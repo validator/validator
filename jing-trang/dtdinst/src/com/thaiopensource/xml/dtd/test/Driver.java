@@ -14,6 +14,8 @@ import com.thaiopensource.xml.dtd.Dtd;
 import com.thaiopensource.xml.dtd.SchemaWriter;
 import com.thaiopensource.xml.dtd.XmlWriter;
 import com.thaiopensource.xml.dtd.FileEntityManager;
+import com.thaiopensource.xml.dtd.CharRepertoire;
+import com.thaiopensource.xml.dtd.EncodingMap;
 
 public class Driver {
   public static void main (String args[]) throws IOException, TestFailException {
@@ -58,10 +60,11 @@ public class Driver {
   }
 
   private static void runTest(File inFile, OutputStream out) throws IOException {
-    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(out));
-    new SchemaWriter(new XmlWriter(w)).writeDtd(new Dtd(inFile.toString(),
-							new FileEntityManager()));
-    
+    Dtd dtd = new Dtd(inFile.toString(), new FileEntityManager());
+    String enc = EncodingMap.getJavaName(dtd.getEncoding());
+    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(out, enc));
+    CharRepertoire cr = CharRepertoire.getInstance(enc);
+    new SchemaWriter(new XmlWriter(w, cr)).writeDtd(dtd);
     w.close();
   }
 

@@ -6,9 +6,12 @@ import java.io.OutputStreamWriter;
 
 public class Driver {
   public static void main (String args[]) throws IOException {
-    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out));
-    new SchemaWriter(new XmlWriter(w)).writeDtd(new Dtd(args[0],
-							new FileEntityManager()));
+    Dtd dtd = new Dtd(args[0], new FileEntityManager());
+    String enc = EncodingMap.getJavaName(dtd.getEncoding());
+    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out,
+								 enc));
+    CharRepertoire cr = CharRepertoire.getInstance(enc);
+    new SchemaWriter(new XmlWriter(w, cr)).writeDtd(dtd);
     w.flush();
   }
 }

@@ -2,10 +2,12 @@ package com.thaiopensource.xml.dtd;
 
 import java.io.Writer;
 import java.io.IOException;
+import java.io.CharConversionException;
 
 public class XmlWriter {
   static final private String indentString = "  ";
   private final Writer writer;
+  private final CharRepertoire cr;
 
   private static final int OTHER = 0; // must be at beginning of line
   private static final int IN_START_TAG = 1;
@@ -18,8 +20,16 @@ public class XmlWriter {
   private String newline = "\n";
   private boolean inData = false;
 
-  public XmlWriter(Writer writer) {
+  public XmlWriter(Writer writer, CharRepertoire cr) {
     this.writer = writer;
+    this.cr = cr;
+  }
+
+  public void writeXmlDecl(String enc) throws IOException {
+    writer.write("<?xml version=\"1.0\" encoding=\"");
+    writer.write(enc);
+    writer.write("\"?>");
+    writer.write(newline);
   }
 
   public void startElement(String name) throws IOException {
@@ -37,7 +47,7 @@ public class XmlWriter {
       break;
     }
     writer.write('<');
-    writer.write(name);
+    outputMarkup(name);
     push(name);
   }
 
@@ -52,7 +62,7 @@ public class XmlWriter {
       // fall through
     case AFTER_DATA:
       writer.write("</");
-      writer.write(name);
+      outputMarkup(name);
       writer.write('>');
       break;
     }
@@ -64,18 +74,22 @@ public class XmlWriter {
     if (state != IN_START_TAG)
       throw new IllegalStateException();
     writer.write(' ');
-    writer.write(name);
+    outputMarkup(name);
     writer.write('=');
     writer.write('"');
-    outputData(value, true);
+    outputData(value, true, false);
     writer.write('"');
   }
 
   public void characters(String str) throws IOException {
+    characters(str, false);
+  }
+
+  public void characters(String str, boolean useCharRef) throws IOException {
     if (state == IN_START_TAG)
       writer.write('>');
     state = AFTER_DATA;
-    outputData(str, false);
+    outputData(str, false, useCharRef);
   }
 
   public void comment(String str) throws IOException {
@@ -85,13 +99,30 @@ public class XmlWriter {
       writer.write(newline);
     }
     writer.write("<!--");
-    writer.write(str);
+    outputMarkup(str);
     writer.write("-->");
     if (state != AFTER_DATA)
       writer.write(newline);
   }
 
-  private void outputData(String str, boolean inAttribute) throws IOException {
+  private void outputMarkup(String str) throws IOException {
+    int len = str.length();
+    for (int i = 0; i < len; i++) {
+      char c = str.charAt(i);
+      if (Utf16.isSurrogate1(c)) {
+	if (i == len || !Utf16.isSurrogate2(str.charAt(i)))
+	  throw new CharConversionException("surrogate pair integrity failure");
+	if (!cr.contains(c, str.charAt(i)))
+	  throw new CharConversionException();
+      }
+      else if (!cr.contains(c))
+	throw new CharConversionException();
+    }
+    writer.write(str);
+  }
+
+  private void outputData(String str, boolean inAttribute, boolean useCharRef)
+    throws IOException {
     int len = str.length();
     for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
@@ -124,22 +155,21 @@ public class XmlWriter {
 	  writer.write('\n');
 	break;
       default:
-	if (c >= 0x80) {
-	  if (Utf16.isSurrogate1(c)) {
-	    ++i;
-	    if (i < len) {
-	      char c2 = str.charAt(i);
-	      if (Utf16.isSurrogate2(c)) {
-		charRef(Utf16.scalarValue(c, c2));
-		break;
-	      }
+	if (Utf16.isSurrogate1(c)) {
+	  ++i;
+	  if (i < len) {
+	    char c2 = str.charAt(i);
+	    if (Utf16.isSurrogate2(c)) {
+	      charRef(Utf16.scalarValue(c, c2));
+	      break;
 	    }
-	    throw new IOException("surrogate pair integrity failure");
 	  }
-	  charRef(c);
+	  throw new CharConversionException("surrogate pair integrity failure");
 	}
-	else
+	if (cr.contains(c) && !useCharRef)
 	  writer.write(c);
+	else
+	  charRef(c);
 	break;
       }
     }

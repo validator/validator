@@ -12,14 +12,16 @@ public class OpenEntity {
   private Reader reader;
   private String baseUri;
   private String location;
+  private String encoding;
 
   /**
    * Creates and initializes an <code>OpenEntity</code>. which uses
    */
-  public OpenEntity(Reader reader, String location, String baseUri) {
+  public OpenEntity(Reader reader, String location, String baseUri, String encoding) {
     this.reader = reader;
     this.location = location;
     this.baseUri = baseUri;
+    this.encoding = encoding;
   }
 
   /**
@@ -46,4 +48,13 @@ public class OpenEntity {
   public final String getLocation() {
     return location;
   }
+
+  /**
+   * Returns the encoding used by the entity or null if the encoding
+   * that was used is unknown.
+   */
+  public final String getEncoding() {
+    return encoding;
+  }
+
 }

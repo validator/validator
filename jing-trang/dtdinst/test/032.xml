@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctype>
-  <nameSpec name="foo">
-    <name>foo</name>
-  </nameSpec>
   <element>
-    <nameSpecRef name="foo"/>
+    <name>หวัดดี</name>
     <sequence/>
   </element>
 </doctype>

@@ -17,6 +17,9 @@ public class SchemaWriter implements TopLevelVisitor,
   }
 
   public void writeDtd(Dtd dtd) throws IOException {
+    String enc = dtd.getEncoding();
+    if (enc != null)
+      w.writeXmlDecl(enc);
     w.startElement("doctype");
     try {
       dtd.accept(this);
@@ -259,7 +262,8 @@ public class SchemaWriter implements TopLevelVisitor,
   public void internalEntityDecl(String name, String value) throws Exception {
     w.startElement("internalEntity");
     w.attribute("name", name);
-    w.characters(value);
+    boolean useCharRef = value.length() == 1 && value.charAt(0) >= 0x80;
+    w.characters(value, useCharRef);
     w.endElement();
   }
 

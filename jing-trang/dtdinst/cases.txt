@@ -1,3 +1,5 @@
+Improve performance.
+
 Command-line option to define a parameter entity as INCLUDE.
 
 Interface to report warnings properly.

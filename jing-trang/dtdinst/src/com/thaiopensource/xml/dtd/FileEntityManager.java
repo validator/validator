@@ -18,8 +18,14 @@ public class FileEntityManager implements EntityManager {
 	  file = new File(dir, systemId);
       }
     }
-    return new OpenEntity(new BufferedReader(new InputStreamReader(new FileInputStream(file))),
+    EncodingDetectInputStream in
+      = new EncodingDetectInputStream(new FileInputStream(file));
+    String enc = in.detectEncoding();
+    String javaEnc = EncodingMap.getJavaName(enc);
+    return new OpenEntity(new BufferedReader(new InputStreamReader(in,
+								   javaEnc)),
 			  file.toString(),
-			  file.toString());
+			  file.toString(),
+			  enc);
   }
 }
