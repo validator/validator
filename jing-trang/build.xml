@@ -320,7 +320,25 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist">
+<target name="dtdinst-test" depends="init">
+  <ant dir="dtdinst" target="test">
+    <property name="build.dir" value="../build/dtdinst-build"/>
+    <property name="dist.dir" value="../build/dtdinst"/>
+    <property name="jar.dir" value="../build"/>
+    <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
+  </ant>
+</target>
+
+<target name="dtdinst-dist" depends="trang-jar">
+  <ant dir="dtdinst" target="dist">
+    <property name="build.dir" value="../build/dtdinst-build"/>
+    <property name="dist.dir" value="../build/dtdinst"/>
+    <property name="jar.dir" value="../build"/>
+    <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
+  </ant>
+</target>
+
+<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties,META-INF/services/*"/>
     <fileset dir="build/src" includes="**/*.java"/>
@@ -376,7 +394,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <fileset dir="eg" includes="testSuite.rng"/>
   </zip>
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="*.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**"/>
+    includes="*.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**,dtdinst/**"/>
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 </target>
 
