@@ -43,7 +43,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
 
   <jar jarfile="build/jing.jar" manifest="build/jing-manifest.txt">
     <fileset dir="build/classes"/>
-    <fileset dir="src" includes="**/*.properties,**/*.rng,META-INF/services/*"/>
+    <fileset dir="src" includes="**/resources/*,META-INF/services/*"/>
   </jar>
 
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
