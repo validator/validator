@@ -934,7 +934,7 @@ public class Converter {
       ns = (String)prefixTable.get(prefix);
       if (ns.equals("")) {
         error("UNDECLARED_PREFIX", prefix);
-        ns = prefix;
+        ns = "##" + prefix;
       }
     }
     NameNameClass nnc = new NameNameClass(ns, localName);
