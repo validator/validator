@@ -13,3 +13,5 @@ Implement 7.1 restrictions
 Detect duplicate attributes
 
 Avoid slow error recovery with large schemas (eg DocBook).
+
+Validate QNames/NCNames in schema.
