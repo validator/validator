@@ -1,0 +1,9 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="">
+  <include href="../eg/testSuite.rng">
+    <define name="correct">
+      <element name="correct">
+	<externalRef href="../src/com/thaiopensource/relaxng/mns2/resources/mns2.rng"/>
+      </element>
+    </define>
+  </include>
+</grammar>
