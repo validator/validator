@@ -1,0 +1,113 @@
+JFLAGS=-O
+
+jing_main=com.thaiopensource.relaxng.util.Driver
+trang_main=com.thaiopensource.relaxng.translate.Driver
+
+exclude_regex=jarv\|jdk1_4\|xerces/\|JingTask\|iso_relax
+
+build_dir = build/gcj
+
+jing_sources := $(shell find src build/src -name '*.java' -print | grep -v '$(exclude_regex)')
+jing_properties := $(shell cd src; find * -name '*.properties' -print | grep -v '$(exclude_regex)')
+jing_services := $(shell (cd src/META-INF/services; find * -name '*.*') | grep -v '$(exclude_regex)')
+jing_services_text = $(addprefix $(build_dir)/resources/META-INF/services/,$(jing_services))
+jing_properties_text = $(addprefix $(build_dir)/resources/,$(jing_properties))
+jing_resources_text = $(jing_services_text) $(jing_properties_text)
+jing_resources_objs = $(addsuffix .o, $(jing_resources_text))
+
+trang_sources := $(shell find trang/src -name '*.java' -print)
+trang_properties := $(shell cd trang/src; find * -name '*.properties' -print)
+trang_properties_text = $(addprefix $(build_dir)/resources/,$(trang_properties))
+trang_resources_objs = $(addsuffix .o, $(trang_properties_text))
+
+dtdinst_sources := $(shell find dtdinst/src -name '*.java' -print)
+dtdinst_properties := $(shell cd dtdinst/src; find * -name '*.properties' -print)
+dtdinst_properties_text = $(addprefix $(build_dir)/resources/,$(dtdinst_properties))
+dtdinst_resources_objs = $(addsuffix .o, $(dtdinst_properties_text))
+
+crimson_properties = org/apache/crimson/parser/resources/Messages.properties
+crimson_services = javax.xml.parsers.SAXParserFactory
+crimson_resources = $(crimson_properties) $(addprefix META-INF/services/, $(crimson_services))
+crimson_resources_text = $(addprefix $(build_dir)/resources/,$(crimson_resources))
+crimson_resources_objs = $(addsuffix .o, $(crimson_resources_text))
+crimson_exclude='org/xml/*' 'org/w3c/*' 'org/apache/crimson/tree/*' \
+  META-INF/services/javax.xml.parsers.DocumentBuilderFactory \
+  javax/xml/parsers/DocumentBuilderFactory.class \
+  javax/xml/parsers/DocumentBuilder.class \
+  org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class \
+  org/apache/crimson/jaxp/DocumentBuilderImpl.class
+
+regex_properties=org/apache/xerces/impl/xpath/regex/message.properties \
+  org/apache/xerces/impl/xpath/regex/message_fr.properties \
+  org/apache/xerces/impl/xpath/regex/message_ja.properties
+regex_properties_text = $(addprefix $(build_dir)/resources/,$(regex_properties))
+regex_resources_objs = $(addsuffix .o, $(regex_properties_text))
+
+jing_objs=$(build_dir)/jing.o $(build_dir)/regex2.o $(build_dir)/crimson.o \
+  $(jing_resources_objs) $(crimson_resources_objs) $(regex_resources_objs) 
+trang_objs=$(jing_objs) \
+  $(build_dir)/dtdinst.o $(dtdinst_resources_objs) \
+  $(build_dir)/trang.o $(trang_resources_objs)
+
+resources_objs=$(jing_resources_objs) $(crimson_resources_objs) \
+  $(trang_resources_objs) $(dtdinst_resources_objs) $(regex_resources_objs)
+
+all: $(build_dir)/jing $(build_dir)/trang
+
+$(build_dir)/jing: $(jing_objs)
+	gcj $(JFLAGS) -o $@ --main=$(jing_main) $^
+
+$(build_dir)/trang: $(trang_objs) 
+	gcj $(JFLAGS) -o $@ --main=$(trang_main) $^
+
+$(resources_objs): %.o: %
+	gcj $(JFLAGS) -c -o $@ --resource=$(subst $(build_dir)/resources/,,$<) $<
+
+$(build_dir)/jing.o: $(jing_sources)
+	gcj $(JFLAGS) -c $(jing_sources) -I$(build_dir)/crimson.zip -Ilib/regex2.jar -o $@
+
+$(build_dir)/jing.o: $(build_dir)/crimson.zip
+
+$(build_dir)/dtdinst.o: $(dtdinst_sources)
+	gcj $(JFLAGS) -c $(dtdinst_sources) -Isrc -o $@
+
+$(build_dir)/trang.o: $(trang_sources)
+	gcj $(JFLAGS) -c $(trang_sources) -Isrc -Idtdinst/src -I$(build_dir)/crimson.zip -o $@
+
+$(build_dir)/crimson.zip: lib/crimson.jar
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	cp $< $@
+	zip -q -d $@ $(crimson_exclude)
+
+$(build_dir)/crimson.o: $(build_dir)/crimson.zip
+	gcj $(JFLAGS) -c $< -o $@
+
+$(build_dir)/regex2.o:
+	gcj $(JFLAGS) -c lib/regex2.jar -o $@
+
+$(crimson_resources_text): lib/crimson.jar
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	unzip -p $< $(subst $(build_dir)/resources/,,$@) >$@
+
+$(regex_properties_text): lib/regex2.jar
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	unzip -p $< $(subst $(build_dir)/resources/,,$@) >$@
+
+$(jing_properties_text) : $(build_dir)/resources/%: src/%
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	cp $< $@
+
+$(trang_properties_text) : $(build_dir)/resources/%: trang/src/%
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	cp $< $@
+
+$(dtdinst_properties_text) : $(build_dir)/resources/%: dtdinst/src/%
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	cp $< $@
+
+$(jing_services_text): $(build_dir)/resources/%: src/%
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	grep -v '$(exclude_regex)' $< >$@
+
+clean:
+	rm -fr $(build_dir)
