@@ -39,35 +39,7 @@ class ListPattern extends Pattern {
   }
 
   Pattern residual(PatternBuilder b, Atom a) {
-    String s = a.getStringValue();
-    if (s == null)
-      return b.makeEmptyChoice();
-    DatatypeContext dc = a.getDatatypeContext();
-    int len = s.length();
-    int tokenStart = -1;
-    Pattern r = p;
-    for (int i = 0; i < len; i++) {
-      switch (s.charAt(i)) {
-      case '\r':
-      case '\n':
-      case ' ':
-      case '\t':
-	if (tokenStart >= 0) {
-	  r = r.residual(b, new StringAtom(s.substring(tokenStart, i),
-					   dc));
-	  tokenStart = -1;
-	}
-	break;
-      default:
-	if (tokenStart < 0)
-	  tokenStart = i;
-	break;
-      }
-    }
-    if (tokenStart >= 0)
-      r = r.residual(b, new StringAtom(s.substring(tokenStart, len),
-				       dc));
-    if (r.isNullable())
+    if (a.matchesList(b, p))
       return b.makeEmptySequence();
     else
       return b.makeEmptyChoice();

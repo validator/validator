@@ -13,11 +13,8 @@ abstract class Atom {
   boolean matchesDatatype(Datatype dt) {
     return false;
   }
-  String getStringValue() {
-    return null;
-  }
-  DatatypeContext getDatatypeContext() {
-    return null;
+  boolean matchesList(PatternBuilder b, Pattern p) {
+    return false;
   }
   boolean matchesAttribute(PatternBuilder b, NameClass nc, Pattern value) {
     return false;

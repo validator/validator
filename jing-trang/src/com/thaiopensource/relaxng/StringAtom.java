@@ -20,19 +20,35 @@ class StringAtom extends Atom {
     return obj.equals(dt.createValue(str, dc));
   }
 
-  boolean matchesDatatype(Datatype dt) {
-    return dt.allows(str, dc);
-  }
-  
-  String getStringValue() {
-    return str;
-  }
-  
-  DatatypeContext getDatatypeContext() {
-    return dc;
+  boolean matchesList(PatternBuilder b, Pattern p) {
+    int len = str.length();
+    int tokenStart = -1;
+    Pattern r = p;
+    for (int i = 0; i < len; i++) {
+      switch (str.charAt(i)) {
+      case '\r':
+      case '\n':
+      case ' ':
+      case '\t':
+	if (tokenStart >= 0) {
+	  r = r.residual(b, new StringAtom(str.substring(tokenStart, i),
+					   dc));
+	  tokenStart = -1;
+	}
+	break;
+      default:
+	if (tokenStart < 0)
+	  tokenStart = i;
+	break;
+      }
+    }
+    if (tokenStart >= 0)
+      r = r.residual(b, new StringAtom(str.substring(tokenStart, len),
+				       dc));
+    return r.isNullable();
   }
 
-  String getString() {
-    return str;
+  boolean matchesDatatype(Datatype dt) {
+    return dt.allows(str, dc);
   }
 }
