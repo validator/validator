@@ -30,7 +30,7 @@ class SchemaImpl implements Schema {
   static class ElementAction {
     private Schema schema;
     private Mode mode;
-    private Set subsumed = new HashSet();
+    private Set covered = new HashSet();
 
     ElementAction(Schema schema, Mode mode) {
       this.schema = schema;
@@ -45,8 +45,8 @@ class SchemaImpl implements Schema {
       return schema;
     }
 
-    Set getSubsumedNamespaces() {
-      return subsumed;
+    Set getCoveredNamespaces() {
+      return covered;
     }
   }
 
@@ -100,8 +100,8 @@ class SchemaImpl implements Schema {
         startMode = lookupCreateMode(modeName);
         return;
       }
-      if (localName.equals("subsume")) {
-        currentElementAction.subsumed.add(attributes.getValue("", "ns"));
+      if (localName.equals("cover")) {
+        currentElementAction.covered.add(attributes.getValue("", "ns"));
         return;
       }
       String modesValue = attributes.getValue("", "modes");

@@ -29,14 +29,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final Subtree parent;
     final ValidatorHandler validator;
     final String namespace;
-    final Set subsumedNamespaces;
+    final Set coveredNamespaces;
     final SchemaImpl.Mode parentMode;
     final int parentLaxDepth;
     int depth = 0;
 
-    Subtree(String namespace, Set subsumedNamespaces, ValidatorHandler validator, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
+    Subtree(String namespace, Set coveredNamespaces, ValidatorHandler validator, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.namespace = namespace;
-      this.subsumedNamespaces = subsumedNamespaces;
+      this.coveredNamespaces = coveredNamespaces;
       this.validator = validator;
       this.parentMode = parentMode;
       this.parentLaxDepth = parentLaxDepth;
@@ -81,7 +81,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   public void startElement(String uri, String localName,
                            String qName, Attributes attributes)
           throws SAXException {
-    if (namespaceSubsumed(uri))
+    if (namespaceCovered(uri))
       subtrees.depth++;
     else {
       SchemaImpl.ElementAction elementAction = currentMode.getElementAction(uri);
@@ -92,7 +92,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       }
       else {
         subtrees = new Subtree(uri,
-                               elementAction.getSubsumedNamespaces(),
+                               elementAction.getCoveredNamespaces(),
                                createValidator(elementAction.getSchema()),
                                currentMode,
                                laxDepth,
@@ -108,7 +108,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       String ns = attributes.getURI(i);
       if (!ns.equals("")
           && !ns.equals(uri)
-          && !namespaceSubsumed(uri)
+          && !namespaceCovered(uri)
           && !attributeNamespaces.contains(ns)) {
         attributeNamespaces.add(ns);
         validateAttributes(ns, attributes);
@@ -117,9 +117,9 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     attributeNamespaces.clear();
   }
 
-  private boolean namespaceSubsumed(String ns) {
+  private boolean namespaceCovered(String ns) {
     return (laxDepth == 0 && subtrees != null
-            && (ns.equals(subtrees.namespace) || subtrees.subsumedNamespaces.contains(ns)));
+            && (ns.equals(subtrees.namespace) || subtrees.coveredNamespaces.contains(ns)));
   }
 
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {

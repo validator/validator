@@ -27,7 +27,7 @@
         </attribute>
       </optional>
       <zeroOrMore>
-        <element name="subsume">
+        <element name="cover">
           <attribute name="ns">
             <data type="anyURI"/>
           </attribute>
