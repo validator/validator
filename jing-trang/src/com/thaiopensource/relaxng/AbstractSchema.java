@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng;
 /**
  * A skeleton implementation of <code>Schema</code>.
  *
- * @author <a href="jjc@jclark.com">James Clark</a>
+ * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public abstract class AbstractSchema implements Schema {
   /**
