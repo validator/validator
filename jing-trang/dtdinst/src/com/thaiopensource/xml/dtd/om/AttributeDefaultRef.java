@@ -25,4 +25,16 @@ public class AttributeDefaultRef extends AttributeDefault {
   public void accept(AttributeDefaultVisitor visitor) throws Exception {
     visitor.attributeDefaultRef(name, attributeDefault);
   }
+
+  public boolean isRequired() {
+    return attributeDefault.isRequired();
+  }
+
+  public String getDefaultValue() {
+    return attributeDefault.getDefaultValue();
+  }
+
+  public String getFixedValue() {
+    return attributeDefault.getFixedValue();
+  }
 }

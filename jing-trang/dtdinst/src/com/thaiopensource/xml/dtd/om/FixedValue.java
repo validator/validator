@@ -18,4 +18,12 @@ public class FixedValue extends AttributeDefault {
   public void accept(AttributeDefaultVisitor visitor) throws Exception {
     visitor.fixedValue(value);
   }
+
+  public String getDefaultValue() {
+    return value;
+  }
+
+  public String getFixedValue() {
+    return value;
+  }
 }

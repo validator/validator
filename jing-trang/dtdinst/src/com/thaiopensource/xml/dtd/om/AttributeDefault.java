@@ -8,6 +8,19 @@ public abstract class AttributeDefault {
   public static final int ATTRIBUTE_DEFAULT_REF = 4;
 
   public abstract int getType();
+
   public abstract void accept(AttributeDefaultVisitor visitor) throws Exception;
+
+  public boolean isRequired() {
+    return false;
+  }
+
+  public String getDefaultValue() {
+    return null;
+  }
+
+  public String getFixedValue() {
+    return null;
+  }
 }
 

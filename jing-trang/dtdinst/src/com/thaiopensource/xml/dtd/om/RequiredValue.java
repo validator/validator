@@ -8,4 +8,8 @@ public class RequiredValue extends AttributeDefault {
   public void accept(AttributeDefaultVisitor visitor) throws Exception {
     visitor.requiredValue();
   }
+
+  public boolean isRequired() {
+    return true;
+  }
 }

@@ -18,4 +18,8 @@ public class DefaultValue extends AttributeDefault {
   public void accept(AttributeDefaultVisitor visitor) throws Exception {
     visitor.defaultValue(value);
   }
+
+  public String getDefaultValue() {
+    return value;
+  }
 }
