@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.4 2001-09-12 07:18:07 jjc Exp $ -->
+<!-- $Id: testSuite.rng,v 1.5 2001-09-20 03:42:02 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
@@ -7,47 +7,41 @@
   -->
   
   <start>
-    <element name="testSuite">
-      <ref name="testCases"/>
-    </element>
+    <ref name="testSuite"/>
   </start>
 
-  <define name="testCases">
-    <ref name="header"/>
-    <zeroOrMore>
-      <choice>
-	<ref name="testCase"/>
-	<!--
-	  Resources are by itself a RELAX NG pattern, and it can be 
-	  referenced from other patterns through <externalRef/>
-	  the scope of the modules are global.
-	-->
-	<element name="resource">
-	  <attribute name="href"/>
-	  <ref name="anyElement"/>
-	</element>
-        <element name="div">
-          <ref name="testCases"/>
-        </element>
-      </choice>
-    </zeroOrMore>
+  <define name="testSuite">
+    <element name="testSuite">
+      <ref name="header"/>
+      <zeroOrMore>
+        <choice>
+           <ref name="testSuite"/>
+           <ref name="testCase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
   </define>
-      
+
   <define name="testCase">
     <element name="testCase">
       <ref name="header"/>
       
       <choice>
+       
         <!-- Incorrect schema -->
-        <element name="incorrect">
-          <ref name="anyElement"/>
-        </element>
+        <group>
+          <element name="incorrect">
+            <ref name="anyElement"/>
+          </element>
+          <ref name="resources"/>
+        </group>
          
         <!-- Correct schema and test cases -->
         <group>
           <element name="correct">
             <externalRef href="relaxng.rng"/>
           </element>
+          <ref name="resources"/>
           <zeroOrMore>
             <choice>
               <!-- Valid test cases -->
@@ -95,6 +89,19 @@
           <text/>
         </element>
       </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="resources">
+    <zeroOrMore>
+      <element name="resource">
+        <!-- systemId must be a relative URI; the base URI for
+             interpreting this will be the base URI
+             of the input schema of the test case; each testCase
+             has a separate directory of resources -->
+        <attribute name="systemId"/>
+        <ref name="anyElement"/>
+      </element>
     </zeroOrMore>
   </define>
   
