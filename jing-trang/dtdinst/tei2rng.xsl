@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
-<!--
-Default attributes
-Fixed attributes
--->
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/0.9"
   xmlns="http://relaxng.org/ns/structure/0.9">
 
 <xsl:import href="rng.xsl"/>
@@ -50,6 +47,7 @@ Fixed attributes
   <xsl:choose>
     <xsl:when test="required">
       <attribute name="{$name}">
+        <xsl:call-template name="default-value"/>
         <xsl:apply-templates select="*[2]"/>
       </attribute>
     </xsl:when>
@@ -61,6 +59,7 @@ Fixed attributes
 	  </xsl:if>
 	</xsl:for-each>
         <attribute name="{$name}">
+          <xsl:call-template name="default-value"/>
           <xsl:apply-templates select="*[2]"/>
         </attribute>
       </optional>
