@@ -15,9 +15,6 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 
-/*
-XXX Specify indent
-*/
 public class RngOutputFormat implements OutputFormat {
   public void output(SchemaCollection sc, OutputDirectory od, String[] params, String inputFormat, ErrorHandler eh)
           throws IOException, InvalidParamsException, SAXException {
