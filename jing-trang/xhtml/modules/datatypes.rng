@@ -106,17 +106,23 @@
 </define>
 
 <define name="ID.datatype">
-  <data type="ID" key="id"/>
+  <key name="id">
+    <data type="ID"/>
+  </key>
 </define>
 
 <define name="IDREF.datatype">
-  <data type="NCName" keyRef="id"/>
+  <keyRef name="id">
+    <data type="NCName"/>
+  </keyRef>
 </define>
 
 <define name="IDREFS.datatype">
   <list>
     <oneOrMore>
-      <data type="NCName" keyRef="id"/>
+      <keyRef name="id">
+        <data type="NCName"/>
+      </keyRef>
     </oneOrMore>
   </list>
 </define>
