@@ -1,5 +1,3 @@
-Fix tei2rng.xsl to deal with attributeDefaultRef/Def.
-
 Overridden general entity declarations.
 
 Overridden external parameter entity declarations.
