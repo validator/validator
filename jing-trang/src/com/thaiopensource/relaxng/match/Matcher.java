@@ -158,18 +158,24 @@ public interface Matcher {
    * in the current state.  This must be called only in a state in
    * which a call to <code>matchStartTagOpen</code> would be allowed.
    * The members of the Vector have type <code>com.thaiopensource.xml.util.Name</code>.
-   * The Vector does not include members for wildcard name classes
-   * (<code>nsName</code> and <code>anyName</code>) in <code>element</code> patterns.
+   * When an element pattern with a wildcard name-class is possible, then all
+   * Names in knownNames that are contained in the wildcard name-class will be
+   * included in the returned Vector.
+   * @param knownNames a Vector of names to be considered for wildcards, or null
+   * @return a Vector of names whose start-tags are possible
    */
-  Vector possibleStartTags();
+  Vector possibleStartTags(Vector knownNames);
 
-   /**
-   * Return a Vector of the names of attributes that valid
+ /**
+   * Return a Vector of the names of attributes that are valid
    * in the current state.  This must be called only in a state in
    * which a call to <code>matchAttributeName</code> would be allowed.
    * The members of the Vector have type <code>com.thaiopensource.xml.util.Name</code>.
-   * The Vector does not include members for wildcard name classes
-   * (<code>nsName</code> and <code>anyName</code>) in <code>attribute</code> patterns.
+   * When an attribute pattern with a wildcard name-class is possible, then all
+   * Names in knownNames that are contained in the wildcard name-class will be
+   * included in the returned Vector.
+   * @param knownNames a Vector of names to be considered for wildcards, or null
+   * @return a Vector of names of attributes that are possible
    */
-  Vector possibleAttributes();
+  Vector possibleAttributes(Vector knownNames);
 }
