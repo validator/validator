@@ -362,6 +362,8 @@ to the parent XHTML section and be validated as part of it.</p>
 
 <p>XXX NRL as subschema for NRL</p>
 
+<p>XXX Have an example will validate and attach for the same namespace</p>
+
 <h2>Built-in modes</h2>
 
 <p>There is a built-in mode named <code>#attach</code>, which contains
@@ -471,12 +473,12 @@ to be able to wrap an extension element around an existing
 non-extension element.  This can arise with namespaces describing
 templating and versioning.  Imagine XHTML inside an XSLT stylesheet:
 in such a document we might have a <code>ul</code> element containing
-a <code>xsl:for-each</code> element containing an <code>li</code>,
+an <code>xsl:for-each</code> element containing an <code>li</code>,
 although the schema for XHTML requires <code>li</code> elements to
 occur as direct children of <code>ul</code> elements. In such a
-situation, we need to need to make the XHTML schema ignore the
-start-tag and end-tag of the <code>xsl:for-each</code> element, but
-not ignore its content.</p>
+situation, we need to need to make the XHTML schema unwrap the
+<code>xsl:for-each</code> element, ignoring its start-tag and end-tag,
+but not ignoring its content.</p>
 
 <p>Suppose we have a namespace
 <code>http://www.example.org/edit</code> containing elements
@@ -505,7 +507,9 @@ allow us still to validate the XHTML document.</p>
 
 <p>The <code>unwrap</code> element says to ignore a particular
 section; like with all the other actions, it applies to a section not
-to a subtree. Thus, the section from the
+to a subtree.  XXX
+
+ Thus, the section from the
 <code>http://www.example.org/edit</code> will be ignored, but child
 sections will be processed according to rules applicable in the
 <code>xhtml</code> mode.  When a
@@ -526,20 +530,25 @@ default namespace = "http://www.example.org/edit"
 element inserted|deleted { empty }
 </pre>
 
+<p>The following NRL schema would allow validation of the
+<code>http://www.example.org/edit</code> namespace:</p>
+
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="xhtml"/>
+      <validate schema="xhtml.rng" useMode="edit"/>
     </namespace>
   </mode>
-  <mode name="xhtml">
+  <mode name="edit" extends="noEdit">
     <namespace ns="http://www.example.org/edit">
       <validate schema="edit.rnc"
                 schemaType="application/x-rnc"
                 useMode="#allow"/>
-      <unwrap useMode="#attach"/>
+      <unwrap useMode="noEdit"/>
     </namespace>
+  </mode>
+  <mode name="noEdit">
     <namespace ns="http://www.w3.org/1999/xhtml">
       <attach/>
     </namespace>
@@ -568,6 +577,40 @@ example, suppose we wish to allow RDF to occur only as a child of the
   <mode name="rdf">
     <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
       <validate schema="rdfxml.rng" useMode="#attach"/>
+    </namespace>
+  </mode>
+</rules>
+</xml>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng" useMode="new"/>
+      <validate schema="xhtml.rng" useMode="old"/>
+    </namespace>
+  </mode>
+  <mode name="new" extends="noEdit">
+    <namespace ns="http://www.example.org/edit">
+      <validate schema="edit.rnc"
+                schemaType="application/x-rnc"
+                useMode="#allow">
+      </validate>
+      <unwrap useMode="noEdit">
+        <context path="deleted" useMode="#allow"/>
+      </unwrap>
+    </namespace>
+  </mode>
+  <mode name="old" extends="noEdit">
+    <namespace ns="http://www.example.org/edit">
+      <unwrap useMode="noEdit">
+        <context path="inserted" useMode="#allow"/>
+      </unwrap>
+    </namespace>
+  </mode>
+  <mode name="noEdit">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <attach/>
     </namespace>
   </mode>
 </rules>
