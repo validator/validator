@@ -65,7 +65,7 @@ class Inferrer {
   }
 
   private static class PatternComparator implements Comparator {
-    private static Class[] classOrder = {
+    private static final Class[] classOrder = {
       TextPattern.class, RefPattern.class, ElementPattern.class
     };
 
@@ -352,7 +352,7 @@ class Inferrer {
     return nnc;
   }
 
-  private DataPattern makeDatatype(Name datatypeName) {
+  private static DataPattern makeDatatype(Name datatypeName) {
     return new DataPattern(datatypeName.getNamespaceUri(), datatypeName.getLocalName());
   }
 
