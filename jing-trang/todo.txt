@@ -1,4 +1,4 @@
-In trang documentation, move some information about DTD conversion into general section
+Compact syntax parser should provide encoding information.
 
 Give a warning for a list containing a single token.
 
@@ -7,16 +7,10 @@ outside a list.
 
 Handle comments embedded within strings better.
 
-SAXParser and comment formatting.
-
-Trang should output a:documentation as comments in the DTD.
-
 Put location information in error messages into a standard format
 understandable by Emacs.
 
 More helpful syntax error messages with compact syntax parser.
-
-Namespace declarations in element annotations (also issue for TC).
 
 Support for IDREF checking via JARV.
 
@@ -41,8 +35,5 @@ from names to content models.
 Better error message for wrong namespace URI.
 
 Option to be verbose.
-
-On output, using character escapes for things outside repertoire of
-character encoding.
 
 Streaming validation of data.
