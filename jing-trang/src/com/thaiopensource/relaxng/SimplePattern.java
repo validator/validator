@@ -6,7 +6,8 @@ abstract class SimplePattern extends Pattern {
   private Locator locator;
 
   SimplePattern(int hc, Locator locator) {
-    super(false, hc);
+    super(false, // XXX should depend on whether it matches empty string
+	  hc);
     this.locator = locator;
   }
 
