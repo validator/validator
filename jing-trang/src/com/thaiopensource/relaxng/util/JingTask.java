@@ -22,6 +22,8 @@ import org.xml.sax.helpers.ParserAdapter;
 import com.thaiopensource.relaxng.ValidationEngine;
 import com.thaiopensource.relaxng.XMLReaderCreator;
 
+import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
+
 /**
  * Ant task to validate XML files using RELAX NG.
  */
