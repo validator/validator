@@ -113,7 +113,9 @@ Implement diagnostic
 <xsl:template match="sch:name">
   <xsl:choose>
     <xsl:when test="@path">
-      <axsl:value-of select="name({@path})"/>
+      <axsl:value-of select="name({@path})">
+        <xsl:call-template name="location"/>
+      </axsl:value-of>
     </xsl:when>
     <xsl:otherwise>
       <axsl:value-of select="name()"/>
