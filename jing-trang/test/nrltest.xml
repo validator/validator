@@ -1562,4 +1562,544 @@ attribute a:y { text }
 <foo att="x"/>
 </invalid>
 </testCase>
+<testCase>
+<resource name="xhtml.rng">
+<grammar ns="http://www.w3.org/1999/xhtml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data datatypeLibrary="" type="token"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <text/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <ref name="horiz.model"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="axis">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data datatypeLibrary="" type="token"/>
+            </attribute>
+          </optional>
+          <attribute name="content">
+            <text/>
+          </attribute>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+</resource>
+<resource name="soap-envelope.xsd">
+<!-- Schema for the SOAP/1.1 envelope
+
+     This schema has been produced using W3C's SOAP Version 1.2 schema
+     found at:
+
+     http://www.w3.org/2001/06/soap-envelope
+
+     Copyright 2001 Martin Gudgin, Developmentor.
+
+     Changes made are the following:
+     - reverted namespace to http://schemas.xmlsoap.org/soap/envelope/
+     - reverted mustUnderstand to only allow 0 and 1 as lexical values
+	 - made encodingStyle a global attribute 20020825
+
+	 Further changes:
+
+	 - removed default value from mustUnderstand attribute declaration - 20030314
+
+     Original copyright:
+     
+     Copyright 2001 W3C (Massachusetts Institute of Technology,
+     Institut National de Recherche en Informatique et en Automatique,
+     Keio University). All Rights Reserved.
+     http://www.w3.org/Consortium/Legal/
+
+     This document is governed by the W3C Software License [1] as
+     described in the FAQ [2].
+
+     [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+     [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://schemas.xmlsoap.org/soap/envelope/"
+           targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" >
+
+     
+  <!-- Envelope, header and body -->
+  <xs:element name="Envelope" type="tns:Envelope" />
+  <xs:complexType name="Envelope" >
+    <xs:sequence>
+      <xs:element ref="tns:Header" minOccurs="0" />
+      <xs:element ref="tns:Body" minOccurs="1" />
+      <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="lax" />
+  </xs:complexType>
+
+  <xs:element name="Header" type="tns:Header" />
+  <xs:complexType name="Header" >
+    <xs:sequence>
+      <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##other" processContents="lax" />
+  </xs:complexType>
+  
+  <xs:element name="Body" type="tns:Body" />
+  <xs:complexType name="Body" >
+    <xs:sequence>
+      <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="lax" >
+	  <xs:annotation>
+	    <xs:documentation>
+		  Prose in the spec does not specify that attributes are allowed on the Body element
+		</xs:documentation>
+	  </xs:annotation>
+	</xs:anyAttribute>
+  </xs:complexType>
+
+       
+  <!-- Global Attributes.  The following attributes are intended to be usable via qualified attribute names on any complex type referencing them.  -->
+  <xs:attribute name="mustUnderstand" >	
+     <xs:simpleType>
+     <xs:restriction base='xs:boolean'>
+	   <xs:pattern value='0|1' />
+	 </xs:restriction>
+   </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="actor" type="xs:anyURI" />
+
+  <xs:simpleType name="encodingStyle" >
+    <xs:annotation>
+	  <xs:documentation>
+	    'encodingStyle' indicates any canonicalization conventions followed in the contents of the containing element.  For example, the value 'http://schemas.xmlsoap.org/soap/encoding/' indicates the pattern described in SOAP specification
+	  </xs:documentation>
+	</xs:annotation>
+    <xs:list itemType="xs:anyURI" />
+  </xs:simpleType>
+
+  <xs:attribute name="encodingStyle" type="tns:encodingStyle" />
+  <xs:attributeGroup name="encodingStyle" >
+    <xs:attribute ref="tns:encodingStyle" />
+  </xs:attributeGroup>
+
+  <xs:element name="Fault" type="tns:Fault" />
+  <xs:complexType name="Fault" final="extension" >
+    <xs:annotation>
+	  <xs:documentation>
+	    Fault reporting structure
+	  </xs:documentation>
+	</xs:annotation>
+    <xs:sequence>
+      <xs:element name="faultcode" type="xs:QName" />
+      <xs:element name="faultstring" type="xs:string" />
+      <xs:element name="faultactor" type="xs:anyURI" minOccurs="0" />
+      <xs:element name="detail" type="tns:detail" minOccurs="0" />      
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="detail">
+    <xs:sequence>
+      <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="lax" /> 
+  </xs:complexType>
+
+</xs:schema>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.rng"/>
+</namespace>
+</rules>
+</correct>
+<valid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+<html>
+<head>
+<title>Document 2</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+</env:Envelope>
+</valid>
+<valid>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</valid>
+<invalid>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</invalid>
+<invalid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+<env:Header/>
+</env:Envelope>
+</invalid>
+<valid>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns="http://www.w3.org/1999/xhtml">
+<env:Header/>
+<env:Body>
+<html>
+<head>
+<title>Document 1</title>
+</head>
+<body>
+<p>...</p>
+</body>
+</html>
+</env:Body>
+</env:Envelope>
+</valid>
+</testCase>
 </testSuite>
