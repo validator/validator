@@ -27,7 +27,6 @@ h1, h2 {
 h1 { font-size: 140% }
 h2 { font-size: 120% }
 pre { margin-left: 2em }
-code { font-family: sans-serif }
 </style>
 
 </xsl:template>
@@ -75,6 +74,14 @@ code { font-family: sans-serif }
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
   </xsl:copy>
+</xsl:template>
+
+<xsl:template match="code">
+  <xsl:text>'</xsl:text>
+  <span class="code">
+    <xsl:apply-templates/>
+  </span>
+  <xsl:text>'</xsl:text>
 </xsl:template>
 
 <xsl:template match="xml">
