@@ -3525,59 +3525,67 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 <!-- Arch: Computer or chip architecture to which element applies; no 
 	default -->
     <attributeGroup name="arch.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>arch</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Condition: General-purpose effectivity attribute -->
     <attributeGroup name="condition.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>condition</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Conformance: Standards conformance characteristics -->
     <attributeGroup name="conformance.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>conformance</name>
         <basic name="NMTOKENS"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- OS: Operating system to which element applies; no default -->
     <attributeGroup name="os.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>os</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Revision: Editorial revision to which element belongs; no default -->
     <attributeGroup name="revision.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>revision</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Security: Security classification; no default -->
     <attributeGroup name="security.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>security</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- UserLevel: Level of user experience to which element applies; no 
 	default -->
     <attributeGroup name="userlevel.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>userlevel</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Vendor: Computer vendor to which element applies; no default -->
     <attributeGroup name="vendor.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>vendor</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
     <attributeGroup name="local.effectivity.attrib"/>
@@ -3595,54 +3603,60 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 <!-- Common attributes .................................................... -->
 <!-- Id: Unique identifier of element; no default -->
     <attributeGroup name="id.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>id</name>
         <basic name="ID"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Id: Unique identifier of element; a value must be supplied; no 
 	default -->
     <attributeGroup name="idreq.attrib">
-      <attribute use="required">
+      <attribute>
         <name>id</name>
         <basic name="ID"/>
+        <required/>
       </attribute>
     </attributeGroup>
 <!-- Lang: Indicator of language in which element is written, for
 	translation, character set management, etc.; no default -->
     <attributeGroup name="lang.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>lang</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Remap: Previous role of element before conversion; no default -->
     <attributeGroup name="remap.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>remap</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Role: New role of element in local environment; no default -->
     <attributeGroup name="role.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>role</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- XRefLabel: Alternate labeling string for XRef text generation;
 	default is usually title or other appropriate label text already
 	contained in element -->
     <attributeGroup name="xreflabel.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>xreflabel</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- RevisionFlag: Revision status of element; default is that element
 	wasn't revised -->
     <attributeGroup name="revisionflag.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>revisionflag</name>
         <enumChoice>
           <enum>changed</enum>
@@ -3650,6 +3664,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
           <enum>deleted</enum>
           <enum>off</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
     <attributeGroup name="local.common.attrib"/>
@@ -3688,47 +3703,56 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 <!-- Scale: Conflation of CALS hscale and vscale -->
 <!-- Scalefit: Same as CALS scalefit -->
     <attributeGroup name="graphics.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>entityref</name>
         <basic name="ENTITY"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>fileref</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>format</name>
         <enumChoice>
           <enumGroupRef name="notation.class"/>
         </enumChoice>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>srccredit</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>width</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>depth</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>align</name>
         <enumChoice>
           <enum>left</enum>
           <enum>right</enum>
           <enum>center</enum>
         </enumChoice>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>scale</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>scalefit</name>
         <datatypeRef name="yesorno.attvals"/>
+        <implied/>
       </attribute>
       <attributeGroupRef name="local.graphics.attrib"/>
     </attributeGroup>
@@ -3738,7 +3762,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 	Other, the OtherAction attribute must have a nonempty value -->
 <!-- OtherAction: User-defined key combination type -->
     <attributeGroup name="keyaction.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>action</name>
         <enumChoice>
           <enum>click</enum>
@@ -3748,101 +3772,114 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
           <enum>simul</enum>
           <enum>other</enum>
         </enumChoice>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>otheraction</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
       <attributeGroupRef name="local.keyaction.attrib"/>
     </attributeGroup>
 <!-- Label: Identifying number or string; default is usually the
 	appropriate number or string autogenerated by a formatter -->
     <attributeGroup name="label.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>label</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Format: whether element is assumed to contain significant white
 	space -->
     <attributeGroup name="linespecific.attrib">
-      <attribute use="optional" default="linespecific">
+      <attribute>
         <name>format</name>
         <notation>
           <enum>linespecific</enum>
         </notation>
+        <default>linespecific</default>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>linenumbering</name>
         <enumChoice>
           <enum>numbered</enum>
           <enum>unnumbered</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Linkend: link to related information; no default -->
     <attributeGroup name="linkend.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>linkend</name>
         <basic name="IDREF"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- Linkend: required link to related information -->
     <attributeGroup name="linkendreq.attrib">
-      <attribute use="required">
+      <attribute>
         <name>linkend</name>
         <basic name="IDREF"/>
+        <required/>
       </attribute>
     </attributeGroup>
 <!-- Linkends: link to one or more sets of related information; no 
 	default -->
     <attributeGroup name="linkends.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>linkends</name>
         <basic name="IDREFS"/>
+        <implied/>
       </attribute>
     </attributeGroup>
     <attributeGroup name="local.mark.attrib"/>
     <attributeGroup name="mark.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>mark</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
       <attributeGroupRef name="local.mark.attrib"/>
     </attributeGroup>
 <!-- MoreInfo: whether element's content has an associated RefEntry -->
     <attributeGroup name="moreinfo.attrib">
-      <attribute use="optional" default="none">
+      <attribute>
         <name>moreinfo</name>
         <enumChoice>
           <enum>refentry</enum>
           <enum>none</enum>
         </enumChoice>
+        <default>none</default>
       </attribute>
     </attributeGroup>
 <!-- Pagenum: number of page on which element appears; no default -->
     <attributeGroup name="pagenum.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>pagenum</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
     <attributeGroup name="local.status.attrib"/>
 <!-- Status: Editorial or publication status of the element
 	it applies to, such as "in review" or "approved for distribution" -->
     <attributeGroup name="status.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>status</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
       <attributeGroupRef name="local.status.attrib"/>
     </attributeGroup>
 <!-- Width: width of the longest line in the element to which it
 	pertains, in number of characters -->
     <attributeGroup name="width.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>width</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- ...................................................................... -->
@@ -4284,9 +4321,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="biblioset.attlist">
         <attlist>
           <name>biblioset</name>
-          <attribute use="optional">
+          <attribute>
             <name>relation</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="biblioset.role.attrib"/>
@@ -4329,9 +4367,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="bibliomset.attlist">
         <attlist>
           <name>bibliomset</name>
-          <attribute use="optional">
+          <attribute>
             <name>relation</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="bibliomset.role.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -4410,9 +4449,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="subjectset.attlist">
           <attlist>
             <name>subjectset</name>
-            <attribute use="optional">
+            <attribute>
               <name>scheme</name>
               <basic name="NMTOKEN"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="subjectset.role.attrib"/>
@@ -4452,9 +4492,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="subject.attlist">
           <attlist>
             <name>subject</name>
-            <attribute use="optional">
+            <attribute>
               <name>weight</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="subject.role.attrib"/>
@@ -4745,17 +4786,20 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="simplemsgentry.role.attrib"/>
             <attributeGroupRef name="local.simplemsgentry.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>audience</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>level</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>origin</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
           </attlist>
 <!--end of simplemsgentry.attlist-->
@@ -5174,13 +5218,14 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="qandset.attlist">
           <attlist>
             <name>qandaset</name>
-            <attribute use="optional">
+            <attribute>
               <name>defaultlabel</name>
               <enumChoice>
                 <enum>qanda</enum>
                 <enum>number</enum>
                 <enum>none</enum>
               </enumChoice>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="qandset.role.attrib"/>
@@ -5516,12 +5561,13 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="step.attlist">
           <attlist>
             <name>step</name>
-            <attribute use="optional" default="required">
+            <attribute>
               <name>performance</name>
               <enumChoice>
                 <enum>optional</enum>
                 <enum>required</enum>
               </enumChoice>
+              <default>required</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="step.role.attrib"/>
@@ -5561,12 +5607,13 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="substeps.attlist">
           <attlist>
             <name>substeps</name>
-            <attribute use="optional" default="required">
+            <attribute>
               <name>performance</name>
               <enumChoice>
                 <enum>optional</enum>
                 <enum>required</enum>
               </enumChoice>
+              <default>required</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="substeps.role.attrib"/>
@@ -5878,7 +5925,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="bridgehead.attlist">
         <attlist>
           <name>bridgehead</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>other</enum>
@@ -5888,6 +5935,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <enum>sect4</enum>
               <enum>sect5</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="bridgehead.role.attrib"/>
@@ -6421,9 +6469,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="glossentry.attlist">
           <attlist>
             <name>glossentry</name>
-            <attribute use="optional">
+            <attribute>
               <name>sortas</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="glossentry.role.attrib"/>
@@ -6468,9 +6517,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="glossdef.attlist">
           <attlist>
             <name>glossdef</name>
-            <attribute use="optional">
+            <attribute>
               <name>subject</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="glossdef.role.attrib"/>
@@ -6508,9 +6558,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="glosssee.attlist">
           <attlist>
             <name>glosssee</name>
-            <attribute use="optional">
+            <attribute>
               <name>otherterm</name>
               <basic name="IDREF"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="glosssee.role.attrib"/>
@@ -6548,9 +6599,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="glossseealso.attlist">
           <attlist>
             <name>glossseealso</name>
-            <attribute use="optional">
+            <attribute>
               <name>otherterm</name>
               <basic name="IDREF"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="glossseealso.role.attrib"/>
@@ -6600,12 +6652,13 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="itemizedlist.attlist">
         <attlist>
           <name>itemizedlist</name>
-          <attribute use="optional">
+          <attribute>
             <name>spacing</name>
             <enumChoice>
               <enum>normal</enum>
               <enum>compact</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="mark.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -6660,7 +6713,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="orderedlist.attlist">
         <attlist>
           <name>orderedlist</name>
-          <attribute use="optional">
+          <attribute>
             <name>numeration</name>
             <enumChoice>
               <enum>arabic</enum>
@@ -6669,27 +6722,31 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <enum>upperroman</enum>
               <enum>lowerroman</enum>
             </enumChoice>
+            <implied/>
           </attribute>
-          <attribute use="optional" default="ignore">
+          <attribute>
             <name>inheritnum</name>
             <enumChoice>
               <enum>inherit</enum>
               <enum>ignore</enum>
             </enumChoice>
+            <default>ignore</default>
           </attribute>
-          <attribute use="optional" default="restarts">
+          <attribute>
             <name>continuation</name>
             <enumChoice>
               <enum>continues</enum>
               <enum>restarts</enum>
             </enumChoice>
+            <default>restarts</default>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>spacing</name>
             <enumChoice>
               <enum>normal</enum>
               <enum>compact</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="orderedlist.role.attrib"/>
@@ -6728,9 +6785,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="listitem.attlist">
         <attlist>
           <name>listitem</name>
-          <attribute use="optional">
+          <attribute>
             <name>override</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="listitem.role.attrib"/>
@@ -6945,17 +7003,19 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="simplelist.attlist">
           <attlist>
             <name>simplelist</name>
-            <attribute use="optional">
+            <attribute>
               <name>columns</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional" default="vert">
+            <attribute>
               <name>type</name>
               <enumChoice>
                 <enum>inline</enum>
                 <enum>vert</enum>
                 <enum>horiz</enum>
               </enumChoice>
+              <default>vert</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="simplelist.role.attrib"/>
@@ -7042,9 +7102,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="variablelist.attlist">
           <attlist>
             <name>variablelist</name>
-            <attribute use="optional">
+            <attribute>
               <name>termlength</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="variablelist.role.attrib"/>
@@ -7206,9 +7267,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="callout.attlist">
           <attlist>
             <name>callout</name>
-            <attribute use="required">
+            <attribute>
               <name>arearefs</name>
               <basic name="IDREFS"/>
+              <required/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="callout.role.attrib"/>
@@ -7405,7 +7467,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
         <includedSection flag="areaspec.attlist">
           <attlist>
             <name>areaspec</name>
-            <attribute use="optional">
+            <attribute>
               <name>units</name>
               <enumChoice>
                 <enum>calspair</enum>
@@ -7414,10 +7476,12 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
                 <enum>linecolumnpair</enum>
                 <enum>other</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>otherunits</name>
               <basic name="NMTOKEN"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="areaspec.role.attrib"/>
@@ -7458,7 +7522,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>area</name>
             <attributeGroupRef name="label.attrib"/>
             <attributeGroupRef name="linkends.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>units</name>
               <enumChoice>
                 <enum>calspair</enum>
@@ -7467,14 +7531,17 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
                 <enum>linecolumnpair</enum>
                 <enum>other</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>otherunits</name>
               <basic name="NMTOKEN"/>
+              <implied/>
             </attribute>
-            <attribute use="required">
+            <attribute>
               <name>coords</name>
               <basic name="CDATA"/>
+              <required/>
             </attribute>
             <attributeGroupRef name="idreq.common.attrib"/>
             <attributeGroupRef name="area.role.attrib"/>
@@ -7516,7 +7583,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
           <attlist>
             <name>areaset</name>
             <attributeGroupRef name="label.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>units</name>
               <enumChoice>
                 <enum>calspair</enum>
@@ -7525,14 +7592,17 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
                 <enum>linecolumnpair</enum>
                 <enum>other</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>otherunits</name>
               <basic name="NMTOKEN"/>
+              <implied/>
             </attribute>
-            <attribute use="required">
+            <attribute>
               <name>coords</name>
               <basic name="CDATA"/>
+              <required/>
             </attribute>
             <attributeGroupRef name="idreq.common.attrib"/>
             <attributeGroupRef name="areaset.role.attrib"/>
@@ -7624,12 +7694,13 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
           <name>literallayout</name>
           <attributeGroupRef name="width.attrib"/>
           <attributeGroupRef name="linespecific.attrib"/>
-          <attribute use="optional" default="normal">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>monospaced</enum>
               <enum>normal</enum>
             </enumChoice>
+            <default>normal</default>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="literallayout.role.attrib"/>
@@ -7858,13 +7929,15 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <includedSection flag="figure.attlist">
         <attlist>
           <name>figure</name>
-          <attribute use="optional" default="0">
+          <attribute>
             <name>float</name>
             <datatypeRef name="yesorno.attvals"/>
+            <default>0</default>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>pgwide</name>
             <datatypeRef name="yesorno.attvals"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -7909,13 +7982,15 @@ in the text (no (0) value, the default)
 -->
         <attlist>
           <name>informalfigure</name>
-          <attribute use="optional" default="0">
+          <attribute>
             <name>float</name>
             <datatypeRef name="yesorno.attvals"/>
+            <default>0</default>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>pgwide</name>
             <datatypeRef name="yesorno.attvals"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -8378,23 +8453,27 @@ in the text (no (0) value, the default)
 <!--SrcCredit: Information about the source of the image-->
       <attributeGroup name="local.objectdata.attrib"/>
       <attributeGroup name="objectdata.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>entityref</name>
           <basic name="ENTITY"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>fileref</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>format</name>
           <enumChoice>
             <enumGroupRef name="notation.class"/>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>srccredit</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="local.objectdata.attrib"/>
       </attributeGroup>
@@ -8430,29 +8509,34 @@ in the text (no (0) value, the default)
             <name>videodata</name>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="objectdata.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>width</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>depth</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>align</name>
               <enumChoice>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>scale</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>scalefit</name>
               <datatypeRef name="yesorno.attvals"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="videodata.role.attrib"/>
             <attributeGroupRef name="local.videodata.attrib"/>
@@ -8526,29 +8610,34 @@ in the text (no (0) value, the default)
             <name>imagedata</name>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="objectdata.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>width</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>depth</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>align</name>
               <enumChoice>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>scale</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>scalefit</name>
               <datatypeRef name="yesorno.attvals"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="local.imagedata.attrib"/>
             <attributeGroupRef name="imagedata.role.attrib"/>
@@ -9031,28 +9120,33 @@ of the current application.
 -->
       <overridden name="tbl.table.mdl">%tbl.table-titles.mdl; %tbl.table-main.mdl;</overridden>
       <attributeGroup name="tbl.table.att">
-        <attribute use="optional">
+        <attribute>
           <name>tabstyle</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tocentry</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>shortentry</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>orient</name>
           <enumChoice>
             <enum>port</enum>
             <enum>land</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>pgwide</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <modelGroup name="tbl.tgroup.mdl">
@@ -9083,9 +9177,10 @@ of the current application.
         </sequence>
       </modelGroup>
       <attributeGroup name="tbl.tgroup.att">
-        <attribute use="optional">
+        <attribute>
           <name>tgroupstyle</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <modelGroup name="tbl.hdft.mdl">
@@ -9144,7 +9239,7 @@ of the current application.
       </element>
       <attlist>
         <name>table</name>
-        <attribute use="optional">
+        <attribute>
           <name>frame</name>
           <enumChoice>
             <enum>top</enum>
@@ -9154,14 +9249,17 @@ of the current application.
             <enum>sides</enum>
             <enum>none</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="tbl.table.att"/>
         <attributeGroupRef name="bodyatt"/>
@@ -9173,20 +9271,23 @@ of the current application.
       </element>
       <attlist>
         <name>tgroup</name>
-        <attribute use="required">
+        <attribute>
           <name>cols</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
         <attributeGroupRef name="tbl.tgroup.att"/>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>align</name>
           <enumChoice>
             <enum>left</enum>
@@ -9195,14 +9296,17 @@ of the current application.
             <enum>justify</enum>
             <enum>char</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>char</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charoff</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9212,27 +9316,32 @@ of the current application.
       </element>
       <attlist>
         <name>colspec</name>
-        <attribute use="optional">
+        <attribute>
           <name>colnum</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colname</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colwidth</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>align</name>
           <enumChoice>
             <enum>left</enum>
@@ -9241,14 +9350,17 @@ of the current application.
             <enum>justify</enum>
             <enum>char</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>char</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charoff</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
       </attlist>
       <element>
@@ -9257,27 +9369,32 @@ of the current application.
       </element>
       <attlist>
         <name>spanspec</name>
-        <attribute use="required">
+        <attribute>
           <name>namest</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>nameend</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>spanname</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>align</name>
           <enumChoice>
             <enum>left</enum>
@@ -9286,14 +9403,17 @@ of the current application.
             <enum>justify</enum>
             <enum>char</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>char</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charoff</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
       </attlist>
       <element>
@@ -9302,13 +9422,14 @@ of the current application.
       </element>
       <attlist>
         <name>thead</name>
-        <attribute use="optional">
+        <attribute>
           <name>valign</name>
           <enumChoice>
             <enum>top</enum>
             <enum>middle</enum>
             <enum>bottom</enum>
           </enumChoice>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9318,13 +9439,14 @@ of the current application.
       </element>
       <attlist>
         <name>tfoot</name>
-        <attribute use="optional">
+        <attribute>
           <name>valign</name>
           <enumChoice>
             <enum>top</enum>
             <enum>middle</enum>
             <enum>bottom</enum>
           </enumChoice>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9338,13 +9460,14 @@ of the current application.
       </element>
       <attlist>
         <name>tbody</name>
-        <attribute use="optional">
+        <attribute>
           <name>valign</name>
           <enumChoice>
             <enum>top</enum>
             <enum>middle</enum>
             <enum>bottom</enum>
           </enumChoice>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9354,17 +9477,19 @@ of the current application.
       </element>
       <attlist>
         <name>row</name>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>valign</name>
           <enumChoice>
             <enum>top</enum>
             <enum>middle</enum>
             <enum>bottom</enum>
           </enumChoice>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9374,36 +9499,43 @@ of the current application.
       </element>
       <attlist>
         <name>entrytbl</name>
-        <attribute use="required">
+        <attribute>
           <name>cols</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
         <attributeGroupRef name="tbl.tgroup.att"/>
-        <attribute use="optional">
+        <attribute>
           <name>colname</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>spanname</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>namest</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>nameend</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>align</name>
           <enumChoice>
             <enum>left</enum>
@@ -9412,14 +9544,17 @@ of the current application.
             <enum>justify</enum>
             <enum>char</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>char</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charoff</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9431,35 +9566,42 @@ of the current application.
       </element>
       <attlist>
         <name>entry</name>
-        <attribute use="optional">
+        <attribute>
           <name>colname</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>namest</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>nameend</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>spanname</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>morerows</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>colsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rowsep</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>align</name>
           <enumChoice>
             <enum>left</enum>
@@ -9468,26 +9610,31 @@ of the current application.
             <enum>justify</enum>
             <enum>char</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>char</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charoff</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rotate</name>
           <datatypeRef name="yesorno"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>valign</name>
           <enumChoice>
             <enum>top</enum>
             <enum>middle</enum>
             <enum>bottom</enum>
           </enumChoice>
+          <implied/>
         </attribute>
         <attributeGroupRef name="secur"/>
       </attlist>
@@ -9540,7 +9687,7 @@ of the current application.
       <includedSection flag="informaltable.attlist">
         <attlist>
           <name>informaltable</name>
-          <attribute use="optional">
+          <attribute>
             <name>frame</name>
             <enumChoice>
               <enum>top</enum>
@@ -9550,14 +9697,17 @@ of the current application.
               <enum>sides</enum>
               <enum>none</enum>
             </enumChoice>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>colsep</name>
             <datatypeRef name="yesorno.attvals"/>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>rowsep</name>
             <datatypeRef name="yesorno.attvals"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.table.attribs"/>
           <attributeGroupRef name="tbl.table.att"/>
@@ -9675,13 +9825,15 @@ of the current application.
           <attlist>
             <name>cmdsynopsis</name>
             <attributeGroupRef name="label.attrib"/>
-            <attribute use="optional" default=" ">
+            <attribute>
               <name>sepchar</name>
               <basic name="CDATA"/>
+              <default> </default>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>cmdlength</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="cmdsynopsis.role.attrib"/>
@@ -9742,20 +9894,22 @@ of the current application.
         <includedSection flag="arg.attlist">
           <attlist>
             <name>arg</name>
-            <attribute use="optional" default="opt">
+            <attribute>
               <name>choice</name>
               <enumChoice>
                 <enum>opt</enum>
                 <enum>req</enum>
                 <enum>plain</enum>
               </enumChoice>
+              <default>opt</default>
             </attribute>
-            <attribute use="optional" default="norepeat">
+            <attribute>
               <name>rep</name>
               <enumChoice>
                 <enum>norepeat</enum>
                 <enum>repeat</enum>
               </enumChoice>
+              <default>norepeat</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="arg.role.attrib"/>
@@ -9818,20 +9972,22 @@ of the current application.
         <includedSection flag="group.attlist">
           <attlist>
             <name>group</name>
-            <attribute use="optional" default="opt">
+            <attribute>
               <name>choice</name>
               <enumChoice>
                 <enum>opt</enum>
                 <enum>req</enum>
                 <enum>plain</enum>
               </enumChoice>
+              <default>opt</default>
             </attribute>
-            <attribute use="optional" default="norepeat">
+            <attribute>
               <name>rep</name>
               <enumChoice>
                 <enum>norepeat</enum>
                 <enum>repeat</enum>
               </enumChoice>
+              <default>norepeat</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="group.role.attrib"/>
@@ -10343,16 +10499,18 @@ of the current application.
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="classsynopsis.role.attrib"/>
             <attributeGroupRef name="local.classsynopsis.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>language</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
-            <attribute use="optional" default="class">
+            <attribute>
               <name>class</name>
               <enumChoice>
                 <enum>class</enum>
                 <enum>interface</enum>
               </enumChoice>
+              <default>class</default>
             </attribute>
           </attlist>
 <!--end of classsynopsis.attlist-->
@@ -10988,20 +11146,22 @@ of the current application.
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="methodparam.role.attrib"/>
             <attributeGroupRef name="local.methodparam.attrib"/>
-            <attribute use="optional" default="req">
+            <attribute>
               <name>choice</name>
               <enumChoice>
                 <enum>opt</enum>
                 <enum>req</enum>
                 <enum>plain</enum>
               </enumChoice>
+              <default>req</default>
             </attribute>
-            <attribute use="optional" default="norepeat">
+            <attribute>
               <name>rep</name>
               <enumChoice>
                 <enum>norepeat</enum>
                 <enum>repeat</enum>
               </enumChoice>
+              <default>norepeat</default>
             </attribute>
           </attlist>
 <!--end of methodparam.attlist-->
@@ -12626,11 +12786,12 @@ of the current application.
         <includedSection flag="modespec.attlist">
           <attlist>
             <name>modespec</name>
-            <attribute use="optional">
+            <attribute>
               <name>application</name>
               <notation>
                 <enumGroupRef name="notation.class"/>
               </notation>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="modespec.role.attrib"/>
@@ -13022,7 +13183,7 @@ OtherCredit. -->
         <includedSection flag="productname.attlist">
           <attlist>
             <name>productname</name>
-            <attribute use="optional" default="trade">
+            <attribute>
               <name>class</name>
               <enumChoice>
                 <enum>service</enum>
@@ -13030,6 +13191,7 @@ OtherCredit. -->
                 <enum>registered</enum>
                 <enum>copyright</enum>
               </enumChoice>
+              <default>trade</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="productname.role.attrib"/>
@@ -13634,12 +13796,13 @@ OtherCredit. -->
       <includedSection flag="application.attlist">
         <attlist>
           <name>application</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>hardware</enum>
               <enum>software</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="moreinfo.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -13819,7 +13982,7 @@ OtherCredit. -->
       <includedSection flag="database.attlist">
         <attlist>
           <name>database</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>name</enum>
@@ -13829,6 +13992,7 @@ OtherCredit. -->
               <enum>key2</enum>
               <enum>record</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="moreinfo.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -14039,7 +14203,7 @@ OtherCredit. -->
       <includedSection flag="filename.attlist">
         <attlist>
           <name>filename</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>headerfile</enum>
@@ -14048,10 +14212,12 @@ OtherCredit. -->
               <enum>directory</enum>
               <enum>symlink</enum>
             </enumChoice>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>path</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="moreinfo.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -14663,11 +14829,12 @@ OtherCredit. -->
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="constant.role.attrib"/>
           <attributeGroupRef name="local.constant.attrib"/>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>limit</enum>
             </enumChoice>
+            <implied/>
           </attribute>
         </attlist>
 <!--end of constant.attlist-->
@@ -14769,7 +14936,7 @@ OtherCredit. -->
       <includedSection flag="medialabel.attlist">
         <attlist>
           <name>medialabel</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>cartridge</enum>
@@ -14777,6 +14944,7 @@ OtherCredit. -->
               <enum>disk</enum>
               <enum>tape</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="medialabel.role.attrib"/>
@@ -15070,13 +15238,14 @@ OtherCredit. -->
       <includedSection flag="parameter.attlist">
         <attlist>
           <name>parameter</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>command</enum>
               <enum>function</enum>
               <enum>option</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="moreinfo.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -15199,7 +15368,7 @@ OtherCredit. -->
       <includedSection flag="replaceable.attlist">
         <attlist>
           <name>replaceable</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>command</enum>
@@ -15207,6 +15376,7 @@ OtherCredit. -->
               <enum>option</enum>
               <enum>parameter</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="replaceable.role.attrib"/>
@@ -15277,7 +15447,7 @@ OtherCredit. -->
       <includedSection flag="sgmltag.attlist">
         <attlist>
           <name>sgmltag</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>attribute</enum>
@@ -15293,6 +15463,7 @@ OtherCredit. -->
               <enum>starttag</enum>
               <enum>sgmlcomment</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="sgmltag.role.attrib"/>
@@ -15397,11 +15568,12 @@ OtherCredit. -->
       <includedSection flag="symbol.attlist">
         <attlist>
           <name>symbol</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>limit</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="symbol.role.attrib"/>
@@ -15443,7 +15615,7 @@ OtherCredit. -->
       <includedSection flag="systemitem.attlist">
         <attlist>
           <name>systemitem</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>constant</enum>
@@ -15455,6 +15627,7 @@ OtherCredit. -->
               <enum>systemname</enum>
               <enum>username</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="moreinfo.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -15807,7 +15980,7 @@ OtherCredit. -->
       <includedSection flag="citetitle.attlist">
         <attlist>
           <name>citetitle</name>
-          <attribute use="optional">
+          <attribute>
             <name>pubwork</name>
             <enumChoice>
               <enum>article</enum>
@@ -15821,6 +15994,7 @@ OtherCredit. -->
               <enum>set</enum>
               <enum>manuscript</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="citetitle.role.attrib"/>
@@ -15964,9 +16138,10 @@ OtherCredit. -->
         <attlist>
           <name>glossterm</name>
           <attributeGroupRef name="linkend.attrib"/>
-          <attribute use="optional">
+          <attribute>
             <name>baseform</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="glossterm.role.attrib"/>
@@ -16184,7 +16359,7 @@ OtherCredit. -->
       <includedSection flag="trademark.attlist">
         <attlist>
           <name>trademark</name>
-          <attribute use="optional" default="trade">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>service</enum>
@@ -16192,6 +16367,7 @@ OtherCredit. -->
               <enum>registered</enum>
               <enum>copyright</enum>
             </enumChoice>
+            <default>trade</default>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="trademark.role.attrib"/>
@@ -16267,14 +16443,16 @@ OtherCredit. -->
       <includedSection flag="link.attlist">
         <attlist>
           <name>link</name>
-          <attribute use="optional">
+          <attribute>
             <name>endterm</name>
             <basic name="IDREF"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="linkendreq.attrib"/>
-          <attribute use="optional">
+          <attribute>
             <name>type</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="link.role.attrib"/>
@@ -16315,21 +16493,25 @@ OtherCredit. -->
       <includedSection flag="olink.attlist">
         <attlist>
           <name>olink</name>
-          <attribute use="optional">
+          <attribute>
             <name>targetdocent</name>
             <basic name="ENTITY"/>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>linkmode</name>
             <basic name="IDREF"/>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>localinfo</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>type</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="olink.role.attrib"/>
@@ -16367,13 +16549,15 @@ OtherCredit. -->
       <includedSection flag="ulink.attlist">
         <attlist>
           <name>ulink</name>
-          <attribute use="required">
+          <attribute>
             <name>url</name>
             <basic name="CDATA"/>
+            <required/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>type</name>
             <basic name="CDATA"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="common.attrib"/>
           <attributeGroupRef name="ulink.role.attrib"/>
@@ -16446,9 +16630,10 @@ OtherCredit. -->
       <includedSection flag="xref.attlist">
         <attlist>
           <name>xref</name>
-          <attribute use="optional">
+          <attribute>
             <name>endterm</name>
             <basic name="IDREF"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="linkendreq.attrib"/>
           <attributeGroupRef name="common.attrib"/>
@@ -16630,36 +16815,41 @@ OtherCredit. -->
           <attlist>
             <name>indexterm</name>
             <attributeGroupRef name="pagenum.attrib"/>
-            <attribute use="optional">
+            <attribute>
               <name>scope</name>
               <enumChoice>
                 <enum>all</enum>
                 <enum>global</enum>
                 <enum>local</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional" default="normal">
+            <attribute>
               <name>significance</name>
               <enumChoice>
                 <enum>preferred</enum>
                 <enum>normal</enum>
               </enumChoice>
+              <default>normal</default>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>class</name>
               <enumChoice>
                 <enum>singular</enum>
                 <enum>startofrange</enum>
                 <enum>endofrange</enum>
               </enumChoice>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>startref</name>
               <basic name="IDREF"/>
+              <implied/>
             </attribute>
-            <attribute use="optional">
+            <attribute>
               <name>zone</name>
               <basic name="IDREFS"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="indexterm.role.attrib"/>
@@ -16697,9 +16887,10 @@ OtherCredit. -->
         <includedSection flag="primary.attlist">
           <attlist>
             <name>primary</name>
-            <attribute use="optional">
+            <attribute>
               <name>sortas</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="primsecter.role.attrib"/>
@@ -16727,9 +16918,10 @@ OtherCredit. -->
         <includedSection flag="secondary.attlist">
           <attlist>
             <name>secondary</name>
-            <attribute use="optional">
+            <attribute>
               <name>sortas</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="primsecter.role.attrib"/>
@@ -16757,9 +16949,10 @@ OtherCredit. -->
         <includedSection flag="tertiary.attlist">
           <attlist>
             <name>tertiary</name>
-            <attribute use="optional">
+            <attribute>
               <name>sortas</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="primsecter.role.attrib"/>
@@ -17330,9 +17523,10 @@ OtherCredit. -->
         <includedSection flag="set.attlist">
           <attlist>
             <name>set</name>
-            <attribute use="optional">
+            <attribute>
               <name>fpi</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="status.attrib"/>
             <attributeGroupRef name="common.attrib"/>
@@ -17394,9 +17588,10 @@ OtherCredit. -->
         <includedSection flag="setinfo.attlist">
           <attlist>
             <name>setinfo</name>
-            <attribute use="optional">
+            <attribute>
               <name>contents</name>
               <basic name="IDREFS"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="setinfo.role.attrib"/>
@@ -17483,9 +17678,10 @@ OtherCredit. -->
         <includedSection flag="book.attlist">
           <attlist>
             <name>book</name>
-            <attribute use="optional">
+            <attribute>
               <name>fpi</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
             <attributeGroupRef name="status.attrib"/>
@@ -17549,9 +17745,10 @@ OtherCredit. -->
         <includedSection flag="bookinfo.attlist">
           <attlist>
             <name>bookinfo</name>
-            <attribute use="optional">
+            <attribute>
               <name>contents</name>
               <basic name="IDREFS"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="bookinfo.role.attrib"/>
@@ -18191,9 +18388,10 @@ OtherCredit. -->
         <includedSection flag="lotentry.attlist">
           <attlist>
             <name>lotentry</name>
-            <attribute use="optional">
+            <attribute>
               <name>srccredit</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="pagenum.attrib"/>
             <attributeGroupRef name="common.attrib"/>
@@ -19775,7 +19973,7 @@ change will not be made after all. -->
       <includedSection flag="sect1.attlist">
         <attlist>
           <name>sect1</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>sect2</enum>
@@ -19783,6 +19981,7 @@ change will not be made after all. -->
               <enum>sect4</enum>
               <enum>sect5</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="status.attrib"/>
@@ -19868,7 +20067,7 @@ change will not be made after all. -->
       <includedSection flag="sect2.attlist">
         <attlist>
           <name>sect2</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>sect1</enum>
@@ -19876,6 +20075,7 @@ change will not be made after all. -->
               <enum>sect4</enum>
               <enum>sect5</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="status.attrib"/>
@@ -19961,7 +20161,7 @@ change will not be made after all. -->
       <includedSection flag="sect3.attlist">
         <attlist>
           <name>sect3</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>sect1</enum>
@@ -19969,6 +20169,7 @@ change will not be made after all. -->
               <enum>sect4</enum>
               <enum>sect5</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="status.attrib"/>
@@ -20054,7 +20255,7 @@ change will not be made after all. -->
       <includedSection flag="sect4.attlist">
         <attlist>
           <name>sect4</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>sect1</enum>
@@ -20062,6 +20263,7 @@ change will not be made after all. -->
               <enum>sect3</enum>
               <enum>sect5</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="status.attrib"/>
@@ -20137,7 +20339,7 @@ change will not be made after all. -->
       <includedSection flag="sect5.attlist">
         <attlist>
           <name>sect5</name>
-          <attribute use="optional">
+          <attribute>
             <name>renderas</name>
             <enumChoice>
               <enum>sect1</enum>
@@ -20145,6 +20347,7 @@ change will not be made after all. -->
               <enum>sect3</enum>
               <enum>sect4</enum>
             </enumChoice>
+            <implied/>
           </attribute>
           <attributeGroupRef name="label.attrib"/>
           <attributeGroupRef name="status.attrib"/>
@@ -20969,9 +21172,10 @@ change will not be made after all. -->
         <includedSection flag="refmiscinfo.attlist">
           <attlist>
             <name>refmiscinfo</name>
-            <attribute use="optional">
+            <attribute>
               <name>class</name>
               <basic name="CDATA"/>
+              <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
             <attributeGroupRef name="refmiscinfo.role.attrib"/>
@@ -21454,7 +21658,7 @@ change will not be made after all. -->
       <includedSection flag="article.attlist">
         <attlist>
           <name>article</name>
-          <attribute use="optional">
+          <attribute>
             <name>class</name>
             <enumChoice>
               <enum>journalarticle</enum>
@@ -21464,10 +21668,12 @@ change will not be made after all. -->
               <enum>specification</enum>
               <enum>faq</enum>
             </enumChoice>
+            <implied/>
           </attribute>
-          <attribute use="optional">
+          <attribute>
             <name>parentbook</name>
             <basic name="IDREF"/>
+            <implied/>
           </attribute>
           <attributeGroupRef name="status.attrib"/>
           <attributeGroupRef name="common.attrib"/>

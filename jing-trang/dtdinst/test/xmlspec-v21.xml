@@ -629,9 +629,10 @@ MAINTAINER:
         Optionally provides a sorting or indexing key, for cases when
         the element content is inappropriate for this purpose. -->
   <attributeGroup name="key.att">
-    <attribute use="optional">
+    <attribute>
       <name>key</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attributeGroup>
 <!--    def attribute:
@@ -640,9 +641,10 @@ MAINTAINER:
         def attributes, and %def-req.att; is for required def
         attributes. -->
   <attributeGroup name="def-req.att">
-    <attribute use="required">
+    <attribute>
       <name>def</name>
       <basic name="IDREF"/>
+      <required/>
     </attribute>
   </attributeGroup>
 <!--    ref attribute:
@@ -651,9 +653,10 @@ MAINTAINER:
         ref attributes, and %ref-req.att; is for required ref
         attributes. -->
   <attributeGroup name="ref-req.att">
-    <attribute use="required">
+    <attribute>
       <name>ref</name>
       <basic name="IDREF"/>
+      <required/>
     </attribute>
   </attributeGroup>
 <!--
@@ -671,13 +674,15 @@ MAINTAINER:
         xlink:type identifies an element as an XLink "simple" linking
         element. -->
   <attributeGroup name="simple-xlink.att">
-    <attribute use="required" default="http://www.w3.org/1999/xlink">
+    <attribute>
       <name>xmlns:xlink</name>
       <basic name="CDATA"/>
+      <fixed>http://www.w3.org/1999/xlink</fixed>
     </attribute>
-    <attribute use="required" default="simple">
+    <attribute>
       <name>xlink:type</name>
       <basic name="CDATA"/>
+      <fixed>simple</fixed>
     </attribute>
   </attributeGroup>
 <!--    href attributes:
@@ -688,15 +693,17 @@ MAINTAINER:
         name should really be xlink:href, but is kept without the
         prefix for now in order to be backwards-compatible. -->
   <attributeGroup name="href.att">
-    <attribute use="optional">
+    <attribute>
       <name>href</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="href-req.att">
-    <attribute use="required">
+    <attribute>
       <name>href</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attributeGroup>
 <!--    xlink:show and xlink:actuate attributes:
@@ -704,33 +711,39 @@ MAINTAINER:
         about how to handle traversal to resource indicated by an
         href locator. -->
   <attributeGroup name="auto-embed.att">
-    <attribute use="required" default="embed">
+    <attribute>
       <name>xlink:show</name>
       <basic name="CDATA"/>
+      <fixed>embed</fixed>
     </attribute>
-    <attribute use="required" default="onLoad">
+    <attribute>
       <name>xlink:actuate</name>
       <basic name="CDATA"/>
+      <fixed>onLoad</fixed>
     </attribute>
   </attributeGroup>
   <attributeGroup name="user-replace.att">
-    <attribute use="required" default="replace">
+    <attribute>
       <name>xlink:show</name>
       <basic name="CDATA"/>
+      <fixed>replace</fixed>
     </attribute>
-    <attribute use="required" default="onRequest">
+    <attribute>
       <name>xlink:actuate</name>
       <basic name="CDATA"/>
+      <fixed>onRequest</fixed>
     </attribute>
   </attributeGroup>
   <attributeGroup name="user-new.att">
-    <attribute use="required" default="new">
+    <attribute>
       <name>xlink:show</name>
       <basic name="CDATA"/>
+      <fixed>new</fixed>
     </attribute>
-    <attribute use="required" default="onRequest">
+    <attribute>
       <name>xlink:actuate</name>
       <basic name="CDATA"/>
+      <fixed>onRequest</fixed>
     </attribute>
   </attributeGroup>
 <!--    xml:space attribute:
@@ -738,12 +751,13 @@ MAINTAINER:
         formatter or other application should retain, as appropriate
         to its function. -->
   <attributeGroup name="xmlspace.att">
-    <attribute use="required" default="preserve">
+    <attribute>
       <name>xml:space</name>
       <enumChoice>
         <enum>default</enum>
         <enum>preserve</enum>
       </enumChoice>
+      <fixed>preserve</fixed>
     </attribute>
   </attributeGroup>
 <!--
@@ -755,7 +769,7 @@ MAINTAINER:
         its parent.  If the root element has no value supplied,
         assume "off". -->
   <attributeGroup name="diff.att">
-    <attribute use="optional">
+    <attribute>
       <name>diff</name>
       <enumChoice>
         <enum>chg</enum>
@@ -763,15 +777,17 @@ MAINTAINER:
         <enum>del</enum>
         <enum>off</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attributeGroup>
 <!--    role attribute:
         Extends the useful life of the DTD by allowing authors to
         make a subtype of any element.  No default. -->
   <attributeGroup name="role.att">
-    <attribute use="optional">
+    <attribute>
       <name>role</name>
       <basic name="NMTOKEN"/>
+      <implied/>
     </attribute>
   </attributeGroup>
 <!--    Common attributes:
@@ -781,17 +797,19 @@ MAINTAINER:
         %common-idreq.att; is for common attributes where the
         ID is required. -->
   <attributeGroup name="common.att">
-    <attribute use="optional">
+    <attribute>
       <name>id</name>
       <basic name="ID"/>
+      <implied/>
     </attribute>
     <attributeGroupRef name="role.att"/>
     <attributeGroupRef name="diff.att"/>
   </attributeGroup>
   <attributeGroup name="common-idreq.att">
-    <attribute use="required">
+    <attribute>
       <name>id</name>
       <basic name="ID"/>
+      <required/>
     </attribute>
     <attributeGroupRef name="role.att"/>
     <attributeGroupRef name="diff.att"/>
@@ -836,7 +854,7 @@ MAINTAINER:
   <attlist>
     <name>spec</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>w3c-doctype</name>
       <enumChoice>
         <enum>cr</enum>
@@ -848,18 +866,21 @@ MAINTAINER:
         <enum>rec</enum>
         <enum>wd</enum>
       </enumChoice>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>other-doctype</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>status</name>
       <enumChoice>
         <enum>int-review</enum>
         <enum>ext-review</enum>
         <enum>final</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attlist>
   <element>
@@ -1380,12 +1401,13 @@ MAINTAINER:
   <attlist>
     <name>ulist</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>spacing</name>
       <enumChoice>
         <enum>normal</enum>
         <enum>compact</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attlist>
 <!--    olist: Ordered list, typically numbered. -->
@@ -1404,12 +1426,13 @@ MAINTAINER:
   <attlist>
     <name>olist</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>spacing</name>
       <enumChoice>
         <enum>normal</enum>
         <enum>compact</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attlist>
   <element>
@@ -1626,18 +1649,20 @@ MAINTAINER:
         that the issue is still open. -->
   <attlist>
     <name>issue</name>
-    <attribute use="required">
+    <attribute>
       <name>id</name>
       <basic name="ID"/>
+      <required/>
     </attribute>
     <attributeGroupRef name="role.att"/>
     <attributeGroupRef name="diff.att"/>
-    <attribute use="optional" default="open">
+    <attribute>
       <name>status</name>
       <enumChoice>
         <enum>open</enum>
         <enum>closed</enum>
       </enumChoice>
+      <default>open</default>
     </attribute>
   </attlist>
   <element>
@@ -1722,9 +1747,10 @@ MAINTAINER:
   <attlist>
     <name>constraintnote</name>
     <attributeGroupRef name="common-idreq.att"/>
-    <attribute use="required">
+    <attribute>
       <name>type</name>
       <basic name="NMTOKEN"/>
+      <required/>
     </attribute>
   </attlist>
 <!-- ............................................................... -->
@@ -1763,14 +1789,16 @@ MAINTAINER:
     <name>graphic</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="simple-xlink.att"/>
-    <attribute use="required">
+    <attribute>
       <name>source</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
     <attributeGroupRef name="auto-embed.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>alt</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
     <attributeGroupRef name="local.graphic.att"/>
   </attlist>
@@ -1789,13 +1817,15 @@ MAINTAINER:
   <attlist>
     <name>proto</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="required">
+    <attribute>
       <name>name</name>
       <basic name="NMTOKEN"/>
+      <required/>
     </attribute>
-    <attribute use="required">
+    <attribute>
       <name>return-type</name>
       <datatypeRef name="argtypes"/>
+      <required/>
     </attribute>
   </attlist>
   <element>
@@ -1805,16 +1835,18 @@ MAINTAINER:
   <attlist>
     <name>arg</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="required">
+    <attribute>
       <name>type</name>
       <datatypeRef name="argtypes"/>
+      <required/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>occur</name>
       <enumChoice>
         <enum>opt</enum>
         <enum>req</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attlist>
 <!--
@@ -1881,16 +1913,18 @@ MAINTAINER:
   <attlist>
     <name>scrap</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>lang</name>
       <basic name="IDREF"/>
+      <implied/>
     </attribute>
-    <attribute use="optional" default="show">
+    <attribute>
       <name>headstyle</name>
       <enumChoice>
         <enum>show</enum>
         <enum>suppress</enum>
       </enumChoice>
+      <default>show</default>
     </attribute>
   </attlist>
 <!--    prodgroup: Sub-collection of productions, needed for
@@ -1910,25 +1944,30 @@ MAINTAINER:
   <attlist>
     <name>prodgroup</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>pcw1</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>pcw2</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>pcw3</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>pcw4</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>pcw5</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attlist>
 <!--    prod: EBNF language production. -->
@@ -2119,7 +2158,7 @@ MAINTAINER:
 #                   Removed htbody in favor of tbody.
 -->
   <attributeGroup name="cellhalign.att">
-    <attribute use="optional">
+    <attribute>
       <name>align</name>
       <enumChoice>
         <enum>left</enum>
@@ -2128,18 +2167,21 @@ MAINTAINER:
         <enum>justify</enum>
         <enum>char</enum>
       </enumChoice>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>char</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>charoff</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="cellvalign.att">
-    <attribute use="optional">
+    <attribute>
       <name>valign</name>
       <enumChoice>
         <enum>top</enum>
@@ -2147,22 +2189,26 @@ MAINTAINER:
         <enum>bottom</enum>
         <enum>baseline</enum>
       </enumChoice>
+      <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="thtd.att">
-    <attribute use="optional">
+    <attribute>
       <name>abbr</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>axis</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>headers</name>
       <basic name="IDREFS"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>scope</name>
       <enumChoice>
         <enum>row</enum>
@@ -2170,26 +2216,31 @@ MAINTAINER:
         <enum>rowgroup</enum>
         <enum>colgroup</enum>
       </enumChoice>
+      <implied/>
     </attribute>
-    <attribute use="optional" default="1">
+    <attribute>
       <name>rowspan</name>
       <basic name="NMTOKEN"/>
+      <default>1</default>
     </attribute>
-    <attribute use="optional" default="1">
+    <attribute>
       <name>colspan</name>
       <basic name="NMTOKEN"/>
+      <default>1</default>
     </attribute>
   </attributeGroup>
   <attributeGroup name="width.att">
-    <attribute use="optional">
+    <attribute>
       <name>width</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="span.att">
-    <attribute use="optional" default="1">
+    <attribute>
       <name>span</name>
       <basic name="NMTOKEN"/>
+      <default>1</default>
     </attribute>
   </attributeGroup>
 <!--    table: HTML-based geometric table model. -->
@@ -2234,15 +2285,17 @@ MAINTAINER:
     <name>table</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="width.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>summary</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>border</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>frame</name>
       <enumChoice>
         <enum>void</enum>
@@ -2255,8 +2308,9 @@ MAINTAINER:
         <enum>box</enum>
         <enum>border</enum>
       </enumChoice>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>rules</name>
       <enumChoice>
         <enum>none</enum>
@@ -2265,14 +2319,17 @@ MAINTAINER:
         <enum>cols</enum>
         <enum>all</enum>
       </enumChoice>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>cellspacing</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
-    <attribute use="optional">
+    <attribute>
       <name>cellpadding</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attlist>
   <element>
@@ -2520,17 +2577,19 @@ typedef, case, component                x
 <!--    name attribute:
         Provides a name.  Required. -->
   <attributeGroup name="idl-name.att">
-    <attribute use="required">
+    <attribute>
       <name>name</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attributeGroup>
 <!--    type attribute:
         Provides a type.  Required. -->
   <attributeGroup name="idl-type.att">
-    <attribute use="required">
+    <attribute>
       <name>type</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attributeGroup>
 <!-- ............................................................... -->
@@ -2591,9 +2650,10 @@ typedef, case, component                x
     <name>interface</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>inherits</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attlist>
 <!--    module: Definition of a module. -->
@@ -2621,9 +2681,10 @@ typedef, case, component                x
   <attlist>
     <name>reference</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="required">
+    <attribute>
       <name>declaration</name>
       <basic name="IDREF"/>
+      <required/>
     </attribute>
   </attlist>
 <!--    typedef: Definition of a named type. -->
@@ -2640,9 +2701,10 @@ typedef, case, component                x
     <name>typedef</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>array.size</name>
       <basic name="NMTOKEN"/>
+      <implied/>
     </attribute>
   </attlist>
 <!--    struct: Declaration of a struct type. -->
@@ -2692,9 +2754,10 @@ typedef, case, component                x
     <name>union</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
-    <attribute use="required">
+    <attribute>
       <name>switch.type</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attlist>
   <element>
@@ -2709,9 +2772,10 @@ typedef, case, component                x
   <attlist>
     <name>case</name>
     <attributeGroupRef name="common.att"/>
-    <attribute use="required">
+    <attribute>
       <name>labels</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attlist>
 <!--    enum: Declaration of an enum type. -->
@@ -2757,9 +2821,10 @@ typedef, case, component                x
     <name>sequence</name>
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-type.att"/>
-    <attribute use="optional">
+    <attribute>
       <name>size</name>
       <basic name="NMTOKEN"/>
+      <implied/>
     </attribute>
   </attlist>
 <!--    constant: Declaration of a named constant. -->
@@ -2774,9 +2839,10 @@ typedef, case, component                x
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
     <attributeGroupRef name="idl-type.att"/>
-    <attribute use="required">
+    <attribute>
       <name>value</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attlist>
 <!--    exception: Declaration of an exception. -->
@@ -2811,12 +2877,13 @@ typedef, case, component                x
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
     <attributeGroupRef name="idl-type.att"/>
-    <attribute use="optional" default="no">
+    <attribute>
       <name>readonly</name>
       <enumChoice>
         <enum>yes</enum>
         <enum>no</enum>
       </enumChoice>
+      <default>no</default>
     </attribute>
   </attlist>
 <!--    method: Declaration of a method. -->
@@ -2865,13 +2932,14 @@ typedef, case, component                x
     <attributeGroupRef name="common.att"/>
     <attributeGroupRef name="idl-name.att"/>
     <attributeGroupRef name="idl-type.att"/>
-    <attribute use="optional" default="inout">
+    <attribute>
       <name>attr</name>
       <enumChoice>
         <enum>in</enum>
         <enum>out</enum>
         <enum>inout</enum>
       </enumChoice>
+      <default>inout</default>
     </attribute>
   </attlist>
   <element>
@@ -3196,9 +3264,10 @@ typedef, case, component                x
   <attlist>
     <name>termdef</name>
     <attributeGroupRef name="common-idreq.att"/>
-    <attribute use="required">
+    <attribute>
       <name>term</name>
       <basic name="CDATA"/>
+      <required/>
     </attribute>
   </attlist>
 <!--    termref: Mention of a term, along with a link to the

@@ -7,25 +7,31 @@
   </element>
   <attlist>
     <name>doc</name>
-    <attribute use="optional" default="/[val]/val/">
+    <attribute>
       <name>att1</name>
       <basic name="CDATA"/>
+      <default>/[val]/val/</default>
     </attribute>
-    <attribute use="optional" default=" ">
+    <attribute>
       <name>att2</name>
       <basic name="CDATA"/>
+      <default> </default>
     </attribute>
-    <attribute use="optional" default=" ">
+    <attribute>
       <name>att3</name>
       <basic name="CDATA"/>
+      <default> </default>
     </attribute>
-    <attribute use="optional" default="&#xD;&#xA;&#x9; ">
+    <attribute>
       <name>att4</name>
       <basic name="CDATA"/>
+      <default>&#xD;
+	 </default>
     </attribute>
-    <attribute use="required" default="val">
+    <attribute>
       <name>att5</name>
       <basic name="CDATA"/>
+      <fixed>val</fixed>
     </attribute>
   </attlist>
 </doctype>

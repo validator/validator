@@ -5,9 +5,10 @@
   </element>
   <attlist>
     <name>doc</name>
-    <attribute use="optional">
+    <attribute>
       <name>att</name>
       <basic name="CDATA"/>
+      <implied/>
     </attribute>
   </attlist>
 </doctype>

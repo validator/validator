@@ -109,9 +109,10 @@
      Common Attributes module in order to be included in %Core.attrib;.
 -->
     <attributeGroup name="style.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>style</name>
         <basic name="CDATA"/>
+        <implied/>
       </attribute>
     </attributeGroup>
     <attributeGroup name="Core.extra.attrib">
@@ -424,9 +425,10 @@
 &gt;
 </ignoredSection>
       <attributeGroup name="XHTML.xmlns.attrib">
-        <attribute use="required" default="http://www.w3.org/1999/xhtml">
+        <attribute>
           <name>xmlns</name>
           <datatypeRef name="URI.datatype"/>
+          <fixed>http://www.w3.org/1999/xhtml</fixed>
         </attribute>
         <attributeGroupRef name="XLINK.xmlns.attrib"/>
       </attributeGroup>
@@ -751,182 +753,215 @@
      for element type names (eg., %a.qname;) are redeclared.
 -->
       <attributeGroup name="Events.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>onclick</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>ondblclick</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onmousedown</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onmouseup</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onmouseover</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onmousemove</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onmouseout</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onkeypress</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onkeydown</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onkeyup</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attributeGroup>
 <!-- additional attributes on anchor element
 -->
       <attlist>
         <nameSpecRef name="a.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on form element
 -->
       <attlist>
         <nameSpecRef name="form.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onsubmit</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onreset</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on label element
 -->
       <attlist>
         <nameSpecRef name="label.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on input element
 -->
       <attlist>
         <nameSpecRef name="input.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onselect</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on select element
 -->
       <attlist>
         <nameSpecRef name="select.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on textarea element
 -->
       <attlist>
         <nameSpecRef name="textarea.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onselect</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on button element
 -->
       <attlist>
         <nameSpecRef name="button.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on body element
 -->
       <attlist>
         <nameSpecRef name="body.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onload</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onunload</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- additional attributes on area element
 -->
       <attlist>
         <nameSpecRef name="area.qname"/>
-        <attribute use="optional">
+        <attribute>
           <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of xhtml-events-1.mod -->
@@ -957,21 +992,24 @@
      %NS.decl.attrib; is declared in the XHTML Qname module.
 -->
       <attributeGroup name="id.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>id</name>
           <basic name="ID"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <attributeGroup name="class.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>class</name>
           <basic name="NMTOKENS"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <attributeGroup name="title.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>title</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <overridden name="Core.extra.attrib"></overridden>
@@ -983,19 +1021,21 @@
         <attributeGroupRef name="Core.extra.attrib"/>
       </attributeGroup>
       <attributeGroup name="lang.attrib">
-        <attribute use="optional">
+        <attribute>
           <name>xml:lang</name>
           <datatypeRef name="LanguageCode.datatype"/>
+          <implied/>
         </attribute>
       </attributeGroup>
       <includedSection flag="XHTML.bidi">
         <attributeGroup name="dir.attrib">
-          <attribute use="optional">
+          <attribute>
             <name>dir</name>
             <enumChoice>
               <enum>ltr</enum>
               <enum>rtl</enum>
             </enumChoice>
+            <implied/>
           </attribute>
         </attributeGroup>
         <attributeGroup name="I18n.attrib">
@@ -2621,9 +2661,10 @@
         <attlist>
           <nameSpecRef name="q.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute use="optional">
+          <attribute>
             <name>cite</name>
             <datatypeRef name="URI.datatype"/>
+            <implied/>
           </attribute>
         </attlist>
 <!-- end of q.attlist -->
@@ -2883,9 +2924,10 @@
         <attlist>
           <nameSpecRef name="blockquote.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute use="optional">
+          <attribute>
             <name>cite</name>
             <datatypeRef name="URI.datatype"/>
+            <implied/>
           </attribute>
         </attlist>
 <!-- end of blockquote.attlist -->
@@ -2935,11 +2977,12 @@
         <attlist>
           <nameSpecRef name="pre.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute use="required" default="preserve">
+          <attribute>
             <name>xml:space</name>
             <enumChoice>
               <enum>preserve</enum>
             </enumChoice>
+            <fixed>preserve</fixed>
           </attribute>
         </attlist>
 <!-- end of pre.attlist -->
@@ -3140,37 +3183,45 @@
       <attlist>
         <nameSpecRef name="a.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>href</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>hreflang</name>
           <datatypeRef name="LanguageCode.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rel</name>
           <datatypeRef name="LinkTypes.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rev</name>
           <datatypeRef name="LinkTypes.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of a.attlist -->
@@ -3445,13 +3496,15 @@
       <attlist>
         <nameSpecRef name="ins.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>cite</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>datetime</name>
           <datatypeRef name="Datetime.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of ins.attlist -->
@@ -3483,13 +3536,15 @@
       <attlist>
         <nameSpecRef name="del.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>cite</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>datetime</name>
           <datatypeRef name="Datetime.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of del.attlist -->
@@ -3553,16 +3608,18 @@
       <attlist>
         <nameSpecRef name="bdo.qname"/>
         <attributeGroupRef name="Core.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>xml:lang</name>
           <datatypeRef name="LanguageCode.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>dir</name>
           <enumChoice>
             <enum>ltr</enum>
             <enum>rtl</enum>
           </enumChoice>
+          <required/>
         </attribute>
       </attlist>
     </includedSection>
@@ -3789,9 +3846,10 @@
       <includedSection flag="rt.attlist">
         <attlist>
           <nameSpecRef name="rt.qname"/>
-          <attribute use="optional" default="1">
+          <attribute>
             <name>rbspan</name>
             <datatypeRef name="Number.datatype"/>
+            <default>1</default>
           </attribute>
         </attlist>
 <!-- end of rt.attlist -->
@@ -4278,33 +4336,40 @@
       <attlist>
         <nameSpecRef name="link.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>href</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>hreflang</name>
           <datatypeRef name="LanguageCode.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rel</name>
           <datatypeRef name="LinkTypes.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>rev</name>
           <datatypeRef name="LinkTypes.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>media</name>
           <datatypeRef name="MediaDesc.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of link.attlist -->
@@ -4362,21 +4427,25 @@
         <nameSpecRef name="meta.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>http-equiv</name>
           <basic name="NMTOKEN"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="NMTOKEN"/>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>content</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>scheme</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of meta.attlist -->
@@ -4437,9 +4506,10 @@
       <attlist>
         <nameSpecRef name="base.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>href</name>
           <datatypeRef name="URI.datatype"/>
+          <required/>
         </attribute>
       </attlist>
 <!-- end of base.attlist -->
@@ -4530,29 +4600,34 @@
       <attlist>
         <nameSpecRef name="script.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>src</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>defer</name>
           <enumChoice>
             <enum>defer</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="required" default="preserve">
+        <attribute>
           <name>xml:space</name>
           <enumChoice>
             <enum>preserve</enum>
           </enumChoice>
+          <fixed>preserve</fixed>
         </attribute>
       </attlist>
 <!-- end of script.attlist -->
@@ -4638,19 +4713,22 @@
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="title.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>media</name>
           <datatypeRef name="MediaDesc.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="required" default="preserve">
+        <attribute>
           <name>xml:space</name>
           <enumChoice>
             <enum>preserve</enum>
           </enumChoice>
+          <fixed>preserve</fixed>
         </attribute>
       </attlist>
 <!-- end of style.attlist -->
@@ -4710,25 +4788,30 @@
       <attlist>
         <nameSpecRef name="img.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>src</name>
           <datatypeRef name="URI.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>alt</name>
           <datatypeRef name="Text.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>longdesc</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>height</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>width</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of img.attlist -->
@@ -4799,35 +4882,42 @@
       <attlist>
         <nameSpecRef name="area.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>href</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional" default="rect">
+        <attribute>
           <name>shape</name>
           <datatypeRef name="Shape.datatype"/>
+          <default>rect</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>coords</name>
           <datatypeRef name="Coords.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>nohref</name>
           <enumChoice>
             <enum>nohref</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>alt</name>
           <datatypeRef name="Text.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of area.attlist -->
@@ -4837,13 +4927,15 @@
 -->
     <attlist>
       <nameSpecRef name="a.qname"/>
-      <attribute use="optional" default="rect">
+      <attribute>
         <name>shape</name>
         <datatypeRef name="Shape.datatype"/>
+        <default>rect</default>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>coords</name>
         <datatypeRef name="Coords.datatype"/>
+        <implied/>
       </attribute>
     </attlist>
 <!-- modify img attribute definition list
@@ -4851,9 +4943,10 @@
 -->
     <attlist>
       <nameSpecRef name="img.qname"/>
-      <attribute use="optional">
+      <attribute>
         <name>usemap</name>
         <basic name="IDREF"/>
+        <implied/>
       </attribute>
     </attlist>
 <!-- modify form input attribute definition list
@@ -4861,9 +4954,10 @@
 -->
     <attlist>
       <nameSpecRef name="input.qname"/>
-      <attribute use="optional">
+      <attribute>
         <name>usemap</name>
         <basic name="IDREF"/>
+        <implied/>
       </attribute>
     </attlist>
 <!-- modify object attribute definition list
@@ -4871,9 +4965,10 @@
 -->
     <attlist>
       <nameSpecRef name="object.qname"/>
-      <attribute use="optional">
+      <attribute>
         <name>usemap</name>
         <basic name="IDREF"/>
+        <implied/>
       </attribute>
     </attlist>
 <!-- 'usemap' points to the 'id' attribute of a <map> element,
@@ -4912,9 +5007,10 @@
       <attlist>
         <nameSpecRef name="map.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>id</name>
           <basic name="ID"/>
+          <required/>
         </attribute>
         <attributeGroupRef name="class.attrib"/>
         <attributeGroupRef name="title.attrib"/>
@@ -4954,20 +5050,22 @@
 -->
     <attlist>
       <nameSpecRef name="img.qname"/>
-      <attribute use="optional">
+      <attribute>
         <name>ismap</name>
         <enumChoice>
           <enum>ismap</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attlist>
     <attlist>
       <nameSpecRef name="input.qname"/>
-      <attribute use="optional">
+      <attribute>
         <name>ismap</name>
         <enumChoice>
           <enum>ismap</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attlist>
 <!-- end of xhtml-ssismap-1.mod -->
@@ -5024,25 +5122,29 @@
         <nameSpecRef name="param.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="id.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>value</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional" default="data">
+        <attribute>
           <name>valuetype</name>
           <enumChoice>
             <enum>data</enum>
             <enum>ref</enum>
             <enum>object</enum>
           </enumChoice>
+          <default>data</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of param.attlist -->
@@ -5111,55 +5213,67 @@
       <attlist>
         <nameSpecRef name="object.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>declare</name>
           <enumChoice>
             <enum>declare</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>classid</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>codebase</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>data</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>codetype</name>
           <datatypeRef name="ContentType.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>archive</name>
           <datatypeRef name="URIs.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>standby</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>height</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>width</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of object.attlist -->
@@ -5212,7 +5326,7 @@
      CALS to avoid a name clash with the valign attribute.
 -->
     <attributeGroup name="frame.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>frame</name>
         <enumChoice>
           <enum>void</enum>
@@ -5225,6 +5339,7 @@
           <enum>box</enum>
           <enum>border</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- The rules attribute defines which rules to draw between cells:
@@ -5234,7 +5349,7 @@
        "none" if border is absent or border="0" otherwise "all"
 -->
     <attributeGroup name="rules.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>rules</name>
         <enumChoice>
           <enum>none</enum>
@@ -5243,12 +5358,13 @@
           <enum>cols</enum>
           <enum>all</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- horizontal alignment attributes for cell contents
 -->
     <attributeGroup name="CellHAlign.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>align</name>
         <enumChoice>
           <enum>left</enum>
@@ -5257,20 +5373,23 @@
           <enum>justify</enum>
           <enum>char</enum>
         </enumChoice>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>char</name>
         <datatypeRef name="Character.datatype"/>
+        <implied/>
       </attribute>
-      <attribute use="optional">
+      <attribute>
         <name>charoff</name>
         <datatypeRef name="Length.datatype"/>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- vertical alignment attribute for cell contents
 -->
     <attributeGroup name="CellVAlign.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>valign</name>
         <enumChoice>
           <enum>top</enum>
@@ -5278,12 +5397,13 @@
           <enum>bottom</enum>
           <enum>baseline</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- scope is simpler than axes attribute for common tables
 -->
     <attributeGroup name="scope.attrib">
-      <attribute use="optional">
+      <attribute>
         <name>scope</name>
         <enumChoice>
           <enum>row</enum>
@@ -5291,6 +5411,7 @@
           <enum>rowgroup</enum>
           <enum>colgroup</enum>
         </enumChoice>
+        <implied/>
       </attribute>
     </attributeGroup>
 <!-- table: Table Element .............................. -->
@@ -5356,27 +5477,32 @@
       <attlist>
         <nameSpecRef name="table.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>summary</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>width</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>border</name>
           <datatypeRef name="Pixels.datatype"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="frame.attrib"/>
         <attributeGroupRef name="rules.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>cellspacing</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>cellpadding</name>
           <datatypeRef name="Length.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of table.attlist -->
@@ -5539,13 +5665,15 @@
       <attlist>
         <nameSpecRef name="colgroup.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>span</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>width</name>
           <datatypeRef name="MultiLength.datatype"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -5585,13 +5713,15 @@
       <attlist>
         <nameSpecRef name="col.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>span</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>width</name>
           <datatypeRef name="MultiLength.datatype"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -5662,26 +5792,31 @@
       <attlist>
         <nameSpecRef name="th.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>abbr</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>axis</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>headers</name>
           <basic name="IDREFS"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>rowspan</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>colspan</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -5714,26 +5849,31 @@
       <attlist>
         <nameSpecRef name="td.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>abbr</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>axis</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>headers</name>
           <basic name="IDREFS"/>
+          <implied/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>rowspan</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
-        <attribute use="optional" default="1">
+        <attribute>
           <name>colspan</name>
           <datatypeRef name="Number.datatype"/>
+          <default>1</default>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -5826,28 +5966,33 @@
       <attlist>
         <nameSpecRef name="form.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="required">
+        <attribute>
           <name>action</name>
           <datatypeRef name="URI.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional" default="get">
+        <attribute>
           <name>method</name>
           <enumChoice>
             <enum>get</enum>
             <enum>post</enum>
           </enumChoice>
+          <default>get</default>
         </attribute>
-        <attribute use="optional" default="application/x-www-form-urlencoded">
+        <attribute>
           <name>enctype</name>
           <datatypeRef name="ContentType.datatype"/>
+          <default>application/x-www-form-urlencoded</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accept-charset</name>
           <datatypeRef name="Charsets.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accept</name>
           <datatypeRef name="ContentTypes.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of form.attlist -->
@@ -5899,13 +6044,15 @@
       <attlist>
         <nameSpecRef name="label.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>for</name>
           <basic name="IDREF"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of label.attlist -->
@@ -5947,63 +6094,76 @@
       <attlist>
         <nameSpecRef name="input.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional" default="text">
+        <attribute>
           <name>type</name>
           <datatypeRef name="InputType.class"/>
+          <default>text</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>value</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>checked</name>
           <enumChoice>
             <enum>checked</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>readonly</name>
           <enumChoice>
             <enum>readonly</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>size</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>maxlength</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>src</name>
           <datatypeRef name="URI.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>alt</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accept</name>
           <datatypeRef name="ContentTypes.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of input.attlist -->
@@ -6038,29 +6198,34 @@
       <attlist>
         <nameSpecRef name="select.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>size</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>multiple</name>
           <enumChoice>
             <enum>multiple</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of select.attlist -->
@@ -6090,15 +6255,17 @@
       <attlist>
         <nameSpecRef name="optgroup.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>label</name>
           <datatypeRef name="Text.datatype"/>
+          <required/>
         </attribute>
       </attlist>
 <!-- end of optgroup.attlist -->
@@ -6124,25 +6291,29 @@
       <attlist>
         <nameSpecRef name="option.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>selected</name>
           <enumChoice>
             <enum>selected</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>label</name>
           <datatypeRef name="Text.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>value</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of option.attlist -->
@@ -6168,37 +6339,44 @@
       <attlist>
         <nameSpecRef name="textarea.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>rows</name>
           <datatypeRef name="Number.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="required">
+        <attribute>
           <name>cols</name>
           <datatypeRef name="Number.datatype"/>
+          <required/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>readonly</name>
           <enumChoice>
             <enum>readonly</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of textarea.attlist -->
@@ -6264,9 +6442,10 @@
       <attlist>
         <nameSpecRef name="legend.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of legend.attlist -->
@@ -6303,35 +6482,41 @@
       <attlist>
         <nameSpecRef name="button.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute use="optional">
+        <attribute>
           <name>name</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>value</name>
           <basic name="CDATA"/>
+          <implied/>
         </attribute>
-        <attribute use="optional" default="submit">
+        <attribute>
           <name>type</name>
           <enumChoice>
             <enum>button</enum>
             <enum>submit</enum>
             <enum>reset</enum>
           </enumChoice>
+          <default>submit</default>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
+          <implied/>
         </attribute>
-        <attribute use="optional">
+        <attribute>
           <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
+          <implied/>
         </attribute>
       </attlist>
 <!-- end of button.attlist -->
@@ -6431,9 +6616,10 @@
 <!-- reserved for future use with document profiles
 -->
       <attributeGroup name="profile.attrib">
-        <attribute use="optional" default="">
+        <attribute>
           <name>profile</name>
           <datatypeRef name="URI.datatype"/>
+          <default></default>
         </attribute>
       </attributeGroup>
       <attlist>
@@ -6500,9 +6686,10 @@
 <!-- version attribute value defined in driver
 -->
       <attributeGroup name="XHTML.version.attrib">
-        <attribute use="required" default="-//W3C//DTD XHTML 1.1//EN">
+        <attribute>
           <name>version</name>
           <datatypeRef name="FPI.datatype"/>
+          <fixed>-//W3C//DTD XHTML 1.1//EN</fixed>
         </attribute>
       </attributeGroup>
 <!-- see the Qualified Names module for information

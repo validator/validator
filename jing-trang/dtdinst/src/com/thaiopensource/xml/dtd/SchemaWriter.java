@@ -8,7 +8,8 @@ public class SchemaWriter implements TopLevelVisitor,
 				     DatatypeVisitor,
 				     EnumGroupVisitor,
                                      FlagVisitor,
-                                     NameSpecVisitor {
+                                     NameSpecVisitor,
+                                     AttributeDefaultVisitor {
   private XmlWriter w;
   
   public SchemaWriter(XmlWriter writer) {
@@ -148,16 +149,13 @@ public class SchemaWriter implements TopLevelVisitor,
   }
 
   public void attribute(NameSpec nameSpec,
-			boolean optional,
 			Datatype datatype,
-			String defaultValue)
+			AttributeDefault attributeDefault)
     throws Exception {
     w.startElement("attribute");
-    w.attribute("use", optional ? "optional" : "required");
-    if (defaultValue != null)
-      w.attribute("default", defaultValue);
     nameSpec.accept(this);
     datatype.accept(this);
+    attributeDefault.accept(this);
     w.endElement();
   }
 
@@ -286,6 +284,28 @@ public class SchemaWriter implements TopLevelVisitor,
     w.startElement("overridden");
     w.attribute("name", name);
     w.characters(value);
+    w.endElement();
+  }
+
+  public void defaultValue(String value) throws Exception {
+    w.startElement("default");
+    w.characters(value);
+    w.endElement();
+  }
+
+  public void fixedValue(String value) throws Exception {
+    w.startElement("fixed");
+    w.characters(value);
+    w.endElement();
+  }
+
+  public void impliedValue() throws Exception {
+    w.startElement("implied");
+    w.endElement();
+  }
+
+  public void requiredValue() throws Exception {
+    w.startElement("required");
     w.endElement();
   }
 }

@@ -73,21 +73,23 @@ class Param {
 	  NameSpec nameSpec = currentParamToNameSpec(ps);
 	  Datatype datatype = paramsToDatatype(ps);
 	  ps.advance();
-	  boolean optional = true;
-	  String defaultValue = null;
+	  AttributeDefault ad;
 	  switch (ps.type) {
 	  case REQUIRED:
-	    optional = false;
+	    ad = new RequiredValue();
 	    break;
 	  case FIXED:
-	    optional = false;
 	    ps.advance();
-	    // fall through
+	    ad = new FixedValue(ps.value);
+	    break;
 	  case DEFAULT_ATTRIBUTE_VALUE:
-	    defaultValue = ps.value;
+	    ad = new DefaultValue(ps.value);
+	    break;
+	  default:
+	    ad = new ImpliedValue();
 	    break;
 	  }
-	  agm = new Attribute(nameSpec, optional, datatype, defaultValue);
+	  agm = new Attribute(nameSpec, datatype, ad);
 	}
       }
       if (agm != null)

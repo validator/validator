@@ -70,8 +70,13 @@ attlistDecl = element attlist { nameSpec, attributeGroup }
 attributeGroupDef = element attributeGroup { name, attributeGroup }
 
 attributeGroup =
-  (element attribute { nameSpec, use, defaultValue, datatype }
+  (element attribute { nameSpec, datatype, attributeDefault }
    | element attributeGroupRef { name } )*
+
+attributeDefault =
+  element implied { empty }
+  | element required { empty }
+  | element default|fixed { text }
 
 modelGroup =
   element modelGroupRef { name }
@@ -86,7 +91,5 @@ modelGroup =
 name = attribute name { xsd:NCName }
 
 nameSpec = element name { xsd:Name } | element nameSpecRef { name }
-
-defaultValue = attribute default { text }?
 
 use = attribute use { "optional" | "required" }

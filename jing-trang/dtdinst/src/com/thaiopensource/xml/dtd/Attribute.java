@@ -2,39 +2,31 @@ package com.thaiopensource.xml.dtd;
 
 public class Attribute extends AttributeGroupMember {
   private final NameSpec nameSpec;
-  private final boolean optional;
   private final Datatype datatype;
-  private final String defaultValue;
+  private final AttributeDefault attributeDefault;
 
   public Attribute(NameSpec nameSpec,
-		   boolean optional,
 		   Datatype datatype,
-		   String defaultValue) {
+		   AttributeDefault attributeDefault) {
     this.nameSpec = nameSpec;
-    this.optional = optional;
     this.datatype = datatype;
-    this.defaultValue = defaultValue;
+    this.attributeDefault = attributeDefault;
   }
 
-  
   public NameSpec getNameSpec() {
     return nameSpec;
-  }
-
-  public boolean isOptional() {
-    return optional;
   }
 
   public Datatype getDatatype() {
     return datatype;
   }
 
-  public String getDefaultValue() {
-    return defaultValue;
+  public AttributeDefault getAttributeDefault() {
+    return attributeDefault;
   }
 
   public void accept(AttributeGroupVisitor visitor) throws Exception {
-    visitor.attribute(nameSpec, optional, datatype, defaultValue);
+    visitor.attribute(nameSpec, datatype, attributeDefault);
   }
 
   public int getType() {
