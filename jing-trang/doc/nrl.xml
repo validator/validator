@@ -464,14 +464,96 @@ will be used to search for a matching rule:</p>
 
 <h2>Transparent namespaces</h2>
 
-<p>XXX</p>
+<p>Many schema languages can deal with the kind of extensibility that
+involves adding child elements or attributes from different
+namespaces.  A more difficult kind of extensibility is where we need
+to be able to wrap an extension element around an existing
+non-extension element.  This can arise with namespaces describing
+templating and versioning.  Imagine XHTML inside an XSLT stylesheet:
+in such a document we might have a <code>ul</code> element containing
+a <code>xsl:for-each</code> element containing an <code>li</code>,
+although the schema for XHTML requires <code>li</code> elements to
+occur as direct children of <code>ul</code> elements. In such a
+situation, we need to need to make the XHTML schema ignore the
+start-tag and end-tag of the <code>xsl:for-each</code> element, but
+not ignore its content.</p>
+
+<p>Suppose we have a namespace
+<code>http://www.example.org/edit</code> containing elements
+<code>inserted</code> and <code>deleted</code>, which describe edits
+that have been made to a document, and suppose we want to use these
+elements inside an XHTML document.  The following NRL schema would
+allow us still to validate the XHTML document.</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng" useMode="xhtml"/>
+    </namespace>
+  </mode>
+  <mode name="xhtml">
+    <namespace ns="http://www.example.org/edit">
+      <ignore/>
+    </namespace>
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <attach/>
+    </namespace>
+  </mode>
+</rules>
+</xml>
+
+<p>The <code>ignore</code> element says to ignore a particular
+section; like with all the other actions, it applies to a section not
+to a subtree. Thus, the section from the
+<code>http://www.example.org/edit</code> will be ignored, but child
+sections will be processed according to rules applicable in the
+<code>xhtml</code> mode.  When a
+<code>http://www.example.org/edit</code> section has a
+<code>http://www.w3.org/1999/xhtml</code> child section, then that
+child section will be attached to the parent of the
+<code>http://www.example.org/edit</code> section (which will be
+another <code>http://www.w3.org/1999/xhtml</code> section).</p>
+
+<p>The above schema does not deal with validating the
+<code>http://www.example.org/edit</code> namespace. Let us suppose
+that <code>inserted</code> and <code>deleted</code> elements
+cannot nest.  Our schema <code>edit.rnc</code>
+for the <code>http://www.example.org/edit</code> is simply</p>
+
+<pre>
+default namespace = "http://www.example.org/edit"
+element inserted|deleted { empty }
+</pre>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng" useMode="xhtml"/>
+    </namespace>
+  </mode>
+  <mode name="xhtml">
+    <namespace ns="http://www.example.org/edit">
+      <validate schema="edit.rnc"
+                schemaType="application/x-rnc"
+                useMode="#allow"/>
+      <ignore useMode="#attach"/>
+    </namespace>
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <attach/>
+    </namespace>
+  </mode>
+</rules>
+</xml>
+
 
 <h2>Element-name context</h2>
 
 <p>So far we have seen how to make the processing of an element depend
 on the namespace URIs of its ancestors.  NRL also allows the
 processing to depend on the element names of its ancestors.  For
-example, suppose we wish to allow RDF to occur as a child of the
+example, suppose we wish to allow RDF to occur only as a child of the
 <code>head</code> element of XHTML.  We can do this as follows:</p>
 
 <xml>
@@ -490,6 +572,23 @@ example, suppose we wish to allow RDF to occur as a child of the
   </mode>
 </rules>
 </xml>
+
+<p>Any element that takes a <code>useMode</code> attribute can also
+have one or more <code>context</code> children that override the
+<code>useMode</code> attribute in specific contexts.  The
+<code>path</code> attribute specifies a test to be applied to the
+parent element of the element or attribute section to be processed.
+The <code>path</code> attribute allows a restricted form of XPath: a
+list of one or more unqualified names separated by <code>/</code>,
+optionally preceded by <code>/</code>.  It is interpreted like a
+pattern in XSLT, except that the names are implicitly qualified with
+the namespace URI of the containing <code>namespace</code> element.
+When more than one path matches, the most specific is chosen.  It is
+an error to have two or more equally specific paths. The path is
+tested against a single section not the entire document: a path of
+<code>/foo</code> means a <code>foo</code> element that is the root of
+a section; it does not mean a <code>foo</code> element that is the
+root of the document.</p>
 
 <h2>Attributes</h2>
 
