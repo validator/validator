@@ -2,8 +2,8 @@ package com.thaiopensource.validate.nrl;
 
 import org.xml.sax.ContentHandler;
 
-class DelveAction extends ResultAction {
-  DelveAction(ModeUsage modeUsage) {
+class IgnoreAction extends ResultAction {
+  IgnoreAction(ModeUsage modeUsage) {
     super(modeUsage);
   }
 
@@ -12,6 +12,6 @@ class DelveAction extends ResultAction {
   }
 
   ResultAction changeCurrentMode(Mode mode) {
-    return new DelveAction(getModeUsage().changeCurrentMode(mode));
+    return new IgnoreAction(getModeUsage().changeCurrentMode(mode));
   }
 }

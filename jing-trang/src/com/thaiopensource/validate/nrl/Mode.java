@@ -93,7 +93,7 @@ class Mode {
       for (Enumeration enum = attributeMap.keys(); enum.hasMoreElements() && attributeProcessing != ATTRIBUTE_PROCESSING_FULL;) {
         String ns = (String)enum.nextElement();
         AttributeActionSet actions = (AttributeActionSet)attributeMap.get(ns);
-        if (!actions.getPass()
+        if (!actions.getAttach()
             || actions.getReject()
             || actions.getSchemas().length > 0)
           attributeProcessing = ((ns.equals("") || ns.equals(ANY_NAMESPACE))

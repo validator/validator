@@ -3,16 +3,16 @@ package com.thaiopensource.validate.nrl;
 import com.thaiopensource.validate.Schema;
 
 class AttributeActionSet {
-  private boolean pass;
+  private boolean attach;
   private boolean reject;
   private Schema[] schemas = new Schema[0];
 
-  boolean getPass() {
-    return pass;
+  boolean getAttach() {
+    return attach;
   }
 
-  void setPass(boolean pass) {
-    this.pass = pass;
+  void setAttach(boolean attach) {
+    this.attach = attach;
   }
 
   boolean getReject() {

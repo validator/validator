@@ -237,7 +237,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       for (int i = 0, len = handlerModes.size(); i < len; i++) {
         ModeUsage modeUsage = (ModeUsage)handlerModes.elementAt(i);
         AttributeActionSet actions = processAttributeSection(modeUsage, ns, indexSet, attributes);
-        if (actions.getPass())
+        if (actions.getAttach())
           ((IntSet)activeHandlersAttributeIndexSets.get(i)).addAll(indexSet);
         else
           transform = true;

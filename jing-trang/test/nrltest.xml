@@ -1275,17 +1275,17 @@ element linux|windows { empty }
   <mode name="linux">
     <namespace ns="http://www.example.com/version">
       <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <delve useMode="#allow">
+      <ignore useMode="#allow">
 	<context path="linux" useMode="#pass"/>
-      </delve>
+      </ignore>
     </namespace>
   </mode>
   <mode name="windows">
     <namespace ns="http://www.example.com/version">
       <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <delve useMode="#allow">
+      <ignore useMode="#allow">
 	<context path="windows" useMode="#pass"/>
-      </delve>
+      </ignore>
     </namespace>
   </mode>
 </rules>
@@ -1468,10 +1468,10 @@ attribute a:y { text }
 </mode>
 <mode name="cover" extends="c">
   <namespace ns="http://www.example.org/a">
-    <pass/>
+    <attach/>
   </namespace>
   <namespace ns="http://www.example.org/b">
-    <pass/>
+    <attach/>
   </namespace>
 </mode>
 <mode name="c">

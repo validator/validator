@@ -176,10 +176,10 @@ class SchemaImpl extends AbstractSchema {
         parseValidate(attributes);
       else if (localName.equals("reject"))
         parseReject(attributes);
-      else if (localName.equals("pass"))
-        parsePass(attributes);
-      else if (localName.equals("delve"))
-        parseDelve(attributes);
+      else if (localName.equals("attach"))
+        parseAttach(attributes);
+      else if (localName.equals("ignore"))
+        parseIgnore(attributes);
       else if (localName.equals("allow"))
         parseAllow(attributes);
       else if (localName.equals("context"))
@@ -371,21 +371,21 @@ class SchemaImpl extends AbstractSchema {
       }
     }
 
-    private void parsePass(Attributes attributes) {
+    private void parseAttach(Attributes attributes) {
       if (attributeActions != null)
-        attributeActions.setPass(true);
+        attributeActions.setAttach(true);
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
-        actions.setResultAction(new PassAction(modeUsage));
+        actions.setResultAction(new AttachAction(modeUsage));
       }
       else
         modeUsage = null;
     }
 
-    private void parseDelve(Attributes attributes) {
+    private void parseIgnore(Attributes attributes) {
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
-        actions.setResultAction(new DelveAction(modeUsage));
+        actions.setResultAction(new IgnoreAction(modeUsage));
       }
       else
         modeUsage = null;
@@ -509,8 +509,8 @@ class SchemaImpl extends AbstractSchema {
     super(properties);
     this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
     makeBuiltinMode("#allow", AllowAction.class);
-    makeBuiltinMode("#pass", PassAction.class);
-    makeBuiltinMode("#delve", DelveAction.class);
+    makeBuiltinMode("#pass", AttachAction.class);
+    makeBuiltinMode("#delve", IgnoreAction.class);
     defaultBaseMode = makeBuiltinMode("#reject", RejectAction.class);
   }
 
@@ -518,12 +518,12 @@ class SchemaImpl extends AbstractSchema {
     Mode mode = lookupCreateMode(name);
     ActionSet actions = new ActionSet();
     ModeUsage modeUsage = new ModeUsage(Mode.CURRENT, mode);
-    if (cls == PassAction.class)
-      actions.setResultAction(new PassAction(modeUsage));
+    if (cls == AttachAction.class)
+      actions.setResultAction(new AttachAction(modeUsage));
     else if (cls == AllowAction.class)
       actions.addNoResultAction(new AllowAction(modeUsage));
-    else if (cls == DelveAction.class)
-      actions.setResultAction(new DelveAction(modeUsage));
+    else if (cls == IgnoreAction.class)
+      actions.setResultAction(new IgnoreAction(modeUsage));
     else
       actions.addNoResultAction(new RejectAction(modeUsage));
     mode.bindElement(Mode.ANY_NAMESPACE, actions);
@@ -532,7 +532,7 @@ class SchemaImpl extends AbstractSchema {
     if (attributesSchema)
       attributeActions.setReject(true);
     else
-      attributeActions.setPass(true);
+      attributeActions.setAttach(true);
     mode.bindAttribute(Mode.ANY_NAMESPACE, attributeActions);
     return mode;
   }

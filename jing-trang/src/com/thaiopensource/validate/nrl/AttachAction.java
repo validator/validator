@@ -5,8 +5,8 @@ import com.thaiopensource.validate.nrl.Mode;
 import com.thaiopensource.validate.nrl.ModeUsage;
 import org.xml.sax.ContentHandler;
 
-class PassAction extends ResultAction {
-  PassAction(ModeUsage modeUsage) {
+class AttachAction extends ResultAction {
+  AttachAction(ModeUsage modeUsage) {
     super(modeUsage);
   }
 
@@ -20,6 +20,6 @@ class PassAction extends ResultAction {
   }
 
   ResultAction changeCurrentMode(Mode mode) {
-    return new PassAction(getModeUsage().changeCurrentMode(mode));
+    return new AttachAction(getModeUsage().changeCurrentMode(mode));
   }
 }
