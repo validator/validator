@@ -26,7 +26,7 @@
   <define name="mode">
     <element name="mode">
       <attribute name="name">
-        <ref name="modeName"/>
+        <ref name="userModeName"/>
       </attribute>
       <optional>
         <attribute name="extends">
@@ -151,7 +151,21 @@
     </zeroOrMore>
   </define>
   <define name="modeName">
+    <choice>
+      <ref name="userModeName"/>
+      <ref name="builtinModeName"/>
+    </choice>
+  </define>
+  <define name="userModeName">
     <data type="NCName"/>
+  </define>
+  <define name="builtinModeName">
+    <choice>
+      <value>#pass</value>
+      <value>#allow</value>
+      <value>#reject</value>
+      <value>#delve</value>
+    </choice>
   </define>
   <define name="schemaType">
     <attribute name="schemaType">

@@ -24,12 +24,12 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 class SchemaImpl extends AbstractSchema {
-  static private final String IMPLICIT_MODE_NAME = "#default";
+  static private final String IMPLICIT_MODE_NAME = "#implicit";
   static private final String WRAPPER_MODE_NAME = "#wrapper";
   static final String MNS2_URI = "http://www.thaiopensource.com/ns/mns2";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
-  private final Mode builtinMode;
+  private Mode defaultBaseMode;
   private final boolean attributesSchema;
 
   static private final class WrappedIOException extends RuntimeException {
@@ -400,16 +400,33 @@ class SchemaImpl extends AbstractSchema {
 
   SchemaImpl(boolean attributesSchema) {
     this.attributesSchema = attributesSchema;
-    builtinMode = new Mode("#builtin", null);
+    makeBuiltinMode("#allow", AllowAction.class);
+    makeBuiltinMode("#pass", PassAction.class);
+    makeBuiltinMode("#delve", DelveAction.class);
+    defaultBaseMode = makeBuiltinMode("#reject", RejectAction.class);
+  }
+
+  private Mode makeBuiltinMode(String name, Class cls) {
+    Mode mode = lookupCreateMode(name);
     ActionSet actions = new ActionSet();
-    actions.addNoResultAction(new RejectAction(new ModeUsage(Mode.CURRENT, builtinMode)));
-    builtinMode.bindElement(Mode.ANY_NAMESPACE, actions);
+    ModeUsage modeUsage = new ModeUsage(Mode.CURRENT, mode);
+    if (cls == PassAction.class)
+      actions.setResultAction(new PassAction(modeUsage));
+    else if (cls == AllowAction.class)
+      actions.addNoResultAction(new AllowAction(modeUsage));
+    else if (cls == DelveAction.class)
+      actions.setResultAction(new DelveAction(modeUsage));
+    else
+      actions.addNoResultAction(new RejectAction(modeUsage));
+    mode.bindElement(Mode.ANY_NAMESPACE, actions);
+    mode.noteDefined(null);
     AttributeActionSet attributeActions = new AttributeActionSet();
     if (attributesSchema)
       attributeActions.setReject(true);
     else
       attributeActions.setPass(true);
-    builtinMode.bindAttribute(Mode.ANY_NAMESPACE, attributeActions);
+    mode.bindAttribute(Mode.ANY_NAMESPACE, attributeActions);
+    return mode;
   }
 
   SchemaFuture installHandlers(XMLReader in, SchemaReceiverImpl sr) {
@@ -432,7 +449,7 @@ class SchemaImpl extends AbstractSchema {
     name = name.trim();
     Mode mode = (Mode)modeMap.get(name);
     if (mode == null) {
-      mode = new Mode(name, builtinMode);
+      mode = new Mode(name, defaultBaseMode);
       modeMap.put(name, mode);
     }
     return mode;

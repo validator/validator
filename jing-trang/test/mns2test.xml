@@ -864,19 +864,14 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 <rules startMode="root" xmlns="http://www.thaiopensource.com/ns/mns2">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="pass">
+      <validate schema="xhtml.rng" useMode="#pass">
         <context path="head" useMode="rdf"/>
       </validate>
     </namespace>
   </mode>
-  <mode name="pass">
-    <anyNamespace>
-      <pass/>
-    </anyNamespace>
-  </mode>
   <mode name="rdf">
     <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng" useMode="pass"/>
+      <validate schema="rdfxml.rng" useMode="#pass"/>
     </namespace>
   </mode>
 </rules>
@@ -1279,29 +1274,19 @@ element linux|windows { empty }
   </mode>
   <mode name="linux">
     <namespace ns="http://www.example.com/version">
-      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="discard"/>
-      <delve useMode="discard">
-	<context path="linux" useMode="keep"/>
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
+      <delve useMode="#allow">
+	<context path="linux" useMode="#pass"/>
       </delve>
     </namespace>
   </mode>
   <mode name="windows">
     <namespace ns="http://www.example.com/version">
-      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="discard"/>
-      <delve useMode="discard">
-	<context path="windows" useMode="keep"/>
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
+      <delve useMode="#allow">
+	<context path="windows" useMode="#pass"/>
       </delve>
     </namespace>
-  </mode>
-  <mode name="keep">
-    <anyNamespace>
-      <pass useMode="keep"/>
-    </anyNamespace>
-  </mode>
-  <mode name="discard">
-    <anyNamespace>
-      <delve useMode="discard"/>
-    </anyNamespace>
   </mode>
 </rules>
 </correct>
