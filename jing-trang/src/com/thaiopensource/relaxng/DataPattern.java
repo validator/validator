@@ -5,9 +5,13 @@ import com.thaiopensource.datatype.Datatype;
 class DataPattern extends StringPattern {
   private Datatype dt;
 
-  DataPattern(Datatype dt) {
-    super(false, combineHashCode(DATA_HASH_CODE, dt.hashCode()));
+  DataPattern(boolean nullable, Datatype dt) {
+    super(nullable, combineHashCode(DATA_HASH_CODE, dt.hashCode()));
     this.dt = dt;
+  }
+
+  DataPattern(Datatype dt) {
+    this(!dt.isContextDependent() && dt.allows("", null), dt);
   }
 
   boolean matches(PatternBuilder b, Atom a) {

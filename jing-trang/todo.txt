@@ -10,6 +10,4 @@ Support Datatype guidelines.
 
 Avoid slow error recovery with large schemas (eg DocBook).
 
-Bug with nullable data.
-
 Implement xml:base.

@@ -9,7 +9,10 @@ class DataExceptPattern extends DataPattern {
   private Locator loc;
 
   DataExceptPattern(Datatype dt, Pattern except, Locator loc) {
-    super(dt);
+    super(!dt.isContextDependent()
+	  && dt.allows("", null)
+	  && !except.isNullable(),
+	  dt);
     this.except = except;
     this.loc = loc;
   }

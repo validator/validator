@@ -7,9 +7,15 @@ class ValuePattern extends StringPattern {
   Datatype dt;
 
   ValuePattern(Datatype dt, Object obj) {
-    super(false, combineHashCode(VALUE_HASH_CODE, obj.hashCode()));
+    super(valueIsNullable(dt, obj),
+	  combineHashCode(VALUE_HASH_CODE, obj.hashCode()));
     this.dt = dt;
     this.obj = obj;
+  }
+
+  static boolean valueIsNullable(Datatype dt, Object obj) {
+    return (!dt.isContextDependent()
+	    && obj.equals(dt.createValue("", null)));
   }
 
   boolean matches(PatternBuilder b, Atom a) {
