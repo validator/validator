@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.10 2001-06-02 08:36:14 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.11 2001-06-02 08:37:30 jjc Exp $ -->
 <grammar namespace="http://relaxng.org/ns/structure/0.9"
+         datatypeNamespace="http://www.w3.org/2001/XMLSchema-datatypes"
          xmlns="http://relaxng.org/ns/structure/0.9">
   <start name="pattern">
     <choice>
@@ -241,6 +242,9 @@
   <define name="common-atts">
     <optional>
       <attribute name="namespace"/>
+    </optional>
+    <optional>
+      <attribute name="datatypeNamespace"/>
     </optional>
     <zeroOrMore>
       <attribute>
