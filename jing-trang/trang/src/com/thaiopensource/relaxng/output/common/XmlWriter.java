@@ -9,7 +9,8 @@ import java.io.CharConversionException;
 import java.util.Stack;
 
 public class XmlWriter {
-  private String lineSep;
+  private final String lineSep;
+  private final String indentString;
   private Writer w;
   private CharRepertoire cr;
   private Stack tagStack = new Stack();
@@ -34,11 +35,15 @@ public class XmlWriter {
     }
   }
 
-  public XmlWriter(Writer w, String encoding, CharRepertoire cr, String lineSep, String[] topLevelAttributes) {
+  public XmlWriter(Writer w, String encoding, CharRepertoire cr, String lineSep, int indent, String[] topLevelAttributes) {
     this.w = w;
     this.lineSep = lineSep;
     this.cr = cr;
     this.topLevelAttributes = topLevelAttributes;
+    char[] tem = new char[indent];
+    for (int i = 0; i < indent; i++)
+      tem[i] = ' ';
+    this.indentString = new String(tem);
     write("<?xml version=\"1.0\" encoding=\"");
     write(encoding);
     write("\"?>");
@@ -200,7 +205,7 @@ public class XmlWriter {
 
   private void indent() {
     for (int i = 0; i < level; i++)
-      write("  ");
+      write(indentString);
   }
 
   private void newline() {

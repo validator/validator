@@ -35,6 +35,7 @@ public class Driver {
   private ErrorHandlerImpl eh = new ErrorHandlerImpl();
   private static final String DEFAULT_OUTPUT_ENCODING = "UTF-8";
   private static final int DEFAULT_LINE_LENGTH = 72;
+  private static final int DEFAULT_INDENT = 2;
 
   static public void main(String[] args) throws IncorrectSchemaException, SAXException, IOException {
     System.exit(new Driver().doMain(args));
@@ -122,7 +123,8 @@ public class Driver {
                                                     new File(args[1]),
                                                     ext,
                                                     DEFAULT_OUTPUT_ENCODING,
-                                                    DEFAULT_LINE_LENGTH);
+                                                    DEFAULT_LINE_LENGTH,
+                                                    DEFAULT_INDENT);
       of.output(sc, od, (String[])outputParams.toArray(new String[0]), inputType.toLowerCase(), eh);
       return 0;
     }

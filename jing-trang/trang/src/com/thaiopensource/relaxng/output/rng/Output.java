@@ -80,7 +80,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     this.prefixMap = prefixMap;
     OutputDirectory.Stream stream = od.open(sourceUri, encoding);
     this.xw = new XmlWriter(stream.getWriter(), stream.getEncoding(), stream.getCharRepertoire(),
-                            od.getLineSeparator(), getTopLevelAttributes());
+                            od.getLineSeparator(), od.getIndent(), getTopLevelAttributes());
   }
 
   String[] getTopLevelAttributes() {

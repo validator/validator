@@ -82,6 +82,7 @@ public class CompactTestDriver {
   static private final String XSD_EXTENSION = ".xsd";
   static private final String OUTPUT_ENCODING = "UTF-8";
   static private final int LINE_LENGTH = 72;
+  static private final int INDENT = 2;
 
   private boolean runTestCase(File dir) throws IOException {
     File xmlDir = new File(dir, toDir);
@@ -156,7 +157,7 @@ public class CompactTestDriver {
   private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
       SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), new String[0], null, eh);
-      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, null, LINE_LENGTH);
+      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, null, LINE_LENGTH, INDENT);
       od.setEncoding(OUTPUT_ENCODING);
       of.output(sc, od, new String[0], null, eh);
       return true;

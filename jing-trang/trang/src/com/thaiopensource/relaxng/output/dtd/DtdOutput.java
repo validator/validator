@@ -51,10 +51,8 @@ class DtdOutput {
   private Writer writer;
   private String encoding;
   private CharRepertoire charRepertoire;
-  private static final int DEFAULT_INDENT = 2;
-  private int indent = DEFAULT_INDENT;
-  private static final int DEFAULT_LINE_LENGTH = 72;
-  private int lineLength = DEFAULT_LINE_LENGTH;
+  private final int indent;
+  private final int lineLength;
   private final String lineSep;
   StringBuffer buf = new StringBuffer();
   List elementQueue = new Vector();
@@ -103,6 +101,8 @@ class DtdOutput {
       throw new WrappedIOException(e);
     }
     this.lineSep = od.getLineSeparator();
+    this.indent = od.getIndent();
+    this.lineLength = od.getLineLength();
   }
 
   class ParenthesizedContentModelOutput extends AbstractVisitor {

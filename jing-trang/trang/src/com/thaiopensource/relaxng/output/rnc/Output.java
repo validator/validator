@@ -15,6 +15,7 @@ import java.util.*;
 class Output {
   private final Prettyprinter pp;
   private final CharRepertoire cr;
+  private final String indent;
   private final String sourceUri;
   private final OutputDirectory od;
   private final ErrorReporter er;
@@ -31,7 +32,6 @@ class Output {
   private boolean isAttributeNameClass;
   private final StringBuffer encodeBuf = new StringBuffer();
 
-  static private final String indent = "  ";
 
   static private final String[] keywords = {
     "attribute", "default", "datatypes", "div", "element", "empty", "external",
@@ -70,6 +70,10 @@ class Output {
     this.cr = stream.getCharRepertoire();
     this.pp = new StreamingPrettyprinter(od.getLineLength(), od.getLineSeparator(), stream.getWriter());
     this.nsb = nsb;
+    char[] tem = new char[od.getIndent()];
+    for (int i = 0; i < tem.length; i++)
+      tem[i] = ' ';
+    this.indent = new String(tem);
   }
 
   private void topLevel(Pattern p) {

@@ -22,14 +22,16 @@ public class LocalOutputDirectory implements OutputDirectory {
   // maps URIs to filenames
   private final Map uriMap = new HashMap();
   private final String mainInputExtension;
+  private int indent;
 
   public LocalOutputDirectory(String mainSourceUri, File mainOutputFile, String extension,
-                              String encoding, int lineLength) {
+                              String encoding, int lineLength, int indent) {
     this.mainOutputFile = mainOutputFile;
     this.outputExtension = extension;
     this.defaultEncoding = encoding;
     this.lineSeparator = System.getProperty("line.separator");
     this.lineLength = lineLength;
+    this.indent = indent;
     this.uriMap.put(mainSourceUri, mainOutputFile.getName());
     int slashOff = mainSourceUri.lastIndexOf('/');
     int dotOff = mainSourceUri.lastIndexOf('.');
@@ -83,5 +85,13 @@ public class LocalOutputDirectory implements OutputDirectory {
 
   public int getLineLength() {
     return lineLength;
+  }
+
+  public int getIndent() {
+    return indent;
+  }
+
+  public void setIndent(int indent) {
+    this.indent = indent;
   }
 }
