@@ -22,15 +22,16 @@ Explain how NRL can improve RELAX NG modularity
 <abstract>
 <p>The XML Namespaces Recommendation allows an XML document to be
 composed of elements and attributes from multiple independent
-namespaces. Each of these namespaces may have its own schema;
-the schemas for different namespaces may be in different schema languages.  The
-problem then arises of how the schemas can be composed in order to
+namespaces. Each of these namespaces may have its own schema; the
+schemas for different namespaces may be in different schema languages.
+The problem then arises of how the schemas can be composed in order to
 allow validation of the complete document. This document proposes the
 Namespace Routing Language (NRL) as a solution to this problem.  NRL
-is an evolution of the author's earlier Modular Namespaces (MNS)
-language.</p>
+is an evolution of the author's earlier <bib ref="mns">Modular
+Namespaces (MNS)</bib> language.</p>
 
-<p>A sample implementation of NRL is included in Jing.</p>
+<p>A sample implementation of NRL is included in <bib ref="jing">Jing</bib>.</p>
+
 </abstract>
 
 <h2>Getting started</h2>
@@ -144,8 +145,8 @@ and the type of schema can be automatically detected from the
 namespace URI of the root element.  In cases where the schema is not
 in XML and there is no MIME type information available to determine
 the type, a <code>schemaType</code> attribute can be used to specify the
-type.  The value of this should be a MIME media type.  For RELAX NG
-Compact Syntax, a value of <code>application/x-rnc</code> should be
+type.  The value of this should be a MIME media type.  For <bib ref="compact">RELAX NG
+Compact Syntax</bib>, a value of <code>application/x-rnc</code> should be
 used.</p>
 
 <xml>
@@ -160,13 +161,14 @@ used.</p>
 </xml>
 
 <p>With many schema languages, there can be different ways to use a
-particular schema to validate an instance.  For example, Schematron
-has the notion of a phase; an instance that is valid with respect to a
-Schematron schema using one phase may not be valid with respect to the
-same schema in another phase. NRL allows validation to be controlled
-by specifying a number of options. For example, to specify that
-validate with respect to xhtml.sch should use the phase named
-<code>Full</code>, an option could be specified as follows:</p>
+particular schema to validate an instance.  For example, <bib
+ref="schematron">Schematron</bib> has the notion of a phase; an
+instance that is valid with respect to a Schematron schema using one
+phase may not be valid with respect to the same schema in another
+phase. NRL allows validation to be controlled by specifying a number
+of options. For example, to specify that validate with respect to
+xhtml.sch should use the phase named <code>Full</code>, an option
+could be specified as follows:</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl">
@@ -216,12 +218,12 @@ which all start with the URI
 <dt><code>http://www.thaiopensource.com/validate/check-id-idref</code></dt>
 
 <dd>No argument. If present, check ID/IDREF in accordance with
-RELAX NG DTD Compatibility specification.</dd>
+<bib ref="dtdcompat">RELAX NG DTD Compatibility</bib> specification.</dd>
 
 <dt><code>http://www.thaiopensource.com/validate/feasible</code></dt>
 
 <dd>No argument. If present, check that the document is
-<em>feasibly valid</em>.  This applies to RELAX NG.  A document is
+<em>feasibly valid</em>.  This applies to <bib ref="relaxng">RELAX NG</bib>.  A document is
 <em>feasibly valid</em> if it could be transformed into a valid
 document by inserting any number of attributes and child elements
 anywhere in the tree.  This is equivalent to transforming the schema
@@ -233,9 +235,10 @@ under construction.</dd>
 
 <dt><code>http://www.thaiopensource.com/validate/schema</code></dt>
 
-<dd>Argument is a URI specifying an additional schema to be used
-for validation. This applies to W3C XML Schema.  This option
-may be specified multiple times, once for each additional schema.</dd>
+<dd>Argument is a URI specifying an additional schema to be used for
+validation. This applies to <bib ref="wxs">W3C XML Schema</bib>.  This
+option may be specified multiple times, once for each additional
+schema.</dd>
 
 </dl>
 
@@ -937,18 +940,20 @@ accomplishes this:</p>
 <p>The fundamental idea of dividing into sections, each of which
 contains elements from a single namespace, and then validating each
 section separately against the schema for its namespace originated in
-Murata Makoto's RELAX Namespace, which formed the basis for the
-recently published DSDL Part 4 CD.</p>
+Murata Makoto's <bib ref="relaxns">RELAX Namespace</bib>, which formed the basis for the
+recently published <bib ref="dsdl-4">DSDL Part 4 CD</bib>.</p>
 
-<p>RELAX Namespace was designed to work well with RELAX Core. RELAX
-Core cannot deal with documents that use multiple namespaces, nor does
-it provide any namespace-based wildcards.  These limitations of RELAX
-Core are reflected in the design of RELAX Namespace.  NRL is designed
-to be able to take advantage of more recent schema languages, such as
-RELAX NG, that are not limited in this way.</p>
+<p>RELAX Namespace was designed to work well with <bib
+ref="relaxcore">RELAX Core</bib>. RELAX Core cannot deal with
+documents that use multiple namespaces, nor does it provide any
+namespace-based wildcards.  These limitations of RELAX Core are
+reflected in the design of RELAX Namespace.  NRL is designed to be
+able to take advantage of more recent schema languages, such as RELAX
+NG, that are not limited in this way.</p>
 
-<p>In reaction to MNS, Rick Jellife produced the Namespace
-Switchboard, which inspired much of the evolution of NRL from MNS.</p>
+<p>In reaction to MNS, Rick Jellife produced the <bib
+ref="nsswitch">Namespace Switchboard</bib>, which inspired much of the
+evolution of NRL from MNS.</p>
 
 <h2>Acknowledgments</h2>
 
@@ -958,22 +963,42 @@ Switchboard, which inspired much of the evolution of NRL from MNS.</p>
 
 <h2>References</h2>
 
-<p>Committee Draft of Document Schema Definition Languages (DSDL) --
-Part 4: Selection of Validation Candidates, <a
-href="http://www.y12.doe.gov/sgml/sc34/document/0363.htm"
->http://www.y12.doe.gov/sgml/sc34/document/0363.htm</a></p>
+<bibliography>
 
-<p>Jing validator, <a
-href="http://www.thaiopensource.com/relaxng/jing.html"
->http://www.thaiopensource.com/relaxng/jing.html</a></p>
+<bibentry name="dsdl-4">Committee Draft of Document Schema Definition Languages
+(DSDL) -- Part 4: Selection of Validation Candidates,
+<url>http://www.y12.doe.gov/sgml/sc34/document/0363.htm</url></bibentry>
 
-<p>Schematron</p>
+<bibentry name="jing">Jing,
+<url>http://www.thaiopensource.com/relaxng/jing.html</url></bibentry>
 
-<p>RELAX NG</p>
+<bibentry name="nsswitch">Namespace Switchboard,
+<url>http://www.topologi.com/resources/NamespaceSwitchboard.html</url></bibentry>
 
-<p>W3C XML Schema</p>
+<bibentry name="relaxns">RELAX Namespace,
+<url>http://www.y-adagio.com/public/standards/tr_relax_ns/toc.htm</url></bibentry>
 
-<p>MNS</p>
+<bibentry name="relaxcore">RELAX Core,
+<url>http://www.xml.gr.jp/relax/</url></bibentry>
+
+<bibentry name="relaxng">RELAX NG, <url>http://relaxng.org</url></bibentry>
+
+<bibentry name="compact">RELAX NG Compact Syntax,
+<url>http://www.oasis-open.org/committees/relax-ng/compact-20021121.html</url></bibentry>
+
+<bibentry name="dtdcompat">RELAX NG DTD Compatibility,
+<url>http://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html</url></bibentry>
+
+<bibentry name="schematron">Schematron,
+<url>http://www.ascc.net/xml/resource/schematron/schematron.html</url></bibentry>
+
+<bibentry name="wxs">W3C XML Schema,
+<url>http://www.w3.org/TR/xmlschema-1/</url></bibentry>
+
+<bibentry name="mns">Modular Namespaces (MNS),
+<url>http://www.thaiopensource.com/relaxng/mns.html</url></bibentry>
+
+</bibliography>
 
 <h2>NRL schema</h2>
 

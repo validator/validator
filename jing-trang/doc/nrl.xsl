@@ -185,4 +185,21 @@ code { font-family: sans-serif }
 
 <xsl:template name="newline"><xsl:text>&#xA;</xsl:text></xsl:template>
 
+<xsl:template match="bibliography">
+  <xsl:for-each select="bibentry">
+    <xsl:sort select="."/>
+    <p><a name="{@name}"/>
+      <xsl:apply-templates mode="bib"/>
+    </p>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="url" mode="bib">
+  <a href="{.}"><xsl:value-of select="."/></a>
+</xsl:template>
+
+<xsl:template match="bib">
+  <a href="#{@ref}"><xsl:value-of select="."/></a>
+</xsl:template>
+
 </xsl:stylesheet>
