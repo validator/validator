@@ -107,8 +107,9 @@ class Decl {
     if (entity.decl != this)
       return null;
     if (entity.text == null)
-      return null;
-    return new InternalEntityDecl(name, new String(entity.text));
+      return new ExternalEntityDecl(name, entity.getExternalId());
+    else
+      return new InternalEntityDecl(name, new String(entity.text));
   }
 
   IncludedSection createIncludedSection(DtdBuilder db) {

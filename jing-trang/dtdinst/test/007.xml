@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <param name="e">(x)</param>
+  <attlist>
+    <name>doc</name>
+    <attribute>
+      <name>a</name>
+      <tokenized name="NOTATION">
+        <enum>x</enum>
+      </tokenized>
+      <implied/>
+    </attribute>
+  </attlist>
+</doctype>

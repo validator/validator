@@ -18,6 +18,7 @@ public interface TopLevelVisitor {
   void includedSection(Flag flag, TopLevel[] contents) throws Exception;
   void ignoredSection(Flag flag, String contents) throws Exception;
   void internalEntityDecl(String name, String value) throws Exception;
+  void externalEntityDecl(String name, ExternalId externalId) throws Exception;
   void notationDecl(String name, ExternalId externalId) throws Exception;
   void nameSpecDef(String name, NameSpec nameSpec) throws Exception;
   void overriddenDef(String name, String value, boolean isDuplicate)

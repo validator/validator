@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <attributeGroup name="e1"/>
+  <element>
+    <name>x1</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>x1</name>
+    <attribute>
+      <name>att</name>
+      <cdata/>
+      <implied/>
+    </attribute>
+    <attributeGroupRef name="e1"/>
+  </attlist>
+  <element>
+    <name>x2</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>x2</name>
+    <attributeGroupRef name="e1"/>
+  </attlist>
+  <element>
+    <name>x3</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>x3</name>
+    <attributeGroupRef name="e1"/>
+    <attribute>
+      <name>att</name>
+      <cdata/>
+      <implied/>
+    </attribute>
+  </attlist>
+</doctype>

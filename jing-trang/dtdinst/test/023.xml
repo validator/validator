@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <modelGroup name="e1">
+    <sequence/>
+  </modelGroup>
+  <modelGroup name="e2">
+    <sequence>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+      <modelGroupRef name="e1"/>
+    </sequence>
+  </modelGroup>
+  <modelGroup name="e3">
+    <sequence>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+      <modelGroupRef name="e1"/>
+    </sequence>
+  </modelGroup>
+  <element>
+    <name>doc1</name>
+    <modelGroupRef name="e2"/>
+  </element>
+  <element>
+    <name>doc2</name>
+    <modelGroupRef name="e3"/>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+  <element>
+    <name>bar</name>
+    <sequence/>
+  </element>
+</doctype>

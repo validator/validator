@@ -1,9 +1,11 @@
+Overridden general entity declarations.
+
+Overridden external parameter entity declarations.
+
 EncodeDetectInputStream should support entities that need an XmlDecl
 rather than a TextDecl.
 
 Command-line option to define a parameter entity as INCLUDE.
-
-external general entities
 
 maybe distinguish char entities in object model
 

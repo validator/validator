@@ -19,6 +19,7 @@ decl =
   | includedSection
   | ignoredSection
   | internalEntityDecl
+  | externalEntityDecl
   | notationDecl
   | processingInstruction
   | comment
@@ -50,6 +51,8 @@ ignoredSection =
 externalIdRef = element externalIdRef { name, decl* }
 
 internalEntityDecl = element internalEntity { name, text }
+
+externalEntityDecl = element externalEntity { name, externalId }
 
 notationDecl = element notation { name, externalId }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1"></param>
+  <modelGroup name="e2">
+    <choice>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+    </choice>
+  </modelGroup>
+  <modelGroup name="e3">
+    <sequence>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+    </sequence>
+  </modelGroup>
+  <element>
+    <name>doc1</name>
+    <modelGroupRef name="e2"/>
+  </element>
+  <element>
+    <name>doc2</name>
+    <modelGroupRef name="e3"/>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+  <element>
+    <name>bar</name>
+    <sequence/>
+  </element>
+</doctype>

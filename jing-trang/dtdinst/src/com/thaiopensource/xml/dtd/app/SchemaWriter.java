@@ -273,6 +273,13 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void externalEntityDecl(String name, ExternalId xid) throws IOException {
+    w.startElement("externalEntity");
+    w.attribute("name", name);
+    externalId(xid);
+    w.endElement();
+  }
+
   public void notationDecl(String name, ExternalId xid) throws IOException {
     w.startElement("notation");
     w.attribute("name", name);
