@@ -160,7 +160,9 @@ public interface Matcher {
    * The members of the Vector have type <code>com.thaiopensource.xml.util.Name</code>.
    * When an element pattern with a wildcard name-class is possible, then all
    * Names in knownNames that are contained in the wildcard name-class will be
-   * included in the returned Vector.
+   * included in the returned Vector.  The returned list may contain duplicates.
+   * Does not modify <code>knownNames</code>.
+   *
    * @param knownNames a Vector of names to be considered for wildcards, or null
    * @return a Vector of names whose start-tags are possible
    */
@@ -173,7 +175,9 @@ public interface Matcher {
    * The members of the Vector have type <code>com.thaiopensource.xml.util.Name</code>.
    * When an attribute pattern with a wildcard name-class is possible, then all
    * Names in knownNames that are contained in the wildcard name-class will be
-   * included in the returned Vector.
+   * included in the returned Vector.  The returned list may contain duplicates.
+   * Does not modify <code>knownNames</code>.
+   *
    * @param knownNames a Vector of names to be considered for wildcards, or null
    * @return a Vector of names of attributes that are possible
    */
