@@ -159,6 +159,35 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </java>
 </target>
 
+<target name="mns-split" depends="init,check-mns-split" unless="mns-split-not-required">
+  <jing rngfile="test/mnstest.rng">
+    <fileset dir="test" includes="mnstest.xml"/>
+  </jing>
+  <delete dir="build/mnstest"/>
+  <mkdir dir="build/mnstest"/>
+  <style basedir="test" destdir="build/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="build/mnstest"/>
+  </style>
+</target>
+
+<target name="check-mns-split">
+  <uptodate property="mns-split-not-required" targetfile="build/mnstest/mnstest.stamp">
+    <srcfiles dir="test" includes="mnstest.xml"/>
+  </uptodate>
+</target>
+
+<target name="mns-test" depends="jar,mns-split" description="Test MNS validation">
+  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
+    <arg value="-m"/>
+    <arg value="build/mnstest/out.log"/>
+    <arg value="build/mnstest"/>
+    <classpath>
+      <pathelement location="build/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
 <target name="xsd-test" depends="jar,xsd-split" description="Test the XML Schema Datatypes implementation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="build/xsdtest/out.log"/>
