@@ -1,3 +1,5 @@
+Avoid making all element declarations global.
+
 We can get (x | (y | z)) if (y|z) was a name class.  Simplify into x|y|z.
 
 Check for duplicate attributes.
