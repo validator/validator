@@ -1,6 +1,6 @@
 package com.thaiopensource.validate.nrl;
 
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.nrl.Action;
 import com.thaiopensource.validate.nrl.Mode;
 import com.thaiopensource.validate.nrl.ModeUsage;

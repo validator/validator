@@ -7,7 +7,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXParseException;
-import com.thaiopensource.validate.ValidatorHandler;
+import org.xml.sax.DTDHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.nrl.ActionSet;
@@ -28,7 +29,7 @@ import java.util.Stack;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
+class ValidatorImpl extends DefaultHandler implements Validator {
   private static final String BEARER_URI = "";
   private static final String BEARER_LOCAL_NAME = "#bearer";
   private static final String NO_NS = "\0";
@@ -39,7 +40,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private Section currentSection;
   private PrefixMapping prefixMapping = null;
   private final Hashtable validatorHandlerCache = new Hashtable();
-  private final Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
+  private final Localizer localizer = new Localizer(ValidatorImpl.class);
   private final Hashset noResultActions = new Hashset();
   private final Hashtable attributeNamespaceIndexSets = new Hashtable();
   private final Vector activeHandlersAttributeIndexSets = new Vector();
@@ -71,12 +72,12 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
      */
     int depth = 0;
     /**
-     * List of the ValidatorHandlers rooted in this section
+     * List of the Validators rooted in this section
      */
-    final Vector newHandlers = new Vector();
+    final Vector validators = new Vector();
     final Vector schemas = new Vector();
     /**
-     * List of the ValidatorHandlers that want to see the elements in this section
+     * List of the ContentHandlers that want to see the elements in this section
      */
     final Vector activeHandlers = new Vector();
     final Vector activeHandlersAttributeModeUsage = new Vector();
@@ -94,26 +95,26 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       this.parent = parent;
     }
 
-    public void addChildMode(ModeUsage modeUsage, ValidatorHandler handler) {
+    public void addChildMode(ModeUsage modeUsage, ContentHandler handler) {
       childPrograms.addElement(new Program(modeUsage, handler));
       if (modeUsage.isContextDependent())
         contextDependent = true;
     }
 
-    public void addNewValidator(Schema schema, ModeUsage modeUsage) {
+    public void addValidator(Schema schema, ModeUsage modeUsage) {
       schemas.addElement(schema);
-      ValidatorHandler handler = createValidatorHandler(schema);
-      newHandlers.addElement(handler);
-      activeHandlers.addElement(handler);
+      Validator validator = createValidator(schema);
+      validators.addElement(validator);
+      activeHandlers.addElement(validator.getContentHandler());
       activeHandlersAttributeModeUsage.addElement(modeUsage);
       attributeProcessing = Math.max(attributeProcessing,
                                      modeUsage.getAttributeProcessing());
-      childPrograms.addElement(new Program(modeUsage, handler));
+      childPrograms.addElement(new Program(modeUsage, validator.getContentHandler()));
       if (modeUsage.isContextDependent())
         contextDependent = true;
     }
 
-    public void addActiveValidator(ValidatorHandler handler, ModeUsage attributeModeUsage) {
+    public void addActiveHandler(ContentHandler handler, ModeUsage attributeModeUsage) {
       activeHandlers.addElement(handler);
       activeHandlersAttributeModeUsage.addElement(attributeModeUsage);
       attributeProcessing = Math.max(attributeProcessing,
@@ -143,15 +144,15 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
 
   static private class Program {
     final ModeUsage modeUsage;
-    final ValidatorHandler handler;
+    final ContentHandler handler;
 
-    Program(ModeUsage modeUsage, ValidatorHandler handler) {
+    Program(ModeUsage modeUsage, ContentHandler handler) {
       this.modeUsage = modeUsage;
       this.handler = handler;
     }
   }
 
-  ValidatorHandlerImpl(Mode mode, PropertyMap properties) {
+  ValidatorImpl(Mode mode, PropertyMap properties) {
     this.properties = properties;
     this.eh = ValidateProperty.ERROR_HANDLER.get(properties);
     this.startMode = mode;
@@ -278,12 +279,15 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private void validateAttributes(Schema schema, Attributes attributes) throws SAXException {
-    ValidatorHandler vh = createValidatorHandler(schema);
-    initHandler(vh);
-    vh.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME, attributes);
-    vh.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
-    cleanupHandler(vh);
-    releaseValidatorHandler(schema, vh);
+    Validator validator = createValidator(schema);
+    ContentHandler ch = validator.getContentHandler();
+    initHandler(ch);
+    ch.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME, attributes);
+    ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
+    cleanupHandler(ch);
+    if (!validator.isValidSoFar())
+      validSoFar = false;
+    releaseValidator(schema, validator);
   }
 
   private void startSection(String uri) throws SAXException {
@@ -305,17 +309,17 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         }
       }
     }
-    for (int i = 0, len = section.newHandlers.size(); i < len; i++)
-      initHandler((ValidatorHandler)section.newHandlers.elementAt(i));
+    for (int i = 0, len = section.validators.size(); i < len; i++)
+      initHandler(((Validator)section.validators.elementAt(i)).getContentHandler());
     currentSection = section;
   }
 
-  private void initHandler(ValidatorHandler vh) throws SAXException {
+  private void initHandler(ContentHandler ch) throws SAXException {
     if (locator != null)
-      vh.setDocumentLocator(locator);
-    vh.startDocument();
+      ch.setDocumentLocator(locator);
+    ch.startDocument();
     for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
-      vh.startPrefixMapping(pm.prefix, pm.uri);
+      ch.startPrefixMapping(pm.prefix, pm.uri);
   }
 
   public void endElement(String uri, String localName, String qName)
@@ -330,20 +334,20 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private void endSection() throws SAXException {
-    for (int i = 0, len = currentSection.newHandlers.size(); i < len; i++) {
-      ValidatorHandler vh = (ValidatorHandler)currentSection.newHandlers.elementAt(i);
-      cleanupHandler(vh);
-      releaseValidatorHandler((Schema)currentSection.schemas.elementAt(i), vh);
+    for (int i = 0, len = currentSection.validators.size(); i < len; i++) {
+      Validator validator = (Validator)currentSection.validators.elementAt(i);
+      cleanupHandler(validator.getContentHandler());
+      if (!validator.isValidSoFar())
+        validSoFar = false;
+      releaseValidator((Schema)currentSection.schemas.elementAt(i), validator);
     }
     currentSection = currentSection.parent;
   }
 
-  private void cleanupHandler(ValidatorHandler vh) throws SAXException {
+  private void cleanupHandler(ContentHandler vh) throws SAXException {
     for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
       vh.endPrefixMapping(pm.prefix);
     vh.endDocument();
-    if (!vh.isValidSoFar())
-      validSoFar = false;
   }
 
   public void endDocument()
@@ -362,7 +366,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     prefixMapping = prefixMapping.parent;
   }
 
-  private ValidatorHandler createValidatorHandler(Schema schema) {
+  private Validator createValidator(Schema schema) {
     Stack stack = (Stack)validatorHandlerCache.get(schema);
     if (stack == null) {
       stack = new Stack();
@@ -370,18 +374,18 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
     if (stack.empty())
       return schema.createValidator(properties);
-    return (ValidatorHandler)stack.pop();
+    return (Validator)stack.pop();
   }
 
-  private void releaseValidatorHandler(Schema schema, ValidatorHandler vh) {
+  private void releaseValidator(Schema schema, Validator vh) {
     vh.reset();
     ((Stack)validatorHandlerCache.get(schema)).push(vh);
   }
 
   public boolean isValidSoFar() {
     for (Section s = currentSection; s != null; s = s.parent) {
-      for (int i = 0, len = s.newHandlers.size(); i < len; i++) {
-        if (!((ValidatorHandler)s.newHandlers.elementAt(i)).isValidSoFar())
+      for (int i = 0, len = s.validators.size(); i < len; i++) {
+        if (!((Validator)s.validators.elementAt(i)).isValidSoFar())
           return false;
       }
     }
@@ -391,5 +395,13 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   public void reset() {
     validSoFar = true;
     initCurrentSection();
+  }
+
+  public ContentHandler getContentHandler() {
+    return this;
+  }
+
+  public DTDHandler getDTDHandler() {
+    return this;
   }
 }

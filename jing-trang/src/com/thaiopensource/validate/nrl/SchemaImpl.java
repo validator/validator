@@ -6,7 +6,7 @@ import com.thaiopensource.util.Uri;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
@@ -55,7 +55,7 @@ class SchemaImpl implements Schema {
     private int foreignDepth = 0;
     private Mode currentMode = null;
     private String defaultSchemaType;
-    private ValidatorHandler validator;
+    private Validator validator;
     private ElementsOrAttributes match;
     private ActionSet actions;
     private AttributeActionSet attributeActions;
@@ -82,7 +82,7 @@ class SchemaImpl implements Schema {
       catch (IncorrectSchemaException e) {
         throw new RuntimeException("internal error in RNG schema for NRL");
       }
-      setDelegate(validator);
+      setDelegate(validator.getContentHandler());
       if (locator != null)
         super.setDocumentLocator(locator);
       super.startDocument();
@@ -435,8 +435,8 @@ class SchemaImpl implements Schema {
     return h;
   }
 
-  public ValidatorHandler createValidator(PropertyMap properties) {
-    return new ValidatorHandlerImpl(startMode, properties);
+  public Validator createValidator(PropertyMap properties) {
+    return new ValidatorImpl(startMode, properties);
   }
 
   private Mode getModeAttribute(Attributes attributes, String localName) {

@@ -8,12 +8,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
+import org.xml.sax.DTDHandler;
 
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.xml.sax.Sax2XMLReaderCreator;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.ValidateProperty;
@@ -39,7 +40,7 @@ public class ValidationEngine {
   private final SchemaReader sr;
   private final PropertyMap schemaProperties;
   private final PropertyMap instanceProperties;
-  private ValidatorHandler vh;
+  private Validator validator;
   private Schema schema;
 
   /**
@@ -167,7 +168,7 @@ public class ValidationEngine {
   public boolean loadSchema(InputSource in) throws SAXException, IOException {
     try {
       schema = sr.createSchema(in, schemaProperties);
-      vh = null;
+      validator = null;
       return true;
     }
     catch (IncorrectSchemaException e) {
@@ -188,19 +189,21 @@ public class ValidationEngine {
   public boolean validate(InputSource in) throws SAXException, IOException {
     if (schema == null)
       throw new IllegalStateException("cannot validate without schema");
-    if (vh == null)
-     vh = schema.createValidator(instanceProperties);
+    if (validator == null)
+     validator = schema.createValidator(instanceProperties);
     else
-      vh.reset();
+      validator.reset();
     if (xr == null) {
       xr = xrc.createXMLReader();
       if (eh != null)
         xr.setErrorHandler(eh);
     }
-    xr.setContentHandler(vh);
-    xr.setDTDHandler(vh);
+    xr.setContentHandler(validator.getContentHandler());
+    DTDHandler dh = validator.getDTDHandler();
+    if (dh != null)
+      xr.setDTDHandler(dh);
     xr.parse(in);
-    return vh.isValidSoFar();
+    return validator.isValidSoFar();
   }
 
   /**

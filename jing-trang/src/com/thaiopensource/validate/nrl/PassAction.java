@@ -1,18 +1,19 @@
 package com.thaiopensource.validate.nrl;
 
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.nrl.Mode;
 import com.thaiopensource.validate.nrl.ModeUsage;
+import org.xml.sax.ContentHandler;
 
 class PassAction extends ResultAction {
   PassAction(ModeUsage modeUsage) {
     super(modeUsage);
   }
 
-  void perform(ValidatorHandler handler, SectionState state) {
+  void perform(ContentHandler handler, SectionState state) {
     final ModeUsage modeUsage = getModeUsage();
     if (handler != null)
-      state.addActiveValidator(handler, modeUsage);
+      state.addActiveHandler(handler, modeUsage);
     else
       state.addAttributeValidationModeUsage(modeUsage);
     state.addChildMode(modeUsage, handler);

@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import com.thaiopensource.xml.util.Name;
@@ -9,10 +9,12 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.ContentHandler;
 
 import java.util.Hashtable;
 
-public class PatternValidatorHandler extends DtdContext implements ValidatorHandler {
+public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
   protected ErrorHandler eh;
@@ -190,7 +192,7 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
     prefixMapping = prefixMapping.getPrevious();
   }
 
-  public PatternValidatorHandler(Pattern pattern, ValidatorPatternBuilder builder, ErrorHandler eh) {
+  public PatternValidator(Pattern pattern, ValidatorPatternBuilder builder, ErrorHandler eh) {
     this.start = pattern;
     this.builder = builder;
     this.eh = eh;
@@ -208,6 +210,14 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
 
   public boolean isValidSoFar() {
     return !hadError;
+  }
+
+  public ContentHandler getContentHandler() {
+    return this;
+  }
+
+  public DTDHandler getDTDHandler() {
+    return this;
   }
 
   private void error(String key) throws SAXException {

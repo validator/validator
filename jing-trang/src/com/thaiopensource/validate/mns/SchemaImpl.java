@@ -6,7 +6,7 @@ import com.thaiopensource.util.Uri;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.Name;
@@ -122,7 +122,7 @@ class SchemaImpl implements Schema {
     private final Stack nameStack = new Stack();
     private boolean isRoot;
     private int pathDepth = 0;
-    private ValidatorHandler validator;
+    private Validator validator;
 
 
     Handler(SchemaReceiverImpl sr) {
@@ -145,7 +145,7 @@ class SchemaImpl implements Schema {
       catch (IncorrectSchemaException e) {
         throw new RuntimeException("internal error in RNG schema for MNS");
       }
-      setDelegate(validator);
+      setDelegate(validator.getContentHandler());
       if (locator != null)
         super.setDocumentLocator(locator);
       super.startDocument();
@@ -440,8 +440,8 @@ class SchemaImpl implements Schema {
     return h;
   }
 
-  public ValidatorHandler createValidator(PropertyMap properties) {
-    return new ValidatorHandlerImpl(startMode, properties);
+  public Validator createValidator(PropertyMap properties) {
+    return new ValidatorImpl(startMode, properties);
   }
 
   private Mode lookupCreateMode(String name) {

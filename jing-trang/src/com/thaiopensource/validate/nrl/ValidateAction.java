@@ -16,7 +16,7 @@ class ValidateAction extends NoResultAction {
   }
 
   void perform(SectionState state) throws SAXException {
-    state.addNewValidator(schema, getModeUsage());
+    state.addValidator(schema, getModeUsage());
   }
 
   NoResultAction changeCurrentMode(Mode mode) {

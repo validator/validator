@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng.impl;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import org.xml.sax.ErrorHandler;
 
 public class FeasibleIdTypeMapSchema implements Schema {
@@ -13,7 +13,7 @@ public class FeasibleIdTypeMapSchema implements Schema {
     this.idTypeMap = idTypeMap;
   }
 
-  public ValidatorHandler createValidator(PropertyMap properties) {
+  public Validator createValidator(PropertyMap properties) {
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
     return new FeasibleIdSoundnessChecker(idTypeMap, eh);
   }

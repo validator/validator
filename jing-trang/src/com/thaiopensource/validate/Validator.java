@@ -1,7 +1,6 @@
 package com.thaiopensource.validate;
 
 import org.xml.sax.ContentHandler;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.DTDHandler;
 
 /**
@@ -15,7 +14,7 @@ import org.xml.sax.DTDHandler;
  *
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
-public interface ValidatorHandler extends ContentHandler, DTDHandler {
+public interface Validator {
   /**
    * Reports whether the content received so far is valid.  If this is called before
    * <code>endDocument</code>, then it reports whether the content received so far
@@ -33,4 +32,7 @@ public interface ValidatorHandler extends ContentHandler, DTDHandler {
    * The current <code>ErrorHandler</code> is not affected.
    */
   void reset();
+
+  ContentHandler getContentHandler();
+  DTDHandler getDTDHandler();
 }

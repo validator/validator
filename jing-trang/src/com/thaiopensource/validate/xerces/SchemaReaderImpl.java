@@ -42,7 +42,7 @@ class SchemaReaderImpl implements SchemaReader {
       preparser.preparseGrammar(XMLGrammarDescription.XML_SCHEMA, toXMLInputSource(in));
     }
     catch (XNIException e) {
-      throw ValidatorHandlerImpl.toSAXException(e);
+      throw ValidatorImpl.toSAXException(e);
     }
     if (xeh.getHadError())
       throw new IncorrectSchemaException();

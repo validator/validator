@@ -1,13 +1,14 @@
 package com.thaiopensource.validate.nrl;
 
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
+import org.xml.sax.ContentHandler;
 
 class DelveAction extends ResultAction {
   DelveAction(ModeUsage modeUsage) {
     super(modeUsage);
   }
 
-  void perform(ValidatorHandler handler, SectionState state) {
+  void perform(ContentHandler handler, SectionState state) {
     state.addChildMode(getModeUsage(), handler);
   }
 

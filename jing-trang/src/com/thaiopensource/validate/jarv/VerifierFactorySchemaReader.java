@@ -4,7 +4,7 @@ import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierFactory;
 import org.xml.sax.InputSource;
@@ -22,9 +22,9 @@ public class VerifierFactorySchemaReader implements SchemaReader {
       this.schema = schema;
     }
 
-    public ValidatorHandler createValidator(PropertyMap properties) {
+    public Validator createValidator(PropertyMap properties) {
       try {
-        return new VerifierValidatorHandler(schema.newVerifier(), properties);
+        return new VerifierValidator(schema.newVerifier(), properties);
       }
       catch (VerifierConfigurationException e) {
         Exception cause = e.getCauseException();

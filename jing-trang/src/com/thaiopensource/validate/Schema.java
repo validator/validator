@@ -18,5 +18,5 @@ public interface Schema {
    * @return a new <code>ValidatorHandler</code> that can be used to validate an XML document
    * against this schema; never <code>null</code>
    */
-  ValidatorHandler createValidator(PropertyMap properties);
+  Validator createValidator(PropertyMap properties);
 }

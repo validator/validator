@@ -1,7 +1,7 @@
 package com.thaiopensource.validate.mns;
 
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.mns.ContextMap;
 import com.thaiopensource.validate.mns.Hashset;
@@ -14,12 +14,14 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.Stack;
 import java.util.Hashtable;
 
-class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
+class ValidatorImpl extends DefaultHandler implements Validator {
   private static final String BEARER_URI = "";
   private static final String BEARER_LOCAL_NAME = "#bearer";
   private SchemaImpl.Mode currentMode;
@@ -31,12 +33,12 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private boolean validSoFar = true;
   private final Hashset attributeNamespaces = new Hashset();
   private PrefixMapping prefixMapping = null;
-  private final Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
-  private final Hashtable validatorHandlerCache = new Hashtable();
+  private final Localizer localizer = new Localizer(ValidatorImpl.class);
+  private final Hashtable validatorCache = new Hashtable();
 
   static private class Subtree {
     final Subtree parent;
-    final ValidatorHandler validator;
+    final Validator validator;
     final Schema schema;
     final Hashset coveredNamespaces;
     final ElementsOrAttributes prune;
@@ -46,7 +48,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final ContextMap contextMap;
 
     Subtree(Hashset coveredNamespaces, ContextMap contextMap,
-            ElementsOrAttributes prune, ValidatorHandler validator,
+            ElementsOrAttributes prune, Validator validator,
             Schema schema, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.coveredNamespaces = coveredNamespaces;
       this.contextMap = contextMap;
@@ -71,7 +73,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
   }
 
-  ValidatorHandlerImpl(SchemaImpl.Mode mode, PropertyMap properties) {
+  ValidatorImpl(SchemaImpl.Mode mode, PropertyMap properties) {
     this.currentMode = mode;
     this.properties = properties;
     this.eh = ValidateProperty.ERROR_HANDLER.get(properties);
@@ -84,13 +86,13 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   public void characters(char ch[], int start, int length)
           throws SAXException {
     for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
-      st.validator.characters(ch, start, length);
+      st.validator.getContentHandler().characters(ch, start, length);
   }
 
   public void ignorableWhitespace(char ch[], int start, int length)
           throws SAXException {
     for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
-      st.validator.ignorableWhitespace(ch, start, length);
+      st.validator.getContentHandler().ignorableWhitespace(ch, start, length);
   }
 
   private SchemaImpl.Mode getMode() {
@@ -119,7 +121,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         subtrees = new Subtree(elementAction.getCoveredNamespaces(),
                                elementAction.getContextMap(),
                                elementAction.getPrune(),
-                               createValidatorHandler(elementAction.getSchema()),
+                               createValidator(elementAction.getSchema()),
                                elementAction.getSchema(),
                                currentMode,
                                laxDepth,
@@ -127,7 +129,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         subtrees.context.push(new Name(uri, localName));
         currentMode = elementAction.getMode();
         laxDepth = 0;
-        startSubtree(subtrees.validator);
+        startSubtree(subtrees.validator.getContentHandler());
       }
     }
     for (Subtree st = subtrees; wantsEvent(st); st = st.parent) {
@@ -136,7 +138,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         prunedAtts = new NamespaceFilteredAttributes(uri, true, attributes);
       else
         prunedAtts = attributes;
-      st.validator.startElement(uri, localName, qName, prunedAtts);
+      st.validator.getContentHandler().startElement(uri, localName, qName, prunedAtts);
     }
     for (int i = 0, len = attributes.getLength(); i < len; i++) {
       String ns = attributes.getURI(i);
@@ -169,42 +171,45 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         error("attributes_undeclared_namespace", ns);
       return;
     }
-    ValidatorHandler vh = createValidatorHandler(attributesSchema);
-    startSubtree(vh);
-    vh.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME,
+    Validator validator = createValidator(attributesSchema);
+    ContentHandler ch = validator.getContentHandler();
+    startSubtree(ch);
+    ch.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME,
                     new NamespaceFilteredAttributes(ns, false, attributes));
-    vh.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
-    endSubtree(vh);
-    releaseValidatorHandler(attributesSchema, vh);
-  }
-
-  private void startSubtree(ValidatorHandler vh) throws SAXException {
-    if (locator != null)
-      vh.setDocumentLocator(locator);
-    vh.startDocument();
-    for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
-      vh.startPrefixMapping(pm.prefix, pm.uri);
-  }
-
-  private void endSubtree(ValidatorHandler vh) throws SAXException {
-    for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
-      vh.endPrefixMapping(pm.prefix);
-    vh.endDocument();
-    if (!vh.isValidSoFar())
+    ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
+    endSubtree(ch);
+    if (!validator.isValidSoFar())
       validSoFar = false;
+    releaseValidator(attributesSchema, validator);
+  }
+
+  private void startSubtree(ContentHandler ch) throws SAXException {
+    if (locator != null)
+      ch.setDocumentLocator(locator);
+    ch.startDocument();
+    for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
+      ch.startPrefixMapping(pm.prefix, pm.uri);
+  }
+
+  private void endSubtree(ContentHandler ch) throws SAXException {
+    for (PrefixMapping pm = prefixMapping; pm != null; pm = pm.parent)
+      ch.endPrefixMapping(pm.prefix);
+    ch.endDocument();
   }
 
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
     for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
-      st.validator.endElement(uri, localName, qName);
+      st.validator.getContentHandler().endElement(uri, localName, qName);
     if (laxDepth > 0)
       laxDepth--;
     else if (!subtrees.context.empty()) {
       subtrees.context.pop();
       if (subtrees.context.empty()) {
-        endSubtree(subtrees.validator);
-        releaseValidatorHandler(subtrees.schema, subtrees.validator);
+        endSubtree(subtrees.validator.getContentHandler());
+        if (!subtrees.validator.isValidSoFar())
+          validSoFar = false;
+        releaseValidator(subtrees.schema, subtrees.validator);
         currentMode = subtrees.parentMode;
         laxDepth = subtrees.parentLaxDepth;
         subtrees = subtrees.parent;
@@ -212,20 +217,20 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
   }
 
-  private ValidatorHandler createValidatorHandler(Schema schema) {
-     Stack stack = (Stack)validatorHandlerCache.get(schema);
+  private Validator createValidator(Schema schema) {
+     Stack stack = (Stack)validatorCache.get(schema);
      if (stack == null) {
        stack = new Stack();
-       validatorHandlerCache.put(schema, stack);
+       validatorCache.put(schema, stack);
      }
      if (stack.empty())
        return schema.createValidator(properties);
-     return (ValidatorHandler)stack.pop();
+     return (Validator)stack.pop();
    }
 
-   private void releaseValidatorHandler(Schema schema, ValidatorHandler vh) {
-     vh.reset();
-     ((Stack)validatorHandlerCache.get(schema)).push(vh);
+   private void releaseValidator(Schema schema, Validator validator) {
+     validator.reset();
+     ((Stack)validatorCache.get(schema)).push(validator);
    }
 
   public void endDocument()
@@ -255,6 +260,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     validSoFar = true;
     subtrees = null;
     locator = null;
+  }
+
+  public ContentHandler getContentHandler() {
+    return this;
+  }
+
+  public DTDHandler getDTDHandler() {
+    return null;
   }
 
   private void error(String key, String arg) throws SAXException {

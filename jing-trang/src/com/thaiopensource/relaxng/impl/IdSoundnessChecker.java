@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.Datatype;
@@ -9,13 +9,15 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.helpers.LocatorImpl;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-public class IdSoundnessChecker implements ValidatorHandler {
+public class IdSoundnessChecker implements Validator, ContentHandler {
   private final IdTypeMap idTypeMap;
   private final ErrorHandler eh;
   private boolean hadError;
@@ -41,6 +43,14 @@ public class IdSoundnessChecker implements ValidatorHandler {
 
   public boolean isValidSoFar() {
     return !hadError;
+  }
+
+  public ContentHandler getContentHandler() {
+    return this;
+  }
+
+  public DTDHandler getDTDHandler() {
+    return null;
   }
 
   public void setDocumentLocator(Locator locator) {

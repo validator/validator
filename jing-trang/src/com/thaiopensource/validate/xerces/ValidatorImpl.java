@@ -2,7 +2,7 @@ package com.thaiopensource.validate.xerces;
 
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Validator;
 import org.apache.xerces.impl.XMLErrorReporter;
 import org.apache.xerces.impl.validation.EntityState;
 import org.apache.xerces.impl.validation.ValidationManager;
@@ -28,11 +28,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.ContentHandler;
 
 import java.io.IOException;
 import java.util.Hashtable;
 
-class ValidatorHandlerImpl extends ParserConfigurationSettings implements ValidatorHandler, XMLLocator, XMLEntityResolver, EntityState {
+class ValidatorImpl extends ParserConfigurationSettings implements Validator, ContentHandler, DTDHandler, XMLLocator, XMLEntityResolver, EntityState {
 
   private XMLSchemaValidator schemaValidator = new XMLSchemaValidator();
   private XMLErrorReporter errorReporter = new XMLErrorReporter();
@@ -65,7 +67,7 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
     Properties.ENTITY_RESOLVER,
   };
 
-  ValidatorHandlerImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, PropertyMap properties) {
+  ValidatorImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, PropertyMap properties) {
     this.symbolTable = symbolTable;
     errorHandlerWrapper = new SAXXMLErrorHandler(ValidateProperty.ERROR_HANDLER.get(properties));
     components = new XMLComponent[] { errorReporter, schemaValidator };
@@ -103,6 +105,14 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
     for (int i = 0; i < components.length; i++)
       components[i].reset(this);
     validationManager.setEntityState(this);
+  }
+
+  public ContentHandler getContentHandler() {
+    return this;
+  }
+
+  public DTDHandler getDTDHandler() {
+    return this;
   }
 
   public void setDocumentLocator(Locator locator) {
