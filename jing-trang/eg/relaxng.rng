@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.7 2001-05-26 03:54:52 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.8 2001-06-02 08:34:20 jjc Exp $ -->
 <grammar ns="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
@@ -74,14 +74,10 @@
       </element>
       <element name="ref">
         <attribute name="name"/>
-        <optional>
-          <attribute name="parent">
-            <choice>
-              <value>true</value>
-              <value>false</value>
-            </choice>
-          </attribute>
-        </optional>
+        <ref name="common-atts"/>
+      </element>
+      <element name="parentRef">
+        <attribute name="name"/>
         <ref name="common-atts"/>
       </element>
       <element name="empty">
