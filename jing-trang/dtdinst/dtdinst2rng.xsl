@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- Deal with fixed attributes properly. -->
+<!-- TODO: Deal with fixed attributes properly. -->
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/0.9"
