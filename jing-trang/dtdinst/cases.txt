@@ -1,0 +1,4 @@
+overridden declarations
+
+(foo %bar) where bar is empty
+
