@@ -13,6 +13,7 @@ import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.ValuePattern;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.util.Naming;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,18 +29,19 @@ public class PrefixManager implements SourceUriGenerator {
   /**
    * Set of prefixes that cannot be used for schema namespace.
    */
-  private final Set reservedPrefixes;
+  private final Set reservedPrefixes = new HashSet();
   private int nextGenIndex = 1;
+  static private final String[] xsdPrefixes  = { "xs", "xsd" };
+  static private final int MAX_PREFIX_LENGTH = 10;
 
   static class PrefixUsage {
     int count;
   }
 
-  static class PrefixSelector extends AbstractVisitor {
+  class PrefixSelector extends AbstractVisitor {
     private final SchemaInfo si;
     private String inheritedNamespace;
     private final Map namespacePrefixUsageMap = new HashMap();
-    private final Set reservedPrefixes = new HashSet();
 
     PrefixSelector(SchemaInfo si) {
       this.si = si;
@@ -135,26 +137,23 @@ public class PrefixManager implements SourceUriGenerator {
       return null;
     }
 
-    void assignPrefixes(Map prefixMap, Set usedPrefixes) {
+    void assignPrefixes() {
       for (Iterator iter = namespacePrefixUsageMap.entrySet().iterator(); iter.hasNext();) {
         Map.Entry entry = (Map.Entry)iter.next();
         String ns = (String)entry.getKey();
         if (!ns.equals("") && !ns.equals(WellKnownNamespaces.XML)) {
-          Map prefixUsageMap = (Map)(entry.getValue());
+          Map prefixUsageMap = (Map)entry.getValue();
           if (prefixUsageMap != null) {
             Map.Entry best = null;
             for (Iterator entryIter = prefixUsageMap.entrySet().iterator(); entryIter.hasNext();) {
               Map.Entry tem = (Map.Entry)entryIter.next();
-              if (best == null
-                  || ((PrefixUsage)tem.getValue()).count > ((PrefixUsage)best.getValue()).count
-                      && !usedPrefixes.contains(tem.getKey()))
+              if ((best == null
+                   || ((PrefixUsage)tem.getValue()).count > ((PrefixUsage)best.getValue()).count)
+                  && prefixOk((String)tem.getKey(), ns))
                 best = tem;
             }
-            if (best != null) {
-              String prefix = (String)best.getKey();
-              prefixMap.put(ns, prefix);
-              usedPrefixes.add(prefix);
-            }
+            if (best != null)
+              usePrefix((String)best.getKey(), ns);
           }
         }
       }
@@ -163,21 +162,18 @@ public class PrefixManager implements SourceUriGenerator {
 
   PrefixManager(SchemaInfo si) {
     usePrefix("xml", WellKnownNamespaces.XML);
-    PrefixSelector ps = new PrefixSelector(si);
-    ps.assignPrefixes(prefixMap, usedPrefixes);
-    this.reservedPrefixes = ps.reservedPrefixes;
+    new PrefixSelector(si).assignPrefixes();
   }
-
-  static private final String[] xsdPrefixes  = { "xs", "xsd" };
 
   String getPrefix(String namespace) {
     String prefix = (String)prefixMap.get(namespace);
     if (prefix == null && namespace.equals(WellKnownNamespaces.XML_SCHEMA)) {
-      for (int i = 0; i < xsdPrefixes.length; i++) {
-        if (tryUsePrefix(xsdPrefixes[i], WellKnownNamespaces.XML_SCHEMA))
+      for (int i = 0; i < xsdPrefixes.length; i++)
+        if (tryUsePrefix(xsdPrefixes[i], namespace))
           return xsdPrefixes[i];
-      }
     }
+    if (prefix == null)
+      prefix = tryUseUri(namespace);
     if (prefix == null) {
       do {
         prefix = "ns" + Integer.toString(nextGenIndex++);
@@ -186,18 +182,62 @@ public class PrefixManager implements SourceUriGenerator {
     return prefix;
   }
 
+  private String tryUseUri(String namespace) {
+    String segment = chooseSegment(namespace);
+    if (segment == null)
+      return null;
+    if (segment.length() <= MAX_PREFIX_LENGTH && tryUsePrefix(segment, namespace))
+      return segment;
+    for (int i = 1; i <= segment.length(); i++) {
+      String prefix = segment.substring(0, i);
+      if (tryUsePrefix(prefix, namespace))
+        return prefix;
+    }
+    return null;
+  }
+
   private boolean tryUsePrefix(String prefix, String namespace) {
-    if (usedPrefixes.contains(prefix))
-      return false;
-    if (reservedPrefixes.contains(prefix) && !namespace.equals(WellKnownNamespaces.XML_SCHEMA))
+    if (!prefixOk(prefix, namespace))
       return false;
     usePrefix(prefix, namespace);
     return true;
   }
 
+  private boolean prefixOk(String prefix, String namespace) {
+    return (!usedPrefixes.contains(prefix)
+            && !(reservedPrefixes.contains(prefix) && namespace.equals(WellKnownNamespaces.XML_SCHEMA)));
+  }
+
   private void usePrefix(String prefix, String namespace) {
     usedPrefixes.add(prefix);
     prefixMap.put(namespace, prefix);
+  }
+
+  static private String chooseSegment(String ns) {
+    int off = ns.indexOf('#');
+    if (off >= 0) {
+      String segment = ns.substring(off + 1).toLowerCase();
+      if (Naming.isNcname(segment))
+        return segment;
+    }
+    else
+      off = ns.length();
+    for (;;) {
+      int i = ns.lastIndexOf('/', off - 1);
+      if (i < 0 || (i > 0 && ns.charAt(i - 1) == '/'))
+        break;
+      String segment = ns.substring(i + 1, off).toLowerCase();
+      if (Naming.isNcname(segment))
+        return segment;
+      off = i;
+    }
+    off = ns.indexOf(':');
+    if (off >= 0) {
+      String segment = ns.substring(off + 1).toLowerCase();
+      if (Naming.isNcname(segment))
+        return segment;
+    }
+    return null;
   }
 
   public String generateSourceUri(String ns) {
