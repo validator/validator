@@ -522,7 +522,7 @@ class Parser extends Token {
   }
 
   private void doFatal(String message) throws ParseException {
-    if (parent != null)
+    if (isInternal)
       parent.doFatal(message);
     if (posOff > currentTokenStart)
       throw new Error("positioning botch");
