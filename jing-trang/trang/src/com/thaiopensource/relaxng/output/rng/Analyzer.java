@@ -24,6 +24,7 @@ import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.edit.Param;
 import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ExternalRefPattern;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
@@ -152,6 +153,11 @@ class Analyzer extends AbstractVisitor {
       except.accept(this);
     for (Iterator iter = p.getParams().iterator(); iter.hasNext();)
       visitAnnotated((Param)iter.next());      
+    return null;
+  }
+
+  public Object visitExternalRef(ExternalRefPattern p) {
+    noteInheritNs(p.getNs());
     return null;
   }
 
