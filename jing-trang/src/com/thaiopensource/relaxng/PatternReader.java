@@ -23,7 +23,6 @@ import org.xml.sax.helpers.LocatorImpl;
 
 import com.thaiopensource.datatype.Datatype;
 import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeReader;
 import com.thaiopensource.datatype.DatatypeFactory;
 
 public class PatternReader implements DatatypeContext {
@@ -122,22 +121,8 @@ public class PatternReader implements DatatypeContext {
 	state.set();
 	state.attributes(atts);
       }
-      else {
-	String role = atts.getValue(relaxngURI, "role");
-	if (role != null)
-	  startElementRole(role, namespaceURI, localName, qName, atts);
-	else
-	  xr.setContentHandler(new Skipper(this));
-      }
-    }
-
-    void startElementRole(String role,
-			  String namespaceURI,
-			  String localName,
-			  String qName,
-			  Attributes atts) throws SAXException {
-      error("bad_role", role);
-      xr.setContentHandler(new Skipper(this));
+      else
+	xr.setContentHandler(new Skipper(this));
     }
 
     public void endElement(String namespaceURI,
@@ -240,129 +225,6 @@ public class PatternReader implements DatatypeContext {
 
   }
 
-  class DatatypeReaderBridge implements XMLReader {
-    private DatatypeContentHandlerBridge contentHandler;
-
-    DatatypeReaderBridge(DatatypeContentHandlerBridge contentHandler) {
-      this.contentHandler = contentHandler;
-      xr.setContentHandler(contentHandler);
-    }
-
-    public boolean getFeature(String name)
-      throws SAXNotRecognizedException, SAXNotSupportedException {
-      return xr.getFeature(name);
-    }
-
-    public void setFeature(String name, boolean value)
-      throws SAXNotRecognizedException, SAXNotSupportedException {
-      throw new SAXNotSupportedException("cannot change feature");
-    }
-
-    public Object getProperty(String name)
-      throws SAXNotRecognizedException, SAXNotSupportedException {
-      return xr.getProperty(name);
-    }
-
-    public void setProperty(String name, Object value)
-      throws SAXNotRecognizedException, SAXNotSupportedException {
-      throw new SAXNotSupportedException("cannot change feature");
-    }
-
-    public void setEntityResolver(EntityResolver resolver) {
-      illegalOp();
-    }
-
-    public EntityResolver getEntityResolver() {
-      return xr.getEntityResolver();
-    }
-
-    public void setDTDHandler(DTDHandler handler) {
-      illegalOp();
-    }
-
-    public DTDHandler getDTDHandler() {
-      return xr.getDTDHandler();
-    }
-
-    public void setErrorHandler(ErrorHandler handler) {
-      illegalOp();
-    }
-
-    public ErrorHandler getErrorHandler() {
-      return xr.getErrorHandler();
-    }
-
-    public void setContentHandler(ContentHandler handler) {
-      contentHandler.setDelegate(handler);
-    }
-
-    public ContentHandler getContentHandler() {
-      return contentHandler.getDelegate();
-    }
-
-    public void parse(InputSource input)
-      throws IOException, SAXException {
-      illegalOp();
-    }
-
-    public void parse(String systemId)
-      throws IOException, SAXException {
-      illegalOp();
-    }
-
-    private void illegalOp() {
-      // XXX
-    }
-  }
-
-  class DatatypeContentHandlerBridge extends DelegateContentHandler {
-    private int level = 0;
-    private State parent;
-    private DatatypeReader datatypeReader;
-
-    DatatypeContentHandlerBridge(State parent, DatatypeReader datatypeReader) {
-      this.parent = parent;
-      this.datatypeReader = datatypeReader;
-    }
-
-    public void startElement(String namespaceURI,
-			     String localName,
-			     String qName,
-			     Attributes atts) throws SAXException {
-      ++level;
-      super.startElement(namespaceURI, localName, qName, atts);
-    }
-
-    public void endElement(String namespaceURI,
-			   String localName,
-			   String qName) throws SAXException {
-      super.endElement(namespaceURI, localName, qName);
-      if (--level == 0) {
-	super.endDocument();
-	end();
-      }
-    }
-
-    private void end() {
-      Datatype dt = null;
-      if (datatypeReader != null)
-	dt = datatypeReader.end();
-      Pattern pattern;
-      if (dt == null) {
-	hadError = true;
-	pattern = patternBuilder.makeError();
-      }
-      else {
-	Locator loc = null;
-	if (locator != null)
-	  loc = new LocatorImpl(locator);
-	pattern = patternBuilder.makeDatatype(dt, loc);
-      }
-      parent.endChild(pattern);
-      parent.set();
-    }
-  }
-
   abstract class EmptyContentState extends State {
 
     State createChildState(String localName) throws SAXException {
@@ -379,27 +241,6 @@ public class PatternReader implements DatatypeContext {
 
   abstract class PatternContainerState extends State {
     Pattern containedPattern;
-
-    void startElementRole(String role,
-			  String namespaceURI,
-			  String localName,
-			  String qName,
-			  Attributes atts) throws SAXException {
-      if (role.equals("datatype")) {
-	DatatypeReader dr = datatypeFactory.createDatatypeReader(namespaceURI, PatternReader.this);
-	if (dr == null)
-	  error("bad_anonymous_datatype", namespaceURI);
-	DatatypeContentHandlerBridge ch = new DatatypeContentHandlerBridge(this, dr);
-	xr.setContentHandler(ch);
-	if (dr != null)
-	  dr.start(new DatatypeReaderBridge(ch));
-	ch.setDocumentLocator(locator);
-	ch.startDocument();
-	ch.startElement(namespaceURI, localName, qName, atts);
-      }
-      else
-	super.startElementRole(role, namespaceURI, localName, qName, atts);
-    }
 
     State createChildState(String localName) throws SAXException {
       State state = (State)patternTable.get(localName);
