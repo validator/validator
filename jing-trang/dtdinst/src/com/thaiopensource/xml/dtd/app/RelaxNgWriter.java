@@ -13,6 +13,13 @@ public class RelaxNgWriter {
   private boolean hadAny = false;
   private Hashtable elementNameTable = new Hashtable();
   private Hashtable defTable = new Hashtable();
+  private Hashtable prefixTable = new Hashtable();
+
+  private String defaultNamespace = null;
+
+  Output groupOutput = new GroupOutput();
+  Output choiceOutput = new ChoiceOutput();
+  Output explicitOutput = new Output();
 
   // These variables control the names use for definitions.
   private String colonReplacement = null;
@@ -23,6 +30,8 @@ public class RelaxNgWriter {
   static final int ELEMENT_DECL = 01;
   static final int ATTLIST_DECL = 02;
   static final int ELEMENT_REF = 04;
+
+  static final String SEPARATORS = ".-_";
 
   // # is the category; % is the name in the category
 
@@ -148,7 +157,7 @@ public class RelaxNgWriter {
       w.startElement("element");
       w.attribute("name", nameSpec.getValue());
       ref(attlistDeclName(nameSpec.getValue()));
-      modelGroup.accept(this);
+      modelGroup.accept(groupOutput);
       w.endElement();
       w.endElement();
       if ((nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
@@ -174,7 +183,7 @@ public class RelaxNgWriter {
       throws Exception {
       w.startElement("define");
       w.attribute("name", name);
-      modelGroup.accept(this);
+      modelGroup.accept(groupOutput);
       w.endElement();
     }
 
@@ -182,7 +191,15 @@ public class RelaxNgWriter {
       throws Exception {
       w.startElement("define");
       w.attribute("name", name);
-      attributeGroup.accept(this);
+      AttributeGroupMember[] members = attributeGroup.getMembers();
+      if (members.length == 0) {
+	w.startElement("empty");
+	w.endElement();
+      }
+      else {
+	for (int i = 0; i < members.length; i++)
+	  members[i].accept(this);
+      }
       w.endElement();
     }
 
@@ -210,7 +227,7 @@ public class RelaxNgWriter {
       else {
 	w.startElement("choice");
 	for (int i = 0; i < members.length; i++)
-	  members[i].accept(this);
+	  members[i].accept(choiceOutput);
 	w.endElement();
       }
     }
@@ -225,26 +242,26 @@ public class RelaxNgWriter {
       else {
 	w.startElement("group");
 	for (int i = 0; i < members.length; i++)
-	  members[i].accept(this);
+	  members[i].accept(groupOutput);
 	w.endElement();
       }
     }
 
     public void oneOrMore(ModelGroup member) throws Exception {
       w.startElement("oneOrMore");
-      member.accept(this);
+      member.accept(groupOutput);
       w.endElement();
     }
 
     public void zeroOrMore(ModelGroup member) throws Exception {
       w.startElement("zeroOrMore");
-      member.accept(this);
+      member.accept(groupOutput);
       w.endElement();
     }
 
     public void optional(ModelGroup member) throws Exception {
       w.startElement("optional");
-      member.accept(this);
+      member.accept(groupOutput);
       w.endElement();
     }
 
@@ -269,11 +286,19 @@ public class RelaxNgWriter {
     public void attribute(NameSpec nameSpec,
 			  Datatype datatype,
 			  AttributeDefault attributeDefault) throws Exception {
+      String name = nameSpec.getValue();
+      if (name.equals("xmlns") || name.startsWith("xmlns:")) {
+	w.startElement("empty");
+	w.endElement();
+	return;
+      }
       if (!attributeDefault.isRequired())
 	w.startElement("optional");
       w.startElement("attribute");
-      w.attribute("name", nameSpec.getValue());
-      datatype.accept(this);
+      w.attribute("name", name);
+      if (datatype.getType() != Datatype.BASIC
+	  || !((BasicDatatype)datatype).getTypeName().equals("CDATA")) 
+	datatype.accept(explicitOutput);
       w.endElement();
       if (!attributeDefault.isRequired())
 	w.endElement();
@@ -286,14 +311,22 @@ public class RelaxNgWriter {
 
     public void basicDatatype(String typeName) throws IOException {
       w.startElement("data");
+      if (typeName.equals("CDATA"))
+	typeName = "string";
       w.attribute("type", typeName);
       w.endElement();
     }
     
     public void enumDatatype(EnumGroup enumGroup) throws Exception {
-      w.startElement("choice");
-      enumGroup.accept(this);
-      w.endElement();
+      if (enumGroup.getMembers().length == 0) {
+	w.startElement("notAllowed");
+	w.endElement();
+      }
+      else {
+	w.startElement("choice");
+	enumGroup.accept(this);
+	w.endElement();
+      }
     }
 
     public void notationDatatype(EnumGroup enumGroup) throws Exception {
@@ -315,16 +348,32 @@ public class RelaxNgWriter {
       ref(name);
     }
 
-    private void ref(String name) throws IOException {
-      w.startElement("ref");
-      w.attribute("name", name);
-      w.endElement();
-    }
-
     public void comment(String value) throws IOException {
       w.comment(value);
     }
 
+  }
+
+  class GroupOutput extends Output {
+    public void sequence(ModelGroup[] members) throws Exception {
+      if (members.length == 0)
+	super.sequence(members);
+      else {
+	for (int i = 0; i < members.length; i++)
+	  members[i].accept(this);
+      }
+    }
+  }
+
+  class ChoiceOutput extends Output {
+    public void choice(ModelGroup[] members) throws Exception {
+      if (members.length == 0)
+	super.choice(members);
+      else {
+	for (int i = 0; i < members.length; i++)
+	  members[i].accept(this);
+      }
+    }
   }
 
   public RelaxNgWriter(XmlWriter w) {
@@ -339,17 +388,15 @@ public class RelaxNgWriter {
       throw (RuntimeException)e;
     }
     chooseNames();
-    if (colonReplacement != null)
-      System.err.println("colonReplacement: " + colonReplacement);
-    System.err.println("elementDecl: " + elementDeclPattern);
-    System.err.println("attlistDecl: " + attlistDeclPattern);
     w.startElement("grammar");
     w.attribute("datatypeLibrary",
 		"http://www.w3.org/2001/XMLSchema-datatypes");
     w.attribute("xmlns",
 		"http://relaxng.org/ns/structure/0.9");
+    outputNamespaces();
+    outputStart();
     try {
-      dtd.accept(new Output());
+      dtd.accept(explicitOutput);
     }
     catch (RuntimeException e) {
       throw e;
@@ -357,15 +404,21 @@ public class RelaxNgWriter {
     catch (Exception e) {
       throw (IOException)e;
     }
+    outputUndefinedElements();
     w.endElement();
   }
 
   void chooseNames() {
+    chooseAny();
     chooseColonReplacement();
     chooseDeclPatterns();
   }
 
-  static final String SEPARATORS = ".-_";
+  void chooseAny() {
+    if (!hadAny)
+      return;
+    // XXX
+  }
 
   void chooseColonReplacement() {
     if (colonReplacementOk())
@@ -486,10 +539,33 @@ public class RelaxNgWriter {
       if (n.intValue() == flags)
 	return;
     }
+    else
+      noteNamePrefix(name);
     elementNameTable.put(name, new Integer(flags));
   }
 
   void noteAttribute(String name, String defaultValue) {
+    if (name.equals("xmlns")) {
+      // XXX check for inconsistency
+      if (defaultValue != null)
+	defaultNamespace = defaultValue;
+    }
+    else if (name.startsWith("xmlns:")) {
+      // XXX check for inconsistency
+      if (defaultValue != null)
+	prefixTable.put(name.substring(6), defaultValue);
+    }
+    else
+      noteNamePrefix(name);
+  }
+
+  private void noteNamePrefix(String name) {
+    int i = name.indexOf(':');
+    if (i < 0)
+      return;
+    String prefix = name.substring(0, i);
+    if (prefixTable.get(prefix) == null)
+      prefixTable.put(prefix, "");
   }
 
   int nameFlags(String name) {
@@ -531,5 +607,69 @@ public class RelaxNgWriter {
     buf.append(value);
     buf.append(pattern.substring(i + 1));
     return buf.toString();
+  }
+
+  void outputNamespaces() throws IOException {
+    for (Enumeration e = prefixTable.keys();
+	 e.hasMoreElements();) {
+      String prefix = (String)e.nextElement();
+      String ns = (String)prefixTable.get(prefix);
+      if (ns.length() != 0)
+	w.attribute("xmlns:" + prefix, ns);
+      else
+	; // XXX give an error
+    }
+    if (defaultNamespace != null)
+      w.attribute("ns", defaultNamespace);
+  }
+
+  void outputStart() throws IOException {
+    w.startElement("start");
+    w.startElement("choice");
+    // Use the defined but unreferenced elements.
+    // If there aren't any, use all defined elements.
+    int mask = ELEMENT_REF|ELEMENT_DECL;
+    for (;;) {
+      boolean gotOne = false;
+      for (Enumeration e = elementNameTable.keys();
+	   e.hasMoreElements();) {
+	String name = (String)e.nextElement();
+	if ((((Integer)elementNameTable.get(name)).intValue() & mask)
+	    == ELEMENT_DECL) {
+	  gotOne = true;
+	  ref(elementDeclName(name));
+	}
+      }
+      if (gotOne)
+	break;
+      if (mask == ELEMENT_DECL)
+	break;
+      mask = ELEMENT_DECL;
+    }
+    w.endElement();
+    w.endElement();
+  }
+
+  
+  void outputUndefinedElements() throws IOException {
+    for (Enumeration e = elementNameTable.keys();
+	 e.hasMoreElements();) {
+      String name = (String)e.nextElement();
+      if ((((Integer)elementNameTable.get(name)).intValue() & ELEMENT_DECL)
+	  == 0) {
+	w.startElement("define");
+	w.attribute("name", elementDeclName(name));
+	w.attribute("combine", "choice");
+	w.startElement("notAllowed");
+	w.endElement();
+	w.endElement();
+      }
+    }
+  }
+
+  void ref(String name) throws IOException {
+    w.startElement("ref");
+    w.attribute("name", name);
+    w.endElement();
   }
 }
