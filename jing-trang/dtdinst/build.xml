@@ -5,7 +5,7 @@
   <javac srcdir="src" destdir="build/classes"/>
 </target>
 
-<target name="jar">
+<target name="jar" depends="compile">
   <jar jarfile="build/dtdparse.jar" manifest="dtdparse.mf">
     <fileset dir="build/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
