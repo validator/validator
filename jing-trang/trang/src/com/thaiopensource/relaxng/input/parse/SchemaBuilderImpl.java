@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.input.parse;
 
 import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.GroupPattern;
@@ -82,14 +83,16 @@ class SchemaBuilderImpl implements SchemaBuilder {
   private final ErrorHandler eh;
   private final Map schemas;
   private final DatatypeLibraryFactory dlf;
+  private final boolean commentsNeedTrimming;
   private boolean hadError = false;
   static private final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
 
-  private SchemaBuilderImpl(Parseable parseable, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf) {
+  private SchemaBuilderImpl(Parseable parseable, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming) {
     this.parseable = parseable;
     this.eh = eh;
     this.schemas = schemas;
     this.dlf = dlf;
+    this.commentsNeedTrimming = commentsNeedTrimming;
   }
 
   public ParsedPattern makeChoice(ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException  {
@@ -437,8 +440,17 @@ class SchemaBuilderImpl implements SchemaBuilder {
     }
   }
 
+  static class TrimmingCommentListImpl extends CommentListImpl {
+    public void addComment(String value, Location loc) throws BuildException {
+      super.addComment(CommentTrimmer.trimComment(value), loc);
+    }
+  }
+
   public CommentList makeCommentList() {
-    return new CommentListImpl();
+    if (commentsNeedTrimming)
+      return new TrimmingCommentListImpl();
+    else
+      return new CommentListImpl();
   }
 
   private class DataPatternBuilderImpl implements DataPatternBuilder {
@@ -651,11 +663,11 @@ class SchemaBuilderImpl implements SchemaBuilder {
     return ns;
   }
 
-  static SchemaCollection parse(Parseable parseable, ErrorHandler eh, DatatypeLibraryFactory dlf)
+  static SchemaCollection parse(Parseable parseable, ErrorHandler eh, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming)
           throws IncorrectSchemaException, IOException, SAXException {
     try {
       SchemaCollection sc = new SchemaCollection();
-      SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable, eh, sc.getSchemas(), dlf);
+      SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable, eh, sc.getSchemas(), dlf, commentsNeedTrimming);
       sc.setMainSchema((Pattern)parseable.parse(sb, new ScopeImpl()));
       if (sb.hadError)
         throw new IncorrectSchemaException();

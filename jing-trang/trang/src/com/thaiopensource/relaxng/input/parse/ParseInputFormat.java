@@ -13,6 +13,10 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import java.io.IOException;
 
 public abstract class ParseInputFormat implements InputFormat {
+  private final boolean commentsNeedTrimming;
+  protected ParseInputFormat(boolean commentsNeedTrimming) {
+    this.commentsNeedTrimming = commentsNeedTrimming;
+  }
   public SchemaCollection load(String uri, String encoding, ErrorHandler eh) throws InputFailedException, IOException, SAXException {
     InputSource in = new InputSource(uri);
     if (encoding != null)
@@ -21,12 +25,13 @@ public abstract class ParseInputFormat implements InputFormat {
     try {
       return SchemaBuilderImpl.parse(parseable,
                                      eh,
-                                     new DatatypeLibraryLoader());
+                                     new DatatypeLibraryLoader(),
+                                     commentsNeedTrimming);
     }
     catch (IncorrectSchemaException e) {
       throw new InputFailedException();
     }
   }
 
-  public abstract Parseable makeParseable(InputSource in, ErrorHandler eh);
+  protected abstract Parseable makeParseable(InputSource in, ErrorHandler eh);
 }

@@ -7,6 +7,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
 public class CompactParseInputFormat extends ParseInputFormat {
+  public CompactParseInputFormat() {
+    super(false);
+  }
+
   public Parseable makeParseable(InputSource in, ErrorHandler eh) {
     return new CompactParseable(in, eh);
   }

@@ -1536,19 +1536,8 @@ class SchemaParser {
 
   class LexicalHandlerImpl extends AbstractLexicalHandler {
     public void comment(char[] chars, int start, int length) throws SAXException {
-      if (!inDtd) {
-        if (length > 0 && (chars[start] == ' ' || chars[start] == '\n')) {
-          length--;
-          start++;
-        }
-        while (length > 0) {
-          char c = chars[start + length - 1];
-          if (c != ' ' && c != '\n')
-            break;
-          length--;
-        }
+      if (!inDtd)
         ((CommentHandler)xr.getContentHandler()).comment(new String(chars, start, length));
-      }
     }
   }
 

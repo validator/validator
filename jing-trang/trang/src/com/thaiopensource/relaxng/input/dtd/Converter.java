@@ -28,6 +28,7 @@ import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
+import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.xml.dtd.om.AttributeDefault;
 import com.thaiopensource.xml.dtd.om.AttributeGroup;
 import com.thaiopensource.xml.dtd.om.AttributeGroupMember;
@@ -339,7 +340,7 @@ public class Converter {
     public void comment(String value) {
       if (comments == null)
         comments = new Vector();
-      comments.add(new Comment(trimComment(value)));
+      comments.add(new Comment(CommentTrimmer.trimComment(value)));
     }
 
     public void externalIdRef(String name, ExternalId externalId,
@@ -987,25 +988,6 @@ public class Converter {
     NameNameClass nnc = new NameNameClass(ns, localName);
     nnc.setPrefix(prefix);
     return nnc;
-  }
-
-  static String trimComment(String value) {
-    int len = value.length();
-    while (len > 0) {
-      char c = value.charAt(len - 1);
-      if (c != ' ' && c != '\n')
-        break;
-      --len;
-    }
-    int start = 0;
-    if (len > 0) {
-      char c = value.charAt(0);
-      if (c == ' ' || c == '\n')
-        start++;
-    }
-    if (start > 0 || len < value.length())
-      return value.substring(start, len);
-    return value;
   }
 }
 

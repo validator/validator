@@ -11,6 +11,10 @@ import org.xml.sax.ErrorHandler;
 public class SAXParseInputFormat extends ParseInputFormat {
   private final XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
 
+  public SAXParseInputFormat() {
+    super(true);
+  }
+
   public Parseable makeParseable(InputSource in, ErrorHandler eh) {
     return new SAXParseable(xrc, in, eh);
   }
