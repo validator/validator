@@ -113,7 +113,7 @@ class Entity {
     for (int i = 0; i < references.length; i++) {
       int start = textIndexToAtomIndex(references[i].start);
       int end = textIndexToAtomIndex(references[i].end);
-      if (start >= 0 && end >= 0) {
+      if (start >= 0 && end >= 0 && atomsAreProperlyNested(start, end)) {
 	if (newAtoms == null)
 	  newAtoms = new Vector();
 	appendSlice(newAtoms, atoms, nCopiedAtoms, start);
@@ -139,6 +139,33 @@ class Entity {
     appendSlice(newAtoms, atoms, nCopiedAtoms, atoms.size());
     atoms = newAtoms;
     references = null;
+  }
+
+  private boolean atomsAreProperlyNested(int start, int end) {
+    int level = 0;
+    for (int i = start; i < end; i++)
+      switch (((Atom)atoms.elementAt(i)).getTokenType()) {
+      case Tokenizer.TOK_COND_SECT_OPEN:
+      case Tokenizer.TOK_OPEN_PAREN:
+      case Tokenizer.TOK_OPEN_BRACKET:
+      case Tokenizer.TOK_DECL_OPEN:
+	level++;
+	break;
+      case Tokenizer.TOK_CLOSE_PAREN:
+      case Tokenizer.TOK_CLOSE_PAREN_ASTERISK:
+      case Tokenizer.TOK_CLOSE_PAREN_QUESTION:
+      case Tokenizer.TOK_CLOSE_PAREN_PLUS:
+      case Tokenizer.TOK_CLOSE_BRACKET:
+      case Tokenizer.TOK_DECL_CLOSE:
+	if (--level < 0)
+	  return false;
+	break;
+      case Tokenizer.TOK_COND_SECT_CLOSE:
+	if ((level -= 2) < 0)
+	  return false;
+	break;
+      }
+    return level == 0;
   }
 
   static boolean sliceEqual(Vector v1, Vector v2, int start, int end) {
