@@ -1,7 +1,7 @@
 srcdir=@srcdir@
 XSLTPROC=xsltproc
 
-check: spec-check mns-check xsd-check
+check: spec-check mns-check nrl-check xsd-check
 
 spec-check: spec-split/stamp
 	../test_jing spec-test.log spec-split
@@ -27,6 +27,18 @@ mns-split/stamp: mns-prepped.xml   $(srcdir)/exslt.xsl
 	$(XSLTPROC) $(srcdir)/exslt.xsl mns-prepped.xml 2>/dev/null
 	@>$@
 
+nrl-check: nrl-split/stamp
+	../test_jing nrl-test.log nrl-split
+
+nrl-prepped.xml: $(srcdir)/nrltest.xml $(srcdir)/prep.xsl
+	$(XSLTPROC) -o $@ --stringparam dir nrl-split $(srcdir)/prep.xsl $(srcdir)/nrltest.xml 2>/dev/null
+
+nrl-split/stamp: nrl-prepped.xml   $(srcdir)/exslt.xsl
+	-mkdir nrl-split
+	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl nrl-prepped.xml 2>/dev/null`
+	$(XSLTPROC) $(srcdir)/exslt.xsl nrl-prepped.xml 2>/dev/null
+	@>$@
+
 xsd-check: xsd-split/stamp
 	../test_jing xsd-test.log xsd-split
 
@@ -46,5 +58,6 @@ clean:
 	-rm -fr spec-split spec-prepped.xml
 	-rm -fr xsd-split xsd-prepped.xml xsd-test-suite.xml
 	-rm -fr mns-split mns-prepped.xml mns-test-suite.xml
+	-rm -fr nrl-split nrl-prepped.xml nrl-test-suite.xml
 
-.PHONY: clean check spec-check xsd-check mns-check
+.PHONY: clean check spec-check xsd-check mns-check nrl-check
