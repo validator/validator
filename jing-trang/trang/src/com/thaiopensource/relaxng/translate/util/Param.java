@@ -2,8 +2,8 @@ package com.thaiopensource.relaxng.translate.util;
 
 public interface Param {
   static class InvalidValueException extends Exception {
-    InvalidValueException() { }
-    InvalidValueException(String message) {
+    public InvalidValueException() { }
+    public InvalidValueException(String message) {
       super(message);
     }
   }

@@ -58,12 +58,25 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.HashMap;
 
 public class Converter {
+  static class Options {
+    boolean inlineAttlistDecls;
+    boolean generateStart = true;
+    String elementDeclPattern;
+    String attlistDeclPattern;
+    String colonReplacement;
+    String anyName;
+    String annotationPrefix;
+    String defaultNamespace;
+    final Map prefixMap = new HashMap();
+  }
+
   private final Dtd dtd;
   private final ErrorReporter er;
   private final SchemaCollection sc = new SchemaCollection();
-  private final boolean inlineAttlistDecls;
+  private final Options options;
   /**
    * true if any uses of ANY have been encountered in the DTD
    */
@@ -103,9 +116,9 @@ public class Converter {
 
   // These variables control the names use for definitions.
   private String colonReplacement = null;
-  private String elementDeclPattern;
-  private String attlistDeclPattern;
-  private String anyName;
+  private String elementDeclPattern = null;
+  private String attlistDeclPattern = null;
+  private String anyName = null;
 
   /**
    * Flags for element names used in elementDeclTable.
@@ -276,7 +289,7 @@ public class Converter {
 
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup) throws Exception {
       GroupPattern gp = new GroupPattern();
-      if (inlineAttlistDecls) {
+      if (options.inlineAttlistDecls) {
         List groups = (List)attlistDeclTable.get(nameSpec.getValue());
         if (groups != null) {
           attributeNames = new HashSet();
@@ -298,7 +311,7 @@ public class Converter {
       addComponent(new DefineComponent(elementDeclName(nameSpec.getValue()),
                                        new ElementPattern(convertQName(nameSpec.getValue(), true),
                                                           pattern)));
-      if (!inlineAttlistDecls && (nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
+      if (!options.inlineAttlistDecls && (nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
         DefineComponent dc = new DefineComponent(attlistDeclName(nameSpec.getValue()), new EmptyPattern());
         dc.setCombine(Combine.INTERLEAVE);
         addComponent(dc);
@@ -311,7 +324,7 @@ public class Converter {
     }
 
     public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup) throws Exception {
-      if (inlineAttlistDecls)
+      if (options.inlineAttlistDecls)
         return;
       String name = nameSpec.getValue();
       attributeNames
@@ -643,18 +656,16 @@ public class Converter {
     }
   }
 
-  public Converter(Dtd dtd, ErrorReporter er, boolean inlineAttlistDecls) {
+  public Converter(Dtd dtd, ErrorReporter er, Options options) {
     this.dtd = dtd;
     this.er = er;
-    this.inlineAttlistDecls = inlineAttlistDecls;
+    this.options = options;
   }
 
   public SchemaCollection convert() throws SAXException {
     try {
       dtd.accept(new Analyzer());
       chooseNames();
-      if (defaultNamespace == null)
-        defaultNamespace = SchemaBuilder.INHERIT_NS;
       GrammarPattern grammar = new GrammarPattern();
       sc.setMainUri(dtd.getUri());
       sc.getSchemaDocumentMap().put(dtd.getUri(),
@@ -662,7 +673,8 @@ public class Converter {
       ComponentOutput co = new ComponentOutput(grammar);
       dtd.accept(co);
       outputUndefinedElements(grammar.getComponents());
-      outputStart(grammar.getComponents());
+      if (options.generateStart)
+        outputStart(grammar.getComponents());
       co.finish();
       return sc;
     }
@@ -675,12 +687,21 @@ public class Converter {
     chooseAny();
     chooseColonReplacement();
     chooseDeclPatterns();
+    choosePrefixes();
     chooseAnnotationPrefix();
   }
 
   private void chooseAny() {
     if (!hadAny)
       return;
+    if (options.anyName != null) {
+      if (!definedNames.contains(options.anyName)) {
+        anyName = options.anyName;
+        definedNames.add(anyName);
+        return;
+      }
+      warning("cannot_use_any_name");
+    }
     for (int n = 0;; n++) {
       for (int i = 0; i < ANY_KEYWORDS.length; i++) {
 	anyName = repeatChar('_', n) + ANY_KEYWORDS[i];
@@ -692,9 +713,39 @@ public class Converter {
     }
   }
 
+  private void choosePrefixes() {
+    if (options.defaultNamespace != null) {
+      if (defaultNamespace != null && !defaultNamespace.equals(options.defaultNamespace))
+        warning("default_namespace_conflict");
+      defaultNamespace = options.defaultNamespace;
+    }
+    else if (defaultNamespace == null)
+      defaultNamespace = SchemaBuilder.INHERIT_NS;
+    for (Iterator iter = options.prefixMap.entrySet().iterator(); iter.hasNext();) {
+      Map.Entry entry = (Map.Entry)iter.next();
+      String prefix = (String)entry.getKey();
+      String ns = (String)entry.getValue();
+      String s = (String)prefixTable.get(prefix);
+      if (s == null)
+        warning("irrelevant_prefix", prefix);
+      else {
+        if (!s.equals("") && !s.equals(ns))
+          warning("prefix_conflict", prefix);
+        prefixTable.put(prefix, ns);
+      }
+    }
+  }
+
   private void chooseAnnotationPrefix() {
     if (!hadDefaultValue)
       return;
+    if (options.annotationPrefix != null) {
+      if (prefixTable.get(options.annotationPrefix) == null) {
+        annotationPrefix = options.annotationPrefix;
+        return;
+      }
+      warning("cannot_use_annotation_prefix");
+    }
     for (int n = 0;; n++) {
       annotationPrefix = repeatChar('_', n) + "a";
       if (prefixTable.get(annotationPrefix) == null)
@@ -703,6 +754,13 @@ public class Converter {
   }
 
   private void chooseColonReplacement() {
+    if (options.colonReplacement != null) {
+      colonReplacement = options.colonReplacement;
+      if (colonReplacementOk())
+        return;
+      warning("cannot_use_colon_replacement");
+      colonReplacement = null;
+    }
     if (colonReplacementOk())
       return;
     for (int n = 1;; n++) {
@@ -726,20 +784,37 @@ public class Converter {
   }
 
   private void chooseDeclPatterns() {
+    if (options.elementDeclPattern != null) {
+      if (patternOk(options.elementDeclPattern, null))
+        elementDeclPattern = options.elementDeclPattern;
+      else
+        warning("cannot_use_element_decl_pattern");
+    }
+    if (options.attlistDeclPattern != null) {
+      if (patternOk(options.attlistDeclPattern, elementDeclPattern))
+        attlistDeclPattern = options.attlistDeclPattern;
+      else
+        warning("cannot_use_attlist_decl_pattern");
+    }
+    if (elementDeclPattern != null && attlistDeclPattern != null)
+      return;
     // XXX Try to match length and case of best prefix
     String pattern = namingPattern();
-    if (patternOk("%"))
-      elementDeclPattern = "%";
-    else
-      elementDeclPattern = choosePattern(pattern, ELEMENT_KEYWORDS);
-    attlistDeclPattern = choosePattern(pattern, ATTLIST_KEYWORDS);
+    if (elementDeclPattern == null) {
+      if (patternOk("%", attlistDeclPattern))
+        elementDeclPattern = "%";
+      else
+        elementDeclPattern = choosePattern(pattern, ELEMENT_KEYWORDS, attlistDeclPattern);
+    }
+    if (attlistDeclPattern == null)
+      attlistDeclPattern = choosePattern(pattern, ATTLIST_KEYWORDS, elementDeclPattern);
   }
 
-  private String choosePattern(String metaPattern, String[] keywords) {
+  private String choosePattern(String metaPattern, String[] keywords, String otherPattern) {
     for (;;) {
       for (int i = 0; i < keywords.length; i++) {
 	String pattern = substitute(metaPattern, '#', keywords[i]);
-	if (patternOk(pattern))
+	if (patternOk(pattern, otherPattern))
 	  return pattern;
       }
       // add another separator
@@ -791,12 +866,23 @@ public class Converter {
       table.put(str, new Integer(n.intValue() + 1));
   }
 
-  private boolean patternOk(String pattern) {
+  private boolean patternOk(String pattern, String otherPattern) {
+    Set usedNames = new HashSet();
     for (Iterator iter = elementNameTable.keySet().iterator();
 	 iter.hasNext();) {
       String name = mungeQName((String)iter.next());
-      if (definedNames.contains(substitute(pattern, '%', name)))
+      String declName = substitute(pattern, '%', name);
+      if (definedNames.contains(declName))
 	return false;
+      if (otherPattern != null) {
+        String otherDeclName = substitute(otherPattern, '%', name);
+        if (usedNames.contains(declName)
+            || usedNames.contains(otherDeclName)
+            || declName.equals(otherDeclName))
+          return false;
+        usedNames.add(declName);
+        usedNames.add(otherDeclName);
+      }
     }
     return true;
   }

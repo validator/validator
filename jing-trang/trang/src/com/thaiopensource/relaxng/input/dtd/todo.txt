@@ -3,19 +3,9 @@ Incorrect start when no defined elements.
 Undefined elements do not contain reference to their attlists;
 undefined elements should use element pattern with notAllowed content.
 
-Option to declare namespace prefixes: -ixmlns:foo=http://...
-
-Option to set colon replacement string.
-
-Option to control name used for any.
-
 Option to control definition of any (anything at all, not allowed,
 choice of all defined elements, choice of all namespaces with defined
 elements).
-
-Option to control pattern used for name of definition for element declaration.
-
-Option to control pattern used for name of definition for attlist declaration.
 
 Option to map comments into annotations (or maybe should be separate program).
 
@@ -28,14 +18,3 @@ Try to preserve marked sections.
 Annotation for included sections (d:condition="flagName")
 
 Sort undefined elements.
-
-Need to avoid conflicts between attlist names and element declaration names  eg
-
-<!ENTITY % x.class "x">
-<!ENTITY % y.class "y">
-<!ENTITY % z.class "z">
-
-<!ELEMENT x (%x.class;|%y.class;|%z.class;)>
-<!ELEMENT y (#PCDATA)>
-<!ELEMENT z (#PCDATA)>
-<!ELEMENT x.attlist (#PCDATA)>
