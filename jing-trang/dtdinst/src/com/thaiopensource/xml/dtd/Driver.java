@@ -6,6 +6,8 @@ import java.io.OutputStreamWriter;
 
 public class Driver {
   public static void main (String args[]) throws IOException {
-    new SchemaWriter(new XmlWriter(new BufferedWriter(new OutputStreamWriter(System.out)))).writeDtd(new Dtd(args[0]));
+    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out));
+    new SchemaWriter(new XmlWriter(w)).writeDtd(new Dtd(args[0]));
+    w.flush();
   }
 }
