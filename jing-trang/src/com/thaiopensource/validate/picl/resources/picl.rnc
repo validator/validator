@@ -7,8 +7,7 @@ constraints = (key|ref|context|union)+
 context = element context { select, inherited, constraints }
 
 key =
-  element key {
-    attribute allowDuplicates { xsd:boolean }?,
+  element key|map {
     attribute name { xsd:NCName }?, # names must be unique in the context
     select,
     inherited,
