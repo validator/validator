@@ -10,9 +10,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.HashSet;
-import java.util.Set;
-
 class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private SchemaImpl.Mode currentMode;
   private int laxDepth = 0;
@@ -21,7 +18,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private Subtree subtrees = null;
   private boolean validSoFar = true;
   private boolean complete = false;
-  private final Set attributeNamespaces = new HashSet();
+  private final Hashset attributeNamespaces = new Hashset();
   private PrefixMapping prefixMapping = null;
   private Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
 
@@ -29,12 +26,12 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final Subtree parent;
     final ValidatorHandler validator;
     final String namespace;
-    final Set coveredNamespaces;
+    final Hashset coveredNamespaces;
     final SchemaImpl.Mode parentMode;
     final int parentLaxDepth;
     int depth = 0;
 
-    Subtree(String namespace, Set coveredNamespaces, ValidatorHandler validator, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
+    Subtree(String namespace, Hashset coveredNamespaces, ValidatorHandler validator, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.namespace = namespace;
       this.coveredNamespaces = coveredNamespaces;
       this.validator = validator;

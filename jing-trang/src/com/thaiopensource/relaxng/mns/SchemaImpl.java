@@ -16,18 +16,15 @@ import org.xml.sax.XMLReader;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 class SchemaImpl implements Schema {
   static final String BEARER_URI = "http://www.thaiopensoure.com/mns/instance";
   static final String BEARER_LOCAL_NAME = "globalAttributesBearer";
   private static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
   private static final String BEARER_PREFIX = "m";
-  private final Map modeMap = new HashMap();
+  private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
 
@@ -46,7 +43,7 @@ class SchemaImpl implements Schema {
   static class ElementAction {
     private Schema schema;
     private Mode mode;
-    private Set covered = new HashSet();
+    private Hashset covered = new Hashset();
 
     ElementAction(Schema schema, Mode mode) {
       this.schema = schema;
@@ -61,7 +58,7 @@ class SchemaImpl implements Schema {
       return schema;
     }
 
-    Set getCoveredNamespaces() {
+    Hashset getCoveredNamespaces() {
       return covered;
     }
   }
@@ -70,8 +67,8 @@ class SchemaImpl implements Schema {
     private boolean defined = false;
     private boolean strict = false;
     private boolean strictDefined = false;
-    private Map elementMap = new HashMap();
-    private Map attributesMap = new HashMap();
+    private Hashtable elementMap = new Hashtable();
+    private Hashtable attributesMap = new Hashtable();
 
     boolean isStrict() {
       return strict;
@@ -110,10 +107,9 @@ class SchemaImpl implements Schema {
     void checkValid() throws IncorrectSchemaException, SAXException {
       if (!validator.isValidSoFar())
         throw new IncorrectSchemaException();
-      for (Iterator iter = modeMap.entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        String modeName = (String)entry.getKey();
-        Mode mode = (Mode)entry.getValue();
+      for (Enumeration enum = modeMap.keys(); enum.hasMoreElements();) {
+        String modeName = (String)enum.nextElement();
+        Mode mode = (Mode)modeMap.get(modeName);
         if (!mode.defined && !modeName.equals(DEFAULT_MODE_NAME))
           error("undefined_mode", modeName); // XXX should have location
       }
