@@ -2,7 +2,7 @@
 
 <property name="sdkjava.dir" value="c:\Program Files\Microsoft SDK for Java 4.0"/>
 
-<target name="all" depends="jar, exegen, validate"/>
+<target name="all" depends="jar, exegen, test, validate"/>
 
 <target name="init">
   <mkdir dir="build"/>
@@ -92,8 +92,32 @@
   </jing>
 </target>
 
-<target name="dist" depends="jar, exegen, validate">
+<target name="split" depends="init, check-split" unless="split-not-required">
+  <delete dir="build/test"/>
+  <mkdir dir="build/test"/>
+  <style basedir="test" destdir="build/test" includes="spectest.xml" extension=".stamp" style="split.xsl">
+    <param name="dir" expression="build/test"/>
+  </style>
+</target>
 
+<target name="check-split">
+  <uptodate property="split-not-required" targetfile="build/test/spectest.stamp">
+    <srcfiles dir="test" includes="spectest.xml"/>
+  </uptodate>
+</target>
+
+<target name="test" depends="jar,split">
+  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
+    <arg value="build/test/out.log"/>
+    <arg value="build/test"/>
+    <classpath>
+      <pathelement path="${java.class.path}"/>
+      <pathelement location="build/jing.jar"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="dist" depends="jar, exegen, validate">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
