@@ -27,6 +27,10 @@ public class XmlWriter {
     this.cr = cr;
   }
 
+  public void setNewline(String newline) {
+    this.newline = newline;
+  }
+
   public void close() throws IOException {
     writer.close();
   }
@@ -145,7 +149,21 @@ public class XmlWriter {
       else if (!cr.contains(c))
 	throw new CharConversionException();
     }
-    writer.write(str);
+    outputLines(str);
+  }
+
+  private void outputLines(String str) throws IOException {
+    while (str.length() > 0) {
+      int i = str.indexOf('\n');
+      if (i < 0) {
+	writer.write(str);
+	break;
+      }
+      if (i > 0)
+	writer.write(str.substring(0, i));
+      writer.write(newline);
+      str = str.substring(i + 1);
+    }
   }
 
   private void outputData(String str, boolean inAttribute, boolean useCharRef)

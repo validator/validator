@@ -1,7 +1,5 @@
 Detect improperly balanced overridden entities.
 
-Use system-dependent line-endings on output in XmlWriter.
-
 RELAX NG: output overridden definitions
 
 RELAX NG: try to preserve marked sections

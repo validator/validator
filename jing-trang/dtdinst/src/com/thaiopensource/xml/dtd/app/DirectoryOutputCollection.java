@@ -14,6 +14,7 @@ class DirectoryOutputCollection implements XmlOutputCollection {
   private final File dir;
   private final NameMapper nameMapper;
   private final Hashtable nameTable = new Hashtable();
+  private final String newline = System.getProperty("line.separator");
 
   private class Member implements XmlOutputMember {
     private final File file;
@@ -27,7 +28,10 @@ class DirectoryOutputCollection implements XmlOutputCollection {
     }
 
     public XmlWriter open(String enc) throws IOException {
-      return new XmlOutputStreamWriter(new FileOutputStream(file), enc);
+      XmlWriter w = new XmlOutputStreamWriter(new FileOutputStream(file), enc);
+      if (newline != null)
+	w.setNewline(newline);
+      return w;
     }
   }
 
