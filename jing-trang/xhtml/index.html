@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Modularization of XHTML in RELAX NG</title>
+</head>
+<body>
+<h1>Modularization of XHTML in RELAX NG</h1>
+
+<p>This directory contains an implementataion in RELAX NG of the
+modularization of XHTML specified by the <a
+href="http://www.w3.org/TR/2001/PR-xhtml-modularization-20010222/"
+>Modularization of XHTML Proposed Recommendation</a>.</p>
+
+<p>The RELAX NG patterns have not been mechanically derived from the DTDs.
+Rather, they have been hand-crafted so as to produce good quality RELAX NG
+patterns.  However, they may well contain bugs.</p>
+
+<p>The <a href="modules"><code>modules</code></a> directory contains
+all the modules; <a
+href="xhtml-basic.rng"><code>xhtml-basic.rng</code></a> uses the
+modules to implement <a href="http://www.w3.org/TR/xhtml-basic/">XHTML
+Basic</a>; <a
+href="xhtml-strict.rng"><code>xhtml-strict.rng</code></a> uses the
+modules to implement <a href="http://www.w3.org/TR/xhtml1/">XHTML
+1.0</a> strict; <a href="xhtml.rng"><code>xhtml.rng</code></a> uses
+the modules to implement the union of <a
+href="http://www.w3.org/TR/xhtml1/">XHTML 1.0</a> transitional and <a
+href="http://www.w3.org/TR/xhtml1/">XHTML 1.0</a> frameset.  You can
+download everything as a <a href="xhtml-rng.zip">zip</a> file.  To
+create a custom version of XHTML, simply copy <code>xhtml.rng</code>
+and delete the inclusions of the modules that you do not want.</p>
+
+<p>The biggest difference between the RELAX NG implementation and the
+DTD implementation is that the RELAX NG implementation does not
+require you to create a model module specific to the combination of
+XHTML modules you are using. Instead, simply include the modules you
+want. The modules take care of redefining the content models
+appropriately.</p>
+
+<p>Note also the following differences:</p>
+
+<ul>
+
+<li>The frames module is used instead of the struct module, rather
+than in addition to it.</li>
+
+<li>The frames module redefines the <code>html</code> content model to
+allow <code>head</code> to be followed by either <code>body</code> or
+<code>frameset</code> rather than just <code>frameset</code>.</li>
+
+<li>The legacy module allows the <code>lang</code> attribute in
+addition to the <code>xml:lang</code> attribute.</li>
+
+<li>In the frames module, the <code>frameset</code> element does not
+restrict the optional <code>noframes</code> element to follow all the
+other child elements.</li>
+
+<li>In the basic tables abstract module, the <code>table</code>
+element does not have a <code>width</code> attribute.  The XHTML PR is
+ambiguous here: the abstract module has the attribute, but the DTD
+does not.</li>
+
+<li>The object and applet modules takes advantage of RELAX NG's
+absence of restrictions on mixed content to enforce the requirement
+that <code>param</code>s precede other content.</li>
+
+</ul>
+
+<address>James Clark</address>
+
+</body>
+</html>

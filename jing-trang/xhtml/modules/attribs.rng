@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Common Attributes Module -->
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+
+<define name="id.attrib">
+  <optional>
+    <attribute name="id">
+      <ref name="ID.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="class.attrib">
+  <optional>
+    <attribute name="class">
+      <ref name="NMTOKENS.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="title.attrib">
+  <optional>
+    <attribute name="title">
+      <ref name="Text.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="Core.attrib">
+  <ref name="id.attrib"/>
+  <ref name="class.attrib"/>
+  <ref name="title.attrib"/>
+</define>
+
+<define name="lang.attrib">
+  <optional>
+    <attribute name="xml:lang">
+      <ref name="LanguageCode.datatype"/>
+    </attribute>
+  </optional>
+  <!-- XHTML mod omits this, but that's incompatible with XHTML 1.0 -->
+  <optional>
+    <attribute name="lang">
+      <ref name="LanguageCode.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="I18n.attrib">
+  <ref name="lang.attrib"/>
+</define>
+
+<define name="Common.attrib">
+  <ref name="Core.attrib"/>
+  <ref name="I18n.attrib"/>
+</define>
+
+</grammar>
