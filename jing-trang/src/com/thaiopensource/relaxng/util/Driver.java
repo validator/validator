@@ -69,14 +69,11 @@ class Driver {
     long loadedPatternTime = -1;
     boolean hadError = false;
     try {
-      ValidationEngine engine = new ValidationEngine();
-      engine.setXMLReaderCreator(createXMLReaderCreator());
-      engine.setErrorHandler(eh);
-      engine.setCheckId(checkId);
-      if (engine.loadPattern(fileInputSource(args[0]))) {
+      ValidationEngine engine = new ValidationEngine(createXMLReaderCreator(), eh, checkId);
+      if (engine.loadSchema(ValidationEngine.fileInputSource(args[0]))) {
         loadedPatternTime = System.currentTimeMillis();
 	for (int i = 1; i < args.length; i++) {
-	  if (!engine.validate(fileInputSource(args[i])))
+	  if (!engine.validate(ValidationEngine.fileInputSource(args[i])))
 	    hadError = true;
 	}
       }
@@ -105,10 +102,6 @@ class Driver {
     if (hadError)
       return 1;
     return 0;
-  }
-
-  static private InputSource fileInputSource(String str) {
-    return new InputSource(FileURL.fileToURL(new File(str)).toString());
   }
 
   static public void setParser(String cls, boolean b) {

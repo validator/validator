@@ -48,10 +48,7 @@ class TestDriver {
       return 2;
     }
     args = op.getRemainingArgs();
-    engine = new ValidationEngine();
-    engine.setXMLReaderCreator(Driver.createXMLReaderCreator());
-    engine.setErrorHandler(eh);
-    engine.setCheckId(checkId);
+    engine = new ValidationEngine(Driver.createXMLReaderCreator(), eh, checkId);
     int result = 0;
     for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));
@@ -127,7 +124,7 @@ class TestDriver {
   private boolean loadSchema(File schema) throws IOException {
     nTests++;
     try {
-      if (engine.loadPattern(new InputSource(FileURL.fileToURL(schema).toString())))
+      if (engine.loadSchema(ValidationEngine.fileInputSource(schema)))
 	return true;
     }
     catch (SAXException e) {
@@ -139,7 +136,7 @@ class TestDriver {
   private boolean validateInstance(File instance) throws IOException {
     nTests++;
     try {
-      if (engine.validate(new InputSource(FileURL.fileToURL(instance).toString())))
+      if (engine.validate(ValidationEngine.fileInputSource(instance)))
 	return true;
     }
     catch (SAXException e) {

@@ -31,6 +31,7 @@ public class JingTask extends Task {
   private File rngFile;
   private File src;
   private Vector filesets = new Vector();
+  private boolean checkid = false;
 
   public void execute() throws BuildException {
     if (rngFile == null)
@@ -45,14 +46,12 @@ public class JingTask extends Task {
     boolean hadError = false;
 
     try {
-      ValidationEngine engine = new ValidationEngine();
-      engine.setXMLReaderCreator(new Jaxp11XMLReaderCreator());
-      engine.setErrorHandler(eh);
-      if (!engine.loadPattern(fileInputSource(rngFile)))
+      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkid);
+      if (!engine.loadSchema(ValidationEngine.fileInputSource(rngFile)))
 	hadError = true;
       else {
 	if (src != null) {
-	  if (!engine.validate(fileInputSource(src)))
+	  if (!engine.validate(ValidationEngine.fileInputSource(src)))
 	    hadError = true;
 	}
 	for (int i = 0; i < filesets.size(); i++) {
@@ -61,7 +60,7 @@ public class JingTask extends Task {
 	  File dir = fs.getDir(project);
 	  String[] srcs = ds.getIncludedFiles();
 	  for (int j = 0; j < srcs.length; j++) {
-	    if (!engine.validate(fileInputSource(new File(dir, srcs[j]))))
+	    if (!engine.validate(ValidationEngine.fileInputSource(new File(dir, srcs[j]))))
 	      hadError = true;
 	  }
 	}
@@ -79,10 +78,11 @@ public class JingTask extends Task {
       throw new BuildException("Validation failed, messages should have been provided.", location);
   }
 
-  static private InputSource fileInputSource(File f) {
-    return new InputSource(FileURL.fileToURL(f).toString());
-  }
-
+  /**
+   * Handles the <code>rngfile</code> attribute.
+   *
+   * @param rngFilename the attribute value
+   */
   public void setRngfile(String rngFilename) {
     rngFile = project.resolveFile(rngFilename);
   }
@@ -90,7 +90,16 @@ public class JingTask extends Task {
   public void setFile(File file) {
     this.src = file;
   }
-  
+
+  /**
+   * Handles the <code>checkid</code> attribute.
+   *
+   * @param checkid the attribute value converted to a boolean
+   */
+  public void setCheckid(boolean checkid) {
+    this.checkid = checkid;
+  }
+
   public void addFileset(FileSet set) {
     filesets.addElement(set);
   }
