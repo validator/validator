@@ -13,6 +13,10 @@ permission.</p>
 
 <h3>Version @VERSION@</h3>
 
+<p>This version of Jing implements the <a
+href="http://www.oasis-open.org/committees/relax-ng/spec-20010811.html">11
+August 2001 version</a> of the RELAX NG Specification.</p>
+
 <p>The implementation is available for download as a <a
 href="jing.jar">JAR</a> file and as a <a href="jing.exe">Win32
 executable</a> for use with the Microsoft Java VM.</p>
@@ -44,8 +48,18 @@ where you have put the various JAR files. The command will be
 slightly different on non-Windows machines.  Consult your Java
 documentation.</p>
 
-<p>The implementation supports <a href="jing-datatypes.html">datatypes</a>
-from XML Schema Part 2.</p>
+<p>Jing uses a vendor-independent Java interface for RELAX NG datatype
+libraries, developed by James Clark and KAWAGUCHI Kohsuke and hosted
+at SourceForge in the <a
+href="http://sourceforge.net/projects/relaxng">relaxng</a> project.
+Jing can use any datatype library that implements this interface.  For
+more information on creating your own datatype libraries, including a
+sample, download <a
+href="datatype-sample.zip">datatype-sample.zip</a>.</p>
+
+<p>Jing also includes an <a
+href="jing-datatypes.html">implementation</a> of a datatype library
+for the W3C XML Schema Part 2 datatypes.</p>
 
 <p>The <a href="jing-src.zip">source</a> is also available.</p>
 
