@@ -1733,6 +1733,20 @@ applies at the syntax level.</documentation>
 <foo xmlns:ex="http://www.example.com/" ex:bar="x"/>
 </invalid>
 </testCase>
+<testCase>
+<section>4.10</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+  <attribute name="xml:lang"/>
+</element>
+</correct>
+<valid>
+<foo xml:lang="en"/>
+</valid>
+<invalid>
+<foo lang="en"/>
+</invalid>
+</testCase>
 </testSuite>
 <testCase>
 <section>4.11</section>
