@@ -13,8 +13,6 @@ abstract class Atom {
   boolean matchesDatatype(Datatype dt) {
     return false;
   }
-  void setKey(Datatype dt, String name) { }
-  void setKeyRef(Datatype dt, String name) { }
   boolean matchesList(PatternBuilder b, Pattern p) {
     return false;
   }

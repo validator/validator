@@ -107,14 +107,6 @@ public class PatternBuilder {
     return intern(new DatatypePattern(dt));
   }
 
-  Pattern makeKey(String name, Pattern p) {
-    return intern(new KeyPattern(name, p));
-  }
-
-  Pattern makeKeyRef(String name, Pattern p) {
-    return intern(new KeyRefPattern(name, p));
-  }
-
   Pattern makeChoice(Pattern p1, Pattern p2) {
     if (p1 == emptyChoice)
       return p2;

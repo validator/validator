@@ -22,8 +22,4 @@ class AttributeAtom extends Atom {
   boolean isAttribute() {
     return true;
   }
-  void checkKeys(KeyChecker kc) throws SAXException {
-    value.checkKeys(kc);
-  }
-
 }

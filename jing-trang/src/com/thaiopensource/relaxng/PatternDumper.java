@@ -231,20 +231,6 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitKey(String name, Pattern p) {
-      startElement("key");
-      attribute("name", name);
-      p.accept(patternVisitor);
-      endElement();
-    }
-
-    public void visitKeyRef(String name, Pattern p) {
-      startElement("keyRef");
-      attribute("name", name);
-      p.accept(patternVisitor);
-      endElement();
-    }
-
     public void visitValue(Datatype dt, Object obj) {
       startElement("value");
       // XXX dump dt

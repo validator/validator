@@ -23,8 +23,6 @@ public abstract class Pattern {
   static final int ATTRIBUTE_HASH_CODE = 29;
   static final int DATA_HASH_CODE = 31;
   static final int LIST_HASH_CODE = 37;
-  static final int KEY_HASH_CODE = 41;
-  static final int KEY_REF_HASH_CODE = 43;
 
   static int combineHashCode(int hc1, int hc2, int hc3) {
     return hc1 * hc2 * hc3;

@@ -469,8 +469,6 @@ public class PatternReader implements DatatypeContext {
 
   class DataState extends State {
     String type;
-    String key;
-    String keyRef;
     DatatypeBuilder dtb;
 
     State create() {
@@ -487,18 +485,6 @@ public class PatternReader implements DatatypeContext {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
 	type = value.trim();
-      else if (name.equals("key")) {
-	warning("key_attribute_deprecated");
-	if (keyRef != null)
-	  error("key_key_ref");
-	key = value.trim();
-      }
-      else if (name.equals("keyRef")) {
-	warning("key_ref_attribute_deprecated");
-	if (key != null)
-	  error("key_key_ref");
-	keyRef = value.trim();
-      }
       else
 	super.setOtherAttribute(name, value);
     }
@@ -513,13 +499,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     void end() {
-      Datatype dt = dtb.finish();
-      Pattern p = patternBuilder.makeData(dt);
-      if (key != null)
-	p = patternBuilder.makeKey(key, p);
-      else if (keyRef != null)
-	p = patternBuilder.makeKeyRef(keyRef, p);
-      parent.endChild(p);
+      parent.endChild(patternBuilder.makeData(dtb.finish()));
     }
   }
 
@@ -627,40 +607,6 @@ public class PatternReader implements DatatypeContext {
 	return super.createChildState(localName);
       error("too_many_children");
       return null;
-    }
-  }
-
-  class KeyState extends SinglePatternContainerState {
-    String name;
-
-    State create() {
-      return new KeyState();
-    }
-
-    void setName(String name) {
-      this.name = name;
-    }
-
-    void endAttributes() throws SAXException {
-      if (name == null)
-	error("missing_name_attribute");
-    }
-
-    Pattern wrapPattern(Pattern p) throws SAXException {
-      if (name == null)
-	return p;
-      return patternBuilder.makeKey(name, p);
-    }
-  }
-
-  class KeyRefState extends KeyState {
-    State create() {
-      return new KeyRefState();
-    }
-    Pattern wrapPattern(Pattern p) throws SAXException {
-      if (name == null)
-	return p;
-      return patternBuilder.makeKeyRef(name, p);
     }
   }
 
@@ -1248,8 +1194,6 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("text", new TextState());
     patternTable.put("value", new ValueState());
     patternTable.put("data", new DataState());
-    patternTable.put("key", new KeyState());
-    patternTable.put("keyRef", new KeyRefState());
     patternTable.put("notAllowed", new NotAllowedState());
     patternTable.put("grammar", new GrammarState());
     patternTable.put("ref", new RefState());

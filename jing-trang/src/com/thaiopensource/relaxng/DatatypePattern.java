@@ -1,13 +1,12 @@
 package com.thaiopensource.relaxng;
 
-import org.xml.sax.Locator;
 import com.thaiopensource.datatype.Datatype;
 
-class DatatypePattern extends SimplePattern {
+class DatatypePattern extends StringPattern {
   private Datatype dt;
 
   DatatypePattern(Datatype dt) {
-    super(combineHashCode(DATA_HASH_CODE, dt.hashCode()));
+    super(false, combineHashCode(DATA_HASH_CODE, dt.hashCode()));
     this.dt = dt;
   }
 
