@@ -8,12 +8,7 @@ import java.io.IOException;
  */
 public interface EntityManager {
   /**
-   * Opens an external entity.
-   * @param systemId the system identifier specified in the entity declaration
-   * @param baseUri the base URI relative to which the system identifier
-   * should be resolved; null if no base URI is available
-   * @param publicId the public identifier specified in the entity declaration;
-   * null if no public identifier was specified
+   * Opens an external entity with the specified external identifier.
    */
-  OpenEntity open(String systemId, String baseUri, String publicId) throws IOException;
+  OpenEntity open(ExternalId xid) throws IOException;
 }

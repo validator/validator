@@ -11,7 +11,7 @@ public class Dtd {
   private Vector topLevel;
 
   public Dtd(String systemId, EntityManager em) throws IOException {
-    this(em.open(systemId, null, null), em);
+    this(em.open(new ExternalId(systemId)), em);
   }
 
   public Dtd(OpenEntity entity, EntityManager em) throws IOException {
