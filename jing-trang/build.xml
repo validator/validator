@@ -18,7 +18,7 @@
 
 <target name="jar" depends="compile">
 
-  <jar jarfile="build/jing.jar">
+  <jar jarfile="build/jing.jar" manifest="src/META-INF/MANIFEST.MF">
     <fileset dir="build/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
     <fileset dir="src" includes="META-INF/services/*"/>
