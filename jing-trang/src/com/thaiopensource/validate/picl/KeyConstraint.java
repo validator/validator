@@ -45,14 +45,16 @@ class KeyConstraint implements Constraint {
       this.index = index;
     }
 
-    void select(ErrorContext ec, String value) {
+    void select(ErrorContext ec, Locator locator, String value) {
       KeyInfo info = index.lookupCreate(value);
       if (info.firstKeyLocator == null) {
-        info.firstKeyLocator = ec.saveLocator();
+        if (locator == null)
+          locator = ec.saveLocator();
+        info.firstKeyLocator = locator;
         info.pendingRefLocators = null;
       }
       else
-        ec.error("duplicate_key", value);
+        ec.error(locator, "duplicate_key", value);
     }
   }
 

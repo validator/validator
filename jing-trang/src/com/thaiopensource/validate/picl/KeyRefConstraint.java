@@ -15,12 +15,14 @@ class KeyRefConstraint extends KeyConstraint {
       this.index = index;
     }
 
-    void select(ErrorContext ec, String value) {
+    void select(ErrorContext ec, Locator locator, String value) {
       KeyInfo info = index.lookupCreate(value);
       if (info.firstKeyLocator == null) {
         if (info.pendingRefLocators == null)
           info.pendingRefLocators = new Vector();
-        info.pendingRefLocators.addElement(ec.saveLocator());
+        if (locator == null)
+          locator = ec.saveLocator();
+        info.pendingRefLocators.addElement(locator);
       }
     }
 
@@ -32,7 +34,7 @@ class KeyRefConstraint extends KeyConstraint {
           continue;
         for (int i = 0, len = info.pendingRefLocators.size(); i < len; i++) {
           Locator loc = (Locator)info.pendingRefLocators.elementAt(i);
-          ec.error("undefined_key", key, loc);
+          ec.error(loc, "undefined_key", key);
         }
       }
     }

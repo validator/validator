@@ -229,15 +229,9 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
     }
   }
 
-  public void error(String key) {
-    error(key, locator);
-  }
-
-  public void error(String key, String arg) {
-    error(key, arg, locator);
-  }
-
-  public void error(String key, Locator locator) {
+  public void error(Locator locator, String key) {
+    if (locator == null)
+      locator = this.locator;
     try {
       eh.error(new SAXParseException(localizer.message(key), locator));
     }
@@ -246,7 +240,9 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
     }
   }
 
-  public void error(String key, String arg, Locator locator) {
+  public void error(Locator locator, String key, String arg) {
+    if (locator == null)
+      locator = this.locator;
     try {
       eh.error(new SAXParseException(localizer.message(key, arg), locator));
     }
