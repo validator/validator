@@ -1,2 +1,3 @@
 Write man pages
 Detect with -lpthread is needed
+Instead of removing unneeded sources, omit them from compile list.
