@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.1 2001-06-11 07:55:56 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.2 2001-06-11 07:56:30 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
@@ -857,19 +857,19 @@
    <!-- An AVT containing at least one expression. -->
    <define name="expr-avt.datatype">
       <data type="string">
-          <param name="pattern">([^\{\}]|\{\{|\}\})*\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\}([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
+         <param name="pattern">([^\{\}]|\{\{|\}\})*\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\}([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
       </data>
    </define>
    <!-- An AVT containing at least one brace; ie where instantiated AVT
         is not the same as the literal AVT. -->
    <define name="brace-avt.datatype">
       <data type="string">
-          <param name="pattern">[^\{\}]*(\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
+         <param name="pattern">[^\{\}]*(\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
       </data>
    </define>
    <define name="avt.datatype">
       <data type="string">
-          <param name="pattern">([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
+         <param name="pattern">([^\{\}]|\{\{|\}\}|\{([^&#34;'\{\}]|&#34;[^&#34;]*&#34;|'[^']*')+\})*</param>
       </data>
    </define>
 </grammar>
