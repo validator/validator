@@ -5,6 +5,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import com.thaiopensource.util.Localizer;
 
 class OutputHandler extends DefaultHandler {
   private final ErrorHandler eh;
@@ -13,6 +14,8 @@ class OutputHandler extends DefaultHandler {
   private StringBuffer message = new StringBuffer();
   private boolean inMessage = false;
   private final String lineSeparator;
+  private static final String indent = "  ";
+  private Localizer localizer = new Localizer(OutputHandler.class);
 
   OutputHandler(ErrorHandler eh) {
     this.eh = eh;
@@ -65,26 +68,26 @@ class OutputHandler extends DefaultHandler {
       if (value != null && value.equals(""))
         value = null;
       systemId = value;
+      message.append(localizer.message(localName.equals("failed-assertion")
+                                       ? "failed_assertion"
+                                       : "report"));
     }
-    else if (localName.equals("statement"))
+    else if (localName.equals("statement") || localName.equals("diagnostic")) {
       inMessage = true;
-    else if (localName.equals("diagnostic")) {
-      inMessage = true;
-      if (message.length() > 0 && message.charAt(message.length() - 1) == ' ')
-        message.setLength(message.length() - 1);
       message.append(lineSeparator);
-      message.append("  ");
+      message.append(indent);
     }
   }
 
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
-    if (localName.equals("statement") || localName.equals("diagnostic"))
-      inMessage = false;
-    else if (localName.equals("failed-assertion")
-             || localName.equals("report")) {
+    if (localName.equals("statement") || localName.equals("diagnostic")) {
       if (message.length() > 0 && message.charAt(message.length() - 1) == ' ')
         message.setLength(message.length() - 1);
+      inMessage = false;
+    }
+    else if (localName.equals("failed-assertion")
+             || localName.equals("report")) {
       eh.error(new SAXParseException(message.toString(), null, systemId, lineNumber, -1));
       message.setLength(0);
     }
