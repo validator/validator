@@ -115,7 +115,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       String ns = attributes.getURI(i);
       if (!ns.equals("")
           && !ns.equals(uri)
-          && !namespaceCovered(uri)
+          && !namespaceCovered(ns)
           && !attributeNamespaces.contains(ns)) {
         attributeNamespaces.add(ns);
         validateAttributes(ns, attributes);
