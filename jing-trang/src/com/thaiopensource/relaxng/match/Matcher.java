@@ -166,7 +166,7 @@ public interface Matcher {
    */
   Vector possibleStartTags(Vector knownNames);
 
- /**
+  /**
    * Return a Vector of the names of attributes that are valid
    * in the current state.  This must be called only in a state in
    * which a call to <code>matchAttributeName</code> would be allowed.
