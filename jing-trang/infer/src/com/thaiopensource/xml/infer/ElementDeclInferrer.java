@@ -50,11 +50,8 @@ class ElementDeclInferrer {
 
   private Particle makeMixedContentModel() {
     Particle p = new TextParticle();
-    for (Iterator iter = mixedContentNames.iterator(); iter.hasNext();) {
-      Name name = (Name)iter.next();
-      if (name != ContentModelInferrer.START && name != ContentModelInferrer.END)
-        p = new ChoiceParticle(p, new ElementParticle(name));
-    }
+    for (Iterator iter = mixedContentNames.iterator(); iter.hasNext();)
+      p = new ChoiceParticle(p, new ElementParticle((Name)iter.next()));
     return new OneOrMoreParticle(p);
   }
 
@@ -62,25 +59,31 @@ class ElementDeclInferrer {
     return contentModelInferrer == null && mixedContentNames == null;
   }
 
-  void addSequence(Name e1, Name e2) {
+  void addElement(Name elementName) {
     if (valueInferrer != null) {
       if (valueInferrer.isAllWhiteSpace()) {
         if (contentModelInferrer == null)
-          contentModelInferrer = new ContentModelInferrer();
-        contentModelInferrer.addSequence(ContentModelInferrer.START, ContentModelInferrer.END);
+          contentModelInferrer = ContentModelInferrer.createContentModelInferrer();
+        // Previously had all elements contained only white space.
+        // Equivalent to an empty content model.
+        contentModelInferrer.endSequence();
       }
       else
         useMixedContent();
     }
     if (mixedContentNames != null)
-      mixedContentNames.add(e2);
+      mixedContentNames.add(elementName);
     else {
       if (contentModelInferrer == null)
-        contentModelInferrer = new ContentModelInferrer();
-      contentModelInferrer.addSequence(e1, e2);
+        contentModelInferrer = ContentModelInferrer.createContentModelInferrer();
+      contentModelInferrer.addElement(elementName);
     }
   }
 
+  void endSequence() {
+    if (contentModelInferrer != null)
+      contentModelInferrer.endSequence();
+  }
 
   void addValue(String value) {
     if (valueInferrer == null)
@@ -88,7 +91,6 @@ class ElementDeclInferrer {
     else
       valueInferrer.addValue(value);
   }
-
 
   void addText() {
     useMixedContent();
@@ -119,8 +121,4 @@ class ElementDeclInferrer {
       dt.addValue(value);
   }
 
-  void setMulti(Name name) {
-    if (contentModelInferrer != null)
-      contentModelInferrer.setMulti(name);
-  }
 }

@@ -26,7 +26,6 @@ public class InferHandler extends DefaultHandler {
   private static class OpenElement {
     final OpenElement parent;
     final ElementDeclInferrer inferrer;
-    Name prevElementName = ContentModelInferrer.START;
 
     public OpenElement(OpenElement parent, ElementDeclInferrer inferrer) {
       this.parent = parent;
@@ -46,12 +45,7 @@ public class InferHandler extends DefaultHandler {
           openElement.inferrer.addText();
         textBuffer.setLength(0);
       }
-      if (openElement.prevElementName.equals(name))
-        openElement.inferrer.setMulti(name);
-      else {
-        openElement.inferrer.addSequence(openElement.prevElementName, name);
-        openElement.prevElementName = name;
-      }
+      openElement.inferrer.addElement(name);
     }
     for (int i = 0, len = attributes.getLength(); i < len; i++)
       attributeNames.add(new Name(attributes.getURI(i), attributes.getLocalName(i)));
@@ -94,7 +88,7 @@ public class InferHandler extends DefaultHandler {
       textBuffer.setLength(0);
     }
     else
-      openElement.inferrer.addSequence(openElement.prevElementName, ContentModelInferrer.END);
+      openElement.inferrer.endSequence();
     openElement = openElement.parent;
   }
 
