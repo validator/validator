@@ -1,7 +1,7 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0">
-
-<include href="../xhtml/modules/datatypes.rng"
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+<include href="../xhtml/modules/datatypes.rng">
   <define name="ID.datatype">
     <data type="NCName"/>
   </define>
@@ -68,6 +68,31 @@
 <define name="Block.class" combine="choice">
   <element name="abstract">
     <ref name="Block.model"/>
+  </element>
+</define>
+
+<define name="Block.class" combine="choice">
+  <element name="bibliography">
+    <zeroOrMore>
+      <element name="bibentry">
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
+        <text/>
+        <element name="url">
+          <data type="anyURI"/>
+        </element>
+      </element>
+    </zeroOrMore>
+  </element>
+</define>
+
+<define name="Inline.class" combine="choice">
+  <element name="bib">
+    <attribute name="ref">
+      <data type="NCName"/>
+    </attribute>
+    <text/>
   </element>
 </define>
 
