@@ -246,8 +246,8 @@ validate =
 
 lax = 
   element lax {
-    inModesAtt?,
-    attribute allow { elementsOrAttributes }?
+    attribute allow { elementsOrAttributes }?,
+    inModesAtt?
   }
 
 validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
@@ -416,7 +416,6 @@ lax =
   element lax {
     attribute allow { elementsOrAttributes }?,
     inModesAtt?,
-    foreign
   }
 
 validateModel =
