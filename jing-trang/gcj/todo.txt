@@ -5,5 +5,4 @@ Write man pages
 Remove unnecessary stuff from trang.
 In jing, clean needs to clean tests
 Add make install target
-Try to use built in SAX parser
 Run test suite with trang
