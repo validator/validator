@@ -9,6 +9,17 @@ class PatternRefPattern extends Pattern {
   private Locator refLoc;
   private String name;
   private int checkRecursionDepth = -1;
+  private boolean combineImplicit = false;
+  private byte combineType = COMBINE_NONE;
+  private byte replacementStatus = REPLACEMENT_KEEP;
+
+  static final byte REPLACEMENT_KEEP = 0;
+  static final byte REPLACEMENT_REQUIRE = 1;
+  static final byte REPLACEMENT_IGNORE = 2;
+
+  static final byte COMBINE_NONE = 0;
+  static final byte COMBINE_CHOICE = 1;
+  static final byte COMBINE_INTERLEAVE = 2;
 
   PatternRefPattern(String name) {
     // The referenced pattern may not be nullable, but the nullability
@@ -87,6 +98,34 @@ class PatternRefPattern extends Pattern {
 
   void accept(PatternVisitor visitor) {
     p.accept(visitor);
+  }
+
+  byte getReplacementStatus() {
+    return replacementStatus;
+  }
+  
+  void setReplacementStatus(byte replacementStatus) {
+    this.replacementStatus = replacementStatus;
+  }
+
+  boolean isCombineImplicit() {
+    return combineImplicit;
+  }
+
+  void setCombineImplicit() {
+    combineImplicit = true;
+  }
+
+  byte getCombineType() {
+    return combineType;
+  }
+
+  void setCombineType(byte combineType) {
+    this.combineType = combineType;
+  }
+
+  String getName() {
+    return name;
   }
 }
 

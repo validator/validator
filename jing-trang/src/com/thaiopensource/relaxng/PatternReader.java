@@ -30,12 +30,6 @@ public class PatternReader implements DatatypeContext {
   static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
 
-  // Declaring these in DefineState gives JVC indigestion.
-
-  static final byte COMBINE_ERROR = 0;
-  static final byte COMBINE_CHOICE = 1;
-  static final byte COMBINE_INTERLEAVE = 2;
-
   XMLReader xr;
   XMLReaderCreator xrc;
   PatternBuilder patternBuilder;
@@ -573,22 +567,113 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class MergeGrammarState extends State {
+  class DivState extends State {
+    IncludeState include;
+
+    DivState(IncludeState include) {
+      this.include = include;
+    }
+
     State create() {
-      return new MergeGrammarState();
+      return new DivState(null);
     }
 
     State createChildState(String localName) throws SAXException {
       if (localName.equals("define"))
-	return new DefineState();
+	return new DefineState(include);
       if (localName.equals("start"))
-	return new StartState();
-      if (localName.equals("include"))
+	return new StartState(include);
+      if (include == null && localName.equals("include"))
 	return new IncludeState();
       if (localName.equals("div"))
-	return new MergeGrammarState();
+	return new DivState(include);
       error("expected_define", localName);
+      // XXX better errors
       return null;
+    }
+
+    void end() throws SAXException {
+    }
+  }
+
+  static class Item {
+    Item(PatternRefPattern prp, Item next) {
+      this.prp = prp;
+      this.next = next;
+    }
+    
+    PatternRefPattern prp;
+    Item next;
+    byte replacementStatus;
+  }
+
+  class IncludeState extends DivState {
+    String href;
+
+    private Item items;
+
+    IncludeState() {
+      super(null);
+      include = this;
+    }
+
+    void add(PatternRefPattern prp) {
+      items = new Item(prp, items);
+    }
+
+    void setOtherAttribute(String name, String value) throws SAXException {
+      if (name.equals("href"))
+	href = value;
+      else
+	super.setOtherAttribute(name, value);
+    }
+
+    void endAttributes() throws SAXException {
+      if (href == null)
+	error("missing_href_attribute");
+    }
+
+    void end() throws SAXException {
+      if (href == null)
+	return;
+      Item i;
+      for (i = items; i != null; i = i.next)
+	i.replacementStatus = i.prp.getReplacementStatus();
+      try {
+	InputSource in = makeInputSource(href);
+	String systemId = in.getSystemId();
+	for (OpenIncludes inc = openIncludes;
+	     inc != null;
+	     inc = inc.parent)
+	  if (inc.systemId.equals(systemId)) {
+	    error("recursive_include", systemId);
+	    return;
+	  }
+	readPattern(PatternReader.this,
+		    in,
+		    grammar,
+		    ns == null ? nsInherit : ns);
+      }
+      catch (IOException e) {
+	throw new SAXException(e);
+      }
+      for (i = items; i != null; i = i.next) {
+	if (i.prp.getReplacementStatus()
+	    == PatternRefPattern.REPLACEMENT_REQUIRE) {
+	  if (i.prp.getName() == null)
+	    error("missing_start_replacement");
+	  else
+	    error("missing_define_replacement", i.prp.getName());
+	}
+	i.prp.setReplacementStatus(i.replacementStatus);
+      }
+    }
+
+  }
+
+  class MergeGrammarState extends DivState {
+    MergeGrammarState() {
+      super(null);
     }
 
     void end() throws SAXException {
@@ -706,8 +791,8 @@ public class PatternReader implements DatatypeContext {
 	      return;
 	    }
 	  includedPattern = readPattern(PatternReader.this,
-					makeInputSource(href),
-					mergeGrammar(),
+					in,
+					null,
 					ns == null ? nsInherit : ns);
 	}
 	catch (IOException e) {
@@ -723,31 +808,20 @@ public class PatternReader implements DatatypeContext {
       }
       return includedPattern;
     }
-
-    Grammar mergeGrammar() {
-      return null;
-    }
-  }
-
-  class IncludeState extends ExternalRefState {
-    State create() {
-      return new IncludeState();
-    }
-    void sendPatternToParent(Pattern p) {
-    }
-
-    Grammar mergeGrammar() {
-      return grammar;
-    }
   }
 
   class DefineState extends PatternContainerState {
     String name;
+    private IncludeState include;
 
-    byte combine = COMBINE_ERROR;
+    byte combine = PatternRefPattern.COMBINE_NONE;
+
+    DefineState(IncludeState include) {
+      this.include = include;
+    }
 
     State create() {
-      return new DefineState();
+      return new DefineState(null);
     }
 
     void setName(String name) {
@@ -758,9 +832,9 @@ public class PatternReader implements DatatypeContext {
       if (name.equals("combine")) {
 	value = value.trim();
 	if (value.equals("choice"))
-	  combine = COMBINE_CHOICE;
+	  combine = PatternRefPattern.COMBINE_CHOICE;
 	else if (value.equals("interleave"))
-	  combine = COMBINE_INTERLEAVE;
+	  combine = PatternRefPattern.COMBINE_INTERLEAVE;
 	else
 	  error("combine_attribute_bad_value", value);
       }
@@ -771,25 +845,59 @@ public class PatternReader implements DatatypeContext {
     void endAttributes() throws SAXException {
       if (name == null)
 	error("missing_name_attribute");
-      else if (combine == COMBINE_ERROR
-	       && grammar.makePatternRef(name).getPattern() != null)
-	error("duplicate_define", name);
+      else 
+	checkCombine(grammar.makePatternRef(name));
+    }
+
+    void checkCombine(PatternRefPattern prp) throws SAXException {
+      if (prp.getReplacementStatus() != PatternRefPattern.REPLACEMENT_KEEP)
+	return;
+      switch (combine) {
+      case PatternRefPattern.COMBINE_NONE:
+	if (prp.isCombineImplicit()) {
+	  if (prp.getName() == null)
+	    error("duplicate_start");
+	  else
+	    error("duplicate_define", prp.getName());
+	}
+	else
+	  prp.setCombineImplicit();
+	break;
+      case PatternRefPattern.COMBINE_CHOICE:
+      case PatternRefPattern.COMBINE_INTERLEAVE:
+	if (prp.getCombineType() != PatternRefPattern.COMBINE_NONE
+	    && prp.getCombineType() != combine) {
+	  if (prp.getName() == null)
+	    error("conflict_combine_start");
+	  else
+	    error("conflict_combine_define", prp.getName());
+	}
+	prp.setCombineType(combine);
+	break;
+      }
     }
 
     void setPattern(PatternRefPattern prp, Pattern p) {
-      prp.setPattern(combineWithOldPattern(prp.getPattern(), p));
-    }
-
-    Pattern combineWithOldPattern(Pattern p1, Pattern p2) {
-      if (p1 != null) {
-	switch (combine) {
-	case COMBINE_CHOICE:
-	  return patternBuilder.makeChoice(p1, p2);
-	case COMBINE_INTERLEAVE:
-	  return patternBuilder.makeInterleave(p1, p2);
-	}
+      switch (prp.getReplacementStatus()) {
+      case PatternRefPattern.REPLACEMENT_KEEP:
+	if (include != null)
+	  include.add(prp);
+	if (prp.getPattern() == null)
+	  prp.setPattern(p);
+	else if (prp.getCombineType()
+		 == PatternRefPattern.COMBINE_INTERLEAVE)
+	  prp.setPattern(patternBuilder.makeInterleave(prp.getPattern(),
+						       p));
+	else
+	  prp.setPattern(patternBuilder.makeChoice(prp.getPattern(),
+						   p));
+	break;
+      case PatternRefPattern.REPLACEMENT_REQUIRE:
+	prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_IGNORE);
+	break;
+      case PatternRefPattern.REPLACEMENT_IGNORE:
+	break;
       }
-      return p2;
     }
 
     void sendPatternToParent(Pattern p) {
@@ -801,16 +909,18 @@ public class PatternReader implements DatatypeContext {
 
   class StartState extends DefineState {
 
+    StartState(IncludeState include) {
+      super(include);
+    }
+
     State create() {
-      return new StartState();
+      return new StartState(null);
     }
 
     void endAttributes() throws SAXException {
       if (name != null)
-        super.endAttributes();
-      else if (combine == COMBINE_ERROR
-	       && grammar.startPatternRef().getPattern() != null)
-	error("duplicate_start");
+	checkCombine(grammar.makePatternRef(name));
+      checkCombine(grammar.startPatternRef());
     }
 
     void setName(String name) {
@@ -818,7 +928,8 @@ public class PatternReader implements DatatypeContext {
     }
 
     void sendPatternToParent(Pattern p) {
-      super.sendPatternToParent(p);
+      if (name != null)
+	setPattern(grammar.makePatternRef(name), p);
       setPattern(grammar.startPatternRef(), p);
     }
   }
