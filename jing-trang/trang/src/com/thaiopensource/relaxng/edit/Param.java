@@ -24,4 +24,8 @@ public class Param extends Annotated {
   public void setValue(String value) {
     this.value = value;
   }
+
+  public boolean mayContainText() {
+    return true;
+  }
 }
