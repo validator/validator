@@ -5,6 +5,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.jarv.JarvConfigurationException;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierFactory;
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class VerifierFactorySchemaReader implements SchemaReader {
   private final VerifierFactory vf;
 
-  static private class SchemaImpl implements Schema {
+  static private class SchemaImpl extends AbstractSchema {
     org.iso_relax.verifier.Schema schema;
 
     private SchemaImpl(org.iso_relax.verifier.Schema schema) {
@@ -35,10 +36,6 @@ public class VerifierFactorySchemaReader implements SchemaReader {
           throw (RuntimeException)cause;
         throw new JarvConfigurationException(e);
       }
-    }
-
-    public ValidatorHandler createValidator() {
-      return createValidator(null);
     }
   }
 
