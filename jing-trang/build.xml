@@ -110,12 +110,10 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
 </target>
 
 <target name="validate" depends="jar" description="Validate all XML files" >
-  <jing rngfile="xhtml/xhtml-basic.rng">
+  <jing rngfile="xhtml/xhtml.rng">
     <fileset dir="doc" includes="*.html,jing-win32-bin/*.html,jing-bin/*.html,regex/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
     <fileset dir="test" includes="index.html"/>
-  </jing>
-  <jing rngfile="xhtml/xhtml.rng">
     <fileset dir="doc/compact" includes="*.html"/>
   </jing>
   <jing rngfile="eg/relaxng.rng">
