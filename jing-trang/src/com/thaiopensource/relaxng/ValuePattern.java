@@ -9,6 +9,7 @@ class ValuePattern extends SimplePattern {
 
   ValuePattern(Datatype dt, String str, Locator locator) {
     super(combineHashCode(VALUE_HASH_CODE, str.hashCode()), locator);
+    this.dt = dt;
     this.str = str;
   }
 
@@ -18,6 +19,8 @@ class ValuePattern extends SimplePattern {
 
   boolean samePattern(Pattern other) {
     if (getClass() != other.getClass())
+      return false;
+    if (!(other instanceof ValuePattern))
       return false;
     return (dt.equals(((ValuePattern)other).dt)
 	    && str.equals(((ValuePattern)other).str));
