@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Jing</title>
+</head>
+<body>
+<h1>Jing</h1>
+<h2>A RELAX NG validator in Java</h2>
+
+<p>Copyright &#169; 2001 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>The implementation is available for download as a <a
+href="jing.jar">JAR</a> file and as a <a href="jing.exe">Win32
+executable</a> for use with the Microsoft Java VM.</p>
+
+<p>To invoke the Win32 executable, simply copy <code>jing.exe</code>
+to a directory in your path and run the command</p>
+
+<pre>jing <var>file</var>.rng <var>file</var>.xml</pre>
+
+<p>This will report errors if <code><var>file</var>.xml</code> does
+not match <code><var>file</var>.rng</code>.  You can specify multiple
+XML files to be validated in a single command.</p>
+
+<p>To use Jing packaged as a JAR file, you must have an implementation
+of the <a href="http://java.sun.com/xml/">Java API for XML Processing
+(JAXP) 1.1</a> in your CLASSPATH.  The main class for Jing is
+<code>com.thaiopensource.relaxng.util.Driver</code>.  The first
+argument expected by the main class is the name of the file containing
+the RELAX NG pattern.  The second and subsequent arguments are the
+names of one or more files to be validated against this pattern. So,
+for example, on Windows, the command:</p>
+
+<pre>c:\jdk1.3\bin\java -cp c:\lib\jing.jar;c:\lib\jaxp.jar;c:\lib\crimson.jar com.thaiopensource.relaxng.util.Driver doc.rng doc.xml</pre>
+
+<p>would validate the XML document contained in <code>doc.xml</code>
+against the RELAX NG pattern contained in <code>doc.rng</code>.Obviously,
+you must replace <code>c:\lib</code> by the path to the directory
+where you have put the various JAR files. The command will be
+slightly different on non-Windows machines.  Consult your Java
+documentation.</p>
+
+<p>The implementation supports <a href="jing-datatypes.html">datatypes</a>
+from XML Schema Part 2.</p>
+
+<p>The <a href="jing-src.zip">source</a> is also available.</p>
+
+<p>There is a <a href="jing-ant.html">Jing task</a> that allows Jing
+to be invoked by the <a href="http://jakarta.apache.org/ant/">Ant</a>
+build tool.</p>
+
+<address>James Clark</address>
+
+</body>
+</html>
