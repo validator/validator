@@ -82,6 +82,7 @@
 <target name="validate" depends="jar">
   <jing rngfile="xhtml/xhtml-basic.rng">
     <fileset dir="doc" includes="**/*.html"/>
+    <fileset dir="datatype-sample" includes="index.html"/>
   </jing>
   <jing rngfile="eg/relaxng.rng">
     <fileset dir="eg" includes="*.rng"/>
@@ -120,7 +121,19 @@
   </java>
 </target>
 
-<target name="dist" depends="jar, exegen, validate">
+<target name="javadoc" depends="init">
+  <mkdir dir="build/api"/>
+  <javadoc sourcepath="src" destdir="build/api" packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
+</target>
+
+<target name="datatype-sample" depends="jar">
+  <ant dir="datatype-sample">
+    <property name="build.dir" value="../build/datatype-sample"/>
+    <property name="jing.jar" value="../build/jing.jar"/>
+  </ant>
+</target>
+
+<target name="dist" depends="jar, exegen, validate, test, javadoc, datatype-sample">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
@@ -136,9 +149,13 @@
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
   <unzip src="build/xhtml-rng.zip" dest="build"/>
   <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
-
+  <zip zipfile="build/datatype-sample.zip">
+    <fileset dir="datatype-sample"/>
+    <fileset dir="build" includes="api/**"/>
+    <fileset dir="build/datatype-sample" includes="datatype-sample.jar"/>
+  </zip>
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**"/>
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip"/>
 
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 
@@ -146,18 +163,6 @@
 
 <target name="clean">
   <delete dir="build"/>
-</target>
-
-<target name="javadoc" depends="init">
-  <mkdir dir="build/api"/>
-  <javadoc sourcepath="src" destdir="build/api" packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
-</target>
-
-<target name="datatype-sample" depends="jar">
-  <ant dir="datatype-sample">
-    <property name="build.dir" value="../build/datatype-sample"/>
-    <property name="jing.jar" value="../build/jing.jar"/>
-  </ant>
 </target>
 
 </project>
