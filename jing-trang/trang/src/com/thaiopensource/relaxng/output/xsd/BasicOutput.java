@@ -784,7 +784,7 @@ public class BasicOutput {
     }
   }
 
-  public BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od, Options options,
+  private BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od, Options options,
                      NamespaceManager nsm, PrefixManager pm, ComplexTypeSelector complexTypeSelector,
                      AbstractElementTypeSelector abstractElementTypeSelector,
                      Set globalElementsDefined, Set globalAttributesDefined) throws IOException {
@@ -817,7 +817,7 @@ public class BasicOutput {
     return pm.getPrefix(ns);
   }
 
-  void output() {
+  private void output() {
     outputCommentList(schema.getLeadingComments());
     xw.startElement(xs("schema"));
     xw.attribute("xmlns:" + xsPrefix, WellKnownNamespaces.XML_SCHEMA);
@@ -902,7 +902,7 @@ public class BasicOutput {
     return pm.getPrefix(ns) + ":" + localName;
   }
 
-  void outputOther() {
+  private void outputOther() {
     String name = nsm.getOtherElementName(targetNamespace);
     if (name != null) {
       xw.startElement(xs("group"));
@@ -927,13 +927,13 @@ public class BasicOutput {
     }
   }
 
-  void outputInclude(String href) {
+  private void outputInclude(String href) {
     xw.startElement(xs("include"));
     xw.attribute("schemaLocation", od.reference(sourceUri, href));
     xw.endElement();
   }
 
-  void outputImport(String ns, String href) {
+  private void outputImport(String ns, String href) {
     xw.startElement(xs("import"));
     if (!ns.equals(""))
       xw.attribute("namespace", ns);
@@ -941,7 +941,7 @@ public class BasicOutput {
     xw.endElement();
   }
 
-  void outputComplexTypeComplexContent(ComplexTypeComplexContentExtension t, String name, Annotated parent) {
+  private void outputComplexTypeComplexContent(ComplexTypeComplexContentExtension t, String name, Annotated parent) {
     String base = t.getBase();
     if (base != null) {
       base = qualifyRef(schema.getGroup(base).getParentSchema().getUri(), base);
@@ -981,7 +981,7 @@ public class BasicOutput {
     xw.endElement();
   }
 
-  void outputComplexTypeSimpleContent(ComplexTypeSimpleContentExtension t, String name, Annotated parent) {
+  private void outputComplexTypeSimpleContent(ComplexTypeSimpleContentExtension t, String name, Annotated parent) {
     String base = t.getBase();
     AttributeUse attributeUses = t.getAttributeUses();
     if (base != null) {
@@ -1043,7 +1043,7 @@ public class BasicOutput {
       outputAnnotation(parent);
   }
 
-  void outputAnnotation(Annotated annotated) {
+  private void outputAnnotation(Annotated annotated) {
     Annotation annotation = annotated.getAnnotation();
     if (annotation == null)
       return;
