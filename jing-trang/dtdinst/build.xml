@@ -1,4 +1,4 @@
-<project name="dtdinst" default="test" basedir=".">
+<project name="dtdinst" default="test">
 
 <property name="build.dir" value="build"/>
 <property name="website.dir" value="build/website"/>

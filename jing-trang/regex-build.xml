@@ -1,4 +1,4 @@
-<project name="regex" default="jar" basedir=".">
+<project name="regex" default="jar">
 
 <property name="regex-version" value="20020430"/>
 <property name="build.xml" value="build.xml"/>

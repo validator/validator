@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "#!/bin/sh" >ant
+echo `dirname $0`/ant "-Dtopbuild.dir=`pwd`" '"$@"' >>ant
+chmod +x ant

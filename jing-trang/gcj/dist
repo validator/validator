@@ -8,8 +8,6 @@ trang_test_main=com.thaiopensource.relaxng.translate.test.CompactTestDriver
 a_jing_file=src/com/thaiopensource/relaxng/util/Driver.java
 crimson_version=1.1.3
 xerces_version=2.3.0
-build_dir=build/gcj
-dist_dir=build/dist/gcj
 jing_version_properties=src/com/thaiopensource/relaxng/util/resources/Version.properties
 trang_version_properties=trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties
 crimson_unwanted="
@@ -50,6 +48,16 @@ elif [ ! -f ${a_jing_file} ]; then
     echo You are in the wrong directory >&2
     exit 1
 fi
+
+if [ $# -gt 0 ]; then
+    jing_build_dir=$1
+else
+    jing_build_dir=build
+fi
+
+jing_build_dir=`cd ${jing_build_dir}; pwd`
+build_dir=${jing_build_dir}/gcj
+dist_dir=${jing_build_dir}/dist/gcj
 
 top_dir=`pwd`
 
@@ -117,10 +125,11 @@ cd ${top_dir}
 cp -a ${jing_dir}/src ${trang_dir}
 
 cd dtdinst
-find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ../${trang_dir}
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ${trang_dir}
 cd ../trang
-find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ../${trang_dir}
-cd ../${trang_dir}/src
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ${trang_dir}
+
+cd ${trang_dir}/src
 
 rm -fr ${jing_unwanted_in_trang}
 

@@ -1,11 +1,12 @@
-<project name="trang" default="jar" basedir=".">
+<project name="trang" default="jar">
 
 <property name="website.dir" value="build"/>
 <property name="dist.dir" value="build/dist"/>
 <property name="jar.dir" value="build"/>
 <property name="dtdinst.src" value="../dtdinst/src"/>
 <property name="jing.src" value="../src"/>
-<property name="jing.gen.src" value="../build/src"/>
+<property name="build.dir" value="build"/>
+<property name="jing.gen.src" value="${build.dir}/../src"/>
 <property name="lib.dir" value="../lib"/>
 <property name="jing.excludes"
           value="com/thaiopensource/relaxng/impl/**,
@@ -13,8 +14,6 @@
                  com/thaiopensource/relaxng/jarv/**,
                  com/thaiopensource/relaxng/*.java,
                  com/thaiopensource/validate/**"/>
-
-<property name="build.dir" value="build"/>
 
 <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
   <classpath>
@@ -60,7 +59,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   <delete dir="${build.dir}/compact-test"/>
   <mkdir dir="${build.dir}/compact-test"/>
   <style basedir="test" destdir="${build.dir}/compact-test" includes="compacttest.xml" extension=".stamp" style="test/compactsplit.xsl">
-    <param name="dir" expression="trang/${build.dir}/compact-test"/>
+    <param name="dir" expression="${build.dir}/compact-test"/>
   </style>
 </target>
 
@@ -77,7 +76,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   <delete dir="${build.dir}/xsd-test"/>
   <mkdir dir="${build.dir}/xsd-test"/>
   <style basedir="test" destdir="${build.dir}/xsd-test" includes="toxsdtest.xml" extension=".stamp" style="test/compactsplit.xsl">
-    <param name="dir" expression="trang/${build.dir}/xsd-test"/>
+    <param name="dir" expression="${build.dir}/xsd-test"/>
   </style>
 </target>
 

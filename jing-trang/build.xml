@@ -1,15 +1,17 @@
-<project name="jing" default="all" basedir=".">
+<project name="jing" default="all">
 
 <property name="sdkjava.dir" value="c:\Program Files\Microsoft SDK for Java 4.0"/>
 
 <property name="lib.dir" value="lib"/>
 
+<property name="topbuild.dir" value="${basedir}/build"/>
+<property name="build.dir" value="${topbuild.dir}"/>
 
 <target name="all" depends="test, trang-test, validate"/>
 
 <target name="init">
-  <mkdir dir="build"/>
-  <mkdir dir="build/dist"/>
+  <mkdir dir="${build.dir}"/>
+  <mkdir dir="${build.dir}/dist"/>
   <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
   <condition property="linux">
     <os family="unix"/>
@@ -21,16 +23,16 @@
 
 <target name="compile-grammar" depends="init"
         description="Compile the JavaCC grammar for the compact syntax" >
- <mkdir dir="build/src/com/thaiopensource/relaxng/parse/compact"/>
+ <mkdir dir="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"/>
  <javacc target="src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj"
-         outputdirectory="build/src/com/thaiopensource/relaxng/parse/compact"
+         outputdirectory="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"
          javacchome="lib"
          />
  <delete quiet="true">
-  <fileset dir="build/src/com/thaiopensource/relaxng/parse/compact"
+  <fileset dir="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"
            includes="UCode_UCodeESC_CharStream.java"/>
  </delete>
- <replace file="build/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
+ <replace file="${build.dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
    token="java.io.IOException" value="EOFException"/>
 </target>
 
@@ -43,25 +45,25 @@
 <target name="gen" depends="compile-grammar,regex-gen"/>
 
 <target name="compile" depends="gen">
-  <mkdir dir="build/classes"/>
-  <javac srcdir="src:build/src" destdir="build/classes" excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java" target="1.1"/>
+  <mkdir dir="${build.dir}/classes"/>
+  <javac srcdir="src:${build.dir}/src" destdir="${build.dir}/classes" excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java" target="1.1"/>
 </target>
 
 <target name="jar" depends="compile" description="Build jing.jar" >
 
-  <echo file="build/jing-manifest.txt">Manifest-Version: 1.0
+  <echo file="${build.dir}/jing-manifest.txt">Manifest-Version: 1.0
 Main-Class: com/thaiopensource/relaxng/util/Driver
 Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 </echo>
 
-  <jar jarfile="build/jing.jar" manifest="build/jing-manifest.txt">
-    <fileset dir="build/classes"/>
+  <jar jarfile="${build.dir}/jing.jar" manifest="${build.dir}/jing-manifest.txt">
+    <fileset dir="${build.dir}/classes"/>
     <fileset dir="src" includes="**/resources/*,META-INF/services/*"/>
   </jar>
 
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
     </classpath>
   </taskdef>
 
@@ -73,54 +75,54 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
         failonerror="yes">
     <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
     <arg value="/nologo"/>
-    <arg value="/out:build\jing.exe"/>
+    <arg value="/out:${build.dir}\jing.exe"/>
     <arg value="/r"/>
     <arg value="/base:src"/>
     <arg value="*.properties"/>
     <arg value="*.rng"/>
     <arg value="META-INF\services\*"/>
-    <arg value="/base:build\classes"/>
+    <arg value="/base:${build.dir}\classes"/>
     <arg value="*.class"/>
-    <arg value="/base:build\crimson-files"/>
+    <arg value="/base:${build.dir}\crimson-files"/>
     <arg value="*.*"/>
-    <arg value="/base:build\regex-files"/>
+    <arg value="/base:${build.dir}\regex-files"/>
     <arg value="*.*"/>
   </exec>
 </target>
 
 <target name="check-exe">
-  <uptodate property="exe-ok" targetfile="build/jing.exe">
-    <srcfiles dir="build/classes" includes="**/*.class"/>
+  <uptodate property="exe-ok" targetfile="${build.dir}/jing.exe">
+    <srcfiles dir="${build.dir}/classes" includes="**/*.class"/>
     <srcfiles dir="src" includes="**/*.properties"/>
   </uptodate>
 </target>
 
 <target name="crimson-files" depends="check-crimson-files" unless="crimson-files-ok">
-  <mkdir dir="build/crimson-files"/>
-  <unzip src="lib/crimson.jar" dest="build/crimson-files"/>
-  <delete dir="build/crimson-files/org/w3c"/>
-  <delete dir="build/crimson-files/org/apache/crimson/tree"/>
-  <delete file="build/crimson-files/META-INF/services/javax.xml.parsers.DocumentBuilderFactory"/>
-  <delete file="build/crimson-files/javax/xml/parsers/DocumentBuilder.class"/>
-  <delete file="build/crimson-files/javax/xml/parsers/DocumentBuilderFactory.class"/>
-  <delete dir="build/crimson-files/org/apache/crimson/jaxp/DocumentBuilderImpl.class"/>
-  <delete dir="build/crimson-files/org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class"/>
+  <mkdir dir="${build.dir}/crimson-files"/>
+  <unzip src="lib/crimson.jar" dest="${build.dir}/crimson-files"/>
+  <delete dir="${build.dir}/crimson-files/org/w3c"/>
+  <delete dir="${build.dir}/crimson-files/org/apache/crimson/tree"/>
+  <delete file="${build.dir}/crimson-files/META-INF/services/javax.xml.parsers.DocumentBuilderFactory"/>
+  <delete file="${build.dir}/crimson-files/javax/xml/parsers/DocumentBuilder.class"/>
+  <delete file="${build.dir}/crimson-files/javax/xml/parsers/DocumentBuilderFactory.class"/>
+  <delete dir="${build.dir}/crimson-files/org/apache/crimson/jaxp/DocumentBuilderImpl.class"/>
+  <delete dir="${build.dir}/crimson-files/org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class"/>
 </target>
 
 <target name="check-crimson-files">
   <available property="crimson-files-ok"
-             file="build/crimson-files/org/apache/crimson/parser/XMLReaderImpl.class"/>
+             file="${build.dir}/crimson-files/org/apache/crimson/parser/XMLReaderImpl.class"/>
 </target>
 
 <target name="regex-files" depends="check-regex-files" unless="regex-files-ok">
-  <mkdir dir="build/regex-files"/>
-  <unzip src="lib/regex2.jar" dest="build/regex-files"/>
-  <delete dir="build/regex-files/META-INF"/>
+  <mkdir dir="${build.dir}/regex-files"/>
+  <unzip src="lib/regex2.jar" dest="${build.dir}/regex-files"/>
+  <delete dir="${build.dir}/regex-files/META-INF"/>
 </target>
 
 <target name="check-regex-files">
   <available property="regex-files-ok"
-             file="build/regex-files/org/apache/xerces/impl/xpath/regex/RegularExpression.class"/>
+             file="${build.dir}/regex-files/org/apache/xerces/impl/xpath/regex/RegularExpression.class"/>
 </target>
 
 <target name="validate" depends="jar" description="Validate all XML files" >
@@ -153,25 +155,25 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="eg/testSuite.rng">
     <fileset dir="test" includes="spectest.xml"/>
   </jing>
-  <delete dir="build/rngtest"/>
-  <mkdir dir="build/rngtest"/>
-  <style basedir="test" destdir="build/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/rngtest"/>
+  <delete dir="${build.dir}/rngtest"/>
+  <mkdir dir="${build.dir}/rngtest"/>
+  <style basedir="test" destdir="${build.dir}/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="${build.dir}/rngtest"/>
   </style>
 </target>
 
 <target name="check-spec-split">
-  <uptodate property="spec-split-not-required" targetfile="build/rngtest/spectest.stamp">
+  <uptodate property="spec-split-not-required" targetfile="${build.dir}/rngtest/spectest.stamp">
     <srcfiles dir="test" includes="spectest.xml"/>
   </uptodate>
 </target>
 
 <target name="spec-test" depends="jar,spec-split" description="Test conformance to the RELAX NG spec">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/rngtest/out.log"/>
-    <arg value="build/rngtest"/>
+    <arg value="${build.dir}/rngtest/out.log"/>
+    <arg value="${build.dir}/rngtest"/>
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
@@ -181,25 +183,25 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="test/mnstest.rng">
     <fileset dir="test" includes="mnstest.xml"/>
   </jing>
-  <delete dir="build/mnstest"/>
-  <mkdir dir="build/mnstest"/>
-  <style basedir="test" destdir="build/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/mnstest"/>
+  <delete dir="${build.dir}/mnstest"/>
+  <mkdir dir="${build.dir}/mnstest"/>
+  <style basedir="test" destdir="${build.dir}/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="${build.dir}/mnstest"/>
   </style>
 </target>
 
 <target name="check-mns-split">
-  <uptodate property="mns-split-not-required" targetfile="build/mnstest/mnstest.stamp">
+  <uptodate property="mns-split-not-required" targetfile="${build.dir}/mnstest/mnstest.stamp">
     <srcfiles dir="test" includes="mnstest.xml"/>
   </uptodate>
 </target>
 
 <target name="mns-test" depends="jar,mns-split" description="Test MNS validation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/mnstest/out.log"/>
-    <arg value="build/mnstest"/>
+    <arg value="${build.dir}/mnstest/out.log"/>
+    <arg value="${build.dir}/mnstest"/>
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
@@ -209,25 +211,25 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="test/nrltest.rng">
     <fileset dir="test" includes="nrltest.xml"/>
   </jing>
-  <delete dir="build/nrltest"/>
-  <mkdir dir="build/nrltest"/>
-  <style basedir="test" destdir="build/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/nrltest"/>
+  <delete dir="${build.dir}/nrltest"/>
+  <mkdir dir="${build.dir}/nrltest"/>
+  <style basedir="test" destdir="${build.dir}/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="${build.dir}/nrltest"/>
   </style>
 </target>
 
 <target name="check-nrl-split">
-  <uptodate property="nrl-split-not-required" targetfile="build/nrltest/nrltest.stamp">
+  <uptodate property="nrl-split-not-required" targetfile="${build.dir}/nrltest/nrltest.stamp">
     <srcfiles dir="test" includes="nrltest.xml"/>
   </uptodate>
 </target>
 
 <target name="nrl-test" depends="jar,nrl-split" description="Test NRL validation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/nrltest/out.log"/>
-    <arg value="build/nrltest"/>
+    <arg value="${build.dir}/nrltest/out.log"/>
+    <arg value="${build.dir}/nrltest"/>
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
@@ -237,25 +239,25 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="test/schematrontest.nrl">
     <fileset dir="test" includes="schematrontest.xml"/>
   </jing>
-  <delete dir="build/schematrontest"/>
-  <mkdir dir="build/schematrontest"/>
-  <style basedir="test" destdir="build/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/schematrontest"/>
+  <delete dir="${build.dir}/schematrontest"/>
+  <mkdir dir="${build.dir}/schematrontest"/>
+  <style basedir="test" destdir="${build.dir}/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="${build.dir}/schematrontest"/>
   </style>
 </target>
 
 <target name="check-schematron-split">
-  <uptodate property="schematron-split-not-required" targetfile="build/schematrontest/schematrontest.stamp">
+  <uptodate property="schematron-split-not-required" targetfile="${build.dir}/schematrontest/schematrontest.stamp">
     <srcfiles dir="test" includes="schematrontest.xml"/>
   </uptodate>
 </target>
 
 <target name="schematron-test" depends="jar,schematron-split" description="Test Schematron validation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/schematrontest/out.log"/>
-    <arg value="build/schematrontest"/>
+    <arg value="${build.dir}/schematrontest/out.log"/>
+    <arg value="${build.dir}/schematrontest"/>
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
@@ -263,17 +265,17 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 <target name="xsd-test" depends="jar,xsd-split" description="Test the XML Schema Datatypes implementation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/xsdtest/out.log"/>
-    <arg value="build/xsdtest"/>
+    <arg value="${build.dir}/xsdtest/out.log"/>
+    <arg value="${build.dir}/xsdtest"/>
     <classpath>
-      <pathelement location="build/jing.jar"/>
+      <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
 </target>
 
 <target name="check-xsd-split">
-  <uptodate property="xsd-split-not-required" targetfile="build/xsdtest/xsdtest.stamp">
+  <uptodate property="xsd-split-not-required" targetfile="${build.dir}/xsdtest/xsdtest.stamp">
     <srcfiles dir="test" includes="xsdtest.xml,xsdtest.xsl,xsdtest.rnc,split.xsl"/>
   </uptodate>
 </target>
@@ -283,22 +285,22 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="test/xsdtest.rnc" compactsyntax="true">
     <fileset dir="test" includes="xsdtest.xml"/>
   </jing>
-  <delete dir="build/xsdtest"/>
-  <mkdir dir="build/xsdtest"/>
-  <style basedir="test" destdir="build/xsdtest" includes="xsdtest.xml" extension=".xml"
+  <delete dir="${build.dir}/xsdtest"/>
+  <mkdir dir="${build.dir}/xsdtest"/>
+  <style basedir="test" destdir="${build.dir}/xsdtest" includes="xsdtest.xml" extension=".xml"
          style="test/xsdtest.xsl"/>
   <jing rngfile="eg/testSuite.rng">
-    <fileset dir="build/xsdtest" includes="xsdtest.xml"/>
+    <fileset dir="${build.dir}/xsdtest" includes="xsdtest.xml"/>
   </jing>
-  <style basedir="build/xsdtest" destdir="build/xsdtest" includes="xsdtest.xml"
+  <style basedir="${build.dir}/xsdtest" destdir="${build.dir}/xsdtest" includes="xsdtest.xml"
          extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/xsdtest"/>
+    <param name="dir" expression="${build.dir}/xsdtest"/>
   </style>
 </target>
 
 <target name="regex-jar">
   <ant antfile="regex-build.xml" target="jar">
-    <property name="classes.dir" value="build/regex-classes"/>
+    <property name="classes.dir" value="${build.dir}/regex-classes"/>
   </ant>
 </target>
 
@@ -307,7 +309,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <fileset dir="test" includes="regextest.xml"/>
   </jing>
   <ant antfile="regex-build.xml" target="test">
-    <property name="classes.dir" value="build/regex-classes"/>
+    <property name="classes.dir" value="${build.dir}/regex-classes"/>
   </ant>
 </target>
 
@@ -316,36 +318,36 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <fileset dir="test" includes="regextest.xml"/>
   </jing>
   <ant antfile="regex-build.xml" target="xerces-test">
-    <property name="classes.dir" value="build/regex-classes"/>
+    <property name="classes.dir" value="${build.dir}/regex-classes"/>
   </ant>
 </target>
 
 <target name="full-regex-test" description="Test (time-consumingly) the regex implementation" >
   <ant antfile="regex-build.xml" target="full-test">
-    <property name="classes.dir" value="build/regex-classes"/>
+    <property name="classes.dir" value="${build.dir}/regex-classes"/>
   </ant>
 </target>
 
 <target name="regex-dist" depends="init">
   <ant antfile="regex-build.xml" target="dist">
-    <property name="classes.dir" value="build/regex-classes"/>
-    <property name="apidoc.dir" value="build/regex-apidoc"/>
-    <property name="dist.dir" value="build/dist"/>
+    <property name="classes.dir" value="${build.dir}/regex-classes"/>
+    <property name="apidoc.dir" value="${build.dir}/regex-apidoc"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
     <property name="build.xml" value="regex-build.xml"/>
     <property name="UnicodeData.file" value="lib/UnicodeData-3.1.0.txt"/>
     <property name="doc.src.dir" value="doc/regex"/>
-    <property name="doc.build.dir" value="build/regex-doc"/>
+    <property name="doc.build.dir" value="${build.dir}/regex-doc"/>
   </ant>
 </target>
 
 <target name="javadoc" depends="init">
-  <mkdir dir="build/api"/>
-  <mkdir dir="build/api/datatype"/>
-  <javadoc sourcepath="src" destdir="build/api/datatype"
+  <mkdir dir="${build.dir}/api"/>
+  <mkdir dir="${build.dir}/api/datatype"/>
+  <javadoc sourcepath="src" destdir="${build.dir}/api/datatype"
     doctitle="RELAX NG Datatype API" windowtitle="RELAX NG Datatype API"
     packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
-  <mkdir dir="build/api/jing"/>
-  <javadoc sourcepath="src" destdir="build/api/jing"
+  <mkdir dir="${build.dir}/api/jing"/>
+  <javadoc sourcepath="src" destdir="${build.dir}/api/jing"
     doctitle="Jing API" windowtitle="Jing API"
     packagenames="com.thaiopensource.validate,
                   com.thaiopensource.validate.rng,
@@ -355,7 +357,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
                   com.thaiopensource.validate.auto,
                   com.thaiopensource.xml.sax,
                   com.thaiopensource.util">
-    <link offline="true" href="../datatype" packagelistLoc="build/api/datatype"/>
+    <link offline="true" href="../datatype" packagelistLoc="${build.dir}/api/datatype"/>
     <link offline="true" href="http://www.saxproject.org/apidoc" packagelistLoc="extapidoc/sax"/>
     <link offline="true" href="http://java.sun.com/products/jdk/1.3/docs/api" packagelistLoc="extapidoc/jdk/1.3"/>
     <link offline="true" href="http://java.sun.com/xml/jaxp/dist/1.1/docs/api" packagelistLoc="extapidoc/jaxp/1.1"/>
@@ -363,9 +365,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 </target>
 
 <target name="doccheck" depends="init">
-  <mkdir dir="build/doccheck"/>
+  <mkdir dir="${build.dir}/doccheck"/>
   <javadoc sourcepath="src"
-           destdir="build/doccheck"
+           destdir="${build.dir}/doccheck"
            packagenames="com.thaiopensource.validate,
                          com.thaiopensource.validate.rng,
                          com.thaiopensource.validate.xerces,
@@ -380,146 +382,146 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 <target name="datatype-sample" depends="jar">
   <ant dir="datatype-sample">
-    <property name="build.dir" value="../build/datatype-sample"/>
-    <property name="jing.jar" value="../build/jing.jar"/>
+    <property name="build.dir" value="${build.dir}/datatype-sample"/>
+    <property name="jing.jar" value="${build.dir}/jing.jar"/>
   </ant>
 </target>
 
 <target name="doc">
-  <style basedir="doc" destdir="build" includes="derivative.xml"
+  <style basedir="doc" destdir="${build.dir}" includes="derivative.xml"
          style="doc/derivative.xsl"/>
-  <style basedir="doc" destdir="build" includes="design.xml"
+  <style basedir="doc" destdir="${build.dir}" includes="design.xml"
          style="doc/design.xsl"/>
-  <copy todir="build">
+  <copy todir="${build.dir}">
     <fileset dir="doc" includes="*.html"/>
   </copy>
-  <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
+  <replace file="${build.dir}/jing.html" token="@VERSION@" value="${version}"/>
 </target>
 
 <target name="trang-jar" depends="jar" description="Build trang.jar" >
   <ant dir="trang" target="jar">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-test" depends="jar" description="Test Trang" >
   <ant dir="trang" target="test">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-compact-test" depends="jar" description="Test compact to XML syntax conversion" >
   <ant dir="trang" target="compact-test">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-xsd-test" depends="jar" description="Test compact to XSD syntax conversion" >
   <ant dir="trang" target="xsd-test">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-validate" depends="jar">
   <ant dir="trang" target="validate">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-website" depends="jar">
   <ant dir="trang" target="website">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="trang-dist" depends="jar">
   <ant dir="trang" target="dist">
-    <property name="build.dir" value="../build/trang"/>
-    <property name="jar.dir" value="../build"/>
-    <property name="website.dir" value="../build"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="lib.dir" value="../lib"/>
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="website.dir" value="${build.dir}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="dtdinst-test" depends="init">
   <ant dir="dtdinst" target="test">
-    <property name="build.dir" value="../build/dtdinst-build"/>
-    <property name="website.dir" value="../build/dtdinst"/>
-    <property name="dist.dir" value="../build"/>
-    <property name="jar.dir" value="../build"/>
+    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
+    <property name="website.dir" value="${build.dir}/dtdinst"/>
+    <property name="dist.dir" value="${build.dir}"/>
+    <property name="jar.dir" value="${build.dir}"/>
     <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="dtdinst-website" depends="init">
   <ant dir="dtdinst" target="website">
-    <property name="build.dir" value="../build/dtdinst-build"/>
-    <property name="website.dir" value="../build/dtdinst"/>
-    <property name="dist.dir" value="../build"/>
-    <property name="jar.dir" value="../build"/>
+    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
+    <property name="website.dir" value="${build.dir}/dtdinst"/>
+    <property name="dist.dir" value="${build.dir}"/>
+    <property name="jar.dir" value="${build.dir}"/>
     <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="dtdinst-dist" depends="trang-jar">
   <ant dir="dtdinst" target="dist">
-    <property name="build.dir" value="../build/dtdinst-build"/>
-    <property name="website.dir" value="../build/dtdinst"/>
-    <property name="dist.dir" value="../build/dist"/>
-    <property name="jar.dir" value="../build"/>
+    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
+    <property name="website.dir" value="${build.dir}/dtdinst"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="jar.dir" value="${build.dir}"/>
     <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
   </ant>
 </target>
 
 <target name="jing-dist" depends="jar,test,validate,javadoc,doc,datatype-sample">
-  <mkdir dir="build/jing-bin"/>
-  <copy todir="build/jing-bin">
+  <mkdir dir="${build.dir}/jing-bin"/>
+  <copy todir="${build.dir}/jing-bin">
     <fileset dir="doc/jing-bin" includes="readme.html"/>
   </copy>
-  <replace file="build/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
-  <zip zipfile="build/jing-src.zip">
+  <replace file="${build.dir}/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="${build.dir}/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.jj,**/resources/*,META-INF/services/*"/>
-    <fileset dir="build/src" includes="**/*.java"/>
-    <zipfileset dir="build" includes="jing-manifest.txt" fullpath="META-INF/MANIFEST.MF"/>
+    <fileset dir="${build.dir}/src" includes="**/*.java"/>
+    <zipfileset dir="${build.dir}" includes="jing-manifest.txt" fullpath="META-INF/MANIFEST.MF"/>
   </zip>
-  <zip zipfile="build/dist/jing-${version}.zip">
-    <zipfileset dir="build" includes="jing.jar" prefix="jing-${version}/bin"/> 
+  <zip zipfile="${build.dir}/dist/jing-${version}.zip">
+    <zipfileset dir="${build.dir}" includes="jing.jar" prefix="jing-${version}/bin"/> 
     <zipfileset dir="lib" includes="saxon.jar,isorelax.jar,xercesImpl.jar,xml-apis.jar" 
                 prefix="jing-${version}/bin"/> 
-    <zipfileset dir="build" includes="jing-src.zip" fullpath="jing-${version}/src.zip"/> 
-    <zipfileset dir="build" includes="api/**" prefix="jing-${version}/doc"/>
+    <zipfileset dir="${build.dir}" includes="jing-src.zip" fullpath="jing-${version}/src.zip"/> 
+    <zipfileset dir="${build.dir}" includes="api/**" prefix="jing-${version}/doc"/>
     <zipfileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"
                 prefix="jing-${version}/lib"/>
     <zipfileset dir="doc/compact" includes="relaxng.rnc" prefix="jing-${version}/lib"/>
@@ -536,97 +538,99 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <zipfileset dir="doc"
                 includes="jing-ant.html,jing-datatypes.html,pluggable-datatypes.html"
                 prefix="jing-${version}/doc"/>
-    <zipfileset dir="build"
+    <zipfileset dir="${build.dir}"
                 includes="jing.html"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="doc/jing-bin"
                 includes="copying.html"
                 prefix="jing-${version}/doc"/>
-    <zipfileset dir="build/jing-bin"
+    <zipfileset dir="${build.dir}/jing-bin"
                 includes="readme.html"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="datatype-sample" prefix="jing-${version}/sample/datatype"/>
-    <zipfileset dir="build/datatype-sample"
+    <zipfileset dir="${build.dir}/datatype-sample"
                 includes="datatype-sample.jar"
                 prefix="jing-${version}/sample/datatype"/>
   </zip>
-  <checksum file="build/dist/jing-${version}.zip" fileext=".md5"/>
+  <checksum file="${build.dir}/dist/jing-${version}.zip" fileext=".md5"/>
 </target>
 
 <target name="jing-win32-dist" depends="exegen" if="windows">
-  <mkdir dir="build/jing-win32-bin"/>
-  <copy todir="build/jing-win32-bin">
+  <mkdir dir="${build.dir}/jing-win32-bin"/>
+  <copy todir="${build.dir}/jing-win32-bin">
     <fileset dir="doc/jing-win32-bin" includes="readme.html"/>
   </copy>
-  <replace file="build/jing-win32-bin/readme.html" token="@VERSION@" value="${version}"/>
-  <zip zipfile="build/jing-${version}-win32-bin.zip">
-    <fileset dir="build/jing-win32-bin" includes="readme.html"/>
+  <replace file="${build.dir}/jing-win32-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="${build.dir}/jing-${version}-win32-bin.zip">
+    <fileset dir="${build.dir}/jing-win32-bin" includes="readme.html"/>
     <fileset dir="doc/jing-win32-bin" includes="apache-license.txt"/>
-    <fileset dir="build" includes="jing.exe,copying.html"/>
+    <fileset dir="${build.dir}" includes="jing.exe,copying.html"/>
   </zip>
-  <checksum file="build/dist/jing-${version}-win32-bin.zip" fileext=".md5"/>
+  <checksum file="${build.dir}/dist/jing-${version}-win32-bin.zip" fileext=".md5"/>
 </target>
 
 <target name="website" depends="validate,javadoc,datatype-sample,doc,trang-website,dtdinst-website"
   description="Build a .tar.gz containing the complete relaxng website" >
-  <copy todir="build">
+  <copy todir="${build.dir}">
     <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
     <fileset dir="." includes="copying.html"/>
     <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
     <fileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"/>
   </copy>
-  <mkdir dir="build/compact"/>
-  <copy todir="build/compact">
+  <mkdir dir="${build.dir}/compact"/>
+  <copy todir="${build.dir}/compact">
     <fileset dir="doc/compact" includes="*.html"/>
   </copy>
   <copy file="doc/compact/relaxng.rnc"
-        tofile="build/compact/relaxng.rnc.txt"/>
-  <zip zipfile="build/testSuite.zip">
+        tofile="${build.dir}/compact/relaxng.rnc.txt"/>
+  <zip zipfile="${build.dir}/testSuite.zip">
     <fileset dir="test" includes="index.html,spectest.xml,split.xsl,saxon.xsl,prep.xml"/>
     <fileset dir="eg" includes="testSuite.rng"/>
   </zip>
-  <tar tarfile="build/relaxng.tar" basedir="build"
+  <tar tarfile="${build.dir}/relaxng.tar" basedir="${build.dir}"
     includes="testSuite.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**,dtdinst/**"/>
-  <gzip zipfile="build/dist/relaxng.tar.gz" src="build/relaxng.tar"/>
+  <gzip zipfile="${build.dir}/dist/relaxng.tar.gz" src="${build.dir}/relaxng.tar"/>
 </target>
 
 <target name="gcj" if="linux" depends="init">
-  <exec executable="gcj/dist" failonerror="true"/>
+  <exec executable="${basedir}/gcj/dist" failonerror="true" dir=".">
+    <arg value="${build.dir}"/>
+  </exec>
   <checksum fileext=".md5">
-    <fileset dir="build/dist/gcj" includes="*.tar.gz"/>
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
   </checksum>
 </target>
 
 <target name="gcj-rpm" depends="gcj" if="linux">
-  <mkdir dir="build/gcj-rpm"/>
-  <apply executable="rpmbuild" failonerror="true">
+  <mkdir dir="${build.dir}/gcj-rpm"/>
+  <apply executable="rpmbuild" failonerror="true" dir=".">
     <arg value="-ta"/>
     <arg value="-D"/>
-    <arg value="jingdir ${basedir}"/>
+    <arg value="_jingbuilddir ${build.dir}"/>
     <arg value="--rcfile=gcj/rpmrc"/>
-    <fileset dir="build/dist/gcj" includes="*.tar.gz"/>
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
   </apply>
 </target>
 
 <target name="gcj-test" depends="gcj" if="linux">
-  <mkdir dir="build/gcj-test"/>
-  <untar compression="gzip" dest="build/gcj-test">
-    <fileset dir="build/dist/gcj" includes="*.tar.gz"/>
+  <mkdir dir="${build.dir}/gcj-test"/>
+  <untar compression="gzip" dest="${build.dir}/gcj-test">
+    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
   </untar>
-  <mkdir dir="build/gcj-test/jingbuild"/>
-  <apply dir="build/gcj-test/jingbuild" executable="/bin/sh" relative="false" failonerror="true">
-    <fileset dir="build/gcj-test" includes="jing-*/configure"/>
+  <mkdir dir="${build.dir}/gcj-test/jingbuild"/>
+  <apply dir="${build.dir}/gcj-test/jingbuild" executable="/bin/sh" relative="false" failonerror="true">
+    <fileset dir="${build.dir}/gcj-test" includes="jing-*/configure"/>
   </apply>
-  <exec executable="make" failonerror="true" dir="build/gcj-test/jingbuild"/>
-  <exec executable="make" failonerror="true" dir="build/gcj-test/jingbuild">
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild"/>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild">
     <arg value="check"/>
   </exec>
-  <mkdir dir="build/gcj-test/trangbuild"/>
-  <apply dir="build/gcj-test/trangbuild" executable="/bin/sh" relative="false" failonerror="true">
-    <fileset dir="build/gcj-test" includes="trang-*/configure"/>
+  <mkdir dir="${build.dir}/gcj-test/trangbuild"/>
+  <apply dir="${build.dir}/gcj-test/trangbuild" executable="/bin/sh" relative="false" failonerror="true">
+    <fileset dir="${build.dir}/gcj-test" includes="trang-*/configure"/>
   </apply>
-  <exec executable="make" failonerror="true" dir="build/gcj-test/trangbuild"/>
-  <exec executable="make" failonerror="true" dir="build/gcj-test/trangbuild">
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild"/>
+  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild">
     <arg value="check"/>
   </exec>
 </target>
@@ -636,7 +640,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 <target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,gcj-dist,jing-win32-dist,website"/>
 
 <target name="clean" description="Remove all files created during the build process">
-  <delete dir="build"/>
+  <delete dir="${build.dir}"/>
 </target>
 
 </project>
