@@ -2,8 +2,6 @@ Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
 
 Option to recover from unknown datatype libraries.
 
-Revise XHTML for compatibility with final Rec.
-
 More helpful error message for duplicate attributes.
 
 Implement ValidationContext.getBaseUri in the instance.
