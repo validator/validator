@@ -113,8 +113,7 @@ public class PatternReader implements ValidationContext {
 	state.attributes(atts);
       }
       else {
-	if (!allowForeignElements())
-	  error("foreign_element_char_content");
+	checkForeignElement();
 	xr.setContentHandler(new Skipper(this));
       }
     }
@@ -138,8 +137,7 @@ public class PatternReader implements ValidationContext {
     void endAttributes() throws SAXException {
     }
 
-    boolean allowForeignElements() {
-      return true;
+    void checkForeignElement() throws SAXException {
     }
 
     void attributes(Attributes atts) throws SAXException {
@@ -420,6 +418,10 @@ public class PatternReader implements ValidationContext {
       return null;
     }
 
+    void checkForeignElement() throws SAXException {
+      error("root_bad_namespace_uri", relaxngURI);
+    }
+
     public void endDocument() throws SAXException {
       if (!hadError)
 	startPattern = containedPattern;
@@ -476,8 +478,8 @@ public class PatternReader implements ValidationContext {
       buf.append(ch, start, len);
     }
 
-    boolean allowForeignElements() {
-      return false;
+    void checkForeignElement() throws SAXException {
+      error("value_contains_foreign_element");
     }
 
     Pattern makePattern() throws SAXException {
@@ -607,8 +609,8 @@ public class PatternReader implements ValidationContext {
       buf.append(ch, start, len);
     }
 
-    boolean allowForeignElements() {
-      return false;
+    void checkForeignElement() throws SAXException {
+      error("param_contains_foreign_element");
     }
     
     void end() throws SAXException {
@@ -1144,8 +1146,8 @@ public class PatternReader implements ValidationContext {
       buf.append(ch, start, len);
     }
 
-    boolean allowForeignElements() {
-      return false;
+    void checkForeignElement() throws SAXException {
+      error("name_contains_foreign_element");
     }
 
     NameClass makeNameClass() throws SAXException {
