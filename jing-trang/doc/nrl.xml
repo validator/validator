@@ -537,10 +537,10 @@ element inserted|deleted { empty }
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="edit"/>
+      <validate schema="xhtml.rng" useMode="xhtml"/>
     </namespace>
   </mode>
-  <mode name="edit" extends="noEdit">
+  <mode name="xhtml" extends="noEdit">
     <namespace ns="http://www.example.org/edit">
       <validate schema="edit.rnc"
                 schemaType="application/x-rnc"
