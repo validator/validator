@@ -28,7 +28,7 @@ public class RngOutputFormat implements OutputFormat {
     }
   }
 
-  private void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od) throws IOException {
+  private static void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od) throws IOException {
     Analyzer analyzer = new Analyzer();
     sd.getPattern().accept(analyzer);
     Output.output(sd.getPattern(),
