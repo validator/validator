@@ -1,6 +1,3 @@
-RELAX NG: give helpful error message if output directory does not
-exist or is a file
-
 EntityManager that properly handles URLs.
 
 Command-line option parser.
