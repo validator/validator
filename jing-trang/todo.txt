@@ -1,3 +1,9 @@
+Allow jing to use OASIS catalogs.
+
+Allow jing to read from stdin.
+
+Put jing/trang man pages online.
+
 Switch to current, open-source version of JavaCC.
 
 Add DTD validator
