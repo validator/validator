@@ -112,6 +112,8 @@ class AtomParser {
 	v.addElement(p);
 	int start = v.size();
 	new AtomParser(new AtomStream(as.entity.atoms), pp, v).parseParams();
+	if (v.size() == start && pp.expectingAttributeName())
+	  v.addElement(new Param(Param.EMPTY_ATTRIBUTE_GROUP));
 	p.entity.setParsed(Entity.PARAM_LEVEL, v, start, v.size());
 	p = new Param(Param.REFERENCE_END);
       }

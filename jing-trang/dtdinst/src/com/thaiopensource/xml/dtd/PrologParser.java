@@ -734,6 +734,10 @@ public class PrologParser implements Cloneable {
     return groupLevel;
   }
 
+  public boolean expectingAttributeName() {
+    return state == attlist1;
+  }
+
   private static boolean matches(String token, int off, String key) {
     int keyLen = key.length();
     if (token.length() - off != keyLen)
