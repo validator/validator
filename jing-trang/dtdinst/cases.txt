@@ -33,3 +33,5 @@ something for case where param entity was not preserved
 
 <!ENTITY % g "(x|y)">
 <!ATTLIST foo bar NOTATION %g; #IMPLIED>
+
+Should recognize above case as enum group.
