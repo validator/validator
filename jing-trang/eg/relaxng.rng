@@ -1,34 +1,34 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.6 2001-05-24 09:19:54 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.7 2001-05-26 03:54:52 jjc Exp $ -->
 <grammar ns="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
     <choice>
       <element name="element">
-	<choice>
-	  <attribute name="name"/>
-	  <ref name="open-name-class"/>
-	</choice>
+        <choice>
+          <attribute name="name"/>
+          <ref name="open-name-class"/>
+        </choice>
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="attribute">
-	<ref name="common-atts"/>
-	<choice>
-	  <group>
-	    <attribute name="name"/>
-	    <optional>
-	      <attribute name="global">
-		<choice>
-		  <value>true</value>
-		  <value>false</value>
-		</choice>
-	      </attribute>
-	    </optional>
-	  </group>
-	  <ref name="open-name-class"/>
-	</choice>
+        <ref name="common-atts"/>
+        <choice>
+          <group>
+            <attribute name="name"/>
+            <optional>
+              <attribute name="global">
+                <choice>
+                  <value>true</value>
+                  <value>false</value>
+                </choice>
+              </attribute>
+            </optional>
+          </group>
+          <ref name="open-name-class"/>
+        </choice>
         <interleave>
           <ref name="other"/>
           <optional>
@@ -38,42 +38,42 @@
       </element>
       <element name="group">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="interleave">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="choice">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="optional">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="zeroOrMore">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="oneOrMore">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="zeroOrMoreTokens">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="oneOrMoreTokens">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="mixed">
         <ref name="common-atts"/>
-	<ref name="open-patterns"/>
+        <ref name="open-patterns"/>
       </element>
       <element name="ref">
-	<attribute name="name"/>
+        <attribute name="name"/>
         <optional>
           <attribute name="parent">
             <choice>
@@ -86,11 +86,11 @@
       </element>
       <element name="empty">
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="text">
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="value">
         <optional>
@@ -115,29 +115,27 @@
           <zeroOrMore>
             <element name="param">
               <attribute name="name"/>
-	      <mixed>
-		<ref name="other"/>
-	      </mixed>
+              <text/>
             </element>
           </zeroOrMore>
         </interleave>
       </element>
       <element name="notAllowed">
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="include">
-	<attribute name="href"/>
+        <attribute name="href"/>
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="grammar">
-	<ref name="common-atts"/>
+        <ref name="common-atts"/>
         <interleave>
           <ref name="other"/>
-   	  <oneOrMore>
+          <oneOrMore>
             <ref name="grammar-element"/>
-	  </oneOrMore>
+          </oneOrMore>
         </interleave>
       </element>
     </choice>
@@ -148,15 +146,15 @@
       <ref name="start-element"/>
       <ref name="define-element"/>
       <element name="include">
-	<attribute name="href"/>
+        <attribute name="href"/>
         <interleave>
           <ref name="other"/>
-	  <zeroOrMore>
+          <zeroOrMore>
             <choice>
-  	      <ref name="start-element"/>
-  	      <ref name="define-element"/>
+              <ref name="start-element"/>
+              <ref name="define-element"/>
             </choice>
-	  </zeroOrMore>
+          </zeroOrMore>
         </interleave>
       </element>
     </choice>
@@ -165,7 +163,7 @@
   <define name="start-element">
     <element name="start">
       <optional>
-	<attribute name="name"/>
+        <attribute name="name"/>
       </optional>
       <ref name="combine-att"/>
       <ref name="common-atts"/>
@@ -212,26 +210,26 @@
       </element>
       <element name="anyName">
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="nsName">
         <ref name="common-atts"/>
-	<ref name="other"/>
+        <ref name="other"/>
       </element>
       <element name="not">
         <ref name="common-atts"/>
-	<ref name="open-name-class"/>
+        <ref name="open-name-class"/>
       </element>
       <element name="difference">
         <ref name="common-atts"/>
         <oneOrMore>
-	  <ref name="open-name-class"/>
+          <ref name="open-name-class"/>
         </oneOrMore>
       </element>
       <element name="choice">
         <ref name="common-atts"/>
         <oneOrMore>
-	  <ref name="open-name-class"/>
+          <ref name="open-name-class"/>
         </oneOrMore>
       </element>
     </choice>
