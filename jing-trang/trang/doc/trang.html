@@ -202,6 +202,50 @@ but does not always do so.</li>
 href="convert-to-xsd-talk.html">slides</a> for a talk given a XML
 2002.</p>
 
+<p>Annotations can be added to the RELAX NG schema to guide the
+translation.  These annotations have the namespace URI
+<code>http://www.thaiopensource.com/ns/trang/xsd</code>. This document
+will use the convention that the prefix <code>tx</code> refers to this
+namespace URI; in other words, it will assume a namespace declaration
+of</p>
+
+<pre>xmlns:tx="http://www.thaiopensource.com/ns/trang/xsd"</pre>
+
+<p>Currently, only one annotation is supported, an attribute
+<code>tx:enableAbstractElements</code>.  The value of this must be
+<code>true</code> or <code>false</code>.  It applies to RELAX NG
+<code>define</code> elements.  Trang will try to translate a
+<code>define</code> that contains a choice of element patterns into an
+abstract element declaration, which will be used as the head of a
+substitution group whose members are the elements in the choice.  If
+<code>tx:enableAbstractElements="false"</code> is specified, then
+trang will not do this (which means the <code>define</code> will
+typically be translated into a group definition).</p>
+
+<p>The <code>tx:enableAbstractElements</code> attribute is inherited
+in a similar way to the <code>ns</code> attribute: it can be specified
+on a <code>grammar</code>, <code>div</code> or <code>include</code>
+element to enable or disable the use of abstract elements for all
+descendant <code>define</code> elements. In the absence of any
+inherited <code>tx:enableAbstractElements</code> attribute, the use of
+abstract elements in enabled.</p>
+
+<p>It can happen that the same element name occurs in a choice in more
+than one <code>define</code> element; at most one of these
+<code>define</code> elements can be translated to an abstract element.
+In this case, trang will not translate any of them to an abstract
+element, unless the use of abstract elements has been disabled by
+<code>tx:enableAbstractElements</code> for all except one of the
+<code>define</code> elements.</p>
+
+<p>In fact, the use of abstract elements is not restricted to the case
+where the <code>define</code> consists of a <code>choice</code> that
+contains only <code>element</code> patterns; the <code>choice</code>
+may also contain <code>ref</code> patterns referring to definitions
+that are to be translated into element declarations, whether abstract
+or not. The <code>tx:enableAbstractElements</code> attribute applies
+equally to these definitions.</p>
+
 <h2>Future plans</h2>
 
 <p>Trang is constructed around a RELAX NG object model designed to
