@@ -1,5 +1,3 @@
-Consistent namespace URIs for guiding DTD and XSD output
-
 In trang documentation, move some information about DTD conversion into general section
 
 Give a warning for a list containing a single token.
