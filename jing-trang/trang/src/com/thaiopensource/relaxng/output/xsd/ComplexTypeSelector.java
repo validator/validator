@@ -289,7 +289,7 @@ class ComplexTypeSelector extends SchemaWalker {
     return refs;
   }
 
-  void chooseComplexTypes(boolean complex, Map definitionMap) {
+  private void chooseComplexTypes(boolean complex, Map definitionMap) {
     for (;;) {
       boolean foundOne = false;
       for (Iterator iter = definitionMap.entrySet().iterator(); iter.hasNext();) {
