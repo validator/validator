@@ -47,8 +47,12 @@ public class ContentModelInferrer {
     }
 
     void addFollowing(ParticleNode p) {
-      if (p != this)
-        followingNodes.add(p);
+      if (p != this) {
+        if (!followingNodes.contains(p)) {
+          p.refCount++;
+          followingNodes.add(p);
+        }
+      }
     }
   }
 
@@ -120,12 +124,24 @@ public class ContentModelInferrer {
 
   }
 
-  static class ParticleBuilder {
+  private static class ParticleBuilder {
     private final int[] rank;
     private int currentRank = 0;
     private Particle rankParticleChoice;
-    private boolean multipleParticlesCurrentRank;
     private Particle followParticle;
+    /**
+     * Sum of the refCounts of the nodes in the ranks (not necessarily immediately) following the current rank.
+     */
+    int followRanksTotalRefCount = 0;
+    /**
+     * Sum of the refCounts of the nodes in the current rank.
+     */
+    int currentRankTotalRefCount = 0;
+
+    /**
+     * Number of references that are from nodes in the current or following ranks.
+     */
+    int totalCoveredRefCount = 0;
 
     ParticleBuilder(int nNodes) {
       rank = new int[nNodes];
@@ -150,19 +166,21 @@ public class ContentModelInferrer {
       rank[node.index] = nodeRank;
       if (nodeRank == currentRank) {
         rankParticleChoice = new ChoiceParticle(rankParticleChoice, node.particle);
-        multipleParticlesCurrentRank = true;
+        currentRankTotalRefCount += node.refCount;
       }
       else {
-        if (multipleParticlesCurrentRank)
+        if (totalCoveredRefCount != followRanksTotalRefCount)
           rankParticleChoice = new ChoiceParticle(rankParticleChoice, new EmptyParticle());
         if (followParticle == null)
           followParticle = rankParticleChoice;
         else
           followParticle = new SequenceParticle(rankParticleChoice, followParticle);
+        followRanksTotalRefCount += currentRankTotalRefCount;
         rankParticleChoice = node.particle;
-        multipleParticlesCurrentRank = false;
+        currentRankTotalRefCount = node.refCount;
         currentRank = nodeRank;
       }
+      totalCoveredRefCount += node.followingNodes.size();
     }
   }
 
@@ -171,7 +189,8 @@ public class ContentModelInferrer {
   }
 
   void setMulti(Name e) {
-    lookup(e).multi = true;
+    if (e != TEXT)
+      lookup(e).multi = true;
   }
 
   private SingleNode lookup(Name name) {
@@ -186,7 +205,8 @@ public class ContentModelInferrer {
 
   Particle inferContentModel() {
     ParticleNode start = new StronglyConnectedComponentsFinder(nameMap.size()).makeDag(lookup(START));
-    return new ParticleBuilder(start.index + 1).build(start);
+    int nNodes = start.index + 1;
+    return new ParticleBuilder(nNodes).build(start);
   }
 
   private static Particle makeParticle(Name name) {
