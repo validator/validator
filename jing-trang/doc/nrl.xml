@@ -5,6 +5,12 @@
 </head>
 <body>
 
+<!-- TODO
+Mention NRL as subschema for NRL.
+Say more about XSD
+Explain how NRL can improve RELAX NG modularity
+-->
+
 <h1>Namespace Routing Language (NRL)</h1>
 
 <p>The XML Namespaces Recommendation allows an XML document to be
@@ -480,11 +486,32 @@ RDF can contain elements from arbitrary namespaces.</p>
 </rules>
 </xml>
 
-<!-- XXX NRL as subschema for NRL -->
+<p>We could use the approach of attaching all namespaces as an
+alternative solution to the XHTML+SVG example.  Instead relying on NRL
+to reject namespaces other than XHTML and SVG, we can instead attach
+sections from all namespaces to the XHTML section, and allow the
+<code>xhtml+svg.rng</code> schema to reject namespaces other than
+XHTML and SVG.</p>
 
-<h2>Open schemas</h2>
-
-<!-- XXX Have an example will validate and attach for the same namespace -->
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="soap">
+<mode name="soap">
+  <namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+    <validate schema="soap-envelope.xsd" useMode="xhtml"/>
+  </namespace>
+</mode>
+<mode name="xhtml">
+  <namespace ns="http://www.w3.org/1999/xhtml">
+    <validate schema="xhtml+svg.rng" useMode="attach"/>
+  </namespace>
+</mode>
+<mode name="attach">
+  <anyNamespace>
+    <attach/>
+  </anyNamespace>
+</mode>
+</rules>
+</xml>
 
 <h2>Built-in modes</h2>
 
@@ -500,17 +527,17 @@ just the rule:</p>
 <p>Thus, the last example in the previous section can be simplified to:</p>
 
 <xml>
-<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
-  <mode name="root">
-    <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="body"/>
-    </namespace>
-  </mode>
-  <mode name="body">
-    <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng" useMode="#attach"/>
-    </namespace>
-  </mode>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="soap">
+<mode name="soap">
+  <namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+    <validate schema="soap-envelope.xsd" useMode="xhtml"/>
+  </namespace>
+</mode>
+<mode name="xhtml">
+  <namespace ns="http://www.w3.org/1999/xhtml">
+    <validate schema="xhtml+svg.rng" useMode="#attach"/>
+  </namespace>
+</mode>
 </rules>
 </xml>
 
@@ -548,6 +575,46 @@ the rule:</p>
 </anyNamespace>
 </xml>
 
+<h2>Open schemas</h2>
+
+<p>Up to now, sections validated by one subschema have not
+participated in the validation of parent subsections.  Modern schema
+languages, such as W3C XML Schema and RELAX NG, can use wildcards to
+allow elements and attributes from any namespace in particular
+contexts.  It is useful to take advantage of this in order to allow
+one subschema to constrain the contexts in which sections validated by
+other subschemas can occur. For example, the official schema for
+<code>http://schemas.xmlsoap.org/soap/envelope/</code> uses wildcards
+to specify precisely where elements from other namespaces are allowed:
+they are allowed as children of the <code>env:Body</code> and
+<code>env:Header</code> elements but not as children of the
+<code>env:Envelope</code> element.  Our NRL schema bypasses these
+constraints because the XHTML sections are not seen by the SOAP
+validation. We can use <code>attach</code> to solve this problem:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.rng"/>
+  <attach/>
+</namespace>
+</rules>
+</xml>
+
+<p>When an XHTML section occurs inside a SOAP section, the XHTML
+section will participate in two validations:</p>
+
+<ul>
+
+<li>it will be validated independently against the XHTML schema, and</li>
+
+<li>it will be attached to the SOAP section and validated along with
+the SOAP section</li>
+
+</ul>
 
 <h2>Element-name context</h2>
 
@@ -874,8 +941,6 @@ RELAX NG, that are not limited in this way.</p>
 
 <p>In reaction to MNS, Rick Jellife produced the Namespace
 Switchboard, which inspired much of the evolution of NRL from MNS.</p>
-
-<!-- XXX Say something about XSD. -->
 
 <h2>Acknowledgments</h2>
 
