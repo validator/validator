@@ -125,8 +125,10 @@ class DtdOutput {
     }
 
     public Object visitElement(ElementPattern p) {
-      if (getContentType(p) == ContentType.DIRECT_SINGLE_ELEMENT)
+      if (getContentType(p) == ContentType.DIRECT_SINGLE_ELEMENT) {
         p.getNameClass().accept(nestedContentModelOutput);
+        elementQueue.add(p);
+      }
       else
         visitPattern(p);
       return null;
