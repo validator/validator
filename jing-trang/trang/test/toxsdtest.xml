@@ -3667,6 +3667,24 @@ b = element x | y | z { element w { empty }* }
 </correct>
 </xsd>
 </testCase>
+<testCase>
+<compact>
+<correct>
+element foo { list { xsd:int* } }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="foo">
+    <xs:simpleType>
+      <xs:list itemType="xs:int"/>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
 <!--
 <testCase>
 <compact>

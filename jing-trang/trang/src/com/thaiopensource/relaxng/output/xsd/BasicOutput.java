@@ -224,7 +224,7 @@ public class BasicOutput {
     }
   }
 
-  class SimpleTypeNamer extends SchemaWalker {
+  class SimpleTypeNamer implements SimpleTypeVisitor {
     public Object visitRestriction(SimpleTypeRestriction t) {
       if (t.getFacets().size() > 0)
         return null;
@@ -238,6 +238,14 @@ public class BasicOutput {
         return null;
       return qualifyRef(schema.getSimpleType(t.getName()).getParentSchema().getUri(),
                         t.getName());
+    }
+
+    public Object visitList(SimpleTypeList t) {
+      return null;
+    }
+
+    public Object visitUnion(SimpleTypeUnion t) {
+      return null;
     }
   }
 
