@@ -164,8 +164,10 @@ public class PatternMatcher implements Cloneable {
   public boolean matchEndTag(ValidationContext vc) {
     // The tricky thing here is that the derivative that we compute may be notAllowed simply because the parent
     // is notAllowed; we don't want to give an error in this case.
-    if (ignoreNextEndTag)
+    if (ignoreNextEndTag) {
+      ignoreNextEndTag = false;
       return true;
+    }
     if (textMaybeTyped)
       return setDataDeriv("", vc);
     textMaybeTyped = false;
