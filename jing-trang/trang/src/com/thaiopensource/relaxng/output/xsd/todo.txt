@@ -69,4 +69,6 @@ Avoid redundant imports and redundant namespace declarations.
 
 With combine attributes, maybe insert <ref> to preserve file structure.
 
+Deal with repeated inclusions of same file, by expanding.
+
 Add an annotation on elements to convey <start> info.
