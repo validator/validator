@@ -73,6 +73,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Collections;
 
 public class BasicBuilder {
   private final PatternVisitor simpleTypeBuilder = new SimpleTypeBuilder();
@@ -255,7 +256,13 @@ public class BasicBuilder {
       }
       if (ct.contains(ChildType.TEXT))
         mixed = true;
-      if (ct.contains(ChildType.DATA) && !mixed && particle == null) {
+      if (particle == null && mixed && attributeUses.equals(AttributeGroup.EMPTY))
+        type = new ComplexTypeSimpleContent(attributeUses,
+                                            new SimpleTypeRestriction(p.getSourceLocation(),
+                                                                      null,
+                                                                      "string",
+                                                                      Collections.EMPTY_LIST));
+      else if (ct.contains(ChildType.DATA) && !mixed && particle == null) {
         SimpleType simpleType = (SimpleType)child.accept(simpleTypeBuilder);
         if (ct.contains(ChildType.EMPTY))
           simpleType = makeUnionWithEmptySimpleType(simpleType, p.getSourceLocation());
