@@ -3,6 +3,9 @@
   <start>
     <element name="rules">
       <optional>
+        <ref name="schemaType"/>
+      </optional>
+      <optional>
         <attribute name="startMode">
           <ref name="mode"/>
         </attribute>
@@ -119,6 +122,9 @@
       <data type="anyURI"/>
     </attribute>
     <optional>
+      <ref name="schemaType"/>
+    </optional>
+    <optional>
       <ref name="inModesAtt"/>
     </optional>
   </define>
@@ -126,6 +132,14 @@
     <attribute name="ns">
       <data type="anyURI"/>
     </attribute>
+  </define>
+  <define name="schemaType">
+    <attribute name="schemaType">
+      <ref name="mediaType"/>
+    </attribute>
+  </define>
+  <define name="mediaType">
+    <data type="string"/>
   </define>
   <define name="useModeAtt">
     <attribute name="useMode">

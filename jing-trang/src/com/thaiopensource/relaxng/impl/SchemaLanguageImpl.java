@@ -17,7 +17,8 @@ public abstract class SchemaLanguageImpl implements SchemaLanguage {
   public Schema createSchema(XMLReaderCreator xrc, InputSource in, ErrorHandler eh, SchemaOptions options, DatatypeLibraryFactory dlf)
           throws IOException, SAXException, IncorrectSchemaException {
     SchemaPatternBuilder spb = new SchemaPatternBuilder();
-    Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb);
+    Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
+                                            options.contains(SchemaOptions.ATTRIBUTES));
     return wrapPattern(start, spb, eh, options);
   }
 

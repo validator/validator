@@ -21,20 +21,16 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.LocatorImpl;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 
 class SchemaImpl extends AbstractSchema {
-  static final String BEARER_URI = "http://www.thaiopensoure.com/mns/instance";
-  static final String BEARER_LOCAL_NAME = "globalAttributesBearer";
   static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
-  private static final String BEARER_PREFIX = "m";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
-  private static final ElementsOrAttributes LAX_DEFAULT = ElementsOrAttributes.NEITHER;
+  private boolean attributesSchema;
 
   static private final class WrappedIOException extends RuntimeException {
     private final IOException exception;
@@ -87,10 +83,14 @@ class SchemaImpl extends AbstractSchema {
   static class Mode {
     private Locator whereDefined;
     private boolean defined = false;
-    private ElementsOrAttributes lax = LAX_DEFAULT;
+    private ElementsOrAttributes lax;
     private boolean strictDefined = false;
     private final Hashtable elementMap = new Hashtable();
     private final Hashtable attributesMap = new Hashtable();
+
+    Mode(ElementsOrAttributes lax) {
+      this.lax = lax;
+    }
 
     ElementsOrAttributes getLax() {
       return lax;
@@ -117,6 +117,7 @@ class SchemaImpl extends AbstractSchema {
     private String contextNs;
     private Mode contextMode;
     private String elementNs;
+    private String defaultSchemaType;
     private final Stack nameStack = new Stack();
     private boolean isRoot;
     private int pathDepth = 0;
@@ -220,6 +221,7 @@ class SchemaImpl extends AbstractSchema {
       String modeName = attributes.getValue("", "startMode");
       if (modeName == null)
         modeName = DEFAULT_MODE_NAME;
+      defaultSchemaType = getSchemaType(attributes);
       startMode = lookupCreateMode(modeName);
     }
 
@@ -248,9 +250,12 @@ class SchemaImpl extends AbstractSchema {
       Mode[] modes = getModes(modeNames);
       String ns = getNs(attributes, isAttribute);
       String schemaUri = getSchema(attributes);
+      String schemaType = getSchemaType(attributes);
+      if (schemaType == null)
+        schemaType = defaultSchemaType;
       try {
         if (isAttribute) {
-          Schema schema = sr.createChildSchema(wrapAttributesSchema(schemaUri));
+          Schema schema = sr.createChildSchema(new InputSource(schemaUri), schemaType, true);
           for (int i = 0; i < modes.length; i++) {
             if (modes[i].attributesMap.get(ns) != null)
               error("validate_attributes_multiply_defined", modeNames[i], ns);
@@ -259,7 +264,7 @@ class SchemaImpl extends AbstractSchema {
           }
         }
         else {
-          Schema schema = sr.createChildSchema(new InputSource(schemaUri));
+          Schema schema = sr.createChildSchema(new InputSource(schemaUri), schemaType, false);
           currentElementAction = new ElementAction(ns,
                                                    schema,
                                                    getUseMode(attributes),
@@ -338,6 +343,10 @@ class SchemaImpl extends AbstractSchema {
         error("schema_fragment_id");
       return Uri.resolve(xmlBaseHandler.getBaseUri(),
                          Uri.escapeDisallowedChars(schemaUri));
+    }
+
+    private String getSchemaType(Attributes attributes) {
+      return attributes.getValue("", "schemaType");
     }
 
     private ElementsOrAttributes getPrune(Attributes attributes) {
@@ -420,6 +429,10 @@ class SchemaImpl extends AbstractSchema {
 
   }
 
+  SchemaImpl(boolean attributesSchema) {
+    this.attributesSchema = attributesSchema;
+  }
+
   SchemaFuture installHandlers(XMLReader in, SchemaReceiverImpl sr) {
     Handler h = new Handler(sr);
     in.setContentHandler(h);
@@ -430,30 +443,10 @@ class SchemaImpl extends AbstractSchema {
     return new ValidatorHandlerImpl(startMode, eh);
   }
 
-  private static InputSource wrapAttributesSchema(String attributesSchemaUri) {
-    StringBuffer buf = new StringBuffer();
-    buf.append("<element name=\"");
-    buf.append(BEARER_PREFIX);
-    buf.append(':');
-    buf.append(BEARER_LOCAL_NAME);
-    buf.append('"');
-    buf.append(" xmlns=\"");
-    buf.append(WellKnownNamespaces.RELAX_NG);
-    buf.append('"');
-    buf.append(" xmlns:");
-    buf.append(BEARER_PREFIX);
-    buf.append("=\"");
-    buf.append(BEARER_URI);
-    buf.append("\"><externalRef href=\"");
-    buf.append(attributesSchemaUri);
-    buf.append("\"/></element>");
-    return new InputSource(new StringReader(buf.toString()));
-  }
-
   private Mode lookupCreateMode(String name) {
     Mode mode = (Mode)modeMap.get(name);
     if (mode == null) {
-      mode = new Mode();
+      mode = new Mode(attributesSchema ? ElementsOrAttributes.ELEMENTS : ElementsOrAttributes.NEITHER);
       modeMap.put(name, mode);
     }
     return mode;

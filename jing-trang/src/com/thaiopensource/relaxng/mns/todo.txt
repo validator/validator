@@ -1,5 +1,3 @@
 ID/IDREF testing.
 
-Allow specification of schema type.  Allow schema to point to MNS schema.
-
 Support an <include/> element.

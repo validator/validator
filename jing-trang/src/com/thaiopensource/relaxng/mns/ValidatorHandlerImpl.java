@@ -15,6 +15,8 @@ import java.util.Stack;
 import java.util.Hashtable;
 
 class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
+  private static final String BEARER_URI = "";
+  private static final String BEARER_LOCAL_NAME = "#bearer";
   private SchemaImpl.Mode currentMode;
   private int laxDepth = 0;
   private ErrorHandler eh;
@@ -163,9 +165,9 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
     ValidatorHandler vh = createValidatorHandler(attributesSchema);
     startSubtree(vh);
-    vh.startElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME,
+    vh.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME,
                     new NamespaceFilteredAttributes(ns, false, attributes));
-    vh.endElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME);
+    vh.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
     endSubtree(vh);
     releaseValidatorHandler(attributesSchema, vh);
   }

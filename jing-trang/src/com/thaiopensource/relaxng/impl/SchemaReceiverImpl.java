@@ -32,7 +32,8 @@ public class SchemaReceiverImpl implements SchemaReceiver {
     final PatternFuture pf = SchemaBuilderImpl.installHandlers(parser, xr, eh, dlf, pb);
     return new SchemaFuture() {
       public Schema getSchema() throws IncorrectSchemaException, SAXException, IOException {
-        return SchemaLanguageImpl.wrapPattern(pf.getPattern(), pb, eh, options);
+        return SchemaLanguageImpl.wrapPattern(pf.getPattern(options.contains(SchemaOptions.ATTRIBUTES)),
+                                              pb, eh, options);
       }
       public RuntimeException unwrapException(RuntimeException e) throws SAXException, IOException, IncorrectSchemaException {
         if (e instanceof BuildException)

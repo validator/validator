@@ -6,5 +6,5 @@ import com.thaiopensource.relaxng.IncorrectSchemaException;
 import java.io.IOException;
 
 public interface PatternFuture {
-  Pattern getPattern() throws IncorrectSchemaException, SAXException, IOException;
+  Pattern getPattern(boolean isAttributesPattern) throws IncorrectSchemaException, SAXException, IOException;
 }

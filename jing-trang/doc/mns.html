@@ -55,12 +55,18 @@ form of MNS schema:</p>
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
-element rules {
-  element validate {
-    attribute ns { xsd:anyURI },
-    attribute schema { xsd:anyURI }
-  }*
-}
+start =
+  element rules {
+    schemaType?,
+    element validate {
+      schemaType?,
+      attribute ns { xsd:anyURI },
+      attribute schema { xsd:anyURI }
+    }*
+  }
+
+schemaType = attribute schemaType { mediaType }
+mediaType = xsd:string
 </pre>
 
 <p>Validity of an instance with respect to a MNS schema is determined
@@ -86,17 +92,32 @@ subject must have a <code>validate</code> rule for its namespace URI:
 there must be a <code>validate</code> element whose <code>ns</code>
 attribute is the same as the validate subject's namespace URI.  The
 value of the <code>ns</code> attribute of the <code>validate</code>
-element can be the empty string to specify the absent namespace URI.
-The associated schema is specified by the <code>schema</code>
-attribute of the <code>validate</code> element.</p>
+element can be the empty string to specify the absent namespace URI.</p>
+
+<p>The associated schema is specified by the <code>schema</code>
+attribute of the <code>validate</code> element.  The schema can be in
+any language supported by the particular implementation.  When the
+schema is XML, the language of the schema is detected from the
+namespace URI of the document element.
+When the schema is not XML, then MNS relies on the MIME type
+of the result of fetching the URI;
+the <code>schemaType</code> attribute can be used
+to specify the MIME type explicitly.  A MIME type of
+<code>application/x-rnc</code> can be used for RELAX NG compact
+syntax.  The <code>schemaType</code> attribute on the
+<code>rules</code> element specifies the default value of of the
+<code>schemaType</code> on <code>validate</code> element.  Note that
+the <code>schema</code> attribute may refer to another MNS schema.</p>
 
 <p>MNS has additional features that provide further control over the
 selection of validation subjects and their associated schemas.</p>
 
-<p class="note">Should MNS identify the type of the schema, and, if
-so, how, or should this be handled elsewhere?</p>
+<p class="note">Should it be possible to put the schema inline in the
+MNS wrapped in, say, a <code>schema</code> element?  How does this
+impact extensibility?</p>
 
-<p class="note">Should MNS have an <code>include</code> element?</p>
+<p class="note">Should MNS have an <code>include</code> element?  The
+ability to recursively reference MNS maybe makes this unnecessary.</p>
 
 <h2><a name="lax">Lax processing</a></h2>
 
@@ -108,13 +129,18 @@ element:</p>
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
-element rules {
-   element validate {
+start = element rules { schemaType?, (validate* &amp; lax?) }
+
+validate =
+  element validate {
+    schemaType?,
     attribute ns { xsd:anyURI },
     attribute schema { xsd:anyURI }
-   }*
-   &amp; element lax { empty }?
-}
+  }
+
+lax = element lax { empty }
+schemaType = attribute schemaType { mediaType }
+mediaType = xsd:string
 </pre>
 
 <p>We will refer to an element that could be a validation subject if
@@ -131,13 +157,18 @@ with a <code>lax</code> element, there need not be.</p>
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
-element rules {
+start = element rules { schemaType?, (validate* &amp; lax?) }
+
+validate =
   element validate|validateAttributes {
+    schemaType?,
     attribute ns { xsd:anyURI },
     attribute schema { xsd:anyURI }
-  }*
-  &amp; element lax { attribute allow { "attributes" | "elements" }? }?
-}
+  }
+
+lax = element lax { attribute allow { "attributes" | "elements" }? }
+schemaType = attribute schemaType { mediaType }
+mediaType = xsd:string
 </pre>
 
 <p>If an element has attributes that are namespace qualified with a
@@ -173,27 +204,29 @@ to match. In the case of RELAX NG, when a
 <code><var>s</var></code>, MNS actually uses a schema of:</p>
 
 <pre>
-element <var>e</var> { external "<var>s</var>" }
+element * { external "<var>s</var>" }
 </pre>
-
-<p>where <code><var>e</var></code> is the name of the element to which
-the attributes were attached.</p>
 
 <h2><a name="multiple">Validation subjects with multiple namespaces</a></h2>
 
 <p>By default, an element is a potential validation subject if its
 namespace URI is different from its parent.  This behavior can be
 changed by adding one or more <code>cover</code> children to
-<code>validate</code> elements.</p>
+<code>validate</code> elements. With the introduction of
+<code>cover</code> elements, the rule is that an element is a
+potential validation subject if it is not
+<em>covered</em> by an ancestor validation subject.  Each validation
+subject has a set of namespace URIs that it covers.  A validation
+subject always covers it own namespace URI.  In addition, it covers
+the namespace URIs specified by the <code>cover</code> elements in its
+<code>validate</code> element.  One obvious case where it is useful
+for a schema to cover more than one namespace is when a
+<code>validate</code> refers recursively to an MNS schema.</p>
 
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
-start =
-  element rules {
-     validate* 
-     &amp; element lax { attribute allow { "attributes" | "elements" }? }?
-  }
+start = element rules { schemaType?, (validate* &amp; lax?) }
 
 validate =
   element validate {
@@ -202,20 +235,20 @@ validate =
   }
   | element validateAttributes { validateModel }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }
+validateModel = nsAtt, attribute schema { xsd:anyURI }, schemaType?
 
+lax = element lax { attribute allow { "attributes" | "elements" }? }
 nsAtt = attribute ns { xsd:anyURI }
+
+schemaType = attribute schemaType { mediaType }
+
+mediaType = xsd:string
 </pre>
 
-<p>With the introduction of <code>cover</code> elements, the rule is
-that an element is a potential validation subject if it is not
-<em>covered</em> by an ancestor validation subject.  Each validation
-subject has a set of namespace URIs that it covers.  A validation
-subject always covers it own namespace URI.  In addition, it covers
-the namespace URIs specified by the <code>cover</code> elements in its
-<code>validate</code> element.  The set elements covered by a
-validation subject is determined from the set of namespace URI that it
-covers by the following two rules:</p>
+
+<p>The set elements covered by a validation subject is determined from
+the set of namespace URI that it covers by the following two
+rules:</p>
 
 <ul>
 
@@ -271,6 +304,7 @@ default namespace = "http://www.thaiopensource.com/ns/mns"
 
 start =
   element rules {
+    schemaType?,
     attribute startMode { mode }?,
     (validate|lax)*
   }
@@ -289,9 +323,13 @@ lax =
     inModesAtt?
   }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
+validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?, schemaType?
 
 nsAtt = attribute ns { xsd:anyURI }
+
+schemaType = attribute schemaType { mediaType }
+
+mediaType = xsd:string
 
 inModesAtt = attribute inModes { list { mode+ } }
 
@@ -436,6 +474,7 @@ default namespace = "http://www.thaiopensource.com/ns/mns"
 
 start =
   element rules {
+    schemaType?,
     attribute startMode { mode }?,
     (validate|lax)*
   }
@@ -470,9 +509,14 @@ lax =
 validateModel =
   nsAtt,
   attribute schema { xsd:anyURI },
+  schemaType?,
   inModesAtt?
 
 nsAtt = attribute ns { xsd:anyURI }
+
+schemaType = attribute schemaType { mediaType }
+
+mediaType = xsd:string
 
 useModeAtt = attribute useMode { mode }
 
@@ -501,6 +545,7 @@ default namespace mns = "http://www.thaiopensource.com/ns/mns"
 
 start =
   element rules {
+    schemaType?,
     attribute startMode { mode }?,
     ((validate | lax)* &amp; foreign)
   }
@@ -541,9 +586,14 @@ lax =
 validateModel =
   nsAtt,
   attribute schema { xsd:anyURI },
+  schemaType?,
   inModesAtt?
 
 nsAtt = attribute ns { xsd:anyURI }
+
+schemaType = attribute schemaType { mediaType }
+
+mediaType = xsd:string
 
 useModeAtt = attribute useMode { mode }
 

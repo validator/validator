@@ -67,13 +67,18 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
   static public Pattern parse(Parseable parseable,
                               ErrorHandler eh,
                               DatatypeLibraryFactory datatypeLibraryFactory,
-                              SchemaPatternBuilder pb) throws IncorrectSchemaException, IOException, SAXException {
+                              SchemaPatternBuilder pb,
+                              boolean isAttributesPattern)
+          throws IncorrectSchemaException, IOException, SAXException {
     try {
       SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable,
                                                    eh,
                                                    new BuiltinDatatypeLibraryFactory(datatypeLibraryFactory),
                                                    pb);
-      return sb.expandPattern((Pattern)parseable.parse(sb, new RootScope(sb)));
+      ParsedPattern pp = parseable.parse(sb, new RootScope(sb));
+      if (isAttributesPattern)
+        pp = sb.wrapAttributesPattern(pp);
+      return sb.expandPattern((Pattern)pp);
     }
     catch (IllegalSchemaException e) {
       throw new IncorrectSchemaException();
@@ -93,9 +98,12 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
                                                        pb);
     final ParsedPatternFuture pf = parser.installHandlers(xr, sb, new RootScope(sb));
     return new PatternFuture() {
-      public Pattern getPattern() throws IncorrectSchemaException, SAXException, IOException {
+      public Pattern getPattern(boolean isAttributesPattern) throws IncorrectSchemaException, SAXException, IOException {
         try {
-          return sb.expandPattern((Pattern)pf.getParsedPattern());
+          ParsedPattern pp = pf.getParsedPattern();
+          if (isAttributesPattern)
+            pp = sb.wrapAttributesPattern(pp);
+          return sb.expandPattern((Pattern)pp);
         }
         catch (IllegalSchemaException e) {
           throw new IncorrectSchemaException();
@@ -120,6 +128,11 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     if (t instanceof Exception)
       throw new SAXException((Exception)t);
     throw new SAXException(t.getClass().getName() + " thrown");
+  }
+
+  private ParsedPattern wrapAttributesPattern(ParsedPattern pattern) {
+    // XXX where can we get a locator from?
+    return makeElement(makeAnyName(null, null), pattern, null, null);
   }
 
   private Pattern expandPattern(Pattern pattern) throws IllegalSchemaException, BuildException {

@@ -3,12 +3,14 @@ package com.thaiopensource.relaxng;
 public class SchemaOptions {
   private static final int CHECK_ID_IDREF_FLAG = 01;
   private static final int FEASIBLE_FLAG = 02;
-  private static final int MAX_FLAG = FEASIBLE_FLAG;
+  private static final int ATTRIBUTES_FLAG = 04;
+  private static final int MAX_FLAG = ATTRIBUTES_FLAG;
   private static final SchemaOptions[] cache = new SchemaOptions[MAX_FLAG << 1];
 
   public static final SchemaOptions NONE = getInstance(0);
   public static final SchemaOptions CHECK_ID_IDREF = getInstance(CHECK_ID_IDREF_FLAG);
   public static final SchemaOptions FEASIBLE = getInstance(FEASIBLE_FLAG);
+  public static final SchemaOptions ATTRIBUTES = getInstance(ATTRIBUTES_FLAG);
 
   private final int flags;
 
