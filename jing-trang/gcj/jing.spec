@@ -15,7 +15,7 @@ A validator for RELAX NG.
 %setup -q
 
 %build
-%configure
+%configure GCJFLAGS="${GCJFLAGS:-%optflags}"
 make
 
 %install
