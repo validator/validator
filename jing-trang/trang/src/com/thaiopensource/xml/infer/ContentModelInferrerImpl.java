@@ -38,7 +38,7 @@ class ContentModelInferrerImpl extends ContentModelInferrer {
     final int index;
     Particle particle;
     int refCount = 0;
-    final Set followingNodes = new HashSet();
+    Set followingNodes = new HashSet();
 
     ParticleNode(int index) {
       this.index = index;
@@ -179,6 +179,32 @@ class ContentModelInferrerImpl extends ContentModelInferrer {
     }
   }
 
+  private static class ParticleMerger {
+    private final boolean[] done;
+
+    private ParticleMerger(int nNodes) {
+      this.done = new boolean[nNodes];
+    }
+
+    void merge(ParticleNode node) {
+      if (done[node.index])
+        return;
+      done[node.index] = true;
+      if (node.particle != null) {
+        while (node.followingNodes.size() == 1) {
+          ParticleNode follower = (ParticleNode)node.followingNodes.iterator().next();
+          if (follower.refCount != 1 || follower.particle == null)
+            break;
+          node.particle = new SequenceParticle(node.particle, follower.particle);
+          node.followingNodes = follower.followingNodes;
+        }
+      }
+      for (Iterator iter = node.followingNodes.iterator(); iter.hasNext();)
+        merge((ParticleNode)iter.next());
+    }
+
+  }
+
   ContentModelInferrerImpl() {
     startNode = lookup(START);
     endNode = lookup(END);
@@ -214,6 +240,7 @@ class ContentModelInferrerImpl extends ContentModelInferrer {
       throw new IllegalStateException();
     ParticleNode start = new StronglyConnectedComponentsFinder(nameMap.size()).makeDag(lookup(START));
     int nNodes = start.index + 1;
+    new ParticleMerger(nNodes).merge(start);
     return new ParticleBuilder(nNodes).build(start);
   }
 
