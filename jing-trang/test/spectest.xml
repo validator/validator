@@ -2439,6 +2439,52 @@ applies at the syntax level.</documentation>
 </grammar>
 </incorrect>
 </testCase>
+<testCase>
+<section>4.16</section>
+<documentation>Tests that 4.16 is before 4.20.</documentation>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<start>
+  <element name="foo">
+    <optional>
+      <attribute>
+	<anyName>
+	  <except>
+	    <anyName/>
+	  </except>
+	</anyName>
+	<text/>
+      </attribute>
+      <notAllowed/>
+    </optional>
+  </element>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<documentation>Tests that 4.16 is before removal of unreachable definitions.</documentation>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<start>
+  <element name="foo">
+    <empty/>
+  </element>
+</start>
+<define name="bar">
+  <element>
+    <anyName>
+      <except>
+	<anyName/>
+      </except>
+    </anyName>
+    <empty/>
+  </element>
+</define>
+</grammar>
+</incorrect>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.17</section>
