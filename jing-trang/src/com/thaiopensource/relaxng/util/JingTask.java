@@ -1,25 +1,17 @@
 package com.thaiopensource.relaxng.util;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.LogOutputStream;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
-import org.apache.tools.ant.DirectoryScanner;
+import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Vector;
-
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.ParserAdapter;
-
-import com.thaiopensource.relaxng.XMLReaderCreator;
 
 
 /**
@@ -28,15 +20,14 @@ import com.thaiopensource.relaxng.XMLReaderCreator;
 
 public class JingTask extends Task {
 
-  private File rngFile;
+  private File schemaFile;
   private File src;
   private final Vector filesets = new Vector();
-  private boolean checkid = true;
-  private boolean compactsyntax = false;
+  private int flags = ValidationEngine.CHECK_ID_IDREF;
 
   public void execute() throws BuildException {
-    if (rngFile == null)
-      throw new BuildException("rngFile attribute must be set!", 
+    if (schemaFile == null)
+      throw new BuildException("There must be an rngFile or schemaFile attribute", 
 			       location);
     if (src == null && filesets.size() == 0)
       throw new BuildException("There must be a file attribute or a fileset child element",
@@ -47,8 +38,8 @@ public class JingTask extends Task {
     boolean hadError = false;
 
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkid, compactsyntax);
-      if (!engine.loadSchema(ValidationEngine.fileInputSource(rngFile)))
+      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, flags);
+      if (!engine.loadSchema(ValidationEngine.fileInputSource(schemaFile)))
 	hadError = true;
       else {
 	if (src != null) {
@@ -85,9 +76,18 @@ public class JingTask extends Task {
    * @param rngFilename the attribute value
    */
   public void setRngfile(String rngFilename) {
-    rngFile = project.resolveFile(rngFilename);
+    schemaFile = project.resolveFile(rngFilename);
   }
-    
+
+  /**
+   * Handles the <code>schemafile</code> attribute.
+   *
+   * @param schemaFilename the attribute value
+   */
+  public void setSchemafile(String schemaFilename) {
+    schemaFile = project.resolveFile(schemaFilename);
+  }
+
   public void setFile(File file) {
     this.src = file;
   }
@@ -98,7 +98,10 @@ public class JingTask extends Task {
    * @param checkid the attribute value converted to a boolean
    */
   public void setCheckid(boolean checkid) {
-    this.checkid = checkid;
+    if (checkid)
+      flags |= ValidationEngine.CHECK_ID_IDREF;
+    else
+      flags &= ~ValidationEngine.CHECK_ID_IDREF;
   }
 
   /**
@@ -107,7 +110,22 @@ public class JingTask extends Task {
    * @param compactsyntax the attribute value converted to a boolean
    */
   public void setCompactsyntax(boolean compactsyntax) {
-    this.compactsyntax = compactsyntax;
+    if (compactsyntax)
+      flags |= ValidationEngine.COMPACT_SYNTAX;
+    else
+      flags &= ~ValidationEngine.COMPACT_SYNTAX;
+  }
+
+  /**
+   * Handles the <code>feasible</code> attribute.
+   *
+   * @param feasible the attribute value converted to a boolean
+   */
+  public void setFeasible(boolean feasible) {
+    if (feasible)
+      flags |= ValidationEngine.FEASIBLE;
+    else
+      flags &= ~ValidationEngine.FEASIBLE;
   }
 
   public void addFileset(FileSet set) {
