@@ -677,7 +677,9 @@ to their parent elements.  Although this is the default behaviour is
 to attach attributes to their parent elements, attributes are in fact
 considered to be separate sections and can be processed
 separately. Attributes with the same namespace URI and same parent
-element are grouped in a single section.</p>
+element are grouped in a single section. Such sections are called
+attribute sections; sections that contain elements are called element
+sections.</p>
 
 <p>A <code>namespace</code> or <code>anyNamespace</code> element can
 have a <code>match</code> attribute, whose value must be a list of one
