@@ -219,6 +219,8 @@ under construction.</dd>
 
 </dl>
 
+<p>XXX schema option for XSD</p>
+
 <p>For convenience, the URI specified by the <code>name</code>
 attribute may be relative; if it is, it will be resolved relative to
 the NRL namespace URI.  The result is that the standard options above
