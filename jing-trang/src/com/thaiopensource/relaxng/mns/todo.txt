@@ -1,1 +1,1 @@
-Allow MNS schema to be open to extension.
+Test suite.
