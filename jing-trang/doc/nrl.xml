@@ -656,7 +656,7 @@ example, suppose we wish to allow RDF to occur only as a child of the
 have one or more <code>context</code> children that override the
 <code>useMode</code> attribute in specific contexts.  The
 <code>path</code> attribute specifies a test to be applied to the
-parent element of the element or attribute section to be processed.
+parent element of the section to be processed.
 The <code>path</code> attribute allows a restricted form of XPath: a
 list of one or more choices separated by <code>|</code>, where each
 choice is a list of one or more unqualified names separated by
