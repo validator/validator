@@ -10,7 +10,7 @@ import org.xml.sax.SAXParseException;
 
 import java.util.Hashtable;
 
-class PatternValidatorHandler implements ValidatorHandler {
+public class PatternValidatorHandler implements ValidatorHandler {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
   private ErrorHandler eh;
@@ -213,7 +213,7 @@ class PatternValidatorHandler implements ValidatorHandler {
     prefixMapping = prefixMapping.getPrevious();
   }
 
-  PatternValidatorHandler(Pattern pattern, ValidatorPatternBuilder builder, ErrorHandler eh) {
+  public PatternValidatorHandler(Pattern pattern, ValidatorPatternBuilder builder, ErrorHandler eh) {
     this.start = pattern;
     this.builder = builder;
     this.eh = eh;
