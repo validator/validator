@@ -151,13 +151,6 @@
   </optional>
 </define>
 
-<!-- Isn't this handled by the target module? -->
-<define name="a.attlist" combine="interleave">
-  <optional>
-    <attribute name="target"/>
-  </optional>
-</define>
-
 <define name="applet.attlist" combine="interleave">
   <optional>
     <attribute name="align">
