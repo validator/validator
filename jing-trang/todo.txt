@@ -1,10 +1,12 @@
+Document support for ID/IDREF.
+
+Describe Jing command-line options.
+
 Finish description of error recovery.
 
+Exclude JARV stuff when building jing.exe.
+
 Support Xerces 2 regexes.
-
-Include the API doc in the distrib.
-
-Add mention of API and JARV to the distribution.
 
 Support for IDREF checking via JARV.
 
@@ -33,4 +35,5 @@ Option to do XInclude before validation.
 
 Integrate the non-XML syntax.
 
-Maybe introduce a variant of the element pattern that has a mapping from names to content models.
+Maybe introduce a variant of the element pattern that has a mapping
+from names to content models.
