@@ -91,5 +91,3 @@ modelGroup =
 name = attribute name { xsd:NCName }
 
 nameSpec = element name { xsd:Name } | element nameSpecRef { name }
-
-use = attribute use { "optional" | "required" }
