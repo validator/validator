@@ -15,12 +15,11 @@ public class Driver {
   public static void main (String args[]) throws IOException {
     DtdParser dtdParser = new DtdParserImpl();
     Dtd dtd = dtdParser.parse(args[0], new FileEntityManager());
-    new RelaxNgWriter(null).writeDtd(dtd);
     String enc = EncodingMap.getJavaName(dtd.getEncoding());
     BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out,
 								 enc));
     CharRepertoire cr = CharRepertoire.getInstance(enc);
-    new SchemaWriter(new XmlWriter(w, cr)).writeDtd(dtd);
+    new RelaxNgWriter(new XmlWriter(w, cr)).writeDtd(dtd);
     w.flush();
   }
 }
