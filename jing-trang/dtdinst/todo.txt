@@ -1,3 +1,7 @@
+License.
+
+Versioning.
+
 Write some documentation.
 
 Think of a better name (dtdinst, dtdlift).
