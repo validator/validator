@@ -212,10 +212,10 @@ public class Inferrer {
     XMLReader xr = xrc.createXMLReader();
     xr.setErrorHandler(eh);
     xr.setContentHandler(handler);
-    for (int i = 1; i < args.length; i++)
+    for (int i = 0; i < args.length - 1; i++)
        xr.parse(new InputSource(UriOrFile.toUri(args[i])));
     SchemaCollection sc = new SchemaCollection();
-    sc.setMainUri(UriOrFile.toUri(args[0]));
+    sc.setMainUri(UriOrFile.toUri(args[args.length - 1]));
     SchemaDocument sd = new SchemaDocument(new Inferrer(handler.getSchema()).grammar);
     sc.getSchemaDocumentMap().put(sc.getMainUri(), sd);
     return sc;

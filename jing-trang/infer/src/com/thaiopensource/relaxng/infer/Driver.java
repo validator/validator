@@ -64,7 +64,7 @@ public class Driver {
         return 2;
       }
       OutputFormat of;
-      String ext = extension(args[0]);
+      String ext = extension(args[args.length - 1]);
       if (outputType == null) {
         outputType = ext;
         if (outputType.length() > 0)
@@ -86,7 +86,7 @@ public class Driver {
       if (ext.length() == 0)
         ext = outputType;
       OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(),
-                                                    new File(args[0]),
+                                                    new File(args[args.length - 1]),
                                                     ext,
                                                     DEFAULT_OUTPUT_ENCODING,
                                                     DEFAULT_LINE_LENGTH,

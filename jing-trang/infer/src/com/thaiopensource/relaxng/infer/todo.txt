@@ -1,14 +1,8 @@
-Create Messages.properties file.
-
 Use prefixes from source file.
-
-Sort choices.
-
-Use nice order for element declarations.
 
 Generate names of element definitions properly so as to avoid conflicts in the presence of namespaces.
 
-Inline element declarations that are referenced only once.
-
 In the DAG, if there is a node x whose set of followers contains exactly one node, y,
 and y has a refCount of 1, then merge x and y into a single ParticleNode.
+
+Sort attribute declarations.
