@@ -12,7 +12,6 @@ import java.util.Stack;
 public class ContentModelInferrer {
   public static final Name START = new Name("", "#start");
   public static final Name END = new Name("", "#end");
-  public static final Name TEXT = new Name("", "#text");
 
   /**
    * Maps names to nodes.
@@ -189,8 +188,7 @@ public class ContentModelInferrer {
   }
 
   void setMulti(Name e) {
-    if (e != TEXT)
-      lookup(e).multi = true;
+    lookup(e).multi = true;
   }
 
   private SingleNode lookup(Name name) {
@@ -212,8 +210,10 @@ public class ContentModelInferrer {
   private static Particle makeParticle(Name name) {
     if (name == START || name == END)
       return null;
-    if (name == TEXT)
-      return new TextParticle();
     return new ElementParticle(name);
+  }
+
+  public Set getElementNames() {
+    return nameMap.keySet();
   }
 }
