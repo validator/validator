@@ -3,8 +3,6 @@ Compact syntax: checking of xmlns namespace URI constraint
 Compact syntax: disallow foreign elements, attributes from having RELAX NG
 namespace URI
 
-Compact syntax: strip hashes after ##.
-
 Give a warning for a list containing a single token.
 
 Give a more helpful message for sequence of strings

@@ -1839,6 +1839,24 @@ about a foo.</a:documentation>
 <testCase>
 <compact>
 <correct><![CDATA[
+#### This is a comment
+######## about a foo.
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <a:documentation>This is a comment
+about a foo.</a:documentation>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
 ## This is a formal comment
 ## about a foo.
 # Regular comment.

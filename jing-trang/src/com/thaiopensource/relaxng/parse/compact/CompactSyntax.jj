@@ -317,12 +317,12 @@ public class CompactSyntax implements Context {
   }
 
   private String mungeComment(String image) {
-    int i = image.indexOf('#');
-    if (i + 1 < image.length() && image.charAt(i + 1) == '#')
+    int i = image.indexOf('#') + 1;
+    while (i < image.length() && image.charAt(i) == '#')
       i++;
-    if (i + 1 < image.length() && image.charAt(i + 1) == ' ')
+    if (i < image.length() && image.charAt(i) == ' ')
       i++;
-    return image.substring(i + 1);
+    return image.substring(i);
   }
 
   private Annotations getCommentsAsAnnotations() {
