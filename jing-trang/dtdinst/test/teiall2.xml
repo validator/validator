@@ -17,10 +17,10 @@
   <flag name="TEI.dictionaries">
     <include/>
   </flag>
-<!-- Terminology doesn't seem to mix with dictionaries, so leave it out.
-<!ENTITY % TEI.terminology "INCLUDE">
--->
-  <flag name="TEI.mixed">
+  <flag name="TEI.terminology">
+    <include/>
+  </flag>
+  <flag name="TEI.general">
     <include/>
   </flag>
   <flag name="TEI.linking">
@@ -54,6 +54,11 @@
     <include/>
   </flag>
   <externalId name="tei2.dtd" system="tei2.dtd"/>
+<!-- Both dictionaries and terminlogy contain element
+     declarations for gram -->
+  <flag name="gram">
+    <ignore/>
+  </flag>
   <externalIdRef name="tei2.dtd">
 <!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
 <!-- [DSTTEI2] 3.6.1: File tei2.dtd:  Main document type declaration file -->
@@ -111,6 +116,9 @@ declared it.-->
       </nameSpec>
       <nameSpec name="n.address">
         <name>address</name>
+      </nameSpec>
+      <nameSpec name="n.admin">
+        <name>admin</name>
       </nameSpec>
       <nameSpec name="n.affiliation">
         <name>affiliation</name>
@@ -291,6 +299,9 @@ declared it.-->
       </nameSpec>
       <nameSpec name="n.derivation">
         <name>derivation</name>
+      </nameSpec>
+      <nameSpec name="n.descrip">
+        <name>descrip</name>
       </nameSpec>
       <nameSpec name="n.dft">
         <name>dft</name>
@@ -742,6 +753,9 @@ declared it.-->
       <nameSpec name="n.offSet">
         <name>offSet</name>
       </nameSpec>
+      <nameSpec name="n.ofig">
+        <name>ofig</name>
+      </nameSpec>
       <nameSpec name="n.opener">
         <name>opener</name>
       </nameSpec>
@@ -762,6 +776,9 @@ declared it.-->
       </nameSpec>
       <nameSpec name="n.orth">
         <name>orth</name>
+      </nameSpec>
+      <nameSpec name="n.otherForm">
+        <name>otherForm</name>
       </nameSpec>
       <nameSpec name="n.p">
         <name>p</name>
@@ -1081,6 +1098,9 @@ declared it.-->
       <nameSpec name="n.term">
         <name>term</name>
       </nameSpec>
+      <nameSpec name="n.termEntry">
+        <name>termEntry</name>
+      </nameSpec>
       <nameSpec name="n.text">
         <name>text</name>
       </nameSpec>
@@ -1089,6 +1109,9 @@ declared it.-->
       </nameSpec>
       <nameSpec name="n.textDesc">
         <name>textDesc</name>
+      </nameSpec>
+      <nameSpec name="n.tig">
+        <name>tig</name>
       </nameSpec>
       <nameSpec name="n.time">
         <name>time</name>
@@ -1233,15 +1256,13 @@ subset.-->
       <overridden name="TEI.drama">IGNORE</overridden>
       <overridden name="TEI.spoken">IGNORE</overridden>
       <overridden name="TEI.dictionaries">IGNORE</overridden>
-      <flag name="TEI.terminology">
-        <ignore/>
-      </flag>
+      <overridden name="TEI.terminology">IGNORE</overridden>
 <!--Now the mixed
 bases.-->
-      <flag name="TEI.general">
+      <overridden name="TEI.general">IGNORE</overridden>
+      <flag name="TEI.mixed">
         <ignore/>
       </flag>
-      <overridden name="TEI.mixed">IGNORE</overridden>
 <!--Now additional tag
 sets.-->
       <overridden name="TEI.linking">IGNORE</overridden>
@@ -2712,10 +2733,105 @@ dictionary entry.-->
 <!-- end of [DDIENTS]  12.1-->
         </externalIdRef>
       </includedSection>
-      <ignoredSection flag="TEI.terminology">
-&lt;!ENTITY  % TEI.terminology.ent SYSTEM 'teiterm2.ent' &gt;
-%TEI.terminology.ent;
-</ignoredSection>
+      <includedSection flag="TEI.terminology">
+        <externalId name="TEI.terminology.ent" system="teiterm2.ent"/>
+        <externalIdRef name="TEI.terminology.ent">
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+<!-- [DTEENT] 13.4: TEIterm2.ent:  Base tag set for terminological data -->
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+          <modelGroup name="x.comp.terminology">
+            <choice/>
+          </modelGroup>
+          <modelGroup name="m.comp.terminology">
+            <choice>
+              <modelGroupRef name="x.comp.terminology"/>
+              <elementRef>
+                <nameSpecRef name="n.termEntry"/>
+              </elementRef>
+            </choice>
+          </modelGroup>
+          <modelGroup name="mix.terminology">
+            <modelGroupRef name="m.comp.terminology"/>
+          </modelGroup>
+          <modelGroup name="x.terminologyInclusions">
+            <choice/>
+          </modelGroup>
+          <modelGroup name="m.terminologyInclusions">
+            <choice>
+              <modelGroupRef name="x.terminologyInclusions"/>
+              <elementRef>
+                <nameSpecRef name="n.date"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.dateStruct"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.note"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.ptr"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.ref"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.xptr"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.xref"/>
+              </elementRef>
+            </choice>
+          </modelGroup>
+          <modelGroup name="x.terminologyMisc">
+            <choice/>
+          </modelGroup>
+          <modelGroup name="m.terminologyMisc">
+            <choice>
+              <modelGroupRef name="x.terminologyMisc"/>
+              <elementRef>
+                <nameSpecRef name="n.admin"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="n.descrip"/>
+              </elementRef>
+            </choice>
+          </modelGroup>
+<!--Add attributes to the set of global attributes:-->
+          <attributeGroup name="a.terminology">
+            <attribute>
+              <name>group</name>
+              <cdata/>
+              <implied/>
+            </attribute>
+            <attribute>
+              <name>grpPtr</name>
+              <tokenized name="IDREF"/>
+              <implied/>
+            </attribute>
+            <attribute>
+              <name>depend</name>
+              <cdata/>
+              <implied/>
+            </attribute>
+            <attribute>
+              <name>depPtr</name>
+              <tokenized name="IDREF"/>
+              <implied/>
+            </attribute>
+          </attributeGroup>
+<!-- end of [DTEENT]  13.4-->
+        </externalIdRef>
+      </includedSection>
       <includedSection flag="TEI.linking">
         <externalId name="TEI.linking.ent" system="teilink2.ent"/>
         <externalIdRef name="TEI.linking.ent">
@@ -3117,16 +3233,20 @@ and general bases.-->
       <overridden name="mix.drama"></overridden>
       <overridden name="mix.spoken"></overridden>
       <overridden name="mix.dictionaries"></overridden>
-      <modelGroup name="mix.terminology">
-        <choice/>
-      </modelGroup>
-      <includedSection flag="TEI.mixed">
+      <overridden name="mix.terminology"></overridden>
+      <ignoredSection flag="TEI.mixed">
+&lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
+&lt;!--The mixed base allows components from any base; it does so by
+defining 'component' as including both common components and those
+specific to one tag set.--&gt;
+&lt;!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
+%mix.dictionaries; %mix.terminology;)' &gt;</ignoredSection>
+      <includedSection flag="TEI.general">
+<!--The general base uses the same definition of component as the
+mixed base.-->
         <flag name="TEI.singleBase">
           <ignore/>
         </flag>
-<!--The mixed base allows components from any base; it does so by
-defining 'component' as including both common components and those
-specific to one tag set.-->
         <modelGroup name="component">
           <choice>
             <modelGroupRef name="m.common"/>
@@ -3137,48 +3257,111 @@ specific to one tag set.-->
             <modelGroupRef name="mix.terminology"/>
           </choice>
         </modelGroup>
-      </includedSection>
-      <ignoredSection flag="TEI.general">
-&lt;!--The general base uses the same definition of component as the
-mixed base.--&gt;
-&lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
-&lt;!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
-%mix.dictionaries; %mix.terminology;)' &gt;
-&lt;!--But it defines a special version of component.seq, which
+<!--But it defines a special version of component.seq, which
 restricts each div of the text to a single base:  bases can shift only
 in embedded divs or at div boundaries.  This entity is constructed out
 of a series of smaller entities, one for each tag set.  If the tag set
-is not in use, its entity will expand to the empty string.--&gt;
-&lt;![ %TEI.verse; [
-&lt;!--If the verse base is in use, ...--&gt;
-&lt;!ENTITY  % gen.verse '((%m.comp.verse;), (%m.common; | %m.comp.verse;)*) |' &gt;]]&gt;
-&lt;![ %TEI.drama; [
-&lt;!--If the drama base is in use, ...--&gt;
-&lt;!ENTITY  % gen.drama '((%m.comp.drama;), (%m.common; | %m.comp.drama;)*) |' &gt;]]&gt;
-&lt;![ %TEI.spoken; [
-&lt;!--If the spoken base is in use, ...--&gt;
-&lt;!ENTITY  % gen.spoken '((%m.comp.spoken;), (%m.common; | %m.comp.spoken;)*) |' &gt;]]&gt;
-&lt;![ %TEI.dictionaries; [
-&lt;!--If the dictionary base is in use, ...--&gt;
-&lt;!ENTITY  % gen.dictionaries '((%m.comp.dictionaries;), (%m.common; | %m.comp.dictionaries;)*) |' &gt;]]&gt;
-&lt;![ %TEI.terminology; [
-&lt;!--If the terminology base is in use, ...--&gt;
-&lt;!ENTITY  % gen.terminology '((%m.comp.terminology;), (%m.common; | %m.comp.terminology;)*) |' &gt;]]&gt;
-&lt;!--Default declarations for all the entities gen.verse,
-etc.--&gt;
-&lt;!ENTITY  % gen.verse '' &gt;
-&lt;!ENTITY  % gen.drama '' &gt;
-&lt;!ENTITY  % gen.spoken '' &gt;
-&lt;!ENTITY  % gen.dictionaries '' &gt;
-&lt;!ENTITY  % gen.terminology '' &gt;
-&lt;!--Now we are ready to declare component.seq and
-component.plus for use in general base tag set.--&gt;
-&lt;!ENTITY  % component.seq '(%m.common;)*, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)?' &gt;
-&lt;!ENTITY  % component.plus '(%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)
-|
-( (%m.common;)+, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries;
-%gen.terminology; TEI...end)?' &gt;
-&lt;!--(End of marked section for general base.)--&gt;</ignoredSection>
+is not in use, its entity will expand to the empty string.-->
+        <includedSection flag="TEI.verse">
+<!--If the verse base is in use, ...-->
+          <modelGroup name="gen.verse">
+            <sequence>
+              <modelGroupRef name="m.comp.verse"/>
+              <zeroOrMore>
+                <choice>
+                  <modelGroupRef name="m.common"/>
+                  <modelGroupRef name="m.comp.verse"/>
+                </choice>
+              </zeroOrMore>
+            </sequence>
+          </modelGroup>
+        </includedSection>
+        <includedSection flag="TEI.drama">
+<!--If the drama base is in use, ...-->
+          <modelGroup name="gen.drama">
+            <sequence>
+              <modelGroupRef name="m.comp.drama"/>
+              <zeroOrMore>
+                <choice>
+                  <modelGroupRef name="m.common"/>
+                  <modelGroupRef name="m.comp.drama"/>
+                </choice>
+              </zeroOrMore>
+            </sequence>
+          </modelGroup>
+        </includedSection>
+        <includedSection flag="TEI.spoken">
+<!--If the spoken base is in use, ...-->
+          <modelGroup name="gen.spoken">
+            <sequence>
+              <modelGroupRef name="m.comp.spoken"/>
+              <zeroOrMore>
+                <choice>
+                  <modelGroupRef name="m.common"/>
+                  <modelGroupRef name="m.comp.spoken"/>
+                </choice>
+              </zeroOrMore>
+            </sequence>
+          </modelGroup>
+        </includedSection>
+        <includedSection flag="TEI.dictionaries">
+<!--If the dictionary base is in use, ...-->
+          <modelGroup name="gen.dictionaries">
+            <sequence>
+              <modelGroupRef name="m.comp.dictionaries"/>
+              <zeroOrMore>
+                <choice>
+                  <modelGroupRef name="m.common"/>
+                  <modelGroupRef name="m.comp.dictionaries"/>
+                </choice>
+              </zeroOrMore>
+            </sequence>
+          </modelGroup>
+        </includedSection>
+        <includedSection flag="TEI.terminology">
+<!--If the terminology base is in use, ...-->
+          <modelGroup name="gen.terminology">
+            <sequence>
+              <modelGroupRef name="m.comp.terminology"/>
+              <zeroOrMore>
+                <choice>
+                  <modelGroupRef name="m.common"/>
+                  <modelGroupRef name="m.comp.terminology"/>
+                </choice>
+              </zeroOrMore>
+            </sequence>
+          </modelGroup>
+        </includedSection>
+<!--Default declarations for all the entities gen.verse,
+etc.-->
+        <overridden name="gen.verse"></overridden>
+        <overridden name="gen.drama"></overridden>
+        <overridden name="gen.spoken"></overridden>
+        <overridden name="gen.dictionaries"></overridden>
+        <overridden name="gen.terminology"></overridden>
+<!--Now we are ready to declare component.seq and
+component.plus for use in general base tag set.-->
+        <modelGroup name="component.seq">
+          <sequence>
+            <zeroOrMore>
+              <modelGroupRef name="m.common"/>
+            </zeroOrMore>
+            <optional>
+              <choice>
+                <modelGroupRef name="gen.verse"/>
+                <modelGroupRef name="gen.drama"/>
+                <modelGroupRef name="gen.spoken"/>
+                <modelGroupRef name="gen.dictionaries"/>
+                <modelGroupRef name="gen.terminology"/>
+                <elementRef>
+                  <name>TEI...end</name>
+                </elementRef>
+              </choice>
+            </optional>
+          </sequence>
+        </modelGroup>
+<!--(End of marked section for general base.)-->
+      </includedSection>
 <!-- end of [DSTECMX]  3.7.8-->
       <includedSection flag="TEI.prose">
         <overridden name="component">(%m.common;)</overridden>
@@ -3200,9 +3383,10 @@ component.plus for use in general base tag set.--&gt;
         <overridden name="component">(%m.common; | %m.comp.dictionaries;)</overridden>
         <overridden name="TEI.singleBase">INCLUDE</overridden>
       </includedSection>
-      <ignoredSection flag="TEI.terminology">
-&lt;!ENTITY  % component '(%m.common; | %m.comp.terminology;)' &gt;
-&lt;!ENTITY  % TEI.singleBase 'INCLUDE' &gt;</ignoredSection>
+      <includedSection flag="TEI.terminology">
+        <overridden name="component">(%m.common; | %m.comp.terminology;)</overridden>
+        <overridden name="TEI.singleBase">INCLUDE</overridden>
+      </includedSection>
 <!--Default declaration.-->
       <overridden name="component">(%m.common;)</overridden>
       <overridden name="TEI.singleBase">INCLUDE</overridden>
@@ -3210,16 +3394,7 @@ component.plus for use in general base tag set.--&gt;
 component elements.  Its definition does not vary with the base (unless
 we are using the general base, in which case it has already been defined
 above), but the meaning of the definition does.-->
-      <modelGroup name="component.seq">
-        <zeroOrMore>
-          <sequence>
-            <modelGroupRef name="component"/>
-            <zeroOrMore>
-              <modelGroupRef name="m.Incl"/>
-            </zeroOrMore>
-          </sequence>
-        </zeroOrMore>
-      </modelGroup>
+      <overridden name="component.seq">((%component;), (%m.Incl;)*)*</overridden>
 <!--The following entities do not vary with the base.-->
       <modelGroup name="paraContent">
         <zeroOrMore>
@@ -3378,7 +3553,7 @@ GLOBAL; otherwise the parameter entities referred to expand to the empty
 string, as shown here.  -->
       <overridden name="a.analysis"></overridden>
       <overridden name="a.linking"></overridden>
-      <attributeGroup name="a.terminology"/>
+      <overridden name="a.terminology"></overridden>
       <attributeGroup name="a.global">
         <attributeGroupRef name="a.terminology"/>
         <attributeGroupRef name="a.linking"/>
@@ -9303,30 +9478,17 @@ Current versions are available from the Text Encoding Initiative.-->
         </includedSection>
 <!--(LBL is declared with USG, elsewhere.)-->
 <!--Elements for morphological information:-->
-        <flag name="gram">
-          <include/>
-        </flag>
-        <includedSection flag="gram">
-          <element>
-            <nameSpecRef name="n.gram"/>
-            <modelGroupRef name="paraContent"/>
-          </element>
-          <attlist>
-            <nameSpecRef name="n.gram"/>
-            <attributeGroupRef name="a.global"/>
-            <attributeGroupRef name="a.dictionaries"/>
-            <attribute>
-              <name>type</name>
-              <cdata/>
-              <implied/>
-            </attribute>
-            <attribute>
-              <name>TEIform</name>
-              <cdata/>
-              <default>gram</default>
-            </attribute>
-          </attlist>
-        </includedSection>
+        <overridden name="gram">INCLUDE</overridden>
+        <ignoredSection flag="gram">
+
+&lt;!ELEMENT %n.gram; %om.RO;  %paraContent;&gt; 
+&lt;!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' &gt;
+  
+</ignoredSection>
         <flag name="gen">
           <include/>
         </flag>
@@ -9964,19 +10126,308 @@ Current versions are available from the Text Encoding Initiative.-->
 <!-- end of [DDIBO]  12.1-->
       </externalIdRef>
     </includedSection>
-    <ignoredSection flag="TEI.terminology">
-&lt;!ENTITY  % TEI.terminology.dtd SYSTEM 'teiterm2.dtd' &gt;
-%TEI.terminology.dtd;
-</ignoredSection>
-    <ignoredSection flag="TEI.general">
-&lt;!ENTITY  % TEI.general.dtd SYSTEM 'teigen2.dtd' &gt;
-%TEI.general.dtd;
-</ignoredSection>
-    <includedSection flag="TEI.mixed">
-      <externalId name="TEI.mixed.dtd" system="teimix2.dtd"/>
-      <externalIdRef name="TEI.mixed.dtd">
+    <includedSection flag="TEI.terminology">
+      <externalId name="TEI.terminology.dtd" system="teiterm2.dtd"/>
+      <externalIdRef name="TEI.terminology.dtd">
 <!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSTCBMX] 3.4: Mixed-Base Tag Set -->
+<!-- [DTETOP] 13.4: TEIterm2.DTD:  Base tag set for terminological data -->
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First, embed the default text structure elements.-->
+        <ignoredSection flag="TEI.singleBase">
+&lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
+%TEI.structure.dtd;
+</ignoredSection>
+        <externalId name="termtags" system="teite2n.dtd"/>
+        <externalIdRef name="termtags">
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+<!-- [DTENE] 13.4.1: Elements for nested-style terminological data -->
+<!--The nested structure is used for data interchange and represents a
+canonical structured form for terminology entries, which differs
+from the less structured forms frequently used to store data in
+terminological databases.-->
+          <flag name="termEntry">
+            <include/>
+          </flag>
+          <includedSection flag="termEntry">
+            <element>
+              <nameSpecRef name="n.termEntry"/>
+              <sequence>
+                <zeroOrMore>
+                  <choice>
+                    <modelGroupRef name="m.terminologyMisc"/>
+                    <modelGroupRef name="m.terminologyInclusions"/>
+                    <modelGroupRef name="m.Incl"/>
+                  </choice>
+                </zeroOrMore>
+                <oneOrMore>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.tig"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <choice>
+                        <modelGroupRef name="m.Incl"/>
+                        <modelGroupRef name="m.terminologyInclusions"/>
+                      </choice>
+                    </zeroOrMore>
+                  </sequence>
+                </oneOrMore>
+              </sequence>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.termEntry"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>termEntry</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+<!--Notes, descrip(s) and admin(s) are allowed in the termEntry
+to provide documentation that applies to the whole entry.-->
+<!--tig='term information group'-->
+<!--ofig='otherform information group'-->
+          <flag name="tig">
+            <include/>
+          </flag>
+          <includedSection flag="tig">
+            <element>
+              <nameSpecRef name="n.tig"/>
+              <sequence>
+                <zeroOrMore>
+                  <choice>
+                    <modelGroupRef name="m.terminologyMisc"/>
+                    <modelGroupRef name="m.terminologyInclusions"/>
+                    <modelGroupRef name="m.Incl"/>
+                  </choice>
+                </zeroOrMore>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.term"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <choice>
+                      <elementRef>
+                        <nameSpecRef name="n.gram"/>
+                      </elementRef>
+                      <modelGroupRef name="m.terminologyInclusions"/>
+                      <modelGroupRef name="m.Incl"/>
+                    </choice>
+                  </zeroOrMore>
+                </sequence>
+                <zeroOrMore>
+                  <sequence>
+                    <modelGroupRef name="m.terminologyMisc"/>
+                    <zeroOrMore>
+                      <choice>
+                        <modelGroupRef name="m.terminologyInclusions"/>
+                        <modelGroupRef name="m.Incl"/>
+                      </choice>
+                    </zeroOrMore>
+                  </sequence>
+                </zeroOrMore>
+                <zeroOrMore>
+                  <sequence>
+                    <elementRef>
+                      <nameSpecRef name="n.ofig"/>
+                    </elementRef>
+                    <zeroOrMore>
+                      <choice>
+                        <modelGroupRef name="m.terminologyInclusions"/>
+                        <modelGroupRef name="m.Incl"/>
+                      </choice>
+                    </zeroOrMore>
+                  </sequence>
+                </zeroOrMore>
+              </sequence>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.tig"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>tig</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+<!--Order is significant: term, descrip(s), ofig(s) or otherform(s)-->
+          <flag name="ofig">
+            <include/>
+          </flag>
+          <includedSection flag="ofig">
+            <element>
+              <nameSpecRef name="n.ofig"/>
+              <sequence>
+                <zeroOrMore>
+                  <choice>
+                    <modelGroupRef name="m.terminologyMisc"/>
+                    <modelGroupRef name="m.Incl"/>
+                  </choice>
+                </zeroOrMore>
+                <sequence>
+                  <elementRef>
+                    <nameSpecRef name="n.otherForm"/>
+                  </elementRef>
+                  <zeroOrMore>
+                    <choice>
+                      <elementRef>
+                        <nameSpecRef name="n.gram"/>
+                      </elementRef>
+                      <modelGroupRef name="m.Incl"/>
+                    </choice>
+                  </zeroOrMore>
+                </sequence>
+                <zeroOrMore>
+                  <sequence>
+                    <modelGroupRef name="m.terminologyMisc"/>
+                    <zeroOrMore>
+                      <modelGroupRef name="m.Incl"/>
+                    </zeroOrMore>
+                  </sequence>
+                </zeroOrMore>
+              </sequence>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.ofig"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>ofig</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+          <flag name="otherForm">
+            <include/>
+          </flag>
+          <includedSection flag="otherForm">
+            <element>
+              <nameSpecRef name="n.otherForm"/>
+              <modelGroupRef name="paraContent"/>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.otherForm"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>otherForm</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+          <flag name="descrip">
+            <include/>
+          </flag>
+          <includedSection flag="descrip">
+            <element>
+              <nameSpecRef name="n.descrip"/>
+              <modelGroupRef name="paraContent"/>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.descrip"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>descrip</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+          <flag name="admin">
+            <include/>
+          </flag>
+          <includedSection flag="admin">
+            <element>
+              <nameSpecRef name="n.admin"/>
+              <modelGroupRef name="paraContent"/>
+            </element>
+            <attlist>
+              <nameSpecRef name="n.admin"/>
+              <attributeGroupRef name="a.global"/>
+              <attribute>
+                <name>type</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>date</name>
+                <cdata/>
+                <default>%ISO-date;</default>
+              </attribute>
+              <attribute>
+                <name>resp</name>
+                <cdata/>
+                <implied/>
+              </attribute>
+              <attribute>
+                <name>TEIform</name>
+                <cdata/>
+                <default>admin</default>
+              </attribute>
+            </attlist>
+          </includedSection>
+<!--We define a.dictionaries as the empty string,
+since we are not now using the tag set for
+dictionaries.-->
+          <overridden name="a.dictionaries"></overridden>
+          <overridden name="gram">INCLUDE</overridden>
+          <ignoredSection flag="gram">
+
+&lt;!ELEMENT %n.gram; %om.RO;  %paraContent;&gt; 
+&lt;!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' &gt;
+  
+</ignoredSection>
+<!-- end of [DTENE]  13.4.1-->
+        </externalIdRef>
+<!-- end of [DTETOP]  13.4-->
+      </externalIdRef>
+    </includedSection>
+    <includedSection flag="TEI.general">
+      <externalId name="TEI.general.dtd" system="teigen2.dtd"/>
+      <externalIdRef name="TEI.general.dtd">
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+<!-- [DSTCBGN] 3.4: General-Base Tag Set -->
 <!--Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
 Document TEI P3, 1994.-->
@@ -11545,9 +11996,13 @@ upon it.-->
           </externalIdRef>
 <!-- end of [DDS]  7.7-->
         </externalIdRef>
-<!-- end of [DSTCBMX]  3.4-->
+<!-- end of [DSTCBGN]  3.4-->
       </externalIdRef>
     </includedSection>
+    <ignoredSection flag="TEI.mixed">
+&lt;!ENTITY  % TEI.mixed.dtd SYSTEM 'teimix2.dtd' &gt;
+%TEI.mixed.dtd;
+</ignoredSection>
 <!-- end of [DSTOVBA]  3.6.4-->
 <!-- [DSTOVAD] 3.6.5: Embed additional tag sets -->
 <!--These entities are declared and embedded only when the user
@@ -16437,4 +16892,23 @@ Current versions are available from the Text Encoding Initiative.-->
     <nameSpecRef name="n.dictScrap"/>
     <sequence/>
   </element>
+  <element>
+    <nameSpecRef name="n.gram"/>
+    <modelGroupRef name="paraContent"/>
+  </element>
+  <attlist>
+    <nameSpecRef name="n.gram"/>
+    <attributeGroupRef name="a.global"/>
+    <attributeGroupRef name="a.dictionaries"/>
+    <attribute>
+      <name>type</name>
+      <cdata/>
+      <implied/>
+    </attribute>
+    <attribute>
+      <name>TEIform</name>
+      <cdata/>
+      <default>gram</default>
+    </attribute>
+  </attlist>
 </doctype>
