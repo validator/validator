@@ -76,3 +76,6 @@ Cleanup handling of newline normalization.
 Line-wrapping for long attribute lists in XmlWriter.
 
 Use system-dependent line-endings on output in XmlWriter.
+
+RELAX NG: don't output datatypeLibrary attribute if there are no
+datatypes.
