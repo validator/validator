@@ -14,7 +14,7 @@ public class ValidationEngine {
   private XMLReader xr;
   private ErrorHandler eh;
   private DatatypeLibraryFactory dlf;
-  private PatternBuilder pb = new PatternBuilder();
+  private PatternBuilder pb;
   private Pattern p;
 
   public void setXMLReaderCreator(XMLReaderCreator xrc) {
@@ -40,8 +40,10 @@ public class ValidationEngine {
    * setXMLReaderCreator must be called before any call to loadPattern
    */
   public boolean loadPattern(InputSource in) throws SAXException, IOException {
+    pb = new PatternBuilder();
     xr = xrc.createXMLReader();
     xr.setErrorHandler(eh);
+    p = null;
     p = PatternReader.readPattern(xrc, xr, pb, dlf, in);
     if (p == null)
       return false;
