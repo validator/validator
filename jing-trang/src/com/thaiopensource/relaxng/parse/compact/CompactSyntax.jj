@@ -1256,9 +1256,9 @@ ParsedElementAnnotation Documentation() :
                                           makeLocation(t),
                                           comments,
                                           getContext());
-    eab.addText(mungeComment(t.image), makeLocation(t));
+    eab.addText(mungeComment(t.image), makeLocation(t), null);
   }
-  (t = <DOCUMENTATION_CONTINUE> { eab.addText("\n" + mungeComment(t.image), makeLocation(t)); })*
+  (t = <DOCUMENTATION_CONTINUE> { eab.addText("\n" + mungeComment(t.image), makeLocation(t), null); })*
   { return eab.makeElementAnnotation(); }
 }
 
@@ -1445,7 +1445,7 @@ void AnnotationElementLiteral(ElementAnnotationBuilder eab) :
   Token t;
 }
 {
-  t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t)); }
+  t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t), getComments()); }
 }
 
 String Literal() :

@@ -544,9 +544,11 @@ public class SchemaBuilderImpl implements SchemaBuilder {
       this.element = element;
     }
 
-    public void addText(String value, Location loc) throws BuildException {
+    public void addText(String value, Location loc, CommentList comments) throws BuildException {
       TextAnnotation t = new TextAnnotation(value);
       t.setSourceLocation((SourceLocation)loc);
+      if (comments != null)
+        element.getChildren().addAll(((CommentListImpl)comments).list);
       element.getChildren().add(t);
     }
 

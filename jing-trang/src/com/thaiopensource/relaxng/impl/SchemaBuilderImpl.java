@@ -792,7 +792,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     // nothing needed
   }
 
-  public void addText(String value, Location loc) {
+  public void addText(String value, Location loc, CommentList comments) {
     // nothing needed
   }
 
