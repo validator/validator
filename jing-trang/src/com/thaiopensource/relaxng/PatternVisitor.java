@@ -15,5 +15,5 @@ interface PatternVisitor {
   void visitAttribute(NameClass ns, Pattern value);
   void visitDatatype(Datatype dt);
   void visitString(boolean normalizeWhiteSpace, String str);
-  void visitAnyString();
+  void visitText();
 }

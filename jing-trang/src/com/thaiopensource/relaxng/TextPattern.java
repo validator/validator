@@ -4,9 +4,9 @@ import org.xml.sax.Locator;
 
 // Matches zero or more characters.
 
-class AnyStringPattern extends Pattern {
-  AnyStringPattern() {
-    super(true, ANY_STRING_HASH_CODE);
+class TextPattern extends Pattern {
+  TextPattern() {
+    super(true, TEXT_HASH_CODE);
   }
 
   Pattern residual(PatternBuilder b, Atom a) {
@@ -21,10 +21,10 @@ class AnyStringPattern extends Pattern {
   }
 
   boolean samePattern(Pattern other) {
-    return other instanceof AnyStringPattern;
+    return other instanceof TextPattern;
   }
 
   void accept(PatternVisitor visitor) {
-    visitor.visitAnyString();
+    visitor.visitText();
   }
 }

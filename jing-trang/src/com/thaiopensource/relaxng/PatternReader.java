@@ -503,7 +503,7 @@ public class PatternReader implements DatatypeContext {
       return new MixedState();
     }
     Pattern wrapPattern(Pattern p) {
-      return patternBuilder.makeInterleave(patternBuilder.makeAnyString(), p);
+      return patternBuilder.makeInterleave(patternBuilder.makeText(), p);
     }
   }
 
@@ -595,13 +595,13 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class AnyStringState extends EmptyContentState {
+  class TextState extends EmptyContentState {
     State create() {
-      return new AnyStringState();
+      return new TextState();
     }
 
     Pattern makePattern() {
-      return patternBuilder.makeAnyString();
+      return patternBuilder.makeText();
     }
   }
 
@@ -723,7 +723,7 @@ public class PatternReader implements DatatypeContext {
 
     void end() throws SAXException {
       if (containedPattern == null)
-	containedPattern = patternBuilder.makeAnyString();
+	containedPattern = patternBuilder.makeText();
       super.end();
     }
 
@@ -1168,7 +1168,7 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("element", new ElementState());
     patternTable.put("attribute", new AttributeState());
     patternTable.put("empty", new EmptyState());
-    patternTable.put("anyString", new AnyStringState());
+    patternTable.put("text", new TextState());
     patternTable.put("string", new StringState());
     patternTable.put("data", new DataState());
     patternTable.put("notAllowed", new NotAllowedState());

@@ -234,7 +234,7 @@ public class PatternDumper {
     }
 
     public void visitDatatype(Datatype dt) {
-      startElement("anyString");	// XXX
+      startElement("text");	// XXX
       endElement();
     }
 
@@ -246,8 +246,8 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitAnyString() {
-      startElement("anyString");
+    public void visitText() {
+      startElement("text");
       endElement();
     }
   }

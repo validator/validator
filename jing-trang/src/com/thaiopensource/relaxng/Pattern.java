@@ -7,7 +7,7 @@ public abstract class Pattern {
   private boolean nullable;
   private int hc;
 
-  static final int ANY_STRING_HASH_CODE = 1;
+  static final int TEXT_HASH_CODE = 1;
   static final int ERROR_HASH_CODE = 3;
   static final int EMPTY_SEQUENCE_HASH_CODE = 5;
   static final int EMPTY_CHOICE_HASH_CODE = 7;

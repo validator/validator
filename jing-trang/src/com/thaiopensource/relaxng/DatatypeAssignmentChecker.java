@@ -13,7 +13,7 @@ public class DatatypeAssignmentChecker {
   private PatternBuilder patternBuilder;
   private Pattern currentPattern;
   private Pattern contentPattern;
-  private boolean containsAnyString = false;
+  private boolean containsText = false;
   private Object contentClass = null;
   private boolean contentAmbig = false;
   private boolean ambig = false;
@@ -84,7 +84,7 @@ public class DatatypeAssignmentChecker {
     public void visitString(boolean normalizeWhiteSpace, String str) {
     }
 
-    public void visitAnyString() {
+    public void visitText() {
     }
 
     public void visitChoice(NameClass nc1, NameClass nc2) {
@@ -145,17 +145,17 @@ public class DatatypeAssignmentChecker {
     public void visitDatatype(Datatype dt) {
       Object cls = dt.getAssignmentClass();
       if (cls == null)
-	addAnyString();
+	addText();
       else
 	addClass(cls);
     }
 
     public void visitString(boolean normalizeWhiteSpace, String str) {
-      addAnyString();
+      addText();
     }
 
-    public void visitAnyString() {
-      addAnyString();
+    public void visitText() {
+      addText();
     }
   }
 
@@ -199,7 +199,7 @@ public class DatatypeAssignmentChecker {
 	currentPattern.accept(new NamesVisitor());
 	contentAmbig = false;
 	contentClass = null;
-	containsAnyString = false;
+	containsText = false;
       }
       return ambig;
     }
@@ -243,7 +243,7 @@ public class DatatypeAssignmentChecker {
   }
 
   void addClass(Object cls) {
-    if (containsAnyString)
+    if (containsText)
       setAmbig();
     else if (contentClass == null)
       contentClass = cls;
@@ -251,10 +251,10 @@ public class DatatypeAssignmentChecker {
       setAmbig();
   }
 
-  void addAnyString() {
+  void addText() {
     if (contentClass != null)
       setAmbig();
-    containsAnyString = true;
+    containsText = true;
   }
 
   private void setAmbig() {

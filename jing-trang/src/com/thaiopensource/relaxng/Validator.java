@@ -222,7 +222,7 @@ public class Validator {
     }
 
     void text() throws SAXException {
-      if (!updateState(b.memoizedAnyStringResidual(combinedState)))
+      if (!updateState(b.memoizedTextResidual(combinedState)))
 	error("text_not_allowed");
     }
 
@@ -363,7 +363,7 @@ public class Validator {
     void text() throws SAXException {
       super.text();
       for (int j = 0; j < state.length; j++)
-	state[j] = b.memoizedAnyStringResidual(state[j]);
+	state[j] = b.memoizedTextResidual(state[j]);
     }
 
     void string(StringAtom a) throws SAXException {

@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-class AnyStringAtom extends Atom {
+class TextAtom extends Atom {
   boolean matchesString() {
     return true;
   }

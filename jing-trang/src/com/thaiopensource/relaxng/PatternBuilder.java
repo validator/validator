@@ -15,12 +15,12 @@ public class PatternBuilder {
 
   private final EmptySequencePattern emptySequence;
   private final EmptyChoicePattern emptyChoice;
-  private final AnyStringPattern anyString;
+  private final TextPattern text;
 
   private final PatternPair emptyPatternPair;
   private final Hashtable eaTable;
-  private final Hashtable asrTable;
-  private final AnyStringAtom anyStringAtom;
+  private final Hashtable textTable;
+  private final TextAtom textAtom;
   private final Hashtable ucpTable;
   private final Hashtable rTable = new Hashtable();
   private Atom rAtom = null;
@@ -31,11 +31,11 @@ public class PatternBuilder {
     usedLimit = 0;
     emptySequence = new EmptySequencePattern();
     emptyChoice = new EmptyChoicePattern();
-    anyString = new AnyStringPattern();
+    text = new TextPattern();
     emptyPatternPair = new PatternPair();
     eaTable = new Hashtable();
-    asrTable = new Hashtable();
-    anyStringAtom = new AnyStringAtom();
+    textTable = new Hashtable();
+    textAtom = new TextAtom();
     ucpTable = new Hashtable();
   }
 
@@ -47,11 +47,11 @@ public class PatternBuilder {
     usedLimit = parent.usedLimit;
     emptySequence = parent.emptySequence;
     emptyChoice = parent.emptyChoice;
-    anyString = parent.anyString;
+    text = parent.text;
     emptyPatternPair = parent.emptyPatternPair;
     eaTable = (Hashtable)parent.eaTable.clone();
-    asrTable = (Hashtable)parent.asrTable.clone();
-    anyStringAtom = parent.anyStringAtom;
+    textTable = (Hashtable)parent.textTable.clone();
+    textAtom = parent.textAtom;
     ucpTable = (Hashtable)parent.ucpTable.clone();
   }
 
@@ -105,8 +105,8 @@ public class PatternBuilder {
       return p1;
     return intern(new ConcurPattern(p1, p2));
   }
-  Pattern makeAnyString() {
-    return anyString;
+  Pattern makeText() {
+    return text;
   }
   Pattern makeString(boolean normalizeWhiteSpace, String str, Locator loc) {
     if (normalizeWhiteSpace)
@@ -141,7 +141,7 @@ public class PatternBuilder {
   }
 
   Pattern makeOneOrMore(Pattern p) {
-    if (p == anyString
+    if (p == text
 	|| p == emptySequence
 	|| p == emptyChoice
 	|| p instanceof OneOrMorePattern)
@@ -254,11 +254,11 @@ public class PatternBuilder {
     return emptyPatternPair;
   }
 
-  Pattern memoizedAnyStringResidual(Pattern p) {
-    Pattern r = (Pattern)asrTable.get(p);
+  Pattern memoizedTextResidual(Pattern p) {
+    Pattern r = (Pattern)textTable.get(p);
     if (r == null) {
-      r = memoizedResidual(p, anyStringAtom);
-      asrTable.put(p, r);
+      r = memoizedResidual(p, textAtom);
+      textTable.put(p, r);
     }
     return r;
   }
