@@ -1,3 +1,6 @@
+Document that XHTML modularization implementation does not implement
+exclusions.
+
 Handle comments embedded within strings better.
 
 Make SAX-based parser preserve element annotations.
