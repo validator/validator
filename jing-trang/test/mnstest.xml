@@ -373,7 +373,7 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://example.com" schema="a.rng" mode="a"/>
+  <validateElement ns="http://example.com" schema="a.rng" useMode="a"/>
 </rules>
 </incorrect>
 </testCase>
