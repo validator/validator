@@ -126,8 +126,11 @@ setup_prog() {
 cd ${prog_src_dir}
 
 cat <<EOF >Makefile.in
+SHELL=/bin/sh
 srcdir = @srcdir@/src
-VPATH = @srcdir@/src
+# put the value on a separate line to stop configure messing with it
+VPATH = \\
+@srcdir@/src
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 
@@ -135,7 +138,8 @@ bindir = @bindir@
 GCJ=@GCJ@
 GCJFLAGS=@GCJFLAGS@
 LDFLAGS=@LDFLAGS@
-
+INSTALL=@INSTALL@
+NORMAL_INSTALL=:
 PROG=${prog}
 MAIN=${main}
 TEST_MAIN=${test_main}
@@ -175,19 +179,25 @@ dirstamp:
 check: test_$(PROG)
 	cd test; $(MAKE)
 
+install: $(PROG)
+	$(NORMAL_INSTALL)
+	$(INSTALL) -d $(bindir)
+	$(INSTALL) $(PROG) $(bindir)/$(PROG)
+
 clean:
 	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
 	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
 	cd test; $(MAKE) clean
 
 .SUFFIXES: .resource
-.PHONY: check clean
+.PHONY: check clean install
 EOF
 
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
 
 echo "AC_INIT(${prog}, ${prog_version})" >configure.ac
 cat <<\EOF >>configure.ac
+AC_PROG_INSTALL
 AC_ARG_VAR([GCJ], [Java compiler command])
 AC_ARG_VAR([GCJFLAGS], [Java compiler flags])
 AC_ARG_VAR([LDFLAGS], [linker flags])
@@ -199,6 +209,9 @@ test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
 AC_CONFIG_FILES([Makefile test/Makefile])
 AC_OUTPUT
 EOF
+
+cp -a ${top_dir}/gcj/install-sh .
+cp -a ${top_dir}/gcj/INSTALL .
 
 autoconf
 
@@ -322,3 +335,10 @@ clean:
 
 .PHONY: check xsd-check compact-check clean
 EOF
+
+cd ${top_dir}
+cd ${jing_src_dir}/..
+tar cfz jing-${jing_version}.tar.gz  jing-${jing_version}
+cd ${top_dir}
+cd ${trang_src_dir}/..
+tar cfz trang-${trang_version}.tar.gz  trang-${trang_version}
