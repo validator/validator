@@ -743,7 +743,7 @@ public class PatternReader implements DatatypeContext {
       if (localName.equals("start"))
 	return new StartState();
       if (localName.equals("include"))
-	return new GrammarIncludeState();
+	return new IncludeState();
       error("expected_define", localName);
       return null;
     }
@@ -833,12 +833,12 @@ public class PatternReader implements DatatypeContext {
     } 
   }
 
-  class IncludeState extends EmptyContentState {
+  class ExternalRefState extends EmptyContentState {
     String href;
     Pattern includedPattern;
     
     State create() {
-      return new IncludeState();
+      return new ExternalRefState();
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
@@ -886,9 +886,9 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class GrammarIncludeState extends IncludeState {
+  class IncludeState extends ExternalRefState {
     State create() {
-      return new GrammarIncludeState();
+      return new IncludeState();
     }
     void sendPatternToParent(Pattern p) {
     }
@@ -1174,7 +1174,7 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("notAllowed", new NotAllowedState());
     patternTable.put("grammar", new GrammarState());
     patternTable.put("ref", new RefState());
-    patternTable.put("include", new IncludeState());
+    patternTable.put("externalRef", new ExternalRefState());
   }
 
   private void initNameClassTable() {
