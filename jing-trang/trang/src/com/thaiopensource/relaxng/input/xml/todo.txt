@@ -10,3 +10,5 @@ Avoid approximation warnings from Trang output modules.
 Should we reconsider always inlining elements that are referenced only once?
 
 Deal with QName datatype.
+
+Tighten test for typical URI. Restrict length; disallow embedded whitespace; require known scheme.
