@@ -59,6 +59,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
   private final XmlWriter xw;
   private final String datatypeLibrary;
   private final Map prefixMap;
+  private String localNs = null;
 
   static public void output(Pattern p, String encoding, String sourceUri, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
     try {
@@ -141,20 +142,20 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     NameNameClass nnc = (NameNameClass)nc;
     String ns = nnc.getNamespaceUri();
     if (ns == NameClass.INHERIT_NS) {
-      if (isAttribute)
+      if (isAttribute || lookupPrefix("") != null)
         return false;
       xw.attribute("name", nnc.getLocalName());
       return true;
     }
     if (ns.length() == 0) {
-      if (!isAttribute && !"".equals(prefixMap.get("")))
+      if (!isAttribute && !"".equals(lookupPrefix("")))
         return false;
       xw.attribute("name", nnc.getLocalName());
       return true;
     }
     String prefix = nnc.getPrefix();
     if (prefix == null) {
-      if (!ns.equals(prefixMap.get("")))
+      if (isAttribute || !ns.equals(lookupPrefix("")))
         return false;
       xw.attribute("name", nnc.getLocalName());
     }
@@ -201,9 +202,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     leadingAnnotations(p);
     xw.startElement("externalRef");
     xw.attribute("href", od.reference(sourceUri, p.getHref()));
-    if (p.getNs() != NameClass.INHERIT_NS
-        && !p.getNs().equals(prefixMap.get("")))
-      xw.attribute("ns", p.getNs());
+    nsAttribute(p.getNs());
     innerAnnotations(p);
     end(p);
     return null;
@@ -238,9 +237,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
         Map.Entry entry = (Map.Entry)iter.next();
         String prefix = (String)entry.getKey();
         String ns = (String)entry.getValue();
-        if (ns != NameClass.INHERIT_NS && !ns.equals(prefixMap.get(prefix)))
-          xw.attribute(prefix.length() == 0 ? "ns" : "xmlns:" + prefix,
-                       ns);
+        if (prefix.length() == 0)
+          nsAttribute(ns);
+        else if (ns != NameClass.INHERIT_NS && !ns.equals(lookupPrefix(prefix)))
+          xw.attribute("xmlns:" + prefix, ns);
       }
     }
     innerAnnotations(p);
@@ -347,11 +347,11 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
   public Object visitNsName(NsNameNameClass nc) {
     leadingAnnotations(nc);
     xw.startElement("nsName");
-    if (nc.getNs() != NameClass.INHERIT_NS
-        && !nc.getNs().equals(prefixMap.get("")))
-      xw.attribute("ns", nc.getNs());
+    String saveNs = localNs;
+    localNs = nsAttribute(nc.getNs());
     innerAnnotations(nc);
     visitExcept(nc);
+    localNs = saveNs;
     end(nc);
     return null;
   }
@@ -370,14 +370,14 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     xw.startElement("name");
     String ns = nc.getNamespaceUri();
     if (ns == NameClass.INHERIT_NS) {
+      nsAttribute(ns);
       innerAnnotations(nc);
       xw.text(nc.getLocalName());
     }
     else {
       String prefix = nc.getPrefix();
       if (prefix == null || ns.length() == 0) {
-        if (!ns.equals(prefixMap.get("")))
-          xw.attribute("ns", ns);
+        nsAttribute(ns);
         innerAnnotations(nc);
         xw.text(nc.getLocalName());
       }
@@ -420,10 +420,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     leadingAnnotations(c);
     xw.startElement("include");
     xw.attribute("href", od.reference(sourceUri, c.getHref()));
-    if (c.getNs() != NameClass.INHERIT_NS
-        && !c.getNs().equals(prefixMap.get("")))
-      xw.attribute("ns", c.getNs());
+    String saveNs = localNs;
+    localNs = nsAttribute(c.getNs());
     finishContainer(c, c);
+    localNs = saveNs;
     return null;
   }
 
@@ -540,5 +540,26 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
             || !subject.getAttributeAnnotations().isEmpty()
             || !subject.getChildElementAnnotations().isEmpty()
             || !subject.getFollowingElementAnnotations().isEmpty());
+  }
+
+  private String nsAttribute(String ns) {
+    if (ns == NameClass.INHERIT_NS) {
+      if (lookupPrefix("") != null) {
+        // cannot do it exactly; this is the best approximation
+        xw.attribute("ns", "");
+        return "";
+      }
+    }
+    else if (!ns.equals(lookupPrefix(""))) {
+      xw.attribute("ns", ns);
+      return ns;
+    }
+    return localNs;
+  }
+
+  private String lookupPrefix(String prefix) {
+    if (prefix.equals("") && localNs != null)
+      return localNs;
+    return (String)prefixMap.get(prefix);
   }
 }
