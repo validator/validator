@@ -81,7 +81,7 @@ class Driver {
     isSax2 = b;
   }
 
-  static private XMLReaderCreator createXMLReaderCreator() {
+  static XMLReaderCreator createXMLReaderCreator() {
     if (className == null) {
       className = System.getProperty("com.thaiopensource.relaxng.util.XMLReader");
       if (className == null) {
