@@ -37,4 +37,48 @@
 </a>
 </invalid>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<attribute name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <text/>
+</attribute>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<group xmlns:eg="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="eg:a">
+    <value>aval</value>
+  </attribute>
+  <attribute name="eg:b">
+    <value>bval</value>
+  </attribute>
+</group>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="http://www.example.com" schema="a.rng"/>
+</rules>
+</correct>
+<valid>
+<foo/>
+</valid>
+<valid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval" eg:b="bval"/>
+</valid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval"/>
+</invalid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:b="bval"/>
+</invalid>
+<invalid>
+<foo xmlns:eg="http://www.example.com" eg:a="aval" eg:b="aval"/>
+</invalid>
+</testCase>
 </testSuite>
