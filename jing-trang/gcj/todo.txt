@@ -1,3 +1,4 @@
+Default GCJFLAGS in configure.ac to -g -O
 Sign RPM file
 Detect with -lpthread is needed
 Instead of removing unneeded sources, omit them from compile list.
