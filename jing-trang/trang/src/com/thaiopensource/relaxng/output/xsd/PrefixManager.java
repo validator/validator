@@ -51,7 +51,8 @@ public class PrefixManager implements SourceUriGenerator {
       if (context != null) {
         for (Enumeration enum = context.prefixes(); enum.hasMoreElements();) {
           String prefix = (String)enum.nextElement();
-          notePrefix(prefix, resolveNamespace(context.resolveNamespacePrefix(prefix)));
+          if (!prefix.equals(""))
+            notePrefix(prefix, resolveNamespace(context.resolveNamespacePrefix(prefix)));
         }
       }
     }
