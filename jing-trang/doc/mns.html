@@ -382,6 +382,16 @@ form:</p>
 <code><var>x</var></code> such that that parent element is the nearest
 ancestor validation subject of that potential validation subject.</p>
 
+<p>The children of the <code>context</code> elements of a particular
+<code>validate</code> element must all identify distinct contexts.  It
+is possible for a single potential validation subject to match
+multiple distinct context children.  A context child containing more
+<code>element</code> elements takes precedence over one containing
+fewer <code>element</code> elements.  Amongst context children
+containing the same number of <code>element</code> elements, one that
+has a <code>root</code> element takes precedence over one that does
+not.</p>
+
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
@@ -552,8 +562,9 @@ to remove the RDF elements before validating the XHTML.</li>
 <li>We want the root element to be XHTML not RDF.  We therefore use a
 starting mode that allows only XHTML.</li>
 
-<li>We want to allow RDF in the <code>head</code> element. We
-therefore specify an appropriate context.</li>
+<li>We want to allow RDF in the XHTML <code>head</code> element. We
+therefore specify an appropriate context in the
+<code>validation</code> element for the XHTML namespace.</li>
 
 <li>We do not want to allow RDF anywhere else within the XHTML.  Since
 we have not specified a <code>useMode</code> attribute on the
