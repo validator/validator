@@ -39,7 +39,7 @@ public class PatternMatcher implements Cloneable {
   }
 
   private PatternMemo memo;
-  private boolean allNonWhitespaceTextEquivalent;
+  private boolean textMaybeTyped;
   private boolean hadError;
   private boolean ignoreNextEndTag;
   private String errorMessage;
@@ -110,47 +110,38 @@ public class PatternMatcher implements Cloneable {
       // XXX should specify which attributes
       ret = error("required_attributes_missing");
     }
-    allNonWhitespaceTextEquivalent
-            = memo.getPattern().getContentType() != Pattern.DATA_CONTENT_TYPE;
+    textMaybeTyped = memo.getPattern().getContentType() == Pattern.DATA_CONTENT_TYPE;
     return ret;
   }
 
-
-  /**
-   * null string means one or more non-whitespace characters; null legal either when mixed
-   * is true or when previous call to isAllNonWhitespaceTextEquivalent returned true
-   *
-   * @param string
-   * @param vc
-   * @param mixed
-   * @return true iff no error
-   */
-  public boolean checkText(String string, ValidationContext vc, boolean mixed) {
-    if (allNonWhitespaceTextEquivalent || mixed) {
-      if (string != null && DataDerivFunction.isBlank(string))
-        return true;
-      if (setMemo(memo.mixedTextDeriv()))
-        return true;
-      return error("text_not_allowed");
-    }
-    else {
-      if (string == null)
-        throw new IllegalStateException();
+  public boolean checkText(String string, ValidationContext vc, boolean nextTagIsEndTag) {
+    if (textMaybeTyped && nextTagIsEndTag) {
       ignoreNextEndTag = true;
       return setDataDeriv(string, vc);
     }
+    else {
+      if (DataDerivFunction.isBlank(string))
+        return true;
+      return checkUntypedText();
+    }
+  }
+
+  public boolean checkUntypedText() {
+    if (setMemo(memo.mixedTextDeriv()))
+      return true;
+    return error("text_not_allowed");
   }
 
   /**
    * Legal when checkText() is legal.
    * @return
    */
-  public boolean isAllNonWhitespaceTextEquivalent() {
-    return allNonWhitespaceTextEquivalent;
+  public boolean isTextMaybeTyped() {
+    return textMaybeTyped;
   }
 
   private boolean setDataDeriv(String string, ValidationContext vc) {
-    allNonWhitespaceTextEquivalent = true;
+    textMaybeTyped = false;
     if (!setMemo(memo.textOnly())) {
       memo = memo.recoverAfter();
       return error("only_text_not_allowed");
@@ -175,9 +166,9 @@ public class PatternMatcher implements Cloneable {
     // is notAllowed; we don't want to give an error in this case.
     if (ignoreNextEndTag)
       return true;
-    if (!allNonWhitespaceTextEquivalent)
+    if (textMaybeTyped)
       return setDataDeriv("", vc);
-    allNonWhitespaceTextEquivalent = true;
+    textMaybeTyped = false;
     if (setMemo(memo.endTagDeriv()))
       return true;
     PatternMemo next = memo.recoverAfter();
