@@ -132,10 +132,10 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </jing>
 </target>
 
-<target name="test" depends="rng-test,mns-test,nrl-test,schematron-test,xsd-test,regex-test"
+<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,xsd-test,regex-test"
         description="Test all aspects of validation"/>
 
-<target name="rng-split" depends="init, check-rng-split" unless="rng-split-not-required">
+<target name="spec-split" depends="init, check-spec-split" unless="spec-split-not-required">
   <jing rngfile="eg/testSuite.rng">
     <fileset dir="test" includes="spectest.xml"/>
   </jing>
@@ -146,13 +146,13 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </style>
 </target>
 
-<target name="check-rng-split">
-  <uptodate property="rng-split-not-required" targetfile="build/rngtest/spectest.stamp">
+<target name="check-spec-split">
+  <uptodate property="spec-split-not-required" targetfile="build/rngtest/spectest.stamp">
     <srcfiles dir="test" includes="spectest.xml"/>
   </uptodate>
 </target>
 
-<target name="rng-test" depends="jar,rng-split" description="Test validation in the RELAX NG XML syntax">
+<target name="spec-test" depends="jar,spec-split" description="Test conformance to the RELAX NG spec">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="build/rngtest/out.log"/>
     <arg value="build/rngtest"/>
@@ -332,7 +332,14 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   <mkdir dir="build/api/jing"/>
   <javadoc sourcepath="src" destdir="build/api/jing"
     doctitle="Jing API" windowtitle="Jing API"
-    packagenames="com.thaiopensource.relaxng,com.thaiopensource.relaxng.util">
+    packagenames="com.thaiopensource.validate,
+                  com.thaiopensource.validate.rng,
+                  com.thaiopensource.validate.xerces,
+                  com.thaiopensource.validate.schematron,
+                  com.thaiopensource.validate.nrl,
+                  com.thaiopensource.validate.auto,
+                  com.thaiopensource.xml.sax,
+                  com.thaiopensource.util">
     <link offline="true" href="../datatype" packagelistLoc="build/api/datatype"/>
     <link offline="true" href="http://www.saxproject.org/apidoc" packagelistLoc="extapidoc/sax"/>
     <link offline="true" href="http://java.sun.com/products/jdk/1.3/docs/api" packagelistLoc="extapidoc/jdk/1.3"/>
@@ -344,7 +351,14 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   <mkdir dir="build/doccheck"/>
   <javadoc sourcepath="src"
            destdir="build/doccheck"
-           packagenames="com.thaiopensource.relaxng,com.thaiopensource.relaxng.util"
+           packagenames="com.thaiopensource.validate,
+                         com.thaiopensource.validate.rng,
+                         com.thaiopensource.validate.xerces,
+                         com.thaiopensource.validate.schematron,
+                         com.thaiopensource.validate.nrl,
+                         com.thaiopensource.validate.auto,
+                         com.thaiopensource.xml.sax,
+                         com.thaiopensource.util"
            doclet="com.sun.tools.doclets.doccheck.DocCheck"
            docletpath="lib/doccheck.jar"/>
 </target>
