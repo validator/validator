@@ -27,7 +27,7 @@ class EndTagDerivFunction extends AbstractPatternFunction {
     return apply(builder.getPatternMemo(p)).getPattern();
   }
 
-  PatternMemo apply(PatternMemo memo) {
+  private PatternMemo apply(PatternMemo memo) {
     return memo.endTagDeriv(this);
   }
 }

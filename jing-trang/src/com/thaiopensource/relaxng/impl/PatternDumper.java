@@ -18,12 +18,12 @@ public class PatternDumper {
   private final Vector patternList = new Vector();
   private final Hashtable patternTable = new Hashtable();
 
-  final PatternVisitor patternVisitor = new DumpPatternVisitor();
-  final PatternVisitor groupPatternVisitor = new GroupDumpPatternVisitor();
-  final PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
-  final PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
-  final NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
-  final NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
+  private final PatternVisitor patternVisitor = new DumpPatternVisitor();
+  private final PatternVisitor groupPatternVisitor = new GroupDumpPatternVisitor();
+  private final PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
+  private final PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
+  private final NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
+  private final NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
 
   static public void dump(PrintWriter writer, Pattern p) {
     new PatternDumper(writer).dump(p);
@@ -33,11 +33,11 @@ public class PatternDumper {
     new PatternDumper(new PrintWriter(out)).dump(p);
   }
 
-  PatternDumper(PrintWriter writer) {
+  private PatternDumper(PrintWriter writer) {
     this.writer = writer;
   }
 
-  void dump(Pattern p) {
+  private void dump(Pattern p) {
     write("<?xml version=\"1.0\"?>");
     startElement("grammar");
     attribute("xmlns", WellKnownNamespaces.RELAX_NG);
@@ -56,7 +56,7 @@ public class PatternDumper {
     writer.flush();
   }
 
-  String getName(Pattern p) {
+  private String getName(Pattern p) {
     String name = (String)patternTable.get(p);
     if (name == null) {
       name = "p" + patternList.size();
@@ -66,7 +66,7 @@ public class PatternDumper {
     return name;
   }
 
-  void startElement(String name) {
+  private void startElement(String name) {
     closeStartTag();
     indent(level);
     write('<');
@@ -76,14 +76,14 @@ public class PatternDumper {
     level++;
   }
 
-  void closeStartTag() {
+  private void closeStartTag() {
     if (startTagOpen) {
       startTagOpen = false;
       write('>');
     }
   }
 
-  void attribute(String name, String value) {
+  private void attribute(String name, String value) {
     write(' ');
     write(name);
     write('=');
@@ -92,7 +92,7 @@ public class PatternDumper {
     write('"');
   }
 
-  void data(String str) {
+  private void data(String str) {
     if (str.length() > 0) {
       closeStartTag();
       chars(str, false);
@@ -100,7 +100,7 @@ public class PatternDumper {
     }
   }
 
-  void chars(String str, boolean isAttribute) {
+  private void chars(String str, boolean isAttribute) {
     int len = str.length();
     for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
@@ -127,7 +127,7 @@ public class PatternDumper {
     }
   }
       
-  void endElement() {
+  private void endElement() {
     --level;
     if (startTagOpen) {
       startTagOpen = false;
@@ -144,25 +144,25 @@ public class PatternDumper {
     suppressIndent = false;
   }
 
-  void indent(int level) {
+  private void indent(int level) {
     writer.println();
     for (int i = 0; i < level; i++)
       write("  ");
   }
 
-  void write(String str) {
+  private void write(String str) {
     writer.print(str);
   }
 
-  void write(char c) {
+  private void write(char c) {
     writer.print(c);
   }
 
-  void push(String s) {
+  private void push(String s) {
     tagStack.addElement(s);
   }
 
-  String pop() {
+  private String pop() {
     String s = (String)tagStack.lastElement();
     tagStack.setSize(tagStack.size() - 1);
     return s;

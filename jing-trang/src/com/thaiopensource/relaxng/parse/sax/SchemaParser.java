@@ -41,24 +41,24 @@ import java.util.Stack;
 
 class SchemaParser {
 
-  static final String relaxngURIPrefix =
+  private static final String relaxngURIPrefix =
           WellKnownNamespaces.RELAX_NG.substring(0, WellKnownNamespaces.RELAX_NG.lastIndexOf('/') + 1);
   static final String relaxng10URI = WellKnownNamespaces.RELAX_NG;
-  static final Localizer localizer = new Localizer(SchemaParser.class);
+  private static final Localizer localizer = new Localizer(SchemaParser.class);
 
-  String relaxngURI;
-  final XMLReader xr;
-  final ErrorHandler eh;
-  final SchemaBuilder schemaBuilder;
-  ParsedPattern startPattern;
-  Locator locator;
-  final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
-  final ContextImpl context = new ContextImpl();
+  private String relaxngURI;
+  private final XMLReader xr;
+  private final ErrorHandler eh;
+  private final SchemaBuilder schemaBuilder;
+  private ParsedPattern startPattern;
+  private Locator locator;
+  private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
+  private final ContextImpl context = new ContextImpl();
 
-  boolean hadError = false;
+  private boolean hadError = false;
 
-  Hashtable patternTable;
-  Hashtable nameClassTable;
+  private Hashtable patternTable;
+  private Hashtable nameClassTable;
 
   static class PrefixMapping {
     final String prefix;
@@ -1429,11 +1429,11 @@ class SchemaParser {
     return startPattern;
   }
 
-  void error(String key) throws SAXException {
+  private void error(String key) throws SAXException {
     error(key, locator);
   }
 
-  void error(String key, String arg) throws SAXException {
+  private void error(String key, String arg) throws SAXException {
     error(key, arg, locator);
   }
 
@@ -1441,20 +1441,20 @@ class SchemaParser {
     error(key, arg1, arg2, locator);
   }
 
-  void error(String key, Locator loc) throws SAXException {
+  private void error(String key, Locator loc) throws SAXException {
     error(new SAXParseException(localizer.message(key), loc));
   }
 
-  void error(String key, String arg, Locator loc) throws SAXException {
+  private void error(String key, String arg, Locator loc) throws SAXException {
     error(new SAXParseException(localizer.message(key, arg), loc));
   }
 
-  void error(String key, String arg1, String arg2, Locator loc)
+  private void error(String key, String arg1, String arg2, Locator loc)
     throws SAXException {
     error(new SAXParseException(localizer.message(key, arg1, arg2), loc));
   }
 
-  void error(SAXParseException e) throws SAXException {
+  private void error(SAXParseException e) throws SAXException {
     hadError = true;
     if (eh != null)
       eh.error(e);
@@ -1464,28 +1464,28 @@ class SchemaParser {
     warning(key, locator);
   }
 
-  void warning(String key, String arg) throws SAXException {
+  private void warning(String key, String arg) throws SAXException {
     warning(key, arg, locator);
   }
 
-  void warning(String key, String arg1, String arg2) throws SAXException {
+  private void warning(String key, String arg1, String arg2) throws SAXException {
     warning(key, arg1, arg2, locator);
   }
 
-  void warning(String key, Locator loc) throws SAXException {
+  private void warning(String key, Locator loc) throws SAXException {
     warning(new SAXParseException(localizer.message(key), loc));
   }
 
-  void warning(String key, String arg, Locator loc) throws SAXException {
+  private void warning(String key, String arg, Locator loc) throws SAXException {
     warning(new SAXParseException(localizer.message(key, arg), loc));
   }
 
-  void warning(String key, String arg1, String arg2, Locator loc)
+  private void warning(String key, String arg1, String arg2, Locator loc)
     throws SAXException {
     warning(new SAXParseException(localizer.message(key, arg1, arg2), loc));
   }
 
-  void warning(SAXParseException e) throws SAXException {
+  private void warning(SAXParseException e) throws SAXException {
     if (eh != null)
       eh.warning(e);
   }
@@ -1539,7 +1539,7 @@ class SchemaParser {
     }
   }
 
-  ParsedNameClass expandName(String name, String ns) throws SAXException {
+  private ParsedNameClass expandName(String name, String ns) throws SAXException {
     int ic = name.indexOf(':');
     if (ic == -1)
       return schemaBuilder.makeName(ns, checkNCName(name), null, null, null);
@@ -1552,7 +1552,7 @@ class SchemaParser {
     return schemaBuilder.makeName("", localName, null, null, null);
   }
 
-  String findPrefix(String qName, String uri) {
+  private String findPrefix(String qName, String uri) {
     String prefix = null;
     if (qName == null || qName.equals("")) {
       for (PrefixMapping p = context.prefixMapping; p != null; p = p.next)
@@ -1568,20 +1568,20 @@ class SchemaParser {
     }
     return prefix;
   }
-  String checkNCName(String str) throws SAXException {
+  private String checkNCName(String str) throws SAXException {
     if (!Naming.isNcname(str))
       error("invalid_ncname", str);
     return str;
   }
 
-  String resolve(String systemId) throws SAXException {
+  private String resolve(String systemId) throws SAXException {
     if (Uri.hasFragmentId(systemId))
       error("href_fragment_id");
     systemId = Uri.escapeDisallowedChars(systemId);
     return Uri.resolve(xmlBaseHandler.getBaseUri(), systemId);
   }
 
-  Location makeLocation() {
+  private Location makeLocation() {
     if (locator == null)
       return null;
     return schemaBuilder.makeLocation(locator.getSystemId(),
@@ -1589,7 +1589,7 @@ class SchemaParser {
 				      locator.getColumnNumber());
   }
 
-  void checkUri(String s) throws SAXException {
+  private void checkUri(String s) throws SAXException {
     if (!Uri.isValid(s))
       error("invalid_uri", s);
   }

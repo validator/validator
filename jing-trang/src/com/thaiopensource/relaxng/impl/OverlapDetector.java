@@ -5,7 +5,7 @@ class OverlapDetector implements NameClassVisitor {
   private final NameClass nc2;
   private boolean overlaps = false;
 
-  static final String IMPOSSIBLE = "\u0000";
+  private static final String IMPOSSIBLE = "\u0000";
 
   private OverlapDetector(NameClass nc1, NameClass nc2) {
     this.nc1 = nc1;
