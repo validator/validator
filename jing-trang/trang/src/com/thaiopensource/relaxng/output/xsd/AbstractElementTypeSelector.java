@@ -113,11 +113,13 @@ class AbstractElementTypeSelector {
   }
 
   private boolean isSimpleTypeValidlyDerived(SimpleType st1, SimpleType st2) {
+    if (st2.getAnnotation() != null)
+      return false;
     if (st2 instanceof SimpleTypeRef)
       return isSimpleTypeValidlyDerivedFromName(st1, ((SimpleTypeRef)st2).getName());
     if (st2 instanceof SimpleTypeRestriction) {
       SimpleTypeRestriction restriction = (SimpleTypeRestriction)st2;
-      if (restriction.getFacets().size() > 0 || restriction.getAnnotation() != null)
+      if (restriction.getFacets().size() > 0)
         return false;
       return isSimpleTypeValidlyDerivedFromBuiltin(st1, restriction.getName());
     }
