@@ -42,22 +42,22 @@ public class XmlWriter {
   }
 
   public void endElement() throws IOException {
+    String name = pop();
     switch (state) {
     case IN_START_TAG:
       writer.write("/>");
-      pop();
-      state = OTHER;
       break;
     case OTHER:
       indent();
       // fall through
     case AFTER_DATA:
       writer.write("</");
-      writer.write(pop());
+      writer.write(name);
       writer.write('>');
       break;
     }
     writer.write(newline);
+    state = OTHER;
   }
 
   public void attribute(String name, String value) throws IOException {
