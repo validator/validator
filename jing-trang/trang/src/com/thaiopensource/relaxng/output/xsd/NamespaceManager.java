@@ -297,13 +297,13 @@ public class NamespaceManager {
     }
   }
 
-  NamespaceManager(Schema schema, SourceUriGenerator sug) {
+  NamespaceManager(Schema schema, Guide guide, SourceUriGenerator sug) {
     this.schema = schema;
     new IncludeFinder(schema);
     schema.accept(new RootMarker());
     assignTargetNamespaces();
     new GlobalElementSelector(schema);
-    findSubstitutionGroups();
+    findSubstitutionGroups(guide);
     chooseRootSchemas(sug);
     new StructureMover(schema);
   }
@@ -456,19 +456,20 @@ public class NamespaceManager {
     }
   }
 
-  private void findSubstitutionGroups() {
+  private void findSubstitutionGroups(Guide guide) {
     List groups = GroupDefinitionFinder.findGroupDefinitions(schema);
     Map elementNameToGroupName = new HashMap();
-    while (addAbstractElements(groups, elementNameToGroupName))
+    while (addAbstractElements(guide, groups, elementNameToGroupName))
       ;
     cleanSubstitutionGroupMap(elementNameToGroupName);
   }
 
-  private boolean addAbstractElements(List groups, Map elementNameToGroupName) {
+  private boolean addAbstractElements(Guide guide, List groups, Map elementNameToGroupName) {
     Set newAbstractElements = new HashSet();
     for (Iterator iter = groups.iterator(); iter.hasNext();) {
       GroupDefinition def = (GroupDefinition)iter.next();
-      if (getGroupDefinitionAbstractElementName(def) == null) {
+      if (guide.getGroupEnableAbstractElement(def.getName())
+          && getGroupDefinitionAbstractElementName(def) == null) {
         Name elementName = abstractElementName(def);
         if (elementName != null) {
           List members = substitutionGroupMembers(def);

@@ -16,6 +16,8 @@ Approximation warnings:
 
 Provide annotation to control which target namespace is assigned to a file.
 
+Document enableAbstractElements annotation.
+
 Take advantage of minOccurs > 1 and 1 < maxOccurs < infinity.
 
 If expansion of a group causes the group to become unreferenced, then remove the group.

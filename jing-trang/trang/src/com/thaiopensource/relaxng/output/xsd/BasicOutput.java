@@ -758,8 +758,8 @@ public class BasicOutput {
     }
   }
 
-  static void output(Schema schema, PrefixManager pm, OutputDirectory od, ErrorReporter er) throws IOException {
-    NamespaceManager nsm = new NamespaceManager(schema, pm);
+  static void output(Schema schema, Guide guide, PrefixManager pm, OutputDirectory od, ErrorReporter er) throws IOException {
+    NamespaceManager nsm = new NamespaceManager(schema, guide, pm);
     ComplexTypeSelector cts = new ComplexTypeSelector(schema);
     Set globalElementsDefined = new HashSet();
     Set globalAttributesDefined = new HashSet();

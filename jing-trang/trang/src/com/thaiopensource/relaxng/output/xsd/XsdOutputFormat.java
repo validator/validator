@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 
 public class XsdOutputFormat implements OutputFormat {
+  static private final boolean DEFAULT_ENABLE_ABSTRACT_ELEMENT = true;
   public void output(SchemaCollection sc, OutputDirectory od, ErrorHandler eh) throws SAXException, IOException, OutputFailedException {
     try {
       ErrorReporter er = new ErrorReporter(eh, XsdOutputFormat.class);
@@ -21,11 +22,12 @@ public class XsdOutputFormat implements OutputFormat {
         if (!er.getHadError()) {
           RestrictionsChecker.check(si, er);
           if (!er.getHadError()) {
-            Schema schema = BasicBuilder.buildBasicSchema(si, er);
+            Guide guide = new Guide(DEFAULT_ENABLE_ABSTRACT_ELEMENT);
+            Schema schema = BasicBuilder.buildBasicSchema(si, guide, er);
             if (!er.getHadError()) {
               new Transformer(schema, er).transform();
               if (!er.getHadError())
-                BasicOutput.output(schema, new PrefixManager(si), od, er);
+                BasicOutput.output(schema, guide, new PrefixManager(si), od, er);
             }
           }
         }

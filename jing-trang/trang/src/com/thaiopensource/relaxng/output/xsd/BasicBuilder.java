@@ -81,12 +81,12 @@ public class BasicBuilder {
   private final PatternVisitor optionalAttributeUseBuilder = new OptionalAttributeUseBuilder();
   private final PatternVisitor particleBuilder = new ParticleBuilder();
   private final PatternVisitor occursCalculator = new OccursCalculator();
-  private final ComponentVisitor schemaBuilder = new SchemaBuilder();
+  private final ComponentVisitor schemaBuilder;
   private final ErrorReporter er;
   private final String inheritedNamespace;
   private final Schema schema;
   private final SchemaInfo si;
-
+  private final Guide guide;
 
   /**
    * Preconditions for calling visit methods in this class are that the child type
@@ -491,6 +491,12 @@ public class BasicBuilder {
   }
 
   class SchemaBuilder extends AbstractVisitor {
+    boolean groupEnableAbstractElements;
+
+    SchemaBuilder(boolean groupEnableAbstractElements) {
+      this.groupEnableAbstractElements = groupEnableAbstractElements;
+    }
+
     public Object visitDefine(DefineComponent c) {
       String name = c.getName();
       SourceLocation location = c.getSourceLocation();
@@ -509,11 +515,14 @@ public class BasicBuilder {
         Pattern body = si.getBody(c);
         if (body != null) {
           ChildType ct = si.getChildType(body);
-          if (ct.contains(ChildType.ELEMENT))
+          if (ct.contains(ChildType.ELEMENT)) {
+            guide.setGroupEnableAbstractElement(name,
+                                                getGroupEnableAbstractElements(c, groupEnableAbstractElements));
             schema.defineGroup(name,
                                (Particle)body.accept(particleBuilder),
                                location,
                                annotation);
+          }
           else if (ct.contains(ChildType.DATA) && !ct.contains(ChildType.TEXT))
             schema.defineSimpleType(name,
                                     (SimpleType)body.accept(simpleTypeBuilder),
@@ -530,30 +539,46 @@ public class BasicBuilder {
     }
 
     public Object visitDiv(DivComponent c) {
+      boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
+      groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
+      groupEnableAbstractElements = saveGroupEnableAbstractElements;
       return null;
     }
 
     public Object visitInclude(IncludeComponent c) {
+      boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
+      groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
       String uri = c.getHref();
       Schema sub = schema.addInclude(uri, c.getSourceLocation(), makeAnnotation(c));
-      si.getSchema(uri).componentsAccept(new BasicBuilder(er, si, sub, resolveNamespace(c.getNs())).schemaBuilder);
+      GrammarPattern includedGrammar = si.getSchema(uri);
+      includedGrammar.componentsAccept(new BasicBuilder(er,
+                                                        si,
+                                                        guide,
+                                                        sub,
+                                                        resolveNamespace(c.getNs()),
+                                                        includedGrammar,
+                                                        groupEnableAbstractElements).schemaBuilder);
+      groupEnableAbstractElements = saveGroupEnableAbstractElements;
       return null;
     }
   }
 
-  private BasicBuilder(ErrorReporter er, SchemaInfo si, Schema schema, String inheritedNamespace) {
+  private BasicBuilder(ErrorReporter er, SchemaInfo si, Guide guide, Schema schema, String inheritedNamespace, Annotated annotated, boolean groupEnableAbstractElements) {
     this.er = er;
     this.si = si;
+    this.guide = guide;
     this.schema = schema;
     this.inheritedNamespace = inheritedNamespace;
+    this.schemaBuilder = new SchemaBuilder(getGroupEnableAbstractElements(annotated, groupEnableAbstractElements));
   }
 
-  static Schema buildBasicSchema(SchemaInfo si, ErrorReporter er) {
+  static Schema buildBasicSchema(SchemaInfo si, Guide guide, ErrorReporter er) {
     GrammarPattern grammar = si.getGrammar();
     Schema schema = new Schema(grammar.getSourceLocation(), makeAnnotation(grammar), OutputDirectory.MAIN);
-    grammar.componentsAccept(new BasicBuilder(er, si, schema, "").schemaBuilder);
+    grammar.componentsAccept(new BasicBuilder(er, si, guide, schema, "", grammar,
+                                              guide.getDefaultGroupEnableAbstractElements()).schemaBuilder);
     return schema;
   }
 
@@ -644,4 +669,17 @@ public class BasicBuilder {
     return null;
   }
 
+  static private final String HINT_NAMESPACE = "http://www.thaiopensource.com/ns/trang/xsd";
+
+  private boolean getGroupEnableAbstractElements(Annotated annotated, boolean current) {
+    String value = annotated.getAttributeAnnotation(HINT_NAMESPACE, "enableAbstractElements");
+    if (value != null) {
+      value = value.trim();
+      if (value.equals("true"))
+        current = true;
+      else if (value.equals("false"))
+        current = false;
+    }
+    return current;
+  }
 }
