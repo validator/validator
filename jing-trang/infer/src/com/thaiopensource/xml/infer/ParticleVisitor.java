@@ -5,5 +5,6 @@ public interface ParticleVisitor {
   Object visitChoice(ChoiceParticle p);
   Object visitSequence(SequenceParticle p);
   Object visitEmpty(EmptyParticle p);
+  Object visitText(TextParticle p);
   Object visitOneOrMore(OneOrMoreParticle p);
 }

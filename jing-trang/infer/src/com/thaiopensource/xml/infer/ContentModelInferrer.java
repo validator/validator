@@ -36,53 +36,134 @@ public class ContentModelInferrer {
 
   }
 
+  private static class ParticleNode {
+    final int index;
+    Particle particle;
+    int refCount = 0;
+    final Set followingNodes = new HashSet();
 
-  /**
-   * http://citeseer.nj.nec.com/nuutila94finding.html
-   */
-  private static class StronglyConnectedComponentsFinder {
-    private final int[] number;
-    private final SingleNode[] root;
-    private final boolean[] visited;
-    private int time = 0;
-    private final Stack stack = new Stack();
-    private int nextSccNumber = 0;
-    private final int[] sccNumber;
-
-    StronglyConnectedComponentsFinder(int nNodes) {
-      number = new int[nNodes];
-      root = new SingleNode[nNodes];
-      visited = new boolean[nNodes];
-      sccNumber = new int[nNodes];
+    ParticleNode(int index) {
+      this.index = index;
     }
 
-    void scc(SingleNode v) {
+    void addFollowing(ParticleNode p) {
+      if (p != this)
+        followingNodes.add(p);
+    }
+  }
+
+  private static class StronglyConnectedComponentsFinder {
+    private final int[] visited;
+    private final SingleNode[] root;
+    private int visitIndex = 0;
+    private final Stack stack = new Stack();
+    private final ParticleNode[] particleNodes;
+    private final SingleNode[] singleNodes;
+    private int nParticles = 0;
+
+    StronglyConnectedComponentsFinder(int nNodes) {
+      visited = new int[nNodes];
+      root = new SingleNode[nNodes];
+      particleNodes = new ParticleNode[nNodes];
+      singleNodes = new SingleNode[nNodes];
+    }
+
+    ParticleNode makeDag(SingleNode start) {
+      visit(start);
+      for (int i = 0; i < singleNodes.length; i++) {
+        if (particleNodes[i].followingNodes.isEmpty()) {
+          for (Iterator iter = singleNodes[i].followingNodes.iterator(); iter.hasNext();)
+            particleNodes[i].addFollowing(particleNodes[((SingleNode)iter.next()).index]);
+        }
+      }
+      return particleNodes[start.index];
+    }
+
+    /**
+     * http://citeseer.nj.nec.com/nuutila94finding.html
+     */
+    void visit(SingleNode v) {
       root[v.index] = v;
-      number[v.index] = ++time;
+      visited[v.index] = ++visitIndex;
+      singleNodes[v.index] = v;
       stack.push(v);
-      visited[v.index] = true;
       for (Iterator iter = v.followingNodes.iterator(); iter.hasNext();) {
         SingleNode w = (SingleNode)iter.next();
-        if (!visited[w.index])
-          scc(w);
-        if (sccNumber[w.index] == 0)
-          root[v.index] = min(root[v.index], root[w.index]);
+        if (visited[w.index] == 0)
+          visit(w);
+        if (particleNodes[w.index] == null)
+          root[v.index] = firstVisited(root[v.index], root[w.index]);
       }
       if (root[v.index] == v) {
-        nextSccNumber++;
-        for (;;) {
-          SingleNode w = (SingleNode)stack.pop();
-          sccNumber[w.index] = nextSccNumber;
-          if (w == v)
-            break;
+        SingleNode w = (SingleNode)stack.pop();
+        ParticleNode pn = new ParticleNode(nParticles++);
+        pn.particle = makeParticle(w.name);
+        particleNodes[w.index] = pn;
+        if (w != v) {
+          do {
+            w = (SingleNode)stack.pop();
+            particleNodes[w.index] = pn;
+            pn.particle = new ChoiceParticle(makeParticle(w.name), pn.particle);
+          } while (w != v);
+          pn.particle = new OneOrMoreParticle(pn.particle);
+        }
+        else {
+          if (w.multi)
+            pn.particle = new OneOrMoreParticle(pn.particle);
         }
       }
     }
 
-    SingleNode min(SingleNode n1, SingleNode n2) {
-      return number[n1.index] < number[n2.index] ? n1 : n2;
+    SingleNode firstVisited(SingleNode n1, SingleNode n2) {
+      return visited[n1.index] < visited[n2.index] ? n1 : n2;
     }
 
+  }
+
+  static class ParticleBuilder {
+    private final int[] rank;
+    private int currentRank = 0;
+    private Particle rankParticleChoice;
+    private boolean multipleParticlesCurrentRank;
+    private Particle followParticle;
+
+    ParticleBuilder(int nNodes) {
+      rank = new int[nNodes];
+    }
+
+    Particle build(ParticleNode start) {
+      visit(start);
+      if (followParticle == null)
+        followParticle = new EmptyParticle();
+      return followParticle;
+    }
+
+    void visit(ParticleNode node) {
+      int maxRank = 0;
+      for (Iterator iter = node.followingNodes.iterator(); iter.hasNext();) {
+        ParticleNode follow = (ParticleNode)iter.next();
+        if (rank[follow.index] == 0)
+          visit(follow);
+        maxRank = Math.max(maxRank, rank[follow.index]);
+      }
+      int nodeRank = maxRank + 1;
+      rank[node.index] = nodeRank;
+      if (nodeRank == currentRank) {
+        rankParticleChoice = new ChoiceParticle(rankParticleChoice, node.particle);
+        multipleParticlesCurrentRank = true;
+      }
+      else {
+        if (multipleParticlesCurrentRank)
+          rankParticleChoice = new ChoiceParticle(rankParticleChoice, new EmptyParticle());
+        if (followParticle == null)
+          followParticle = rankParticleChoice;
+        else
+          followParticle = new SequenceParticle(rankParticleChoice, followParticle);
+        rankParticleChoice = node.particle;
+        multipleParticlesCurrentRank = false;
+        currentRank = nodeRank;
+      }
+    }
   }
 
   void addSequence(Name e1, Name e2) {
@@ -102,26 +183,17 @@ public class ContentModelInferrer {
     return node;
   }
 
-  void sccDebug(Name name) {
-    StronglyConnectedComponentsFinder sccFinder = new StronglyConnectedComponentsFinder(nameMap.size());
-    sccFinder.scc(lookup(START));
-    System.err.println(name.getLocalName());
-    int[] sccNumber = sccFinder.sccNumber;
-    SingleNode[] nodeTab = new SingleNode[nameMap.size()];
-    for (Iterator iter = nameMap.values().iterator(); iter.hasNext();) {
-      SingleNode tem = (SingleNode)iter.next();
-      nodeTab[tem.index] = tem;
-    }
-    for (int i = 1; i <= sccFinder.nextSccNumber; i++) {
-      System.err.print("  ");
-      for (int j = 0; j < sccNumber.length; j++)
-        if (sccNumber[j] == i)
-          System.err.print(" " + nodeTab[j].name.getLocalName());
-      System.err.println();
-    }
-  }
 
   Particle inferContentModel() {
-    return null;
+    ParticleNode start = new StronglyConnectedComponentsFinder(nameMap.size()).makeDag(lookup(START));
+    return new ParticleBuilder(start.index + 1).build(start);
+  }
+
+  private static Particle makeParticle(Name name) {
+    if (name == START || name == END)
+      return null;
+    if (name == TEXT)
+      return new TextParticle();
+    return new ElementParticle(name);
   }
 }

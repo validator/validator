@@ -87,10 +87,4 @@ public class InferHandler extends DefaultHandler {
     return schema;
   }
 
-  public void dumpScc() {
-    for (Iterator iter = inferrerMap.entrySet().iterator(); iter.hasNext();) {
-       Map.Entry entry = (Map.Entry)iter.next();
-      ((ContentModelInferrer)entry.getValue()).sccDebug((Name)entry.getKey());
-    }
-  }
 }
