@@ -1,8 +1,10 @@
+Include the API doc in the distrib.
+
+Add mention of API and JARV to the distribution.
+
 Document the public API.
 
-Implement JARV API.
-
-Provide a TeeFilter.
+Support for IDREF checking via JARV.
 
 In a big choice or interleave or attribute group, memoization for each binary pattern is
 inefficient.
