@@ -1385,15 +1385,6 @@ start = element foo { empty }
 </testCase>
 <testCase>
 <compact>
-<incorrect><![CDATA[
-namespace local = ""
-foo [ local:xmlns = "bar" ]
-start = element foo { empty }
-]]></incorrect>
-</compact>
-</testCase>
-<testCase>
-<compact>
 <correct><![CDATA[
 element foo { empty }
 # comment
@@ -2140,6 +2131,71 @@ element \x{D}foo { empty }
 ]]></incorrect>
 </compact>
 </testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+[rng:foo = "val"]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+[rng:foo [ "val" ]]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+[foo [ rng:foo [ "val" ] ]]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <foo xmlns="">
+    <rng:foo>val</rng:foo>
+  </foo>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+[foo [ rng:foo = "val" ]]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <foo xmlns="" rng:foo="val"/>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<!--
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace local = ""
+foo [ local:xmlns = "bar" ]
+start = element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+-->
 <!--
 <testCase>
 <compact>

@@ -533,7 +533,7 @@ ParsedPattern AnnotatedPrimaryExpr(Scope scope, Token[] except) :
 {
   a = Annotations()
   p = PrimaryExpr(scope, a, except)
-  ( <FANNOTATE> e = AnnotationElement() { p = sb.annotateAfter(p, e); })*
+  ( <FANNOTATE> e = AnnotationElement(false) { p = sb.annotateAfter(p, e); })*
   { return p; }
 }
 
@@ -637,7 +637,7 @@ ParsedPattern UnaryExpr(Scope scope, boolean[] hadOccur, Token[] except) :
    (t = "+" { checkExcept(except); p = sb.makeOneOrMore(p, makeLocation(t), null); }
     | t = "?" { checkExcept(except); p = sb.makeOptional(p, makeLocation(t), null); }
     | t = "*" { checkExcept(except); p = sb.makeZeroOrMore(p, makeLocation(t), null); })
-   ( <FANNOTATE> e = AnnotationElement() { p = sb.annotateAfter(p, e); } )*
+   ( <FANNOTATE> e = AnnotationElement(false) { p = sb.annotateAfter(p, e); } )*
   )?
   { return p; }
 }
@@ -692,7 +692,7 @@ ParsedNameClass AnnotateAfter(ParsedNameClass nc) :
   ParsedElementAnnotation e;
 }
 {
-  ( <FANNOTATE> e = AnnotationElement() { nc = sb.annotateAfter(nc, e); })*
+  ( <FANNOTATE> e = AnnotationElement(false) { nc = sb.annotateAfter(nc, e); })*
   { return nc; }
 }
 
@@ -1243,7 +1243,7 @@ Annotations Annotations() :
   )?
   ("[" { if (a == null) a = sb.makeAnnotations(comments, getContext()); clearAttributeList(); }
        (LOOKAHEAD(2) PrefixedAnnotationAttribute(a, false) )*
-       ( e = AnnotationElement() { a.addElement(e); } )*
+       ( e = AnnotationElement(false) { a.addElement(e); } )*
        { a.addComment(getComments()); }
   "]")?
   {
@@ -1259,7 +1259,7 @@ void AnnotationAttribute(Annotations a) :
   PrefixedAnnotationAttribute(a, true) | UnprefixedAnnotationAttribute(a)
 }
 
-void PrefixedAnnotationAttribute(Annotations a, boolean allowUnqualified) :
+void PrefixedAnnotationAttribute(Annotations a, boolean nested) :
 {
   Token t;
   String value;
@@ -1273,8 +1273,10 @@ void PrefixedAnnotationAttribute(Annotations a, boolean allowUnqualified) :
     String ns = lookupPrefix(prefix, t);
     if (ns == SchemaBuilder.INHERIT_NS)
       error("inherited_annotation_namespace", t);
-    else if (ns.length() == 0 && !allowUnqualified)
+    else if (ns.length() == 0 && !nested)
       error("unqualified_annotation_attribute", t);
+    else if (ns.equals(WellKnownNamespaces.RELAX_NG) && !nested)
+      error("relax_ng_namespace", t);
     /*else if (ns.length() == 0
              && qn.length() - colon - 1 == 5
              && qn.regionMatches(colon + 1, "xmlns", 0, 5))
@@ -1304,12 +1306,12 @@ void UnprefixedAnnotationAttribute(Annotations a) :
   }
 }
 
-ParsedElementAnnotation AnnotationElement() :
+ParsedElementAnnotation AnnotationElement(boolean nested) :
 {
   ParsedElementAnnotation a;
 }
 {
-  (a = PrefixedAnnotationElement()
+  (a = PrefixedAnnotationElement(nested)
    | a = UnprefixedAnnotationElement())
   { return a; }
 }
@@ -1319,12 +1321,12 @@ ParsedElementAnnotation AnnotationElementNotKeyword() :
   ParsedElementAnnotation a;
 }
 {
-  (a = PrefixedAnnotationElement()
+  (a = PrefixedAnnotationElement(false)
    | a = IdentifierAnnotationElement())
   { return a; }
 }
 
-ParsedElementAnnotation PrefixedAnnotationElement() :
+ParsedElementAnnotation PrefixedAnnotationElement(boolean nested) :
 {
   CommentList comments = getComments();
   Token t;
@@ -1339,6 +1341,10 @@ ParsedElementAnnotation PrefixedAnnotationElement() :
     String ns = lookupPrefix(prefix, t);
     if (ns == SchemaBuilder.INHERIT_NS) {
       error("inherited_annotation_namespace", t);
+      ns = "";
+    }
+    else if (!nested && ns.equals(WellKnownNamespaces.RELAX_NG)) {
+      error("relax_ng_namespace", t);
       ns = "";
     }
     else {
@@ -1393,7 +1399,7 @@ void AnnotationElementContent(ElementAnnotationBuilder eab) :
   (LOOKAHEAD(2) AnnotationAttribute(eab))*
   ((AnnotationElementLiteral(eab)
     ("~" AnnotationElementLiteral(eab))*)
-   | e = AnnotationElement() { eab.addElement(e); })*
+   | e = AnnotationElement(true) { eab.addElement(e); })*
   { eab.addComment(getComments()); }
   "]"
 }

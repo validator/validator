@@ -1,6 +1,3 @@
-Compact syntax: disallow foreign elements, attributes from having RELAX NG
-namespace URI
-
 Give a warning for a list containing a single token.
 
 Give a more helpful message for sequence of strings
@@ -17,7 +14,7 @@ Trang should output a:documentation as comments in the DTD.
 Put location information in error messages into a standard format
 understandable by Emacs.
 
-More helpful syntax error messages with non-XML syntax parser.
+More helpful syntax error messages with compact syntax parser.
 
 Namespace declarations in element annotations (also issue for TC).
 
