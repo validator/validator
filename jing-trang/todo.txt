@@ -1,7 +1,5 @@
 Make jing.jar and trang.jar be executable.
 
-Use a rewindable stream during autodetection
-
 Maybe need to redesign reset() so that it can be used to cleanup the thread.
 
 Test NRL option handling

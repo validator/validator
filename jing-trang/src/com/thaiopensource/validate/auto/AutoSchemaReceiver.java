@@ -18,6 +18,7 @@ import com.thaiopensource.util.PropertyMap;
 
 public class AutoSchemaReceiver implements SchemaReceiver {
   private final PropertyMap properties;
+  private final Rewindable rewindable;
 
   private class Handler extends DefaultHandler implements SchemaFuture {
     private final XMLReader xr;
@@ -51,6 +52,7 @@ public class AutoSchemaReceiver implements SchemaReceiver {
         throw new SAXParseException(detail, locator);
       }
       sf = sr.installHandlers(xr);
+      rewindable.willNotRewind();
       ContentHandler contentHandler = xr.getContentHandler();
       if (contentHandler == null)
         return;
@@ -81,8 +83,9 @@ public class AutoSchemaReceiver implements SchemaReceiver {
     }
   }
 
-  public AutoSchemaReceiver(PropertyMap properties) {
+  public AutoSchemaReceiver(PropertyMap properties, Rewindable rewindable) {
     this.properties = properties;
+    this.rewindable = rewindable;
   }
 
   public SchemaFuture installHandlers(XMLReader xr) {

@@ -14,6 +14,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class AutoSchemaReader implements SchemaReader {
   private final SchemaReceiverFactory srf;
@@ -33,30 +35,43 @@ public class AutoSchemaReader implements SchemaReader {
       SchemaReceiverFactory.PROPERTY.put(builder, srf);
       properties = builder.toPropertyMap();
     }
-    SchemaReceiver sr = new AutoSchemaReceiver(properties);
+    InputSource in2 = new InputSource();
+    in2.setSystemId(in.getSystemId());
+    in2.setPublicId(in.getPublicId());
+    in2.setEncoding(in.getEncoding());
+    Rewindable rewindable;
+    if (in.getCharacterStream() != null)
+      throw new IllegalArgumentException("character stream input sources not supported for auto-detection");
+    else {
+      InputStream byteStream = in.getByteStream();
+      if (byteStream == null) {
+        String systemId = in.getSystemId();
+        if (systemId == null)
+          throw new IllegalArgumentException("null systemId and null byteStream");
+        byteStream = new URL(systemId).openStream();
+        // XXX should use encoding from MIME header
+      }
+      RewindableInputStream rewindableByteStream = new RewindableInputStream(byteStream);
+      in.setByteStream(rewindableByteStream);
+      in2.setByteStream(rewindableByteStream);
+      rewindable = rewindableByteStream;
+    }
+    SchemaReceiver sr = new AutoSchemaReceiver(properties, rewindable);
     XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
     XMLReader xr = xrc.createXMLReader();
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
     if (eh != null)
       xr.setErrorHandler(eh);
     SchemaFuture sf = sr.installHandlers(xr);
-    // XXX we should wrap the input source so that we don't have to read it twice
     try {
-      ReparseException reparser;
       try {
         xr.parse(in);
         return sf.getSchema();
       }
       catch (ReparseException e) {
-        reparser = e;
-      }
-      for (;;) {
-        try {
-          return reparser.reparse(in);
-        }
-        catch (ReparseException e) {
-          reparser = e;
-        }
+        rewindable.rewind();
+        rewindable.willNotRewind();
+        return e.reparse(in2);
       }
     }
     catch (SAXException e) {
