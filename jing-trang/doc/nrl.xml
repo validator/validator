@@ -867,6 +867,194 @@ path =
   }
 </pre>
 
+<h2>Formal semantics</h2>
+
+<p>In order to describe the semantics of NRL, it is convenient to
+construct a new section-based data model based processing.  This data
+model is constructed from the RELAX NG data model.  An implementation
+wouldn't actually have to construct this, but the semantics are
+simpler to describe in terms of this new data model than in terms of
+the RELAX NG data model.  Note that the information content is exactly
+equivalent to the RELAX NG data model.</p>
+
+<p>There are two kinds of section: attribute sections and element
+sections.  Two attributes belong to the same section iff they have the
+same parent and the same namespace URI.  An element belongs to the
+same section as its parent iff it has the same namespace URI as its
+parent.  An attribute section is simply a non-empty unordered set of
+attributes (as in RELAX NG), where each member of the set has the same
+namespace URI.  An element section is a little more complicated. First
+we need the concept of a node.  There are three kinds of node: an
+element node, a text node and a slot node.  An element node has a
+name, a context (as in RELAX NG), and a list of child nodes. A text
+node has a string value. A slot node has no additional information; it
+is merely a placeholder for a element section.  A list of child nodes
+never has two adjacent text nodes and never has two adjacent slot
+nodes.  An element section is a triple &lt;<i>nd</i>, <i>lsa</i>,
+<i>lle</i>>, where <i>nd</i> is an element node, <i>lsa</i> is a list
+of unordered sets of attribute sections, and <i>lle</i> is a list of
+lists of element sections.  <i>lsa</i> has one member for each element
+node in <i>nd</i>. The unordered set of attribute sections that is the
+<i>n</i>-th member of <i>lsa</i> gives the attributes for the
+<i>n</i>-th element node in <i>nd</i> (iterating in document order).
+<i>lle</i> has one member for each slot node in <i>nd</i>.  The list
+of element sections that is the <i>n</i>-th member of <i>lle</i>
+corresponds to the <i>n</i>-th slot node in <i>nd</i> (iterating in
+document order).</p>
+
+<p>An NRL schema consists of a set of modes.  A mode consists of a set
+of rules.  A mode maps a section to an action based on the section's
+namespace URI and on whether the section is an attribute section or an
+element section.  An action can be applied to element sections and
+attribute sections.  An action returns two values, one of which is
+always error information.  When an action is applied to an element
+section, it returns error information and a (possibly empty) list of
+element sections.  When an action is applied to an attribute section,
+it returns error information and either an attribute section or an
+empty list.</p>
+
+<p>Here is a formalization in Haskell:</p>
+
+<pre>
+type Uri = String
+type LocalName = String
+type QName = (Uri, LocalName)
+type Prefix = String
+type Context = (Uri, [(Prefix, Uri)])
+
+data Node = ElementNode QName Context [Node]
+	  | TextNode String
+	  | HoleNode
+
+type AttributeSection = [(QName, String)]
+
+data ElementSection = ElementSection Node [[AttributeSection]] [[ElementSection]]
+data ElementsOrAttributes = Elements | Attributes
+
+type Mode = ElementsOrAttributes -> Uri -> Action
+
+data Action = Attach Mode
+	    | Reject Mode
+	    | Unwrap Mode
+	    | Allow Mode
+	    | Validate Uri Mode
+	    | Sequence Action Action
+
+data ErrorReport = AttributeError AttributeSection String
+		 | ElementError ElementSection String
+
+type ErrorInfo = [ErrorReport]
+
+data Validated a = Validated ErrorInfo a
+
+applyElementAction :: Action -> ElementSection -> Validated [ElementSection]
+
+applyElementAction (Reject m) e@(ElementSection nd lsa lle) =
+   Validated ([ElementError e "namespace rejected"]
+               ++ (errors (plsa m lsa))
+               ++ (errors (plle m lle)))
+             []
+applyElementAction (Attach m) (ElementSection nd lsa lle)
+  = listV (elementSectionV nd (plsa m lsa) (plle m lle))
+applyElementAction (Unwrap m) (ElementSection _ _ lle) = ple m (concat lle)
+applyElementAction (Allow m) (ElementSection nd lsa lle)
+  = valid2 (\x y -> []) (plsa m lsa) (plle m lle)
+applyElementAction (Validate s m) (ElementSection nd lsa lle)
+  = Validated (validate s (elementSectionV nd (plsa m lsa) (plle m lle)))
+              []
+applyElementAction (Sequence a1 a2) e
+  = actionSequence (applyElementAction a1 e) (applyElementAction a2 e)
+
+validate :: Uri -> Validated ElementSection -> ErrorInfo
+validate uri (Validated errs e) = errs ++ (validateElement uri e)
+
+elementSectionV :: Node -> Validated [[AttributeSection]] -> Validated [[ElementSection]] -> Validated ElementSection
+elementSectionV nd lsa lle = valid2 (ElementSection nd) lsa lle
+
+applyAttributeAction :: Action -> AttributeSection -> Validated (Maybe AttributeSection)
+applyAttributeAction (Allow m) a = Validated [] Nothing
+applyAttributeAction (Reject m) a = Validated [AttributeError a "namespace rejected"] Nothing
+applyAttributeAction (Attach m) a = Validated [] (Just a)
+applyAttributeAction (Unwrap _) _ = Validated [] Nothing
+applyAttributeAction (Validate s m) a
+  = Validated (validateAttribute s a) Nothing
+applyAttributeAction (Sequence a1 a2) a
+  = actionSequence (applyAttributeAction a1 a) (applyAttributeAction a2 a)
+
+
+actionSequence :: Validated a -> Validated a -> Validated a
+actionSequence (Validated errs1 _) (Validated errs2 x) = Validated (errs1 ++ errs2) x
+
+
+-- these are provided by an external validation library
+
+validateElement :: Uri -> ElementSection -> ErrorInfo
+validateElement _ _ = []
+
+validateAttribute :: Uri -> AttributeSection -> ErrorInfo
+validateAttribute _ _ = []
+
+-- processing functions
+
+pe :: Mode -> ElementSection -> Validated [ElementSection]
+pe m e = applyElementAction (m Elements (elementSectionNs e)) e
+
+ple :: Mode -> [ElementSection] -> Validated [ElementSection]
+ple m le = concatMapV (pe m) le
+
+plle :: Mode -> [[ElementSection]] -> Validated [[ElementSection]]
+plle m lle = mapV (ple m) lle
+
+pa :: Mode -> AttributeSection -> Validated (Maybe AttributeSection)
+pa m a = applyAttributeAction (m Attributes (attributeSectionNs a)) a
+
+psa :: Mode -> [AttributeSection] -> Validated [AttributeSection]
+psa m sa = dropMapV (pa m) sa
+
+plsa :: Mode -> [[AttributeSection]] -> Validated [[AttributeSection]]
+plsa m lsa = mapV (psa m) lsa
+
+elementSectionNs :: ElementSection -> Uri
+elementSectionNs (ElementSection (ElementNode (ns, _) _ _) _ _) = ns
+
+attributeSectionNs :: AttributeSection -> Uri
+attributeSectionNs (((ns, _),_):_) = ns
+
+-- functions for the Validated type
+
+errors :: Validated a -> ErrorInfo
+errors (Validated e _) = e
+
+valid1 :: (a -> b) -> Validated a -> Validated b
+valid1 f (Validated e x) = Validated e (f x)
+
+valid2 :: (a -> b -> c) -> Validated a -> Validated b -> Validated c
+valid2 f (Validated e x) (Validated e' y) = Validated (e ++ e') (f x y)
+
+listV :: Validated a -> Validated [a]
+listV x = valid1 (\y -> [y]) x
+
+mapV :: (a -> Validated b) -> [a] -> Validated [b]
+
+mapV f [] = Validated [] []
+mapV f (x:xs) = valid2 (\ x xs -> (x:xs)) (f x) (mapV f xs)
+
+concatMapV :: (a -> Validated [b]) -> [a] -> Validated [b]
+concatMapV f xs = valid1 concat (mapV f xs)
+
+dropMapV :: (a -> Validated (Maybe b)) -> [a] -> Validated [b]
+dropMapV f [] = Validated [] []
+dropMapV f (x:xs) = valid2 maybeCons (f x) (dropMapV f xs)
+
+maybeCons :: (Maybe a) -> [a] -> [a]
+maybeCons Nothing x = x
+maybeCons (Just x) xs = (x:xs)
+</pre>
+
+<p>This does not yet deal with element-name context. To deal with this,
+we would need to change each of the Actions that has a Mode parameter
+to take a more complex structure.</p>
+
 </div>
 
 </body>
