@@ -90,7 +90,9 @@ mv ${build_dir}/tem $f
 
 cd ${build_dir}
 tar xfz ${top_dir}/gcj/crimson-${crimson_version}-src.tar.gz crimson-${crimson_version}/src
-cd crimson-${crimson_version}/src
+cd crimson-${crimson_version}
+patch -p0 <${top_dir}/gcj/crimson.patch
+cd src
 
 rm -fr ${crimson_unwanted}
 find org javax -type f -not -name '*.java' -not -name '*.properties' | xargs rm -f
