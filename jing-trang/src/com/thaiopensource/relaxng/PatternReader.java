@@ -136,8 +136,9 @@ public class PatternReader implements DatatypeContext {
 
     void attributes(Attributes atts) throws SAXException {
       int len = atts.getLength();
-      for (int i = 0; i < len; i++)
-	if (atts.getURI(i).length() == 0) {
+      for (int i = 0; i < len; i++) {
+	String uri = atts.getURI(i);
+	if (uri.length() == 0) {
 	  String name = atts.getLocalName(i);
 	  if (name.equals("name"))
 	    setName(atts.getValue(i).trim());
@@ -148,7 +149,9 @@ public class PatternReader implements DatatypeContext {
 	  else
 	    setOtherAttribute(name, atts.getValue(i));
 	}
-      // XXX disallow attributes from relaxngURI namespace?
+	else if (uri.equals(relaxngURI))
+	  error("qualified_attribute", atts.getLocalName(i));
+      }
       endAttributes();
     }
 
