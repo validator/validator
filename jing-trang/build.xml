@@ -302,6 +302,15 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
+<target name="trang-validate" depends="jar">
+  <ant dir="trang" target="validate">
+    <property name="build.dir" value="../build/trang"/>
+    <property name="dist.dir" value="../build"/>
+    <property name="jing.classes" value="../build/classes"/>
+    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+  </ant>
+</target>
+
 <target name="trang-dist" depends="jar">
   <ant dir="trang" target="dist">
     <property name="build.dir" value="../build/trang"/>
