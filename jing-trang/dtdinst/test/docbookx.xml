@@ -17225,11 +17225,16 @@ OtherCredit. </comment>
           <modelGroupRef name="local.article.class"/>
         </choice>
       </modelGroup>
-      <param name="local.book.class"></param>
+      <modelGroup name="local.book.class">
+        <choice/>
+      </modelGroup>
       <modelGroup name="book.class">
-        <elementRef>
-          <name>book</name>
-        </elementRef>
+        <choice>
+          <elementRef>
+            <name>book</name>
+          </elementRef>
+          <modelGroupRef name="local.book.class"/>
+        </choice>
       </modelGroup>
       <modelGroup name="local.chapter.class">
         <choice/>

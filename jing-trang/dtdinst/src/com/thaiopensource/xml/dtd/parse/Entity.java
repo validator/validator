@@ -465,6 +465,9 @@ class Entity {
     }
     if ((groupFlags & GROUP_CONTAINS_NMTOKEN) == 0) {
       switch (groupFlags & (GROUP_CONTAINS_SEQ|GROUP_CONTAINS_OR)) {
+      case 0:
+	groupFlags |= GROUP_CONTAINS_OR;
+	// fall through
       case GROUP_CONTAINS_SEQ:
       case GROUP_CONTAINS_OR:
 	semantic = SEMANTIC_MODEL_GROUP;

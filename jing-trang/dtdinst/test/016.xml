@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctype>
-  <param name="e1"></param>
+  <modelGroup name="e1">
+    <choice/>
+  </modelGroup>
   <modelGroup name="e2">
-    <elementRef>
-      <name>foo</name>
-    </elementRef>
+    <choice>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <modelGroupRef name="e1"/>
+    </choice>
   </modelGroup>
   <element>
     <name>doc</name>
