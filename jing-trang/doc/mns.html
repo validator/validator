@@ -41,14 +41,15 @@ only will it be validated with respect to its schema, but it will also
 be validated as part of validation of ancestor validation subjects
 with respect to their schemas.</p>
 
-<p>By default, an element is a <em>potential validation subject</em>
-if has no parent or if its namespace URI is different from that of its
-parent. A potential validation subject becomes a validation subject if
-there is <code>validate</code> rule for its namespace URI.  The
-associated schema is specified by the <code>schema</code> attribute of
-the <code>validate</code> element.  The value of the
-<code>ns</code> attribute of the <code>validate</code> element
-can be the empty string to specify the absent namespace URI.</p>
+<p>An element is a validation subject if it has no parent or if its
+namespace URI is different from that of its parent. A validation
+subject must have a <code>validate</code> rule for its namespace URI:
+there must be a <code>validate</code> element whose <code>ns</code>
+attribute is the same as the validate subject's namespace URI.  The
+value of the <code>ns</code> attribute of the <code>validate</code>
+element can be the empty string to specify the absent namespace URI.
+The associated schema is specified by the <code>schema</code>
+attribute of the <code>validate</code> element.</p>
 
 <p class="note">Should MNS identify the type of the schema, or should
 this be handled elsewhere?</p>
@@ -56,10 +57,12 @@ this be handled elsewhere?</p>
 <p>MNS has additional features that provide further control over the
 selection of validation subjects and their associated schemas.</p>
 
-<h2>Strict processing</h2>
+<h2>Lax processing</h2>
 
-<p>The <code>rules</code> element may include an empty
-<code>strict</code> element:</p>
+<p>Sometimes it may be desirable to allow elements from namespaces for
+which there are no <code>validate</code> rules.  This can be done by
+adding an empty <code>lax</code> element to the <code>rules</code>
+element:</p>
 
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
@@ -69,13 +72,16 @@ element rules {
     attribute ns { xsd:anyURI },
     attribute schema { xsd:anyURI }
    }*
-   &amp; element strict { empty }?
+   &amp; element lax { empty }?
 }
 </pre>
 
-<p>This makes processing <em>strict</em> instead of <em>lax</em>.
-With strict processing, it is an error if there is no applicable
-<code>validate</code> element for a potential validation subject.</p>
+<p>We will refer to an element that could be a validation subject if
+there is an applicable <code>validate</code> element as a
+<em>potential validation subject</em>.  In the absence of a
+<code>lax</code> element, there must be an applicable
+<code>validate</code> element for every potential validation subject;
+with a <code>lax</code> element, there need not be.</p>
 
 <h2>Attributes</h2>
 
@@ -89,8 +95,7 @@ element rules {
     attribute ns { xsd:anyURI },
     attribute schema { xsd:anyURI }
   }*
-  &amp; element strict { empty }?
-  &amp; element strictAttributes { empty }?
+  &amp; element lax { attribute allow { "attributes" | "elements" }? }?
 }
 </pre>
 
@@ -104,14 +109,17 @@ by the <code>schema</code> attribute of the
 <code>validateAttributes</code> element. Unqualified attributes are
 never validation subjects.</p>
 
-<p>The <code>strictAttributes</code> element specifies strictness for
-attributes; the <code>strict</code> element specifies strictness for
-elements. If attributes are processed strictly, then it is an error if
-there is no applicable <code>validateAttributes</code> element for a
-potential validation subject that is a set of attributes.  If elements
-are processed strictly, then it is an error if there is no applicable
-<code>validate</code> element for a potential validation subject that
-is an element.</p>
+<p>Lax processing for elements means that a potential validation
+subject that is an element need not have an applicable
+<code>validate</code> element.  Lax processing for attributes means
+that a potential validation subject that is an attribute need not have
+an applicable <code>validateAttributes</code> element.  In the absence
+of a <code>lax</code> element, neither attributes nor elements are
+processed laxly.  By default, the <code>lax</code> element enables lax
+processing for both elements and attributes. If
+<code>allow="attributes"</code> is specified, then lax processing is
+enabled for attributes only; if <code>allow="elements"</code> is
+specified, then lax processing is enabled for elements only.</p>
 
 <p>Normally, schema languages (including RELAX NG) validate an element
 rather than a set of attributes.  To work around this, MNS performs
@@ -143,8 +151,7 @@ default namespace = "http://www.thaiopensource.com/ns/mns"
 start =
   element rules {
      validate* 
-     &amp; element strict { empty }?
-     &amp; element strictAttributes { empty }?
+     &amp; element lax { attribute allow { "attributes" | "elements" }? }?
   }
 
 validate =
@@ -224,7 +231,7 @@ default namespace = "http://www.thaiopensource.com/ns/mns"
 start =
   element rules {
      attribute startMode { mode }?,
-     (validate|process)*
+     (validate|lax)*
   }
 
 validate =
@@ -235,7 +242,19 @@ validate =
   }
   | element validateAttributes { validateModel }
 
-process = element lax|strict|laxAttributes|strictAttributes { inModesAtt? }
+lax = 
+  element lax {
+    inModesAtt?,
+    attribute allow {
+      list {
+        ("elements", "attributes") 
+         | ("attributes", "elements") 
+         | "elements"
+         | "attributes"
+         | empty
+      }
+    }?
+  }
 
 validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
 
@@ -274,20 +293,22 @@ attribute.  Within each validation subject element, processing
 switches to the mode specified by the <code>useMode</code>
 attribute.</p>
 
-<p>Whether processing is strict or lax also depends on the mode.  The
-<code>strict</code> and <code>strictAttributes</code> elements have a
-<code>inModes</code> attribute that specifies the modes in which they
-apply. As usual, the default value of the <code>inModes</code> attribute
-is the default mode.  There are also <code>lax</code> and
-<code>laxAttributes</code> elements that allows the processing for a
-mode to be explicitly specified as lax.</p>
+<p>Whether processing is lax also depends on the mode.  The
+<code>lax</code> element has an <code>inModes</code> attribute that
+specifies the modes in which they apply.  There can be multiple
+<code>lax</code> elements specifying lax processing for different
+modes.  As usual, the default value of the
+<code>inModes</code> attribute is the default mode.</p>
 
 <p>For every mode named in a <code>useMode</code> attribute other than
 the default mode, there must be at least one <code>validate</code>,
-<code>validateAttribute</code>, <code>lax</code>,
-<code>laxAttributes</code>, <code>strict</code> or
-<code>strictAttributes</code> element that includes that mode in its
-<code>inModes</code> attribute.</p>
+<code>validateAttribute</code> or <code>lax</code> element that
+includes that mode in its <code>inModes</code> attribute.  For a mode
+that allows nothing, either the default mode can be used or a
+<code>&lt;lax allow="" inModes="<var>m</var>"/></code> rule can be
+added.  The allowed value of the <code>allow</code> attribute is, in
+fact, a list of between zero and two distinct tokens from the set
+<code>elements</code> and <code>attributes</code>.</p>
 
 <h2>Pruning</h2>
 
@@ -317,7 +338,7 @@ namespace local = ""
 start =
   element rules {
     attribute startMode { mode }?,
-    ((validate|process)* &amp; foreign)
+    ((validate|lax)* &amp; foreign)
   }
 
 validate =
@@ -329,9 +350,19 @@ validate =
   }
   | element validateAttributes { validateModel &amp; foreign }
 
-process =
-  element lax|strict|laxAttributes|strictAttributes {
-    inModesAtt? &amp; foreign
+lax =
+  element lax {
+    inModesAtt?
+    attribute allow {
+      list {
+        ("elements", "attributes") 
+         | ("attributes", "elements") 
+         | "elements"
+         | "attributes"
+         | empty
+      }
+    }?,
+    foreign
   }
 
 validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
