@@ -1098,39 +1098,6 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class NameClassNotState extends NameClassContainerState {
-    NameClass nameClass;
-
-    void endChild(NameClass nc) {
-      nameClass = nc;
-    }
-
-    State createChildState(String localName) throws SAXException {
-      if (nameClass == null)
-	return super.createChildState(localName);
-      error("expected_one_name_class", localName);
-      return null;
-    }
-
-    State create() {
-      return new NameClassNotState();
-    }
-
-    void end() throws SAXException {
-      if (nameClass == null) {
-	error("missing_name_class");
-	parent.endChild(new ErrorNameClass());
-	return;
-      }
-      parent.endChild(new NotNameClass(nameClass));
-    }
-
-    void endAttributes() throws SAXException {
-      warning("not_deprecated");
-      super.endAttributes();
-    }
-  }
-
   abstract class NameClassMultiContainerState extends NameClassContainerState {
     NameClass nameClass;
 
@@ -1163,21 +1130,6 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class NameClassDifferenceState extends NameClassMultiContainerState {
-    State create() {
-      return new NameClassDifferenceState();
-    }
-
-    void endAttributes() throws SAXException {
-      warning("difference_deprecated");
-      super.endAttributes();
-    }
-
-    NameClass combineNameClass(NameClass nc1, NameClass nc2) {
-      return new DifferenceNameClass(nc1, nc2);
-    }
-  }
-
   private void initPatternTable() {
     patternTable = new Hashtable();
     patternTable.put("zeroOrMore", new ZeroOrMoreState());
@@ -1206,9 +1158,7 @@ public class PatternReader implements DatatypeContext {
     nameClassTable.put("name", new NameState());
     nameClassTable.put("anyName", new AnyNameState());
     nameClassTable.put("nsName", new NsNameState());
-    nameClassTable.put("not", new NameClassNotState());
     nameClassTable.put("choice", new NameClassChoiceState());
-    nameClassTable.put("difference", new NameClassDifferenceState());
   }
 
   Pattern getStartPattern() {
