@@ -22,6 +22,6 @@ class DatatypePattern extends SimplePattern {
   }
 
   void accept(PatternVisitor visitor) {
-    visitor.visitDatatype(dt);
+    visitor.visitDatatype(dt, null, null);
   }
 }

@@ -225,7 +225,7 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitDatatype(Datatype dt) {
+    public void visitDatatype(Datatype dt, String key, String keyRef) {
       startElement("text");	// XXX
       endElement();
     }

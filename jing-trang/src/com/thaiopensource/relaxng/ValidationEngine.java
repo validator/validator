@@ -46,7 +46,7 @@ public class ValidationEngine {
     p = PatternReader.readPattern(xrc, xr, pb, df, in);
     if (p == null)
       return false;
-    isAmbig = new DatatypeAssignmentChecker(pb, p, eh).isAmbig();
+    isAmbig = new KeyAmbigChecker(pb, p, eh).isAmbig();
     return true;
   }
 

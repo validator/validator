@@ -8,13 +8,15 @@ import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.datatype.Datatype;
 
-public class DatatypeAssignmentChecker {
+public class KeyAmbigChecker {
   private PatternBuilder patternBuilder;
   private Pattern currentPattern;
   private Pattern contentPattern;
   private boolean containsText = false;
-  private Object contentClass = null;
+  private String contentKey = null;
+  private String contentKeyRef = null;
   private boolean contentAmbig = false;
+  private boolean contentInList = false;
   private boolean ambig = false;
   private ErrorHandler eh;
   private Vector patterns = new Vector();
@@ -76,7 +78,7 @@ public class DatatypeAssignmentChecker {
     public void visitAttribute(NameClass ns, Pattern value) {
     }
 
-    public void visitDatatype(Datatype dt) {
+    public void visitDatatype(Datatype dt, String key, String keyRef) {
     }
 
     public void visitValue(Datatype dt, Object obj) {
@@ -112,6 +114,7 @@ public class DatatypeAssignmentChecker {
 
   class NamesVisitor extends VisitorBase {
     byte type;
+    boolean inList = false;
 
     public void visitElement(NameClass nc, Pattern content) {
       type = ELEMENT;
@@ -140,20 +143,23 @@ public class DatatypeAssignmentChecker {
       addName(type, ns, localName);
     }
 
-    public void visitDatatype(Datatype dt) {
-      Object cls = null;	// XXX
-      if (cls == null)
-	addText();
-      else
-	addClass(cls);
+    public void visitList(Pattern p) {
+      boolean saveInList = inList;
+      inList = true;
+      p.accept(this);
+      inList = saveInList;
+    }
+
+    public void visitDatatype(Datatype dt, String key, String keyRef) {
+      addText(inList, key, keyRef);
     }
 
     public void visitDatatypeValue(Datatype dt, String str) {
-      addText();
+      addText(inList, null, null);
     }
 
     public void visitText() {
-      addText();
+      addText(inList, null, null);
     }
   }
 
@@ -180,9 +186,9 @@ public class DatatypeAssignmentChecker {
 
   }
 
-  public DatatypeAssignmentChecker(PatternBuilder patternBuilder,
-				   Pattern p,
-				   ErrorHandler eh) {
+  public KeyAmbigChecker(PatternBuilder patternBuilder,
+			 Pattern p,
+			 ErrorHandler eh) {
     this.patternBuilder = patternBuilder;
     this.eh = eh;
     combinePattern(p);
@@ -196,7 +202,9 @@ public class DatatypeAssignmentChecker {
 	currentPatternContext = (String)patternContexts.elementAt(i);
 	currentPattern.accept(new NamesVisitor());
 	contentAmbig = false;
-	contentClass = null;
+	contentKey = null;
+	contentKeyRef = null;
+	contentInList = false;
 	containsText = false;
       }
       return ambig;
@@ -240,33 +248,36 @@ public class DatatypeAssignmentChecker {
     finishPattern(context);
   }
 
-  void addClass(Object cls) {
-    if (containsText)
-      setAmbig();
-    else if (contentClass == null)
-      contentClass = cls;
-    else if (!contentClass.equals(cls))
-      setAmbig();
+  void addText(boolean inList, String key, String keyRef) {
+    if (key == null && keyRef == null)
+      inList = false;
+    if (!containsText) {
+      containsText = true;
+      contentKey = key;
+      contentKeyRef = keyRef;
+      contentInList = inList;
+    }
+    else if (!isEqual(key, contentKey)
+	     || !isEqual(keyRef, contentKeyRef)
+	     || inList != contentInList) {
+      if (contentAmbig)
+	return;
+      contentAmbig = true;
+      ambig = true;
+      try {
+	eh.warning(new SAXParseException(Localizer.message("key_ambig",
+							   currentPatternContext),
+					 null));
+      }
+      catch (SAXException e) {
+	throw new SAXExceptionWrapper(e);
+      }
+    }
   }
 
-  void addText() {
-    if (contentClass != null)
-      setAmbig();
-    containsText = true;
-  }
-
-  private void setAmbig() {
-    if (contentAmbig)
-      return;
-    contentAmbig = true;
-    ambig = true;
-    try {
-      eh.warning(new SAXParseException(Localizer.message("datatype_assign_ambig",
-							 currentPatternContext),
-				       null));
-    }
-    catch (SAXException e) {
-      throw new SAXExceptionWrapper(e);
-    }
+  static private boolean isEqual(String str1, String str2) {
+    if (str1 == null)
+      return str2 == null;
+    return str1.equals(str2);
   }
 }

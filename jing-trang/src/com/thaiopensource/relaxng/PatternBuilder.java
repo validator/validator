@@ -96,8 +96,10 @@ public class PatternBuilder {
   Pattern makeValue(Datatype dt, Object obj, Locator loc) {
     return intern(new ValuePattern(dt, obj, loc));
   }
+
   Pattern makeDatatype(Datatype dt, String key, String keyRef, Locator loc) {
-    // XXX handle key and keyRef
+    if (key != null || keyRef != null)
+      return intern(new KeyDataPattern(dt, key, keyRef, loc));
     return intern(new DatatypePattern(dt, loc));
   }
 
