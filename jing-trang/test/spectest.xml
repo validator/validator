@@ -1958,6 +1958,24 @@ applies at the syntax level.</documentation>
 </testCase>
 <testCase>
 <section>4.12</section>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <value>x</value>
+    <value>y</value>
+    <value>z</value>
+  </list>
+</element>
+</correct>
+<valid>
+<foo>x y z</foo>
+</valid>
+<invalid>
+<foo>x</foo>
+</invalid>
+</testCase>
+<testCase>
+<section>4.12</section>
 <section>4.13</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
