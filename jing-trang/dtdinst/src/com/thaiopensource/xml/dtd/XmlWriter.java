@@ -67,7 +67,7 @@ public class XmlWriter {
     writer.write(name);
     writer.write('=');
     writer.write('"');
-    outputData(value);
+    outputData(value, true);
     writer.write('"');
   }
 
@@ -75,7 +75,7 @@ public class XmlWriter {
     if (state == IN_START_TAG)
       writer.write('>');
     state = AFTER_DATA;
-    outputData(str);
+    outputData(str, false);
   }
 
   public void comment(String str) throws IOException {
@@ -91,7 +91,7 @@ public class XmlWriter {
       writer.write(newline);
   }
 
-  private void outputData(String str) throws IOException {
+  private void outputData(String str, boolean inAttribute) throws IOException {
     int len = str.length();
     for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
@@ -107,6 +107,21 @@ public class XmlWriter {
 	break;
       case '"':
 	writer.write("&quot;");
+	break;
+      case '\r':
+	writer.write("&#xD;");
+	break;
+      case '\t':
+	if (inAttribute)
+	  writer.write("&#x9;");
+	else
+	  writer.write('\t');
+	break;
+      case '\n':
+	if (inAttribute)
+	  writer.write("&#xA;");
+	else
+	  writer.write('\n');
 	break;
       default:
 	if (c >= 0x80) {
