@@ -61,7 +61,11 @@ input and output filenames as follows:</p>
 
 <dt><code>.dtd</code></dt>
 
-<dd>XML 1.0 DTDs</dd>
+<dd>XML 1.0 DTD</dd>
+
+<dt><code>.xsd</code></dt>
+
+<dd>W3C XML Schema</dd>
 
 </dl>
 
@@ -100,7 +104,11 @@ as follows:
 
 <dt><code>dtd</code></dt>
 
-<dd>XML 1.0 DTDs</dd>
+<dd>XML 1.0 DTD</dd>
+
+<dt><code>.xsd</code></dt>
+
+<dd>W3C XML Schema</dd>
 
 </dl>
 </dd>
@@ -167,6 +175,26 @@ unrestricted use of the features of RELAX NG.</li>
 
 </ul>
 
+<h2>W3C XML Schema</h2>
+
+<p>This is still under active development. It currently has several
+limitations including:</p>
+
+<ul>
+
+<li>it may generate schemas that violate W3C XML Schema's restrictions
+on ambiguous content models;</li>
+
+<li>it may generate schemas that violate W3C XML Schema's restrictions
+on consistent element types;</li>
+
+<li>when the RELAX NG schema cannot be represented by W3C XML Schema,
+a generalization is generated; it should give a warning in this case,
+but does not always do so.</li>
+
+</ul>
+
+
 <h2>Future plans</h2>
 
 <p>Trang is constructed around a RELAX NG object model designed to
@@ -177,8 +205,6 @@ from and to this object model.</p>
 <p>Features planned for future releases include:</p>
 
 <ul>
-
-<li>Provide an output module for W3C XML Schema</li>
 
 <li>Provide an output module for the RELAX NG compact syntax</li>
 
