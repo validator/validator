@@ -6,6 +6,10 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Enumeration;
 
+/*
+TODOD Need to ensure newline normalization is done properly.
+*/
+
 public class Parser extends Token {
   private Parser parent;
   private Reader in;
@@ -323,6 +327,9 @@ public class Parser extends Token {
 				     bufStart - currentTokenStart)));
     int action = pp.action(tok, buf, currentTokenStart, bufStart);
     switch (action) {
+    case PrologParser.ACTION_IGNORE_SECT:
+      skipIgnoreSect();
+      break;
     case PrologParser.ACTION_GENERAL_ENTITY_NAME:
       declState.entity = null;
       break;
@@ -563,6 +570,29 @@ public class Parser extends Token {
       catch (InvalidTokenException e) {
 	bufStart = currentTokenStart = e.getOffset();
 	reportInvalidToken(e);
+      }
+    }
+  }
+
+  private static final int IGNORE_SECT = Tokenizer.TOK_COMMA + 1;
+
+  private final void skipIgnoreSect() throws IOException {
+    for (;;) {
+      try {
+	int sectStart = bufStart;
+	bufStart = Tokenizer.skipIgnoreSect(buf, bufStart, bufEnd);
+	addAtom(new Atom(IGNORE_SECT, new String(buf, sectStart, bufStart - sectStart)));
+	return;
+      }
+      catch (PartialTokenException e) {
+	if (!fill()) {
+	  currentTokenStart = bufStart;
+	  fatal("UNCLOSED_CONDITIONAL_SECTION");
+	}
+      }
+      catch (InvalidTokenException e) {
+	currentTokenStart = e.getOffset();
+	fatal("IGNORE_SECT_CHAR");
       }
     }
   }
