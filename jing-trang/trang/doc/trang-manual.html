@@ -24,6 +24,7 @@ permission.</p>
 <li><a href="#rng-input">RELAX NG (XML syntax)</a></li>
 <li><a href="#rnc-input">RELAX NG (compact syntax)</a></li>
 <li><a href="#dtd-input">XML DTD</a></li>
+<li><a href="#xml-input">XML</a></li>
 </ul>
 </li>
 
@@ -59,6 +60,9 @@ permission.</p>
 <li>XML 1.0 DTD</li>
 <li>W3C XML Schema</li>
 </ul>
+
+<p>Trang can also infer a schema from one or more example XML
+documents.</p>
 
 <p>Trang uses an internal representation based on RELAX NG.  For each
 supported input format, there is an input module that converts a
@@ -102,9 +106,9 @@ explicitly using a command of the form:</p>
 
 <h2><a name="arguments">Command-line arguments</a></h2>
 
-<p>Trang requires at least two command-line arguments: the first is
-the URI or filename of the schema to be translated; the second is the
-output filename.</p>
+<p>Trang requires two command-line arguments: the first is the URI or
+filename of the schema to be translated; the second is the output
+filename.</p>
 
 <p>Trang infers the input and output modules to be used from the
 extension of input and output filenames as follows:</p>
@@ -126,18 +130,29 @@ extension of input and output filenames as follows:</p>
 
 <dd>W3C XML Schema</dd>
 
+<dt><code>.xml</code></dt>
+
+<dd>XML documents (used as examples from which to infer a schema)</dd>
+
 </dl>
 
 <p>This inference can be overridden using the <code>-I</code> and
 <code>-O</code> options.</p>
 
-<p>Trang accepts the following command-line options:</p>
+<p>When the input is XML documents used as examples to infer a schema,
+more than one input file may be specified as arguments.  All the input
+files are specified before the output file.</p>
+
+<p>The arguments specifying the input and output files can be preceded
+by arguments specifying options. Trang accepts the following
+options:</p>
 
 <dl>
 
 <dt><code>-I <a href="#rng-input">rng</a></code></dt>
 <dt><code>-I <a href="#rnc-input">rnc</a></code></dt>
 <dt><code>-I <a href="#dtd-input">dtd</a></code></dt>
+<dt><code>-I <a href="#xml-input">xml</a></code></dt>
 
 <dd>Specifies the input module.</dd>
 
@@ -313,6 +328,21 @@ referenced are allowed as document elements.</dd>
 
 <!-- Say something about limitations wrt marked sections -->
 
+<h3><a name="xml-input">XML input module</a></h3>
+
+<p>This input module accepts one or more XML documents and infers a
+schema.  All the XML documents will be valid with respect to the
+inferred schema.</p>
+
+<p>It accept the following parameters:</p>
+
+<dl>
+<dt><code>-i encoding=<var>name</var></code></dt>
+
+<dd>Use an encoding of <var>name</var> rather than the encoding
+specified in the encoding declaration of the XML document.</dd>
+
+</dl>
 
 <h2><a name="output-modules">Output modules</a></h2>
 
