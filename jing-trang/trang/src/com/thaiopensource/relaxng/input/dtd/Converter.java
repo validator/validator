@@ -1,41 +1,59 @@
 package com.thaiopensource.relaxng.input.dtd;
 
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Vector;
-import java.util.List;
-import java.util.Iterator;
-
-import com.thaiopensource.xml.dtd.om.*;
+import com.thaiopensource.relaxng.edit.AttributeAnnotation;
+import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.Component;
+import com.thaiopensource.relaxng.edit.Container;
+import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.EmptyPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.relaxng.edit.NameNameClass;
+import com.thaiopensource.relaxng.edit.NotAllowedPattern;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.RefPattern;
+import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
+import com.thaiopensource.relaxng.edit.Comment;
+import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.output.common.ErrorReporter;
+import com.thaiopensource.relaxng.parse.SchemaBuilder;
+import com.thaiopensource.xml.dtd.om.AttributeDefault;
+import com.thaiopensource.xml.dtd.om.AttributeGroup;
+import com.thaiopensource.xml.dtd.om.AttributeGroupMember;
+import com.thaiopensource.xml.dtd.om.AttributeGroupVisitor;
+import com.thaiopensource.xml.dtd.om.Datatype;
+import com.thaiopensource.xml.dtd.om.DatatypeVisitor;
+import com.thaiopensource.xml.dtd.om.Def;
+import com.thaiopensource.xml.dtd.om.Dtd;
+import com.thaiopensource.xml.dtd.om.EnumGroup;
+import com.thaiopensource.xml.dtd.om.EnumGroupVisitor;
+import com.thaiopensource.xml.dtd.om.Flag;
+import com.thaiopensource.xml.dtd.om.ModelGroup;
+import com.thaiopensource.xml.dtd.om.ModelGroupVisitor;
+import com.thaiopensource.xml.dtd.om.NameSpec;
+import com.thaiopensource.xml.dtd.om.TokenizedDatatype;
+import com.thaiopensource.xml.dtd.om.TopLevel;
+import com.thaiopensource.xml.dtd.om.TopLevelVisitor;
 import com.thaiopensource.xml.em.ExternalId;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
-import com.thaiopensource.util.Localizer;
-import com.thaiopensource.relaxng.output.common.ErrorReporter;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.NotAllowedPattern;
-import com.thaiopensource.relaxng.edit.ChoicePattern;
-import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.AttributePattern;
-import com.thaiopensource.relaxng.edit.AttributeAnnotation;
-import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.Container;
-import com.thaiopensource.relaxng.edit.DefineComponent;
-import com.thaiopensource.relaxng.edit.Combine;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.NameNameClass;
-import com.thaiopensource.relaxng.edit.SchemaCollection;
-import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import org.xml.sax.SAXException;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class Converter {
   private final Dtd dtd;
@@ -196,9 +214,28 @@ public class Converter {
 
   private class ComponentOutput extends VisitorBase {
     private final List components;
+    private final Annotated grammar;
+    private List comments = null;
 
-    ComponentOutput(Container container) {
-      components = container.getComponents();
+    ComponentOutput(GrammarPattern grammar) {
+      components = grammar.getComponents();
+      this.grammar = grammar;
+    }
+
+    void finish() {
+      if (comments != null)
+        grammar.getFollowingElementAnnotations().addAll(comments);
+    }
+
+    private void addComponent(Component c) {
+      if (comments != null) {
+        if (components.isEmpty())
+          grammar.getLeadingComments().addAll(comments);
+        else
+          c.getLeadingComments().addAll(comments);
+        comments = null;
+      }
+      components.add(c);
     }
 
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup) throws Exception {
@@ -222,18 +259,18 @@ public class Converter {
           gp.getChildren().add(pattern);
         pattern = gp;
       }
-      components.add(new DefineComponent(elementDeclName(nameSpec.getValue()),
-                                         new ElementPattern(convertQName(nameSpec.getValue(), true),
-                                                            pattern)));
+      addComponent(new DefineComponent(elementDeclName(nameSpec.getValue()),
+                                       new ElementPattern(convertQName(nameSpec.getValue(), true),
+                                                          pattern)));
       if (!inlineAttlistDecls && (nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
         DefineComponent dc = new DefineComponent(attlistDeclName(nameSpec.getValue()), new EmptyPattern());
         dc.setCombine(Combine.INTERLEAVE);
-        components.add(dc);
+        addComponent(dc);
       }
       if (anyName != null) {
         DefineComponent dc = new DefineComponent(anyName, ref(elementDeclName(nameSpec.getValue())));
         dc.setCombine(Combine.CHOICE);
-        components.add(dc);
+        addComponent(dc);
       }
     }
 
@@ -255,12 +292,12 @@ public class Converter {
       }
       DefineComponent dc = new DefineComponent(attlistDeclName(name), convert(attributeGroup));
       dc.setCombine(Combine.INTERLEAVE);
-      components.add(dc);
+      addComponent(dc);
     }
 
     public void modelGroupDef(String name, ModelGroup modelGroup)
       throws Exception {
-      components.add(new DefineComponent(name, convert(modelGroup)));
+      addComponent(new DefineComponent(name, convert(modelGroup)));
     }
 
     public void attributeGroupDef(String name, AttributeGroup attributeGroup)
@@ -281,7 +318,7 @@ public class Converter {
         else
           pattern = group;
       }
-      components.add(new DefineComponent(name, pattern));
+      addComponent(new DefineComponent(name, pattern));
     }
 
     public void enumGroupDef(String name, EnumGroup enumGroup) throws Exception {
@@ -292,15 +329,17 @@ public class Converter {
         pattern = (Pattern)choice.getChildren().get(0);
       else
         pattern = choice;
-      components.add(new DefineComponent(name, pattern));
+      addComponent(new DefineComponent(name, pattern));
     }
 
     public void datatypeDef(String name, Datatype datatype) throws Exception {
-      components.add(new DefineComponent(name, convert(datatype)));
+      addComponent(new DefineComponent(name, convert(datatype)));
     }
 
     public void comment(String value) {
-      // XXX
+      if (comments == null)
+        comments = new Vector();
+      comments.add(new Comment(trimComment(value)));
     }
 
     public void externalIdRef(String name, ExternalId externalId,
@@ -328,11 +367,12 @@ public class Converter {
       }
       IncludeComponent ic = new IncludeComponent(uri);
       ic.setNs(defaultNamespace);
-      components.add(ic);
+      addComponent(ic);
       GrammarPattern included = new GrammarPattern();
-      TopLevelVisitor tlv = new ComponentOutput(included);
+      ComponentOutput co = new ComponentOutput(included);
       for (int i = 0; i < contents.length; i++)
-        contents[i].accept(tlv);
+        contents[i].accept(co);
+      co.finish();
       sc.getSchemas().put(uri, included);
     }
 
@@ -584,9 +624,11 @@ public class Converter {
         defaultNamespace = SchemaBuilder.INHERIT_NS;
       GrammarPattern grammar = new GrammarPattern();
       sc.setMainSchema(grammar);
-      dtd.accept(new ComponentOutput(grammar));
+      ComponentOutput co = new ComponentOutput(grammar);
+      dtd.accept(co);
       outputUndefinedElements(grammar.getComponents());
       outputStart(grammar.getComponents());
+      co.finish();
       return sc;
     }
     catch (Exception e) {
@@ -945,6 +987,25 @@ public class Converter {
     NameNameClass nnc = new NameNameClass(ns, localName);
     nnc.setPrefix(prefix);
     return nnc;
+  }
+
+  static String trimComment(String value) {
+    int len = value.length();
+    while (len > 0) {
+      char c = value.charAt(len - 1);
+      if (c != ' ' && c != '\n')
+        break;
+      --len;
+    }
+    int start = 0;
+    if (len > 0) {
+      char c = value.charAt(0);
+      if (c == ' ' || c == '\n')
+        start++;
+    }
+    if (start > 0 || len < value.length())
+      return value.substring(start, len);
+    return value;
   }
 }
 
