@@ -57,7 +57,7 @@ class ElementPattern extends Pattern {
     return b.makeEmptyPatternPair();
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
     if (checkedRestrictions)
       return;
     checkedRestrictions = true;
@@ -70,7 +70,7 @@ class ElementPattern extends Pattern {
       throw new RestrictionViolationException("attribute_contains_element");
     }
     try {
-      p.checkRestrictions(ELEMENT_CONTEXT);
+      p.checkRestrictions(ELEMENT_CONTEXT, new DuplicateAttributeDetector());
     }
     catch (RestrictionViolationException e) {
       e.maybeSetLocator(loc);

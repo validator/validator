@@ -83,5 +83,18 @@ class ChoicePattern extends BinaryPattern {
       return dt;
     return p2.getDatatype();
   }
+
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
+    if (dad != null)
+      dad.startChoice();
+    p1.checkRestrictions(context, dad);
+    if (dad != null)
+      dad.alternative();
+    p2.checkRestrictions(context, dad);
+    if (dad != null)
+      dad.endChoice();
+  }
+
 }
 

@@ -79,7 +79,7 @@ class InterleavePattern extends BinaryPattern {
     return b.makeInterleave(cp1, cp2);
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_interleave");
@@ -88,7 +88,8 @@ class InterleavePattern extends BinaryPattern {
     }
     super.checkRestrictions(context == ELEMENT_REPEAT_CONTEXT
 			    ? ELEMENT_REPEAT_INTERLEAVE_CONTEXT
-			    : context);
+			    : context,
+			    dad);
     if (context != LIST_CONTEXT
 	&& !contentTypeGroupable(p1.getContentType(), p2.getContentType()))
       throw new RestrictionViolationException("interleave_string");

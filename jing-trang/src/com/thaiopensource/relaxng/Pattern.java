@@ -96,7 +96,8 @@ public abstract class Pattern {
   static final int LIST_CONTEXT = 6;
   static final int DATA_EXCEPT_CONTEXT = 7;
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
   }
 
   // Know that ip is same class, distinct object, not null

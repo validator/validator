@@ -24,7 +24,8 @@ class TextPattern extends Pattern {
     visitor.visitText();
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
     switch (context) {
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_text");

@@ -17,9 +17,10 @@ abstract class BinaryPattern extends Pattern {
     p2.checkRecursion(depth);
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
-    p1.checkRestrictions(context);
-    p2.checkRestrictions(context);
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
+    p1.checkRestrictions(context, dad);
+    p2.checkRestrictions(context, dad);
   }
 
   boolean samePattern(Pattern other) {

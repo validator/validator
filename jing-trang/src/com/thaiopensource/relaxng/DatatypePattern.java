@@ -28,7 +28,8 @@ class DatatypePattern extends StringPattern {
     return dt;
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_data");

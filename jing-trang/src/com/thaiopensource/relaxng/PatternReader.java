@@ -1224,7 +1224,7 @@ public class PatternReader implements DatatypeContext {
       }
       pattern = pattern.expand(patternBuilder);
       try {
-	pattern.checkRestrictions(Pattern.START_CONTEXT);
+	pattern.checkRestrictions(Pattern.START_CONTEXT, null);
 	return pattern;
       }
       catch (RestrictionViolationException e) {

@@ -41,7 +41,7 @@ class AttributePattern extends Pattern {
       return this;
   }
 
-  void checkRestrictions(int context) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_attribute");
@@ -56,8 +56,10 @@ class AttributePattern extends Pattern {
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_attribute");
     }
+    if (!dad.addAttribute(nameClass))
+      throw new RestrictionViolationException("duplicate_attribute");
     try {
-      p.checkRestrictions(ATTRIBUTE_CONTEXT);
+      p.checkRestrictions(ATTRIBUTE_CONTEXT, null);
     }
     catch (RestrictionViolationException e) {
       e.maybeSetLocator(loc);

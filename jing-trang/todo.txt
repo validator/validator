@@ -1,6 +1,6 @@
 Handle <except> inside <data>
 
-Detect duplicate attributes
+More helpful error message for duplicate attributes
 
 Validate QNames/NCNames in schema.
 
