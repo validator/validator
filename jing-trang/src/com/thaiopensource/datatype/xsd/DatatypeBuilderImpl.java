@@ -93,7 +93,7 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     throws DatatypeException {
     if (base.getOrderRelation() == null)
       error("not_ordered");
-    Object value = base.getValue(str, context);
+    Object value = base.createValue(str, context);
     if (value == null)
       error("invalid_limit", str);
     return value;
