@@ -1,3 +1,5 @@
+Distinguish error for unknown datatype library and unknown datatype.
+
 Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
 
 Option to recover from unknown datatype libraries.
@@ -15,5 +17,7 @@ Support DTD compatibility use of ID/IDREF/IDREFS.
 Support DTD compatibility use of default values.
 
 Avoid slow error recovery with large schemas (eg DocBook).
+
+Option to do XInclude before validation.
 
 Integrate the non-XML syntax.
