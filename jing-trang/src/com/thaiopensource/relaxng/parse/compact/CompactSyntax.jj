@@ -47,6 +47,11 @@ public class CompactSyntax implements Context {
   private static final String xmlnsUri = "http://www.w3.org/2000/xmlns";
   private static final String compatibilityUri = "http://relaxng.org/ns/compatibility/annotations/1.0";
 
+  private static final int IN_ELEMENT = 0;
+  private static final int IN_ATTRIBUTE = 1;
+  private static final int IN_ANY_NAME = 2;
+  private static final int IN_NS_NAME = 4;
+
   private String defaultNamespace = SchemaBuilder.INHERIT_NS;
   private String compatibilityPrefix = null;
   private SchemaBuilder sb;
@@ -116,6 +121,18 @@ public class CompactSyntax implements Context {
       reportEscapeSyntaxException(e);
     }
     throw new IllegalSchemaException();
+  }
+
+  private void checkNsName(int context, LocatedString ns) {
+    if ((context & IN_NS_NAME) != 0)
+      error("ns_name_except_contains_ns_name", ns.getToken());
+  }
+
+  private void checkAnyName(int context, Token t) {
+    if ((context & IN_NS_NAME) != 0)
+      error("ns_name_except_contains_any_name", t);
+    if ((context & IN_ANY_NAME) != 0)
+      error("any_name_except_contains_any_name", t);
   }
 
   private void error(String key, Token tok) {
@@ -369,10 +386,24 @@ ParsedPattern Input(Scope scope) :
 void TopLevelLookahead() :
 {}
 {
-  (Identifier() | <PREFIXED_NAME>) ("=" | "[")
-  | LookaheadBody() ("start" | Identifier() "=")
-  | LookaheadDocumentation() (LookaheadBody())? ("start" | Identifier() "=")
-  | "start" "="
+  <PREFIXED_NAME> "["
+  | Identifier() ("[" | "=" | "&=" | "|=")
+  | LookaheadGrammarKeyword()
+  | LookaheadBody() LookaheadAfterAnnotations()
+  | LookaheadDocumentation() (LookaheadBody())? LookaheadAfterAnnotations()
+}
+
+void LookaheadAfterAnnotations() :
+{}
+{
+  Identifier() ("=" | "&=" | "|=")
+  | LookaheadGrammarKeyword()
+}
+
+void LookaheadGrammarKeyword() :
+{}
+{
+  "start" | "div" | "include"
 }
 
 void LookaheadDocumentation() :
@@ -607,7 +638,7 @@ ParsedPattern ElementExpr(Scope scope, Annotations a) :
 }
 {
   t = "element"
-  nc = NameClass(false, null)
+  nc = NameClass(IN_ELEMENT, null)
   "{"
   p = Expr(scope, null, null)
   { p = afterComments(p); }
@@ -623,7 +654,7 @@ ParsedPattern AttributeExpr(Scope scope, Annotations a) :
 }
 {
   t = "attribute"
-  nc = NameClass(true, null)
+  nc = NameClass(IN_ATTRIBUTE, null)
   "{"
   p = Expr(scope, null, null)
   { p = afterComments(p); }
@@ -631,16 +662,16 @@ ParsedPattern AttributeExpr(Scope scope, Annotations a) :
   { return sb.makeAttribute(nc, p, makeLocation(t), a); }
 }
 
-ParsedNameClass NameClass(boolean inAttribute, Annotations[] pa) :
+ParsedNameClass NameClass(int context, Annotations[] pa) :
 {
   Annotations a;
   ParsedNameClass nc;
 }
 {
   a = Annotations()
-  (nc = PrimaryNameClass(inAttribute, a) nc = AnnotateAfter(nc) nc = NameClassAlternatives(inAttribute, nc, pa)
-   | nc = AnyNameExceptClass(inAttribute, a, pa)
-   | nc = NsNameExceptClass(inAttribute, a, pa))
+  (nc = PrimaryNameClass(context, a) nc = AnnotateAfter(nc) nc = NameClassAlternatives(context, nc, pa)
+   | nc = AnyNameExceptClass(context, a, pa)
+   | nc = NsNameExceptClass(context, a, pa))
   { return nc; }
 }
 
@@ -653,7 +684,7 @@ ParsedNameClass AnnotateAfter(ParsedNameClass nc) :
   { return nc; }
 }
 
-ParsedNameClass NameClassAlternatives(boolean inAttribute, ParsedNameClass nc, Annotations[] pa) :
+ParsedNameClass NameClassAlternatives(int context, ParsedNameClass nc, Annotations[] pa) :
 {
   Token t;
   ParsedNameClass[] nameClasses;
@@ -666,7 +697,7 @@ ParsedNameClass NameClassAlternatives(boolean inAttribute, ParsedNameClass nc, A
       nameClasses[0] = nc;
       nNameClasses = 1;
     }
-    (t = "|" nc = BasicNameClass(inAttribute) nc = AnnotateAfter(nc)
+    (t = "|" nc = BasicNameClass(context) nc = AnnotateAfter(nc)
     {
       if (nNameClasses >= nameClasses.length) {
 	ParsedNameClass[] oldNameClasses = nameClasses;
@@ -689,41 +720,41 @@ ParsedNameClass NameClassAlternatives(boolean inAttribute, ParsedNameClass nc, A
   { return nc; }
 }
 
-ParsedNameClass BasicNameClass(boolean inAttribute) :
+ParsedNameClass BasicNameClass(int context) :
 {
   Annotations a;
   ParsedNameClass nc;
 }
 {
   a = Annotations()
-  (nc = PrimaryNameClass(inAttribute, a)
-   | nc = OpenNameClass(a))
+  (nc = PrimaryNameClass(context, a)
+   | nc = OpenNameClass(context, a))
   { return nc; }
 }
 
-ParsedNameClass PrimaryNameClass(boolean inAttribute, Annotations a) :
+ParsedNameClass PrimaryNameClass(int context, Annotations a) :
 {
   ParsedNameClass nc;
 }
 {
-  (nc = UnprefixedNameClass(inAttribute, a)
+  (nc = UnprefixedNameClass(context, a)
    | nc = PrefixedNameClass(a) 
-   | nc = ParenNameClass(inAttribute, a))
+   | nc = ParenNameClass(context, a))
   { return nc; }
 }
 
-ParsedNameClass OpenNameClass(Annotations a) :
+ParsedNameClass OpenNameClass(int context, Annotations a) :
 {
   Token t;
   LocatedString ns;
 }
 {
-  ns = NsName() { return sb.makeNsName(ns.getString(), ns.getLocation(), a); }
-  | t = "*" { return sb.makeAnyName(makeLocation(t), a); }
+  ns = NsName() { checkNsName(context, ns); return sb.makeNsName(ns.getString(), ns.getLocation(), a); }
+  | t = "*" { checkAnyName(context, t); return sb.makeAnyName(makeLocation(t), a); }
 }
 
 
-ParsedNameClass UnprefixedNameClass(boolean inAttribute, Annotations a) :
+ParsedNameClass UnprefixedNameClass(int context, Annotations a) :
 {
   LocatedString name;
 }
@@ -731,7 +762,7 @@ ParsedNameClass UnprefixedNameClass(boolean inAttribute, Annotations a) :
   name = UnprefixedName()
   {
     String ns;
-    if (inAttribute)
+    if ((context & (IN_ATTRIBUTE|IN_ELEMENT)) == IN_ATTRIBUTE)
       ns = "";
     else
       ns = defaultNamespace;
@@ -753,19 +784,20 @@ ParsedNameClass PrefixedNameClass(Annotations a) :
   }
 }
 
-ParsedNameClass NsNameExceptClass(boolean inAttribute, Annotations a, Annotations[] pa) :
+ParsedNameClass NsNameExceptClass(int context, Annotations a, Annotations[] pa) :
 {
   LocatedString ns;
   ParsedNameClass nc;
 }
 {
   ns = NsName()
-  (nc = ExceptNameClass(inAttribute)
+  { checkNsName(context, ns); }
+  (nc = ExceptNameClass(context | IN_NS_NAME)
    { nc = sb.makeNsName(ns.getString(), nc, ns.getLocation(), a); }
    nc = AnnotateAfter(nc)
   | { nc = sb.makeNsName(ns.getString(), ns.getLocation(), a); }
     nc = AnnotateAfter(nc)
-    nc = NameClassAlternatives(inAttribute, nc, pa))
+    nc = NameClassAlternatives(context, nc, pa))
   { return nc; }
 }
 
@@ -782,30 +814,31 @@ LocatedString NsName() :
   }
 }
 
-ParsedNameClass AnyNameExceptClass(boolean inAttribute, Annotations a, Annotations[] pa) :
+ParsedNameClass AnyNameExceptClass(int context, Annotations a, Annotations[] pa) :
 {
   Token t;
   ParsedNameClass nc;
 }
 {
   t = "*"
-  (nc = ExceptNameClass(inAttribute)
+  { checkAnyName(context, t); }
+  (nc = ExceptNameClass(context | IN_ANY_NAME)
    { nc = sb.makeAnyName(nc, makeLocation(t), a); }
    nc = AnnotateAfter(nc)
   | { nc = sb.makeAnyName(makeLocation(t), a); }
     nc = AnnotateAfter(nc)
-    nc = NameClassAlternatives(inAttribute, nc, pa))
+    nc = NameClassAlternatives(context, nc, pa))
   { return nc; }
 }
 
-ParsedNameClass ParenNameClass(boolean inAttribute, Annotations a) :
+ParsedNameClass ParenNameClass(int context, Annotations a) :
 {
   Token t;
   ParsedNameClass nc;
   Annotations[] pa = new Annotations[]{ a };
 }
 {
-  t = "(" nc = NameClass(inAttribute, pa) { nc = afterComments(nc); } ")"
+  t = "(" nc = NameClass(context, pa) { nc = afterComments(nc); } ")"
   { 
     if (pa[0] != null)
       nc = sb.makeChoice(new ParsedNameClass[] { nc }, 1, makeLocation(t), pa[0]);
@@ -813,12 +846,12 @@ ParsedNameClass ParenNameClass(boolean inAttribute, Annotations a) :
   }
 }
 
-ParsedNameClass ExceptNameClass(boolean inAttribute) :
+ParsedNameClass ExceptNameClass(int context) :
 {
   ParsedNameClass nc;
 }
 {
-  "-" nc = BasicNameClass(inAttribute)
+  "-" nc = BasicNameClass(context)
   { return nc; }
 }
 
@@ -1021,10 +1054,6 @@ ParsedPattern ParentExpr(Scope scope, Annotations a) :
 {
   "parent" { comments = getComments(); } name = Identifier()
   { 
-    if (scope == null) {
-      error("no_grammar", name.getToken());
-      return sb.makeErrorPattern();
-    }
     if (comments != null) {
       if (a == null)
         a = sb.makeAnnotations(null, getContext());
@@ -1041,10 +1070,6 @@ ParsedPattern IdentifierExpr(Scope scope, Annotations a) :
 {
   name = Identifier()
   { 
-    if (scope == null) {
-      error("no_grammar", name.getToken());
-      return sb.makeErrorPattern();
-    }
     return scope.makeRef(name.getString(), name.getLocation(), a);
   }
 }

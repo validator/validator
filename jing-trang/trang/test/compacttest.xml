@@ -863,7 +863,7 @@ head =		element head {
 				}*
 			}
 
-# END OF ibtwsh.rnx
+# END OF ibtwsh.rnc
 
 
 ]]></correct>
@@ -1244,17 +1244,17 @@ head =		element head {
     </element>
   </define>
 </grammar>
-<!-- END OF ibtwsh.rnx -->
+<!-- END OF ibtwsh.rnc -->
 </correct>
 </xml>
 </testCase>
 <testCase>
 <compact>
-<resource name="x.rnx">
+<resource name="x.rnc">
 foo
 </resource>
 <correct><![CDATA[
-start = externalRef "x.rnx"
+start = externalRef "x.rnc"
 foo = element foo { empty }
 ]]></correct>
 </compact>
@@ -1907,6 +1907,151 @@ element foo { empty }
   <empty/>
 </element>
 <!---->
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element * - * { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element * - (*) { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg = "http://www.example.com"
+element eg:* - * { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg = "http://www.example.com"
+element eg:* - (*) { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg = "http://www.example.com"
+element eg:* - eg:* { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg = "http://www.example.com"
+element eg:* - (eg:*) { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg1 = "http://www.example.com/1"
+namespace eg2 = "http://www.example.com/2"
+element eg1:* - eg2:* { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<correct>foo</correct>
+</compact>
+<xml>
+<correct>
+<ref name="foo" xmlns="http://relaxng.org/ns/structure/1.0"/>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<resource name="x.rnc">
+start = element foo { empty }
+</resource>
+<correct><![CDATA[
+include "x.rnc"
+]]></correct>
+</compact>
+<xml>
+<resource name="x.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo"><empty/></element>
+  </start>
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x.rng"/>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+div { start = element foo { empty } }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <div>
+    <start>
+      <element name="foo">
+        <empty/>
+      </element>
+    </start>
+  </div>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+[xml:lang="jp"] div { start = element foo { empty } }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <div xml:lang="jp">
+    <start>
+      <element name="foo">
+        <empty/>
+      </element>
+    </start>
+  </div>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+x |= element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<define name="x" combine="choice">
+  <element name="foo"><empty/></element>
+</define>
+</grammar>
 </correct>
 </xml>
 </testCase>
