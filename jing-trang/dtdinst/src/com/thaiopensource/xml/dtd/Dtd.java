@@ -4,92 +4,39 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Enumeration;
 
-class Dtd {
-  private Vector atoms;
-  private Vector decls = new Vector();
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 
-  private Hashtable paramEntityTable = new Hashtable();
+public class Dtd {
 
-  Dtd(Vector atoms) {
-    this.atoms = atoms;
+  private Vector topLevel;
+
+  public Dtd(String filename) throws IOException {
+    Reader r = new InputStreamReader(new BufferedInputStream(new FileInputStream(filename)));
+    System.err.println("Parsing");
+    DtdBuilder db = new Parser(r).parse();
+    System.err.println("Unexpanding");
+    db.unexpandEntities();
+    System.err.println("Creating decls");
+    db.createDecls();
+    System.err.println("Analyze semantics");
+    db.analyzeSemantics();
+    topLevel = db.createTopLevel();
   }
 
-  Vector getDecls() {
-    return decls;
+  public TopLevel[] getAllTopLevel() {
+    TopLevel[] tem = new TopLevel[topLevel.size()];
+    for (int i = 0; i < tem.length; i++)
+      tem[i] = (TopLevel)topLevel.elementAt(i);
+    return tem;
   }
 
-  Entity lookupParamEntity(String name) {
-    return (Entity)paramEntityTable.get(name);
-  }
-
-  Entity createParamEntity(String name) {
-    Entity e = (Entity)paramEntityTable.get(name);
-    if (e != null)
-      return null;
-    e = new Entity(name);
-    paramEntityTable.put(name, e);
-    return e;
-  }
-
-  void unexpandEntities() {
-    for (Enumeration e = paramEntityTable.elements();
-	 e.hasMoreElements();)
-      ((Entity)e.nextElement()).unexpandEntities();
-  }
-  
-  void createDecls() {
-    new AtomParser(new AtomStream(atoms),
-		   new PrologParser(PrologParser.EXTERNAL_ENTITY),
-		   decls).parse();
-  }
-
-  void analyzeSemantics() {
-    for (Enumeration e = paramEntityTable.elements();
-	 e.hasMoreElements();)
-      ((Entity)e.nextElement()).analyzeSemantic();
-  }
-
-  void dump() {
-    dumpEntity("#doc", atoms);
-  }
-
-  private static void dumpEntity(String name, Vector atoms) {
-    System.out.println("<e name=\"" + name + "\">");
-    dumpAtoms(atoms);
-    System.out.println("</e>");
-  }
-
-  private static void dumpAtoms(Vector v) {
-    int n = v.size();
-    for (int i = 0; i < n; i++) {
-      Atom a = (Atom)v.elementAt(i);
-      Entity e = a.getEntity();
-      if (e != null)
-	dumpEntity(e.name, e.atoms);
-      else if (a.getTokenType() != Tokenizer.TOK_PROLOG_S) {
-	System.out.print("<t>");
-	dumpString(a.getToken());
-	System.out.println("</t>");
-      }
-    }
-  }
-  
-  private static void dumpString(String s) {
-    int n = s.length();
+  public void accept(TopLevelVisitor visitor) throws VisitException {
+    int n = topLevel.size();
     for (int i = 0; i < n; i++)
-      switch (s.charAt(i)) {
-      case '<':
-	System.out.print("&lt;");
-	break;
-      case '>':
-	System.out.print("&gt;");
-	break;
-      case '&':
-	System.out.print("&amp;");
-	break;
-      default:
-	System.out.print(s.charAt(i));
-	break;
-      }
+      ((TopLevel)topLevel.elementAt(i)).accept(visitor);
   }
 }

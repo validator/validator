@@ -25,7 +25,7 @@ public class Parser extends Token {
   private static final int READSIZE = 1024*8;
   // Some temporary buffers
   private ReplacementTextBuffer valueBuf;
-  private Dtd dtd;
+  private DtdBuilder db;
   private Vector atoms = new Vector();
 
   static class DeclState {
@@ -38,7 +38,7 @@ public class Parser extends Token {
     this.buf = new char[READSIZE * 2];
     this.valueBuf = new ReplacementTextBuffer();
     this.bufEnd = 0;
-    this.dtd = new Dtd(atoms);
+    this.db = new DtdBuilder(atoms);
   }
 
   private Parser(char[] buf, String entityName, boolean isParameterEntity, Parser parent) {
@@ -51,12 +51,12 @@ public class Parser extends Token {
     this.bufEnd = buf.length;
     this.bufEndStreamOffset = buf.length;
     this.valueBuf = parent.valueBuf;
-    this.dtd = parent.dtd;
+    this.db = parent.db;
   }
 
-  public Dtd parse() throws IOException {
+  public DtdBuilder parse() throws IOException {
     parseDecls(false);
-    return dtd;
+    return db;
   }
 
   private void parseDecls(boolean isInternal) throws IOException {
@@ -107,7 +107,7 @@ public class Parser extends Token {
       declState.entity = null;
       break;
     case PrologParser.ACTION_PARAM_ENTITY_NAME:
-      declState.entity = dtd.createParamEntity(token);
+      declState.entity = db.createParamEntity(token);
       break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
       if (declState.entity != null) {
@@ -122,7 +122,7 @@ public class Parser extends Token {
       {
 	int nameStart = currentTokenStart + 1;
 	String name = new String(buf, nameStart, getNameEnd() - nameStart);
-	Entity entity = dtd.lookupParamEntity(name);
+	Entity entity = db.lookupParamEntity(name);
 	if (entity == null) {
 	  fatal("UNDEF_PEREF", name);
 	  break;
@@ -284,7 +284,7 @@ public class Parser extends Token {
       break;
     case Tokenizer.TOK_PARAM_ENTITY_REF:
       String name = new String(buf, start + 1, end - start - 2);
-      Entity entity = dtd.lookupParamEntity(name);
+      Entity entity = db.lookupParamEntity(name);
       if (entity == null) {
 	fatal("UNDEF_PEREF", name);
 	break;

@@ -1,0 +1,20 @@
+package com.thaiopensource.xml.dtd;
+
+public class AttributeGroup {
+  private AttributeGroupMember[] members;
+
+  public AttributeGroup(AttributeGroupMember[] members) {
+    this.members = members;
+  }
+
+  public AttributeGroupMember[] getMembers() {
+    AttributeGroupMember[] tem = new AttributeGroupMember[members.length];
+    System.arraycopy(members, 0, tem, 0, members.length);
+    return tem;
+  }
+  
+  public void accept(AttributeGroupVisitor visitor) throws VisitException {
+    for (int i = 0; i < members.length; i++)
+      members[i].accept(visitor);
+  }
+}
