@@ -162,16 +162,7 @@
 <define name="button">
   <element name="button">
     <ref name="button.attlist"/>
-    <zeroOrMore>
-      <choice>
-        <text/>
-	<choice>
-	  <ref name="legend"/>
-	  <ref name="Inline.class"/>
-	  <ref name="Block.mix"/>
-	</choice>
-      </choice>
-    </zeroOrMore>
+    <ref name="Flow.model"/>
   </element>
 </define>
 
