@@ -1,21 +1,29 @@
 package com.thaiopensource.xml.dtd;
 
 public class IgnoredSection extends TopLevel {
-  private final String value;
+  
+  private final Flag flag;
+  private final String contents;
 
-  IgnoredSection(String value) {
-    this.value = value;
+  public IgnoredSection(Flag flag, String contents) {
+    this.flag = flag;
+    this.contents = contents;
   }
 
   public int getType() {
     return IGNORED_SECTION;
   }
-      
-  public String getValue() {
-    return value;
+
+  public Flag getFlag() {
+    return flag;
+  }
+  
+  public String getContents() {
+    return contents;
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.ignoredSection(value);
+    visitor.ignoredSection(flag, contents);
   }
+
 }

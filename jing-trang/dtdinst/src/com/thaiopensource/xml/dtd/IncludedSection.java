@@ -1,17 +1,17 @@
 package com.thaiopensource.xml.dtd;
 
-public class IncludeSection extends TopLevel {
+public class IncludedSection extends TopLevel {
   
   private final Flag flag;
   private final TopLevel[] contents;
 
-  public IncludeSection(Flag flag, TopLevel[] contents) {
+  public IncludedSection(Flag flag, TopLevel[] contents) {
     this.flag = flag;
     this.contents = contents;
   }
 
   public int getType() {
-    return INCLUDE_SECTION;
+    return INCLUDED_SECTION;
   }
 
   public Flag getFlag() {
@@ -25,7 +25,7 @@ public class IncludeSection extends TopLevel {
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.includeSection(flag, getContents());
+    visitor.includedSection(flag, getContents());
   }
 
 }

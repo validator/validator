@@ -55,9 +55,6 @@ public class SchemaWriter implements TopLevelVisitor,
     w.comment(value);
   }
 
-  public void ignoredSection(String value) throws Exception {
-  }
-
   public void modelGroupDef(String name, ModelGroup modelGroup) throws Exception {
     w.startElement("modelGroup");
     w.attribute("name", name);
@@ -222,8 +219,8 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void includeSection(Flag flag, TopLevel[] contents) throws Exception {
-    w.startElement("includeSection");
+  public void includedSection(Flag flag, TopLevel[] contents) throws Exception {
+    w.startElement("includedSection");
     if (flag instanceof FlagRef)
       w.attribute("flag", ((FlagRef)flag).getName());
     for (int i = 0; i < contents.length; i++)
@@ -231,11 +228,18 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void ignoreSection(Flag flag, String contents) throws Exception {
-    w.startElement("ignoreSection");
+  public void ignoredSection(Flag flag, String contents) throws Exception {
+    w.startElement("ignoredSection");
     if (flag instanceof FlagRef)
       w.attribute("flag", ((FlagRef)flag).getName());
     w.characters(contents);
+    w.endElement();
+  }
+
+  public void internalEntityDecl(String name, String value) throws Exception {
+    w.startElement("internalEntity");
+    w.attribute("name", name);
+    w.characters(value);
     w.endElement();
   }
 }

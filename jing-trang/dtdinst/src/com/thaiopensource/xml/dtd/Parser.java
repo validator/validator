@@ -118,7 +118,7 @@ public class Parser extends Token {
       skipIgnoreSect();
       break;
     case PrologParser.ACTION_GENERAL_ENTITY_NAME:
-      declState.entity = null;
+      declState.entity = db.createGeneralEntity(token);
       break;
     case PrologParser.ACTION_PARAM_ENTITY_NAME:
       declState.entity = db.createParamEntity(token);
@@ -132,6 +132,10 @@ public class Parser extends Token {
 	declState.entity.systemId = token.substring(1, token.length() - 1);
 	declState.entity.baseUri = baseUri;
       }
+      break;
+    case PrologParser.ACTION_ENTITY_NOTATION_NAME:
+      if (declState.entity != null)
+	declState.entity.notationName = token;
       break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
       if (declState.entity != null) {

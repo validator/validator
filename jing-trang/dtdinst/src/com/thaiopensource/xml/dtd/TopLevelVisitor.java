@@ -7,14 +7,13 @@ public interface TopLevelVisitor {
     throws Exception;
   void processingInstruction(String target, String value) throws Exception;
   void comment(String value) throws Exception;
-  void ignoredSection(String value) throws Exception;
   void modelGroupDef(String name, ModelGroup modelGroup) throws Exception;
   void attributeGroupDef(String name, AttributeGroup attributeGroup)
     throws Exception;
   void enumGroupDef(String name, EnumGroup enumGroup) throws Exception;
   void datatypeDef(String name, Datatype datatype) throws Exception;
   void flagDef(String name, Flag flag) throws Exception;
-  void includeSection(Flag flag, TopLevel[] contents) throws Exception;
-  void ignoreSection(Flag flag, String contents) throws Exception;
+  void includedSection(Flag flag, TopLevel[] contents) throws Exception;
+  void ignoredSection(Flag flag, String contents) throws Exception;
+  void internalEntityDecl(String name, String value) throws Exception;
 }
-

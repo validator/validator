@@ -9,6 +9,7 @@ class DtdBuilder {
   private Vector decls = new Vector();
 
   private Hashtable paramEntityTable = new Hashtable();
+  private Hashtable generalEntityTable = new Hashtable();
 
   DtdBuilder(Vector atoms) {
     this.atoms = atoms;
@@ -26,8 +27,21 @@ class DtdBuilder {
     Entity e = (Entity)paramEntityTable.get(name);
     if (e != null)
       return null;
-    e = new Entity(name);
+    e = new Entity(name, true);
     paramEntityTable.put(name, e);
+    return e;
+  }
+
+  Entity lookupGeneralEntity(String name) {
+    return (Entity)generalEntityTable.get(name);
+  }
+
+  Entity createGeneralEntity(String name) {
+    Entity e = (Entity)generalEntityTable.get(name);
+    if (e != null)
+      return null;
+    e = new Entity(name, false);
+    generalEntityTable.put(name, e);
     return e;
   }
 

@@ -56,9 +56,9 @@ class Decl {
     case ENTITY:
       return createEntityDecl(db);
     case INCLUDE_SECTION:
-      return createIncludeSection(db);
+      return createIncludedSection(db);
     case IGNORE_SECTION:
-      return createIgnoreSection();
+      return createIgnoredSection();
     }
     return null;
   }
@@ -81,7 +81,7 @@ class Decl {
     ParamStream ps = new ParamStream(params);
     ps.advance();
     if (ps.type != Param.PERCENT)
-      return null;
+      return createGeneralEntityDecl(db, ps.value);
     ps.advance();
     String name = ps.value;
     Entity entity = db.lookupParamEntity(name);
@@ -110,13 +110,24 @@ class Decl {
     return null;
   }
 
-  IncludeSection createIncludeSection(DtdBuilder db) {
+  TopLevel createGeneralEntityDecl(DtdBuilder db, String name) {
+    Entity entity = db.lookupGeneralEntity(name);
+    if (entity.decl == null)
+      entity.decl = this;
+    if (entity.decl != this)
+      return null;
+    if (entity.text == null)
+      return null;
+    return new InternalEntityDecl(name, new String(entity.text));
+  }
+
+  IncludedSection createIncludedSection(DtdBuilder db) {
     Flag flag = Param.paramsToFlag(params);
     Vector contents = declsToTopLevel(db, decls);
     TopLevel[] tem = new TopLevel[decls.size()];
     for (int i = 0; i < tem.length; i++)
       tem[i] = (TopLevel)contents.elementAt(i);
-    return new IncludeSection(flag, tem);
+    return new IncludedSection(flag, tem);
   }
 
   static Vector declsToTopLevel(DtdBuilder db, Vector decls) {
@@ -130,7 +141,7 @@ class Decl {
     return v;
   }
 
-  IgnoreSection createIgnoreSection() {
-    return new IgnoreSection(Param.paramsToFlag(params), value);
+  IgnoredSection createIgnoredSection() {
+    return new IgnoredSection(Param.paramsToFlag(params), value);
   }
 }

@@ -15,7 +15,11 @@ class Entity {
   }
 
   final String name;
-  Entity(String name) { this.name = name; }
+  final boolean isParameter;
+  Entity(String name, boolean isParameter) {
+    this.name = name;
+    this.isParameter = isParameter;
+  }
   char[] text;
   String systemId;
   String publicId;
