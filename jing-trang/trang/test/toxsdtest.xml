@@ -338,16 +338,11 @@ bar = element bar { empty }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified" version="1.0">
-<xs:group name="root">
-  <xs:choice>
-    <xs:element ref="foo"/>
-    <xs:element ref="bar"/>
-  </xs:choice>
-</xs:group>
-<xs:element name="foo">
+<xs:element name="root" abstract="true"/>
+<xs:element name="foo" substitutionGroup="root">
   <xs:complexType/>
 </xs:element>
-<xs:element name="bar">
+<xs:element name="bar" substitutionGroup="root">
   <xs:complexType/>
 </xs:element>
 </xs:schema>
@@ -832,16 +827,10 @@ root = element foo|bar|baz { empty }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:complexType name="root"/>
-  <xs:group name="root">
-    <xs:choice>
-      <xs:element ref="foo"/>
-      <xs:element ref="bar"/>
-      <xs:element ref="baz"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="foo" type="root"/>
-  <xs:element name="bar" type="root"/>
-  <xs:element name="baz" type="root"/>
+  <xs:element name="root" abstract="true"/>
+  <xs:element name="foo" type="root" substitutionGroup="root"/>
+  <xs:element name="bar" type="root" substitutionGroup="root"/>
+  <xs:element name="baz" type="root" substitutionGroup="root"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -1716,18 +1705,18 @@ start = element foo1 { bar } | foo2
 <resource name="eg2.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
+  <xs:element name="bar" abstract="true"/>
   <xs:complexType name="bar">
-    <xs:choice>
-      <xs:element ref="e2:bar1"/>
-      <xs:element ref="e2:bar2"/>
-    </xs:choice>
+    <xs:sequence>
+      <xs:element ref="e2:bar"/>
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="bar1">
+  <xs:element name="bar1" substitutionGroup="e2:bar">
     <xs:complexType>
       <xs:group ref="ns1:baz"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="bar2">
+  <xs:element name="bar2" substitutionGroup="e2:bar">
     <xs:complexType>
       <xs:group ref="ns1:baz1"/>
     </xs:complexType>
@@ -2305,14 +2294,9 @@ inline |= element code { text }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:complexType name="inline" mixed="true"/>
-  <xs:group name="inline">
-    <xs:choice>
-      <xs:element ref="em"/>
-      <xs:element ref="code"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="em" type="inline"/>
-  <xs:element name="code" type="inline"/>
+  <xs:element name="inline" abstract="true"/>
+  <xs:element name="em" type="inline" substitutionGroup="inline"/>
+  <xs:element name="code" type="inline" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2328,14 +2312,9 @@ inline = element em { text }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:complexType name="inline" mixed="true"/>
-  <xs:group name="inline">
-    <xs:choice>
-      <xs:element ref="code"/>
-      <xs:element ref="em"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="code" type="inline"/>
-  <xs:element name="em" type="inline"/>
+  <xs:element name="inline" abstract="true"/>
+  <xs:element name="code" type="inline" substitutionGroup="inline"/>
+  <xs:element name="em" type="inline" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2352,16 +2331,10 @@ inline |= element b { text }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:complexType name="inline" mixed="true"/>
-  <xs:group name="inline">
-    <xs:choice>
-      <xs:element ref="code"/>
-      <xs:element ref="em"/>
-      <xs:element ref="b"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="code" type="inline"/>
-  <xs:element name="em" type="inline"/>
-  <xs:element name="b" type="inline"/>
+  <xs:element name="inline" abstract="true"/>
+  <xs:element name="code" type="inline" substitutionGroup="inline"/>
+  <xs:element name="em" type="inline" substitutionGroup="inline"/>
+  <xs:element name="b" type="inline" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2601,28 +2574,26 @@ head =		element head {
     <xs:attributeGroup ref="i18n"/>
   </xs:attributeGroup>
   <xs:complexType name="horiz.model" mixed="true">
-    <xs:group minOccurs="0" maxOccurs="unbounded" ref="horiz"/>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="horiz"/>
+    </xs:sequence>
     <xs:attributeGroup ref="basic"/>
   </xs:complexType>
   <xs:complexType name="vert.model" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:group ref="horiz"/>
-      <xs:group ref="vert"/>
+      <xs:element ref="horiz"/>
+      <xs:element ref="vert"/>
     </xs:choice>
     <xs:attributeGroup ref="basic"/>
   </xs:complexType>
   <xs:complexType name="struct.model">
-    <xs:group minOccurs="0" maxOccurs="unbounded" ref="vert"/>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="vert"/>
+    </xs:sequence>
     <xs:attributeGroup ref="basic"/>
   </xs:complexType>
-  <xs:group name="horiz">
-    <xs:choice>
-      <xs:element ref="a"/>
-      <xs:element ref="br"/>
-      <xs:group ref="horiz.other"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="a">
+  <xs:element name="horiz" abstract="true"/>
+  <xs:element name="a" substitutionGroup="horiz">
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="horiz.model">
@@ -2634,69 +2605,32 @@ head =		element head {
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  <xs:element name="br">
+  <xs:element name="br" substitutionGroup="horiz">
     <xs:complexType>
       <xs:attributeGroup ref="all"/>
     </xs:complexType>
   </xs:element>
-  <xs:group name="horiz.other">
-    <xs:choice>
-      <xs:element ref="abbr"/>
-      <xs:element ref="acronym"/>
-      <xs:element ref="cite"/>
-      <xs:element ref="code"/>
-      <xs:element ref="dfn"/>
-      <xs:element ref="em"/>
-      <xs:element ref="img"/>
-      <xs:element ref="kbd"/>
-      <xs:element ref="q"/>
-      <xs:element ref="samp"/>
-      <xs:element ref="span"/>
-      <xs:element ref="strong"/>
-      <xs:element ref="var"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="abbr" type="horiz.model"/>
-  <xs:element name="acronym" type="horiz.model"/>
-  <xs:element name="cite" type="horiz.model"/>
-  <xs:element name="code" type="horiz.model"/>
-  <xs:element name="dfn" type="horiz.model"/>
-  <xs:element name="em" type="horiz.model"/>
-  <xs:element name="img" type="horiz.model"/>
-  <xs:element name="kbd" type="horiz.model"/>
-  <xs:element name="q" type="horiz.model"/>
-  <xs:element name="samp" type="horiz.model"/>
-  <xs:element name="span" type="horiz.model"/>
-  <xs:element name="strong" type="horiz.model"/>
-  <xs:element name="var" type="horiz.model"/>
-  <xs:group name="vert">
-    <xs:choice>
-      <xs:group ref="header"/>
-      <xs:group ref="List"/>
-      <xs:element ref="table"/>
-      <xs:group ref="vert.other"/>
-    </xs:choice>
-  </xs:group>
-  <xs:group name="header">
-    <xs:choice>
-      <xs:element ref="h1"/>
-      <xs:element ref="h2"/>
-      <xs:element ref="h3"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="h1" type="horiz.model"/>
-  <xs:element name="h2" type="horiz.model"/>
-  <xs:element name="h3" type="horiz.model"/>
-  <xs:group name="List">
-    <xs:choice>
-      <xs:element ref="dl"/>
-      <xs:choice>
-        <xs:element ref="ol"/>
-        <xs:element ref="ul"/>
-      </xs:choice>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="dl">
+  <xs:element name="horiz.other" abstract="true" substitutionGroup="horiz"/>
+  <xs:element name="abbr" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="acronym" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="cite" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="code" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="dfn" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="em" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="img" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="kbd" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="q" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="samp" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="span" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="strong" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="var" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="vert" abstract="true"/>
+  <xs:element name="header" abstract="true" substitutionGroup="vert"/>
+  <xs:element name="h1" substitutionGroup="header" type="horiz.model"/>
+  <xs:element name="h2" substitutionGroup="header" type="horiz.model"/>
+  <xs:element name="h3" substitutionGroup="header" type="horiz.model"/>
+  <xs:element name="List" abstract="true" substitutionGroup="vert"/>
+  <xs:element name="dl" substitutionGroup="List">
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
         <xs:element ref="dt"/>
@@ -2707,7 +2641,7 @@ head =		element head {
   </xs:element>
   <xs:element name="dt" type="horiz.model"/>
   <xs:element name="dd" type="horiz.model"/>
-  <xs:element name="ol">
+  <xs:element name="ol" substitutionGroup="List">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="li"/>
@@ -2716,7 +2650,7 @@ head =		element head {
     </xs:complexType>
   </xs:element>
   <xs:element name="li" type="horiz.model"/>
-  <xs:element name="ul">
+  <xs:element name="ul" substitutionGroup="List">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="li"/>
@@ -2746,7 +2680,7 @@ head =		element head {
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
-  <xs:element name="table">
+  <xs:element name="table" substitutionGroup="vert">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" ref="caption"/>
@@ -2759,7 +2693,9 @@ head =		element head {
   <xs:element name="caption" type="horiz.model"/>
   <xs:element name="tr">
     <xs:complexType>
-      <xs:group maxOccurs="unbounded" ref="tabledata"/>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tabledata"/>
+      </xs:sequence>
       <xs:attributeGroup ref="basic"/>
       <xs:attributeGroup ref="aligns"/>
     </xs:complexType>
@@ -2786,25 +2722,12 @@ head =		element head {
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:group name="tabledata">
-    <xs:choice>
-      <xs:element ref="th"/>
-      <xs:element ref="td"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="th" type="tabledata"/>
-  <xs:element name="td" type="tabledata"/>
-  <xs:group name="vert.other">
-    <xs:choice>
-      <xs:element ref="address"/>
-      <xs:element ref="blockquote"/>
-      <xs:element ref="div"/>
-      <xs:element ref="p"/>
-      <xs:element ref="pre"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="address" type="horiz.model"/>
-  <xs:element name="blockquote">
+  <xs:element name="tabledata" abstract="true"/>
+  <xs:element name="th" type="tabledata" substitutionGroup="tabledata"/>
+  <xs:element name="td" type="tabledata" substitutionGroup="tabledata"/>
+  <xs:element name="vert.other" abstract="true" substitutionGroup="vert"/>
+  <xs:element name="address" substitutionGroup="vert.other" type="horiz.model"/>
+  <xs:element name="blockquote" substitutionGroup="vert.other">
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="struct.model">
@@ -2813,9 +2736,9 @@ head =		element head {
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  <xs:element name="div" type="struct.model"/>
-  <xs:element name="p" type="horiz.model"/>
-  <xs:element name="pre" type="horiz.model"/>
+  <xs:element name="div" substitutionGroup="vert.other" type="struct.model"/>
+  <xs:element name="p" substitutionGroup="vert.other" type="horiz.model"/>
+  <xs:element name="pre" substitutionGroup="vert.other" type="horiz.model"/>
   <xs:element name="html">
     <xs:complexType>
       <xs:sequence>
@@ -2829,7 +2752,9 @@ head =		element head {
   </xs:element>
   <xs:element name="body">
     <xs:complexType>
-      <xs:group minOccurs="0" maxOccurs="unbounded" ref="vert"/>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vert"/>
+      </xs:sequence>
       <xs:attributeGroup ref="basic"/>
     </xs:complexType>
   </xs:element>
@@ -3260,17 +3185,13 @@ x = element foo|bar { empty }
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:complexType name="x"/>
-  <xs:group name="x">
+  <xs:element name="x" abstract="true">
     <xs:annotation>
       <xs:documentation>An x.</xs:documentation>
     </xs:annotation>
-    <xs:choice>
-      <xs:element ref="foo"/>
-      <xs:element ref="bar"/>
-    </xs:choice>
-  </xs:group>
-  <xs:element name="foo" type="x"/>
-  <xs:element name="bar" type="x"/>
+  </xs:element>
+  <xs:element name="foo" type="x" substitutionGroup="x"/>
+  <xs:element name="bar" type="x" substitutionGroup="x"/>
 </xs:schema>
 </correct>
 </xsd>
