@@ -65,13 +65,11 @@ import com.thaiopensource.relaxng.output.xsd.basic.Annotation;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
 import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
-import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.List;
 import java.util.Vector;
 import java.util.Iterator;
-import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;

@@ -25,7 +25,6 @@ import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.Set;

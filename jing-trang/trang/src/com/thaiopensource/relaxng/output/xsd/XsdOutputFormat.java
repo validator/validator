@@ -10,7 +10,6 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.translate.util.ParamProcessor;
 import com.thaiopensource.relaxng.translate.util.AbstractParam;
-import com.thaiopensource.relaxng.translate.util.Param;
 import com.thaiopensource.relaxng.translate.util.EnumParam;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
