@@ -48,8 +48,11 @@ class DecimalDatatype extends DatatypeBase implements OrderRelation {
     return true;
   }
 
-  /* BigDecimal.equals considers objects distinct if they have the
-     different scales but the same mathematical value. */
+  /**
+   * BigDecimal.equals considers objects distinct if they have the
+   * different scales but the same mathematical value. Similarly
+   * for hashCode.
+   */
 
   static class Decimal extends BigDecimal {
     Decimal(String str) {
@@ -59,6 +62,9 @@ class DecimalDatatype extends DatatypeBase implements OrderRelation {
       if (obj == null || !(obj instanceof Decimal))
 	return false;
       return compareTo((Decimal)obj) == 0;
+    }
+    public int hashCode() {
+      return toBigInteger().hashCode();
     }
   }
 

@@ -39,6 +39,9 @@ class QNameDatatype extends DatatypeBase {
       QName other = (QName)obj;
       return namespaceURI.equals(other.namespaceURI) && localName.equals(other.localName);
     }
+    public int hashCode() {
+      return localName.hashCode() ^ namespaceURI.hashCode();
+    }
   }
 
   Object getValue(String str, DatatypeContext dc) {

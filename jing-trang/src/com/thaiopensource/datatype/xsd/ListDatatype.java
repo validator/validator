@@ -28,6 +28,13 @@ class ListDatatype extends DatatypeBase implements Measure {
 	  return false;
       return true;
     }
+    public int hashCode() {
+      int hc = 0;
+      for (int i = 0; i < items.length; i++)
+	hc ^= items[i].hashCode();
+      return hc;
+    }
+    // XXX should implement toString
   }
 
   Object getValue(String str, DatatypeContext dc) {
