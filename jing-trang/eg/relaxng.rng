@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.20 2001-07-13 00:31:26 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.21 2001-07-13 00:43:51 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -190,11 +190,6 @@
 
   <define name="start-element">
     <element name="start">
-      <optional>
-        <attribute name="name">
-          <data type="NCName"/>
-        </attribute>
-      </optional>
       <ref name="combine-att"/>
       <ref name="common-atts"/>
       <ref name="open-pattern"/>
