@@ -49,7 +49,7 @@ public class CompactParseable implements Parseable {
   private static final String UTF8 = EncodingMap.getJavaName("UTF-8");
   private static final String UTF16 = EncodingMap.getJavaName("UTF-16");
 
-  private Reader makeReader(InputSource is) throws BuildException {
+  private static Reader makeReader(InputSource is) throws BuildException {
     try {
       Reader r = is.getCharacterStream();
       if (r == null) {

@@ -120,19 +120,19 @@ public class DatatypeLibraryImpl implements DatatypeLibrary {
     return regexEngine;
   }
 
-  private DatatypeBase restrictMax(DatatypeBase base, String limit) {
+  private static DatatypeBase restrictMax(DatatypeBase base, String limit) {
     return new MaxInclusiveRestrictDatatype(base, base.getValue(limit, null));
   }
 
-  private DatatypeBase restrictMin(DatatypeBase base, String limit) {
+  private static DatatypeBase restrictMin(DatatypeBase base, String limit) {
     return new MinInclusiveRestrictDatatype(base, base.getValue(limit, null));
   }
 
-  private DatatypeBase list(DatatypeBase base) {
+  private static DatatypeBase list(DatatypeBase base) {
     return new MinLengthRestrictDatatype(new ListDatatype(base), 1);
   }
 
-  private RegexEngine findRegexEngine() {
+  private static RegexEngine findRegexEngine() {
     Enumeration e = new Service(RegexEngine.class).getProviders();
     if (!e.hasMoreElements())
       return null;

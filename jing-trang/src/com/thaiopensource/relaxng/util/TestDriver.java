@@ -117,7 +117,7 @@ class TestDriver {
     return result;
   }
 
-  private void failed(File f) {
+  private static void failed(File f) {
     System.err.println("Failed: " + f.toString());
   }
 

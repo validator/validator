@@ -142,15 +142,15 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     return base;
   }
 
-  private void error(String key) throws DatatypeException {
+  private static void error(String key) throws DatatypeException {
     throw new DatatypeException(localizer.message(key));
   }
 
-  private void error(String key, String arg) throws DatatypeException {
+  private static void error(String key, String arg) throws DatatypeException {
     throw new DatatypeException(localizer.message(key, arg));
   }
 
-  private void error(String key, String arg, int pos) throws DatatypeException {
+  private static void error(String key, String arg, int pos) throws DatatypeException {
     throw new DatatypeException(pos, localizer.message(key, arg));
   }
 

@@ -75,7 +75,7 @@ public class SAXParseable implements Parseable {
     }
   }
 
-  private InputSource makeInputSource(XMLReader xr, String systemId) throws IOException, SAXException {
+  private static InputSource makeInputSource(XMLReader xr, String systemId) throws IOException, SAXException {
     EntityResolver er = xr.getEntityResolver();
     if (er != null) {
       InputSource inputSource = er.resolveEntity(null, systemId);

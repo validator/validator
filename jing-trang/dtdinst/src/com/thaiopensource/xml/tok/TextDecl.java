@@ -185,7 +185,7 @@ public class TextDecl {
     }
   }
 
-  private int skipWS(char[] buf, int off, int end) {
+  private static int skipWS(char[] buf, int off, int end) {
   loop:
     while (off != end) {
       switch (buf[off]) {

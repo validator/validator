@@ -13,7 +13,7 @@ class Base64BinaryDatatype extends BinaryDatatype {
     return byteCount(str) >= 0;
   }
 
-  private int byteCount(String str) {
+  private static int byteCount(String str) {
     int nChars = 0;
     int nPadding = 0;
     int lastCharWeight = -1;

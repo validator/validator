@@ -131,7 +131,7 @@ class Simplifier extends AbstractVisitor {
     return p;
   }
 
-  private Annotated copy(Annotated to, Annotated from) {
+  private static Annotated copy(Annotated to, Annotated from) {
     to.setSourceLocation(from.getSourceLocation());
     return to;
   }

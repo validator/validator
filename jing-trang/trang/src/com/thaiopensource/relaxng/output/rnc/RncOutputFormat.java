@@ -32,7 +32,7 @@ public class RncOutputFormat implements OutputFormat {
     }
   }
 
-  private void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
+  private static void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
     Output.output(sd.getPattern(),
                   sd.getEncoding(),
                   sourceUri,

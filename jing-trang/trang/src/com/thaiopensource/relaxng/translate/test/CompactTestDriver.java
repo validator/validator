@@ -150,7 +150,7 @@ public class CompactTestDriver {
     }
   }
 
-  private void failed(File f) {
+  private static void failed(File f) {
     System.err.println(f.toString() + " failed");
   }
 

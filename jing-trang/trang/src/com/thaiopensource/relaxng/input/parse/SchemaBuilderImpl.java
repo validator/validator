@@ -100,7 +100,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
     return makeComposite(new ChoicePattern(), patterns, nPatterns, loc, anno);
   }
 
-  private ParsedPattern makeComposite(CompositePattern p, ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException {
+  private static ParsedPattern makeComposite(CompositePattern p, ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException {
     List children = p.getChildren();
     for (int i = 0; i < nPatterns; i++)
       children.add(patterns[i]);
