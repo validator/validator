@@ -22,6 +22,9 @@ public class InferHandler extends DefaultHandler {
   private final List attributeNames = new Vector();
   private final DatatypeRepertoire datatypes;
   private final StringBuffer textBuffer = new StringBuffer();
+  private final Set usedNamespaceUris = new HashSet();
+  private final Schema schema = new Schema();
+  private final Set assignedPrefixes = new HashSet();
 
   private static class OpenElement {
     final OpenElement parent;
@@ -36,7 +39,7 @@ public class InferHandler extends DefaultHandler {
   public void startElement(String uri, String localName,
                            String qName, Attributes attributes)
           throws SAXException {
-    Name name = new Name(uri, localName);
+    Name name = makeName(uri, localName);
     if (openElement == null)
       startSet.add(name);
     else {
@@ -48,7 +51,7 @@ public class InferHandler extends DefaultHandler {
       openElement.inferrer.addElement(name);
     }
     for (int i = 0, len = attributes.getLength(); i < len; i++)
-      attributeNames.add(new Name(attributes.getURI(i), attributes.getLocalName(i)));
+      attributeNames.add(makeName(attributes.getURI(i), attributes.getLocalName(i)));
     ElementDeclInferrer inferrer = (ElementDeclInferrer)inferrerMap.get(name);
     if (inferrer == null) {
       inferrer = new ElementDeclInferrer(datatypes, attributeNames);
@@ -60,6 +63,23 @@ public class InferHandler extends DefaultHandler {
       inferrer.addAttributeValue((Name)attributeNames.get(i), attributes.getValue(i));
     attributeNames.clear();
     openElement = new OpenElement(openElement, inferrer);
+  }
+
+  public void startPrefixMapping(String prefix, String uri)
+          throws SAXException {
+    if (prefix != null
+        && !prefix.equals("")
+        && schema.getPrefixMap().get(uri) == null
+        && !assignedPrefixes.contains(prefix)) {
+      assignedPrefixes.add(prefix);
+      schema.getPrefixMap().put(uri, prefix);
+    }
+  }
+
+  private Name makeName(String uri, String localName) {
+    if (!uri.equals(""))
+      usedNamespaceUris.add(uri);
+    return new Name(uri, localName);
   }
 
   public void characters(char ch[], int start, int length)
@@ -93,7 +113,6 @@ public class InferHandler extends DefaultHandler {
   }
 
   public Schema getSchema() {
-    Schema schema = new Schema();
     for (Iterator iter = inferrerMap.entrySet().iterator(); iter.hasNext();) {
       Map.Entry entry = (Map.Entry)iter.next();
       ElementDecl decl = ((ElementDeclInferrer)entry.getValue()).infer();
@@ -101,6 +120,7 @@ public class InferHandler extends DefaultHandler {
       schema.getElementDecls().put(name, decl);
     }
     schema.setStart(makeStart());
+    schema.getPrefixMap().keySet().retainAll(usedNamespaceUris);
     return schema;
   }
 

@@ -1,4 +1,4 @@
-Use prefixes from source file.
+Choose default namespace.
 
 Generate names of element definitions properly so as to avoid conflicts in the presence of namespaces.
 

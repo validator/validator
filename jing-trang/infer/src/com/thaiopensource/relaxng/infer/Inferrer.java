@@ -282,7 +282,14 @@ public class Inferrer {
   }
 
   private NameNameClass makeNameClass(Name name) {
-    return new NameNameClass(name.getNamespaceUri(), name.getLocalName());
+    String ns = name.getNamespaceUri();
+    NameNameClass nnc = new NameNameClass(ns, name.getLocalName());
+    if (!ns.equals("")) {
+      String prefix = (String)schema.getPrefixMap().get(ns);
+      if (prefix != null)
+        nnc.setPrefix(prefix);
+    }
+    return nnc;
   }
 
   private DataPattern makeDatatype(Name datatypeName) {
