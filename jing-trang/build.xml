@@ -61,6 +61,8 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <fileset dir="src" includes="**/resources/*,META-INF/services/*"/>
   </jar>
 
+  <chmod perm="+x" file="${build.dir}/jing.jar"/>
+
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
     <classpath>
       <pathelement location="${build.dir}/jing.jar"/>

@@ -50,6 +50,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
                        META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"
              excludes="${jing.excludes}"/>
   </jar>
+  <chmod perm="+x" file="${jar.dir}/trang.jar"/>
 </target>
 
 <target name="compact-split" depends="init,check-compact-split" unless="compact-split-not-required">

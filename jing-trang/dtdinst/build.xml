@@ -35,6 +35,7 @@
     <fileset dir="${build.dir}/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
+  <chmod perm="+x" file="${build.dir}/dtdinst.jar"/>
 </target>
 
 <target name="test" depends="jar">

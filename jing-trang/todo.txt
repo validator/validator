@@ -1,5 +1,3 @@
-Make jing.jar and trang.jar be executable.
-
 Maybe need to redesign reset() so that it can be used to cleanup the thread.
 
 Test NRL option handling
