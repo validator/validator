@@ -14,14 +14,16 @@ public class LocalOutputDirectory implements OutputDirectory {
   private final String lineSeparator;
   private final String extension;
   private final String encoding;
+  private final int lineLength;
   // maps URIs to filenames
   private final Map uriMap = new HashMap();
 
-  public LocalOutputDirectory(File mainOutputFile, String extension, String encoding) {
+  public LocalOutputDirectory(File mainOutputFile, String extension, String encoding, int lineLength) {
     this.mainOutputFile = mainOutputFile;
     this.extension = extension;
     this.encoding = encoding;
     this.lineSeparator = System.getProperty("line.separator");
+    this.lineLength = lineLength;
   }
 
   public Writer open(String sourceUri) throws IOException {
@@ -64,5 +66,9 @@ public class LocalOutputDirectory implements OutputDirectory {
 
   public String getEncoding() {
     return encoding;
+  }
+
+  public int getLineLength() {
+    return lineLength;
   }
 }

@@ -10,4 +10,5 @@ public interface OutputDirectory {
   String reference(String fromSourceUri, String toSourceUri);
   String getLineSeparator();
   String getEncoding();
+  int getLineLength();
 }
