@@ -71,7 +71,7 @@
     <Commit>
       <option name="NON_RECURSIVE" value="false" />
       <option name="REVISION_TAG" value="" />
-      <option name="LOG_MESSAGE" value="Implement a whole bunch of DTD input options" />
+      <option name="LOG_MESSAGE" value="Sort imports so that output order does not&#10;depend on hash table iteration" />
       <option name="ADDITIONAL_OPTIONS" value="" />
     </Commit>
     <Diff>
@@ -262,24 +262,7 @@
       </breakpoint>
     </exception_breakpoints>
     <field_breakpoints />
-    <method_breakpoints>
-      <breakpoint url="jar://C:/j2sdk1.4.0/src.zip!/java/util/GregorianCalendar.java" line="2051">
-        <option name="ENABLED" value="false" />
-        <option name="SUSPEND_VM" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CONDITION" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="LOG_MESSAGE" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INVERSE_CLASS_FILLTERS" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="WATCH_ENTRY" value="true" />
-        <option name="WATCH_EXIT" value="true" />
-      </breakpoint>
-    </method_breakpoints>
+    <method_breakpoints />
   </component>
   <component class="com.intellij.debugger.settings.DebuggerSettings">
     <option name="TRACING_FILTERS_ENABLED" value="true" />
@@ -464,8 +447,8 @@
     <configuration name="dtdinst" type="Application" default="false" selected="true">
       <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.translate.Driver" />
       <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" value="office.dtd office.rnc" />
-      <option name="WORKING_DIRECTORY" value="c:/temp/ooo" />
+      <option name="PROGRAM_PARAMETERS" value="-o enable-abstract-elements bug.rnc bug.xsd" />
+      <option name="WORKING_DIRECTORY" value="c:/temp" />
     </configuration>
     <configuration name="xsdtest" type="Application" default="false" selected="false">
       <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.test.CompactTestDriver" />
@@ -508,34 +491,34 @@
   </component>
   <component class="com.intellij.ide.desktop.IdeDocumentManager">
     <recent_files>
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/ParamProcessor.java" column="0" line="45" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/OutputDirectoryParamProcessor.java" column="23" line="18" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/test/CompactTestDriver.java" column="5" line="168" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/ParamFactory.java" column="17" line="2" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/todo.txt" column="21" line="21" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/util/Uri.java" column="24" line="9" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/AbsoluteUriParam.java" column="0" line="11" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/NCNameParam.java" column="28" line="4" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/NmtokenParam.java" column="14" line="8" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/resources/Messages.properties" column="57" line="12" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/resources/Messages.properties" column="0" line="16" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/Converter.java" column="24" line="819" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/DtdInputFormat.java" column="18" line="132" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/Param.java" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/EncodingParam.java" column="39" line="9" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/basic/SchemaWalker.java" column="36" line="8" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/basic/ComplexTypeSimpleContent.java" column="0" line="13" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/ComplexTypeSelector.java" column="0" line="404" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/test/CompactTestDriver.java" column="24" line="161" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/rnc/NamespaceManager.java" column="5" line="213" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DatatypeLibraryFactoryImpl.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DatatypeLibraryImpl.java" column="13" line="16" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DateTimeDatatype.java" column="6" line="8" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/XsdOutputFormat.java" column="54" line="60" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/AbstractElementTypeSelector.java" column="21" line="108" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/basic/Attribute.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/PrefixManager.java" column="73" line="9" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/todo.txt" column="58" line="40" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/NamespaceManager.java" column="7" line="614" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/BasicOutput.java" column="14" line="829" />
     </recent_files>
     <open_files>
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/Converter.java" column="24" line="819" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/NCNameParam.java" column="28" line="4" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/DtdInputFormat.java" column="18" line="132" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/NmtokenParam.java" column="14" line="8" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/resources/Messages.properties" column="0" line="16" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/Param.java" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/AbsoluteUriParam.java" column="0" line="11" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/EncodingParam.java" column="39" line="9" />
-      <active_file url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/EncodingParam.java" />
-      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/resources/Messages.properties" column="57" line="12" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/util/Uri.java" column="24" line="9" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/AbstractElementTypeSelector.java" column="21" line="108" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/XsdOutputFormat.java" column="54" line="60" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/basic/Attribute.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/BasicOutput.java" column="14" line="829" />
+      <active_file url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/BasicOutput.java" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DateTimeDatatype.java" column="6" line="8" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/NamespaceManager.java" column="7" line="614" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/todo.txt" column="58" line="40" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DatatypeLibraryFactoryImpl.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/PrefixManager.java" column="73" line="9" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DatatypeLibraryImpl.java" column="13" line="16" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -547,26 +530,31 @@
   <component class="com.intellij.ide.navigator.impl.ProjectNavigatorSettings">
     <navigator id="ClasspathNavigator" flattenPackages="false" showMembers="false" />
     <navigator id="ProjectNavigator" flattenPackages="true" showMembers="false">
-      <expanded_node type="directory" url="file://$PROJECT_DIR$" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/trang" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$" />
     </navigator>
     <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/resources" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/parse" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/common" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/test" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src/com/thaiopensource/xml/dtd/app" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/resources" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src/com/thaiopensource/xml/out" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util/resources" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd/resources" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/test" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/rnc" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src/com/thaiopensource/xml/out" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/parse" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/resources" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/translate/util" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/dtd" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/xsd/basic" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/common" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/dtdinst/src/com/thaiopensource/xml/dtd/app" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/input/dtd" />
     </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">
@@ -596,7 +584,7 @@
     <option name="OPEN_IN_BROWSER" value="false" />
   </component>
   <component class="com.intellij.projectRoots.ProjectRootContainer">
-    <jdk name="java version &quot;1.4.0&quot;" />
+    <jdk name="java version &quot;1.4.1_01&quot;" />
     <root file="file://$PROJECT_DIR$/classes">
       <property name="type" value="outputPath" />
     </root>
