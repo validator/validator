@@ -44,15 +44,60 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Vector;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Inferrer {
   private final Schema schema;
+  private final Set multiplyReferencedElementNames = new HashSet();
   private final GrammarPattern grammar;
   private final ParticleConverter particleConverter = new ParticleConverter();
+  private final List outputQueue = new Vector();
+  private final Set queued = new HashSet();
 
-  private class ParticleConverter implements ParticleVisitor {
+  private static class PatternComparator implements Comparator {
+    private static Class[] classOrder = {
+      TextPattern.class, RefPattern.class, ElementPattern.class
+    };
+
+    public int compare(Object o1, Object o2) {
+      if (o1.getClass() != o2.getClass())
+        return classIndex(o1.getClass()) - classIndex(o2.getClass());
+      if (o1 instanceof RefPattern)
+        return ((RefPattern)o1).getName().compareTo(((RefPattern)o2).getName());
+      if (o1 instanceof ElementPattern)
+        return extractElementName(o1).compareTo(extractElementName(o2));
+      return 0;
+    }
+
+    private static Name extractElementName(Object o) {
+      NameNameClass nnc = (NameNameClass)((ElementPattern)o).getNameClass();
+      return new Name(nnc.getNamespaceUri(), nnc.getLocalName());
+    }
+
+    private static int classIndex(Class aClass) {
+      for (int i = 0; i < classOrder.length; i++)
+        if (aClass == classOrder[i])
+          return i;
+      return classOrder.length;
+    }
+  }
+
+  private class ParticleConverter extends PatternComparator implements ParticleVisitor {
     public Object visitElement(ElementParticle p) {
-      return new RefPattern(getDefineName(p.getName()));
+      Name name = p.getName();
+      if (multiplyReferencedElementNames.contains(name)) {
+        if (!queued.contains(name)) {
+          queued.add(name);
+          outputQueue.add(name);
+        }
+        return new RefPattern(getDefineName(name));
+      }
+      else
+        return createElementPattern(name);
     }
 
     public Object visitChoice(ChoiceParticle p) {
@@ -60,6 +105,7 @@ public class Inferrer {
       List children = cp.getChildren();
       addChoices(children, p.getChild1());
       addChoices(children, p.getChild2());
+      Collections.sort(children, this);
       for (Iterator iter = children.iterator(); iter.hasNext();)
         if (iter.next() instanceof EmptyPattern) {
           iter.remove();
@@ -124,6 +170,42 @@ public class Inferrer {
     }
   }
 
+  private class ReferenceFinder implements ParticleVisitor {
+    private final Set referencedElementNames = new HashSet();
+
+    public Object visitElement(ElementParticle p) {
+      Name name = p.getName();
+      if (referencedElementNames.contains(name))
+        multiplyReferencedElementNames.add(name);
+      else
+        referencedElementNames.add(name);
+      return null;
+    }
+
+    public Object visitChoice(ChoiceParticle p) {
+      p.getChild1().accept(this);
+      p.getChild2().accept(this);
+      return null;
+    }
+
+    public Object visitSequence(SequenceParticle p) {
+      p.getChild1().accept(this);
+      p.getChild2().accept(this);
+      return null;
+    }
+
+    public Object visitEmpty(EmptyParticle p) {
+      return null;
+    }
+
+    public Object visitText(TextParticle p) {
+      return null;
+    }
+
+    public Object visitOneOrMore(OneOrMoreParticle p) {
+      return p.getChild().accept(this);
+    }
+  }
   public static SchemaCollection infer(String[] args, ErrorHandlerImpl eh) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
     XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
@@ -139,23 +221,32 @@ public class Inferrer {
     return sc;
   }
 
-  Inferrer(Schema schema) {
+  private Inferrer(Schema schema) {
     this.schema = schema;
     this.grammar = new GrammarPattern();
+    findMultiplyReferencedElements();
     grammar.getComponents().add(new DefineComponent(DefineComponent.START,
                                                     particleConverter.convert(schema.getStart())));
-    for (Iterator iter = schema.getElementDecls().entrySet().iterator(); iter.hasNext();) {
-      Map.Entry entry = (Map.Entry)iter.next();
-      Name elementName = (Name)entry.getKey();
-      String defineName = getDefineName(elementName);
-      ElementDecl elementDecl = (ElementDecl)entry.getValue();
-      grammar.getComponents().add(new DefineComponent(defineName,
-                                                      createPattern(elementName, elementDecl)));
-
+    for (int i = 0; i < outputQueue.size(); i++) {
+      Name elementName = (Name)outputQueue.get(i);
+      grammar.getComponents().add(new DefineComponent(getDefineName(elementName),
+                                                      createElementPattern(elementName)));
     }
   }
 
-  private Pattern createPattern(Name elementName, ElementDecl elementDecl) {
+  private void findMultiplyReferencedElements() {
+    ReferenceFinder finder = new ReferenceFinder();
+    schema.getStart().accept(finder);
+    for (Iterator iter = schema.getElementDecls().values().iterator(); iter.hasNext();) {
+      ElementDecl decl = (ElementDecl)iter.next();
+      Particle particle = decl.getContentModel();
+      if (particle != null)
+        particle.accept(finder);
+    }
+  }
+
+  private Pattern createElementPattern(Name elementName) {
+    ElementDecl elementDecl = schema.getElementDecl(elementName);
     Pattern contentPattern;
     Particle particle = elementDecl.getContentModel();
     if (particle != null)
@@ -195,11 +286,11 @@ public class Inferrer {
     return new DataPattern(datatypeName.getNamespaceUri(), datatypeName.getLocalName());
   }
 
-  String getDefineName(Name elementName) {
+  private String getDefineName(Name elementName) {
     return elementName.getLocalName();
   }
 
-  private Pattern normalize(CompositePattern cp) {
+  private static Pattern normalize(CompositePattern cp) {
     if (cp.getChildren().size() == 1)
       return (Pattern)cp.getChildren().get(0);
     return cp;
