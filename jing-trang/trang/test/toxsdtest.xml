@@ -3546,6 +3546,127 @@ t = element z { empty }*
 </correct>
 </xsd>
 </testCase>
+<testCase>
+<compact>
+<correct>
+a = element z { empty }*
+b = a, attribute att { text }
+c = element x { a } | element y { b }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:complexType name="a">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="z"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="z">
+    <xs:complexType/>
+  </xs:element>
+  <xs:complexType name="b">
+    <xs:complexContent>
+      <xs:extension base="a">
+        <xs:attribute name="att" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="c" abstract="true" type="a"/>
+  <xs:element name="x" substitutionGroup="c"/>
+  <xs:element name="y" substitutionGroup="c" type="b"/>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+a = element z { empty }*
+b = attribute att { text }
+c = element x { a } | element y { b }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:complexType name="a">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="z"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="z">
+    <xs:complexType/>
+  </xs:element>
+  <xs:attributeGroup name="b">
+    <xs:attribute name="att" use="required"/>
+  </xs:attributeGroup>
+  <xs:element name="c" abstract="true"/>
+  <xs:element name="x" substitutionGroup="c" type="a"/>
+  <xs:element name="y" substitutionGroup="c">
+    <xs:complexType>
+      <xs:attributeGroup ref="b"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+start = element e { a* } | element f { b* }
+a = element x | y | z { element v { empty }* }
+b = element x | y | z { element w { empty }* }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="e">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="a"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="f">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="b"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="a">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="v"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="a">
+    <xs:choice>
+      <xs:element name="x" type="a"/>
+      <xs:element name="y" type="a"/>
+      <xs:element name="z" type="a"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="v">
+    <xs:complexType/>
+  </xs:element>
+  <xs:complexType name="b">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="w"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="b">
+    <xs:choice>
+      <xs:element name="x" type="b"/>
+      <xs:element name="y" type="b"/>
+      <xs:element name="z" type="b"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="w">
+    <xs:complexType/>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
 <!--
 <testCase>
 <compact>
