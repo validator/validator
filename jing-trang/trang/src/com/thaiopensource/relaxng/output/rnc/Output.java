@@ -51,19 +51,16 @@ import java.util.HashSet;
 import java.util.Vector;
 import java.util.Collections;
 import java.util.Map;
+import java.util.HashMap;
 
 /*
-
-Datatype declarations
-
-
-Namespace declarations
-
 Avoid top-level grammar element
 
 Annotations
+
 Comments
-Encoding
+
+Use \x{} escapes for characters not in repertoire of selected encoding
 
 Avoid lines with excessive complexity
 
@@ -80,6 +77,7 @@ class Output {
   private final OutputDirectory od;
   private final ErrorReporter er;
   private final NamespaceManager.NamespaceBindings nsb;
+  private final Map datatypeLibraryMap = new HashMap();
   private final NameClassVisitor nameClassOutput = new NameClassOutput();
   private final NameClassVisitor noParenNameClassOutput = new NoParenNameClassOutput();
   private final PatternVisitor noParenPatternOutput = new NoParenPatternOutput();
@@ -111,7 +109,8 @@ class Output {
     }
   }
 
-  private Output(String sourceUri, OutputDirectory od, ErrorReporter er, NamespaceManager.NamespaceBindings nsb) throws IOException {
+  private Output(String sourceUri, OutputDirectory od, ErrorReporter er,
+                 NamespaceManager.NamespaceBindings nsb) throws IOException {
     this.sourceUri = sourceUri;
     this.od = od;
     this.er = er;
@@ -121,6 +120,7 @@ class Output {
 
   private void topLevel(Pattern p) {
     outputNamespaceDeclarations();
+    outputDatatypeLibraryDeclarations(p);
     p.accept(patternOutput);
     pp.hardNewline();
     pp.close();
@@ -151,6 +151,51 @@ class Output {
           literal(ns);
         pp.hardNewline();
       }
+    }
+  }
+
+
+  private void outputDatatypeLibraryDeclarations(Pattern p) {
+    List datatypeLibraries = new Vector();
+    datatypeLibraries.addAll(DatatypeLibraryVisitor.findDatatypeLibraries(p));
+    Collections.sort(datatypeLibraries);
+    for (int i = 0, len = datatypeLibraries.size(); i < len; i++) {
+      String prefix = "d";
+      if (len > 1)
+        prefix += Integer.toString(i + 1);
+      String uri = (String)datatypeLibraries.get(i);
+      datatypeLibraryMap.put(uri, prefix);
+      pp.text("datatypes ");
+      pp.text(prefix);
+      pp.text(" = ");
+      literal(uri);
+      pp.hardNewline();
+    }
+    datatypeLibraryMap.put(WellKnownNamespaces.XML_SCHEMA_DATATYPES, "xsd");
+  }
+
+  static class DatatypeLibraryVisitor extends NullVisitor {
+    private Set datatypeLibraries = new HashSet();
+
+    public void nullVisitValue(ValuePattern p) {
+      noteDatatypeLibrary(p.getDatatypeLibrary());
+      super.nullVisitValue(p);
+    }
+
+    public void nullVisitData(DataPattern p) {
+      noteDatatypeLibrary(p.getDatatypeLibrary());
+      super.nullVisitData(p);
+    }
+
+    private void noteDatatypeLibrary(String uri) {
+      if (!uri.equals("") && !uri.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES))
+        datatypeLibraries.add(uri);
+    }
+
+    static Set findDatatypeLibraries(Pattern p) {
+      DatatypeLibraryVisitor dlv = new DatatypeLibraryVisitor();
+      p.accept(dlv);
+      return dlv.datatypeLibraries;
     }
   }
 
@@ -388,15 +433,8 @@ class Output {
 
     public Object visitData(DataPattern p) {
       String lib = p.getDatatypeLibrary();
-      String prefix;
-      if (lib.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES))
-        prefix = "xsd:";
-      else if (lib.equals(""))
-        prefix = "";
-      else
-        // XXX
-        prefix = "xxx:";
-      pp.text(prefix);
+      if (!lib.equals(""))
+        pp.text((String)datatypeLibraryMap.get(lib) + ":");
       pp.text(p.getType());
       // XXX params
       // XXX except
@@ -404,7 +442,13 @@ class Output {
     }
 
     public Object visitValue(ValuePattern p) {
-      // XXX datatype
+      String lib = p.getDatatypeLibrary();
+      if (lib.equals("")) {
+        if (!p.getType().equals("token"))
+          pp.text(p.getType() + " ");
+      }
+      else
+        pp.text((String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ");
       literal(p.getValue());
       return null;
     }
