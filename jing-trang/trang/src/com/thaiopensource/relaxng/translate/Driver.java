@@ -1,10 +1,11 @@
 package com.thaiopensource.relaxng.translate;
 
-import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.input.InputFormat;
+import com.thaiopensource.relaxng.input.MultiInputFormat;
+import com.thaiopensource.relaxng.input.xml.XmlInputFormat;
 import com.thaiopensource.relaxng.input.dtd.DtdInputFormat;
 import com.thaiopensource.relaxng.input.parse.compact.CompactParseInputFormat;
 import com.thaiopensource.relaxng.input.parse.sax.SAXParseInputFormat;
@@ -73,8 +74,8 @@ public class Driver {
         return 2;
       }
       args = op.getRemainingArgs();
-      if (args.length != 2) {
-        error(localizer.message("wrong_number_of_arguments"));
+      if (args.length < 2) {
+        error(localizer.message("too_few_arguments"));
         eh.print(localizer.message("usage", Version.getVersion(Driver.class)));
         return 2;
       }
@@ -90,12 +91,14 @@ public class Driver {
         inFormat = new CompactParseInputFormat();
       else if (inputType.equalsIgnoreCase("dtd"))
         inFormat = new DtdInputFormat();
+      else if (inputType.equalsIgnoreCase("xml"))
+        inFormat = new XmlInputFormat();
       else {
         error(localizer.message("unrecognized_input_type", inputType));
         return 2;
       }
       OutputFormat of;
-      String ext = extension(args[1]);
+      String ext = extension(args[args.length - 1]);
       if (outputType == null) {
         outputType = ext;
         if (outputType.length() > 0)
@@ -113,14 +116,25 @@ public class Driver {
         error(localizer.message("unrecognized_output_type", outputType));
         return 2;
       }
-      SchemaCollection sc = inFormat.load(UriOrFile.toUri(args[0]),
-                                          (String[])inputParams.toArray(new String[0]),
-                                          outputType.toLowerCase(),
-                                          eh);
+      String[] inputParamArray = (String[])inputParams.toArray(new String[0]);
+      outputType = outputType.toLowerCase();
+      SchemaCollection sc;
+      if (args.length > 2) {
+        if (!(inFormat instanceof MultiInputFormat)) {
+          error(localizer.message("too_many_arguments"));
+          return 2;
+        }
+        String[] uris = new String[args.length - 1];
+        for (int i = 0; i < uris.length; i++)
+          uris[i] = UriOrFile.toUri(args[i]);
+        sc = ((MultiInputFormat)inFormat).load(uris, inputParamArray, outputType, eh);
+      }
+      else
+        sc = inFormat.load(UriOrFile.toUri(args[0]), inputParamArray, outputType, eh);
       if (ext.length() == 0)
         ext = outputType;
       OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(),
-                                                    new File(args[1]),
+                                                    new File(args[args.length - 1]),
                                                     ext,
                                                     DEFAULT_OUTPUT_ENCODING,
                                                     DEFAULT_LINE_LENGTH,

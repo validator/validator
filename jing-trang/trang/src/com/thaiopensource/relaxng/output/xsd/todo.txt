@@ -105,3 +105,6 @@ Consider turning attribute groups (without paired group or simple type) into com
 Map element with <text/> only content onto element with simple type of string
 (or at least provide option for this).
 
+Option to strip prefix or suffix (e.g. suffix ".att") so as to take advantage of XSD's multiple namespaces.
+
+

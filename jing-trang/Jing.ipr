@@ -122,6 +122,7 @@
         <filter targetName="trang-dist" isVisible="false" />
         <filter targetName="dtdinst-test" isVisible="false" />
         <filter targetName="dtdinst-dist" isVisible="false" />
+        <filter targetName="infer-jar" isVisible="true" />
         <filter targetName="dist" isVisible="true" />
         <filter targetName="clean" isVisible="true" />
       </targetFilters>

@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.infer;
+package com.thaiopensource.relaxng.input.xml;
 
 import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.relaxng.edit.AttributePattern;
@@ -20,9 +20,7 @@ import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.Name;
-import com.thaiopensource.relaxng.util.ErrorHandlerImpl;
 import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
-import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.infer.AttributeDecl;
 import com.thaiopensource.xml.infer.ChoiceParticle;
 import com.thaiopensource.xml.infer.ElementDecl;
@@ -39,6 +37,7 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.ErrorHandler;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -206,16 +205,17 @@ public class Inferrer {
       return p.getChild().accept(this);
     }
   }
-  public static SchemaCollection infer(String[] args, ErrorHandlerImpl eh) throws SAXException, IOException {
+
+  public static SchemaCollection infer(String[] args, ErrorHandler eh) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
     XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
     XMLReader xr = xrc.createXMLReader();
     xr.setErrorHandler(eh);
     xr.setContentHandler(handler);
-    for (int i = 0; i < args.length - 1; i++)
-       xr.parse(new InputSource(UriOrFile.toUri(args[i])));
+    for (int i = 0; i < args.length; i++)
+       xr.parse(new InputSource(args[i]));
     SchemaCollection sc = new SchemaCollection();
-    sc.setMainUri(UriOrFile.toUri(args[args.length - 1]));
+    sc.setMainUri(args[0]);
     SchemaDocument sd = new SchemaDocument(new Inferrer(handler.getSchema()).grammar);
     sc.getSchemaDocumentMap().put(sc.getMainUri(), sd);
     return sc;
