@@ -4,6 +4,7 @@ import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.Service;
 import com.thaiopensource.validate.auto.SchemaReceiver;
 import com.thaiopensource.validate.auto.SchemaReceiverFactory;
+import com.thaiopensource.validate.Option;
 
 import java.util.Enumeration;
 
@@ -19,4 +20,15 @@ public class SchemaReceiverLoader implements SchemaReceiverFactory {
     }
     return null;
   }
+
+  public Option getOption(String uri) {
+    for (Enumeration enum = service.getProviders(); enum.hasMoreElements();) {
+      SchemaReceiverFactory srf = (SchemaReceiverFactory)enum.nextElement();
+      Option option = srf.getOption(uri);
+      if (option != null)
+        return option;
+    }
+    return null;
+  }
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar ns="http://www.thaiopensource.com/ns/nrl" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="http://www.thaiopensource.com/validate/nrl" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="rules">
       <optional>
@@ -103,7 +103,24 @@
           <ref name="schemaType"/>
         </optional>
         <interleave>
-          <ref name="modeUsage"/>
+          <group>
+            <zeroOrMore>
+              <element name="option">
+                <attribute name="name">
+                  <data type="anyURI"/>
+                </attribute>
+                <optional>
+                  <attribute name="arg"/>
+                </optional>
+                <optional>
+                  <attribute name="mustSupport">
+                    <data type="boolean"/>
+                  </attribute>
+                </optional>
+              </element>
+            </zeroOrMore>
+            <ref name="modeUsage"/>
+          </group>
           <ref name="foreign"/>
         </interleave>
       </element>

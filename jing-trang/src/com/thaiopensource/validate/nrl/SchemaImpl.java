@@ -4,10 +4,16 @@ import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.Uri;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
+import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.OptionArgumentException;
+import com.thaiopensource.validate.OptionArgumentPresenceException;
+import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
@@ -20,16 +26,17 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.LocatorImpl;
 
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-class SchemaImpl implements Schema {
+class SchemaImpl extends AbstractSchema {
   static private final String IMPLICIT_MODE_NAME = "#implicit";
   static private final String WRAPPER_MODE_NAME = "#wrapper";
-  static final String NRL_URI = "http://www.thaiopensource.com/ns/nrl";
+  static final String NRL_URI = SchemaReader.BASE_URI + "nrl";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private Mode defaultBaseMode;
@@ -47,6 +54,17 @@ class SchemaImpl implements Schema {
     }
   }
 
+  static private class MustSupportOption {
+    private final String name;
+    private final PropertyId pid;
+    private final Locator locator;
+
+    MustSupportOption(String name, PropertyId pid, Locator locator) {
+      this.name = name;
+      this.pid = pid;
+      this.locator = locator;
+    }
+  }
 
   private class Handler extends DelegatingContentHandler implements SchemaFuture {
     private final SchemaReceiverImpl sr;
@@ -63,6 +81,10 @@ class SchemaImpl implements Schema {
     private ElementsOrAttributes match;
     private ActionSet actions;
     private AttributeActionSet attributeActions;
+    private String schemaUri;
+    private String schemaType;
+    private PropertyMapBuilder options;
+    private Vector mustSupportOptions = new Vector();
     private ModeUsage modeUsage;
     private boolean anyNamespace;
 
@@ -162,6 +184,8 @@ class SchemaImpl implements Schema {
         parseAllow(attributes);
       else if (localName.equals("context"))
         parseContext(attributes);
+      else if (localName.equals("option"))
+        parseOption(attributes);
       else
         throw new RuntimeException("unexpected element \"" + localName + "\"");
     }
@@ -175,6 +199,10 @@ class SchemaImpl implements Schema {
         foreignDepth--;
         return;
       }
+      if (ceh.getHadErrorOrFatalError())
+        return;
+      if (localName.equals("validate"))
+        finishValidate();
     }
 
     private void parseRules(Attributes attributes) {
@@ -246,28 +274,100 @@ class SchemaImpl implements Schema {
     }
 
     private void parseValidate(Attributes attributes) throws SAXException {
-      String schemaUri = getSchema(attributes);
-      String schemaType = getSchemaType(attributes);
+      schemaUri = getSchema(attributes);
+      schemaType = getSchemaType(attributes);
       if (schemaType == null)
         schemaType = defaultSchemaType;
+      if (actions != null)
+        modeUsage = getModeUsage(attributes);
+      else
+        modeUsage = null;
+      options = new PropertyMapBuilder();
+      mustSupportOptions.clear();
+    }
+
+    private void finishValidate() throws SAXException {
       try {
         if (attributeActions != null) {
-          Schema schema = sr.createChildSchema(new InputSource(schemaUri), schemaType, true);
+          Schema schema = createSubSchema(true);
           attributeActions.addSchema(schema);
         }
         if (actions != null) {
-          modeUsage = getModeUsage(attributes);
-          Schema schema = sr.createChildSchema(new InputSource(schemaUri), schemaType, false);
+          Schema schema = createSubSchema(false);
           actions.addNoResultAction(new ValidateAction(modeUsage, schema));
         }
-        else
-          modeUsage = null;
       }
       catch (IncorrectSchemaException e) {
         hadError = true;
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
+      }
+    }
+
+    private Schema createSubSchema(boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
+      PropertyMap requestedProperties = options.toPropertyMap();
+      Schema schema = sr.createChildSchema(new InputSource(schemaUri),
+                                           schemaType,
+                                           requestedProperties,
+                                           isAttributesSchema);
+      PropertyMap actualProperties = schema.getProperties();
+      for (Enumeration enum = mustSupportOptions.elements(); enum.hasMoreElements();) {
+        MustSupportOption mso = (MustSupportOption)enum.nextElement();
+        Object actualValue = actualProperties.get(mso.pid);
+        if (actualValue == null)
+          error("unsupported_option", mso.name, mso.locator);
+        else if (!actualValue.equals(requestedProperties.get(mso.pid)))
+          error("unsupported_option_arg", mso.name, mso.locator);
+      }
+      return schema;
+    }
+
+    private void parseOption(Attributes attributes) throws SAXException {
+      boolean mustSupport;
+      String mustSupportValue = attributes.getValue("", "mustSupport");
+      if (mustSupportValue != null) {
+        mustSupportValue = mustSupportValue.trim();
+        mustSupport = mustSupportValue.equals("1") || mustSupportValue.equals("true");
+      }
+      else
+        mustSupport = false;
+      String name = Uri.resolve(NRL_URI, attributes.getValue("", "name"));
+      Option option = sr.getOption(name);
+      if (option == null) {
+        if (mustSupport)
+          error("unknown_option", name);
+      }
+      else {
+        String arg = attributes.getValue("", "arg");
+        try {
+          PropertyId pid = option.getPropertyId();
+          Object value = option.valueOf(arg);
+          Object oldValue = options.get(pid);
+          if (oldValue != null) {
+            value = option.combine(new Object[]{oldValue, value});
+            if (value == null)
+              error("duplicate_option", name);
+            else
+              options.put(pid, value);
+          }
+          else {
+            options.put(pid, value);
+            mustSupportOptions.addElement(new MustSupportOption(name, pid,
+                                                                locator == null
+                                                                ? null
+                                                                : new LocatorImpl(locator)));
+          }
+        }
+        catch (OptionArgumentPresenceException e) {
+          error(arg == null ? "option_requires_argument" : "option_unexpected_argument", name);
+        }
+        catch (OptionArgumentException e) {
+          if (arg == null)
+            error("option_requires_argument", name);
+          else
+            error("option_bad_argument", name, arg);
+        }
       }
     }
 
@@ -405,8 +505,9 @@ class SchemaImpl implements Schema {
 
   }
 
-  SchemaImpl(boolean attributesSchema) {
-    this.attributesSchema = attributesSchema;
+  SchemaImpl(PropertyMap properties) {
+    super(properties);
+    this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
     makeBuiltinMode("#allow", AllowAction.class);
     makeBuiltinMode("#pass", PassAction.class);
     makeBuiltinMode("#delve", DelveAction.class);

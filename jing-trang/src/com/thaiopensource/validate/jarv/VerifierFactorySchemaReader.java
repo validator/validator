@@ -5,6 +5,8 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.Validator;
+import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.AbstractSchema;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierFactory;
 import org.xml.sax.InputSource;
@@ -15,7 +17,7 @@ import java.io.IOException;
 public class VerifierFactorySchemaReader implements SchemaReader {
   private final VerifierFactory vf;
 
-  static private class SchemaImpl implements Schema {
+  static private class SchemaImpl extends AbstractSchema {
     org.iso_relax.verifier.Schema schema;
 
     private SchemaImpl(org.iso_relax.verifier.Schema schema) {
@@ -75,4 +77,7 @@ public class VerifierFactorySchemaReader implements SchemaReader {
 
   }
 
+  public Option getOption(String uri) {
+    return null;
+  }
 }

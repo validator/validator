@@ -22,4 +22,14 @@ public class SchemaReaderLoader implements SchemaReaderFactory {
     }
     return null;
   }
+
+  public Option getOption(String uri) {
+    for (Enumeration enum = service.getProviders(); enum.hasMoreElements();) {
+      SchemaReaderFactory srf = (SchemaReaderFactory)enum.nextElement();
+      Option option = srf.getOption(uri);
+      if (option != null)
+        return option;
+    }
+    return null;
+  }
 }

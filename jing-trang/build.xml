@@ -132,27 +132,30 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </jing>
 </target>
 
-<target name="split" depends="init, check-split" unless="split-not-required">
+<target name="test" depends="rng-test,mns-test,nrl-test,schematron-test,xsd-test,regex-test"
+        description="Test all aspects of validation"/>
+
+<target name="rng-split" depends="init, check-rng-split" unless="rng-split-not-required">
   <jing rngfile="eg/testSuite.rng">
     <fileset dir="test" includes="spectest.xml"/>
   </jing>
-  <delete dir="build/test"/>
-  <mkdir dir="build/test"/>
-  <style basedir="test" destdir="build/test" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/test"/>
+  <delete dir="build/rngtest"/>
+  <mkdir dir="build/rngtest"/>
+  <style basedir="test" destdir="build/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="build/rngtest"/>
   </style>
 </target>
 
-<target name="check-split">
-  <uptodate property="split-not-required" targetfile="build/test/spectest.stamp">
+<target name="check-rng-split">
+  <uptodate property="rng-split-not-required" targetfile="build/rngtest/spectest.stamp">
     <srcfiles dir="test" includes="spectest.xml"/>
   </uptodate>
 </target>
 
-<target name="test" depends="jar,split" description="Test validation in the XML syntax">
+<target name="rng-test" depends="jar,rng-split" description="Test validation in the RELAX NG XML syntax">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/test/out.log"/>
-    <arg value="build/test"/>
+    <arg value="build/rngtest/out.log"/>
+    <arg value="build/rngtest"/>
     <classpath>
       <pathelement location="build/jing.jar"/>
       <pathelement path="${java.class.path}"/>
@@ -423,10 +426,10 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist,mns-test"
+<target name="dist" depends="jar,exegen,validate,test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist"
   description="Build a .tar.gz containing the complete relaxng website" >
   <zip zipfile="build/jing-src.zip">
-    <fileset dir="src" includes="**/*.java,**/*.properties,META-INF/services/*"/>
+    <fileset dir="src" includes="**/*.java,**/*.jj,**/resources/*,META-INF/services/*"/>
     <fileset dir="build/src" includes="**/*.java"/>
     <zipfileset dir="build" includes="jing-manifest.txt" fullpath="META-INF/MANIFEST.MF"/>
   </zip>

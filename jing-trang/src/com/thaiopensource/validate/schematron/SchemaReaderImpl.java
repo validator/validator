@@ -3,11 +3,13 @@ package com.thaiopensource.validate.schematron;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
+import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.xml.sax.CountingErrorHandler;
@@ -48,6 +50,12 @@ class SchemaReaderImpl implements SchemaReader {
   private final Schema schematronSchema;
   private static final String SCHEMATRON_SCHEMA = "schematron.rnc";
   private static final String SCHEMATRON_STYLESHEET = "schematron.xsl";
+  private static final PropertyId[] supportedPropertyIds = {
+    ValidateProperty.ERROR_HANDLER,
+    ValidateProperty.XML_READER_CREATOR,
+    SchematronProperty.DIAGNOSE,
+    SchematronProperty.PHASE,
+  };
 
   SchemaReaderImpl(TransformerFactory transformerFactory) throws TransformerConfigurationException, IncorrectSchemaException {
     this.transformerFactoryClass = transformerFactory.getClass();
@@ -68,6 +76,10 @@ class SchemaReaderImpl implements SchemaReader {
     catch (IOException e) {
       throw new IncorrectSchemaException();
     }
+  }
+
+  public Option getOption(String uri) {
+    return SchematronProperty.getOption(uri);
   }
 
   private void initTransformerFactory(TransformerFactory factory) {
@@ -398,7 +410,7 @@ class SchemaReaderImpl implements SchemaReader {
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
       Templates templates = transformerFactory.newTemplates(source);
-      return new SchemaImpl(templates);
+      return new SchemaImpl(templates, properties, supportedPropertyIds);
     }
     catch (TransformerConfigurationException e) {
       throw toSAXException(e, errorListener.getHadError()

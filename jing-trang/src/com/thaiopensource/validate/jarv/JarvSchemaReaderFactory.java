@@ -2,6 +2,7 @@ package com.thaiopensource.validate.jarv;
 
 import com.thaiopensource.validate.SchemaReaderFactory;
 import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.Option;
 import org.iso_relax.verifier.VerifierFactory;
 import org.iso_relax.verifier.VerifierConfigurationException;
 
@@ -13,6 +14,10 @@ public class JarvSchemaReaderFactory implements SchemaReaderFactory {
         return new VerifierFactorySchemaReader(vf);
     }
     catch (VerifierConfigurationException e) { }
+    return null;
+  }
+
+  public Option getOption(String uri) {
     return null;
   }
 }

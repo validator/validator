@@ -29,4 +29,5 @@ public interface Schema {
    * @see ValidateProperty#ERROR_HANDLER
    */
   Validator createValidator(PropertyMap properties);
+  PropertyMap getProperties();
 }

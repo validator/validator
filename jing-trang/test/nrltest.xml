@@ -6,7 +6,7 @@
 </testCase>
 <testCase>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <namespace ns="http://www.example.org/a">
   <allow/>
 </namespace>
@@ -47,7 +47,7 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 </testCase>
 <testCase>
 <incorrect>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl" startMode="foo">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="foo">
 <mode name="foo" extends="bar"/>
 <mode name="bar" extends="foo"/>
 </rules>
@@ -55,7 +55,7 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 </testCase>
 <testCase>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl"/>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl"/>
 </correct>
 <invalid>
 <foo/>
@@ -861,7 +861,7 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 </grammar>
 </resource>
 <correct>
-<rules startMode="root" xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules startMode="root" xmlns="http://www.thaiopensource.com/validate/nrl">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
       <validate schema="xhtml.rng" useMode="#pass">
@@ -1265,7 +1265,7 @@ default namespace = "http://www.example.com/version"
 element linux|windows { empty }
 </resource>
 <correct>
-<rules startMode="root" xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules startMode="root" xmlns="http://www.thaiopensource.com/validate/nrl">
   <mode name="root">
     <namespace ns="">
       <validate schema="ibtwsh6.rng" useMode="linux"/>
@@ -1367,7 +1367,7 @@ element linux|windows { empty }
 </testCase>
 <testCase>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <anyNamespace>
   <allow/>
 </anyNamespace>
@@ -1407,7 +1407,7 @@ attribute a:x { text },
 attribute a:y { text }
 </resource>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <anyNamespace>
   <allow/>
 </anyNamespace>
@@ -1447,7 +1447,7 @@ attribute a:y { text }
 </testCase>
 <testCase>
 <resource name="ab.mns">
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <namespace ns="http://www.example.org/a">
   <allow/>
 </namespace>
@@ -1457,7 +1457,7 @@ attribute a:y { text }
 </rules>
 </resource>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl" startMode="start">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="start">
 <mode name="start" extends="c">
   <namespace ns="http://www.example.org/a">
     <validate schema="ab.mns" useMode="cover"/>
@@ -1527,7 +1527,7 @@ attribute a:y { text }
 </testCase>
 <testCase>
 <resource name="atts.mns">
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <namespace match="attributes" ns="http://www.example.org/a">
   <allow/>
 </namespace>
@@ -1537,7 +1537,7 @@ attribute a:y { text }
 </rules>
 </resource>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/nrl">
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
 <anyNamespace>
   <allow/>
 </anyNamespace>

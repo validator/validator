@@ -6,6 +6,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.Option;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -68,5 +69,9 @@ public class AutoSchemaReader implements SchemaReader {
     catch (RuntimeException e) {
       throw sf.unwrapException(e);
     }
+  }
+
+  public Option getOption(String uri) {
+    return srf.getOption(uri);
   }
 }

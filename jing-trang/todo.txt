@@ -1,3 +1,11 @@
+NRL reject messages should specify mode
+
+Driver should check for options inappropriate for schema language
+
+Use a rewindable stream during autodetection
+
+Maybe need to redesign reset() so that it can be used to cleanup the thread.
+
 Insist that the property
 map passed to schema.createValidator contains an error handler or
 maybe use DraconianErrorHandler by default.

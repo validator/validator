@@ -24,4 +24,6 @@ public interface SchemaReaderFactory {
    * schema language
    */
   public SchemaReader createSchemaReader(String namespaceUri);
+
+  Option getOption(String uri);
 }

@@ -6,6 +6,7 @@ import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
+import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.BuildException;
@@ -36,7 +37,7 @@ public class SchemaReceiverImpl implements SchemaReceiver {
     final PatternFuture pf = SchemaBuilderImpl.installHandlers(parser, xr, eh, dlf, pb);
     return new SchemaFuture() {
       public Schema getSchema() throws IncorrectSchemaException, SAXException, IOException {
-        return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA)),
+        return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(NrlProperty.ATTRIBUTES_SCHEMA)),
                                             pb, properties);
       }
       public RuntimeException unwrapException(RuntimeException e) throws SAXException, IOException, IncorrectSchemaException {

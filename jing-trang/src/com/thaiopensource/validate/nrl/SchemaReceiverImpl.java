@@ -1,21 +1,19 @@
 package com.thaiopensource.validate.nrl;
 
+import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
-import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.rng.RngProperty;
-import com.thaiopensource.validate.rng.SAXSchemaReader;
+import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
-import com.thaiopensource.validate.nrl.SchemaImpl;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.validate.auto.SchemaReceiver;
 import com.thaiopensource.validate.auto.SchemaReceiverFactory;
-import org.xml.sax.ErrorHandler;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
+import com.thaiopensource.validate.rng.SAXSchemaReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -27,29 +25,33 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private static final String NRL_SCHEMA = "nrl.rng";
   private static final String RNC_MEDIA_TYPE = "application/x-rnc";
   private final PropertyMap properties;
-  private final PropertyMap attributeSchemaProperties;
   private final boolean attributesSchema;
   private final SchemaReader autoSchemaLanguage;
   private Schema nrlSchema = null;
+  private static final PropertyId subSchemaProperties[] = {
+    ValidateProperty.ERROR_HANDLER,
+    ValidateProperty.XML_READER_CREATOR,
+    ValidateProperty.ENTITY_RESOLVER,
+    SchemaReceiverFactory.PROPERTY,
+  };
 
   public SchemaReceiverImpl(PropertyMap properties) {
-    this.attributesSchema = properties.contains(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA);
-    PropertyMapBuilder builder = new PropertyMapBuilder(properties);
-    if (attributesSchema) {
-      attributeSchemaProperties = properties;
-      builder.put(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA, null);
-      this.properties = builder.toPropertyMap();
+    this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
+    PropertyMapBuilder builder = new PropertyMapBuilder();
+    for (int i = 0; i < subSchemaProperties.length; i++) {
+      Object value = properties.get(subSchemaProperties[i]);
+      if (value != null)
+        builder.put(subSchemaProperties[i], value);
     }
-    else {
-      this.properties = properties;
-      NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA.add(builder);
-      attributeSchemaProperties = builder.toPropertyMap();
-    }
+    this.properties = builder.toPropertyMap();
     this.autoSchemaLanguage = new AutoSchemaReader(SchemaReceiverFactory.PROPERTY.get(properties));
   }
 
   public SchemaFuture installHandlers(XMLReader xr) {
-    return new SchemaImpl(attributesSchema).installHandlers(xr, this);
+    PropertyMapBuilder builder = new PropertyMapBuilder(properties);
+    if (attributesSchema)
+      NrlProperty.ATTRIBUTES_SCHEMA.add(builder);
+    return new SchemaImpl(builder.toPropertyMap()).installHandlers(xr, this);
   }
 
   Schema getNrlSchema() throws IOException, IncorrectSchemaException, SAXException {
@@ -76,10 +78,21 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return properties;
   }
 
-  Schema createChildSchema(InputSource inputSource, String schemaType, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
-    SchemaReader lang = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaLanguage;
-    return lang.createSchema(inputSource,
-                             isAttributesSchema ? attributeSchemaProperties : properties);
+  Schema createChildSchema(InputSource inputSource, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
+    SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaLanguage;
+    PropertyMapBuilder builder = new PropertyMapBuilder(properties);
+    if (isAttributesSchema)
+      NrlProperty.ATTRIBUTES_SCHEMA.add(builder);
+    for (int i = 0, len = options.size(); i < len; i++)
+      builder.put(options.getKey(i), options.get(options.getKey(i)));
+    return reader.createSchema(inputSource, builder.toPropertyMap());
+  }
+
+  Option getOption(String uri) {
+    Option option = autoSchemaLanguage.getOption(uri);
+    if (option != null)
+      return option;
+    return CompactSchemaReader.getInstance().getOption(uri);
   }
 
   private static boolean isRnc(String schemaType) {

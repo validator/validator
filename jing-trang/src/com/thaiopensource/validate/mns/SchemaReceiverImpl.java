@@ -7,6 +7,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.validate.rng.SAXSchemaReader;
 import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
+import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
@@ -32,16 +33,16 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private Schema mnsSchema = null;
 
   public SchemaReceiverImpl(PropertyMap properties) {
-    this.attributesSchema = properties.contains(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA);
+    this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
     if (attributesSchema) {
       attributeSchemaProperties = properties;
-      builder.put(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA, null);
+      builder.put(NrlProperty.ATTRIBUTES_SCHEMA, null);
       this.properties = builder.toPropertyMap();
     }
     else {
       this.properties = properties;
-      NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA.add(builder);
+      NrlProperty.ATTRIBUTES_SCHEMA.add(builder);
       attributeSchemaProperties = builder.toPropertyMap();
     }
     this.autoSchemaLanguage = new AutoSchemaReader(SchemaReceiverFactory.PROPERTY.get(properties));

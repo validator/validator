@@ -1,10 +1,10 @@
 package com.thaiopensource.validate.schematron;
 
-import org.apache.xalan.processor.TransformerFactoryImpl;
+import com.icl.saxon.TransformerFactoryImpl;
 
 import javax.xml.transform.TransformerFactory;
 
-public class XalanSchemaReaderFactory extends SchematronSchemaReaderFactory {
+public class SaxonSchemaReaderFactory extends SchematronSchemaReaderFactory {
   public TransformerFactory newTransformerFactory() {
     return new TransformerFactoryImpl();
   }

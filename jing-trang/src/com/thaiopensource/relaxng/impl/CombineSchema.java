@@ -1,14 +1,16 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.Validator;
-import com.thaiopensource.util.PropertyMap;
 
-public class CombineSchema implements Schema {
+public class CombineSchema extends AbstractSchema {
   private final Schema schema1;
   private final Schema schema2;
 
-  public CombineSchema(Schema schema1, Schema schema2) {
+  public CombineSchema(Schema schema1, Schema schema2, PropertyMap properties) {
+    super(properties);
     this.schema1 = schema1;
     this.schema2 = schema2;
   }

@@ -8,6 +8,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
+import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
@@ -29,7 +30,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 
-class SchemaImpl implements Schema {
+class SchemaImpl extends AbstractSchema {
   static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
