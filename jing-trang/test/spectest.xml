@@ -1627,7 +1627,22 @@ applies at the syntax level.</documentation>
 </testSuite>
 <testSuite>
 <section>4.8</section>
-<documentation>TODO</documentation>
+<testCase>
+<section>4.8</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+  <attribute>
+    <name>bar</name>
+  </attribute>
+</element>
+</correct>
+<valid>
+<eg:foo xmlns:eg="http://www.example.com" eg:bar="x"/>
+</valid>
+<invalid>
+<eg:foo xmlns:eg="http://www.example.com" bar="x"/>
+</invalid>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.9</section>
