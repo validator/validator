@@ -6,7 +6,7 @@ Implement diagnostics: checking, XSL, output, property
 
 Implement keys in XSL
 
-Try to get it working in Xalans
+Try to get it working in Xalan
 
 Use system-id in LocationFilter
 
