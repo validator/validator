@@ -2551,13 +2551,62 @@ head =		element head {
 </xs:schema>
 </resource>
 <correct>
+<!--
+  	ibtwsh.dtd
+  	This is the Itsy Bitsy Teeny Weeny Simple Hypertext DTD.
+  	Its public identifier is -//XML-DEV List//DTD IBTWSH 6.0//EN
+  	The contents are dedicated to the public domain by
+  		the author, John Cowan <cowan@ccil.org>, except that
+  		John Cowan retains the moral right to be known as the author.
+  	This is draft 6.2
+  	Diff from 6.1: rel|rel now rel|rev, th|td@headers now IDREFS,
+  		table width no longer an integer, non-basic table attrs gone,
+  		rowspan and colspan must be non-negative
+  	Diff from 6.0: added attributes to ul, comment about img, new meta
+-->
+<!--
+  This is a RELAX NG schema which describes a subset of XHTML Basic for
+  use within other schemas.  It is by intention equivalent
+  (within its scope) to -//W3C//DTD XHTML 1.1//EN, but is
+  not a derived work in the copyright sense.
+-->
+<!--
+  It is often convenient for XML documents to have a bit of
+  documentation somewhere in them.  In the absence of a schema like
+  this one, that documentation winds up being <text/> only, which is
+  a pity, because rich text adds measurably to the readability of
+  documents.  By incorporating this schema by reference (as an
+  external parameter entity) into another schema, that schema inherits
+  the capabilities of this one.  Using HTML-compatible elements
+  and attributes allows the documentation to be passed straight
+  through to HTML renderers.
+-->
+<!--
+  Current HTML renderers can cope with most XML tags, but empty
+  tags require special treatment.  Inserting a space before the
+  terminating "/>" usually makes the "/" (which is not HTML)
+  invisible.  Using "<tag></tag>" is not as effective, as the
+  latter is often misinterpreted as a second "<tag>".
+-->
+<!--
+  Note that since the elements of this schema are intended to be
+  used within domain-specific elements of the surrounding DTD,
+  it is not necessary that every fragment begin with an "html"
+  element, as in HTML.  Recommended <define>s for elements
+  containing documentation are "horiz.model" for simple
+  text fragments and "struct.model" for documents in extenso.
+-->
+<!-- Declarations -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <!-- Common attributes -->
+  <!-- All elements (except full-document elements) can have these attributes -->
   <xs:attributeGroup name="all">
     <xs:attribute name="id" type="xs:ID"/>
     <xs:attribute name="class" type="xs:token"/>
     <xs:attribute name="title"/>
   </xs:attributeGroup>
+  <!-- All non-empty elements can have these attributes -->
   <xs:attributeGroup name="i18n">
     <xs:attribute ref="xml:lang"/>
     <xs:attribute name="dir">
@@ -2573,6 +2622,7 @@ head =		element head {
     <xs:attributeGroup ref="all"/>
     <xs:attributeGroup ref="i18n"/>
   </xs:attributeGroup>
+  <!-- Models -->
   <xs:complexType name="horiz.model" mixed="true">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="horiz"/>
@@ -2592,6 +2642,7 @@ head =		element head {
     </xs:sequence>
     <xs:attributeGroup ref="basic"/>
   </xs:complexType>
+  <!-- Horizontal formatting elements -->
   <xs:element name="horiz" abstract="true"/>
   <xs:element name="a" substitutionGroup="horiz">
     <xs:complexType>
@@ -2624,6 +2675,7 @@ head =		element head {
   <xs:element name="span" substitutionGroup="horiz.other" type="horiz.model"/>
   <xs:element name="strong" substitutionGroup="horiz.other" type="horiz.model"/>
   <xs:element name="var" substitutionGroup="horiz.other" type="horiz.model"/>
+  <!-- Vertical formatting elements -->
   <xs:element name="vert" abstract="true"/>
   <xs:element name="header" abstract="true" substitutionGroup="vert"/>
   <xs:element name="h1" substitutionGroup="header" type="horiz.model"/>
@@ -2739,6 +2791,7 @@ head =		element head {
   <xs:element name="div" substitutionGroup="vert.other" type="struct.model"/>
   <xs:element name="p" substitutionGroup="vert.other" type="horiz.model"/>
   <xs:element name="pre" substitutionGroup="vert.other" type="horiz.model"/>
+  <!-- Support for complete HTML documents -->
   <xs:element name="html">
     <xs:complexType>
       <xs:sequence>
@@ -2780,6 +2833,7 @@ head =		element head {
     </xs:complexType>
   </xs:element>
 </xs:schema>
+<!-- END OF ibtwsh.rnc -->
 </correct>
 </xsd>
 </testCase>
@@ -3272,6 +3326,45 @@ element foo {
     <xs:complexType mixed="true"/>
   </xs:element>
 </xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+#0
+grammar {
+  #1
+  foo []
+  #2
+  div {
+  #3
+  foo []
+  #4
+  foo = element foo { empty }
+  }
+  #5
+  foo[]
+  #6
+}
+#7
+</correct>
+</compact>
+<xsd>
+<correct>
+<!-- 0 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+  <!-- 1 -->
+  <!-- 2 -->
+  <!-- 3 -->
+  <!-- 4 -->
+  <xs:element name="foo">
+    <xs:complexType/>
+  </xs:element>
+  <!-- 5 -->
+  <!-- 6 -->
+</xs:schema>
+<!-- 7 -->
 </correct>
 </xsd>
 </testCase>

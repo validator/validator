@@ -73,8 +73,6 @@ to use redefine; can combine two definitions from include parent and
 include descendant, not two definitions from two include children; in
 this case, rename defines in childen and add define to parent.
 
-Deal with comments
-
 Deal with annotations (provide special support for xs:key/xs:keyRef/xs:unique).
 
 Better support for xsd:documentation:
@@ -98,3 +96,6 @@ Add an annotation on elements to convey <start> info.
 
 Handle the case where the head of a substitution group should be a non-abstract element
 (remember to deal with type derivation restriction).
+
+Deal with non top-level commments.
+

@@ -46,6 +46,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeNotAllowedContent;
 import com.thaiopensource.relaxng.output.xsd.basic.ComplexType;
 import com.thaiopensource.relaxng.output.xsd.basic.Annotated;
 import com.thaiopensource.relaxng.output.xsd.basic.Annotation;
+import com.thaiopensource.relaxng.output.xsd.basic.Comment;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
@@ -731,6 +732,10 @@ public class BasicOutput {
     public void visitRoot(RootDeclaration decl) {
       decl.getParticle().accept(globalElementOutput);
     }
+
+    public void visitComment(Comment comment) {
+      xw.comment(comment.getContent());
+    }
   }
 
   class MovedStructureOutput implements StructureVisitor {
@@ -801,6 +806,7 @@ public class BasicOutput {
   }
 
   void output() {
+    outputCommentList(schema.getLeadingComments());
     xw.startElement(xs("schema"));
     xw.attribute("xmlns:" + xsPrefix, WellKnownNamespaces.XML_SCHEMA);
     xw.attribute("elementFormDefault", "qualified");
@@ -829,6 +835,7 @@ public class BasicOutput {
       outputOther();
     }
     xw.endElement();
+    outputCommentList(schema.getTrailingComments());
     xw.close();
   }
 
@@ -1021,4 +1028,8 @@ public class BasicOutput {
     xw.endElement();
   }
 
+  private void outputCommentList(List list) {
+    for (Iterator iter = list.iterator(); iter.hasNext();)
+      xw.comment(((Comment)iter.next()).getContent());
+  }
 }

@@ -32,6 +32,7 @@ import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.TextAnnotation;
+import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.output.xsd.basic.Occurs;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeUnion;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRestriction;
@@ -498,6 +499,7 @@ public class BasicBuilder {
     }
 
     public Object visitDefine(DefineComponent c) {
+      addLeadingComments(c);
       String name = c.getName();
       SourceLocation location = c.getSourceLocation();
       Annotation annotation = makeAnnotation(c);
@@ -535,32 +537,39 @@ public class BasicBuilder {
                                         annotation);
         }
       }
+      addTrailingComments(c);
       return null;
     }
 
     public Object visitDiv(DivComponent c) {
+      addLeadingComments(c);
+      addInitialChildComments(c);
       boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
       groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
       groupEnableAbstractElements = saveGroupEnableAbstractElements;
+      addTrailingComments(c);
       return null;
     }
 
     public Object visitInclude(IncludeComponent c) {
+      addLeadingComments(c);
+      addInitialChildComments(c);
       boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
       groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
       String uri = c.getHref();
       Schema sub = schema.addInclude(uri, c.getSourceLocation(), makeAnnotation(c));
       GrammarPattern includedGrammar = si.getSchema(uri);
-      includedGrammar.componentsAccept(new BasicBuilder(er,
-                                                        si,
-                                                        guide,
-                                                        sub,
-                                                        resolveNamespace(c.getNs()),
-                                                        includedGrammar,
-                                                        groupEnableAbstractElements).schemaBuilder);
+      new BasicBuilder(er,
+                       si,
+                       guide,
+                       sub,
+                       resolveNamespace(c.getNs()),
+                       includedGrammar,
+                       groupEnableAbstractElements).processGrammar(includedGrammar);
       groupEnableAbstractElements = saveGroupEnableAbstractElements;
+      addTrailingComments(c);
       return null;
     }
   }
@@ -577,9 +586,16 @@ public class BasicBuilder {
   static Schema buildBasicSchema(SchemaInfo si, Guide guide, ErrorReporter er) {
     GrammarPattern grammar = si.getGrammar();
     Schema schema = new Schema(grammar.getSourceLocation(), makeAnnotation(grammar), OutputDirectory.MAIN);
-    grammar.componentsAccept(new BasicBuilder(er, si, guide, schema, "", grammar,
-                                              guide.getDefaultGroupEnableAbstractElements()).schemaBuilder);
+    new BasicBuilder(er, si, guide, schema, "", grammar,
+                     guide.getDefaultGroupEnableAbstractElements()).processGrammar(grammar);
     return schema;
+  }
+
+  private void processGrammar(GrammarPattern grammar) {
+    copyComments(grammar.getLeadingComments(), schema.getLeadingComments());
+    addInitialChildComments(grammar);
+    grammar.componentsAccept(schemaBuilder);
+    copyComments(grammar.getFollowingElementAnnotations(), schema.getTrailingComments());
   }
 
   private static SimpleType makeUnionWithEmptySimpleType(SimpleType type, SourceLocation location) {
@@ -655,14 +671,18 @@ public class BasicBuilder {
                      ? annotated.getFollowingElementAnnotations()
                      : annotated.getChildElementAnnotations());
     for (Iterator iter = elements.iterator(); iter.hasNext();) {
-      ElementAnnotation element = (ElementAnnotation)iter.next();
-      if (element.getNamespaceUri().equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS)
-          && element.getLocalName().equals("documentation")) {
-        List children = element.getChildren();
-        if (children.size() == 1) {
-          AnnotationChild child = (AnnotationChild)children.get(0);
-          if (child instanceof TextAnnotation)
-            return new Annotation(((TextAnnotation)child).getValue());
+      Object obj = iter.next();
+      // obj might be a Comment
+      if (obj instanceof ElementAnnotation) {
+        ElementAnnotation element = (ElementAnnotation)obj;
+        if (element.getNamespaceUri().equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS)
+                && element.getLocalName().equals("documentation")) {
+          List children = element.getChildren();
+          if (children.size() == 1) {
+            AnnotationChild child = (AnnotationChild)children.get(0);
+            if (child instanceof TextAnnotation)
+              return new Annotation(((TextAnnotation)child).getValue());
+          }
         }
       }
     }
@@ -681,5 +701,38 @@ public class BasicBuilder {
         current = false;
     }
     return current;
+  }
+
+  private void addLeadingComments(Annotated annotated) {
+    addComments(annotated.getLeadingComments());
+  }
+
+  private void addInitialChildComments(Annotated annotated) {
+    addComments(annotated.getChildElementAnnotations());
+  }
+
+  private void addTrailingComments(Annotated annotated) {
+    addComments(annotated.getFollowingElementAnnotations());
+  }
+
+  private void addComments(List list) {
+    for (Iterator iter = list.iterator(); iter.hasNext();) {
+      Object obj = iter.next();
+      if (obj instanceof Comment) {
+        Comment comment = (Comment)obj;
+        schema.addComment(comment.getValue(), comment.getSourceLocation());
+      }
+    }
+  }
+
+  private void copyComments(List fromList, List toList) {
+    for (Iterator iter = fromList.iterator(); iter.hasNext();) {
+      Object obj = iter.next();
+      if (obj instanceof Comment) {
+        Comment comment = (Comment)obj;
+        toList.add(new com.thaiopensource.relaxng.output.xsd.basic.Comment(comment.getSourceLocation(),
+                                                                           comment.getValue()));
+      }
+    }
   }
 }
