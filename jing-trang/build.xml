@@ -79,7 +79,11 @@
 
 <target name="validate" depends="jar">
   <jing rngfile="xhtml/xhtml-basic.rng">
-     <fileset dir="doc" includes="**/*.html"/>
+    <fileset dir="doc" includes="**/*.html"/>
+  </jing>
+  <jing rngfile="eg/relaxng.rng">
+    <fileset dir="eg" includes="relaxng.rng"/>
+    <fileset dir="xhtml" includes="**/*.rng"/>
   </jing>
 </target>
 
@@ -95,13 +99,14 @@
     <fileset dir="." includes="copying.txt"/>
     <fileset dir="doc" includes="*.html"/>
     <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
+    <fileset dir="eg" includes="relaxng.rng"/>
   </copy>
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
   <unzip src="build/xhtml-rng.zip" dest="build"/>
   <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
 
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,xhtml/**"/>
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**"/>
 
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 
