@@ -1,6 +1,6 @@
 <project name="regex" default="jar" basedir=".">
 
-<property name="version" value="20020430"/>
+<property name="regex-version" value="20020430"/>
 <property name="build.xml" value="build.xml"/>
 <property name="build.dir" value="build"/>
 <property name="classes.dir" value="${build.dir}/classes"/>
@@ -144,25 +144,25 @@
   <mkdir dir="${doc.build.dir}"/>
   <copy file="${doc.src.dir}/readme.html"
         todir="${doc.build.dir}"/>
-  <replace file="${doc.build.dir}/readme.html" token="@VERSION@" value="${version}"/>
+  <replace file="${doc.build.dir}/readme.html" token="@VERSION@" value="${regex-version}"/>
 </target>
 
 <target name="dist" depends="jar,javadoc,doc,test">
   <zip zipfile="${build.dir}/xsdregex.zip">
-    <zipfileset dir="${doc.build.dir}" prefix="xsdregex-${version}" includes="readme.html"/>
-    <zipfileset dir="${doc.src.dir}" prefix="xsdregex-${version}/doc-src"/>
-    <zipfileset prefix="xsdregex-${version}/src" dir="src"
+    <zipfileset dir="${doc.build.dir}" prefix="xsdregex-${regex-version}" includes="readme.html"/>
+    <zipfileset dir="${doc.src.dir}" prefix="xsdregex-${regex-version}/doc-src"/>
+    <zipfileset prefix="xsdregex-${regex-version}/src" dir="src"
       includes="com/thaiopensource/datatype/xsd/regex/**/*.java,
                 com/thaiopensource/datatype/xsd/regex/**/*.properties,
                 com/thaiopensource/xml/util/Naming.java,
                 ${util.src},
                 META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"/>
-    <zipfileset prefix="xsdregex-${version}/test" dir="test"
+    <zipfileset prefix="xsdregex-${regex-version}/test" dir="test"
       includes="regextest.xml,regextest.rnc"/>
-    <zipfileset prefix="xsdregex-${version}" dir="." includes="copying.txt"/>
-    <zipfileset dir="." includes="${jar.file}" fullpath="xsdregex-${version}/xsdregex.jar"/>
-    <zipfileset dir="." includes="${build.xml}" fullpath="xsdregex-${version}/build.xml"/>
-    <zipfileset dir="${apidoc.dir}" prefix="xsdregex-${version}/apidoc"/>
+    <zipfileset prefix="xsdregex-${regex-version}" dir="." includes="copying.txt"/>
+    <zipfileset dir="." includes="${jar.file}" fullpath="xsdregex-${regex-version}/xsdregex.jar"/>
+    <zipfileset dir="." includes="${build.xml}" fullpath="xsdregex-${regex-version}/build.xml"/>
+    <zipfileset dir="${apidoc.dir}" prefix="xsdregex-${regex-version}/apidoc"/>
   </zip>
 </target>
 
