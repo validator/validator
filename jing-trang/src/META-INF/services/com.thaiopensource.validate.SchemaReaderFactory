@@ -1,2 +1,3 @@
 com.thaiopensource.validate.jarv.JarvSchemaReaderFactory
 com.thaiopensource.validate.xerces.XsdSchemaReaderFactory
+com.thaiopensource.validate.schematron.SchematronSchemaReaderFactory
