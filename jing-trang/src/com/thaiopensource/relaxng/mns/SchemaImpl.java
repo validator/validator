@@ -215,7 +215,7 @@ class SchemaImpl implements Schema {
     }
 
     private void parseProcess(boolean strict, boolean isAttribute, Attributes attributes) throws SAXException {
-      String[] modeNames = getModeNames(attributes);
+      String[] modeNames = getInModes(attributes);
       SchemaImpl.Mode[] modes = getModes(modeNames);
       for (int i = 0; i < modes.length; i++) {
         if (isAttribute) {
@@ -238,7 +238,7 @@ class SchemaImpl implements Schema {
     }
 
     private void parseValidate(boolean isAttribute, Attributes attributes) throws SAXException {
-      String[] modeNames = getModeNames(attributes);
+      String[] modeNames = getInModes(attributes);
       Mode[] modes = getModes(modeNames);
       String ns = getNs(attributes, isAttribute);
       String schemaUri = getSchema(attributes);
@@ -366,11 +366,11 @@ class SchemaImpl implements Schema {
       return modes;
     }
 
-    private String[] getModeNames(Attributes attributes) {
-      String modesValue = attributes.getValue("", "modes");
-      if (modesValue == null)
+    private String[] getInModes(Attributes attributes) {
+      String inModes = attributes.getValue("", "inModes");
+      if (inModes == null)
         return new String[] { DEFAULT_MODE_NAME };
-      return StringSplitter.split(modesValue);
+      return StringSplitter.split(inModes);
     }
 
 

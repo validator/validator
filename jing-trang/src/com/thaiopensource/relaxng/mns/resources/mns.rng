@@ -117,7 +117,7 @@
       </choice>
       <interleave>
         <optional>
-          <ref name="modesAtt"/>
+          <ref name="inModesAtt"/>
         </optional>
         <ref name="foreign"/>
       </interleave>
@@ -129,7 +129,7 @@
       <data type="anyURI"/>
     </attribute>
     <optional>
-      <ref name="modesAtt"/>
+      <ref name="inModesAtt"/>
     </optional>
   </define>
   <define name="nsAtt">
@@ -142,8 +142,8 @@
       <ref name="mode"/>
     </attribute>
   </define>
-  <define name="modesAtt">
-    <attribute name="modes">
+  <define name="inModesAtt">
+    <attribute name="inModes">
       <list>
         <oneOrMore>
           <ref name="mode"/>

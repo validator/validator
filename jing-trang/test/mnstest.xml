@@ -386,8 +386,8 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
-  <strict modes="#default"/>
-  <lax modes="a"/>
+  <strict inModes="#default"/>
+  <lax inModes="a"/>
 </rules>
 </correct>
 <valid>
@@ -427,9 +427,9 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate modes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
-  <strict modes="#default"/>
-  <lax modes="a"/>
+  <validate inModes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
+  <strict inModes="#default"/>
+  <lax inModes="a"/>
 </rules>
 </correct>
 <valid>
@@ -482,15 +482,15 @@
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict modes="a b"/>
-  <strict modes="b c"/>
+  <strict inModes="a b"/>
+  <strict inModes="b c"/>
 </rules>
 </incorrect>
 </testCase>
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict modes="a b a"/>
+  <strict inModes="a b a"/>
 </rules>
 </incorrect>
 </testCase>
@@ -1410,20 +1410,20 @@
 <rules xmlns="http://www.thaiopensource.com/ns/mns" startMode="xhtml">
   <validate ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
             schema="rdfxml.rng"
-            modes="rdf"
+            inModes="rdf"
             useMode="anything"/>
   <validate ns="http://www.w3.org/1999/xhtml"
             schema="xhtml.rng"
-            modes="xhtml"
+            inModes="xhtml"
             useMode="nothing"
             prune="true">
     <context useMode="rdf">
       <element name="head"/>
     </context>
   </validate>
-  <strict modes="nothing xhtml"/>
-  <strictAttributes modes="nothing"/>
-  <lax modes="anything"/>
+  <strict inModes="nothing xhtml"/>
+  <strictAttributes inModes="nothing"/>
+  <lax inModes="anything"/>
 </rules>
 </correct>
 <valid>

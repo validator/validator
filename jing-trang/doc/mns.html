@@ -235,13 +235,13 @@ validate =
   }
   | element validateAttributes { validateModel }
 
-process = element lax|strict|laxAttributes|strictAttributes { modesAtt? }
+process = element lax|strict|laxAttributes|strictAttributes { inModesAtt? }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt?
+validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
 
 nsAtt = attribute ns { xsd:anyURI }
 
-modesAtt = attribute modes { list { mode+ } }
+inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
 </pre>
@@ -250,9 +250,9 @@ mode = xsd:NCName | "#default"
 named mode.  A mode is named by an NCName.  In addition, there is a
 default mode named <code>#default</code>.  The
 <code>validate</code> and <code>validateAttributes</code>
-elements have an optional <code>modes</code> attribute, which
+elements have an optional <code>inModes</code> attribute, which
 specifies the modes in which the elements are applicable.  The default
-value of the <code>modes</code> attribute is the default mode.  It is an
+value of the <code>inModes</code> attribute is the default mode.  It is an
 error if there is a mode and a namespace URI for which more than one
 <code>validate</code> or <code>validateAttributes</code>
 element is applicable.  Thus, when an element is selected as a
@@ -276,8 +276,8 @@ attribute.</p>
 
 <p>Whether processing is strict or lax also depends on the mode.  The
 <code>strict</code> and <code>strictAttributes</code> elements have a
-<code>modes</code> attribute that specifies the modes in which they
-apply. As usual, the default value of the <code>modes</code> attribute
+<code>inModes</code> attribute that specifies the modes in which they
+apply. As usual, the default value of the <code>inModes</code> attribute
 is the default mode.  There are also <code>lax</code> and
 <code>laxAttributes</code> elements that allows the processing for a
 mode to be explicitly specified as lax.</p>
@@ -287,7 +287,7 @@ the default mode, there must be at least one <code>validate</code>,
 <code>validateAttribute</code>, <code>lax</code>,
 <code>laxAttributes</code>, <code>strict</code> or
 <code>strictAttributes</code> element that includes that mode in its
-<code>modes</code> attribute.</p>
+<code>inModes</code> attribute.</p>
 
 <h2>Pruning</h2>
 
@@ -331,14 +331,14 @@ validate =
 
 process =
   element lax|strict|laxAttributes|strictAttributes {
-    modesAtt? &amp; foreign
+    inModesAtt? &amp; foreign
   }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt?
+validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
 
 nsAtt = attribute ns { xsd:anyURI }
 
-modesAtt = attribute modes { list { mode+ } }
+inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
 
