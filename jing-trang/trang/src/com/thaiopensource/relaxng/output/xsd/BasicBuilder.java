@@ -689,10 +689,10 @@ public class BasicBuilder {
     return null;
   }
 
-  static private final String HINT_NAMESPACE = "http://www.thaiopensource.com/ns/trang/xsd";
+  static private final String GUIDE_NAMESPACE = "http://www.thaiopensource.com/ns/relaxng/xsd";
 
   private boolean getGroupEnableAbstractElements(Annotated annotated, boolean current) {
-    String value = annotated.getAttributeAnnotation(HINT_NAMESPACE, "enableAbstractElements");
+    String value = annotated.getAttributeAnnotation(GUIDE_NAMESPACE, "enableAbstractElements");
     if (value != null) {
       value = value.trim();
       if (value.equals("true"))
