@@ -541,7 +541,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <zipfileset dir="src/com/thaiopensource/validate/nrl/resources"
                 includes="nrl.rng"
                 prefix="jing-${version}/lib"/>
-    <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/doc"/>
+    <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/lib"/>
     <zipfileset dir="doc"
                 includes="jing-ant.html,jing-datatypes.html,jing-other.html,pluggable-datatypes.html"
                 prefix="jing-${version}/doc"/>
