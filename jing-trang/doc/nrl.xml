@@ -13,6 +13,12 @@ Explain how NRL can improve RELAX NG modularity
 
 <h1>Namespace Routing Language (NRL)</h1>
 
+<div class="titlepage">
+<p><b>Author:</b> James Clark &lt;jjc@thaiopensource.com><br />
+<b>Date:</b> 2003-06-08</p>
+<p>Copyright &#169; Thai Open Source Software Center Ltd</p>
+</div>
+
 <abstract>
 <p>The XML Namespaces Recommendation allows an XML document to be
 composed of elements and attributes from multiple independent

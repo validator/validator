@@ -56,6 +56,7 @@ code { font-family: sans-serif }
 
 <xsl:template match="h1">
   <h1><xsl:apply-templates/></h1>
+  <xsl:copy-of select="../div[@class='titlepage']"/>
   <xsl:if test="../abstract">
     <h2>Abstract</h2>
     <xsl:apply-templates select="../abstract/*"/>
