@@ -331,6 +331,55 @@ attribute prune { elementsOrAttributes }?
 
 <h2>More on modes</h2>
 
+<p>Sometimes the processing mode to be used for an element may need to
+depend on the name of the parent of that element.  For example, we
+might wish to allow elements of a particular namespace only within the
+XHTML <code>head</code> element and not anywhere else.  To do this,
+one or more <code>context</code> elements are added to the
+<code>validate</code> element.  The content of the
+<code>context</code> element identifies a context; the
+<code>useMode</code> attribute identifies a mode to be applied to
+potential validation subjects in that context. The default value of
+the <code>useMode</code> attribute is the default mode as usual.</p>
+
+<p>The context relates to the ancestry of the potential validation
+subject starting with its parent element and continuing up and
+including its nearest ancestor validation subject.  The context
+identified by a <code>context</code> element is the union of the
+contexts identified by each of its children.  An <code>element</code>
+element specifies a parent whose local name is equal to the value of
+the <code>name</code> attribute and whose namespace is equal to the
+value of the <code>ns</code> attribute. The namespace must the same as
+that specified on the <code>validate</code> element or one of its
+<code>cover</code> elements.  The <code>ns</code> attribute is
+inherited and so it is unnecessary to specify it except when there are
+<code>cover</code> elements.</p>
+
+<p>A context of the form:</p>
+
+<pre>
+&lt;element name="<var>x</var>">
+  &lt;element name="<var>y</var>">
+    &lt;element name="<var>z</var>"/>
+  &lt;/element>
+&lt;/element>
+</pre>
+
+<p>applies to a potential validation subject with a parent
+<code><var>z</var></code>, a grandparent <code><var>y</var></code> and
+a great grandparent <code><var>x</var></code>.  A context of the
+form:</p>
+
+<pre>
+&lt;root>
+  &lt;element name="<var>x</var>"/>
+&lt;/root>
+</pre>
+
+<p>applies to a potential validation subject with a parent element
+<code><var>x</var></code> such that that parent element is the nearest
+ancestor validation subject of that potential validation subject.</p>
+
 <pre>
 default namespace = "http://www.thaiopensource.com/ns/mns"
 
