@@ -54,8 +54,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-Avoid top-level grammar element
-
 Comments (top-level most important)
 
 Annotations
@@ -121,7 +119,10 @@ class Output {
   private void topLevel(Pattern p) {
     outputNamespaceDeclarations();
     outputDatatypeLibraryDeclarations(p);
-    p.accept(patternOutput);
+    if (p instanceof GrammarPattern)
+      innerBody(((GrammarPattern)p).getComponents());
+    else
+      p.accept(patternOutput);
     pp.hardNewline();
     pp.close();
   }
@@ -564,15 +565,28 @@ class Output {
   }
 
   private void body(List components) {
-    pp.text(" {");
-    pp.startNest(indent);
-    for (Iterator iter = components.iterator(); iter.hasNext();) {
+    if (components.size() == 0)
+      pp.text(" { }");
+    else {
+      pp.text(" {");
+      pp.startNest(indent);
       pp.hardNewline();
+      innerBody(components);
+      pp.endNest();
+      pp.hardNewline();
+      pp.text("}");
+    }
+  }
+
+  private void innerBody(List components) {
+    boolean first = true;
+    for (Iterator iter = components.iterator(); iter.hasNext();) {
+      if (first)
+        first = false;
+      else
+        pp.hardNewline();
       ((Component)iter.next()).accept(componentOutput);
     }
-    pp.endNest();
-    pp.hardNewline();
-    pp.text("}");
   }
 
   private void identifier(String name) {
