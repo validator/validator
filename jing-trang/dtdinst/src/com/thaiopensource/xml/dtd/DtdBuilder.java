@@ -10,6 +10,7 @@ class DtdBuilder {
 
   private Hashtable paramEntityTable = new Hashtable();
   private Hashtable generalEntityTable = new Hashtable();
+  private Hashtable normalizedTable = new Hashtable();
 
   DtdBuilder(Vector atoms) {
     this.atoms = atoms;
@@ -52,7 +53,8 @@ class DtdBuilder {
   }
   
   void createDecls() {
-    new AtomParser(new AtomStream(atoms),
+    new AtomParser(this,
+		   new AtomStream(atoms),
 		   new PrologParser(PrologParser.EXTERNAL_ENTITY),
 		   decls).parse();
   }
@@ -109,5 +111,13 @@ class DtdBuilder {
 	System.out.print(s.charAt(i));
 	break;
       }
+  }
+
+  void setNormalized(String origValue, String normalizedValue) {
+    normalizedTable.put(origValue, normalizedValue);
+  }
+
+  String getNormalized(String origValue) {
+    return (String)normalizedTable.get(origValue);
   }
 }

@@ -170,6 +170,28 @@ public class Parser extends Token {
 	entity.open = false;
 	break;
       }
+    case PrologParser.ACTION_DEFAULT_ATTRIBUTE_VALUE:
+      {
+	String origValue = token.substring(1, token.length() - 1);
+	if (db.getNormalized(origValue) != null)
+	  break;
+	StringBuffer tem = new StringBuffer();
+	try {
+	  normalizeAttributeValue(buf,
+				  currentTokenStart + 1,
+				  bufStart - 1,
+				  tem);
+	}
+	catch (AttributeValueException e) {
+	  currentTokenStart = e.offset;
+	  if (e.arg != null)
+	    fatal(e.key, e.arg);
+	  else
+	    fatal(e.key);
+	}
+	db.setNormalized(origValue, tem.toString());
+	break;
+      }
     }
   }
 
@@ -458,7 +480,7 @@ public class Parser extends Token {
 			     pos.getColumnNumber());
   }
 
-  private void reportInvalidToken(InvalidTokenException e) throws IOException {
+  private void reportInvalidToken(InvalidTokenException e) throws ParseException {
     if (e.getType() == InvalidTokenException.XML_TARGET)
       fatal("XML_TARGET");
     else
@@ -497,4 +519,101 @@ public class Parser extends Token {
     return buf.toString();
   }
 
+  class AttributeValueException extends Exception {
+    int offset;
+    String key;
+    String arg;
+
+    AttributeValueException(String key, int offset) {
+      this.key = key;
+      this.arg = null;
+      this.offset = offset;
+    }
+
+    AttributeValueException(String key, String arg, int offset) {
+      this.key = key;
+      this.arg = arg;
+      this.offset = offset;
+    }
+  }
+
+  private void normalizeAttributeValue(char[] b,
+				       int start,
+				       int end,
+				       StringBuffer result)
+    throws AttributeValueException {
+    Token t = new Token();
+    for (;;) {
+      int tok;
+      int nextStart;
+      try {
+	tok = Tokenizer.tokenizeAttributeValue(b, start, end, t);
+	nextStart = t.getTokenEnd();
+      }
+      catch (PartialTokenException e) {
+	throw new AttributeValueException("NOT_WELL_FORMED", end);
+      }
+      catch (InvalidTokenException e) {
+	throw new AttributeValueException("ILLEGAL_CHAR", e.getOffset());
+      }
+      catch (EmptyTokenException e) {
+	return;
+      }
+      catch (ExtensibleTokenException e) {
+	tok = e.getTokenType();
+	nextStart = end;
+      }
+      switch (tok) {
+      case Tokenizer.TOK_DATA_NEWLINE:
+	if (b == buf && !isInternal)
+	  result.append(' ');
+	else {
+	  for (int i = start; i < nextStart; i++)
+	    result.append(' ');
+	}
+	break;
+      case Tokenizer.TOK_DATA_CHARS:
+	result.append(b, start, nextStart - start);
+	break;
+      case Tokenizer.TOK_MAGIC_ENTITY_REF:
+      case Tokenizer.TOK_CHAR_REF:
+	result.append(t.getRefChar());
+	break;
+      case Tokenizer.TOK_CHAR_PAIR_REF:
+	{
+	  char[] pair = new char[2];
+	  t.getRefCharPair(pair, 0);
+	  result.append(pair);
+	}
+	break;
+      case Tokenizer.TOK_ATTRIBUTE_VALUE_S:
+	result.append(' ');
+	break;
+      case Tokenizer.TOK_ENTITY_REF:
+	String name = new String(b, start + 1, nextStart - start - 2);
+	Entity entity = db.lookupGeneralEntity(name);
+	if (entity == null)
+	  throw new AttributeValueException("UNDEF_REF", name, start);
+	if (entity.systemId != null)
+	  throw new AttributeValueException("EXTERN_REF_ATTVAL", name, start);
+	try {
+	  if (entity.open)
+	    throw new AttributeValueException("RECURSION", start);
+	  entity.open = true;
+	  normalizeAttributeValue(entity.text,
+				  0,
+				  entity.text.length,
+				  result);
+	  entity.open = false;
+	}
+	catch (AttributeValueException e) {
+	  throw new AttributeValueException(e.key, e.arg, start);
+	}
+	break;
+      default:
+	throw new Error("attribute value botch");
+      }
+      start = nextStart;
+    }
+  }
 }

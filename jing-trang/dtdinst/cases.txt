@@ -1,9 +1,5 @@
 Encoding detection
 
-expand general entity references for default values
-
-attval normalization of default values
-
 Don't unexpand empty entities that might be pasted.
 
 Create NotationDecl objects.

@@ -3,18 +3,21 @@ package com.thaiopensource.xml.dtd;
 import java.util.Vector;
 
 class AtomParser {
+  private DtdBuilder db;
   private AtomStream as;
   private PrologParser pp;
   private Vector v;
   private Particle group;
 
-  AtomParser(AtomStream as, PrologParser pp, Vector v) {
+  AtomParser(DtdBuilder db, AtomStream as, PrologParser pp, Vector v) {
+    this.db = db;
     this.as = as;
     this.pp = pp;
     this.v = v;
   }
 
-  AtomParser(AtomStream as, PrologParser pp, Particle group) {
+  AtomParser(DtdBuilder db, AtomStream as, PrologParser pp, Particle group) {
+    this.db = db;
     this.as = as;
     this.pp = pp;
     this.v = group.particles;
@@ -39,7 +42,7 @@ class AtomParser {
 	d.entity = as.entity;
 	v.addElement(d);
 	int start = v.size();
-	new AtomParser(new AtomStream(as.entity.atoms), pp, v).parseDecls();
+	new AtomParser(db, new AtomStream(as.entity.atoms), pp, v).parseDecls();
 	d.entity.setParsed(Entity.DECL_LEVEL, v, start, v.size());
 	d = new Decl(Decl.REFERENCE_END);
       }
@@ -72,14 +75,14 @@ class AtomParser {
 	      throw new Error("unexpected decl type"); // should have been caught
 	    d = new Decl(type);
 	    d.params = new Vector();
-	    new AtomParser(as, pp, d.params).parseParams();
+	    new AtomParser(db, as, pp, d.params).parseParams();
 	  }
 	  break;
 	case Tokenizer.TOK_COND_SECT_OPEN:
 	  {
 	    Vector params = new Vector();
 	    // current token should be "["
-	    if (new AtomParser(as, pp, params).parseParams()) {
+	    if (new AtomParser(db, as, pp, params).parseParams()) {
 	      d = new Decl(Decl.IGNORE_SECTION);
 	      as.advance();
 	      d.value = as.token.substring(0, as.token.length() - 3);
@@ -87,7 +90,7 @@ class AtomParser {
 	    else {
 	      d = new Decl(Decl.INCLUDE_SECTION);
 	      d.decls = new Vector();
-	      new AtomParser(as, pp, d.decls).parseDecls();
+	      new AtomParser(db, as, pp, d.decls).parseDecls();
 	    }
 	    d.params = params;
 	  }
@@ -113,7 +116,7 @@ class AtomParser {
 	p.entity = as.entity;
 	v.addElement(p);
 	int start = v.size();
-	new AtomParser(new AtomStream(as.entity.atoms), pp, v).parseParams();
+	new AtomParser(db, new AtomStream(as.entity.atoms), pp, v).parseParams();
 	if (v.size() == start && pp.expectingAttributeName())
 	  v.addElement(new Param(Param.EMPTY_ATTRIBUTE_GROUP));
 	p.entity.setParsed(Entity.PARAM_LEVEL, v, start, v.size());
@@ -144,12 +147,13 @@ class AtomParser {
 	  switch (action) {
 	  case PrologParser.ACTION_DEFAULT_ATTRIBUTE_VALUE:
 	    p = new Param(Param.DEFAULT_ATTRIBUTE_VALUE);
+	    p.value = db.getNormalized(as.token.substring(1, as.token.length() - 1));
 	    break;
 	  default:
 	    p = new Param(Param.LITERAL);
+	    p.value = as.token.substring(1, as.token.length() - 1);
 	    break;
 	  }
-	  p.value = as.token.substring(1, as.token.length() - 1);
 	  break;
 	case Tokenizer.TOK_PERCENT:
 	  p = new Param(Param.PERCENT);
@@ -226,7 +230,7 @@ class AtomParser {
   private Particle parseGroup() {
     Particle g = new Particle(Particle.GROUP);
     g.particles = new Vector();
-    new AtomParser(as, pp, g).parseParticles();
+    new AtomParser(db, as, pp, g).parseParticles();
     int n = g.particles.size();
     int flags = 0;
     for (int i = 0; i < n; i++) {
@@ -267,7 +271,7 @@ class AtomParser {
 	p.entity = as.entity;
 	v.addElement(p);
 	int start = v.size();
-	new AtomParser(new AtomStream(as.entity.atoms), pp, group).parseParticles();
+	new AtomParser(db, new AtomStream(as.entity.atoms), pp, group).parseParticles();
 	p.entity.setParsed(Entity.PARTICLE_LEVEL, v, start, v.size());
 	p = new Particle(Particle.REFERENCE_END);
       } 

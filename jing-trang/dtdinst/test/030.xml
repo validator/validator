@@ -1,0 +1,31 @@
+<doctype>
+  <internalEntity name="e1">val</internalEntity>
+  <internalEntity name="e2">[&amp;e1;]</internalEntity>
+  <element>
+    <name>doc</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>doc</name>
+    <attribute use="optional" default="/[val]/val/">
+      <name>att1</name>
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute use="optional" default=" ">
+      <name>att2</name>
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute use="optional" default=" ">
+      <name>att3</name>
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute use="optional" default="&#xD;&#xA;&#x9; ">
+      <name>att4</name>
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute use="required" default="val">
+      <name>att5</name>
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+</doctype>
