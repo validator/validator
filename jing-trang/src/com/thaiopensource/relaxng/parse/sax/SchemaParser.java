@@ -38,7 +38,7 @@ import java.util.Vector;
 Deal with comments
 Deal with element annotations
 */
-class SchemaParser extends DtdContext implements Context {
+class SchemaParser {
 
   static final String relaxngURIPrefix = "http://relaxng.org/ns/structure/";
   static final String relaxng10URI = relaxngURIPrefix + "1.0";
@@ -52,8 +52,8 @@ class SchemaParser extends DtdContext implements Context {
   SchemaBuilder schemaBuilder;
   ParsedPattern startPattern;
   Locator locator;
-  PrefixMapping prefixMapping;
   XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
+  ContextImpl context = new ContextImpl();
   private boolean inDtd = false;
 
   boolean hadError = false;
@@ -70,6 +70,57 @@ class SchemaParser extends DtdContext implements Context {
       this.prefix = prefix;
       this.uri = uri;
       this.next = next;
+    }
+  }
+
+  static abstract class AbstractContext extends DtdContext implements Context {
+    PrefixMapping prefixMapping;
+
+    AbstractContext() {
+      prefixMapping = new PrefixMapping("xml", xmlURI, null);
+    }
+
+    AbstractContext(AbstractContext context) {
+      super(context);
+      prefixMapping = context.prefixMapping;
+    }
+
+    public String resolveNamespacePrefix(String prefix) {
+      for (PrefixMapping p = prefixMapping; p != null; p = p.next)
+        if (p.prefix.equals(prefix))
+          return p.uri;
+      return null;
+    }
+
+    public Enumeration prefixes() {
+      Vector v = new Vector();
+      for (PrefixMapping p = prefixMapping; p != null; p = p.next) {
+        if (!v.contains(p.prefix))
+          v.addElement(p.prefix);
+      }
+      return v.elements();
+    }
+
+    public Context copy() {
+      return new SavedContext(this);
+    }
+  }
+
+  static class SavedContext extends AbstractContext {
+    private final String baseUri;
+    SavedContext(AbstractContext context) {
+      super(context);
+      this.baseUri = context.getBaseUri();
+    }
+
+    public String getBaseUri() {
+      return baseUri;
+    }
+  }
+
+  class ContextImpl extends AbstractContext {
+    public String getBaseUri() {
+      return xmlBaseHandler.getBaseUri();
     }
   }
 
@@ -106,9 +157,11 @@ class SchemaParser extends DtdContext implements Context {
       this.scope = parent.scope;
       this.startLocation = makeLocation();
       if (parent.comments != null) {
-        annotations = schemaBuilder.makeAnnotations(parent.comments, SchemaParser.this);
+        annotations = schemaBuilder.makeAnnotations(parent.comments, getContext());
         parent.comments = null;
       }
+      else if (parent instanceof RootState)
+        annotations = schemaBuilder.makeAnnotations(null, getContext());
     }
 
     String getNs() {
@@ -192,11 +245,11 @@ class SchemaParser extends DtdContext implements Context {
 	  xmlBaseHandler.xmlBaseAttribute(atts.getValue(i));
         else {
           if (annotations == null)
-            annotations = schemaBuilder.makeAnnotations(null, SchemaParser.this);
+            annotations = schemaBuilder.makeAnnotations(null, getContext());
           String qName = atts.getQName(i);
           String prefix = null;
           if (qName.equals("")) {
-            for (PrefixMapping p = prefixMapping; p != null; p = p.next)
+            for (PrefixMapping p = context.prefixMapping; p != null; p = p.next)
               if (p.uri.equals(uri)) {
                 prefix = p.prefix;
                 break;
@@ -259,11 +312,11 @@ class SchemaParser extends DtdContext implements Context {
     }
 
     public void startPrefixMapping(String prefix, String uri) {
-      prefixMapping = new PrefixMapping(prefix, uri, prefixMapping);
+      context.prefixMapping = new PrefixMapping(prefix, uri, context.prefixMapping);
     }
 
     public void endPrefixMapping(String prefix) {
-      prefixMapping = prefixMapping.next;
+      context.prefixMapping = context.prefixMapping.next;
     }
 
     boolean isPatternNamespaceURI(String s) {
@@ -310,7 +363,7 @@ class SchemaParser extends DtdContext implements Context {
     void end() throws SAXException {
       if (comments != null) {
         if (annotations == null)
-          annotations = schemaBuilder.makeAnnotations(null, SchemaParser.this);
+          annotations = schemaBuilder.makeAnnotations(null, getContext());
         annotations.addComment(comments);
         comments = null;
       }
@@ -581,7 +634,7 @@ class SchemaParser extends DtdContext implements Context {
       return schemaBuilder.makeValue(datatypeLibrary,
                                      type,
                                      buf.toString(),
-                                     SchemaParser.this,
+                                     getContext(),
                                      getNs(),
                                      startLocation,
                                      annotations);
@@ -686,7 +739,7 @@ class SchemaParser extends DtdContext implements Context {
       if (name == null)
 	return;
       if (dpb != null)
-	dpb.addParam(name, buf.toString(), SchemaParser.this, getNs(), startLocation, annotations);
+	dpb.addParam(name, buf.toString(), getContext(), getNs(), startLocation, annotations);
     }
   }
 
@@ -1323,7 +1376,7 @@ class SchemaParser extends DtdContext implements Context {
     this.schemaBuilder = schemaBuilder;
     if (eh != null)
       xr.setErrorHandler(eh);
-    xr.setDTDHandler(this);
+    xr.setDTDHandler(context);
     if (schemaBuilder.usesComments()) {
       try {
         xr.setProperty("http://xml.org/sax/properties/lexical-handler", new LexicalHandlerImpl());
@@ -1337,7 +1390,6 @@ class SchemaParser extends DtdContext implements Context {
     }
     initPatternTable();
     initNameClassTable();
-    prefixMapping = new PrefixMapping("xml", xmlURI, null);
     new RootState(grammar, scope, SchemaBuilder.INHERIT_NS).set();
   }
 
@@ -1349,25 +1401,8 @@ class SchemaParser extends DtdContext implements Context {
     inDtd = false;
   }
 
-
-  public String resolveNamespacePrefix(String prefix) {
-    for (PrefixMapping p = prefixMapping; p != null; p = p.next)
-      if (p.prefix.equals(prefix))
-        return p.uri;
-    return null;
-  }
-
-  public Enumeration prefixes() {
-    Vector v = new Vector();
-    for (PrefixMapping p = prefixMapping; p != null; p = p.next) {
-      if (!v.contains(p.prefix))
-        v.addElement(p.prefix);
-    }
-    return v.elements();
-  }
-
-  public String getBaseUri() {
-    return xmlBaseHandler.getBaseUri();
+  private Context getContext() {
+    return context;
   }
 
   class LexicalHandlerImpl extends AbstractLexicalHandler {
@@ -1394,7 +1429,7 @@ class SchemaParser extends DtdContext implements Context {
       return schemaBuilder.makeName(ns, checkNCName(name), null, null, null);
     String prefix = checkNCName(name.substring(0, ic));
     String localName = checkNCName(name.substring(ic + 1));
-    for (PrefixMapping tem = prefixMapping; tem != null; tem = tem.next)
+    for (PrefixMapping tem = context.prefixMapping; tem != null; tem = tem.next)
       if (tem.prefix.equals(prefix))
 	return schemaBuilder.makeName(tem.uri, localName, prefix, null, null);
     error("undefined_prefix", prefix);

@@ -92,6 +92,9 @@ public class CompactSyntax implements Context {
     this.sourceUri = sourceUri;
     this.sb = sb;
     this.eh = eh;
+    // this causes the root pattern to have non-null annotations
+    // which is useful because it gives a context to trang
+    this.topLevelComments = sb.makeCommentList();
   }
 
   ParsedPattern parse(Scope scope) throws IllegalSchemaException {
@@ -229,6 +232,10 @@ public class CompactSyntax implements Context {
     return false;
   }
 
+  public Context copy() {
+    return this;
+  }
+
   private Context getContext() {
     return this;
   }
@@ -237,8 +244,8 @@ public class CompactSyntax implements Context {
     return getComments(getTopLevelComments());
   }
 
-  private CommentList topLevelComments = null;
-   
+  private CommentList topLevelComments;
+
   private CommentList getTopLevelComments() {
     CommentList tem = topLevelComments;
     topLevelComments = null;
@@ -278,7 +285,7 @@ public class CompactSyntax implements Context {
                 t = t.next;
                 buf.append('\n');
                 buf.append(mungeComment(t.image));
-              } while (t.next != null 
+              } while (t.next != null
                        && t.next.kind == CompactSyntaxConstants.SINGLE_LINE_COMMENT_CONTINUE);
               s = buf.toString();
             }
@@ -417,7 +424,7 @@ void LookaheadBody() :
 {}
 {
   "["
-   ( (<PREFIXED_NAME> | UnprefixedName()) 
+   ( (<PREFIXED_NAME> | UnprefixedName())
      ("=" (<LITERAL>)+ | LookaheadBody()) )*
   "]"
 }
@@ -743,7 +750,7 @@ ParsedNameClass PrimaryNameClass(int context, Annotations a) :
 }
 {
   (nc = UnprefixedNameClass(context, a)
-   | nc = PrefixedNameClass(a) 
+   | nc = PrefixedNameClass(a)
    | nc = ParenNameClass(context, a))
   { return nc; }
 }
@@ -811,7 +818,7 @@ LocatedString NsName() :
   Token t;
 }
 {
-  t = <PREFIX_STAR> 
+  t = <PREFIX_STAR>
   {
     String qn = t.image;
     String prefix = qn.substring(0, qn.length() - 2);
@@ -844,7 +851,7 @@ ParsedNameClass ParenNameClass(int context, Annotations a) :
 }
 {
   t = "(" nc = NameClass(context, pa) { nc = afterComments(nc); } ")"
-  { 
+  {
     if (pa[0] != null)
       nc = sb.makeChoice(new ParsedNameClass[] { nc }, 1, makeLocation(t), pa[0]);
     return nc;
@@ -895,7 +902,7 @@ ParsedPattern GrammarExpr(Scope scope, Annotations a) :
 }
 {
   t = "grammar" { g = sb.makeGrammar(scope); }
-  "{" a = GrammarBody(g, g, a) { topLevelComments(g); } "}" 
+  "{" a = GrammarBody(g, g, a) { topLevelComments(g); } "}"
   { return g.endGrammar(makeLocation(t), a); }
 }
 
@@ -926,7 +933,7 @@ void GrammarComponent(GrammarSection section, Scope scope) :
   Annotations a;
 }
 {
-  (a = Annotations() 
+  (a = Annotations()
    (Definition(section, scope, a)
     | Include(section, scope, a)
     | Div(section, scope, a)))
@@ -1026,9 +1033,9 @@ ParsedPattern ExternalRefExpr(Scope scope, Annotations a) :
   String ns;
 }
 {
-  t = "externalRef" href = Literal() 
+  t = "externalRef" href = Literal()
   ns = Inherit()
-  { 
+  {
     try {
       return sb.makeExternalRef(resolve(href), ns, scope, makeLocation(t), a);
     }
@@ -1058,13 +1065,13 @@ ParsedPattern ParentExpr(Scope scope, Annotations a) :
 }
 {
   "parent" { comments = getComments(); } name = Identifier()
-  { 
+  {
     if (comments != null) {
       if (a == null)
         a = sb.makeAnnotations(null, getContext());
       a.addComment(comments);
     }
-    return scope.makeParentRef(name.getString(), name.getLocation(), a); 
+    return scope.makeParentRef(name.getString(), name.getLocation(), a);
   }
 }
 
@@ -1074,7 +1081,7 @@ ParsedPattern IdentifierExpr(Scope scope, Annotations a) :
 }
 {
   name = Identifier()
-  { 
+  {
     return scope.makeRef(name.getString(), name.getLocation(), a);
   }
 }
@@ -1206,7 +1213,7 @@ ParsedElementAnnotation Documentation() :
 }
 {
   (t = <DOCUMENTATION> | t = <DOCUMENTATION_AFTER_SINGLE_LINE_COMMENT>)
-  { 
+  {
     eab = sb.makeElementAnnotationBuilder(compatibilityUri,
                                           "documentation",
                                           getCompatibilityPrefix(),
@@ -1239,7 +1246,7 @@ Annotations Annotations() :
        ( e = AnnotationElement() { a.addElement(e); } )*
        { a.addComment(getComments()); }
   "]")?
-  { 
+  {
     if (a == null && comments != null)
       a = sb.makeAnnotations(comments, getContext());
     return a;
@@ -1384,7 +1391,7 @@ void AnnotationElementContent(ElementAnnotationBuilder eab) :
 }
 {
   "[" { clearAttributeList(); }
-  (LOOKAHEAD(2) AnnotationAttribute(eab))* 
+  (LOOKAHEAD(2) AnnotationAttribute(eab))*
   (t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t)); }
    | e = AnnotationElement() { eab.addElement(e); })*
   { eab.addComment(getComments()); }

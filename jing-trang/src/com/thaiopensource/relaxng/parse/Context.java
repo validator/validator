@@ -6,4 +6,5 @@ import java.util.Enumeration;
 
 public interface Context extends ValidationContext {
   Enumeration prefixes();
+  Context copy();
 }

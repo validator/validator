@@ -7,8 +7,18 @@ import org.relaxng.datatype.ValidationContext;
 import java.util.Hashtable;
 
 public abstract class DtdContext implements DTDHandler, ValidationContext {
-  private final Hashtable notationTable = new Hashtable();
-  private final Hashtable unparsedEntityTable = new Hashtable();
+  private final Hashtable notationTable;
+  private final Hashtable unparsedEntityTable;
+
+  public DtdContext() {
+    notationTable = new Hashtable();
+    unparsedEntityTable = new Hashtable();
+  }
+
+  public DtdContext(DtdContext dc) {
+    notationTable = dc.notationTable;
+    unparsedEntityTable = dc.unparsedEntityTable;
+  }
 
   public void notationDecl(String name,
                            String publicId,
