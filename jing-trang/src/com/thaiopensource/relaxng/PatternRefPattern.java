@@ -7,7 +7,6 @@ import org.xml.sax.SAXParseException;
 class PatternRefPattern extends Pattern {
   private Pattern p;
   private Locator refLoc;
-  private int includeIndex = -1;
   private String name;
   private int checkRecursionDepth = -1;
 
@@ -24,15 +23,10 @@ class PatternRefPattern extends Pattern {
     return p;
   }
   
-  void setPattern(Pattern p, int includeIndex) {
+  void setPattern(Pattern p) {
     this.p = p;
-    this.includeIndex = includeIndex;
   }
 
-  int getIncludeIndex() {
-    return includeIndex;
-  }
-  
   Locator getRefLocator() {
     return refLoc;
   }

@@ -45,8 +45,6 @@ public class PatternReader implements DatatypeContext {
   Locator locator;
   PrefixMapping prefixMapping;
   boolean hadError = false;
-  int includeIndex;
-  int[] nextIncludeIndex;
 
   Hashtable patternTable;
   Hashtable nameClassTable;
@@ -629,7 +627,7 @@ public class PatternReader implements DatatypeContext {
 	PatternRefPattern tr = (PatternRefPattern)grammar.makePatternRef(name);
 	if (tr.getPattern() == null) {
 	  error("reference_to_undefined", name, tr.getRefLocator());
-	  tr.setPattern(patternBuilder.makeError(), includeIndex);
+	  tr.setPattern(patternBuilder.makeError());
 	}
       }
       Pattern start = grammar.startPatternRef().getPattern();
@@ -785,16 +783,13 @@ public class PatternReader implements DatatypeContext {
     void endAttributes() throws SAXException {
       if (name == null)
 	error("missing_name_attribute");
-      else if (grammar.makePatternRef(name).getIncludeIndex() == includeIndex)
-  	error("duplicate_define", name);
       else if (combine == COMBINE_ERROR
 	       && grammar.makePatternRef(name).getPattern() != null)
-	error("define_missing_combine", name);
-
+	error("duplicate_define", name);
     }
 
     void setPattern(PatternRefPattern prp, Pattern p) {
-      prp.setPattern(combineWithOldPattern(prp.getPattern(), p), includeIndex);
+      prp.setPattern(combineWithOldPattern(prp.getPattern(), p));
     }
 
     Pattern combineWithOldPattern(Pattern p1, Pattern p2) {
@@ -825,11 +820,9 @@ public class PatternReader implements DatatypeContext {
     void endAttributes() throws SAXException {
       if (name != null)
         super.endAttributes();
-      if (grammar.startPatternRef().getIncludeIndex() == includeIndex)
-	error("duplicate_start");
       else if (combine == COMBINE_ERROR
 	       && grammar.startPatternRef().getPattern() != null)
-	error("start_missing_combine");
+	error("duplicate_start");
     }
 
     void setName(String name) {
@@ -1094,8 +1087,6 @@ public class PatternReader implements DatatypeContext {
     this.xr = xr;
     this.datatypeFactory = datatypeFactory;
     openIncludes = null;
-    includeIndex = 0;
-    nextIncludeIndex = new int[]{1};
     init(null, "");
   }
 
@@ -1109,8 +1100,6 @@ public class PatternReader implements DatatypeContext {
     this.datatypeFactory = parent.datatypeFactory;
     this.xr = xr;
     this.openIncludes = new OpenIncludes(systemId, parent.openIncludes);
-    this.includeIndex = parent.nextIncludeIndex[0]++;
-    this.nextIncludeIndex = parent.nextIncludeIndex;
     init(grammar, ns);
   }
 
