@@ -658,16 +658,17 @@ have one or more <code>context</code> children that override the
 <code>path</code> attribute specifies a test to be applied to the
 parent element of the element or attribute section to be processed.
 The <code>path</code> attribute allows a restricted form of XPath: a
-list of one or more unqualified names separated by <code>/</code>,
-optionally preceded by <code>/</code>.  It is interpreted like a
-pattern in XSLT, except that the names are implicitly qualified with
-the namespace URI of the containing <code>namespace</code> element.
-When more than one path matches, the most specific is chosen.  It is
-an error to have two or more equally specific paths. The path is
-tested against a single section not the entire document: a path of
-<code>/foo</code> means a <code>foo</code> element that is the root of
-a section; it does not mean a <code>foo</code> element that is the
-root of the document.</p>
+list of one or more choices separated by <code>|</code>, where each
+choice is a list of one or more unqualified names separated by
+<code>/</code>, optionally preceded by <code>/</code>.  It is
+interpreted like a pattern in XSLT, except that the names are
+implicitly qualified with the namespace URI of the containing
+<code>namespace</code> element.  When more than one path matches, the
+most specific is chosen.  It is an error to have two or more equally
+specific paths. The path is tested against a single section not the
+entire document: a path of <code>/foo</code> means a <code>foo</code>
+element that is the root of a section; it does not mean a
+<code>foo</code> element that is the root of the document.</p>
 
 <h2>Attributes</h2>
 
