@@ -786,22 +786,9 @@ public class PatternReader implements DatatypeContext {
 
   class RefState extends EmptyContentState {
     String name;
-    boolean refParent = false;
 
     State create() {
       return new RefState();
-    }
-
-    void setOtherAttribute(String name, String value) throws SAXException {
-      if (name.equals("parent")) {
-	value = value.trim();
-	if (value.equals("true"))
-	  refParent = true;
-	else if (!value.equals("false"))
-	  error("parent_attribute_bad_value", value);
-      }
-      else
-	super.setOtherAttribute(name, value);
     }
 
     void endAttributes() throws SAXException {
@@ -809,8 +796,6 @@ public class PatternReader implements DatatypeContext {
 	error("missing_name_attribute");
       if (grammar == null)
 	error("ref_outside_grammar");
-      else if (refParent && grammar.getParent() == null)
-	error("parent_ref_outside_grammar");
     }
 
     void setName(String name) throws SAXException {
@@ -818,11 +803,10 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern makePattern() {
-      Grammar g = grammar;
-      if (refParent) {
-	if (g != null)
-	  g = g.getParent();
-      }
+      return makePattern(grammar);
+    }
+
+    Pattern makePattern(Grammar g) {
       if (g != null && name != null) {
 	PatternRefPattern p = g.makePatternRef(name);
 	if (p.getRefLocator() == null && locator != null)
@@ -831,6 +815,22 @@ public class PatternReader implements DatatypeContext {
       }
       return patternBuilder.makeError();
     } 
+  }
+
+  class ParentRefState extends RefState {
+    State create() {
+      return new ParentRefState();
+    }
+
+    void endAttributes() throws SAXException {
+      super.endAttributes();
+      if (grammar.getParent() == null)
+	error("parent_ref_outside_grammar");
+    }
+
+    Pattern makePattern() {
+      return makePattern(grammar == null ? null : grammar.getParent());
+    }
   }
 
   class ExternalRefState extends EmptyContentState {
@@ -1174,6 +1174,7 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("notAllowed", new NotAllowedState());
     patternTable.put("grammar", new GrammarState());
     patternTable.put("ref", new RefState());
+    patternTable.put("parentRef", new ParentRefState());
     patternTable.put("externalRef", new ExternalRefState());
   }
 
