@@ -77,39 +77,31 @@
              file="build/sax-files/org/xml/sax/Parser.class"/>
 </target>
 
-<target name="src" depends="init">
-  <zip zipfile="build/jing-src.zip">
-    <fileset dir="src" includes="**/*.java,**/*.properties"/>
-  </zip>
-</target>
-
 <target name="validate" depends="jar">
   <jing rngfile="xhtml/xhtml-basic.rng">
      <fileset dir="doc" includes="**/*.html"/>
   </jing>
 </target>
 
-<target name="xhtml" depends="init">
+<target name="dist" depends="jar, exegen, validate">
+
+  <zip zipfile="build/jing-src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+  </zip>
   <zip zipfile="build/xhtml-rng.zip">
     <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
   </zip>
-</target>
-
-<target name="doc">
-  <copy file="copying.txt" todir="build"/>
-  <copy file="doc/jing.html" todir="build"/>
-  <copy file="doc/jing-ant.html" todir="build"/>
-  <copy file="doc/jing-datatypes.html" todir="build"/>
+  <copy todir="build">
+    <fileset dir="." includes="copying.txt"/>
+    <fileset dir="doc" includes="*.html"/>
+    <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
+  </copy>
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
-</target>
-
-<target name="dist" depends="jar, exegen, validate, src, doc, xhtml">
-
   <unzip src="build/xhtml-rng.zip" dest="build"/>
   <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
 
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,xhtml/**"/>
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,xhtml/**"/>
 
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 
