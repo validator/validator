@@ -3,7 +3,6 @@ package com.thaiopensource.relaxng.impl;
 import com.thaiopensource.relaxng.ValidatorHandler;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
-import org.relaxng.datatype.ValidationContext;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
