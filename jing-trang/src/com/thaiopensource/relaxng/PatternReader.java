@@ -1095,6 +1095,7 @@ public class PatternReader implements ValidationContext {
       this.prevState = prevState;
       this.nameClassRef = nameClassRef;
       setParent(prevState.parent);
+      this.ns = prevState.ns;
     }
 
     void endChild(NameClass nameClass) {
