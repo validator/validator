@@ -1,8 +1,6 @@
 Redo documentation.  Cover new input syntax. Give each input/output
 module its own separate page.
 
-Fix John Cowan's bug.
-
 Preserve directory structure on output.
 
 Detect unencodable characters in comments in XmlWriter.  Also in
