@@ -107,6 +107,10 @@ public class PatternBuilder {
     return intern(new DataPattern(dt));
   }
 
+  Pattern makeDataExcept(Datatype dt, Pattern except, Locator loc) {
+    return intern(new DataExceptPattern(dt, except, loc));
+  }
+
   Pattern makeChoice(Pattern p1, Pattern p2) {
     if (p1 == emptyChoice)
       return p2;

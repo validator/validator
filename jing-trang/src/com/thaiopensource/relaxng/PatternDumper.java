@@ -231,6 +231,11 @@ public class PatternDumper {
       endElement();
     }
 
+    public void visitDataExcept(Datatype dt, Pattern except) {
+      startElement("text");	// XXX
+      endElement();
+    }
+
     public void visitValue(Datatype dt, Object obj) {
       startElement("value");
       // XXX dump dt

@@ -10,7 +10,7 @@ class DataPattern extends StringPattern {
     this.dt = dt;
   }
 
-  boolean matches(Atom a) {
+  boolean matches(PatternBuilder b, Atom a) {
     return a.matchesDatatype(dt);
   }
 
@@ -22,6 +22,10 @@ class DataPattern extends StringPattern {
 
   void accept(PatternVisitor visitor) {
     visitor.visitData(dt);
+  }
+
+  Datatype getDatatype() {
+    return dt;
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad)

@@ -13,6 +13,7 @@ interface PatternVisitor {
   void visitElement(NameClass nc, Pattern content);
   void visitAttribute(NameClass ns, Pattern value);
   void visitData(Datatype dt);
+  void visitDataExcept(Datatype dt, Pattern except);
   void visitValue(Datatype dt, Object obj);
   void visitText();
   void visitList(Pattern p);

@@ -12,7 +12,7 @@ class ValuePattern extends StringPattern {
     this.obj = obj;
   }
 
-  boolean matches(Atom a) {
+  boolean matches(PatternBuilder b, Atom a) {
     return a.matchesDatatypeValue(dt, obj);
   }
 

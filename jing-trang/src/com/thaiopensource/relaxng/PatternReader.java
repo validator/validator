@@ -470,15 +470,25 @@ public class PatternReader implements DatatypeContext {
   class DataState extends State {
     String type;
     DatatypeBuilder dtb;
+    Pattern except = null;
+    Locator loc = copyLocator();
 
     State create() {
       return new DataState();
     }
 
     State createChildState(String localName) throws SAXException {
-      if (localName.equals("param"))
+      if (localName.equals("param")) {
+	if (except != null)
+	  error("param_after_except");
 	return new ParamState(dtb);
-      error("expected_param", localName);
+      }
+      if (localName.equals("except")) {
+	if (except != null)
+	  error("multiple_except");
+	return new ChoiceState();
+      }
+      error("expected_param_except", localName);
       return null;
     }
 
@@ -499,8 +509,22 @@ public class PatternReader implements DatatypeContext {
     }
 
     void end() {
-      parent.endChild(patternBuilder.makeData(dtb.finish()));
+      Datatype dt = dtb.finish();
+      Pattern p;
+      if (except != null)
+	p = patternBuilder.makeDataExcept(dt, except, loc);
+      else
+	p = patternBuilder.makeData(dt);
+      parent.endChild(p);
     }
+
+    void endChild(Pattern pattern) {
+      if (except == null)
+	except = pattern;
+      else
+	except = patternBuilder.makeChoice(except, pattern);
+    }
+
   }
 
   class ParamState extends State {
