@@ -39,7 +39,7 @@ public class PatternDumper {
   void dump(Pattern p) {
     write("<?xml version=\"1.0\"?>");
     startElement("grammar");
-    attribute("xmlns", PatternReader.relaxngURI);
+    attribute("xmlns", PatternReader.relaxng10URI);
     startElement("start");
     p.accept(sequencePatternVisitor);
     endElement();
