@@ -155,7 +155,12 @@
   </ant>
 </target>
 
-<target name="dist" depends="jar, exegen, validate, test, javadoc, datatype-sample">
+<target name="doc">
+  <style basedir="doc" destdir="build" includes="derivative.xml"
+         style="doc/derivative.xsl"/>
+</target>
+
+<target name="dist" depends="jar, exegen, validate, test, javadoc, datatype-sample, doc">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
