@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar ns="http://www.thaiopensource.com/ns/mns"
-  xmlns="http://relaxng.org/ns/structure/1.0"
-  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="http://www.thaiopensource.com/ns/mns" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="rules">
       <optional>
@@ -12,8 +10,7 @@
       <interleave>
         <zeroOrMore>
           <choice>
-            <ref name="validateElement"/>
-            <ref name="validateAttributes"/>
+            <ref name="validate"/>
             <ref name="process"/>
           </choice>
         </zeroOrMore>
@@ -21,44 +18,42 @@
       </interleave>
     </element>
   </start>
-  <define name="validateElement">
-    <element name="validateElement">
-      <ref name="commonAttributes"/>
-      <optional>
-        <attribute name="useMode">
-          <ref name="mode"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="prune">
-          <choice>
-            <value>true</value>
-            <value>false</value>
-          </choice>
-        </attribute>
-      </optional>
-      <interleave>
-        <zeroOrMore>
-          <element name="cover">
-            <interleave>
-              <attribute name="ns">
-                <data type="anyURI"/>
-              </attribute>
-              <ref name="foreign"/>
-            </interleave>
-          </element>
-        </zeroOrMore>
-        <ref name="foreign"/>
-      </interleave>
-    </element>
-  </define>
-  <define name="validateAttributes">
-    <element name="validateAttributes">
-      <interleave>
-        <ref name="commonAttributes"/>
-        <ref name="foreign"/>
-      </interleave>
-    </element>
+  <define name="validate">
+    <choice>
+      <element name="validateElement">
+        <ref name="validateModel"/>
+        <optional>
+          <attribute name="useMode">
+            <ref name="mode"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="prune">
+            <choice>
+              <value>true</value>
+              <value>false</value>
+            </choice>
+          </attribute>
+        </optional>
+        <interleave>
+          <zeroOrMore>
+            <element name="cover">
+              <interleave>
+                <ref name="nsAtt"/>
+                <ref name="foreign"/>
+              </interleave>
+            </element>
+          </zeroOrMore>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+      <element name="validateAttributes">
+        <interleave>
+          <ref name="validateModel"/>
+          <ref name="foreign"/>
+        </interleave>
+      </element>
+    </choice>
   </define>
   <define name="process">
     <element>
@@ -67,10 +62,41 @@
         <name>strict</name>
       </choice>
       <interleave>
-        <ref name="modesAttribute"/>
+        <optional>
+          <ref name="modesAtt"/>
+        </optional>
         <ref name="foreign"/>
       </interleave>
     </element>
+  </define>
+  <define name="validateModel">
+    <ref name="nsAtt"/>
+    <attribute name="schema">
+      <data type="anyURI"/>
+    </attribute>
+    <optional>
+      <ref name="modesAtt"/>
+    </optional>
+  </define>
+  <define name="nsAtt">
+    <attribute name="ns">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="modesAtt">
+    <attribute name="modes">
+      <list>
+        <oneOrMore>
+          <ref name="mode"/>
+        </oneOrMore>
+      </list>
+    </attribute>
+  </define>
+  <define name="mode">
+    <choice>
+      <data type="NCName"/>
+      <value>#default</value>
+    </choice>
   </define>
   <define name="foreign">
     <zeroOrMore>
@@ -107,31 +133,5 @@
         </element>
       </choice>
     </zeroOrMore>
-  </define>
-  <define name="commonAttributes">
-    <attribute name="ns">
-      <data type="anyURI"/>
-    </attribute>
-    <attribute name="schema">
-      <data type="anyURI"/>
-    </attribute>
-    <ref name="modesAttribute"/>
-  </define>
-  <define name="modesAttribute">
-    <optional>
-      <attribute name="modes">
-        <list>
-          <oneOrMore>
-            <ref name="mode"/>
-          </oneOrMore>
-        </list>
-      </attribute>
-    </optional>
-  </define>
-  <define name="mode">
-    <choice>
-      <data type="NCName"/>
-      <value>#default</value>
-    </choice>
   </define>
 </grammar>
