@@ -80,6 +80,7 @@ class Parser extends Token {
   }
 
   DtdBuilder parse() throws IOException {
+    skipTextDecl();
     parseDecls(false);
     return db;
   }
@@ -124,15 +125,6 @@ class Parser extends Token {
     String token = a.getToken();
     int action = pp.action(tok, token);
     switch (action) {
-    case PrologParser.ACTION_TEXT_DECL:
-      try {
-	new TextDecl(buf, currentTokenStart, bufStart);
-      }
-      catch (InvalidTokenException e) {
-	currentTokenStart = e.getOffset();
-	fatal("INVALID_TEXT_DECL");
-      }
-      break;
     case PrologParser.ACTION_IGNORE_SECT:
       skipIgnoreSect();
       break;
@@ -277,7 +269,9 @@ class Parser extends Token {
       = entityManager.open(new ExternalId(entity.systemId, entity.publicId, entity.baseUri));
     if (openEntity == null)
       return null;
-    return new Parser(openEntity, this);
+    Parser p = new Parser(openEntity, this);
+    p.skipTextDecl();
+    return p;
   }
 
 
@@ -404,6 +398,24 @@ class Parser extends Token {
     default:
       throw new Error("replacement text botch");
     }
+  }
+
+  private void skipTextDecl() throws IOException {
+    try {
+      if (tokenizeProlog() != Tokenizer.TOK_XML_DECL) {
+	currentTokenStart = bufStart = 0;
+	return;
+      }
+      try {
+	new TextDecl(buf, currentTokenStart, bufStart);
+      }
+      catch (InvalidTokenException e) {
+	currentTokenStart = e.getOffset();
+	fatal("INVALID_TEXT_DECL");
+      }
+    }
+    catch (EmptyTokenException e) { }
+    catch (EndOfPrologException e) { }
   }
 
   private final int tokenizeProlog()
