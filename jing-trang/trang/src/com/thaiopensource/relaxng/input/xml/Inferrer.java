@@ -56,6 +56,10 @@ class Inferrer {
   private final ParticleConverter particleConverter = new ParticleConverter();
   private final List outputQueue = new Vector();
   private final Set queued = new HashSet();
+  private String prefixSeparator;
+
+  private static final String SEPARATORS = ".-_";
+
 
   private static class PatternComparator implements Comparator {
     private static Class[] classOrder = {
@@ -225,6 +229,7 @@ class Inferrer {
     this.schema = schema;
     this.grammar = new GrammarPattern();
     findMultiplyReferencedElements();
+    choosePrefixSeparator();
     grammar.getComponents().add(new DefineComponent(DefineComponent.START,
                                                     particleConverter.convert(schema.getStart())));
     for (int i = 0; i < outputQueue.size(); i++) {
@@ -243,6 +248,54 @@ class Inferrer {
       if (particle != null)
         particle.accept(finder);
     }
+  }
+
+
+  private void choosePrefixSeparator() {
+    Map prefixMap = schema.getPrefixMap();
+    Set namespacesInDefines = new HashSet();
+    for (Iterator iter = multiplyReferencedElementNames.iterator(); iter.hasNext();)
+      namespacesInDefines.add(((Name)iter.next()).getNamespaceUri());
+    if (namespacesInDefines.size() <= 1)
+      return; // don't need to use prefixes in defines
+    // define additional prefixes if necessary
+    namespacesInDefines.removeAll(prefixMap.keySet());
+    if (namespacesInDefines.size() > 1) {
+      namespacesInDefines.remove("");
+      int n = 1;
+      for (Iterator iter = namespacesInDefines.iterator(); iter.hasNext();) {
+        for (;;) {
+          String prefix = "ns" + Integer.toString(n++);
+          if (!prefixMap.containsKey(prefix)) {
+            prefixMap.put(iter.next(), prefix);
+            break;
+          }
+        }
+      }
+    }
+    // choose a prefixSeparator that avoids all collisions
+    StringBuffer buf = new StringBuffer();
+    for (int len = 1;; len++)
+      for (int i = 0; i < SEPARATORS.length(); i++) {
+        char c = SEPARATORS.charAt(i);
+        for (int j = 0; j < len; j++)
+          buf.append(c);
+        prefixSeparator = buf.toString();
+        if (prefixSeparatorOk())
+          return;
+        buf.setLength(0);
+      }
+  }
+
+  private boolean prefixSeparatorOk() {
+    Set names = new HashSet();
+    for (Iterator iter = multiplyReferencedElementNames.iterator(); iter.hasNext();) {
+      String name = getDefineName((Name)iter.next());
+      if (names.contains(name))
+        return false;
+      names.add(name);
+    }
+    return true;
   }
 
   private Pattern createElementPattern(Name elementName) {
@@ -297,6 +350,11 @@ class Inferrer {
   }
 
   private String getDefineName(Name elementName) {
+    if (prefixSeparator != null) {
+      String prefix = (String)schema.getPrefixMap().get(elementName.getNamespaceUri());
+      if (prefix != null)
+        return prefix + prefixSeparator + elementName.getLocalName();
+    }
     return elementName.getLocalName();
   }
 
