@@ -5530,6 +5530,43 @@ z
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
+    <list>
+      <interleave>
+        <value>x</value>
+        <value>y</value>
+      </interleave>
+    </list>
+  </element>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>7.1.3</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo">
+    <list>
+      <choice>
+	<interleave>
+	  <value>x</value>
+	  <value>y</value>
+	</interleave>
+        <value>z</value>
+      </choice>
+    </list>
+  </element>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>7.1.4</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo">
     <data type="string">
       <except>
         <attribute name="bar"/>
@@ -6655,141 +6692,6 @@ before string sequence checking.</documentation>
 <valid>
 <foo><bar/><baz/></foo>
 </valid>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <value>bar</value>
-      <value>bar</value>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <value>bar</value>
-      <optional>
-        <value>bar</value>
-      </optional>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <value>bar</value>
-      <value> bar </value>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <value>bar</value>
-      <value type="string">baz</value>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <choice>
-        <value>bar</value>
-        <value type="string">baz</value>
-      </choice>
-      <value>x</value>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <choice>
-        <value>bar</value>
-        <value type="string">baz</value>
-      </choice>
-      <value type="string">x</value>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <data type="token"/>
-      <data type="token"/>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <value>bar</value>
-      <interleave>
-        <value>baz</value>
-        <value>bar</value>
-      </interleave>
-    </interleave>
-  </list>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>7.4</section>
-<correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <list>
-    <interleave>
-      <choice>
-        <value>bar</value>
-        <group>
-          <value>bar</value>
-          <value>bar</value>
-        </group>
-      </choice>
-      <value>baz</value>
-    </interleave>
-  </list>
-</element>
-</correct>
-<valid><foo>bar baz</foo></valid>
 </testCase>
 <testCase>
 <section>7.4</section>

@@ -30,8 +30,6 @@ class DataPattern extends StringPattern {
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
-    if (alpha != null)
-      alpha.addData();
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_data");

@@ -86,25 +86,21 @@ class InterleavePattern extends BinaryPattern {
       throw new RestrictionViolationException("start_contains_interleave");
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_interleave");
+    case LIST_CONTEXT:
+      throw new RestrictionViolationException("list_contains_interleave");
     }
     if (context == ELEMENT_REPEAT_CONTEXT)
       context = ELEMENT_REPEAT_INTERLEAVE_CONTEXT;
     Alphabet a1;
     if (alpha != null && alpha.isEmpty())
       a1 = alpha;
-    else if (context == LIST_CONTEXT)
-      a1 = new ListAlphabet();
     else
-      a1 = new ElementAlphabet();
+      a1 = new Alphabet();
     p1.checkRestrictions(context, dad, a1);
     if (a1.isEmpty())
       p2.checkRestrictions(context, dad, a1);
     else {
-      Alphabet a2;
-      if (context == LIST_CONTEXT)
-	a2 = new ListAlphabet();
-      else
-	a2 = new ElementAlphabet();
+      Alphabet a2 = new Alphabet();
       p2.checkRestrictions(context, dad, a2);
       a1.checkOverlap(a2);
       if (alpha != null) {

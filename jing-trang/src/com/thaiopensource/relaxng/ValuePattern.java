@@ -31,8 +31,6 @@ class ValuePattern extends StringPattern {
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
-    if (alpha != null)
-      alpha.addValue(dt, obj);
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_value");
