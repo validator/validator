@@ -1,3 +1,6 @@
+EncodeDetectInputStream should support entities that need an XmlDecl
+rather than a TextDecl.
+
 Command-line option to define a parameter entity as INCLUDE.
 
 external general entities
