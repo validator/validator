@@ -6,7 +6,7 @@
 <h1>Jing</h1>
 <h2>A RELAX NG validator in Java</h2>
 
-<p>Copyright &#169; 2001 Thai Open Source Software Center Ltd</p>
+<p>Copyright &#169; 2001, 2002 Thai Open Source Software Center Ltd</p>
 
 <p>See the file <a href="copying.txt">copying.txt</a> for copying
 permission.</p>
@@ -63,11 +63,31 @@ for the W3C XML Schema Part 2 datatypes.</p>
 
 <p>The <a href="jing-src.zip">source</a> is also available.</p>
 
+<p>If you wish to use Jing in your programs, you have a choice.</p>
+
+<ul>
+
+<li>You can use Jing's
+native API.  The documentation of Jing's API can
+be <a href="api/jing/index.html">browsed</a> online, or can be <a
+href="jing-api.zip">downloaded</a>.</li>
+
+<li>You can use JARV (Java API for RELAX Verifiers).  JARV is part of
+the <a href="http://iso-relax.sourceforge.net">ISO-RELAX</a>
+SourceForge project.  Jing's implementation requires the dev snapshot
+version of <a
+href="http://iso-relax.sourceforge.net/devSnapShot/iso-relax.jar"
+><code>iso-relax.jar</code></a>. Support for DTD Compatibility
+validation of ID/IDREF is not currently available via this
+interface.</li>
+
+</ul>
+
 <p>There is a <a href="jing-ant.html">Jing task</a> that allows Jing
 to be invoked by the <a href="http://jakarta.apache.org/ant/">Ant</a>
 build tool.</p>
 
-<address>James Clark</address>
+<address><a href="mailto:jjc@jclark.com">James Clark</a></address>
 
 </body>
 </html>
