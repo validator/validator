@@ -3,10 +3,6 @@ Incorrect start when no defined elements.
 Undefined elements do not contain reference to their attlists;
 undefined elements should use element pattern with notAllowed content.
 
-Avoid outputting explicit empty for namespace declaration attribute.
-
-defTable should be a Set.
-
 Option to declare namespace prefixes: -ixmlns:foo=http://...
 
 Option to set colon replacement string.
