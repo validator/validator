@@ -23,11 +23,11 @@ class ValidatorImpl extends DelegatingContentHandler implements Validator {
   private Locator locator;
   private TransformerException transformerException;
 
-  private Object contentHandlerMonitor = new Object();
-  private Object parseMonitor = new Object();
-  private Object transformMonitor = new Object();
+  private final Object contentHandlerMonitor = new Object();
+  private final Object parseMonitor = new Object();
+  private final Object transformMonitor = new Object();
   private Thread transformThread;
-  private ContentHandler outputHandler;
+  private final ContentHandler outputHandler;
 
   class BlockingReader extends XMLReaderImpl {
     public void parse(InputSource in) throws SAXException {

@@ -11,11 +11,11 @@ class OutputHandler extends DefaultHandler {
   private final ErrorHandler eh;
   private int lineNumber = -1;
   private String systemId = null;
-  private StringBuffer message = new StringBuffer();
+  private final StringBuffer message = new StringBuffer();
   private boolean inMessage = false;
   private final String lineSeparator;
   private static final String indent = "  ";
-  private Localizer localizer = new Localizer(OutputHandler.class);
+  private final Localizer localizer = new Localizer(OutputHandler.class);
 
   OutputHandler(ErrorHandler eh) {
     this.eh = eh;

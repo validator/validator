@@ -39,7 +39,7 @@ class SchemaImpl extends AbstractSchema {
   static final String NRL_URI = SchemaReader.BASE_URI + "nrl";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
-  private Mode defaultBaseMode;
+  private final Mode defaultBaseMode;
   private final boolean attributesSchema;
 
   static private final class WrappedIOException extends RuntimeException {
@@ -84,7 +84,7 @@ class SchemaImpl extends AbstractSchema {
     private String schemaUri;
     private String schemaType;
     private PropertyMapBuilder options;
-    private Vector mustSupportOptions = new Vector();
+    private final Vector mustSupportOptions = new Vector();
     private ModeUsage modeUsage;
     private boolean anyNamespace;
 

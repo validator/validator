@@ -9,7 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
 public class CompactSchemaReader extends SchemaReaderImpl {
-  private static SchemaReader theInstance = new CompactSchemaReader();
+  private static final SchemaReader theInstance = new CompactSchemaReader();
 
   private CompactSchemaReader() {
   }

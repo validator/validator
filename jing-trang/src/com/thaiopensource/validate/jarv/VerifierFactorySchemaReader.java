@@ -18,7 +18,7 @@ public class VerifierFactorySchemaReader implements SchemaReader {
   private final VerifierFactory vf;
 
   static private class SchemaImpl extends AbstractSchema {
-    org.iso_relax.verifier.Schema schema;
+    final org.iso_relax.verifier.Schema schema;
 
     private SchemaImpl(org.iso_relax.verifier.Schema schema) {
       this.schema = schema;
@@ -31,7 +31,7 @@ public class VerifierFactorySchemaReader implements SchemaReader {
       catch (VerifierConfigurationException e) {
         Exception cause = e.getCauseException();
         if (cause instanceof RuntimeException
-            && e.getMessage() == null || e.getMessage().equals(cause.getMessage()))
+            && (e.getMessage() == null || e.getMessage().equals(cause.getMessage())))
           throw (RuntimeException)cause;
         throw new JarvConfigurationException(e);
       }

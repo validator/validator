@@ -38,15 +38,15 @@ import java.util.Hashtable;
 
 class ValidatorImpl extends ParserConfigurationSettings implements Validator, ContentHandler, DTDHandler, XMLLocator, XMLEntityResolver, EntityState {
 
-  private XMLSchemaValidator schemaValidator = new XMLSchemaValidator();
-  private XMLErrorReporter errorReporter = new XMLErrorReporter();
-  private ValidationManager validationManager = new ValidationManager();
-  private NamespaceContext namespaceContext = new NamespaceSupport();
-  private XMLAttributes attributes = new XMLAttributesImpl();
-  private SymbolTable symbolTable;
-  private XMLComponent[] components;
+  private final XMLSchemaValidator schemaValidator = new XMLSchemaValidator();
+  private final XMLErrorReporter errorReporter = new XMLErrorReporter();
+  private final ValidationManager validationManager = new ValidationManager();
+  private final NamespaceContext namespaceContext = new NamespaceSupport();
+  private final XMLAttributes attributes = new XMLAttributesImpl();
+  private final SymbolTable symbolTable;
+  private final XMLComponent[] components;
   private Locator locator;
-  private Hashtable entityTable = new Hashtable();
+  private final Hashtable entityTable = new Hashtable();
   private boolean pushedContext = false;
 
   // XXX deal with baseURI
@@ -248,7 +248,7 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
 
   private QName makeQName(String namespaceURI, String localName, String qName) {
     localName = symbolTable.addSymbol(localName);
-    String prefix = null;
+    String prefix;
     if (namespaceURI.equals("")) {
       namespaceURI = null;
       prefix = XMLSymbols.EMPTY_STRING;

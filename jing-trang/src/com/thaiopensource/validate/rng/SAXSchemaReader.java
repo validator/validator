@@ -9,7 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
 public class SAXSchemaReader extends SchemaReaderImpl {
-  private static SchemaReader theInstance = new SAXSchemaReader();
+  private static final SchemaReader theInstance = new SAXSchemaReader();
   
   private SAXSchemaReader() {
   }

@@ -35,7 +35,7 @@ class SchemaImpl extends AbstractSchema {
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
-  private boolean attributesSchema;
+  private final boolean attributesSchema;
 
   static private final class WrappedIOException extends RuntimeException {
     private final IOException exception;
