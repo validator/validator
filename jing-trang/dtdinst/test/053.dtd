@@ -1,0 +1,5 @@
+<!ELEMENT doc EMPTY>
+<!ATTLIST doc a1 CDATA #FIXED "foo value"
+              a2 IDREFS #FIXED "really bizarre"
+              a3 (foo) #FIXED "foo">
+
