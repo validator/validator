@@ -1,0 +1,4 @@
+<!ENTITY % bar "bar CDATA #IMPLIED">
+<!ELEMENT foo EMPTY>
+<!ATTLIST foo %bar;>
+<!ATTLIST foo %bar;>
