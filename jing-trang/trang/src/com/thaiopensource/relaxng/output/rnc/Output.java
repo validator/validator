@@ -392,8 +392,8 @@ class Output {
         pp.startNest("(");
         p.getChild().accept(patternOutput);
         pp.endNest();
-        pp.text(")");
         pp.text(op);
+        pp.text(")");
       }
       endAnnotations(p);
     }
@@ -546,22 +546,26 @@ class Output {
       }
       Pattern e = p.getExcept();
       if (e != null) {
-        // XXX need parentheses if e has following annotations
-        if (params.size() == 0) {
-          pp.text(" - ");
-          pp.startNest(qn + " - ");
-          e.accept(patternOutput);
-          pp.endNest();
-        }
+        boolean useParen = (!e.mayContainText()
+                            && !e.getFollowingElementAnnotations().isEmpty());
+        String s;
+        if (params.isEmpty())
+          s = " - ";
         else {
           pp.startGroup();
           pp.softNewline(" ");
-          pp.text("- ");
-          pp.startNest("- ");
-          e.accept(patternOutput);
-          pp.endNest();
-          pp.endGroup();
+          s = "- ";
         }
+        if (useParen)
+          s += "(";
+        pp.text(s);
+        pp.startNest(params.isEmpty() ? qn + s : s);
+        e.accept(useParen ? noParenPatternOutput : patternOutput);
+        pp.endNest();
+        if (useParen)
+          pp.text(")");
+        if (!params.isEmpty())
+          pp.endGroup();
       }
       endAnnotations(p);
       return null;
