@@ -1,6 +1,6 @@
-Support OASIS catalogs.
+Bug from open office with duplicate attributes.
 
-Write some documentation.
+Support OASIS catalogs.
 
 RELAX NG: output overridden definitions
 
