@@ -11,13 +11,13 @@
 <xsl:strip-space elements="*"/>
 
 <xsl:key name="param"
-         match="flag|nameSpec|modelGroup|attributeGroup|externalId|datatype"
+         match="flag|nameSpec|modelGroup|attributeGroup|externalId|datatype|param"
          use="@name"/>
 
-<xsl:template match="comment()">
+<xsl:template match="comment">
   <xsl:text>
 </xsl:text>
-  <xsl:copy/>
+  <xsl:comment><xsl:value-of select="."/></xsl:comment>
 </xsl:template>
 
 <xsl:template match="doctype">
@@ -127,7 +127,7 @@
 </xsl:template>
 
 <xsl:template
-   match="overridden|duplicate|internalEntity|ignoredSection|default"/>
+   match="param|overridden|duplicate|internalEntity|ignoredSection|default"/>
 
 <xsl:template match="cdata|pcdata">
   <text/>

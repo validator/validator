@@ -55,38 +55,38 @@
     <include/>
   </flag>
   <externalId name="tei2.dtd" system="tei2.dtd"/>
-<!-- Both dictionaries and terminlogy contain element
-     declarations for gram -->
+  <comment> Both dictionaries and terminlogy contain element
+     declarations for gram </comment>
   <flag name="gram">
     <ignore/>
   </flag>
   <externalIdRef name="tei2.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSTTEI2] 3.6.1: File tei2.dtd:  Main document type declaration file -->
-<!--Text Encoding Initiative:
+    <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+    <comment> [DSTTEI2] 3.6.1: File tei2.dtd:  Main document type declaration file </comment>
+    <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+    <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+    <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--This file first defines some useful entities, then defines the
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+    <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+    <comment>This file first defines some useful entities, then defines the
 element TEI.2 and includes files with the various specialized parts of
 the document type declaration.  It also declares the top-level TEI.2
-and TEI.2.corpus elements.-->
-<!--I.  Preliminaries.-->
-<!--Embed any local modifications to TEI entities.-->
-<!-- [DSTOVLE] 3.6.2: Local modifications to parameter entities -->
-<!--Embed local modifications to TEI parameter entities.  Declare
+and TEI.2.corpus elements.</comment>
+    <comment>I.  Preliminaries.</comment>
+    <comment>Embed any local modifications to TEI entities.</comment>
+    <comment> [DSTOVLE] 3.6.2: Local modifications to parameter entities </comment>
+    <comment>Embed local modifications to TEI parameter entities.  Declare
 entity as empty string first, in case user has no mods and has not
-declared it.-->
+declared it.</comment>
     <param name="TEI.extensions.ent"></param>
-<!-- end of [DSTOVLE]  3.6.2-->
-<!--Embed entities for TEI generic identifiers.-->
+    <comment> end of [DSTOVLE]  3.6.2</comment>
+    <comment>Embed entities for TEI generic identifiers.</comment>
     <externalId name="TEI.elementNames" system="teigis2.ent"/>
     <externalIdRef name="TEI.elementNames">
       <nameSpec name="n.TEI.2">
@@ -1281,20 +1281,20 @@ declared it.-->
         <name>year</name>
       </nameSpec>
     </externalIdRef>
-<!--Define entities for TEI keywords.-->
-<!--This includes defining the default for each base and additional
+    <comment>Define entities for TEI keywords.</comment>
+    <comment>This includes defining the default for each base and additional
 tag set as 'IGNORE', and initialising the tag omissibility indicator
-entities depending on the value of TEI.XML-->
-<!-- [DSTPEKW] 3.8.5: TEI Keywords -->
-<!--We declare and immediately embed the TEI keywords file.-->
+entities depending on the value of TEI.XML</comment>
+    <comment> [DSTPEKW] 3.8.5: TEI Keywords </comment>
+    <comment>We declare and immediately embed the TEI keywords file.</comment>
     <externalId name="TEI.keywords.ent" system="teikey2.ent"/>
     <externalIdRef name="TEI.keywords.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSTKEYS] 3.8.5: TEI Keywords -->
-<!--I.  Declare TEI keywords for data types.-->
-<!--These parameter entities are used as keywords to express
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DSTKEYS] 3.8.5: TEI Keywords </comment>
+      <comment>I.  Declare TEI keywords for data types.</comment>
+      <comment>These parameter entities are used as keywords to express
 rules or constraints which cannot be fully expressed in SGML; their
-expansions show the nearest SGML equivalent.-->
+expansions show the nearest SGML equivalent.</comment>
       <param name="INHERITED">#IMPLIED</param>
       <datatype name="ISO-date">
         <cdata/>
@@ -1302,26 +1302,26 @@ expansions show the nearest SGML equivalent.-->
       <datatype name="extPtr">
         <cdata/>
       </datatype>
-<!--II.  Declare keywords for tag-set selection.-->
-<!--Declare all bases and additional tag sets as 'IGNORE'.  The
+      <comment>II.  Declare keywords for tag-set selection.</comment>
+      <comment>Declare all bases and additional tag sets as 'IGNORE'.  The
 user can override this default by declaring the same entity with the
 replacement text 'INCLUDE', in the document's DTD
-subset.-->
-<!--Base tag sets first.-->
+subset.</comment>
+      <comment>Base tag sets first.</comment>
       <overridden name="TEI.prose">IGNORE</overridden>
       <overridden name="TEI.verse">IGNORE</overridden>
       <overridden name="TEI.drama">IGNORE</overridden>
       <overridden name="TEI.spoken">IGNORE</overridden>
       <overridden name="TEI.dictionaries">IGNORE</overridden>
       <overridden name="TEI.terminology">IGNORE</overridden>
-<!--Now the mixed
-bases.-->
+      <comment>Now the mixed
+bases.</comment>
       <overridden name="TEI.general">IGNORE</overridden>
       <flag name="TEI.mixed">
         <ignore/>
       </flag>
-<!--Now additional tag
-sets.-->
+      <comment>Now additional tag
+sets.</comment>
       <overridden name="TEI.linking">IGNORE</overridden>
       <overridden name="TEI.analysis">IGNORE</overridden>
       <overridden name="TEI.fs">IGNORE</overridden>
@@ -1332,8 +1332,8 @@ sets.-->
       <overridden name="TEI.nets">IGNORE</overridden>
       <overridden name="TEI.figures">IGNORE</overridden>
       <overridden name="TEI.corpus">IGNORE</overridden>
-<!--III. Declare TEI.XML and associated omissibility
-indicators-->
+      <comment>III. Declare TEI.XML and associated omissibility
+indicators</comment>
       <overridden name="TEI.XML">IGNORE</overridden>
       <includedSection flag="TEI.XML">
         <param name="om.RO"></param>
@@ -1341,34 +1341,34 @@ indicators-->
       </includedSection>
       <overridden name="om.RO">- o</overridden>
       <overridden name="om.RR">- -</overridden>
-<!-- end of [DSTKEYS]  3.8.5-->
+      <comment> end of [DSTKEYS]  3.8.5</comment>
     </externalIdRef>
-<!-- end of [DSTPEKW]  3.8.5-->
-<!--II. Define element classes for content models, shared
+    <comment> end of [DSTPEKW]  3.8.5</comment>
+    <comment>II. Define element classes for content models, shared
 attributes for element classes, and global attributes.  (This all
-happens within the file TEIclas2.ent.)-->
+happens within the file TEIclas2.ent.)</comment>
     <externalId name="TEI.elementClasses" system="teiclas2.ent"/>
     <externalIdRef name="TEI.elementClasses">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSTECOV] 3.7.3: Element classes for TEI DTDs -->
-<!--Text Encoding Initiative:
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DSTECOV] 3.7.3: Element classes for TEI DTDs </comment>
+      <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+      <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+      <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--First, we declare the 'low-level' core classes:  these are
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+      <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+      <comment>First, we declare the 'low-level' core classes:  these are
 classes of semantically and structurally similar elements declared as
-part of the core tag set, e.g. the classes 'data' or 'edit'.-->
-<!-- [DSTECLO] 3.7.4: Low-level classes -->
-<!--Most of these elements are in the core tag set, but
-some may be from other tag sets.-->
-<!--Phrase-level classes-->
+part of the core tag set, e.g. the classes 'data' or 'edit'.</comment>
+      <comment> [DSTECLO] 3.7.4: Low-level classes </comment>
+      <comment>Most of these elements are in the core tag set, but
+some may be from other tag sets.</comment>
+      <comment>Phrase-level classes</comment>
       <modelGroup name="x.hqphrase">
         <choice/>
       </modelGroup>
@@ -1725,8 +1725,8 @@ some may be from other tag sets.-->
           <modelGroupRef name="m.refsys"/>
         </choice>
       </modelGroup>
-<!--Inter-level classes
--->
+      <comment>Inter-level classes
+</comment>
       <modelGroup name="x.hqinter">
         <choice/>
       </modelGroup>
@@ -1818,8 +1818,8 @@ some may be from other tag sets.-->
           </elementRef>
         </choice>
       </modelGroup>
-<!-- end of [DSTECLO]  3.7.4-->
-<!-- [DSTECMI] 3.7.9: Misc. Element Class Models -->
+      <comment> end of [DSTECLO]  3.7.4</comment>
+      <comment> [DSTECMI] 3.7.9: Misc. Element Class Models </comment>
       <param name="x.agent"></param>
       <param name="m.agent">%x.agent; %n.name;</param>
       <modelGroup name="x.addrPart">
@@ -2163,14 +2163,14 @@ some may be from other tag sets.-->
           </elementRef>
         </choice>
       </modelGroup>
-<!-- end of [DSTECMI]  3.7.9-->
-<!--Next, we declare the 'high-level' classes:  these group
+      <comment> end of [DSTECMI]  3.7.9</comment>
+      <comment>Next, we declare the 'high-level' classes:  these group
 together all phrase-level elements, all inter-level elements, and all
 chunk-level elements in the core, and identify the 'common' component
 elements (chunks and inter-level elements), as opposed to the
-tagset-specific components.-->
-<!-- [DSTECHI] 3.7.5: Common high-level classes -->
-<!--These are the three fundamental element classes.-->
+tagset-specific components.</comment>
+      <comment> [DSTECHI] 3.7.5: Common high-level classes </comment>
+      <comment>These are the three fundamental element classes.</comment>
       <modelGroup name="x.phrase">
         <choice/>
       </modelGroup>
@@ -2262,8 +2262,8 @@ tagset-specific components.-->
           </elementRef>
         </choice>
       </modelGroup>
-<!--This class isolates all the common
-component-level elements.-->
+      <comment>This class isolates all the common
+component-level elements.</comment>
       <modelGroup name="x.common">
         <choice/>
       </modelGroup>
@@ -2280,31 +2280,31 @@ component-level elements.-->
           </elementRef>
         </choice>
       </modelGroup>
-<!-- end of [DSTECHI]  3.7.5-->
-<!--Next, we embed the portions of each base and additional tag
+      <comment> end of [DSTECHI]  3.7.5</comment>
+      <comment>Next, we embed the portions of each base and additional tag
 set which declare relevant parameter entities.  Only those files are
 embedded which have been selected by the user in the DTD subset.  These
 files will declare parameter entities for their component-level
-elements, as well as for any global attributes they define.-->
-<!-- [DSTECMK] 3.7.6: Embedding tag-set-specific entity definitions -->
+elements, as well as for any global attributes they define.</comment>
+      <comment> [DSTECMK] 3.7.6: Embedding tag-set-specific entity definitions </comment>
       <includedSection flag="TEI.verse">
         <externalId name="TEI.verse.ent" system="teivers2.ent"/>
         <externalIdRef name="TEI.verse.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DVEE] 9.1: Base Tag Set for Verse: entities -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DVEE] 9.1: Base Tag Set for Verse: entities </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--First, declare the class of
-components specific to verse -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+          <comment>First, declare the class of
+components specific to verse </comment>
           <modelGroup name="x.comp.verse">
             <choice/>
           </modelGroup>
@@ -2319,7 +2319,7 @@ components specific to verse -->
           <modelGroup name="mix.verse">
             <modelGroupRef name="m.comp.verse"/>
           </modelGroup>
-<!--Next define attributes common to metrical elements-->
+          <comment>Next define attributes common to metrical elements</comment>
           <attributeGroup name="a.metrical">
             <attribute>
               <name>met</name>
@@ -2344,18 +2344,18 @@ components specific to verse -->
               <implied/>
             </attribute>
           </attributeGroup>
-<!--Now, we define the class of elements which can appear
-only within metrical elements-->
+          <comment>Now, we define the class of elements which can appear
+only within metrical elements</comment>
           <duplicate name="x.phrase.verse"/>
           <duplicate name="m.phrase.verse"/>
-<!-- end of [DVEE]  9.1-->
+          <comment> end of [DVEE]  9.1</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.drama">
         <externalId name="TEI.drama.ent" system="teidram2.ent"/>
         <externalIdRef name="TEI.drama.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDRCLA] 10.: Class declarations for Performance Texts -->
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DDRCLA] 10.: Class declarations for Performance Texts </comment>
           <duplicate name="x.dramafront"/>
           <duplicate name="m.dramafront"/>
           <duplicate name="x.stageDirection"/>
@@ -2375,25 +2375,25 @@ only within metrical elements-->
           <modelGroup name="mix.drama">
             <modelGroupRef name="m.comp.drama"/>
           </modelGroup>
-<!-- end of [DDRCLA]  10.-->
+          <comment> end of [DDRCLA]  10.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.spoken">
         <externalId name="TEI.spoken.ent" system="teispok2.ent"/>
         <externalIdRef name="TEI.spoken.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTSCLA] 11.: Class declarations for Transcribed Speech -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DTSCLA] 11.: Class declarations for Transcribed Speech </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
           <modelGroup name="x.comp.spoken">
             <choice/>
           </modelGroup>
@@ -2443,28 +2443,28 @@ Current versions are available from the Text Encoding Initiative.-->
           <modelGroup name="mix.spoken">
             <modelGroupRef name="m.comp.spoken"/>
           </modelGroup>
-<!-- end of [DTSCLA]  11.-->
+          <comment> end of [DTSCLA]  11.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.dictionaries">
         <externalId name="TEI.dictionaries.ent" system="teidict2.ent"/>
         <externalIdRef name="TEI.dictionaries.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDIENTS] 12.1: Element classes for dictionary base -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DDIENTS] 12.1: Element classes for dictionary base </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--First we define attributes available on all the elements in
-this tag set.-->
-<!-- [DEDIMV] 12.5.4: Attributes for dictionary work -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+          <comment>First we define attributes available on all the elements in
+this tag set.</comment>
+          <comment> [DEDIMV] 12.5.4: Attributes for dictionary work </comment>
           <attributeGroup name="a.dictionaries">
             <attribute>
               <name>expand</name>
@@ -2510,9 +2510,9 @@ this tag set.-->
               <default>n</default>
             </attribute>
           </attributeGroup>
-<!-- end of [DEDIMV]  12.5.4-->
-<!--Next we define comp.dictionaries, which will be used in the
-declaration of component, within file TEI2.DTD.-->
+          <comment> end of [DEDIMV]  12.5.4</comment>
+          <comment>Next we define comp.dictionaries, which will be used in the
+declaration of component, within file TEI2.DTD.</comment>
           <modelGroup name="x.comp.dictionaries">
             <choice/>
           </modelGroup>
@@ -2533,9 +2533,9 @@ declaration of component, within file TEI2.DTD.-->
           <modelGroup name="mix.dictionaries">
             <modelGroupRef name="m.comp.dictionaries"/>
           </modelGroup>
-<!--Next, we declare some specialized element
+          <comment>Next, we declare some specialized element
 classes, used in various content models in the dictionary
-tag set.-->
+tag set.</comment>
           <attributeGroup name="a.entries">
             <attribute>
               <name>type</name>
@@ -2548,7 +2548,7 @@ tag set.-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- [DEDIEN] 12.2.2: Class for top-level structure of dictionary entries -->
+          <comment> [DEDIEN] 12.2.2: Class for top-level structure of dictionary entries </comment>
           <modelGroup name="x.dictionaryTopLevel">
             <choice/>
           </modelGroup>
@@ -2587,8 +2587,8 @@ tag set.-->
               </elementRef>
             </choice>
           </modelGroup>
-<!-- end of [DEDIEN]  12.2.2-->
-<!-- [DEDITPFO] 12.3.1: Classes for morphological and form information -->
+          <comment> end of [DEDIEN]  12.2.2</comment>
+          <comment> [DEDITPFO] 12.3.1: Classes for morphological and form information </comment>
           <modelGroup name="x.morphInfo">
             <choice/>
           </modelGroup>
@@ -2651,8 +2651,8 @@ tag set.-->
               </elementRef>
             </choice>
           </modelGroup>
-<!-- end of [DEDITPFO]  12.3.1-->
-<!-- [DEDITPGR] 12.3.2: Elements for grammatical information -->
+          <comment> end of [DEDITPFO]  12.3.1</comment>
+          <comment> [DEDITPGR] 12.3.2: Elements for grammatical information </comment>
           <modelGroup name="x.gramInfo">
             <choice/>
           </modelGroup>
@@ -2680,8 +2680,8 @@ tag set.-->
               </elementRef>
             </choice>
           </modelGroup>
-<!-- end of [DEDITPGR]  12.3.2-->
-<!-- [DEDIHW] 12.4: Classes for headword references -->
+          <comment> end of [DEDITPGR]  12.3.2</comment>
+          <comment> [DEDIHW] 12.4: Classes for headword references </comment>
           <duplicate name="x.formPointers"/>
           <duplicate name="m.formPointers"/>
           <attributeGroup name="a.formPointers">
@@ -2691,13 +2691,13 @@ tag set.-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- end of [DEDIHW]  12.4-->
-<!-- [DEDIFR] 12.6: Model class for unstructured dictionary entries -->
-<!--This entity declares the class of elements defined
+          <comment> end of [DEDIHW]  12.4</comment>
+          <comment> [DEDIFR] 12.6: Model class for unstructured dictionary entries </comment>
+          <comment>This entity declares the class of elements defined
 specifically for use in dictionary entries, except those which are
 included in the phrase class.   This class
 is used in defining the 'free'
-dictionary entry.-->
+dictionary entry.</comment>
           <modelGroup name="x.dictionaryParts">
             <choice/>
           </modelGroup>
@@ -2793,26 +2793,26 @@ dictionary entry.-->
               </elementRef>
             </choice>
           </modelGroup>
-<!-- end of [DEDIFR]  12.6-->
-<!-- end of [DDIENTS]  12.1-->
+          <comment> end of [DEDIFR]  12.6</comment>
+          <comment> end of [DDIENTS]  12.1</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.terminology">
         <externalId name="TEI.terminology.ent" system="teiterm2.ent"/>
         <externalIdRef name="TEI.terminology.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTEENT] 13.4: TEIterm2.ent:  Base tag set for terminological data -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DTEENT] 13.4: TEIterm2.ent:  Base tag set for terminological data </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
           <modelGroup name="x.comp.terminology">
             <choice/>
           </modelGroup>
@@ -2871,7 +2871,7 @@ Current versions are available from the Text Encoding Initiative.-->
               </elementRef>
             </choice>
           </modelGroup>
-<!--Add attributes to the set of global attributes:-->
+          <comment>Add attributes to the set of global attributes:</comment>
           <attributeGroup name="a.terminology">
             <attribute>
               <name>group</name>
@@ -2894,27 +2894,27 @@ Current versions are available from the Text Encoding Initiative.-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- end of [DTEENT]  13.4-->
+          <comment> end of [DTEENT]  13.4</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.linking">
         <externalId name="TEI.linking.ent" system="teilink2.ent"/>
         <externalIdRef name="TEI.linking.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSAENTS] 14.: Global attributes for the TEI.linking tag set -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DSAENTS] 14.: Global attributes for the TEI.linking tag set </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--When tag set TEI.linking is used, the following attributes
-may be attached to any element:-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+          <comment>When tag set TEI.linking is used, the following attributes
+may be attached to any element:</comment>
           <attributeGroup name="a.linking">
             <attribute>
               <name>corresp</name>
@@ -2957,8 +2957,8 @@ may be attached to any element:-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!--The following attributes apply to all pointer
-elements:-->
+          <comment>The following attributes apply to all pointer
+elements:</comment>
           <attributeGroup name="a.pointer">
             <attribute>
               <name>type</name>
@@ -2999,8 +2999,8 @@ elements:-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!--The following attributes apply to all pointer group
-elements:-->
+          <comment>The following attributes apply to all pointer group
+elements:</comment>
           <attributeGroup name="a.pointerGroup">
             <attributeGroupRef name="a.pointer"/>
             <attribute>
@@ -3014,15 +3014,15 @@ elements:-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- end of [DSAENTS]  14.-->
+          <comment> end of [DSAENTS]  14.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.analysis">
         <externalId name="TEI.analysis.ent" system="teiana2.ent"/>
         <externalIdRef name="TEI.analysis.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DAIENT] 15.: Modifications to TEI class system for analysis -->
-<!-- [DAIGA] 15.2: Global attribute for analysis -->
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DAIENT] 15.: Modifications to TEI class system for analysis </comment>
+          <comment> [DAIGA] 15.2: Global attribute for analysis </comment>
           <attributeGroup name="a.analysis">
             <attribute>
               <name>ana</name>
@@ -3030,48 +3030,48 @@ elements:-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- end of [DAIGA]  15.2-->
-<!-- end of [DAIENT]  15.-->
+          <comment> end of [DAIGA]  15.2</comment>
+          <comment> end of [DAIENT]  15.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.transcr">
         <externalId name="TEI.transcr.ent" system="teitran2.ent"/>
         <externalIdRef name="TEI.transcr.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DPHENT] 18.: Attributes for Transcription of Primary Sources -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DPHENT] 18.: Attributes for Transcription of Primary Sources </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
           <param name="a.edit">
       resp IDREF %INHERITED;
       cert CDATA #IMPLIED</param>
-<!-- end of [DPHENT]  18.-->
+          <comment> end of [DPHENT]  18.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.textcrit">
         <externalId name="TEI.textcrit.ent" system="teitc2.ent"/>
         <externalIdRef name="TEI.textcrit.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTCE] 19.: Entity classes for text criticism -->
-<!--Text Encoding Initiative:
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DTCE] 19.: Entity classes for text criticism </comment>
+          <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+          <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+          <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+          <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
           <modelGroup name="x.fragmentary">
             <choice/>
           </modelGroup>
@@ -3131,14 +3131,14 @@ Current versions are available from the Text Encoding Initiative.-->
               <implied/>
             </attribute>
           </attributeGroup>
-<!-- end of [DTCE]  19.-->
+          <comment> end of [DTCE]  19.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.names.dates">
         <externalId name="TEI.names.dates.ent" system="teind2.ent"/>
         <externalIdRef name="TEI.names.dates.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DNDENT] 20.: Additional classes for names and dates -->
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DNDENT] 20.: Additional classes for names and dates </comment>
           <duplicate name="x.personPart"/>
           <duplicate name="m.personPart"/>
           <duplicate name="x.placePart"/>
@@ -3254,33 +3254,33 @@ Current versions are available from the Text Encoding Initiative.-->
               <default>yes</default>
             </attribute>
           </attributeGroup>
-<!-- end of [DNDENT]  20.-->
+          <comment> end of [DNDENT]  20.</comment>
         </externalIdRef>
       </includedSection>
       <includedSection flag="TEI.figures">
         <externalId name="TEI.figures.ent" system="teifig2.ent"/>
         <externalIdRef name="TEI.figures.ent">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DFTPE] 22.2: Formula Content -->
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DFTPE] 22.2: Formula Content </comment>
           <datatype name="formulaNotations">
             <cdata/>
           </datatype>
           <modelGroup name="formulaContent">
             <pcdata/>
           </modelGroup>
-<!-- end of [DFTPE]  22.2-->
+          <comment> end of [DFTPE]  22.2</comment>
         </externalIdRef>
       </includedSection>
-<!-- end of [DSTECMK]  3.7.6-->
-<!--We can now declare the standard content models; one of these
-varies with the base selected.-->
-<!-- [DSTECST] 3.7.7: Standard Content Models -->
-<!--Here we declare the parameter entities phrase, phrase.seq,
+      <comment> end of [DSTECMK]  3.7.6</comment>
+      <comment>We can now declare the standard content models; one of these
+varies with the base selected.</comment>
+      <comment> [DSTECST] 3.7.7: Standard Content Models </comment>
+      <comment>Here we declare the parameter entities phrase, phrase.seq,
 component, component.seq, paraContent, and specialPara, for use in the
-content models of element declarations.-->
-<!--The entities phrase and phrase.seq are the same in all bases.
+content models of element declarations.</comment>
+      <comment>The entities phrase and phrase.seq are the same in all bases.
 They may include elements specific to single tag sets; if the tag set is
-not selected, these elements are undefined and have no effect.-->
+not selected, these elements are undefined and have no effect.</comment>
       <modelGroup name="phrase">
         <choice>
           <pcdata/>
@@ -3293,13 +3293,13 @@ not selected, these elements are undefined and have no effect.-->
           <modelGroupRef name="phrase"/>
         </zeroOrMore>
       </modelGroup>
-<!--The entity component varies with the base.  The
+      <comment>The entity component varies with the base.  The
 versions for the combined bases are declared first (so as to
 take precedence over the declarations in the individual
-bases).-->
-<!-- [DSTECMX] 3.7.8: Definition of components for combined bases -->
-<!--Default declarations for the 'mix.' entities used for mixed
-and general bases.-->
+bases).</comment>
+      <comment> [DSTECMX] 3.7.8: Definition of components for combined bases </comment>
+      <comment>Default declarations for the 'mix.' entities used for mixed
+and general bases.</comment>
       <overridden name="mix.verse"></overridden>
       <overridden name="mix.drama"></overridden>
       <overridden name="mix.spoken"></overridden>
@@ -3313,8 +3313,8 @@ specific to one tag set.--&gt;
 &lt;!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
 %mix.dictionaries; %mix.terminology;)' &gt;</ignoredSection>
       <includedSection flag="TEI.general">
-<!--The general base uses the same definition of component as the
-mixed base.-->
+        <comment>The general base uses the same definition of component as the
+mixed base.</comment>
         <flag name="TEI.singleBase">
           <ignore/>
         </flag>
@@ -3328,13 +3328,13 @@ mixed base.-->
             <modelGroupRef name="mix.terminology"/>
           </choice>
         </modelGroup>
-<!--But it defines a special version of component.seq, which
+        <comment>But it defines a special version of component.seq, which
 restricts each div of the text to a single base:  bases can shift only
 in embedded divs or at div boundaries.  This entity is constructed out
 of a series of smaller entities, one for each tag set.  If the tag set
-is not in use, its entity will expand to the empty string.-->
+is not in use, its entity will expand to the empty string.</comment>
         <includedSection flag="TEI.verse">
-<!--If the verse base is in use, ...-->
+          <comment>If the verse base is in use, ...</comment>
           <modelGroup name="gen.verse">
             <sequence>
               <modelGroupRef name="m.comp.verse"/>
@@ -3348,7 +3348,7 @@ is not in use, its entity will expand to the empty string.-->
           </modelGroup>
         </includedSection>
         <includedSection flag="TEI.drama">
-<!--If the drama base is in use, ...-->
+          <comment>If the drama base is in use, ...</comment>
           <modelGroup name="gen.drama">
             <sequence>
               <modelGroupRef name="m.comp.drama"/>
@@ -3362,7 +3362,7 @@ is not in use, its entity will expand to the empty string.-->
           </modelGroup>
         </includedSection>
         <includedSection flag="TEI.spoken">
-<!--If the spoken base is in use, ...-->
+          <comment>If the spoken base is in use, ...</comment>
           <modelGroup name="gen.spoken">
             <sequence>
               <modelGroupRef name="m.comp.spoken"/>
@@ -3376,7 +3376,7 @@ is not in use, its entity will expand to the empty string.-->
           </modelGroup>
         </includedSection>
         <includedSection flag="TEI.dictionaries">
-<!--If the dictionary base is in use, ...-->
+          <comment>If the dictionary base is in use, ...</comment>
           <modelGroup name="gen.dictionaries">
             <sequence>
               <modelGroupRef name="m.comp.dictionaries"/>
@@ -3390,7 +3390,7 @@ is not in use, its entity will expand to the empty string.-->
           </modelGroup>
         </includedSection>
         <includedSection flag="TEI.terminology">
-<!--If the terminology base is in use, ...-->
+          <comment>If the terminology base is in use, ...</comment>
           <modelGroup name="gen.terminology">
             <sequence>
               <modelGroupRef name="m.comp.terminology"/>
@@ -3403,15 +3403,15 @@ is not in use, its entity will expand to the empty string.-->
             </sequence>
           </modelGroup>
         </includedSection>
-<!--Default declarations for all the entities gen.verse,
-etc.-->
+        <comment>Default declarations for all the entities gen.verse,
+etc.</comment>
         <overridden name="gen.verse"></overridden>
         <overridden name="gen.drama"></overridden>
         <overridden name="gen.spoken"></overridden>
         <overridden name="gen.dictionaries"></overridden>
         <overridden name="gen.terminology"></overridden>
-<!--Now we are ready to declare component.seq and
-component.plus for use in general base tag set.-->
+        <comment>Now we are ready to declare component.seq and
+component.plus for use in general base tag set.</comment>
         <modelGroup name="component.seq">
           <sequence>
             <zeroOrMore>
@@ -3435,9 +3435,9 @@ component.plus for use in general base tag set.-->
 |
 ( (%m.common;)+, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries;
 %gen.terminology; TEI...end)?</param>
-<!--(End of marked section for general base.)-->
+        <comment>(End of marked section for general base.)</comment>
       </includedSection>
-<!-- end of [DSTECMX]  3.7.8-->
+      <comment> end of [DSTECMX]  3.7.8</comment>
       <includedSection flag="TEI.prose">
         <overridden name="component">(%m.common;)</overridden>
         <overridden name="TEI.singleBase">INCLUDE</overridden>
@@ -3462,15 +3462,15 @@ component.plus for use in general base tag set.-->
         <overridden name="component">(%m.common; | %m.comp.terminology;)</overridden>
         <overridden name="TEI.singleBase">INCLUDE</overridden>
       </includedSection>
-<!--Default declaration.-->
+      <comment>Default declaration.</comment>
       <overridden name="component">(%m.common;)</overridden>
       <overridden name="TEI.singleBase">INCLUDE</overridden>
-<!--The entity component.seq is always a starred sequence of
+      <comment>The entity component.seq is always a starred sequence of
 component elements.  Its definition does not vary with the base (unless
 we are using the general base, in which case it has already been defined
-above), but the meaning of the definition does.-->
+above), but the meaning of the definition does.</comment>
       <overridden name="component.seq">((%component;), (%m.Incl;)*)*</overridden>
-<!--The following entities do not vary with the base.-->
+      <comment>The following entities do not vary with the base.</comment>
       <modelGroup name="paraContent">
         <zeroOrMore>
           <choice>
@@ -3492,10 +3492,10 @@ above), but the meaning of the definition does.-->
           </choice>
         </zeroOrMore>
       </modelGroup>
-<!-- end of [DSTECST]  3.7.7-->
-<!--Finally, we declare the attribute classes, including
-the global attributes.-->
-<!-- [DSTECAT] 3.7.1: Attribute classes -->
+      <comment> end of [DSTECST]  3.7.7</comment>
+      <comment>Finally, we declare the attribute classes, including
+the global attributes.</comment>
+      <comment> [DSTECAT] 3.7.1: Attribute classes </comment>
       <attributeGroup name="a.declaring">
         <attribute>
           <name>decls</name>
@@ -3617,15 +3617,15 @@ the global attributes.-->
           <default>DITTO</default>
         </attribute>
       </attributeGroup>
-<!-- end of [DSTECAT]  3.7.1-->
-<!-- [DSTGA] 3.5: Global attributes -->
-<!--The global attributes are defined for every element in the TEI
+      <comment> end of [DSTECAT]  3.7.1</comment>
+      <comment> [DSTGA] 3.5: Global attributes </comment>
+      <comment>The global attributes are defined for every element in the TEI
 tag set; individual declarations may be overridden by local declarations
-for individual elements.-->
-<!--If the tag sets invoked by the user define extra global
+for individual elements.</comment>
+      <comment>If the tag sets invoked by the user define extra global
 attributes (they do this in their .ent file), then they are inherited by
 GLOBAL; otherwise the parameter entities referred to expand to the empty
-string, as shown here.  -->
+string, as shown here.  </comment>
       <overridden name="a.analysis"></overridden>
       <overridden name="a.linking"></overridden>
       <overridden name="a.terminology"></overridden>
@@ -3654,15 +3654,15 @@ string, as shown here.  -->
           <implied/>
         </attribute>
       </attributeGroup>
-<!--The TEIform attribute is also global, but is declared
+      <comment>The TEIform attribute is also global, but is declared
 individually for each element, not in a parameter entity
-declaration.-->
-<!-- end of [DSTGA]  3.5-->
-<!-- end of [DSTECOV]  3.7.3-->
+declaration.</comment>
+      <comment> end of [DSTGA]  3.5</comment>
+      <comment> end of [DSTECOV]  3.7.3</comment>
     </externalIdRef>
-<!--III.  Define the top-level TEI elements:  one for individual
-texts, one for composites with a collective header.-->
-<!--A TEI document is a text preceded by a TEI header.-->
+    <comment>III.  Define the top-level TEI elements:  one for individual
+texts, one for composites with a collective header.</comment>
+    <comment>A TEI document is a text preceded by a TEI header.</comment>
     <flag name="TEI.2">
       <include/>
     </flag>
@@ -3688,8 +3688,8 @@ texts, one for composites with a collective header.-->
         </attribute>
       </attlist>
     </includedSection>
-<!--A TEI corpus is a series of TEI.2 documents, preceded by a
-corpus-level TEI header.-->
+    <comment>A TEI corpus is a series of TEI.2 documents, preceded by a
+corpus-level TEI header.</comment>
     <flag name="teiCorpus.2">
       <include/>
     </flag>
@@ -3717,34 +3717,34 @@ corpus-level TEI header.-->
         </attribute>
       </attlist>
     </includedSection>
-<!--IV.  Embed the actual tag sets.  First embed any local
+    <comment>IV.  Embed the actual tag sets.  First embed any local
 modifications and extensions.  Then embed the core tag sets, the
 (single) base tag set, and the (optional) additional tag sets specified
-by the user.-->
-<!-- [DSTOVLO] 3.6.2: Embed local element declarations, etc. -->
-<!--Embedding local modifications here allows user modifications
-to use all the standard TEI element classes and parameter entities.-->
+by the user.</comment>
+    <comment> [DSTOVLO] 3.6.2: Embed local element declarations, etc. </comment>
+    <comment>Embedding local modifications here allows user modifications
+to use all the standard TEI element classes and parameter entities.</comment>
     <param name="TEI.extensions.dtd"></param>
-<!-- end of [DSTOVLO]  3.6.2-->
-<!-- [DSTOVCO] 3.6.3: Embed the core tag sets -->
-<!--These occur in all documents and are therefore defined
-unconditionally.-->
+    <comment> end of [DSTOVLO]  3.6.2</comment>
+    <comment> [DSTOVCO] 3.6.3: Embed the core tag sets </comment>
+    <comment>These occur in all documents and are therefore defined
+unconditionally.</comment>
     <externalId name="TEI.header.dtd" system="teihdr2.dtd"/>
     <externalIdRef name="TEI.header.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [D221] 5.1.1: The TEI Header -->
-<!--teihdr2.dtd  Tags for TEI Header.-->
-<!--Text Encoding Initiative:
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [D221] 5.1.1: The TEI Header </comment>
+      <comment>teihdr2.dtd  Tags for TEI Header.</comment>
+      <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+      <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+      <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+      <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
       <flag name="teiHeader">
         <include/>
       </flag>
@@ -3810,8 +3810,8 @@ Current versions are available from the Text Encoding Initiative.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [D221B] 5.1.1:  -->
-<!-- [D222] 5.2: The file description -->
+      <comment> [D221B] 5.1.1:  </comment>
+      <comment> [D222] 5.2: The file description </comment>
       <flag name="fileDesc">
         <include/>
       </flag>
@@ -3862,7 +3862,7 @@ Current versions are available from the Text Encoding Initiative.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [D2221] 5.2.1: The title statement -->
+      <comment> [D2221] 5.2.1: The title statement </comment>
       <flag name="titleStmt">
         <include/>
       </flag>
@@ -3963,10 +3963,10 @@ Current versions are available from the Text Encoding Initiative.-->
           </attribute>
         </attlist>
       </includedSection>
-<!--The TITLE, AUTHOR, NAME, RESPSTMT, and RESP elements are
-declared in file teicore2.dtd, not here.-->
-<!-- end of [D2221]  5.2.1-->
-<!-- [D2222] 5.2.2: The edition statement -->
+      <comment>The TITLE, AUTHOR, NAME, RESPSTMT, and RESP elements are
+declared in file teicore2.dtd, not here.</comment>
+      <comment> end of [D2221]  5.2.1</comment>
+      <comment> [D2222] 5.2.2: The edition statement </comment>
       <flag name="editionStmt">
         <include/>
       </flag>
@@ -4019,8 +4019,8 @@ declared in file teicore2.dtd, not here.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2222]  5.2.2-->
-<!-- [D2223] 5.2.3: The extent statement -->
+      <comment> end of [D2222]  5.2.2</comment>
+      <comment> [D2223] 5.2.3: The extent statement </comment>
       <flag name="extent">
         <include/>
       </flag>
@@ -4039,8 +4039,8 @@ declared in file teicore2.dtd, not here.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2223]  5.2.3-->
-<!-- [D2224] 5.2.4: The publication statement -->
+      <comment> end of [D2223]  5.2.3</comment>
+      <comment> [D2224] 5.2.4: The publication statement </comment>
       <flag name="publicationStmt">
         <include/>
       </flag>
@@ -4193,10 +4193,10 @@ declared in file teicore2.dtd, not here.-->
           </attribute>
         </attlist>
       </includedSection>
-<!--The PUBLISHER, PUBPLACE, and ADDRESS elements
-are defined in file teicore2.dtd.-->
-<!-- end of [D2224]  5.2.4-->
-<!-- [D2225] 5.2.5: The series statement -->
+      <comment>The PUBLISHER, PUBPLACE, and ADDRESS elements
+are defined in file teicore2.dtd.</comment>
+      <comment> end of [D2224]  5.2.4</comment>
+      <comment> [D2225] 5.2.5: The series statement </comment>
       <flag name="seriesStmt">
         <include/>
       </flag>
@@ -4236,8 +4236,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2225]  5.2.5-->
-<!-- [D2226] 5.2.6: The notes statement -->
+      <comment> end of [D2225]  5.2.5</comment>
+      <comment> [D2226] 5.2.6: The notes statement </comment>
       <flag name="notesStmt">
         <include/>
       </flag>
@@ -4260,10 +4260,10 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!--The NOTE element is defined with the core tags.-->
-<!-- end of [D2226]  5.2.6-->
-<!-- end of [D222]  5.2-->
-<!-- [D223] 5.2.7: The source description -->
+      <comment>The NOTE element is defined with the core tags.</comment>
+      <comment> end of [D2226]  5.2.6</comment>
+      <comment> end of [D222]  5.2</comment>
+      <comment> [D223] 5.2.7: The source description </comment>
       <flag name="sourceDesc">
         <include/>
       </flag>
@@ -4307,7 +4307,7 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [D2231] 5.2.9: Script statement and recording statement -->
+      <comment> [D2231] 5.2.9: Script statement and recording statement </comment>
       <flag name="scriptStmt">
         <include/>
       </flag>
@@ -4485,9 +4485,9 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2231]  5.2.9-->
-<!-- end of [D223]  5.2.7-->
-<!-- [D225] 5.3: The encoding description -->
+      <comment> end of [D2231]  5.2.9</comment>
+      <comment> end of [D223]  5.2.7</comment>
+      <comment> [D225] 5.3: The encoding description </comment>
       <flag name="encodingDesc">
         <include/>
       </flag>
@@ -4557,7 +4557,7 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [D2251] 5.3.1: The project description -->
+      <comment> [D2251] 5.3.1: The project description </comment>
       <flag name="projectDesc">
         <include/>
       </flag>
@@ -4581,8 +4581,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2251]  5.3.1-->
-<!-- [D2252] 5.3.2: The sampling declaration -->
+      <comment> end of [D2251]  5.3.1</comment>
+      <comment> [D2252] 5.3.2: The sampling declaration </comment>
       <flag name="samplingDecl">
         <include/>
       </flag>
@@ -4606,8 +4606,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2252]  5.3.2-->
-<!-- [D2253] 5.3.3: The editorial practices declaration -->
+      <comment> end of [D2252]  5.3.2</comment>
+      <comment> [D2253] 5.3.3: The editorial practices declaration </comment>
       <flag name="editorialDecl">
         <include/>
       </flag>
@@ -4886,8 +4886,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2253]  5.3.3-->
-<!-- [DHD57] 5.3.4: Tag usage and rendition declarations -->
+      <comment> end of [D2253]  5.3.3</comment>
+      <comment> [DHD57] 5.3.4: Tag usage and rendition declarations </comment>
       <flag name="tagsDecl">
         <include/>
       </flag>
@@ -4973,8 +4973,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DHD57]  5.3.4-->
-<!-- [D2254] 5.3.5.3: The reference scheme declaration -->
+      <comment> end of [DHD57]  5.3.4</comment>
+      <comment> [D2254] 5.3.5.3: The reference scheme declaration </comment>
       <flag name="refsDecl">
         <include/>
       </flag>
@@ -5095,8 +5095,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2254]  5.3.5.3-->
-<!-- [D2255] 5.3.6: The classification declaration -->
+      <comment> end of [D2254]  5.3.5.3</comment>
+      <comment> [D2255] 5.3.6: The classification declaration </comment>
       <flag name="classDecl">
         <include/>
       </flag>
@@ -5214,8 +5214,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2255]  5.3.6-->
-<!-- [D2256] 5.3.7: The FSD declaration -->
+      <comment> end of [D2255]  5.3.6</comment>
+      <comment> [D2256] 5.3.7: The FSD declaration </comment>
       <flag name="fsdDecl">
         <include/>
       </flag>
@@ -5244,8 +5244,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2256]  5.3.7-->
-<!-- [D2258] 5.3.8: Metrical Notation Declaration -->
+      <comment> end of [D2256]  5.3.7</comment>
+      <comment> [D2258] 5.3.8: Metrical Notation Declaration </comment>
       <flag name="metDecl">
         <include/>
       </flag>
@@ -5313,8 +5313,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2258]  5.3.8-->
-<!-- [DHDVAR] 5.3.9: Variant-Encoding Declaration -->
+      <comment> end of [D2258]  5.3.8</comment>
+      <comment> [DHDVAR] 5.3.9: Variant-Encoding Declaration </comment>
       <flag name="variantEncoding">
         <include/>
       </flag>
@@ -5350,9 +5350,9 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DHDVAR]  5.3.9-->
-<!-- end of [D225]  5.3-->
-<!-- [D224] 5.4: The profile description -->
+      <comment> end of [DHDVAR]  5.3.9</comment>
+      <comment> end of [D225]  5.3</comment>
+      <comment> [D224] 5.4: The profile description </comment>
       <flag name="profileDesc">
         <include/>
       </flag>
@@ -5407,7 +5407,7 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [D224C] 5.4.1: Creation -->
+      <comment> [D224C] 5.4.1: Creation </comment>
       <flag name="creation">
         <include/>
       </flag>
@@ -5426,8 +5426,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D224C]  5.4.1-->
-<!-- [D2241] 5.4.2: Language usage -->
+      <comment> end of [D224C]  5.4.1</comment>
+      <comment> [D2241] 5.4.2: Language usage </comment>
       <flag name="langUsage">
         <include/>
       </flag>
@@ -5484,8 +5484,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2241]  5.4.2-->
-<!-- [D2243] 5.4.3: Text Classification -->
+      <comment> end of [D2241]  5.4.2</comment>
+      <comment> [D2243] 5.4.3: Text Classification </comment>
       <flag name="textClass">
         <include/>
       </flag>
@@ -5600,9 +5600,9 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [D2243]  5.4.3-->
-<!-- end of [D224]  5.4-->
-<!-- [D226] 5.5: The Revision Description -->
+      <comment> end of [D2243]  5.4.3</comment>
+      <comment> end of [D224]  5.4</comment>
+      <comment> [D226] 5.5: The Revision Description </comment>
       <flag name="revisionDesc">
         <include/>
       </flag>
@@ -5660,17 +5660,17 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!--respStmt, item, and date are declared in teicore2.-->
-<!-- end of [D226]  5.5-->
-<!-- end of [D221B]  5.1.1-->
-<!-- end of [D221]  5.1.1-->
+      <comment>respStmt, item, and date are declared in teicore2.</comment>
+      <comment> end of [D226]  5.5</comment>
+      <comment> end of [D221B]  5.1.1</comment>
+      <comment> end of [D221]  5.1.1</comment>
     </externalIdRef>
     <externalId name="TEI.core.dtd" system="teicore2.dtd"/>
     <externalIdRef name="TEI.core.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DCO] 6.12: Elements available in all forms of the TEI main DTD -->
-<!--Definition of elements, sub-group by sub-group.-->
-<!-- [DCOPA] 6.1: Paragraph -->
+      <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+      <comment> [DCO] 6.12: Elements available in all forms of the TEI main DTD </comment>
+      <comment>Definition of elements, sub-group by sub-group.</comment>
+      <comment> [DCOPA] 6.1: Paragraph </comment>
       <flag name="p">
         <include/>
       </flag>
@@ -5689,8 +5689,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOPA]  6.1-->
-<!-- [DCOHQ] 6.3.2.1: Highlighted phrases -->
+      <comment> end of [DCOPA]  6.1</comment>
+      <comment> [DCOHQ] 6.3.2.1: Highlighted phrases </comment>
       <flag name="foreign">
         <include/>
       </flag>
@@ -5709,7 +5709,7 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [DCOHQ1] 6.3.2.2:  -->
+      <comment> [DCOHQ1] 6.3.2.2:  </comment>
       <flag name="emph">
         <include/>
       </flag>
@@ -5746,8 +5746,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOHQ1]  6.3.2.2-->
-<!-- [DCOHQ3] 6.3.2.3:  -->
+      <comment> end of [DCOHQ1]  6.3.2.2</comment>
+      <comment> [DCOHQ3] 6.3.2.3:  </comment>
       <flag name="distinct">
         <include/>
       </flag>
@@ -5786,8 +5786,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOHQ3]  6.3.2.3-->
-<!-- [DCOHQQ] 6.3.3: Quotation -->
+      <comment> end of [DCOHQ3]  6.3.2.3</comment>
+      <comment> [DCOHQQ] 6.3.3: Quotation </comment>
       <flag name="q">
         <include/>
       </flag>
@@ -5891,8 +5891,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOHQQ]  6.3.3-->
-<!-- [DCOHQU] 6.3.4: Terms, glosses, etc. -->
+      <comment> end of [DCOHQQ]  6.3.3</comment>
+      <comment> [DCOHQU] 6.3.4: Terms, glosses, etc. </comment>
       <flag name="term">
         <include/>
       </flag>
@@ -5957,9 +5957,9 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOHQU]  6.3.4-->
-<!-- end of [DCOHQ]  6.3.2.1-->
-<!-- [DCONA] 6.4.1: Proper Nouns -->
+      <comment> end of [DCOHQU]  6.3.4</comment>
+      <comment> end of [DCOHQ]  6.3.2.1</comment>
+      <comment> [DCONA] 6.4.1: Proper Nouns </comment>
       <flag name="name">
         <include/>
       </flag>
@@ -6008,8 +6008,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCONA]  6.4.1-->
-<!-- [DCONU] 6.4.3: Numbers and measures -->
+      <comment> end of [DCONA]  6.4.1</comment>
+      <comment> [DCONU] 6.4.3: Numbers and measures </comment>
       <flag name="num">
         <include/>
       </flag>
@@ -6062,8 +6062,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCONU]  6.4.3-->
-<!-- [DCODA] 6.4.4: Dates and times -->
+      <comment> end of [DCONU]  6.4.3</comment>
+      <comment> [DCODA] 6.4.4: Dates and times </comment>
       <flag name="date">
         <include/>
       </flag>
@@ -6216,8 +6216,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCODA]  6.4.4-->
-<!-- [DCOAB] 6.4.5: Abbreviations -->
+      <comment> end of [DCODA]  6.4.4</comment>
+      <comment> [DCOAB] 6.4.5: Abbreviations </comment>
       <flag name="abbr">
         <include/>
       </flag>
@@ -6294,8 +6294,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOAB]  6.4.5-->
-<!-- [DCOEDC] 6.5.1: Editorial tags for correction -->
+      <comment> end of [DCOAB]  6.4.5</comment>
+      <comment> [DCOEDC] 6.5.1: Editorial tags for correction </comment>
       <flag name="sic">
         <include/>
       </flag>
@@ -6362,8 +6362,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOEDC]  6.5.1-->
-<!-- [DCOEDR] 6.5.2: Editorial tags for regularization -->
+      <comment> end of [DCOEDC]  6.5.1</comment>
+      <comment> [DCOEDR] 6.5.2: Editorial tags for regularization </comment>
       <flag name="reg">
         <include/>
       </flag>
@@ -6420,8 +6420,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOEDR]  6.5.2-->
-<!-- [DCOEDA] 6.5.3: Other editorial tags -->
+      <comment> end of [DCOEDR]  6.5.2</comment>
+      <comment> [DCOEDA] 6.5.3: Other editorial tags </comment>
       <flag name="gap">
         <include/>
       </flag>
@@ -6594,8 +6594,8 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOEDA]  6.5.3-->
-<!-- [DCOAD] 6.4.2: Addresses and their components -->
+      <comment> end of [DCOEDA]  6.5.3</comment>
+      <comment> [DCOAD] 6.4.2: Addresses and their components </comment>
       <flag name="address">
         <include/>
       </flag>
@@ -6710,10 +6710,10 @@ are defined in file teicore2.dtd.-->
           </attribute>
         </attlist>
       </includedSection>
-<!--Other components of addresses should be represented
-using the general purpose NAME element-->
-<!-- end of [DCOAD]  6.4.2-->
-<!-- [DCOXR] 6.6: Simple cross references -->
+      <comment>Other components of addresses should be represented
+using the general purpose NAME element</comment>
+      <comment> end of [DCOAD]  6.4.2</comment>
+      <comment> [DCOXR] 6.6: Simple cross references </comment>
       <duplicate name="a.pointer"/>
       <flag name="ptr">
         <include/>
@@ -6763,8 +6763,8 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOXR]  6.6-->
-<!-- [DCOLI] 6.7: Lists and List Items -->
+      <comment> end of [DCOXR]  6.6</comment>
+      <comment> [DCOLI] 6.7: Lists and List Items </comment>
       <flag name="list">
         <include/>
       </flag>
@@ -6947,8 +6947,8 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOLI]  6.7-->
-<!-- [DCONO] 6.8.1: Annotation -->
+      <comment> end of [DCOLI]  6.7</comment>
+      <comment> [DCONO] 6.8.1: Annotation </comment>
       <flag name="note">
         <include/>
       </flag>
@@ -7000,7 +7000,7 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [DCONOIX] 6.8.2: Index Entries -->
+      <comment> [DCONOIX] 6.8.2: Index Entries </comment>
       <flag name="index">
         <include/>
       </flag>
@@ -7067,9 +7067,9 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCONOIX]  6.8.2-->
-<!-- end of [DCONO]  6.8.1-->
-<!-- [DCORSM] 6.9.3: Milestone tags -->
+      <comment> end of [DCONOIX]  6.8.2</comment>
+      <comment> end of [DCONO]  6.8.1</comment>
+      <comment> [DCORSM] 6.9.3: Milestone tags </comment>
       <flag name="milestone">
         <include/>
       </flag>
@@ -7167,8 +7167,8 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCORSM]  6.9.3-->
-<!-- [DCOBI] 6.10.1: Tags for Bibliographic References -->
+      <comment> end of [DCORSM]  6.9.3</comment>
+      <comment> [DCOBI] 6.10.1: Tags for Bibliographic References </comment>
       <flag name="bibl">
         <include/>
       </flag>
@@ -7402,7 +7402,7 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- [DCOBILV] 6.10.2.1: Levels of bibliographic information -->
+      <comment> [DCOBILV] 6.10.2.1: Levels of bibliographic information </comment>
       <flag name="analytic">
         <include/>
       </flag>
@@ -7632,8 +7632,8 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOBILV]  6.10.2.1-->
-<!-- [DCOBICOR] 6.10.2.2: Author, title, etc. -->
+      <comment> end of [DCOBILV]  6.10.2.1</comment>
+      <comment> [DCOBICOR] 6.10.2.2: Author, title, etc. </comment>
       <flag name="author">
         <include/>
       </flag>
@@ -7773,8 +7773,8 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOBICOR]  6.10.2.2-->
-<!-- [DCOPUB] 6.10.2.3: Bibliographic subelements -->
+      <comment> end of [DCOBICOR]  6.10.2.2</comment>
+      <comment> [DCOPUB] 6.10.2.3: Bibliographic subelements </comment>
       <flag name="imprint">
         <include/>
       </flag>
@@ -7869,11 +7869,11 @@ using the general purpose NAME element-->
           </attribute>
         </attlist>
       </includedSection>
-<!--Note and date are defined elsewhere, as are extent, address,
-and idno.-->
-<!-- end of [DCOPUB]  6.10.2.3-->
-<!-- end of [DCOBI]  6.10.1-->
-<!-- [DCOVE] 6.11.1: Verse -->
+      <comment>Note and date are defined elsewhere, as are extent, address,
+and idno.</comment>
+      <comment> end of [DCOPUB]  6.10.2.3</comment>
+      <comment> end of [DCOBI]  6.10.1</comment>
+      <comment> [DCOVE] 6.11.1: Verse </comment>
       <flag name="l">
         <include/>
       </flag>
@@ -7959,8 +7959,8 @@ and idno.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCOVE]  6.11.1-->
-<!-- [DCODR] 6.11.2: Drama -->
+      <comment> end of [DCOVE]  6.11.1</comment>
+      <comment> [DCODR] 6.11.2: Drama </comment>
       <flag name="sp">
         <include/>
       </flag>
@@ -8066,56 +8066,56 @@ and idno.-->
           </attribute>
         </attlist>
       </includedSection>
-<!-- end of [DCODR]  6.11.2-->
-<!-- end of [DCO]  6.12-->
+      <comment> end of [DCODR]  6.11.2</comment>
+      <comment> end of [DCO]  6.12</comment>
     </externalIdRef>
-<!-- end of [DSTOVCO]  3.6.3-->
-<!-- [DSTOVBA] 3.6.4: Embed base tag set -->
-<!--A different base will be embedded, depending on which
+    <comment> end of [DSTOVCO]  3.6.3</comment>
+    <comment> [DSTOVBA] 3.6.4: Embed base tag set </comment>
+    <comment>A different base will be embedded, depending on which
 parameter entity has been declared by the user
-with the value 'INCLUDE'.-->
+with the value 'INCLUDE'.</comment>
     <includedSection flag="TEI.prose">
       <externalId name="TEI.prose.dtd" system="teipros2.dtd"/>
       <externalIdRef name="TEI.prose.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DPR] 8.: Base Tag Set for Prose -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DPR] 8.: Base Tag Set for Prose </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--This base tag set does nothing but declare and embed the
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment>This base tag set does nothing but declare and embed the
 default text structure.  When it is selected, therefore,
 the only tags available are those in the core and those
-defined in other selected tag sets.-->
+defined in other selected tag sets.</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
-<!-- end of [DPR]  8.-->
+        <comment> end of [DPR]  8.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.verse">
       <externalId name="TEI.verse.dtd" system="teivers2.dtd"/>
       <externalIdRef name="TEI.verse.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DVE] 9.1: Base Tag Set for Verse -->
-<!--First, declare the default text structure, which
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DVE] 9.1: Base Tag Set for Verse </comment>
+        <comment>First, declare the default text structure, which
 is the same for verse as it is for other kinds of text.  (But declare
-it only if verse is the only base.)-->
+it only if verse is the only base.)</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
-<!--Finally, declare the elements specific to this base
-tag set-->
-<!-- [DVEST] 9.2: Numbered line groups -->
+        <comment>Finally, declare the elements specific to this base
+tag set</comment>
+        <comment> [DVEST] 9.2: Numbered line groups </comment>
         <flag name="lg1">
           <include/>
         </flag>
@@ -8356,8 +8356,8 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DVEST]  9.2-->
-<!-- [DVESE] 9.3: Caesura -->
+        <comment> end of [DVEST]  9.2</comment>
+        <comment> [DVESE] 9.3: Caesura </comment>
         <flag name="caesura">
           <include/>
         </flag>
@@ -8376,17 +8376,17 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DVESE]  9.3-->
-<!-- end of [DVE]  9.1-->
+        <comment> end of [DVESE]  9.3</comment>
+        <comment> end of [DVE]  9.1</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.drama">
       <externalId name="TEI.drama.dtd" system="teidram2.dtd"/>
       <externalIdRef name="TEI.drama.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDR] 10.: Base tag set for Performance texts -->
-<!-- [DDRFAB] 10.1: Specialized front and back matter for performance texts -->
-<!-- [DDRSET] 10.1.1: The Set element -->
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DDR] 10.: Base tag set for Performance texts </comment>
+        <comment> [DDRFAB] 10.1: Specialized front and back matter for performance texts </comment>
+        <comment> [DDRSET] 10.1.1: The Set element </comment>
         <flag name="set">
           <include/>
         </flag>
@@ -8415,8 +8415,8 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDRSET]  10.1.1-->
-<!-- [DDRPRO] 10.1.2: Prologues and Epilogues -->
+        <comment> end of [DDRSET]  10.1.1</comment>
+        <comment> [DDRPRO] 10.1.2: Prologues and Epilogues </comment>
         <flag name="prologue">
           <include/>
         </flag>
@@ -8499,8 +8499,8 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDRPRO]  10.1.2-->
-<!-- [DDRPERF] 10.1.3: The Performance element -->
+        <comment> end of [DDRPRO]  10.1.2</comment>
+        <comment> [DDRPERF] 10.1.3: The Performance element </comment>
         <flag name="performance">
           <include/>
         </flag>
@@ -8542,8 +8542,8 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDRPERF]  10.1.3-->
-<!-- [DDRCAST] 10.1.4: The cast list -->
+        <comment> end of [DDRPERF]  10.1.3</comment>
+        <comment> [DDRCAST] 10.1.4: The cast list </comment>
         <flag name="castList">
           <include/>
         </flag>
@@ -8752,10 +8752,10 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDRCAST]  10.1.4-->
-<!-- end of [DDRFAB]  10.1-->
-<!-- [DDRSTA] 10.2.3: Stage directions -->
-<!--Stage is defined as part of the core.-->
+        <comment> end of [DDRCAST]  10.1.4</comment>
+        <comment> end of [DDRFAB]  10.1</comment>
+        <comment> [DDRSTA] 10.2.3: Stage directions </comment>
+        <comment>Stage is defined as part of the core.</comment>
         <flag name="move">
           <include/>
         </flag>
@@ -8794,8 +8794,8 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDRSTA]  10.2.3-->
-<!-- [DDROTH] 10.3.1: Screen plays and other technical matters -->
+        <comment> end of [DDRSTA]  10.2.3</comment>
+        <comment> [DDROTH] 10.3.1: Screen plays and other technical matters </comment>
         <flag name="view">
           <include/>
         </flag>
@@ -8920,33 +8920,33 @@ tag set-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDROTH]  10.3.1-->
-<!--The base tag set for drama uses the standard default
-text-structure elements, which are embedded here:-->
+        <comment> end of [DDROTH]  10.3.1</comment>
+        <comment>The base tag set for drama uses the standard default
+text-structure elements, which are embedded here:</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
-<!-- end of [DDR]  10.-->
+        <comment> end of [DDR]  10.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.spoken">
       <externalId name="TEI.spoken.dtd" system="teispok2.dtd"/>
       <externalIdRef name="TEI.spoken.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTS] 11.: Base tag set for Transcribed Speech -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DTS] 11.: Base tag set for Transcribed Speech </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!-- [DTSCOMP] 11.2.7: Components of Transcribed Speech -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment> [DTSCOMP] 11.2.7: Components of Transcribed Speech </comment>
         <flag name="u">
           <include/>
         </flag>
@@ -9214,40 +9214,40 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTSCOMP]  11.2.7-->
-<!--The base tag set for transcriptions of speech uses the
+        <comment> end of [DTSCOMP]  11.2.7</comment>
+        <comment>The base tag set for transcriptions of speech uses the
 standard default text-structure elements, which are embedded
-here:-->
+here:</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
-<!-- end of [DTS]  11.-->
+        <comment> end of [DTS]  11.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.dictionaries">
       <externalId name="TEI.dictionaries.dtd" system="teidict2.dtd"/>
       <externalIdRef name="TEI.dictionaries.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDIBO] 12.1: Base tag set for printed dictionaries -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DDIBO] 12.1: Base tag set for printed dictionaries </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--First we embed the default text structure.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment>First we embed the default text structure.</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
-<!--Now we define the dictionary-specific material.-->
-<!-- [DDIEN] 12.2.1: Dictionary entries and their structure -->
+        <comment>Now we define the dictionary-specific material.</comment>
+        <comment> [DDIEN] 12.2.1: Dictionary entries and their structure </comment>
         <flag name="superentry">
           <include/>
         </flag>
@@ -9404,8 +9404,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDIEN]  12.2.1-->
-<!-- [DDITPFO] 12.3.1: The form group -->
+        <comment> end of [DDIEN]  12.2.1</comment>
+        <comment> [DDITPFO] 12.3.1: The form group </comment>
         <flag name="form">
           <include/>
         </flag>
@@ -9552,8 +9552,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!--(LBL is declared with USG, elsewhere.)-->
-<!--Elements for morphological information:-->
+        <comment>(LBL is declared with USG, elsewhere.)</comment>
+        <comment>Elements for morphological information:</comment>
         <overridden name="gram">INCLUDE</overridden>
         <ignoredSection flag="gram">
 
@@ -9703,8 +9703,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPFO]  12.3.1-->
-<!-- [DDITPGR] 12.3.2: The gram group -->
+        <comment> end of [DDITPFO]  12.3.1</comment>
+        <comment> [DDITPGR] 12.3.2: The gram group </comment>
         <flag name="gramGrp">
           <include/>
         </flag>
@@ -9794,8 +9794,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPGR]  12.3.2-->
-<!-- [DDITPDE] 12.3.3.1: Definition text -->
+        <comment> end of [DDITPGR]  12.3.2</comment>
+        <comment> [DDITPDE] 12.3.3.1: Definition text </comment>
         <flag name="def">
           <include/>
         </flag>
@@ -9815,8 +9815,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPDE]  12.3.3.1-->
-<!-- [DDITPTR] 12.3.3.2: Translation information -->
+        <comment> end of [DDITPDE]  12.3.3.1</comment>
+        <comment> [DDITPTR] 12.3.3.2: Translation information </comment>
         <flag name="trans">
           <include/>
         </flag>
@@ -9863,8 +9863,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPTR]  12.3.3.2-->
-<!-- [DDITPET] 12.3.4: Etymologies -->
+        <comment> end of [DDITPTR]  12.3.3.2</comment>
+        <comment> [DDITPET] 12.3.4: Etymologies </comment>
         <flag name="etym">
           <include/>
         </flag>
@@ -9932,8 +9932,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPET]  12.3.4-->
-<!-- [DDITPEG] 12.3.5.1: Examples and citations -->
+        <comment> end of [DDITPET]  12.3.4</comment>
+        <comment> [DDITPEG] 12.3.5.1: Examples and citations </comment>
         <flag name="eg">
           <include/>
         </flag>
@@ -9967,8 +9967,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPEG]  12.3.5.1-->
-<!-- [DDITPUS] 12.3.5.2: Usage information -->
+        <comment> end of [DDITPEG]  12.3.5.1</comment>
+        <comment> [DDITPUS] 12.3.5.2: Usage information </comment>
         <flag name="usg">
           <include/>
         </flag>
@@ -10017,8 +10017,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPUS]  12.3.5.2-->
-<!-- [DDITPXR] 12.3.5.3: Cross References -->
+        <comment> end of [DDITPUS]  12.3.5.2</comment>
+        <comment> [DDITPXR] 12.3.5.3: Cross References </comment>
         <flag name="xr">
           <include/>
         </flag>
@@ -10056,8 +10056,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPXR]  12.3.5.3-->
-<!-- [DDITPRE] 12.3.6: Related entries -->
+        <comment> end of [DDITPXR]  12.3.5.3</comment>
+        <comment> [DDITPRE] 12.3.6: Related entries </comment>
         <flag name="re">
           <include/>
         </flag>
@@ -10092,8 +10092,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDITPRE]  12.3.6-->
-<!-- [DDIHW] 12.4: Headword references -->
+        <comment> end of [DDITPRE]  12.3.6</comment>
+        <comment> [DDIHW] 12.4: Headword references </comment>
         <flag name="oRef">
           <include/>
         </flag>
@@ -10198,39 +10198,39 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DDIHW]  12.4-->
-<!-- end of [DDIBO]  12.1-->
+        <comment> end of [DDIHW]  12.4</comment>
+        <comment> end of [DDIBO]  12.1</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.terminology">
       <externalId name="TEI.terminology.dtd" system="teiterm2.dtd"/>
       <externalIdRef name="TEI.terminology.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTETOP] 13.4: TEIterm2.DTD:  Base tag set for terminological data -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DTETOP] 13.4: TEIterm2.DTD:  Base tag set for terminological data </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--First, embed the default text structure elements.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment>First, embed the default text structure elements.</comment>
         <ignoredSection flag="TEI.singleBase">
 &lt;!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' &gt;
 %TEI.structure.dtd;
 </ignoredSection>
         <externalId name="termtags" system="teite2n.dtd"/>
         <externalIdRef name="termtags">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTENE] 13.4.1: Elements for nested-style terminological data -->
-<!--The nested structure is used for data interchange and represents a
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DTENE] 13.4.1: Elements for nested-style terminological data </comment>
+          <comment>The nested structure is used for data interchange and represents a
 canonical structured form for terminology entries, which differs
 from the less structured forms frequently used to store data in
-terminological databases.-->
+terminological databases.</comment>
           <flag name="termEntry">
             <include/>
           </flag>
@@ -10275,10 +10275,10 @@ terminological databases.-->
               </attribute>
             </attlist>
           </includedSection>
-<!--Notes, descrip(s) and admin(s) are allowed in the termEntry
-to provide documentation that applies to the whole entry.-->
-<!--tig='term information group'-->
-<!--ofig='otherform information group'-->
+          <comment>Notes, descrip(s) and admin(s) are allowed in the termEntry
+to provide documentation that applies to the whole entry.</comment>
+          <comment>tig='term information group'</comment>
+          <comment>ofig='otherform information group'</comment>
           <flag name="tig">
             <include/>
           </flag>
@@ -10348,7 +10348,7 @@ to provide documentation that applies to the whole entry.-->
               </attribute>
             </attlist>
           </includedSection>
-<!--Order is significant: term, descrip(s), ofig(s) or otherform(s)-->
+          <comment>Order is significant: term, descrip(s), ofig(s) or otherform(s)</comment>
           <flag name="ofig">
             <include/>
           </flag>
@@ -10479,9 +10479,9 @@ to provide documentation that applies to the whole entry.-->
               </attribute>
             </attlist>
           </includedSection>
-<!--We define a.dictionaries as the empty string,
+          <comment>We define a.dictionaries as the empty string,
 since we are not now using the tag set for
-dictionaries.-->
+dictionaries.</comment>
           <overridden name="a.dictionaries"></overridden>
           <overridden name="gram">INCLUDE</overridden>
           <ignoredSection flag="gram">
@@ -10494,39 +10494,39 @@ dictionaries.-->
       TEIform CDATA 'gram' &gt;
   
 </ignoredSection>
-<!-- end of [DTENE]  13.4.1-->
+          <comment> end of [DTENE]  13.4.1</comment>
         </externalIdRef>
-<!-- end of [DTETOP]  13.4-->
+        <comment> end of [DTETOP]  13.4</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.general">
       <externalId name="TEI.general.dtd" system="teigen2.dtd"/>
       <externalIdRef name="TEI.general.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSTCBGN] 3.4: General-Base Tag Set -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DSTCBGN] 3.4: General-Base Tag Set </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
         <externalId name="TEI.structure.dtd" system="teistr2.dtd"/>
         <externalIdRef name="TEI.structure.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDS] 7.7: Default text structure -->
-<!--This definition of the basic text structure is used by most
+          <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+          <comment> [DDS] 7.7: Default text structure </comment>
+          <comment>This definition of the basic text structure is used by most
 TEI base tag sets; some bases, however, use slight variations
-upon it.-->
+upon it.</comment>
           <duplicate name="x.divtop"/>
           <duplicate name="m.divtop"/>
           <duplicate name="x.divbot"/>
           <duplicate name="m.divbot"/>
-<!-- [DDSTEXT] 7.: Top-level parts of default structure -->
+          <comment> [DDSTEXT] 7.: Top-level parts of default structure </comment>
           <flag name="text">
             <include/>
           </flag>
@@ -10808,8 +10808,8 @@ upon it.-->
               </attribute>
             </attlist>
           </includedSection>
-<!-- end of [DDSTEXT]  7.-->
-<!-- [DDSDIV] 7.1.1: Un-numbered divisions -->
+          <comment> end of [DDSTEXT]  7.</comment>
+          <comment> [DDSDIV] 7.1.1: Un-numbered divisions </comment>
           <flag name="div">
             <include/>
           </flag>
@@ -10887,8 +10887,8 @@ upon it.-->
               </attribute>
             </attlist>
           </includedSection>
-<!-- end of [DDSDIV]  7.1.1-->
-<!-- [DDSDIVN] 7.1.2: Numbered divisions -->
+          <comment> end of [DDSDIV]  7.1.1</comment>
+          <comment> [DDSDIVN] 7.1.2: Numbered divisions </comment>
           <flag name="div0">
             <include/>
           </flag>
@@ -11471,8 +11471,8 @@ upon it.-->
               </attribute>
             </attlist>
           </includedSection>
-<!-- end of [DDSDIVN]  7.1.2-->
-<!-- [DDSDIVX] 7.2.4: Tags for start and end of divisions -->
+          <comment> end of [DDSDIVN]  7.1.2</comment>
+          <comment> [DDSDIVX] 7.2.4: Tags for start and end of divisions </comment>
           <flag name="trailer">
             <include/>
           </flag>
@@ -11711,13 +11711,13 @@ upon it.-->
               </attribute>
             </attlist>
           </includedSection>
-<!--The HEAD element is declared in the core tag set.-->
-<!-- end of [DDSDIVX]  7.2.4-->
-<!--Front matter is defined in TEI.front file.-->
+          <comment>The HEAD element is declared in the core tag set.</comment>
+          <comment> end of [DDSDIVX]  7.2.4</comment>
+          <comment>Front matter is defined in TEI.front file.</comment>
           <externalId name="TEI.front.dtd" system="teifron2.dtd"/>
           <externalIdRef name="TEI.front.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDSFRONT] 7.5: Additional Tag Set for Front Matter -->
+            <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+            <comment> [DDSFRONT] 7.5: Additional Tag Set for Front Matter </comment>
             <flag name="front">
               <include/>
             </flag>
@@ -11790,7 +11790,7 @@ upon it.-->
             </includedSection>
             <duplicate name="x.tpParts"/>
             <duplicate name="m.tpParts"/>
-<!-- [DDSTPAGE] 7.5: Tags for title pages -->
+            <comment> [DDSTPAGE] 7.5: Tags for title pages </comment>
             <flag name="titlePage">
               <include/>
             </flag>
@@ -11990,14 +11990,14 @@ upon it.-->
                 </attribute>
               </attlist>
             </includedSection>
-<!-- end of [DDSTPAGE]  7.5-->
-<!-- end of [DDSFRONT]  7.5-->
+            <comment> end of [DDSTPAGE]  7.5</comment>
+            <comment> end of [DDSFRONT]  7.5</comment>
           </externalIdRef>
-<!--Back matter is defined in TEI.back file.-->
+          <comment>Back matter is defined in TEI.back file.</comment>
           <externalId name="TEI.back.dtd" system="teiback2.dtd"/>
           <externalIdRef name="TEI.back.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DDSBACK] 7.6: Tags for Back Matter -->
+            <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+            <comment> [DDSBACK] 7.6: Tags for Back Matter </comment>
             <flag name="back">
               <include/>
             </flag>
@@ -12068,39 +12068,39 @@ upon it.-->
                 </attribute>
               </attlist>
             </includedSection>
-<!-- end of [DDSBACK]  7.6-->
+            <comment> end of [DDSBACK]  7.6</comment>
           </externalIdRef>
-<!-- end of [DDS]  7.7-->
+          <comment> end of [DDS]  7.7</comment>
         </externalIdRef>
-<!-- end of [DSTCBGN]  3.4-->
+        <comment> end of [DSTCBGN]  3.4</comment>
       </externalIdRef>
     </includedSection>
     <ignoredSection flag="TEI.mixed">
 &lt;!ENTITY  % TEI.mixed.dtd SYSTEM 'teimix2.dtd' &gt;
 %TEI.mixed.dtd;
 </ignoredSection>
-<!-- end of [DSTOVBA]  3.6.4-->
-<!-- [DSTOVAD] 3.6.5: Embed additional tag sets -->
-<!--These entities are declared and embedded only when the user
+    <comment> end of [DSTOVBA]  3.6.4</comment>
+    <comment> [DSTOVAD] 3.6.5: Embed additional tag sets </comment>
+    <comment>These entities are declared and embedded only when the user
 has overridden the default declaration of IGNORE for a specific
-additional tag set.-->
+additional tag set.</comment>
     <includedSection flag="TEI.linking">
       <externalId name="TEI.linking.dtd" system="teilink2.dtd"/>
       <externalIdRef name="TEI.linking.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DSA] 14.: Linking, Segmentation and Alignment -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DSA] 14.: Linking, Segmentation and Alignment </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!-- [DSAPT] 14.1.3: Links -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment> [DSAPT] 14.1.3: Links </comment>
         <flag name="link">
           <include/>
         </flag>
@@ -12156,8 +12156,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSAPT]  14.1.3-->
-<!-- [DSAXR] 14.2.1: Extended pointers -->
+        <comment> end of [DSAPT]  14.1.3</comment>
+        <comment> [DSAXR] 14.2.1: Extended pointers </comment>
         <flag name="xref">
           <include/>
         </flag>
@@ -12196,8 +12196,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSAXR]  14.2.1-->
-<!-- [DSASA] 14.3: Blocks, Segments and Anchors -->
+        <comment> end of [DSAXR]  14.2.1</comment>
+        <comment> [DSASA] 14.3: Blocks, Segments and Anchors </comment>
         <flag name="anchor">
           <include/>
         </flag>
@@ -12271,8 +12271,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSASA]  14.3-->
-<!-- [DSASYMP] 14.5.2: Temporal specification -->
+        <comment> end of [DSASA]  14.3</comment>
+        <comment> [DSASYMP] 14.5.2: Temporal specification </comment>
         <flag name="when">
           <include/>
         </flag>
@@ -12348,8 +12348,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSASYMP]  14.5.2-->
-<!-- [DSAAG] 14.7: Aggregation -->
+        <comment> end of [DSASYMP]  14.5.2</comment>
+        <comment> [DSAAG] 14.7: Aggregation </comment>
         <flag name="join">
           <include/>
         </flag>
@@ -12433,8 +12433,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSAAG]  14.7-->
-<!-- [DSAAT] 14.8: Alternation -->
+        <comment> end of [DSAAG]  14.7</comment>
+        <comment> [DSAAT] 14.8: Alternation </comment>
         <flag name="alt">
           <include/>
         </flag>
@@ -12527,28 +12527,28 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DSAAT]  14.8-->
-<!-- end of [DSA]  14.-->
+        <comment> end of [DSAAT]  14.8</comment>
+        <comment> end of [DSA]  14.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.analysis">
       <externalId name="TEI.analysis.dtd" system="teiana2.dtd"/>
       <externalIdRef name="TEI.analysis.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DAI] 15.: Simple analytic mechanisms -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DAI] 15.: Simple analytic mechanisms </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!--We declare the various elements, group by group.-->
-<!-- [DAISP] 15.3: Spans -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment>We declare the various elements, group by group.</comment>
+        <comment> [DAISP] 15.3: Spans </comment>
         <flag name="span">
           <include/>
         </flag>
@@ -12653,8 +12653,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DAISP]  15.3-->
-<!-- [DAILC] 15.1: Linguistic Segment Categories -->
+        <comment> end of [DAISP]  15.3</comment>
+        <comment> [DAILC] 15.1: Linguistic Segment Categories </comment>
         <flag name="s">
           <include/>
         </flag>
@@ -12807,27 +12807,27 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DAILC]  15.1-->
-<!-- end of [DAI]  15.-->
+        <comment> end of [DAILC]  15.1</comment>
+        <comment> end of [DAI]  15.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.fs">
       <externalId name="TEI.fs.dtd" system="teifs2.dtd"/>
       <externalIdRef name="TEI.fs.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DFS] 16.1: Feature Structures -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DFS] 16.1: Feature Structures </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!-- [DFSBI] 16.2: Feature structures, binary values -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment> [DFSBI] 16.2: Feature structures, binary values </comment>
         <flag name="fs">
           <include/>
         </flag>
@@ -13012,8 +13012,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSBI]  16.2-->
-<!-- [DFSFL] 16.3: Feature libraries -->
+        <comment> end of [DFSBI]  16.2</comment>
+        <comment> [DFSFL] 16.3: Feature libraries </comment>
         <flag name="fLib">
           <include/>
         </flag>
@@ -13143,8 +13143,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSFL]  16.3-->
-<!-- [DFSSY] 16.4: Symbolic, etc. values -->
+        <comment> end of [DFSFL]  16.3</comment>
+        <comment> [DFSSY] 16.4: Symbolic, etc. values </comment>
         <flag name="sym">
           <include/>
         </flag>
@@ -13367,8 +13367,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSSY]  16.4-->
-<!-- [DFSSS] 16.6: Null values -->
+        <comment> end of [DFSSY]  16.4</comment>
+        <comment> [DFSSS] 16.6: Null values </comment>
         <flag name="null">
           <include/>
         </flag>
@@ -13387,8 +13387,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSSS]  16.6-->
-<!-- [DFSAL] 16.7: Alternative features and feature values -->
+        <comment> end of [DFSSS]  16.6</comment>
+        <comment> [DFSAL] 16.7: Alternative features and feature values </comment>
         <flag name="fAlt">
           <include/>
         </flag>
@@ -13557,8 +13557,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSAL]  16.7-->
-<!-- [DFSBO] 16.8: Boolean, default, uncertainty values -->
+        <comment> end of [DFSAL]  16.7</comment>
+        <comment> [DFSBO] 16.8: Boolean, default, uncertainty values </comment>
         <flag name="any">
           <include/>
         </flag>
@@ -13631,26 +13631,26 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFSBO]  16.8-->
-<!-- end of [DFS]  16.1-->
+        <comment> end of [DFSBO]  16.8</comment>
+        <comment> end of [DFS]  16.1</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.certainty">
       <externalId name="TEI.certainty.dtd" system="teicert2.dtd"/>
       <externalIdRef name="TEI.certainty.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DCE] 17.1.2: Certainty and uncertainty -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DCE] 17.1.2: Certainty and uncertainty </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
         <flag name="certainty">
           <include/>
         </flag>
@@ -13699,7 +13699,7 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- [DCERESP] 17.2: Responsibility for markup -->
+        <comment> [DCERESP] 17.2: Responsibility for markup </comment>
         <flag name="respons">
           <include/>
         </flag>
@@ -13738,27 +13738,27 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DCERESP]  17.2-->
-<!-- end of [DCE]  17.1.2-->
+        <comment> end of [DCERESP]  17.2</comment>
+        <comment> end of [DCE]  17.1.2</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.transcr">
       <externalId name="TEI.transcr.dtd" system="teitran2.dtd"/>
       <externalIdRef name="TEI.transcr.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DPH] 18.: Transcription of Primary Sources -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DPH] 18.: Transcription of Primary Sources </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!-- [DTCAD] 18.1.4: Added and Deleted Spans -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment> [DTCAD] 18.1.4: Added and Deleted Spans </comment>
         <flag name="addSpan">
           <include/>
         </flag>
@@ -13855,8 +13855,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAD]  18.1.4-->
-<!-- [DPHCD] 18.1.6: Cancelled Deletions -->
+        <comment> end of [DTCAD]  18.1.4</comment>
+        <comment> [DPHCD] 18.1.6: Cancelled Deletions </comment>
         <flag name="restore">
           <include/>
         </flag>
@@ -13886,8 +13886,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DPHCD]  18.1.6-->
-<!-- [DPHOM] 18.1.7: Supplied Text -->
+        <comment> end of [DPHCD]  18.1.6</comment>
+        <comment> [DPHOM] 18.1.7: Supplied Text </comment>
         <flag name="supplied">
           <include/>
         </flag>
@@ -13931,8 +13931,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DPHOM]  18.1.7-->
-<!-- [DPHHD] 18.2.1: Hand Shifts -->
+        <comment> end of [DPHOM]  18.1.7</comment>
+        <comment> [DPHHD] 18.2.1: Hand Shifts </comment>
         <flag name="hand">
           <include/>
         </flag>
@@ -14061,8 +14061,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DPHHD]  18.2.1-->
-<!-- [DPHDA] 18.2.3: Damage and Illegiblity -->
+        <comment> end of [DPHHD]  18.2.1</comment>
+        <comment> [DPHDA] 18.2.3: Damage and Illegiblity </comment>
         <flag name="damage">
           <include/>
         </flag>
@@ -14111,8 +14111,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DPHDA]  18.2.3-->
-<!-- [DPHSP] 18.2.5: Spaces in the source -->
+        <comment> end of [DPHDA]  18.2.3</comment>
+        <comment> [DPHSP] 18.2.5: Spaces in the source </comment>
         <flag name="space">
           <include/>
         </flag>
@@ -14149,8 +14149,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DPHSP]  18.2.5-->
-<!-- [DTCHD] 18.3: Headers and footers -->
+        <comment> end of [DPHSP]  18.2.5</comment>
+        <comment> [DTCHD] 18.3: Headers and footers </comment>
         <flag name="fw">
           <include/>
         </flag>
@@ -14179,27 +14179,27 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCHD]  18.3-->
-<!-- end of [DPH]  18.-->
+        <comment> end of [DTCHD]  18.3</comment>
+        <comment> end of [DPH]  18.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.textcrit">
       <externalId name="TEI.textcrit.dtd" system="teitc2.dtd"/>
       <externalIdRef name="TEI.textcrit.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DTC] 19.: Tags for text criticism -->
-<!--Text Encoding Initiative:
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DTC] 19.: Tags for text criticism </comment>
+        <comment>Text Encoding Initiative:
 Guidelines for Electronic Text Encoding and Interchange.
-Document TEI P3, 1994.-->
-<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Document TEI P3, 1994.</comment>
+        <comment>Copyright (c) 1994 ACH, ACL, ALLC.
 Permission to copy in any form is granted,
-provided this notice is included in all copies.-->
-<!--These materials may not be altered;
+provided this notice is included in all copies.</comment>
+        <comment>These materials may not be altered;
 modifications to these DTDs should be performed as specified
-in the Guidelines in chapter "Modifying the TEI DTD."-->
-<!--These materials subject to revision.
-Current versions are available from the Text Encoding Initiative.-->
-<!-- [DTCAPEN] 19.1.1: Apparatus entry -->
+in the Guidelines in chapter &quot;Modifying the TEI DTD.&quot;</comment>
+        <comment>These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.</comment>
+        <comment> [DTCAPEN] 19.1.1: Apparatus entry </comment>
         <flag name="app">
           <include/>
         </flag>
@@ -14302,8 +14302,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAPEN]  19.1.1-->
-<!-- [DTCAPLR] 19.1.2: Readings -->
+        <comment> end of [DTCAPEN]  19.1.1</comment>
+        <comment> [DTCAPLR] 19.1.2: Readings </comment>
         <flag name="lem">
           <include/>
         </flag>
@@ -14358,8 +14358,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAPLR]  19.1.2-->
-<!-- [DTCAPSU] 19.1.3: Reading Groups -->
+        <comment> end of [DTCAPLR]  19.1.2</comment>
+        <comment> [DTCAPSU] 19.1.3: Reading Groups </comment>
         <flag name="rdgGrp">
           <include/>
         </flag>
@@ -14413,8 +14413,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAPSU]  19.1.3-->
-<!-- [DTCAPWD] 19.1.4.1: Witness Details -->
+        <comment> end of [DTCAPSU]  19.1.3</comment>
+        <comment> [DTCAPWD] 19.1.4.1: Witness Details </comment>
         <flag name="witDetail">
           <include/>
         </flag>
@@ -14458,8 +14458,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAPWD]  19.1.4.1-->
-<!-- [DTCSCWL] 19.1.4.2: Source-text Witness Lists in Apparatus -->
+        <comment> end of [DTCAPWD]  19.1.4.1</comment>
+        <comment> [DTCSCWL] 19.1.4.2: Source-text Witness Lists in Apparatus </comment>
         <flag name="wit">
           <include/>
         </flag>
@@ -14478,8 +14478,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCSCWL]  19.1.4.2-->
-<!-- [DTCAPLW] 19.1.4.3: Witness Lists in Front Matter -->
+        <comment> end of [DTCSCWL]  19.1.4.2</comment>
+        <comment> [DTCAPLW] 19.1.4.3: Witness Lists in Front Matter </comment>
         <flag name="witList">
           <include/>
         </flag>
@@ -14540,8 +14540,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCAPLW]  19.1.4.3-->
-<!-- [DTCFW] 19.1.5: Fragmentary witnesses -->
+        <comment> end of [DTCAPLW]  19.1.4.3</comment>
+        <comment> [DTCFW] 19.1.5: Fragmentary witnesses </comment>
         <flag name="witStart">
           <include/>
         </flag>
@@ -14618,16 +14618,16 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DTCFW]  19.1.5-->
-<!-- end of [DTC]  19.-->
+        <comment> end of [DTCFW]  19.1.5</comment>
+        <comment> end of [DTC]  19.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.names.dates">
       <externalId name="TEI.names.dates.dtd" system="teind2.dtd"/>
       <externalIdRef name="TEI.names.dates.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DND] 20.: Additional tags for names and dates -->
-<!-- [DNDPER] 20.1: Personal names -->
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DND] 20.: Additional tags for names and dates </comment>
+        <comment> [DNDPER] 20.1: Personal names </comment>
         <flag name="persName">
           <include/>
         </flag>
@@ -14773,8 +14773,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DNDPER]  20.1-->
-<!-- [DNDPLAC] 20.2.3: Names for places -->
+        <comment> end of [DNDPER]  20.1</comment>
+        <comment> [DNDPLAC] 20.2.3: Names for places </comment>
         <flag name="placeName">
           <include/>
         </flag>
@@ -14983,8 +14983,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DNDPLAC]  20.2.3-->
-<!-- [DNDORG] 20.3: Organization names -->
+        <comment> end of [DNDPLAC]  20.2.3</comment>
+        <comment> [DNDORG] 20.3: Organization names </comment>
         <flag name="orgName">
           <include/>
         </flag>
@@ -15117,8 +15117,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DNDORG]  20.3-->
-<!-- [DNDDATE] 20.4.2: Date components -->
+        <comment> end of [DNDORG]  20.3</comment>
+        <comment> [DNDDATE] 20.4.2: Date components </comment>
         <flag name="dateStruct">
           <include/>
         </flag>
@@ -15336,17 +15336,17 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!--offset and distance were defined above-->
-<!-- end of [DNDDATE]  20.4.2-->
-<!-- end of [DND]  20.-->
+        <comment>offset and distance were defined above</comment>
+        <comment> end of [DNDDATE]  20.4.2</comment>
+        <comment> end of [DND]  20.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.nets">
       <externalId name="TEI.nets.dtd" system="teinet2.dtd"/>
       <externalIdRef name="TEI.nets.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DGD] 21.: Graphs, networks and trees -->
-<!-- [DGDGR] 21.1: Graphs -->
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DGD] 21.: Graphs, networks and trees </comment>
+        <comment> [DGDGR] 21.1: Graphs </comment>
         <flag name="graph">
           <include/>
         </flag>
@@ -15536,8 +15536,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DGDGR]  21.1-->
-<!-- [DGDTR] 21.2: Trees (basic method) -->
+        <comment> end of [DGDGR]  21.1</comment>
+        <comment> [DGDTR] 21.2: Trees (basic method) </comment>
         <flag name="tree">
           <include/>
         </flag>
@@ -15744,8 +15744,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DGDTR]  21.2-->
-<!-- [DGDAL] 21.3: Trees (alternate method) -->
+        <comment> end of [DGDTR]  21.2</comment>
+        <comment> [DGDAL] 21.3: Trees (alternate method) </comment>
         <flag name="eTree">
           <include/>
         </flag>
@@ -15916,16 +15916,16 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DGDAL]  21.3-->
-<!-- end of [DGD]  21.-->
+        <comment> end of [DGDAL]  21.3</comment>
+        <comment> end of [DGD]  21.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.figures">
       <externalId name="TEI.figures.dtd" system="teifig2.dtd"/>
       <externalIdRef name="TEI.figures.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DFTFF] 22.: Tables, Formulae, Figures -->
-<!-- [DFTTAB] 22.1.1: Tables -->
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DFTFF] 22.: Tables, Formulae, Figures </comment>
+        <comment> [DFTTAB] 22.1.1: Tables </comment>
         <flag name="table">
           <include/>
         </flag>
@@ -16043,8 +16043,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFTTAB]  22.1.1-->
-<!-- [DFTFOR] 22.2: Formulae -->
+        <comment> end of [DFTTAB]  22.1.1</comment>
+        <comment> [DFTFOR] 22.2: Formulae </comment>
         <flag name="formula">
           <include/>
         </flag>
@@ -16068,8 +16068,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFTFOR]  22.2-->
-<!-- [DFTGRA] 22.3: Figures -->
+        <comment> end of [DFTFOR]  22.2</comment>
+        <comment> [DFTGRA] 22.3: Figures </comment>
         <flag name="figure">
           <include/>
         </flag>
@@ -16155,15 +16155,15 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DFTGRA]  22.3-->
-<!-- end of [DFTFF]  22.-->
+        <comment> end of [DFTGRA]  22.3</comment>
+        <comment> end of [DFTFF]  22.</comment>
       </externalIdRef>
     </includedSection>
     <includedSection flag="TEI.corpus">
       <externalId name="TEI.corpus.dtd" system="teicorp2.dtd"/>
       <externalIdRef name="TEI.corpus.dtd">
-<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
-<!-- [DCCHDR] 23.2: Header extensions for Corpus Texts -->
+        <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
+        <comment> [DCCHDR] 23.2: Header extensions for Corpus Texts </comment>
         <flag name="textDesc">
           <include/>
         </flag>
@@ -16282,7 +16282,7 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- [DCCAHTD] 23.2.1: Text description -->
+        <comment> [DCCAHTD] 23.2.1: Text description </comment>
         <flag name="channel">
           <include/>
         </flag>
@@ -16509,8 +16509,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DCCAHTD]  23.2.1-->
-<!-- [DCCAHPA] 23.2.2: Participants description -->
+        <comment> end of [DCCAHTD]  23.2.1</comment>
+        <comment> [DCCAHPA] 23.2.2: Participants description </comment>
         <duplicate name="x.demographic"/>
         <duplicate name="m.demographic"/>
         <flag name="person">
@@ -16855,8 +16855,8 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DCCAHPA]  23.2.2-->
-<!-- [DCCAHSE] 23.2.3: Setting description -->
+        <comment> end of [DCCAHPA]  23.2.2</comment>
+        <comment> [DCCAHSE] 23.2.3: Setting description </comment>
         <flag name="setting">
           <include/>
         </flag>
@@ -16941,12 +16941,12 @@ Current versions are available from the Text Encoding Initiative.-->
             </attribute>
           </attlist>
         </includedSection>
-<!-- end of [DCCAHSE]  23.2.3-->
-<!-- end of [DCCHDR]  23.2-->
+        <comment> end of [DCCAHSE]  23.2.3</comment>
+        <comment> end of [DCCHDR]  23.2</comment>
       </externalIdRef>
     </includedSection>
-<!-- end of [DSTOVAD]  3.6.5-->
-<!-- end of [DSTTEI2]  3.6.1-->
+    <comment> end of [DSTOVAD]  3.6.5</comment>
+    <comment> end of [DSTTEI2]  3.6.1</comment>
   </externalIdRef>
   <element>
     <nameSpecRef name="n.att"/>

@@ -20,6 +20,7 @@ decl =
   | ignoredSection
   | internalEntityDecl
   | processingInstruction
+  | comment
 
 elementDecl = element element { nameSpec, modelGroup }
 
@@ -51,6 +52,8 @@ internalEntityDecl = element internalEntity { name, text }
 
 processingInstruction =
   element processingInstruction { attribute target { xsd:NCName }, text }
+
+comment = element comment { text }
 
 datatype =
   element tokenized { 

@@ -57,7 +57,9 @@ public class SchemaWriter implements TopLevelVisitor,
   }
 
   public void comment(String value) throws Exception {
-    w.comment(value);
+    w.startElement("comment");
+    w.characters(value);
+    w.endElement();
   }
 
   public void modelGroupDef(String name, ModelGroup modelGroup) throws Exception {

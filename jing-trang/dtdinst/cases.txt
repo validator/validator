@@ -1,5 +1,7 @@
 Create NotationDecl objects.
 
+Divide up into packages.
+
 Command-line option to define a parameter entity as INCLUDE.
 
 Real implementation of EncodingMap.

@@ -7,7 +7,7 @@
     <flagRef name="e1"/>
   </flag>
   <includedSection>
-<!-- this is included -->
+    <comment> this is included </comment>
     <flag name="e3">
       <ignore/>
     </flag>
