@@ -23,6 +23,8 @@ public interface SchemaReader {
    * @throws IOException if an I/O error occurs
    * @throws SAXException
    * @throws IncorrectSchemaException
+   *
+   * @see ValidateProperty
    */
   Schema createSchema(InputSource in, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException;
