@@ -4,7 +4,7 @@ import com.thaiopensource.relaxng.ValidatorHandler;
 import com.thaiopensource.relaxng.Schema;
 import org.xml.sax.SAXException;
 
-public interface SectionState {
+interface SectionState {
   /**
    *
    * @param modeUsage
