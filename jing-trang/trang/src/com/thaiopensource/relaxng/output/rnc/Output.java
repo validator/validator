@@ -834,7 +834,10 @@ class Output {
   private void endAnnotations(Annotated annotated) {
     if (!annotated.mayContainText()) {
       for (Iterator iter = annotated.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
-        pp.softNewline(" ");
+        if (annotated instanceof Component)
+          pp.hardNewline();
+        else
+          pp.softNewline(" ");
         AnnotationChildVisitor output = (annotated instanceof Component
                                          ? annotationChildOutput
                                          : followingAnnotationChildOutput);
