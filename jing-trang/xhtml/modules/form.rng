@@ -4,18 +4,6 @@
 
 <include href="basic-form.rng">
 
-  <define name="form">
-    <element name="form">
-      <ref name="form.attlist"/>
-      <oneOrMore>
-	<choice>
-	  <ref name="Block.class"/>
-	  <ref name="fieldset"/>
-	</choice>
-      </oneOrMore>
-    </element>
-  </define>
-
   <define name="select">
     <element name="select">
       <ref name="select.attlist"/>
