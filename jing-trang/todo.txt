@@ -17,3 +17,5 @@ Avoid slow error recovery with large schemas (eg DocBook).
 Validate QNames/NCNames in schema.
 
 Bug with nullable data.
+
+Implement xml:base.
