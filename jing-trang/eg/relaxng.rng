@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.8 2001-06-02 08:34:20 jjc Exp $ -->
-<grammar ns="http://relaxng.org/main/ns/0.1"
+<!-- $Id: relaxng.rng,v 1.9 2001-06-02 08:35:45 jjc Exp $ -->
+<grammar namespace="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
     <choice>
@@ -208,7 +208,7 @@
         <ref name="common-atts"/>
         <ref name="other"/>
       </element>
-      <element name="nsName">
+      <element name="namespaceName">
         <ref name="common-atts"/>
         <ref name="other"/>
       </element>
@@ -240,14 +240,14 @@
 
   <define name="common-atts">
     <optional>
-      <attribute name="ns"/>
+      <attribute name="namespace"/>
     </optional>
     <zeroOrMore>
       <attribute>
         <not>
           <choice>
-            <nsName/>
-            <nsName ns=""/>
+            <namespaceName/>
+            <namespaceName namespace=""/>
           </choice>
         </not>
       </attribute>
@@ -258,7 +258,7 @@
     <zeroOrMore>
       <element>
         <not>
-          <nsName/>
+          <namespaceName/>
         </not>
         <zeroOrMore>
           <choice>
