@@ -424,8 +424,7 @@ void LookaheadBody() :
 {}
 {
   "["
-   ( (<PREFIXED_NAME> | UnprefixedName())
-     ("=" (<LITERAL>)+ | LookaheadBody()) )*
+   (<PREFIXED_NAME> | UnprefixedName() | "=" | <LITERAL> | LookaheadBody() )*
   "]"
 }
 
