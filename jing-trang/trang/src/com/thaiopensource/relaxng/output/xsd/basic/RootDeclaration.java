@@ -2,11 +2,11 @@ package com.thaiopensource.relaxng.output.xsd.basic;
 
 import com.thaiopensource.relaxng.edit.SourceLocation;
 
-public class RootDeclaration extends TopLevel {
+public class RootDeclaration extends Annotated implements TopLevel {
   private Particle particle;
 
-  public RootDeclaration(SourceLocation location, Annotation annotation, Schema parentSchema, Particle particle) {
-    super(location, annotation, parentSchema);
+  public RootDeclaration(SourceLocation location, Annotation annotation, Particle particle) {
+    super(location, annotation);
     this.particle = particle;
   }
 

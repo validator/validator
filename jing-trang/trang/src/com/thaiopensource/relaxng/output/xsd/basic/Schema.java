@@ -67,12 +67,12 @@ public class Schema extends Annotated {
   }
 
   public void addRoot(Particle particle, SourceLocation location, Annotation annotation) {
-    topLevel.add(new RootDeclaration(location, annotation, this, particle));
+    topLevel.add(new RootDeclaration(location, annotation, particle));
   }
 
   public Schema addInclude(String uri, SourceLocation location, Annotation annotation) {
     Schema included = new Schema(location, annotation, uri, this);
-    topLevel.add(new Include(location, annotation, this, included));
+    topLevel.add(new Include(location, annotation, included));
     return included;
   }
 
