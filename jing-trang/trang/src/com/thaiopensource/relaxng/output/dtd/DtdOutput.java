@@ -739,7 +739,10 @@ class DtdOutput {
     }
 
     public Object visitDiv(DivComponent c) {
+      outputLeadingComments(c);
+      outputInitialChildComments(c);
       visitContainer(c);
+      outputFollowingComments(c);
       return null;
     }
 
@@ -794,6 +797,7 @@ class DtdOutput {
     }
     if (grammarPattern != null) {
       outputLeadingComments(grammarPattern);
+      outputInitialChildComments(grammarPattern);
       grammarOutput.visitContainer(grammarPattern);
       outputFollowingComments(grammarPattern);
     }
@@ -803,6 +807,7 @@ class DtdOutput {
   void subOutput(GrammarPattern grammarPattern) {
     xmlDecl();
     outputLeadingComments(grammarPattern);
+    outputInitialChildComments(grammarPattern);
     grammarOutput.visitContainer(grammarPattern);
     outputFollowingComments(grammarPattern);
     close();
@@ -1120,12 +1125,19 @@ class DtdOutput {
   }
 
   void outputLeadingComments(Annotated a) {
-    for (Iterator iter = a.getLeadingComments().iterator(); iter.hasNext();)
-      outputComment(((Comment)iter.next()).getValue());
+    outputComments(a.getLeadingComments());
+  }
+
+  void outputInitialChildComments(Annotated a) {
+    outputComments(a.getChildElementAnnotations());
   }
 
   void outputFollowingComments(Annotated a) {
-    for (Iterator iter = a.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
+    outputComments(a.getFollowingElementAnnotations());
+  }
+
+  void outputComments(List list) {
+    for (Iterator iter = list.iterator(); iter.hasNext();) {
       AnnotationChild child = (AnnotationChild)iter.next();
       if (child instanceof Comment)
         outputComment(((Comment)child).getValue());
