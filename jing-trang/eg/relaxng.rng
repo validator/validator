@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.23 2001-07-13 03:56:49 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.24 2001-07-16 01:57:53 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -242,7 +242,7 @@
     <choice>
       <element name="name">
         <ref name="common-atts"/>
-        <text/>
+        <data type="QName"/>
       </element>
       <element name="anyName">
         <ref name="common-atts"/>
