@@ -27,8 +27,8 @@ public class CompactParseable implements Parseable {
     this.eh = eh;
   }
 
-  public ParsedPattern parse(SchemaBuilder sb) throws BuildException, IllegalSchemaException {
-    return new CompactSyntax(makeReader(in), in.getSystemId(), sb, eh).parse(null);
+  public ParsedPattern parse(SchemaBuilder sb, Scope scope) throws BuildException, IllegalSchemaException {
+    return new CompactSyntax(makeReader(in), in.getSystemId(), sb, eh).parse(scope);
   }
 
   public ParsedPattern parseInclude(String uri, SchemaBuilder sb, IncludedGrammar g)

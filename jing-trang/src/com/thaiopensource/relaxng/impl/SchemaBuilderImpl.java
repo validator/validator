@@ -69,7 +69,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
                                                    eh,
                                                    new BuiltinDatatypeLibraryFactory(datatypeLibraryFactory),
                                                    pb);
-      return sb.expandPattern((Pattern)parseable.parse(sb));
+      return sb.expandPattern((Pattern)parseable.parse(sb, new RootScope(sb)));
     }
     catch (IllegalSchemaException e) {
       throw new IncorrectSchemaException();
@@ -524,6 +524,23 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
 
     public Include makeInclude() {
       return new IncludeImpl(sb, this);
+    }
+
+  }
+
+  static class RootScope implements Scope {
+    private final SchemaBuilderImpl sb;
+    RootScope(SchemaBuilderImpl sb) {
+      this.sb = sb;
+    }
+
+    public ParsedPattern makeParentRef(String name, Location loc, Annotations anno) throws BuildException {
+      sb.error("parent_ref_outside_grammar", (Locator)loc);
+      return sb.makeErrorPattern();
+    }
+    public ParsedPattern makeRef(String name, Location loc, Annotations anno) throws BuildException {
+      sb.error("ref_outside_grammar", (Locator)loc);
+      return sb.makeErrorPattern();
     }
 
   }

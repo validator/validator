@@ -865,8 +865,6 @@ class SchemaParser extends DtdContext implements Context {
     void endAttributes() throws SAXException {
       if (name == null)
 	error("missing_name_attribute");
-      if (scope == null)
-	error("ref_outside_grammar");
     }
 
     void setName(String name) throws SAXException {

@@ -28,10 +28,10 @@ public class SAXParseable implements Parseable {
     this.eh = eh;
   }
 
-  public ParsedPattern parse(SchemaBuilder schemaBuilder) throws BuildException, IllegalSchemaException {
+  public ParsedPattern parse(SchemaBuilder schemaBuilder, Scope scope) throws BuildException, IllegalSchemaException {
     try {
       XMLReader xr = xrc.createXMLReader();
-      SchemaParser sp = new SchemaParser(xr, eh, schemaBuilder, null, null);
+      SchemaParser sp = new SchemaParser(xr, eh, schemaBuilder, null, scope);
       xr.parse(in);
       return sp.getStartPattern();
     }

@@ -537,7 +537,7 @@ public class SchemaBuilderImpl implements SchemaBuilder {
           throws IncorrectSchemaException, IOException, SAXException {
     try {
       SchemaCollection sc = new SchemaCollection();
-      sc.setMainSchema((Pattern)parseable.parse(new SchemaBuilderImpl(parseable, sc.getSchemas(), dlf)));
+      sc.setMainSchema((Pattern)parseable.parse(new SchemaBuilderImpl(parseable, sc.getSchemas(), dlf), new ScopeImpl()));
       return sc;
     }
     catch (IllegalSchemaException e) {
