@@ -12,8 +12,6 @@ outside a list.
 
 Handle comments embedded within strings better.
 
-Make SAX-based parser preserve element annotations.
-
 SAXParser and comment formatting.
 
 Trang should output a:documentation as comments in the DTD.
