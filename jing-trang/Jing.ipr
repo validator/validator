@@ -136,10 +136,7 @@
     <option name="HIDE_UP_TO_DATE_FILES" value="true" />
   </component>
   <component class="com.intellij.cvsSupport.CvsManager">
-    <expanded_paths>
-      <path value="$PROJECT_DIR$/lib" />
-      <path value="$PROJECT_DIR$/scripts" />
-    </expanded_paths>
+    <expanded_paths />
   </component>
   <component class="com.intellij.debugger.Debugger">
     <line_breakpoints />
@@ -270,12 +267,10 @@
   </component>
   <component class="com.intellij.ide.desktop.IdeDocumentManager">
     <recent_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax1XMLReaderCreator.java" column="79" line="12" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp11XMLReaderCreator.java" column="54" line="10" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax2XMLReaderCreator.java" column="15" line="12" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/JingTask.java" column="0" line="23" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SchemaFactory.java" column="32" line="13" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternSchema.java" column="13" line="6" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierImpl.java" column="36" line="14" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/package.html" column="0" line="0" />
@@ -284,20 +279,13 @@
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryImpl.java" column="10" line="28" />
       <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierHandlerImpl.java" column="48" line="3" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternValidatorHandler.java" column="13" line="12" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" column="13" line="9" />
     </recent_files>
     <open_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierHandlerImpl.java" column="48" line="3" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternValidatorHandler.java" column="13" line="12" />
-      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternValidatorHandler.java" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryImpl.java" column="10" line="28" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/SchemaImpl.java" column="70" line="18" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierImpl.java" column="36" line="14" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryLoaderImpl.java" column="35" line="3" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/package.html" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternSchema.java" column="13" line="6" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" column="13" line="9" />
+      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -312,12 +300,10 @@
       <expanded_node type="directory" url="file://$PROJECT_DIR$" />
     </navigator>
     <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
     </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">
@@ -355,6 +341,9 @@
       <property name="type" value="classPathEntry" />
     </root>
     <root file="jar://$PROJECT_DIR$/lib/regex.jar!/">
+      <property name="type" value="classPathEntry" />
+    </root>
+    <root file="jar://$PROJECT_DIR$/lib/regex2.jar!/">
       <property name="type" value="classPathEntry" />
     </root>
     <root file="jar://$PROJECT_DIR$/lib/crimson.jar!/">
