@@ -1,10 +1,10 @@
 package com.thaiopensource.relaxng.jarv;
 
-import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.impl.SchemaBuilderImpl;
 import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
 import com.thaiopensource.relaxng.parse.Parseable;
+import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
@@ -31,7 +31,7 @@ public class VerifierFactoryImpl extends VerifierFactory {
     try {
       return new SchemaImpl(SchemaBuilderImpl.parse(parseable, eh, dlf, spb, false), spb);
     }
-    catch (IncorrectSchemaException e) {
+    catch (IllegalSchemaException e) {
       throw new SAXException("unreported schema error");
     }
   }

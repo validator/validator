@@ -5,11 +5,11 @@ import com.thaiopensource.validate.auto.SchemaReceiver;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.rng.RngProperty;
-import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
 import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.BuildException;
+import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.util.PropertyMap;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
@@ -37,12 +37,23 @@ public class SchemaReceiverImpl implements SchemaReceiver {
     final PatternFuture pf = SchemaBuilderImpl.installHandlers(parser, xr, eh, dlf, pb);
     return new SchemaFuture() {
       public Schema getSchema() throws IncorrectSchemaException, SAXException, IOException {
-        return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(NrlProperty.ATTRIBUTES_SCHEMA)),
-                                            pb, properties);
+        try {
+          return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(NrlProperty.ATTRIBUTES_SCHEMA)),
+                                              pb, properties);
+        }
+        catch (IllegalSchemaException e) {
+          throw new IncorrectSchemaException();
+        }
       }
       public RuntimeException unwrapException(RuntimeException e) throws SAXException, IOException, IncorrectSchemaException {
-        if (e instanceof BuildException)
-          return SchemaBuilderImpl.unwrapBuildException((BuildException)e);
+        if (e instanceof BuildException) {
+          try {
+            return SchemaBuilderImpl.unwrapBuildException((BuildException)e);
+          }
+          catch (IllegalSchemaException ise) {
+            throw new IncorrectSchemaException();
+          }
+        }
         return e;
       }
     };

@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.relaxng.parse.Parseable;
+import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.AbstractSchema;
@@ -9,7 +10,6 @@ import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
 import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
@@ -39,9 +39,14 @@ public abstract class SchemaReaderImpl implements SchemaReader {
     DatatypeLibraryFactory dlf = RngProperty.DATATYPE_LIBRARY_FACTORY.get(properties);
     if (dlf == null)
       dlf = new DatatypeLibraryLoader();
-    Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
-                                            properties.contains(NrlProperty.ATTRIBUTES_SCHEMA));
-    return wrapPattern(start, spb, properties);
+    try {
+      Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
+                                              properties.contains(NrlProperty.ATTRIBUTES_SCHEMA));
+      return wrapPattern(start, spb, properties);
+    }
+    catch (IllegalSchemaException e) {
+      throw new IncorrectSchemaException();
+    }
   }
 
   public Option getOption(String uri) {
