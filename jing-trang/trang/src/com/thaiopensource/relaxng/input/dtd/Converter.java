@@ -1,9 +1,36 @@
 package com.thaiopensource.relaxng.input.dtd;
 
-import com.thaiopensource.relaxng.edit.*;
+import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.AnyNameNameClass;
+import com.thaiopensource.relaxng.edit.AttributeAnnotation;
+import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.Comment;
+import com.thaiopensource.relaxng.edit.Component;
+import com.thaiopensource.relaxng.edit.CompositePattern;
+import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.EmptyPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.relaxng.edit.NameNameClass;
+import com.thaiopensource.relaxng.edit.NotAllowedPattern;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.RefPattern;
+import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
+import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
-import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.xml.dtd.om.AttributeDefault;
 import com.thaiopensource.xml.dtd.om.AttributeGroup;
 import com.thaiopensource.xml.dtd.om.AttributeGroupMember;
@@ -25,7 +52,15 @@ import com.thaiopensource.xml.em.ExternalId;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.SAXException;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 public class Converter {
   static class Options {
