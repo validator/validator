@@ -103,6 +103,20 @@ W3C XML Schema Part 2 datatypes.  There is a separate <a
 href="jing-datatypes.html">document</a> describing this implementation
 and how to use it.</p>
 
+<p>Jing also supports <a
+href="http://www.thaiopensource.com/relaxng/mns.html">Modular
+Namespaces (MNS)</a>.  No special options are needed for this.
+Provided that you do not use the <code>-c</code> option, Jing will
+detect that the schema is an MNS schema rather than a RELAX NG schema.
+Jing allows MNS schemas to reference schemas in RELAX NG, RELAX NG
+Compact Syntax and MNS.  Note that the design of MNS is not final and
+is subject to (possibly radical) change.  ID/IDREF checking does not
+work with MNS in the way that it probably should: each
+<code>validate</code> and <code>validateAttributes</code> element
+performs ID/IDREF checking completely independently; they probably
+should share a common table of ID/IDREFs.  This behavior may change in
+a future release.</p>
+
 <p>If you wish to use Jing in your programs, you have a choice.</p>
 
 <ul>
