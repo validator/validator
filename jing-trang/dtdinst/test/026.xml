@@ -7,7 +7,7 @@
     <name>doc</name>
     <attribute>
       <name>att</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attlist>

@@ -613,7 +613,7 @@ MAINTAINER:
 <!--    argtypes:
         Values for function prototype argument datatypes. -->
   <datatype name="argtypes">
-    <enumChoice>
+    <tokenized>
       <enum>boolean</enum>
       <enum>expression</enum>
       <enum>location-set</enum>
@@ -623,7 +623,7 @@ MAINTAINER:
       <enum>point</enum>
       <enum>range</enum>
       <enum>string</enum>
-    </enumChoice>
+    </tokenized>
   </datatype>
 <!--    key attribute:
         Optionally provides a sorting or indexing key, for cases when
@@ -631,7 +631,7 @@ MAINTAINER:
   <attributeGroup name="key.att">
     <attribute>
       <name>key</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attributeGroup>
@@ -643,7 +643,7 @@ MAINTAINER:
   <attributeGroup name="def-req.att">
     <attribute>
       <name>def</name>
-      <basic name="IDREF"/>
+      <tokenized name="IDREF"/>
       <required/>
     </attribute>
   </attributeGroup>
@@ -655,7 +655,7 @@ MAINTAINER:
   <attributeGroup name="ref-req.att">
     <attribute>
       <name>ref</name>
-      <basic name="IDREF"/>
+      <tokenized name="IDREF"/>
       <required/>
     </attribute>
   </attributeGroup>
@@ -676,12 +676,12 @@ MAINTAINER:
   <attributeGroup name="simple-xlink.att">
     <attribute>
       <name>xmlns:xlink</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>http://www.w3.org/1999/xlink</fixed>
     </attribute>
     <attribute>
       <name>xlink:type</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>simple</fixed>
     </attribute>
   </attributeGroup>
@@ -695,14 +695,14 @@ MAINTAINER:
   <attributeGroup name="href.att">
     <attribute>
       <name>href</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="href-req.att">
     <attribute>
       <name>href</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attributeGroup>
@@ -713,36 +713,36 @@ MAINTAINER:
   <attributeGroup name="auto-embed.att">
     <attribute>
       <name>xlink:show</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>embed</fixed>
     </attribute>
     <attribute>
       <name>xlink:actuate</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>onLoad</fixed>
     </attribute>
   </attributeGroup>
   <attributeGroup name="user-replace.att">
     <attribute>
       <name>xlink:show</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>replace</fixed>
     </attribute>
     <attribute>
       <name>xlink:actuate</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>onRequest</fixed>
     </attribute>
   </attributeGroup>
   <attributeGroup name="user-new.att">
     <attribute>
       <name>xlink:show</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>new</fixed>
     </attribute>
     <attribute>
       <name>xlink:actuate</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>onRequest</fixed>
     </attribute>
   </attributeGroup>
@@ -753,10 +753,10 @@ MAINTAINER:
   <attributeGroup name="xmlspace.att">
     <attribute>
       <name>xml:space</name>
-      <enumChoice>
+      <tokenized>
         <enum>default</enum>
         <enum>preserve</enum>
-      </enumChoice>
+      </tokenized>
       <fixed>preserve</fixed>
     </attribute>
   </attributeGroup>
@@ -771,12 +771,12 @@ MAINTAINER:
   <attributeGroup name="diff.att">
     <attribute>
       <name>diff</name>
-      <enumChoice>
+      <tokenized>
         <enum>chg</enum>
         <enum>add</enum>
         <enum>del</enum>
         <enum>off</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attributeGroup>
@@ -786,7 +786,7 @@ MAINTAINER:
   <attributeGroup name="role.att">
     <attribute>
       <name>role</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <implied/>
     </attribute>
   </attributeGroup>
@@ -799,7 +799,7 @@ MAINTAINER:
   <attributeGroup name="common.att">
     <attribute>
       <name>id</name>
-      <basic name="ID"/>
+      <tokenized name="ID"/>
       <implied/>
     </attribute>
     <attributeGroupRef name="role.att"/>
@@ -808,7 +808,7 @@ MAINTAINER:
   <attributeGroup name="common-idreq.att">
     <attribute>
       <name>id</name>
-      <basic name="ID"/>
+      <tokenized name="ID"/>
       <required/>
     </attribute>
     <attributeGroupRef name="role.att"/>
@@ -856,7 +856,7 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>w3c-doctype</name>
-      <enumChoice>
+      <tokenized>
         <enum>cr</enum>
         <enum>dispcmts</enum>
         <enum>issues</enum>
@@ -865,21 +865,21 @@ MAINTAINER:
         <enum>pr</enum>
         <enum>rec</enum>
         <enum>wd</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
     <attribute>
       <name>other-doctype</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>status</name>
-      <enumChoice>
+      <tokenized>
         <enum>int-review</enum>
         <enum>ext-review</enum>
         <enum>final</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attlist>
@@ -1403,10 +1403,10 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>spacing</name>
-      <enumChoice>
+      <tokenized>
         <enum>normal</enum>
         <enum>compact</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attlist>
@@ -1428,10 +1428,10 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>spacing</name>
-      <enumChoice>
+      <tokenized>
         <enum>normal</enum>
         <enum>compact</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attlist>
@@ -1651,17 +1651,17 @@ MAINTAINER:
     <name>issue</name>
     <attribute>
       <name>id</name>
-      <basic name="ID"/>
+      <tokenized name="ID"/>
       <required/>
     </attribute>
     <attributeGroupRef name="role.att"/>
     <attributeGroupRef name="diff.att"/>
     <attribute>
       <name>status</name>
-      <enumChoice>
+      <tokenized>
         <enum>open</enum>
         <enum>closed</enum>
-      </enumChoice>
+      </tokenized>
       <default>open</default>
     </attribute>
   </attlist>
@@ -1749,7 +1749,7 @@ MAINTAINER:
     <attributeGroupRef name="common-idreq.att"/>
     <attribute>
       <name>type</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <required/>
     </attribute>
   </attlist>
@@ -1791,13 +1791,13 @@ MAINTAINER:
     <attributeGroupRef name="simple-xlink.att"/>
     <attribute>
       <name>source</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
     <attributeGroupRef name="auto-embed.att"/>
     <attribute>
       <name>alt</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attributeGroupRef name="local.graphic.att"/>
@@ -1819,7 +1819,7 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>name</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <required/>
     </attribute>
     <attribute>
@@ -1842,10 +1842,10 @@ MAINTAINER:
     </attribute>
     <attribute>
       <name>occur</name>
-      <enumChoice>
+      <tokenized>
         <enum>opt</enum>
         <enum>req</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attlist>
@@ -1915,15 +1915,15 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>lang</name>
-      <basic name="IDREF"/>
+      <tokenized name="IDREF"/>
       <implied/>
     </attribute>
     <attribute>
       <name>headstyle</name>
-      <enumChoice>
+      <tokenized>
         <enum>show</enum>
         <enum>suppress</enum>
-      </enumChoice>
+      </tokenized>
       <default>show</default>
     </attribute>
   </attlist>
@@ -1946,27 +1946,27 @@ MAINTAINER:
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>pcw1</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>pcw2</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>pcw3</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>pcw4</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>pcw5</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attlist>
@@ -2160,86 +2160,86 @@ MAINTAINER:
   <attributeGroup name="cellhalign.att">
     <attribute>
       <name>align</name>
-      <enumChoice>
+      <tokenized>
         <enum>left</enum>
         <enum>center</enum>
         <enum>right</enum>
         <enum>justify</enum>
         <enum>char</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
     <attribute>
       <name>char</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>charoff</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="cellvalign.att">
     <attribute>
       <name>valign</name>
-      <enumChoice>
+      <tokenized>
         <enum>top</enum>
         <enum>middle</enum>
         <enum>bottom</enum>
         <enum>baseline</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="thtd.att">
     <attribute>
       <name>abbr</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>axis</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>headers</name>
-      <basic name="IDREFS"/>
+      <tokenized name="IDREFS"/>
       <implied/>
     </attribute>
     <attribute>
       <name>scope</name>
-      <enumChoice>
+      <tokenized>
         <enum>row</enum>
         <enum>col</enum>
         <enum>rowgroup</enum>
         <enum>colgroup</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
     <attribute>
       <name>rowspan</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <default>1</default>
     </attribute>
     <attribute>
       <name>colspan</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <default>1</default>
     </attribute>
   </attributeGroup>
   <attributeGroup name="width.att">
     <attribute>
       <name>width</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attributeGroup>
   <attributeGroup name="span.att">
     <attribute>
       <name>span</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <default>1</default>
     </attribute>
   </attributeGroup>
@@ -2287,17 +2287,17 @@ MAINTAINER:
     <attributeGroupRef name="width.att"/>
     <attribute>
       <name>summary</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>border</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>frame</name>
-      <enumChoice>
+      <tokenized>
         <enum>void</enum>
         <enum>above</enum>
         <enum>below</enum>
@@ -2307,28 +2307,28 @@ MAINTAINER:
         <enum>vsides</enum>
         <enum>box</enum>
         <enum>border</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
     <attribute>
       <name>rules</name>
-      <enumChoice>
+      <tokenized>
         <enum>none</enum>
         <enum>groups</enum>
         <enum>rows</enum>
         <enum>cols</enum>
         <enum>all</enum>
-      </enumChoice>
+      </tokenized>
       <implied/>
     </attribute>
     <attribute>
       <name>cellspacing</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
     <attribute>
       <name>cellpadding</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attlist>
@@ -2579,7 +2579,7 @@ typedef, case, component                x
   <attributeGroup name="idl-name.att">
     <attribute>
       <name>name</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attributeGroup>
@@ -2588,7 +2588,7 @@ typedef, case, component                x
   <attributeGroup name="idl-type.att">
     <attribute>
       <name>type</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attributeGroup>
@@ -2652,7 +2652,7 @@ typedef, case, component                x
     <attributeGroupRef name="idl-name.att"/>
     <attribute>
       <name>inherits</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <implied/>
     </attribute>
   </attlist>
@@ -2683,7 +2683,7 @@ typedef, case, component                x
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>declaration</name>
-      <basic name="IDREF"/>
+      <tokenized name="IDREF"/>
       <required/>
     </attribute>
   </attlist>
@@ -2703,7 +2703,7 @@ typedef, case, component                x
     <attributeGroupRef name="idl-name.att"/>
     <attribute>
       <name>array.size</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <implied/>
     </attribute>
   </attlist>
@@ -2756,7 +2756,7 @@ typedef, case, component                x
     <attributeGroupRef name="idl-name.att"/>
     <attribute>
       <name>switch.type</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attlist>
@@ -2774,7 +2774,7 @@ typedef, case, component                x
     <attributeGroupRef name="common.att"/>
     <attribute>
       <name>labels</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attlist>
@@ -2823,7 +2823,7 @@ typedef, case, component                x
     <attributeGroupRef name="idl-type.att"/>
     <attribute>
       <name>size</name>
-      <basic name="NMTOKEN"/>
+      <tokenized name="NMTOKEN"/>
       <implied/>
     </attribute>
   </attlist>
@@ -2841,7 +2841,7 @@ typedef, case, component                x
     <attributeGroupRef name="idl-type.att"/>
     <attribute>
       <name>value</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attlist>
@@ -2879,10 +2879,10 @@ typedef, case, component                x
     <attributeGroupRef name="idl-type.att"/>
     <attribute>
       <name>readonly</name>
-      <enumChoice>
+      <tokenized>
         <enum>yes</enum>
         <enum>no</enum>
-      </enumChoice>
+      </tokenized>
       <default>no</default>
     </attribute>
   </attlist>
@@ -2934,11 +2934,11 @@ typedef, case, component                x
     <attributeGroupRef name="idl-type.att"/>
     <attribute>
       <name>attr</name>
-      <enumChoice>
+      <tokenized>
         <enum>in</enum>
         <enum>out</enum>
         <enum>inout</enum>
-      </enumChoice>
+      </tokenized>
       <default>inout</default>
     </attribute>
   </attlist>
@@ -3266,7 +3266,7 @@ typedef, case, component                x
     <attributeGroupRef name="common-idreq.att"/>
     <attribute>
       <name>term</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <required/>
     </attribute>
   </attlist>

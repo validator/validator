@@ -179,19 +179,24 @@ public class SchemaWriter implements TopLevelVisitor,
   }
 
   public void basicDatatype(String typeName) throws IOException {
-    w.startElement("basic");
-    w.attribute("name", typeName);
+    if (typeName.equals("CDATA"))
+      w.startElement("cdata");
+    else {
+      w.startElement("tokenized");
+      w.attribute("name", typeName);
+    }
     w.endElement();
   }
 
   public void enumDatatype(EnumGroup enumGroup) throws Exception {
-    w.startElement("enumChoice");
+    w.startElement("tokenized");
     enumGroup.accept(this);
     w.endElement();
   }
 
   public void notationDatatype(EnumGroup enumGroup) throws Exception {
-    w.startElement("notation");
+    w.startElement("tokenized");
+    w.attribute("name", "NOTATION");
     enumGroup.accept(this);
     w.endElement();
   }

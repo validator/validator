@@ -112,7 +112,7 @@
     <attributeGroup name="style.attrib">
       <attribute>
         <name>style</name>
-        <basic name="CDATA"/>
+        <cdata/>
         <implied/>
       </attribute>
     </attributeGroup>
@@ -253,76 +253,76 @@
 <!-- Length defined for cellpadding/cellspacing -->
 <!-- nn for pixels or nn% for percentage length -->
       <datatype name="Length.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- space-separated list of link types -->
       <datatype name="LinkTypes.datatype">
-        <basic name="NMTOKENS"/>
+        <tokenized name="NMTOKENS"/>
       </datatype>
 <!-- single or comma-separated list of media descriptors -->
       <datatype name="MediaDesc.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- pixel, percentage, or relative -->
       <datatype name="MultiLength.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- one or more digits (NUMBER) -->
       <datatype name="Number.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- integer representing length in pixels -->
       <datatype name="Pixels.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- script expression -->
       <datatype name="Script.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- textual content -->
       <datatype name="Text.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- Imported Datatypes ................................ -->
 <!-- a single character from [ISO10646] -->
       <datatype name="Character.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- a character encoding, as per [RFC2045] -->
       <datatype name="Charset.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- a space separated list of character encodings, as per [RFC2045] -->
       <datatype name="Charsets.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- media type, as per [RFC2045] -->
       <datatype name="ContentType.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- comma-separated list of media types, as per [RFC2045] -->
       <datatype name="ContentTypes.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- date and time information. ISO date format -->
       <datatype name="Datetime.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- formal public identifier, as per [ISO8879] -->
       <datatype name="FPI.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- a language code, as per [RFC3066] -->
       <datatype name="LanguageCode.datatype">
-        <basic name="NMTOKEN"/>
+        <tokenized name="NMTOKEN"/>
       </datatype>
 <!-- a Uniform Resource Identifier, see [URI] -->
       <datatype name="URI.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- a space-separated list of Uniform Resource Identifiers, see [URI] -->
       <datatype name="URIs.datatype">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- end of xhtml-datatypes-1.mod -->
     </includedSection>
@@ -1002,14 +1002,14 @@
       <attributeGroup name="id.attrib">
         <attribute>
           <name>id</name>
-          <basic name="ID"/>
+          <tokenized name="ID"/>
           <implied/>
         </attribute>
       </attributeGroup>
       <attributeGroup name="class.attrib">
         <attribute>
           <name>class</name>
-          <basic name="NMTOKENS"/>
+          <tokenized name="NMTOKENS"/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -1039,10 +1039,10 @@
         <attributeGroup name="dir.attrib">
           <attribute>
             <name>dir</name>
-            <enumChoice>
+            <tokenized>
               <enum>ltr</enum>
               <enum>rtl</enum>
-            </enumChoice>
+            </tokenized>
             <implied/>
           </attribute>
         </attributeGroup>
@@ -2996,9 +2996,9 @@
           <attributeGroupRef name="Common.attrib"/>
           <attribute>
             <name>xml:space</name>
-            <enumChoice>
+            <tokenized>
               <enum>preserve</enum>
-            </enumChoice>
+            </tokenized>
             <fixed>preserve</fixed>
           </attribute>
         </attlist>
@@ -3636,10 +3636,10 @@
         </attribute>
         <attribute>
           <name>dir</name>
-          <enumChoice>
+          <tokenized>
             <enum>ltr</enum>
             <enum>rtl</enum>
-          </enumChoice>
+          </tokenized>
           <required/>
         </attribute>
       </attlist>
@@ -4456,22 +4456,22 @@
         <attributeGroupRef name="I18n.attrib"/>
         <attribute>
           <name>http-equiv</name>
-          <basic name="NMTOKEN"/>
+          <tokenized name="NMTOKEN"/>
           <implied/>
         </attribute>
         <attribute>
           <name>name</name>
-          <basic name="NMTOKEN"/>
+          <tokenized name="NMTOKEN"/>
           <implied/>
         </attribute>
         <attribute>
           <name>content</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <required/>
         </attribute>
         <attribute>
           <name>scheme</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attlist>
@@ -4646,16 +4646,16 @@
         </attribute>
         <attribute>
           <name>defer</name>
-          <enumChoice>
+          <tokenized>
             <enum>defer</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>xml:space</name>
-          <enumChoice>
+          <tokenized>
             <enum>preserve</enum>
-          </enumChoice>
+          </tokenized>
           <fixed>preserve</fixed>
         </attribute>
       </attlist>
@@ -4755,9 +4755,9 @@
         </attribute>
         <attribute>
           <name>xml:space</name>
-          <enumChoice>
+          <tokenized>
             <enum>preserve</enum>
-          </enumChoice>
+          </tokenized>
           <fixed>preserve</fixed>
         </attribute>
       </attlist>
@@ -4897,15 +4897,15 @@
 <!-- end of area.element -->
     </includedSection>
     <datatype name="Shape.datatype">
-      <enumChoice>
+      <tokenized>
         <enum>rect</enum>
         <enum>circle</enum>
         <enum>poly</enum>
         <enum>default</enum>
-      </enumChoice>
+      </tokenized>
     </datatype>
     <datatype name="Coords.datatype">
-      <basic name="CDATA"/>
+      <cdata/>
     </datatype>
     <flag name="area.attlist">
       <include/>
@@ -4931,9 +4931,9 @@
         </attribute>
         <attribute>
           <name>nohref</name>
-          <enumChoice>
+          <tokenized>
             <enum>nohref</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -4977,7 +4977,7 @@
       <nameSpecRef name="img.qname"/>
       <attribute>
         <name>usemap</name>
-        <basic name="IDREF"/>
+        <tokenized name="IDREF"/>
         <implied/>
       </attribute>
     </attlist>
@@ -4988,7 +4988,7 @@
       <nameSpecRef name="input.qname"/>
       <attribute>
         <name>usemap</name>
-        <basic name="IDREF"/>
+        <tokenized name="IDREF"/>
         <implied/>
       </attribute>
     </attlist>
@@ -4999,7 +4999,7 @@
       <nameSpecRef name="object.qname"/>
       <attribute>
         <name>usemap</name>
-        <basic name="IDREF"/>
+        <tokenized name="IDREF"/>
         <implied/>
       </attribute>
     </attlist>
@@ -5041,7 +5041,7 @@
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attribute>
           <name>id</name>
-          <basic name="ID"/>
+          <tokenized name="ID"/>
           <required/>
         </attribute>
         <attributeGroupRef name="class.attrib"/>
@@ -5085,9 +5085,9 @@
       <nameSpecRef name="img.qname"/>
       <attribute>
         <name>ismap</name>
-        <enumChoice>
+        <tokenized>
           <enum>ismap</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attlist>
@@ -5095,9 +5095,9 @@
       <nameSpecRef name="input.qname"/>
       <attribute>
         <name>ismap</name>
-        <enumChoice>
+        <tokenized>
           <enum>ismap</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attlist>
@@ -5158,21 +5158,21 @@
         <attributeGroupRef name="id.attrib"/>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <required/>
         </attribute>
         <attribute>
           <name>value</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>valuetype</name>
-          <enumChoice>
+          <tokenized>
             <enum>data</enum>
             <enum>ref</enum>
             <enum>object</enum>
-          </enumChoice>
+          </tokenized>
           <default>data</default>
         </attribute>
         <attribute>
@@ -5250,9 +5250,9 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>declare</name>
-          <enumChoice>
+          <tokenized>
             <enum>declare</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -5302,7 +5302,7 @@
         </attribute>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
@@ -5364,7 +5364,7 @@
     <attributeGroup name="frame.attrib">
       <attribute>
         <name>frame</name>
-        <enumChoice>
+        <tokenized>
           <enum>void</enum>
           <enum>above</enum>
           <enum>below</enum>
@@ -5374,7 +5374,7 @@
           <enum>vsides</enum>
           <enum>box</enum>
           <enum>border</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attributeGroup>
@@ -5387,13 +5387,13 @@
     <attributeGroup name="rules.attrib">
       <attribute>
         <name>rules</name>
-        <enumChoice>
+        <tokenized>
           <enum>none</enum>
           <enum>groups</enum>
           <enum>rows</enum>
           <enum>cols</enum>
           <enum>all</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attributeGroup>
@@ -5402,13 +5402,13 @@
     <attributeGroup name="CellHAlign.attrib">
       <attribute>
         <name>align</name>
-        <enumChoice>
+        <tokenized>
           <enum>left</enum>
           <enum>center</enum>
           <enum>right</enum>
           <enum>justify</enum>
           <enum>char</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
       <attribute>
@@ -5427,12 +5427,12 @@
     <attributeGroup name="CellVAlign.attrib">
       <attribute>
         <name>valign</name>
-        <enumChoice>
+        <tokenized>
           <enum>top</enum>
           <enum>middle</enum>
           <enum>bottom</enum>
           <enum>baseline</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attributeGroup>
@@ -5441,12 +5441,12 @@
     <attributeGroup name="scope.attrib">
       <attribute>
         <name>scope</name>
-        <enumChoice>
+        <tokenized>
           <enum>row</enum>
           <enum>col</enum>
           <enum>rowgroup</enum>
           <enum>colgroup</enum>
-        </enumChoice>
+        </tokenized>
         <implied/>
       </attribute>
     </attributeGroup>
@@ -5835,12 +5835,12 @@
         </attribute>
         <attribute>
           <name>axis</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>headers</name>
-          <basic name="IDREFS"/>
+          <tokenized name="IDREFS"/>
           <implied/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
@@ -5892,12 +5892,12 @@
         </attribute>
         <attribute>
           <name>axis</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>headers</name>
-          <basic name="IDREFS"/>
+          <tokenized name="IDREFS"/>
           <implied/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
@@ -6010,10 +6010,10 @@
         </attribute>
         <attribute>
           <name>method</name>
-          <enumChoice>
+          <tokenized>
             <enum>get</enum>
             <enum>post</enum>
-          </enumChoice>
+          </tokenized>
           <default>get</default>
         </attribute>
         <attribute>
@@ -6083,7 +6083,7 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>for</name>
-          <basic name="IDREF"/>
+          <tokenized name="IDREF"/>
           <implied/>
         </attribute>
         <attribute>
@@ -6113,7 +6113,7 @@
     </flag>
     <includedSection flag="input.attlist">
       <datatype name="InputType.class">
-        <enumChoice>
+        <tokenized>
           <enum>text</enum>
           <enum>password</enum>
           <enum>checkbox</enum>
@@ -6124,7 +6124,7 @@
           <enum>hidden</enum>
           <enum>image</enum>
           <enum>button</enum>
-        </enumChoice>
+        </tokenized>
       </datatype>
 <!-- attribute 'name' required for all but submit & reset
 -->
@@ -6138,33 +6138,33 @@
         </attribute>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>value</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>checked</name>
-          <enumChoice>
+          <tokenized>
             <enum>checked</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>readonly</name>
-          <enumChoice>
+          <tokenized>
             <enum>readonly</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -6237,7 +6237,7 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
@@ -6247,16 +6247,16 @@
         </attribute>
         <attribute>
           <name>multiple</name>
-          <enumChoice>
+          <tokenized>
             <enum>multiple</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -6294,9 +6294,9 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -6330,16 +6330,16 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>selected</name>
-          <enumChoice>
+          <tokenized>
             <enum>selected</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -6349,7 +6349,7 @@
         </attribute>
         <attribute>
           <name>value</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attlist>
@@ -6378,7 +6378,7 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
@@ -6393,16 +6393,16 @@
         </attribute>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>readonly</name>
-          <enumChoice>
+          <tokenized>
             <enum>readonly</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
@@ -6521,28 +6521,28 @@
         <attributeGroupRef name="Common.attrib"/>
         <attribute>
           <name>name</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>value</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>type</name>
-          <enumChoice>
+          <tokenized>
             <enum>button</enum>
             <enum>submit</enum>
             <enum>reset</enum>
-          </enumChoice>
+          </tokenized>
           <default>submit</default>
         </attribute>
         <attribute>
           <name>disabled</name>
-          <enumChoice>
+          <tokenized>
             <enum>disabled</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>

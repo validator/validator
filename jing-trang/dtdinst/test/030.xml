@@ -9,28 +9,28 @@
     <name>doc</name>
     <attribute>
       <name>att1</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <default>/[val]/val/</default>
     </attribute>
     <attribute>
       <name>att2</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <default> </default>
     </attribute>
     <attribute>
       <name>att3</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <default> </default>
     </attribute>
     <attribute>
       <name>att4</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <default>&#xD;
 	 </default>
     </attribute>
     <attribute>
       <name>att5</name>
-      <basic name="CDATA"/>
+      <cdata/>
       <fixed>val</fixed>
     </attribute>
   </attlist>

@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.BufferedInputStream;
 import java.util.Hashtable;
 
@@ -16,6 +18,7 @@ import com.thaiopensource.xml.dtd.FileEntityManager;
 public class Driver {
   public static void main (String args[]) throws IOException, TestFailException {
     String dir = args[0];
+    String failDir = args[1];
     String[] files = new File(dir).list();
     Hashtable fileTable = new Hashtable();
     for (int i = 0; i < files.length; i++)
@@ -28,7 +31,7 @@ public class Driver {
 	if (fileTable.get(outFile) != null) {
 	  try {
 	    System.err.println("Running test " + inFile);
-	    runTest(new File(dir, inFile), new File(dir, outFile));
+	    runCompareTest(new File(dir, inFile), new File(dir, outFile));
 	  }
 	  catch (CompareFailException e) {
 	    System.err.println(inFile + " failed at byte " + e.getByteIndex());
@@ -36,6 +39,7 @@ public class Driver {
 	      failures = inFile;
 	    else
 	      failures += " " + inFile;
+	    runOutputTest(new File(dir, inFile), new File(failDir, outFile));
 	  }
 	}
       }
@@ -43,11 +47,22 @@ public class Driver {
       throw new TestFailException(failures);
   }
 
-  public static void runTest(File inFile, File outFile) throws IOException {
-    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new CompareOutputStream(new BufferedInputStream(new FileInputStream(outFile)))));
+  public static void runCompareTest(File inFile, File outFile) throws IOException {
+    runTest(inFile,
+	    new CompareOutputStream(new BufferedInputStream(new FileInputStream(outFile))));
+
+  }
+
+  public static void runOutputTest(File inFile, File outFile) throws IOException {
+    runTest(inFile, new FileOutputStream(outFile));
+  }
+
+  private static void runTest(File inFile, OutputStream out) throws IOException {
+    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(out));
     new SchemaWriter(new XmlWriter(w)).writeDtd(new Dtd(inFile.toString(),
 							new FileEntityManager()));
     
     w.close();
   }
+
 }

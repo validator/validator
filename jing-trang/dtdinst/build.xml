@@ -13,8 +13,10 @@
 </target>
 
 <target name="test" depends="jar">
+  <mkdir dir="build/test"/>
   <java classname="com.thaiopensource.xml.dtd.test.Driver" >
     <arg value="test"/> 
+    <arg value="build/test"/> 
     <classpath>
       <pathelement location="build/dtdparse.jar"/>
     </classpath>

@@ -2459,7 +2459,7 @@
 <!-- ...................................................................... -->
 <!-- General-purpose semantics entities ................................... -->
       <datatype name="yesorno.attvals">
-        <basic name="CDATA"/>
+        <cdata/>
       </datatype>
 <!-- ...................................................................... -->
 <!-- Entities for module inclusions ....................................... -->
@@ -3592,7 +3592,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="arch.attrib">
         <attribute>
           <name>arch</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3600,7 +3600,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="condition.attrib">
         <attribute>
           <name>condition</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3608,7 +3608,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="conformance.attrib">
         <attribute>
           <name>conformance</name>
-          <basic name="NMTOKENS"/>
+          <tokenized name="NMTOKENS"/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3616,7 +3616,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="os.attrib">
         <attribute>
           <name>os</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3624,7 +3624,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="revision.attrib">
         <attribute>
           <name>revision</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3632,7 +3632,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="security.attrib">
         <attribute>
           <name>security</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3641,7 +3641,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="userlevel.attrib">
         <attribute>
           <name>userlevel</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3649,7 +3649,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="vendor.attrib">
         <attribute>
           <name>vendor</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3670,7 +3670,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="id.attrib">
         <attribute>
           <name>id</name>
-          <basic name="ID"/>
+          <tokenized name="ID"/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3679,7 +3679,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="idreq.attrib">
         <attribute>
           <name>id</name>
-          <basic name="ID"/>
+          <tokenized name="ID"/>
           <required/>
         </attribute>
       </attributeGroup>
@@ -3688,7 +3688,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="lang.attrib">
         <attribute>
           <name>lang</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3696,7 +3696,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="remap.attrib">
         <attribute>
           <name>remap</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3704,7 +3704,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="role.attrib">
         <attribute>
           <name>role</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3714,7 +3714,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="xreflabel.attrib">
         <attribute>
           <name>xreflabel</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3723,12 +3723,12 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="revisionflag.attrib">
         <attribute>
           <name>revisionflag</name>
-          <enumChoice>
+          <tokenized>
             <enum>changed</enum>
             <enum>added</enum>
             <enum>deleted</enum>
             <enum>off</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3770,48 +3770,48 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="graphics.attrib">
         <attribute>
           <name>entityref</name>
-          <basic name="ENTITY"/>
+          <tokenized name="ENTITY"/>
           <implied/>
         </attribute>
         <attribute>
           <name>fileref</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>format</name>
-          <enumChoice>
+          <tokenized>
             <enumGroupRef name="notation.class"/>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>srccredit</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>width</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>depth</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
           <name>align</name>
-          <enumChoice>
+          <tokenized>
             <enum>left</enum>
             <enum>right</enum>
             <enum>center</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>scale</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attribute>
@@ -3829,19 +3829,19 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="keyaction.attrib">
         <attribute>
           <name>action</name>
-          <enumChoice>
+          <tokenized>
             <enum>click</enum>
             <enum>double-click</enum>
             <enum>press</enum>
             <enum>seq</enum>
             <enum>simul</enum>
             <enum>other</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
         <attribute>
           <name>otheraction</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attributeGroupRef name="local.keyaction.attrib"/>
@@ -3851,7 +3851,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="label.attrib">
         <attribute>
           <name>label</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3860,17 +3860,17 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="linespecific.attrib">
         <attribute>
           <name>format</name>
-          <notation>
+          <tokenized name="NOTATION">
             <enum>linespecific</enum>
-          </notation>
+          </tokenized>
           <default>linespecific</default>
         </attribute>
         <attribute>
           <name>linenumbering</name>
-          <enumChoice>
+          <tokenized>
             <enum>numbered</enum>
             <enum>unnumbered</enum>
-          </enumChoice>
+          </tokenized>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3878,7 +3878,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="linkend.attrib">
         <attribute>
           <name>linkend</name>
-          <basic name="IDREF"/>
+          <tokenized name="IDREF"/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3886,7 +3886,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="linkendreq.attrib">
         <attribute>
           <name>linkend</name>
-          <basic name="IDREF"/>
+          <tokenized name="IDREF"/>
           <required/>
         </attribute>
       </attributeGroup>
@@ -3895,7 +3895,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="linkends.attrib">
         <attribute>
           <name>linkends</name>
-          <basic name="IDREFS"/>
+          <tokenized name="IDREFS"/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3903,7 +3903,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="mark.attrib">
         <attribute>
           <name>mark</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attributeGroupRef name="local.mark.attrib"/>
@@ -3912,10 +3912,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="moreinfo.attrib">
         <attribute>
           <name>moreinfo</name>
-          <enumChoice>
+          <tokenized>
             <enum>refentry</enum>
             <enum>none</enum>
-          </enumChoice>
+          </tokenized>
           <default>none</default>
         </attribute>
       </attributeGroup>
@@ -3923,7 +3923,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="pagenum.attrib">
         <attribute>
           <name>pagenum</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -3933,7 +3933,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="status.attrib">
         <attribute>
           <name>status</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
         <attributeGroupRef name="local.status.attrib"/>
@@ -3943,7 +3943,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
       <attributeGroup name="width.attrib">
         <attribute>
           <name>width</name>
-          <basic name="CDATA"/>
+          <cdata/>
           <implied/>
         </attribute>
       </attributeGroup>
@@ -4388,7 +4388,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>biblioset</name>
             <attribute>
               <name>relation</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -4434,7 +4434,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>bibliomset</name>
             <attribute>
               <name>relation</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="bibliomset.role.attrib"/>
@@ -4516,7 +4516,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>subjectset</name>
               <attribute>
                 <name>scheme</name>
-                <basic name="NMTOKEN"/>
+                <tokenized name="NMTOKEN"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -4559,7 +4559,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>subject</name>
               <attribute>
                 <name>weight</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -4853,17 +4853,17 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <attributeGroupRef name="local.simplemsgentry.attrib"/>
               <attribute>
                 <name>audience</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>level</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>origin</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
             </attlist>
@@ -5285,11 +5285,11 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>qandaset</name>
               <attribute>
                 <name>defaultlabel</name>
-                <enumChoice>
+                <tokenized>
                   <enum>qanda</enum>
                   <enum>number</enum>
                   <enum>none</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -5628,10 +5628,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>step</name>
               <attribute>
                 <name>performance</name>
-                <enumChoice>
+                <tokenized>
                   <enum>optional</enum>
                   <enum>required</enum>
-                </enumChoice>
+                </tokenized>
                 <default>required</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -5674,10 +5674,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>substeps</name>
               <attribute>
                 <name>performance</name>
-                <enumChoice>
+                <tokenized>
                   <enum>optional</enum>
                   <enum>required</enum>
-                </enumChoice>
+                </tokenized>
                 <default>required</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -5992,14 +5992,14 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>bridgehead</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>other</enum>
                 <enum>sect1</enum>
                 <enum>sect2</enum>
                 <enum>sect3</enum>
                 <enum>sect4</enum>
                 <enum>sect5</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -6536,7 +6536,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>glossentry</name>
               <attribute>
                 <name>sortas</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -6584,7 +6584,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>glossdef</name>
               <attribute>
                 <name>subject</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -6625,7 +6625,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>glosssee</name>
               <attribute>
                 <name>otherterm</name>
-                <basic name="IDREF"/>
+                <tokenized name="IDREF"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -6666,7 +6666,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>glossseealso</name>
               <attribute>
                 <name>otherterm</name>
-                <basic name="IDREF"/>
+                <tokenized name="IDREF"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -6719,10 +6719,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>itemizedlist</name>
             <attribute>
               <name>spacing</name>
-              <enumChoice>
+              <tokenized>
                 <enum>normal</enum>
                 <enum>compact</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="mark.attrib"/>
@@ -6780,37 +6780,37 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>orderedlist</name>
             <attribute>
               <name>numeration</name>
-              <enumChoice>
+              <tokenized>
                 <enum>arabic</enum>
                 <enum>upperalpha</enum>
                 <enum>loweralpha</enum>
                 <enum>upperroman</enum>
                 <enum>lowerroman</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>inheritnum</name>
-              <enumChoice>
+              <tokenized>
                 <enum>inherit</enum>
                 <enum>ignore</enum>
-              </enumChoice>
+              </tokenized>
               <default>ignore</default>
             </attribute>
             <attribute>
               <name>continuation</name>
-              <enumChoice>
+              <tokenized>
                 <enum>continues</enum>
                 <enum>restarts</enum>
-              </enumChoice>
+              </tokenized>
               <default>restarts</default>
             </attribute>
             <attribute>
               <name>spacing</name>
-              <enumChoice>
+              <tokenized>
                 <enum>normal</enum>
                 <enum>compact</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -6852,7 +6852,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <name>listitem</name>
             <attribute>
               <name>override</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -7070,16 +7070,16 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>simplelist</name>
               <attribute>
                 <name>columns</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>type</name>
-                <enumChoice>
+                <tokenized>
                   <enum>inline</enum>
                   <enum>vert</enum>
                   <enum>horiz</enum>
-                </enumChoice>
+                </tokenized>
                 <default>vert</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -7169,7 +7169,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>variablelist</name>
               <attribute>
                 <name>termlength</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -7334,7 +7334,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>callout</name>
               <attribute>
                 <name>arearefs</name>
-                <basic name="IDREFS"/>
+                <tokenized name="IDREFS"/>
                 <required/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -7534,18 +7534,18 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <name>areaspec</name>
               <attribute>
                 <name>units</name>
-                <enumChoice>
+                <tokenized>
                   <enum>calspair</enum>
                   <enum>linecolumn</enum>
                   <enum>linerange</enum>
                   <enum>linecolumnpair</enum>
                   <enum>other</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>otherunits</name>
-                <basic name="NMTOKEN"/>
+                <tokenized name="NMTOKEN"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -7589,23 +7589,23 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <attributeGroupRef name="linkends.attrib"/>
               <attribute>
                 <name>units</name>
-                <enumChoice>
+                <tokenized>
                   <enum>calspair</enum>
                   <enum>linecolumn</enum>
                   <enum>linerange</enum>
                   <enum>linecolumnpair</enum>
                   <enum>other</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>otherunits</name>
-                <basic name="NMTOKEN"/>
+                <tokenized name="NMTOKEN"/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>coords</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <required/>
               </attribute>
               <attributeGroupRef name="idreq.common.attrib"/>
@@ -7650,23 +7650,23 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
               <attributeGroupRef name="label.attrib"/>
               <attribute>
                 <name>units</name>
-                <enumChoice>
+                <tokenized>
                   <enum>calspair</enum>
                   <enum>linecolumn</enum>
                   <enum>linerange</enum>
                   <enum>linecolumnpair</enum>
                   <enum>other</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>otherunits</name>
-                <basic name="NMTOKEN"/>
+                <tokenized name="NMTOKEN"/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>coords</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <required/>
               </attribute>
               <attributeGroupRef name="idreq.common.attrib"/>
@@ -7761,10 +7761,10 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
             <attributeGroupRef name="linespecific.attrib"/>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>monospaced</enum>
                 <enum>normal</enum>
-              </enumChoice>
+              </tokenized>
               <default>normal</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -8520,24 +8520,24 @@ in the text (no (0) value, the default)
         <attributeGroup name="objectdata.attrib">
           <attribute>
             <name>entityref</name>
-            <basic name="ENTITY"/>
+            <tokenized name="ENTITY"/>
             <implied/>
           </attribute>
           <attribute>
             <name>fileref</name>
-            <basic name="CDATA"/>
+            <cdata/>
             <implied/>
           </attribute>
           <attribute>
             <name>format</name>
-            <enumChoice>
+            <tokenized>
               <enumGroupRef name="notation.class"/>
-            </enumChoice>
+            </tokenized>
             <implied/>
           </attribute>
           <attribute>
             <name>srccredit</name>
-            <basic name="CDATA"/>
+            <cdata/>
             <implied/>
           </attribute>
           <attributeGroupRef name="local.objectdata.attrib"/>
@@ -8576,26 +8576,26 @@ in the text (no (0) value, the default)
               <attributeGroupRef name="objectdata.attrib"/>
               <attribute>
                 <name>width</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>depth</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>align</name>
-                <enumChoice>
+                <tokenized>
                   <enum>left</enum>
                   <enum>right</enum>
                   <enum>center</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>scale</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
@@ -8677,26 +8677,26 @@ in the text (no (0) value, the default)
               <attributeGroupRef name="objectdata.attrib"/>
               <attribute>
                 <name>width</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>depth</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>align</name>
-                <enumChoice>
+                <tokenized>
                   <enum>left</enum>
                   <enum>right</enum>
                   <enum>center</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>scale</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
@@ -9172,7 +9172,7 @@ in the text (no (0) value, the default)
 <!-- no if zero(s),
                                 yes if any other digits value -->
           <datatype name="yesorno">
-            <basic name="CDATA"/>
+            <cdata/>
           </datatype>
 <!-- default for use in entry content -->
 <!--
@@ -9189,7 +9189,7 @@ of the current application.
           <attributeGroup name="tbl.table.att">
             <attribute>
               <name>tabstyle</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
@@ -9204,10 +9204,10 @@ of the current application.
             </attribute>
             <attribute>
               <name>orient</name>
-              <enumChoice>
+              <tokenized>
                 <enum>port</enum>
                 <enum>land</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
@@ -9246,7 +9246,7 @@ of the current application.
           <attributeGroup name="tbl.tgroup.att">
             <attribute>
               <name>tgroupstyle</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
           </attributeGroup>
@@ -9308,14 +9308,14 @@ of the current application.
             <name>table</name>
             <attribute>
               <name>frame</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>bottom</enum>
                 <enum>topbot</enum>
                 <enum>all</enum>
                 <enum>sides</enum>
                 <enum>none</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
@@ -9340,7 +9340,7 @@ of the current application.
             <name>tgroup</name>
             <attribute>
               <name>cols</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attributeGroupRef name="tbl.tgroup.att"/>
@@ -9356,23 +9356,23 @@ of the current application.
             </attribute>
             <attribute>
               <name>align</name>
-              <enumChoice>
+              <tokenized>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
                 <enum>justify</enum>
                 <enum>char</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>char</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>charoff</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9385,17 +9385,17 @@ of the current application.
             <name>colspec</name>
             <attribute>
               <name>colnum</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>colname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>colwidth</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
@@ -9410,23 +9410,23 @@ of the current application.
             </attribute>
             <attribute>
               <name>align</name>
-              <enumChoice>
+              <tokenized>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
                 <enum>justify</enum>
                 <enum>char</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>char</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>charoff</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
           </attlist>
@@ -9438,17 +9438,17 @@ of the current application.
             <name>spanspec</name>
             <attribute>
               <name>namest</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attribute>
               <name>nameend</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attribute>
               <name>spanname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attribute>
@@ -9463,23 +9463,23 @@ of the current application.
             </attribute>
             <attribute>
               <name>align</name>
-              <enumChoice>
+              <tokenized>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
                 <enum>justify</enum>
                 <enum>char</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>char</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>charoff</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
           </attlist>
@@ -9491,11 +9491,11 @@ of the current application.
             <name>thead</name>
             <attribute>
               <name>valign</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>middle</enum>
                 <enum>bottom</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9508,11 +9508,11 @@ of the current application.
             <name>tfoot</name>
             <attribute>
               <name>valign</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>middle</enum>
                 <enum>bottom</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9529,11 +9529,11 @@ of the current application.
             <name>tbody</name>
             <attribute>
               <name>valign</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>middle</enum>
                 <enum>bottom</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9551,11 +9551,11 @@ of the current application.
             </attribute>
             <attribute>
               <name>valign</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>middle</enum>
                 <enum>bottom</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9568,28 +9568,28 @@ of the current application.
             <name>entrytbl</name>
             <attribute>
               <name>cols</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attributeGroupRef name="tbl.tgroup.att"/>
             <attribute>
               <name>colname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>spanname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>namest</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>nameend</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
@@ -9604,23 +9604,23 @@ of the current application.
             </attribute>
             <attribute>
               <name>align</name>
-              <enumChoice>
+              <tokenized>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
                 <enum>justify</enum>
                 <enum>char</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>char</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>charoff</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9635,27 +9635,27 @@ of the current application.
             <name>entry</name>
             <attribute>
               <name>colname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>namest</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>nameend</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>spanname</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>morerows</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
@@ -9670,23 +9670,23 @@ of the current application.
             </attribute>
             <attribute>
               <name>align</name>
-              <enumChoice>
+              <tokenized>
                 <enum>left</enum>
                 <enum>right</enum>
                 <enum>center</enum>
                 <enum>justify</enum>
                 <enum>char</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>char</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>charoff</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
@@ -9696,11 +9696,11 @@ of the current application.
             </attribute>
             <attribute>
               <name>valign</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>middle</enum>
                 <enum>bottom</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="secur"/>
@@ -9757,14 +9757,14 @@ of the current application.
             <name>informaltable</name>
             <attribute>
               <name>frame</name>
-              <enumChoice>
+              <tokenized>
                 <enum>top</enum>
                 <enum>bottom</enum>
                 <enum>topbot</enum>
                 <enum>all</enum>
                 <enum>sides</enum>
                 <enum>none</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
@@ -9895,12 +9895,12 @@ of the current application.
               <attributeGroupRef name="label.attrib"/>
               <attribute>
                 <name>sepchar</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <default> </default>
               </attribute>
               <attribute>
                 <name>cmdlength</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -9964,19 +9964,19 @@ of the current application.
               <name>arg</name>
               <attribute>
                 <name>choice</name>
-                <enumChoice>
+                <tokenized>
                   <enum>opt</enum>
                   <enum>req</enum>
                   <enum>plain</enum>
-                </enumChoice>
+                </tokenized>
                 <default>opt</default>
               </attribute>
               <attribute>
                 <name>rep</name>
-                <enumChoice>
+                <tokenized>
                   <enum>norepeat</enum>
                   <enum>repeat</enum>
-                </enumChoice>
+                </tokenized>
                 <default>norepeat</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -10042,19 +10042,19 @@ of the current application.
               <name>group</name>
               <attribute>
                 <name>choice</name>
-                <enumChoice>
+                <tokenized>
                   <enum>opt</enum>
                   <enum>req</enum>
                   <enum>plain</enum>
-                </enumChoice>
+                </tokenized>
                 <default>opt</default>
               </attribute>
               <attribute>
                 <name>rep</name>
-                <enumChoice>
+                <tokenized>
                   <enum>norepeat</enum>
                   <enum>repeat</enum>
-                </enumChoice>
+                </tokenized>
                 <default>norepeat</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -10569,15 +10569,15 @@ of the current application.
               <attributeGroupRef name="local.classsynopsis.attrib"/>
               <attribute>
                 <name>language</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>class</name>
-                <enumChoice>
+                <tokenized>
                   <enum>class</enum>
                   <enum>interface</enum>
-                </enumChoice>
+                </tokenized>
                 <default>class</default>
               </attribute>
             </attlist>
@@ -11216,19 +11216,19 @@ of the current application.
               <attributeGroupRef name="local.methodparam.attrib"/>
               <attribute>
                 <name>choice</name>
-                <enumChoice>
+                <tokenized>
                   <enum>opt</enum>
                   <enum>req</enum>
                   <enum>plain</enum>
-                </enumChoice>
+                </tokenized>
                 <default>req</default>
               </attribute>
               <attribute>
                 <name>rep</name>
-                <enumChoice>
+                <tokenized>
                   <enum>norepeat</enum>
                   <enum>repeat</enum>
-                </enumChoice>
+                </tokenized>
                 <default>norepeat</default>
               </attribute>
             </attlist>
@@ -12856,9 +12856,9 @@ of the current application.
               <name>modespec</name>
               <attribute>
                 <name>application</name>
-                <notation>
+                <tokenized name="NOTATION">
                   <enumGroupRef name="notation.class"/>
-                </notation>
+                </tokenized>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -13253,12 +13253,12 @@ OtherCredit. -->
               <name>productname</name>
               <attribute>
                 <name>class</name>
-                <enumChoice>
+                <tokenized>
                   <enum>service</enum>
                   <enum>trade</enum>
                   <enum>registered</enum>
                   <enum>copyright</enum>
-                </enumChoice>
+                </tokenized>
                 <default>trade</default>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -13866,10 +13866,10 @@ OtherCredit. -->
             <name>application</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>hardware</enum>
                 <enum>software</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="moreinfo.attrib"/>
@@ -14052,14 +14052,14 @@ OtherCredit. -->
             <name>database</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>name</enum>
                 <enum>table</enum>
                 <enum>field</enum>
                 <enum>key1</enum>
                 <enum>key2</enum>
                 <enum>record</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="moreinfo.attrib"/>
@@ -14273,18 +14273,18 @@ OtherCredit. -->
             <name>filename</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>headerfile</enum>
                 <enum>devicefile</enum>
                 <enum>libraryfile</enum>
                 <enum>directory</enum>
                 <enum>symlink</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>path</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="moreinfo.attrib"/>
@@ -14899,9 +14899,9 @@ OtherCredit. -->
             <attributeGroupRef name="local.constant.attrib"/>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>limit</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
           </attlist>
@@ -15006,12 +15006,12 @@ OtherCredit. -->
             <name>medialabel</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>cartridge</enum>
                 <enum>cdrom</enum>
                 <enum>disk</enum>
                 <enum>tape</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -15308,11 +15308,11 @@ OtherCredit. -->
             <name>parameter</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>command</enum>
                 <enum>function</enum>
                 <enum>option</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="moreinfo.attrib"/>
@@ -15438,12 +15438,12 @@ OtherCredit. -->
             <name>replaceable</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>command</enum>
                 <enum>function</enum>
                 <enum>option</enum>
                 <enum>parameter</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -15517,7 +15517,7 @@ OtherCredit. -->
             <name>sgmltag</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>attribute</enum>
                 <enum>attvalue</enum>
                 <enum>element</enum>
@@ -15530,7 +15530,7 @@ OtherCredit. -->
                 <enum>xmlpi</enum>
                 <enum>starttag</enum>
                 <enum>sgmlcomment</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -15638,9 +15638,9 @@ OtherCredit. -->
             <name>symbol</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>limit</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -15685,7 +15685,7 @@ OtherCredit. -->
             <name>systemitem</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>constant</enum>
                 <enum>groupname</enum>
                 <enum>library</enum>
@@ -15694,7 +15694,7 @@ OtherCredit. -->
                 <enum>resource</enum>
                 <enum>systemname</enum>
                 <enum>username</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="moreinfo.attrib"/>
@@ -16050,7 +16050,7 @@ OtherCredit. -->
             <name>citetitle</name>
             <attribute>
               <name>pubwork</name>
-              <enumChoice>
+              <tokenized>
                 <enum>article</enum>
                 <enum>book</enum>
                 <enum>chapter</enum>
@@ -16061,7 +16061,7 @@ OtherCredit. -->
                 <enum>series</enum>
                 <enum>set</enum>
                 <enum>manuscript</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16208,7 +16208,7 @@ OtherCredit. -->
             <attributeGroupRef name="linkend.attrib"/>
             <attribute>
               <name>baseform</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16429,12 +16429,12 @@ OtherCredit. -->
             <name>trademark</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>service</enum>
                 <enum>trade</enum>
                 <enum>registered</enum>
                 <enum>copyright</enum>
-              </enumChoice>
+              </tokenized>
               <default>trade</default>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16513,13 +16513,13 @@ OtherCredit. -->
             <name>link</name>
             <attribute>
               <name>endterm</name>
-              <basic name="IDREF"/>
+              <tokenized name="IDREF"/>
               <implied/>
             </attribute>
             <attributeGroupRef name="linkendreq.attrib"/>
             <attribute>
               <name>type</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16563,22 +16563,22 @@ OtherCredit. -->
             <name>olink</name>
             <attribute>
               <name>targetdocent</name>
-              <basic name="ENTITY"/>
+              <tokenized name="ENTITY"/>
               <implied/>
             </attribute>
             <attribute>
               <name>linkmode</name>
-              <basic name="IDREF"/>
+              <tokenized name="IDREF"/>
               <implied/>
             </attribute>
             <attribute>
               <name>localinfo</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attribute>
               <name>type</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16619,12 +16619,12 @@ OtherCredit. -->
             <name>ulink</name>
             <attribute>
               <name>url</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <required/>
             </attribute>
             <attribute>
               <name>type</name>
-              <basic name="CDATA"/>
+              <cdata/>
               <implied/>
             </attribute>
             <attributeGroupRef name="common.attrib"/>
@@ -16700,7 +16700,7 @@ OtherCredit. -->
             <name>xref</name>
             <attribute>
               <name>endterm</name>
-              <basic name="IDREF"/>
+              <tokenized name="IDREF"/>
               <implied/>
             </attribute>
             <attributeGroupRef name="linkendreq.attrib"/>
@@ -16885,38 +16885,38 @@ OtherCredit. -->
               <attributeGroupRef name="pagenum.attrib"/>
               <attribute>
                 <name>scope</name>
-                <enumChoice>
+                <tokenized>
                   <enum>all</enum>
                   <enum>global</enum>
                   <enum>local</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>significance</name>
-                <enumChoice>
+                <tokenized>
                   <enum>preferred</enum>
                   <enum>normal</enum>
-                </enumChoice>
+                </tokenized>
                 <default>normal</default>
               </attribute>
               <attribute>
                 <name>class</name>
-                <enumChoice>
+                <tokenized>
                   <enum>singular</enum>
                   <enum>startofrange</enum>
                   <enum>endofrange</enum>
-                </enumChoice>
+                </tokenized>
                 <implied/>
               </attribute>
               <attribute>
                 <name>startref</name>
-                <basic name="IDREF"/>
+                <tokenized name="IDREF"/>
                 <implied/>
               </attribute>
               <attribute>
                 <name>zone</name>
-                <basic name="IDREFS"/>
+                <tokenized name="IDREFS"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -16957,7 +16957,7 @@ OtherCredit. -->
               <name>primary</name>
               <attribute>
                 <name>sortas</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -16988,7 +16988,7 @@ OtherCredit. -->
               <name>secondary</name>
               <attribute>
                 <name>sortas</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -17019,7 +17019,7 @@ OtherCredit. -->
               <name>tertiary</name>
               <attribute>
                 <name>sortas</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -17596,7 +17596,7 @@ OtherCredit. -->
               <name>set</name>
               <attribute>
                 <name>fpi</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="status.attrib"/>
@@ -17661,7 +17661,7 @@ OtherCredit. -->
               <name>setinfo</name>
               <attribute>
                 <name>contents</name>
-                <basic name="IDREFS"/>
+                <tokenized name="IDREFS"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -17751,7 +17751,7 @@ OtherCredit. -->
               <name>book</name>
               <attribute>
                 <name>fpi</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="label.attrib"/>
@@ -17818,7 +17818,7 @@ OtherCredit. -->
               <name>bookinfo</name>
               <attribute>
                 <name>contents</name>
-                <basic name="IDREFS"/>
+                <tokenized name="IDREFS"/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -18461,7 +18461,7 @@ OtherCredit. -->
               <name>lotentry</name>
               <attribute>
                 <name>srccredit</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="pagenum.attrib"/>
@@ -20046,12 +20046,12 @@ change will not be made after all. -->
             <name>sect1</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>sect2</enum>
                 <enum>sect3</enum>
                 <enum>sect4</enum>
                 <enum>sect5</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
@@ -20140,12 +20140,12 @@ change will not be made after all. -->
             <name>sect2</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>sect1</enum>
                 <enum>sect3</enum>
                 <enum>sect4</enum>
                 <enum>sect5</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
@@ -20234,12 +20234,12 @@ change will not be made after all. -->
             <name>sect3</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>sect1</enum>
                 <enum>sect2</enum>
                 <enum>sect4</enum>
                 <enum>sect5</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
@@ -20328,12 +20328,12 @@ change will not be made after all. -->
             <name>sect4</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>sect1</enum>
                 <enum>sect2</enum>
                 <enum>sect3</enum>
                 <enum>sect5</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
@@ -20412,12 +20412,12 @@ change will not be made after all. -->
             <name>sect5</name>
             <attribute>
               <name>renderas</name>
-              <enumChoice>
+              <tokenized>
                 <enum>sect1</enum>
                 <enum>sect2</enum>
                 <enum>sect3</enum>
                 <enum>sect4</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attributeGroupRef name="label.attrib"/>
@@ -21245,7 +21245,7 @@ change will not be made after all. -->
               <name>refmiscinfo</name>
               <attribute>
                 <name>class</name>
-                <basic name="CDATA"/>
+                <cdata/>
                 <implied/>
               </attribute>
               <attributeGroupRef name="common.attrib"/>
@@ -21731,19 +21731,19 @@ change will not be made after all. -->
             <name>article</name>
             <attribute>
               <name>class</name>
-              <enumChoice>
+              <tokenized>
                 <enum>journalarticle</enum>
                 <enum>productsheet</enum>
                 <enum>whitepaper</enum>
                 <enum>techreport</enum>
                 <enum>specification</enum>
                 <enum>faq</enum>
-              </enumChoice>
+              </tokenized>
               <implied/>
             </attribute>
             <attribute>
               <name>parentbook</name>
-              <basic name="IDREF"/>
+              <tokenized name="IDREF"/>
               <implied/>
             </attribute>
             <attributeGroupRef name="status.attrib"/>

@@ -47,17 +47,13 @@ processingInstruction =
   element processingInstruction { attribute target { xsd:NCName }, text }
 
 datatype =
-  element basic { 
-    attribute name {
-      "CDATA" 
-      | "NMTOKEN" | "NMTOKENS"
-      | "ENTITY" | "ENTITIES"
-      | "ID"
-      | "IDREF" | "IDREFS"
-    }
+  element tokenized { 
+    attribute name { "NMTOKEN" | "NMTOKENS"
+                     | "ENTITY" | "ENTITIES"
+                     | "ID" | "IDREF" | "IDREFS" }
+    | (attribute name { "NOTATION" }?, enumGroup)
   }
-  | element enumChoice { enumGroup }
-  | element notation { enumGroup }
+  | element cdata { empty }
   | element datatypeRef { name }
 
 enumGroup =
