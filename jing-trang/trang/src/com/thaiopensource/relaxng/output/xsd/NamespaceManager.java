@@ -57,8 +57,8 @@ public class NamespaceManager {
     static final int OCCUR_TOP = 2;
     static final int OCCUR_MOVE = 3;
     static final int OCCUR_ROOT = 4;
-    int occur;
-    Structure globalType;
+    int occur = OCCUR_NONE;
+    Structure globalType = null;
   }
 
   // Maps sourceUri to SourceUri
