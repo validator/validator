@@ -986,7 +986,7 @@ void Include(GrammarSection section, Scope scope, Annotations a) :
 {
   t = "include" href = Literal()
   ns = Inherit()
-  ("{" (IncludeComponent(include, scope))* { topLevelComments(include); } "}")?
+  ("{" a = IncludeBody(include, scope, a) { topLevelComments(include); } "}")?
   {
     try {
       include.endInclude(resolve(href), ns, makeLocation(t), a);
@@ -994,6 +994,18 @@ void Include(GrammarSection section, Scope scope, Annotations a) :
     catch (IllegalSchemaException e) { }
   }
 }
+
+Annotations IncludeBody(GrammarSection section, Scope scope, Annotations a) :
+{
+  ParsedElementAnnotation e;
+}
+{
+  (LOOKAHEAD(2) e = AnnotationElementNotKeyword()
+   { if (a == null) a = sb.makeAnnotations(null, getContext()); a.addElement(e); })*
+  (IncludeComponent(section, scope))*
+  { return a; }
+}
+
 
 void IncludeComponent(GrammarSection section, Scope scope) :
 {
@@ -1012,7 +1024,7 @@ void Div(GrammarSection section, Scope scope, Annotations a) :
   Div div = section.makeDiv();
 }
 {
-  t = "div" "{" (GrammarComponent(div, scope))* { topLevelComments(div); } "}"
+  t = "div" "{" a = GrammarBody(div, scope, a) { topLevelComments(div); } "}"
   { div.endDiv(makeLocation(t), a); }
 }
 
@@ -1022,7 +1034,7 @@ void IncludeDiv(GrammarSection section, Scope scope, Annotations a) :
   Div div = section.makeDiv();
 }
 {
-  t = "div" "{" (IncludeComponent(div, scope))* { topLevelComments(div); } "}"
+  t = "div" "{" a = IncludeBody(div, scope, a) { topLevelComments(div); } "}"
   { div.endDiv(makeLocation(t), a); }
 }
 

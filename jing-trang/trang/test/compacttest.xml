@@ -2185,6 +2185,63 @@ element foo { empty }
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+div {
+  foo []
+  foo = element foo { empty }
+}
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <div>
+    <foo xmlns=""/>
+    <define name="foo">
+      <element name="foo">
+        <empty/>
+      </element>
+    </define>
+  </div>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<resource name="x.rnc">
+foo = empty
+</resource>
+<correct><![CDATA[
+include "x.rnc" {
+  foo []
+  div {
+    bar []
+    foo = element foo { empty }
+  }
+}
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="x.rng">
+    <foo xmlns=""/>
+    <div>
+      <bar xmlns=""/>
+      <define name="foo">
+        <element name="foo">
+          <empty/>
+        </element>
+      </define>
+    </div>
+  </include>
+</grammar>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>
