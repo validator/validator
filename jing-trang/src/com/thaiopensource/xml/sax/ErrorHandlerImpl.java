@@ -42,7 +42,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
     return bundle.getString(key);
   }
 
-  public String format(String key, Object[] args) {
+  private String format(String key, Object[] args) {
     return MessageFormat.format(getString(key), args);
   }
 
