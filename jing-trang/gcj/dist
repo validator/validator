@@ -164,8 +164,8 @@ AC_ARG_VAR([LDFLAGS], [linker flags])
 if test -z "$GCJ"; then
   AC_CHECK_TOOL(GCJ, gcj)
 fi
-test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
 test -z "$GCJ" && AC_MSG_ERROR([GCJ not found in \$PATH])
+test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 EOF
