@@ -2758,24 +2758,26 @@ applies at the syntax level.</documentation>
 <documentation>4.17 is before 4.19</documentation>
 <incorrect>
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
-  <choice>
-    <element name="foo">
-      <empty/>
-    </element>
-    <group>
-      <notAllowed/>
-      <grammar xmlns="http://relaxng.org/ns/structure/0.9">
-	<start>
-	  <parentRef name="foo"/>
-	</start>
-	<define name="foo">
-	  <element name="foo">
-	    <empty/>
-	  </element>
-	</define>
-      </grammar>
-    </group>
-  </choice>
+  <start>
+    <choice>
+      <element name="foo">
+	<empty/>
+      </element>
+      <group>
+	<notAllowed/>
+	<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+	  <start>
+	    <parentRef name="foo"/>
+	  </start>
+	  <define name="foo">
+	    <element name="foo">
+	      <empty/>
+	    </element>
+	  </define>
+	</grammar>
+      </group>
+    </choice>
+  </start>
 </grammar>
 </incorrect>
 </testCase>
