@@ -18,7 +18,8 @@ Command-line options to expand/not recognize various kinds of ref.
 
 Command-line option to define a parameter entity as INCLUDE.
 
-maybe distinguish char entities in object model
+Maybe distinguish char entities in object model; or perhaps
+represent result of parsing entity.
 
 Try to parse ignored marked sections.
 
