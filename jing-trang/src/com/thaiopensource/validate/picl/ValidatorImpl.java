@@ -94,7 +94,7 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
   }
 
   public ContentHandler getContentHandler() {
-    return null;
+    return this;
   }
 
   public DTDHandler getDTDHandler() {
