@@ -169,8 +169,6 @@ public class ValidationDriver {
       throw new IllegalStateException("cannot validate without schema");
     if (validator == null)
       validator = schema.createValidator(instanceProperties);
-    else
-      validator.reset();
     if (xr == null) {
       xr = xrc.createXMLReader();
       xr.setErrorHandler(eh);
@@ -180,8 +178,13 @@ public class ValidationDriver {
     DTDHandler dh = validator.getDTDHandler();
     if (dh != null)
       xr.setDTDHandler(dh);
-    xr.parse(in);
-    return !eh.getHadErrorOrFatalError();
+    try {
+      xr.parse(in);
+      return !eh.getHadErrorOrFatalError();
+    }
+    finally {
+      validator.reset();
+    }
   }
 
   /**
