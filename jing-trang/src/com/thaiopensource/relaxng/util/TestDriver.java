@@ -14,9 +14,6 @@ import org.xml.sax.ErrorHandler;
 import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.util.OptionParser;
 
-import org.relaxng.datatype.DatatypeLibraryFactory;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
-
 class TestDriver {
   static public void main(String[] args) throws IOException {
     System.exit(new TestDriver().doMain(args));
@@ -54,7 +51,6 @@ class TestDriver {
     engine = new ValidationEngine();
     engine.setXMLReaderCreator(Driver.createXMLReaderCreator());
     engine.setErrorHandler(eh);
-    engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
     engine.setCheckId(checkId);
     int result = 0;
     for (int i = 1; i < args.length; i++) {

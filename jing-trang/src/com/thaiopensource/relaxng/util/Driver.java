@@ -18,9 +18,6 @@ import org.xml.sax.ErrorHandler;
 import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.util.OptionParser;
 
-import org.relaxng.datatype.DatatypeLibraryFactory;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
-
 class Driver {
 
   static private String className = null;
@@ -75,7 +72,6 @@ class Driver {
       ValidationEngine engine = new ValidationEngine();
       engine.setXMLReaderCreator(createXMLReaderCreator());
       engine.setErrorHandler(eh);
-      engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       engine.setCheckId(checkId);
       if (engine.loadPattern(fileInputSource(args[0]))) {
         loadedPatternTime = System.currentTimeMillis();

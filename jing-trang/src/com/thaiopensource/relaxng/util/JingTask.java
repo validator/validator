@@ -21,7 +21,6 @@ import org.xml.sax.helpers.ParserAdapter;
 
 import com.thaiopensource.relaxng.XMLReaderCreator;
 
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 
 /**
  * Ant task to validate XML files using RELAX NG.
@@ -49,7 +48,6 @@ public class JingTask extends Task {
       ValidationEngine engine = new ValidationEngine();
       engine.setXMLReaderCreator(new Jaxp11XMLReaderCreator());
       engine.setErrorHandler(eh);
-      engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       if (!engine.loadPattern(fileInputSource(rngFile)))
 	hadError = true;
       else {

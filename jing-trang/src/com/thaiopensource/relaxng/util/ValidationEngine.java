@@ -7,7 +7,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-import org.relaxng.datatype.DatatypeLibraryFactory;
+import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.relaxng.ValidatorHandler;
@@ -24,6 +24,7 @@ class ValidationEngine {
 
   public ValidationEngine() {
     factory = new SchemaFactory();
+    factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
   }
 
   public void setXMLReaderCreator(XMLReaderCreator xrc) {
@@ -39,10 +40,6 @@ class ValidationEngine {
     if (xr != null && eh != null)
       xr.setErrorHandler(eh);
     factory.setErrorHandler(eh);
-  }
-
-  public void setDatatypeLibraryFactory(DatatypeLibraryFactory dlf) {
-    factory.setDatatypeLibraryFactory(dlf);
   }
 
   public void setCheckId(boolean checkId) {
