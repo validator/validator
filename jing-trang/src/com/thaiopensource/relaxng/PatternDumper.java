@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.io.PrintWriter;
 import java.io.OutputStream;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 public class PatternDumper {
   private boolean startTagOpen = false;

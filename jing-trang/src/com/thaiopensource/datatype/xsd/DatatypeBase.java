@@ -2,8 +2,11 @@ package com.thaiopensource.datatype.xsd;
 
 import java.util.StringTokenizer;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.DatatypeStreamingValidator;
+import org.relaxng.datatype.helpers.StreamingValidatorImpl;
 
 abstract class DatatypeBase implements Datatype {
   abstract boolean lexicallyAllows(String str);
@@ -25,16 +28,21 @@ abstract class DatatypeBase implements Datatype {
     return whiteSpace;
   }
 
-  public boolean allows(String str, DatatypeContext dc) {
+  public boolean isValid(String str, ValidationContext vc) {
     str = normalizeWhiteSpace(str);
-    return lexicallyAllows(str) && allowsValue(str, dc);
+    return lexicallyAllows(str) && allowsValue(str, vc);
   }
 
-  public Object createValue(String str, DatatypeContext dc) {
+  public void checkValid(String str, ValidationContext vc) throws DatatypeException {
+    if (!isValid(str, vc))
+      throw new DatatypeException();
+  }
+
+  public Object createValue(String str, ValidationContext vc) {
     str = normalizeWhiteSpace(str);
     if (!lexicallyAllows(str))
       return null;
-    return getValue(str, dc);
+    return getValue(str, vc);
   }
 
   final String normalizeWhiteSpace(String str) {
@@ -48,14 +56,14 @@ abstract class DatatypeBase implements Datatype {
   }
     
   /* Requires lexicallyAllows to be true.  Must return same value as
-     getValue(str, dc) != null. */
-  boolean allowsValue(String str, DatatypeContext dc) {
+     getValue(str, vc) != null. */
+  boolean allowsValue(String str, ValidationContext vc) {
     return true;
   }
 
   /* Requires lexicallyAllows to be true. Returns null if value does not satisfy
      constraints on value space. */
-  abstract Object getValue(String str, DatatypeContext dc);
+  abstract Object getValue(String str, ValidationContext vc);
   
   OrderRelation getOrderRelation() {
     return null;
@@ -111,4 +119,15 @@ abstract class DatatypeBase implements Datatype {
     return ID_TYPE_NULL;
   }
 
+  public int valueHashCode(Object value) {
+    return value.hashCode();
+  }
+
+  public boolean sameValue(Object value1, Object value2) {
+    return value1.equals(value2);
+  }
+
+  public DatatypeStreamingValidator createStreamingValidator(ValidationContext vc) {
+    return new StreamingValidatorImpl(this, vc);
+  }
 }

@@ -3,26 +3,26 @@ package com.thaiopensource.datatype.xsd;
 import java.util.ResourceBundle;
 import java.text.MessageFormat;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeBuilder;
-import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.InvalidParamException;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeBuilder;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.DatatypeException;
 
 class DatatypeBuilderImpl implements DatatypeBuilder {
   static final private String bundleName
     = "com.thaiopensource.datatype.xsd.resources.Messages";
 
   private DatatypeBase base;
-  private DatatypeFactoryImpl factory;
+  private DatatypeLibraryImpl library;
 
-  DatatypeBuilderImpl(DatatypeFactoryImpl factory, DatatypeBase base) {
-    this.factory = factory;
+  DatatypeBuilderImpl(DatatypeLibraryImpl library, DatatypeBase base) {
+    this.library = library;
     this.base = base;
   }
 
-  public void addParam(String name,
-		       String value,
-		       DatatypeContext context) throws InvalidParamException {
+  public void addParameter(String name,
+			   String value,
+			   ValidationContext context) throws DatatypeException {
     if (name.equals("pattern"))
       addPatternParam(value);
     else if (name.equals("minInclusive"))
@@ -51,9 +51,9 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
       error("unrecognized_param", name);
   }
 
-  private void addPatternParam(String value) throws InvalidParamException {
+  private void addPatternParam(String value) throws DatatypeException {
     try {
-      RegexEngine engine = factory.getRegexEngine();
+      RegexEngine engine = library.getRegexEngine();
       base = new PatternRestrictDatatype(base,
 					 engine.compile(value));
     }
@@ -62,32 +62,32 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     }
   }
 
-  private void addMinInclusiveParam(String value, DatatypeContext context)
-    throws InvalidParamException {
+  private void addMinInclusiveParam(String value, ValidationContext context)
+    throws DatatypeException {
     base = new MinInclusiveRestrictDatatype(base,
 					    getLimit(value, context));
   }
 
-  private void addMaxInclusiveParam(String value, DatatypeContext context)
-    throws InvalidParamException {
+  private void addMaxInclusiveParam(String value, ValidationContext context)
+    throws DatatypeException {
     base = new MaxInclusiveRestrictDatatype(base,
 					    getLimit(value, context));
   }
 
-  private void addMinExclusiveParam(String value, DatatypeContext context)
-    throws InvalidParamException {
+  private void addMinExclusiveParam(String value, ValidationContext context)
+    throws DatatypeException {
     base = new MinExclusiveRestrictDatatype(base,
 					    getLimit(value, context));
   }
 
-  private void addMaxExclusiveParam(String value, DatatypeContext context)
-    throws InvalidParamException {
+  private void addMaxExclusiveParam(String value, ValidationContext context)
+    throws DatatypeException {
     base = new MaxExclusiveRestrictDatatype(base,
 					    getLimit(value, context));
   }
 
-  private Object getLimit(String str, DatatypeContext context)
-    throws InvalidParamException {
+  private Object getLimit(String str, ValidationContext context)
+    throws DatatypeException {
     if (base.getOrderRelation() == null)
       error("not_ordered");
     Object value = base.getValue(str, context);
@@ -96,19 +96,19 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     return value;
   }
 
-  private void addLengthParam(String value) throws InvalidParamException {
+  private void addLengthParam(String value) throws DatatypeException {
     base = new LengthRestrictDatatype(base, getLength(value));
   }
 
-  private void addMinLengthParam(String value) throws InvalidParamException {
+  private void addMinLengthParam(String value) throws DatatypeException {
     base = new MinLengthRestrictDatatype(base, getLength(value));
   }
 
-  private void addMaxLengthParam(String value) throws InvalidParamException {
+  private void addMaxLengthParam(String value) throws DatatypeException {
     base = new MaxLengthRestrictDatatype(base, getLength(value));
   }
 
-  private int getLength(String str) throws InvalidParamException {
+  private int getLength(String str) throws DatatypeException {
     if (base.getMeasure() == null)
       error("no_length");
     int len = convertNonNegativeInteger(str);
@@ -117,7 +117,7 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     return len;
   }
     
-  private void addScaleParam(String str) throws InvalidParamException {
+  private void addScaleParam(String str) throws DatatypeException {
     if (!(base.getPrimitive() instanceof DecimalDatatype))
       error("scale_not_derived_from_decimal");
     int scale = convertNonNegativeInteger(str);
@@ -126,7 +126,7 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     base = new ScaleRestrictDatatype(base, scale);
   }
 
-  private void addPrecisionParam(String str) throws InvalidParamException {
+  private void addPrecisionParam(String str) throws DatatypeException {
     if (!(base.getPrimitive() instanceof DecimalDatatype))
       error("precision_not_derived_from_decimal");
     int scale = convertNonNegativeInteger(str);
@@ -135,16 +135,16 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
     base = new PrecisionRestrictDatatype(base, scale);
   }
 
-  public Datatype finish() {
+  public Datatype createDatatype() {
     return base;
   }
 
-  private void error(String key) throws InvalidParamException {
-    throw new InvalidParamException(message(key));
+  private void error(String key) throws DatatypeException {
+    throw new DatatypeException(message(key));
   }
 
-  private void error(String key, String arg) throws InvalidParamException {
-    throw new InvalidParamException(message(key, arg));
+  private void error(String key, String arg) throws DatatypeException {
+    throw new DatatypeException(message(key, arg));
   }
 
   static private String message(String key) {

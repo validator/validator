@@ -1,22 +1,10 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.ValidationContext;
 
-class TokenDatatype implements Datatype {
-  public boolean allows(String str, DatatypeContext dc) {
-    return true;
-  }
-
-  public Object createValue(String str, DatatypeContext context) {
+class TokenDatatype extends StringDatatype {
+  public Object createValue(String str, ValidationContext vc) {
     return StringNormalizer.normalize(str);
-  }
-
-  public boolean isContextDependent() {
-    return false;
-  }
-
-  public int getIdType() {
-    return ID_TYPE_NULL;
   }
 }

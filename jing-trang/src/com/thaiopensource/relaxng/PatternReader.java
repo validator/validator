@@ -18,13 +18,14 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.LocatorImpl;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeFactory;
-import com.thaiopensource.datatype.DatatypeBuilder;
-import com.thaiopensource.datatype.InvalidParamException;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.DatatypeLibraryFactory;
+import org.relaxng.datatype.DatatypeLibrary;
+import org.relaxng.datatype.DatatypeBuilder;
+import org.relaxng.datatype.DatatypeException;
 
-public class PatternReader implements DatatypeContext {
+public class PatternReader implements ValidationContext {
 
   static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
@@ -33,7 +34,7 @@ public class PatternReader implements DatatypeContext {
   XMLReader xr;
   XMLReaderCreator xrc;
   PatternBuilder patternBuilder;
-  DatatypeFactory datatypeFactory;
+  DatatypeLibraryFactory datatypeLibraryFactory;
   Pattern startPattern;
   Locator locator;
   PrefixMapping prefixMapping;
@@ -42,10 +43,6 @@ public class PatternReader implements DatatypeContext {
   Hashtable patternTable;
   Hashtable nameClassTable;
   final OpenIncludes openIncludes;
-  DatatypeBuilder stringDatatypeBuilder
-    = new BuiltinDatatypeBuilder(new StringDatatype());
-  DatatypeBuilder tokenDatatypeBuilder
-    = new BuiltinDatatypeBuilder(new TokenDatatype());
   Datatype ncNameDatatype;
 
   static class PrefixMapping {
@@ -457,16 +454,25 @@ public class PatternReader implements DatatypeContext {
     Pattern makePattern() throws SAXException {
       DatatypeBuilder dtb;
       if (type == null)
-	dtb = tokenDatatypeBuilder;
+	dtb = getDatatypeBuilder("", "token");
       else
 	dtb = getDatatypeBuilder(datatypeLibrary, type);
-      Datatype dt = dtb.finish();
-      Object value = dt.createValue(buf.toString(), PatternReader.this);
-      if (value == null) {
+      try {
+	Datatype dt = dtb.createDatatype();
+	Object value = dt.createValue(buf.toString(), PatternReader.this);
+	if (value != null)
+	  return patternBuilder.makeValue(dt, value);
 	error("invalid_value", buf.toString());
 	return patternBuilder.makeData(dt);
       }
-      return patternBuilder.makeValue(dt, value);
+      catch (DatatypeException e) {
+	String detail = e.getMessage();
+	if (detail != null)
+	  error("datatype_requires_param_detail", detail);
+	else
+	  error("datatype_requires_param");
+	return patternBuilder.makeError();
+      }
     }
 
   }
@@ -506,19 +512,29 @@ public class PatternReader implements DatatypeContext {
     void endAttributes() throws SAXException {
       if (type == null) {
 	error("missing_type_attribute");
-	dtb = stringDatatypeBuilder;
+	dtb = getDatatypeBuilder("", "string");
       }
       else
 	dtb = getDatatypeBuilder(datatypeLibrary, type);
     }
 
-    void end() {
-      Datatype dt = dtb.finish();
+    void end() throws SAXException {
       Pattern p;
-      if (except != null)
-	p = patternBuilder.makeDataExcept(dt, except, loc);
-      else
-	p = patternBuilder.makeData(dt);
+      try {
+	Datatype dt = dtb.createDatatype();
+	if (except != null)
+	  p = patternBuilder.makeDataExcept(dt, except, loc);
+	else
+	  p = patternBuilder.makeData(dt);
+      }
+      catch (DatatypeException e) {
+	String detail = e.getMessage();
+	if (detail != null)
+	  error("invalid_params_detail", detail);
+	else
+	  error("invalid_params");
+	p = patternBuilder.makeError();
+      }
       parent.endChild(p);
     }
 
@@ -566,10 +582,14 @@ public class PatternReader implements DatatypeContext {
       if (name == null)
 	return;
       try {
-	dtb.addParam(name, buf.toString(), PatternReader.this);
+	dtb.addParameter(name, buf.toString(), PatternReader.this);
       }
-      catch (InvalidParamException e) {
-	error("invalid_param", e.getMessage());
+      catch (DatatypeException e) {
+	String detail = e.getMessage();
+	if (detail != null)
+	  error("invalid_param_detail", detail);
+	else
+	  error("invalid_param");
       }
     }
   }
@@ -1311,17 +1331,13 @@ public class PatternReader implements DatatypeContext {
   public PatternReader(XMLReaderCreator xrc,
 		       XMLReader xr,
 		       PatternBuilder patternBuilder,
-		       DatatypeFactory datatypeFactory) {
+		       DatatypeLibraryFactory factory) {
     this.xrc = xrc;
     this.patternBuilder = patternBuilder;
     this.xr = xr;
-    this.datatypeFactory = datatypeFactory;
-    DatatypeBuilder dtb = datatypeFactory.createDatatypeBuilder(xsdURI,
-								"NCName");
-    if (dtb != null)
-      this.ncNameDatatype = dtb.finish();
-    else
-      this.ncNameDatatype = new StringDatatype();
+    this.datatypeLibraryFactory
+      = new BuiltinDatatypeLibraryFactory(factory);
+    this.ncNameDatatype = getNCNameDatatype();
     openIncludes = null;
     init(null, "");
   }
@@ -1333,7 +1349,7 @@ public class PatternReader implements DatatypeContext {
 		String ns) {
     this.xrc = parent.xrc;
     this.patternBuilder = parent.patternBuilder;
-    this.datatypeFactory = parent.datatypeFactory;
+    this.datatypeLibraryFactory = parent.datatypeLibraryFactory;
     this.ncNameDatatype = parent.ncNameDatatype;
     this.xr = xr;
     this.openIncludes = new OpenIncludes(systemId, parent.openIncludes);
@@ -1361,7 +1377,7 @@ public class PatternReader implements DatatypeContext {
   }
 
   String checkNCName(String str) throws SAXException {
-    if (!ncNameDatatype.allows(str, null))
+    if (!ncNameDatatype.isValid(str, null))
       error("invalid_ncname", str);
     return str;
   }
@@ -1400,9 +1416,9 @@ public class PatternReader implements DatatypeContext {
   public static Pattern readPattern(XMLReaderCreator xrc,
 				    XMLReader xr,
 				    PatternBuilder patternBuilder,
-				    DatatypeFactory datatypeFactory,
+				    DatatypeLibraryFactory datatypeLibraryFactory,
 				    InputSource in) throws SAXException, IOException {
-    PatternReader pr = new PatternReader(xrc, xr, patternBuilder, datatypeFactory);
+    PatternReader pr = new PatternReader(xrc, xr, patternBuilder, datatypeLibraryFactory);
     xr.parse(in);
     return pr.expandPattern(pr.getStartPattern());
   }
@@ -1421,11 +1437,23 @@ public class PatternReader implements DatatypeContext {
     return pr.getStartPattern();
   }
 
-  public String getNamespaceURI(String prefix) {
+  public String resolveNamespacePrefix(String prefix) {
     for (PrefixMapping p = prefixMapping; p != null; p = p.next)
       if (p.prefix.equals(prefix))
 	return p.uri;
     return null;
+  }
+
+  public String getBaseUri() {
+    return null;
+  }
+
+  public boolean isUnparsedEntity(String name) {
+    return false;
+  }
+
+  public boolean isNotation(String name) {
+    return false;
   }
 
   boolean isPatternNamespaceURI(String s) {
@@ -1433,22 +1461,34 @@ public class PatternReader implements DatatypeContext {
   }
 
   DatatypeBuilder getDatatypeBuilder(String datatypeLibrary, String type) throws SAXException {
-    if ("".equals(datatypeLibrary)) {
-      if (type.equals("string"))
-	return stringDatatypeBuilder;
-      if (type.equals("token"))
-	return tokenDatatypeBuilder;
-      error("unrecognized_builtin_datatype", type);
+    DatatypeLibrary dl
+      = datatypeLibraryFactory.createDatatypeLibrary(datatypeLibrary);
+    if (dl != null) {
+      try {
+	return dl.createDatatypeBuilder(type);
+      }
+      catch (DatatypeException e) { }
     }
-    else {
-      DatatypeBuilder dtb
-	= datatypeFactory.createDatatypeBuilder(datatypeLibrary,
-						type);
-      if (dtb != null)
-	return dtb;
-      error("unrecognized_datatype", datatypeLibrary, type);
+    error("unrecognized_datatype", datatypeLibrary, type);
+    try {
+      return datatypeLibraryFactory.createDatatypeLibrary("")
+	                           .createDatatypeBuilder("string");
     }
-    return stringDatatypeBuilder;
+    catch (DatatypeException e) {
+      throw new RuntimeException("could not create builtin \"string\" datatype");
+    }
+  }
+
+  private Datatype getNCNameDatatype() {
+    DatatypeLibrary dl 
+      = datatypeLibraryFactory.createDatatypeLibrary(xsdURI);
+    if (dl != null) {
+      try {
+	return dl.createDatatypeBuilder("NCName").createDatatype();
+      }
+      catch (DatatypeException e) { }
+    }
+    return new StringDatatype();
   }
 
   Locator copyLocator() {

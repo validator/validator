@@ -10,7 +10,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.helpers.LocatorImpl;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 public class Validator {
   PatternBuilder b;
@@ -21,7 +21,7 @@ public class Validator {
   static final int RECOVERY_ATTEMPTS = 2;
   PrefixMapping prefixMapping = new PrefixMapping("xml", PatternReader.xmlURI, null);
 
-  static final class PrefixMapping implements DatatypeContext {
+  static final class PrefixMapping implements ValidationContext {
     private final String prefix;
     private final String namespaceURI;
     private final PrefixMapping prev;
@@ -36,7 +36,7 @@ public class Validator {
       return prev;
     }
 
-    public String getNamespaceURI(String prefix) {
+    public String resolveNamespacePrefix(String prefix) {
       PrefixMapping tem = this;
       do { 
 	if (tem.prefix.equals(prefix))
@@ -45,6 +45,19 @@ public class Validator {
       } while (tem != null);
       return null;
     }
+
+    public String getBaseUri() {
+      return null;
+    }
+    
+    public boolean isUnparsedEntity(String name) {
+      return false;
+    }
+
+    public boolean isNotation(String name) {
+      return false;
+    }
+
   }
 
   class Handler implements ContentHandler {

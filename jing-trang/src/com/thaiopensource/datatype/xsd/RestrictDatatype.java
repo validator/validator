@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class RestrictDatatype extends DatatypeBase {
   protected DatatypeBase base;
@@ -18,8 +18,8 @@ class RestrictDatatype extends DatatypeBase {
     return base.lexicallyAllows(str);
   }
 
-  boolean allowsValue(String str, DatatypeContext dc) {
-    return base.allowsValue(str, dc);
+  boolean allowsValue(String str, ValidationContext vc) {
+    return base.allowsValue(str, vc);
   }
 
   OrderRelation getOrderRelation() {
@@ -30,8 +30,8 @@ class RestrictDatatype extends DatatypeBase {
     return base.getMeasure();
   }
 
-  Object getValue(String str, DatatypeContext dc) {
-    return base.getValue(str, dc);
+  Object getValue(String str, ValidationContext vc) {
+    return base.getValue(str, vc);
   }
 
   DatatypeBase getPrimitive() {

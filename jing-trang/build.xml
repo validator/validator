@@ -21,6 +21,7 @@
   <jar jarfile="build/jing.jar">
     <fileset dir="build/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
+    <fileset dir="src" includes="META-INF/services/*"/>
   </jar>
 
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
@@ -40,6 +41,7 @@
     <arg value="/r"/>
     <arg value="/base:src"/>
     <arg value="*.properties"/>
+    <arg value="META-INF\services\*"/>
     <arg value="/base:build\classes"/>
     <arg value="*.class"/>
     <arg value="/base:build\xp-files"/>

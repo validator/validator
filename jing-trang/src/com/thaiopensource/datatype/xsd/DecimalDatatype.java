@@ -2,7 +2,7 @@ package com.thaiopensource.datatype.xsd;
 
 import java.math.BigDecimal;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class DecimalDatatype extends DatatypeBase implements OrderRelation {
 
@@ -48,30 +48,10 @@ class DecimalDatatype extends DatatypeBase implements OrderRelation {
     return true;
   }
 
-  /**
-   * BigDecimal.equals considers objects distinct if they have the
-   * different scales but the same mathematical value. Similarly
-   * for hashCode.
-   */
-
-  static class Decimal extends BigDecimal {
-    Decimal(String str) {
-      super(str);
-    }
-    public boolean equals(Object obj) {
-      if (obj == null || !(obj instanceof Decimal))
-	return false;
-      return compareTo((Decimal)obj) == 0;
-    }
-    public int hashCode() {
-      return toBigInteger().hashCode();
-    }
-  }
-
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     if (str.charAt(0) == '+')
       str = str.substring(1);	// JDK 1.1 doesn't handle leading +
-    return new Decimal(str);
+    return new BigDecimal(str);
   }
 
   OrderRelation getOrderRelation() {
@@ -80,6 +60,20 @@ class DecimalDatatype extends DatatypeBase implements OrderRelation {
 
   public int compareValue(Object obj1, Object obj2) {
     return ((BigDecimal)obj1).compareTo((BigDecimal)obj2);
+  }
+
+  /**
+   * BigDecimal.equals considers objects distinct if they have the
+   * different scales but the same mathematical value. Similarly
+   * for hashCode.
+   */
+
+  public boolean sameValue(Object value1, Object value2) {
+    return ((BigDecimal)value1).compareTo((BigDecimal)value2) == 0;
+  }
+
+  public int valueHashCode(Object value) {
+    return ((BigDecimal)value).toBigInteger().hashCode();
   }
 
 }

@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 class ChoicePattern extends BinaryPattern {
   ChoicePattern(Pattern p1, Pattern p2) {

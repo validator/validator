@@ -1,12 +1,12 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class BooleanDatatype extends DatatypeBase {
   boolean lexicallyAllows(String str) {
     return str.equals("true") || str.equals("false");
   }
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     switch (str.charAt(0)) {
     case 't':
       return Boolean.TRUE;

@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng;
 import org.xml.sax.SAXException;
 import org.xml.sax.Locator;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 public abstract class Pattern {
   private boolean nullable;

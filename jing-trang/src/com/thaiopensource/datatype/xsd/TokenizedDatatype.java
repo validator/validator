@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class TokenizedDatatype extends DatatypeBase {
   private DatatypeBase base;
@@ -14,15 +14,15 @@ class TokenizedDatatype extends DatatypeBase {
     return base.lexicallyAllows(base.normalizeWhiteSpace(str));
   }
 
-  boolean allowsValue(String str, DatatypeContext dc) {
-    return base.allowsValue(base.normalizeWhiteSpace(str), dc);
+  boolean allowsValue(String str, ValidationContext vc) {
+    return base.allowsValue(base.normalizeWhiteSpace(str), vc);
   }
 
   OrderRelation getOrderRelation() {
     return base.getOrderRelation();
   }
 
-  Object getValue(String str, DatatypeContext dc) {
-    return base.getValue(base.normalizeWhiteSpace(str), dc);
+  Object getValue(String str, ValidationContext vc) {
+    return base.getValue(base.normalizeWhiteSpace(str), vc);
   }
 }

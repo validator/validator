@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 import org.xml.sax.Locator;
 
@@ -10,7 +10,7 @@ class DataExceptPattern extends DataPattern {
 
   DataExceptPattern(Datatype dt, Pattern except, Locator loc) {
     super(!dt.isContextDependent()
-	  && dt.allows("", null)
+	  && dt.isValid("", null)
 	  && !except.isNullable(),
 	  dt);
     this.except = except;

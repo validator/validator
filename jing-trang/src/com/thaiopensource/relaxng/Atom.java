@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.ValidationContext;
 
 abstract class Atom {
   boolean matchesString() {

@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 interface PatternVisitor {
   void visitEmptySequence();

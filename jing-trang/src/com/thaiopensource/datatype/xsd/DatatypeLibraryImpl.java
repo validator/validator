@@ -1,16 +1,18 @@
 package com.thaiopensource.datatype.xsd;
 
 import java.util.Hashtable;
+import java.util.Enumeration;
 
+import com.thaiopensource.util.Service;
 import org.xml.sax.XMLReader;
 
-import com.thaiopensource.datatype.DatatypeFactory;
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeBuilder;
+import org.relaxng.datatype.DatatypeLibrary;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.DatatypeBuilder;
 
-public class DatatypeFactoryImpl implements DatatypeFactory {
-  static private final String xsdns = "http://www.w3.org/2001/XMLSchema-datatypes";
+public class DatatypeLibraryImpl implements DatatypeLibrary {
   private final Hashtable typeTable = new Hashtable();
   private RegexEngine regexEngine;
 
@@ -28,12 +30,8 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
   static private final String UNSIGNED_SHORT_MAX = "65535";
   static private final String UNSIGNED_BYTE_MAX = "255";
 
-  public DatatypeFactoryImpl() {
-    this(new NullRegexEngine());
-  }
-
-  public DatatypeFactoryImpl(RegexEngine regexEngine) {
-    this.regexEngine = regexEngine;
+  public DatatypeLibraryImpl() {
+    this.regexEngine = findRegexEngine();
     typeTable.put("string", new StringDatatype());
     typeTable.put("normalizedString", new CdataDatatype());
     typeTable.put("token", new TokenDatatype());
@@ -97,13 +95,11 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("gMonth", new StringDatatype());
   }
 
-  public DatatypeBuilder createDatatypeBuilder(String namespaceURI, String localName) {
-    if (xsdns.equals(namespaceURI)) {
-      DatatypeBase base = (DatatypeBase)typeTable.get(localName);
-      if (base != null)
-	return new DatatypeBuilderImpl(this, base);
-    }
-    return null;
+  public DatatypeBuilder createDatatypeBuilder(String localName) {
+    DatatypeBase base = (DatatypeBase)typeTable.get(localName);
+    if (base == null)
+      return null;
+    return new DatatypeBuilderImpl(this, base);
   }
 
   RegexEngine getRegexEngine() {
@@ -120,5 +116,16 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
 
   private DatatypeBase list(DatatypeBase base) {
     return new MinLengthRestrictDatatype(new ListDatatype(base), 1);
+  }
+
+  private RegexEngine findRegexEngine() {
+    Enumeration e = new Service(RegexEngine.class).getProviders();
+    if (!e.hasMoreElements())
+      return new NullRegexEngine();
+    return (RegexEngine)e.nextElement();
+  }
+
+  public Datatype createDatatype(String type) throws DatatypeException {
+    return createDatatypeBuilder(type).createDatatype();
   }
 }

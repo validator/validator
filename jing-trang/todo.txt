@@ -1,6 +1,12 @@
 More helpful error message for duplicate attributes.
 
-Use SF datatype library interface.
+Implement ValidationContext.getBaseUri.
+
+Implement ValidationContext.isUnparsedEntity.
+
+Implement ValidationContext.isNotation.
+
+Datatype documentation.
 
 Support DTD compatibility use of ID/IDREF/IDREFS.
 

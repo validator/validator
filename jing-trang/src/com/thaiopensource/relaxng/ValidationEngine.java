@@ -7,13 +7,13 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-import com.thaiopensource.datatype.DatatypeFactory;
+import org.relaxng.datatype.DatatypeLibraryFactory;
 
 public class ValidationEngine {
   private XMLReaderCreator xrc;
   private XMLReader xr;
   private ErrorHandler eh;
-  private DatatypeFactory df;
+  private DatatypeLibraryFactory dlf;
   private PatternBuilder pb = new PatternBuilder();
   private Pattern p;
 
@@ -32,8 +32,8 @@ public class ValidationEngine {
       xr.setErrorHandler(eh);
   }
 
-  public void setDatatypeFactory(DatatypeFactory df) {
-    this.df = df;
+  public void setDatatypeLibraryFactory(DatatypeLibraryFactory dlf) {
+    this.dlf = dlf;
   }
 
   /**
@@ -42,7 +42,7 @@ public class ValidationEngine {
   public boolean loadPattern(InputSource in) throws SAXException, IOException {
     xr = xrc.createXMLReader();
     xr.setErrorHandler(eh);
-    p = PatternReader.readPattern(xrc, xr, pb, df, in);
+    p = PatternReader.readPattern(xrc, xr, pb, dlf, in);
     if (p == null)
       return false;
     return true;

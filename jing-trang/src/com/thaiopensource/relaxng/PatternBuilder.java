@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng;
 import org.xml.sax.Locator;
 import java.util.Hashtable;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 public class PatternBuilder {
   

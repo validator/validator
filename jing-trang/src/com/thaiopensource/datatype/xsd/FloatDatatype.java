@@ -1,10 +1,10 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class FloatDatatype extends DoubleDatatype {
 
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     if (str.equals("INF"))
       return new Float(Float.POSITIVE_INFINITY);
     if (str.equals("-INF"))

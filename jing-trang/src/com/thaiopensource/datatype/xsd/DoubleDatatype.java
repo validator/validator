@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class DoubleDatatype extends DatatypeBase implements OrderRelation {
 
@@ -53,7 +53,7 @@ class DoubleDatatype extends DatatypeBase implements OrderRelation {
     return hadDigit;
   }
 
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     if (str.equals("INF"))
       return new Double(Double.POSITIVE_INFINITY);
     if (str.equals("-INF"))

@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class ErrorDatatype extends DatatypeBase implements OrderRelation {
   public boolean lexicallyAllows(String str) {
@@ -8,7 +8,7 @@ class ErrorDatatype extends DatatypeBase implements OrderRelation {
   }
   static class Error { }
 
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     return new Error();
   }
 

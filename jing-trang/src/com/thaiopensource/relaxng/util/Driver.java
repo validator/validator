@@ -18,9 +18,7 @@ import org.xml.sax.ErrorHandler;
 import com.thaiopensource.relaxng.ValidationEngine;
 import com.thaiopensource.relaxng.XMLReaderCreator;
 
-import com.thaiopensource.datatype.DatatypeFactory;
-import com.thaiopensource.datatype.xsd.DatatypeFactoryImpl;
-import com.thaiopensource.datatype.xsd.RegexEngine;
+import org.relaxng.datatype.DatatypeLibraryFactory;
 
 class Driver {
 
@@ -48,7 +46,7 @@ class Driver {
       ValidationEngine engine = new ValidationEngine();
       engine.setXMLReaderCreator(createXMLReaderCreator());
       engine.setErrorHandler(eh);
-      engine.setDatatypeFactory(createDatatypeFactory());
+      engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       if (engine.loadPattern(fileInputSource(args[0]))) {
 	for (int i = 1; i < args.length; i++) {
 	  if (!engine.validate(fileInputSource(args[i])))
@@ -76,22 +74,6 @@ class Driver {
 
   static private InputSource fileInputSource(String str) {
     return new InputSource(FileURL.fileToURL(new File(str)).toString());
-  }
-
-  static private DatatypeFactory createDatatypeFactory() {
-    String cls
-      = System.getProperty("com.thaiopensource.relaxng.util.RegexEngine");
-    if (cls != null) {
-      try {
-	return new DatatypeFactoryImpl((RegexEngine)Class.forName(cls)
-				                         .newInstance());
-      }
-      catch (ClassNotFoundException e) { }
-      catch (InstantiationException e) { }
-      catch (IllegalAccessException e) { }
-      catch (ClassCastException e) { }
-    }
-    return new DatatypeFactoryImpl();
   }
 
   static public void setParser(String cls, boolean b) {

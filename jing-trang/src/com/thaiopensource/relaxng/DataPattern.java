@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 class DataPattern extends StringPattern {
   private Datatype dt;
@@ -11,7 +11,7 @@ class DataPattern extends StringPattern {
   }
 
   DataPattern(Datatype dt) {
-    this(!dt.isContextDependent() && dt.allows("", null), dt);
+    this(!dt.isContextDependent() && dt.isValid("", null), dt);
   }
 
   boolean matches(PatternBuilder b, Atom a) {

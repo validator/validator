@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
+import org.relaxng.datatype.Datatype;
 
 class ValuePattern extends StringPattern {
   Object obj;
@@ -15,7 +15,7 @@ class ValuePattern extends StringPattern {
 
   static boolean valueIsNullable(Datatype dt, Object obj) {
     return (!dt.isContextDependent()
-	    && obj.equals(dt.createValue("", null)));
+	    && dt.sameValue(obj, dt.createValue("", null)));
   }
 
   boolean matches(PatternBuilder b, Atom a) {
@@ -28,7 +28,7 @@ class ValuePattern extends StringPattern {
     if (!(other instanceof ValuePattern))
       return false;
     return (dt.equals(((ValuePattern)other).dt)
-	    && obj.equals(((ValuePattern)other).obj));
+	    && dt.sameValue(obj, ((ValuePattern)other).obj));
   }
 
   void accept(PatternVisitor visitor) {

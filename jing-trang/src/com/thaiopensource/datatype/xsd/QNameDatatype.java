@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class QNameDatatype extends DatatypeBase {
   public boolean lexicallyAllows(String str) {
@@ -44,26 +44,26 @@ class QNameDatatype extends DatatypeBase {
     }
   }
 
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     int i = str.indexOf(':');
     if (i < 0) {
-      String ns = dc.getNamespaceURI("");
+      String ns = vc.resolveNamespacePrefix("");
       if (ns == null)
 	ns = "";
       return new QName(ns, str);
     }
     else {
       String prefix = str.substring(0, i);
-      String ns = dc.getNamespaceURI(prefix);
+      String ns = vc.resolveNamespacePrefix(prefix);
       if (ns == null)
 	return null;
       return new QName(ns, str.substring(i + 1));
     }
   }
 
-  boolean allowsValue(String str, DatatypeContext dc) {
+  boolean allowsValue(String str, ValidationContext vc) {
     int i = str.indexOf(':');
-    return i < 0 || dc.getNamespaceURI(str.substring(0, i)) != null;
+    return i < 0 || vc.resolveNamespacePrefix(str.substring(0, i)) != null;
   }
 
   public boolean isContextDependent() {

@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class TokenDatatype extends DatatypeBase implements Measure {
 
@@ -13,7 +13,7 @@ class TokenDatatype extends DatatypeBase implements Measure {
     return true;
   }
 
-  Object getValue(String str, DatatypeContext dc) {
+  Object getValue(String str, ValidationContext vc) {
     return str;
   }
 

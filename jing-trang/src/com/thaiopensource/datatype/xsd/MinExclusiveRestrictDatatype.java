@@ -1,6 +1,6 @@
 package com.thaiopensource.datatype.xsd;
 
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.ValidationContext;
 
 class MinExclusiveRestrictDatatype extends ValueRestrictDatatype {
   private OrderRelation order;

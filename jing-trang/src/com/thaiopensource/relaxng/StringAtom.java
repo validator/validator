@@ -1,17 +1,17 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.ValidationContext;
 
 import org.xml.sax.SAXException;
 
 class StringAtom extends Atom {
   private String str;
-  private DatatypeContext dc;
+  private ValidationContext vc;
 
-  StringAtom(String str, DatatypeContext dc) {
+  StringAtom(String str, ValidationContext vc) {
     this.str = str;
-    this.dc = dc;
+    this.vc = vc;
   }
  
   boolean matchesString() {
@@ -19,7 +19,10 @@ class StringAtom extends Atom {
   }
 
   boolean matchesDatatypeValue(Datatype dt, Object obj) {
-    return obj.equals(dt.createValue(str, dc));
+    Object strValue = dt.createValue(str, vc);
+    if (strValue == null)
+      return false;
+    return dt.sameValue(obj, strValue);
   }
 
   boolean matchesList(PatternBuilder b, Pattern p) {
@@ -49,12 +52,12 @@ class StringAtom extends Atom {
   }
 
   private Pattern matchToken(PatternBuilder b, Pattern p, int i, int j) {
-    StringAtom sa = new StringAtom(str.substring(i, j), dc);
+    StringAtom sa = new StringAtom(str.substring(i, j), vc);
     return p.residual(b, sa);
   }
 
   boolean matchesDatatype(Datatype dt) {
-    return dt.allows(str, dc);
+    return dt.isValid(str, vc);
   }
 
 }

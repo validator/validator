@@ -1,9 +1,9 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeBuilder;
-import com.thaiopensource.datatype.InvalidParamException;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.DatatypeBuilder;
+import org.relaxng.datatype.DatatypeException;
 
 class BuiltinDatatypeBuilder implements DatatypeBuilder {
   private final Datatype dt;
@@ -12,13 +12,13 @@ class BuiltinDatatypeBuilder implements DatatypeBuilder {
     this.dt = dt;
   }
 
-  public void addParam(String name,
-		       String value,
-		       DatatypeContext context) throws InvalidParamException {
-    throw new InvalidParamException(Localizer.message("builtin_param"));
+  public void addParameter(String name,
+			   String value,
+			   ValidationContext context) throws DatatypeException {
+    throw new DatatypeException(Localizer.message("builtin_param"));
   }
 
-  public Datatype finish() {
+  public Datatype createDatatype() {
     return dt;
   }
 }
