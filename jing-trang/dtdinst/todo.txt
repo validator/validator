@@ -2,7 +2,8 @@ Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
 naming convention or presence of element declarations or whether all
 references to the element are via that parameter entity.
 
-Deal with external parameter entities referenced within declarations.
+Deal with external parameter entities (possibly with TextDecls)
+referenced within declarations.
 
 Translation to RELAX NG: undefined elements; namespaces; overridden
 attributes; ANY; start based on unreferenced element.
@@ -55,3 +56,6 @@ rather than a TextDecl.
 
 In EncodingDetectInputStream should check that encoding specified in
 XML declaration is consistent with auto-detected encoding.
+
+Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
+
