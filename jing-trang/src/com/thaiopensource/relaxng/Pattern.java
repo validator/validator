@@ -14,12 +14,11 @@ public abstract class Pattern {
   static final int CHOICE_HASH_CODE = 11;
   static final int SEQUENCE_HASH_CODE = 13;
   static final int INTERLEAVE_HASH_CODE = 17;
-  static final int CONCUR_HASH_CODE = 19;
+  static final int ONE_OR_MORE_HASH_CODE = 19;
   static final int ELEMENT_HASH_CODE = 23;
   static final int STRING_HASH_CODE = 27;
   static final int ATTRIBUTE_HASH_CODE = 29;
-  static final int ONE_OR_MORE_HASH_CODE = 31;
-  static final int DATA_HASH_CODE = 37;
+  static final int DATA_HASH_CODE = 31;
 
   static int combineHashCode(int hc1, int hc2, int hc3) {
     return hc1 * hc2 * hc3;

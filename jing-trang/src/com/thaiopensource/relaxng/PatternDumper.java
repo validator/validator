@@ -19,7 +19,6 @@ public class PatternDumper {
   PatternVisitor sequencePatternVisitor = new SequenceDumpPatternVisitor();
   PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
   PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
-  PatternVisitor concurPatternVisitor = new ConcurDumpPatternVisitor();
   NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
   NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
   NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
@@ -197,13 +196,6 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitConcur(Pattern p1, Pattern p2) {
-      startElement("concur");
-      p1.accept(concurPatternVisitor);
-      p2.accept(concurPatternVisitor);
-      endElement();
-    }
-
     public void visitChoice(Pattern p1, Pattern p2) {
       startElement("choice");
       p1.accept(choicePatternVisitor);
@@ -261,13 +253,6 @@ public class PatternDumper {
 
   class ChoiceDumpPatternVisitor extends DumpPatternVisitor {
     public void visitChoice(Pattern p1, Pattern p2) {
-      p1.accept(this);
-      p2.accept(this);
-    }
-  }
-
-  class ConcurDumpPatternVisitor extends DumpPatternVisitor {
-    public void visitConcur(Pattern p1, Pattern p2) {
       p1.accept(this);
       p2.accept(this);
     }

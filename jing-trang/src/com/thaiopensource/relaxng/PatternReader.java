@@ -327,15 +327,6 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class ConcurState extends PatternContainerState {
-    State create() {
-      return new ConcurState();
-    }
-    Pattern combinePattern(Pattern p1, Pattern p2) {
-      return patternBuilder.makeConcur(p1, p2);
-    }
-  }
-
   class MixedState extends PatternContainerState {
     State create() {
       return new MixedState();
@@ -990,7 +981,6 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("optional", new OptionalState());
     patternTable.put("choice", new ChoiceState());
     patternTable.put("interleave", new InterleaveState());
-    patternTable.put("concur", new ConcurState());
     patternTable.put("group", new GroupState());
     patternTable.put("mixed", new MixedState());
     patternTable.put("element", new ElementState());

@@ -8,7 +8,6 @@ interface PatternVisitor {
   void visitError();
   void visitSequence(Pattern p1, Pattern p2);
   void visitInterleave(Pattern p1, Pattern p2);
-  void visitConcur(Pattern p1, Pattern p2);
   void visitChoice(Pattern p1, Pattern p2);
   void visitOneOrMore(Pattern p);
   void visitElement(NameClass nc, Pattern content);
