@@ -500,11 +500,12 @@ class Output {
         pp.startNest(indent);
         for (Iterator iter = params.iterator(); iter.hasNext();) {
           pp.softNewline(" ");
-          // XXX output annotations for param
           Param param = (Param)iter.next();
+          startAnnotations(param);
           pp.text(param.getName());
           pp.text(" = ");
           literal(param.getValue());
+          endAnnotations(param);
         }
         pp.endNest();
         pp.softNewline(" ");
