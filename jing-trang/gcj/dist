@@ -78,6 +78,10 @@ mkdir -p ${jing_src_dir} ${trang_src_dir}
 cd ${jing_src_dir}/src
 rm -fr ${jing_unwanted}
 
+f=com/thaiopensource/relaxng/util/resources/Messages.properties
+sed -e 's/java com.thaiopensource.relaxng.util.Driver/jing/' $f >tem
+mv tem $f
+
 echo com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl >META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine
 
 cd ${top_dir}
@@ -120,6 +124,10 @@ find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang
 cd ../${trang_src_dir}/src
 
 rm -fr ${jing_unwanted_in_trang}
+
+f=com/thaiopensource/relaxng/translate/resources/Messages.properties
+sed -e 's/java com.thaiopensource.relaxng.translate.Driver/trang/' $f >tem
+mv tem $f
 
 cd ${top_dir}
 
