@@ -542,7 +542,7 @@ just the rule:</p>
 </xml>
 
 <p>Suppose you are not interested in the namespace-based capabilities of
-NRL, but you simply want to validate a document concurrently against
+NRL, but you just want to validate a document concurrently against
 two schemas.  The simplest way is like this:</p>
 
 <xml>
