@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.9 2001-06-02 08:35:45 jjc Exp $ -->
-<grammar namespace="http://relaxng.org/main/ns/0.1"
-         xmlns="http://relaxng.org/main/ns/0.1">
+<!-- $Id: relaxng.rng,v 1.10 2001-06-02 08:36:14 jjc Exp $ -->
+<grammar namespace="http://relaxng.org/ns/structure/0.9"
+         xmlns="http://relaxng.org/ns/structure/0.9">
   <start name="pattern">
     <choice>
       <element name="element">
