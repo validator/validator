@@ -864,14 +864,14 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 <rules startMode="root" xmlns="http://www.thaiopensource.com/validate/nrl">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="#pass">
+      <validate schema="xhtml.rng" useMode="#attach">
         <context path="head" useMode="rdf"/>
       </validate>
     </namespace>
   </mode>
   <mode name="rdf">
     <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng" useMode="#pass"/>
+      <validate schema="rdfxml.rng" useMode="#attach"/>
     </namespace>
   </mode>
 </rules>
@@ -1275,17 +1275,17 @@ element linux|windows { empty }
   <mode name="linux">
     <namespace ns="http://www.example.com/version">
       <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <ignore useMode="#allow">
-	<context path="linux" useMode="#pass"/>
-      </ignore>
+      <unwrap useMode="#allow">
+	<context path="linux" useMode="#attach"/>
+      </unwrap>
     </namespace>
   </mode>
   <mode name="windows">
     <namespace ns="http://www.example.com/version">
       <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <ignore useMode="#allow">
-	<context path="windows" useMode="#pass"/>
-      </ignore>
+      <unwrap useMode="#allow">
+	<context path="windows" useMode="#attach"/>
+      </unwrap>
     </namespace>
   </mode>
 </rules>

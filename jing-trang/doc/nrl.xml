@@ -494,7 +494,7 @@ allow us still to validate the XHTML document.</p>
   </mode>
   <mode name="xhtml">
     <namespace ns="http://www.example.org/edit">
-      <ignore/>
+      <unwrap/>
     </namespace>
     <namespace ns="http://www.w3.org/1999/xhtml">
       <attach/>
@@ -503,7 +503,7 @@ allow us still to validate the XHTML document.</p>
 </rules>
 </xml>
 
-<p>The <code>ignore</code> element says to ignore a particular
+<p>The <code>unwrap</code> element says to ignore a particular
 section; like with all the other actions, it applies to a section not
 to a subtree. Thus, the section from the
 <code>http://www.example.org/edit</code> will be ignored, but child
@@ -538,7 +538,7 @@ element inserted|deleted { empty }
       <validate schema="edit.rnc"
                 schemaType="application/x-rnc"
                 useMode="#allow"/>
-      <ignore useMode="#attach"/>
+      <unwrap useMode="#attach"/>
     </namespace>
     <namespace ns="http://www.w3.org/1999/xhtml">
       <attach/>
@@ -787,7 +787,7 @@ noResultAction =
   | element allow|reject { modeUsage }
 
 resultAction =
-  element attach|ignore { modeUsage }
+  element attach|unwrap { modeUsage }
 
 option =
   element option {
@@ -806,7 +806,7 @@ modeUsage =
 modeName = userModeName | builtinModeName
 
 userModeName = xsd:NCName
-builtinModeName = "#attach" | "#allow" | "#reject" | "#ignore"
+builtinModeName = "#attach" | "#allow" | "#reject" | "#unwrap"
 
 schemaType = attribute schemaType { mediaType }
 mediaType = xsd:string  # should do better than this

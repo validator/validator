@@ -2,8 +2,8 @@ package com.thaiopensource.validate.nrl;
 
 import org.xml.sax.ContentHandler;
 
-class IgnoreAction extends ResultAction {
-  IgnoreAction(ModeUsage modeUsage) {
+class UnwrapAction extends ResultAction {
+  UnwrapAction(ModeUsage modeUsage) {
     super(modeUsage);
   }
 
@@ -12,6 +12,6 @@ class IgnoreAction extends ResultAction {
   }
 
   ResultAction changeCurrentMode(Mode mode) {
-    return new IgnoreAction(getModeUsage().changeCurrentMode(mode));
+    return new UnwrapAction(getModeUsage().changeCurrentMode(mode));
   }
 }

@@ -178,8 +178,8 @@ class SchemaImpl extends AbstractSchema {
         parseReject(attributes);
       else if (localName.equals("attach"))
         parseAttach(attributes);
-      else if (localName.equals("ignore"))
-        parseIgnore(attributes);
+      else if (localName.equals("unwrap"))
+        parseUnwrap(attributes);
       else if (localName.equals("allow"))
         parseAllow(attributes);
       else if (localName.equals("context"))
@@ -382,10 +382,10 @@ class SchemaImpl extends AbstractSchema {
         modeUsage = null;
     }
 
-    private void parseIgnore(Attributes attributes) {
+    private void parseUnwrap(Attributes attributes) {
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
-        actions.setResultAction(new IgnoreAction(modeUsage));
+        actions.setResultAction(new UnwrapAction(modeUsage));
       }
       else
         modeUsage = null;
@@ -509,8 +509,8 @@ class SchemaImpl extends AbstractSchema {
     super(properties);
     this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
     makeBuiltinMode("#allow", AllowAction.class);
-    makeBuiltinMode("#pass", AttachAction.class);
-    makeBuiltinMode("#delve", IgnoreAction.class);
+    makeBuiltinMode("#attach", AttachAction.class);
+    makeBuiltinMode("#unwrap", UnwrapAction.class);
     defaultBaseMode = makeBuiltinMode("#reject", RejectAction.class);
   }
 
@@ -522,8 +522,8 @@ class SchemaImpl extends AbstractSchema {
       actions.setResultAction(new AttachAction(modeUsage));
     else if (cls == AllowAction.class)
       actions.addNoResultAction(new AllowAction(modeUsage));
-    else if (cls == IgnoreAction.class)
-      actions.setResultAction(new IgnoreAction(modeUsage));
+    else if (cls == UnwrapAction.class)
+      actions.setResultAction(new UnwrapAction(modeUsage));
     else
       actions.addNoResultAction(new RejectAction(modeUsage));
     mode.bindElement(Mode.ANY_NAMESPACE, actions);

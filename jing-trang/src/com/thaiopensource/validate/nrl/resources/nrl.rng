@@ -141,7 +141,7 @@
     <element>
       <choice>
         <name>attach</name>
-        <name>ignore</name>
+        <name>unwrap</name>
       </choice>
       <interleave>
         <ref name="modeUsage"/>
@@ -182,7 +182,7 @@
       <value>#attach</value>
       <value>#allow</value>
       <value>#reject</value>
-      <value>#ignore</value>
+      <value>#unwrap</value>
     </choice>
   </define>
   <define name="schemaType">
