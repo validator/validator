@@ -1,6 +1,5 @@
 package com.thaiopensource.validate.nrl;
 
-import com.thaiopensource.validate.Validator;
 import org.xml.sax.ContentHandler;
 
 class DelveAction extends ResultAction {
