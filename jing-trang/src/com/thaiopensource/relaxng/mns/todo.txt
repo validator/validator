@@ -1,3 +1,6 @@
 ID/IDREF testing.
 
 Support an <include/> element.
+
+Might have a checker specific to a particular namespace (eg RDF, XSLT,
+HTML).
