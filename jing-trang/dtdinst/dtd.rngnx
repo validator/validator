@@ -10,6 +10,7 @@ decl =
   | enumGroupDef
   | datatypeDef
   | flagDef
+  | includeSection
 
 elementDecl = element element { qname, modelGroup }
 
@@ -18,6 +19,9 @@ modelGroupDef = element modelGroup { name, modelGroup }
 datatypeDef = element datatype { name, datatype }
 
 flagDef = element flag { name, flag }
+
+includeSection = 
+  element includeSection { attribute flag { xsd:NCName }?, decl* }
 
 datatype =
   element basic { 
