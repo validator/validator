@@ -1,1 +1,1 @@
-Avoid use of Collections and any other 1.2 stuff.
+Avoid use of Collections.
