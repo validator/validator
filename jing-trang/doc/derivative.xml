@@ -1,0 +1,860 @@
+<?xml-stylesheet href="derivative.xsl" type="text/xsl"?>
+<!DOCTYPE html [
+<!ENTITY nbsp "&#160;">
+]>
+<html xml:space="preserve">
+<head>
+<title>An algorithm for RELAX NG validation</title>
+<style>
+.haskell { margin-left: 20pt }
+</style>
+
+</head>
+
+<body>
+<h1>An algorithm for RELAX NG validation</h1>
+<h3>James Clark (jjc@thaiopensource.com)</h3>
+<h3>2002-02-11</h3>
+
+<div>
+<p>This document describes an algorithm for validating an XML document
+against a RELAX NG schema.  This algorithm is based on the idea of
+what's called a <i>derivative</i> (sometimes called a <i>residual</i>).
+It is not the only possible algorithm for RELAX NG validation.  This
+document does not describe any algorithms for transforming a RELAX NG
+schema into simplified form, nor for determining whether a RELAX NG
+schema is correct.</p>
+
+<p>We use <a href="http://www.haskell.org">Haskell</a> to describe the
+algorithm.  Do not worry if you don't know Haskell; we use only a tiny
+subset which should be easily understandable.</p>
+
+<h2>Basics</h2>
+
+<p>First, we define the datatypes we will be using. URIs and local
+names are just strings.</p>
+
+<haskell name="Uri">
+type Uri = String
+</haskell>
+
+<haskell name="LocalName">
+type LocalName = String
+</haskell>
+
+<p>A <code>ParamList</code> represents a list of parameters; each parameter
+is a pair consisting of a local name and a value.</p>
+
+<haskell name="ParamList">
+type ParamList = [(LocalName, String)]
+</haskell>
+
+<p>A <code>Context</code> represents the context of an XML element.
+It consists of a base URI and a mapping from prefixes to namespace
+URIs.</p>
+
+<haskell name="Prefix">
+type Prefix = String
+</haskell>
+<haskell name="Context">
+type Context = (Uri, [(Prefix, Uri)])
+</haskell>
+
+<p>A <code>Datatype</code> identifies a datatype by a datatype library name
+and a local name.</p>
+
+<haskell name="Datatype">
+type Datatype = (Uri, LocalName)
+</haskell>
+
+<p>A <code>NameClass</code> represents a name class.</p>
+
+<haskell name="NameClass">
+data NameClass = AnyName
+                 | AnyNameExcept NameClass
+                 | Name Uri LocalName
+                 | NsName Uri
+                 | NsNameExcept Uri NameClass
+                 | NameClassChoice NameClass NameClass
+</haskell>
+
+
+<p>A <code>Pattern</code> represents a pattern after simplification.</p>
+
+<haskell name="Pattern">
+data Pattern = Empty
+               | NotAllowed
+               | Text
+               | Choice Pattern Pattern
+               | Interleave Pattern Pattern
+               | Group Pattern Pattern
+               | OneOrMore Pattern
+               | List Pattern
+               | Data Datatype ParamList
+               | DataExcept Datatype ParamList Pattern
+               | Value Datatype String Context
+               | Attribute NameClass Pattern
+               | Element NameClass Pattern
+               | After Pattern Pattern
+</haskell>
+
+<p>The <code>After</code> pattern is used internally and will be
+explained later.</p>
+
+<p>Note that there is an <code>Element</code> pattern rather than a
+<code>Ref</code> pattern.  In the simplified XML representation of
+patterns, every <code>ref</code> element refers to an
+<code>element</code> pattern.  In the internal representation of
+patterns, we can replace each reference to a <code>ref</code> pattern
+by a reference to the <code>element</code> pattern that the
+<code>ref</code> pattern references, resulting in a cyclic data
+structure.  (Note that even though Haskell is purely functional it can
+handle cyclic data structures because of its laziness.)</p>
+
+<p>In the instance, elements and attributes are labelled with QNames;
+a QName is a URI/local name pair.</p>
+
+<haskell name="QName">
+data QName = QName Uri LocalName
+</haskell>
+
+<p>An XML document is represented as a <code>ChildNode</code>. There are
+two kinds of child node:</p>
+
+<ul>
+<li>a <code>TextNode</code> containing a string;</li>
+
+<li>an <code>ElementNode</code> containing a name (of type
+<code>QName</code>), a <code>Context</code>, a set of attributes
+(represented as a list of <code>AttributeNode</code>s, each of which
+will be an <code>AttributeNode</code>), and a list of children
+(represented as a list of <code>ChildNode</code>s).</li>
+</ul>
+
+<haskell name="ChildNode">
+data ChildNode = ElementNode QName Context [AttributeNode] [ChildNode]
+                 | TextNode String
+</haskell>
+
+<p>An <code>AttributeNode</code> consists of a <name>QName</name> and
+a <code>String</code>.</p>
+
+<haskell name="AttributeNode">
+data AttributeNode = AttributeNode QName String
+</haskell>
+
+<p>Now we're ready to define our first function: <code>contains</code>
+tests whether a <name>NameClass</name> contains a particular
+<name>QName</name>.</p>
+
+<haskell name="contains">
+contains :: NameClass -> QName -> Bool
+contains AnyName _ = True
+contains (AnyNameExcept nc) n = not (contains nc n)
+contains (NsName ns1) (QName ns2 _) = (ns1 == ns2)
+contains (NsNameExcept ns1 nc) (QName ns2 ln) =
+  ns1 == ns2 &amp;&amp; not (contains nc (QName ns2 ln))
+contains (Name ns1 ln1) (QName ns2 ln2) = (ns1 == ns2) &amp;&amp; (ln1 == ln2)
+contains (NameClassChoice nc1 nc2) n = (contains nc1 n) || (contains nc2 n)
+</haskell>
+
+<p class="haskell">In Haskell, <code>_</code> is an anonymous variable
+that matches any argument.</p>
+
+<p><code>nullable</code> tests whether a pattern matches the empty
+sequence.</p>
+
+<haskell name="nullable"> 
+nullable:: Pattern -> Bool
+
+nullable (Group p1 p2) = nullable p1 &amp;&amp; nullable p2
+nullable (Interleave p1 p2) = nullable p1 &amp;&amp; nullable p2
+nullable (Choice p1 p2) = nullable p1 || nullable p2
+nullable (OneOrMore p) = nullable p
+nullable (Element _ _) = False
+nullable (Attribute _ _) = False
+nullable (List _) = False
+nullable (Value _ _ _) = False
+nullable (Data _ _) = False
+nullable (DataExcept _ _ _) = False
+nullable NotAllowed = False
+nullable Empty = True
+nullable Text = True
+nullable (After _ _) = False
+</haskell>
+
+<p>The key concept used by this validation technique is the concept of
+a <i>derivative</i>.  The derivative of a pattern <var>p</var> with
+respect to a node <var>x</var> is a pattern for what's left of
+<var>p</var> after matching <var>x</var>; in other words, it is a
+pattern that matches any sequence that when appended to <var>x</var>
+will match <var>p</var>.</p>
+
+<p>If we can compute derivatives, then we can determine whether a
+pattern matches a node: a pattern matches a node if the derivative of
+the pattern with respect to the node is nullable.</p>
+
+<p>It is desirable to be able to compute the derivative of a node in a
+streaming fashion, making a single pass over the tree. In order
+to do this, we break down an element into a sequence of components:</p>
+
+<ol>
+<li>a start-tag open containing a QName</li>
+<li>a sequence of zero or more attributes</li>
+<li>a start-tag close</li>
+<li>a sequence of zero or more children</li>
+<li>an end-tag</li>
+</ol>
+
+<p>We compute the derivative of a pattern with respect to an element
+by computing its derivative with respect to each component in turn.</p>
+
+<p>We can now explain why we need the <code>After</code> pattern.  A
+pattern <code>After <var>x</var> <var>y</var></code> is a pattern that
+matches <code><var>x</var></code> followed by an end-tag followed by
+<code><var>y</var></code>.  We need the <code>After</code> pattern in
+order to be able to express the derivative of a pattern with respect
+to a start-tag open.</p>
+
+<p>The central function is <code>childNode</code> which computes the
+derivative of a pattern with respect to a <name>ChildNode</name> and a
+<name>Context</name>:</p>
+
+<haskell name="childDeriv">
+childDeriv :: Context -> Pattern -> ChildNode -> Pattern
+childDeriv cx p (TextNode s) = textDeriv cx p s
+childDeriv _ p (ElementNode qn cx atts children) =
+  let p1 = startTagOpenDeriv p qn
+      p2 = attsDeriv cx p1 atts
+      p3 = startTagCloseDeriv p2
+      p4 = childrenDeriv cx p3 children
+  in endTagDeriv p4
+</haskell>
+
+<p><code>textDeriv</code> computes the derivative of a pattern with
+respect to a text node.</p>
+
+<haskell name="textDeriv">
+textDeriv :: Context -> Pattern -> String -> Pattern
+</haskell>
+
+<p><code>Choice</code> is easy:</p>
+
+<haskell>
+textDeriv cx (Choice p1 p2) s =
+  choice (textDeriv cx p1 s) (textDeriv cx p2 s)
+</haskell>
+
+<p><code>Interleave</code> is almost as easy (one of the main
+advantages of this validation technique is the ease with which it
+handles interleave):</p>
+
+<haskell>
+textDeriv cx (Interleave p1 p2) s =
+  choice (interleave (textDeriv cx p1 s) p2)
+         (interleave p1 (textDeriv cx p2 s))
+</haskell>
+
+<p>For <code>Group</code>, the derivative depends on whether
+the first operand is nullable.</p>
+
+<haskell>
+textDeriv cx (Group p1 p2) s =
+  let p = group (textDeriv cx p1 s) p2
+  in if nullable p1 then choice p (textDeriv cx p2 s) else p
+</haskell>
+
+<p>For <code>After</code>, we recursively apply <code>textDeriv</code>
+to the first argument.</p>
+
+<haskell>
+textDeriv cx (After p1 p2) s = after (textDeriv cx p1 s) p2
+</haskell>
+
+<p>For <code>OneOrMore</code> we partially expand the
+<code>OneOrMore</code> into a <code>Group</code>.</p>
+
+<haskell>
+textDeriv cx (OneOrMore p) s =
+  group (textDeriv cx p s) (choice (OneOrMore p) Empty)
+</haskell>
+
+<p>A <code>text</code> pattern matches zero or more text nodes.  Thus
+the derivative of <code>Text</code> with respect to a text node is
+<code>Text</code>, <em>not</em> <code>Empty</code>.</p>
+
+<haskell>
+textDeriv cx Text _ = Text
+</haskell>
+
+<p>The derivative of a <code>value</code>, <code>data</code> or
+<code>list</code> pattern with respect to a text node is
+<code>Empty</code> if the pattern matches and <code>NotAllowed</code>
+if it does not.</p>
+
+<p>To determine whether a <code>value</code> or <code>data</code>
+pattern matches, we rely respectively on the
+<name>datatypeEqual</name> and <name>datatypeAllows</name> functions
+which implement the semantics of a datatype library.</p>
+
+<haskell>
+textDeriv cx1 (Value dt value cx2) s =
+  if datatypeEqual dt value cx2 s cx1 then Empty else NotAllowed
+textDeriv cx (Data dt params) s =
+  if datatypeAllows dt params s cx then Empty else NotAllowed
+textDeriv cx (DataExcept dt params p) s =
+  if datatypeAllows dt params s cx &amp;&amp; not (nullable (textDeriv cx p s)) then
+    Empty
+  else
+    NotAllowed
+</haskell>
+
+<p>To determine whether a pattern <code>List <var>p</var></code>
+matches a text node, the value of the text node is split into a
+sequence of whitespace-delimited tokens, and the resulting sequence is
+matched against <code><var>p</var></code>:</p>
+
+<haskell>
+textDeriv cx (List p) s =
+  if nullable (listDeriv cx p (words s)) then Empty else NotAllowed
+</haskell>
+
+<p>In any other case, the pattern does not match the node.</p>
+
+<haskell>
+textDeriv _ _ _ = NotAllowed
+</haskell>
+
+<p>To compute the derivative of a pattern with respect to a list of
+strings, simply compute the derivative with respect to each member of
+the list in turn.</p>
+
+<haskell name="listDeriv">
+listDeriv :: Context -> Pattern -> [String] -> Pattern
+listDeriv _ p [] = p
+listDeriv cx p (h:t) = listDeriv cx (textDeriv cx p h) t
+</haskell>
+
+<p>When constructing <code>Choice</code>, <code>Group</code>,
+<code>Interleave</code> and <code>After</code> patterns while
+computing derivatives, we recognize the obvious algebraic identities
+for <code>NotAllowed</code> and <code>Empty</code>:</p>
+
+<haskell name="choice">
+choice :: Pattern -> Pattern -> Pattern
+choice p NotAllowed = p
+choice NotAllowed p = p
+choice p1 p2 = Choice p1 p2
+</haskell>
+<haskell name="group">
+group :: Pattern -> Pattern -> Pattern
+group p NotAllowed = NotAllowed
+group NotAllowed p = NotAllowed
+group p Empty = p
+group Empty p = p
+group p1 p2 = Group p1 p2
+</haskell>
+<haskell name="interleave">
+interleave :: Pattern -> Pattern -> Pattern
+interleave p NotAllowed = NotAllowed
+interleave NotAllowed p = NotAllowed
+interleave p Empty = p
+interleave Empty p = p
+interleave p1 p2 = Interleave p1 p2
+</haskell>
+<haskell name="after">
+after :: Pattern -> Pattern -> Pattern
+after p NotAllowed = NotAllowed
+after NotAllowed p = NotAllowed
+after p1 p2 = After p1 p2
+</haskell>
+
+<p>The <code>datatypeAllows</code> and <code>datatypeEqual</code>
+functions represent the semantics of datatype libraries. Here, we
+specify only the semantics of the builtin datatype library.</p>
+
+<haskell name="datatypeAllows">
+datatypeAllows :: Datatype -> ParamList -> String -> Context -> Bool
+
+datatypeAllows ("", "string") [] _ _ = True
+datatypeAllows ("", "token") [] _ _ = True
+</haskell>
+
+<haskell name="datatypeEqual">
+datatypeEqual :: Datatype -> String -> Context -> String -> Context -> Bool
+
+datatypeEqual ("", "string") s1 _ s2 _ = (s1 == s2)
+datatypeEqual ("", "token") s1 _ s2 _ =
+  (normalizeWhitespace s1) == (normalizeWhitespace s2)
+</haskell>
+
+<haskell name="normalizeWhitespace">
+normalizeWhitespace :: String -> String
+normalizeWhitespace s = unwords (words s)
+</haskell>
+
+<p>Perhaps the trickiest part of the algorithm is in computing the
+derivative with respect to a start-tag open.  For this,
+we need a helper function; <code>applyAfter</code> takes
+a function and applies it to the second operand of
+each <code>After</code> pattern.</p>
+
+<haskell name="applyAfter">
+applyAfter :: (Pattern -> Pattern) -> Pattern -> Pattern
+applyAfter f (After p1 p2) = after p1 (f p2)
+applyAfter f (Choice p1 p2) = choice (applyAfter f p1) (applyAfter f p2)
+applyAfter f NotAllowed = NotAllowed
+</haskell>
+
+<p>We rely here on the fact that <code>After</code> patterns are
+restricted in where they can occur.  Specifically, an
+<code>After</code> pattern cannot be the descendant of any pattern
+other than a <code>Choice</code> pattern or another <code>After</code>
+pattern; also the first operand of an <code>After</code> pattern can
+neither be an <code>After</code> pattern nor contain any
+<code>After</code> pattern descendants.</p>
+
+<haskell name="startTagDeriv">
+startTagOpenDeriv :: Pattern -> QName -> Pattern
+</haskell>
+
+<p>The derivative of a <code>Choice</code> pattern is as usual.</p>
+
+<haskell>
+startTagOpenDeriv (Choice p1 p2) qn =
+  choice (startTagOpenDeriv p1 qn) (startTagOpenDeriv p2 qn)
+</haskell>
+
+<p>To represent the derivative of a <code>Element</code> pattern,
+we introduce an <code>After</code> pattern.</p>
+
+<haskell>
+startTagOpenDeriv (Element nc p) qn =
+  if contains nc qn then after p Empty else NotAllowed
+</haskell>
+
+<p>For <code>Interleave</code>, <code>OneOrMore</code>
+<code>Group</code> or <code>After</code> we compute the derivative in a
+similar way to <code>textDeriv</code> but with an important twist.
+The twist is that instead of applying <code>interleave</code>,
+<code>group</code> and <code>after</code> directly to the result of
+recursively applying <code>startTagOpenDeriv</code>, we instead use
+<code>applyAfter</code> to push the <code>interleave</code>,
+<code>group</code> or <code>after</code> down into the second operand
+of <code>After</code>.  Note that the following definitions ensure
+that the invariants on where <code>After</code> patterns can occur are
+maintained.</p>
+
+<p>We make use of the standard Haskell function <code>flip</code>
+which flips the order of the arguments of a function of two arguments.
+Thus, <code>flip</code> applied to a function of two arguments
+<var>f</var> and an argument <var>x</var> returns a function of one
+argument <var>g</var> such that <var>g</var>(<var>y</var>) =
+<var>f</var>(<var>y</var>, <var>x</var>).</p>
+
+<haskell>
+startTagOpenDeriv (Interleave p1 p2) qn =
+  choice (applyAfter (flip interleave p2) (startTagOpenDeriv p1 qn))
+         (applyAfter (interleave p1) (startTagOpenDeriv p2 qn))
+startTagOpenDeriv (OneOrMore p) qn =
+  applyAfter (flip group (choice (OneOrMore p) Empty))
+             (startTagOpenDeriv p qn)
+startTagOpenDeriv (Group p1 p2) qn =
+  let x = applyAfter (flip group p2) (startTagOpenDeriv p1 qn)
+  in if nullable p1 then
+       choice x (startTagOpenDeriv p2 qn)
+     else
+       x
+startTagOpenDeriv (After p1 p2) qn =
+  applyAfter (flip after p2) (startTagOpenDeriv p1 qn)
+</haskell>
+
+<p>In any other case, the derivative is <code>NotAllowed</code>.</p>
+
+<haskell>
+startTagOpenDeriv _ qn = NotAllowed
+</haskell>
+
+<p>To compute the derivative of a pattern with respect to a sequence
+of attributes, simply compute the derivative with respect to each
+attribute in turn.</p>
+
+<haskell name="attsDeriv">
+attsDeriv :: Context -> Pattern -> [AttributeNode] -> Pattern
+attsDeriv cx p [] = p
+attsDeriv cx p ((AttributeNode qn s):t) =
+  attsDeriv cx (attDeriv cx p (AttributeNode qn s)) t
+</haskell>
+
+<p>Computing the derivative with respect to an attribute done in a
+similar to computing the derivative with respect to a text node.  The
+main difference is in the handling of <code>Group</code>, which has to
+deal with the fact that the order of attributes is not significant.
+Computing the derivative of a <code>Group</code> pattern with respect
+to an attribute node works the same as computing the derivative of an
+<code>Interleave</code> pattern.</p>
+
+<haskell name="attDeriv">
+attDeriv :: Context -> Pattern -> AttributeNode -> Pattern
+attDeriv cx (After p1 p2) att =
+  after (attDeriv cx p1 att) p2
+attDeriv cx (Choice p1 p2) att =
+  choice (attDeriv cx p1 att) (attDeriv cx p2 att)
+attDeriv cx (Group p1 p2) att =
+  choice (group (attDeriv cx p1 att) p2)
+         (group p1 (attDeriv cx p2 att))
+attDeriv cx (Interleave p1 p2) att =
+  choice (interleave (attDeriv cx p1 att) p2)
+         (interleave p1 (attDeriv cx p2 att))
+attDeriv cx (OneOrMore p) att =
+  group (attDeriv cx p att) (choice (OneOrMore p) Empty)
+attDeriv cx (Attribute nc p) (AttributeNode qn s) =
+  if contains nc qn &amp;&amp; valueMatch cx p s then Empty else NotAllowed
+attDeriv _ _ _ = NotAllowed
+</haskell>
+
+<p><code>valueMatch</code> is used for matching attribute values.  It
+has to implement the RELAX NG rules on whitespace.</p>
+
+<haskell name="valueMatch">
+valueMatch :: Context -> Pattern -> String -> Bool
+valueMatch cx p s =
+  (nullable p &amp;&amp; whitespace s) || nullable (textDeriv cx p s)
+</haskell>
+
+<p>When we see a start-tag close, we know that there cannot be any
+further attributes. Therefore we can replace each
+<code>Attribute</code> pattern by <code>NotAllowed</code>.</p>
+
+<haskell name="startTagCloseDeriv">
+startTagCloseDeriv :: Pattern -> Pattern
+startTagCloseDeriv (After p1 p2) =
+  after (startTagCloseDeriv p1) p2
+startTagCloseDeriv (Choice p1 p2) =
+  choice (startTagCloseDeriv p1) (startTagCloseDeriv p2)
+startTagCloseDeriv (Group p1 p2) =
+  group (startTagCloseDeriv p1) (startTagCloseDeriv p2)
+startTagCloseDeriv (Interleave p1 p2) =
+  interleave (startTagCloseDeriv p1) (startTagCloseDeriv p2)
+startTagCloseDeriv (OneOrMore p) =
+  oneOrMore (startTagCloseDeriv p)
+startTagCloseDeriv (Attribute _ _) = NotAllowed
+startTagCloseDeriv p = p
+</haskell>
+
+<p>When constructing a <code>OneOrMore</code>, we need to treat an
+operand of <code>NotAllowed</code> specially:</p>
+
+<haskell>
+oneOrMore :: Pattern -> Pattern
+oneOrMore NotAllowed = NotAllowed
+oneOrMore p = OneOrMore p
+</haskell>
+
+<p>Computing the derivative of a pattern with respect to a list of
+children involves computing the derivative with respect to each
+pattern in turn, except that whitespace requires special
+treatment.</p>
+
+<haskell name="childrenDeriv">
+childrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
+</haskell>
+
+<p>The case where the list of children is empty is treated as if there
+were a text node whose value were the empty string.</p>
+
+<haskell>
+childrenDeriv cx p [] = childrenDeriv cx p [(TextNode "")]
+</haskell>
+
+<p>In the case where the list of children consists of a single text
+node and the value of the text node consists only of whitespace, the
+list of children matches if the list matches either with or without
+stripping the text node. Note the similarity with
+<name>valueMatch</name>.</p>
+
+<haskell>
+childrenDeriv cx p [(TextNode s)] =
+  let p1 = childDeriv cx p (TextNode s)
+  in if whitespace s then choice p p1 else p1
+</haskell>
+
+<p>Otherwise, there must be one or more elements amongst the children,
+in which case any whitespace-only text nodes are stripped before the
+derivative is computed.</p>
+
+<haskell>
+childrenDeriv cx p children = stripChildrenDeriv cx p children
+
+stripChildrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
+stripChildrenDeriv _ p [] = p
+stripChildrenDeriv cx p (h:t) = 
+  stripChildrenDeriv (if strip h then p else (childDeriv cx p h)) t
+
+strip :: ChildNode -> Boolean
+strip (TextNode s) = whitespace s
+strip _ = False
+</haskell>
+
+<p><code>whitespace</code> tests whether a string is contains
+only whitespace.</p>
+
+<haskell name="whitespace">
+whitespace :: String -> Bool
+whitespace s = all isSpace s
+</haskell>
+
+<p>Computing the derivative of a pattern with respect to an end-tag is
+obvious. Note that we rely here on the invariants about where
+<code>After</code> patterns can occur.</p>
+
+<haskell name="endTagDeriv">
+endTagDeriv :: Pattern -> Pattern
+endTagDeriv (Choice p1 p2) = choice (endTagDeriv p1) (endTagDeriv p2)
+endTagDeriv (After p1 p2) = if nullable p1 then p2 else NotAllowed
+endTagDeriv _ = NotAllowed
+</haskell>
+
+<h2>Optimizations</h2>
+
+<h3>Computing <code>nullable</code></h3>
+
+<p>The nullability of a pattern can be determined straightforwardly as
+the pattern is being constructed.  Instead of computing
+<code>nullable</code> repeatedly, it should be computed once when the
+pattern is constructed and stored as a field in the pattern.</p>
+
+<h3>Interning patterns</h3>
+
+<p>Additional optimizations become possible if it is possible to
+efficiently determine whether two patterns are equal. We don't want to
+have to completely walk the structure of both patterns to determine
+equality.  To make efficient comparison possible, we <i>intern</i>
+patterns in a hash table.  Two interned patterns are equal if and only
+if they are the same object (i.e. <code>==</code> in Java terms).
+(This is similar to the way that <code>String</code>s are interned to
+make <code>Symbol</code>s which can be compared for equality using
+<code>==</code>.)  To make interning possible, there are two notions
+of identity defined on patterns each with a corresponding hash
+function:</p>
+
+<ul>
+
+<li>interned identity is simply object identity (i.e. <code>==</code>
+or <code>Object.equals</code> in Java); for a hash function, we can
+use <code>Object.hash</code> in Java or the address of the object in
+C/C++</li>
+
+<li>uninterned identity uses the type of the pattern, the
+<i>interned</i> identity of subpatterns, and the identity of any other
+parts of the pattern; similarly, the uninterned hash function calls
+the interned hash function on subpatterns</li>
+
+</ul>
+
+<p>To intern patterns, we maintain a set of patterns implemented as a
+hash table.  The hash table used <i>uninterned</i> identity and the
+corresponding <i>uninterned</i> hash function.  When a new pattern is
+constructed, any subpatterns must first be interned.  The pattern is
+interned by looking it up in the hash table.  If it is found, we throw
+the new pattern away and instead return the existing entry in the hash
+table. If it is not found, we store the pattern in the hash table
+before returning it. (This is basically <i>hash-consing</i>.)</p>
+
+<h3>Avoiding exponential blowup</h3>
+
+<p>In order to avoid exponential blowup with some patterns, it is
+essential for the <name>choice</name> function to eliminate redundant
+choices.  Define the <i>choice-leaves</i> of a pattern to be the
+concatenation of the choice-leaves of its operands if the the pattern
+is a <code>Choice</code> pattern and the empty-list otherwise.
+Eliminating redundant choices means ensuring that the list of
+choice-leaves of the constructed pattern contains no duplicates.  One
+way to do this is to for <name>choice</name> to walk the choice-leaves
+of one operand building a hash-table of the set of choice-leaves of
+that operand; then walk the other operand using this hash-table to
+eliminate any choice-leaf that has occurred in the other operand.</p>
+
+<h3>Memoization</h3>
+
+<p>Memoization is an optimization technique that can be applied to any
+pure function that has no side-effects and whose return value depends
+only on the value of its arguments.  The basic idea is to remember
+function calls. A table is maintained that maps lists of arguments
+values to previously computed return values for those arguments.  When
+a function is called with a particular list of arguments, that list of
+arguments is looked up in the table. If an entry is found, then the
+previously computed value is returned immediately.  Otherwise, the
+value is computed as usual and then stored in the table for future
+use.</p>
+
+<p>The functions <code>startTagOpenDeriv</code>,
+<code>startTagCloseDeriv</code> and <code>endTagDeriv</code> defined
+above can be memoized efficiently.</p>
+
+<p>Memoizing <code>textDeriv</code> is suboptimal because although the
+<code>textDeriv</code> takes the string value of the text node and the
+context as arguments, in many cases the result does not depends on
+these arguments.  Instead we can distinguish two different cases for
+the content of an element.  One case is that the content contains no
+elements (i.e. it's empty or consists of just a string). In this case,
+we can first simplify pattern using a <code>textOnlyDeriv</code> that
+replaces each <code>Element</code> pattern by <code>NotAllowed</code>.
+This can be efficiently memoized.</p>
+
+<haskell name="textOnlyDeriv">
+textOnlyDeriv :: Pattern -> Pattern
+textOnlyDeriv (After p1 p2) =
+  after (textOnlyDeriv p1) p2
+textOnlyDeriv (Choice p1 p2) =
+  choice (textOnlyDeriv p1) (textOnlyDeriv p2)
+textOnlyDeriv (Group p1 p2) =
+  group (textOnlyDeriv p1) (textOnlyDeriv p2)
+textOnlyDeriv (Group p1 p2) =
+  interleave (textOnlyDeriv p1) (textOnlyDeriv p2)
+textOnlyDeriv (OneOrMore p) =
+  oneOrMore (textOnlyDeriv p)
+textOnlyDeriv (Element _ _) = NotAllowed
+textOnlyDeriv p = p
+</haskell>
+
+<p>In this case, <code>textOnlyDeriv</code> will always be followed
+by <code>endTagDeriv</code>, so we can fold the functionality
+of <code>endTagDeriv</code> into <code>textOnlyDeriv</code>.</p>
+
+<p>In the other case, the content of the element contains one or more
+child elements.  In this case, any text nodes can match only
+<code>Text</code> patterns (because of the restrictions in section 7.2
+of the RELAX NG specification).  The derivative of a <code>Text</code>
+pattern with respect to a text node does not depend on either the
+value of the text node or the context.  We therefore introduce a
+<code>mixedTextDeriv</code> function, which can be efficiently
+memoized, for use in this case.</p>
+
+<haskell name="mixedTextDeriv">
+mixedTextDeriv :: Pattern -> Pattern
+mixedTextDeriv (Choice p1 p2) =
+  choice (mixedTextDeriv p1) (mixedTextDeriv p2)
+mixedTextDeriv (Interleave p1 p2) =
+  choice (interleave (mixedTextDeriv p1) p2)
+         (interleave p1 (mixedTextDeriv p2))
+mixedTextDeriv (After p1 p2) = after (mixedTextDeriv p1) p2
+mixedTextDeriv (Group p1 p2) =
+  let p = group (mixedTextDeriv p1) p2
+  in if nullable p1 then choice p (mixedTextDeriv p2) else p
+mixedTextDeriv (OneOrMore p) =
+  group (mixedTextDeriv p) (choice (OneOrMore p) Empty)
+mixedTextDeriv Text = Text
+mixedTextDeriv _ = NotAllowed
+</haskell>
+
+<p>Another important special case of <code>textDeriv</code> that can
+be memoized efficiently is when we can determine statically that a
+pattern is consistent with some datatype.  More precisely, we can
+define a pattern <var>p</var> to be consistent with a datatype
+<var>d</var> if and only if for any two strings
+<var>s</var><sub>1</sub> <var>s</var><sub>2</sub>, and any two
+contexts <var>c</var><sub>1</sub> <var>c</var><sub>2</sub>, if
+<code>datatypeEqual</code>&nbsp;<var>d</var>&nbsp;<var>s</var><sub>1</sub>&nbsp;<var>c</var><sub>1</sub>&nbsp;<var>s</var><sub>2</sub>&nbsp;<var>c</var><sub>2</sub>,
+then
+<code>textDeriv</code>&nbsp;<var>c</var><sub>1</sub>&nbsp;<var>p</var>&nbsp;<var>s</var><sub>1</sub>
+is the same as
+<code>textDeriv</code>&nbsp;<var>c</var><sub>2</sub>&nbsp;<var>p</var>&nbsp;<var>s</var><sub>2</sub>.
+In this case, we can combine the string and context arguments into a
+single argument representing the value of the datatype that the string
+represents in the context; this can be much more efficiently memoized
+than the general case.</p>
+
+<p>The <code>attDeriv</code> function can be memoized more efficiently
+by splitting it into two function.  The first function is a
+<code>startAttributeDeriv</code> function that works like
+<code>startTagOpenDeriv</code> and depends just on the
+<code>QName</code> of the attribute.  The second stage works in the
+same way to the case when the children of an element contain a single
+string.</p>
+
+<h2>Error handling</h2>
+
+<p>So far, the algorithms presented do nothing more than compute
+whether or not the node is valid with respect to the pattern.
+However, a user will not appreciate a tool that simply reports that
+the document is invalid, without giving any indication of where the
+problem occurs or what the problem is.</p>
+
+<p>The most important thing is to detect invalidity as soon as
+possible.  If an implementation can do this, then it can tell the user
+where the problem occurs and it can protect the application from
+seeing invalid data.  If we consider the XML document to be a sequence
+of SAX-like events, then detecting the error <i>as soon as
+possible</i>, means that the implementation must detect when an
+initial sequence <var>s</var> of events is such that there is no valid
+sequence of events that starts with <var>s</var>.</p>
+
+<p>@@@</p>
+
+<p>Error recovery is something of a black art.  Here are some of the
+error recovery techniques that Jing implements:</p>
+
+<ul>
+
+<li>If an attribute causes an error, then recover by trying to match
+that attribute with a special wildcard value which matches any
+pattern; if that fails then simply ignore the attribute.</li>
+
+<li>If <name>startTagCloseDeriv</name> causes an error, then replace
+all <code>attribute</code> patterns by <code>empty</code> (i.e. assume
+all attributes match).</li>
+
+<li>If there are no potential patterns for an element of a particular
+name, try to find a potential pattern by searching the current
+pattern; in the first instance, search for a potential pattern at the
+current element depth (i.e. the search cannot pass through any
+<code>element</code> patterns); if that still fails to find a
+potential pattern, then search at element depth 1 (i.e. the search can
+pass through at most one <code>element</code> pattern).</li>
+
+<li>If the content of an element does not match any of the potential
+patterns, then recover by assuming it matches all of them.</li>
+
+<li>If a text node causes an error, ignore the text node.</li>
+
+</ul>
+
+<p>Here are some error recovery techniques I hope to implement in the future:</p>
+
+<ul>
+
+<li>Suppose we are current expecting elements A, B, C, B, D in that
+order.  Suppose we see a B element (which is an error since only A is
+allowed at the current point). After parsing the B element, we should
+recover using a pattern of ((C, B, D)|D).  At the moment, after
+parsing the B element, Jing continues as if the B element had not been
+encountered.</li>
+
+<li>If no potential patterns are found for an element of a particular
+name, then the entire schema should be searched for potential
+patterns, first looking for patterns for that name, and then looking
+for pattern for the namespace of that name.</li>
+
+</ul>
+
+<h2>References</h2>
+
+<p>Dongwon Lee, Murali Mani, Makoto Murata. <i>Reasoning about XML
+Schema Languages using Formal Language Theory</i>. 2000. See <a
+href="http://citeseer.nj.nec.com/lee00reasoning.html"
+>http://citeseer.nj.nec.com/lee00reasoning.html</a>.</p>
+
+<p>Janusz A. Brzozowski. <i>Derivatives of Regular
+Expressions</i>. Journal of the ACM, Volume 11, Issue 4, 1964.</p>
+
+<p>Mark Hopkins. <i>Regular Expression Package</i>. <a
+href="http://compilers.iecc.com/comparch/article/94-02-109">Posted</a>
+to comp.compilers, 1994.  Available from <a
+href="ftp://iecc.com/pub/file/regex.tar.gz"
+>ftp://iecc.com/pub/file/regex.tar.gz</a>.</p>
+
+</div>
+
+</body>
+</html>
