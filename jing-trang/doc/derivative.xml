@@ -14,7 +14,7 @@
 <body>
 <h1>An algorithm for RELAX NG validation</h1>
 <h3>James Clark (jjc@thaiopensource.com)</h3>
-<h3>2002-02-11</h3>
+<h3>2002-02-12</h3>
 
 <div>
 <p>This document describes an algorithm for validating an XML document
