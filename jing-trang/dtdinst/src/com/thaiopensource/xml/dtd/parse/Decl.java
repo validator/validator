@@ -21,7 +21,7 @@ class Decl {
     this.type = type;
   }
 
-  int type;
+  final int type;
   Vector params;
   String value;
   Entity entity;

@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.dtd.om;
 
 public class EnumGroup {
-  private EnumGroupMember[] members;
+  private final EnumGroupMember[] members;
 
   public EnumGroup(EnumGroupMember[] members) {
     this.members = members;

@@ -6,7 +6,7 @@ package com.thaiopensource.xml.tok;
  * more chars were added.
  */
 public class PartialCharException extends PartialTokenException {
-  private int leadCharIndex;
+  private final int leadCharIndex;
   PartialCharException(int leadCharIndex) {
     this.leadCharIndex = leadCharIndex;
   }

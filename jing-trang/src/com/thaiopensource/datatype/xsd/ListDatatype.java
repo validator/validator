@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import org.relaxng.datatype.ValidationContext;
 
 class ListDatatype extends DatatypeBase implements Measure {
-  private DatatypeBase itemType;
+  private final DatatypeBase itemType;
   
   ListDatatype(DatatypeBase itemType) {
     this.itemType = itemType;

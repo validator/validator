@@ -3,7 +3,7 @@ package com.thaiopensource.xml.util;
 import java.io.UnsupportedEncodingException;
 
 public abstract class EncodingMap {
-  static String[] aliases = {
+  private static final String[] aliases = {
     "UTF-8", "UTF8",
     "UTF-16", "Unicode",
     "UTF-16BE", "UnicodeBigUnmarked",

@@ -4,9 +4,9 @@ import org.xml.sax.SAXException;
 import com.thaiopensource.relaxng.parse.ParsedPattern;
 
 public abstract class Pattern implements ParsedPattern {
-  private boolean nullable;
-  private int hc;
-  private int contentType;
+  private final boolean nullable;
+  private final int hc;
+  private final int contentType;
 
   static final int TEXT_HASH_CODE = 1;
   static final int ERROR_HASH_CODE = 3;

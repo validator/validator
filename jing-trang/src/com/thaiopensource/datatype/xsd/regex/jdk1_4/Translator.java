@@ -17,12 +17,12 @@ import java.math.BigDecimal;
  * @see <a href="http://www.w3.org/TR/xmlschema-2/#regexs">XML Schema Part 2</a>
  */
 public class Translator {
-  private String regExp;
+  private final String regExp;
   private int pos = 0;
-  private int length;
+  private final int length;
   private char curChar;
   private boolean eos = false;
-  private StringBuffer result = new StringBuffer();
+  private final StringBuffer result = new StringBuffer();
 
   static private final String categories = "LMNPZSC";
   static private final CharClass[] categoryCharClasses = new CharClass[categories.length()];
@@ -34,7 +34,7 @@ public class Translator {
   static private final char SURROGATE2_MIN = '\uDC00';
   static private final char SURROGATE2_MAX = '\uDFFF';
 
-  static Localizer localizer = new Localizer(Translator.class);
+  static final Localizer localizer = new Localizer(Translator.class);
 
   static private final String[] blockNames = {
     "BasicLatin",
@@ -579,7 +579,7 @@ public class Translator {
   }
 
   static class SingleChar extends SimpleCharClass {
-    private char c;
+    private final char c;
     SingleChar(char c) {
       super(SOME, NONE);
       this.c = c;
@@ -602,7 +602,7 @@ public class Translator {
   }
 
   static class WideSingleChar extends SimpleCharClass {
-    private int c;
+    private final int c;
 
     WideSingleChar(int c) {
       super(NONE, SOME);
@@ -639,8 +639,8 @@ public class Translator {
   }
 
   static class CharRange extends SimpleCharClass {
-    private int lower;
-    private int upper;
+    private final int lower;
+    private final int upper;
 
     CharRange(int lower, int upper) {
       super(lower < NONBMP_MIN ? SOME : NONE,
@@ -673,7 +673,7 @@ public class Translator {
   }
 
   static class Property extends SimpleCharClass {
-    private String name;
+    private final String name;
 
     Property(String name) {
       super(SOME, NONE);
@@ -698,8 +698,8 @@ public class Translator {
   }
 
   static class Subtraction extends CharClass {
-    private CharClass cc1;
-    private CharClass cc2;
+    private final CharClass cc1;
+    private final CharClass cc2;
     Subtraction(CharClass cc1, CharClass cc2) {
       // min corresponds to intersection
       // complement corresponds to negation
@@ -766,7 +766,7 @@ public class Translator {
   }
 
   static class Union extends CharClass {
-    private List members;
+    private final List members;
 
     Union(CharClass[] v) {
       this(toList(v));
@@ -853,7 +853,7 @@ public class Translator {
   }
 
   static class Complement extends CharClass {
-    private CharClass cc;
+    private final CharClass cc;
     Complement(CharClass cc) {
       super(-cc.getContainsBmp(), -cc.getContainsNonBmp());
       this.cc = cc;
@@ -1209,13 +1209,13 @@ public class Translator {
     return subCategoryCharClasses[sci];
   }
 
-  static private char UNICODE_3_1_ADD_Lu = '\u03F4';   // added in 3.1
-  static private char UNICODE_3_1_ADD_Ll = '\u03F5';   // added in 3.1
+  static private final char UNICODE_3_1_ADD_Lu = '\u03F4';   // added in 3.1
+  static private final char UNICODE_3_1_ADD_Ll = '\u03F5';   // added in 3.1
   // 3 characters changed from No to Nl between 3.0 and 3.1
-  static private char UNICODE_3_1_CHANGE_No_to_Nl_MIN = '\u16EE';
-  static private char UNICODE_3_1_CHANGE_No_to_Nl_MAX = '\u16F0';
-  static private String CATEGORY_Pi = "\u00AB\u2018\u201B\u201C\u201F\u2039"; // Java doesn't know about category Pi
-  static private String CATEGORY_Pf = "\u00BB\u2019\u201D\u203A"; // Java doesn't know about category Pf
+  static private final char UNICODE_3_1_CHANGE_No_to_Nl_MIN = '\u16EE';
+  static private final char UNICODE_3_1_CHANGE_No_to_Nl_MAX = '\u16F0';
+  static private final String CATEGORY_Pi = "\u00AB\u2018\u201B\u201C\u201F\u2039"; // Java doesn't know about category Pi
+  static private final String CATEGORY_Pf = "\u00BB\u2019\u201D\u203A"; // Java doesn't know about category Pf
 
   static private CharClass computeCategoryCharClass(char code) {
     List classes = new Vector();

@@ -1,8 +1,8 @@
 package com.thaiopensource.datatype.xsd;
 
 class MaxLengthRestrictDatatype extends ValueRestrictDatatype {
-  private int length;
-  private Measure measure;
+  private final int length;
+  private final Measure measure;
 
   MaxLengthRestrictDatatype(DatatypeBase base, int length) {
     super(base);

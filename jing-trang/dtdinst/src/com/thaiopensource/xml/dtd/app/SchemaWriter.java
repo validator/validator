@@ -14,7 +14,7 @@ public class SchemaWriter implements TopLevelVisitor,
                                      FlagVisitor,
                                      NameSpecVisitor,
                                      AttributeDefaultVisitor {
-  private XmlWriter w;
+  private final XmlWriter w;
   
   public SchemaWriter(XmlWriter writer) {
     this.w = writer;

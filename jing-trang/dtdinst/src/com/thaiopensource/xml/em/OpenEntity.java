@@ -9,10 +9,10 @@ import java.io.Reader;
  * @see EntityManager
  */
 public class OpenEntity {
-  private Reader reader;
-  private String baseUri;
-  private String location;
-  private String encoding;
+  private final Reader reader;
+  private final String baseUri;
+  private final String location;
+  private final String encoding;
 
   /**
    * Creates and initializes an <code>OpenEntity</code>. which uses

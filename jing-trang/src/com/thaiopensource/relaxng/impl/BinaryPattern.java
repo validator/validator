@@ -3,8 +3,8 @@ package com.thaiopensource.relaxng.impl;
 import org.xml.sax.SAXException;
 
 abstract class BinaryPattern extends Pattern {
-  Pattern p1;
-  Pattern p2;
+  final Pattern p1;
+  final Pattern p2;
 
   BinaryPattern(boolean nullable, int hc, Pattern p1, Pattern p2) {
     super(nullable, Math.max(p1.getContentType(), p2.getContentType()), hc);

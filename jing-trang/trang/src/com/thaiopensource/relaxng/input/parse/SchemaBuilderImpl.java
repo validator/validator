@@ -279,8 +279,8 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   private class GrammarSectionImpl extends ScopeImpl implements Grammar, Div, Include, IncludedGrammar {
-    private Annotated subject;
-    private List components;
+    private final Annotated subject;
+    private final List components;
     Component lastComponent;
 
     private GrammarSectionImpl(Annotated subject, Container container) {
@@ -430,7 +430,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   static class CommentListImpl implements CommentList {
-    private List list = new Vector();
+    private final List list = new Vector();
     public void addComment(String value, Location loc) throws BuildException {
       Comment comment = new Comment(value);
       comment.setSourceLocation((SourceLocation)loc);
@@ -455,7 +455,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   private class DataPatternBuilderImpl implements DataPatternBuilder {
-    private DataPattern p;
+    private final DataPattern p;
     private DatatypeBuilder dtb = null;
 
     DataPatternBuilderImpl(DataPattern p) throws BuildException {
@@ -537,9 +537,9 @@ class SchemaBuilderImpl implements SchemaBuilder {
 
   private static class AnnotationsImpl implements Annotations {
     private CommentList comments;
-    private List attributes = new Vector();
-    private List elements = new Vector();
-    private Context context;
+    private final List attributes = new Vector();
+    private final List elements = new Vector();
+    private final Context context;
 
     AnnotationsImpl(CommentList comments, Context context) {
       this.comments = comments;

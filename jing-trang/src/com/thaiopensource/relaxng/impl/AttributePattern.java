@@ -4,9 +4,9 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 class AttributePattern extends Pattern {
-  private NameClass nameClass;
-  private Pattern p;
-  private Locator loc;
+  private final NameClass nameClass;
+  private final Pattern p;
+  private final Locator loc;
 
   AttributePattern(NameClass nameClass, Pattern value, Locator loc) {
     super(false,

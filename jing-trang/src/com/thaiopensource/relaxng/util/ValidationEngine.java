@@ -28,8 +28,8 @@ import com.thaiopensource.util.UriOrFile;
 public class ValidationEngine {
   private final XMLReaderCreator xrc;
   private XMLReader xr;
-  private ErrorHandler eh;
-  private SchemaFactory factory;
+  private final ErrorHandler eh;
+  private final SchemaFactory factory;
   private ValidatorHandler vh;
   private Schema schema;
 

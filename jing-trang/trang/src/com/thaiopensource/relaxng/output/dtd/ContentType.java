@@ -2,22 +2,22 @@ package com.thaiopensource.relaxng.output.dtd;
 
 class ContentType {
   private final ContentType parent;
-  static ContentType MIXED_ELEMENT_CLASS = new ContentType();
-  static ContentType NOT_ALLOWED = new ContentType();
-  static ContentType SIMPLE_TYPE = new ContentType();
-  static ContentType SIMPLE_TYPE_CHOICE = new ContentType(SIMPLE_TYPE);
-  static ContentType VALUE = new ContentType(SIMPLE_TYPE);
-  static ContentType EMPTY = new ContentType();
-  static ContentType TEXT = new ContentType(MIXED_ELEMENT_CLASS);
-  static ContentType MIXED_MODEL = new ContentType();
-  static ContentType INTERLEAVE_MIXED_MODEL = new ContentType(MIXED_MODEL);
-  static ContentType MODEL_GROUP = new ContentType();
-  static ContentType ELEMENT_CLASS = new ContentType(MODEL_GROUP);
-  static ContentType DIRECT_SINGLE_ELEMENT = new ContentType(ELEMENT_CLASS);
-  static ContentType ZERO_OR_MORE_ELEMENT_CLASS = new ContentType(MODEL_GROUP);
-  static ContentType INTERLEAVE_ZERO_OR_MORE_ELEMENT_CLASS = new ContentType(ZERO_OR_MORE_ELEMENT_CLASS);
-  static ContentType ENUM = new ContentType(SIMPLE_TYPE);
-  static ContentType ERROR = new ContentType();
+  static final ContentType MIXED_ELEMENT_CLASS = new ContentType();
+  static final ContentType NOT_ALLOWED = new ContentType();
+  static final ContentType SIMPLE_TYPE = new ContentType();
+  static final ContentType SIMPLE_TYPE_CHOICE = new ContentType(SIMPLE_TYPE);
+  static final ContentType VALUE = new ContentType(SIMPLE_TYPE);
+  static final ContentType EMPTY = new ContentType();
+  static final ContentType TEXT = new ContentType(MIXED_ELEMENT_CLASS);
+  static final ContentType MIXED_MODEL = new ContentType();
+  static final ContentType INTERLEAVE_MIXED_MODEL = new ContentType(MIXED_MODEL);
+  static final ContentType MODEL_GROUP = new ContentType();
+  static final ContentType ELEMENT_CLASS = new ContentType(MODEL_GROUP);
+  static final ContentType DIRECT_SINGLE_ELEMENT = new ContentType(ELEMENT_CLASS);
+  static final ContentType ZERO_OR_MORE_ELEMENT_CLASS = new ContentType(MODEL_GROUP);
+  static final ContentType INTERLEAVE_ZERO_OR_MORE_ELEMENT_CLASS = new ContentType(ZERO_OR_MORE_ELEMENT_CLASS);
+  static final ContentType ENUM = new ContentType(SIMPLE_TYPE);
+  static final ContentType ERROR = new ContentType();
 
   private ContentType() {
     this.parent = null;

@@ -7,7 +7,7 @@ package com.thaiopensource.xml.tok;
  * would throw this if the char subarray consists of a legal XML name.
  */
 public class ExtensibleTokenException extends TokenException {
-  private int tokType;
+  private final int tokType;
 
   ExtensibleTokenException(int tokType) {
     this.tokType = tokType;

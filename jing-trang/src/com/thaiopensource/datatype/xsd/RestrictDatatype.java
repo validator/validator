@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import org.relaxng.datatype.ValidationContext;
 
 class RestrictDatatype extends DatatypeBase {
-  protected DatatypeBase base;
+  protected final DatatypeBase base;
   
   RestrictDatatype(DatatypeBase base) {
     this(base, base.getWhiteSpace());

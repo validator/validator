@@ -14,11 +14,11 @@ public class Schema extends Annotated {
   private final String uri;
   private final String encoding;
   private Schema parent;
-  private List topLevel = new Vector();
-  private Map groupMap;
-  private Map attributeGroupMap;
-  private Map simpleTypeMap;
-  private List subSchemas;
+  private final List topLevel = new Vector();
+  private final Map groupMap;
+  private final Map attributeGroupMap;
+  private final Map simpleTypeMap;
+  private final List subSchemas;
   private final List leadingComments = new Vector();
   private final List trailingComments = new Vector();
 

@@ -30,7 +30,7 @@ public class JingTask extends Task {
 
   private File rngFile;
   private File src;
-  private Vector filesets = new Vector();
+  private final Vector filesets = new Vector();
   private boolean checkid = true;
   private boolean compactsyntax = false;
 

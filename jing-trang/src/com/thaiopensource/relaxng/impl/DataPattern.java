@@ -4,7 +4,7 @@ import com.thaiopensource.datatype.Datatype2;
 import org.relaxng.datatype.Datatype;
 
 class DataPattern extends StringPattern {
-  private Datatype dt;
+  private final Datatype dt;
 
   DataPattern(Datatype dt) {
     super(combineHashCode(DATA_HASH_CODE, dt.hashCode()));

@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import java.math.BigDecimal;
 
 class PrecisionRestrictDatatype extends ValueRestrictDatatype {
-  private int precision;
+  private final int precision;
 
   PrecisionRestrictDatatype(DatatypeBase base, int precision) {
     super(base);

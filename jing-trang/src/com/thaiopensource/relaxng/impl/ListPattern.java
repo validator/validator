@@ -4,8 +4,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 class ListPattern extends Pattern {
-  Pattern p;
-  Locator locator;
+  final Pattern p;
+  final Locator locator;
 
   ListPattern(Pattern p, Locator locator) {
     super(false,

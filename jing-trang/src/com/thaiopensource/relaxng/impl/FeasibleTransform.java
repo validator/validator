@@ -5,7 +5,7 @@ import java.util.Hashtable;
 public class FeasibleTransform {
   private static class FeasiblePatternFunction extends AbstractPatternFunction {
     private final SchemaPatternBuilder spb;
-    private Hashtable elementTable = new Hashtable();
+    private final Hashtable elementTable = new Hashtable();
 
     FeasiblePatternFunction(SchemaPatternBuilder spb) {
       this.spb = spb;

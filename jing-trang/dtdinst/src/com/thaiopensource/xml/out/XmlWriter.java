@@ -16,11 +16,9 @@ public class XmlWriter {
   private static final int AFTER_DATA = 2;
   private int state = OTHER;
 
-  private boolean startTagOpen = false;
   private String[] stack = new String[20];
   private int level = 0;
   private String newline = "\n";
-  private boolean inData = false;
 
   public XmlWriter(Writer writer, CharRepertoire cr) {
     this.writer = writer;

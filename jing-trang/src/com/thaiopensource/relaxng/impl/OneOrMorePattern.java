@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng.impl;
 import org.xml.sax.SAXException;
 
 class OneOrMorePattern extends Pattern {
-  Pattern p;
+  final Pattern p;
 
   OneOrMorePattern(Pattern p) {
     super(p.isNullable(),

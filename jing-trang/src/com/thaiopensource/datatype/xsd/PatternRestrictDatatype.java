@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import com.thaiopensource.datatype.xsd.regex.Regex;
 
 class PatternRestrictDatatype extends RestrictDatatype {
-  private Regex pattern;
+  private final Regex pattern;
 
   PatternRestrictDatatype(DatatypeBase base, Regex pattern) {
     super(base);

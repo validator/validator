@@ -1,7 +1,6 @@
 package com.thaiopensource.relaxng.input.dtd;
 
 import com.thaiopensource.relaxng.input.InputFormat;
-import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
@@ -26,8 +25,6 @@ import java.io.IOException;
 import java.util.Map;
 
 public class DtdInputFormat implements InputFormat {
-  private boolean inlineAttlistDecls = false;
-
   static private class NamespaceDeclParamFactory implements ParamFactory {
     private final Map prefixMap;
 

@@ -308,8 +308,8 @@ class Transformer extends SchemaTransformer {
   }
 
   static class AttributeInfo {
-    Map map;
-    Wildcard wildcard;
+    final Map map;
+    final Wildcard wildcard;
 
     AttributeInfo(Map map, Wildcard wildcard) {
       this.map = map;
@@ -373,7 +373,7 @@ class Transformer extends SchemaTransformer {
   class AttributeTransformer extends AbstractAttributeUseVisitor {
     private final Set retainNames;
     private final Set requiredNames;
-    private boolean retainWildcard;
+    private final boolean retainWildcard;
 
     public AttributeTransformer(Set retainNames, Set requiredNames, boolean retainWildcard) {
       this.retainNames = retainNames;

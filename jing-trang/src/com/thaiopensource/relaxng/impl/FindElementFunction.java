@@ -3,9 +3,9 @@ package com.thaiopensource.relaxng.impl;
 import java.util.Hashtable;
 
 class FindElementFunction extends AbstractPatternFunction {
-  private ValidatorPatternBuilder builder;
-  private Name name;
-  private Hashtable processed = new Hashtable();
+  private final ValidatorPatternBuilder builder;
+  private final Name name;
+  private final Hashtable processed = new Hashtable();
   private int specificity = NameClass.SPECIFICITY_NONE;
   private Pattern pattern = null;
 

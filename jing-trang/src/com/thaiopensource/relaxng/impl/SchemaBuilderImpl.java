@@ -47,7 +47,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
   private final String inheritNs;
   private final ErrorHandler eh;
   private final OpenIncludes openIncludes;
-  private AttributeNameClassChecker attributeNameClassChecker = new AttributeNameClassChecker();
+  private final AttributeNameClassChecker attributeNameClassChecker = new AttributeNameClassChecker();
   static final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
 
   static class OpenIncludes {
@@ -249,8 +249,8 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
   }
 
   private class ValidationContextImpl implements ValidationContext {
-    private ValidationContext vc;
-    private String ns;
+    private final ValidationContext vc;
+    private final String ns;
 
     ValidationContextImpl(ValidationContext vc, String ns) {
       this.vc = vc;
@@ -281,7 +281,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
   }
 
   private class DataPatternBuilderImpl implements DataPatternBuilder {
-    private DatatypeBuilder dtb;
+    private final DatatypeBuilder dtb;
     DataPatternBuilderImpl(DatatypeBuilder dtb) {
       this.dtb = dtb;
     }
@@ -566,16 +566,16 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
       this.next = next;
     }
 
-    RefPattern prp;
-    Override next;
+    final RefPattern prp;
+    final Override next;
     byte replacementStatus;
   }
 
 
   private static class IncludeImpl implements Include, Div {
-    private SchemaBuilderImpl sb;
+    private final SchemaBuilderImpl sb;
     private Override overrides;
-    private GrammarImpl grammar;
+    private final GrammarImpl grammar;
 
     private IncludeImpl(SchemaBuilderImpl sb, GrammarImpl grammar) {
       this.sb = sb;

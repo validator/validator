@@ -4,11 +4,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 class Grammar {
-  private Hashtable patterns = new Hashtable();
+  private final Hashtable patterns = new Hashtable();
 
-  private RefPattern start = new RefPattern(null);
+  private final RefPattern start = new RefPattern(null);
 
-  private Grammar parent;
+  private final Grammar parent;
 
   Grammar(Grammar parent) {
     this.parent = parent;

@@ -3,13 +3,13 @@ package com.thaiopensource.relaxng.impl;
 import java.util.Vector;
 
 class DuplicateAttributeDetector {
-  private Vector nameClasses = new Vector();
+  private final Vector nameClasses = new Vector();
   private Alternative alternatives = null;
 
   private static class Alternative {
-    private int startIndex;
+    private final int startIndex;
     private int endIndex;
-    private Alternative parent;
+    private final Alternative parent;
 
     private Alternative(int startIndex, Alternative parent) {
       this.startIndex = startIndex;

@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import java.math.BigDecimal;
 
 class ScaleRestrictDatatype extends ValueRestrictDatatype {
-  private int scale;
+  private final int scale;
 
   ScaleRestrictDatatype(DatatypeBase base, int scale) {
     super(base);

@@ -3,8 +3,8 @@ package com.thaiopensource.datatype.xsd;
 import org.relaxng.datatype.ValidationContext;
 
 class MinInclusiveRestrictDatatype extends ValueRestrictDatatype {
-  private OrderRelation order;
-  private Object limit;
+  private final OrderRelation order;
+  private final Object limit;
 
   MinInclusiveRestrictDatatype(DatatypeBase base, Object limit) {
     super(base);

@@ -16,7 +16,7 @@ import org.relaxng.datatype.DatatypeBuilder;
 
 public class DatatypeLibraryImpl implements DatatypeLibrary {
   private final Hashtable typeTable = new Hashtable();
-  private RegexEngine regexEngine;
+  private final RegexEngine regexEngine;
 
   static private final String LONG_MAX = "9223372036854775807";
   static private final String LONG_MIN = "-9223372036854775808";

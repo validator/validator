@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.dtd.om;
 
 public class FixedValue extends AttributeDefault {
-  private String value;
+  private final String value;
   
   public FixedValue(String value) {
     this.value = value;

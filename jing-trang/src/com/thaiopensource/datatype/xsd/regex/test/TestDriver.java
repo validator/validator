@@ -24,7 +24,7 @@ public class TestDriver extends DefaultHandler {
   private int nFail = 0;
   private int nTests = 0;
   private Locator loc;
-  private RegexEngine engine;
+  private final RegexEngine engine;
 
   static public void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
     if (args.length != 2) {

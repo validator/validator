@@ -9,8 +9,8 @@ class AtomStream {
   boolean eof;
 
   private int i;
-  private int len;
-  private Vector v;
+  private final int len;
+  private final Vector v;
 
   AtomStream(Vector v) {
     this.v = v;

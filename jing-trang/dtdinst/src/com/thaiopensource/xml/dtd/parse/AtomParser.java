@@ -5,10 +5,10 @@ import java.util.Vector;
 import com.thaiopensource.xml.tok.Tokenizer;
 
 class AtomParser {
-  private DtdBuilder db;
-  private AtomStream as;
-  private PrologParser pp;
-  private Vector v;
+  private final DtdBuilder db;
+  private final AtomStream as;
+  private final PrologParser pp;
+  private final Vector v;
   private Particle group;
 
   AtomParser(DtdBuilder db, AtomStream as, PrologParser pp, Vector v) {

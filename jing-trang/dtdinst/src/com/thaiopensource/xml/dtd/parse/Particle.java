@@ -19,7 +19,7 @@ class Particle {
     this.type = type;
   }
 
-  int type;
+  final int type;
   char occur;			// * ? + or 0
   Vector particles; 
   Entity entity;

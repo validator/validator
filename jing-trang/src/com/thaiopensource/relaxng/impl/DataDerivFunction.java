@@ -4,9 +4,9 @@ import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.ValidationContext;
 
 class DataDerivFunction extends AbstractPatternFunction {
-  private ValidatorPatternBuilder builder;
-  private ValidationContext vc;
-  private String str;
+  private final ValidatorPatternBuilder builder;
+  private final ValidationContext vc;
+  private final String str;
 
   DataDerivFunction(String str, ValidationContext vc, ValidatorPatternBuilder builder) {
     this.str = str;

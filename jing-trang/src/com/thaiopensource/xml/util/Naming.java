@@ -61,7 +61,7 @@ public class Naming {
   "\u0ae6\u0aef\u0b66\u0b6f\u0be7\u0bef\u0c66\u0c6f\u0ce6\u0cef\u0d66\u0d6f" +
   "\u0e50\u0e59\u0ed0\u0ed9\u0f20\u0f29\u3031\u3035\u309d\u309e\u30fc\u30fe";
 
-  /* final */ static byte[][] charTypeTable;
+  private final static byte[][] charTypeTable;
 
   static {
     charTypeTable = new byte[256][];

@@ -4,7 +4,7 @@ package com.thaiopensource.datatype.xsd.regex;
  * Thrown when an syntactically incorrect regular expression is detected.
  */
 public class RegexSyntaxException extends Exception {
-  private int position;
+  private final int position;
 
   /**
    * Represents an unknown position within a string containing a regular expression.

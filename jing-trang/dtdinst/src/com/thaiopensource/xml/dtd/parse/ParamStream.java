@@ -9,11 +9,12 @@ class ParamStream {
   String value;
 
   private int i = 0;
-  private Vector v;
-  private boolean showReferences = false;
+  private final Vector v;
+  private final boolean showReferences;
 
   ParamStream(Vector v) {
     this.v = v;
+    this.showReferences = false;
   }
 
   ParamStream(Vector v, boolean showReferences) {

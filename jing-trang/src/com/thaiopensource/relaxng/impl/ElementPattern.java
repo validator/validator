@@ -5,11 +5,11 @@ import org.xml.sax.SAXException;
 
 class ElementPattern extends Pattern {
   private Pattern p;
-  private NameClass origNameClass;
+  private final NameClass origNameClass;
   private NameClass nameClass;
   private boolean expanded = false;
   private boolean checkedRestrictions = false;
-  private Locator loc;
+  private final Locator loc;
 
   ElementPattern(NameClass nameClass, Pattern p, Locator loc) {
     super(false,

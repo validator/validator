@@ -47,13 +47,13 @@ class SchemaParser {
   static final Localizer localizer = new Localizer(SchemaParser.class);
 
   String relaxngURI;
-  XMLReader xr;
-  ErrorHandler eh;
-  SchemaBuilder schemaBuilder;
+  final XMLReader xr;
+  final ErrorHandler eh;
+  final SchemaBuilder schemaBuilder;
   ParsedPattern startPattern;
   Locator locator;
-  XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
-  ContextImpl context = new ContextImpl();
+  final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
+  final ContextImpl context = new ContextImpl();
 
   boolean hadError = false;
 
@@ -327,9 +327,9 @@ class SchemaParser {
   }
 
   class ForeignElementHandler extends Handler {
-    State nextState;
+    final State nextState;
     ElementAnnotationBuilder builder;
-    Stack builderStack = new Stack();
+    final Stack builderStack = new Stack();
     StringBuffer textBuf;
     Location textLoc;
 
@@ -398,7 +398,7 @@ class SchemaParser {
 
   class Skipper extends DefaultHandler implements CommentHandler {
     int level = 1;
-    State nextState;
+    final State nextState;
 
     Skipper(State nextState) {
       this.nextState = nextState;
@@ -688,7 +688,7 @@ class SchemaParser {
   }
 
   class ValueState extends EmptyContentState {
-    StringBuffer buf = new StringBuffer();
+    final StringBuffer buf = new StringBuffer();
     String type;
 
     State create() {
@@ -792,8 +792,8 @@ class SchemaParser {
   }
 
   class ParamState extends State {
-    private StringBuffer buf = new StringBuffer();
-    private DataPatternBuilder dpb;
+    private final StringBuffer buf = new StringBuffer();
+    private final DataPatternBuilder dpb;
     private String name;
 
     ParamState(DataPatternBuilder dpb) {
@@ -943,7 +943,7 @@ class SchemaParser {
   }
 
   class DivState extends GrammarSectionState {
-    Div div;
+    final Div div;
     DivState(Div div) {
       super(div);
       this.div = div;
@@ -957,7 +957,7 @@ class SchemaParser {
 
   class IncludeState extends GrammarSectionState {
     String href;
-    Include include;
+    final Include include;
 
     IncludeState(Include include) {
       super(include);
@@ -993,7 +993,7 @@ class SchemaParser {
   }
 
   class MergeGrammarState extends GrammarSectionState {
-    IncludedGrammar grammar;
+    final IncludedGrammar grammar;
     MergeGrammarState(IncludedGrammar grammar) {
       super(grammar);
       this.grammar = grammar;
@@ -1105,7 +1105,7 @@ class SchemaParser {
 
   abstract class DefinitionState extends PatternContainerState {
     GrammarSection.Combine combine = null;
-    GrammarSection section;
+    final GrammarSection section;
 
     DefinitionState(GrammarSection section) {
       this.section = section;
@@ -1192,8 +1192,8 @@ class SchemaParser {
   }
 
   class NameClassChildState extends NameClassContainerState {
-    State prevState;
-    NameClassRef nameClassRef;
+    final State prevState;
+    final NameClassRef nameClassRef;
 
     State create() {
       return null;
@@ -1233,7 +1233,7 @@ class SchemaParser {
   }
 
   class NameState extends NameClassBaseState {
-    StringBuffer buf = new StringBuffer();
+    final StringBuffer buf = new StringBuffer();
 
     State createChildState(String localName) throws SAXException {
       error("expected_name", localName);

@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class Driver {
-  static private Localizer localizer = new Localizer(Driver.class);
+  static private final Localizer localizer = new Localizer(Driver.class);
   private String inputType;
   private String outputType;
-  private ErrorHandlerImpl eh = new ErrorHandlerImpl();
+  private final ErrorHandlerImpl eh = new ErrorHandlerImpl();
   private static final String DEFAULT_OUTPUT_ENCODING = "UTF-8";
   private static final int DEFAULT_LINE_LENGTH = 72;
   private static final int DEFAULT_INDENT = 2;

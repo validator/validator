@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 class SchemaInfo {
   private final SchemaCollection sc;
-  private GrammarPattern grammar;
+  private final GrammarPattern grammar;
   private final ErrorReporter er;
   private final Map childTypeMap = new HashMap();
   private final Map defineMap = new HashMap();

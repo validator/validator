@@ -53,30 +53,30 @@ import java.util.Collections;
 import java.util.Iterator;
 
 class Analysis {
-  private NamespaceManager nsm = new NamespaceManager();
-  private AttlistMapper am = new AttlistMapper();
-  private ErrorReporter er;
-  private Map contentTypes = new HashMap();
-  private Map attributeTypes = new HashMap();
-  private Map attributeAlphabets = new HashMap();
-  private Map attributeNamespaces = new HashMap();
+  private final NamespaceManager nsm = new NamespaceManager();
+  private final AttlistMapper am = new AttlistMapper();
+  private final ErrorReporter er;
+  private final Map contentTypes = new HashMap();
+  private final Map attributeTypes = new HashMap();
+  private final Map attributeAlphabets = new HashMap();
+  private final Map attributeNamespaces = new HashMap();
   private Map defines = null;
-  private Set attlists = new HashSet();
-  private Map parts = new HashMap();
-  private Map seenTable = new HashMap();
-  private Map elementDecls = new HashMap();
+  private final Set attlists = new HashSet();
+  private final Map parts = new HashMap();
+  private final Map seenTable = new HashMap();
+  private final Map elementDecls = new HashMap();
   private ContentType startType = ContentType.ERROR;
   private GrammarPart mainPart;
-  private SchemaCollection schemas;
+  private final SchemaCollection schemas;
   private GrammarPattern grammarPattern;
-  private AttributeTyper attributeTyper = new AttributeTyper();
-  private AttributeAlphabetComputer attributeAlphabetComputer = new AttributeAlphabetComputer();
-  private AttributeNamespacesComputer attributeNamespacesComputer = new AttributeNamespacesComputer();
-  private IncludeContentChecker includeContentChecker = new IncludeContentChecker();
+  private final AttributeTyper attributeTyper = new AttributeTyper();
+  private final AttributeAlphabetComputer attributeAlphabetComputer = new AttributeAlphabetComputer();
+  private final AttributeNamespacesComputer attributeNamespacesComputer = new AttributeNamespacesComputer();
+  private final IncludeContentChecker includeContentChecker = new IncludeContentChecker();
 
   private class Analyzer implements PatternVisitor, ComponentVisitor, NameClassVisitor {
     private ElementPattern ancestorPattern;
-    private Set pendingRefs;
+    private final Set pendingRefs;
 
     public Analyzer() {
       pendingRefs = new HashSet();

@@ -11,16 +11,16 @@ import java.util.Stack;
 public class XmlWriter {
   private final String lineSep;
   private final String indentString;
-  private Writer w;
-  private CharRepertoire cr;
-  private Stack tagStack = new Stack();
+  private final Writer w;
+  private final CharRepertoire cr;
+  private final Stack tagStack = new Stack();
   private boolean inStartTag = false;
   private boolean inText = false;
   private int level = 0;
-  private String[] topLevelAttributes;
+  private final String[] topLevelAttributes;
 
   public static class WrappedException extends RuntimeException {
-    private IOException cause;
+    private final IOException cause;
 
     public Throwable getCause() {
       return cause;

@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class Driver {
   private static final int FAILURE_EXIT_CODE = 1;
-  private static Localizer localizer = new Localizer(Driver.class);
+  private static final Localizer localizer = new Localizer(Driver.class);
 
   public static void main(String[] args) {
     try {

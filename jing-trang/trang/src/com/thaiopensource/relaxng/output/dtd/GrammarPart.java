@@ -23,19 +23,19 @@ import java.util.Set;
 import java.util.HashSet;
 
 class GrammarPart implements ComponentVisitor {
-  private ErrorReporter er;
-  private Map defines;
-  private Set attlists;
-  private Set implicitlyCombinedDefines;
-  private Map combineTypes;
-  private SchemaCollection schemas;
-  private Map parts;
+  private final ErrorReporter er;
+  private final Map defines;
+  private final Set attlists;
+  private final Set implicitlyCombinedDefines;
+  private final Map combineTypes;
+  private final SchemaCollection schemas;
+  private final Map parts;
   // maps name to component that provides it
-  private Map whereProvided = new HashMap();
-  private Set pendingIncludes;
+  private final Map whereProvided = new HashMap();
+  private final Set pendingIncludes;
 
   public static class IncludeLoopException extends RuntimeException {
-    private IncludeComponent include;
+    private final IncludeComponent include;
 
     public IncludeLoopException(IncludeComponent include) {
       this.include = include;

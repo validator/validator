@@ -9,8 +9,8 @@ class QNameDatatype extends DatatypeBase {
   }
 
   static class QName {
-    private String namespaceURI;
-    private String localName;
+    private final String namespaceURI;
+    private final String localName;
     QName(String namespaceURI, String localName) {
       this.namespaceURI = namespaceURI;
       this.localName = localName;

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 interface Prettyprinter {
   public static class WrappedException extends RuntimeException {
-    private IOException cause;
+    private final IOException cause;
 
     public Throwable getCause() {
       return cause;

@@ -91,25 +91,25 @@ public class Converter {
   /**
    * Maps each element name to an Integer containing a set of flags.
    */
-  private Map elementNameTable = new Hashtable();
+  private final Map elementNameTable = new Hashtable();
   /**
    * Maps each element name to a List of attribute groups of each attlist declaration.
    */
-  private Map attlistDeclTable = new Hashtable();
+  private final Map attlistDeclTable = new Hashtable();
   /**
    * Set of strings representing names for which there are definitions in the DTD.
    */
-  private Set definedNames = new HashSet();
+  private final Set definedNames = new HashSet();
   /**
    * Maps prefixes to namespace URIs.
    */
-  private Map prefixTable = new Hashtable();
+  private final Map prefixTable = new Hashtable();
 
   /**
    * Maps a string representing an element name to the set of names of attributes
    * that have been declated for that element.
    */
-  private Map attributeNamesTable = new Hashtable();
+  private final Map attributeNamesTable = new Hashtable();
   /**
    * Contains the set of attribute names that have already been output in the current scope.
    */
@@ -141,15 +141,15 @@ public class Converter {
 
   private static final String DEFAULT_PATTERN = "#.%";
 
-  private String[] ELEMENT_KEYWORDS = {
+  private final String[] ELEMENT_KEYWORDS = {
     "element", "elem", "e"
   };
 
-  private String[] ATTLIST_KEYWORDS = {
+  private final String[] ATTLIST_KEYWORDS = {
     "attlist", "attributes", "attribs", "atts", "a"
   };
 
-  private String[] ANY_KEYWORDS = {
+  private final String[] ANY_KEYWORDS = {
     "any", "ANY", "anyElement"
   };
 
@@ -448,7 +448,7 @@ public class Converter {
   }
 
   private class AttributeGroupOutput implements AttributeGroupVisitor {
-    List group;
+    final List group;
 
     AttributeGroupOutput(GroupPattern gp) {
       group = gp.getChildren();
@@ -613,7 +613,7 @@ public class Converter {
 
   private class DuplicateAttributeDetector implements AttributeGroupVisitor {
     private boolean containsDuplicate = false;
-    private List names = new Vector();
+    private final List names = new Vector();
 
     public void attribute(NameSpec nameSpec,
 			  Datatype datatype,

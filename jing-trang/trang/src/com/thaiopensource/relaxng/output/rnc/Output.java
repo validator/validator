@@ -205,7 +205,7 @@ class Output {
   }
 
   static class DatatypeLibraryVisitor extends NullVisitor {
-    private Set datatypeLibraries = new HashSet();
+    private final Set datatypeLibraries = new HashSet();
 
     public void nullVisitValue(ValuePattern p) {
       noteDatatypeLibrary(p.getDatatypeLibrary());
@@ -230,7 +230,7 @@ class Output {
   }
 
   static class NamespaceVisitor extends NullVisitor {
-    private NamespaceManager nsm = new NamespaceManager();
+    private final NamespaceManager nsm = new NamespaceManager();
     private boolean isAttribute;
 
     public void nullVisitInclude(IncludeComponent c) {

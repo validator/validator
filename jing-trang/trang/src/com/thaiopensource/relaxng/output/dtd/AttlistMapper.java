@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 class AttlistMapper {
-  private Map elementToAttlistMap = new HashMap();
-  private Map paramEntityToElementMap = new HashMap();
+  private final Map elementToAttlistMap = new HashMap();
+  private final Map paramEntityToElementMap = new HashMap();
 
   void noteAttribute(ElementPattern e) {
     elementToAttlistMap.put(e, Boolean.FALSE);

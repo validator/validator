@@ -18,7 +18,7 @@ public class ParamProcessor {
   private static class BadParamException extends Exception { }
 
   static class LocalizedInvalidValueException extends Param.InvalidValueException {
-    private String key;
+    private final String key;
 
     LocalizedInvalidValueException(String key) {
       this.key = key;

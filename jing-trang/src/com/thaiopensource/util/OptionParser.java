@@ -6,7 +6,7 @@ public class OptionParser {
   private String optionArg = null;
   private int argIndex = 0;
   private int currentOptionIndex = 0;
-  private String[] args;
+  private final String[] args;
 
   private static final char OPTION_CHAR = '-';
 

@@ -11,9 +11,9 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 
 public class ErrorHandlerImpl implements ErrorHandler {
-  private PrintWriter err;
+  private final PrintWriter err;
   
-  private String bundleName
+  private final String bundleName
     = "com.thaiopensource.relaxng.util.resources.Messages";
 
   private ResourceBundle bundle = null;

@@ -152,8 +152,8 @@ public class Compare {
   }
 
   static class Saver extends DefaultHandler {
-    private List eventList = new Vector();
-    private List attributeList = new Vector();
+    private final List eventList = new Vector();
+    private final List attributeList = new Vector();
 
     List getEventList() {
       return eventList;
@@ -210,7 +210,7 @@ public class Compare {
   }
 
   static class CommentSaver extends AbstractLexicalHandler {
-    private Saver saver;
+    private final Saver saver;
     CommentSaver(Saver saver) {
       this.saver = saver;
     }

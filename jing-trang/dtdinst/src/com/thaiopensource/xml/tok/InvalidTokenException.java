@@ -5,7 +5,7 @@ package com.thaiopensource.xml.tok;
  * with a legal XML token and cannot start one if more bytes are added.
  */
 public class InvalidTokenException extends TokenException {
-  private /* final */ int offset;
+  private final int offset;
 
   /**
    * The character or byte at the specified offset is not allowed
@@ -21,7 +21,7 @@ public class InvalidTokenException extends TokenException {
    */
   public static final byte DUPLICATE_ATTRIBUTE = 2;
 
-  private /* final */ byte type;
+  private final byte type;
   
   InvalidTokenException(int offset, byte type) {
     this.offset = offset;

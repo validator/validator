@@ -81,11 +81,11 @@ public class CategoriesGen {
       add(firstCode, lastCode, lastCategory);
   }
 
-  private Map map = new HashMap();
+  private final Map map = new HashMap();
 
   static class Range {
-    private int lower;
-    private int upper;
+    private final int lower;
+    private final int upper;
 
     public Range(int lower, int upper) {
       this.lower = lower;

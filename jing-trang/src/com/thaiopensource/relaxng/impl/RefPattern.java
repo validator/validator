@@ -7,7 +7,7 @@ import org.xml.sax.SAXParseException;
 class RefPattern extends Pattern {
   private Pattern p;
   private Locator refLoc;
-  private String name;
+  private final String name;
   private int checkRecursionDepth = -1;
   private boolean combineImplicit = false;
   private byte combineType = COMBINE_NONE;

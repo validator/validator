@@ -54,11 +54,11 @@ public class CompactSyntax implements Context {
   private SchemaBuilder sb;
   private String sourceUri;
   private ErrorHandler eh;
-  private Hashtable namespaceTable = new Hashtable();
-  private Hashtable datatypesTable = new Hashtable();
+  private final Hashtable namespaceTable = new Hashtable();
+  private final Hashtable datatypesTable = new Hashtable();
   private boolean hadError = false;
-  private static Localizer localizer = new Localizer(CompactSyntax.class);
-  private Hashtable attributeNameTable = new Hashtable();
+  private static final Localizer localizer = new Localizer(CompactSyntax.class);
+  private final Hashtable attributeNameTable = new Hashtable();
   private boolean annotationsIncludeElements = false;
 
   final class LocatedString {

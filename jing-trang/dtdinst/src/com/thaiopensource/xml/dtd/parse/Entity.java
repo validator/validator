@@ -13,9 +13,9 @@ class Entity {
       this.start = start;
       this.end = end;
     }
-    Entity entity;
-    int start;
-    int end;
+    final Entity entity;
+    final int start;
+    final int end;
   }
 
   final String name;

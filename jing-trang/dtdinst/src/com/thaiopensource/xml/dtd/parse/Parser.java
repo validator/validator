@@ -10,7 +10,7 @@ import com.thaiopensource.xml.em.*;
 import com.thaiopensource.util.Localizer;
 
 class Parser extends Token {
-  static Localizer localizer = new Localizer(Parser.class);
+  static final Localizer localizer = new Localizer(Parser.class);
   private Parser parent;
   private Reader in;
   private char[] buf;
@@ -20,21 +20,21 @@ class Parser extends Token {
   // The offset in buffer corresponding to pos.
   private int posOff = 0;
   private long bufEndStreamOffset = 0;
-  private Position pos = new Position();
+  private final Position pos = new Position();
 
   private static final int READSIZE = 1024*8;
   // Some temporary buffers
-  private ReplacementTextBuffer valueBuf;
-  private DtdBuilder db;
-  private Vector atoms = new Vector();
+  private final ReplacementTextBuffer valueBuf;
+  private final DtdBuilder db;
+  private final Vector atoms = new Vector();
   private final boolean isInternal;
-  private String baseUri;
-  private EntityManager entityManager;
+  private final String baseUri;
+  private final EntityManager entityManager;
   // for error messages
   private String location;
   
-  private Hashtable atomTable;
-  private Hashtable elementTable;
+  private final Hashtable atomTable;
+  private final Hashtable elementTable;
 
   static class DeclState {
     Entity entity;
@@ -46,7 +46,6 @@ class Parser extends Token {
     this.baseUri = entity.getBaseUri();
     this.location = entity.getLocation();
     this.entityManager = entityManager;
-    this.parent = parent;
     this.buf = new char[READSIZE * 2];
     this.valueBuf = new ReplacementTextBuffer();
     this.bufEnd = 0;
@@ -655,9 +654,9 @@ class Parser extends Token {
   }
 
   static class AttributeValueException extends Exception {
-    int offset;
-    String key;
-    String arg;
+    final int offset;
+    final String key;
+    final String arg;
 
     AttributeValueException(String key, int offset) {
       this.key = key;

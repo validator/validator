@@ -4,8 +4,8 @@ import org.relaxng.datatype.Datatype;
 import org.xml.sax.Locator;
 
 class DataExceptPattern extends DataPattern {
-  private Pattern except;
-  private Locator loc;
+  private final Pattern except;
+  private final Locator loc;
 
   DataExceptPattern(Datatype dt, Pattern except, Locator loc) {
     super(dt);

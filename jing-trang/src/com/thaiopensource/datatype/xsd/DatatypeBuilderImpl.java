@@ -14,7 +14,7 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
   static final Localizer localizer = new Localizer(DatatypeBuilderImpl.class);
 
   private DatatypeBase base;
-  private DatatypeLibraryImpl library;
+  private final DatatypeLibraryImpl library;
 
   DatatypeBuilderImpl(DatatypeLibraryImpl library, DatatypeBase base) throws DatatypeException {
     this.library = library;

@@ -35,16 +35,16 @@ public class NamespaceManager {
   static class SourceUri {
     String targetNamespace;
     // list of strings giving included URIs
-    List includes = new Vector();
+    final List includes = new Vector();
   }
 
   static class TargetNamespace {
     String rootSchema;
-    List movedStructures = new Vector();
-    Set movedStructureSet = new HashSet();
-    Map movedStructureNameMap = new HashMap();
-    Set movedElementNameSet = new HashSet();
-    Set movedAttributeNameSet = new HashSet();
+    final List movedStructures = new Vector();
+    final Set movedStructureSet = new HashSet();
+    final Map movedStructureNameMap = new HashMap();
+    final Set movedElementNameSet = new HashSet();
+    final Set movedAttributeNameSet = new HashSet();
     boolean movedOtherElement = false;
     boolean movedOtherAttribute = false;
     String otherElementName;
@@ -217,7 +217,7 @@ public class NamespaceManager {
   }
 
   class StructureMover extends SchemaWalker {
-    private String currentNamespace;
+    private final String currentNamespace;
 
     StructureMover(Schema schema) {
       this(getTargetNamespace(schema.getUri()));
@@ -445,7 +445,7 @@ public class NamespaceManager {
   }
 
   static class GroupDefinitionFinder extends SchemaWalker {
-    List list = new Vector();
+    final List list = new Vector();
 
     public void visitGroup(GroupDefinition def) {
       list.add(def);

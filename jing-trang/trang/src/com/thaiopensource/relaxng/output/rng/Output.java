@@ -55,11 +55,11 @@ import java.io.Writer;
 import java.io.IOException;
 
 class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
-  private String sourceUri;
-  private OutputDirectory od;
-  private XmlWriter xw;
-  private String datatypeLibrary;
-  private Map prefixMap;
+  private final String sourceUri;
+  private final OutputDirectory od;
+  private final XmlWriter xw;
+  private final String datatypeLibrary;
+  private final Map prefixMap;
 
   static public void output(Pattern p, String encoding, String sourceUri, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
     try {

@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.dtd.om;
 
 public class AttributeGroup {
-  private AttributeGroupMember[] members;
+  private final AttributeGroupMember[] members;
 
   public AttributeGroup(AttributeGroupMember[] members) {
     this.members = members;

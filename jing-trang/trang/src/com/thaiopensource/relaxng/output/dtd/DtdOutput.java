@@ -47,40 +47,40 @@ import java.util.Set;
 import java.util.Vector;
 
 class DtdOutput {
-  private String sourceUri;
+  private final String sourceUri;
   private Writer writer;
   private String encoding;
   private CharRepertoire charRepertoire;
   private final int indent;
   private final int lineLength;
   private final String lineSep;
-  StringBuffer buf = new StringBuffer();
-  List elementQueue = new Vector();
-  List requiredParamEntities = new Vector();
-  List externallyRequiredParamEntities = new Vector();
-  Set doneParamEntities = new HashSet();
-  Set doneIncludes = new HashSet();
-  Set pendingIncludes = new HashSet();
-  private Analysis analysis;
-  private GrammarPart part;
-  private OutputDirectory od;
-  private ErrorReporter er;
-  private Set reservedEntityNames;
+  final StringBuffer buf = new StringBuffer();
+  final List elementQueue = new Vector();
+  final List requiredParamEntities = new Vector();
+  final List externallyRequiredParamEntities = new Vector();
+  final Set doneParamEntities = new HashSet();
+  final Set doneIncludes = new HashSet();
+  final Set pendingIncludes = new HashSet();
+  private final Analysis analysis;
+  private final GrammarPart part;
+  private final OutputDirectory od;
+  private final ErrorReporter er;
+  private final Set reservedEntityNames;
 
-  PatternVisitor topLevelContentModelOutput = new TopLevelContentModelOutput();
-  AbstractVisitor nestedContentModelOutput = new ContentModelOutput();
-  PatternVisitor expandedContentModelOutput = new ExpandedContentModelOutput();
-  PatternVisitor groupContentModelOutput = new GroupContentModelOutput();
-  PatternVisitor choiceContentModelOutput = new ChoiceContentModelOutput();
-  PatternVisitor occurContentModelOutput = new ParenthesizedContentModelOutput();
-  PatternVisitor innerElementClassOutput = new InnerElementClassOutput();
-  PatternVisitor expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
-  AttributeOutput attributeOutput = new AttributeOutput();
-  AttributeOutput optionalAttributeOutput = new OptionalAttributeOutput();
-  PatternVisitor topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
-  PatternVisitor nestedSimpleTypeOutput = new SimpleTypeOutput();
-  PatternVisitor valueOutput = new ValueOutput();
-  GrammarOutput grammarOutput = new GrammarOutput();
+  final PatternVisitor topLevelContentModelOutput = new TopLevelContentModelOutput();
+  final AbstractVisitor nestedContentModelOutput = new ContentModelOutput();
+  final PatternVisitor expandedContentModelOutput = new ExpandedContentModelOutput();
+  final PatternVisitor groupContentModelOutput = new GroupContentModelOutput();
+  final PatternVisitor choiceContentModelOutput = new ChoiceContentModelOutput();
+  final PatternVisitor occurContentModelOutput = new ParenthesizedContentModelOutput();
+  final PatternVisitor innerElementClassOutput = new InnerElementClassOutput();
+  final PatternVisitor expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
+  final AttributeOutput attributeOutput = new AttributeOutput();
+  final AttributeOutput optionalAttributeOutput = new OptionalAttributeOutput();
+  final PatternVisitor topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
+  final PatternVisitor nestedSimpleTypeOutput = new SimpleTypeOutput();
+  final PatternVisitor valueOutput = new ValueOutput();
+  final GrammarOutput grammarOutput = new GrammarOutput();
 
   static private final String DTD_URI = "http://www.thaiopensource.com/ns/relaxng/dtd";
 
@@ -1187,7 +1187,7 @@ class DtdOutput {
   }
 
   static class WrappedIOException extends RuntimeException {
-    IOException cause;
+    final IOException cause;
 
     WrappedIOException(IOException cause) {
       this.cause = cause;

@@ -21,7 +21,7 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
   private boolean hadError;
   private boolean complete;
   private boolean collectingCharacters;
-  private StringBuffer charBuf = new StringBuffer();
+  private final StringBuffer charBuf = new StringBuffer();
   private PrefixMapping prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
   private Locator locator;
 

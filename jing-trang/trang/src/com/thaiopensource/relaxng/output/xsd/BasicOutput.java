@@ -63,7 +63,7 @@ public class BasicOutput {
     String anyProcessContents = "skip";
     String anyAttributeProcessContents = "skip";
   }
-  private XmlWriter xw;
+  private final XmlWriter xw;
   private final Schema schema;
   private final SimpleTypeOutput simpleTypeOutput = new SimpleTypeOutput();
   private final ComplexTypeOutput complexTypeOutput = new ComplexTypeOutput();

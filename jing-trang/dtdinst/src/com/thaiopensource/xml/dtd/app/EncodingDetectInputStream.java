@@ -36,7 +36,7 @@ public class EncodingDetectInputStream extends InputStream {
     4, 0x4C, 0x6F, 0xA7, 0x94, 0, 1, 0, 1
   };
 
-  static int NPARMS = 4;
+  static final int NPARMS = 4;
 
   /**
    * Detects the encoding based on the bytes following the current

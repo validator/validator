@@ -12,7 +12,7 @@ public class ErrorReporter {
   boolean hadError = false;
 
   static public class WrappedSAXException extends RuntimeException {
-    private SAXException exception;
+    private final SAXException exception;
 
     private WrappedSAXException(SAXException exception) {
       this.exception = exception;

@@ -64,7 +64,7 @@ public class Uri {
     return buf.toString();
   }
 
-  private static String excluded = "<>\"{}|\\^`";
+  private static final String excluded = "<>\"{}|\\^`";
 
   private static boolean isExcluded(char c) {
     return c <= 0x20 || c >= 0x7F || excluded.indexOf(c) >= 0;

@@ -11,20 +11,20 @@ import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 public class PatternDumper {
   private boolean startTagOpen = false;
-  private Vector tagStack = new Vector();
-  private PrintWriter writer;
+  private final Vector tagStack = new Vector();
+  private final PrintWriter writer;
   private int level = 0;
   private boolean suppressIndent = false;
-  private Vector patternList = new Vector();
-  private Hashtable patternTable = new Hashtable();
+  private final Vector patternList = new Vector();
+  private final Hashtable patternTable = new Hashtable();
 
-  PatternVisitor patternVisitor = new DumpPatternVisitor();
-  PatternVisitor groupPatternVisitor = new GroupDumpPatternVisitor();
-  PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
-  PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
-  NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
-  NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
-  NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
+  final PatternVisitor patternVisitor = new DumpPatternVisitor();
+  final PatternVisitor groupPatternVisitor = new GroupDumpPatternVisitor();
+  final PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
+  final PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
+  final NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
+  final NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
+  final NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
 
   static public void dump(PrintWriter writer, Pattern p) {
     new PatternDumper(writer).dump(p);

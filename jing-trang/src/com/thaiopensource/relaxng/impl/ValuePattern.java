@@ -3,8 +3,8 @@ package com.thaiopensource.relaxng.impl;
 import org.relaxng.datatype.Datatype;
 
 class ValuePattern extends StringPattern {
-  Object obj;
-  Datatype dt;
+  final Object obj;
+  final Datatype dt;
 
   ValuePattern(Datatype dt, Object obj) {
     super(combineHashCode(VALUE_HASH_CODE, obj.hashCode()));

@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 public class CharRepertoire {
   private final byte[] allUnknown = new byte[256];
-  private byte[][] charTable = new byte[256][];
+  private final byte[][] charTable = new byte[256][];
 
   private static final byte UNKNOWN = 0;
   private static final byte IN = 1;

@@ -5,10 +5,10 @@ import java.io.IOException;
 import com.thaiopensource.util.Localizer;
 
 public class ParseException extends IOException {
-  private Localizer localizer;
-  private String location;
-  private int lineNumber;
-  private int columnNumber;
+  private final Localizer localizer;
+  private final String location;
+  private final int lineNumber;
+  private final int columnNumber;
 
   public ParseException(Localizer localizer,
 			String message,

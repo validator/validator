@@ -3,7 +3,7 @@ package com.thaiopensource.datatype.xsd;
 import org.relaxng.datatype.ValidationContext;
 
 class TokenizedDatatype extends DatatypeBase {
-  private DatatypeBase base;
+  private final DatatypeBase base;
   
   TokenizedDatatype(DatatypeBase base) {
     super(WHITE_SPACE_PRESERVE);

@@ -18,9 +18,9 @@ import java.io.IOException;
 
 public class SAXParseable implements Parseable {
   static public final String URI = SchemaParser.relaxng10URI;
-  private XMLReaderCreator xrc;
-  private InputSource in;
-  private ErrorHandler eh;
+  private final XMLReaderCreator xrc;
+  private final InputSource in;
+  private final ErrorHandler eh;
 
   public SAXParseable(XMLReaderCreator xrc, InputSource in, ErrorHandler eh) {
     this.xrc = xrc;

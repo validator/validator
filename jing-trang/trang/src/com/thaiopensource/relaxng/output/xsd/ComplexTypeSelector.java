@@ -41,8 +41,8 @@ import java.util.List;
 
 class ComplexTypeSelector extends SchemaWalker {
   static class Refs {
-    Set referencingElements = new HashSet();
-    Set referencingDefinitions = new HashSet();
+    final Set referencingElements = new HashSet();
+    final Set referencingDefinitions = new HashSet();
     boolean nonTypeReference = false;
     boolean desirable = false;
     boolean someReferencingElementsNotMixed = false;
@@ -66,7 +66,7 @@ class ComplexTypeSelector extends SchemaWalker {
   private int nonTypeReference = 0;
   private int undesirable = 0;
   private boolean mixed = false;
-  private Map complexTypeMap = new HashMap();
+  private final Map complexTypeMap = new HashMap();
   private final Schema schema;
   private final Transformer transformer;
   private final ParticleVisitor baseFinder = new BaseFinder();

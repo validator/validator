@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng.impl;
 import org.xml.sax.Locator;
 
 class RestrictionViolationException extends Exception {
-  private String messageId;
+  private final String messageId;
   private Locator loc;
   private Name name;
 

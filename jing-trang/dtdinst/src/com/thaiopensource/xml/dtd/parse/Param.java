@@ -34,7 +34,7 @@ class Param {
     this.type = type;
   }
 
-  int type;
+  final int type;
   Entity entity;
   Particle group;
   String value;

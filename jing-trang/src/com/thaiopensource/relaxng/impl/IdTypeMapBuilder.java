@@ -94,9 +94,9 @@ public class IdTypeMapBuilder {
   }
 
   private class BuildFunction extends AbstractPatternFunction {
-    private NameClass elementNameClass;
-    private Locator locator;
-    private boolean attributeIsParent;
+    private final NameClass elementNameClass;
+    private final Locator locator;
+    private final boolean attributeIsParent;
 
     BuildFunction(NameClass elementNameClass, Locator locator) {
       this.elementNameClass = elementNameClass;

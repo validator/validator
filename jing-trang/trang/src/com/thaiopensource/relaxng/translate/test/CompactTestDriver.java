@@ -27,9 +27,9 @@ import java.io.OutputStreamWriter;
 
 public class CompactTestDriver {
 
-  private XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
+  private final XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
   private ErrorHandler eh;
-  private InputFormat inputFormat = new CompactParseInputFormat();
+  private final InputFormat inputFormat = new CompactParseInputFormat();
   private OutputFormat outputFormat;
   private OutputFormat compactOutputFormat;
   private String toDir;

@@ -7,14 +7,14 @@ import java.util.Enumeration;
 import com.thaiopensource.xml.tok.Tokenizer;
 
 class DtdBuilder {
-  private Vector atoms;
-  private Vector decls = new Vector();
+  private final Vector atoms;
+  private final Vector decls = new Vector();
 
-  private Hashtable paramEntityTable = new Hashtable();
-  private Hashtable generalEntityTable = new Hashtable();
-  private Hashtable normalizedTable = new Hashtable();
-  private Hashtable notationTable = new Hashtable();
-  private Hashtable ambigNameTable = new Hashtable();
+  private final Hashtable paramEntityTable = new Hashtable();
+  private final Hashtable generalEntityTable = new Hashtable();
+  private final Hashtable normalizedTable = new Hashtable();
+  private final Hashtable notationTable = new Hashtable();
+  private final Hashtable ambigNameTable = new Hashtable();
 
   DtdBuilder(Vector atoms) {
     this.atoms = atoms;

@@ -1,8 +1,8 @@
 package com.thaiopensource.relaxng.impl;
 
 class OverlapDetector implements NameClassVisitor {
-  private NameClass nc1;
-  private NameClass nc2;
+  private final NameClass nc1;
+  private final NameClass nc2;
   private boolean overlaps = false;
 
   static final String IMPOSSIBLE = "\u0000";
