@@ -15,7 +15,7 @@ Explain how NRL can improve RELAX NG modularity
 
 <div class="titlepage">
 <p><b>Author:</b> James Clark &lt;jjc@thaiopensource.com><br />
-<b>Date:</b> 2003-06-10</p>
+<b>Date:</b> 2003-06-13</p>
 <p>Copyright &#169; Thai Open Source Software Center Ltd</p>
 </div>
 
@@ -167,7 +167,7 @@ instance that is valid with respect to a Schematron schema using one
 phase may not be valid with respect to the same schema in another
 phase. NRL allows validation to be controlled by specifying a number
 of options. For example, to specify that validate with respect to
-xhtml.sch should use the phase named <code>Full</code>, an option
+<code>xhtml.sch</code> should use the phase named <code>Full</code>, an option
 could be specified as follows:</p>
 
 <xml>
@@ -938,23 +938,69 @@ accomplishes this:</p>
 
 <h2>Related work</h2>
 
-<p>The fundamental idea of dividing into sections, each of which
-contains elements from a single namespace, and then validating each
-section separately against the schema for its namespace originated in
-Murata Makoto's <bib ref="relaxns">RELAX Namespace</bib>, which formed the basis for the
-recently published <bib ref="dsdl-4">DSDL Part 4 CD</bib>.</p>
+<p>The fundamental idea of dividing the instance into sections, each
+of which contains elements from a single namespace, and then
+validating each section separately against the schema for its
+namespace originated in Murata Makoto's <bib ref="relaxns">RELAX
+Namespace</bib>.  ISO/IEC JTC1/SC34 (the ISO subcommittee responsible
+for Document Description and Processing Languages) is developing
+ISO/IEC 19757 Document Schema Definition Languages (DSDL) as a
+multi-part standard.  A <bib ref="N363">Committee Draft (CD) of Part
+4: Selection of Validation Candidates</bib>, which was based on RELAX
+Namespace, has been approved.  Comments on the CD have been <bib
+ref="N415">resolved</bib>. <bib ref="mns">MNS</bib>, the predecessor
+to NRL, was input to the CD comment resolution process.  In response
+to MNS, Rick Jelliffe produced the <bib ref="nsswitch">Namespace
+Switchboard</bib>, which was also input to the CD comment resolution
+process. Some of the evolution of NRL from MNS was inspired by the
+Namespace Switchboard.  A Final Committee Draft (FCD) of Part 4 is
+currently in preparation; NRL will be submitted as input.</p>
 
-<p>RELAX Namespace was designed to work well with <bib
-ref="relaxcore">RELAX Core</bib>. RELAX Core cannot deal with
-documents that use multiple namespaces, nor does it provide any
-namespace-based wildcards.  These limitations of RELAX Core are
-reflected in the design of RELAX Namespace.  NRL is designed to be
-able to take advantage of more recent schema languages, such as RELAX
-NG, that are not limited in this way.</p>
+<p>At this stage, no guarantees can be made about how NRL will relate
+to the FCD. In the opinion of the author, the functionality is likely
+to be similar, with the following possible exceptions:</p>
 
-<p>In response to MNS, Rick Jelliffe produced the <bib
-ref="nsswitch">Namespace Switchboard</bib>, which inspired much of the
-evolution of NRL from MNS.</p>
+<ul>
+
+<li>There are concerns about <href>Element-name context</href>: some
+feel it is too complicated; some feel it is too simple.</li>
+
+<li>The functionality corresponding to <href>Transparent
+namespaces</href>, was rejected on the last occasion it was discussed;
+one reason was the lack of implementation experience. It is hoped that
+this can be reconsidered in the light of NRL.</li>
+
+<li>The functionality provided by the <code>option</code> element in
+<href>Specifying the schema</href> has not yet been considered for the
+FCD.</li>
+
+</ul>
+
+<p>However, the syntax may well be totally different. In
+particular:</p>
+
+<ul>
+
+<li>Names of elements and attributes may be different.</li>
+
+<li>Syntactic sugar for modes may be different.  The FCD may not
+provide <href>Mode inheritance</href>.  The FCD may use nesting to
+avoid the need to name modes in some cases.</li>
+
+<li>The FCD is expected to provide a schema inclusion mechanism (not just
+using NRL as a subschema).</li>
+
+<li>The FCD is expected to allow inline schemas, for example, by
+allowing <code>validate</code> to have a <code>schema</code> element
+containing the schema as an alternative to the <code>schema</code>
+attribute containing the schema's URL.</li>
+
+</ul>
+
+<p>The group working on DSDL (SC34/WG1) welcomes public discussion of
+DSDL. Comments on NRL would be useful input to the Part 4 FCD
+preparation process. See the <bib ref="dsdl.org">DSDL web site</bib>
+for information on how to make comments.</p>
 
 <h2>Acknowledgments</h2>
 
@@ -966,9 +1012,17 @@ evolution of NRL from MNS.</p>
 
 <bibliography>
 
-<bibentry name="dsdl-4">Committee Draft of Document Schema Definition Languages
+<bibentry name="dsdl.org">DSDL Web Site,
+<url>http://www.dsdl.org</url></bibentry>
+
+<bibentry name="N363">Committee Draft of Document Schema Definition Languages
 (DSDL) -- Part 4: Selection of Validation Candidates,
 <url>http://www.y12.doe.gov/sgml/sc34/document/0363.htm</url></bibentry>
+
+<bibentry name="N415">Comment Disposition of Committee Draft
+Ballot of Document Schema Definition Languages (DSDL) -- Part 4:
+Selection of Validation Candidates,
+<url>http://www.y12.doe.gov/sgml/sc34/document/0415.htm</url></bibentry>
 
 <bibentry name="jing">Jing,
 <url>http://www.thaiopensource.com/relaxng/jing.html</url></bibentry>
