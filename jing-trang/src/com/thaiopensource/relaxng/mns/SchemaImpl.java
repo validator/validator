@@ -294,11 +294,10 @@ class SchemaImpl implements Schema {
 
     private void parseElement(Attributes attributes) throws SAXException {
       String ns = getNs(attributes, false);
-      if (ns != null) {
-        if (!currentElementAction.covered.contains(ns))
-          error("context_ns_not_covered", ns);
+      if (ns != null)
         elementNs = ns;
-      }
+      if (!currentElementAction.covered.contains(elementNs))
+        error("context_ns_not_covered", elementNs);
       nameStack.push(new Name(elementNs, attributes.getValue("", "name").trim()));
       pathDepth++;
     }
