@@ -24,8 +24,17 @@
   </grammar>
 </xsl:template>
 
-<xsl:template match="modelGroup|attributeGroup|datatype">
+<xsl:template match="modelGroup|datatype">
   <define name="{@name}">
+    <xsl:apply-templates/>
+  </define>
+</xsl:template>
+
+<xsl:template match="attributeGroup">
+  <define name="{@name}">
+    <xsl:if test="not(*)">
+      <empty/>
+    </xsl:if>
     <xsl:apply-templates/>
   </define>
 </xsl:template>
@@ -53,6 +62,9 @@
       <ref name="{$attlist-prefix}{$name}"/>
       <xsl:apply-templates select="*[2]"/>
     </element>
+  </define>
+  <define name="{$attlist-prefix}{$name}" combine="interleave">
+    <empty/>
   </define>
 </xsl:template>
 
@@ -90,7 +102,7 @@
   <xsl:variable name="name">
     <xsl:apply-templates select="*[1]"/>
   </xsl:variable>
-  <define name="{$attlist-prefix}{$name}">
+  <define name="{$attlist-prefix}{$name}" combine="interleave">
     <xsl:apply-templates select="*[position()&gt;1]"/>
   </define>
 </xsl:template>
