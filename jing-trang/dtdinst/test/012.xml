@@ -1,0 +1,9 @@
+<doctype>
+  <nameSpec name="foo">
+    <name>foo</name>
+  </nameSpec>
+  <element>
+    <nameSpecRef name="foo"/>
+    <sequence/>
+  </element>
+</doctype>

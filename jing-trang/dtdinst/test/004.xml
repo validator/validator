@@ -1,0 +1,15 @@
+<doctype>
+  <modelGroup name="e1">
+    <elementRef>
+      <name>foo</name>
+    </elementRef>
+  </modelGroup>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e1"/>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+</doctype>

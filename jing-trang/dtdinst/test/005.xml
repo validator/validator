@@ -1,0 +1,9 @@
+<doctype>
+  <modelGroup name="e1">
+    <sequence/>
+  </modelGroup>
+  <element>
+    <name>foo</name>
+    <modelGroupRef name="e1"/>
+  </element>
+</doctype>

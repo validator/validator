@@ -1,0 +1,24 @@
+<doctype>
+  <modelGroup name="e2">
+    <sequence>
+      <elementRef>
+        <name>foo</name>
+      </elementRef>
+      <elementRef>
+        <name>bar</name>
+      </elementRef>
+    </sequence>
+  </modelGroup>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+  <element>
+    <name>bar</name>
+    <sequence/>
+  </element>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e2"/>
+  </element>
+</doctype>
