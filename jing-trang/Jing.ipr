@@ -80,9 +80,48 @@
       <includeParser value="true" />
       <maximumHeapSize value="128" />
       <viewClosedWhenNoErrors value="false" />
+      <targetFilters>
+        <filter targetName="all" isVisible="true" />
+        <filter targetName="init" isVisible="false" />
+        <filter targetName="compile-grammar" isVisible="true" />
+        <filter targetName="regex-gen" isVisible="false" />
+        <filter targetName="compile" isVisible="false" />
+        <filter targetName="jar" isVisible="true" />
+        <filter targetName="exegen" isVisible="true" />
+        <filter targetName="check-exe" isVisible="false" />
+        <filter targetName="crimson-files" isVisible="false" />
+        <filter targetName="check-crimson-files" isVisible="false" />
+        <filter targetName="regex-files" isVisible="false" />
+        <filter targetName="check-regex-files" isVisible="false" />
+        <filter targetName="validate" isVisible="true" />
+        <filter targetName="split" isVisible="false" />
+        <filter targetName="check-split" isVisible="false" />
+        <filter targetName="test" isVisible="true" />
+        <filter targetName="xsd-test" isVisible="true" />
+        <filter targetName="check-xsd-split" isVisible="false" />
+        <filter targetName="xsd-split" isVisible="false" />
+        <filter targetName="regex-jar" isVisible="false" />
+        <filter targetName="regex-test" isVisible="true" />
+        <filter targetName="xerces-regex-test" isVisible="false" />
+        <filter targetName="full-regex-test" isVisible="true" />
+        <filter targetName="regex-dist" isVisible="false" />
+        <filter targetName="javadoc" isVisible="false" />
+        <filter targetName="doccheck" isVisible="false" />
+        <filter targetName="datatype-sample" isVisible="false" />
+        <filter targetName="doc" isVisible="false" />
+        <filter targetName="trang-jar" isVisible="true" />
+        <filter targetName="trang-test" isVisible="true" />
+        <filter targetName="trang-xsd-test" isVisible="true" />
+        <filter targetName="trang-validate" isVisible="false" />
+        <filter targetName="trang-dist" isVisible="false" />
+        <filter targetName="dtdinst-test" isVisible="false" />
+        <filter targetName="dtdinst-dist" isVisible="false" />
+        <filter targetName="dist" isVisible="true" />
+        <filter targetName="clean" isVisible="true" />
+      </targetFilters>
     </buildFile>
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
+    <option name="FILTER_TARGETS" value="true" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
