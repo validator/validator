@@ -662,6 +662,14 @@ public class PatternReader implements ValidationContext {
     Pattern wrapPattern(Pattern p) {
       return patternBuilder.makeAttribute(nameClass, p, copyLocator());
     }
+
+    State createChildState(String localName) throws SAXException {
+      State tem = super.createChildState(localName);
+      if (tem != null && containedPattern != null)
+	error("attribute_multi_pattern");
+      return tem;
+    }
+
   }
 
   abstract class SinglePatternContainerState extends PatternContainerState {
@@ -1041,6 +1049,14 @@ public class PatternReader implements ValidationContext {
 	setPattern(grammar.makePatternRef(name), p);
       setPattern(grammar.startPatternRef(), p);
     }
+
+    State createChildState(String localName) throws SAXException {
+      State tem = super.createChildState(localName);
+      if (tem != null && containedPattern != null)
+	error("start_multi_pattern");
+      return tem;
+    }
+
   }
 
   abstract class NameClassContainerState extends State {
