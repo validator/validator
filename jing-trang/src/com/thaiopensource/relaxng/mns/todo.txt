@@ -1,1 +1,3 @@
 Avoid use of Collections.
+
+Allow MNS schema to be open to extension.
