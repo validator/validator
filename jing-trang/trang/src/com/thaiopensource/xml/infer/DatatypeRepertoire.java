@@ -56,7 +56,7 @@ public class DatatypeRepertoire {
     }
   }
 
-  static public class BinaryType extends Type {
+  static private class BinaryType extends Type {
     private BinaryType(Datatype dt, String name, int index) {
       super(dt, name, index);
     }
@@ -66,7 +66,7 @@ public class DatatypeRepertoire {
     }
   }
 
-  static public class UriType extends Type {
+  static private class UriType extends Type {
     private UriType(Datatype dt, String name, int index) {
       super(dt, name, index);
     }
@@ -75,6 +75,17 @@ public class DatatypeRepertoire {
       return Uri.isAbsolute(value);
     }
 
+  }
+
+  static private class BooleanType extends Type {
+    private BooleanType(Datatype dt, String name, int index) {
+      super(dt, name, index);
+    }
+
+    public boolean isTypical(String value) {
+      value = value.trim();
+      return value.equals("true") || value.equals("false");
+    }
   }
 
   private final Type[] types = new Type[typeNames.length];
@@ -107,7 +118,9 @@ public class DatatypeRepertoire {
   static private Type makeType(String typeName, Datatype dt, int index) {
     if (typeName.equals("anyURI"))
       return new UriType(dt, typeName, index);
-    else if (typeName.equals("base64Binary") || typeName.equals("hexBinary"))
+    if (typeName.equals("boolean"))
+      return new BooleanType(dt, typeName, index);
+    if (typeName.equals("base64Binary") || typeName.equals("hexBinary"))
       return new BinaryType(dt, typeName, index);
     return new Type(dt, typeName, index);
   }
