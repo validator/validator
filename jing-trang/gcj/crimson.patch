@@ -1,0 +1,77 @@
+--- src/org/apache/crimson/parser/Parser2.java~	2001-11-01 13:27:03.000000000 +0700
++++ src/org/apache/crimson/parser/Parser2.java	2003-02-24 17:54:33.000000000 +0700
+@@ -56,6 +56,9 @@
+  * Foundation, please see <http://www.apache.org/>.
+  */
+ 
++/* Hacked by jjc to work with latest version of SAX2 NamespaceSupport
++which disallows calling declarePrefix after calling processName.
++Also removed obnoxious catching of RuntimeExceptions. */
+ 
+ package org.apache.crimson.parser;
+ 
+@@ -519,15 +522,19 @@
+             } else
+                 fatal ("P-003", null, e);
+ 
+-        } catch (RuntimeException e) {
++	    // This is a really bad idea because we lose
++	    // the stack trace from the RuntimeException
++	    // which is much more interesting than the
++	    // SAX location.
++	    //        } catch (RuntimeException e) {
+             // Don't discard location that triggered the exception
+-            throw new SAXParseException (
+-                e.getMessage () != null
+-                    ? e.getMessage ()
+-                    : e.getClass ().getName (),
+-                locator.getPublicId (), locator.getSystemId (),
+-                locator.getLineNumber (), locator.getColumnNumber (),
+-                e);
++            //throw new SAXParseException (
++            //    e.getMessage () != null
++            //        ? e.getMessage ()
++            //        : e.getClass ().getName (),
++            //    locator.getPublicId (), locator.getSystemId (),
++            //    locator.getLineNumber (), locator.getColumnNumber (),
++            //    e);
+ 
+         } finally {
+             // recycle temporary data used during parsing
+@@ -1584,6 +1591,15 @@
+                 prefix = attQName.substring(6);
+             }
+ 
++            if (!seenNSDecl) {
++                if (attTmp.getLength() > 0) {
++                    // Latest SAX2 doesn't allow us declarePrefix
++                    // after processName in the same context.
++                    nsSupport.popContext();
++                    nsSupport.pushContext();
++                }
++                seenNSDecl = true;
++            }
+             if (!nsSupport.declarePrefix(prefix, value)) {
+                 error("P-083", new Object[] { prefix });
+             }
+@@ -1602,11 +1618,19 @@
+                 // are provided.
+                 nsAttTmp.addElement(attQName);
+             }
+-            seenNSDecl = true;
+             return exceptions;
+         }
+ 
+         // This isn't a namespace declaration.
++        if (seenNSDecl) {
++            // Avoid calling processName after having declared a
++            // prefix, since recent versions of SAX2 disallow this.
++            // When seenNSDecl is true, processName will be called
++            // later.
++            attTmp.addAttribute("", attQName, attQName, type, value,
++                                defaultValue, isSpecified);
++            return exceptions;
++        }
+         try {
+             String attName[] = processName(attQName, true, true);
+             attTmp.addAttribute(attName[0], attName[1], attName[2], type,
