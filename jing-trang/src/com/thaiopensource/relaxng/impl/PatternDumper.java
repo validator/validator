@@ -24,7 +24,6 @@ public class PatternDumper {
   final PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
   final NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
   final NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
-  final NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
 
   static public void dump(PrintWriter writer, Pattern p) {
     new PatternDumper(writer).dump(p);
@@ -336,13 +335,6 @@ public class PatternDumper {
     public void visitChoice(NameClass nc1, NameClass nc2) {
       nc1.accept(this);
       nc2.accept(this);
-    }
-  }
-
-  class DifferenceDumpNameClassVisitor extends DumpNameClassVisitor {
-    public void visitDifference(NameClass nc1, NameClass nc2) {
-      nc1.accept(this);
-      nc2.accept(nameClassVisitor);
     }
   }
 }
