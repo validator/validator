@@ -285,8 +285,15 @@ mode in its <code>modes</code> attribute.</p>
 
 <h2>Pruning</h2>
 
-<p>The <code>validateElement</code> element can have a boolean
-<code>prune</code> attribute.</p>
+<p>We can distinguish between schemas that are <em>open</em> and
+schemas that are <em>closed</em>.  Open schemas allow attributes and
+elements in other namespaces; closed schemas are not. Sometimes it is
+necessary to treat a closed schema as open.  This can be done by
+adding a <code>prune="true"</code> attribute to
+<code>validateElement</code>.  This has the effect of removing all
+potential validation candidates from the subtree before validating the
+subtree with respect to the schema specified by the
+<code>validateElement</code>.</p>
 
 <pre>
 attribute prune { "true" | "false" }?
