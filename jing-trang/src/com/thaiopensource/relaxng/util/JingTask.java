@@ -46,7 +46,7 @@ public class JingTask extends Task {
 
     try {
       ValidationEngine engine = new ValidationEngine();
-      engine.setXMLReaderCreator(new Jaxp10XMLReaderCreator());
+      engine.setXMLReaderCreator(new Jaxp11XMLReaderCreator());
       engine.setErrorHandler(eh);
       engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       if (!engine.loadPattern(fileInputSource(rngFile)))
