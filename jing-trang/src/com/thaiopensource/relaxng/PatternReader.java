@@ -33,11 +33,8 @@ public class PatternReader implements DatatypeContext {
   // Declaring these in DefineState gives JVC indigestion.
 
   static final byte COMBINE_ERROR = 0;
-  static final byte COMBINE_REPLACE = 1;
-  static final byte COMBINE_SEQUENCE = 2;
-  static final byte COMBINE_CHOICE = 3;
-  static final byte COMBINE_INTERLEAVE = 4;
-  static final byte COMBINE_CONCUR = 5;
+  static final byte COMBINE_CHOICE = 1;
+  static final byte COMBINE_INTERLEAVE = 2;
 
   String patternNS;
   XMLReader xr;
@@ -755,16 +752,10 @@ public class PatternReader implements DatatypeContext {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("combine")) {
 	value = value.trim();
-	if (value.equals("group"))
-	  combine = COMBINE_SEQUENCE;
-	else if (value.equals("choice"))
+	if (value.equals("choice"))
 	  combine = COMBINE_CHOICE;
 	else if (value.equals("interleave"))
 	  combine = COMBINE_INTERLEAVE;
-	else if (value.equals("concur"))
-	  combine = COMBINE_CONCUR;
-	else if (value.equals("replace"))
-	  combine = COMBINE_REPLACE;
 	else
 	  error("combine_attribute_bad_value", value);
       }
@@ -790,14 +781,10 @@ public class PatternReader implements DatatypeContext {
     Pattern combineWithOldPattern(Pattern p1, Pattern p2) {
       if (p1 != null) {
 	switch (combine) {
-	case COMBINE_SEQUENCE:
-	  return patternBuilder.makeSequence(p1, p2);
 	case COMBINE_CHOICE:
 	  return patternBuilder.makeChoice(p1, p2);
 	case COMBINE_INTERLEAVE:
 	  return patternBuilder.makeInterleave(p1, p2);
-	case COMBINE_CONCUR:
-	  return patternBuilder.makeConcur(p1, p2);
 	}
       }
       return p2;
