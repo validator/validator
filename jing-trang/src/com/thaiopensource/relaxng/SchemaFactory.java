@@ -67,8 +67,8 @@ public class SchemaFactory {
    * @throws NullPointerException if the current XMLReaderCreator is <code>null</code>
    */
   public Schema createSchema(InputSource in) throws IOException, SAXException, IncorrectSchemaException {
-    SchemaReader lang = compactSyntax ? CompactSchemaReader.getInstance() : autoSchemaLanguage;
-    return lang.createSchema(in, properties.toPropertyMap());
+    SchemaReader r = compactSyntax ? CompactSchemaReader.getInstance() : autoSchemaLanguage;
+    return r.createSchema(in, properties.toPropertyMap());
   }
 
   /**
