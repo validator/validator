@@ -106,4 +106,78 @@
 </a>
 </invalid>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="" schema="a.rng"/>
+  <strict/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com">
+<a xmlns=""/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://www.example.com" schema="a.rng"/>
+  <strict/>
+</rules>
+</correct>
+<invalid>
+<b>
+<a xmlns="http://www.example.com"/>
+</b>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com"/>
+</valid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns" ns="">
+  <validateElement ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns"/>
+</correct>
+<valid>
+<a/>
+</valid>
+<valid>
+<a foo="bar" xml:lang="en">
+  <b xmlns="http://www.example.com"/>
+</a>
+</valid>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns=""/>
+</rules>
+</incorrect>
+</testCase>
 </testSuite>
