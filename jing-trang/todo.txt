@@ -1,5 +1,3 @@
-Predeclare xsd prefix.
-
 Document that XHTML modularization implementation does not implement
 exclusions.
 
