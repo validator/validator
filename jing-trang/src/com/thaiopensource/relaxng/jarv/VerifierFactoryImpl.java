@@ -31,7 +31,7 @@ public class VerifierFactoryImpl extends VerifierFactory {
     SchemaPatternBuilder spb = new SchemaPatternBuilder();
     Parseable parseable = new SAXParseable(xrc, is, eh);
     try {
-      return new SchemaImpl(SchemaBuilderImpl.parse(parseable, eh, dlf, spb), spb);
+      return new SchemaImpl(SchemaBuilderImpl.parse(parseable, eh, dlf, spb, false), spb);
     }
     catch (IncorrectSchemaException e) {
       throw new SAXException("unreported schema error");
