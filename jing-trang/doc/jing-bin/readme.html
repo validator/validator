@@ -1,50 +1,98 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Jing binary distribution</title>
+<title>Jing version @VERSION@</title>
 </head>
 <body>
-<h1>Jing binary distribution</h1>
+<h1>Jing version @VERSION@</h1>
 
-<p>Copyright &#169; 2001, 2002 Thai Open Source Software Center Ltd</p>
+<p>Copyright &#169; 2001, 2002, 2003 Thai Open Source Software Center
+Ltd.  Jing can be freely copied subject to these <a
+href="doc/copying.html">conditions</a>.</p>
 
-<p>See the file <a href="copying.html">copying.html</a> for copying
-permission.</p>
+<p>This directory contains version @VERSION@ of Jing, a validator for
+RELAX NG and other schema languages.</p>
 
-<h3>Version @VERSION@</h3>
+<p>The directory <code>bin</code> contains <code>.jar</code>
+files, ready for use with a a Java runtime.</p>
 
-<p>The file <code>jing.jar</code> contains a version of the Jing RELAX
-NG validator for use with a Java runtime.</p>
+<p>Version 1.4 of the Java Runtime Environment (JRE), is recommended,
+which can be downloaded <a
+href="http://java.sun.com/j2se/1.4/download.html">here</a>, since this
+is what this version of Jing has been tested with.  Version 1.1 or
+later should also work, although some functionality may be present
+only with version 1.2 or later.</p>
 
-<p>The most straightforward way to run this is to install version 1.4
-of the Java Runtime Environment (JRE), which can be downloaded <a
-href="http://java.sun.com/j2se/1.4/download.html">here</a>.</p>
+<p>Jing is a command-line application.  Once you have installed JRE
+1.4, you can run Jing by using the command:</p>
 
-<p>Once you have installed JRE 1.4, you can run Jing by using the
-command:</p>
-
-<pre>java -jar jing.jar <var>file</var>.rng <var>file</var>.xml</pre>
+<pre>java -jar <var>path-to-dist</var>/jing-@VERSION@/bin/jing.jar <var>file</var>.rng <var>file</var>.xml</pre>
 
 <p>If <code><var>file</var>.rng</code> is a correct schema and
 <code><var>file</var>.xml</code> is valid with respect to
 <code><var>file</var>.rng</code>, then Jing will generate no output.
 Otherwise, it will generate one or more error messages.</p>
 
-<p>It is also possible to run jing using versions 1.2 or 1.3 or the
-Java runtime, but to do so you must first install an implementation of
-<a href="http://java.sun.com/xml/">Java API for XML Processing (JAXP)
-1.1</a> as an extension.  One suitable implementation is Crimson,
-which can be downloaded <a
-href="http://xml.apache.org/dist/crimson/">here</a>.  The
-<code>crimson.jar</code> file must be copied into the
-<code>lib/ext</code> subdirectory of the Java home directory.</p>
+<p>Apart from <code>jing.jar</code>, the <code>bin</code> directory
+contains some third-party jar files, which are used for XML parsing
+(under a pre-1.4 JRE that does not provide the Java XML parsing
+extension) and for validating with <a
+href="doc/jing-other.html">schema languages other than RELAX
+NG</a>:</p>
 
-<p>If for some reason you do not wish to install JAXP 1.1 as an
-extension, then you can instead use a command such as:</p>
+<dl>
 
-<pre>java -cp jing.jar;crimson.jar com.thaiopensource.relaxng.util.Driver <var>file</var>.rng <var>file</var>.xml</pre>
+<dt><code>saxon.jar</code></dt>
 
-<p>For more information about the features provided by Jing, see this
-<a href="jing.html">document</a>.</p>
+<dd>Comes from the <a href="http://saxon.sourceforge.net/">Saxon</a>
+6.5.2 distribution. Used for Schematron validation.</dd>
+
+<dt><code>xercesImpl.jar</code></dt>
+<dt><code>xml-apis.jar</code></dt>
+
+<dd>Come from the <a
+href="http://xml.apache.org/xerces2-j/">Xerces-J</a> 2.4.0
+distribution. Used for W3C XML Schema validation and for XML
+parsing. Xerces-J's license requires the following
+acknowledgment. "This product includes software developed by the
+Apache Software Foundation (http://www.apache.org/)."</dd>
+
+<dt><code>isorelax.jar</code></dt>
+
+<dd>Comes from <a
+href="http://sourceforge.net/projects/iso-relax/">ISO RELAX</a>
+2003/01/08 distribution.  Provides a bridge to validators that use the
+JARV interface.</dd>
+
+</dl>
+
+<p>When you use <code>jing.jar</code> with the <code>-jar</code>
+option, the above <code>.jar</code> files will be used automatically,
+provided they are in the same directory as <code>jing.jar</code> and
+provided they have not been renamed. When using the <code>-jar</code>
+option, the JRE will ignore any additional class path entries
+specified by the <code>-cp</code> or <code>-classpath</code> options
+or by the <code>CLASSPATH</code> environment variable.</p>
+
+<p>If you do not want use the <code>-jar</code> option (perhaps
+because you want to use additional <code>.jar</code> files not shipped
+with Jing), then you must explicitly include all the needed
+<code>.jar</code> files with a <code>-cp</code> or
+<code>-classpath</code> option or with the <code>CLASSPATH</code>
+environment variable, and specify a class name of
+<code>com.thaiopensource.relaxng.util.Driver</code>.  For example,
+using a Bourne-compatible shell, you could do:</p>
+
+<pre>
+d=<var>path-to-dist</var>/jing-@VERSION@/bin
+CLASSPATH=$d/jing.jar:$d/xercesImpl.jar:$d/xml-apis.jar:$d/saxon.jar:$d/isorelax.jar
+export CLASSPATH
+java com.thaiopensource.relaxng.util.Driver <var>file</var>.rng <var>file</var>.xml
+</pre>
+
+<p>For more information about the features and usage of Jing, see this
+<a href="doc/jing.html">document</a>.</p>
+
+<p>The source code is in the file <code>src.zip</code>.</p>
 
 </body>
 </html>
