@@ -144,14 +144,8 @@
 <define name="fieldset">
   <element name="fieldset">
     <ref name="fieldset.attlist"/>
-    <zeroOrMore>
-      <choice>
-        <text/>
-        <ref name="legend"/>
-        <ref name="Inline.class"/>
-        <ref name="Block.class"/>
-      </choice>
-    </zeroOrMore>
+    <ref name="legend"/>
+    <ref name="Flow.model"/>
   </element>
 </define>
 
