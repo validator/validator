@@ -1,7 +1,3 @@
-Option to control value of processContents on wildcards.
-
-Option to disable use of substitution groups.
-
 We can get (x | (y | z)) if (y|z) was a name class.  Simplify into x|y|z.
 
 Check for duplicate attributes.
@@ -41,6 +37,9 @@ Handle nested grammars (use different namespace for different grammars).
 Turn overrides into <redefine>.
 
 Preserve definitions that are equivalent to empty or notAllowed.
+A define whose pattern is equivalent to notAllowed should be preserved
+in the intermediate form, since it may correspond to the abstract head
+of a substitution group (probably need an annotation to control this).
 
 Handle externalRef (remember problem with parentRef in externalRef)
 
@@ -53,10 +52,6 @@ For a <value type="NOTATION"/>, map to NOTATION and generate an
 appropriate xs:notation declaration based on annotations.
 
 Deal with xsi attributes.
-
-A define whose pattern is equivalent to notAllowed should be preserved
-in the intermediate form, since it may correspond to the abstract head
-of a substitution group (probably need an annotation to control this).
 
 Better support for combine="choice".  Now that element substitution groups
 are supported, combine="choice" can be supported much better.

@@ -4,10 +4,14 @@ import java.util.Set;
 import java.util.HashSet;
 
 class Guide {
-  private final boolean defaultGroupEnableAbstractElements;
+  private boolean defaultGroupEnableAbstractElements;
   private final Set nonDefaultGroupSet = new HashSet();
 
   Guide(boolean defaultGroupEnableAbstractElements) {
+    this.defaultGroupEnableAbstractElements = defaultGroupEnableAbstractElements;
+  }
+
+  void setDefaultGroupEnableAbstractElements(boolean defaultGroupEnableAbstractElements) {
     this.defaultGroupEnableAbstractElements = defaultGroupEnableAbstractElements;
   }
 

@@ -57,6 +57,10 @@ import java.util.HashSet;
 import java.io.IOException;
 
 public class BasicOutput {
+  static class Options {
+    String anyProcessContents = "skip";
+    String anyAttributeProcessContents = "skip";
+  }
   private XmlWriter xw;
   private final Schema schema;
   private final SimpleTypeOutput simpleTypeOutput = new SimpleTypeOutput();
@@ -78,6 +82,7 @@ public class BasicOutput {
   private final Set globalElementsDefined;
   private final Set globalAttributesDefined;
   private final String xsPrefix;
+  private final Options options;
 
   class SimpleTypeOutput implements SimpleTypeVisitor {
     public Object visitRestriction(SimpleTypeRestriction t) {
@@ -323,7 +328,7 @@ public class BasicOutput {
       else {
         usedWrapper = startWrapperForAny();
         namespaceAttribute(p.getWildcard());
-        xw.attribute("processContents", "skip");
+        xw.attribute("processContents", options.anyProcessContents);
         outputAnnotation(p);
       }
       endWrapper(usedWrapper);
@@ -484,7 +489,7 @@ public class BasicOutput {
       else {
         xw.startElement(xs("anyAttribute"));
         namespaceAttribute(a.getWildcard());
-        xw.attribute("processContents", "skip");
+        xw.attribute("processContents", options.anyAttributeProcessContents);
         xw.endElement();
       }
       return null;
@@ -762,14 +767,15 @@ public class BasicOutput {
     }
   }
 
-  static void output(Schema schema, Guide guide, PrefixManager pm, OutputDirectory od, ErrorReporter er) throws IOException {
+  static void output(Schema schema, Guide guide, PrefixManager pm, OutputDirectory od,
+                     Options options, ErrorReporter er) throws IOException {
     NamespaceManager nsm = new NamespaceManager(schema, guide, pm);
     ComplexTypeSelector cts = new ComplexTypeSelector(schema);
     Set globalElementsDefined = new HashSet();
     Set globalAttributesDefined = new HashSet();
     try {
       for (Iterator iter = schema.getSubSchemas().iterator(); iter.hasNext();)
-        new BasicOutput((Schema)iter.next(), er, od, nsm, pm, cts,
+        new BasicOutput((Schema)iter.next(), er, od, options, nsm, pm, cts,
                         globalElementsDefined, globalAttributesDefined).output();
     }
     catch (XmlWriter.WrappedException e) {
@@ -777,7 +783,7 @@ public class BasicOutput {
     }
   }
 
-  public BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od,
+  public BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od, Options options,
                      NamespaceManager nsm, PrefixManager pm, ComplexTypeSelector complexTypeSelector,
                      Set globalElementsDefined, Set globalAttributesDefined) throws IOException {
     this.schema = schema;
@@ -790,11 +796,13 @@ public class BasicOutput {
     this.od = od;
     this.targetNamespace = nsm.getTargetNamespace(schema.getUri());
     this.xsPrefix = pm.getPrefix(WellKnownNamespaces.XML_SCHEMA);
+    this.options = options;
     OutputDirectory.Stream stream = od.open(schema.getUri(), schema.getEncoding());
     xw = new XmlWriter(stream.getWriter(),
                        stream.getEncoding(),
                        stream.getCharRepertoire(),
                        od.getLineSeparator(),
+                       od.getIndent(),
                        new String[0]);
   }
 
@@ -897,7 +905,7 @@ public class BasicOutput {
       xw.startElement(xs("sequence"));
       xw.startElement(xs("any"));
       xw.attribute("namespace", "##other");
-      xw.attribute("processContents", "skip");
+      xw.attribute("processContents", options.anyProcessContents);
       xw.endElement();
       xw.endElement();
       xw.endElement();
@@ -908,7 +916,7 @@ public class BasicOutput {
       xw.attribute("name", name);
       xw.startElement(xs("anyAttribute"));
       xw.attribute("namespace", "##other");
-      xw.attribute("processContents", "skip");
+      xw.attribute("processContents", options.anyAttributeProcessContents);
       xw.endElement();
       xw.endElement();
     }
