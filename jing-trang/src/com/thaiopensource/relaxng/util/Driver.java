@@ -31,7 +31,7 @@ class Driver {
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itcfe:p:", args);
+    OptionParser op = new OptionParser("itcdfe:p:", args);
     PropertyMapBuilder properties = new PropertyMapBuilder();
     ValidateProperty.ERROR_HANDLER.put(properties, eh);
     RngProperty.CHECK_ID_IDREF.add(properties);
@@ -44,6 +44,9 @@ class Driver {
           break;
         case 'c':
           sr = CompactSchemaReader.getInstance();
+          break;
+        case 'd':
+          SchematronProperty.DIAGNOSE.add(properties);
           break;
         case 't':
           timing = true;
