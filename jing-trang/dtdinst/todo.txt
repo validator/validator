@@ -2,6 +2,8 @@ License.
 
 Versioning.
 
+Move localizer to com.thaiopensource.util.
+
 Write some documentation.
 
 Think of a better name (dtdinst, dtdlift).
