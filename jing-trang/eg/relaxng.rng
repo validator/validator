@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<!-- RELAX NG for RELAX NG -->
+<!-- $Id: relaxng.rng,v 1.1 2001-05-24 07:34:28 jjc Exp $ -->
+<grammar ns="http://relaxng.org/main/ns/0.1"
+         xmlns="http://relaxng.org/main/ns/0.1">
+  <start name="pattern">
+    <choice>
+      <element name="element">
+	<choice>
+	  <attribute name="name"/>
+	  <ref name="open-name-class"/>
+	</choice>
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="attribute">
+	<ref name="common-atts"/>
+	<choice>
+	  <group>
+	    <attribute name="name"/>
+	    <optional>
+	      <attribute name="global">
+		<choice>
+		  <string>true</string>
+		  <string>false</string>
+		</choice>
+	      </attribute>
+	    </optional>
+	  </group>
+	  <ref name="open-name-class"/>
+	</choice>
+        <interleave>
+          <ref name="other"/>
+          <optional>
+            <ref name="pattern"/>
+          </optional>
+        </interleave>
+      </element>
+      <element name="group">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="interleave">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="choice">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="optional">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="zeroOrMore">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="oneOrMore">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="zeroOrMoreTokens">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="oneOrMoreTokens">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="mixed">
+        <ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="ref">
+	<attribute name="name"/>
+        <optional>
+          <attribute name="parent">
+            <choice>
+              <string>true</string>
+              <string>true</string>
+            </choice>
+          </attribute>
+        </optional>
+        <ref name="common-atts"/>
+      </element>
+      <element name="empty">
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="text">
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="value">
+        <optional>
+          <attribute name="type"/>
+        </optional>
+        <ref name="common-atts"/>
+        <mixed>
+          <ref name="other"/>
+        </mixed>
+      </element>
+      <element name="data">
+        <attribute name="type"/>
+        <optional>
+          <choice>
+            <attribute name="key"/>
+            <attribute name="keyRef"/>
+          </choice>
+        </optional>
+        <ref name="common-atts"/>
+        <interleave>
+          <ref name="other"/>
+          <zeroOrMore>
+            <element name="param">
+              <attribute name="name"/>
+	      <mixed>
+		<ref name="other"/>
+	      </mixed>
+            </element>
+          </zeroOrMore>
+        </interleave>
+      </element>
+      <element name="notAllowed">
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="include">
+	<attribute name="href"/>
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="grammar">
+	<ref name="common-atts"/>
+        <interleave>
+          <ref name="other"/>
+   	  <oneOrMore>
+            <ref name="grammar-element"/>
+	  </oneOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </start>
+
+  <define name="grammar-element">
+    <choice>
+      <ref name="define-element"/>
+      <element name="start">
+	<optional>
+	  <attribute name="name"/>
+	</optional>
+        <ref name="combine-att"/>
+	<ref name="common-atts"/>
+	<ref name="open-patterns"/>
+      </element>
+      <element name="include">
+	<attribute name="href"/>
+        <interleave>
+          <ref name="open"/>
+	  <zeroOrMore>
+	    <ref name="define-element"/>
+	  </zeroOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+
+  <define name="define-element">
+    <element name="define">
+      <attribute name="name"/>
+      <ref name="combine-att"/>
+      <ref name="common-atts"/>
+      <ref name="open-patterns"/>
+    </element>
+  </define>
+
+  <define name="combine-att">
+    <optional>
+      <attribute name="combine">
+        <choice>
+          <string>choice</string>
+          <string>interleave</string>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  
+  <define name="open-patterns">
+    <interleave>
+      <ref name="other"/>
+      <oneOrMore>
+        <ref name="pattern"/>
+      </oneOrMore>
+    </interleave>
+  </define>
+
+  <define name="name-class">
+    <choice>
+      <element name="name">
+        <ref name="common-atts"/>
+        <mixed>
+          <ref name="other"/>
+        </mixed>
+      </element>
+      <element name="anyName">
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="nsName">
+        <ref name="common-atts"/>
+	<ref name="other"/>
+      </element>
+      <element name="not">
+        <ref name="common-atts"/>
+	<ref name="open-name-class"/>
+      </element>
+      <element name="difference">
+        <ref name="common-atts"/>
+        <oneOrMore>
+	  <ref name="open-name-class"/>
+        </oneOrMore>
+      </element>
+      <element name="choice">
+        <ref name="common-atts"/>
+        <oneOrMore>
+	  <ref name="open-name-class"/>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+
+  <define name="open-name-class">
+    <interleave>
+      <ref name="other"/>
+      <ref name="name-class"/>
+    </interleave>
+  </define>
+
+  <define name="common-atts">
+    <optional>
+      <attribute name="ns"/>
+    </optional>
+    <zeroOrMore>
+      <attribute>
+        <not>
+          <choice>
+            <nsName/>
+            <nsName ns=""/>
+          </choice>
+        </not>
+      </attribute>
+    </zeroOrMore>
+  </define>
+
+  <define name="other">
+    <zeroOrMore>
+      <element>
+        <not>
+          <nsName/>
+        </not>
+        <zeroOrMore>
+          <choice>
+            <attribute>
+              <anyName/>
+            </attribute>
+            <anyString/>
+            <ref name="any"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </zeroOrMore>
+  </define>
+
+  <define name="any">
+    <element>
+      <anyName/>
+      <zeroOrMore>
+        <choice>
+          <attribute>
+            <anyName/>
+          </attribute>
+          <anyString/>
+          <ref name="any"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+</grammar>
