@@ -1024,12 +1024,7 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  abstract class NameClassEmptyContentState extends State {
-
-    State createChildState(String localName) throws SAXException {
-      error("expected_empty", localName);
-      return null;
-    }
+  abstract class NameClassBaseState extends State {
 
     abstract NameClass makeNameClass() throws SAXException;
 
@@ -1038,8 +1033,13 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class NameState extends NameClassEmptyContentState {
+  class NameState extends NameClassBaseState {
     StringBuffer buf = new StringBuffer();
+
+    State createChildState(String localName) throws SAXException {
+      error("expected_name", localName);
+      return null;
+    }
 
     State create() {
       return new NameState();
@@ -1056,22 +1056,50 @@ public class PatternReader implements DatatypeContext {
     
   }
 
-  class AnyNameState extends NameClassEmptyContentState {
+  class AnyNameState extends NameClassBaseState {
+    NameClass except = null;
+
     State create() {
       return new AnyNameState();
     }
 
+    State createChildState(String localName) throws SAXException {
+      if (localName.equals("except")) {
+	if (except != null)
+	  error("multiple_except");
+	return new NameClassChoiceState();
+      }
+      error("expected_except", localName);
+      return null;
+    }
+
     NameClass makeNameClass() {
+      NameClass nc = makeNameClassNoExcept();
+      if (except == null)
+	return nc;
+      else
+	return new DifferenceNameClass(nc, except);
+    }
+
+    NameClass makeNameClassNoExcept() {
       return new AnyNameClass();
     }
+
+    void endChild(NameClass nameClass) {
+      if (except != null)
+	except = new ChoiceNameClass(except, nameClass);
+      else
+	except = nameClass;
+    }
+
   }
 
-  class NsNameState extends NameClassEmptyContentState {
+  class NsNameState extends AnyNameState {
     State create() {
       return new NsNameState();
     }
 
-    NameClass makeNameClass() {
+    NameClass makeNameClassNoExcept() {
       return new NsNameClass(ns != null ? ns : nsInherit);
     }
   }
@@ -1101,6 +1129,11 @@ public class PatternReader implements DatatypeContext {
 	return;
       }
       parent.endChild(new NotNameClass(nameClass));
+    }
+
+    void endAttributes() throws SAXException {
+      warning("not_deprecated");
+      super.endAttributes();
     }
   }
 
@@ -1139,6 +1172,11 @@ public class PatternReader implements DatatypeContext {
   class NameClassDifferenceState extends NameClassMultiContainerState {
     State create() {
       return new NameClassDifferenceState();
+    }
+
+    void endAttributes() throws SAXException {
+      warning("difference_deprecated");
+      super.endAttributes();
     }
 
     NameClass combineNameClass(NameClass nc1, NameClass nc2) {
@@ -1224,6 +1262,20 @@ public class PatternReader implements DatatypeContext {
 
   void error(SAXParseException e) throws SAXException {
     hadError = true;
+    ErrorHandler eh = xr.getErrorHandler();
+    if (eh != null)
+      eh.error(e);
+  }
+
+  void warning(String key) throws SAXException {
+    warning(key, locator);
+  }
+
+  void warning(String key, Locator loc) throws SAXException {
+    warning(new SAXParseException(Localizer.message(key), loc));
+  }
+
+  void warning(SAXParseException e) throws SAXException {
     ErrorHandler eh = xr.getErrorHandler();
     if (eh != null)
       eh.error(e);
