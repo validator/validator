@@ -869,7 +869,9 @@ public class BasicOutput {
   private void namespaceAttribute(Wildcard wc) {
     if (wc.isPositive()) {
       StringBuffer buf = new StringBuffer();
-      for (Iterator iter = wc.getNamespaces().iterator(); iter.hasNext();) {
+      List namespaces = new Vector(wc.getNamespaces());
+      Collections.sort(namespaces);
+      for (Iterator iter = namespaces.iterator(); iter.hasNext();) {
         if (buf.length() > 0)
           buf.append(' ');
         String ns = (String)iter.next();

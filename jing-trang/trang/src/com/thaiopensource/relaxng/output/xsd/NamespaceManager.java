@@ -101,6 +101,13 @@ public class NamespaceManager {
               || (n1.elementCount == n2.elementCount
                   && n1.attributeCount > n2.attributeCount));
     }
+    public boolean equals(Object obj) {
+      if (!(obj instanceof NamespaceUsage))
+        return false;
+      NamespaceUsage other = (NamespaceUsage)obj;
+      return (elementCount == other.elementCount
+              && attributeCount == other.attributeCount);
+    }
   }
 
   class TargetNamespaceSelector extends SchemaWalker {
@@ -169,8 +176,11 @@ public class NamespaceManager {
       for (Iterator iter = namespaceUsageMap.entrySet().iterator(); iter.hasNext();) {
         Map.Entry tem = (Map.Entry)iter.next();
         if (best == null
-                || NamespaceUsage.isBetter((NamespaceUsage)tem.getValue(),
-                                           (NamespaceUsage)best.getValue()))
+            || NamespaceUsage.isBetter((NamespaceUsage)tem.getValue(),
+                                       (NamespaceUsage)best.getValue())
+                // avoid output depending on order of hash table iteration
+            || (tem.getValue().equals(best.getValue())
+                && ((String)tem.getKey()).compareTo(best.getKey()) < 0))
           best = tem;
       }
       namespaceUsageMap.clear();
