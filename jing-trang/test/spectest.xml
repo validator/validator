@@ -1590,6 +1590,40 @@ applies at the syntax level.</documentation>
 <valid><foo/></valid>
 <invalid><bar/></invalid>
 </testCase>
+<testCase>
+<section>4.7</section>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <define name="foo" combine="choice">
+    <element name="foo3">
+      <empty/>
+    </element>
+  </define>
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <ref name="foo"/>
+  </start>
+  <include href="x">
+    <define name="foo" combine="choice">
+      <element name="foo1">
+	<empty/>
+      </element>
+    </define>
+  </include>
+  <define name="foo">
+    <element name="foo2">
+      <empty/>
+    </element>
+  </define>
+</grammar>
+</correct>
+<valid><foo1/></valid>
+<valid><foo2/></valid>
+<invalid><foo3/></invalid>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.8</section>
