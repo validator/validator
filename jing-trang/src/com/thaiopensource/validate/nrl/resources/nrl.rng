@@ -117,6 +117,7 @@
                     <data type="boolean"/>
                   </attribute>
                 </optional>
+                <ref name="foreign"/>
               </element>
             </zeroOrMore>
             <ref name="modeUsage"/>
