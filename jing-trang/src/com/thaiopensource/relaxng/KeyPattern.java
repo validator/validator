@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng;
 
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 import com.thaiopensource.datatype.Datatype;
 
 class KeyPattern extends StringPattern {
@@ -8,18 +9,30 @@ class KeyPattern extends StringPattern {
   private String name;
   private Pattern p;
 
-  KeyPattern(Datatype dt, String name, Locator locator, Pattern p) {
+  KeyPattern(String name, Locator locator, Pattern p) {
     super(false,
 	  combineHashCode(KEY_HASH_CODE, name.hashCode(), p.hashCode()),
 	  locator);
     this.p = p;
-    this.dt = dt;
     this.name = name;
+    this.dt = p.getDatatype();
+  }
+
+  void checkRecursion(int depth) throws SAXException {
+    p.checkRecursion(depth);
+  }
+
+  Pattern expand(PatternBuilder b) {
+    Pattern ep = p.expand(b);
+    if (ep != p)
+      return b.makeKey(name, getLocator(), ep);
+    else
+      return this;
   }
 
   Pattern residual(PatternBuilder b, Atom a) {
     Pattern r = p.residual(b, a);
-    if (r.isNullable())
+    if (r.isNullable() && dt != null)
       a.setKey(dt, name);
     return r;
   }

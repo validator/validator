@@ -101,12 +101,12 @@ public class PatternBuilder {
     return intern(new DatatypePattern(dt, loc));
   }
 
-  Pattern makeKey(Datatype dt, String name, Locator loc, Pattern p) {
-    return intern(new KeyPattern(dt, name, loc, p));
+  Pattern makeKey(String name, Locator loc, Pattern p) {
+    return intern(new KeyPattern(name, loc, p));
   }
 
-  Pattern makeKeyRef(Datatype dt, String name, Locator loc, Pattern p) {
-    return intern(new KeyRefPattern(dt, name, loc, p));
+  Pattern makeKeyRef(String name, Locator loc, Pattern p) {
+    return intern(new KeyRefPattern(name, loc, p));
   }
 
   Pattern makeChoice(Pattern p1, Pattern p2) {

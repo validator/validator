@@ -518,9 +518,9 @@ public class PatternReader implements DatatypeContext {
       Datatype dt = dtb.finish();
       Pattern p = patternBuilder.makeData(dt, loc);
       if (key != null)
-	p = patternBuilder.makeKey(dt, key, loc, p);
+	p = patternBuilder.makeKey(key, loc, p);
       else if (keyRef != null)
-	p = patternBuilder.makeKeyRef(dt, keyRef, loc, p);
+	p = patternBuilder.makeKeyRef(keyRef, loc, p);
       parent.endChild(p);
     }
   }
@@ -651,16 +651,7 @@ public class PatternReader implements DatatypeContext {
     Pattern wrapPattern(Pattern p) throws SAXException {
       if (name == null)
 	return p;
-      Datatype dt = p.getDatatype();
-      if (dt == null) {
-	error("bad_key_content");
-	return p;
-      }
-      return makeKey(dt, copyLocator(), p);
-    }
-
-    Pattern makeKey(Datatype dt, Locator loc, Pattern p) {
-      return patternBuilder.makeKey(dt, name, loc, p);
+      return patternBuilder.makeKey(name, copyLocator(), p);
     }
   }
 
@@ -668,8 +659,10 @@ public class PatternReader implements DatatypeContext {
     State create() {
       return new KeyRefState();
     }
-    Pattern makeKey(Datatype dt, Locator loc, Pattern p) {
-      return patternBuilder.makeKeyRef(dt, name, loc, p);
+    Pattern wrapPattern(Pattern p) throws SAXException {
+      if (name == null)
+	return p;
+      return patternBuilder.makeKeyRef(name, copyLocator(), p);
     }
   }
 

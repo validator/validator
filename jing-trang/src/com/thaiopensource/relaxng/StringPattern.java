@@ -19,4 +19,8 @@ abstract class StringPattern extends Pattern {
   boolean distinguishesStrings() {
     return true;
   }
+
+  Locator getLocator() {
+    return locator;
+  }
 }
