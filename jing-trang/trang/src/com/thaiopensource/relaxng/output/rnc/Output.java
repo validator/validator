@@ -12,10 +12,6 @@ import java.util.*;
 
 /*
 Use \x{} escapes for characters not in repertoire of selected encoding
-
-Combine adjacent text annotations.
-
-Make long literals pretty
 */
 class Output {
   private final Prettyprinter pp;
@@ -68,6 +64,7 @@ class Output {
   }
 
   private void topLevel(Pattern p) {
+    p.accept(new TextAnnotationMerger());
     boolean implicitGrammar = p instanceof GrammarPattern && p.getAttributeAnnotations().isEmpty();
     if (implicitGrammar && !p.getLeadingComments().isEmpty()) {
       leadingComments(p);
@@ -109,23 +106,33 @@ class Output {
       String ns = nsb.getNamespaceUri(prefix);
       if (prefix.length() == 0) {
         if (defaultPrefix == null && !ns.equals(SchemaBuilder.INHERIT_NS)) {
-          pp.text("default namespace = ");
+          pp.startGroup();
+          pp.text("default namespace =");
+          pp.startNest(indent);
+          pp.softNewline(" ");
           literal(ns);
+          pp.endNest();
+          pp.endGroup();
           pp.hardNewline();
           needNewline = true;
         }
       }
       else if (!prefix.equals("xml")) {
+        pp.startGroup();
         if (prefix.equals(defaultPrefix))
           pp.text("default namespace ");
         else
           pp.text("namespace ");
         pp.text(prefix);
-        pp.text(" = ");
+        pp.text(" =");
+        pp.startNest(indent);
+        pp.softNewline(" ");
         if (ns.equals(SchemaBuilder.INHERIT_NS))
           pp.text("inherit");
         else
           literal(ns);
+        pp.endNest();
+        pp.endGroup();
         pp.hardNewline();
         needNewline = true;
       }
@@ -149,13 +156,39 @@ class Output {
         prefix += Integer.toString(i + 1);
       String uri = (String)datatypeLibraries.get(i);
       datatypeLibraryMap.put(uri, prefix);
+      pp.startGroup();
       pp.text("datatypes ");
       pp.text(prefix);
-      pp.text(" = ");
+      pp.text(" =");
+      pp.startNest(indent);
+      pp.softNewline(" ");
       literal(uri);
+      pp.endNest();
+      pp.endGroup();
       pp.hardNewline();
     }
     pp.hardNewline();
+  }
+
+  static class TextAnnotationMerger extends NullVisitor {
+    public void nullVisitElement(ElementAnnotation ea) {
+      TextAnnotation prevText = null;
+      for (Iterator iter = ea.getChildren().iterator(); iter.hasNext();) {
+        AnnotationChild child = (AnnotationChild)iter.next();
+        if (child instanceof TextAnnotation) {
+          if (prevText == null)
+            prevText = (TextAnnotation)child;
+          else {
+            prevText.setValue(prevText.getValue() + ((TextAnnotation)child).getValue());
+            iter.remove();
+          }
+        }
+        else {
+          prevText = null;
+          child.accept(this);
+        }
+      }
+    }
   }
 
   static class DatatypeLibraryVisitor extends NullVisitor {
@@ -334,9 +367,13 @@ class Output {
 
     public Object visitInclude(IncludeComponent c) {
       startAnnotations(c);
+      pp.startGroup();
       pp.text("include ");
+      pp.startNest("include ");
       literal(od.reference(sourceUri, c.getHref()));
       inherit(c.getNs());
+      pp.endNest();
+      pp.endGroup();
       List components = c.getComponents();
       if (!components.isEmpty())
         body(components);
@@ -452,9 +489,13 @@ class Output {
 
     public Object visitExternalRef(ExternalRefPattern p) {
       startAnnotations(p);
+      pp.startGroup();
       pp.text("external ");
+      pp.startNest("external ");
       literal(od.reference(sourceUri, p.getHref()));
       inherit(p.getNs());
+      pp.endNest();
+      pp.endGroup();
       endAnnotations(p);
       return null;
     }
@@ -571,9 +612,14 @@ class Output {
           pp.softNewline(" ");
           Param param = (Param)iter.next();
           startAnnotations(param);
+          pp.startGroup();
           pp.text(param.getName());
-          pp.text(" = ");
+          pp.text(" =");
+          pp.startNest(indent);
+          pp.softNewline(" ");
           literal(param.getValue());
+          pp.endNest();
+          pp.endGroup();
           endAnnotations(param);
         }
         pp.endNest();
@@ -622,13 +668,22 @@ class Output {
       }
       startAnnotations(p);
       String lib = p.getDatatypeLibrary();
+      pp.startGroup();
+      String str = null;
       if (lib.equals("")) {
         if (!p.getType().equals("token"))
-          pp.text(p.getType() + " ");
+          str = p.getType() + " ";
       }
       else
-        pp.text((String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ");
+        str = (String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ";
+      if (str != null) {
+        literal(str);
+        pp.startNest(str);
+      }
       literal(p.getValue());
+      if (str != null)
+        pp.endNest();
+      pp.endGroup();
       endAnnotations(p);
       return null;
     }
@@ -868,9 +923,14 @@ class Output {
     for (Iterator iter = attributes.iterator(); iter.hasNext();) {
       AttributeAnnotation att = (AttributeAnnotation)iter.next();
       pp.softNewline(" ");
+      pp.startGroup();
       pp.text(qualifyName(att.getNamespaceUri(), att.getPrefix(), att.getLocalName(), true));
-      pp.text(" = ");
+      pp.text(" =");
+      pp.startNest(indent);
+      pp.softNewline(" ");
       literal(att.getValue());
+      pp.endNest();
+      pp.endGroup();
     }
     for (Iterator iter = children.iterator(); iter.hasNext();) {
       pp.softNewline(" ");
@@ -914,7 +974,8 @@ class Output {
   private void inherit(String ns) {
     if (ns.equals(nsb.getNamespaceUri("")))
       return;
-    pp.text(" inherit = ");
+    pp.softNewline(" ");
+    pp.text("inherit = ");
     pp.text(nsb.getNonEmptyPrefix(ns));
   }
 
@@ -931,17 +992,26 @@ class Output {
       // Find the delimiter that gives the longest segment
       String bestDelim = null;
       int bestEnd = -1;
+      int lim = str.indexOf('\n', i);
+      if (lim < 0)
+        lim = len;
+      else
+        ++lim;
       for (int j = 0; j < delims.length; j++) {
         int end = (str + delims[j]).indexOf(delims[j], i);
         if (end > bestEnd) {
           bestDelim = delims[j];
           bestEnd = end;
-          if (end == len)
+          if (end >= lim) {
+            bestEnd = lim;
             break;
+          }
         }
       }
-      if (i != 0)
-        pp.text(" ~ ");
+      if (i != 0) {
+        pp.text(" ~");
+        pp.softNewline(" ");
+      }
       pp.text(bestDelim);
       encode(str.substring(i, bestEnd));
       pp.text(bestDelim);
