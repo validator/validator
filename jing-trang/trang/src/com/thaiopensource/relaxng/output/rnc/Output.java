@@ -1000,7 +1000,7 @@ class Output {
     encodedText(name);
   }
 
-  static final String[] delims = { "\"", "'", "\"\"\"", "'''" };
+  private static final String[] delims = { "\"", "'", "\"\"\"", "'''" };
 
   private void literal(String str) {
     for (int i = 0, len = str.length();;) {
