@@ -116,7 +116,7 @@ Class-Path: jing.jar
     <fileset dir="${dist.dir}" includes="trang.jar,jing.jar"/>
   </zip>
   <copy todir="${dist.dir}">
-    <fileset dir="doc" includes="trang.html"/>
+    <fileset dir="doc" includes="trang.html,convert-to-xsd-talk.html"/>
   </copy>
   <replace file="${dist.dir}/trang.html" token="@VERSION@" value="${version}"/>
 </target>
