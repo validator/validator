@@ -49,6 +49,10 @@ class Decl {
     switch (type) {
     case COMMENT:
       return new Comment(value);
+    case PROCESSING_INSTRUCTION:
+      return createProcessingInstruction();
+    case NOTATION:
+      return createNotationDecl();
     case ELEMENT:
       return createElementDecl();
     case ATTLIST:
@@ -143,5 +147,33 @@ class Decl {
 
   IgnoredSection createIgnoredSection() {
     return new IgnoredSection(Param.paramsToFlag(params), value);
+  }
+
+  ProcessingInstruction createProcessingInstruction() {
+    int len = value.length();
+    int i;
+    for (i = 0; i < len && !isWS(value.charAt(i)); i++)
+      ;
+    String target = value.substring(0, i);
+    if (i < len) {
+      for (++i; i < len && isWS(value.charAt(i)); i++)
+	;
+    }
+    return new ProcessingInstruction(target, value.substring(i, len));
+  }
+
+  static private boolean isWS(char c) {
+    switch (c) {
+    case '\n':
+    case '\r':
+    case '\t':
+    case ' ':
+      return true;
+    }
+    return false;
+  }
+  
+  NotationDecl createNotationDecl() {
+    return null;
   }
 }
