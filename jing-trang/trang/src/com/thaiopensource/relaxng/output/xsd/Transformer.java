@@ -31,6 +31,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.ComplexType;
 import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeComplexContent;
 import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
+import com.thaiopensource.util.Equal;
 
 import java.util.List;
 import java.util.Iterator;
@@ -235,12 +236,10 @@ class Transformer extends SchemaTransformer {
         }
       }
     }
-    Set common = new HashSet(maps[0].keySet());
+    Set required = new HashSet();
     Set union = new HashSet(maps[0].keySet());
-    for (int i = 1; i < maps.length; i++) {
-      common.retainAll(maps[i].keySet());
+    for (int i = 1; i < maps.length; i++)
       union.addAll(maps[i].keySet());
-    }
     Set[] retainAttributeNames = new Set[children.size()];
     for (int i = 0; i < retainAttributeNames.length; i++)
       retainAttributeNames[i] = new HashSet();
@@ -250,6 +249,7 @@ class Transformer extends SchemaTransformer {
       if (wildcard == null || !wildcard.contains(name)) {
         SingleAttributeUse[] uses = new SingleAttributeUse[maps.length];
         int useIndex = -1;
+        boolean isRequired = true;
         for (int i = 0; i < maps.length; i++) {
           uses[i] = (SingleAttributeUse)maps[i].get(name);
           if (uses[i] != null) {
@@ -257,8 +257,14 @@ class Transformer extends SchemaTransformer {
               useIndex = -2;
             else if (useIndex == -1)
               useIndex = i;
+            if (uses[i].isOptional())
+              isRequired = false;
           }
+          else
+            isRequired = false;
         }
+        if (isRequired)
+          required.add(name);
         if (useIndex < 0)
           useIndex = chooseUseIndex(uses);
         if (useIndex >= 0)
@@ -266,12 +272,13 @@ class Transformer extends SchemaTransformer {
         else {
           List choices = new Vector();
           for (int i = 0; i < uses.length; i++)
-            choices.add(uses[i].getType());
+            if (uses[i] != null && uses[i].getType() != null)
+              choices.add(uses[i].getType());
           Attribute tem = new Attribute(a.getLocation(),
                                         null,
                                         name,
                                         (SimpleType)new SimpleTypeUnion(a.getLocation(), null, choices).accept(this));
-          if (common.contains(name))
+          if (isRequired)
             newChildren.add(tem);
           else
             newChildren.add(new OptionalAttribute(a.getLocation(), null, tem, null));
@@ -280,7 +287,7 @@ class Transformer extends SchemaTransformer {
     }
     for (int i = 0; i < retainAttributeNames.length; i++) {
       Object tem = ((AttributeUse)children.get(i)).accept(new AttributeTransformer(retainAttributeNames[i],
-                                                                                   common,
+                                                                                   required,
                                                                                    i == wildcardUseIndex));
       if (!tem.equals(AttributeGroup.EMPTY))
         newChildren.add(tem);
@@ -299,7 +306,8 @@ class Transformer extends SchemaTransformer {
       if (uses[i] != null) {
         if (firstIndex == -1)
           firstIndex = i;
-        else if (!uses[i].equals(uses[firstIndex]))
+        else if (!Equal.equal(uses[i].getType(), uses[firstIndex].getType())
+                 || !Equal.equal(uses[i].getDefaultValue(), uses[firstIndex].getDefaultValue()))
           return -1;
       }
     }

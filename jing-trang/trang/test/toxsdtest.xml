@@ -3801,6 +3801,47 @@ c = element a { x } | element b { y }
 </correct>
 </xsd>
 </testCase>
+<testCase>
+<compact>
+<correct>
+element foo {
+  attribute att { text } | attribute att { text }?
+}
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="foo">
+    <xs:complexType>
+      <xs:attribute name="att"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo {
+  attribute att1 { text } | attribute att1 { string } | attribute att2 { text }?
+}
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="foo">
+    <xs:complexType>
+      <xs:attribute name="att1"/>
+      <xs:attribute name="att2"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
 <!--
 <testCase>
 <compact>
