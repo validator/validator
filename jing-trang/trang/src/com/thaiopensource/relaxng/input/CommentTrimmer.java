@@ -31,7 +31,7 @@ public class CommentTrimmer {
       case '\t':
         break;
       case '\n':
-        --len;
+        ++start;
         break loop2;
       default:
         break loop2;
