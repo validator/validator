@@ -60,6 +60,9 @@ class Inferrer {
 
   private static final String SEPARATORS = ".-_";
 
+  static class Options {
+    String encoding;
+  }
 
   private static class PatternComparator implements Comparator {
     private static Class[] classOrder = {
@@ -210,14 +213,18 @@ class Inferrer {
     }
   }
 
-  static SchemaCollection infer(String[] args, ErrorHandler eh) throws SAXException, IOException {
+  static SchemaCollection infer(String[] args, Options options, ErrorHandler eh) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
     XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
     XMLReader xr = xrc.createXMLReader();
     xr.setErrorHandler(eh);
     xr.setContentHandler(handler);
-    for (int i = 0; i < args.length; i++)
-       xr.parse(new InputSource(args[i]));
+    for (int i = 0; i < args.length; i++) {
+      InputSource in = new InputSource(args[i]);
+      if (options.encoding != null)
+        in.setEncoding(options.encoding);
+      xr.parse(in);
+    }
     SchemaCollection sc = new SchemaCollection();
     sc.setMainUri(args[0]);
     SchemaDocument sd = new SchemaDocument(new Inferrer(handler.getSchema()).grammar);
