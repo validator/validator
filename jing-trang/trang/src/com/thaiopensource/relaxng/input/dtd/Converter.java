@@ -50,14 +50,7 @@ import com.thaiopensource.xml.em.ExternalId;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.SAXException;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.HashMap;
+import java.util.*;
 
 public class Converter {
   static class Options {
@@ -1028,11 +1021,14 @@ public class Converter {
   }
 
   private void outputUndefinedElements(List components) {
-    for (Iterator iter = elementNameTable.entrySet().iterator(); iter.hasNext();) {
-      Map.Entry entry = (Map.Entry)iter.next();
-      if ((((Integer)entry.getValue()).intValue() & ELEMENT_DECL)
+    List elementNames = new Vector();
+    elementNames.addAll(elementNameTable.keySet());
+    Collections.sort(elementNames);
+    for (Iterator iter = elementNames.iterator(); iter.hasNext();) {
+      String elementName = (String)iter.next();
+      if ((((Integer)elementNameTable.get(elementName)).intValue() & ELEMENT_DECL)
 	  == 0) {
-        DefineComponent dc = new DefineComponent(elementDeclName((String)entry.getKey()), new NotAllowedPattern());
+        DefineComponent dc = new DefineComponent(elementDeclName(elementName), new NotAllowedPattern());
         dc.setCombine(Combine.CHOICE);
         components.add(dc);
       }
