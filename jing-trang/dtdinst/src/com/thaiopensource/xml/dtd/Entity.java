@@ -32,6 +32,13 @@ class Entity {
 
   int referenceLevel = NO_LEVEL;
 
+  static final int GROUP_CONTAINS_OR = 01;
+  static final int GROUP_CONTAINS_SEQ = 02;
+  static final int GROUP_CONTAINS_PCDATA = 04;
+  static final int GROUP_CONTAINS_GROUP = 010;
+
+  int groupFlags = 0;
+
   Vector parsed;
 
   void setParsed(int level, Vector v, int start, int end) {
