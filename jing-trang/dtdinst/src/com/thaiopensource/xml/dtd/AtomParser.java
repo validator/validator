@@ -246,10 +246,6 @@ class AtomParser {
 	v.addElement(p);
 	int start = v.size();
 	new AtomParser(new AtomStream(as.entity.atoms), pp, group).parseParticles(isModelGroup);
-	if (v.size() == start)
-	  v.addElement(new Particle(isModelGroup
-				    ? Particle.EMPTY_MODEL_GROUP
-				    : Particle.EMPTY_ATTRIBUTE_VALUE_GROUP));
 	p.entity.setParsed(Entity.PARTICLE_LEVEL, v, start, v.size());
 	p = new Particle(Particle.REFERENCE_END);
       } 

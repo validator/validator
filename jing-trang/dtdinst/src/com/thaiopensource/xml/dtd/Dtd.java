@@ -43,6 +43,12 @@ class Dtd {
 		   decls).parse();
   }
 
+  void analyzeSemantics() {
+    for (Enumeration e = paramEntityTable.elements();
+	 e.hasMoreElements();)
+      ((Entity)e.nextElement()).analyzeSemantic();
+  }
+
   void dump() {
     dumpEntity("#doc", atoms);
   }

@@ -11,9 +11,6 @@ class Particle {
   static final int REFERENCE_END = 5;
   static final int CONNECT_OR = 6;
   static final int CONNECT_SEQ = 7;
-  // Pseudo-tokens
-  static final int EMPTY_MODEL_GROUP = 8;
-  static final int EMPTY_ATTRIBUTE_VALUE_GROUP = 9;
 
   Particle(int type) {
     this.type = type;

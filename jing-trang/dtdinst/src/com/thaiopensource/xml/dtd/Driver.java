@@ -18,6 +18,8 @@ public class Driver {
     dtd.unexpandEntities();
     System.err.println("Creating decls");
     dtd.createDecls();
+    System.err.println("Analyze semantics");
+    dtd.analyzeSemantics();
     // System.err.println("Dumping");
     // dtd.dump();
   }

@@ -28,7 +28,7 @@ class Entity {
   static final int NO_LEVEL = 0;
   static final int DECL_LEVEL = 1;
   static final int PARAM_LEVEL = 2;
-  static final int PARTICLE_LEVEL = 2;
+  static final int PARTICLE_LEVEL = 3;
 
   int referenceLevel = NO_LEVEL;
 
@@ -38,6 +38,14 @@ class Entity {
   static final int GROUP_CONTAINS_GROUP = 010;
 
   int groupFlags = 0;
+
+  static final int SEMANTIC_NONE = 0;
+  static final int SEMANTIC_MODEL_GROUP = 1;
+  static final int SEMANTIC_ATTRIBUTE_GROUP = 2;
+  static final int SEMANTIC_ENUM_GROUP = 3;
+  static final int SEMANTIC_DATATYPE = 4;
+
+  int semantic = SEMANTIC_NONE;
 
   Vector parsed;
 
@@ -126,6 +134,92 @@ class Entity {
   static void appendSlice(Vector to, Vector from, int start, int end) {
     for (; start < end; start++)
       to.addElement(from.elementAt(start));
+  }
+
+  void analyzeSemantic() {
+    switch (referenceLevel) {
+    case PARAM_LEVEL:
+      analyzeSemanticParam();
+      break;
+    case PARTICLE_LEVEL:
+      analyzeSemanticParticle();
+      break;
+    }
+  }
+
+  private void analyzeSemanticParam() {
+    if (isAttributeGroup())
+      semantic = SEMANTIC_ATTRIBUTE_GROUP;
+    else if (isDatatype())
+      semantic = SEMANTIC_DATATYPE;
+  }
+
+  static class ParamStream {
+    int type;
+    private int i = 0;
+    private Vector v;
+
+    ParamStream(Vector v) {
+      this.v = v;
+    }
+    boolean advance() {
+      while (i < v.size()) {
+	type = ((Param)v.elementAt(i++)).type;
+	switch (type) {
+	case Param.REFERENCE:
+	case Param.REFERENCE_END:
+	  break;
+	default:
+	  return true;
+	}
+      }
+      type = -1;
+      return false;
+    }
+  }
+
+  private boolean isAttributeGroup() {
+    ParamStream ps = new ParamStream(parsed);
+    if (!ps.advance())
+      return false;
+    if (ps.type == Param.EMPTY_ATTRIBUTE_GROUP)
+      return true;
+    do {
+      if (ps.type != Param.ATTRIBUTE_NAME
+	  || !ps.advance()
+	  || (ps.type == Param.ATTRIBUTE_TYPE_NOTATION && !ps.advance())
+	  || !ps.advance()
+	  || (ps.type == Param.FIXED && !ps.advance()))
+	return false;
+    } while (ps.advance());
+    return true;
+  }
+
+  private boolean isDatatype() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance()
+	    && (ps.type == Param.ATTRIBUTE_TYPE
+		|| ps.type == Param.ATTRIBUTE_VALUE_GROUP
+		|| (ps.type == Param.ATTRIBUTE_TYPE_NOTATION
+		    && ps.advance()))
+	    && !ps.advance());
+  }
+
+  private void analyzeSemanticParticle() {
+    // XXX deal with empty particles
+    int n = parsed.size();
+    for (int i = 0; i < n; i++) {
+      switch (((Particle)parsed.elementAt(i)).type) {
+      case Particle.GROUP:
+      case Particle.ELEMENT_NAME:
+      case Particle.PCDATA:
+	semantic = SEMANTIC_MODEL_GROUP;
+	return;
+      case Particle.NMTOKEN:
+	semantic = SEMANTIC_ENUM_GROUP;
+	return;
+      }
+    }
   }
 }
 
