@@ -9,7 +9,8 @@
 
 <p>The XML Namespaces Recommendation allows an XML document to be
 composed of elements and attributes from multiple independent
-namespaces. Each of these namespaces may have its own schema.  The
+namespaces. Each of these namespaces may have its own schema;
+the schemas for different namespaces may be in different schema languages.  The
 problem then arises of how the schemas can be composed in order to
 allow validation of the complete document. This document proposes the
 Namespace Routing Language (NRL) as a solution to this problem.  NRL
@@ -44,30 +45,6 @@ is an example:</p>
 
 <p>The absent namespace can be mapped to a namespace URI by using
 <code>ns=""</code>.</p>
-
-<h2>Specifying the schema</h2>
-
-<p>In most cases the schema will be in some namespaced XML dialect,
-and the type of schema can be automatically detected from the
-namespace URI of the root element.  In cases where the schema is not
-in XML and there is no MIME type information available to determine
-the type, a <code>schemaType</code> attribute can be used to specify the
-type.  The value of this should be a MIME media type.  For RELAX NG
-compact syntax, a value of <code>application/x-rnc</code> should be
-used.</p>
-
-<xml>
-<rules xmlns="http://www.thaiopensource.com/validate/nrl">
-<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
-  <validate schema="soap-envelope.xsd"/>
-</namespace>
-<namespace ns="http://www.w3.org/1999/xhtml">
-  <validate schema="xhtml.rnc" schemaType="application/x-rnc"/>
-</namespace>
-</rules>
-</xml>
-
-<p>XXX schema options</p>
 
 <h2>Processing model</h2>
 
@@ -145,6 +122,144 @@ part of the same section as the root element.</p>
 
 <p>This validation process can be refined in several ways, which
 are described in the following sections.</p>
+
+<h2>Specifying the schema</h2>
+
+<p>In most cases the schema will be in some namespaced XML dialect,
+and the type of schema can be automatically detected from the
+namespace URI of the root element.  In cases where the schema is not
+in XML and there is no MIME type information available to determine
+the type, a <code>schemaType</code> attribute can be used to specify the
+type.  The value of this should be a MIME media type.  For RELAX NG
+compact syntax, a value of <code>application/x-rnc</code> should be
+used.</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.rnc" schemaType="application/x-rnc"/>
+</namespace>
+</rules>
+</xml>
+
+<p>With many schema languages, there can be different ways to use a
+particular schema to validate an instance.  For example, Schematron
+has the notion of a phase; an instance that is valid with respect to a
+Schematron schema using one phase may not be valid with respect to the
+same schema in another phase. NRL allows validation to be controlled
+by specifying a number of options. For example, to specify that
+validate with respect to xhtml.sch should use the phase named
+<code>Full</code>, an option could be specified as follows:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.sch">
+    <option name="http://www.thaiopensource.com/validate/phase" arg="Full"/>
+  </validate>
+</namespace>
+</rules>
+</xml>
+
+<p>Options may have arguments. Some options do not need arguments. For
+example, for Schematron there is a
+<code>http://www.thaiopensource.com/validate/diagnose</code> option.
+If this option is present, then errors will include Schematron
+diagnostics; if it is not, then errors will not include diagnostics.
+With this option, no <code>arg</code> attribute is necessary:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.sch">
+    <option name="http://www.thaiopensource.com/validate/diagnose"/>
+  </validate>
+</namespace>
+</rules>
+</xml>
+
+<p>Options are named by URIs. A number of standard options are defined
+which all start with the URI
+<code>http://www.thaiopensource.com/validate/</code>:</p>
+
+<dl>
+
+<dt><code>http://www.thaiopensource.com/validate/phase</code></dt>
+<dd>Argument is a string, specifying Schematron phase</dd>
+
+<dt><code>http://www.thaiopensource.com/validate/diagnose</code></dt>
+<dd>No argument. If present, include Schematron diagnostics in error messages</dd>
+
+<dt><code>http://www.thaiopensource.com/validate/check-id-idref</code></dt>
+
+<dd>No argument.If option present, check ID/IDREF in accordance with
+RELAX NG DTD Compatibility specification.</dd>
+
+<dt><code>http://www.thaiopensource.com/validate/feasible</code></dt>
+
+<dd>No argument.If option present, check that the document is
+<em>feasibly valid</em>.  This applies to RELAX NG.  A document is
+<em>feasibly valid</em> if it could be transformed into a valid
+document by inserting any number of attributes and child elements
+anywhere in the tree.  This is equivalent to transforming the schema
+by wrapping every <code>data</code>, <code>list</code>,
+<code>element</code> and <code>attribute</code> element in an
+<code>optional</code> element and then validating against the
+transformed schema. This option is useful while a document is still
+under construction.</dd>
+
+</dl>
+
+<p>For convenience, the URI specified by the <code>name</code>
+attribute may be relative; if it is, it will be resolved relative to
+the NRL namespace URI.  The result is that the standard options above
+can be specified without the
+<code>http://www.thaiopensource.com/validate/</code> prefix. For
+example,</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.sch">
+    <option name="phase" arg="Full"/>
+  </validate>
+</namespace>
+</rules>
+</xml>
+
+<p>Normally, an NRL implementation will make a best-effort attempt to
+support the specified option and will simply ignore options that it
+does not understand or cannot support.  If it is essential that a
+particular option is supported, then a <code>mustSupport</code>
+attribute may be added to the <code>option</code> element:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+  <validate schema="soap-envelope.xsd"/>
+</namespace>
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.sch">
+    <option name="phase" arg="Full" mustSupport="true"/>
+  </validate>
+</namespace>
+</rules>
+</xml>
+
+<p>If there is a <code>mustSupport</code> attribute and the NRL
+implementation cannot support the option, it must report an error.</p>
 
 <h2>Concurrent validation</h2>
 
@@ -754,6 +869,10 @@ href="http://www.y12.doe.gov/sgml/sc34/document/0363.htm"
 href="http://www.thaiopensource.com/relang/jing.html"
 >http://www.thaiopensource.com/relang/jing.html</a></p>
 
+<p>Schematron</p>
+
+<p>RELAX NG</p>
+
 <h2>NRL schema</h2>
 
 <p>NRL elements can be extended with arbitrary attributes provided the
@@ -870,11 +989,11 @@ path =
 <h2>Formal semantics</h2>
 
 <p>In order to describe the semantics of NRL, it is convenient to
-construct a new section-based data model based processing.  This data
-model is constructed from the RELAX NG data model.  An implementation
-wouldn't actually have to construct this, but the semantics are
-simpler to describe in terms of this new data model than in terms of
-the RELAX NG data model.  Note that the information content is exactly
+construct a new section-based data model.  This data model is
+constructed from the RELAX NG data model.  An implementation wouldn't
+actually have to construct this, but the semantics are simpler to
+describe in terms of this data model rather than in terms of the RELAX
+NG data model.  Note that the information content is exactly
 equivalent to the RELAX NG data model.</p>
 
 <p>There are two kinds of section: attribute sections and element
@@ -912,6 +1031,8 @@ section, it returns error information and a (possibly empty) list of
 element sections.  When an action is applied to an attribute section,
 it returns error information and either an attribute section or an
 empty list.</p>
+
+<p>XXX explain sequence</p>
 
 <p>Here is a formalization in Haskell:</p>
 
