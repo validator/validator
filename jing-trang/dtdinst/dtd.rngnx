@@ -11,11 +11,11 @@ decl =
   | datatypeDef
   | flagDef
   | nameSpecDef
+  | overriddenDef
   | includedSection
   | ignoredSection
   | internalEntityDecl
   | processingInstruction
-
 
 elementDecl = element element { nameSpec, modelGroup }
 
@@ -26,6 +26,8 @@ datatypeDef = element datatype { name, datatype }
 flagDef = element flag { name, flag }
 
 nameSpecDef = element nameSpec { name, nameSpec }
+
+overriddenDef = element overridden { name, text }
 
 includedSection = 
   element includedSection { attribute flag { xsd:NCName }?, decl* }
