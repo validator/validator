@@ -251,6 +251,27 @@ class Output {
         nsm.preferBinding(prefix, ns);
     }
 
+    public void nullVisitAnnotated(Annotated p) {
+      p.leadingCommentsAccept(this);
+      p.attributeAnnotationsAccept(this);
+      List before = (p.mayContainText()
+                     ? p.getFollowingElementAnnotations()
+                     : p.getChildElementAnnotations());
+      // Avoid unnecessary prefix for documentation
+      int state = 0;
+      for (Iterator iter = before.iterator(); iter.hasNext();) {
+        AnnotationChild child = (AnnotationChild)iter.next();
+        if (state < 2 && documentationString(child) != null)
+          state = 1;
+        else if (state != 1 || !(child instanceof Comment))
+          state = 2;
+        if (state == 2)
+          child.accept(this);
+      }
+      if (!p.mayContainText())
+        p.followingElementAnnotationsAccept(this);
+    }
+
     static NamespaceManager.NamespaceBindings createBindings(Pattern p) {
       NamespaceVisitor nsv = new NamespaceVisitor();
       p.accept(nsv);
@@ -771,7 +792,7 @@ class Output {
     return true;
   }
 
-  private String documentationString(AnnotationChild child) {
+  private static String documentationString(AnnotationChild child) {
     if (!(child instanceof ElementAnnotation))
      return null;
     ElementAnnotation elem = (ElementAnnotation)child;
