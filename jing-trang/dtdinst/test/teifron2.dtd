@@ -1,0 +1,118 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDSFRONT] 7.5: Additional Tag Set for Front Matter -->
+
+<!ENTITY % front 'INCLUDE' >
+<![ %front; [
+
+<!ELEMENT %n.front;
+%om.RO;  (  (%m.front; | %m.Incl;)*,
+                 (
+                   ( (%m.fmchunk;), (%m.fmchunk; | %n.titlePage; | %m.Incl;)*)
+                   |
+                   ( (%n.div;), ((%n.div;) | %m.front; | %m.Incl;)* )
+                   |
+                   ( (%n.div1;), ((%n.div1;) | %m.front; | %m.Incl; )*)
+                 )?
+              )> 
+<!ATTLIST %n.front;  
+      %a.global;
+      %a.declaring;
+      TEIform CDATA 'front' >
+  
+]]>
+  
+
+<!ENTITY % x.tpParts "" >
+<!ENTITY % m.tpParts "%x.tpParts; %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.figure; | %n.imprimatur; | %n.titlePart;"> 
+
+<!-- [DDSTPAGE] 7.5: Tags for title pages -->
+
+<!ENTITY % titlePage 'INCLUDE' >
+<![ %titlePage; [
+
+<!ELEMENT %n.titlePage; %om.RO;  ((%m.Incl;)*, (%m.tpParts;), (%m.tpParts; | %m.Incl;)*)> 
+<!ATTLIST %n.titlePage;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'titlePage' >
+  
+]]>
+  
+<!ENTITY % docTitle 'INCLUDE' >
+<![ %docTitle; [
+
+<!ELEMENT %n.docTitle; %om.RO;  ((%m.Incl;)*, ((%n.titlePart;), (%m.Incl;)*)+)> 
+<!ATTLIST %n.docTitle;  
+      %a.global;
+      TEIform CDATA 'docTitle' >
+  
+]]>
+  
+<!ENTITY % titlePart 'INCLUDE' >
+<![ %titlePart; [
+
+<!ELEMENT %n.titlePart; %om.RO; %paraContent;> 
+<!ATTLIST %n.titlePart;  
+      %a.global;
+      type CDATA "main"
+      TEIform CDATA 'titlePart' >
+  
+]]>
+  
+<!ENTITY % docAuthor 'INCLUDE' >
+<![ %docAuthor; [
+
+<!ELEMENT %n.docAuthor; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.docAuthor;  
+      %a.global;
+      TEIform CDATA 'docAuthor' >
+  
+]]>
+  
+<!ENTITY % imprimatur 'INCLUDE' >
+<![ %imprimatur; [
+
+<!ELEMENT %n.imprimatur; %om.RO; %paraContent;> 
+<!ATTLIST %n.imprimatur;  
+      %a.global;
+      TEIform CDATA 'imprimatur' >
+  
+]]>
+  
+<!ENTITY % docEdition 'INCLUDE' >
+<![ %docEdition; [
+
+<!ELEMENT %n.docEdition; %om.RO; %paraContent;> 
+<!ATTLIST %n.docEdition;  
+      %a.global;
+      TEIform CDATA 'docEdition' >
+  
+]]>
+  
+<!ENTITY % docImprint 'INCLUDE' >
+<![ %docImprint; [
+
+<!ELEMENT %n.docImprint; %om.RO;  (#PCDATA | %m.phrase; | %n.pubPlace; | %n.docDate; |
+publisher | %m.Incl;)*> 
+<!ATTLIST %n.docImprint;  
+      %a.global;
+      TEIform CDATA 'docImprint' >
+  
+]]>
+  
+<!ENTITY % docDate 'INCLUDE' >
+<![ %docDate; [
+
+<!ELEMENT %n.docDate; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.docDate;  
+      %a.global;
+      value %ISO-date; #IMPLIED
+      TEIform CDATA 'docDate' >
+  
+]]>
+  
+<!-- end of [DDSTPAGE]  7.5-->
+
+<!-- end of [DDSFRONT]  7.5-->

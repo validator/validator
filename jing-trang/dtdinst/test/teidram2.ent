@@ -1,0 +1,16 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDRCLA] 10.: Class declarations for Performance Texts -->
+
+
+<!ENTITY % x.dramafront "" >
+<!ENTITY % m.dramafront "%x.dramafront; %n.castList; | %n.epilogue; | %n.performance; | %n.prologue; | %n.set;"> 
+
+<!ENTITY % x.stageDirection "" >
+<!ENTITY % m.stageDirection "%x.stageDirection; %n.camera; | %n.caption; | %n.move; | %n.sound; | %n.tech; | %n.view;"> 
+
+<!ENTITY % x.comp.drama "" >
+<!ENTITY % m.comp.drama "%x.comp.drama; %n.castList; | %m.stageDirection;"> 
+<!ENTITY  % mix.drama '| %m.comp.drama;' >
+<!-- end of [DDRCLA]  10.-->

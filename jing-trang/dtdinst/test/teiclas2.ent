@@ -1,0 +1,426 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DSTECOV] 3.7.3: Element classes for TEI DTDs -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First, we declare the 'low-level' core classes:  these are
+classes of semantically and structurally similar elements declared as
+part of the core tag set, e.g. the classes 'data' or 'edit'.-->
+
+<!-- [DSTECLO] 3.7.4: Low-level classes -->
+
+
+<!--Most of these elements are in the core tag set, but
+some may be from other tag sets.-->
+
+<!--Phrase-level classes-->
+
+
+<!ENTITY % x.hqphrase "" >
+<!ENTITY % m.hqphrase "%x.hqphrase; %n.distinct; | %n.emph; | %n.foreign; | %n.gloss; | %n.hi; | %n.mentioned; | %n.soCalled; | %n.term; | %n.title;"> 
+
+
+<!ENTITY % x.date "" >
+<!ENTITY % m.date "%x.date; %n.date; | %n.dateRange; | %n.dateStruct;"> 
+
+
+<!ENTITY % x.data "" >
+<!ENTITY % m.data "%x.data; %n.abbr; | %n.address; | %n.date; | %n.dateRange; | %n.dateStruct; | %n.expan; | %n.geogName; | %n.lang; | %n.measure; | %n.name; | %n.num; | %n.orgName; | %n.persName; | %n.placeName; | %n.rs; | %n.time; | %n.timeRange; | %n.timeStruct;"> 
+
+
+<!ENTITY % x.edit "" >
+<!ENTITY % m.edit "%x.edit; %n.add; | %n.app; | %n.corr; | %n.damage; | %n.del; | %n.orig; | %n.reg; | %n.restore; | %n.sic; | %n.space; | %n.supplied; | %n.unclear;"> 
+
+
+<!ENTITY % x.loc "" >
+<!ENTITY % m.loc "%x.loc; %n.ptr; | %n.ref; | %n.xptr; | %n.xref;"> 
+
+
+<!ENTITY % x.seg "" >
+<!ENTITY % m.seg "%x.seg; %n.c; | %n.cl; | %n.m; | %n.phr; | %n.s; | %n.seg; | %n.w;"> 
+
+
+<!ENTITY % x.sgmlKeywords "" >
+<!ENTITY % m.sgmlKeywords "%x.sgmlKeywords; %n.att; | %n.gi; | %n.tag; | %n.val;"> 
+
+
+<!ENTITY % x.phrase.verse "" >
+<!ENTITY % m.phrase.verse "%x.phrase.verse; %n.caesura;"> 
+
+
+<!ENTITY % x.formPointers "" >
+<!ENTITY % m.formPointers "%x.formPointers; %n.oRef; | %n.oVar; | %n.pRef; | %n.pVar;"> 
+
+
+<!ENTITY % x.metadata "" >
+<!ENTITY % m.metadata "%x.metadata; %n.alt; | %n.altGrp; | %n.certainty; | %n.fLib; | %n.fs; | %n.fsLib; | %n.fvLib; | %n.index; | %n.interp; | %n.interpGrp; | %n.join; | %n.joinGrp; | %n.link; | %n.linkGrp; | %n.respons; | %n.span; | %n.spanGrp; | %n.timeline;"> 
+
+
+<!ENTITY % x.refsys "" >
+<!ENTITY % m.refsys "%x.refsys; %n.cb; | %n.lb; | %n.milestone; | %n.pb;"> 
+
+
+<!ENTITY % x.editIncl "" >
+<!ENTITY % m.editIncl "%x.editIncl; %n.addSpan; | %n.delSpan; | %n.gap;"> 
+
+
+
+
+<!ENTITY % x.Incl "" >
+<!ENTITY % m.Incl "%x.Incl; %n.anchor; | %m.editIncl; | %m.metadata; | %m.refsys;"> 
+
+<!--Inter-level classes
+-->
+
+
+<!ENTITY % x.hqinter "" >
+<!ENTITY % m.hqinter "%x.hqinter; %n.cit; | %n.q; | %n.quote;"> 
+
+
+<!ENTITY % x.bibl "" >
+<!ENTITY % m.bibl "%x.bibl; %n.bibl; | %n.biblFull; | %n.biblStruct;"> 
+
+
+<!ENTITY % x.lists "" >
+<!ENTITY % m.lists "%x.lists; %n.label; | %n.list; | %n.listBibl;"> 
+
+
+<!ENTITY % x.notes "" >
+<!ENTITY % m.notes "%x.notes; %n.note; | %n.witDetail;"> 
+
+
+<!ENTITY % x.stageDirection "" >
+<!ENTITY % m.stageDirection "%x.stageDirection; %n.camera; | %n.caption; | %n.move; | %n.sound; | %n.tech; | %n.view;"> 
+<!-- end of [DSTECLO]  3.7.4-->
+
+
+<!-- [DSTECMI] 3.7.9: Misc. Element Class Models -->
+
+
+<!ENTITY % x.agent "" >
+<!ENTITY % m.agent "%x.agent; %n.name;"> 
+
+<!ENTITY % x.addrPart "" >
+<!ENTITY % m.addrPart "%x.addrPart; %n.name; | %n.postBox; | %n.postCode; | %n.street;"> 
+
+<!ENTITY % x.biblPart "" >
+<!ENTITY % m.biblPart "%x.biblPart; %n.analytic; | %n.author; | %n.biblScope; | %n.edition; | %n.editor; | %n.extent; | %n.idno; | %n.imprint; | %n.monogr; | %n.note; | %n.publisher; | %n.pubPlace; | %n.respStmt; | %n.series;"> 
+
+<!ENTITY % x.demographic "" >
+<!ENTITY % m.demographic "%x.demographic; %n.affiliation; | %n.birth; | %n.education; | %n.firstLang; | %n.langKnown; | %n.occupation; | %n.persName; | %n.residence; | %n.socecStatus;"> 
+
+<!ENTITY % x.divbot "" >
+<!ENTITY % m.divbot "%x.divbot; %n.byline; | %n.closer; | %n.dateline; | %n.epigraph; | %n.salute; | %n.signed; | %n.trailer;"> 
+
+<!ENTITY % x.divtop "" >
+<!ENTITY % m.divtop "%x.divtop; %n.argument; | %n.byline; | %n.dateline; | %n.docAuthor; | %n.docDate; | %n.epigraph; | %n.head; | %n.opener; | %n.salute; | %n.signed;"> 
+
+<!ENTITY % x.dramafront "" >
+<!ENTITY % m.dramafront "%x.dramafront; %n.castList; | %n.epilogue; | %n.performance; | %n.prologue; | %n.set;"> 
+
+<!ENTITY % x.front "" >
+<!ENTITY % m.front "%x.front; %n.divGen; | %m.dramafront; | %n.titlePage;"> 
+
+<!ENTITY % x.personPart "" >
+<!ENTITY % m.personPart "%x.personPart; %n.addName; | %n.foreName; | %n.genName; | %n.nameLink; | %n.roleName; | %n.surname;"> 
+
+<!ENTITY % x.placePart "" >
+<!ENTITY % m.placePart "%x.placePart; %n.bloc; | %n.country; | %n.distance; | %n.geog; | %n.offSet; | %n.region; | %n.settlement;"> 
+
+<!ENTITY % x.tpParts "" >
+<!ENTITY % m.tpParts "%x.tpParts; %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.figure; | %n.imprimatur; | %n.titlePart;"> 
+
+<!ENTITY % x.fmchunk "" >
+<!ENTITY % m.fmchunk "%x.fmchunk; %n.argument; | %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.head; | %n.titlePart;"> 
+<!-- end of [DSTECMI]  3.7.9-->
+
+<!--Next, we declare the 'high-level' classes:  these group
+together all phrase-level elements, all inter-level elements, and all
+chunk-level elements in the core, and identify the 'common' component
+elements (chunks and inter-level elements), as opposed to the
+tagset-specific components.-->
+
+<!-- [DSTECHI] 3.7.5: Common high-level classes -->
+
+<!--These are the three fundamental element classes.-->
+
+<!ENTITY % x.phrase "" >
+<!ENTITY % m.phrase "%x.phrase; %m.data; | %n.dictScrap; | %m.edit; | %m.formPointers; | %n.formula; | %n.fw; | %n.handShift; | %m.hqphrase; | %m.loc; | %m.phrase.verse; | %m.seg; | %m.sgmlKeywords;"> 
+
+<!ENTITY % x.inter "" >
+<!ENTITY % m.inter "%x.inter; %m.bibl; | %n.castList; | %n.figure; | %m.hqinter; | %m.lists; | %m.notes; | %n.stage; | %m.stageDirection; | %n.table; | %n.text;"> 
+
+<!ENTITY % x.chunk "" >
+<!ENTITY % m.chunk "%x.chunk; %n.ab; | %n.eTree; | %n.graph; | %n.l; | %n.lg; | %n.p; | %n.sp; | %n.tree; | %n.witList;"> 
+<!--This class isolates all the common
+component-level elements.-->
+
+<!ENTITY % x.common "" >
+<!ENTITY % m.common "%x.common; %m.bibl; | %m.chunk; | %m.hqinter; | %m.lists; | %m.notes; | %n.stage;"> 
+<!-- end of [DSTECHI]  3.7.5-->
+
+<!--Next, we embed the portions of each base and additional tag
+set which declare relevant parameter entities.  Only those files are
+embedded which have been selected by the user in the DTD subset.  These
+files will declare parameter entities for their component-level
+elements, as well as for any global attributes they define.-->
+
+<!-- [DSTECMK] 3.7.6: Embedding tag-set-specific entity definitions -->
+
+<![ %TEI.verse; [
+<!ENTITY  % TEI.verse.ent SYSTEM 'teivers2.ent' >
+%TEI.verse.ent;
+]]>
+<![ %TEI.drama; [
+<!ENTITY  % TEI.drama.ent SYSTEM 'teidram2.ent' >
+%TEI.drama.ent;
+]]>
+<![ %TEI.spoken; [
+<!ENTITY  % TEI.spoken.ent SYSTEM 'teispok2.ent' >
+%TEI.spoken.ent;
+]]>
+<![ %TEI.dictionaries; [
+<!ENTITY  % TEI.dictionaries.ent SYSTEM 'teidict2.ent' >
+%TEI.dictionaries.ent;
+]]>
+<![ %TEI.terminology; [
+<!ENTITY  % TEI.terminology.ent SYSTEM 'teiterm2.ent' >
+%TEI.terminology.ent;
+]]>
+<![ %TEI.linking; [
+<!ENTITY  % TEI.linking.ent SYSTEM 'teilink2.ent' >
+%TEI.linking.ent;
+]]>
+<![ %TEI.analysis; [
+<!ENTITY  % TEI.analysis.ent SYSTEM 'teiana2.ent' >
+%TEI.analysis.ent;
+]]>
+<![ %TEI.transcr; [
+<!ENTITY  % TEI.transcr.ent SYSTEM 'teitran2.ent' >
+%TEI.transcr.ent;
+]]>
+<![ %TEI.textcrit; [
+<!ENTITY  % TEI.textcrit.ent SYSTEM 'teitc2.ent' >
+%TEI.textcrit.ent;
+]]>
+<![ %TEI.names.dates; [
+<!ENTITY  % TEI.names.dates.ent SYSTEM 'teind2.ent' >
+%TEI.names.dates.ent;
+]]>
+<![ %TEI.figures; [
+<!ENTITY  % TEI.figures.ent SYSTEM 'teifig2.ent' >
+%TEI.figures.ent;
+]]>
+<!-- end of [DSTECMK]  3.7.6-->
+
+<!--We can now declare the standard content models; one of these
+varies with the base selected.-->
+
+<!-- [DSTECST] 3.7.7: Standard Content Models -->
+
+<!--Here we declare the parameter entities phrase, phrase.seq,
+component, component.seq, paraContent, and specialPara, for use in the
+content models of element declarations.-->
+<!--The entities phrase and phrase.seq are the same in all bases.
+They may include elements specific to single tag sets; if the tag set is
+not selected, these elements are undefined and have no effect.-->
+<!ENTITY  % phrase '#PCDATA | %m.phrase; | %m.Incl;' >
+<!ENTITY  % phrase.seq '(%phrase;)*'  >
+<!--The entity component varies with the base.  The
+versions for the combined bases are declared first (so as to
+take precedence over the declarations in the individual
+bases).-->
+
+<!-- [DSTECMX] 3.7.8: Definition of components for combined bases -->
+
+<!--Default declarations for the 'mix.' entities used for mixed
+and general bases.-->
+<!ENTITY  % mix.verse '' >
+<!ENTITY  % mix.drama '' >
+<!ENTITY  % mix.spoken '' >
+<!ENTITY  % mix.dictionaries '' >
+<!ENTITY  % mix.terminology '' >
+<![ %TEI.mixed; [
+<!ENTITY  % TEI.singleBase 'IGNORE' >
+<!--The mixed base allows components from any base; it does so by
+defining 'component' as including both common components and those
+specific to one tag set.-->
+<!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
+%mix.dictionaries; %mix.terminology;)' >]]>
+<![ %TEI.general; [
+<!--The general base uses the same definition of component as the
+mixed base.-->
+<!ENTITY  % TEI.singleBase 'IGNORE' >
+<!ENTITY  % component '(%m.common; %mix.verse; %mix.drama; %mix.spoken;
+%mix.dictionaries; %mix.terminology;)' >
+<!--But it defines a special version of component.seq, which
+restricts each div of the text to a single base:  bases can shift only
+in embedded divs or at div boundaries.  This entity is constructed out
+of a series of smaller entities, one for each tag set.  If the tag set
+is not in use, its entity will expand to the empty string.-->
+<![ %TEI.verse; [
+<!--If the verse base is in use, ...-->
+<!ENTITY  % gen.verse '((%m.comp.verse;), (%m.common; | %m.comp.verse;)*) |' >]]>
+<![ %TEI.drama; [
+<!--If the drama base is in use, ...-->
+<!ENTITY  % gen.drama '((%m.comp.drama;), (%m.common; | %m.comp.drama;)*) |' >]]>
+<![ %TEI.spoken; [
+<!--If the spoken base is in use, ...-->
+<!ENTITY  % gen.spoken '((%m.comp.spoken;), (%m.common; | %m.comp.spoken;)*) |' >]]>
+<![ %TEI.dictionaries; [
+<!--If the dictionary base is in use, ...-->
+<!ENTITY  % gen.dictionaries '((%m.comp.dictionaries;), (%m.common; | %m.comp.dictionaries;)*) |' >]]>
+<![ %TEI.terminology; [
+<!--If the terminology base is in use, ...-->
+<!ENTITY  % gen.terminology '((%m.comp.terminology;), (%m.common; | %m.comp.terminology;)*) |' >]]>
+<!--Default declarations for all the entities gen.verse,
+etc.-->
+<!ENTITY  % gen.verse '' >
+<!ENTITY  % gen.drama '' >
+<!ENTITY  % gen.spoken '' >
+<!ENTITY  % gen.dictionaries '' >
+<!ENTITY  % gen.terminology '' >
+<!--Now we are ready to declare component.seq and
+component.plus for use in general base tag set.-->
+<!ENTITY  % component.seq '(%m.common;)*, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)?' >
+<!ENTITY  % component.plus '(%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)
+|
+( (%m.common;)+, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries;
+%gen.terminology; TEI...end)?' >
+<!--(End of marked section for general base.)-->]]>
+<!-- end of [DSTECMX]  3.7.8-->
+
+<![ %TEI.prose; [
+<!ENTITY  % component '(%m.common;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<![ %TEI.verse; [
+<!ENTITY  % component '(%m.common; | %m.comp.verse;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<![ %TEI.drama; [
+<!ENTITY  % component '(%m.common; | %m.comp.drama;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<![ %TEI.spoken; [
+<!ENTITY  % component '(%m.common; | %m.comp.spoken;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<![ %TEI.dictionaries; [
+<!ENTITY  % component '(%m.common; | %m.comp.dictionaries;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<![ %TEI.terminology; [
+<!ENTITY  % component '(%m.common; | %m.comp.terminology;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >]]>
+<!--Default declaration.-->
+<!ENTITY  % component '(%m.common;)' >
+<!ENTITY  % TEI.singleBase 'INCLUDE' >
+<!--The entity component.seq is always a starred sequence of
+component elements.  Its definition does not vary with the base (unless
+we are using the general base, in which case it has already been defined
+above), but the meaning of the definition does.-->
+<!ENTITY  % component.seq '((%component;), (%m.Incl;)*)*' >
+<!--The following entities do not vary with the base.-->
+<!ENTITY  % paraContent '(#PCDATA | %m.phrase; | %m.inter; | %m.Incl;)*' >
+<!ENTITY  % specialPara '(#PCDATA | %m.phrase; | %m.inter; | %m.chunk; | %m.Incl;)*' >
+<!-- end of [DSTECST]  3.7.7-->
+
+<!--Finally, we declare the attribute classes, including
+the global attributes.-->
+
+<!-- [DSTECAT] 3.7.1: Attribute classes -->
+
+<!ENTITY % a.declaring '
+      decls IDREFS #IMPLIED'> 
+<!ENTITY % a.declarable '
+      default (YES|NO) "NO"'> 
+<!ENTITY % a.typed '
+      type CDATA #IMPLIED
+      subtype CDATA #IMPLIED'> 
+<!ENTITY % a.divn '
+      type CDATA "CDATA"
+      org (composite | uniform) "uniform"
+      sample (initial | medial | final | unknown | complete) "complete"
+      part (Y | N | I | M | F) "N"'> 
+<!ENTITY % a.enjamb '
+      enjamb CDATA #IMPLIED'> 
+<!ENTITY % a.interpret '
+      resp CDATA %INHERITED;
+      type CDATA %INHERITED;
+      inst IDREFS #IMPLIED'> 
+<!ENTITY % a.metrical '
+      met CDATA %INHERITED;
+      real CDATA #IMPLIED
+      rhyme CDATA #IMPLIED'> 
+<!ENTITY % a.names '
+      key CDATA #IMPLIED
+      reg CDATA #IMPLIED'> 
+<!ENTITY % a.personPart '
+      %a.names;
+      type CDATA #IMPLIED
+      full (yes | abb | init) "yes"
+      sort CDATA #IMPLIED'> 
+<!ENTITY % a.placePart '
+      %a.names;
+      %a.typed;'> 
+<!ENTITY % a.pointer '
+      type CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      crdate CDATA #IMPLIED
+      targType CDATA #IMPLIED
+      targOrder (Y | N | U) "U"
+      evaluate (all | one | none) #IMPLIED'> 
+<!ENTITY % a.seg '
+      type CDATA #IMPLIED
+      function CDATA #IMPLIED
+      part (Y | N | I | M | F) "N"'> 
+<!ENTITY % a.temporalExpr '
+      %a.names;
+      %a.typed;
+      value CDATA #IMPLIED
+      full (yes | abb | init) "yes"'> 
+<!ENTITY % a.timed '
+      start IDREF #IMPLIED
+      end IDREF #IMPLIED
+      dur CDATA #IMPLIED'> 
+<!ENTITY % a.xPointer '
+      %a.pointer;
+      doc ENTITY #IMPLIED
+      from %extPtr; "ROOT"
+      to %extPtr; "DITTO"'> 
+<!-- end of [DSTECAT]  3.7.1-->
+
+
+<!-- [DSTGA] 3.5: Global attributes -->
+
+<!--The global attributes are defined for every element in the TEI
+tag set; individual declarations may be overridden by local declarations
+for individual elements.-->
+<!--If the tag sets invoked by the user define extra global
+attributes (they do this in their .ent file), then they are inherited by
+GLOBAL; otherwise the parameter entities referred to expand to the empty
+string, as shown here.  -->
+<!ENTITY % a.analysis ''> 
+<!ENTITY % a.linking ''> 
+<!ENTITY % a.terminology ''> 
+<!ENTITY % a.global '
+      %a.terminology;
+      %a.linking;
+      %a.analysis;
+      id ID #IMPLIED
+      n CDATA #IMPLIED
+      lang IDREF %INHERITED;
+      rend CDATA #IMPLIED'> 
+<!--The TEIform attribute is also global, but is declared
+individually for each element, not in a parameter entity
+declaration.-->
+<!-- end of [DSTGA]  3.5-->
+
+<!-- end of [DSTECOV]  3.7.3-->

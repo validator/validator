@@ -1,0 +1,52 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DCE] 17.1.2: Certainty and uncertainty -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!ENTITY % certainty 'INCLUDE' >
+<![ %certainty; [
+
+<!ELEMENT %n.certainty; %om.RO;  EMPTY> 
+<!ATTLIST %n.certainty;  
+      %a.global;
+      target IDREFS #REQUIRED
+      locus CDATA #REQUIRED
+      assertedValue CDATA #IMPLIED
+      desc CDATA #IMPLIED
+      given CDATA #IMPLIED
+      degree CDATA #IMPLIED
+      TEIform CDATA 'certainty' >
+  
+]]>
+  
+
+<!-- [DCERESP] 17.2: Responsibility for markup -->
+
+<!ENTITY % respons 'INCLUDE' >
+<![ %respons; [
+
+<!ELEMENT %n.respons; %om.RO; EMPTY> 
+<!ATTLIST %n.respons;  
+      %a.global;
+      target IDREFS #REQUIRED
+      locus CDATA #REQUIRED
+      resp CDATA #REQUIRED
+      desc CDATA #IMPLIED
+      TEIform CDATA 'respons' >
+  
+]]>
+  
+<!-- end of [DCERESP]  17.2-->
+
+<!-- end of [DCE]  17.1.2-->

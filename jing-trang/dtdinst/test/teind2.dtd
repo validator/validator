@@ -1,0 +1,376 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DND] 20.: Additional tags for names and dates -->
+
+
+<!-- [DNDPER] 20.1: Personal names -->
+
+<!ENTITY % persName 'INCLUDE' >
+<![ %persName; [
+
+<!ELEMENT %n.persName; %om.RR;  (#PCDATA | %m.personPart; | %m.phrase; | %m.Incl; )*> 
+<!ATTLIST %n.persName;  
+      %a.global;
+      %a.names;
+      type CDATA #IMPLIED
+      TEIform CDATA 'persName' >
+  
+]]>
+  
+<!ENTITY % surname 'INCLUDE' >
+<![ %surname; [
+
+<!ELEMENT %n.surname; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.surname;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'surname' >
+  
+]]>
+  
+<!ENTITY % foreName 'INCLUDE' >
+<![ %foreName; [
+
+<!ELEMENT %n.foreName; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.foreName;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'foreName' >
+  
+]]>
+  
+<!ENTITY % genName 'INCLUDE' >
+<![ %genName; [
+
+<!ELEMENT %n.genName; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.genName;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'genName' >
+  
+]]>
+  
+<!ENTITY % nameLink 'INCLUDE' >
+<![ %nameLink; [
+
+<!ELEMENT %n.nameLink; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.nameLink;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'nameLink' >
+  
+]]>
+  
+<!ENTITY % addName 'INCLUDE' >
+<![ %addName; [
+
+<!ELEMENT %n.addName; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.addName;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'addName' >
+  
+]]>
+  
+<!ENTITY % roleName 'INCLUDE' >
+<![ %roleName; [
+
+<!ELEMENT %n.roleName; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.roleName;  
+      %a.global;
+      %a.personPart;
+      TEIform CDATA 'roleName' >
+  
+]]>
+  
+<!-- end of [DNDPER]  20.1-->
+
+
+<!-- [DNDPLAC] 20.2.3: Names for places -->
+
+<!ENTITY % placeName 'INCLUDE' >
+<![ %placeName; [
+
+<!ELEMENT %n.placeName; %om.RR;  (#PCDATA | %m.placePart; | %m.phrase; | %m.Incl;)*> 
+<!ATTLIST %n.placeName;  
+      %a.global;
+      %a.names;
+      TEIform CDATA 'placeName' >
+  
+]]>
+  
+<!ENTITY % settlement 'INCLUDE' >
+<![ %settlement; [
+
+<!ELEMENT %n.settlement; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.settlement;  
+      %a.global;
+      %a.names;
+      %a.typed;
+      TEIform CDATA 'settlement' >
+  
+]]>
+  
+<!ENTITY % region 'INCLUDE' >
+<![ %region; [
+
+<!ELEMENT %n.region; %om.RR; %paraContent;> 
+<!ATTLIST %n.region;  
+      %a.global;
+      %a.names;
+      %a.typed;
+      TEIform CDATA 'region' >
+  
+]]>
+  
+<!ENTITY % country 'INCLUDE' >
+<![ %country; [
+
+<!ELEMENT %n.country; %om.RO; %paraContent;> 
+<!ATTLIST %n.country;  
+      %a.global;
+      %a.names;
+      %a.typed;
+      TEIform CDATA 'country' >
+  
+]]>
+  
+<!ENTITY % bloc 'INCLUDE' >
+<![ %bloc; [
+
+<!ELEMENT %n.bloc; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.bloc;  
+      %a.global;
+      %a.names;
+      %a.typed;
+      TEIform CDATA 'bloc' >
+  
+]]>
+  
+<!ENTITY % offSet 'INCLUDE' >
+<![ %offSet; [
+
+<!ELEMENT %n.offSet; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.offSet;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'offSet' >
+  
+]]>
+  
+<!ENTITY % distance 'INCLUDE' >
+<![ %distance; [
+
+<!ELEMENT %n.distance; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.distance;  
+      %a.global;
+      %a.temporalExpr;
+      exact (Y|N|U) "U"
+      TEIform CDATA 'distance' >
+  
+]]>
+  
+<!ENTITY % geogName 'INCLUDE' >
+<![ %geogName; [
+
+<!ELEMENT %n.geogName; %om.RR;  (#PCDATA | %n.geog; | %n.name; | %m.Incl; )*> 
+<!ATTLIST %n.geogName;  
+      %a.global;
+      %a.names;
+      type CDATA #IMPLIED
+      TEIform CDATA 'geogName' >
+  
+]]>
+  
+<!ENTITY % geog 'INCLUDE' >
+<![ %geog; [
+
+<!ELEMENT %n.geog; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.geog;  
+      %a.global;
+      %a.names;
+      %a.typed;
+      TEIform CDATA 'geog' >
+  
+]]>
+  
+<!-- end of [DNDPLAC]  20.2.3-->
+
+
+<!-- [DNDORG] 20.3: Organization names -->
+
+<!ENTITY % orgName 'INCLUDE' >
+<![ %orgName; [
+
+<!ELEMENT %n.orgName; %om.RR;  (#PCDATA | %n.orgTitle; | %n.orgType; | %n.orgDivn; |  %m.phrase; | %m.Incl;)*
+> 
+<!ATTLIST %n.orgName;  
+      %a.global;
+      type CDATA #IMPLIED
+      key CDATA #IMPLIED
+      reg CDATA #IMPLIED
+      TEIform CDATA 'orgName' >
+  
+]]>
+  
+<!ENTITY % orgTitle 'INCLUDE' >
+<![ %orgTitle; [
+
+<!ELEMENT %n.orgTitle; %om.RR; %phrase.seq; > 
+<!ATTLIST %n.orgTitle;  
+      %a.global;
+      type CDATA #IMPLIED
+      reg CDATA #IMPLIED
+      TEIform CDATA 'orgTitle' >
+  
+]]>
+  
+<!ENTITY % orgType 'INCLUDE' >
+<![ %orgType; [
+
+<!ELEMENT %n.orgType; %om.RR; %phrase.seq; > 
+<!ATTLIST %n.orgType;  
+      %a.global;
+      type CDATA #IMPLIED
+      reg CDATA #IMPLIED
+      TEIform CDATA 'orgType' >
+  
+]]>
+  
+<!ENTITY % orgDivn 'INCLUDE' >
+<![ %orgDivn; [
+
+<!ELEMENT %n.orgDivn; %om.RR; %phrase.seq; > 
+<!ATTLIST %n.orgDivn;  
+      %a.global;
+      type CDATA #IMPLIED
+      reg CDATA #IMPLIED
+      TEIform CDATA 'orgDivn' >
+  
+]]>
+  
+<!-- end of [DNDORG]  20.3-->
+
+
+<!-- [DNDDATE] 20.4.2: Date components -->
+
+<!ENTITY % dateStruct 'INCLUDE' >
+<![ %dateStruct; [
+
+<!ELEMENT %n.dateStruct; %om.RR;   (#PCDATA | %m.temporalExpr; | %m.Incl;)*> 
+<!ATTLIST %n.dateStruct;  
+      %a.global;
+      %a.temporalExpr;
+      calendar CDATA #IMPLIED
+      exact CDATA #IMPLIED
+      TEIform CDATA 'dateStruct' >
+  
+]]>
+  
+<!ENTITY % day 'INCLUDE' >
+<![ %day; [
+
+<!ELEMENT %n.day; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.day;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'day' >
+  
+]]>
+  
+<!ENTITY % week 'INCLUDE' >
+<![ %week; [
+
+<!ELEMENT %n.week; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.week;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'week' >
+  
+]]>
+  
+<!ENTITY % month 'INCLUDE' >
+<![ %month; [
+
+<!ELEMENT %n.month; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.month;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'month' >
+  
+]]>
+  
+<!ENTITY % year 'INCLUDE' >
+<![ %year; [
+
+<!ELEMENT %n.year; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.year;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'year' >
+  
+]]>
+  
+<!ENTITY % occasion 'INCLUDE' >
+<![ %occasion; [
+
+<!ELEMENT %n.occasion; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.occasion;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'occasion' >
+  
+]]>
+  
+<!ENTITY % timeStruct 'INCLUDE' >
+<![ %timeStruct; [
+
+<!ELEMENT %n.timeStruct; %om.RR;   (#PCDATA | %m.temporalExpr; | %m.Incl;)*> 
+<!ATTLIST %n.timeStruct;  
+      %a.global;
+      %a.temporalExpr;
+      zone CDATA #IMPLIED
+      TEIform CDATA 'timeStruct' >
+  
+]]>
+  
+<!ENTITY % second 'INCLUDE' >
+<![ %second; [
+
+<!ELEMENT %n.second; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.second;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'second' >
+  
+]]>
+  
+<!ENTITY % minute 'INCLUDE' >
+<![ %minute; [
+
+<!ELEMENT %n.minute; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.minute;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'minute' >
+  
+]]>
+  
+<!ENTITY % hour 'INCLUDE' >
+<![ %hour; [
+
+<!ELEMENT %n.hour; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.hour;  
+      %a.global;
+      %a.temporalExpr;
+      TEIform CDATA 'hour' >
+  
+]]>
+  
+<!--offset and distance were defined above-->
+<!-- end of [DNDDATE]  20.4.2-->
+
+
+
+<!-- end of [DND]  20.-->

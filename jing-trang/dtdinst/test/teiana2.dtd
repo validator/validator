@@ -1,0 +1,144 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DAI] 15.: Simple analytic mechanisms -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--We declare the various elements, group by group.-->
+
+<!-- [DAISP] 15.3: Spans -->
+
+<!ENTITY % span 'INCLUDE' >
+<![ %span; [
+
+<!ELEMENT %n.span; %om.RO; EMPTY> 
+<!ATTLIST %n.span;  
+      %a.global;
+      %a.interpret;
+      value CDATA #REQUIRED
+      from IDREF #REQUIRED
+      to IDREF #IMPLIED
+      TEIform CDATA 'span' >
+  
+]]>
+  
+<!ENTITY % spanGrp 'INCLUDE' >
+<![ %spanGrp; [
+
+<!ELEMENT %n.spanGrp; %om.RR;  (((%n.span;))*)> 
+<!ATTLIST %n.spanGrp;  
+      %a.global;
+      %a.interpret;
+      TEIform CDATA 'spanGrp' >
+  
+]]>
+  
+<!ENTITY % interp 'INCLUDE' >
+<![ %interp; [
+
+<!ELEMENT %n.interp; %om.RO; EMPTY> 
+<!ATTLIST %n.interp;  
+      %a.global;
+      %a.interpret;
+      value CDATA #REQUIRED
+      TEIform CDATA 'interp' >
+  
+]]>
+  
+<!ENTITY % interpGrp 'INCLUDE' >
+<![ %interpGrp; [
+
+<!ELEMENT %n.interpGrp; %om.RR;  (((%n.interp;))*)> 
+<!ATTLIST %n.interpGrp;  
+      %a.global;
+      %a.interpret;
+      TEIform CDATA 'interpGrp' >
+  
+]]>
+  
+<!-- end of [DAISP]  15.3-->
+
+
+<!-- [DAILC] 15.1: Linguistic Segment Categories -->
+
+<!ENTITY % s 'INCLUDE' >
+<![ %s; [
+
+<!ELEMENT %n.s; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.s;  
+      %a.global;
+      %a.seg;
+      TEIform CDATA 's' >
+  
+]]>
+  
+<!ENTITY % cl 'INCLUDE' >
+<![ %cl; [
+
+<!ELEMENT %n.cl; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.cl;  
+      %a.global;
+      %a.seg;
+      TEIform CDATA 'cl' >
+  
+]]>
+  
+<!ENTITY % phr 'INCLUDE' >
+<![ %phr; [
+
+<!ELEMENT %n.phr; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.phr;  
+      %a.global;
+      %a.seg;
+      TEIform CDATA 'phr' >
+  
+]]>
+  
+<!ENTITY % w 'INCLUDE' >
+<![ %w; [
+
+<!ELEMENT %n.w; %om.RR;  (#PCDATA | %n.seg; | %n.w; | %n.m; | %n.c; | %m.Incl;)*> 
+<!ATTLIST %n.w;  
+      %a.global;
+      %a.seg;
+      lemma CDATA #IMPLIED
+      TEIform CDATA 'w' >
+  
+]]>
+  
+<!ENTITY % m 'INCLUDE' >
+<![ %m; [
+
+<!ELEMENT %n.m; %om.RR;  (#PCDATA | %n.seg; | %n.c; | %m.Incl;)*> 
+<!ATTLIST %n.m;  
+      %a.global;
+      %a.seg;
+      baseform CDATA #IMPLIED
+      TEIform CDATA 'm' >
+  
+]]>
+  
+<!ENTITY % c 'INCLUDE' >
+<![ %c; [
+
+<!ELEMENT %n.c; %om.RR;   (#PCDATA)> 
+<!ATTLIST %n.c;  
+      %a.global;
+      %a.seg;
+      TEIform CDATA 'c' >
+  
+]]>
+  
+<!-- end of [DAILC]  15.1-->
+
+<!-- end of [DAI]  15.-->

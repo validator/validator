@@ -1,0 +1,390 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTD] 27.: File teitsd2.dtd:  Auxiliary DTD for Tag Set Documentation -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--Embed entities for TEI generic identifiers.-->
+<!ENTITY  % TEI.elementNames SYSTEM 'teigis2.ent' >
+%TEI.elementNames;
+
+<!--Define entities for TEI keywords.-->
+<!ENTITY  % TEI.keywords.ent SYSTEM 'teikey2.ent' >
+%TEI.keywords.ent;
+
+<!--Define element classes for content models, shared
+attributes for element classes, and global attributes.  (This all
+happens within the file TEIclas2.ent.)-->
+<!ENTITY  % TEI.elementClasses SYSTEM 'teiclas2.ent' >
+%TEI.elementClasses;
+
+<!--Embed the core tag set-->
+<!ENTITY  % TEI.core.dtd SYSTEM 'teicore2.dtd' >
+%TEI.core.dtd;
+
+<!--Define the top-level element for this DTD-->
+<!ENTITY % tsd 'INCLUDE' >
+<![ %tsd; [
+
+<!ELEMENT %n.tsd; %om.RO;   (((%n.tagDoc;) | %n.entDoc; | %n.classDoc;)+)> 
+<!ATTLIST %n.tsd;  
+      %a.global;
+      TEIform CDATA 'tsd' >
+  
+]]>
+  
+<!--Define some additions for the phrase level tags-->
+<!ENTITY % gi 'INCLUDE' >
+<![ %gi; [
+
+<!ELEMENT %n.gi; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.gi;  
+      %a.global;
+      TEI (yes|no) "yes"
+      TEIform CDATA 'gi' >
+  
+]]>
+  
+<!ENTITY % tag 'INCLUDE' >
+<![ %tag; [
+
+<!ELEMENT %n.tag; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.tag;  
+      %a.global;
+      TEI (yes|no) "yes"
+      TEIform CDATA 'tag' >
+  
+]]>
+  
+<!ENTITY % att 'INCLUDE' >
+<![ %att; [
+
+<!ELEMENT %n.att; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.att;  
+      %a.global;
+      TEI (yes|no) "yes"
+      TEIform CDATA 'att' >
+  
+]]>
+  
+<!ENTITY % val 'INCLUDE' >
+<![ %val; [
+
+<!ELEMENT %n.val; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.val;  
+      %a.global;
+      TEIform CDATA 'val' >
+  
+]]>
+  
+<!--Finally we define the elements specific to this DTD-->
+
+<!-- [DTDTAG] 27.1: The TagDoc element -->
+
+<!ENTITY % tagDoc 'INCLUDE' >
+<![ %tagDoc; [
+
+<!ELEMENT %n.tagDoc; %om.RR;  ((%n.gi;), (%n.rs;)?, (%n.desc;), (%n.attList;)?, (%n.exemplum;)*, (%n.remarks;)?,
+   (%n.part;)?, (%n.classes;)?, (%n.files;)?, (%n.dataDesc;)?, (%n.parents;)?, (%n.children;)?,
+   (%n.elemDecl;), (%n.attlDecl;)?, (%n.ptr;)*, (%n.equiv;)*)> 
+<!ATTLIST %n.tagDoc;  
+      %a.global;
+      usage (req|mwa|rec|rwa|opt) "opt"
+      TEIform CDATA 'tagDoc' >
+  
+]]>
+  
+<!--RS and PTR are defined in the core-->
+<!--GI is defined above -->
+<!ENTITY % desc 'INCLUDE' >
+<![ %desc; [
+
+<!ELEMENT %n.desc; %om.RO; %paraContent;> 
+<!ATTLIST %n.desc;  
+      %a.global;
+      TEIform CDATA 'desc' >
+  
+]]>
+  
+<!ENTITY % attList 'INCLUDE' >
+<![ %attList; [
+
+<!ELEMENT %n.attList; %om.RO;  ((%n.attDef;)*)> 
+<!ATTLIST %n.attList;  
+      %a.global;
+      TEIform CDATA 'attList' >
+  
+]]>
+  
+<!ENTITY % exemplum 'INCLUDE' >
+<![ %exemplum; [
+
+<!ELEMENT %n.exemplum; %om.RR;  ((%n.p;)*, (%n.eg;), (%n.p;)*)> 
+<!ATTLIST %n.exemplum;  
+      %a.global;
+      TEIform CDATA 'exemplum' >
+  
+]]>
+  
+<!ENTITY % eg 'INCLUDE' >
+<![ %eg; [
+
+<!ELEMENT %n.eg; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.eg;  
+      %a.global;
+      TEIform CDATA 'eg' >
+  
+]]>
+  
+<!ENTITY % remarks 'INCLUDE' >
+<![ %remarks; [
+
+<!ELEMENT %n.remarks; %om.RO;  (%component.seq;)> 
+<!ATTLIST %n.remarks;  
+      %a.global;
+      TEIform CDATA 'remarks' >
+  
+]]>
+  
+<!ENTITY % part 'INCLUDE' >
+<![ %part; [
+
+<!ELEMENT %n.part; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.part;  
+      %a.global;
+      type CDATA #IMPLIED
+      name CDATA #IMPLIED
+      TEIform CDATA 'part' >
+  
+]]>
+  
+<!ENTITY % classes 'INCLUDE' >
+<![ %classes; [
+
+<!ELEMENT %n.classes; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.classes;  
+      %a.global;
+      names CDATA #REQUIRED
+      TEIform CDATA 'classes' >
+  
+]]>
+  
+<!ENTITY % files 'INCLUDE' >
+<![ %files; [
+
+<!ELEMENT %n.files; %om.RO; EMPTY> 
+<!ATTLIST %n.files;  
+      %a.global;
+      names CDATA #IMPLIED
+      TEIform CDATA 'files' >
+  
+]]>
+  
+<!ENTITY % dataDesc 'INCLUDE' >
+<![ %dataDesc; [
+
+<!ELEMENT %n.dataDesc; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.dataDesc;  
+      %a.global;
+      TEIform CDATA 'dataDesc' >
+  
+]]>
+  
+<!ENTITY % parents 'INCLUDE' >
+<![ %parents; [
+
+<!ELEMENT %n.parents; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.parents;  
+      %a.global;
+      TEIform CDATA 'parents' >
+  
+]]>
+  
+<!ENTITY % children 'INCLUDE' >
+<![ %children; [
+
+<!ELEMENT %n.children; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.children;  
+      %a.global;
+      TEIform CDATA 'children' >
+  
+]]>
+  
+<!ENTITY % elemDecl 'INCLUDE' >
+<![ %elemDecl; [
+
+<!ELEMENT %n.elemDecl; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.elemDecl;  
+      %a.global;
+      TEIform CDATA 'elemDecl' >
+  
+]]>
+  
+<!ENTITY % attlDecl 'INCLUDE' >
+<![ %attlDecl; [
+
+<!ELEMENT %n.attlDecl; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.attlDecl;  
+      %a.global;
+      TEIform CDATA 'attlDecl' >
+  
+]]>
+  
+<!ENTITY % equiv 'INCLUDE' >
+<![ %equiv; [
+
+<!ELEMENT %n.equiv; %om.RO; %specialPara;> 
+<!ATTLIST %n.equiv;  
+      %a.global;
+      scheme CDATA #REQUIRED
+      TEIform CDATA 'equiv' >
+  
+]]>
+  
+<!-- end of [DTDTAG]  27.1-->
+
+
+<!-- [DTDATT] 27.1.1: Attribute documentation -->
+
+<!ENTITY % attDef 'INCLUDE' >
+<![ %attDef; [
+
+<!ELEMENT %n.attDef; %om.RO;  ((%n.attName;), (%n.rs;)?, (%n.desc;),
+((%n.datatype;), ((%n.valList;) | %n.valDesc;)?),
+default, (%n.eg;)?, (%n.remarks;)?, (%n.equiv;)*)> 
+<!ATTLIST %n.attDef;  
+      %a.global;
+      usage (req|mwa|rec|rwa|opt) "opt"
+      TEIform CDATA 'attDef' >
+  
+]]>
+  
+<!ENTITY % attName 'INCLUDE' >
+<![ %attName; [
+
+<!ELEMENT %n.attName; %om.RO;  (#PCDATA) > 
+<!ATTLIST %n.attName;  
+      %a.global;
+      TEIform CDATA 'attName' >
+  
+]]>
+  
+<!ENTITY % datatype 'INCLUDE' >
+<![ %datatype; [
+
+<!ELEMENT %n.datatype; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.datatype;  
+      %a.global;
+      TEIform CDATA 'datatype' >
+  
+]]>
+  
+<!ENTITY % valList 'INCLUDE' >
+<![ %valList; [
+
+<!ELEMENT %n.valList; %om.RR;  (((%n.val;),(%n.desc;))*)> 
+<!ATTLIST %n.valList;  
+      %a.global;
+      type (closed | semi | open) "open"
+      TEIform CDATA 'valList' >
+  
+]]>
+  
+<!ENTITY % valDesc 'INCLUDE' >
+<![ %valDesc; [
+
+<!ELEMENT %n.valDesc; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.valDesc;  
+      %a.global;
+      TEIform CDATA 'valDesc' >
+  
+]]>
+  
+<!ENTITY % default 'INCLUDE' >
+<![ %default; [
+
+<!ELEMENT %n.default; %om.RO;  (#PCDATA) > 
+<!ATTLIST %n.default;  
+      %a.global;
+      TEIform CDATA 'default' >
+  
+]]>
+  
+<!-- end of [DTDATT]  27.1.1-->
+
+
+<!-- [DTDCLA] 27.2: Element classes -->
+
+<!ENTITY % classDoc 'INCLUDE' >
+<![ %classDoc; [
+
+<!ELEMENT %n.classDoc; %om.RO;  ((%n.class;), (%n.rs;)?, (%n.desc;), (%n.attList;)?, (%n.remarks;)?, (%n.part;)?,
+classes?, (%n.files;)?, (%n.ptr;)*, (%n.equiv;)*) > 
+<!ATTLIST %n.classDoc;  
+      %a.global;
+      type (model | atts | both) #IMPLIED
+      TEIform CDATA 'classDoc' >
+  
+]]>
+  
+<!ENTITY % class 'INCLUDE' >
+<![ %class; [
+
+<!ELEMENT %n.class; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.class;  
+      %a.global;
+      TEIform CDATA 'class' >
+  
+]]>
+  
+<!--all other constituents are defined above-->
+<!-- end of [DTDCLA]  27.2-->
+
+
+<!-- [DTDENT] 27.3: Entity Documentation -->
+
+<!ENTITY % entDoc 'INCLUDE' >
+<![ %entDoc; [
+
+<!ELEMENT %n.entDoc; %om.RR;  ((%n.entName;), (%n.rs;)?, (%n.desc;), (%n.remarks;)?, (%n.string;), (%n.ptr;)*, (%n.equiv;)*)> 
+<!ATTLIST %n.entDoc;  
+      %a.global;
+      type (pe | ge) #REQUIRED
+      TEIform CDATA 'entDoc' >
+  
+]]>
+  
+<!ENTITY % entName 'INCLUDE' >
+<![ %entName; [
+
+<!ELEMENT %n.entName; %om.RO;  (#PCDATA)> 
+<!ATTLIST %n.entName;  
+      %a.global;
+      TEIform CDATA 'entName' >
+  
+]]>
+  
+<!ENTITY % string 'INCLUDE' >
+<![ %string; [
+
+<!ELEMENT %n.string; %om.RR;  (#PCDATA)> 
+<!ATTLIST %n.string;  
+      %a.global;
+      TEIform CDATA 'string' >
+  
+]]>
+  
+<!--All other constituents are defined above-->
+<!-- end of [DTDENT]  27.3-->
+
+<!-- end of [DTD]  27.-->

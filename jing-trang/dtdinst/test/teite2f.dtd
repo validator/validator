@@ -1,0 +1,83 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTEFL] 13.4.2: Elements for flat-style terminological data -->
+
+<!--The flat structure is used to represent a variety of terminology
+documents that occur in practice and which do not follow the form
+of the nested interchange
+format.  The flat representation allows for a less
+rigid structure, but provides a rich mechanism for reflecting
+inter-element relations.-->
+<!--The declaration of termEntry enforces appearance of at least one term
+element in a termEntry, which may be preceded by descrip, admin, note,
+otherform, or gram.  There may be multiple notes, admins, descrips
+otherforms, and grams appearing in any order.  xRef, date, biblRef
+can appear in all positions in termEntry.-->
+<!ENTITY % termEntry 'INCLUDE' >
+<![ %termEntry; [
+
+<!ELEMENT %n.termEntry; %om.RO;
+ ( (%m.terminologyMisc; | %n.otherForm; | (%n.gram;); |
+%m.terminologyInclusions; | %m.Incl;)*, ((%n.term;), 
+(%m.terminologyMisc; | %n.otherForm; | %n.gram; | %m.terminologyInclusions; | %m.Incl;)*  )+ )   
+> 
+<!ATTLIST %n.termEntry;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'termEntry' >
+  
+]]>
+  
+<!ENTITY % otherForm 'INCLUDE' >
+<![ %otherForm; [
+
+<!ELEMENT %n.otherForm; %om.RO;  %paraContent;> 
+<!ATTLIST %n.otherForm;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'otherForm' >
+  
+]]>
+  
+<!ENTITY % descrip 'INCLUDE' >
+<![ %descrip; [
+
+<!ELEMENT %n.descrip; %om.RO;  %paraContent;> 
+<!ATTLIST %n.descrip;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'descrip' >
+  
+]]>
+  
+<!ENTITY % admin 'INCLUDE' >
+<![ %admin; [
+
+<!ELEMENT %n.admin; %om.RO;  %paraContent;> 
+<!ATTLIST %n.admin;  
+      %a.global;
+      type CDATA #IMPLIED
+      date CDATA '%ISO-date;'
+      resp CDATA #IMPLIED
+      TEIform CDATA 'admin' >
+  
+]]>
+  
+<!--We define a.dictionaries as the empty string,
+since we are not now using the tag set for
+dictionaries.-->
+<!ENTITY % a.dictionaries ''> 
+<!ENTITY % gram 'INCLUDE' >
+<![ %gram; [
+
+<!ELEMENT %n.gram; %om.RO;  %paraContent;> 
+<!ATTLIST %n.gram;  
+      %a.global;
+      %a.dictionaries;
+      type CDATA #IMPLIED
+      TEIform CDATA 'gram' >
+  
+]]>
+  
+<!-- end of [DTEFL]  13.4.2-->

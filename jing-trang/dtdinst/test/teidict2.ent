@@ -1,0 +1,95 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDIENTS] 12.1: Element classes for dictionary base -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+<!--First we define attributes available on all the elements in
+this tag set.-->
+
+<!-- [DEDIMV] 12.5.4: Attributes for dictionary work -->
+
+<!ENTITY % a.dictionaries '
+      expand CDATA #IMPLIED
+      norm CDATA #IMPLIED
+      split CDATA #IMPLIED
+      value CDATA #IMPLIED
+      orig CDATA #IMPLIED
+      location IDREF #IMPLIED
+      mergedin IDREF #IMPLIED
+      opt (y | n) "n"'> 
+<!-- end of [DEDIMV]  12.5.4-->
+
+<!--Next we define comp.dictionaries, which will be used in the
+declaration of component, within file TEI2.DTD.-->
+
+<!ENTITY % x.comp.dictionaries "" >
+<!ENTITY % m.comp.dictionaries "%x.comp.dictionaries; %n.entry; | %n.entryFree; | %n.superentry;"> 
+<!ENTITY  % mix.dictionaries '| %m.comp.dictionaries;' >
+<!--Next, we declare some specialized element
+classes, used in various content models in the dictionary
+tag set.-->
+<!ENTITY % a.entries '
+      type CDATA "main"
+      key CDATA #IMPLIED'> 
+
+<!-- [DEDIEN] 12.2.2: Class for top-level structure of dictionary entries -->
+
+
+<!ENTITY % x.dictionaryTopLevel "" >
+<!ENTITY % m.dictionaryTopLevel "%x.dictionaryTopLevel; %n.def; | %n.eg; | %n.etym; | %n.form; | %n.gramGrp; | %n.note; | %n.re; | %n.trans; | %n.usg; | %n.xr;"> 
+<!-- end of [DEDIEN]  12.2.2-->
+
+
+<!-- [DEDITPFO] 12.3.1: Classes for morphological and form information -->
+
+
+<!ENTITY % x.morphInfo "" >
+<!ENTITY % m.morphInfo "%x.morphInfo; %n.case; | %n.gen; | %n.gram; | %n.itype; | %n.mood; | %n.number; | %n.per; | %n.tns;"> 
+
+<!ENTITY % x.formInfo "" >
+<!ENTITY % m.formInfo "%x.formInfo; %n.form; | %n.hyph; | %n.lbl; | %m.morphInfo; | %n.orth; | %n.pron; | %n.syll; | %n.usg;"> 
+<!-- end of [DEDITPFO]  12.3.1-->
+
+
+<!-- [DEDITPGR] 12.3.2: Elements for grammatical information -->
+
+
+<!ENTITY % x.gramInfo "" >
+<!ENTITY % m.gramInfo "%x.gramInfo; %n.colloc; | %n.gramGrp; | %n.lbl; | %m.morphInfo; | %n.pos; | %n.subc; | %n.usg;"> 
+<!-- end of [DEDITPGR]  12.3.2-->
+
+
+<!-- [DEDIHW] 12.4: Classes for headword references -->
+
+
+<!ENTITY % x.formPointers "" >
+<!ENTITY % m.formPointers "%x.formPointers; %n.oRef; | %n.oVar; | %n.pRef; | %n.pVar;"> 
+<!ENTITY % a.formPointers '
+      target IDREF #IMPLIED'> 
+<!-- end of [DEDIHW]  12.4-->
+
+
+<!-- [DEDIFR] 12.6: Model class for unstructured dictionary entries -->
+
+<!--This entity declares the class of elements defined
+specifically for use in dictionary entries, except those which are
+included in the phrase class.   This class
+is used in defining the 'free'
+dictionary entry.-->
+
+<!ENTITY % x.dictionaryParts "" >
+<!ENTITY % m.dictionaryParts "%x.dictionaryParts; %n.case; | %n.colloc; | %n.def; | %n.eg; | %n.etym; | %n.form; | %n.gen; | %n.gramGrp; | %n.hom; | %n.hyph; | %n.itype; | %n.lbl; | %n.mood; | %n.number; | %n.orth; | %n.per; | %n.pos; | %n.pron; | %n.re; | %n.sense; | %n.stress; | %n.subc; | %n.superentry; | %n.syll; | %n.tns; | %n.tr; | %n.trans; | %n.usg; | %n.xr;"> 
+<!-- end of [DEDIFR]  12.6-->
+
+<!-- end of [DDIENTS]  12.1-->

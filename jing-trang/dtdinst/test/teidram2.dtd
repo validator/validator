@@ -1,0 +1,227 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDR] 10.: Base tag set for Performance texts -->
+
+
+<!-- [DDRFAB] 10.1: Specialized front and back matter for performance texts -->
+
+
+<!-- [DDRSET] 10.1.1: The Set element -->
+
+<!ENTITY % set 'INCLUDE' >
+<![ %set; [
+
+<!ELEMENT %n.set; %om.RR;  ((%m.Incl;)*, (%n.head;)?, %component.seq;)> 
+<!ATTLIST %n.set;  
+      %a.global;
+      TEIform CDATA 'set' >
+  
+]]>
+  
+<!-- end of [DDRSET]  10.1.1-->
+
+
+<!-- [DDRPRO] 10.1.2: Prologues and Epilogues -->
+
+<!ENTITY % prologue 'INCLUDE' >
+<![ %prologue; [
+
+<!ELEMENT %n.prologue; %om.RR;
+ ((%m.divtop; | %m.Incl;)*,
+  ((%component;), (%m.Incl;)*)+, ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.prologue;  
+      %a.global;
+      TEIform CDATA 'prologue' >
+  
+]]>
+  
+<!ENTITY % epilogue 'INCLUDE' >
+<![ %epilogue; [
+
+<!ELEMENT %n.epilogue; %om.RR;  ((%m.divtop; | %m.Incl;)*,
+((%component;), (%m.Incl;)*)+, ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.epilogue;  
+      %a.global;
+      TEIform CDATA 'epilogue' >
+  
+]]>
+  
+<!-- end of [DDRPRO]  10.1.2-->
+
+
+<!-- [DDRPERF] 10.1.3: The Performance element -->
+
+<!ENTITY % performance 'INCLUDE' >
+<![ %performance; [
+
+<!ELEMENT %n.performance; %om.RR;  ((%m.divtop; | %m.Incl;)*,
+  ((%component;), (%m.Incl;)*)+, ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.performance;  
+      %a.global;
+      TEIform CDATA 'performance' >
+  
+]]>
+  
+<!-- end of [DDRPERF]  10.1.3-->
+
+
+<!-- [DDRCAST] 10.1.4: The cast list -->
+
+<!ENTITY % castList 'INCLUDE' >
+<![ %castList; [
+
+<!ELEMENT %n.castList; %om.RR;  ((%m.divtop; | %m.Incl;)*, ((%component;), (%m.Incl;)*)*,
+               (((%n.castItem;) | %n.castGroup;), (%m.Incl;)*)+, ((%component;),
+	       (%m.Incl;)*)*)> 
+<!ATTLIST %n.castList;  
+      %a.global;
+      TEIform CDATA 'castList' >
+  
+]]>
+  
+<!ENTITY % castGroup 'INCLUDE' >
+<![ %castGroup; [
+
+<!ELEMENT %n.castGroup; %om.RR;
+ ((%m.Incl;)*, ((%n.head;), (%m.Incl;)*)?, (((%n.castItem;) | %n.castGroup;),
+(%m.Incl;)*)+, ((%n.trailer;), (%m.Incl;)*)?)> 
+<!ATTLIST %n.castGroup;  
+      %a.global;
+      TEIform CDATA 'castGroup' >
+  
+]]>
+  
+<!ENTITY % castItem 'INCLUDE' >
+<![ %castItem; [
+
+<!ELEMENT %n.castItem; %om.RO;  (#PCDATA | %n.role; | %n.roleDesc; | %n.actor; | %m.phrase; |
+%m.Incl; )*> 
+<!ATTLIST %n.castItem;  
+      %a.global;
+      type (role | list) "role"
+      TEIform CDATA 'castItem' >
+  
+]]>
+  
+<!ENTITY % role 'INCLUDE' >
+<![ %role; [
+
+<!ELEMENT %n.role; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.role;  
+      %a.global;
+      TEIform CDATA 'role' >
+  
+]]>
+  
+<!ENTITY % roleDesc 'INCLUDE' >
+<![ %roleDesc; [
+
+<!ELEMENT %n.roleDesc; %om.RR; %phrase.seq;> 
+<!ATTLIST %n.roleDesc;  
+      %a.global;
+      TEIform CDATA 'roleDesc' >
+  
+]]>
+  
+<!ENTITY % actor 'INCLUDE' >
+<![ %actor; [
+
+<!ELEMENT %n.actor; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.actor;  
+      %a.global;
+      TEIform CDATA 'actor' >
+  
+]]>
+  
+<!-- end of [DDRCAST]  10.1.4-->
+
+<!-- end of [DDRFAB]  10.1-->
+
+
+<!-- [DDRSTA] 10.2.3: Stage directions -->
+
+<!--Stage is defined as part of the core.-->
+<!ENTITY % move 'INCLUDE' >
+<![ %move; [
+
+<!ELEMENT %n.move; %om.RO; EMPTY> 
+<!ATTLIST %n.move;  
+      %a.global;
+      who IDREFS #REQUIRED
+      type CDATA #IMPLIED
+      where CDATA #IMPLIED
+      perf IDREFS #IMPLIED
+      TEIform CDATA 'move' >
+  
+]]>
+  
+<!-- end of [DDRSTA]  10.2.3-->
+
+
+<!-- [DDROTH] 10.3.1: Screen plays and other technical matters -->
+
+<!ENTITY % view 'INCLUDE' >
+<![ %view; [
+
+<!ELEMENT %n.view; %om.RO; %specialPara;> 
+<!ATTLIST %n.view;  
+      %a.global;
+      TEIform CDATA 'view' >
+  
+]]>
+  
+<!ENTITY % camera 'INCLUDE' >
+<![ %camera; [
+
+<!ELEMENT %n.camera; %om.RR; %paraContent;> 
+<!ATTLIST %n.camera;  
+      %a.global;
+      type CDATA #IMPLIED
+      TEIform CDATA 'camera' >
+  
+]]>
+  
+<!ENTITY % sound 'INCLUDE' >
+<![ %sound; [
+
+<!ELEMENT %n.sound; %om.RO; %paraContent;> 
+<!ATTLIST %n.sound;  
+      %a.global;
+      type CDATA #IMPLIED
+      discrete (y|n|u) "u"
+      TEIform CDATA 'sound' >
+  
+]]>
+  
+<!ENTITY % caption 'INCLUDE' >
+<![ %caption; [
+
+<!ELEMENT %n.caption; %om.RO; %paraContent;> 
+<!ATTLIST %n.caption;  
+      %a.global;
+      TEIform CDATA 'caption' >
+  
+]]>
+  
+<!ENTITY % tech 'INCLUDE' >
+<![ %tech; [
+
+<!ELEMENT %n.tech; %om.RO; %paraContent;> 
+<!ATTLIST %n.tech;  
+      %a.global;
+      type (light | sound | prop | block) #IMPLIED
+      perf IDREFS #IMPLIED
+      TEIform CDATA 'tech' >
+  
+]]>
+  
+<!-- end of [DDROTH]  10.3.1-->
+
+<!--The base tag set for drama uses the standard default
+text-structure elements, which are embedded here:-->
+<![ %TEI.singleBase; [
+<!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' >
+%TEI.structure.dtd;
+]]>
+<!-- end of [DDR]  10.-->

@@ -1,0 +1,58 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DSTKEYS] 3.8.5: TEI Keywords -->
+
+<!--I.  Declare TEI keywords for data types.-->
+<!--These parameter entities are used as keywords to express
+rules or constraints which cannot be fully expressed in SGML; their
+expansions show the nearest SGML equivalent.-->
+<!ENTITY  % INHERITED '#IMPLIED' >
+<!ENTITY  % ISO-date 'CDATA' >
+<!ENTITY  % extPtr 'CDATA' >
+<!--II.  Declare keywords for tag-set selection.-->
+<!--Declare all bases and additional tag sets as 'IGNORE'.  The
+user can override this default by declaring the same entity with the
+replacement text 'INCLUDE', in the document's DTD
+subset.-->
+<!--Base tag sets first.-->
+<!ENTITY  % TEI.prose 'IGNORE' >
+<!ENTITY  % TEI.verse 'IGNORE' >
+<!ENTITY  % TEI.drama 'IGNORE' >
+<!ENTITY  % TEI.spoken 'IGNORE' >
+<!ENTITY  % TEI.dictionaries 'IGNORE' >
+<!ENTITY  % TEI.terminology 'IGNORE' >
+<!--Now the mixed
+bases.-->
+<!ENTITY  % TEI.general 'IGNORE' >
+<!ENTITY  % TEI.mixed 'IGNORE' >
+<!--Now additional tag
+sets.-->
+<!ENTITY  % TEI.linking 'IGNORE' >
+<!ENTITY  % TEI.analysis 'IGNORE' >
+<!ENTITY  % TEI.fs 'IGNORE' >
+<!ENTITY  % TEI.certainty 'IGNORE' >
+<!ENTITY  % TEI.transcr 'IGNORE' >
+<!ENTITY  % TEI.textcrit 'IGNORE' >
+<!ENTITY  % TEI.names.dates 'IGNORE' >
+<!ENTITY  % TEI.nets 'IGNORE' >
+<!ENTITY  % TEI.figures 'IGNORE' >
+<!ENTITY  % TEI.corpus 'IGNORE' >
+
+<!--III. Declare TEI.XML and associated omissibility
+indicators-->
+
+<!ENTITY  % TEI.XML 'IGNORE' >
+
+<![ %TEI.XML; [
+
+<!ENTITY  % om.RO '' >
+
+<!ENTITY  % om.RR '' >
+]]>
+
+<!ENTITY  % om.RO '- o' >
+
+<!ENTITY  % om.RR '- -' >
+
+<!-- end of [DSTKEYS]  3.8.5-->

@@ -1,0 +1,197 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DPH] 18.: Transcription of Primary Sources -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!-- [DTCAD] 18.1.4: Added and Deleted Spans -->
+
+<!ENTITY % addSpan 'INCLUDE' >
+<![ %addSpan; [
+
+<!ELEMENT %n.addSpan; %om.RO;  EMPTY> 
+<!ATTLIST %n.addSpan;  
+      %a.global;
+      type CDATA #IMPLIED
+      place CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      hand IDREF %INHERITED;
+      to IDREF #REQUIRED
+      TEIform CDATA 'addSpan' >
+  
+]]>
+  
+<!ENTITY % delSpan 'INCLUDE' >
+<![ %delSpan; [
+
+<!ELEMENT %n.delSpan; %om.RO;  EMPTY> 
+<!ATTLIST %n.delSpan;  
+      %a.global;
+      type CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED
+      hand IDREF %INHERITED;
+      to IDREF #REQUIRED
+      status CDATA 'unremarkable'
+      TEIform CDATA 'delSpan' >
+  
+]]>
+  
+<!-- end of [DTCAD]  18.1.4-->
+
+
+<!-- [DPHCD] 18.1.6: Cancelled Deletions -->
+
+<!ENTITY % restore 'INCLUDE' >
+<![ %restore; [
+
+<!ELEMENT %n.restore; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.restore;  
+      %a.global;
+      %a.readings;
+      desc CDATA #IMPLIED
+      cert CDATA #IMPLIED
+      TEIform CDATA 'restore' >
+  
+]]>
+  
+<!-- end of [DPHCD]  18.1.6-->
+
+
+<!-- [DPHOM] 18.1.7: Supplied Text -->
+
+<!ENTITY % supplied 'INCLUDE' >
+<![ %supplied; [
+
+<!ELEMENT %n.supplied; %om.RO;  %paraContent;> 
+<!ATTLIST %n.supplied;  
+      %a.global;
+      reason CDATA #IMPLIED
+      resp CDATA %INHERITED;
+      hand IDREF %INHERITED;
+      agent CDATA #IMPLIED
+      source CDATA #IMPLIED
+      TEIform CDATA 'supplied' >
+  
+]]>
+  
+<!-- end of [DPHOM]  18.1.7-->
+
+
+<!-- [DPHHD] 18.2.1: Hand Shifts -->
+
+<!ENTITY % hand 'INCLUDE' >
+<![ %hand; [
+
+<!ELEMENT %n.hand; %om.RO;  EMPTY> 
+<!ATTLIST %n.hand;  
+      %a.global;
+      hand CDATA #IMPLIED
+      scribe CDATA #IMPLIED
+      style CDATA #IMPLIED
+      mainLang CDATA #IMPLIED
+      ink CDATA #IMPLIED
+      character CDATA #IMPLIED
+      first CDATA #IMPLIED
+      resp CDATA %INHERITED;
+      TEIform CDATA 'hand' >
+  
+]]>
+  
+<!ENTITY % handShift 'INCLUDE' >
+<![ %handShift; [
+
+<!ELEMENT %n.handShift; %om.RO;  EMPTY> 
+<!ATTLIST %n.handShift;  
+      %a.global;
+      new IDREF #IMPLIED
+      old IDREF #IMPLIED
+      style CDATA #IMPLIED
+      ink CDATA #IMPLIED
+      character CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      TEIform CDATA 'handShift' >
+  
+]]>
+  
+<!ENTITY % handList 'INCLUDE' >
+<![ %handList; [
+
+<!ELEMENT %n.handList; %om.RO;   ((%n.hand;)*)> 
+<!ATTLIST %n.handList;  
+      %a.global;
+      TEIform CDATA 'handList' >
+  
+]]>
+  
+<!-- end of [DPHHD]  18.2.1-->
+
+
+<!-- [DPHDA] 18.2.3: Damage and Illegiblity -->
+
+<!ENTITY % damage 'INCLUDE' >
+<![ %damage; [
+
+<!ELEMENT %n.damage; %om.RO;  %paraContent;> 
+<!ATTLIST %n.damage;  
+      %a.global;
+      type CDATA #IMPLIED
+      extent CDATA #IMPLIED
+      resp IDREF %INHERITED;
+      hand IDREF %INHERITED;
+      agent CDATA #IMPLIED
+      degree CDATA #IMPLIED
+      TEIform CDATA 'damage' >
+  
+]]>
+  
+<!-- end of [DPHDA]  18.2.3-->
+
+
+<!-- [DPHSP] 18.2.5: Spaces in the source -->
+
+<!ENTITY % space 'INCLUDE' >
+<![ %space; [
+
+<!ELEMENT %n.space; %om.RO;  EMPTY> 
+<!ATTLIST %n.space;  
+      %a.global;
+      dim (horizontal | vertical) #IMPLIED
+      extent CDATA #IMPLIED
+      resp CDATA #IMPLIED
+      TEIform CDATA 'space' >
+  
+]]>
+  
+<!-- end of [DPHSP]  18.2.5-->
+
+
+<!-- [DTCHD] 18.3: Headers and footers -->
+
+<!ENTITY % fw 'INCLUDE' >
+<![ %fw; [
+
+<!ELEMENT %n.fw; %om.RO;  %phrase.seq;> 
+<!ATTLIST %n.fw;  
+      %a.global;
+      type CDATA #IMPLIED
+      place CDATA #IMPLIED
+      TEIform CDATA 'fw' >
+  
+]]>
+  
+<!-- end of [DTCHD]  18.3-->
+
+<!-- end of [DPH]  18.-->

@@ -1,0 +1,25 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTSCLA] 11.: Class declarations for Transcribed Speech -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!ENTITY % x.comp.spoken "" >
+<!ENTITY % m.comp.spoken "%x.comp.spoken; %n.event; | %n.kinesic; | %n.pause; | %n.shift; | %n.u; | %n.vocal; | %n.writing;"> 
+<!ENTITY % a.timed '
+      start IDREF #IMPLIED
+      end IDREF #IMPLIED
+      dur CDATA #IMPLIED'> 
+<!ENTITY  % mix.spoken '| %m.comp.spoken;' >
+<!-- end of [DTSCLA]  11.-->

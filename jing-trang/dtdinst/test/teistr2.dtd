@@ -1,0 +1,325 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DDS] 7.7: Default text structure -->
+
+<!--This definition of the basic text structure is used by most
+TEI base tag sets; some bases, however, use slight variations
+upon it.-->
+
+<!ENTITY % x.divtop "" >
+<!ENTITY % m.divtop "%x.divtop; %n.argument; | %n.byline; | %n.dateline; | %n.docAuthor; | %n.docDate; | %n.epigraph; | %n.head; | %n.opener; | %n.salute; | %n.signed;"> 
+
+<!ENTITY % x.divbot "" >
+<!ENTITY % m.divbot "%x.divbot; %n.byline; | %n.closer; | %n.dateline; | %n.epigraph; | %n.salute; | %n.signed; | %n.trailer;"> 
+
+<!-- [DDSTEXT] 7.: Top-level parts of default structure -->
+
+<!ENTITY % text 'INCLUDE' >
+<![ %text; [
+
+<!ELEMENT %n.text; %om.RR;  ((%m.Incl;)*, ((%n.front;), (%m.Incl;)*)?,
+ ((%n.body;) | %n.group;), (%m.Incl;)*, ((%n.back;), (%m.Incl;)*)?)> 
+<!ATTLIST %n.text;  
+      %a.global;
+      %a.declaring;
+      TEIform CDATA 'text' >
+  
+]]>
+  
+<!ENTITY % body 'INCLUDE' >
+<![ %body; [
+
+<!ELEMENT %n.body;
+%om.RO;  ( (%m.divtop; | %m.Incl;)*,
+          ( (  ((%component;), (%m.Incl;)*)+,
+               (((%n.divGen;), (%m.Incl;)*)*, 
+                  ( ((%n.div;),   ((%n.div;)|(%n.divGen;)|%m.Incl;)*) |
+                    ((%n.div0;), ((%n.div0;)|(%n.divGen;)|%m.Incl;)*) |
+                    ((%n.div1;), ((%n.div1;)|(%n.divGen;)|%m.Incl;)*) 
+                  )? ))
+              | (((%n.divGen;), (%m.Incl;)*)*,
+                (((%n.div;),   ((%n.div;)|(%n.divGen;)|%m.Incl;)*) |
+                 ((%n.div0;), ((%n.div0;)|(%n.divGen;)|%m.Incl;)*) |
+                 ((%n.div1;), ((%n.div1;)|(%n.divGen;)|%m.Incl;)*) 
+             ))), ((%m.divbot;), (%m.Incl;)*)* )> 
+<!ATTLIST %n.body;  
+      %a.global;
+      %a.declaring;
+      TEIform CDATA 'body' >
+  
+]]>
+  
+<!ENTITY % group 'INCLUDE' >
+<![ %group; [
+
+<!ELEMENT %n.group;
+%om.RO;  ((%m.divtop; | %m.Incl;)*, (((%n.text;) | %n.group;),
+((%n.text;)|(%n.group;)|%m.Incl;)*), ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.group;  
+      %a.global;
+      %a.declaring;
+      TEIform CDATA 'group' >
+  
+]]>
+  
+<!-- end of [DDSTEXT]  7.-->
+
+
+<!-- [DDSDIV] 7.1.1: Un-numbered divisions -->
+
+<!ENTITY % div 'INCLUDE' >
+<![ %div; [
+
+<!ELEMENT %n.div; %om.RO;  ((%m.divtop; |
+%m.Incl; )*, ( (((%n.div;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                (((%n.div;) | %n.divGen;), (%m.Incl;)*)*)),
+	      ((%m.divbot;),(%m.Incl;)*)*)> 
+<!ATTLIST %n.div;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div' >
+  
+]]>
+  
+<!-- end of [DDSDIV]  7.1.1-->
+
+
+<!-- [DDSDIVN] 7.1.2: Numbered divisions -->
+
+<!ENTITY % div0 'INCLUDE' >
+<![ %div0; [
+
+<!ELEMENT %n.div0; %om.RO; 
+           ( (%m.divtop; | %m.Incl;)*, ( (((%n.div1;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div1;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div0;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div0' >
+  
+]]>
+  
+<!ENTITY % div1 'INCLUDE' >
+<![ %div1; [
+
+<!ELEMENT %n.div1; %om.RO;           
+ ( (%m.divtop; | %m.Incl;)*, ( (((%n.div2;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div2;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div1;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div1' >
+  
+]]>
+  
+<!ENTITY % div2 'INCLUDE' >
+<![ %div2; [
+
+<!ELEMENT %n.div2; %om.RO;           
+ ( (%m.divtop; | %m.Incl;)*, ( (((%n.div3;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div3;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div2;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div2' >
+  
+]]>
+  
+<!ENTITY % div3 'INCLUDE' >
+<![ %div3; [
+
+<!ELEMENT %n.div3; %om.RO; 
+ ( (%m.divtop; | %m.Incl;)*, ( (((%n.div4;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div4;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div3;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div3' >
+  
+]]>
+  
+<!ENTITY % div4 'INCLUDE' >
+<![ %div4; [
+
+<!ELEMENT %n.div4; %om.RO; 
+ ( (%m.divtop; | %m.Incl;)*, ( (((%n.div5;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div5;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)
+> 
+<!ATTLIST %n.div4;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div4' >
+  
+]]>
+  
+<!ENTITY % div5 'INCLUDE' >
+<![ %div5; [
+
+<!ELEMENT %n.div5; %om.RO;   ( (%m.divtop; | %m.Incl;)*, ( (((%n.div6;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div6;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div5;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div5' >
+  
+]]>
+  
+<!ENTITY % div6 'INCLUDE' >
+<![ %div6; [
+
+<!ELEMENT %n.div6; %om.RO;            ( (%m.divtop; | %m.Incl;)*, ( (((%n.div7;) | %n.divGen;), (%m.Incl;)*)+
+              | ( (%component;, (%m.Incl;)*)+, 
+                   (((%n.div7;) | %n.divGen;), (%m.Incl;)*)*)),
+              ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div6;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div6' >
+  
+]]>
+  
+<!ENTITY % div7 'INCLUDE' >
+<![ %div7; [
+
+<!ELEMENT %n.div7; %om.RO;  ((%m.divtop; |
+%m.Incl;)*, (%component;, (%m.Incl;)*)+, ((%m.divbot;), (%m.Incl;)*)*)> 
+<!ATTLIST %n.div7;  
+      %a.global;
+      %a.divn;
+      %a.declaring;
+      TEIform CDATA 'div7' >
+  
+]]>
+  
+<!-- end of [DDSDIVN]  7.1.2-->
+
+
+<!-- [DDSDIVX] 7.2.4: Tags for start and end of divisions -->
+
+<!ENTITY % trailer 'INCLUDE' >
+<![ %trailer; [
+
+<!ELEMENT %n.trailer; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.trailer;  
+      %a.global;
+      TEIform CDATA 'trailer' >
+  
+]]>
+  
+<!ENTITY % byline 'INCLUDE' >
+<![ %byline; [
+
+<!ELEMENT %n.byline; %om.RO;  (#PCDATA | %m.phrase; | %n.docAuthor; | %m.Incl;)*> 
+<!ATTLIST %n.byline;  
+      %a.global;
+      TEIform CDATA 'byline' >
+  
+]]>
+  
+<!ENTITY % dateline 'INCLUDE' >
+<![ %dateline; [
+
+<!ELEMENT %n.dateline; %om.RO;  (#PCDATA| %n.date; | %n.time; | %n.name; | %n.address;)*> 
+<!ATTLIST %n.dateline;  
+      %a.global;
+      TEIform CDATA 'dateline' >
+  
+]]>
+  
+<!ENTITY % argument 'INCLUDE' >
+<![ %argument; [
+
+<!ELEMENT %n.argument; %om.RR;  ((%m.Incl;)*, ((%n.head;), %component.seq;)?)> 
+<!ATTLIST %n.argument;  
+      %a.global;
+      TEIform CDATA 'argument' >
+  
+]]>
+  
+<!ENTITY % epigraph 'INCLUDE' >
+<![ %epigraph; [
+
+<!ELEMENT %n.epigraph; %om.RR;  (%component.seq;)> 
+<!ATTLIST %n.epigraph;  
+      %a.global;
+      TEIform CDATA 'epigraph' >
+  
+]]>
+  
+<!ENTITY % opener 'INCLUDE' >
+<![ %opener; [
+
+<!ELEMENT %n.opener; %om.RO;  (#PCDATA | %m.phrase; | %n.argument; | %n.byline; |  %n.dateline; | %n.epigraph; | %n.salute; | %n.signed; 
+ | %m.Incl;)* > 
+<!ATTLIST %n.opener;  
+      %a.global;
+      TEIform CDATA 'opener' >
+  
+]]>
+  
+<!ENTITY % closer 'INCLUDE' >
+<![ %closer; [
+
+<!ELEMENT %n.closer; %om.RO;  (#PCDATA | %n.signed; | %n.dateline; | %n.salute; | %m.phrase;
+ | %m.Incl;)*
+ > 
+<!ATTLIST %n.closer;  
+      %a.global;
+      TEIform CDATA 'closer' >
+  
+]]>
+  
+<!ENTITY % salute 'INCLUDE' >
+<![ %salute; [
+
+<!ELEMENT %n.salute; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.salute;  
+      %a.global;
+      TEIform CDATA 'salute' >
+  
+]]>
+  
+<!ENTITY % signed 'INCLUDE' >
+<![ %signed; [
+
+<!ELEMENT %n.signed; %om.RO; %phrase.seq;> 
+<!ATTLIST %n.signed;  
+      %a.global;
+      TEIform CDATA 'signed' >
+  
+]]>
+  
+<!--The HEAD element is declared in the core tag set.-->
+<!-- end of [DDSDIVX]  7.2.4-->
+
+<!--Front matter is defined in TEI.front file.-->
+<!ENTITY  % TEI.front.dtd SYSTEM 'teifron2.dtd' >
+%TEI.front.dtd;
+
+<!--Back matter is defined in TEI.back file.-->
+<!ENTITY  % TEI.back.dtd SYSTEM 'teiback2.dtd' >
+%TEI.back.dtd;
+
+<!-- end of [DDS]  7.7-->

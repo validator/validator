@@ -1,0 +1,126 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DTS] 11.: Base tag set for Transcribed Speech -->
+
+<!--Text Encoding Initiative:
+Guidelines for Electronic Text Encoding and Interchange.
+Document TEI P3, 1994.-->
+<!--Copyright (c) 1994 ACH, ACL, ALLC.
+Permission to copy in any form is granted,
+provided this notice is included in all copies.-->
+<!--These materials may not be altered;
+modifications to these DTDs should be performed as specified
+in the Guidelines in chapter "Modifying the TEI DTD."-->
+<!--These materials subject to revision.
+Current versions are available from the Text Encoding Initiative.-->
+
+<!-- [DTSCOMP] 11.2.7: Components of Transcribed Speech -->
+
+<!ENTITY % u 'INCLUDE' >
+<![ %u; [
+
+<!ELEMENT %n.u; %om.RR;
+ (#PCDATA | %m.phrase; |%m.comp.spoken; | %m.Incl;)* > 
+<!ATTLIST %n.u;  
+      %a.global;
+      %a.timed;
+      %a.declaring;
+      trans (smooth | latching | overlap | pause) "smooth"
+      who IDREFS %INHERITED;
+      TEIform CDATA 'u' >
+  
+]]>
+  
+<!ENTITY % pause 'INCLUDE' >
+<![ %pause; [
+
+<!ELEMENT %n.pause; %om.RO; EMPTY> 
+<!ATTLIST %n.pause;  
+      %a.global;
+      %a.timed;
+      type CDATA #IMPLIED
+      who IDREF #IMPLIED
+      TEIform CDATA 'pause' >
+  
+]]>
+  
+<!ENTITY % vocal 'INCLUDE' >
+<![ %vocal; [
+
+<!ELEMENT %n.vocal; %om.RO; EMPTY> 
+<!ATTLIST %n.vocal;  
+      %a.global;
+      %a.timed;
+      who IDREF %INHERITED;
+      iterated (y | n | u) "n"
+      desc CDATA #IMPLIED
+      TEIform CDATA 'vocal' >
+  
+]]>
+  
+<!ENTITY % kinesic 'INCLUDE' >
+<![ %kinesic; [
+
+<!ELEMENT %n.kinesic; %om.RO; EMPTY> 
+<!ATTLIST %n.kinesic;  
+      %a.global;
+      %a.timed;
+      who IDREF %INHERITED;
+      iterated (y | n | u) "n"
+      desc CDATA #IMPLIED
+      TEIform CDATA 'kinesic' >
+  
+]]>
+  
+<!ENTITY % event 'INCLUDE' >
+<![ %event; [
+
+<!ELEMENT %n.event; %om.RO; EMPTY> 
+<!ATTLIST %n.event;  
+      %a.global;
+      %a.timed;
+      who IDREF %INHERITED;
+      iterated (y | n | u) "n"
+      desc CDATA #IMPLIED
+      TEIform CDATA 'event' >
+  
+]]>
+  
+<!ENTITY % writing 'INCLUDE' >
+<![ %writing; [
+
+<!ELEMENT %n.writing; %om.RR; %paraContent;> 
+<!ATTLIST %n.writing;  
+      %a.global;
+      who IDREF %INHERITED;
+      type CDATA #IMPLIED
+      script IDREF #IMPLIED
+      gradual (y | n | u) #IMPLIED
+      TEIform CDATA 'writing' >
+  
+]]>
+  
+<!ENTITY % shift 'INCLUDE' >
+<![ %shift; [
+
+<!ELEMENT %n.shift; %om.RO; EMPTY> 
+<!ATTLIST %n.shift;  
+      %a.global;
+      who IDREF #IMPLIED
+      feature (tempo | loud | pitch | tension | rhythm | voice) #REQUIRED
+      new CDATA "normal"
+      TEIform CDATA 'shift' >
+  
+]]>
+  
+<!-- end of [DTSCOMP]  11.2.7-->
+
+<!--The base tag set for transcriptions of speech uses the
+standard default text-structure elements, which are embedded
+here:-->
+<![ %TEI.singleBase; [
+<!ENTITY  % TEI.structure.dtd SYSTEM 'teistr2.dtd' >
+%TEI.structure.dtd;
+]]>
+<!-- end of [DTS]  11.-->

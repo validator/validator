@@ -1,0 +1,57 @@
+
+<!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
+    
+<!-- [DCORSC] 31.6: Concurrent Document Type for Page and Line References -->
+
+<!ENTITY  % version 'ref' >
+<!ENTITY % %version 'INCLUDE' >
+<![ %%version; [
+
+<!ELEMENT %n.%version; %om.RR;   (#PCDATA | %n.page; | %n.vol;)*> 
+<!ATTLIST %n.%version;  
+      %a.global;
+      TEIform CDATA '%version' >
+  
+]]>
+  
+<!ENTITY % vol 'INCLUDE' >
+<![ %vol; [
+
+<!ELEMENT %n.vol; %om.RR;   (#PCDATA | %n.page;)*> 
+<!ATTLIST %n.vol;  
+      %a.global;
+      TEIform CDATA 'vol' >
+  
+]]>
+  
+<!ENTITY % page 'INCLUDE' >
+<![ %page; [
+
+<!ELEMENT %n.page; %om.RO;   (#PCDATA | %n.line; | %n.col;)*> 
+<!ATTLIST %n.page;  
+      %a.global;
+      TEIform CDATA 'page' >
+  
+]]>
+  
+<!ENTITY % col 'INCLUDE' >
+<![ %col; [
+
+<!ELEMENT %n.col; %om.RO;   (#PCDATA | %n.line;)*> 
+<!ATTLIST %n.col;  
+      %a.global;
+      TEIform CDATA 'col' >
+  
+]]>
+  
+<!ENTITY % line 'INCLUDE' >
+<![ %line; [
+
+<!ELEMENT %n.line; %om.RR;   (#PCDATA)> 
+<!ATTLIST %n.line;  
+      %a.global;
+      TEIform CDATA 'line' >
+  
+]]>
+  
+<!-- end of [DCORSC]  31.6-->
