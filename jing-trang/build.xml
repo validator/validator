@@ -1,0 +1,97 @@
+<project name="jing" default="all" basedir=".">
+
+<property name="sdkjava.dir" value="c:\Program Files\Microsoft SDK for Java 4.0"/>
+
+<target name="all" depends="jar, exegen"/>
+
+<target name="init">
+  <mkdir dir="build"/>
+  <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
+</target>
+
+<target name="compile" depends="init">
+
+  <mkdir dir="build/classes"/>
+  <javac srcdir="src" destdir="build/classes"/>
+
+</target>
+
+<target name="jar" depends="compile">
+
+  <jar jarfile="build/jing.jar">
+    <fileset dir="build/classes"/>
+    <fileset dir="src" includes="**/*.properties"/>
+  </jar>
+
+  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.TrexTask">
+    <classpath>
+      <pathelement location="build/jing.jar"/>
+    </classpath>
+  </taskdef>
+
+</target>
+
+
+<target name="exegen" depends="compile,check-exe,xp-files,sax-files"
+        unless="exe-ok">
+  <exec dir="." executable="${sdkjava.dir}\bin\jexegen" failonerror="yes">
+    <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
+    <arg value="/nologo"/>
+    <arg value="/out:build\jing.exe"/>
+    <arg value="/r"/>
+    <arg value="/base:src"/>
+    <arg value="*.properties"/>
+    <arg value="/base:build\classes"/>
+    <arg value="*.class"/>
+    <arg value="/base:build\xp-files"/>
+    <arg value="*.*"/>
+    <arg value="/base:build\sax-files"/>
+    <arg value="org\xml\sax\*.*"/>
+  </exec>
+</target>
+
+<target name="check-exe">
+  <uptodate property="exe-ok" targetfile="build/jing.exe">
+    <srcfiles dir="build/classes" includes="**/*.class"/>
+    <srcfiles dir="src" includes="**/*.properties"/>
+  </uptodate>
+</target>
+
+<target name="xp-files" depends="check-xp-files" unless="xp-files-ok">
+  <mkdir dir="build/xp-files"/>
+  <unzip src="lib/xp.jar" dest="build/xp-files"/>
+  <delete dir="build/xp-files/META-INF"/>
+</target>
+
+<target name="sax-files" depends="check-sax-files" unless="sax-files-ok">
+  <mkdir dir="build/sax-files"/>
+  <unzip src="lib/crimson.jar" dest="build/sax-files"/>
+</target>
+
+<target name="check-xp-files">
+  <available property="xp-files-ok"
+             file="build/xp-files/com/jclark/xml/sax/Driver.class"/>
+</target>
+
+<target name="check-sax-files">
+  <available property="sax-files-ok"
+             file="build/sax-files/org/xml/sax/Parser.class"/>
+</target>
+
+<target name="xhtml" depends="init">
+  <zip zipfile="build/xhtml-trex.zip">
+    <fileset dir="." includes="xhtml/**/*.trex,xhtml/index.html"/>
+  </zip>
+</target>
+
+<target name="src" depends="init">
+  <zip zipfile="build/jing-src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+  </zip>
+</target>
+
+<target name="clean">
+  <delete dir="build"/>
+</target>
+
+</project>
