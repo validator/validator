@@ -2236,6 +2236,70 @@ include "x.rnc" {
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo { [x[]](text*) }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <zeroOrMore>
+    <x xmlns=""/>
+    <text/>
+  </zeroOrMore>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo {
+  string - ((string|string) >> x[]) >> y[]
+}
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="">
+  <data type="string">
+    <except>
+      <choice>
+        <data type="string"/>
+        <data type="string"/>
+      </choice>
+      <x xmlns=""/>
+    </except>
+  </data>
+  <y xmlns=""/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo {
+  string - ("x" >> x[]) >> y[]
+}
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="">
+  <data type="string">
+    <except>
+      <value>x</value>
+      <x xmlns=""/>
+    </except>
+  </data>
+  <y xmlns=""/>
+</element>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>
