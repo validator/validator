@@ -22,10 +22,34 @@ start
 
 <xsl:key name="override" match="overridden" use="@name"/>
 
-<xsl:template match="modelGroup|attributeGroup|datatype">
+<xsl:template match="doctype">
+  <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+      <choice>
+	<ref name="TEI.2"/>
+	<ref name="teiCorpus.2"/>
+      </choice>
+    </start>
+    <xsl:apply-templates/>
+  </grammar>
+</xsl:template>
+
+<xsl:template match="modelGroup|datatype">
   <define name="{@name}">
     <xsl:if test="key('override',@name)">
       <xsl:call-template name="condition"/>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </define>
+</xsl:template>
+
+<xsl:template match="attributeGroup">
+  <define name="{@name}">
+    <xsl:if test="key('override',@name)">
+      <xsl:call-template name="condition"/>
+    </xsl:if>
+    <xsl:if test="not(*)">
+      <empty/>
     </xsl:if>
     <xsl:apply-templates/>
   </define>
@@ -64,6 +88,9 @@ start
       <ref name="{$attlist-prefix}{$name}"/>
       <xsl:apply-templates select="*[2]"/>
     </element>
+  </define>
+  <define name="{$attlist-prefix}{$name}" combine="interleave">
+    <empty/>
   </define>
 </xsl:template>
 
