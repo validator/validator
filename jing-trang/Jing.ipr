@@ -15,6 +15,7 @@
         <root type="simple" url="file://$PROJECT_DIR$/dtdinst/src" />
         <root type="simple" url="file://$PROJECT_DIR$/trang/src" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/xerces.src.zip!/" />
+        <root type="simple" url="jar://$PROJECT_DIR$/lib/isorelax.src.zip!/" />
       </root>
     </sourcePath>
     <classPath>
@@ -26,6 +27,7 @@
         <root type="simple" url="jar://$PROJECT_DIR$/lib/regex2.jar!/" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/isorelax.jar!/" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/xercesImpl.jar!/" />
+        <root type="simple" url="jar://$PROJECT_DIR$/lib/saxon.jar!/" />
         <root type="simple" url="file://$PROJECT_DIR$/src" />
         <root type="simple" url="file://$PROJECT_DIR$/dtdinst/src" />
         <root type="simple" url="file://$PROJECT_DIR$/trang/src" />
