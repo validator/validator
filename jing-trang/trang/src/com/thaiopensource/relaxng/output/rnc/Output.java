@@ -133,6 +133,8 @@ class Output {
     prefixes.addAll(nsb.getPrefixes());
     Collections.sort(prefixes);
 
+    boolean needNewline = false;
+
     for (Iterator iter = prefixes.iterator(); iter.hasNext();) {
       String prefix = (String)iter.next();
       String ns = nsb.getNamespaceUri(prefix);
@@ -141,6 +143,7 @@ class Output {
           pp.text("default namespace = ");
           literal(ns);
           pp.hardNewline();
+          needNewline = true;
         }
       }
       else if (!prefix.equals("xml")) {
@@ -152,14 +155,21 @@ class Output {
         else
           literal(ns);
         pp.hardNewline();
+        needNewline = true;
       }
     }
+
+    if (needNewline)
+      pp.hardNewline();
   }
 
 
   private void outputDatatypeLibraryDeclarations(Pattern p) {
+    datatypeLibraryMap.put(WellKnownNamespaces.XML_SCHEMA_DATATYPES, "xsd");
     List datatypeLibraries = new Vector();
     datatypeLibraries.addAll(DatatypeLibraryVisitor.findDatatypeLibraries(p));
+    if (datatypeLibraries.isEmpty())
+      return;
     Collections.sort(datatypeLibraries);
     for (int i = 0, len = datatypeLibraries.size(); i < len; i++) {
       String prefix = "d";
@@ -173,7 +183,7 @@ class Output {
       literal(uri);
       pp.hardNewline();
     }
-    datatypeLibraryMap.put(WellKnownNamespaces.XML_SCHEMA_DATATYPES, "xsd");
+    pp.hardNewline();
   }
 
   static class DatatypeLibraryVisitor extends NullVisitor {
