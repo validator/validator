@@ -2323,6 +2323,25 @@ token "value"
 ]]></incorrect>
 </compact>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+[ x [
+"1"
+#2
+"3" ]]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <x xmlns="">1<!-- 2 -->3</x>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>

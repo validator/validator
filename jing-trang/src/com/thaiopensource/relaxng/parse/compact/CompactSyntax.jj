@@ -1443,9 +1443,10 @@ void AnnotationElementContent(ElementAnnotationBuilder eab) :
 void AnnotationElementLiteral(ElementAnnotationBuilder eab) :
 {
   Token t;
+  CommentList comments = getComments();
 }
 {
-  t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t), getComments()); }
+  t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t), comments); }
 }
 
 String Literal() :
