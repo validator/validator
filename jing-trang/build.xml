@@ -93,6 +93,9 @@
 </target>
 
 <target name="split" depends="init, check-split" unless="split-not-required">
+  <jing rngfile="eg/testSuite.rng">
+    <fileset dir="test" includes="spectest.xml"/>
+  </jing>
   <delete dir="build/test"/>
   <mkdir dir="build/test"/>
   <style basedir="test" destdir="build/test" includes="spectest.xml" extension=".stamp" style="split.xsl">
