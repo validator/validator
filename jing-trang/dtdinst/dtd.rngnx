@@ -5,17 +5,8 @@ start = element doctype { decl* }
 decl = 
   elementDecl 
   | attlistDecl
-  | modelGroupDef
-  | attributeGroupDef
-  | enumGroupDef
-  | datatypeDef
-  | attributeDefaultDef
-  | flagDef
-  | nameSpecDef
-  | externalIdDef
+  | def
   | overriddenDef
-  | paramDef
-  | duplicateDef
   | externalIdRef
   | includedSection
   | ignoredSection
@@ -24,6 +15,17 @@ decl =
   | notationDecl
   | processingInstruction
   | comment
+
+def =
+  modelGroupDef
+  | attributeGroupDef
+  | enumGroupDef
+  | datatypeDef
+  | attributeDefaultDef
+  | flagDef
+  | nameSpecDef
+  | externalIdDef
+  | paramDef
 
 elementDecl = element element { nameSpec, modelGroup }
 
@@ -39,9 +41,9 @@ nameSpecDef = element nameSpec { name, nameSpec }
 
 externalIdDef = element externalId { name, externalId }
 
-overriddenDef = element overridden { name, text }
-
 paramDef = element param { name, text }
+
+overriddenDef = element overridden { def | duplicateDef }
 
 duplicateDef = element duplicate { name }
 

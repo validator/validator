@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class EnumGroupDef extends TopLevel {
+public class EnumGroupDef extends Def {
   
-  private final String name;
   private final EnumGroup enumGroup;
 
   public EnumGroupDef(String name, EnumGroup enumGroup) {
-    this.name = name;
+    super(name);
     this.enumGroup = enumGroup;
   }
 
@@ -18,11 +17,7 @@ public class EnumGroupDef extends TopLevel {
     return enumGroup;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.enumGroupDef(name, enumGroup);
+    visitor.enumGroupDef(getName(), enumGroup);
   }
 }

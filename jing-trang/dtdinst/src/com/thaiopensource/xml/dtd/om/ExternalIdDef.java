@@ -2,12 +2,11 @@ package com.thaiopensource.xml.dtd.om;
 
 import com.thaiopensource.xml.em.ExternalId;
 
-public class ExternalIdDef extends TopLevel {
-  private final String name;
+public class ExternalIdDef extends Def {
   private final ExternalId externalId;
 
   public ExternalIdDef(String name, ExternalId externalId) {
-    this.name = name;
+    super(name);
     this.externalId = externalId;
   }
 
@@ -15,15 +14,11 @@ public class ExternalIdDef extends TopLevel {
     return EXTERNAL_ID_DEF;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public ExternalId getExternalId() {
     return externalId;
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.externalIdDef(name, externalId);
+    visitor.externalIdDef(getName(), externalId);
   }
 }

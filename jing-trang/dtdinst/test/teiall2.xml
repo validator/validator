@@ -1310,39 +1310,79 @@ user can override this default by declaring the same entity with the
 replacement text 'INCLUDE', in the document's DTD
 subset.</comment>
       <comment>Base tag sets first.</comment>
-      <overridden name="TEI.prose">IGNORE</overridden>
-      <overridden name="TEI.verse">IGNORE</overridden>
-      <overridden name="TEI.drama">IGNORE</overridden>
-      <overridden name="TEI.spoken">IGNORE</overridden>
-      <overridden name="TEI.dictionaries">IGNORE</overridden>
-      <overridden name="TEI.terminology">IGNORE</overridden>
+      <overridden>
+        <param name="TEI.prose">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.verse">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.drama">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.spoken">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.dictionaries">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.terminology">IGNORE</param>
+      </overridden>
       <comment>Now the mixed
 bases.</comment>
-      <overridden name="TEI.general">IGNORE</overridden>
+      <overridden>
+        <param name="TEI.general">IGNORE</param>
+      </overridden>
       <flag name="TEI.mixed">
         <ignore/>
       </flag>
       <comment>Now additional tag
 sets.</comment>
-      <overridden name="TEI.linking">IGNORE</overridden>
-      <overridden name="TEI.analysis">IGNORE</overridden>
-      <overridden name="TEI.fs">IGNORE</overridden>
-      <overridden name="TEI.certainty">IGNORE</overridden>
-      <overridden name="TEI.transcr">IGNORE</overridden>
-      <overridden name="TEI.textcrit">IGNORE</overridden>
-      <overridden name="TEI.names.dates">IGNORE</overridden>
-      <overridden name="TEI.nets">IGNORE</overridden>
-      <overridden name="TEI.figures">IGNORE</overridden>
-      <overridden name="TEI.corpus">IGNORE</overridden>
+      <overridden>
+        <param name="TEI.linking">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.analysis">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.fs">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.certainty">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.transcr">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.textcrit">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.names.dates">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.nets">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.figures">IGNORE</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.corpus">IGNORE</param>
+      </overridden>
       <comment>III. Declare TEI.XML and associated omissibility
 indicators</comment>
-      <overridden name="TEI.XML">IGNORE</overridden>
+      <overridden>
+        <param name="TEI.XML">IGNORE</param>
+      </overridden>
       <includedSection flag="TEI.XML">
         <param name="om.RO"></param>
         <param name="om.RR"></param>
       </includedSection>
-      <overridden name="om.RO">- o</overridden>
-      <overridden name="om.RR">- -</overridden>
+      <overridden>
+        <param name="om.RO">- o</param>
+      </overridden>
+      <overridden>
+        <param name="om.RR">- -</param>
+      </overridden>
       <comment> end of [DSTKEYS]  3.8.5</comment>
     </externalIdRef>
     <comment> end of [DSTPEKW]  3.8.5</comment>
@@ -2348,8 +2388,12 @@ components specific to verse </comment>
           </attributeGroup>
           <comment>Now, we define the class of elements which can appear
 only within metrical elements</comment>
-          <duplicate name="x.phrase.verse"/>
-          <duplicate name="m.phrase.verse"/>
+          <overridden>
+            <duplicate name="x.phrase.verse"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.phrase.verse"/>
+          </overridden>
           <comment> end of [DVEE]  9.1</comment>
         </externalIdRef>
       </includedSection>
@@ -2358,10 +2402,18 @@ only within metrical elements</comment>
         <externalIdRef name="TEI.drama.ent">
           <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
           <comment> [DDRCLA] 10.: Class declarations for Performance Texts </comment>
-          <duplicate name="x.dramafront"/>
-          <duplicate name="m.dramafront"/>
-          <duplicate name="x.stageDirection"/>
-          <duplicate name="m.stageDirection"/>
+          <overridden>
+            <duplicate name="x.dramafront"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.dramafront"/>
+          </overridden>
+          <overridden>
+            <duplicate name="x.stageDirection"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.stageDirection"/>
+          </overridden>
           <modelGroup name="x.comp.drama">
             <choice/>
           </modelGroup>
@@ -2684,8 +2736,12 @@ tag set.</comment>
           </modelGroup>
           <comment> end of [DEDITPGR]  12.3.2</comment>
           <comment> [DEDIHW] 12.4: Classes for headword references </comment>
-          <duplicate name="x.formPointers"/>
-          <duplicate name="m.formPointers"/>
+          <overridden>
+            <duplicate name="x.formPointers"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.formPointers"/>
+          </overridden>
           <attributeGroup name="a.formPointers">
             <attribute>
               <name>target</name>
@@ -3141,10 +3197,18 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <externalIdRef name="TEI.names.dates.ent">
           <comment> TEI P4 DTD. Generated May 2001 by dtdGen </comment>
           <comment> [DNDENT] 20.: Additional classes for names and dates </comment>
-          <duplicate name="x.personPart"/>
-          <duplicate name="m.personPart"/>
-          <duplicate name="x.placePart"/>
-          <duplicate name="m.placePart"/>
+          <overridden>
+            <duplicate name="x.personPart"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.personPart"/>
+          </overridden>
+          <overridden>
+            <duplicate name="x.placePart"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.placePart"/>
+          </overridden>
           <modelGroup name="x.temporalExpr">
             <choice/>
           </modelGroup>
@@ -3302,11 +3366,21 @@ bases).</comment>
       <comment> [DSTECMX] 3.7.8: Definition of components for combined bases </comment>
       <comment>Default declarations for the 'mix.' entities used for mixed
 and general bases.</comment>
-      <overridden name="mix.verse"></overridden>
-      <overridden name="mix.drama"></overridden>
-      <overridden name="mix.spoken"></overridden>
-      <overridden name="mix.dictionaries"></overridden>
-      <overridden name="mix.terminology"></overridden>
+      <overridden>
+        <param name="mix.verse"></param>
+      </overridden>
+      <overridden>
+        <param name="mix.drama"></param>
+      </overridden>
+      <overridden>
+        <param name="mix.spoken"></param>
+      </overridden>
+      <overridden>
+        <param name="mix.dictionaries"></param>
+      </overridden>
+      <overridden>
+        <param name="mix.terminology"></param>
+      </overridden>
       <ignoredSection flag="TEI.mixed">
 &lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
 &lt;!--The mixed base allows components from any base; it does so by
@@ -3407,11 +3481,21 @@ is not in use, its entity will expand to the empty string.</comment>
         </includedSection>
         <comment>Default declarations for all the entities gen.verse,
 etc.</comment>
-        <overridden name="gen.verse"></overridden>
-        <overridden name="gen.drama"></overridden>
-        <overridden name="gen.spoken"></overridden>
-        <overridden name="gen.dictionaries"></overridden>
-        <overridden name="gen.terminology"></overridden>
+        <overridden>
+          <param name="gen.verse"></param>
+        </overridden>
+        <overridden>
+          <param name="gen.drama"></param>
+        </overridden>
+        <overridden>
+          <param name="gen.spoken"></param>
+        </overridden>
+        <overridden>
+          <param name="gen.dictionaries"></param>
+        </overridden>
+        <overridden>
+          <param name="gen.terminology"></param>
+        </overridden>
         <comment>Now we are ready to declare component.seq and
 component.plus for use in general base tag set.</comment>
         <modelGroup name="component.seq">
@@ -3441,37 +3525,67 @@ component.plus for use in general base tag set.</comment>
       </includedSection>
       <comment> end of [DSTECMX]  3.7.8</comment>
       <includedSection flag="TEI.prose">
-        <overridden name="component">(%m.common;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <includedSection flag="TEI.verse">
-        <overridden name="component">(%m.common; | %m.comp.verse;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common; | %m.comp.verse;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <includedSection flag="TEI.drama">
-        <overridden name="component">(%m.common; | %m.comp.drama;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common; | %m.comp.drama;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <includedSection flag="TEI.spoken">
-        <overridden name="component">(%m.common; | %m.comp.spoken;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common; | %m.comp.spoken;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <includedSection flag="TEI.dictionaries">
-        <overridden name="component">(%m.common; | %m.comp.dictionaries;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common; | %m.comp.dictionaries;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <includedSection flag="TEI.terminology">
-        <overridden name="component">(%m.common; | %m.comp.terminology;)</overridden>
-        <overridden name="TEI.singleBase">INCLUDE</overridden>
+        <overridden>
+          <param name="component">(%m.common; | %m.comp.terminology;)</param>
+        </overridden>
+        <overridden>
+          <param name="TEI.singleBase">INCLUDE</param>
+        </overridden>
       </includedSection>
       <comment>Default declaration.</comment>
-      <overridden name="component">(%m.common;)</overridden>
-      <overridden name="TEI.singleBase">INCLUDE</overridden>
+      <overridden>
+        <param name="component">(%m.common;)</param>
+      </overridden>
+      <overridden>
+        <param name="TEI.singleBase">INCLUDE</param>
+      </overridden>
       <comment>The entity component.seq is always a starred sequence of
 component elements.  Its definition does not vary with the base (unless
 we are using the general base, in which case it has already been defined
 above), but the meaning of the definition does.</comment>
-      <overridden name="component.seq">((%component;), (%m.Incl;)*)*</overridden>
+      <overridden>
+        <param name="component.seq">((%component;), (%m.Incl;)*)*</param>
+      </overridden>
       <comment>The following entities do not vary with the base.</comment>
       <modelGroup name="paraContent">
         <zeroOrMore>
@@ -3515,7 +3629,9 @@ the global attributes.</comment>
           <default>NO</default>
         </attribute>
       </attributeGroup>
-      <duplicate name="a.typed"/>
+      <overridden>
+        <duplicate name="a.typed"/>
+      </overridden>
       <attributeGroup name="a.divn">
         <attribute>
           <name>type</name>
@@ -3553,7 +3669,9 @@ the global attributes.</comment>
           <default>N</default>
         </attribute>
       </attributeGroup>
-      <duplicate name="a.enjamb"/>
+      <overridden>
+        <duplicate name="a.enjamb"/>
+      </overridden>
       <attributeGroup name="a.interpret">
         <attribute>
           <name>resp</name>
@@ -3571,11 +3689,21 @@ the global attributes.</comment>
           <implied/>
         </attribute>
       </attributeGroup>
-      <duplicate name="a.metrical"/>
-      <duplicate name="a.names"/>
-      <duplicate name="a.personPart"/>
-      <duplicate name="a.placePart"/>
-      <duplicate name="a.pointer"/>
+      <overridden>
+        <duplicate name="a.metrical"/>
+      </overridden>
+      <overridden>
+        <duplicate name="a.names"/>
+      </overridden>
+      <overridden>
+        <duplicate name="a.personPart"/>
+      </overridden>
+      <overridden>
+        <duplicate name="a.placePart"/>
+      </overridden>
+      <overridden>
+        <duplicate name="a.pointer"/>
+      </overridden>
       <attributeGroup name="a.seg">
         <attribute>
           <name>type</name>
@@ -3599,8 +3727,12 @@ the global attributes.</comment>
           <default>N</default>
         </attribute>
       </attributeGroup>
-      <duplicate name="a.temporalExpr"/>
-      <duplicate name="a.timed"/>
+      <overridden>
+        <duplicate name="a.temporalExpr"/>
+      </overridden>
+      <overridden>
+        <duplicate name="a.timed"/>
+      </overridden>
       <attributeGroup name="a.xPointer">
         <attributeGroupRef name="a.pointer"/>
         <attribute>
@@ -3628,9 +3760,15 @@ for individual elements.</comment>
 attributes (they do this in their .ent file), then they are inherited by
 GLOBAL; otherwise the parameter entities referred to expand to the empty
 string, as shown here.  </comment>
-      <overridden name="a.analysis"></overridden>
-      <overridden name="a.linking"></overridden>
-      <overridden name="a.terminology"></overridden>
+      <overridden>
+        <param name="a.analysis"></param>
+      </overridden>
+      <overridden>
+        <param name="a.linking"></param>
+      </overridden>
+      <overridden>
+        <param name="a.terminology"></param>
+      </overridden>
       <attributeGroup name="a.global">
         <attributeGroupRef name="a.terminology"/>
         <attributeGroupRef name="a.linking"/>
@@ -6716,7 +6854,9 @@ are defined in file teicore2.dtd.</comment>
 using the general purpose NAME element</comment>
       <comment> end of [DCOAD]  6.4.2</comment>
       <comment> [DCOXR] 6.6: Simple cross references </comment>
-      <duplicate name="a.pointer"/>
+      <overridden>
+        <duplicate name="a.pointer"/>
+      </overridden>
       <flag name="ptr">
         <include/>
       </flag>
@@ -9556,7 +9696,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         </includedSection>
         <comment>(LBL is declared with USG, elsewhere.)</comment>
         <comment>Elements for morphological information:</comment>
-        <overridden name="gram">INCLUDE</overridden>
+        <overridden>
+          <param name="gram">INCLUDE</param>
+        </overridden>
         <ignoredSection flag="gram">
 
 &lt;!ELEMENT %n.gram; %om.RO;  %paraContent;&gt; 
@@ -10484,8 +10626,12 @@ to provide documentation that applies to the whole entry.</comment>
           <comment>We define a.dictionaries as the empty string,
 since we are not now using the tag set for
 dictionaries.</comment>
-          <overridden name="a.dictionaries"></overridden>
-          <overridden name="gram">INCLUDE</overridden>
+          <overridden>
+            <param name="a.dictionaries"></param>
+          </overridden>
+          <overridden>
+            <param name="gram">INCLUDE</param>
+          </overridden>
           <ignoredSection flag="gram">
 
 &lt;!ELEMENT %n.gram; %om.RO;  %paraContent;&gt; 
@@ -10524,10 +10670,18 @@ Current versions are available from the Text Encoding Initiative.</comment>
           <comment>This definition of the basic text structure is used by most
 TEI base tag sets; some bases, however, use slight variations
 upon it.</comment>
-          <duplicate name="x.divtop"/>
-          <duplicate name="m.divtop"/>
-          <duplicate name="x.divbot"/>
-          <duplicate name="m.divbot"/>
+          <overridden>
+            <duplicate name="x.divtop"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.divtop"/>
+          </overridden>
+          <overridden>
+            <duplicate name="x.divbot"/>
+          </overridden>
+          <overridden>
+            <duplicate name="m.divbot"/>
+          </overridden>
           <comment> [DDSTEXT] 7.: Top-level parts of default structure </comment>
           <flag name="text">
             <include/>
@@ -11790,8 +11944,12 @@ upon it.</comment>
                 </attribute>
               </attlist>
             </includedSection>
-            <duplicate name="x.tpParts"/>
-            <duplicate name="m.tpParts"/>
+            <overridden>
+              <duplicate name="x.tpParts"/>
+            </overridden>
+            <overridden>
+              <duplicate name="m.tpParts"/>
+            </overridden>
             <comment> [DDSTPAGE] 7.5: Tags for title pages </comment>
             <flag name="titlePage">
               <include/>
@@ -16513,8 +16671,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
         </includedSection>
         <comment> end of [DCCAHTD]  23.2.1</comment>
         <comment> [DCCAHPA] 23.2.2: Participants description </comment>
-        <duplicate name="x.demographic"/>
-        <duplicate name="m.demographic"/>
+        <overridden>
+          <duplicate name="x.demographic"/>
+        </overridden>
+        <overridden>
+          <duplicate name="m.demographic"/>
+        </overridden>
         <flag name="person">
           <include/>
         </flag>

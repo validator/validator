@@ -11,7 +11,15 @@
 <xsl:strip-space elements="*"/>
 
 <xsl:key name="param"
-         match="flag|nameSpec|modelGroup|attributeGroup|externalId|datatype|param|attributeDefault"
+         match="flag[not(parent::overridden)]
+                |nameSpec[not(parent::overridden)]
+                |modelGroup[not(parent::overridden)]
+                |attributeGroup[not(parent::overridden)]
+                |enumGroup[not(parent::overridden)]
+                |externalId[not(parent::overridden)]
+                |datatype[not(parent::overridden)]
+                |param[not(parent::overridden)]
+                |attributeDefault[not(parent::overridden)]"
          use="@name"/>
 
 <xsl:template match="comment">
@@ -141,8 +149,7 @@
   <xsl:value-of select="."/>
 </xsl:template>
 
-<xsl:template
-   match="param|overridden|duplicate|internalEntity|ignoredSection|default"/>
+<xsl:template match="param|overridden|internalEntity|ignoredSection|default"/>
 
 <xsl:template match="cdata|pcdata">
   <text/>

@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class ModelGroupDef extends TopLevel {
+public class ModelGroupDef extends Def {
   
-  private final String name;
   private final ModelGroup modelGroup;
 
   public ModelGroupDef(String name, ModelGroup modelGroup) {
-    this.name = name;
+    super(name);
     this.modelGroup = modelGroup;
   }
 
@@ -18,11 +17,7 @@ public class ModelGroupDef extends TopLevel {
     return modelGroup;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.modelGroupDef(name, modelGroup);
+    visitor.modelGroupDef(getName(), modelGroup);
   }
 }

@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class AttributeGroupDef extends TopLevel {
+public class AttributeGroupDef extends Def {
   
-  private final String name;
   private final AttributeGroup attributeGroup;
 
   public AttributeGroupDef(String name, AttributeGroup attributeGroup) {
-    this.name = name;
+    super(name);
     this.attributeGroup = attributeGroup;
   }
 
@@ -18,11 +17,7 @@ public class AttributeGroupDef extends TopLevel {
     return attributeGroup;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.attributeGroupDef(name, attributeGroup);
+    visitor.attributeGroupDef(getName(), attributeGroup);
   }
 }

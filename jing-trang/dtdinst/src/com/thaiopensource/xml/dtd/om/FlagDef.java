@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class FlagDef extends TopLevel {
+public class FlagDef extends Def {
   
-  private final String name;
   private final Flag flag;
 
   public FlagDef(String name, Flag flag) {
-    this.name = name;
+    super(name);
     this.flag = flag;
   }
 
@@ -18,11 +17,7 @@ public class FlagDef extends TopLevel {
     return flag;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.flagDef(name, flag);
+    visitor.flagDef(getName(), flag);
   }
 }

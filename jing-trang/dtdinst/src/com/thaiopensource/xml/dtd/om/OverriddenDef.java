@@ -1,13 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
 public class OverriddenDef extends TopLevel {
-  private final String name;
-  private final String value;
   private final boolean duplicate;
+  private final Def def;
 
-  public OverriddenDef(String name, String value, boolean duplicate) {
-    this.name = name;
-    this.value = value;
+  public OverriddenDef(Def def, boolean duplicate) {
+    this.def = def;
     this.duplicate = duplicate;
   }
 
@@ -15,12 +13,8 @@ public class OverriddenDef extends TopLevel {
     return OVERRIDDEN_DEF;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public String getValue() {
-    return value;
+  public Def getDef() {
+    return def;
   }
 
   public boolean isDuplicate() {
@@ -28,7 +22,7 @@ public class OverriddenDef extends TopLevel {
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.overriddenDef(name, value, duplicate);
+    visitor.overriddenDef(def, duplicate);
   }
 
 }

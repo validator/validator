@@ -21,8 +21,7 @@ public interface TopLevelVisitor {
   void externalEntityDecl(String name, ExternalId externalId) throws Exception;
   void notationDecl(String name, ExternalId externalId) throws Exception;
   void nameSpecDef(String name, NameSpec nameSpec) throws Exception;
-  void overriddenDef(String name, String value, boolean isDuplicate)
-    throws Exception;
+  void overriddenDef(Def def, boolean isDuplicate) throws Exception;
   void externalIdDef(String name, ExternalId externalId) throws Exception;
   void externalIdRef(String name, ExternalId externalId, TopLevel[] contents)
     throws Exception;

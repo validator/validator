@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class AttributeDefaultDef extends TopLevel {
+public class AttributeDefaultDef extends Def {
   
-  private final String name;
   private final AttributeDefault attributeDefault;
 
   public AttributeDefaultDef(String name, AttributeDefault attributeDefault) {
-    this.name = name;
+    super(name);
     this.attributeDefault = attributeDefault;
   }
 
@@ -18,11 +17,7 @@ public class AttributeDefaultDef extends TopLevel {
     return attributeDefault;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.attributeDefaultDef(name, attributeDefault);
+    visitor.attributeDefaultDef(getName(), attributeDefault);
   }
 }

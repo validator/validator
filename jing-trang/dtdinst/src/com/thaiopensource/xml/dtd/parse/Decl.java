@@ -223,8 +223,7 @@ class Decl {
     ps.advance();
     if (ps.type != Param.LITERAL)
       return null;
-    return new OverriddenDef(entity.name,
-			     ps.value,
+    return new OverriddenDef(new ParamDef(entity.name, ps.value),
 			     ps.value.equals(entity.entityValue));
   }
 }

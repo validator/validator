@@ -15,7 +15,7 @@
 <xsl:param name="element-prefix" select="''"/>
 <xsl:param name="attlist-prefix" select="'al.'"/>
 
-<xsl:key name="override" match="overridden" use="@name"/>
+<xsl:key name="override" match="overridden" use="*/@name"/>
 
 <xsl:template match="doctype">
   <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">

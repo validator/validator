@@ -1,12 +1,11 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class DatatypeDef extends TopLevel {
+public class DatatypeDef extends Def {
   
-  private final String name;
   private final Datatype datatype;
 
   public DatatypeDef(String name, Datatype datatype) {
-    this.name = name;
+    super(name);
     this.datatype = datatype;
   }
 
@@ -18,11 +17,7 @@ public class DatatypeDef extends TopLevel {
     return datatype;
   }
   
-  public String getName() {
-    return name;
-  }
-
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.datatypeDef(name, datatype);
+    visitor.datatypeDef(getName(), datatype);
   }
 }

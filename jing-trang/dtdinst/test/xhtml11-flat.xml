@@ -400,7 +400,9 @@
         overridden, the default behaviour follows the overall DTD
         prefixing scheme.
 </comment>
-      <duplicate name="NS.prefixed"/>
+      <overridden>
+        <duplicate name="NS.prefixed"/>
+      </overridden>
       <flag name="XHTML.prefixed">
         <flagRef name="NS.prefixed"/>
       </flag>
@@ -417,7 +419,9 @@
      NOTE: As specified in [XMLNAMES], the namespace prefix serves
      as a proxy for the URI reference, and is not in itself significant.
 </comment>
-      <duplicate name="XHTML.prefix"/>
+      <overridden>
+        <duplicate name="XHTML.prefix"/>
+      </overridden>
       <comment> 4. Declare parameter entities (eg., %XHTML.pfx;) containing the
         colonized prefix(es) (eg., '%XHTML.prefix;:') used when
         prefixing is active, an empty string when it is not.
@@ -450,7 +454,9 @@
       <param name="NS.decl.attrib">%XHTML.xmlns.extra.attrib;</param>
       <comment> This is a placeholder for future XLink support.
 </comment>
-      <duplicate name="XLINK.xmlns.attrib"/>
+      <overridden>
+        <duplicate name="XLINK.xmlns.attrib"/>
+      </overridden>
       <comment> Declare a parameter entity %NS.decl.attrib; containing all
      XML namespace declaration attributes used by XHTML, including
      a default xmlns attribute when prefixing is inactive.
@@ -754,7 +760,9 @@
       <param name="alt.qname">%XHTML.pfx;alt</param>
       <comment> end of xhtml-qname-1.mod </comment>
     </includedSection>
-    <overridden name="xhtml-events.module">IGNORE</overridden>
+    <overridden>
+      <param name="xhtml-events.module">IGNORE</param>
+    </overridden>
     <includedSection flag="xhtml-events.module">
       <externalId name="xhtml-events.mod" system="xhtml-events-1.mod" public="-//W3C//ENTITIES XHTML Intrinsic Events 1.0//EN"/>
       <comment> ...................................................................... </comment>
@@ -1054,7 +1062,9 @@
           <implied/>
         </attribute>
       </attributeGroup>
-      <overridden name="Core.extra.attrib"></overridden>
+      <overridden>
+        <param name="Core.extra.attrib"></param>
+      </overridden>
       <attributeGroup name="Core.attrib">
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="id.attrib"/>
@@ -1085,11 +1095,15 @@
           <attributeGroupRef name="lang.attrib"/>
         </attributeGroup>
       </includedSection>
-      <overridden name="I18n.attrib">%lang.attrib;</overridden>
+      <overridden>
+        <param name="I18n.attrib">%lang.attrib;</param>
+      </overridden>
       <attributeGroup name="Common.extra.attrib"/>
       <comment> intrinsic event attributes declared previously
 </comment>
-      <overridden name="Events.attrib"></overridden>
+      <overridden>
+        <param name="Events.attrib"></param>
+      </overridden>
       <attributeGroup name="Common.attrib">
         <attributeGroupRef name="Core.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
@@ -2405,7 +2419,9 @@
         <modelGroup name="br.content">
           <sequence/>
         </modelGroup>
-        <overridden name="br.qname">br</overridden>
+        <overridden>
+          <param name="br.qname">br</param>
+        </overridden>
         <element>
           <nameSpecRef name="br.qname"/>
           <modelGroupRef name="br.content"/>
@@ -2435,7 +2451,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="span.qname">span</overridden>
+        <overridden>
+          <param name="span.qname">span</param>
+        </overridden>
         <element>
           <nameSpecRef name="span.qname"/>
           <modelGroupRef name="span.content"/>
@@ -2494,7 +2512,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="abbr.qname">abbr</overridden>
+        <overridden>
+          <param name="abbr.qname">abbr</param>
+        </overridden>
         <element>
           <nameSpecRef name="abbr.qname"/>
           <modelGroupRef name="abbr.content"/>
@@ -2523,7 +2543,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="acronym.qname">acronym</overridden>
+        <overridden>
+          <param name="acronym.qname">acronym</param>
+        </overridden>
         <element>
           <nameSpecRef name="acronym.qname"/>
           <modelGroupRef name="acronym.content"/>
@@ -2552,7 +2574,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="cite.qname">cite</overridden>
+        <overridden>
+          <param name="cite.qname">cite</param>
+        </overridden>
         <element>
           <nameSpecRef name="cite.qname"/>
           <modelGroupRef name="cite.content"/>
@@ -2581,7 +2605,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="code.qname">code</overridden>
+        <overridden>
+          <param name="code.qname">code</param>
+        </overridden>
         <element>
           <nameSpecRef name="code.qname"/>
           <modelGroupRef name="code.content"/>
@@ -2610,7 +2636,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="dfn.qname">dfn</overridden>
+        <overridden>
+          <param name="dfn.qname">dfn</param>
+        </overridden>
         <element>
           <nameSpecRef name="dfn.qname"/>
           <modelGroupRef name="dfn.content"/>
@@ -2639,7 +2667,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="em.qname">em</overridden>
+        <overridden>
+          <param name="em.qname">em</param>
+        </overridden>
         <element>
           <nameSpecRef name="em.qname"/>
           <modelGroupRef name="em.content"/>
@@ -2668,7 +2698,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="kbd.qname">kbd</overridden>
+        <overridden>
+          <param name="kbd.qname">kbd</param>
+        </overridden>
         <element>
           <nameSpecRef name="kbd.qname"/>
           <modelGroupRef name="kbd.content"/>
@@ -2697,7 +2729,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="q.qname">q</overridden>
+        <overridden>
+          <param name="q.qname">q</param>
+        </overridden>
         <element>
           <nameSpecRef name="q.qname"/>
           <modelGroupRef name="q.content"/>
@@ -2731,7 +2765,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="samp.qname">samp</overridden>
+        <overridden>
+          <param name="samp.qname">samp</param>
+        </overridden>
         <element>
           <nameSpecRef name="samp.qname"/>
           <modelGroupRef name="samp.content"/>
@@ -2760,7 +2796,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="strong.qname">strong</overridden>
+        <overridden>
+          <param name="strong.qname">strong</param>
+        </overridden>
         <element>
           <nameSpecRef name="strong.qname"/>
           <modelGroupRef name="strong.content"/>
@@ -2789,7 +2827,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="var.qname">var</overridden>
+        <overridden>
+          <param name="var.qname">var</param>
+        </overridden>
         <element>
           <nameSpecRef name="var.qname"/>
           <modelGroupRef name="var.content"/>
@@ -2848,7 +2888,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="div.qname">div</overridden>
+        <overridden>
+          <param name="div.qname">div</param>
+        </overridden>
         <element>
           <nameSpecRef name="div.qname"/>
           <modelGroupRef name="div.content"/>
@@ -2877,7 +2919,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="p.qname">p</overridden>
+        <overridden>
+          <param name="p.qname">p</param>
+        </overridden>
         <element>
           <nameSpecRef name="p.qname"/>
           <modelGroupRef name="p.content"/>
@@ -2936,7 +2980,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="address.qname">address</overridden>
+        <overridden>
+          <param name="address.qname">address</param>
+        </overridden>
         <element>
           <nameSpecRef name="address.qname"/>
           <modelGroupRef name="address.content"/>
@@ -2962,7 +3008,9 @@
             <modelGroupRef name="Block.mix"/>
           </oneOrMore>
         </modelGroup>
-        <overridden name="blockquote.qname">blockquote</overridden>
+        <overridden>
+          <param name="blockquote.qname">blockquote</param>
+        </overridden>
         <element>
           <nameSpecRef name="blockquote.qname"/>
           <modelGroupRef name="blockquote.content"/>
@@ -3015,7 +3063,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="pre.qname">pre</overridden>
+        <overridden>
+          <param name="pre.qname">pre</param>
+        </overridden>
         <element>
           <nameSpecRef name="pre.qname"/>
           <modelGroupRef name="pre.content"/>
@@ -3052,7 +3102,9 @@
         <include/>
       </flag>
       <includedSection flag="h1.element">
-        <overridden name="h1.qname">h1</overridden>
+        <overridden>
+          <param name="h1.qname">h1</param>
+        </overridden>
         <element>
           <nameSpecRef name="h1.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3073,7 +3125,9 @@
         <include/>
       </flag>
       <includedSection flag="h2.element">
-        <overridden name="h2.qname">h2</overridden>
+        <overridden>
+          <param name="h2.qname">h2</param>
+        </overridden>
         <element>
           <nameSpecRef name="h2.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3094,7 +3148,9 @@
         <include/>
       </flag>
       <includedSection flag="h3.element">
-        <overridden name="h3.qname">h3</overridden>
+        <overridden>
+          <param name="h3.qname">h3</param>
+        </overridden>
         <element>
           <nameSpecRef name="h3.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3115,7 +3171,9 @@
         <include/>
       </flag>
       <includedSection flag="h4.element">
-        <overridden name="h4.qname">h4</overridden>
+        <overridden>
+          <param name="h4.qname">h4</param>
+        </overridden>
         <element>
           <nameSpecRef name="h4.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3136,7 +3194,9 @@
         <include/>
       </flag>
       <includedSection flag="h5.element">
-        <overridden name="h5.qname">h5</overridden>
+        <overridden>
+          <param name="h5.qname">h5</param>
+        </overridden>
         <element>
           <nameSpecRef name="h5.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3157,7 +3217,9 @@
         <include/>
       </flag>
       <includedSection flag="h6.element">
-        <overridden name="h6.qname">h6</overridden>
+        <overridden>
+          <param name="h6.qname">h6</param>
+        </overridden>
         <element>
           <nameSpecRef name="h6.qname"/>
           <modelGroupRef name="Heading.content"/>
@@ -3222,7 +3284,9 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <overridden name="a.qname">a</overridden>
+      <overridden>
+        <param name="a.qname">a</param>
+      </overridden>
       <element>
         <nameSpecRef name="a.qname"/>
         <modelGroupRef name="a.content"/>
@@ -3310,12 +3374,24 @@
      This module declares the list-oriented element types
      and their attributes.
 </comment>
-    <overridden name="dl.qname">dl</overridden>
-    <overridden name="dt.qname">dt</overridden>
-    <overridden name="dd.qname">dd</overridden>
-    <overridden name="ol.qname">ol</overridden>
-    <overridden name="ul.qname">ul</overridden>
-    <overridden name="li.qname">li</overridden>
+    <overridden>
+      <param name="dl.qname">dl</param>
+    </overridden>
+    <overridden>
+      <param name="dt.qname">dt</param>
+    </overridden>
+    <overridden>
+      <param name="dd.qname">dd</param>
+    </overridden>
+    <overridden>
+      <param name="ol.qname">ol</param>
+    </overridden>
+    <overridden>
+      <param name="ul.qname">ul</param>
+    </overridden>
+    <overridden>
+      <param name="li.qname">li</param>
+    </overridden>
     <comment> dl: Definition List ............................... </comment>
     <flag name="dl.element">
       <include/>
@@ -3537,7 +3613,9 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <overridden name="ins.qname">ins</overridden>
+      <overridden>
+        <param name="ins.qname">ins</param>
+      </overridden>
       <element>
         <nameSpecRef name="ins.qname"/>
         <modelGroupRef name="ins.content"/>
@@ -3577,7 +3655,9 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <overridden name="del.qname">del</overridden>
+      <overridden>
+        <param name="del.qname">del</param>
+      </overridden>
       <element>
         <nameSpecRef name="del.qname"/>
         <modelGroupRef name="del.content"/>
@@ -3650,7 +3730,9 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <overridden name="bdo.qname">bdo</overridden>
+      <overridden>
+        <param name="bdo.qname">bdo</param>
+      </overridden>
       <element>
         <nameSpecRef name="bdo.qname"/>
         <modelGroupRef name="bdo.content"/>
@@ -3720,12 +3802,24 @@
 </comment>
     <comment> declare qualified element type names:
 </comment>
-    <overridden name="ruby.qname">ruby</overridden>
-    <overridden name="rbc.qname">rbc</overridden>
-    <overridden name="rtc.qname">rtc</overridden>
-    <overridden name="rb.qname">rb</overridden>
-    <overridden name="rt.qname">rt</overridden>
-    <overridden name="rp.qname">rp</overridden>
+    <overridden>
+      <param name="ruby.qname">ruby</param>
+    </overridden>
+    <overridden>
+      <param name="rbc.qname">rbc</param>
+    </overridden>
+    <overridden>
+      <param name="rtc.qname">rtc</param>
+    </overridden>
+    <overridden>
+      <param name="rb.qname">rb</param>
+    </overridden>
+    <overridden>
+      <param name="rt.qname">rt</param>
+    </overridden>
+    <overridden>
+      <param name="rp.qname">rp</param>
+    </overridden>
     <comment> rp fallback is included by default.
 </comment>
     <flag name="Ruby.fallback">
@@ -3771,7 +3865,9 @@
         </sequence>
       </modelGroup>
     </includedSection>
-    <overridden name="Ruby.content.simple">( %rb.qname;, %rt.qname; )</overridden>
+    <overridden>
+      <param name="Ruby.content.simple">( %rb.qname;, %rt.qname; )</param>
+    </overridden>
     <includedSection flag="Ruby.complex">
       <modelGroup name="Ruby.content.complex">
         <sequence>
@@ -3789,7 +3885,9 @@
         </sequence>
       </modelGroup>
     </includedSection>
-    <overridden name="Ruby.content.complex"></overridden>
+    <overridden>
+      <param name="Ruby.content.complex"></param>
+    </overridden>
     <comment> Content models of the rb and the rt elements are intended to
      allow other inline-level elements of its parent markup language,
      but it should not include ruby descendent elements. The following
@@ -3797,9 +3895,13 @@
      those content models with minimum effort.  It's defined as
      '( #PCDATA )' by default.
 </comment>
-    <overridden name="NoRuby.content">( #PCDATA )</overridden>
+    <overridden>
+      <param name="NoRuby.content">( #PCDATA )</param>
+    </overridden>
     <comment> one or more digits (NUMBER) </comment>
-    <duplicate name="Number.datatype"/>
+    <overridden>
+      <duplicate name="Number.datatype"/>
+    </overridden>
     <comment> ruby element ...................................... </comment>
     <flag name="ruby.element">
       <include/>
@@ -3944,9 +4046,13 @@
 
      before including the Ruby module.
 </comment>
-    <overridden name="Ruby.common.attlists">IGNORE</overridden>
+    <overridden>
+      <param name="Ruby.common.attlists">IGNORE</param>
+    </overridden>
     <includedSection flag="Ruby.common.attlists">
-      <overridden name="Ruby.common.attrib"></overridden>
+      <overridden>
+        <param name="Ruby.common.attrib"></param>
+      </overridden>
       <comment> common attributes for ruby ........................ </comment>
       <flag name="Ruby.common.attlist">
         <include/>
@@ -4087,7 +4193,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="b.qname">b</overridden>
+        <overridden>
+          <param name="b.qname">b</param>
+        </overridden>
         <element>
           <nameSpecRef name="b.qname"/>
           <modelGroupRef name="b.content"/>
@@ -4116,7 +4224,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="big.qname">big</overridden>
+        <overridden>
+          <param name="big.qname">big</param>
+        </overridden>
         <element>
           <nameSpecRef name="big.qname"/>
           <modelGroupRef name="big.content"/>
@@ -4145,7 +4255,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="i.qname">i</overridden>
+        <overridden>
+          <param name="i.qname">i</param>
+        </overridden>
         <element>
           <nameSpecRef name="i.qname"/>
           <modelGroupRef name="i.content"/>
@@ -4174,7 +4286,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="small.qname">small</overridden>
+        <overridden>
+          <param name="small.qname">small</param>
+        </overridden>
         <element>
           <nameSpecRef name="small.qname"/>
           <modelGroupRef name="small.content"/>
@@ -4203,7 +4317,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="sub.qname">sub</overridden>
+        <overridden>
+          <param name="sub.qname">sub</param>
+        </overridden>
         <element>
           <nameSpecRef name="sub.qname"/>
           <modelGroupRef name="sub.content"/>
@@ -4232,7 +4348,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="sup.qname">sup</overridden>
+        <overridden>
+          <param name="sup.qname">sup</param>
+        </overridden>
         <element>
           <nameSpecRef name="sup.qname"/>
           <modelGroupRef name="sup.content"/>
@@ -4261,7 +4379,9 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <overridden name="tt.qname">tt</overridden>
+        <overridden>
+          <param name="tt.qname">tt</param>
+        </overridden>
         <element>
           <nameSpecRef name="tt.qname"/>
           <modelGroupRef name="tt.content"/>
@@ -4315,7 +4435,9 @@
         <modelGroup name="hr.content">
           <sequence/>
         </modelGroup>
-        <overridden name="hr.qname">hr</overridden>
+        <overridden>
+          <param name="hr.qname">hr</param>
+        </overridden>
         <element>
           <nameSpecRef name="hr.qname"/>
           <modelGroupRef name="hr.content"/>
@@ -4383,7 +4505,9 @@
       <modelGroup name="link.content">
         <sequence/>
       </modelGroup>
-      <overridden name="link.qname">link</overridden>
+      <overridden>
+        <param name="link.qname">link</param>
+      </overridden>
       <element>
         <nameSpecRef name="link.qname"/>
         <modelGroupRef name="link.content"/>
@@ -4474,7 +4598,9 @@
       <modelGroup name="meta.content">
         <sequence/>
       </modelGroup>
-      <overridden name="meta.qname">meta</overridden>
+      <overridden>
+        <param name="meta.qname">meta</param>
+      </overridden>
       <element>
         <nameSpecRef name="meta.qname"/>
         <modelGroupRef name="meta.content"/>
@@ -4555,7 +4681,9 @@
       <modelGroup name="base.content">
         <sequence/>
       </modelGroup>
-      <overridden name="base.qname">base</overridden>
+      <overridden>
+        <param name="base.qname">base</param>
+      </overridden>
       <element>
         <nameSpecRef name="base.qname"/>
         <modelGroupRef name="base.content"/>
@@ -4650,7 +4778,9 @@
       <modelGroup name="script.content">
         <pcdata/>
       </modelGroup>
-      <overridden name="script.qname">script</overridden>
+      <overridden>
+        <param name="script.qname">script</param>
+      </overridden>
       <element>
         <nameSpecRef name="script.qname"/>
         <modelGroupRef name="script.content"/>
@@ -4706,7 +4836,9 @@
           <modelGroupRef name="Block.mix"/>
         </oneOrMore>
       </modelGroup>
-      <overridden name="noscript.qname">noscript</overridden>
+      <overridden>
+        <param name="noscript.qname">noscript</param>
+      </overridden>
       <element>
         <nameSpecRef name="noscript.qname"/>
         <modelGroupRef name="noscript.content"/>
@@ -4762,7 +4894,9 @@
       <modelGroup name="style.content">
         <pcdata/>
       </modelGroup>
-      <overridden name="style.qname">style</overridden>
+      <overridden>
+        <param name="style.qname">style</param>
+      </overridden>
       <element>
         <nameSpecRef name="style.qname"/>
         <modelGroupRef name="style.content"/>
@@ -4840,7 +4974,9 @@
       <modelGroup name="img.content">
         <sequence/>
       </modelGroup>
-      <overridden name="img.qname">img</overridden>
+      <overridden>
+        <param name="img.qname">img</param>
+      </overridden>
       <element>
         <nameSpecRef name="img.qname"/>
         <modelGroupRef name="img.content"/>
@@ -4924,7 +5060,9 @@
       <modelGroup name="area.content">
         <sequence/>
       </modelGroup>
-      <overridden name="area.qname">area</overridden>
+      <overridden>
+        <param name="area.qname">area</param>
+      </overridden>
       <element>
         <nameSpecRef name="area.qname"/>
         <modelGroupRef name="area.content"/>
@@ -5060,7 +5198,9 @@
           </choice>
         </oneOrMore>
       </modelGroup>
-      <overridden name="map.qname">map</overridden>
+      <overridden>
+        <param name="map.qname">map</param>
+      </overridden>
       <element>
         <nameSpecRef name="map.qname"/>
         <modelGroupRef name="map.content"/>
@@ -5176,7 +5316,9 @@
       <modelGroup name="param.content">
         <sequence/>
       </modelGroup>
-      <overridden name="param.qname">param</overridden>
+      <overridden>
+        <param name="param.qname">param</param>
+      </overridden>
       <element>
         <nameSpecRef name="param.qname"/>
         <modelGroupRef name="param.content"/>
@@ -5269,7 +5411,9 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <overridden name="object.qname">object</overridden>
+      <overridden>
+        <param name="object.qname">object</param>
+      </overridden>
       <element>
         <nameSpecRef name="object.qname"/>
         <modelGroupRef name="object.content"/>
@@ -5382,16 +5526,36 @@
 </comment>
     <comment> declare qualified element type names:
 </comment>
-    <overridden name="table.qname">table</overridden>
-    <overridden name="caption.qname">caption</overridden>
-    <overridden name="thead.qname">thead</overridden>
-    <overridden name="tfoot.qname">tfoot</overridden>
-    <overridden name="tbody.qname">tbody</overridden>
-    <overridden name="colgroup.qname">colgroup</overridden>
-    <overridden name="col.qname">col</overridden>
-    <overridden name="tr.qname">tr</overridden>
-    <overridden name="th.qname">th</overridden>
-    <overridden name="td.qname">td</overridden>
+    <overridden>
+      <param name="table.qname">table</param>
+    </overridden>
+    <overridden>
+      <param name="caption.qname">caption</param>
+    </overridden>
+    <overridden>
+      <param name="thead.qname">thead</param>
+    </overridden>
+    <overridden>
+      <param name="tfoot.qname">tfoot</param>
+    </overridden>
+    <overridden>
+      <param name="tbody.qname">tbody</param>
+    </overridden>
+    <overridden>
+      <param name="colgroup.qname">colgroup</param>
+    </overridden>
+    <overridden>
+      <param name="col.qname">col</param>
+    </overridden>
+    <overridden>
+      <param name="tr.qname">tr</param>
+    </overridden>
+    <overridden>
+      <param name="th.qname">th</param>
+    </overridden>
+    <overridden>
+      <param name="td.qname">td</param>
+    </overridden>
     <comment> The frame attribute specifies which parts of the frame around
      the table should be rendered. The values are not the same as
      CALS to avoid a name clash with the valign attribute.
@@ -5985,16 +6149,36 @@
 </comment>
     <comment> declare qualified element type names:
 </comment>
-    <overridden name="form.qname">form</overridden>
-    <overridden name="label.qname">label</overridden>
-    <overridden name="input.qname">input</overridden>
-    <overridden name="select.qname">select</overridden>
-    <overridden name="optgroup.qname">optgroup</overridden>
-    <overridden name="option.qname">option</overridden>
-    <overridden name="textarea.qname">textarea</overridden>
-    <overridden name="fieldset.qname">fieldset</overridden>
-    <overridden name="legend.qname">legend</overridden>
-    <overridden name="button.qname">button</overridden>
+    <overridden>
+      <param name="form.qname">form</param>
+    </overridden>
+    <overridden>
+      <param name="label.qname">label</param>
+    </overridden>
+    <overridden>
+      <param name="input.qname">input</param>
+    </overridden>
+    <overridden>
+      <param name="select.qname">select</param>
+    </overridden>
+    <overridden>
+      <param name="optgroup.qname">optgroup</param>
+    </overridden>
+    <overridden>
+      <param name="option.qname">option</param>
+    </overridden>
+    <overridden>
+      <param name="textarea.qname">textarea</param>
+    </overridden>
+    <overridden>
+      <param name="fieldset.qname">fieldset</param>
+    </overridden>
+    <overridden>
+      <param name="legend.qname">legend</param>
+    </overridden>
+    <overridden>
+      <param name="button.qname">button</param>
+    </overridden>
     <comment> %BlkNoForm.mix; includes all non-form block elements,
      plus %Misc.class;
 </comment>
@@ -6651,7 +6835,9 @@
       <modelGroup name="title.content">
         <pcdata/>
       </modelGroup>
-      <overridden name="title.qname">title</overridden>
+      <overridden>
+        <param name="title.qname">title</param>
+      </overridden>
       <element>
         <nameSpecRef name="title.qname"/>
         <modelGroupRef name="title.content"/>
@@ -6674,8 +6860,12 @@
       <include/>
     </flag>
     <includedSection flag="head.element">
-      <overridden name="head.content">( %HeadOpts.mix;, %title.qname;, %HeadOpts.mix; )</overridden>
-      <overridden name="head.qname">head</overridden>
+      <overridden>
+        <param name="head.content">( %HeadOpts.mix;, %title.qname;, %HeadOpts.mix; )</param>
+      </overridden>
+      <overridden>
+        <param name="head.qname">head</param>
+      </overridden>
       <element>
         <nameSpecRef name="head.qname"/>
         <modelGroupRef name="head.content"/>
@@ -6713,7 +6903,9 @@
           <modelGroupRef name="Block.mix"/>
         </oneOrMore>
       </modelGroup>
-      <overridden name="body.qname">body</overridden>
+      <overridden>
+        <param name="body.qname">body</param>
+      </overridden>
       <element>
         <nameSpecRef name="body.qname"/>
         <modelGroupRef name="body.content"/>
@@ -6745,7 +6937,9 @@
           </elementRef>
         </sequence>
       </modelGroup>
-      <overridden name="html.qname">html</overridden>
+      <overridden>
+        <param name="html.qname">html</param>
+      </overridden>
       <element>
         <nameSpecRef name="html.qname"/>
         <modelGroupRef name="html.content"/>
