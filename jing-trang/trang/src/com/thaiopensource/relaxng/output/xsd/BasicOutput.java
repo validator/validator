@@ -366,17 +366,17 @@ public class BasicOutput {
     }
 
     public Object visitGroupRef(GroupRef p) {
-      String name = p.getName();
-      GroupDefinition def = schema.getGroup(name);
-      Particle particle = def.getParticle();
+      String groupName = p.getName();
+      GroupDefinition def = schema.getGroup(groupName);
+      Name elementName = nsm.getElementNameForGroupRef(def);
       boolean usedWrapper;
-      if (particle instanceof Element && nsm.isGlobal((Element)particle)) {
+      if (elementName != null) {
         usedWrapper = startWrapperForElement();
-        xw.attribute("ref", qualifyName(((Element)particle).getName()));
+        xw.attribute("ref", qualifyName(elementName));
       }
       else {
         usedWrapper = startWrapperForGroupRef();
-        xw.attribute("ref", qualifyRef(def.getParentSchema().getUri(), name));
+        xw.attribute("ref", qualifyRef(def.getParentSchema().getUri(), groupName));
       }
       outputAnnotation(p);
       endWrapper(usedWrapper);
@@ -600,7 +600,7 @@ public class BasicOutput {
       ComplexTypeComplexContentExtension ct = complexTypeSelector.createComplexTypeForGroup(def.getName());
       if (ct != null)
         outputComplexTypeComplexContent(ct, def.getName(), def);
-      else if (particle instanceof Element && nsm.isGlobal((Element)particle))
+      else if (nsm.isGroupDefinitionOmitted(def))
         ;
       else if (!tryElementChoiceSameType(def)) {
         xw.startElement(xs("group"));

@@ -427,7 +427,7 @@ public class NamespaceManager {
         if (def == null
             || !getTargetNamespace(def.getParentSchema().getUri()).equals(ns)
             || (def instanceof GroupDefinition
-                && willElide((GroupDefinition)def)))
+                && getElementNameForGroupRef((GroupDefinition)def) != null))
           break;
       }
       name = base + Integer.toString(n);
@@ -436,11 +436,15 @@ public class NamespaceManager {
     return name;
   }
 
-  private boolean willElide(GroupDefinition def) {
+  Name getElementNameForGroupRef(GroupDefinition def) {
     Particle particle = def.getParticle();
-    if (!(particle instanceof Element))
-      return false;
-    return isGlobal((Element)particle);
+    if (!(particle instanceof Element) || !isGlobal((Element)particle))
+      return null;
+    return ((Element)particle).getName();
+  }
+
+  boolean isGroupDefinitionOmitted(GroupDefinition def) {
+    return getElementNameForGroupRef(def) != null;
   }
 
   String getTargetNamespace(String schemaUri) {
