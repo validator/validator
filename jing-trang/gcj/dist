@@ -49,6 +49,8 @@ com/thaiopensource/relaxng/util/ExegenDriver.java
 com/thaiopensource/relaxng/util/TestDriver.java
 com/thaiopensource/relaxng/util/ValidationEngine.java
 "
+jing_test="dir.xsl exslt.xsl prep.xsl
+spectest.xml xsdtest.xml xsdtest.xsl mnstest.xml"
 
 if [ -f ../${a_jing_file} ]; then
     cd ..
@@ -198,10 +200,7 @@ setup_prog
 
 cd test
 
-cp -a ${top_dir}/test/dir.xsl .
-cp -a ${top_dir}/test/exslt.xsl .
-cp -a ${top_dir}/test/prep.xsl .
-cp -a ${top_dir}/test/spectest.xml .
+for f in ${jing_test}; do cp -a ${top_dir}/test/$f .; done
 
 cp -a ${top_dir}/gcj/test_jing.mk Makefile.in
 
