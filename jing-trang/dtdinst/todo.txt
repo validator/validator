@@ -1,3 +1,6 @@
+Maybe should disallow colons in names other than element and attribute
+names per the Namespaces Rec.
+
 Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
 naming convention or presence of element declarations or whether all
 references to the element are via that parameter entity.
@@ -59,3 +62,4 @@ XML declaration is consistent with auto-detected encoding.
 
 Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
 
+Cleanup handling of newline normalization.
