@@ -61,7 +61,7 @@
            value="${version}"/>
   <tar tarfile="build/dtdinst.tar"
        basedir="build"
-       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,teixml.dtd.txt,example/*"/>
+       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,dtdinst2rng.xsl,teixml.dtd.txt,example/*"/>
   <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
 </target>
 
