@@ -15,6 +15,7 @@ import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.relaxng.ValidatorHandler;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.mns.MnsSchemaFactory;
 import com.thaiopensource.util.UriOrFile;
 
 /**
@@ -33,12 +34,24 @@ public class ValidationEngine {
   private Schema schema;
 
   /**
-   * Default constructor.  Equivalent to <code>ValidationEngine(null, null, true)</code>.
+   * Flag indicating that ID/IDREF/IDREFS should be checked.
+   * @see #ValidationEngine(XMLReaderCreator, ErrorHandler, int)
+   */
+  public static final int CHECK_ID_IDREF = 01;
+  /**
+   * Flag indicating that the schema is in the compact syntax rather than the XML syntax.
+   * @see #ValidationEngine(XMLReaderCreator, ErrorHandler, int)
+   */
+  public static final int COMPACT_SYNTAX = 02;
+  public static final int FEASIBLE = 04;
+  public static final int MNS = 010;
+
+  /**
+   * Default constructor.  Equivalent to <code>ValidationEngine(null, null, CHECK_ID_IDREF)</code>.
    */
   public ValidationEngine() {
-    this(null, null, true);
+    this(null, null, CHECK_ID_IDREF);
   }
-
   /**
    * Constructs a <code>ValidationEngine</code>.
    *
@@ -46,25 +59,34 @@ public class ValidationEngine {
    * if <code>null</code> uses <code>Sax2XMLReaderCreator</code>
    * @param eh the <code>ErrorHandler</code> to be used for reporting errors; if <code>null</code>
    * uses <code>DraconianErrorHandler</code>
-   * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
-   * @throws NullPointerException if <code>xrc</code> is <code>null</code>
+   * @param flags bitwise OR of flags selected from <code>CHECK_ID_IDREF</code>, <code>COMPACT_SYNTAX</code>,
+   * <code>FEASIBLE</code>, <code>MNS</code>
    * @see DraconianErrorHandler
    * @see Sax2XMLReaderCreator
+   * @see #CHECK_ID_IDREF
+   * @see #COMPACT_SYNTAX
+   * @see #FEASIBLE
+   * @see #MNS
    */
   public ValidationEngine(XMLReaderCreator xrc,
                           ErrorHandler eh,
-                          boolean checkIdIdref) {
+                          int flags) {
     if (xrc == null)
       xrc = new Sax2XMLReaderCreator();
     if (eh == null)
       eh = new DraconianErrorHandler();
-    factory = new SchemaFactory();
+    if ((flags & MNS) != 0)
+      factory = new MnsSchemaFactory();
+    else
+      factory = new SchemaFactory();
     factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
     this.xrc = xrc;
     factory.setXMLReaderCreator(xrc);
     this.eh = eh;
     factory.setErrorHandler(eh);
-    factory.setCheckIdIdref(checkIdIdref);
+    factory.setCheckIdIdref((flags & CHECK_ID_IDREF) != 0);
+    factory.setCompactSyntax((flags & COMPACT_SYNTAX) != 0);
+    factory.setFeasible((flags & FEASIBLE) != 0);
   }
 
   /**
@@ -75,22 +97,48 @@ public class ValidationEngine {
    * @param eh the <code>ErrorHandler</code> to be used for reporting errors; if <code>null</code>
    * uses <code>DraconianErrorHandler</code>
    * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
-   * @throws NullPointerException if <code>xrc</code> is <code>null</code>
+   * @see DraconianErrorHandler
+   * @see Sax2XMLReaderCreator
+   * @deprecated
+   */
+  public ValidationEngine(XMLReaderCreator xrc,
+                          ErrorHandler eh,
+                          boolean checkIdIdref) {
+    this(xrc, eh, checkIdIdref ? CHECK_ID_IDREF : 0);
+  }
+
+  /**
+   * Constructs a <code>ValidationEngine</code>.
+   *
+   * @param xrc the <code>XMLReaderCreator</code> to be used for constructing <code>XMLReader</code>s;
+   * if <code>null</code> uses <code>Sax2XMLReaderCreator</code>
+   * @param eh the <code>ErrorHandler</code> to be used for reporting errors; if <code>null</code>
+   * uses <code>DraconianErrorHandler</code>
+   * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
    * @param compactSyntax <code>true</code> if the compact syntax should be used to parse the schema;
    * <code>false</code> if the XML syntax should be used
    * @see DraconianErrorHandler
    * @see Sax2XMLReaderCreator
+   * @deprecated
    */
   public ValidationEngine(XMLReaderCreator xrc, ErrorHandler eh, boolean checkIdIdref, boolean compactSyntax) {
-    this(xrc, eh, checkIdIdref);
-    factory.setCompactSyntax(compactSyntax);
+    this(xrc,
+         eh,
+         (checkIdIdref ? CHECK_ID_IDREF : 0)
+         | (compactSyntax ? COMPACT_SYNTAX : 0));
   }
 
 
+  /**
+   * @deprecated
+   */
   public ValidationEngine(XMLReaderCreator xrc, ErrorHandler eh, boolean checkIdIdref, boolean compactSyntax,
                           boolean feasible) {
-    this(xrc, eh, checkIdIdref, compactSyntax);
-    factory.setFeasible(feasible);
+    this(xrc,
+         eh,
+         (checkIdIdref ? CHECK_ID_IDREF : 0)
+         | (compactSyntax ? COMPACT_SYNTAX : 0)
+         | (feasible ? FEASIBLE : 0));
   }
 
   /**

@@ -1,0 +1,34 @@
+Avoid use of Collections and any other 1.2 stuff.
+
+Specify native namespaces for each island.
+
+Specify whether unknown namespaces should be ignored.
+
+Each validateElement/validateAttributes has a set of modes in which it applies.  Each validateElement
+specifies a mode in which it is processed.  modes attribute defaults to #default. useMode attribute
+defaults to #default.  <lax modes=""/> <strict modes=""/>
+
+start = element rules { useModeAttribute, (validateElement|validateAttribute|process)* }
+
+validateElement =
+  element validateElement {
+    commonAttributes,
+    useModeAttribute,
+    element subsume {
+      attribute ns { xsd:anyURI }
+    }*
+  }
+
+validateAttributes = element validateAttributes { commonAttributes }
+
+process = element lax|strict { modesAttribute }
+
+commonAttributes =
+  attribute ns { xsd:anyURI },
+  attribute schema { xsd:anyURI },
+  modesAttribute
+
+modesAttribute = attribute modes { list { mode+ } }?
+useModeAttribute = attribute useMode { mode }?
+
+mode = xsd:NCName | "#default"

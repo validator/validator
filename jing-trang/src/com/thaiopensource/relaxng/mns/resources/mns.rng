@@ -1,0 +1,26 @@
+<grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+         ns="http://www.thaiopensource.com/ns/mns"
+         xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="rules">
+      <zeroOrMore>
+        <choice>
+          <element name="validateElement">
+            <ref name="commonAttributes"/>
+          </element>
+          <element name="validateAttributes">
+            <ref name="commonAttributes"/>
+          </element>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </start>
+  <define name="commonAttributes">
+    <attribute name="ns">
+      <data type="anyURI"/>
+    </attribute>
+    <attribute name="schema">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+</grammar>

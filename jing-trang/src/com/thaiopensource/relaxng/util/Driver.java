@@ -18,23 +18,21 @@ class Driver {
     System.exit(new Driver().doMain(args));
   }
 
-  private boolean checkId = true;
-  private boolean compactSyntax = false;
-  private boolean feasible = false;
+  private int validationFlags = ValidationEngine.CHECK_ID_IDREF;
   private boolean timing = false;
   private String encoding = null;
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itcfe:", args);
+    OptionParser op = new OptionParser("itcfme:", args);
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
         case 'i':
-          checkId = false;
+          validationFlags &= ~ValidationEngine.CHECK_ID_IDREF;
           break;
         case 'c':
-          compactSyntax = true;
+          validationFlags |= ValidationEngine.COMPACT_SYNTAX;
           break;
         case 't':
           timing = true;
@@ -43,7 +41,10 @@ class Driver {
           encoding = op.getOptionArg();
           break;
         case 'f':
-          feasible = true;
+          validationFlags |= ValidationEngine.FEASIBLE;
+          break;
+        case 'm':
+          validationFlags |= ValidationEngine.MNS;
           break;
         }
       }
@@ -67,8 +68,7 @@ class Driver {
     long loadedPatternTime = -1;
     boolean hadError = false;
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh,
-                                                     checkId, compactSyntax, feasible);
+      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, validationFlags);
       InputSource in = ValidationEngine.uriOrFileInputSource(args[0]);
       if (encoding != null)
         in.setEncoding(encoding);
