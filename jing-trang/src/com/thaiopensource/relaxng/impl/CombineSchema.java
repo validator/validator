@@ -15,6 +15,6 @@ public class CombineSchema implements Schema {
 
   public Validator createValidator(PropertyMap properties) {
     return new CombineValidator(schema1.createValidator(properties),
-                                       schema2.createValidator(properties));
+                                schema2.createValidator(properties));
   }
 }
