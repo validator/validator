@@ -993,6 +993,7 @@ public class Converter {
       if (ns.equals("")) {
         error("UNDECLARED_PREFIX", prefix);
         ns = "##" + prefix;
+        prefixTable.put(prefix, ns);
       }
     }
     NameNameClass nnc = new NameNameClass(ns, localName);
