@@ -543,7 +543,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
                 prefix="jing-${version}/lib"/>
     <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/doc"/>
     <zipfileset dir="doc"
-                includes="jing-ant.html,jing-datatypes.html,pluggable-datatypes.html"
+                includes="jing-ant.html,jing-datatypes.html,jing-other.html,pluggable-datatypes.html"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}"
                 includes="jing.html,nrl.html"
