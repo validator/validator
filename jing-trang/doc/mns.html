@@ -8,7 +8,44 @@ p.note { margin-left: 1in; font-size: smaller; font-style: italic }
 <body>
 <h1>Modular Namespaces (MNS)</h1>
 
-<p>In its simplest form, a Modular Namespaces (MNS) schema consists of a
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#basics">Basics</a></li>
+<li><a href="#lax">Lax processing</a></li>
+<li><a href="#attributes">Attributes</a></li>
+<li><a href="#multiple">Validation subjects with multiple namespaces</a></li>
+<li><a href="#modes">Modes</a></li>
+<li><a href="#pruning">Pruning</a></li>
+<li><a href="#more-modes">More on modes</a></li>
+<li><a href="#extensibility">Extensibility</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+
+<h2><a name="introduction">Introduction</a></h2>
+
+<p>The XML Namespaces Recommendation allows an XML document to be
+composed of elements and attributes from multiple independent
+namespaces. Each of these namespaces may have its own schema.  The
+problem then arises of how the schemas can be composed in order to
+allow validation of the complete document.</p>
+
+<p>In RELAX Namespace, Murata Makoto pioneered the idea of dividing
+the document into <em>islands</em>, with each island containing a
+single namespace, and validating each island separately against the
+schema for its namespace.  RELAX Namespace formed the basis for the
+recently <a href="http://www.y12.doe.gov/sgml/sc34/document/0363.htm"
+>published</a> Committee Draft of Document Schema Definition Languages
+(DSDL) -- Part 4: Selection of Validation Candidates.</p>
+
+<p>This document presents a language named Modular Namespaces (MNS),
+which is an evolution of the ideas in RELAX Namespace and DSDL Part
+4.</p>
+
+<h2><a name="basics">Basics</a></h2>
+
+<p>In its simplest form, a MNS schema consists of a
 mapping from namespace URIs to schema URIs.  An MNS schema is written
 in XML.  Here is a RELAX NG compact syntax schema for this simplest
 form of MNS schema:</p>
@@ -59,7 +96,7 @@ so, how, or should this be handled elsewhere?</p>
 
 <p class="note">Should MNS have an <code>include</code> element?</p>
 
-<h2>Lax processing</h2>
+<h2><a name="lax">Lax processing</a></h2>
 
 <p>Sometimes it may be desirable to allow elements from namespaces for
 which there are no <code>validate</code> rules.  This can be done by
@@ -85,7 +122,7 @@ there is an applicable <code>validate</code> element as a
 <code>validate</code> element for every potential validation subject;
 with a <code>lax</code> element, there need not be.</p>
 
-<h2>Attributes</h2>
+<h2><a name="attributes">Attributes</a></h2>
 
 <p>Attributes can also be validation subjects:</p>
 
@@ -140,7 +177,7 @@ element <var>e</var> { external "<var>s</var>" }
 <p>where <code><var>e</var></code> is the name of the element to which
 the attributes were attached.</p>
 
-<h2>Validation subjects with multiple namespaces</h2>
+<h2><a name="multiple">Validation subjects with multiple namespaces</a></h2>
 
 <p>By default, an element is a potential validation subject if its
 namespace URI is different from its parent.  This behavior can be
@@ -217,7 +254,7 @@ elements and cover attributes?</p>
 <p class="note">Should it be possible to cover all namespaces except a
 particular (possibly empty) finite set of namespaces?</p>
 
-<h2>Modes</h2>
+<h2><a name="modes">Modes</a></h2>
 
 <p>The selection of validation subjects and associated schemas may
 need to be context dependent.  For example, not all namespace URIs may
@@ -313,7 +350,7 @@ added.  The allowed value of the <code>allow</code> attribute is, in
 fact, a list of between zero and two distinct tokens from the set
 <code>elements</code> and <code>attributes</code>.</p>
 
-<h2>Pruning</h2>
+<h2><a name="pruning">Pruning</a></h2>
 
 <p>We can distinguish between schemas that are <em>open</em> and
 schemas that are <em>closed</em>.  Open schemas allow attributes and
@@ -331,7 +368,7 @@ or <code>attributes</code>.</p>
 attribute prune { elementsOrAttributes }?
 </pre>
 
-<h2>More on modes</h2>
+<h2><a name="more-modes">More on modes</a></h2>
 
 <p>Sometimes the processing mode to be used for an element may need to
 depend on the name of the parent of that element.  For example, we
@@ -451,7 +488,7 @@ elementsOrAttributes =
   }
 </pre>
 
-<h2>Extensibility</h2>
+<h2><a name="extensibility">Extensibility</a></h2>
 
 <p>Just as with RELAX NG, foreign elements and attributes can be added
 to MNS schemas.  Thus, the complete MNS schema is as follows:</p>
@@ -528,7 +565,7 @@ foreign =
 anything = (text | attribute * { text } | element * { anything })*
 </pre>
 
-<h2>Example</h2>
+<h2><a name="example">Example</a></h2>
 
 <p>Suppose we want to validate an XHTML document that uses RDF within its
 <code>head</code> element.  The following would do the job:</p>
