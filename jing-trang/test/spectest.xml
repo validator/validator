@@ -1631,6 +1631,37 @@ applies at the syntax level.</documentation>
 <section>4.8</section>
 <correct>
 <element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+  <attribute name="bar" ns="http://www.example.com"/>
+</element>
+</correct>
+<valid>
+<eg:foo xmlns:eg="http://www.example.com" eg:bar="x"/>
+</valid>
+<invalid>
+<eg:foo xmlns:eg="http://www.example.com" bar="x"/>
+</invalid>
+</testCase>
+<testCase>
+<section>4.8</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+  <attribute name="bar"/>
+</element>
+</correct>
+<invalid>
+<eg:foo xmlns:eg="http://www.example.com" eg:bar="x"/>
+</invalid>
+<valid>
+<eg:foo xmlns:eg="http://www.example.com" bar="x"/>
+</valid>
+</testCase>
+</testSuite>
+<testSuite>
+<section>4.9</section>
+<testCase>
+<section>4.9</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
   <attribute>
     <name>bar</name>
   </attribute>
@@ -1643,9 +1674,6 @@ applies at the syntax level.</documentation>
 <eg:foo xmlns:eg="http://www.example.com" bar="x"/>
 </invalid>
 </testCase>
-</testSuite>
-<testSuite>
-<section>4.9</section>
 <testCase>
 <section>4.6</section>
 <section>4.9</section>
@@ -1669,7 +1697,42 @@ applies at the syntax level.</documentation>
 </testSuite>
 <testSuite>
 <section>4.10</section>
-<documentation>TODO</documentation>
+<testCase>
+<section>4.10</section>
+<incorrect>
+<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo:bar">
+  <empty/>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.10</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" name="eg:foo" xmlns:eg="http://www.example.com">
+  <empty/>
+</element>
+</correct>
+<valid>
+<foo xmlns="http://www.example.com"/>
+</valid>
+<invalid>
+<foo xmlns="http://www.example.com/"/>
+</invalid>
+</testCase>
+<testCase>
+<section>4.10</section>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo" xmlns:eg="http://www.example.com">
+  <attribute name="eg:bar"/>
+</element>
+</correct>
+<valid>
+<foo xmlns:ex="http://www.example.com" ex:bar="x"/>
+</valid>
+<invalid>
+<foo xmlns:ex="http://www.example.com/" ex:bar="x"/>
+</invalid>
+</testCase>
 </testSuite>
 <testCase>
 <section>4.11</section>
