@@ -31,7 +31,7 @@
 <target name="website" depends="jar">
   <mkdir dir="build/website"/>
   <copy todir="build/website">
-    <fileset dir="." includes="index.html"/>
+    <fileset dir="." includes="index.html,copying.txt"/>
   </copy>
   <replace file="build/website/index.html"
            token="@VERSION@"
