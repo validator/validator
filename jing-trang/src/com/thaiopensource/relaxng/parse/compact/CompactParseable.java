@@ -7,6 +7,7 @@ import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.IncludedGrammar;
 import com.thaiopensource.relaxng.parse.Scope;
+import com.thaiopensource.xml.util.EncodingMap;
 import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
@@ -45,8 +46,8 @@ public class CompactParseable implements Parseable {
     return new CompactSyntax(makeReader(tem), uri, sb, eh).parse(scope);
   }
 
-  private static final String UTF8 = fixupEncodingName("UTF-8", "UTF8");
-  private static final String UTF16 = fixupEncodingName("UTF-16", "Unicode");
+  private static final String UTF8 = EncodingMap.getJavaName("UTF-8");
+  private static final String UTF16 = EncodingMap.getJavaName("UTF-16");
 
   private Reader makeReader(InputSource is) throws BuildException {
     try {
@@ -86,19 +87,4 @@ public class CompactParseable implements Parseable {
     }
     return encoding;
   }
-
-  static private String fixupEncodingName(String name, String altName) {
-    try {
-      "x".getBytes(name);
-    }
-    catch (UnsupportedEncodingException e) {
-      try {
-        "x".getBytes(altName);
-        return altName;
-      }
-      catch (UnsupportedEncodingException e2) { }
-    }
-    return name;
-  }
-
 }
