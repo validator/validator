@@ -1,3 +1,8 @@
+Give a warning for a list containing a single token.
+
+Give a more helpful message for sequence of strings
+outside a list.
+
 Handle comments embedded within strings better.
 
 Make SAX-based parser preserve element annotations.
