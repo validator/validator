@@ -6,7 +6,6 @@ import com.thaiopensource.datatype.DatatypeContext;
 class StringAtom extends Atom {
   private String str;
   private DatatypeContext dc;
-  private Object assignmentClass = null;
 
   StringAtom(String str, DatatypeContext dc) {
     this.str = str;
