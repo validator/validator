@@ -75,7 +75,6 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
   private Output(String sourceUri, String encoding, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
     this.sourceUri = sourceUri;
     this.od = od;
-    this.xw = xw;
     this.datatypeLibrary = datatypeLibrary;
     this.prefixMap = prefixMap;
     OutputDirectory.Stream stream = od.open(sourceUri, encoding);
@@ -83,7 +82,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
                             od.getLineSeparator(), od.getIndent(), getTopLevelAttributes());
   }
 
-  String[] getTopLevelAttributes() {
+  private String[] getTopLevelAttributes() {
     int nAtts = prefixMap.size();
     if (datatypeLibrary != null)
       nAtts += 1;
@@ -135,7 +134,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return null;
   }
 
-  boolean tryNameAttribute(NameClass nc, boolean isAttribute) {
+  private boolean tryNameAttribute(NameClass nc, boolean isAttribute) {
     if (hasAnnotations(nc))
       return false;
     if (!(nc instanceof NameNameClass))
@@ -219,7 +218,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return visitAbstractRef("parentRef", p);
   }
 
-  public Object visitAbstractRef(String name, AbstractRefPattern p) {
+  private Object visitAbstractRef(String name, AbstractRefPattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     xw.attribute("name", p.getName());
@@ -298,7 +297,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return visitNullary("notAllowed", p);
   }
 
-  public Object visitNullary(String name, Pattern p) {
+  private Object visitNullary(String name, Pattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
@@ -306,7 +305,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return null;
   }
 
-  public Object visitUnary(String name, UnaryPattern p) {
+  private Object visitUnary(String name, UnaryPattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
@@ -315,7 +314,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return null;
   }
 
-  public Object visitComposite(String name, CompositePattern p) {
+  private Object visitComposite(String name, CompositePattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
@@ -434,16 +433,16 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     end(subject);
   }
 
-  public void leadingAnnotations(Annotated subject) {
+  private void leadingAnnotations(Annotated subject) {
     annotationChildren(subject.getLeadingComments(), true);
   }
 
-  public void innerAnnotations(Annotated subject) {
+  private void innerAnnotations(Annotated subject) {
     annotationAttributes(subject.getAttributeAnnotations());
     annotationChildren(subject.getChildElementAnnotations(), true);
   }
 
-  public void outerAnnotations(Annotated subject) {
+  private void outerAnnotations(Annotated subject) {
     annotationChildren(subject.getFollowingElementAnnotations(), true);
   }
 
