@@ -299,8 +299,7 @@ public class RelaxNgWriter {
 	w.startElement("optional");
       w.startElement("attribute");
       w.attribute("name", name);
-      if (datatype.getType() != Datatype.BASIC
-	  || !((BasicDatatype)datatype).getTypeName().equals("CDATA")) 
+      if (datatype.getType() != Datatype.CDATA)
 	datatype.accept(explicitOutput);
       w.endElement();
       if (!attributeDefault.isRequired())
@@ -312,10 +311,14 @@ public class RelaxNgWriter {
       ref(name);
     }
 
-    public void basicDatatype(String typeName) throws IOException {
+    public void cdataDatatype() throws IOException {
       w.startElement("data");
-      if (typeName.equals("CDATA"))
-	typeName = "string";
+      w.attribute("name", "string");
+      w.endElement();
+    }
+
+    public void tokenizedDatatype(String typeName) throws IOException {
+      w.startElement("data");
       w.attribute("type", typeName);
       w.endElement();
     }

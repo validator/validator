@@ -194,13 +194,14 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void basicDatatype(String typeName) throws IOException {
-    if (typeName.equals("CDATA"))
-      w.startElement("cdata");
-    else {
-      w.startElement("tokenized");
-      w.attribute("name", typeName);
-    }
+  public void cdataDatatype() throws IOException {
+    w.startElement("cdata");
+    w.endElement();
+  }
+
+  public void tokenizedDatatype(String typeName) throws IOException {
+    w.startElement("tokenized");
+    w.attribute("name", typeName);
     w.endElement();
   }
 

@@ -1,14 +1,14 @@
 package com.thaiopensource.xml.dtd.om;
 
-public class BasicDatatype extends Datatype {
+public class TokenizedDatatype extends Datatype {
   private final String typeName;
 
-  public BasicDatatype(String typeName) {
+  public TokenizedDatatype(String typeName) {
     this.typeName = typeName;
   }
 
   public int getType() {
-    return BASIC;
+    return TOKENIZED;
   }
 
   public String getTypeName() {
@@ -16,7 +16,7 @@ public class BasicDatatype extends Datatype {
   }
 
   public void accept(DatatypeVisitor visitor) throws Exception {
-    visitor.basicDatatype(typeName);
+    visitor.tokenizedDatatype(typeName);
   }
 }
 

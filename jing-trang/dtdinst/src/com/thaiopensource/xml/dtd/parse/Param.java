@@ -103,7 +103,10 @@ class Param {
       ps.advance();
       return new NotationDatatype(paramToEnumGroup(ps));
     case ATTRIBUTE_TYPE:
-      return new BasicDatatype(ps.value);
+      if (ps.value.equals("CDATA"))
+	return new CdataDatatype();
+      else
+	return new TokenizedDatatype(ps.value);
     }
     throw new Error();
   }
