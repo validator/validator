@@ -1,7 +1,35 @@
+Encoding detection
+
+expand general entity references for default values
+
+attval normalization of default values
+
+general entities
+
+notations
+
+Error reporting.
+
+Don't unexpand entities that are not properly nested.
+
+Don't expand empty entities that might be pasted.
+
 overridden declarations
 
 (foo %bar) where bar is empty
 
-case where entity contains just "|" or "," (maybe don't unexpand these)
+case where entity contains just "|" or ","
 
 undefined elements
+
+
+empty param entities at the group level
+ignored sections
+included sections
+external general entities
+
+
+something for case where param entity was not preserved
+
+<!ENTITY % g "(x|y)">
+<!ATTLIST foo bar NOTATION %g; #IMPLIED>
