@@ -20,6 +20,7 @@ public class RelaxNgWriter {
   private Hashtable defTable = new Hashtable();
   private Hashtable prefixTable = new Hashtable();
   private ErrorMessageHandler errorMessageHandler = null;
+  private String initialComment = null;
 
   private Hashtable duplicateAttributeTable = new Hashtable();
   private Hashtable currentDuplicateAttributeTable = null;
@@ -533,6 +534,10 @@ public class RelaxNgWriter {
     errorMessageHandler = handler;
   }
 
+  public void setInitialComment(String str) {
+    initialComment = str;
+  }
+
   public void writeDtd(Dtd dtd) throws IOException {
     try {
       dtd.accept(new Analyzer());
@@ -544,6 +549,8 @@ public class RelaxNgWriter {
     outMember = outCollection.getMain();
     w = outMember.open(dtd.getEncoding());
     w.writeXmlDecl(dtd.getEncoding());
+    if (initialComment != null)
+      w.comment(initialComment);
     startGrammar();
     try {
       dtd.accept(explicitOutput);

@@ -105,6 +105,9 @@ public class Driver {
 	= new DirectoryOutputCollection(dtd.getUri(), dir, mapper);
       RelaxNgWriter w = new RelaxNgWriter(out);
       ErrorMessageHandlerImpl emh = new ErrorMessageHandlerImpl();
+      String initialComment = localizer().message("COMMENT", getVersion());
+      if (initialComment.length() != 0)
+	w.setInitialComment(" " + initialComment + " ");
       w.setErrorMessageHandler(emh);
       w.writeDtd(dtd);
       return emh.errorCount == 0;
