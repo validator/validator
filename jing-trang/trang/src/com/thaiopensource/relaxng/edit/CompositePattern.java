@@ -8,4 +8,8 @@ public abstract class CompositePattern extends Pattern {
   public List getChildren() {
     return children;
   }
+  public void childrenAccept(PatternVisitor visitor) {
+    for (int i = 0, len = children.size();  i < len; i++)
+      ((Pattern)children.get(i)).accept(visitor);
+  }
 }

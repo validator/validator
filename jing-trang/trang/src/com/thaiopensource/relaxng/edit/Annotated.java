@@ -4,6 +4,7 @@ import com.thaiopensource.relaxng.parse.Context;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.Iterator;
 
 public abstract class Annotated extends SourceObject {
   private final List leadingComments = new Vector();
@@ -38,5 +39,14 @@ public abstract class Annotated extends SourceObject {
 
   public void setContext(Context context) {
     this.context = context;
+  }
+
+  public String getAttributeAnnotation(String ns, String localName) {
+    for (Iterator iter = attributeAnnotations.iterator(); iter.hasNext();) {
+      AttributeAnnotation att = (AttributeAnnotation)iter.next();
+      if (att.getNamespaceUri().equals(ns) && att.getLocalName().equals(localName))
+        return att.getValue();
+    }
+    return null;
   }
 }

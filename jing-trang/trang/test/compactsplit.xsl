@@ -19,7 +19,9 @@
 <xsl:variable name="correctSchemaName" select="'c'"/>
 <xsl:variable name="xmlSuffix" select="'.rng'"/>
 <xsl:variable name="compactSuffix" select="'.rnc'"/>
+<xsl:variable name="xsdSuffix" select="'.xsd'"/>
 <xsl:variable name="xmlDir" select="'xml'"/>
+<xsl:variable name="xsdDir" select="'xsd'"/>
 <xsl:variable name="compactDir" select="'compact'"/>
 <xsl:variable name="outDir" select="'out'"/>
 
@@ -36,7 +38,7 @@
   </xsl:apply-templates>
 </xsl:template>
 
-<xsl:template match="xml//resource">
+<xsl:template match="xml//resource|xsd//resource">
   <xsl:param name="base"/>
   <saxon:output href="{$base}/{@name}" method="xml">
     <xsl:copy-of select="node()"/>
@@ -46,6 +48,13 @@
 <xsl:template match="xml//correct">
   <xsl:param name="base"/>
   <saxon:output href="{$base}/{$correctSchemaName}{$xmlSuffix}" method="xml">
+    <xsl:copy-of select="node()"/>
+  </saxon:output>
+</xsl:template>
+
+<xsl:template match="xsd//correct">
+  <xsl:param name="base"/>
+  <saxon:output href="{$base}/{$correctSchemaName}{$xsdSuffix}" method="xml">
     <xsl:copy-of select="node()"/>
   </saxon:output>
 </xsl:template>
@@ -85,6 +94,17 @@
 <xsl:template match="xml">
   <xsl:param name="base"/>
   <xsl:variable name="d" select="concat($base, '/', $xmlDir)"/>
+  <xsl:call-template name="mkdir">
+    <xsl:with-param name="dir" select="$d"/>
+  </xsl:call-template>
+  <xsl:apply-templates select="*">
+    <xsl:with-param name="base" select="$d"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="xsd">
+  <xsl:param name="base"/>
+  <xsl:variable name="d" select="concat($base, '/', $xsdDir)"/>
   <xsl:call-template name="mkdir">
     <xsl:with-param name="dir" select="$d"/>
   </xsl:call-template>

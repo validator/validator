@@ -1,10 +1,10 @@
-package com.thaiopensource.relaxng.output.rng;
+package com.thaiopensource.relaxng.output.common;
 
 import java.io.Writer;
 import java.io.IOException;
 import java.util.Stack;
 
-class XmlWriter {
+public class XmlWriter {
   private String lineSep;
   private Writer w;
   private Stack tagStack = new Stack();
@@ -13,14 +13,14 @@ class XmlWriter {
   private int level = 0;
   private String[] topLevelAttributes;
 
-  class WrappedException extends RuntimeException {
+  public class WrappedException extends RuntimeException {
     private IOException cause;
 
     public Throwable getCause() {
       return cause;
     }
 
-    IOException getIOException() {
+    public IOException getIOException() {
       return cause;
     }
 
@@ -39,7 +39,7 @@ class XmlWriter {
     newline();
   }
 
-  void startElement(String name) {
+  public void startElement(String name) {
     if (inStartTag) {
       maybeWriteTopLevelAttributes();
       inStartTag = false;
@@ -57,7 +57,7 @@ class XmlWriter {
     level++;
   }
 
-  void endElement() {
+  public void endElement() {
     if (inStartTag) {
       maybeWriteTopLevelAttributes();
       level--;
@@ -78,7 +78,7 @@ class XmlWriter {
     newline();
   }
 
-  void attribute(String name, String value) {
+  public void attribute(String name, String value) {
     if (!inStartTag)
       throw new IllegalStateException("attribute outside of start-tag");
     write(' ');
@@ -89,7 +89,7 @@ class XmlWriter {
     write('"');
   }
 
-  void text(String s) {
+  public void text(String s) {
     if (s.length() == 0)
       return;
     if (inStartTag) {
@@ -101,7 +101,7 @@ class XmlWriter {
     inText = true;
   }
 
-  void comment(String s) {
+  public void comment(String s) {
     if (inStartTag) {
       maybeWriteTopLevelAttributes();
       inStartTag = false;
@@ -145,7 +145,7 @@ class XmlWriter {
       newline();
   }
 
-  void data(String s) {
+  public void data(String s) {
     int n = s.length();
     for (int i = 0; i < n; i++) {
       switch (s.charAt(i)) {
@@ -205,7 +205,7 @@ class XmlWriter {
     }
   }
 
-  void close() {
+  public void close() {
     try {
       w.close();
     }

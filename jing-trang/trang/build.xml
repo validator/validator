@@ -50,10 +50,41 @@ Class-Path: jing.jar
   </uptodate>
 </target>
 
+<target name="xsd-split" depends="init,check-xsd-split" unless="xsd-split-not-required">
+  <jing rngfile="test/toxsdtest.rnc" compactsyntax="yes">
+    <fileset dir="test" includes="toxsdtest.xml"/>
+  </jing>
+  <delete dir="${build.dir}/xsd-test"/>
+  <mkdir dir="${build.dir}/xsd-test"/>
+  <style basedir="test" destdir="${build.dir}/xsd-test" includes="toxsdtest.xml" extension=".stamp" style="test/compactsplit.xsl">
+    <param name="dir" expression="trang/${build.dir}/xsd-test"/>
+  </style>
+</target>
+
+<target name="check-xsd-split">
+  <uptodate property="xsd-split-not-required" targetfile="${build.dir}/xsd-test/toxsdtest.stamp">
+    <srcfiles dir="test" includes="toxsdtest.xml,compactsplit.xsl"/>
+  </uptodate>
+</target>
+
 <target name="test" depends="jar,split">
   <java classname="com.thaiopensource.relaxng.output.test.CompactTestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/test/out.log"/>
     <arg value="${build.dir}/test"/>
+    <arg value="xml"/>
+    <classpath>
+      <pathelement location="${dist.dir}/trang.jar"/>
+      <pathelement location="${dist.dir}/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="xsd-test" depends="jar,xsd-split">
+  <java classname="com.thaiopensource.relaxng.output.test.CompactTestDriver" fork="yes" failonerror="yes">
+    <arg value="${build.dir}/xsd-test/out.log"/>
+    <arg value="${build.dir}/xsd-test"/>
+    <arg value="xsd"/>
     <classpath>
       <pathelement location="${dist.dir}/trang.jar"/>
       <pathelement location="${dist.dir}/jing.jar"/>

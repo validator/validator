@@ -6,6 +6,9 @@ public class AttributeAnnotation extends SourceObject {
   private String prefix;
   private String value;
 
+  /**
+   * namespaceUri is never null; empty string is used for absent namespace
+   */
   public AttributeAnnotation(String namespaceUri, String localName, String value) {
     this.namespaceUri = namespaceUri;
     this.localName = localName;

@@ -37,7 +37,11 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.output.common.ErrorReporter;
+import com.thaiopensource.relaxng.output.common.NameClassSplitter;
+import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.xml.util.Naming;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.List;
 import java.util.HashMap;
@@ -495,7 +499,7 @@ class Analysis {
       List names = NameClassSplitter.split(p.getNameClass());
       for (int i = 0, len = names.size(); i < len; i++) {
         String ns = ((NameNameClass)names.get(i)).getNamespaceUri();
-        if (ns.length() != 0 && ns != NameClass.INHERIT_NS && !ns.equals(NamespaceManager.xmlURI)) {
+        if (ns.length() != 0 && ns != NameClass.INHERIT_NS && !ns.equals(WellKnownNamespaces.XML)) {
           if (result == null)
             result = new HashSet();
           result.add(ns);
@@ -523,7 +527,7 @@ class Analysis {
     this.er = er;
     new Analyzer().analyzeContentType(schemas.getMainSchema());
     checkAttlists();
-    if (!er.hadError)
+    if (!er.getHadError())
       nsm.assignPrefixes();
   }
 

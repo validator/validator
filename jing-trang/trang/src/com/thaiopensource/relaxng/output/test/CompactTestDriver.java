@@ -7,6 +7,9 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 
 import java.io.IOException;
 import java.io.File;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
 
 import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
@@ -17,16 +20,20 @@ import com.thaiopensource.relaxng.output.OutputFormat;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.LocalOutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFailedException;
+import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
 import com.thaiopensource.relaxng.parse.compact.CompactParseable;
 import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.relaxng.util.ErrorHandlerImpl;
 import com.thaiopensource.util.UriOrFile;
 
 public class CompactTestDriver {
 
   private XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
   private ErrorHandler eh;
-  private OutputFormat of = new RngOutputFormat();
+  private OutputFormat of;
+  private String toDir;
+  private String toExt;
 
   private CompactTestDriver() {
   }
@@ -36,6 +43,17 @@ public class CompactTestDriver {
   }
 
   private int doMain(String[] args) throws IOException {
+    eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
+    if (args[2].equals("xsd")) {
+      of = new XsdOutputFormat();
+      toExt = XSD_EXTENSION;
+      toDir = XSD_DIR;
+    }
+    else {
+      of = new RngOutputFormat();
+      toExt = XML_EXTENSION;
+      toDir = XML_DIR;
+    }
     return runTestSuite(new File(args[1])) ? 0 : 1;
   }
 
@@ -53,30 +71,32 @@ public class CompactTestDriver {
   }
 
   static private final String XML_DIR = "xml";
+  static private final String XSD_DIR = "xsd";
   static private final String COMPACT_DIR = "compact";
   static private final String OUT_DIR = "out";
   static private final String CORRECT_SCHEMA_NAME = "c";
   static private final String INCORRECT_SCHEMA_NAME = "i";
   static private final String COMPACT_EXTENSION = ".rnc";
   static private final String XML_EXTENSION = ".rng";
+  static private final String XSD_EXTENSION = ".xsd";
   static private final String OUTPUT_ENCODING = "UTF-8";
 
   private boolean runTestCase(File dir) throws IOException {
-    File xmlDir = new File(dir, XML_DIR);
+    File xmlDir = new File(dir, toDir);
     File compactDir = new File(dir, COMPACT_DIR);
     File outputDir = new File(dir, OUT_DIR);
     File correct = new File(compactDir, CORRECT_SCHEMA_NAME + COMPACT_EXTENSION);
     File incorrect = new File(compactDir, INCORRECT_SCHEMA_NAME + COMPACT_EXTENSION);
     boolean passed = true;
     if (correct.exists()) {
-      File output = new File(outputDir, CORRECT_SCHEMA_NAME + XML_EXTENSION);
+      File output = new File(outputDir, CORRECT_SCHEMA_NAME + toExt);
       if (!run(correct, output) || !compareDir(xmlDir, outputDir)) {
         passed = false;
         failed(correct);
       }
     }
     if (incorrect.exists()) {
-      File output = new File(outputDir, INCORRECT_SCHEMA_NAME + XML_EXTENSION);
+      File output = new File(outputDir, INCORRECT_SCHEMA_NAME + toExt);
       if (run(incorrect, output)) {
         passed = false;
         failed(incorrect);
@@ -114,8 +134,9 @@ public class CompactTestDriver {
     try {
       Parseable parseable = new CompactParseable(new InputSource(UriOrFile.fileToUri(in)), eh);
       SchemaCollection sc = SchemaBuilderImpl.parse(parseable,
+                                                    eh,
                                                     new DatatypeLibraryLoader());
-      OutputDirectory od = new LocalOutputDirectory(out, XML_EXTENSION, OUTPUT_ENCODING);
+      OutputDirectory od = new LocalOutputDirectory(out, toExt, OUTPUT_ENCODING);
       of.output(sc, od, eh);
       return true;
     }

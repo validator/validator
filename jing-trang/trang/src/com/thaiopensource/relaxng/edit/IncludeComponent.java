@@ -47,4 +47,9 @@ public class IncludeComponent extends Component implements Container {
   public Object accept(ComponentVisitor visitor) {
     return visitor.visitInclude(this);
   }
+
+  public void componentsAccept(ComponentVisitor visitor) {
+    for (int i = 0, len = components.size();  i < len; i++)
+      ((Component)components.get(i)).accept(visitor);
+  }
 }

@@ -1,0 +1,72 @@
+Check for duplicate attributes.
+
+Check for violations of RELAX NG interleave restriction.
+
+Approximation warnings:
+- interleave
+- mixed text
+- list containing a group of two non-empty tokens
+- element wildcard with content that does not allow everything
+- wildcards with two or more negative namespaces
+- wildcards with negative single names
+- choice between attributes
+- choice between elements and data
+
+Provide annotation to control which target namespace is assigned to a file.
+
+Take advantage of minOccurs > 1 and 1 < maxOccurs < infinity.
+
+If expansion of a group causes the group to become unreferenced, then remove the group.
+
+If define referenced only in something that is unreachable because of notAllowed, remove the define.
+
+Use complexTypes for groups and simpleTypes with associated attributes, even if not all references can
+make use of them.
+
+Use the last component of the namespace URI in selecting prefix and generated schema file when no prefix is used in the
+RELAX NG.
+
+Try using default namespace declaration to refer to things in targetNamespace.
+
+Make choice of targetNamespace not depend on order of hash table iteration.
+
+Handle nested grammars (use different namespace for different grammars).
+
+Turn overrides into <redefine>.
+
+Preserve definitions that are equivalent to empty or notAllowed.
+
+Handle externalRef (remember problem with parentRef in externalRef)
+
+Interleave
+- Avoid introducing ambiguities when approximating <interleave>, eg x & (y, y).
+- Optimize nested choices in expanding <interleave>.
+- Optimize eg x* & (a, b, c) into x*, (a, x*), (b, x*), (c, x*)
+
+For a <value type="NOTATION"/>, map to NOTATION and generate an appropriate xs:notation declaration
+based on annotations.
+
+Deal with xsi attributes.
+
+Make use of element substitution groups; may affect which elements are global.
+
+Deal with comments
+
+Deal with annotations (provide special support for xs:key/xs:keyRef/xs:unique).
+
+Better support for xsd:documentation:
+- copy xsd:documentation annotations
+- copy xml:lang attribute from a:documentation elements
+- allow multiple a:documentation elements
+
+Be more careful about preserving annotations.
+
+Deal with element type consistent restriction
+
+Deal with ambiguous content model restriction
+
+Avoid redundant imports and redundant namespace declarations.
+
+With combine attributes, maybe insert <ref> to preserve file structure.
+
+Add an annotation on elements to convey <start> info.

@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.output.dtd;
+package com.thaiopensource.relaxng.output.common;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
@@ -6,12 +6,12 @@ import org.xml.sax.SAXException;
 import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.util.Localizer;
 
-class ErrorReporter {
-  private Localizer localizer = new Localizer(ErrorReporter.class);
-  private ErrorHandler eh;
+public class ErrorReporter {
+  private final Localizer localizer;
+  private final ErrorHandler eh;
   boolean hadError = false;
 
-  static class WrappedSAXException extends RuntimeException {
+  static public class WrappedSAXException extends RuntimeException {
     private SAXException exception;
 
     private WrappedSAXException(SAXException exception) {
@@ -23,11 +23,12 @@ class ErrorReporter {
     }
   }
 
-  ErrorReporter(ErrorHandler eh) {
+  public ErrorReporter(ErrorHandler eh, Class cls) {
     this.eh = eh;
+    this.localizer = new Localizer(cls);
   }
 
-  void error(String key, SourceLocation loc) {
+  public void error(String key, SourceLocation loc) {
     hadError = true;
     if (eh == null)
       return;
@@ -39,7 +40,7 @@ class ErrorReporter {
     }
   }
 
-  void error(String key, String arg, SourceLocation loc) {
+  public void error(String key, String arg, SourceLocation loc) {
     hadError = true;
     if (eh == null)
       return;
@@ -51,7 +52,7 @@ class ErrorReporter {
     }
   }
 
-  void error(String key, String arg1, String arg2, SourceLocation loc) {
+  public void error(String key, String arg1, String arg2, SourceLocation loc) {
     hadError = true;
     if (eh == null)
       return;
@@ -63,7 +64,7 @@ class ErrorReporter {
     }
   }
 
-  void warning(String key, SourceLocation loc) {
+  public void warning(String key, SourceLocation loc) {
     if (eh == null)
       return;
     try {
@@ -74,7 +75,7 @@ class ErrorReporter {
     }
   }
 
-  void warning(String key, String arg, SourceLocation loc) {
+  public void warning(String key, String arg, SourceLocation loc) {
     if (eh == null)
       return;
     try {
@@ -85,7 +86,7 @@ class ErrorReporter {
     }
   }
 
-  void warning(String key, String arg1, String arg2, SourceLocation loc) {
+  public void warning(String key, String arg1, String arg2, SourceLocation loc) {
     if (eh == null)
       return;
     try {
@@ -96,6 +97,10 @@ class ErrorReporter {
     }
   }
 
+  public boolean getHadError() {
+    return hadError;
+  }
+
   private static SAXParseException makeParseException(String message, SourceLocation loc) {
     if (loc == null)
       return new SAXParseException(message, null);
@@ -104,5 +109,9 @@ class ErrorReporter {
                                  loc.getUri(),
                                  loc.getLineNumber(),
                                  loc.getColumnNumber());
+  }
+
+  public Localizer getLocalizer() {
+    return localizer;
   }
 }

@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.output.dtd;
 
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -10,8 +11,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 class NamespaceManager {
-  static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
-
   // map namespace URIs to non-empty prefix
   private Map namespaceUriMap = new HashMap();
   private String defaultNamespaceUri = null;
@@ -20,7 +19,7 @@ class NamespaceManager {
 
   NamespaceManager() {
     usedPrefixes.add("xml");
-    namespaceUriMap.put(xmlURI, "xml");
+    namespaceUriMap.put(WellKnownNamespaces.XML, "xml");
   }
 
   String getPrefixForNamespaceUri(String ns) {

@@ -1,0 +1,8 @@
+namespace xs = "http://www.w3.org/2001/XMLSchema"
+
+include "compacttest.rnc" {
+  correct-xml = element xsd { xml-resources, element correct { rng } }
+  rng = any-xs
+}
+
+any-xs = element xs:* { attribute * { text }*, (text|any-xs)* }

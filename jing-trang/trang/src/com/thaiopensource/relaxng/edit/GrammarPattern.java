@@ -13,4 +13,9 @@ public class GrammarPattern extends Pattern implements Container {
   public Object accept(PatternVisitor visitor) {
     return visitor.visitGrammar(this);
   }
+
+  public void componentsAccept(ComponentVisitor visitor) {
+    for (int i = 0, len = components.size();  i < len; i++)
+      ((Component)components.get(i)).accept(visitor);
+  }
 }

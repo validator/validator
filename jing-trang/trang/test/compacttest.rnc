@@ -17,7 +17,7 @@ correct-compact = element compact {
 compact-resources =  (element resource { name, compact }
                      | element dir { name, compact-resources })*
 
-incorrect-compact = element compact { xml-resources, element incorrect { compact } }
+incorrect-compact = element compact { compact-resources, element incorrect { compact } }
 
 compact = attribute encoding { token }?, text
 

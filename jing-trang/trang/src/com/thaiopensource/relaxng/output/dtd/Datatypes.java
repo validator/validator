@@ -1,11 +1,11 @@
 package com.thaiopensource.relaxng.output.dtd;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Datatypes {
-  private static final String COMPATIBILITY_DATATYPES_URI = "http://relaxng.org/ns/compatibility/datatypes/1.0";
-  private static final String XSD_URI = "http://www.w3.org/2001/XMLSchema-datatypes";
 
   private static final Map xsdMap = new HashMap();
 
@@ -27,11 +27,11 @@ public class Datatypes {
     new Info("string", CDATA|EXACT|CDATA_EQUALITY),
     "",
     new Info("token", CDATA|EXACT|TOKEN_EQUALITY),
-    COMPATIBILITY_DATATYPES_URI,
+    WellKnownNamespaces.RELAX_NG_COMPATIBILITY_DATATYPES,
     new Info("ID", COMPATIBLE|EXACT|TOKEN_EQUALITY),
-    COMPATIBILITY_DATATYPES_URI,
+    WellKnownNamespaces.RELAX_NG_COMPATIBILITY_DATATYPES,
     new Info("IDREF", COMPATIBLE|EXACT|TOKEN_EQUALITY),
-    COMPATIBILITY_DATATYPES_URI,
+    WellKnownNamespaces.RELAX_NG_COMPATIBILITY_DATATYPES,
     new Info("IDREFS", COMPATIBLE|EXACT|TOKEN_EQUALITY)
   };
 
@@ -68,7 +68,7 @@ public class Datatypes {
   }
 
   public static Info getInfo(String datatypeLibrary, String localName) {
-    if (datatypeLibrary.equals(XSD_URI))
+    if (datatypeLibrary.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES))
       return (Info)xsdMap.get(localName);
     for (int i = 0; i < others.length; i += 2)
       if (datatypeLibrary.equals(others[i])

@@ -23,6 +23,7 @@ import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.parse.Context;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.List;
 import java.util.Iterator;
@@ -31,7 +32,6 @@ import java.util.HashMap;
 import java.util.Enumeration;
 
 class Analyzer extends AbstractVisitor {
-  static private final String xmlURI = "http://www.w3.org/XML/1998/namespace";
 
   private Object visitAnnotated(Annotated anno) {
     noteContext(anno.getContext());
@@ -197,7 +197,7 @@ class Analyzer extends AbstractVisitor {
   Map getPrefixMap() {
     if (haveInherit)
       prefixMap.remove("");
-    prefixMap.put("xml", xmlURI);
+    prefixMap.put("xml", WellKnownNamespaces.XML);
     return prefixMap;
   }
 

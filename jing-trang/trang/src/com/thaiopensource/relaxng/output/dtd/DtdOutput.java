@@ -32,7 +32,10 @@ import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.output.common.ErrorReporter;
+import com.thaiopensource.relaxng.output.common.NameClassSplitter;
 import com.thaiopensource.xml.util.Naming;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -78,7 +81,6 @@ class DtdOutput {
   PatternVisitor valueOutput = new ValueOutput();
   GrammarOutput grammarOutput = new GrammarOutput();
 
-  static private final String COMPATIBILITY_ANNOTATIONS_URI = "http://relaxng.org/ns/compatibility/annotations/1.0";
   static private final String DTD_URI = "http://www.thaiopensource.com/ns/relaxng/dtd";
 
   private DtdOutput(String sourceUri, Analysis analysis, Set reservedEntityNames, OutputDirectory od, ErrorReporter er) {
@@ -1206,7 +1208,7 @@ class DtdOutput {
   }
 
   private static String getDefaultValue(AttributePattern p) {
-    return getAttributeAnnotation(p, COMPATIBILITY_ANNOTATIONS_URI, "defaultValue");
+    return getAttributeAnnotation(p, WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS, "defaultValue");
   }
 
   private static String getAttributeAnnotation(Annotated p, String ns, String localName) {

@@ -13,4 +13,9 @@ public class ChoiceNameClass extends NameClass {
   public Object accept(NameClassVisitor visitor) {
     return visitor.visitChoice(this);
   }
+
+  public void childrenAccept(NameClassVisitor visitor) {
+    for (int i = 0, len = children.size();  i < len; i++)
+      ((NameClass)children.get(i)).accept(visitor);
+  }
 }

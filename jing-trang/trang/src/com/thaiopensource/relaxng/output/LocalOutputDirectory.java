@@ -22,7 +22,6 @@ public class LocalOutputDirectory implements OutputDirectory {
     this.extension = extension;
     this.encoding = encoding;
     this.lineSeparator = System.getProperty("line.separator");
-    String name = mainOutputFile.getName();
   }
 
   public Writer open(String sourceUri) throws IOException {
@@ -35,6 +34,8 @@ public class LocalOutputDirectory implements OutputDirectory {
   }
 
   public String reference(String fromSourceUri, String toSourceUri) {
+    if (toSourceUri.equals(MAIN))
+      return mainOutputFile.getName();
     return mapFilename(toSourceUri);
   }
 
@@ -52,7 +53,7 @@ public class LocalOutputDirectory implements OutputDirectory {
     int dot = filename.lastIndexOf('.');
     String base = dot < 0 ? filename : filename.substring(0, dot);
     filename = base + extension;
-    for (int i = 1; uriMap.containsValue(filename); i++)
+    for (int i = 1; uriMap.containsValue(filename) || filename.equals(mainOutputFile.getName()); i++)
       filename = base + Integer.toString(i) + extension;
     return filename;
   }

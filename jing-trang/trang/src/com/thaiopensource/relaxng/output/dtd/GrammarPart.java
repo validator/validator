@@ -12,6 +12,7 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.relaxng.edit.Combine;
 import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.List;
 import java.util.Map;

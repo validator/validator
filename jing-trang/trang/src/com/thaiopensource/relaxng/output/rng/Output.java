@@ -45,6 +45,7 @@ import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.output.common.XmlWriter;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
 
 import java.util.Map;

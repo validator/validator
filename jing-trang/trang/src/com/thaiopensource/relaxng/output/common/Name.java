@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.output.dtd;
+package com.thaiopensource.relaxng.output.common;
 
 final public class Name {
   private final String namespaceUri;
