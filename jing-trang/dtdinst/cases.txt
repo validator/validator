@@ -1,5 +1,3 @@
-Add TEI to test cases.
-
 Encoding detection
 
 expand general entity references for default values
