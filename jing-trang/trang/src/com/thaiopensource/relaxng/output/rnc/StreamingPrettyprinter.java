@@ -99,16 +99,17 @@ public class StreamingPrettyprinter implements Prettyprinter {
   /**
    * Maximum allowable line width (not including newline char).
    */
-  private int maxWidth = 40;
+  private final int maxWidth;
 
   private Group noBreakGroup = null;
 
-  public StreamingPrettyprinter(String lineSep, Writer w) {
+  public StreamingPrettyprinter(int maxWidth, String lineSep, Writer w) {
     this.lineSep = lineSep;
     this.w = w;
+    this.maxWidth = maxWidth;
+    this.availWidth = maxWidth;
     head = makeSegment();
     tail = head;
-    availWidth = maxWidth;
   }
 
   private Segment makeSegment() {
