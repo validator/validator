@@ -185,6 +185,7 @@ class Entity {
       int end = textIndexToAtomIndex(references[i].end);
       if (start >= 0
 	  && end >= 0
+	  && !(start == end && atomMaybePasted(start))
 	  && atomsAreProperlyNested(start, end, true)) {
 	if (newAtoms == null)
 	  newAtoms = new Vector();
@@ -285,6 +286,27 @@ class Entity {
 	break;
       }
     return level == 0;
+  }
+
+  private boolean atomMaybePasted(int i) {
+    if (i > 0) {
+      switch (((Atom)atoms.elementAt(i - 1)).getTokenType()) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_NMTOKEN:
+	return true;
+      }
+    }
+    if (i < atoms.size()) {
+      switch (((Atom)atoms.elementAt(i)).getTokenType()) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_NAME_QUESTION:
+      case Tokenizer.TOK_NAME_ASTERISK:
+      case Tokenizer.TOK_NAME_PLUS:
+      case Tokenizer.TOK_NMTOKEN:
+	return true;
+      }
+    }
+    return false;
   }
 
   static boolean sliceEqual(Vector v1, Vector v2, int start, int end) {
