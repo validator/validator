@@ -13,6 +13,7 @@ decl =
   | nameSpecDef
   | externalIdDef
   | overriddenDef
+  | duplicateDef
   | externalIdRef
   | includedSection
   | ignoredSection
@@ -32,6 +33,8 @@ nameSpecDef = element nameSpec { name, nameSpec }
 externalIdDef = element externalId { name, externalId }
 
 overriddenDef = element overridden { name, text }
+
+duplicateDef = element duplicate { name }
 
 includedSection = 
   element includedSection { attribute flag { xsd:NCName }?, decl* }

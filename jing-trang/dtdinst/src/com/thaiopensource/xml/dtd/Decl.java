@@ -69,7 +69,7 @@ class Decl {
     if (entity.decl == null)
       entity.decl = this;
     if (entity.decl != this)
-      return createOverriddenDef(name, ps);
+      return createOverriddenDef(entity, ps);
     if (entity.text == null)
       return new ExternalIdDef(name, entity.getExternalId());
     switch (entity.semantic) {
@@ -207,10 +207,12 @@ class Decl {
     return null;
   }
 
-  OverriddenDef createOverriddenDef(String name, ParamStream ps) {
+  OverriddenDef createOverriddenDef(Entity entity, ParamStream ps) {
     ps.advance();
     if (ps.type != Param.LITERAL)
       return null;
-    return new OverriddenDef(name, ps.value);
+    return new OverriddenDef(entity.name,
+			     ps.value,
+			     ps.value.equals(entity.entityValue));
   }
 }

@@ -2277,8 +2277,8 @@ components specific to verse -->
           </attributeGroup>
 <!--Now, we define the class of elements which can appear
 only within metrical elements-->
-          <overridden name="x.phrase.verse"></overridden>
-          <overridden name="m.phrase.verse">%x.phrase.verse; %n.caesura;</overridden>
+          <duplicate name="x.phrase.verse"/>
+          <duplicate name="m.phrase.verse"/>
 <!-- end of [DVEE]  9.1-->
         </externalIdRef>
       </includedSection>
@@ -2287,10 +2287,10 @@ only within metrical elements-->
         <externalIdRef name="TEI.drama.ent">
 <!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
 <!-- [DDRCLA] 10.: Class declarations for Performance Texts -->
-          <overridden name="x.dramafront"></overridden>
-          <overridden name="m.dramafront">%x.dramafront; %n.castList; | %n.epilogue; | %n.performance; | %n.prologue; | %n.set;</overridden>
-          <overridden name="x.stageDirection"></overridden>
-          <overridden name="m.stageDirection">%x.stageDirection; %n.camera; | %n.caption; | %n.move; | %n.sound; | %n.tech; | %n.view;</overridden>
+          <duplicate name="x.dramafront"/>
+          <duplicate name="m.dramafront"/>
+          <duplicate name="x.stageDirection"/>
+          <duplicate name="m.stageDirection"/>
           <modelGroup name="x.comp.drama">
             <choice/>
           </modelGroup>
@@ -2613,8 +2613,8 @@ tag set.-->
           </modelGroup>
 <!-- end of [DEDITPGR]  12.3.2-->
 <!-- [DEDIHW] 12.4: Classes for headword references -->
-          <overridden name="x.formPointers"></overridden>
-          <overridden name="m.formPointers">%x.formPointers; %n.oRef; | %n.oVar; | %n.pRef; | %n.pVar;</overridden>
+          <duplicate name="x.formPointers"/>
+          <duplicate name="m.formPointers"/>
           <attributeGroup name="a.formPointers">
             <attribute>
               <name>target</name>
@@ -3066,10 +3066,10 @@ Current versions are available from the Text Encoding Initiative.-->
         <externalIdRef name="TEI.names.dates.ent">
 <!-- TEI P4 DTD. Generated May 2001 by dtdGen -->
 <!-- [DNDENT] 20.: Additional classes for names and dates -->
-          <overridden name="x.personPart"></overridden>
-          <overridden name="m.personPart">%x.personPart; %n.addName; | %n.foreName; | %n.genName; | %n.nameLink; | %n.roleName; | %n.surname;</overridden>
-          <overridden name="x.placePart"></overridden>
-          <overridden name="m.placePart">%x.placePart; %n.bloc; | %n.country; | %n.distance; | %n.geog; | %n.offSet; | %n.region; | %n.settlement;</overridden>
+          <duplicate name="x.personPart"/>
+          <duplicate name="m.personPart"/>
+          <duplicate name="x.placePart"/>
+          <duplicate name="m.placePart"/>
           <modelGroup name="x.temporalExpr">
             <choice/>
           </modelGroup>
@@ -3373,9 +3373,7 @@ the global attributes.-->
           <default>NO</default>
         </attribute>
       </attributeGroup>
-      <overridden name="a.typed">
-      type CDATA #IMPLIED
-      subtype CDATA #IMPLIED</overridden>
+      <duplicate name="a.typed"/>
       <attributeGroup name="a.divn">
         <attribute>
           <name>type</name>
@@ -3413,8 +3411,7 @@ the global attributes.-->
           <default>N</default>
         </attribute>
       </attributeGroup>
-      <overridden name="a.enjamb">
-      enjamb CDATA #IMPLIED</overridden>
+      <duplicate name="a.enjamb"/>
       <attributeGroup name="a.interpret">
         <attribute>
           <name>resp</name>
@@ -3432,28 +3429,11 @@ the global attributes.-->
           <implied/>
         </attribute>
       </attributeGroup>
-      <overridden name="a.metrical">
-      met CDATA %INHERITED;
-      real CDATA #IMPLIED
-      rhyme CDATA #IMPLIED</overridden>
-      <overridden name="a.names">
-      key CDATA #IMPLIED
-      reg CDATA #IMPLIED</overridden>
-      <overridden name="a.personPart">
-      %a.names;
-      type CDATA #IMPLIED
-      full (yes | abb | init) &quot;yes&quot;
-      sort CDATA #IMPLIED</overridden>
-      <overridden name="a.placePart">
-      %a.names;
-      %a.typed;</overridden>
-      <overridden name="a.pointer">
-      type CDATA #IMPLIED
-      resp CDATA #IMPLIED
-      crdate CDATA #IMPLIED
-      targType CDATA #IMPLIED
-      targOrder (Y | N | U) &quot;U&quot;
-      evaluate (all | one | none) #IMPLIED</overridden>
+      <duplicate name="a.metrical"/>
+      <duplicate name="a.names"/>
+      <duplicate name="a.personPart"/>
+      <duplicate name="a.placePart"/>
+      <duplicate name="a.pointer"/>
       <attributeGroup name="a.seg">
         <attribute>
           <name>type</name>
@@ -3477,15 +3457,8 @@ the global attributes.-->
           <default>N</default>
         </attribute>
       </attributeGroup>
-      <overridden name="a.temporalExpr">
-      %a.names;
-      %a.typed;
-      value CDATA #IMPLIED
-      full (yes | abb | init) &quot;yes&quot;</overridden>
-      <overridden name="a.timed">
-      start IDREF #IMPLIED
-      end IDREF #IMPLIED
-      dur CDATA #IMPLIED</overridden>
+      <duplicate name="a.temporalExpr"/>
+      <duplicate name="a.timed"/>
       <attributeGroup name="a.xPointer">
         <attributeGroupRef name="a.pointer"/>
         <attribute>
@@ -6600,13 +6573,7 @@ are defined in file teicore2.dtd.-->
 using the general purpose NAME element-->
 <!-- end of [DCOAD]  6.4.2-->
 <!-- [DCOXR] 6.6: Simple cross references -->
-      <overridden name="a.pointer">
-      type CDATA #IMPLIED
-      resp CDATA #IMPLIED
-      crdate CDATA #IMPLIED
-      targType CDATA #IMPLIED
-      targOrder (Y | N | U) &quot;U&quot;
-      evaluate (all | one | none) #IMPLIED</overridden>
+      <duplicate name="a.pointer"/>
       <flag name="ptr">
         <include/>
       </flag>
@@ -10384,7 +10351,7 @@ to provide documentation that applies to the whole entry.-->
 since we are not now using the tag set for
 dictionaries.-->
           <overridden name="a.dictionaries"></overridden>
-          <overridden name="gram">INCLUDE</overridden>
+          <duplicate name="gram"/>
           <includedSection flag="gram">
             <element>
               <nameSpecRef name="n.gram"/>
@@ -10438,10 +10405,10 @@ Current versions are available from the Text Encoding Initiative.-->
 <!--This definition of the basic text structure is used by most
 TEI base tag sets; some bases, however, use slight variations
 upon it.-->
-          <overridden name="x.divtop"></overridden>
-          <overridden name="m.divtop">%x.divtop; %n.argument; | %n.byline; | %n.dateline; | %n.docAuthor; | %n.docDate; | %n.epigraph; | %n.head; | %n.opener; | %n.salute; | %n.signed;</overridden>
-          <overridden name="x.divbot"></overridden>
-          <overridden name="m.divbot">%x.divbot; %n.byline; | %n.closer; | %n.dateline; | %n.epigraph; | %n.salute; | %n.signed; | %n.trailer;</overridden>
+          <duplicate name="x.divtop"/>
+          <duplicate name="m.divtop"/>
+          <duplicate name="x.divbot"/>
+          <duplicate name="m.divbot"/>
 <!-- [DDSTEXT] 7.: Top-level parts of default structure -->
           <flag name="text">
             <include/>
@@ -11704,8 +11671,8 @@ upon it.-->
                 </attribute>
               </attlist>
             </includedSection>
-            <overridden name="x.tpParts"></overridden>
-            <overridden name="m.tpParts">%x.tpParts; %n.byline; | %n.docAuthor; | %n.docDate; | %n.docEdition; | %n.docImprint; | %n.docTitle; | %n.epigraph; | %n.figure; | %n.imprimatur; | %n.titlePart;</overridden>
+            <duplicate name="x.tpParts"/>
+            <duplicate name="m.tpParts"/>
 <!-- [DDSTPAGE] 7.5: Tags for title pages -->
             <flag name="titlePage">
               <include/>
@@ -16423,8 +16390,8 @@ Current versions are available from the Text Encoding Initiative.-->
         </includedSection>
 <!-- end of [DCCAHTD]  23.2.1-->
 <!-- [DCCAHPA] 23.2.2: Participants description -->
-        <overridden name="x.demographic"></overridden>
-        <overridden name="m.demographic">%x.demographic; %n.affiliation; | %n.birth; | %n.education; | %n.firstLang; | %n.langKnown; | %n.occupation; | %n.persName; | %n.residence; | %n.socecStatus;</overridden>
+        <duplicate name="x.demographic"/>
+        <duplicate name="m.demographic"/>
         <flag name="person">
           <include/>
         </flag>

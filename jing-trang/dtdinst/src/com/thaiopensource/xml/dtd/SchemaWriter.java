@@ -302,10 +302,16 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void overriddenDef(String name, String value) throws Exception {
-    w.startElement("overridden");
-    w.attribute("name", name);
-    w.characters(value);
+  public void overriddenDef(String name, String value, boolean duplicate) throws Exception {
+    if (duplicate) {
+      w.startElement("duplicate");
+      w.attribute("name", name);
+    }
+    else {
+      w.startElement("overridden");
+      w.attribute("name", name);
+      w.characters(value);
+    }
     w.endElement();
   }
 

@@ -374,7 +374,7 @@
         overridden, the default behaviour follows the overall DTD
         prefixing scheme.
 -->
-      <overridden name="NS.prefixed">IGNORE</overridden>
+      <duplicate name="NS.prefixed"/>
       <flag name="XHTML.prefixed">
         <flagRef name="NS.prefixed"/>
       </flag>
@@ -390,7 +390,7 @@
      NOTE: As specified in [XMLNAMES], the namespace prefix serves
      as a proxy for the URI reference, and is not in itself significant.
 -->
-      <overridden name="XHTML.prefix"></overridden>
+      <duplicate name="XHTML.prefix"/>
 <!-- 4. Declare parameter entities (eg., %XHTML.pfx;) containing the
         colonized prefix(es) (eg., '%XHTML.prefix;:') used when
         prefixing is active, an empty string when it is not.
@@ -419,7 +419,7 @@
 </ignoredSection>
 <!-- This is a placeholder for future XLink support.
 -->
-      <overridden name="XLINK.xmlns.attrib"></overridden>
+      <duplicate name="XLINK.xmlns.attrib"/>
 <!-- Declare a parameter entity %NS.decl.attrib; containing all
      XML namespace declaration attributes used by XHTML, including
      a default xmlns attribute when prefixing is inactive.
@@ -3764,7 +3764,7 @@
 -->
     <overridden name="NoRuby.content">( #PCDATA )</overridden>
 <!-- one or more digits (NUMBER) -->
-    <overridden name="Number.datatype">CDATA</overridden>
+    <duplicate name="Number.datatype"/>
 <!-- ruby element ...................................... -->
     <flag name="ruby.element">
       <include/>

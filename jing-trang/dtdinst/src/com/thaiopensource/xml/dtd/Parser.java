@@ -141,6 +141,7 @@ public class Parser extends Token {
       if (declState.entity != null) {
 	makeReplacementText();
 	declState.entity.text = valueBuf.getChars();
+	declState.entity.entityValue = token.substring(1, token.length() - 1);
 	declState.entity.mustReparse = valueBuf.getMustReparse();
 	declState.entity.references = valueBuf.getReferences();
       }

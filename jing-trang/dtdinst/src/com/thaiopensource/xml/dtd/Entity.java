@@ -21,6 +21,7 @@ class Entity {
     this.isParameter = isParameter;
   }
   char[] text;
+  String entityValue;
   String systemId;
   String publicId;
   String baseUri;
