@@ -33,22 +33,22 @@ pre { margin-left: 2em }
 
 <xsl:template match="h2">
   <h2><a name="{translate(normalize-space(),' ','_')}"/>
-<xsl:number/><xsl:text> </xsl:text><xsl:apply-templates/></h2>
+<xsl:for-each select=".."><xsl:number/></xsl:for-each><xsl:text> </xsl:text><xsl:apply-templates/></h2>
 </xsl:template>
 
 <xsl:template match="h2" mode="toc">
-  &#160;&#160;<xsl:number/><xsl:text> </xsl:text>
+  &#160;&#160;<xsl:for-each select=".."><xsl:number/></xsl:for-each><xsl:text> </xsl:text>
   <a href="#{translate(.,' ','_')}"><xsl:apply-templates/></a>
   <br/>
 </xsl:template>
 
-<xsl:template match="div[@class='back']/h2">
+<xsl:template match="div[@class='back']/div/h2">
   <h2><a name="{translate(.,' ','_')}"/>
-  <xsl:number format="A"/><xsl:text> </xsl:text><xsl:apply-templates/></h2>
+  <xsl:for-each select=".."><xsl:number format="A"/></xsl:for-each><xsl:text> </xsl:text><xsl:apply-templates/></h2>
 </xsl:template>
 
-<xsl:template match="div[@class='back']/h2" mode="toc">
-  &#160;&#160;<xsl:number format="A"/><xsl:text> </xsl:text>
+<xsl:template match="div[@class='back']/div/h2" mode="toc">
+  &#160;&#160;<xsl:for-each select=".."><xsl:number format="A"/></xsl:for-each><xsl:text> </xsl:text>
   <a href="#{translate(.,' ','_')}"><xsl:apply-templates/></a>
   <br/>
 </xsl:template>
@@ -61,7 +61,7 @@ pre { margin-left: 2em }
     <xsl:apply-templates select="../abstract/*"/>
   </xsl:if>
   <h2>Contents</h2>
-  <xsl:apply-templates select="../h2|../div/h2" mode="toc"/>
+  <xsl:apply-templates select="../../h2|../div/div/h2" mode="toc"/>
   <hr/>
 </xsl:template>
 
@@ -213,7 +213,7 @@ pre { margin-left: 2em }
 
 <xsl:template match="href">
   <a href="#{translate(normalize-space(),' ','_')}">
-    <xsl:for-each select="//h2[normalize-space()=normalize-space(current())]">
+    <xsl:for-each select="//h2[normalize-space()=normalize-space(current())]/..">
       <xsl:number/>
     </xsl:for-each>
     <xsl:text> </xsl:text>
