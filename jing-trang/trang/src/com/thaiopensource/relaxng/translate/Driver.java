@@ -143,7 +143,7 @@ public class Driver {
     return 1;
   }
 
-  void error(String message) {
+  private void error(String message) {
     eh.printException(new SAXException(message));
   }
 
