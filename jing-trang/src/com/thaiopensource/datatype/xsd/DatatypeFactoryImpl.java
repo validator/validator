@@ -73,11 +73,12 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("IDREF", ncNameType);
     typeTable.put("IDREFS", list(ncNameType));
 
+    typeTable.put("NOTATION", new QNameDatatype());
+
     // Partially implemented
     DatatypeBase entityType = ncNameType;
     typeTable.put("ENTITY", entityType);
     typeTable.put("ENTITIES", list(entityType));
-    typeTable.put("NOTATION", new NameDatatype());
     typeTable.put("language", new LanguageDatatype());
 
     // Not implemented yet
