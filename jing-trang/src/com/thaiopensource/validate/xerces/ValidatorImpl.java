@@ -169,6 +169,7 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
                                 symbolTable.addSymbol(atts.getType(i)),
                                 atts.getValue(i));
       schemaValidator.startElement(makeQName(namespaceURI, localName, qName), attributes, null);
+      attributes.removeAllAttributes();
     }
     catch (XNIException e) {
       throw toSAXException(e);
