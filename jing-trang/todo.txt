@@ -1,0 +1,15 @@
+Use SF datatype library interface.
+
+Support DTD compatibility use of ID/IDREF/IDREFS.
+
+Support DTD compatibility use of default values.
+
+Support Datatype guideliness.
+
+Handle <except> inside <data>
+
+Implement 7.1 restrictions
+
+Detect duplicate attributes
+
+Avoid slow error recovery with large schemas (eg DocBook).
