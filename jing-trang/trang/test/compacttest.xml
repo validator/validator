@@ -2055,6 +2055,24 @@ x |= element foo { empty }
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace eg = "http://www.example.com"
+
+[eg:foo [ "x" "y" ~ "z" "z" "y" ]]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns:eg="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <eg:foo>xyzzy</eg:foo>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>

@@ -1385,16 +1385,24 @@ ParsedElementAnnotation IdentifierAnnotationElement() :
 
 void AnnotationElementContent(ElementAnnotationBuilder eab) :
 {
-  Token t;
   ParsedElementAnnotation e;
 }
 {
   "[" { clearAttributeList(); }
   (LOOKAHEAD(2) AnnotationAttribute(eab))*
-  (t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t)); }
+  ((AnnotationElementLiteral(eab)
+    ("~" AnnotationElementLiteral(eab))*)
    | e = AnnotationElement() { eab.addElement(e); })*
   { eab.addComment(getComments()); }
   "]"
+}
+
+void AnnotationElementLiteral(ElementAnnotationBuilder eab) :
+{
+  Token t;
+}
+{
+  t = <LITERAL> { eab.addText(unquote(t.image), makeLocation(t)); }
 }
 
 String Literal() :
