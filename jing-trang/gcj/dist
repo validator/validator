@@ -41,7 +41,7 @@ com/thaiopensource/relaxng/SchemaFactory.java
 com/thaiopensource/validate
 "
 jing_test="dir.xsl exslt.xsl prep.xsl
-spectest.xml xsdtest.xml xsdtest.xsl mnstest.xml"
+spectest.xml xsdtest.xml xsdtest.xsl mnstest.xml nrltest.xml"
 
 if [ -f ../${a_jing_file} ]; then
     cd ..
@@ -66,7 +66,7 @@ trang_src_dir=${build_dir}/src/trang-${trang_version}
 
 mkdir -p ${jing_src_dir} ${trang_src_dir}
 
-(ls src/META-INF/services/*.*; find src -name '*.java' -or -name '*.jj' -or -name '*.properties' -or -name '*.rng') | cpio --quiet -p -d ${jing_src_dir}
+(ls src/META-INF/services/*.*; find src -name '*.java' -or -name '*.jj' -or -name '*.properties' -or -name '*.rng') | cpio --quiet -p -m -d ${jing_src_dir}
 
 cd ${jing_src_dir}/src
 rm -fr ${jing_unwanted}
@@ -116,9 +116,9 @@ cd ${top_dir}
 cp -a ${jing_src_dir}/src ${trang_src_dir}
 
 cd dtdinst
-find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ../${trang_src_dir}
 cd ../trang
-find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -m -d ../${trang_src_dir}
 cd ../${trang_src_dir}/src
 
 rm -fr ${jing_unwanted_in_trang}
