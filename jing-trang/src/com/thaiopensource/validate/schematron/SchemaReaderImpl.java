@@ -35,6 +35,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,7 @@ class SchemaReaderImpl implements SchemaReader {
     SchematronProperty.PHASE,
   };
 
-  SchemaReaderImpl(TransformerFactory transformerFactory) throws TransformerConfigurationException, IncorrectSchemaException {
+  SchemaReaderImpl(SAXTransformerFactory transformerFactory) throws TransformerConfigurationException, IncorrectSchemaException {
     this.transformerFactoryClass = transformerFactory.getClass();
     String resourceName = fullResourceName(SCHEMATRON_STYLESHEET);
     StreamSource source = new StreamSource(getResourceAsStream(resourceName));
@@ -304,7 +305,7 @@ class SchemaReaderImpl implements SchemaReader {
       catch (TransformerException e) {
         if (e.getException() instanceof IOException)
           throw (IOException)e.getException();
-        throw ValidatorImpl.toSAXException(e);
+        throw toSAXException(e);
       }
       if (ceh.getHadErrorOrFatalError())
         throw new SAXException(new IncorrectSchemaException());
@@ -410,7 +411,7 @@ class SchemaReaderImpl implements SchemaReader {
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
       Templates templates = transformerFactory.newTemplates(source);
-      return new SchemaImpl(templates, properties, supportedPropertyIds);
+      return new SchemaImpl(templates, transformerFactoryClass, properties, supportedPropertyIds);
     }
     catch (TransformerConfigurationException e) {
       throw toSAXException(e, errorListener.getHadError()
@@ -495,5 +496,17 @@ class SchemaReaderImpl implements SchemaReader {
       return ClassLoader.getSystemResourceAsStream(resourceName);
     else
       return cl.getResourceAsStream(resourceName);
+  }
+
+  static SAXException toSAXException(TransformerException transformerException) {
+    // Unwrap where possible
+    Throwable wrapped = transformerException.getException();
+    if (wrapped instanceof SAXException)
+      return (SAXException)wrapped;
+    if (wrapped instanceof RuntimeException)
+      throw (RuntimeException)wrapped;
+    if (wrapped instanceof Exception)
+      return new SAXException((Exception)wrapped);
+    return new SAXException(transformerException);
   }
 }

@@ -6,8 +6,8 @@ import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.SchemaReaderFactory;
 
 import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.sax.SAXTransformerFactory;
 
 public abstract class SchematronSchemaReaderFactory implements SchemaReaderFactory {
   public SchemaReader createSchemaReader(String namespaceUri) {
@@ -26,5 +26,5 @@ public abstract class SchematronSchemaReaderFactory implements SchemaReaderFacto
     return SchematronProperty.getOption(uri);
   }
 
-  public abstract TransformerFactory newTransformerFactory();
+  public abstract SAXTransformerFactory newTransformerFactory();
 }
