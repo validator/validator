@@ -3,6 +3,7 @@ package com.thaiopensource.xml.dtd;
 import java.io.Reader;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Vector;
 
 public class Parser extends Token {
   private Parser parent;
@@ -20,11 +21,58 @@ public class Parser extends Token {
   // Some temporary buffers
   private Buffer valueBuf;
   private Hashtable paramEntityTable;
+  private Vector atoms = new Vector();
+
+  static class Atom {
+    private int tokenType;
+    private String token;
+    private EntityImpl entity;
+
+    Atom(EntityImpl entity) {
+      this.entity = entity;
+      this.tokenType = -1;
+      this.token = null;
+    }
+
+    Atom(int tokenType, String token) {
+      this.tokenType = tokenType;
+      this.token = token;
+    }
+
+    final int getTokenType() {
+      return tokenType;
+    }
+
+    final String getToken() {
+      return token;
+    }
+
+    final EntityImpl getEntity() {
+      return entity;
+    }
+
+    public int hashCode() {
+      return token.hashCode();
+    }
+
+    public boolean equals(Object obj) {
+      if (obj == null || !(obj instanceof Atom))
+	return false;
+      Atom other = (Atom)obj;
+      if (this.entity != null)
+	return this.entity == other.entity;
+      else
+	return this.tokenType == other.tokenType && this.token.equals(other.token);
+    }
+  }
 
   static class EntityImpl {
+    final String name;
+    EntityImpl(String name) { this.name = name; }
     char[] text;
     boolean open;
     String notationName;
+    Vector atoms;
   }
 
   static class DeclState {
@@ -53,7 +101,12 @@ public class Parser extends Token {
     this.paramEntityTable = parent.paramEntityTable;
   }
 
-  public void parseDecls(boolean isInternal) throws IOException {
+  public void parse() throws IOException {
+    parseDecls(false);
+    dumpEntity("#doc", atoms);
+  }
+
+  private void parseDecls(boolean isInternal) throws IOException {
     PrologParser pp = new PrologParser(isInternal
 				       ? PrologParser.INTERNAL_ENTITY
 				       : PrologParser.EXTERNAL_ENTITY);
@@ -72,9 +125,7 @@ public class Parser extends Token {
 	  pp.end();
 	  break;
 	}
-	prologAction(pp.action(tok, buf, currentTokenStart, bufStart),
-		     pp,
-		     declState);
+	prologAction(tok, pp, declState);
       }
     }
     catch (PrologSyntaxException e) {
@@ -88,7 +139,13 @@ public class Parser extends Token {
     }
   }
 
-  private void prologAction(int action, PrologParser pp, DeclState declState) throws IOException {
+  private void prologAction(int tok, PrologParser pp, DeclState declState)
+    throws IOException, PrologSyntaxException {
+    if (tok != Tokenizer.TOK_PARAM_ENTITY_REF)
+      addAtom(new Atom(tok, new String(buf,
+				       currentTokenStart,
+				       bufStart - currentTokenStart)));
+    int action = pp.action(tok, buf, currentTokenStart, bufStart);
     switch (action) {
     case PrologParser.ACTION_GENERAL_ENTITY_NAME:
       declState.entity = null;
@@ -125,6 +182,8 @@ public class Parser extends Token {
 	  parser.parseDecls(entity.text != null);
 	else
 	  parser.parseInnerParamEntity(pp, declState);
+	entity.atoms = parser.atoms;
+	addAtom(new Atom(entity));
 	entity.open = false;
 	break;
       }
@@ -136,9 +195,7 @@ public class Parser extends Token {
     try {
       for (;;) {
 	int tok = tokenizeProlog();
-	prologAction(pp.action(tok, buf, currentTokenStart, bufStart),
-		     pp,
-		     declState);
+	prologAction(tok, pp, declState);
 	if (tok == Tokenizer.TOK_DECL_CLOSE)
 	  fatal("PE_DECL_NESTING");
       }
@@ -371,7 +428,7 @@ public class Parser extends Token {
     EntityImpl e = (EntityImpl)paramEntityTable.get(name);
     if (e != null)
       return null;
-    e = new EntityImpl();
+    e = new EntityImpl(name);
     paramEntityTable.put(name, e);
     return e;
   }
@@ -389,4 +446,50 @@ public class Parser extends Token {
     // XXX
     fatal("INVALID_TOKEN");
   }
+
+  private void addAtom(Atom a) {
+    atoms.addElement(a);
+  }
+
+  private void dumpEntity(String name, Vector atoms) {
+    System.out.println("<e name=\"" + name + "\">");
+    dumpAtoms(atoms);
+    System.out.println("</e>");
+  }
+
+  private void dumpAtoms(Vector v) {
+    int n = v.size();
+    for (int i = 0; i < n; i++) {
+      Atom a = (Atom)v.elementAt(i);
+      if (a.getTokenType() < 0) {
+	EntityImpl e = a.getEntity();
+	dumpEntity(e.name, e.atoms);
+      }
+      else {
+	System.out.print("<t>");
+	dumpString(a.getToken());
+	System.out.println("</t>");
+      }
+    }
+  }
+  
+  private void dumpString(String s) {
+    int n = s.length();
+    for (int i = 0; i < n; i++)
+      switch (s.charAt(i)) {
+      case '<':
+	System.out.print("&lt;");
+	break;
+      case '>':
+	System.out.print("&gt;");
+	break;
+      case '&':
+	System.out.print("&amp;");
+	break;
+      default:
+	System.out.print(s.charAt(i));
+	break;
+      }
+  }
+
 }

@@ -11,7 +11,7 @@ public class Driver {
   public static void main (String args[]) throws IOException {
     Reader r = new InputStreamReader(new BufferedInputStream(new FileInputStream(args[0])));
     Parser p = new Parser(r);
-    p.parseDecls(false);
+    p.parse();
   }
 
 }
