@@ -4,12 +4,6 @@ import java.io.Reader;
 import java.io.IOException;
 import java.util.Vector;
 
-/*
-TODO  Need to ensure newline normalization is done properly.
-Don't unexpand entities that are not properly nested.
-Don't expand empty entities that might be pasted.
-*/
-
 public class Parser extends Token {
   private Parser parent;
   private Reader in;
@@ -27,6 +21,7 @@ public class Parser extends Token {
   private ReplacementTextBuffer valueBuf;
   private DtdBuilder db;
   private Vector atoms = new Vector();
+  private final boolean isInternal;
 
   static class DeclState {
     Entity entity;
@@ -39,6 +34,7 @@ public class Parser extends Token {
     this.valueBuf = new ReplacementTextBuffer();
     this.bufEnd = 0;
     this.db = new DtdBuilder(atoms);
+    this.isInternal = false;
   }
 
   private Parser(char[] buf, String entityName, boolean isParameterEntity, Parser parent) {
@@ -52,6 +48,7 @@ public class Parser extends Token {
     this.bufEndStreamOffset = buf.length;
     this.valueBuf = parent.valueBuf;
     this.db = parent.db;
+    this.isInternal = true;
   }
 
   public DtdBuilder parse() throws IOException {
@@ -94,9 +91,7 @@ public class Parser extends Token {
 
   private void prologAction(int tok, PrologParser pp, DeclState declState)
     throws IOException, PrologSyntaxException {
-    String token = new String(buf,
-			      currentTokenStart,
-			      bufStart - currentTokenStart);
+    String token = bufferString(currentTokenStart, bufStart);
     addAtom(new Atom(tok, token));
     int action = pp.action(tok, token);
     switch (action) {
@@ -263,6 +258,12 @@ public class Parser extends Token {
   private void handleEntityValueToken(ReplacementTextBuffer value,
 				      int tok, int start, int end, Token t) throws IOException {
     switch (tok) {
+    case Tokenizer.TOK_DATA_NEWLINE:
+      if (!isInternal) {
+	value.append('\n');
+	break;
+      }
+      // fall through
     case Tokenizer.TOK_DATA_CHARS:
     case Tokenizer.TOK_ENTITY_REF:
     case Tokenizer.TOK_MAGIC_ENTITY_REF:
@@ -278,9 +279,6 @@ public class Parser extends Token {
       break;
     case Tokenizer.TOK_CHAR_PAIR_REF:
       value.appendRefCharPair(t);
-      break;
-    case Tokenizer.TOK_DATA_NEWLINE:
-      value.append('\n');
       break;
     case Tokenizer.TOK_PARAM_ENTITY_REF:
       String name = new String(buf, start + 1, end - start - 2);
@@ -348,7 +346,7 @@ public class Parser extends Token {
 	int sectStart = bufStart;
 	bufStart = Tokenizer.skipIgnoreSect(buf, bufStart, bufEnd);
 	addAtom(new Atom(Tokenizer.TOK_COND_SECT_CLOSE,
-			 new String(buf, sectStart, bufStart - sectStart)));
+			 bufferString(sectStart, bufStart)));
 	return;
       }
       catch (PartialTokenException e) {
@@ -429,4 +427,29 @@ public class Parser extends Token {
   private void setLastAtomEntity(Entity e) {
     ((Atom)atoms.elementAt(atoms.size() - 1)).setEntity(e);
   }
+
+  private final String bufferString(int start, int end) {
+    return normalizeNewlines(new String(buf, start, end - start));
+  }
+
+  private final String normalizeNewlines(String str) {
+    if (isInternal)
+      return str;
+    int i = str.indexOf('\r');
+    if (i < 0)
+      return str;
+    StringBuffer buf = new StringBuffer();
+    for (i = 0; i < str.length(); i++) {
+      char c = str.charAt(i);
+      if (c == '\r') {
+	buf.append('\n');
+	if (i + 1 < str.length() && str.charAt(i + 1) == '\n')
+	  i++;
+      }
+      else
+	buf.append(c);
+    }
+    return buf.toString();
+  }
+
 }
