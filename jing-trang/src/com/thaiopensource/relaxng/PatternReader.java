@@ -1269,6 +1269,7 @@ public class PatternReader implements ValidationContext {
       }
       catch (SAXParseException e) {
 	error(e);
+	return null;
       }
       pattern = pattern.expand(patternBuilder);
       try {
