@@ -211,12 +211,12 @@ public class PatternMatcher implements Cloneable, Matcher {
   }
 
   // members are of type Name
-  public Vector possibleStartTags() {
+  public Vector possibleStartTags(Vector knownNames) {
     // XXX
     return null;
   }
 
-  public Vector possibleAttributes() {
+  public Vector possibleAttributes(Vector knownNames) {
     // XXX
     return null;
   }
