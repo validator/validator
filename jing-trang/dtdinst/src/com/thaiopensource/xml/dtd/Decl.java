@@ -51,6 +51,8 @@ class Decl {
       return new Comment(value);
     case ELEMENT:
       return createElementDecl();
+    case ATTLIST:
+      return createAttlistDecl();
     case ENTITY:
       return createEntityDecl(db);
     }
@@ -79,6 +81,13 @@ class Decl {
     return new ElementDecl(name, mg);
   }
 
+  AttlistDecl createAttlistDecl() {
+    ParamStream ps = new ParamStream(params, true);
+    ps.advance();
+    String name = ps.value;
+    return new AttlistDecl(name, Param.paramsToAttributeGroup(ps));
+  }
+    
   TopLevel createEntityDecl(DtdBuilder db) {
     ParamStream ps = new ParamStream(params);
     ps.advance();
@@ -95,6 +104,13 @@ class Decl {
     case Entity.SEMANTIC_MODEL_GROUP:
       entity.modelGroup = Particle.particlesToModelGroup(entity.parsed);
       return new ModelGroupDef(name, entity.modelGroup);
+    case Entity.SEMANTIC_ATTRIBUTE_GROUP:
+      entity.attributeGroup = 
+	Param.paramsToAttributeGroup(entity.parsed);
+      return new AttributeGroupDef(name, entity.attributeGroup);
+    case Entity.SEMANTIC_DATATYPE:
+      entity.datatype = Param.paramsToDatatype(entity.parsed);
+      return new DatatypeDef(name, entity.datatype);
     }
     return null;
   }

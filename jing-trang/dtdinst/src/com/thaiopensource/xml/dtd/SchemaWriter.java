@@ -37,7 +37,7 @@ public class SchemaWriter implements TopLevelVisitor,
 
   public void attlistDecl(String name, AttributeGroup attributeGroup)
     throws Exception {
-    w.startElement("element");
+    w.startElement("attlist");
     w.attribute("name", name);
     attributeGroup.accept(this);
     w.endElement();
@@ -148,6 +148,7 @@ public class SchemaWriter implements TopLevelVisitor,
 			String defaultValue)
     throws Exception {
     w.startElement("attribute");
+    w.attribute("name", name);
     w.attribute("use", optional ? "optional" : "required");
     if (defaultValue != null)
       w.attribute("default", defaultValue);
@@ -174,34 +175,7 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void basicDatatype(int type) throws IOException {
-    String typeName = null;
-    switch (type) {
-    case Datatype.CDATA:
-      typeName = "CDATA";
-      break;
-    case Datatype.NMTOKEN:
-      typeName = "NMTOKEN";
-      break;
-    case Datatype.NMTOKENS:
-      typeName = "NMTOKENS";
-      break;
-    case Datatype.ID:
-      typeName = "ID";
-      break;
-    case Datatype.IDREF:
-      typeName = "IDREF";
-      break;
-    case Datatype.IDREFS:
-      typeName = "IDREFS";
-      break;
-    case Datatype.ENTITY:
-      typeName = "ENTITY";
-      break;
-    case Datatype.ENTITIES:
-      typeName = "ENTITIES";
-      break;
-    }
+  public void basicDatatype(String typeName) throws IOException {
     w.startElement("basic");
     w.attribute("name", typeName);
     w.endElement();

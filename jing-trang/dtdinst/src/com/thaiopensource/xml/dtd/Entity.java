@@ -47,6 +47,9 @@ class Entity {
 
   int semantic = SEMANTIC_NONE;
   ModelGroup modelGroup;
+  AttributeGroup attributeGroup;
+  EnumGroup enumGroup;
+  Datatype datatype;
 
   Decl decl;
 

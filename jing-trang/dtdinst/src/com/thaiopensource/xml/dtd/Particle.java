@@ -125,4 +125,10 @@ class Particle {
     else
       return new Choice(mgs);
   }
+
+  EnumGroup createEnumGroup() {
+    // XXX
+    return new EnumGroup(new EnumGroupMember[0]);
+  }
+
 }

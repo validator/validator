@@ -47,4 +47,71 @@ class Param {
       return false;
     return true;
   }
+
+  static AttributeGroup paramsToAttributeGroup(Vector v) {
+    return paramsToAttributeGroup(new ParamStream(v, true));
+  }
+
+  static AttributeGroup paramsToAttributeGroup(ParamStream ps) {
+    Vector ag = new Vector();
+    while (ps.advance()) {
+      AttributeGroupMember agm = null;
+      switch (ps.type) {
+      case REFERENCE:
+	agm = new AttributeGroupRef(ps.entity.name, ps.entity.attributeGroup);
+	break;
+      case EMPTY_ATTRIBUTE_GROUP:
+	break;
+      case ATTRIBUTE_NAME:
+	{
+	  String name = ps.value;
+	  Datatype datatype = paramsToDatatype(ps);
+	  ps.advance();
+	  boolean optional = true;
+	  String defaultValue = null;
+	  switch (ps.type) {
+	  case REQUIRED:
+	    optional = false;
+	    break;
+	  case FIXED:
+	    optional = false;
+	    ps.advance();
+	    // fall through
+	  case DEFAULT_ATTRIBUTE_VALUE:
+	    defaultValue = ps.value;
+	    break;
+	  }
+	  agm = new Attribute(name, optional, datatype, defaultValue);
+	}
+      }
+      if (agm != null)
+	ag.addElement(agm);
+    }
+    AttributeGroupMember[] members = new AttributeGroupMember[ag.size()];
+    for (int i = 0; i < members.length; i++)
+      members[i] = (AttributeGroupMember)ag.elementAt(i);
+    return new AttributeGroup(members);
+  }
+
+  static Datatype paramsToDatatype(Vector v) {
+    return paramsToDatatype(new ParamStream(v, true));
+  }
+
+  static Datatype paramsToDatatype(ParamStream ps) {
+    ps.advance();
+    switch (ps.type) {
+    case REFERENCE:
+      return new DatatypeRef(ps.entity.name, ps.entity.datatype);
+    case ATTRIBUTE_VALUE_GROUP:
+      return new EnumDatatype(ps.group.createEnumGroup());
+    case ATTRIBUTE_TYPE_NOTATION:
+      ps.advance();
+      return new NotationDatatype(ps.group.createEnumGroup());
+    case ATTRIBUTE_TYPE:
+      return new BasicDatatype(ps.value);
+    }
+    throw new Error();
+  }
+
+
 }

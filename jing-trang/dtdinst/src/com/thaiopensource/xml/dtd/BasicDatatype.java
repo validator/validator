@@ -1,18 +1,22 @@
 package com.thaiopensource.xml.dtd;
 
 public class BasicDatatype extends Datatype {
-  private final int type;
+  private final String typeName;
 
-  public BasicDatatype(int type) {
-    this.type = type;
+  public BasicDatatype(String typeName) {
+    this.typeName = typeName;
   }
 
   public int getType() {
-    return type;
+    return BASIC;
+  }
+
+  public String getTypeName() {
+    return typeName;
   }
 
   public void accept(DatatypeVisitor visitor) throws Exception {
-    visitor.basicDatatype(type);
+    visitor.basicDatatype(typeName);
   }
 }
 
