@@ -5,9 +5,15 @@ import org.xml.sax.Locator;
 class RestrictionViolationException extends Exception {
   private String messageId;
   private Locator loc;
+  private Name name;
 
   RestrictionViolationException(String messageId) {
     this.messageId = messageId;
+  }
+
+  RestrictionViolationException(String messageId, Name name) {
+    this.messageId = messageId;
+    this.name = name;
   }
 
   String getMessageId() {
@@ -21,6 +27,10 @@ class RestrictionViolationException extends Exception {
   void maybeSetLocator(Locator loc) {
     if (this.loc == null)
       this.loc = loc;
+  }
+
+  Name getName() {
+    return name;
   }
 }
   

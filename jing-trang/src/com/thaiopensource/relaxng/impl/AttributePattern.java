@@ -47,8 +47,12 @@ class AttributePattern extends Pattern {
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_attribute");
     }
-    if (!dad.addAttribute(nameClass))
-      throw new RestrictionViolationException("duplicate_attribute");
+    if (!dad.addAttribute(nameClass)) {
+      if (nameClass instanceof SimpleNameClass)
+        throw new RestrictionViolationException("duplicate_attribute_detail", ((SimpleNameClass)nameClass).getName());
+      else
+        throw new RestrictionViolationException("duplicate_attribute");
+    }
     try {
       p.checkRestrictions(ATTRIBUTE_CONTEXT, null, null);
     }
