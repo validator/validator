@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.5 2001-09-20 03:42:02 jjc Exp $ -->
+<!-- $Id: testSuite.rng,v 1.6 2001-09-20 04:20:49 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
@@ -94,15 +94,31 @@
 
   <define name="resources">
     <zeroOrMore>
-      <element name="resource">
-        <!-- systemId must be a relative URI; the base URI for
-             interpreting this will be the base URI
-             of the input schema of the test case; each testCase
-             has a separate directory of resources -->
-        <attribute name="systemId"/>
-        <ref name="anyElement"/>
-      </element>
+      <choice>
+	<element name="resource">
+	  <attribute name="name">
+            <ref name="pathSegment"/>
+          </attribute>
+	  <ref name="anyElement"/>
+	</element>
+        <element name="dir">
+          <attribute name="name">
+            <ref name="pathSegment"/>
+          </attribute>
+          <ref name="resources"/>
+        </element>
+      </choice>
     </zeroOrMore>
+  </define>
+
+  <!-- A relative URI segment. -->
+
+  <define name="pathSegment">
+    <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+          type="string">
+      <!-- one or more RFC 2396 pchars -->
+      <param name="pattern">[-A-Za-z0-9:@&amp;=+$,_.!~*'()]+</param>
+    </data>
   </define>
   
 </grammar>
