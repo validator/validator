@@ -492,6 +492,7 @@ class Parser extends Token {
 
   private Vector tokenizeOverriddenEntity(char[] text) {
     Vector v = new Vector();
+    int level = 0;
     try {
       Token t = new Token();
       int start = 0;
@@ -506,6 +507,27 @@ class Parser extends Token {
 	  tok = e.getTokenType();
 	  tokenEnd = text.length;
 	}
+	switch (tok) {
+	case Tokenizer.TOK_COND_SECT_OPEN:
+	case Tokenizer.TOK_OPEN_PAREN:
+	case Tokenizer.TOK_OPEN_BRACKET:
+	case Tokenizer.TOK_DECL_OPEN:
+	  level++;
+	  break;
+	case Tokenizer.TOK_CLOSE_PAREN:
+	case Tokenizer.TOK_CLOSE_PAREN_ASTERISK:
+	case Tokenizer.TOK_CLOSE_PAREN_QUESTION:
+	case Tokenizer.TOK_CLOSE_PAREN_PLUS:
+	case Tokenizer.TOK_CLOSE_BRACKET:
+	case Tokenizer.TOK_DECL_CLOSE:
+	  if (--level < 0)
+	    return null;
+	  break;
+	case Tokenizer.TOK_COND_SECT_CLOSE:
+	  if ((level -= 2) < 0)
+	    return null;
+	  break;
+	}
 	v.addElement(new Atom(tok,
 			      new String(text, start, tokenEnd - start)));
 	
@@ -513,6 +535,8 @@ class Parser extends Token {
       }
     }
     catch (EmptyTokenException e) {
+      if (level != 0)
+	return null;
       return v;
     }
     catch (EndOfPrologException e) { }
