@@ -1038,7 +1038,14 @@ element sections.  When an action is applied to an attribute section,
 it returns error information and either an attribute section or an
 empty list.</p>
 
-<p>XXX explain sequence</p>
+<p>In the NRL syntax, a rule can contain multiple actions.  This is
+represented in the formalization using a Sequence action.  The
+sequence action discards results (other than error information) from
+the first action.  Only two actions can produce results other than
+error information: attach and unwrap.  The NRL syntax allows at most
+one such action in a rule.  When constructing a sequence representing
+a set of actions in a rule, this action, if any, must be the last
+action in the sequence.</p>
 
 <p>Here is a formalization in Haskell:</p>
 
