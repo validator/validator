@@ -32,6 +32,8 @@ class SchemaImpl implements Schema {
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
+  private static final boolean STRICT_DEFAULT = true;
+  private static final boolean STRICT_ATTRIBUTES_DEFAULT = true;
 
   static private final class WrappedIOException extends RuntimeException {
     private final IOException exception;
@@ -84,8 +86,8 @@ class SchemaImpl implements Schema {
   static class Mode {
     private Locator whereDefined;
     private boolean defined = false;
-    private boolean strict = false;
-    private boolean strictAttributes = false;
+    private boolean strict = STRICT_DEFAULT;
+    private boolean strictAttributes = STRICT_ATTRIBUTES_DEFAULT;
     private boolean strictDefined = false;
     private boolean strictAttributesDefined = false;
     private final Hashtable elementMap = new Hashtable();

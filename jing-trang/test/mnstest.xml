@@ -13,6 +13,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng"/>
+  <lax/>
 </rules>
 </correct>
 <valid>
@@ -63,6 +64,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validateAttributes ns="http://www.example.com" schema="a.rng"/>
+  <lax/>
 </rules>
 </correct>
 <valid>
@@ -90,6 +92,8 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
+  <lax/>
+  <laxAttributes/>
 </rules>
 </correct>
 <valid>
@@ -162,7 +166,10 @@
 </testCase>
 <testCase>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/mns"/>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+<lax/>
+<laxAttributes/>
+</rules>
 </correct>
 <valid>
 <a/>
@@ -195,6 +202,7 @@
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="http://www.example.com/a" schema="a.rng" prune="true"/>
   <validateAttributes ns="http://www.example.com/b" schema="b.rng"/>
+  <lax/>
 </rules>
 </correct>
 <valid>
@@ -249,6 +257,7 @@
   <validate ns="http://www.example.com" schema="a.rng">
     <cover ns=""/>
   </validate>
+  <lax/>
 </rules>
 </correct>
 <valid>
@@ -326,6 +335,7 @@
   <validate ns="http://www.example.com/a" schema="a.rng" prune="true">
     <cover ns="http://www.example.com/b"/>
   </validate>
+  <lax/>
 </rules>
 </correct>
 <valid>
@@ -577,7 +587,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
-  <strict/>
+  <laxAttributes/>
 </rules>
 </correct>
 <valid>
@@ -598,7 +608,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
-  <strictAttributes/>
+  <lax/>
 </rules>
 </correct>
 <invalid>
