@@ -6,7 +6,7 @@ abstract class ValueSelectionHandler implements SelectionHandler {
   }
 
   class ValueHandlerImpl implements ValueHandler {
-    private StringBuffer buf = new StringBuffer();
+    private final StringBuffer buf = new StringBuffer();
     public void characters(ErrorContext ec, char[] chars, int start, int len) {
       buf.append(chars, start, len);
     }

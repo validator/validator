@@ -7,7 +7,7 @@ import com.thaiopensource.validate.Option;
 import com.thaiopensource.util.PropertyMap;
 
 public class PiclSchemaReceiverFactory implements SchemaReceiverFactory {
-  static final String PICL_URI = SchemaReader.BASE_URI + "picl";
+  private static final String PICL_URI = SchemaReader.BASE_URI + "picl";
   public SchemaReceiver createSchemaReceiver(String namespaceUri, PropertyMap properties) {
     if (!PICL_URI.equals(namespaceUri))
       return null;

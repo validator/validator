@@ -7,9 +7,9 @@ class PatternBuilder {
   static final byte ATTRIBUTE = 1;
 
   private boolean hadDescendantOrSelf = false;
-  private Vector choices = new Vector();
-  private Vector names = new Vector();
-  private Vector descendantsOrSelf = new Vector();
+  private final Vector choices = new Vector();
+  private final Vector names = new Vector();
+  private final Vector descendantsOrSelf = new Vector();
   private static final int NO_ATTRIBUTE = 0;
   private static final int LAST_WAS_ATTRIBUTE = 1;
   private static final int NON_LEAF_ATTRIBUTE = 2;

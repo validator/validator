@@ -19,7 +19,7 @@ class PatternParser {
   private String tokenLocalName;
   private final PatternBuilder builder = new PatternBuilder();
   private NamespaceContext namespaceContext;
-  private StringBuffer nameBuffer = new StringBuffer();
+  private final StringBuffer nameBuffer = new StringBuffer();
 
   private static final int TOKEN_EOF  = 0;
   private static final int TOKEN_SLASH  = 1;
@@ -110,7 +110,7 @@ class PatternParser {
   }
 
 
-  void advance() throws SAXException, InvalidPatternException {
+  private void advance() throws SAXException, InvalidPatternException {
     for (;;) {
       tokenStartOffset = patternOffset;
       if (patternOffset >= patternLength) {
@@ -230,19 +230,19 @@ class PatternParser {
     return ch > 0x80 || Character.isLetterOrDigit(ch) || ".-_".indexOf(ch) >= 0;
   }
 
-  InvalidPatternException error(String key) throws SAXException {
+  private InvalidPatternException error(String key) throws SAXException {
     if (eh != null)
       eh.error(new SAXParseException(addContext(localizer.message(key)), locator));
     return new InvalidPatternException();
   }
 
-  InvalidPatternException error(String key, String arg) throws SAXException {
+  private InvalidPatternException error(String key, String arg) throws SAXException {
     if (eh != null)
       eh.error(new SAXParseException(addContext(localizer.message(key, arg)), locator));
     return new InvalidPatternException();
   }
 
-  String addContext(String message) {
+  private String addContext(String message) {
     return localizer.message("context",
                              new Object[] {
                                message,

@@ -3,7 +3,7 @@ package com.thaiopensource.validate.picl;
 abstract class PathPattern extends Pattern {
   private final String[] names;
   private final boolean[] descendantsOrSelf;
-  static String ANY = "#any";
+  static final String ANY = "#any";
 
   PathPattern(String[] names, boolean[] descendantsOrSelf) {
     this.names = names;

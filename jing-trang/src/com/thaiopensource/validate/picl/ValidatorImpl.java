@@ -24,10 +24,10 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
   private final AttributePath attributePath = new AttributePath();
   private Locator locator;
   private final ErrorHandler eh;
-  private Localizer localizer = new Localizer(ValidatorImpl.class);
+  private final Localizer localizer = new Localizer(ValidatorImpl.class);
 
   private static class WrappedSAXException extends RuntimeException {
-    SAXException exception;
+    final SAXException exception;
 
     WrappedSAXException(SAXException exception) {
       this.exception = exception;
@@ -35,9 +35,9 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
   }
 
   static class ActivePattern {
-    int rootDepth;
-    Pattern pattern;
-    SelectionHandler handler;
+    final int rootDepth;
+    final Pattern pattern;
+    final SelectionHandler handler;
 
     ActivePattern(int rootDepth, Pattern pattern, SelectionHandler handler) {
       this.rootDepth = rootDepth;
@@ -47,8 +47,8 @@ class ValidatorImpl extends DefaultHandler implements Validator, Path, PatternMa
   }
 
   static class OpenElement {
-    String namespaceUri;
-    String localName;
+    final String namespaceUri;
+    final String localName;
     int nActivePatterns;
     int nValueHandlers;
 
