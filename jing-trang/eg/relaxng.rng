@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.18 2001-07-04 08:16:17 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.19 2001-07-13 00:27:08 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -19,16 +19,9 @@
       <element name="attribute">
         <ref name="common-atts"/>
         <choice>
-          <group>
-            <attribute name="name">
-              <data type="QName"/>
-            </attribute>
-            <optional>
-              <attribute name="global">
-                <data type="boolean"/>
-              </attribute>
-            </optional>
-          </group>
+	  <attribute name="name">
+	    <data type="QName"/>
+	  </attribute>
           <ref name="open-name-class"/>
         </choice>
         <interleave>
