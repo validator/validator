@@ -1635,7 +1635,7 @@ applies at the syntax level.</documentation>
 </element>
 </correct>
 <valid>
-<eg:foo xmlns:eg="http://www.example.com" eg:bar="x"/>
+<eg:foo eg:bar="x" xmlns:eg="http://www.example.com"/>
 </valid>
 <invalid>
 <eg:foo xmlns:eg="http://www.example.com" bar="x"/>
@@ -2360,6 +2360,54 @@ applies at the syntax level.</documentation>
 </testSuite>
 <testSuite>
 <section>4.18</section>
+<testCase>
+<section>4.18</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <element name="foo">
+      <ref name="bar"/>
+    </element>
+  </start>
+  <define name="bar">
+    <optional>
+      <element name="bar">
+        <empty/>
+      </element>
+      <ref name="bar"/>
+    </optional>
+  </define>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.18</section>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <element name="foo">
+      <ref name="bar"/>
+    </element>
+  </start>
+  <define name="bar">
+    <element name="bar">
+      <optional>
+        <ref name="bar"/>
+      </optional>
+    </element>
+  </define>
+</grammar>
+</correct>
+<valid>
+<foo><bar/></foo>
+</valid>
+<valid>
+<foo><bar><bar/></bar></foo>
+</valid>
+<invalid>
+<foo/>
+</invalid>
+</testCase>
 <testCase>
 <section>4.18</section>
 <section>4.19</section>
