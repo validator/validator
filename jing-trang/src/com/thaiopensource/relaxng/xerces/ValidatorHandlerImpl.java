@@ -157,6 +157,7 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
           throws SAXException {
     try {
       schemaValidator.endDocument(null);
+      complete = true;
     }
     catch (XNIException e) {
       throw toSAXException(e);
