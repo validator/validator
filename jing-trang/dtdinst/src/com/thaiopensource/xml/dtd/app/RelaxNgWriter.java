@@ -7,8 +7,10 @@ import java.util.Enumeration;
 import com.thaiopensource.xml.dtd.om.*;
 import com.thaiopensource.xml.out.XmlWriter;
 import com.thaiopensource.xml.em.ExternalId;
+import com.thaiopensource.xml.util.Localizer;
 
 public class RelaxNgWriter {
+  static Localizer localizer = new Localizer(RelaxNgWriter.class);
   private XmlOutputCollection outCollection;
   private XmlWriter w;
   private XmlOutputMember outMember;
@@ -16,6 +18,7 @@ public class RelaxNgWriter {
   private Hashtable elementNameTable = new Hashtable();
   private Hashtable defTable = new Hashtable();
   private Hashtable prefixTable = new Hashtable();
+  private ErrorMessageHandler errorMessageHandler = null;
 
   private String defaultNamespace = null;
 
@@ -429,6 +432,10 @@ public class RelaxNgWriter {
     this.outCollection = outCollection;
   }
 
+  public void setErrorMessageHandler(ErrorMessageHandler handler) {
+    errorMessageHandler = handler;
+  }
+
   public void writeDtd(Dtd dtd) throws IOException {
     try {
       dtd.accept(new Analyzer());
@@ -595,14 +602,25 @@ public class RelaxNgWriter {
 
   void noteAttribute(String name, String defaultValue) {
     if (name.equals("xmlns")) {
-      // XXX check for inconsistency
-      if (defaultValue != null)
-	defaultNamespace = defaultValue;
+      if (defaultValue != null) {
+	if (defaultNamespace != null
+	    && !defaultNamespace.equals(defaultValue))
+	  error("INCONSISTENT_DEFAULT_NAMESPACE");
+	else
+	  defaultNamespace = defaultValue;
+      }
     }
     else if (name.startsWith("xmlns:")) {
-      // XXX check for inconsistency
-      if (defaultValue != null)
-	prefixTable.put(name.substring(6), defaultValue);
+      if (defaultValue != null) {
+	String prefix = name.substring(6);
+	String ns = (String)prefixTable.get(prefix);
+	if (ns != null
+	    && !ns.equals("")
+	    && !ns.equals(defaultValue))
+	  error("INCONSISTENT_PREFIX", prefix);
+	else if (!prefix.equals("xml"))
+	  prefixTable.put(prefix, defaultValue);
+      }
     }
     else
       noteNamePrefix(name);
@@ -613,7 +631,7 @@ public class RelaxNgWriter {
     if (i < 0)
       return;
     String prefix = name.substring(0, i);
-    if (prefixTable.get(prefix) == null)
+    if (prefixTable.get(prefix) == null && !prefix.equals("xml"))
       prefixTable.put(prefix, "");
   }
 
@@ -666,7 +684,7 @@ public class RelaxNgWriter {
       if (ns.length() != 0)
 	w.attribute("xmlns:" + prefix, ns);
       else
-	; // XXX give an error
+	error("UNDECLARED_PREFIX", prefix);
     }
     if (defaultNamespace != null)
       w.attribute("ns", defaultNamespace);
@@ -741,5 +759,34 @@ public class RelaxNgWriter {
   
   void endGrammar() throws IOException {
     w.endElement();
+  }
+
+  void error(String key) {
+    reportError(localizer.message(key));
+  }
+
+  void error(String key, String arg) {
+    reportError(localizer.message(key, arg));
+  }
+
+  void warning(String key) {
+    reportWarning(localizer.message(key));
+  }
+
+  void warning(String key, String arg) {
+    reportWarning(localizer.message(key, arg));
+  }
+
+  private void reportError(String message) {
+    report(new ErrorMessage(ErrorMessage.ERROR, message));
+  }
+
+  private void reportWarning(String message) {
+    report(new ErrorMessage(ErrorMessage.WARNING, message));
+  }
+
+  private void report(ErrorMessage em) {
+    if (errorMessageHandler != null)
+      errorMessageHandler.message(em);
   }
 }

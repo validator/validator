@@ -6,8 +6,6 @@ RELAX NG: Handle multiple refs to same external entity safely.
 
 Command-line option parser.
 
-Allow RelaxNgWriter to report errors.
-
 Add DtdParseException to om package.
 
 Maybe better to avoid empty sequences and empty choices in the object
