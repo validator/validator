@@ -217,6 +217,7 @@ autoconf
 
 rm -fr autom4te*
 
+sed -e "/^Version:/s/:.*/: ${prog_version}/" ${top_dir}/gcj/${prog}.spec >${prog}.spec
 cat >copying.txt <<EOF
 Except as otherwise stated, the following license applies to this software.
 
