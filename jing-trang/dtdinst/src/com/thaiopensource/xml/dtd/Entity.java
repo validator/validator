@@ -87,8 +87,13 @@ class Entity {
     if (parsed.size() == 1 && end - start == 1) {
       if (level == PARAM_LEVEL && referenceLevel == PARTICLE_LEVEL) {
 	if (paramParticleConsistent((Param)v.elementAt(start),
-				    (Particle)parsed.elementAt(0)))
+				    (Particle)parsed.elementAt(0))) {
+	  // For element name case, otherwise particle will be
+	  // ambiguous with model group.
+	  referenceLevel = PARAM_LEVEL;
+	  parsed.setElementAt(v.elementAt(start), 0);
 	  return;
+	}
       }
       else if (level == PARTICLE_LEVEL && referenceLevel == PARAM_LEVEL) {
 	if (paramParticleConsistent((Param)parsed.elementAt(0),
