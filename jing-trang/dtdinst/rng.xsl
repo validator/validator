@@ -28,6 +28,14 @@
   <xsl:comment><xsl:value-of select="."/></xsl:comment>
 </xsl:template>
 
+<xsl:template match="processingInstruction">
+  <xsl:text>
+</xsl:text>
+  <xsl:processing-instruction name="{@target}">
+    <xsl:value-of select="."/>
+  </xsl:processing-instruction>
+</xsl:template>
+
 <xsl:template match="doctype">
   <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
     <xsl:apply-templates/>
