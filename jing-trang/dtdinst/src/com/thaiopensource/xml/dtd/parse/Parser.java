@@ -143,38 +143,31 @@ class Parser extends Token {
       declState.entity = db.createParamEntity(token);
       break;
     case PrologParser.ACTION_ENTITY_PUBLIC_ID:
-      if (declState.entity != null) {
-	try {
-	  declState.entity.publicId = Tokenizer.getPublicId(buf,
-							    currentTokenStart,
-							    bufStart);
-	}
-	catch (InvalidTokenException e) {
-	  currentTokenStart = e.getOffset();
-	  fatal("INVALID_PUBLIC_ID");
-	}
+      try {
+	declState.entity.publicId = Tokenizer.getPublicId(buf,
+							  currentTokenStart,
+							  bufStart);
+      }
+      catch (InvalidTokenException e) {
+	currentTokenStart = e.getOffset();
+	fatal("INVALID_PUBLIC_ID");
       }
       break;
     case PrologParser.ACTION_ENTITY_SYSTEM_ID:
-      if (declState.entity != null) {
-	declState.entity.systemId = token.substring(1, token.length() - 1);
-	declState.entity.baseUri = baseUri;
-      }
+      declState.entity.systemId = token.substring(1, token.length() - 1);
+      declState.entity.baseUri = baseUri;
       break;
     case PrologParser.ACTION_ENTITY_NOTATION_NAME:
-      if (declState.entity != null)
-	declState.entity.notationName = token;
+      declState.entity.notationName = token;
       break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
-      if (declState.entity != null) {
-	makeReplacementText();
-	declState.entity.text = valueBuf.getChars();
-	declState.entity.entityValue = token.substring(1, token.length() - 1);
-	declState.entity.mustReparse = valueBuf.getMustReparse();
-	if (declState.entity.mustReparse)
-	  declState.entity.problem = Entity.REPARSE_PROBLEM;
-	declState.entity.references = valueBuf.getReferences();
-      }
+      makeReplacementText();
+      declState.entity.text = valueBuf.getChars();
+      declState.entity.entityValue = token.substring(1, token.length() - 1);
+      declState.entity.mustReparse = valueBuf.getMustReparse();
+      if (declState.entity.mustReparse)
+	declState.entity.problem = Entity.REPARSE_PROBLEM;
+      declState.entity.references = valueBuf.getReferences();
       break;
     case PrologParser.ACTION_INNER_PARAM_ENTITY_REF:
     case PrologParser.ACTION_OUTER_PARAM_ENTITY_REF:

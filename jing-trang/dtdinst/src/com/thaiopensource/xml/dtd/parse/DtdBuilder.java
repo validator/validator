@@ -28,11 +28,16 @@ class DtdBuilder {
   }
 
   Entity createParamEntity(String name) {
-    Entity e = (Entity)paramEntityTable.get(name);
-    if (e != null)
-      return null;
-    e = new Entity(name, true);
-    paramEntityTable.put(name, e);
+    Entity e = new Entity(name, true);
+    Entity prev = (Entity)paramEntityTable.get(name);
+    if (prev != null) {
+      while (prev.overrides != null)
+	prev = prev.overrides;
+      prev.overrides = e;
+      e.overridden = true;
+    }
+    else
+      paramEntityTable.put(name, e);
     return e;
   }
 
@@ -41,11 +46,16 @@ class DtdBuilder {
   }
 
   Entity createGeneralEntity(String name) {
-    Entity e = (Entity)generalEntityTable.get(name);
-    if (e != null)
-      return null;
-    e = new Entity(name, false);
-    generalEntityTable.put(name, e);
+    Entity e = new Entity(name, false);
+    Entity prev = (Entity)generalEntityTable.get(name);
+    if (prev != null) {
+      while (prev.overrides != null)
+	prev = prev.overrides;
+      prev.overrides = e;
+      e.overridden = true;
+    }
+    else
+      generalEntityTable.put(name, e);
     return e;
   }
 

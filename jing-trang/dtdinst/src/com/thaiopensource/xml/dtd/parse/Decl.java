@@ -68,10 +68,23 @@ class Decl {
     ps.advance();
     String name = ps.value;
     Entity entity = db.lookupParamEntity(name);
-    if (entity.decl == null)
+    if (entity.decl == null) {
       entity.decl = this;
-    if (entity.decl != this)
-      return createOverriddenDef(entity, ps);
+      return createDef(db, entity);
+    }
+    else {
+      Entity overridden = entity.overrides;
+      while (overridden.decl != null)
+	overridden = overridden.overrides;
+      overridden.decl = this;
+      return new OverriddenDef(createDef(db, overridden),
+			       entity.entityValue != null
+			       && entity.entityValue.equals(overridden.entityValue));
+    }
+  }
+
+  Def createDef(DtdBuilder db, Entity entity) {
+    String name = entity.name;
     if (entity.text == null)
       return new ExternalIdDef(name, entity.getExternalId());
     switch (entity.semantic) {
@@ -98,7 +111,7 @@ class Decl {
       entity.attributeDefault = Param.paramsToAttributeDefault(entity.parsed);
       return new AttributeDefaultDef(name, entity.attributeDefault);
     }
-    if (entity.problem == Entity.NO_PROBLEM)
+    if (entity.problem == Entity.NO_PROBLEM && !entity.overridden)
       throw new RuntimeException("unexplained problem for entity " + entity.name);
     return new ParamDef(name, entity.entityValue);
   }
@@ -217,13 +230,5 @@ class Decl {
     ps.advance();
     return new NotationDecl(ps.value,
 			    db.lookupNotation(ps.value).getExternalId());
-  }
-
-  OverriddenDef createOverriddenDef(Entity entity, ParamStream ps) {
-    ps.advance();
-    if (ps.type != Param.LITERAL)
-      return null;
-    return new OverriddenDef(new ParamDef(entity.name, ps.value),
-			     ps.value.equals(entity.entityValue));
   }
 }

@@ -17,8 +17,6 @@ Check for duplicate ELEMENT declarations.
 
 Overridden general entity declarations.
 
-Overridden external parameter entity declarations.
-
 Try to parse overridden declarations.
 
 Command-line options to expand/not recognize various kinds of ref.

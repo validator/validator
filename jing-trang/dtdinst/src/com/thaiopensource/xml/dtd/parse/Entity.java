@@ -29,6 +29,8 @@ class Entity {
   String systemId;
   String publicId;
   String baseUri;
+  Entity overrides;
+  boolean overridden;
   // Which parts of text came from references?
   Reference[] references;
   boolean open;
