@@ -2,14 +2,16 @@ package com.thaiopensource.relaxng.util;
 
 import java.util.ResourceBundle;
 import java.text.MessageFormat;
-import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.io.OutputStream;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 
 class ErrorHandlerImpl implements ErrorHandler {
-  private PrintStream err;
+  private PrintWriter err;
   
   private String bundleName
     = "com.thaiopensource.relaxng.util.resources.Messages";
@@ -17,11 +19,19 @@ class ErrorHandlerImpl implements ErrorHandler {
   private ResourceBundle bundle = null;
 
   public ErrorHandlerImpl() {
-    this.err = System.err;
+    this(System.err);
   }
 
-  public ErrorHandlerImpl(PrintStream err) {
-    this.err = err;
+  public ErrorHandlerImpl(OutputStream os) {
+    this.err = new PrintWriter(os);
+  }
+
+  public ErrorHandlerImpl(Writer w) {
+    this.err = new PrintWriter(w);
+  }
+
+  public void close() {
+    err.close();
   }
 
   private String getString(String key) {
@@ -63,8 +73,10 @@ class ErrorHandlerImpl implements ErrorHandler {
   }
 
   void print(String message) {
-    if (message.length() != 0)
+    if (message.length() != 0) {
       err.println(message);
+      err.flush();
+    }
   }
 
   private String formatLocation(SAXParseException e) {
