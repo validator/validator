@@ -204,7 +204,7 @@ public class Parser extends Token {
       return new Parser(entity.text, name, this);
 
     OpenEntity openEntity
-      = entityManager.open(entity.systemId, entity.baseUri, entity.publicId);
+      = entityManager.open(new ExternalId(entity.systemId, entity.publicId, entity.baseUri));
     if (openEntity == null)
       return null;
     return new Parser(openEntity, this);
