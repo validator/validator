@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.xml.util.StringSplitter;
 import org.relaxng.datatype.Datatype;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
@@ -92,7 +93,7 @@ public class IdSoundnessChecker implements ValidatorHandler {
       Name attributeName = new Name(attributes.getURI(i), attributes.getLocalName(i));
       int idType = idTypeMap.getIdType(elementName, attributeName);
       if (idType != Datatype.ID_TYPE_NULL) {
-        String[] tokens = split(attributes.getValue(i));
+        String[] tokens = StringSplitter.split(attributes.getValue(i));
         switch (idType) {
         case Datatype.ID_TYPE_ID:
           if (tokens.length == 1)
@@ -196,40 +197,5 @@ public class IdSoundnessChecker implements ValidatorHandler {
     if (eh != null)
       eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg),
                                      loc));
-  }
-
-  private static String[] split(String str) {
-    int len = str.length();
-    int nTokens = 0;
-    for (int i = 0; i < len; i++)
-     if (!isSpace(str.charAt(i)) && (i == 0 || isSpace(str.charAt(i - 1))))
-       nTokens++;
-    String[] tokens = new String[nTokens];
-    nTokens = 0;
-    int tokenStart = -1;
-    for (int i = 0; i < len; i++) {
-      if (isSpace(str.charAt(i))) {
-        if (tokenStart >= 0) {
-          tokens[nTokens++] = str.substring(tokenStart, i);
-          tokenStart = -1;
-        }
-      }
-      else if (i == 0 || isSpace(str.charAt(i - 1)))
-       tokenStart = i;
-    }
-    if (tokenStart >= 0)
-      tokens[nTokens] = str.substring(tokenStart, len);
-    return tokens;
-  }
-
-  private static boolean isSpace(char c) {
-    switch (c) {
-    case ' ':
-    case '\r':
-    case '\n':
-    case '\t':
-      return true;
-    }
-    return false;
   }
 }

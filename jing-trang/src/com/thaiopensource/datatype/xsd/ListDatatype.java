@@ -1,6 +1,7 @@
 package com.thaiopensource.datatype.xsd;
 
 import org.relaxng.datatype.ValidationContext;
+import com.thaiopensource.xml.util.StringSplitter;
 
 class ListDatatype extends DatatypeBase implements Measure {
   private final DatatypeBase itemType;
@@ -10,7 +11,7 @@ class ListDatatype extends DatatypeBase implements Measure {
   }
 
   Object getValue(String str, ValidationContext vc) {
-    String[] tokens = split(str);
+    String[] tokens = StringSplitter.split(str);
     Object[] items = new Object[tokens.length];
     for (int i = 0; i < items.length; i++) {
       items[i] = itemType.getValue(tokens[i], vc);
@@ -21,7 +22,7 @@ class ListDatatype extends DatatypeBase implements Measure {
   }
 
   boolean lexicallyAllows(String str) {
-    String[] tokens = split(str);
+    String[] tokens = StringSplitter.split(str);
     for (int i = 0; i < tokens.length; i++)
       if (!itemType.lexicallyAllows(tokens[i]))
 	return false;
@@ -29,31 +30,11 @@ class ListDatatype extends DatatypeBase implements Measure {
   }
 
   boolean allowsValue(String str, ValidationContext vc) {
-    String[] tokens = split(str);
+    String[] tokens = StringSplitter.split(str);
     for (int i = 0; i < tokens.length; i++)
       if (!itemType.allowsValue(tokens[i], vc))
 	return false;
     return true;
-  }
-
-  static private String[] split(String s) {
-    int len = s.length();
-    if (len == 0)
-      return new String[0];
-    int nTokens = 1;
-    for (int i = 0; i < len; i++)
-      if (s.charAt(i) == ' ')
-	nTokens++;
-    String[] tokens = new String[nTokens];
-    int tokenStart = 0;
-    nTokens = 0;
-    for (int i = 0; i < len; i++)
-      if (s.charAt(i) == ' ') {
-	tokens[nTokens++] = s.substring(tokenStart, i);
-	tokenStart = i + 1;
-      }
-    tokens[nTokens] = s.substring(tokenStart);
-    return tokens;
   }
 
   Measure getMeasure() {
