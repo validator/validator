@@ -6,7 +6,7 @@ public class ChoiceParticle extends BinaryParticle {
     super(p1, p2);
   }
 
-  Object accept(ParticleVisitor visitor) {
+  public Object accept(ParticleVisitor visitor) {
     return visitor.visitChoice(this);
   }
 }

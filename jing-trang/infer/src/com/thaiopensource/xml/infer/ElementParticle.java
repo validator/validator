@@ -13,7 +13,7 @@ public class ElementParticle extends Particle {
     return name;
   }
 
-  Object accept(ParticleVisitor visitor) {
+  public Object accept(ParticleVisitor visitor) {
     return visitor.visitElement(this);
   }
 

@@ -11,7 +11,7 @@ public class OneOrMoreParticle extends Particle {
     return child;
   }
 
-  Object accept(ParticleVisitor visitor) {
+  public Object accept(ParticleVisitor visitor) {
     return visitor.visitOneOrMore(this);
   }
 }
