@@ -30,12 +30,12 @@ crimson_services = javax.xml.parsers.SAXParserFactory
 crimson_resources = $(crimson_properties) $(addprefix META-INF/services/, $(crimson_services))
 crimson_resources_text = $(addprefix $(build_dir)/resources/,$(crimson_resources))
 crimson_resources_objs = $(addsuffix .o, $(crimson_resources_text))
-crimson_exclude='org/xml/*' 'org/w3c/*' 'org/apache/crimson/tree/*' \
-  META-INF/services/javax.xml.parsers.DocumentBuilderFactory \
-  javax/xml/parsers/DocumentBuilderFactory.class \
-  javax/xml/parsers/DocumentBuilder.class \
-  org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class \
-  org/apache/crimson/jaxp/DocumentBuilderImpl.class
+crimson_dir=/home/jjc/crimson-1.1.3/src
+crimson_sources=$(shell find \
+  $(crimson_dir)/org/apache/crimson/jaxp \
+  $(crimson_dir)/javax/xml/parsers \
+  $(crimson_dir)/org/apache/crimson/parser \
+  $(crimson_dir)/org/apache/crimson/util -name '*.java' -print | grep -v Document)
 
 regex_properties=org/apache/xerces/impl/xpath/regex/message.properties \
   org/apache/xerces/impl/xpath/regex/message_fr.properties \
@@ -52,42 +52,43 @@ trang_objs=$(jing_objs) \
 resources_objs=$(jing_resources_objs) $(crimson_resources_objs) \
   $(trang_resources_objs) $(dtdinst_resources_objs) $(regex_resources_objs)
 
+# needed on RedHat 8.0; otherwise unhandled exceptions cause a hang
+extra_libs=-lpthread
+
 all: $(build_dir)/jing $(build_dir)/trang
 
 $(build_dir)/jing: $(jing_objs)
-	gcj $(JFLAGS) -o $@ --main=$(jing_main) $^
+	gcj $(JFLAGS) -o $@ --main=$(jing_main) $^ $(extra_libs)
 
-$(build_dir)/trang: $(trang_objs) 
-	gcj $(JFLAGS) -o $@ --main=$(trang_main) $^
+$(build_dir)/trang: $(trang_objs)
+	gcj $(JFLAGS) -o $@ --main=$(trang_main) $^ $(extra_libs)
 
 $(resources_objs): %.o: %
 	gcj $(JFLAGS) -c -o $@ --resource=$(subst $(build_dir)/resources/,,$<) $<
 
 $(build_dir)/jing.o: $(jing_sources)
-	gcj $(JFLAGS) -c $(jing_sources) -I$(build_dir)/crimson.zip -Ilib/regex2.jar -o $@
-
-$(build_dir)/jing.o: $(build_dir)/crimson.zip
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	gcj $(JFLAGS) -c $(jing_sources) -I$(crimson_dir) -Ilib/regex2.jar -o $@
 
 $(build_dir)/dtdinst.o: $(dtdinst_sources)
+	test -d $(dir $@) || mkdir -p $(dir $@)
 	gcj $(JFLAGS) -c $(dtdinst_sources) -Isrc -o $@
 
 $(build_dir)/trang.o: $(trang_sources)
-	gcj $(JFLAGS) -c $(trang_sources) -Isrc -Idtdinst/src -I$(build_dir)/crimson.zip -o $@
-
-$(build_dir)/crimson.zip: lib/crimson.jar
 	test -d $(dir $@) || mkdir -p $(dir $@)
-	cp $< $@
-	zip -q -d $@ $(crimson_exclude)
+	gcj $(JFLAGS) -c $(trang_sources) -Isrc -Idtdinst/src -I$(crimson_dir) -o $@
 
-$(build_dir)/crimson.o: $(build_dir)/crimson.zip
-	gcj $(JFLAGS) -c $< -o $@
+$(build_dir)/crimson.o: $(crimson_sources)
+	test -d $(dir $@) || mkdir -p $(dir $@)
+	gcj $(JFLAGS) -c $(crimson_sources) -o $@
 
 $(build_dir)/regex2.o:
+	test -d $(dir $@) || mkdir -p $(dir $@)
 	gcj $(JFLAGS) -c lib/regex2.jar -o $@
 
-$(crimson_resources_text): lib/crimson.jar
+$(crimson_resources_text): $(build_dir)/resources/%: $(crimson_dir)/%
 	test -d $(dir $@) || mkdir -p $(dir $@)
-	unzip -p $< $(subst $(build_dir)/resources/,,$@) >$@
+	cp $< $@
 
 $(regex_properties_text): lib/regex2.jar
 	test -d $(dir $@) || mkdir -p $(dir $@)
