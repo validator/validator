@@ -1,3 +1,5 @@
+Fix John C's problem with ID/IDREF and name classes.
+
 Document that XHTML modularization implementation does not implement
 exclusions.
 
