@@ -15,6 +15,11 @@ import java.io.IOException;
 public class DtdInputFormat implements InputFormat {
   public SchemaCollection load(String uri, String encoding, ErrorHandler eh) throws IOException, SAXException {
     Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
-    return new Converter(new ErrorReporter(eh, DtdInputFormat.class)).convertDtd(dtd);
+    try {
+      return new Converter(new ErrorReporter(eh, DtdInputFormat.class)).convertDtd(dtd);
+    }
+    catch (ErrorReporter.WrappedSAXException e) {
+      throw e.getException();
+    }
   }
 }

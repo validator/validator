@@ -583,9 +583,6 @@ public class Converter {
       outputStart(grammar.getComponents());
       return sc;
     }
-    catch (ErrorReporter.WrappedSAXException e) {
-      throw e.getException();
-    }
     catch (Exception e) {
       throw (RuntimeException)e;
     }
