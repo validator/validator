@@ -1,4 +1,8 @@
-RELAX NG: Don't create an output file that contains just comments.
+RELAX NG: overridden attributes.
+
+RELAX NG: use FIXED values to construct datatype
+
+Check for duplicate ELEMENT declarations.
 
 EntityManager that properly handles URLs.
 
@@ -6,22 +10,22 @@ RELAX NG: Handle multiple refs to same external entity safely.
 
 Command-line option parser.
 
+Option to set start elements.
+
+Use system-dependent line-endings on output in XmlWriter.
+
+RELAX NG: Don't create an output file that contains just comments.
+
 Add DtdParseException to om package.
 
 Maybe better to avoid empty sequences and empty choices in the object
 model.
-
-RELAX NG: overridden attributes.
-
-RELAX NG: use FIXED values to construct datatype
 
 RELAX NG: annotation for included sections (d:condition="flagName")
 
 RELAX NG: sort undefined elements.
 
 RELAX NG: preserve directory structure on output.
-
-Check for duplicate ELEMENT declarations.
 
 Methods on DTD giving random access to various kinds of declaration.
 
@@ -73,9 +77,5 @@ Cleanup handling of newline normalization.
 
 Line-wrapping for long attribute lists in XmlWriter.
 
-Use system-dependent line-endings on output in XmlWriter.
-
 RELAX NG: don't output datatypeLibrary attribute if there are no
 datatypes.
-
-Option to set start elements.
