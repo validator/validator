@@ -3,6 +3,7 @@ package com.thaiopensource.xml.dtd.app;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Vector;
 
 import com.thaiopensource.xml.dtd.om.*;
 import com.thaiopensource.xml.out.XmlWriter;
@@ -212,6 +213,12 @@ public class RelaxNgWriter {
 	currentDuplicateAttributeTable = new Hashtable();
 	duplicateAttributeTable.put(name, currentDuplicateAttributeTable);
       }
+      else {
+        EmptyAttributeGroupDetector emptyDetector = new EmptyAttributeGroupDetector();
+        attributeGroup.accept(emptyDetector);
+        if (!emptyDetector.containsAttribute)
+          return;
+      }
       w.startElement("define");
       w.attribute("name", attlistDeclName(name));
       w.attribute("combine", "interleave");
@@ -366,8 +373,13 @@ public class RelaxNgWriter {
       attributeGroup.accept(detector);
       if (detector.containsDuplicate)
 	attributeGroup.accept(this);
-      else
+      else {
 	ref(name);
+        for (Enumeration e = detector.names.elements(); e.hasMoreElements();) {
+          String tem = (String)e.nextElement();
+          currentDuplicateAttributeTable.put(tem, tem);
+        }
+      }
     }
 
     public void cdataDatatype() throws IOException {
@@ -480,18 +492,36 @@ public class RelaxNgWriter {
 
   private class DuplicateAttributeDetector implements AttributeGroupVisitor {
     private boolean containsDuplicate = false;
-    
+    private Vector names = new Vector();
+
     public void attribute(NameSpec nameSpec,
 			  Datatype datatype,
 			  AttributeDefault attributeDefault) {
-      if (currentDuplicateAttributeTable.get(nameSpec.getValue()) != null)
+      String name = nameSpec.getValue();
+      if (currentDuplicateAttributeTable.get(name) != null)
 	containsDuplicate = true;
+      names.addElement(name);
     }
 
     public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
       attributeGroup.accept(this);
     }
 
+  }
+
+  private class EmptyAttributeGroupDetector implements AttributeGroupVisitor {
+    private boolean containsAttribute = false;
+
+    public void attribute(NameSpec nameSpec,
+                          Datatype datatype,
+                          AttributeDefault attributeDefault) {
+      if (currentDuplicateAttributeTable.get(nameSpec.getValue()) == null)
+        containsAttribute = true;
+    }
+
+    public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
+      attributeGroup.accept(this);
+    }
   }
 
   private class SignificanceDetector extends VisitorBase {
