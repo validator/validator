@@ -268,7 +268,10 @@ public class SchemaBuilderImpl implements SchemaBuilder {
     }
 
     public void topLevelAnnotation(ParsedElementAnnotation ea) throws BuildException {
-      addAfterAnnotation(lastComponent, ea);
+      if (lastComponent == null)
+        ((ElementAnnotationBuilderImpl)ea).addTo(subject.getChildElementAnnotations());
+      else
+        addAfterAnnotation(lastComponent, ea);
     }
 
     public void topLevelComment(CommentList comments) throws BuildException {
