@@ -115,7 +115,8 @@ public class ErrorHandlerImpl implements ErrorHandler {
     String detail = se.getMessage();
     if (e != null) {
       String detail2 = e.getMessage();
-      if (detail2 == detail)
+      // Crimson stupidity
+      if (detail2 == detail || e.getClass().getName().equals(detail))
 	return formatMessage(e);
       else if (detail2 == null)
 	return format("exception",
