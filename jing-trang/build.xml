@@ -551,9 +551,12 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <zipfileset dir="doc/jing-bin"
                 includes="copying.html"
                 prefix="jing-${version}/doc"/>
+    <zipfileset dir="gcj"
+                includes="xerces.copying.txt"
+                prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}/jing-bin"
                 includes="readme.html"
-                prefix="jing-${version}/doc"/>
+                prefix="jing-${version}"/>
     <zipfileset dir="datatype-sample" prefix="jing-${version}/sample/datatype"/>
     <zipfileset dir="${build.dir}/datatype-sample"
                 includes="datatype-sample.jar"
