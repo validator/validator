@@ -14,6 +14,7 @@ import com.thaiopensource.relaxng.parse.Scope;
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.relaxng.parse.CommentList;
+import com.thaiopensource.relaxng.parse.Div;
 import com.thaiopensource.util.Uri;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Naming;
@@ -800,17 +801,17 @@ class SchemaParser {
     }
   }
 
-  class DivState extends State {
+  class GrammarSectionState extends State {
     GrammarSection section;
 
-    DivState() { }
+    GrammarSectionState() { }
 
-    DivState(GrammarSection section) {
+    GrammarSectionState(GrammarSection section) {
       this.section = section;
     }
 
     State create() {
-      return new DivState(null);
+      return new GrammarSectionState(null);
     }
 
     State createChildState(String localName) throws SAXException {
@@ -838,7 +839,20 @@ class SchemaParser {
     }
   }
 
-  class IncludeState extends DivState {
+  class DivState extends GrammarSectionState {
+    Div div;
+    DivState(Div div) {
+      super(div);
+      this.div = div;
+    }
+
+    void end() throws SAXException {
+      super.end();
+      div.endDiv(startLocation, annotations);
+    }
+  }
+
+  class IncludeState extends GrammarSectionState {
     String href;
     Include include;
 
@@ -875,7 +889,7 @@ class SchemaParser {
     }
   }
 
-  class MergeGrammarState extends DivState {
+  class MergeGrammarState extends GrammarSectionState {
     IncludedGrammar grammar;
     MergeGrammarState(IncludedGrammar grammar) {
       super(grammar);
@@ -888,7 +902,7 @@ class SchemaParser {
     }
   }
 
-  class GrammarState extends DivState {
+  class GrammarState extends GrammarSectionState {
     Grammar grammar;
 
     void setParent(State parent) {
