@@ -77,6 +77,9 @@ class Entity {
   static final int SEMANTIC_ATTRIBUTE_DEFAULT = 7;
 
   int semantic = SEMANTIC_NONE;
+
+  boolean maybeNameSpec;
+
   ModelGroup modelGroup;
   AttributeGroup attributeGroup;
   EnumGroup enumGroup;
@@ -437,6 +440,10 @@ class Entity {
   }
 
   private void analyzeSemanticParticle() {
+    if (maybeNameSpec) {
+      semantic = SEMANTIC_NAME_SPEC;
+      return;
+    }
     int n = parsed.size();
     if (n == 0) {
       analyzeEmptySemanticParticle();
@@ -498,6 +505,13 @@ class Entity {
       return Particle.particlesToEnumGroup(((Param)parsed.elementAt(0)).group.particles);
   }
 
+  NameSpec toNameSpec() {
+    if (referenceLevel == PARTICLE_LEVEL)
+      return new Name(((Particle)parsed.elementAt(0)).value);
+    else
+      return Param.paramsToNameSpec(parsed);
+  }
+
   ExternalId getExternalId() {
     return new ExternalId(systemId, publicId, baseUri);
   }
@@ -505,6 +519,18 @@ class Entity {
   void noteReferenced() {
     if (problem == UNREFERENCED_PROBLEM)
       problem = NO_PROBLEM;
+  }
+
+  String ambiguousNameSpec() {
+    if (problem != NO_PROBLEM
+	|| referenceLevel != PARTICLE_LEVEL
+	|| parsed.size() != 1)
+      return null;
+    Particle p = (Particle)parsed.elementAt(0);
+    if (p.type != Particle.ELEMENT_NAME)
+      return null;
+    maybeNameSpec = true;
+    return p.value;
   }
 }
 

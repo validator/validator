@@ -1,7 +1,3 @@
-Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
-naming convention or presence of element declarations or whether all
-references to the element are via that parameter entity.
-
 Deal with external parameter entities (possibly with TextDecls)
 referenced within declarations.
 

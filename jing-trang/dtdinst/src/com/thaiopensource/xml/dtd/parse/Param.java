@@ -1,6 +1,7 @@
 package com.thaiopensource.xml.dtd.parse;
 
 import java.util.Vector;
+import java.util.Enumeration;
 
 import com.thaiopensource.xml.dtd.om.*;
 
@@ -192,5 +193,20 @@ class Param {
     }
     throw new Error();
   }
+
+  static void examineElementNames(DtdBuilder db, Enumeration params) {
+    while (params.hasMoreElements()) {
+      Param param = (Param)params.nextElement();
+      switch (param.type) {
+      case ELEMENT_NAME:
+	db.noteElementName(param.value, null);
+	break;
+      case MODEL_GROUP:
+	Particle.examineElementNames(db, param.group.particles.elements());
+	break;
+      }
+    }
+  }
+	
 
 }

@@ -22,11 +22,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
     <externalId name="TEI.elementNames" system="teigis2.ent"/>
     <externalIdRef name="TEI.elementNames">
       <param name="n.TEI.2">TEI.2</param>
-      <modelGroup name="n.ab">
-        <elementRef>
-          <name>ab</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.ab">
+        <name>ab</name>
+      </nameSpec>
       <nameSpec name="n.abbr">
         <name>abbr</name>
       </nameSpec>
@@ -36,11 +34,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>add</name>
       </nameSpec>
       <param name="n.addName">addName</param>
-      <modelGroup name="n.addSpan">
-        <elementRef>
-          <name>addSpan</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.addSpan">
+        <name>addSpan</name>
+      </nameSpec>
       <nameSpec name="n.addrLine">
         <name>addrLine</name>
       </nameSpec>
@@ -49,36 +45,26 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.admin">admin</param>
       <param name="n.affiliation">affiliation</param>
-      <modelGroup name="n.alt">
-        <elementRef>
-          <name>alt</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.altGrp">
-        <elementRef>
-          <name>altGrp</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.alt">
+        <name>alt</name>
+      </nameSpec>
+      <nameSpec name="n.altGrp">
+        <name>altGrp</name>
+      </nameSpec>
       <nameSpec name="n.analytic">
         <name>analytic</name>
       </nameSpec>
-      <modelGroup name="n.anchor">
-        <elementRef>
-          <name>anchor</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.anchor">
+        <name>anchor</name>
+      </nameSpec>
       <param name="n.any">any</param>
-      <modelGroup name="n.app">
-        <elementRef>
-          <name>app</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.app">
+        <name>app</name>
+      </nameSpec>
       <param name="n.arc">arc</param>
-      <modelGroup name="n.argument">
-        <elementRef>
-          <name>argument</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.argument">
+        <name>argument</name>
+      </nameSpec>
       <nameSpec name="n.att">
         <name>att</name>
       </nameSpec>
@@ -118,39 +104,27 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.bloc">bloc</param>
       <param name="n.body">body</param>
       <param name="n.broadcast">broadcast</param>
-      <modelGroup name="n.byline">
-        <elementRef>
-          <name>byline</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.c">
-        <elementRef>
-          <name>c</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.caesura">
-        <elementRef>
-          <name>caesura</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.camera">
-        <elementRef>
-          <name>camera</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.caption">
-        <elementRef>
-          <name>caption</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.byline">
+        <name>byline</name>
+      </nameSpec>
+      <nameSpec name="n.c">
+        <name>c</name>
+      </nameSpec>
+      <nameSpec name="n.caesura">
+        <name>caesura</name>
+      </nameSpec>
+      <nameSpec name="n.camera">
+        <name>camera</name>
+      </nameSpec>
+      <nameSpec name="n.caption">
+        <name>caption</name>
+      </nameSpec>
       <param name="n.case">case</param>
       <param name="n.castGroup">castGroup</param>
       <param name="n.castItem">castItem</param>
-      <modelGroup name="n.castList">
-        <elementRef>
-          <name>castList</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.castList">
+        <name>castList</name>
+      </nameSpec>
       <param name="n.catDesc">catDesc</param>
       <param name="n.catRef">catRef</param>
       <param name="n.category">category</param>
@@ -158,11 +132,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>cb</name>
       </nameSpec>
       <param name="n.cell">cell</param>
-      <modelGroup name="n.certainty">
-        <elementRef>
-          <name>certainty</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.certainty">
+        <name>certainty</name>
+      </nameSpec>
       <param name="n.change">change</param>
       <param name="n.channel">channel</param>
       <param name="n.character">character</param>
@@ -173,11 +145,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.cit">
         <name>cit</name>
       </nameSpec>
-      <modelGroup name="n.cl">
-        <elementRef>
-          <name>cl</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.cl">
+        <name>cl</name>
+      </nameSpec>
       <nameSpec name="n.class">
         <name>class</name>
       </nameSpec>
@@ -189,11 +159,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.classes">
         <name>classes</name>
       </nameSpec>
-      <modelGroup name="n.closer">
-        <elementRef>
-          <name>closer</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.closer">
+        <name>closer</name>
+      </nameSpec>
       <param name="n.codedCharSet">codedCharSet</param>
       <param name="n.col">col</param>
       <param name="n.colloc">colloc</param>
@@ -205,11 +173,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.correction">correction</param>
       <param name="n.country">country</param>
       <param name="n.creation">creation</param>
-      <modelGroup name="n.damage">
-        <elementRef>
-          <name>damage</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.damage">
+        <name>damage</name>
+      </nameSpec>
       <nameSpec name="n.dataDesc">
         <name>dataDesc</name>
       </nameSpec>
@@ -222,16 +188,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.dateRange">
         <name>dateRange</name>
       </nameSpec>
-      <modelGroup name="n.dateStruct">
-        <elementRef>
-          <name>dateStruct</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.dateline">
-        <elementRef>
-          <name>dateline</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.dateStruct">
+        <name>dateStruct</name>
+      </nameSpec>
+      <nameSpec name="n.dateline">
+        <name>dateline</name>
+      </nameSpec>
       <param name="n.day">day</param>
       <param name="n.declaration">declaration</param>
       <param name="n.def">def</param>
@@ -241,22 +203,18 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.del">
         <name>del</name>
       </nameSpec>
-      <modelGroup name="n.delSpan">
-        <elementRef>
-          <name>delSpan</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.delSpan">
+        <name>delSpan</name>
+      </nameSpec>
       <param name="n.derivation">derivation</param>
       <nameSpec name="n.desc">
         <name>desc</name>
       </nameSpec>
       <param name="n.descrip">descrip</param>
       <param name="n.dft">dft</param>
-      <modelGroup name="n.dictScrap">
-        <elementRef>
-          <name>dictScrap</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.dictScrap">
+        <name>dictScrap</name>
+      </nameSpec>
       <param name="n.direction">direction</param>
       <param name="n.distance">distance</param>
       <nameSpec name="n.distinct">
@@ -275,36 +233,26 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.divGen">
         <name>divGen</name>
       </nameSpec>
-      <modelGroup name="n.docAuthor">
-        <elementRef>
-          <name>docAuthor</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.docDate">
-        <elementRef>
-          <name>docDate</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.docAuthor">
+        <name>docAuthor</name>
+      </nameSpec>
+      <nameSpec name="n.docDate">
+        <name>docDate</name>
+      </nameSpec>
       <param name="n.docEdition">docEdition</param>
       <param name="n.docImprint">docImprint</param>
       <param name="n.docTitle">docTitle</param>
       <param name="n.domain">domain</param>
       <param name="n.eLeaf">eLeaf</param>
-      <modelGroup name="n.eTree">
-        <elementRef>
-          <name>eTree</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.edition">
-        <elementRef>
-          <name>edition</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.editionStmt">
-        <elementRef>
-          <name>editionStmt</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.eTree">
+        <name>eTree</name>
+      </nameSpec>
+      <nameSpec name="n.edition">
+        <name>edition</name>
+      </nameSpec>
+      <nameSpec name="n.editionStmt">
+        <name>editionStmt</name>
+      </nameSpec>
       <nameSpec name="n.editor">
         <name>editor</name>
       </nameSpec>
@@ -329,11 +277,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.entitySet">entitySet</param>
       <param name="n.entry">entry</param>
       <param name="n.entryFree">entryFree</param>
-      <modelGroup name="n.epigraph">
-        <elementRef>
-          <name>epigraph</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.epigraph">
+        <name>epigraph</name>
+      </nameSpec>
       <param name="n.epilogue">epilogue</param>
       <param name="n.equipment">equipment</param>
       <nameSpec name="n.equiv">
@@ -349,27 +295,21 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>expan</name>
       </nameSpec>
       <param name="n.extFigure">extFigure</param>
-      <modelGroup name="n.extent">
-        <elementRef>
-          <name>extent</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.extent">
+        <name>extent</name>
+      </nameSpec>
       <param name="n.f">f</param>
       <param name="n.fAlt">fAlt</param>
       <param name="n.fDecl">fDecl</param>
       <param name="n.fDescr">fDescr</param>
-      <modelGroup name="n.fLib">
-        <elementRef>
-          <name>fLib</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.fLib">
+        <name>fLib</name>
+      </nameSpec>
       <param name="n.factuality">factuality</param>
       <param name="n.figDesc">figDesc</param>
-      <modelGroup name="n.figure">
-        <elementRef>
-          <name>figure</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.figure">
+        <name>figure</name>
+      </nameSpec>
       <param name="n.fileDesc">fileDesc</param>
       <nameSpec name="n.files">
         <name>files</name>
@@ -382,48 +322,36 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.forest">forest</param>
       <param name="n.forestGrp">forestGrp</param>
       <param name="n.form">form</param>
-      <modelGroup name="n.formula">
-        <elementRef>
-          <name>formula</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.formula">
+        <name>formula</name>
+      </nameSpec>
       <param name="n.front">front</param>
-      <modelGroup name="n.fs">
-        <elementRef>
-          <name>fs</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.fs">
+        <name>fs</name>
+      </nameSpec>
       <param name="n.fsConstraints">fsConstraints</param>
       <param name="n.fsDecl">fsDecl</param>
       <param name="n.fsDescr">fsDescr</param>
-      <modelGroup name="n.fsLib">
-        <elementRef>
-          <name>fsLib</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.fsLib">
+        <name>fsLib</name>
+      </nameSpec>
       <param name="n.fsdDecl">fsdDecl</param>
       <param name="n.funder">funder</param>
-      <modelGroup name="n.fvLib">
-        <elementRef>
-          <name>fvLib</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.fw">
-        <elementRef>
-          <name>fw</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.fvLib">
+        <name>fvLib</name>
+      </nameSpec>
+      <nameSpec name="n.fw">
+        <name>fw</name>
+      </nameSpec>
       <nameSpec name="n.gap">
         <name>gap</name>
       </nameSpec>
       <param name="n.gen">gen</param>
       <param name="n.genName">genName</param>
       <param name="n.geog">geog</param>
-      <modelGroup name="n.geogName">
-        <elementRef>
-          <name>geogName</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.geogName">
+        <name>geogName</name>
+      </nameSpec>
       <nameSpec name="n.gi">
         <name>gi</name>
       </nameSpec>
@@ -432,19 +360,15 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.gram">gram</param>
       <param name="n.gramGrp">gramGrp</param>
-      <modelGroup name="n.graph">
-        <elementRef>
-          <name>graph</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.graph">
+        <name>graph</name>
+      </nameSpec>
       <param name="n.group">group</param>
       <param name="n.hand">hand</param>
       <param name="n.handList">handList</param>
-      <modelGroup name="n.handShift">
-        <elementRef>
-          <name>handShift</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.handShift">
+        <name>handShift</name>
+      </nameSpec>
       <nameSpec name="n.head">
         <name>head</name>
       </nameSpec>
@@ -462,11 +386,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.hyph">hyph</param>
       <param name="n.hyphenation">hyphenation</param>
       <param name="n.iNode">iNode</param>
-      <modelGroup name="n.idno">
-        <elementRef>
-          <name>idno</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.idno">
+        <name>idno</name>
+      </nameSpec>
       <param name="n.if">if</param>
       <param name="n.iff">iff</param>
       <param name="n.ihs">ihs</param>
@@ -478,31 +400,23 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>index</name>
       </nameSpec>
       <param name="n.interaction">interaction</param>
-      <modelGroup name="n.interp">
-        <elementRef>
-          <name>interp</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.interpGrp">
-        <elementRef>
-          <name>interpGrp</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.interp">
+        <name>interp</name>
+      </nameSpec>
+      <nameSpec name="n.interpGrp">
+        <name>interpGrp</name>
+      </nameSpec>
       <param name="n.interpretation">interpretation</param>
       <nameSpec name="n.item">
         <name>item</name>
       </nameSpec>
       <param name="n.itype">itype</param>
-      <modelGroup name="n.join">
-        <elementRef>
-          <name>join</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.joinGrp">
-        <elementRef>
-          <name>joinGrp</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.join">
+        <name>join</name>
+      </nameSpec>
+      <nameSpec name="n.joinGrp">
+        <name>joinGrp</name>
+      </nameSpec>
       <param name="n.keywords">keywords</param>
       <param name="n.kinesic">kinesic</param>
       <nameSpec name="n.l">
@@ -513,11 +427,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.lacunaEnd">lacunaEnd</param>
       <param name="n.lacunaStart">lacunaStart</param>
-      <modelGroup name="n.lang">
-        <elementRef>
-          <name>lang</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.lang">
+        <name>lang</name>
+      </nameSpec>
       <param name="n.langKnown">langKnown</param>
       <param name="n.langUsage">langUsage</param>
       <param name="n.language">language</param>
@@ -536,16 +448,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.lg4">lg4</param>
       <param name="n.lg5">lg5</param>
       <param name="n.line">line</param>
-      <modelGroup name="n.link">
-        <elementRef>
-          <name>link</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.linkGrp">
-        <elementRef>
-          <name>linkGrp</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.link">
+        <name>link</name>
+      </nameSpec>
+      <nameSpec name="n.linkGrp">
+        <name>linkGrp</name>
+      </nameSpec>
       <nameSpec name="n.list">
         <name>list</name>
       </nameSpec>
@@ -553,11 +461,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>listBibl</name>
       </nameSpec>
       <param name="n.locale">locale</param>
-      <modelGroup name="n.m">
-        <elementRef>
-          <name>m</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.m">
+        <name>m</name>
+      </nameSpec>
       <nameSpec name="n.measure">
         <name>measure</name>
       </nameSpec>
@@ -578,11 +484,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.month">month</param>
       <param name="n.mood">mood</param>
-      <modelGroup name="n.move">
-        <elementRef>
-          <name>move</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.move">
+        <name>move</name>
+      </nameSpec>
       <param name="n.msr">msr</param>
       <nameSpec name="n.name">
         <name>name</name>
@@ -595,41 +499,31 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.note">
         <name>note</name>
       </nameSpec>
-      <modelGroup name="n.notesStmt">
-        <elementRef>
-          <name>notesStmt</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.notesStmt">
+        <name>notesStmt</name>
+      </nameSpec>
       <param name="n.null">null</param>
       <nameSpec name="n.num">
         <name>num</name>
       </nameSpec>
       <param name="n.number">number</param>
-      <modelGroup name="n.oRef">
-        <elementRef>
-          <name>oRef</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.oVar">
-        <elementRef>
-          <name>oVar</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.oRef">
+        <name>oRef</name>
+      </nameSpec>
+      <nameSpec name="n.oVar">
+        <name>oVar</name>
+      </nameSpec>
       <param name="n.occasion">occasion</param>
       <param name="n.occupation">occupation</param>
       <param name="n.offSet">offSet</param>
       <param name="n.ofig">ofig</param>
-      <modelGroup name="n.opener">
-        <elementRef>
-          <name>opener</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.opener">
+        <name>opener</name>
+      </nameSpec>
       <param name="n.orgDivn">orgDivn</param>
-      <modelGroup name="n.orgName">
-        <elementRef>
-          <name>orgName</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.orgName">
+        <name>orgName</name>
+      </nameSpec>
       <param name="n.orgTitle">orgTitle</param>
       <param name="n.orgType">orgType</param>
       <nameSpec name="n.orig">
@@ -640,16 +534,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.p">
         <name>p</name>
       </nameSpec>
-      <modelGroup name="n.pRef">
-        <elementRef>
-          <name>pRef</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.pVar">
-        <elementRef>
-          <name>pVar</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.pRef">
+        <name>pRef</name>
+      </nameSpec>
+      <nameSpec name="n.pVar">
+        <name>pVar</name>
+      </nameSpec>
       <param name="n.page">page</param>
       <nameSpec name="n.parents">
         <name>parents</name>
@@ -665,23 +555,17 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.per">per</param>
       <param name="n.performance">performance</param>
-      <modelGroup name="n.persName">
-        <elementRef>
-          <name>persName</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.persName">
+        <name>persName</name>
+      </nameSpec>
       <param name="n.person">person</param>
       <param name="n.personGrp">personGrp</param>
-      <modelGroup name="n.phr">
-        <elementRef>
-          <name>phr</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.placeName">
-        <elementRef>
-          <name>placeName</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.phr">
+        <name>phr</name>
+      </nameSpec>
+      <nameSpec name="n.placeName">
+        <name>placeName</name>
+      </nameSpec>
       <param name="n.plus">plus</param>
       <param name="n.pos">pos</param>
       <nameSpec name="n.postBox">
@@ -702,11 +586,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.pubPlace">
         <name>pubPlace</name>
       </nameSpec>
-      <modelGroup name="n.publicationStmt">
-        <elementRef>
-          <name>publicationStmt</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.publicationStmt">
+        <name>publicationStmt</name>
+      </nameSpec>
       <nameSpec name="n.publisher">
         <name>publisher</name>
       </nameSpec>
@@ -744,16 +626,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.respStmt">
         <name>respStmt</name>
       </nameSpec>
-      <modelGroup name="n.respons">
-        <elementRef>
-          <name>respons</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.restore">
-        <elementRef>
-          <name>restore</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.respons">
+        <name>respons</name>
+      </nameSpec>
+      <nameSpec name="n.restore">
+        <name>restore</name>
+      </nameSpec>
       <param name="n.revisionDesc">revisionDesc</param>
       <param name="n.role">role</param>
       <param name="n.roleDesc">roleDesc</param>
@@ -763,16 +641,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.rs">
         <name>rs</name>
       </nameSpec>
-      <modelGroup name="n.s">
-        <elementRef>
-          <name>s</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.salute">
-        <elementRef>
-          <name>salute</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.s">
+        <name>s</name>
+      </nameSpec>
+      <nameSpec name="n.salute">
+        <name>salute</name>
+      </nameSpec>
       <param name="n.samplingDecl">samplingDecl</param>
       <param name="n.script">script</param>
       <param name="n.scriptStmt">scriptStmt</param>
@@ -787,11 +661,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.series">
         <name>series</name>
       </nameSpec>
-      <modelGroup name="n.seriesStmt">
-        <elementRef>
-          <name>seriesStmt</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.seriesStmt">
+        <name>seriesStmt</name>
+      </nameSpec>
       <param name="n.set">set</param>
       <param name="n.setting">setting</param>
       <param name="n.settingDesc">settingDesc</param>
@@ -800,43 +672,31 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.sic">
         <name>sic</name>
       </nameSpec>
-      <modelGroup name="n.signed">
-        <elementRef>
-          <name>signed</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.signed">
+        <name>signed</name>
+      </nameSpec>
       <nameSpec name="n.soCalled">
         <name>soCalled</name>
       </nameSpec>
       <param name="n.socecStatus">socecStatus</param>
-      <modelGroup name="n.sound">
-        <elementRef>
-          <name>sound</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.sourceDesc">
-        <elementRef>
-          <name>sourceDesc</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.sound">
+        <name>sound</name>
+      </nameSpec>
+      <nameSpec name="n.sourceDesc">
+        <name>sourceDesc</name>
+      </nameSpec>
       <nameSpec name="n.sp">
         <name>sp</name>
       </nameSpec>
-      <modelGroup name="n.space">
-        <elementRef>
-          <name>space</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.span">
-        <elementRef>
-          <name>span</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.spanGrp">
-        <elementRef>
-          <name>spanGrp</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.space">
+        <name>space</name>
+      </nameSpec>
+      <nameSpec name="n.span">
+        <name>span</name>
+      </nameSpec>
+      <nameSpec name="n.spanGrp">
+        <name>spanGrp</name>
+      </nameSpec>
       <nameSpec name="n.speaker">
         <name>speaker</name>
       </nameSpec>
@@ -857,20 +717,16 @@ Current versions are available from the Text Encoding Initiative.</comment>
       </nameSpec>
       <param name="n.subc">subc</param>
       <param name="n.superentry">superentry</param>
-      <modelGroup name="n.supplied">
-        <elementRef>
-          <name>supplied</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.supplied">
+        <name>supplied</name>
+      </nameSpec>
       <param name="n.surname">surname</param>
       <param name="n.syll">syll</param>
       <param name="n.sym">sym</param>
       <param name="n.symbol">symbol</param>
-      <modelGroup name="n.table">
-        <elementRef>
-          <name>table</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.table">
+        <name>table</name>
+      </nameSpec>
       <nameSpec name="n.tag">
         <name>tag</name>
       </nameSpec>
@@ -880,11 +736,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <param name="n.tagUsage">tagUsage</param>
       <param name="n.tagsDecl">tagsDecl</param>
       <param name="n.taxonomy">taxonomy</param>
-      <modelGroup name="n.tech">
-        <elementRef>
-          <name>tech</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.tech">
+        <name>tech</name>
+      </nameSpec>
       <param name="n.teiCorpus.2">teiCorpus.2</param>
       <param name="n.teiFsd2">teiFsd2</param>
       <param name="n.teiHeader">teiHeader</param>
@@ -892,11 +746,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>term</name>
       </nameSpec>
       <param name="n.termEntry">termEntry</param>
-      <modelGroup name="n.text">
-        <elementRef>
-          <name>text</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.text">
+        <name>text</name>
+      </nameSpec>
       <param name="n.textClass">textClass</param>
       <param name="n.textDesc">textDesc</param>
       <param name="n.then">then</param>
@@ -907,39 +759,29 @@ Current versions are available from the Text Encoding Initiative.</comment>
       <nameSpec name="n.timeRange">
         <name>timeRange</name>
       </nameSpec>
-      <modelGroup name="n.timeStruct">
-        <elementRef>
-          <name>timeStruct</name>
-        </elementRef>
-      </modelGroup>
-      <modelGroup name="n.timeline">
-        <elementRef>
-          <name>timeline</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.timeStruct">
+        <name>timeStruct</name>
+      </nameSpec>
+      <nameSpec name="n.timeline">
+        <name>timeline</name>
+      </nameSpec>
       <nameSpec name="n.title">
         <name>title</name>
       </nameSpec>
       <param name="n.titlePage">titlePage</param>
       <param name="n.titlePart">titlePart</param>
-      <modelGroup name="n.titleStmt">
-        <elementRef>
-          <name>titleStmt</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.titleStmt">
+        <name>titleStmt</name>
+      </nameSpec>
       <param name="n.tns">tns</param>
       <param name="n.tr">tr</param>
-      <modelGroup name="n.trailer">
-        <elementRef>
-          <name>trailer</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.trailer">
+        <name>trailer</name>
+      </nameSpec>
       <param name="n.trans">trans</param>
-      <modelGroup name="n.tree">
-        <elementRef>
-          <name>tree</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.tree">
+        <name>tree</name>
+      </nameSpec>
       <param name="n.triangle">triangle</param>
       <nameSpec name="n.tsd">
         <name>tsd</name>
@@ -963,46 +805,34 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <name>valList</name>
       </nameSpec>
       <param name="n.variantEncoding">variantEncoding</param>
-      <modelGroup name="n.view">
-        <elementRef>
-          <name>view</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.view">
+        <name>view</name>
+      </nameSpec>
       <param name="n.vocal">vocal</param>
       <param name="n.vol">vol</param>
-      <modelGroup name="n.w">
-        <elementRef>
-          <name>w</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.w">
+        <name>w</name>
+      </nameSpec>
       <param name="n.week">week</param>
       <param name="n.when">when</param>
       <param name="n.wit">wit</param>
-      <modelGroup name="n.witDetail">
-        <elementRef>
-          <name>witDetail</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.witDetail">
+        <name>witDetail</name>
+      </nameSpec>
       <param name="n.witEnd">witEnd</param>
-      <modelGroup name="n.witList">
-        <elementRef>
-          <name>witList</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.witList">
+        <name>witList</name>
+      </nameSpec>
       <param name="n.witStart">witStart</param>
       <param name="n.witness">witness</param>
       <param name="n.writing">writing</param>
-      <modelGroup name="n.xptr">
-        <elementRef>
-          <name>xptr</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.xptr">
+        <name>xptr</name>
+      </nameSpec>
       <param name="n.xr">xr</param>
-      <modelGroup name="n.xref">
-        <elementRef>
-          <name>xref</name>
-        </elementRef>
-      </modelGroup>
+      <nameSpec name="n.xref">
+        <name>xref</name>
+      </nameSpec>
       <param name="n.year">year</param>
     </externalIdRef>
     <comment>Define entities for TEI keywords.</comment>
@@ -1172,12 +1002,18 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.dateRange"/>
           </elementRef>
-          <modelGroupRef name="n.dateStruct"/>
+          <elementRef>
+            <nameSpecRef name="n.dateStruct"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.expan"/>
           </elementRef>
-          <modelGroupRef name="n.geogName"/>
-          <modelGroupRef name="n.lang"/>
+          <elementRef>
+            <nameSpecRef name="n.geogName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.lang"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.measure"/>
           </elementRef>
@@ -1187,9 +1023,15 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.num"/>
           </elementRef>
-          <modelGroupRef name="n.orgName"/>
-          <modelGroupRef name="n.persName"/>
-          <modelGroupRef name="n.placeName"/>
+          <elementRef>
+            <nameSpecRef name="n.orgName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.persName"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.placeName"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.rs"/>
           </elementRef>
@@ -1199,7 +1041,9 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.timeRange"/>
           </elementRef>
-          <modelGroupRef name="n.timeStruct"/>
+          <elementRef>
+            <nameSpecRef name="n.timeStruct"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.edit">
@@ -1211,11 +1055,15 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.add"/>
           </elementRef>
-          <modelGroupRef name="n.app"/>
+          <elementRef>
+            <nameSpecRef name="n.app"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.corr"/>
           </elementRef>
-          <modelGroupRef name="n.damage"/>
+          <elementRef>
+            <nameSpecRef name="n.damage"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.del"/>
           </elementRef>
@@ -1225,12 +1073,18 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.reg"/>
           </elementRef>
-          <modelGroupRef name="n.restore"/>
+          <elementRef>
+            <nameSpecRef name="n.restore"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.sic"/>
           </elementRef>
-          <modelGroupRef name="n.space"/>
-          <modelGroupRef name="n.supplied"/>
+          <elementRef>
+            <nameSpecRef name="n.space"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.supplied"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.unclear"/>
           </elementRef>
@@ -1248,8 +1102,12 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.ref"/>
           </elementRef>
-          <modelGroupRef name="n.xptr"/>
-          <modelGroupRef name="n.xref"/>
+          <elementRef>
+            <nameSpecRef name="n.xptr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.xref"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.seg">
@@ -1258,13 +1116,25 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.seg">
         <choice>
           <modelGroupRef name="x.seg"/>
-          <modelGroupRef name="n.c"/>
-          <modelGroupRef name="n.cl"/>
-          <modelGroupRef name="n.m"/>
-          <modelGroupRef name="n.phr"/>
-          <modelGroupRef name="n.s"/>
+          <elementRef>
+            <nameSpecRef name="n.c"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.cl"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.m"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.phr"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.s"/>
+          </elementRef>
           <modelGroupRef name="n.seg"/>
-          <modelGroupRef name="n.w"/>
+          <elementRef>
+            <nameSpecRef name="n.w"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.sgmlKeywords">
@@ -1293,7 +1163,9 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.phrase.verse">
         <choice>
           <modelGroupRef name="x.phrase.verse"/>
-          <modelGroupRef name="n.caesura"/>
+          <elementRef>
+            <nameSpecRef name="n.caesura"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.formPointers">
@@ -1302,10 +1174,18 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.formPointers">
         <choice>
           <modelGroupRef name="x.formPointers"/>
-          <modelGroupRef name="n.oRef"/>
-          <modelGroupRef name="n.oVar"/>
-          <modelGroupRef name="n.pRef"/>
-          <modelGroupRef name="n.pVar"/>
+          <elementRef>
+            <nameSpecRef name="n.oRef"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.oVar"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pRef"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.pVar"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.metadata">
@@ -1314,26 +1194,60 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.metadata">
         <choice>
           <modelGroupRef name="x.metadata"/>
-          <modelGroupRef name="n.alt"/>
-          <modelGroupRef name="n.altGrp"/>
-          <modelGroupRef name="n.certainty"/>
-          <modelGroupRef name="n.fLib"/>
-          <modelGroupRef name="n.fs"/>
-          <modelGroupRef name="n.fsLib"/>
-          <modelGroupRef name="n.fvLib"/>
+          <elementRef>
+            <nameSpecRef name="n.alt"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.altGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.certainty"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fLib"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fs"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fsLib"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fvLib"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.index"/>
           </elementRef>
-          <modelGroupRef name="n.interp"/>
-          <modelGroupRef name="n.interpGrp"/>
-          <modelGroupRef name="n.join"/>
-          <modelGroupRef name="n.joinGrp"/>
-          <modelGroupRef name="n.link"/>
-          <modelGroupRef name="n.linkGrp"/>
-          <modelGroupRef name="n.respons"/>
-          <modelGroupRef name="n.span"/>
-          <modelGroupRef name="n.spanGrp"/>
-          <modelGroupRef name="n.timeline"/>
+          <elementRef>
+            <nameSpecRef name="n.interp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.interpGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.join"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.joinGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.link"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.linkGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.respons"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.span"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.spanGrp"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.timeline"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.refsys">
@@ -1362,8 +1276,12 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.editIncl">
         <choice>
           <modelGroupRef name="x.editIncl"/>
-          <modelGroupRef name="n.addSpan"/>
-          <modelGroupRef name="n.delSpan"/>
+          <elementRef>
+            <nameSpecRef name="n.addSpan"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.delSpan"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.gap"/>
           </elementRef>
@@ -1375,7 +1293,9 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.Incl">
         <choice>
           <modelGroupRef name="x.Incl"/>
-          <modelGroupRef name="n.anchor"/>
+          <elementRef>
+            <nameSpecRef name="n.anchor"/>
+          </elementRef>
           <modelGroupRef name="m.editIncl"/>
           <modelGroupRef name="m.metadata"/>
           <modelGroupRef name="m.refsys"/>
@@ -1443,7 +1363,9 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.note"/>
           </elementRef>
-          <modelGroupRef name="n.witDetail"/>
+          <elementRef>
+            <nameSpecRef name="n.witDetail"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.stageDirection">
@@ -1452,12 +1374,24 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.stageDirection">
         <choice>
           <modelGroupRef name="x.stageDirection"/>
-          <modelGroupRef name="n.camera"/>
-          <modelGroupRef name="n.caption"/>
-          <modelGroupRef name="n.move"/>
-          <modelGroupRef name="n.sound"/>
-          <modelGroupRef name="n.tech"/>
-          <modelGroupRef name="n.view"/>
+          <elementRef>
+            <nameSpecRef name="n.camera"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.caption"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.move"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.sound"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.tech"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.view"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <comment> end of [DSTECLO]  3.7.4</comment>
@@ -1499,12 +1433,18 @@ some may be from other tag sets.</comment>
           <elementRef>
             <nameSpecRef name="n.biblScope"/>
           </elementRef>
-          <modelGroupRef name="n.edition"/>
+          <elementRef>
+            <nameSpecRef name="n.edition"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.editor"/>
           </elementRef>
-          <modelGroupRef name="n.extent"/>
-          <modelGroupRef name="n.idno"/>
+          <elementRef>
+            <nameSpecRef name="n.extent"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.idno"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.imprint"/>
           </elementRef>
@@ -1536,13 +1476,27 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.divbot">
         <choice>
           <modelGroupRef name="x.divbot"/>
-          <modelGroupRef name="n.byline"/>
-          <modelGroupRef name="n.closer"/>
-          <modelGroupRef name="n.dateline"/>
-          <modelGroupRef name="n.epigraph"/>
-          <modelGroupRef name="n.salute"/>
-          <modelGroupRef name="n.signed"/>
-          <modelGroupRef name="n.trailer"/>
+          <elementRef>
+            <nameSpecRef name="n.byline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.closer"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.epigraph"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.salute"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.signed"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.trailer"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.divtop">
@@ -1551,18 +1505,36 @@ some may be from other tag sets.</comment>
       <modelGroup name="m.divtop">
         <choice>
           <modelGroupRef name="x.divtop"/>
-          <modelGroupRef name="n.argument"/>
-          <modelGroupRef name="n.byline"/>
-          <modelGroupRef name="n.dateline"/>
-          <modelGroupRef name="n.docAuthor"/>
-          <modelGroupRef name="n.docDate"/>
-          <modelGroupRef name="n.epigraph"/>
+          <elementRef>
+            <nameSpecRef name="n.argument"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.byline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.dateline"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.docAuthor"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.docDate"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.epigraph"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.head"/>
           </elementRef>
-          <modelGroupRef name="n.opener"/>
-          <modelGroupRef name="n.salute"/>
-          <modelGroupRef name="n.signed"/>
+          <elementRef>
+            <nameSpecRef name="n.opener"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.salute"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.signed"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <param name="x.dramafront"></param>
@@ -1592,12 +1564,20 @@ tagset-specific components.</comment>
         <choice>
           <modelGroupRef name="x.phrase"/>
           <modelGroupRef name="m.data"/>
-          <modelGroupRef name="n.dictScrap"/>
+          <elementRef>
+            <nameSpecRef name="n.dictScrap"/>
+          </elementRef>
           <modelGroupRef name="m.edit"/>
           <modelGroupRef name="m.formPointers"/>
-          <modelGroupRef name="n.formula"/>
-          <modelGroupRef name="n.fw"/>
-          <modelGroupRef name="n.handShift"/>
+          <elementRef>
+            <nameSpecRef name="n.formula"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.fw"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.handShift"/>
+          </elementRef>
           <modelGroupRef name="m.hqphrase"/>
           <modelGroupRef name="m.loc"/>
           <modelGroupRef name="m.phrase.verse"/>
@@ -1612,8 +1592,12 @@ tagset-specific components.</comment>
         <choice>
           <modelGroupRef name="x.inter"/>
           <modelGroupRef name="m.bibl"/>
-          <modelGroupRef name="n.castList"/>
-          <modelGroupRef name="n.figure"/>
+          <elementRef>
+            <nameSpecRef name="n.castList"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.figure"/>
+          </elementRef>
           <modelGroupRef name="m.hqinter"/>
           <modelGroupRef name="m.lists"/>
           <modelGroupRef name="m.notes"/>
@@ -1621,8 +1605,12 @@ tagset-specific components.</comment>
             <nameSpecRef name="n.stage"/>
           </elementRef>
           <modelGroupRef name="m.stageDirection"/>
-          <modelGroupRef name="n.table"/>
-          <modelGroupRef name="n.text"/>
+          <elementRef>
+            <nameSpecRef name="n.table"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.text"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="x.chunk">
@@ -1631,9 +1619,15 @@ tagset-specific components.</comment>
       <modelGroup name="m.chunk">
         <choice>
           <modelGroupRef name="x.chunk"/>
-          <modelGroupRef name="n.ab"/>
-          <modelGroupRef name="n.eTree"/>
-          <modelGroupRef name="n.graph"/>
+          <elementRef>
+            <nameSpecRef name="n.ab"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.eTree"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.graph"/>
+          </elementRef>
           <elementRef>
             <nameSpecRef name="n.l"/>
           </elementRef>
@@ -1646,8 +1640,12 @@ tagset-specific components.</comment>
           <elementRef>
             <nameSpecRef name="n.sp"/>
           </elementRef>
-          <modelGroupRef name="n.tree"/>
-          <modelGroupRef name="n.witList"/>
+          <elementRef>
+            <nameSpecRef name="n.tree"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="n.witList"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <comment>This class isolates all the common
@@ -3652,7 +3650,9 @@ using the general purpose NAME element</comment>
                   </zeroOrMore>
                 </sequence>
                 <sequence>
-                  <modelGroupRef name="n.idno"/>
+                  <elementRef>
+                    <nameSpecRef name="n.idno"/>
+                  </elementRef>
                   <zeroOrMore>
                     <modelGroupRef name="m.Incl"/>
                   </zeroOrMore>
@@ -3683,14 +3683,18 @@ using the general purpose NAME element</comment>
               <modelGroupRef name="m.Incl"/>
             </zeroOrMore>
             <sequence>
-              <modelGroupRef name="n.titleStmt"/>
+              <elementRef>
+                <nameSpecRef name="n.titleStmt"/>
+              </elementRef>
               <zeroOrMore>
                 <modelGroupRef name="m.Incl"/>
               </zeroOrMore>
             </sequence>
             <optional>
               <sequence>
-                <modelGroupRef name="n.editionStmt"/>
+                <elementRef>
+                  <nameSpecRef name="n.editionStmt"/>
+                </elementRef>
                 <zeroOrMore>
                   <modelGroupRef name="m.Incl"/>
                 </zeroOrMore>
@@ -3698,21 +3702,27 @@ using the general purpose NAME element</comment>
             </optional>
             <optional>
               <sequence>
-                <modelGroupRef name="n.extent"/>
+                <elementRef>
+                  <nameSpecRef name="n.extent"/>
+                </elementRef>
                 <zeroOrMore>
                   <modelGroupRef name="m.Incl"/>
                 </zeroOrMore>
               </sequence>
             </optional>
             <sequence>
-              <modelGroupRef name="n.publicationStmt"/>
+              <elementRef>
+                <nameSpecRef name="n.publicationStmt"/>
+              </elementRef>
               <zeroOrMore>
                 <modelGroupRef name="m.Incl"/>
               </zeroOrMore>
             </sequence>
             <optional>
               <sequence>
-                <modelGroupRef name="n.seriesStmt"/>
+                <elementRef>
+                  <nameSpecRef name="n.seriesStmt"/>
+                </elementRef>
                 <zeroOrMore>
                   <modelGroupRef name="m.Incl"/>
                 </zeroOrMore>
@@ -3720,7 +3730,9 @@ using the general purpose NAME element</comment>
             </optional>
             <optional>
               <sequence>
-                <modelGroupRef name="n.notesStmt"/>
+                <elementRef>
+                  <nameSpecRef name="n.notesStmt"/>
+                </elementRef>
                 <zeroOrMore>
                   <modelGroupRef name="m.Incl"/>
                 </zeroOrMore>
@@ -3728,7 +3740,9 @@ using the general purpose NAME element</comment>
             </optional>
             <zeroOrMore>
               <sequence>
-                <modelGroupRef name="n.sourceDesc"/>
+                <elementRef>
+                  <nameSpecRef name="n.sourceDesc"/>
+                </elementRef>
                 <zeroOrMore>
                   <modelGroupRef name="m.Incl"/>
                 </zeroOrMore>
@@ -3773,7 +3787,9 @@ using the general purpose NAME element</comment>
               </choice>
             </oneOrMore>
             <optional>
-              <modelGroupRef name="n.trailer"/>
+              <elementRef>
+                <nameSpecRef name="n.trailer"/>
+              </elementRef>
             </optional>
           </sequence>
         </element>
@@ -3938,7 +3954,9 @@ using the general purpose NAME element</comment>
             </zeroOrMore>
             <zeroOrMore>
               <sequence>
-                <modelGroupRef name="n.edition"/>
+                <elementRef>
+                  <nameSpecRef name="n.edition"/>
+                </elementRef>
                 <zeroOrMore>
                   <choice>
                     <elementRef>
@@ -3960,7 +3978,9 @@ using the general purpose NAME element</comment>
                 <elementRef>
                   <nameSpecRef name="n.imprint"/>
                 </elementRef>
-                <modelGroupRef name="n.extent"/>
+                <elementRef>
+                  <nameSpecRef name="n.extent"/>
+                </elementRef>
                 <elementRef>
                   <nameSpecRef name="n.biblScope"/>
                 </elementRef>
@@ -4375,7 +4395,9 @@ and idno.</comment>
                   <elementRef>
                     <nameSpecRef name="n.lg"/>
                   </elementRef>
-                  <modelGroupRef name="n.ab"/>
+                  <elementRef>
+                    <nameSpecRef name="n.ab"/>
+                  </elementRef>
                   <elementRef>
                     <name>seg</name>
                   </elementRef>

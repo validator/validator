@@ -14,6 +14,7 @@ class DtdBuilder {
   private Hashtable generalEntityTable = new Hashtable();
   private Hashtable normalizedTable = new Hashtable();
   private Hashtable notationTable = new Hashtable();
+  private Hashtable ambigNameTable = new Hashtable();
 
   DtdBuilder(Vector atoms) {
     this.atoms = atoms;
@@ -86,9 +87,41 @@ class DtdBuilder {
   }
 
   void analyzeSemantics() {
+    /* A parameter entity such as
+
+       <!ENTITY % n.foo "foo">
+ 
+       where n.foo is referenced only in model groups could either be
+       a name spec for an undefined element or a model group. If the
+       element name "foo" is always referenced via n.foo, then we
+       assume it's a name spec, otherwise we take it to be a model
+       group. */
+
+    for (Enumeration e = paramEntityTable.elements();
+	 e.hasMoreElements();) {
+      Entity ent = (Entity)e.nextElement();
+      String name = ent.ambiguousNameSpec();
+      if (name != null) {
+	Entity prevEnt = (Entity)ambigNameTable.get(name);
+	if (prevEnt != null) {
+	  prevEnt.maybeNameSpec = false;
+	  ent.maybeNameSpec = false;
+	}
+	else
+	  ambigNameTable.put(name, ent);
+      }
+    }
+    Decl.examineElementNames(this, decls.elements());
+
     for (Enumeration e = paramEntityTable.elements();
 	 e.hasMoreElements();)
       ((Entity)e.nextElement()).analyzeSemantic();
+  }
+
+  void noteElementName(String name, Entity entity) {
+    Entity cur = (Entity)ambigNameTable.get(name);
+    if (cur != null && cur != entity)
+      cur.maybeNameSpec = false;
   }
 
   Vector createTopLevel() {

@@ -1,6 +1,7 @@
 package com.thaiopensource.xml.dtd.parse;
 
 import java.util.Vector;
+import java.util.Enumeration;
 
 import com.thaiopensource.xml.dtd.om.*;
 
@@ -173,4 +174,25 @@ class Particle {
       members[i] = (EnumGroupMember)eg.elementAt(i);
     return new EnumGroup(members);
   }
+
+  static void examineElementNames(DtdBuilder db, Enumeration particles) {
+    Entity prevEntity = null;
+    while (particles.hasMoreElements()) {
+      Particle particle = (Particle)particles.nextElement();
+      Entity curEntity = null;
+      switch (particle.type) {
+      case REFERENCE:
+	curEntity = particle.entity;
+	break;
+      case ELEMENT_NAME:
+	db.noteElementName(particle.value, prevEntity);
+	break;
+      case GROUP:
+	examineElementNames(db, particle.particles.elements());
+	break;
+      }
+      prevEntity = curEntity;
+    }
+  }
+
 }

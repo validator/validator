@@ -105,7 +105,7 @@ class Decl {
       entity.flag = Param.paramsToFlag(entity.parsed);
       return new FlagDef(name, entity.flag);
     case Entity.SEMANTIC_NAME_SPEC:
-      entity.nameSpec = Param.paramsToNameSpec(entity.parsed);
+      entity.nameSpec = entity.toNameSpec();
       return new NameSpecDef(name, entity.nameSpec);
     case Entity.SEMANTIC_ATTRIBUTE_DEFAULT:
       entity.attributeDefault = Param.paramsToAttributeDefault(entity.parsed);
@@ -229,5 +229,20 @@ class Decl {
     ps.advance();
     return new NotationDecl(ps.value,
 			    db.lookupNotation(ps.value).getExternalId());
+  }
+
+  static void examineElementNames(DtdBuilder db, Enumeration decls) {
+    while (decls.hasMoreElements()) {
+      Decl decl = (Decl)decls.nextElement();
+      switch (decl.type) {
+      case ELEMENT:
+      case ATTLIST:
+	Param.examineElementNames(db, decl.params.elements());
+	break;
+      case INCLUDE_SECTION:
+	examineElementNames(db, decl.decls.elements());
+	break;
+      }
+    }
   }
 }
