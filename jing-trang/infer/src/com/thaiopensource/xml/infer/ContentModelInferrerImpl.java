@@ -186,10 +186,10 @@ class ContentModelInferrerImpl extends ContentModelInferrer {
   }
 
   public void addElement(Name elementName) {
-    if (elementName.equals(prevNode.name))
+    SingleNode node = lookup(elementName);
+    if (node == prevNode)
       prevNode.repeated = true;
     else {
-      SingleNode node = lookup(elementName);
       prevNode.followingNodes.add(node);
       prevNode = node;
     }
