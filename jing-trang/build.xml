@@ -83,6 +83,7 @@
   <jing rngfile="xhtml/xhtml-basic.rng">
     <fileset dir="doc" includes="**/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
+    <fileset dir="test" includes="index.html"/>
   </jing>
   <jing rngfile="eg/relaxng.rng">
     <fileset dir="eg" includes="*.rng"/>
@@ -154,8 +155,12 @@
     <fileset dir="build" includes="api/**"/>
     <fileset dir="build/datatype-sample" includes="datatype-sample.jar"/>
   </zip>
+  <zip zipfile="build/testSuite.zip">
+    <fileset dir="test"/>
+    <fileset dir="eg" includes="testSuite.rng"/>
+  </zip>
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip"/>
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip,testSuite.zip"/>
 
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 
