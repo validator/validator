@@ -2,7 +2,7 @@ package com.thaiopensource.xml.dtd.parse;
 
 import java.io.IOException;
 
-import com.thaiopensource.xml.util.Localizer;
+import com.thaiopensource.util.Localizer;
 
 public class ParseException extends IOException {
   private Localizer localizer;

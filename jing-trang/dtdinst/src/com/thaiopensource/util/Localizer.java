@@ -1,4 +1,4 @@
-package com.thaiopensource.xml.util;
+package com.thaiopensource.util;
 
 import java.util.ResourceBundle;
 import java.text.MessageFormat;

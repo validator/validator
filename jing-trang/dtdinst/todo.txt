@@ -1,5 +1,3 @@
-Move localizer to com.thaiopensource.util.
-
 Write some documentation.
 
 RELAX NG: output overridden definitions

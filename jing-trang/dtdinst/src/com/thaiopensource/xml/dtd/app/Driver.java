@@ -8,7 +8,7 @@ import java.util.MissingResourceException;
 
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
-import com.thaiopensource.xml.util.Localizer;
+import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.out.XmlWriter;
 import com.thaiopensource.util.OptionParser;
 

@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import com.thaiopensource.xml.dtd.om.*;
 import com.thaiopensource.xml.out.XmlWriter;
 import com.thaiopensource.xml.em.ExternalId;
-import com.thaiopensource.xml.util.Localizer;
+import com.thaiopensource.util.Localizer;
 
 public class RelaxNgWriter {
   static Localizer localizer = new Localizer(RelaxNgWriter.class);

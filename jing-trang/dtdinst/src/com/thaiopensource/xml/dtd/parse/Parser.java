@@ -7,7 +7,7 @@ import java.util.Hashtable;
 
 import com.thaiopensource.xml.tok.*;
 import com.thaiopensource.xml.em.*;
-import com.thaiopensource.xml.util.Localizer;
+import com.thaiopensource.util.Localizer;
 
 class Parser extends Token {
   static Localizer localizer = new Localizer(Parser.class);
