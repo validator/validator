@@ -1,3 +1,5 @@
+Tests for namespace declaration names.
+
 Support URI version number of 1.0.
 
 Distinguish error for unknown datatype library and unknown datatype.
