@@ -56,7 +56,8 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
 
 <target name="exegen" depends="compile,check-exe,crimson-files,regex-files"
         unless="exe-ok" description="Build jing.exe" >
-  <exec dir="." executable="${sdkjava.dir}\bin\jexegen" failonerror="yes">
+  <exec dir="." executable="${sdkjava.dir}\bin\jexegen"
+        failonerror="yes" os="Windows 2000">
     <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
     <arg value="/nologo"/>
     <arg value="/out:build\jing.exe"/>
