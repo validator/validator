@@ -1,7 +1,7 @@
 package com.thaiopensource.validate.picl;
 
 abstract class PathPattern extends Pattern {
-  protected final String[] names;
+  private final String[] names;
   private final boolean[] descendantsOrSelf;
   static String ANY = "#any";
 
@@ -10,9 +10,16 @@ abstract class PathPattern extends Pattern {
     this.descendantsOrSelf = descendantsOrSelf;
   }
 
-  boolean matchSegment(Path path, int pathStartIndex, int pathLength,
-                       int patternStartIndex, int patternLength,
-                       boolean ignoreRightmostDescendantsOrSelf) {
+  abstract boolean isAttribute();
+
+  boolean matches(Path path, int rootDepth) {
+    return (isAttribute() == path.isAttribute()
+            && matchSegment(path, rootDepth, path.length() - rootDepth, 0, names.length >> 1, false));
+  }
+
+  private boolean matchSegment(Path path, int pathStartIndex, int pathLength,
+                               int patternStartIndex, int patternLength,
+                               boolean ignoreRightmostDescendantsOrSelf) {
     if (patternLength > pathLength)
       return false;
     while (patternLength > 0
@@ -42,24 +49,24 @@ abstract class PathPattern extends Pattern {
 
   private boolean matchStep(Path path, int pathIndex, int patternIndex) {
     patternIndex *= 2;
-    return (ElementPathPattern.matchName(path.getNamespace(pathIndex), names[patternIndex])
-            && ElementPathPattern.matchName(path.getLocalName(pathIndex), names[patternIndex + 1]));
+    return (matchName(path.getNamespace(pathIndex), names[patternIndex])
+            && matchName(path.getLocalName(pathIndex), names[patternIndex + 1]));
   }
 
-  static boolean matchName(String str, String pattern) {
+  private static boolean matchName(String str, String pattern) {
     if (pattern == ElementPathPattern.ANY)
       return true;
     return str.equals(pattern);
   }
 
-  String toString(boolean isAttribute) {
+  public String toString() {
     StringBuffer buf = new StringBuffer();
     for (int i = 0, j = 0; i < names.length; i += 2, j++) {
       if (j != 0)
         buf.append(descendantsOrSelf[j] ? "//" : "/");
       else if (descendantsOrSelf[0])
         buf.append(".//");
-      if (isAttribute && i + 2 == names.length)
+      if (isAttribute() && i + 2 == names.length)
         buf.append('@');
       if (names[i] == ANY)
         buf.append('*');

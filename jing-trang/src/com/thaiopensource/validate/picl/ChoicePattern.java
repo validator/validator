@@ -7,16 +7,9 @@ class ChoicePattern extends Pattern {
     this.choices = choices;
   }
 
-  boolean matchesAttribute(Path path, String namespaceUri, String localName, int rootDepth) {
+  boolean matches(Path path, int rootDepth) {
     for (int i = 0; i < choices.length; i++)
-      if (choices[i].matchesAttribute(path, namespaceUri, localName, rootDepth))
-        return true;
-    return false;
-  }
-
-  boolean matchesElement(Path path, int rootDepth) {
-    for (int i = 0; i < choices.length; i++)
-      if (choices[i].matchesElement(path, rootDepth))
+      if (choices[i].matches(path, rootDepth))
         return true;
     return false;
   }
