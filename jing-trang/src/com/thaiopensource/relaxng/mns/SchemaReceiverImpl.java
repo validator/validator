@@ -52,7 +52,7 @@ class SchemaReceiverImpl implements SchemaReceiver {
    if (mnsSchema == null) {
       String className = SchemaReceiverImpl.class.getName();
       String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + MNS_SCHEMA;
-      URL mnsSchemaUrl = SchemaReceiverImpl.class.getClassLoader().getResource(resourceName);
+      URL mnsSchemaUrl = getResource(resourceName);
       mnsSchema = SAXSchemaLanguage.getInstance().createSchema(xrc,
                                                                new InputSource(mnsSchemaUrl.toString()),
                                                                eh,
@@ -60,6 +60,15 @@ class SchemaReceiverImpl implements SchemaReceiver {
                                                                dlf);
     }
     return mnsSchema;
+  }
+
+  private static URL getResource(String resourceName) {
+    ClassLoader cl = SchemaReceiverImpl.class.getClassLoader();
+    // XXX see if we should borrow 1.2 code from Service
+    if (cl == null)
+      return ClassLoader.getSystemResource(resourceName);
+    else
+      return cl.getResource(resourceName);
   }
 
   ErrorHandler getErrorHandler() {
