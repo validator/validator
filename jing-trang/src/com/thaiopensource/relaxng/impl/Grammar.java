@@ -6,7 +6,7 @@ import java.util.Hashtable;
 class Grammar {
   private Hashtable patterns = new Hashtable();
 
-  private PatternRefPattern start = new PatternRefPattern(null);
+  private RefPattern start = new RefPattern(null);
 
   private Grammar parent;
 
@@ -14,7 +14,7 @@ class Grammar {
     this.parent = parent;
   }
 
-  PatternRefPattern startPatternRef() {
+  RefPattern startPatternRef() {
     return start;
   }
 
@@ -26,10 +26,10 @@ class Grammar {
     return patterns.keys();
   }
 
-  PatternRefPattern makePatternRef(String name) {
-    PatternRefPattern p = (PatternRefPattern)patterns.get(name);
+  RefPattern makePatternRef(String name) {
+    RefPattern p = (RefPattern)patterns.get(name);
     if (p == null) {
-      p = new PatternRefPattern(name);
+      p = new RefPattern(name);
       patterns.put(name, p);
     }
     return p;

@@ -758,12 +758,12 @@ public class PatternReader {
   }
 
   static class Item {
-    Item(PatternRefPattern prp, Item next) {
+    Item(RefPattern prp, Item next) {
       this.prp = prp;
       this.next = next;
     }
     
-    PatternRefPattern prp;
+    RefPattern prp;
     Item next;
     byte replacementStatus;
   }
@@ -778,7 +778,7 @@ public class PatternReader {
       include = this;
     }
 
-    void add(PatternRefPattern prp) {
+    void add(RefPattern prp) {
       items = new Item(prp, items);
     }
 
@@ -802,7 +802,7 @@ public class PatternReader {
       Item i;
       for (i = items; i != null; i = i.next) {
 	i.replacementStatus = i.prp.getReplacementStatus();
-	i.prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_REQUIRE);
+	i.prp.setReplacementStatus(RefPattern.REPLACEMENT_REQUIRE);
       }
       try {
 	InputSource in = makeInputSource(href);
@@ -825,7 +825,7 @@ public class PatternReader {
       }
       for (i = items; i != null; i = i.next) {
 	if (i.prp.getReplacementStatus()
-	    == PatternRefPattern.REPLACEMENT_REQUIRE) {
+	    == RefPattern.REPLACEMENT_REQUIRE) {
 	  if (i.prp.getName() == null)
 	    error("missing_start_replacement");
 	  else
@@ -863,7 +863,7 @@ public class PatternReader {
       for (Enumeration enum = grammar.patternNames();
 	   enum.hasMoreElements();) {
 	String name = (String)enum.nextElement();
-	PatternRefPattern tr = (PatternRefPattern)grammar.makePatternRef(name);
+	RefPattern tr = (RefPattern)grammar.makePatternRef(name);
 	if (tr.getPattern() == null) {
 	  error("reference_to_undefined", name, tr.getRefLocator());
 	  tr.setPattern(patternBuilder.makeError());
@@ -902,7 +902,7 @@ public class PatternReader {
 
     Pattern makePattern(Grammar g) {
       if (g != null && name != null) {
-	PatternRefPattern p = g.makePatternRef(name);
+	RefPattern p = g.makePatternRef(name);
 	if (p.getRefLocator() == null && locator != null)
 	  p.setRefLocator(new LocatorImpl(locator));
 	return p;
@@ -979,7 +979,7 @@ public class PatternReader {
   }
 
   abstract class DefinitionState extends PatternContainerState {
-    byte combine = PatternRefPattern.COMBINE_NONE;
+    byte combine = RefPattern.COMBINE_NONE;
 
     private IncludeState include;
 
@@ -987,25 +987,25 @@ public class PatternReader {
       this.include = include;
     }
 
-    void setPattern(PatternRefPattern prp, Pattern p) {
+    void setPattern(RefPattern prp, Pattern p) {
       switch (prp.getReplacementStatus()) {
-      case PatternRefPattern.REPLACEMENT_KEEP:
+      case RefPattern.REPLACEMENT_KEEP:
 	if (include != null)
 	  include.add(prp);
 	if (prp.getPattern() == null)
 	  prp.setPattern(p);
 	else if (prp.getCombineType()
-		 == PatternRefPattern.COMBINE_INTERLEAVE)
+		 == RefPattern.COMBINE_INTERLEAVE)
 	  prp.setPattern(patternBuilder.makeInterleave(prp.getPattern(),
 						       p));
 	else
 	  prp.setPattern(patternBuilder.makeChoice(prp.getPattern(),
 						   p));
 	break;
-      case PatternRefPattern.REPLACEMENT_REQUIRE:
-	prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_IGNORE);
+      case RefPattern.REPLACEMENT_REQUIRE:
+	prp.setReplacementStatus(RefPattern.REPLACEMENT_IGNORE);
 	break;
-      case PatternRefPattern.REPLACEMENT_IGNORE:
+      case RefPattern.REPLACEMENT_IGNORE:
 	break;
       }
     }
@@ -1014,9 +1014,9 @@ public class PatternReader {
       if (name.equals("combine")) {
 	value = value.trim();
 	if (value.equals("choice"))
-	  combine = PatternRefPattern.COMBINE_CHOICE;
+	  combine = RefPattern.COMBINE_CHOICE;
 	else if (value.equals("interleave"))
-	  combine = PatternRefPattern.COMBINE_INTERLEAVE;
+	  combine = RefPattern.COMBINE_INTERLEAVE;
 	else
 	  error("combine_attribute_bad_value", value);
       }
@@ -1024,11 +1024,11 @@ public class PatternReader {
 	super.setOtherAttribute(name, value);
     }
 
-    void checkCombine(PatternRefPattern prp) throws SAXException {
-      if (prp.getReplacementStatus() != PatternRefPattern.REPLACEMENT_KEEP)
+    void checkCombine(RefPattern prp) throws SAXException {
+      if (prp.getReplacementStatus() != RefPattern.REPLACEMENT_KEEP)
 	return;
       switch (combine) {
-      case PatternRefPattern.COMBINE_NONE:
+      case RefPattern.COMBINE_NONE:
 	if (prp.isCombineImplicit()) {
 	  if (prp.getName() == null)
 	    error("duplicate_start");
@@ -1038,9 +1038,9 @@ public class PatternReader {
 	else
 	  prp.setCombineImplicit();
 	break;
-      case PatternRefPattern.COMBINE_CHOICE:
-      case PatternRefPattern.COMBINE_INTERLEAVE:
-	if (prp.getCombineType() != PatternRefPattern.COMBINE_NONE
+      case RefPattern.COMBINE_CHOICE:
+      case RefPattern.COMBINE_INTERLEAVE:
+	if (prp.getCombineType() != RefPattern.COMBINE_NONE
 	    && prp.getCombineType() != combine) {
 	  if (prp.getName() == null)
 	    error("conflict_combine_start");

@@ -4,7 +4,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-class PatternRefPattern extends Pattern {
+class RefPattern extends Pattern {
   private Pattern p;
   private Locator refLoc;
   private String name;
@@ -22,7 +22,7 @@ class PatternRefPattern extends Pattern {
   static final byte COMBINE_CHOICE = 1;
   static final byte COMBINE_INTERLEAVE = 2;
 
-  PatternRefPattern(String name) {
+  RefPattern(String name) {
     this.name = name;
   }
 
