@@ -5,17 +5,15 @@
 <body>
 <h1>DTDinst</h1>
 
-<p>Copyright &#169; 2001 Thai Open Source Software Center Ltd</p>
+<p>Copyright &#169; 2001-2003 Thai Open Source Software Center Ltd</p>
 
 <p>See the file <a href="copying.txt">copying.txt</a> for copying
 permission.</p>
 
 <h3>Version @VERSION@</h3>
 
-<p>DTDinst is a program for converting XML DTDs into XML instance
-format. The XML instance can be in either a <a
-href="#format">format</a> specific to DTDinst or <a
-href="http://relaxng.org">RELAX NG</a> format.</p>
+<p>DTDinst is a program for converting XML DTDs into an XML instance
+<a href="#format">format</a>.</p>
 
 <p>The key feature of DTDinst is its handling of parameter entities.
 It is able to reliably turn parameter entity declarations and
@@ -42,39 +40,19 @@ environment</a> installed on your system.</p>
 
 <p>To run DTDinst, use a command of the form:</p>
 
-<pre>java -jar dtdinst.jar [ -i ] [ -r <var>dir</var> ] <var>DTD</var></pre>
+<pre>java -jar dtdinst.jar <var>DTD</var></pre>
 
 <p>The <code><var>DTD</var></code> argument can be either a file or a
 URL.</p>
 
-<p>If the <code>-r</code> option is not specified, DTDinst writes an
-XML representation of the DTD in <a href="#format">DTDinst format</a>
-to the standard output. For example, the command</p>
+<p>DTDinst writes an XML representation of the DTD in <a
+href="#format">DTDinst format</a> to the standard output. For example,
+the command</p>
 
 <pre>java -jar dtdinst.jar http://www.w3.org/XML/1998/06/xmlspec-v21.dtd >xmlspec.xml</pre>
 
 <p>would write an XML representation of the W3C xmlspec DTD to the
 file <code>xmlspec.xml</code>.</p>
-
-<p>With the <code>-r</code> option, DTDinst writes one or more files
-containing a RELAX NG schema to the directory
-<code><var>dir</var></code>. For example, the command</p>
-
-<pre>java -jar dtdinst.jar -r relax http://www.xml.gr.jp/relax/relaxCore.dtd</pre>
-
-<p>would write a RELAX NG schema for RELAX Core to the directory
-<code>relax</code>. The directory would contain a
-<code>relaxCore.rng</code> file corresponding to
-<code>relaxCore.dtd</code>, and would also contain a
-<code>datatypes.rng</code> file corresponding to
-<code>datatypes.dtd</code>, which is referenced by
-<code>relaxCore.dtd</code>.</p>
-
-<p>The <code>-i</code> option tells DTDinst to inline <code>ATTLIST</code> declarations.
-Without this option, DTDinst will generate a <code>define</code> in the RELAX NG schema
-for each <code>ATTLIST</code> declaration in the DTD.  With this option, DTDinst will
-move the patterns generated from <code>ATTLIST</code> declarations into the corresponding
-<code>element</code> pattern.</p>
 
 <h2><a name="format">DTDinst format</a></h2>
 
@@ -204,12 +182,6 @@ href="http://www.tei-c.org/P4X/DTD/">TEI P4 DTD</a>.</p>
 
 <p>DTDinst does not attempt to understand the contents of parameter
 entities that are never referenced.</p>
-
-<p>The conversion to RELAX NG preserves neither conditional sections
-nor overridden parameter entity declarations.  If you need to preserve
-these, the recommended approach is to generate RELAX NG from DTDinst
-format using a transformation (perhaps written in XSLT) customized for
-for your particular DTD.</p>
 
 <h2>Reporting bugs</h2>
 
