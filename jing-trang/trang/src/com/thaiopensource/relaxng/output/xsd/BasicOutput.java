@@ -636,7 +636,7 @@ public class BasicOutput {
       xw.startElement(xs("element"));
       xw.attribute("name", name.getLocalName());
       xw.attribute("abstract", "true");
-      outputComplexType(name, abstractElementTypeSelector.getAbstractElementType(name, nsm), def);
+      outputComplexType(name, abstractElementTypeSelector.getAbstractElementType(name), def);
       xw.endElement();
       return true;
     }
@@ -1026,7 +1026,7 @@ public class BasicOutput {
     Name substitutionGroup = nsm.getSubstitutionGroup(elementName);
     if (substitutionGroup != null) {
       xw.attribute("substitutionGroup", qualifyName(substitutionGroup));
-      if (ct != null && ct.equals(abstractElementTypeSelector.getAbstractElementType(substitutionGroup, nsm)))
+      if (ct != null && ct.equals(abstractElementTypeSelector.getAbstractElementType(substitutionGroup)))
         ct = null;
     }
     if (ct != null) {

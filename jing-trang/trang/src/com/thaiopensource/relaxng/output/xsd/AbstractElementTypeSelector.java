@@ -31,10 +31,10 @@ class AbstractElementTypeSelector {
     this.complexTypeSelector = complexTypeSelector;
   }
 
-  ComplexType getAbstractElementType(Name name, NamespaceManager nsm) {
+  ComplexType getAbstractElementType(Name name) {
     ComplexType ct = (ComplexType)abstractElementComplexTypeMap.get(name);
     if (ct == null) {
-      ct = computeAbstractElementType(name, nsm);
+      ct = computeAbstractElementType(name);
       if (ct == null)
         ct = urType;
       abstractElementComplexTypeMap.put(name, ct);
@@ -44,7 +44,7 @@ class AbstractElementTypeSelector {
     return ct;
   }
 
-  private ComplexType computeAbstractElementType(Name name, NamespaceManager nsm) {
+  private ComplexType computeAbstractElementType(Name name) {
     List members = nsm.getAbstractElementSubstitutionGroupMembers(name);
     if (members == null)
       return null;
@@ -155,7 +155,7 @@ class AbstractElementTypeSelector {
     Element element = nsm.getGlobalElement(name);
     if (element != null)
       return element.getComplexType();
-    return getAbstractElementType(name, nsm);
+    return getAbstractElementType(name);
   }
 }
 
