@@ -7,7 +7,6 @@ public class ValuePattern extends Pattern {
   private String datatypeLibrary;
   private String type;
   private String value;
-  private String ns;
   private final Map prefixMap = new HashMap();
 
   public ValuePattern(String datatypeLibrary, String type, String value) {
@@ -42,14 +41,6 @@ public class ValuePattern extends Pattern {
 
   public boolean mayContainText() {
     return true;
-  }
-
-  public String getNs() {
-    return ns;
-  }
-
-  public void setNs(String ns) {
-    this.ns = ns;
   }
 
   public Map getPrefixMap() {
