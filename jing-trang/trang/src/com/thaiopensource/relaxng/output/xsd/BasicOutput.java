@@ -508,6 +508,7 @@ public class BasicOutput {
         outputSubstitutionGroup(name);
         ComplexType type = p.getComplexType();
         if (type instanceof ComplexTypeNotAllowedContent)
+          // XXX Do we need outputAnnotation here?
           xw.attribute("abstract", "true");
         else {
           complexTypeOutput.parent = p;
