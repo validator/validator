@@ -1,0 +1,147 @@
+# Based on
+# http://www.ascc.net/xml/schematron/schematron1-5.dtd, version of 2002/08/16
+
+# This version has the 1.6 feature that sch:key element with @match 
+# is allowed under sch:schema. This is not part of 1.5 proper.
+
+default namespace = "http://www.ascc.net/xml/schematron"
+namespace xsi = "http://www.w3.org/2000/10/XMLSchema-instance"
+
+start = schema
+
+# Element declarations
+schema =
+  element schema {
+    attribute xsi:schemaLocation { uri }?,
+    attribute id { xsd:ID }?,
+    attribute fpi { fpi }?,
+    attribute ns { fpi }?,
+    attribute schemaVersion { text }?,
+    attribute defaultPhase { xsd:IDREF }?,
+    attribute icon { uri }?,
+    attribute version { text }?,
+    attribute xml:lang { xsd:NMTOKEN }?,
+    title?,
+    ns*,
+    p*,
+    (phase | key)*,
+    pattern+,
+    p*,
+    diagnostics?
+  }
+active =
+  element active {
+    attribute pattern { xsd:IDREF },
+    (text | dir | emph | span)*
+  }
+assert =
+  element assert {
+    attribute test { expr },
+    attribute role { xsd:NMTOKEN }?,
+    attribute id { xsd:ID }?,
+    attribute diagnostics { xsd:IDREFS }?,
+    attribute icon { uri }?,
+    attribute subject { path }?,
+    attribute xml:lang { xsd:NMTOKEN }?,
+    (text | name | emph | dir | span)*
+  }
+dir =
+  element dir {
+    attribute value { "ltr" | "rtl" }?,
+    text
+  }
+emph = element emph { text }
+extends =
+  element extends {
+    attribute rule { xsd:IDREF },
+    empty
+  }
+diagnostic =
+  element diagnostic {
+    attribute id { xsd:ID },
+    attribute icon { uri }?,
+    attribute xml:lang { xsd:NMTOKEN }?,
+    (text | value-of | emph | dir | span)*
+  }
+diagnostics = element diagnostics { diagnostic* }
+key =
+  element key {
+    attribute match { text }?,
+    attribute name { xsd:NMTOKEN },
+    attribute path { path },
+    attribute icon { uri }?,
+    empty
+  }
+name =
+  element name {
+    attribute path { path }?,
+    empty
+  }
+ns =
+  element ns {
+    attribute uri { uri },
+    attribute prefix { xsd:NMTOKEN }?,
+    empty
+  }
+p =
+  element p {
+    attribute xml:lang { text }?,
+    attribute id { xsd:ID }?,
+    attribute class { text }?,
+    attribute icon { uri }?,
+    (text | dir | emph | span)*
+  }
+pattern =
+  element pattern {
+    attribute name { text },
+    attribute see { uri }?,
+    attribute id { xsd:ID }?,
+    attribute icon { uri }?,
+    p*,
+    rule*
+  }
+phase =
+  element phase {
+    attribute id { xsd:ID },
+    attribute fpi { fpi }?,
+    attribute icon { uri }?,
+    p*,
+    active*
+  }
+report =
+  element report {
+    attribute test { expr },
+    attribute role { xsd:NMTOKEN }?,
+    attribute id { xsd:ID }?,
+    attribute diagnostics { xsd:IDREFS }?,
+    attribute icon { uri }?,
+    attribute subject { path }?,
+    attribute xml:lang { text }?,
+    (text | name | emph | dir | span)*
+  }
+rule =
+  element rule {
+    attribute context { path }?,
+    attribute abstract { "true" | "false" }?,
+    attribute role { xsd:NMTOKEN }?,
+    attribute id { xsd:ID }?,
+    (assert | report | key | extends)+
+  }
+span =
+  element span {
+    attribute class { text }?,
+    text
+  }
+title = element title { (text | dir)* }
+value-of =
+  element value-of {
+    attribute select { path },
+    empty
+  }
+
+# Data types
+
+uri = string
+path = string
+expr = string
+fpi = string
