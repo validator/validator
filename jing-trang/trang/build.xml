@@ -99,7 +99,7 @@ Class-Path: jing.jar
   </jing>
 </target>
 
-<target name="dist" depends="jar,validate,test">
+<target name="dist" depends="jar,validate,test,xsd-test">
   <zip zipfile="${dist.dir}/trang-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
     <zipfileset dir="${build.dir}" includes="trang-manifest.txt"
