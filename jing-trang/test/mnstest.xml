@@ -81,4 +81,29 @@
 <foo xmlns:eg="http://www.example.com" eg:a="aval" eg:b="aval"/>
 </invalid>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="" schema="a.rng" prune="true"/>
+</rules>
+</correct>
+<valid>
+<a xml:lang="en"/>
+</valid>
+<valid>
+<a>
+<b xmlns="http://www.example.com"/>
+</a>
+</valid>
+<invalid>
+<a>
+<b/>
+</a>
+</invalid>
+</testCase>
 </testSuite>
