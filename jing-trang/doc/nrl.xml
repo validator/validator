@@ -103,8 +103,8 @@ each section separately against the subschema for its namespace.</p>
 </env:Envelope>
 </xml>
 
-<p>would be divided into three sections, one with the
-<code>http://schemas.xmlsoap.org/soap/envelope/</code> namespace</p>
+<p>would be divided into three sections, one with the envelope
+namespace</p>
 
 <xml>
 <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
@@ -113,8 +113,7 @@ each section separately against the subschema for its namespace.</p>
 </env:Envelope>
 </xml>
 
-<p>and two with the <code>http://www.w3.org/1999/xhtml</code>
-namespace:</p>
+<p>and two with the XHTML namespace:</p>
 
 <xml>
 <xhtml xmlns="http://www.w3.org/1999/xhtml">
@@ -141,9 +140,8 @@ namespace:</p>
 <p>Note that two elements only belong to the same section if they have
 a common ancestor and if all elements on the path to that common
 ancestor have the same namespace.  Thus, if one of the XHTML documents
-happened to contain an element from the
-<code>http://schemas.xmlsoap.org/soap/envelope/</code>, it would not
-be part of the same section as the root element.</p>
+happened to contain an element from the envelope, it would not be
+part of the same section as the root element.</p>
 
 <p>This validation process can be refined in several ways, which
 are described in the following sections.</p>
@@ -595,12 +593,12 @@ to be able to wrap an extension element around an existing
 non-extension element.  This can arise with namespaces describing
 templating and versioning.  Imagine XHTML inside an XSLT stylesheet:
 in such a document we might have a <code>ul</code> element containing
-an <code>xsl:for-each</code> element containing an <code>li</code>,
-although the schema for XHTML requires <code>li</code> elements to
-occur as direct children of <code>ul</code> elements. In such a
-situation, we need to need to make the XHTML schema unwrap the
-<code>xsl:for-each</code> element, ignoring its start-tag and end-tag,
-but not ignoring its content.</p>
+an <code>xsl:for-each</code> element containing an <code>li</code>
+element, although the schema for XHTML requires <code>li</code>
+elements to occur as direct children of <code>ul</code> elements. In
+such a situation, we need to need to make the XHTML schema
+<i>unwrap</i> the <code>xsl:for-each</code> element, ignoring its
+start-tag and end-tag, but not ignoring its content.</p>
 
 <p>Suppose we have a namespace
 <code>http://www.example.org/edit</code> containing elements
@@ -627,33 +625,30 @@ allow us still to validate the XHTML document.</p>
 </rules>
 </xml>
 
-<p>The <code>unwrap</code> element says to ignore a particular
-section; like with all the other actions, it applies to a section not
-to a subtree.  XXX
+<p>When <code>unwrap</code> is applied to an element section
+<var>e</var>, it ignores the elements in <var>e</var> and their
+attributes and just processes the child element sections of
+<var>e</var>; if processing the child element sections causes a
+section to try to attach to <var>e</var>, it will instead attach to
+the parent of <var>e</var>.  Thus, in the above schema the section
+from the edit namespace will be ignored, but child sections will be
+processed according to rules applicable in the <code>xhtml</code>
+mode.  When a edit section has an XHTML child section, then that XHTML
+child section will be attached to the parent of the edit section
+(which can only be another XHTML section).</p>
 
- Thus, the section from the
-<code>http://www.example.org/edit</code> will be ignored, but child
-sections will be processed according to rules applicable in the
-<code>xhtml</code> mode.  When a
-<code>http://www.example.org/edit</code> section has a
-<code>http://www.w3.org/1999/xhtml</code> child section, then that
-child section will be attached to the parent of the
-<code>http://www.example.org/edit</code> section (which will be
-another <code>http://www.w3.org/1999/xhtml</code> section).</p>
-
-<p>The above schema does not deal with validating the
-<code>http://www.example.org/edit</code> namespace. Let us suppose
-that <code>inserted</code> and <code>deleted</code> elements
-cannot nest.  Our schema <code>edit.rnc</code>
-for the <code>http://www.example.org/edit</code> is simply</p>
+<p>The above schema does not deal with validating the edit
+namespace. Let us suppose that <code>inserted</code> and
+<code>deleted</code> elements cannot nest.  Our schema
+<code>edit.rnc</code> for the edit namespace is just two lines:</p>
 
 <pre>
 default namespace = "http://www.example.org/edit"
 element inserted|deleted { empty }
 </pre>
 
-<p>The following NRL schema would allow validation of the
-<code>http://www.example.org/edit</code> namespace:</p>
+<p>The following NRL schema would allow validation of the edit
+namespace:</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
@@ -678,7 +673,15 @@ element inserted|deleted { empty }
 </rules>
 </xml>
 
-<p>XXX</p>
+<p>The above schema is still not quite right. Suppose a
+<code>title</code> element was both inserted and deleted.  With the
+above NRL schema, XHTML validation would see two <code>title</code>
+elements, which would get an error. We should instead do XHTML
+validation twice, once including the content of the
+<code>inserted</code> elements and ignoring the content of the
+<code>deleted</code> elements and once doing the opposite.  We only
+need to validate the edit elements once.  The following NRL schema
+accomplishes this:</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
@@ -731,6 +734,8 @@ RELAX NG, that are not limited in this way.</p>
 
 <p>In reaction to MNS, Rick Jellife produced the Namespace
 Switchboard, which inspired much of the evolution of NRL from MNS.</p>
+
+<p>Say something about XSD.</p>
 
 <h2>Acknowledgments</h2>
 
