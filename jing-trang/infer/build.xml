@@ -1,0 +1,42 @@
+<project name="infer" default="jar" basedir=".">
+
+<property name="build.dir" value="build"/>
+<property name="jing.classes" value="../build/classes"/>
+<property name="trang.classes" value="../build/classes"/>
+<property name="dist.dir" value="build"/>
+
+<target name="init">
+  <mkdir dir="${build.dir}"/>
+  <property file="src/com/thaiopensource/relaxng/infer/resources/Version.properties"/>
+</target>
+
+<target name="compile" depends="init">
+  <mkdir dir="${build.dir}/classes"/>
+  <javac srcdir="src" destdir="${build.dir}/classes"
+         classpath="${jing.classes}:${trang.classes}"/>
+</target>
+
+<target name="jar" depends="compile">
+  <echo file="${build.dir}/infer-manifest.txt">Manifest-Version: 1.0
+Main-Class: com/thaiopensource/relaxng/infer/Driver
+Class-Path: trang.jar
+</echo>
+
+  <jar jarfile="${dist.dir}/infer.jar" manifest="${build.dir}/infer-manifest.txt">
+    <fileset dir="${build.dir}/classes"/>
+    <fileset dir="src" includes="**/*.properties"/>
+  </jar>
+</target>
+
+<target name="dist" depends="jar">
+  <zip zipfile="${dist.dir}/infer-src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+    <zipfileset dir="${build.dir}" includes="infer-manifest.txt"
+       fullpath="META-INF/MANIFEST.MF"/>
+  </zip>
+  <zip zipfile="${dist.dir}/infer-bin.zip">
+    <fileset dir="${dist.dir}" includes="infer.jar,trang.jar,jing.jar"/>
+  </zip>
+</target>
+
+</project>
