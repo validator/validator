@@ -42,4 +42,8 @@ public class ParseException extends IOException {
 			       new Integer(lineNumber),
 			       new Integer(columnNumber) });
   }
+
+  public String getMessageBody() {
+    return super.getMessage();
+  }
 }

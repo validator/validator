@@ -6,9 +6,11 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
+import com.thaiopensource.xml.dtd.parse.ParseException;
 import com.thaiopensource.xml.dtd.app.UriEntityManager;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.IOException;
 
@@ -16,12 +18,17 @@ public class DtdInputFormat implements InputFormat {
   private boolean inlineAttlistDecls = false;
 
   public SchemaCollection load(String uri, String encoding, ErrorHandler eh) throws IOException, SAXException {
-    Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
     try {
-      return new Converter(dtd, new ErrorReporter(eh, DtdInputFormat.class), inlineAttlistDecls).convert();
+      Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
+      try {
+        return new Converter(dtd, new ErrorReporter(eh, DtdInputFormat.class), inlineAttlistDecls).convert();
+      }
+      catch (ErrorReporter.WrappedSAXException e) {
+        throw e.getException();
+      }
     }
-    catch (ErrorReporter.WrappedSAXException e) {
-      throw e.getException();
+    catch (ParseException e) {
+      throw new SAXParseException(e.getMessageBody(), null, e.getLocation(), e.getLineNumber(), e.getColumnNumber());
     }
   }
 
