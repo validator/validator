@@ -433,18 +433,32 @@ public class Parser extends Token {
     return true;
   }
 
-  private void fatal(String s, String arg) throws IOException {
-    throw new IOException(s + ": " + arg);
+  private void fatal(String key, String arg) throws ParseException {
+    doFatal(Localizer.message(key, arg));
   }
   
-  private void fatal(String s) throws IOException {
-    // XXX
-    throw new IOException(s);
+  private void fatal(String key) throws ParseException {
+    doFatal(Localizer.message(key));
+  }
+
+  private void doFatal(String message) throws ParseException {
+    if (parent != null)
+      parent.doFatal(message);
+    if (posOff > currentTokenStart)
+      throw new Error("positioning botch");
+    Tokenizer.movePosition(buf, posOff, currentTokenStart, pos);
+    posOff = currentTokenStart;
+    throw new ParseException(message,
+			     location,
+			     pos.getLineNumber(),
+			     pos.getColumnNumber());
   }
 
   private void reportInvalidToken(InvalidTokenException e) throws IOException {
-    // XXX
-    fatal("INVALID_TOKEN");
+    if (e.getType() == InvalidTokenException.XML_TARGET)
+      fatal("XML_TARGET");
+    else
+      fatal("ILLEGAL_CHAR");
   }
 
   private void addAtom(Atom a) {
