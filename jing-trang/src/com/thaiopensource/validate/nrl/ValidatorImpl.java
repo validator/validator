@@ -333,6 +333,9 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       Validator validator = (Validator)currentSection.validators.elementAt(i);
       cleanupHandler(validator.getContentHandler());
       releaseValidator((Schema)currentSection.schemas.elementAt(i), validator);
+      // endDocument() on one of the validators may throw an exception
+      // in this case we don't want to release the validator twice
+      currentSection.validators.setElementAt(null, i);
     }
     currentSection = currentSection.parent;
   }
@@ -371,11 +374,18 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   }
 
   private void releaseValidator(Schema schema, Validator vh) {
+    if (vh == null)
+      return;
     vh.reset();
     ((Stack)validatorHandlerCache.get(schema)).push(vh);
   }
 
   public void reset() {
+    for (; currentSection != null; currentSection = currentSection.parent) {
+      for (int i = 0, len = currentSection.validators.size(); i < len; i++)
+        releaseValidator((Schema)currentSection.schemas.elementAt(i),
+                         (Validator)currentSection.validators.elementAt(i));
+    }
     initCurrentSection();
   }
 
