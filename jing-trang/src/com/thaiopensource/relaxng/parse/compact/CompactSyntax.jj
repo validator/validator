@@ -46,6 +46,7 @@ public class CompactSyntax implements Context {
   private static final String xmlUri = "http://www.w3.org/XML/1998/namespace";
   private static final String xmlnsUri = "http://www.w3.org/2000/xmlns";
   private static final String compatibilityUri = "http://relaxng.org/ns/compatibility/annotations/1.0";
+  private static final String xsdUri = "http://www.w3.org/2001/XMLSchema-datatypes";
 
   private static final int IN_ELEMENT = 0;
   private static final int IN_ATTRIBUTE = 1;
@@ -453,7 +454,11 @@ void Preamble() :
 {}
 {
   (NamespaceDecl() | DatatypesDecl())*
-  { namespaceTable.put("xml", xmlUri); }
+  {
+    namespaceTable.put("xml", xmlUri);
+    if (datatypesTable.get("xsd") == null)
+      datatypesTable.put("xsd", xsdUri);
+  }
 }
 
 void NamespaceDecl() :
