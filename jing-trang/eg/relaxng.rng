@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.14 2001-06-02 08:39:44 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.15 2001-06-02 08:46:40 jjc Exp $ -->
 <grammar namespace="http://relaxng.org/ns/structure/0.9"
          datatypeNamespace="http://www.w3.org/2001/XMLSchema-datatypes"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -8,7 +8,9 @@
     <choice>
       <element name="element">
         <choice>
-          <attribute name="name"/>
+          <attribute name="name">
+            <data type="QName"/>
+          </attribute>
           <ref name="open-name-class"/>
         </choice>
         <ref name="common-atts"/>
@@ -18,13 +20,12 @@
         <ref name="common-atts"/>
         <choice>
           <group>
-            <attribute name="name"/>
+	    <attribute name="name">
+	      <data type="QName"/>
+	    </attribute>
             <optional>
               <attribute name="global">
-                <choice>
-                  <value>true</value>
-                  <value>false</value>
-                </choice>
+                <data type="boolean"/>
               </attribute>
             </optional>
           </group>
@@ -70,11 +71,15 @@
         <ref name="open-patterns"/>
       </element>
       <element name="ref">
-        <attribute name="name"/>
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
         <ref name="common-atts"/>
       </element>
       <element name="parentRef">
-        <attribute name="name"/>
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
         <ref name="common-atts"/>
       </element>
       <element name="empty">
@@ -87,27 +92,35 @@
       </element>
       <element name="value">
         <optional>
-          <attribute name="type"/>
+          <attribute name="type">
+            <data type="NCName"/>
+          </attribute>
         </optional>
         <ref name="common-atts"/>
-        <mixed>
-          <ref name="other"/>
-        </mixed>
+        <text/>
       </element>
       <element name="data">
-        <attribute name="type"/>
+        <attribute name="type">
+          <data type="NCName"/>
+        </attribute>
         <optional>
-          <attribute name="key"/>
+          <attribute name="key">
+            <data type="NCName"/>
+          </attribute>
         </optional>
         <optional>
-          <attribute name="keyRef"/>
+          <attribute name="keyRef">
+            <data type="NCName"/>
+          </attribute>
         </optional>
         <ref name="common-atts"/>
         <interleave>
           <ref name="other"/>
           <zeroOrMore>
             <element name="param">
-              <attribute name="name"/>
+              <attribute name="name">
+                <data type="NCName"/>
+              </attribute>
               <text/>
             </element>
           </zeroOrMore>
@@ -118,7 +131,9 @@
         <ref name="other"/>
       </element>
       <element name="externalRef">
-        <attribute name="href"/>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
         <ref name="common-atts"/>
         <ref name="other"/>
       </element>
@@ -139,7 +154,9 @@
       <ref name="start-element"/>
       <ref name="define-element"/>
       <element name="include">
-        <attribute name="href"/>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
         <interleave>
           <ref name="other"/>
           <zeroOrMore>
@@ -156,7 +173,9 @@
   <define name="start-element">
     <element name="start">
       <optional>
-        <attribute name="name"/>
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
       </optional>
       <ref name="combine-att"/>
       <ref name="common-atts"/>
@@ -166,7 +185,9 @@
 
   <define name="define-element">
     <element name="define">
-      <attribute name="name"/>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
       <ref name="combine-att"/>
       <ref name="common-atts"/>
       <ref name="open-patterns"/>
@@ -237,10 +258,14 @@
 
   <define name="common-atts">
     <optional>
-      <attribute name="namespace"/>
+      <attribute name="namespace">
+        <data type="anyURI"/>
+      </attribute>
     </optional>
     <optional>
-      <attribute name="datatypeNamespace"/>
+      <attribute name="datatypeNamespace">
+        <data type="anyURI"/>
+      </attribute>
     </optional>
     <zeroOrMore>
       <attribute>
