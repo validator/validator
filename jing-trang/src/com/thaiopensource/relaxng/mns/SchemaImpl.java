@@ -92,7 +92,7 @@ class SchemaImpl implements Schema {
             throws SAXException {
       super.startElement(uri, localName, qName, attributes);
       if (!validator.isValidSoFar() || !MNS_URI.equals(uri))
-        return;
+        return; // XXX make schema open
       if (localName.equals("rules")) {
         String modeName = attributes.getValue("", "startMode");
         if (modeName == null)
