@@ -91,10 +91,15 @@ class Output {
         pp.hardNewline();
       }
       innerBody(((GrammarPattern)p).getComponents());
+      // This deals with trailing comments
+      for (Iterator iter = p.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
+        pp.hardNewline();
+        ((AnnotationChild)iter.next()).accept(annotationChildOutput);
+      }
     }
     else
       p.accept(patternOutput);
-    pp.hardNewline();
+    // The pretty printer ensures that we have a terminating newline.
     pp.close();
   }
 
