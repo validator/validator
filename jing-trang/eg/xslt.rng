@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.2 2001-06-11 07:56:30 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.3 2001-07-07 02:34:18 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
@@ -27,12 +27,12 @@
    </define>
    <define name="top-level-extension">
       <element>
-         <not>
-            <choice>
+         <anyName>
+            <except>
                <nsName/>
                <nsName ns=""/>
-            </choice>
-         </not>
+            </except>
+         </anyName>
          <grammar>
             <start name="any">
 	       <zeroOrMore>
@@ -62,9 +62,11 @@
    </define>
    <define name="literal-result-element-as-stylesheet">
       <element>
-         <not>
-            <nsName/>
-         </not>
+         <anyName>
+            <except>
+               <nsName/>
+            </except>
+         </anyName>
          <attribute name="version" global="true">
             <ref name="version"/>
          </attribute>
@@ -74,9 +76,11 @@
    </define>
    <define name="literal-result-element">
       <element>
-         <not>
-            <nsName/>
-         </not>
+         <anyName>
+            <except>
+               <nsName/>
+            </except>
+         </anyName>
          <ref name="literal-result-element.atts"/>
          <ref name="template.model"/>
       </element>
@@ -85,9 +89,11 @@
       <zeroOrMore>
          <choice>
             <attribute>
-               <not>
-                  <nsName/>
-               </not>
+	       <anyName>
+		  <except>
+		     <nsName/>
+		  </except>
+	       </anyName>
                <ref name="avt.datatype"/>
             </attribute>
             <attribute name="extension-element-prefixes" global="true">
@@ -145,12 +151,12 @@
    <define name="extension.atts">
       <zeroOrMore>
          <attribute>
-            <not>
-               <choice>
+            <anyName>
+               <except>
                   <nsName/>
                   <nsName ns=""/>
-               </choice>
-            </not>
+               </except>
+            </anyName>
          </attribute>
       </zeroOrMore>
    </define>
