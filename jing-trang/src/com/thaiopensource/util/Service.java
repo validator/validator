@@ -61,13 +61,8 @@ public class Service {
       URL url;
       if (cl == null)
 	url = ClassLoader.getSystemResource(resName);
-      else {
+      else
 	url = cl.getResource(resName);
-	// With Ant, getResourceAsStream works when getResource
-	// does not.
-	if (url == null)
-	  return new Singleton(cl.getResourceAsStream(resName));
-      }
       return new Singleton(url);
     }
 
@@ -96,20 +91,7 @@ public class Service {
 
     Enumeration getResources(String resName) {
       try {
-	Enumeration e = cl.getResources(resName);
-	if (e.hasMoreElements())
-	  return e;
-	// A class loader may not be JDK 1.2 aware
-	// and so may not implement getResources.
-	URL url = cl.getResource(resName);
-	if (url != null)
-	  return new Singleton(url);
-	// Some class loaders (as in Ant) implement
-	// getResourceAsStream but not getResource!
-	InputStream in = cl.getResourceAsStream(resName);
-	if (in != null)
-	  return new Singleton(in);
-	return e;
+	return cl.getResources(resName);
       }
       catch (IOException e) {
 	return new Singleton(null);
@@ -142,7 +124,7 @@ public class Service {
       while (classNames == null) {
 	if (!configFiles.hasMoreElements())
 	  return false;
-	classNames = parseConfigFile(configFiles.nextElement());
+	classNames = parseConfigFile((URL)configFiles.nextElement());
       }
       while (classNames.hasMoreElements()) {
 	String className = (String)classNames.nextElement();
@@ -167,13 +149,9 @@ public class Service {
   private static final int IN_NAME = 1;
   private static final int IN_COMMENT = 2;
 
-  private static Enumeration parseConfigFile(Object obj) {
+  private static Enumeration parseConfigFile(URL url) {
     try {
-      InputStream in;
-      if (obj instanceof URL)
-	in = ((URL)obj).openStream();
-      else
-	in = (InputStream)obj;
+      InputStream in = url.openStream();
       Reader r;
       try {
 	r = new InputStreamReader(in, "UTF-8");
