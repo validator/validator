@@ -166,7 +166,7 @@ if test -z "$GCJ"; then
 fi
 test -z "$GCJ" && AC_MSG_ERROR([GCJ not found in \$PATH])
 test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile test/Makefile])
 AC_OUTPUT
 EOF
 
@@ -183,11 +183,46 @@ prog_src_dir=${jing_src_dir}
 setup_prog
 cp -a ${top_dir}/copying.txt .
 
+cat <<\EOF >>Makefile.in
+
+TEST_MAIN=com.thaiopensource.relaxng.util.TestDriver
+
+test_$(PROG): $(PROG).o $(RESOURCES)
+	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(TEST_MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
+
+test:
+	cd test; $(MAKE)
+
+check: test test_$(PROG)
+	./test_$(PROG) test.log test/split
+
+.PHONY: test
+EOF
+
+mkdir test
+cd test
+
+cp -a ${top_dir}/gcj/dirs.xsl .
+cp -a ${top_dir}/gcj/esplit.xsl .
+cp -a ${top_dir}/test/spectest.xml .
+
+cat <<\EOF >Makefile.in
+srcdir=@srcdir@
+XSLTPROC=xsltproc
+
+split/stamp: $(srcdir)/spectest.xml $(srcdir)/esplit.xsl $(srcdir)/dirs.xsl
+	-mkdir split
+	-mkdir `$(XSLTPROC) --stringparam dir split $(srcdir)/dirs.xsl $(srcdir)/spectest.xml 2>/dev/null`
+	$(XSLTPROC) --stringparam dir split $(srcdir)/esplit.xsl $(srcdir)/spectest.xml 2>/dev/null
+	@>$@
+
+EOF
+
 cd ${top_dir}
 prog=trang
 main=${trang_main}
 prog_version=${trang_version}
 prog_src_dir=${trang_src_dir}
 setup_prog
-sed -e "s/@VERSION@/${trang_version}/g" -e ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
+sed -e "s/@VERSION@/${trang_version}/g" ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
 cp -a ${top_dir}/trang/copying.txt .

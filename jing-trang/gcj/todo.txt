@@ -1,0 +1,8 @@
+Fix usage messages
+Detect with -l-org-xml-sax is needed
+Detect with -lpthread is needed
+Write man pages
+Make sure we are complying with Apache license
+Remove unnecessary stuff from trang.
+
+Run test suite with trang
