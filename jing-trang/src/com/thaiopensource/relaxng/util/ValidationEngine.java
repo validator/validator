@@ -2,7 +2,6 @@ package com.thaiopensource.relaxng.util;
 
 import java.io.IOException;
 import java.io.File;
-import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.xml.sax.SAXException;
