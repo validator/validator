@@ -23,6 +23,7 @@ import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.edit.Param;
+import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
@@ -115,6 +116,14 @@ class Analyzer extends AbstractVisitor {
     return visitUnary(p);
   }
 
+  public Object visitAttribute(AttributePattern p) {
+    NameClass nc = p.getNameClass();
+    if (nc instanceof NameNameClass
+        && ((NameNameClass)nc).getNamespaceUri().equals(""))
+      return visitUnary(p);
+    return visitNameClassed(p);
+  }
+
   public Object visitChoice(ChoiceNameClass nc) {
     visitAnnotated(nc);
     List list = nc.getChildren();
@@ -161,7 +170,7 @@ class Analyzer extends AbstractVisitor {
 
   public Object visitNsName(NsNameNameClass nc) {
     visitAnnotated(nc);
-    noteNs(null, nc.getNs());
+    noteInheritNs(nc.getNs());
     NameClass except = nc.getExcept();
     if (except != null)
       except.accept(this);
@@ -178,6 +187,11 @@ class Analyzer extends AbstractVisitor {
       datatypeLibrary = uri;
   }
 
+  private void noteInheritNs(String ns) {
+    if (ns == NameClass.INHERIT_NS)
+      haveInherit = true;
+  }
+
   private void noteNs(String prefix, String ns) {
     if (ns == NameClass.INHERIT_NS) {
       haveInherit = true;
@@ -185,7 +199,7 @@ class Analyzer extends AbstractVisitor {
     }
     if (prefix == null)
       prefix = "";
-    if (ns == null || (ns.length() == 0 && prefix.length() != 0))
+    if (ns == null || (ns.length() == 0 && prefix.length() != 0) || prefixMap.containsKey(prefix))
       return;
     prefixMap.put(prefix, ns);
   }
