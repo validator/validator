@@ -2,9 +2,9 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias"
 	xmlns:sch="http://www.ascc.net/xml/schematron"
-        xmlns:o="http://www.thaiopensource.com/schematron-output"
-        xmlns:loc="http://www.thaiopensource.com/location"
-        exclude-result-prefixes="sch">
+        xmlns:loc="http://www.thaiopensource.com/ns/location"
+	xmlns:saxon="http://icl.com/saxon"
+        xmlns:xj="http://xml.apache.org/xslt/java">
 
 <xsl:param name="phase" select="'#ALL'"/>
 
@@ -15,9 +15,9 @@
 <xsl:template match="/">
   <axsl:stylesheet version="1.0">
     <axsl:template match="/">
-      <o:result>
-        <axsl:apply-templates select="*"/>
-      </o:result>
+      <result>
+        <axsl:apply-templates select="/" mode="all"/>
+      </result>
     </axsl:template>
     <xsl:choose>
       <xsl:when test="$phase='#ALL'">
@@ -30,31 +30,32 @@
 	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
-    <axsl:template match="*">
-      <axsl:apply-templates select="*"/>
+    <axsl:template match="*|/" mode="all">
+      <axsl:apply-templates select="*" mode="all"/>
     </axsl:template>
-    <xsl:call-template name="location"/>
+    <xsl:call-template name="define-location"/>
   </axsl:stylesheet>
 </xsl:template>
 
 <xsl:template match="*" mode="pattern">
   <xsl:variable name="pattern-index" select="position()"/>
   <xsl:variable name="last" select="last()"/>
-  <xsl:variable name="notLast" select="not(position()=$last)"/>
+  <xsl:variable name="not-last" select="not(position()=$last)"/>
   <xsl:for-each select="sch:rule">
     <xsl:choose>
       <xsl:when test="@context">
-	<axsl:template match="{@context}" name="R{$pattern-index}.{position()}"
-                       priority="{($last + 1 - $pattern-index) + (1 div position())}"
-                       xsl:use-attribute-sets="location">
+	<axsl:template match="{@context}" mode="M{$pattern-index}" priority="{1 + (1 div position())}"
+                       name="R{$pattern-index}.{position()}">
+          <xsl:call-template name="location"/>
 	  <xsl:apply-templates select="*" mode="assertion"/>
-	  <xsl:if test="$notLast">
+	  <xsl:if test="$not-last">
 	     <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
 	  </xsl:if>
 	</axsl:template>
-	<axsl:template match="{@context}" mode="M{$pattern-index}" priority="{1 + (1 div position())}"
-           xsl:use-attribute-sets="location">
-	   <axsl:call-template name="R{$pattern-index}.{position()}"/>
+	<axsl:template match="{@context}" mode="all" priority="{($last + 1 - $pattern-index) + (1 div position())}">
+          <xsl:call-template name="location"/>
+	  <axsl:call-template name="R{$pattern-index}.{position()}"/>
+          <axsl:apply-templates select="*" mode="all"/>
 	</axsl:template>
       </xsl:when>
       <xsl:otherwise>
@@ -65,7 +66,7 @@
     </xsl:choose>
   </xsl:for-each>
   <axsl:template match="*" mode="M{$pattern-index}">
-    <xsl:if test="$notLast">
+    <xsl:if test="$not-last">
        <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
     </xsl:if>
   </axsl:template>
@@ -76,19 +77,31 @@
 </xsl:template>
 
 <xsl:template match="sch:report" mode="assertion">
-  <axsl:if test="{@test}"  xsl:use-attribute-sets="location">
-    <o:report axsl:use-attribute-sets="location">
-      <xsl:apply-templates/>
-    </o:report>
+  <axsl:if test="{@test}">
+    <xsl:call-template name="location"/>
+    <report>
+      <xsl:call-template name="assertion"/>
+    </report>
   </axsl:if>
 </xsl:template>
 
 <xsl:template match="sch:assert" mode="assertion">
-  <axsl:if test="not({@test})"  xsl:use-attribute-sets="location">
-    <o:assertionFailed axsl:use-attribute-sets="location">
-      <xsl:apply-templates/>
-    </o:assertionFailed>
+  <axsl:if test="not({@test})">
+    <xsl:call-template name="location"/>
+    <failed-assertion>
+      <xsl:call-template name="assertion"/>
+    </failed-assertion>
   </axsl:if>
+</xsl:template>
+
+<xsl:template name="assertion">
+   <xsl:copy-of select="@role|@test|@icon|@xml:lang"/>
+   <axsl:call-template name="location"/>
+   <xsl:if test="* or normalize-space(text())">
+     <statement>
+       <xsl:apply-templates/>
+     </statement>
+   </xsl:if>
 </xsl:template>
 
 <xsl:template match="sch:name">
@@ -104,91 +117,62 @@
 
 <xsl:template match="*" mode="assertion"/>
 
-<xsl:template name="location">
-  <axsl:attribute-set name="location"
-         xmlns:saxon="http://icl.com/saxon"
-         xmlns:xj="http://xml.apache.org/xalan/java">
-    <axsl:attribute name="line-number">
-      <xsl:choose>
-	<xsl:when test="function-available('saxon:lineNumber')">
+<xsl:variable name="saxon"
+              select="function-available('saxon:lineNumber')
+                      and function-available('saxon:systemId')"/>
+
+<!-- The JDK 1.4 version of Xalan is buggy and gets an exception if we try
+     to use these extension functions, so detect this version and don't use it. -->
+<xsl:variable name="xalan"
+              xmlns:xalan="http://xml.apache.org/xalan"
+              select="function-available('xj:org.apache.xalan.lib.NodeInfo.lineNumber')
+                      and function-available('xj:org.apache.xalan.lib.NodeInfo.systemId')
+                      and function-available('xalan:checkEnvironment')
+                      and not(contains(xalan:checkEnvironment()//item[@key='version.xalan2'],
+                                       'Xalan Java 2.2'))"/>
+
+<xsl:template name="define-location">
+  <axsl:template name="location">
+    <xsl:choose>
+      <xsl:when test="$saxon">
+	<axsl:attribute name="line-number">
 	  <axsl:value-of select="saxon:lineNumber()"/>
-	</xsl:when>
-	<xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.lineNumber')">
-	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
-	</xsl:when>
-	<xsl:otherwise>-1</xsl:otherwise>
-      </xsl:choose>
-    </axsl:attribute>
-    <axsl:attribute name="column-number">
-      <xsl:choose>
-	<xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.columnNumber')">
-	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.columnNumber()"/>
-	</xsl:when>
-	<xsl:otherwise>-1</xsl:otherwise>
-      </xsl:choose>
-    </axsl:attribute>
-    <axsl:attribute name="system-id">
-      <xsl:choose>
-	<xsl:when test="function-available('saxon:systemId')">
+	</axsl:attribute>
+	<axsl:attribute name="system-id">
 	  <axsl:value-of select="saxon:systemId()"/>
-	</xsl:when>
-	<xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.systemId')">
+	</axsl:attribute>
+      </xsl:when>
+      <xsl:when test="$xalan">
+	<axsl:attribute name="line-number">
+	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
+	</axsl:attribute>
+	<axsl:attribute name="system-id">
 	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
-	</xsl:when>
-	<xsl:otherwise/>
-      </xsl:choose>
-    </axsl:attribute>
-    <axsl:attribute name="public-id">
-      <xsl:choose>
-	<xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.publicId')">
-	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.publicId()"/>
-	</xsl:when>
-	<xsl:otherwise/>
-      </xsl:choose>
-    </axsl:attribute>
-  </axsl:attribute-set>
+	</axsl:attribute>
+      </xsl:when>
+    </xsl:choose>
+  </axsl:template>
 </xsl:template>
 
-<xsl:attribute-set name="location" xmlns:saxon="http://icl.com/saxon"
-              xmlns:xj="http://xml.apache.org/xslt/java">
-  <xsl:attribute name="loc:line-number">
-    <xsl:choose>
-      <xsl:when test="function-available('saxon:lineNumber')">
+<xsl:template name="location">
+  <xsl:choose>
+    <xsl:when test="$saxon">
+      <xsl:attribute name="loc:line-number">
 	<xsl:value-of select="saxon:lineNumber()"/>
-      </xsl:when>
-      <xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.lineNumber')">
-	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
-      </xsl:when>
-      <xsl:otherwise>-1</xsl:otherwise>
-    </xsl:choose>
-  </xsl:attribute>
-  <xsl:attribute name="loc:column-number">
-    <xsl:choose>
-      <xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.columnNumber')">
-	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.columnNumber()"/>
-      </xsl:when>
-      <xsl:otherwise>-1</xsl:otherwise>
-    </xsl:choose>
-  </xsl:attribute>
-  <xsl:attribute name="loc:system-id">
-    <xsl:choose>
-      <xsl:when test="function-available('saxon:systemId')">
+      </xsl:attribute>
+      <xsl:attribute name="loc:system-id">
 	<xsl:value-of select="saxon:systemId()"/>
-      </xsl:when>
-      <xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.systemId')">
+      </xsl:attribute>
+    </xsl:when>
+    <xsl:when test="$xalan">
+      <xsl:attribute name="loc:line-number">
+	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
+      </xsl:attribute>
+      <xsl:attribute name="loc:system-id">
 	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
-      </xsl:when>
-      <xsl:otherwise/>
-    </xsl:choose>
-  </xsl:attribute>
-  <xsl:attribute name="loc:public-id">
-    <xsl:choose>
-      <xsl:when test="function-available('xj:org.apache.xalan.lib.NodeInfo.publicId')">
-	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.publicId()"/>
-      </xsl:when>
-      <xsl:otherwise/>
-    </xsl:choose>
-  </xsl:attribute>
-</xsl:attribute-set>
+      </xsl:attribute>
+    </xsl:when>
+  </xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>
