@@ -78,9 +78,9 @@ by the <code>schema</code> attribute of the
 <code>validateAttributes</code> element. Unqualified attributes are
 never validation subjects.</p>
 
-<p>Note that it is <code>validationAttribute<b>s</b></code>, because
+<p>Note that it is <code>validateAttribute<b>s</b></code>, because
 attributes are validated as a set with respect to their schema, but it
-is <code>validationElement</code> because an element is individually
+is <code>validateElement</code> because an element is individually
 validated with respect to its schema.</p>
 
 <p>Normally, schema languages (including RELAX NG) validate an element
@@ -158,7 +158,7 @@ that an element is a potential validation subject if it is not
 subject has a set of namespace URIs that it covers.  A validation
 subject always covers it own namespace URI.  In addition, it covers
 the namespace URIs specified by the <code>cover</code> elements in its
-<code>validationElement</code> element.  The set elements covered by a
+<code>validateElement</code> element.  The set elements covered by a
 validation subject is determined from the set of namespace URI that it
 covers by the following two rules:</p>
 
@@ -189,7 +189,7 @@ subject.</li>
 subject if its parent element and its namespace URI are covered by
 that validation subject.</p>
 
-<p>Note that a <code>validationElement</code> element is applicable to
+<p>Note that a <code>validateElement</code> element is applicable to
 a potential validation subject only if the namespace URI of the
 potential validation subject is as specified by the <code>ns</code>
 attribute.  Any <code>cover</code> child elements do not affect
@@ -239,12 +239,12 @@ mode = xsd:NCName | "#default"
 <p>The selection of validation subjects takes place with respect to a
 named mode.  A mode is named by an NCName.  In addition, there is a
 default mode named <code>#default</code>.  The
-<code>validationElement</code> and <code>validateAttributes</code>
+<code>validateElement</code> and <code>validateAttributes</code>
 elements have an optional <code>modes</code> attribute, which
 specifies the modes in which the elements are applicable.  The default
 value of the <code>modes</code> attribute is the default mode.  It is an
 error if there is a mode and a namespace URI for which more than one
-<code>validationElement</code> or <code>validateAttributes</code>
+<code>validateElement</code> or <code>validateAttributes</code>
 element is applicable.  Thus, when an element is selected as a
 validation subject there is a unique applicable
 <code>validateElement</code> element.</p>
