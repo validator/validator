@@ -489,6 +489,10 @@ public class PatternReader implements DatatypeContext {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
 	typeName = value.trim();
+      else if (name.equals("key"))
+	; // XXX
+      else if (name.equals("keyRef"))
+	; // XXX
       else
 	super.setOtherAttribute(name, value);
     }
