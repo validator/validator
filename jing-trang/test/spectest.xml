@@ -2820,6 +2820,52 @@ applies at the syntax level.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>4.17</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <ref name="foo"/>
+  </start>
+  <define name="foo">
+    <choice>
+      <element name="foo">
+        <empty/>
+      </element>
+      <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+        <start>
+	  <parentRef name="foo"/>
+        </start>
+      </grammar>
+    </choice>
+  </define>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.17</section>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <ref name="foo"/>
+  </start>
+  <define name="foo">
+    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+      <start>
+	<ref name="foo"/>
+      </start>
+      <define name="foo">
+	<element name="foo">
+	  <empty/>
+	</element>
+      </define>
+    </grammar>
+  </define>
+</grammar>
+</correct>
+<valid><foo/></valid>
+</testCase>
+<testCase>
+<section>4.17</section>
 <correct>
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
   <start>
@@ -2845,6 +2891,7 @@ applies at the syntax level.</documentation>
 <invalid><outerFoo/></invalid>
 </testCase>
 <testCase>
+<section>4.17</section>
 <correct>
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
   <start>
