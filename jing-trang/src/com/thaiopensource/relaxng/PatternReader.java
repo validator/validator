@@ -1442,6 +1442,8 @@ public class PatternReader implements ValidationContext {
 
   InputSource makeInputSource(String systemId)
     throws IOException, SAXException {
+    if (Uri.hasFragmentId(systemId))
+      error("href_fragment_id");
     systemId = Uri.resolve(xmlBaseHandler.getBaseUri(), systemId);
     EntityResolver er = xr.getEntityResolver();
     if (er != null) {
