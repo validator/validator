@@ -545,7 +545,6 @@ public class RelaxNgWriter {
     w = outMember.open(dtd.getEncoding());
     w.writeXmlDecl(dtd.getEncoding());
     startGrammar();
-    outputStart();
     try {
       dtd.accept(explicitOutput);
     }
@@ -556,6 +555,7 @@ public class RelaxNgWriter {
       throw (IOException)e;
     }
     outputUndefinedElements();
+    outputStart();
     endGrammar();
     w.close();
   }
