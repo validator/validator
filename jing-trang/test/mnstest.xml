@@ -544,4 +544,28 @@
 </rules>
 </incorrect>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns" xmlns:x="http://example.com" x:foo="stuff">
+  <x:bar/>
+  <validateElement ns="" schema="a.rng" x:att="val">
+    <x:foo>
+      <validateElement/>
+    </x:foo>
+  </validateElement>
+  <x:baz/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<b/>
+</invalid>
+</testCase>
 </testSuite>
