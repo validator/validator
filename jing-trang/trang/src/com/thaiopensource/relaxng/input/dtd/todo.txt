@@ -12,3 +12,5 @@ need to fix XSD output to deal with such comments.
 
 Choose start elements based on presence of namespace declarations.
 
+An attribute group that contains only namespace declarations should
+disappear completely.
