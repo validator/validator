@@ -954,6 +954,10 @@ class SchemaParser extends DtdContext implements Context {
       else
 	super.setOtherAttribute(name, value);
     }
+
+    ParsedPattern buildPattern(ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws SAXException {
+      return super.buildPattern(patterns, nPatterns, loc, null);
+    }
   }
 
   class DefineState extends DefinitionState {
