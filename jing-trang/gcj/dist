@@ -137,7 +137,6 @@ GCJ=@GCJ@
 GCJFLAGS=@GCJFLAGS@
 LDFLAGS=@LDFLAGS@
 INSTALL=@INSTALL@
-NORMAL_INSTALL=:
 PROG=${prog}
 MAIN=${main}
 TEST_MAIN=${test_main}
@@ -180,7 +179,6 @@ check: test_$(PROG)
 	cd test; $(MAKE)
 
 install: $(PROG)
-	$(NORMAL_INSTALL)
 	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
 	$(INSTALL) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
 
