@@ -1,8 +1,6 @@
 RELAX NG: give helpful error message if output directory does not
 exist or is a file
 
-RELAX NG: overridden attributes.
-
 EntityManager that properly handles URLs.
 
 RELAX NG: Handle multiple refs to same external entity safely.

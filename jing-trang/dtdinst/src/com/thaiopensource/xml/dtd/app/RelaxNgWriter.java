@@ -21,6 +21,8 @@ public class RelaxNgWriter {
   private Hashtable prefixTable = new Hashtable();
   private ErrorMessageHandler errorMessageHandler = null;
 
+  private Hashtable duplicateAttributeTable = new Hashtable();
+  private Hashtable currentDuplicateAttributeTable = null;
   private String defaultNamespace = null;
   private String annotationPrefix = null;
 
@@ -202,8 +204,15 @@ public class RelaxNgWriter {
 
     public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
       throws Exception {
+      String name = nameSpec.getValue();
+      currentDuplicateAttributeTable
+	= (Hashtable)duplicateAttributeTable.get(name);
+      if (currentDuplicateAttributeTable == null) {
+	currentDuplicateAttributeTable = new Hashtable();
+	duplicateAttributeTable.put(name, currentDuplicateAttributeTable);
+      }
       w.startElement("define");
-      w.attribute("name", attlistDeclName(nameSpec.getValue()));
+      w.attribute("name", attlistDeclName(name));
       w.attribute("combine", "interleave");
       attributeGroup.accept(this);
       w.endElement();
@@ -219,6 +228,8 @@ public class RelaxNgWriter {
 
     public void attributeGroupDef(String name, AttributeGroup attributeGroup)
       throws Exception {
+      // This takes care of duplicates within the group
+      currentDuplicateAttributeTable = new Hashtable();
       w.startElement("define");
       w.attribute("name", name);
       AttributeGroupMember[] members = attributeGroup.getMembers();
@@ -317,6 +328,9 @@ public class RelaxNgWriter {
 			  Datatype datatype,
 			  AttributeDefault attributeDefault) throws Exception {
       String name = nameSpec.getValue();
+      if (currentDuplicateAttributeTable.get(name) != null)
+	return;
+      currentDuplicateAttributeTable.put(name, name);
       if (name.equals("xmlns") || name.startsWith("xmlns:")) {
 	w.startElement("empty");
 	w.endElement();
@@ -346,8 +360,13 @@ public class RelaxNgWriter {
     }
 
     public void attributeGroupRef(String name, AttributeGroup attributeGroup)
-      throws IOException {
-      ref(name);
+      throws Exception {
+      DuplicateAttributeDetector detector = new DuplicateAttributeDetector();
+      attributeGroup.accept(detector);
+      if (detector.containsDuplicate)
+	attributeGroup.accept(this);
+      else
+	ref(name);
     }
 
     public void cdataDatatype() throws IOException {
@@ -447,6 +466,22 @@ public class RelaxNgWriter {
 	  members[i].accept(this);
       }
     }
+  }
+
+  private class DuplicateAttributeDetector implements AttributeGroupVisitor {
+    private boolean containsDuplicate = false;
+    
+    public void attribute(NameSpec nameSpec,
+			  Datatype datatype,
+			  AttributeDefault attributeDefault) {
+      if (currentDuplicateAttributeTable.get(nameSpec.getValue()) != null)
+	containsDuplicate = true;
+    }
+
+    public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
+      attributeGroup.accept(this);
+    }
+
   }
 
   public RelaxNgWriter(XmlOutputCollection outCollection) {
