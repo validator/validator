@@ -1,0 +1,8 @@
+<doctype>
+  <element name="foo">
+    <sequence/>
+  </element>
+  <element name="bar">
+    <elementRef name="EMPTY"/>
+  </element>
+</doctype>

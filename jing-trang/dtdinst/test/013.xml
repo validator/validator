@@ -1,0 +1,11 @@
+<doctype>
+  <modelGroup name="e1">
+    <elementRef name="foo"/>
+  </modelGroup>
+  <element name="foo">
+    <modelGroupRef name="e1"/>
+  </element>
+  <element name="bar">
+    <modelGroupRef name="e1"/>
+  </element>
+</doctype>
