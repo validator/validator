@@ -2,7 +2,6 @@ package com.thaiopensource.relaxng.xerces;
 
 import com.thaiopensource.relaxng.ValidatorHandler;
 import org.apache.xerces.util.SymbolTable;
-import org.apache.xerces.util.ErrorHandlerWrapper;
 import org.apache.xerces.util.ParserConfigurationSettings;
 import org.apache.xerces.util.NamespaceSupport;
 import org.apache.xerces.util.XMLAttributesImpl;
@@ -32,7 +31,7 @@ import org.xml.sax.SAXParseException;
 import java.util.Hashtable;
 import java.io.IOException;
 
-public class XsdValidator extends ParserConfigurationSettings implements ValidatorHandler, XMLLocator, XMLEntityResolver, EntityState {
+class ValidatorHandlerImpl extends ParserConfigurationSettings implements ValidatorHandler, XMLLocator, XMLEntityResolver, EntityState {
 
   private XMLSchemaValidator schemaValidator = new XMLSchemaValidator();
   private XMLErrorReporter errorReporter = new XMLErrorReporter();
@@ -41,43 +40,13 @@ public class XsdValidator extends ParserConfigurationSettings implements Validat
   private XMLAttributes attributes = new XMLAttributesImpl();
   private SymbolTable symbolTable;
   private XMLComponent[] components;
-  private ErrorHandlerWrapper errorHandlerWrapper;
+  private SAXXMLErrorHandler errorHandlerWrapper;
   private boolean complete;
-  private boolean validSoFar;
   private Locator locator;
   private Hashtable entityTable = new Hashtable();
   private boolean pushedContext = false;
 
   // XXX deal with baseURI
-
-  class ErrorHandlerImpl extends ErrorHandlerWrapper {
-    ErrorHandlerImpl(ErrorHandler errorHandler) {
-      super(errorHandler);
-    }
-
-    public void error(String domain, String key,
-                      XMLParseException exception) throws XNIException {
-      validSoFar = false;
-      if (fErrorHandler == null)
-        return;
-      super.error(domain, key, exception);
-    }
-
-    public void warning(String domain, String key,
-                        XMLParseException exception) throws XNIException {
-      if (fErrorHandler == null)
-        return;
-      super.warning(domain, key, exception);
-    }
-
-    public void fatalError(String domain, String key,
-                           XMLParseException exception) throws XNIException {
-      validSoFar = false;
-      if (fErrorHandler == null)
-        return;
-      super.fatalError(domain, key, exception);
-    }
-  }
 
   static private final String[] recognizedFeatures = {
     Features.SCHEMA_AUGMENT_PSVI,
@@ -96,9 +65,9 @@ public class XsdValidator extends ParserConfigurationSettings implements Validat
     Properties.ENTITY_RESOLVER,
   };
 
-  XsdValidator(SymbolTable symbolTable, XMLGrammarPool grammarPool, ErrorHandler errorHandler) {
+  ValidatorHandlerImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, ErrorHandler errorHandler) {
     this.symbolTable = symbolTable;
-    errorHandlerWrapper = new ErrorHandlerImpl(errorHandler);
+    errorHandlerWrapper = new SAXXMLErrorHandler(errorHandler);
     components = new XMLComponent[] { errorReporter, schemaValidator };
     for (int i = 0; i < components.length; i++) {
       addRecognizedFeatures(components[i].getRecognizedFeatures());
@@ -136,11 +105,11 @@ public class XsdValidator extends ParserConfigurationSettings implements Validat
   }
 
   public boolean isValidSoFar() {
-    return validSoFar;
+    return !errorHandlerWrapper.getHadError();
   }
 
   public void reset() {
-    validSoFar = true;
+    errorHandlerWrapper.reset();
     complete = false;
     validationManager.reset();
     namespaceContext.reset();

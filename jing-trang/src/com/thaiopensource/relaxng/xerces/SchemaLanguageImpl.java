@@ -23,7 +23,7 @@ import org.apache.xerces.util.SynchronizedSymbolTable;
 
 import java.io.IOException;
 
-public class SchemaLanguageImpl implements SchemaLanguage {
+class SchemaLanguageImpl implements SchemaLanguage {
   public Schema createSchema(XMLReaderCreator xrc, InputSource in, ErrorHandler eh, SchemaOptions options, DatatypeLibraryFactory dlf)
           throws IOException, SAXException, IncorrectSchemaException {
     SymbolTable symbolTable = new SymbolTable();
@@ -31,15 +31,16 @@ public class SchemaLanguageImpl implements SchemaLanguage {
     XMLGrammarPool grammarPool = new XMLGrammarPoolImpl();
     preparser.registerPreparser(XMLGrammarDescription.XML_SCHEMA, null);
     preparser.setGrammarPool(grammarPool);
-    if (eh != null)
-      preparser.setErrorHandler(new ErrorHandlerWrapper(eh));
-    Grammar g;
+    SAXXMLErrorHandler xeh = new SAXXMLErrorHandler(eh);
+    preparser.setErrorHandler(xeh);
     try {
-      g = preparser.preparseGrammar(XMLGrammarDescription.XML_SCHEMA, toXMLInputSource(in));
+      preparser.preparseGrammar(XMLGrammarDescription.XML_SCHEMA, toXMLInputSource(in));
     }
     catch (XNIException e) {
-      throw XsdValidator.toSAXException(e);
+      throw ValidatorHandlerImpl.toSAXException(e);
     }
+    if (xeh.getHadError())
+      throw new IncorrectSchemaException();
     return new SchemaImpl(new SynchronizedSymbolTable(symbolTable),
                           new CachingParserPool.SynchronizedGrammarPool(grammarPool));
   }
