@@ -63,13 +63,13 @@ public class PatternMatcher implements Cloneable {
     return (PatternMatcher)clone();
   }
 
-  public boolean checkStartDocument() {
+  public boolean matchStartDocument() {
     if (memo.isNotAllowed())
       return error("schema_allows_nothing");
     return true;
   }
 
-  public boolean checkStartTagOpen(Name name) {
+  public boolean matchStartTagOpen(Name name) {
     if (setMemo(memo.startTagOpenDeriv(name)))
       return true;
     PatternMemo next = memo.startTagOpenRecoverDeriv(name);
@@ -83,14 +83,14 @@ public class PatternMatcher implements Cloneable {
     return error(next.isNotAllowed() ? "unknown_element" : "out_of_context_element", name);
   }
 
-  public boolean checkAttributeName(Name name) {
+  public boolean matchAttributeName(Name name) {
     if (setMemo(memo.startAttributeDeriv(name)))
       return true;
     ignoreNextEndTag = true;
     return error("impossible_attribute_ignored", name);
   }
 
-  public boolean checkAttributeValue(String value, ValidationContext vc) {
+  public boolean matchAttributeValue(String value, ValidationContext vc) {
     if (ignoreNextEndTag) {
       ignoreNextEndTag = false;
       return true;
@@ -101,7 +101,7 @@ public class PatternMatcher implements Cloneable {
     return error("bad_attribute_value_no_name"); // XXX add to catalog
   }
 
-  public boolean checkStartTagClose() {
+  public boolean matchStartTagClose() {
     boolean ret;
     if (setMemo(memo.endAttributes()))
       ret = true;
@@ -114,7 +114,7 @@ public class PatternMatcher implements Cloneable {
     return ret;
   }
 
-  public boolean checkText(String string, ValidationContext vc, boolean nextTagIsEndTag) {
+  public boolean matchText(String string, ValidationContext vc, boolean nextTagIsEndTag) {
     if (textMaybeTyped && nextTagIsEndTag) {
       ignoreNextEndTag = true;
       return setDataDeriv(string, vc);
@@ -122,18 +122,18 @@ public class PatternMatcher implements Cloneable {
     else {
       if (DataDerivFunction.isBlank(string))
         return true;
-      return checkUntypedText();
+      return matchUntypedText();
     }
   }
 
-  public boolean checkUntypedText() {
+  public boolean matchUntypedText() {
     if (setMemo(memo.mixedTextDeriv()))
       return true;
     return error("text_not_allowed");
   }
 
   /**
-   * Legal when checkText() is legal.
+   * Legal when matchText() is legal.
    * @return
    */
   public boolean isTextMaybeTyped() {
@@ -161,7 +161,7 @@ public class PatternMatcher implements Cloneable {
     return ret;
   }
 
-  public boolean checkEndTag(ValidationContext vc) {
+  public boolean matchEndTag(ValidationContext vc) {
     // The tricky thing here is that the derivative that we compute may be notAllowed simply because the parent
     // is notAllowed; we don't want to give an error in this case.
     if (ignoreNextEndTag)
