@@ -15,7 +15,6 @@ import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.ForkContentHandler;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -60,7 +59,6 @@ class SchemaReaderImpl implements SchemaReader {
     PropertyMapBuilder builder = new PropertyMapBuilder();
     ValidateProperty.ERROR_HANDLER.put(builder, new DraconianErrorHandler());
     RngProperty.CHECK_ID_IDREF.add(builder);
-    RngProperty.DATATYPE_LIBRARY_FACTORY.put(builder, new DatatypeLibraryLoader());
     try {
       schematronSchema = CompactSchemaReader.getInstance().createSchema(schemaSource, builder.toPropertyMap());
     }
@@ -345,7 +343,10 @@ class SchemaReaderImpl implements SchemaReader {
       PropertyMapBuilder builder = new PropertyMapBuilder(properties);
       ValidateProperty.ERROR_HANDLER.put(builder, ueh1);
       SAXSource source = createValidatingSource(in, builder.toPropertyMap(), ueh1);
-      source = createTransformingSource(source, in.getSystemId(), ueh2);
+      source = createTransformingSource(source,
+                                        SchematronProperty.PHASE.get(properties),
+                                        in.getSystemId(),
+                                        ueh2);
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
@@ -373,10 +374,12 @@ class SchemaReaderImpl implements SchemaReader {
     return new SAXSource(new ValidateStage(xr, validator, ceh), in);
   }
 
-  private SAXSource createTransformingSource(SAXSource in, String systemId, CountingErrorHandler ceh) throws SAXException {
+  private SAXSource createTransformingSource(SAXSource in, String phase, String systemId, CountingErrorHandler ceh) throws SAXException {
     try {
       Transformer transformer = schematron.newTransformer();
       transformer.setErrorListener(new DraconianErrorListener());
+      if (phase != null)
+        transformer.setParameter("phase", phase);
       return new SAXSource(new TransformStage(transformer, in, systemId, ceh, localizer),
                            new InputSource(systemId));
     }
