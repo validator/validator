@@ -155,7 +155,7 @@ public class CompactTestDriver {
   private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
       SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), null, eh);
-      OutputDirectory od = new LocalOutputDirectory(out, outExt, OUTPUT_ENCODING, LINE_LENGTH);
+      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, OUTPUT_ENCODING, true, LINE_LENGTH);
       of.output(sc, od, eh);
       return true;
     }

@@ -559,7 +559,7 @@ public class BasicBuilder {
       groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
       String uri = c.getHref();
-      Schema sub = schema.addInclude(uri, c.getSourceLocation(), makeAnnotation(c));
+      Schema sub = schema.addInclude(uri, si.getEncoding(uri), c.getSourceLocation(), makeAnnotation(c));
       GrammarPattern includedGrammar = si.getSchema(uri);
       new BasicBuilder(er,
                        si,
@@ -585,7 +585,7 @@ public class BasicBuilder {
 
   static Schema buildBasicSchema(SchemaInfo si, Guide guide, ErrorReporter er) {
     GrammarPattern grammar = si.getGrammar();
-    Schema schema = new Schema(grammar.getSourceLocation(), makeAnnotation(grammar), OutputDirectory.MAIN);
+    Schema schema = new Schema(grammar.getSourceLocation(), makeAnnotation(grammar), si.getMainUri(), si.getEncoding(si.getMainUri()));
     new BasicBuilder(er, si, guide, schema, "", grammar,
                      guide.getDefaultGroupEnableAbstractElements()).processGrammar(grammar);
     return schema;

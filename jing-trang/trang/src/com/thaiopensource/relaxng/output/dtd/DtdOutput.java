@@ -36,6 +36,7 @@ import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.out.CharRepertoire;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -48,6 +49,8 @@ import java.util.Vector;
 class DtdOutput {
   private String sourceUri;
   private Writer writer;
+  private String encoding;
+  private CharRepertoire charRepertoire;
   private static final int DEFAULT_INDENT = 2;
   private int indent = DEFAULT_INDENT;
   private static final int DEFAULT_LINE_LENGTH = 72;
@@ -91,7 +94,10 @@ class DtdOutput {
     this.er = er;
     this.part = analysis.getGrammarPart(sourceUri);
     try {
-      this.writer = od.open(sourceUri);
+      OutputDirectory.Stream stream = od.open(sourceUri, analysis.getEncoding(sourceUri));
+      this.encoding = stream.getEncoding();
+      this.writer = stream.getWriter();
+      this.charRepertoire = stream.getCharRepertoire();
     }
     catch (IOException e) {
       throw new WrappedIOException(e);
@@ -779,7 +785,7 @@ class DtdOutput {
 
   static void output(Analysis analysis, OutputDirectory od, ErrorReporter er) throws IOException {
     try {
-      new DtdOutput(od.MAIN, analysis, new HashSet(), od, er).topLevelOutput();
+      new DtdOutput(analysis.getMainUri(), analysis, new HashSet(), od, er).topLevelOutput();
     }
     catch (WrappedIOException e) {
       throw e.cause;
@@ -815,7 +821,7 @@ class DtdOutput {
 
   void xmlDecl() {
     write("<?xml encoding=\"");
-    write(od.getEncoding());
+    write(encoding);
     write("\"?>");
     outputNewline();
   }

@@ -42,6 +42,7 @@ import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.Combine;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.DataPatternBuilder;
@@ -228,7 +229,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
     finishPattern(erp, loc, anno);
     if (schemas.get(uri) == null) {
       schemas.put(uri, new Object()); // avoid possibility of infinite loop
-      schemas.put(uri, parseable.parseExternal(uri, this, scope));
+      schemas.put(uri, new SchemaDocument((Pattern)parseable.parseExternal(uri, this, scope)));
     }
     return erp;
   }
@@ -346,7 +347,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
         GrammarPattern g = new GrammarPattern();
         try {
           ParsedPattern pattern = parseable.parseInclude(uri, SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
-          schemas.put(uri, pattern);
+          schemas.put(uri, new SchemaDocument((Pattern)pattern));
         }
         catch (IllegalSchemaException e) {
           schemas.remove(uri);
@@ -663,12 +664,17 @@ class SchemaBuilderImpl implements SchemaBuilder {
     return ns;
   }
 
-  static SchemaCollection parse(Parseable parseable, ErrorHandler eh, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming)
+  private void parse(Parseable parseable, String uri) throws IllegalSchemaException {
+    schemas.put(uri, new SchemaDocument((Pattern)parseable.parse(this, new ScopeImpl())));
+  }
+
+  static SchemaCollection parse(Parseable parseable, String uri, ErrorHandler eh, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming)
           throws IncorrectSchemaException, IOException, SAXException {
     try {
       SchemaCollection sc = new SchemaCollection();
-      SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable, eh, sc.getSchemas(), dlf, commentsNeedTrimming);
-      sc.setMainSchema((Pattern)parseable.parse(sb, new ScopeImpl()));
+      SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable, eh, sc.getSchemaDocumentMap(), dlf, commentsNeedTrimming);
+      sc.setMainUri(uri);
+      sb.parse(parseable, uri);
       if (sb.hadError)
         throw new IncorrectSchemaException();
       return sc;

@@ -1,12 +1,17 @@
 package com.thaiopensource.relaxng.output.common;
 
+import com.thaiopensource.xml.out.CharRepertoire;
+import com.thaiopensource.util.Utf16;
+
 import java.io.Writer;
 import java.io.IOException;
+import java.io.CharConversionException;
 import java.util.Stack;
 
 public class XmlWriter {
   private String lineSep;
   private Writer w;
+  private CharRepertoire cr;
   private Stack tagStack = new Stack();
   private boolean inStartTag = false;
   private boolean inText = false;
@@ -29,9 +34,10 @@ public class XmlWriter {
     }
   }
 
-  public XmlWriter(String lineSep, Writer w, String[] topLevelAttributes, String encoding) {
-    this.lineSep = lineSep;
+  public XmlWriter(Writer w, String encoding, CharRepertoire cr, String lineSep, String[] topLevelAttributes) {
     this.w = w;
+    this.lineSep = lineSep;
+    this.cr = cr;
     this.topLevelAttributes = topLevelAttributes;
     write("<?xml version=\"1.0\" encoding=\"");
     write(encoding);
@@ -148,7 +154,8 @@ public class XmlWriter {
   public void data(String s) {
     int n = s.length();
     for (int i = 0; i < n; i++) {
-      switch (s.charAt(i)) {
+      char c = s.charAt(i);
+      switch (c) {
       case '<':
         write("&lt;");
         break;
@@ -165,10 +172,30 @@ public class XmlWriter {
         write(lineSep);
         break;
       default:
-        write(s.charAt(i));
+        if (Utf16.isSurrogate(c)) {
+          if (!Utf16.isSurrogate1(c) || i + 1 == n || !Utf16.isSurrogate2(s.charAt(i + 1)))
+            throw new WrappedException(new CharConversionException("surrogate pair integrity failure"));
+          char c2 = s.charAt(++i);
+          if (cr.contains(c, c2)) {
+            write(c);
+            write(c2);
+          }
+          else
+            charRef(Utf16.scalarValue(c, c2));
+        }
+        else if (!cr.contains(c))
+          charRef(c);
+        else
+          write(c);
         break;
       }
     }
+  }
+
+  private void charRef(int n) {
+    write("&#x");
+    write(Integer.toHexString(n));
+    write(';');
   }
 
   private void indent() {

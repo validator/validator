@@ -21,6 +21,7 @@ import com.thaiopensource.relaxng.edit.MixedPattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 
 import java.util.List;
 import java.util.Iterator;
@@ -29,11 +30,9 @@ import java.util.Map;
 class Simplifier extends AbstractVisitor {
   public static void simplify(SchemaCollection sc) {
     Simplifier simplifier = new Simplifier();
-    sc.setMainSchema((Pattern)sc.getMainSchema().accept(simplifier));
-    Map schemas = sc.getSchemas();
-    for (Iterator iter = schemas.keySet().iterator(); iter.hasNext();) {
-      Object href = iter.next();
-      schemas.put(href, ((Pattern)schemas.get(href)).accept(simplifier));
+    for (Iterator iter = sc.getSchemaDocumentMap().values().iterator(); iter.hasNext();) {
+      SchemaDocument sd = (SchemaDocument)iter.next();
+      sd.setPattern((Pattern)sd.getPattern().accept(simplifier));
     }
   }
 

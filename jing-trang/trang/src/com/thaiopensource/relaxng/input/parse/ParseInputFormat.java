@@ -24,6 +24,7 @@ public abstract class ParseInputFormat implements InputFormat {
     Parseable parseable = makeParseable(in, eh);
     try {
       return SchemaBuilderImpl.parse(parseable,
+                                     uri,
                                      eh,
                                      new DatatypeLibraryLoader(),
                                      commentsNeedTrimming);

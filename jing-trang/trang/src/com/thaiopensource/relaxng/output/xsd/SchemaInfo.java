@@ -27,6 +27,7 @@ import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.edit.ComponentVisitor;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.HashMap;
@@ -298,12 +299,13 @@ class SchemaInfo {
     this.sc = sc;
     this.er = er;
     forceGrammar();
-    grammar = (GrammarPattern)sc.getMainSchema();
+    grammar = getSchema(sc.getMainUri());
     grammar.componentsAccept(new GrammarVisitor());
   }
 
   void forceGrammar() {
-    sc.setMainSchema(convertToGrammar(sc.getMainSchema()));
+    SchemaDocument sd = (SchemaDocument)sc.getSchemaDocumentMap().get(sc.getMainUri());
+    sd.setPattern(convertToGrammar(sd.getPattern()));
     // TODO convert other schemas
   }
 
@@ -324,12 +326,16 @@ class SchemaInfo {
     return grammar;
   }
 
-  GrammarPattern getSchema(String sourceUri) {
-    return (GrammarPattern)sc.getSchemas().get(sourceUri);
+  String getMainUri() {
+    return sc.getMainUri();
   }
 
-  Set getSourceUris() {
-    return sc.getSchemas().keySet();
+  GrammarPattern getSchema(String sourceUri) {
+    return (GrammarPattern)((SchemaDocument)sc.getSchemaDocumentMap().get(sourceUri)).getPattern();
+  }
+
+  String getEncoding(String sourceUri) {
+    return ((SchemaDocument)sc.getSchemaDocumentMap().get(sourceUri)).getEncoding();
   }
 
   ChildType getChildType(Pattern p) {

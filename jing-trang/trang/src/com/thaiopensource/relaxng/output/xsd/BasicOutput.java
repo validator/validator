@@ -791,10 +791,12 @@ public class BasicOutput {
     this.od = od;
     this.targetNamespace = nsm.getTargetNamespace(schema.getUri());
     this.xsPrefix = pm.getPrefix(WellKnownNamespaces.XML_SCHEMA);
-    xw = new XmlWriter(od.getLineSeparator(),
-                       od.open(schema.getUri()),
-                       new String[0],
-                       od.getEncoding());
+    OutputDirectory.Stream stream = od.open(schema.getUri(), schema.getEncoding());
+    xw = new XmlWriter(stream.getWriter(),
+                       stream.getEncoding(),
+                       stream.getCharRepertoire(),
+                       od.getLineSeparator(),
+                       new String[0]);
   }
 
   private String topLevelPrefix(String ns) {

@@ -108,8 +108,9 @@ public class Driver {
       SchemaCollection sc = inFormat.load(UriOrFile.toUri(args[0]), encoding, eh);
       if (ext.length() == 0)
         ext = outputType;
-      OutputDirectory od = new LocalOutputDirectory(new File(args[1]), ext,
+      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), new File(args[1]), ext,
                                                     encoding == null ? DEFAULT_OUTPUT_ENCODING : encoding,
+                                                    encoding != null,
                                                     DEFAULT_LINE_LENGTH);
       of.output(sc, od, eh);
       return 0;

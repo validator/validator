@@ -36,6 +36,7 @@ import com.thaiopensource.relaxng.edit.NsNameNameClass;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
 import com.thaiopensource.relaxng.edit.CompositePattern;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
@@ -293,7 +294,7 @@ class Analysis {
 
     public Object visitInclude(IncludeComponent c) {
       includeContentChecker.visitContainer(c);
-      visitContainer((GrammarPattern)schemas.getSchemas().get(c.getHref()));
+      visitContainer((GrammarPattern)((SchemaDocument)schemas.getSchemaDocumentMap().get(c.getHref())).getPattern());
       return null;
     }
 
@@ -525,7 +526,7 @@ class Analysis {
   Analysis(SchemaCollection schemas, ErrorReporter er) {
     this.schemas = schemas;
     this.er = er;
-    new Analyzer().analyzeContentType(schemas.getMainSchema());
+    new Analyzer().analyzeContentType(getPattern());
     checkAttlists();
     if (!er.getHadError())
       nsm.assignPrefixes();
@@ -540,7 +541,7 @@ class Analysis {
   }
 
   Pattern getPattern() {
-    return schemas.getMainSchema();
+    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(schemas.getMainUri())).getPattern();
   }
 
   String getPrefixForNamespaceUri(String ns) {
@@ -595,15 +596,22 @@ class Analysis {
     return grammarPattern;
   }
 
+  String getMainUri() {
+    return schemas.getMainUri();
+  }
+
   GrammarPart getGrammarPart(String sourceUri) {
-    if (sourceUri == OutputDirectory.MAIN)
+    if (sourceUri.equals(schemas.getMainUri()))
       return mainPart;
     else
       return (GrammarPart)parts.get(sourceUri);
   }
 
   Pattern getSchema(String sourceUri) {
-    return (Pattern)schemas.getSchemas().get(sourceUri);
+    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(sourceUri)).getPattern();
   }
 
+  String getEncoding(String sourceUri) {
+    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(sourceUri)).getEncoding();
+  }
 }

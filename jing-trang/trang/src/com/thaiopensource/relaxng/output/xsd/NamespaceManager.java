@@ -370,7 +370,7 @@ public class NamespaceManager {
       Map.Entry entry = (Map.Entry)iter.next();
       String ns = (String)entry.getKey();;
       List list = new Vector();
-      findRootSchemas(OutputDirectory.MAIN, ns, list);
+      findRootSchemas(schema.getUri(), ns, list);
       if (list.size() == 1)
         ((TargetNamespace)entry.getValue()).rootSchema = (String)list.get(0);
       else {
@@ -378,7 +378,7 @@ public class NamespaceManager {
         lookupSourceUri(sourceUri).includes.addAll(list);
         lookupSourceUri(sourceUri).targetNamespace = ns;
         ((TargetNamespace)entry.getValue()).rootSchema = sourceUri;
-        schema.addInclude(sourceUri, null, null);
+        schema.addInclude(sourceUri, schema.getEncoding(), null, null);
       }
     }
   }

@@ -61,9 +61,9 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
   private String datatypeLibrary;
   private Map prefixMap;
 
-  static public void output(Pattern p, String sourceUri, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
+  static public void output(Pattern p, String encoding, String sourceUri, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
     try {
-      Output out = new Output(sourceUri, od, datatypeLibrary, prefixMap);
+      Output out = new Output(sourceUri, encoding, od, datatypeLibrary, prefixMap);
       p.accept(out);
       out.xw.close();
     }
@@ -72,13 +72,15 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     }
   }
 
-  private Output(String sourceUri, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
+  private Output(String sourceUri, String encoding, OutputDirectory od, String datatypeLibrary, Map prefixMap) throws IOException {
     this.sourceUri = sourceUri;
     this.od = od;
     this.xw = xw;
     this.datatypeLibrary = datatypeLibrary;
     this.prefixMap = prefixMap;
-    this.xw = new XmlWriter(od.getLineSeparator(), od.open(sourceUri), getTopLevelAttributes(), od.getEncoding());
+    OutputDirectory.Stream stream = od.open(sourceUri, encoding);
+    this.xw = new XmlWriter(stream.getWriter(), stream.getEncoding(), stream.getCharRepertoire(),
+                            od.getLineSeparator(), getTopLevelAttributes());
   }
 
   String[] getTopLevelAttributes() {

@@ -6,6 +6,7 @@ import com.thaiopensource.relaxng.output.OutputFailedException;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
@@ -19,10 +20,9 @@ public class RncOutputFormat implements OutputFormat {
 
     try {
       ErrorReporter er = new ErrorReporter(eh, RncOutputFormat.class);
-      outputPattern(sc.getMainSchema(), OutputDirectory.MAIN, od, er);
-      for (Iterator iter = sc.getSchemas().entrySet().iterator(); iter.hasNext();) {
+      for (Iterator iter = sc.getSchemaDocumentMap().entrySet().iterator(); iter.hasNext();) {
         Map.Entry entry = (Map.Entry)iter.next();
-        outputPattern((Pattern)entry.getValue(), (String)entry.getKey(), od, er);
+        outputPattern((SchemaDocument)entry.getValue(), (String)entry.getKey(), od, er);
       }
     }
     catch (ErrorReporter.WrappedSAXException e) {
@@ -30,8 +30,9 @@ public class RncOutputFormat implements OutputFormat {
     }
   }
 
-  private void outputPattern(Pattern p, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
-    Output.output(p,
+  private void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
+    Output.output(sd.getPattern(),
+                  sd.getEncoding(),
                   sourceUri,
                   od,
                   er);

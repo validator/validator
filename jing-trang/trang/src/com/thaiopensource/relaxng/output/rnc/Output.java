@@ -6,15 +6,15 @@ import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.out.CharRepertoire;
+import com.thaiopensource.util.Utf16;
 
 import java.io.IOException;
 import java.util.*;
 
-/*
-Use \x{} escapes for characters not in repertoire of selected encoding
-*/
 class Output {
   private final Prettyprinter pp;
+  private final CharRepertoire cr;
   private final String sourceUri;
   private final OutputDirectory od;
   private final ErrorReporter er;
@@ -29,6 +29,7 @@ class Output {
   private final AnnotationChildVisitor annotationChildOutput = new AnnotationChildOutput();
   private final AnnotationChildVisitor followingAnnotationChildOutput = new FollowingAnnotationChildOutput();
   private boolean isAttributeNameClass;
+  private final StringBuffer encodeBuf = new StringBuffer();
 
   static private final String indent = "  ";
 
@@ -45,21 +46,29 @@ class Output {
       keywordSet.add(keywords[i]);
   }
 
-  static void output(Pattern p, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
+  static void output(Pattern p, String encoding, String sourceUri, OutputDirectory od, ErrorReporter er) throws IOException {
     try {
-      new Output(sourceUri, od, er, NamespaceVisitor.createBindings(p)).topLevel(p);
+      new Output(sourceUri, encoding, od, er, NamespaceVisitor.createBindings(p)).topLevel(p);
     }
     catch (Prettyprinter.WrappedException e) {
       throw e.getIOException();
     }
   }
 
-  private Output(String sourceUri, OutputDirectory od, ErrorReporter er,
+  private Output(String sourceUri, String encoding, OutputDirectory od, ErrorReporter er,
                  NamespaceManager.NamespaceBindings nsb) throws IOException {
     this.sourceUri = sourceUri;
     this.od = od;
     this.er = er;
-    this.pp = new StreamingPrettyprinter(od.getLineLength(), od.getLineSeparator(), od.open(sourceUri));
+    // Only preserve the input encoding if it's one that can be auto-detected.
+    if (encoding != null
+        && !encoding.equalsIgnoreCase("UTF-8")
+        && !encoding.equalsIgnoreCase("UTF-16")
+        && !encoding.equalsIgnoreCase("US-ASCII"))
+      encoding = null;
+    OutputDirectory.Stream stream = od.open(sourceUri, encoding);
+    this.cr = stream.getCharRepertoire();
+    this.pp = new StreamingPrettyprinter(od.getLineLength(), od.getLineSeparator(), stream.getWriter());
     this.nsb = nsb;
   }
 
@@ -123,7 +132,7 @@ class Output {
           pp.text("default namespace ");
         else
           pp.text("namespace ");
-        pp.text(prefix);
+        encodedText(prefix);
         pp.text(" =");
         pp.startNest(indent);
         pp.softNewline(" ");
@@ -158,7 +167,7 @@ class Output {
       datatypeLibraryMap.put(uri, prefix);
       pp.startGroup();
       pp.text("datatypes ");
-      pp.text(prefix);
+      encodedText(prefix);
       pp.text(" =");
       pp.startNest(indent);
       pp.softNewline(" ");
@@ -602,6 +611,7 @@ class Output {
         qn = (String)datatypeLibraryMap.get(lib) + ":" + p.getType();
       else
         qn = p.getType();
+      qn = encode(qn);
       pp.text(qn);
       List params = p.getParams();
       if (params.size() > 0) {
@@ -613,7 +623,7 @@ class Output {
           Param param = (Param)iter.next();
           startAnnotations(param);
           pp.startGroup();
-          pp.text(param.getName());
+          encodedText(param.getName());
           pp.text(" =");
           pp.startNest(indent);
           pp.softNewline(" ");
@@ -677,8 +687,9 @@ class Output {
       else
         str = (String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ";
       if (str != null) {
-        literal(str);
-        pp.startNest(str);
+        String encoded = encode(str);
+        pp.text(encoded);
+        pp.startNest(encoded);
       }
       literal(p.getValue());
       if (str != null)
@@ -722,13 +733,13 @@ class Output {
       String prefix = nsb.getNonEmptyPrefix(nc.getNs());
       if (e == null) {
         startAnnotations(nc);
-        pp.text(prefix);
+        encodedText(prefix);
         pp.text(":*");
       }
       else {
         boolean useParens = startAnnotations(nc) || alwaysUseParens;
         String s = useParens ? "(" : "";
-        s += prefix;
+        s += encode(prefix);
         s += ":* - ";
         pp.text(s);
         pp.startNest(s);
@@ -743,7 +754,7 @@ class Output {
 
     public Object visitName(NameNameClass nc) {
       startAnnotations(nc);
-      pp.text(qualifyName(nc.getNamespaceUri(), nc.getPrefix(), nc.getLocalName(), isAttributeNameClass));
+      qualifiedName(nc.getNamespaceUri(), nc.getPrefix(), nc.getLocalName(), isAttributeNameClass);
       endAnnotations(nc);
       return null;
     }
@@ -792,9 +803,9 @@ class Output {
 
     public Object visitElement(ElementAnnotation elem) {
       checkContext(elem.getContext(), elem.getSourceLocation());
-      pp.text(qualifyName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
-                          // unqualified annotation element names have "" namespace
-                          true));
+      qualifiedName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
+                    // unqualified annotation element names have "" namespace
+                    true);
       pp.text(" ");
       annotationBody(elem.getAttributes(), elem.getChildren());
       return null;
@@ -924,7 +935,7 @@ class Output {
       AttributeAnnotation att = (AttributeAnnotation)iter.next();
       pp.softNewline(" ");
       pp.startGroup();
-      pp.text(qualifyName(att.getNamespaceUri(), att.getPrefix(), att.getLocalName(), true));
+      qualifiedName(att.getNamespaceUri(), att.getPrefix(), att.getLocalName(), true);
       pp.text(" =");
       pp.startNest(indent);
       pp.softNewline(" ");
@@ -976,13 +987,13 @@ class Output {
       return;
     pp.softNewline(" ");
     pp.text("inherit = ");
-    pp.text(nsb.getNonEmptyPrefix(ns));
+    encodedText(nsb.getNonEmptyPrefix(ns));
   }
 
   private void identifier(String name) {
     if (keywordSet.contains(name))
       pp.text("\\");
-    pp.text(name);
+    encodedText(name);
   }
 
   static final String[] delims = { "\"", "'", "\"\"\"", "'''" };
@@ -1013,7 +1024,7 @@ class Output {
         pp.softNewline(" ");
       }
       pp.text(bestDelim);
-      encode(str.substring(i, bestEnd));
+      encodedText(str.substring(i, bestEnd));
       pp.text(bestDelim);
       i = bestEnd;
       if (i == len)
@@ -1021,11 +1032,16 @@ class Output {
     }
   }
 
-  private void encode(String str) {
+  private void encodedText(String str) {
+    pp.text(encode(str));
+  }
+
+  private String encode(String str) {
     int start = 0;
     int len = str.length();
     for (int i = 0; i < len; i++) {
-      switch (str.charAt(i)) {
+      char c = str.charAt(i);
+      switch (c) {
       case '\\':
         if (!startsWithEscapeOpen(str, i))
           break;
@@ -1033,18 +1049,40 @@ class Output {
       case '\r':
       case '\n':
         if (start < i)
-          pp.text(str.substring(start, i));
-        pp.text("\\x{");
-        pp.text(Integer.toHexString(str.charAt(i)));
-        pp.text("}");
+          encodeBuf.append(str.substring(start, i));
+        escape(c);
         start = i + 1;
+        break;
+      default:
+        if (Utf16.isSurrogate(c)) {
+          if (!cr.contains(c, str.charAt(i + 1))) {
+            if (start < i)
+              encodeBuf.append(str.substring(start, i));
+            escape(Utf16.scalarValue(c, str.charAt(i + 1)));
+            start = i + 2;
+          }
+          ++i;
+        }
+        else if (!cr.contains(c)) {
+          escape(c);
+          start = i + 1;
+        }
         break;
       }
     }
     if (start == 0)
-      pp.text(str);
-    else if (start != len)
-      pp.text(str.substring(start, len));
+      return str;
+    if (start != len)
+      encodeBuf.append(str.substring(start, len));
+    str = encodeBuf.toString();
+    encodeBuf.setLength(0);
+    return str;
+  }
+
+  private void escape(int n) {
+    encodeBuf.append("\\x{");
+    encodeBuf.append(Integer.toHexString(n));
+    encodeBuf.append("}");
   }
 
   static private boolean startsWithEscapeOpen(String str, int off) {
@@ -1058,14 +1096,15 @@ class Output {
   /**
    * null means no prefix
    */
-  private String qualifyName(String ns, String prefix, String localName, boolean isAttribute) {
+  private void qualifiedName(String ns, String prefix, String localName, boolean isAttribute) {
     prefix = choosePrefix(ns, prefix, isAttribute);
     if (prefix == null)
-      return localName;
-    StringBuffer buf = new StringBuffer(prefix);
-    buf.append(':');
-    buf.append(localName);
-    return buf.toString();
+      encodedText(localName);
+    else {
+      encodedText(prefix);
+      pp.text(":");
+      encodedText(localName);
+    }
   }
 
   /**
@@ -1093,7 +1132,7 @@ class Output {
         pp.text(" ");
       int j = value.indexOf('\n', i);
       String tem = j < 0 ? value.substring(i) : value.substring(i, j);
-      encode(tem);
+      encodedText(tem);
       pp.hardNewline();
       if (j < 0)
         break;

@@ -1,5 +1,8 @@
 package com.thaiopensource.relaxng.output;
 
+import com.thaiopensource.xml.util.EncodingMap;
+import com.thaiopensource.xml.out.CharRepertoire;
+
 import java.io.Writer;
 import java.io.IOException;
 import java.io.File;
@@ -13,31 +16,34 @@ public class LocalOutputDirectory implements OutputDirectory {
   private final File mainOutputFile;
   private final String lineSeparator;
   private final String extension;
-  private final String encoding;
+  private final String defaultEncoding;
+  private final boolean alwaysUseDefaultEncoding;
   private final int lineLength;
   // maps URIs to filenames
   private final Map uriMap = new HashMap();
 
-  public LocalOutputDirectory(File mainOutputFile, String extension, String encoding, int lineLength) {
+  public LocalOutputDirectory(String mainSourceUri, File mainOutputFile, String extension,
+                              String encoding, boolean forceEncoding, int lineLength) {
     this.mainOutputFile = mainOutputFile;
     this.extension = extension;
-    this.encoding = encoding;
+    this.defaultEncoding = encoding;
+    this.alwaysUseDefaultEncoding = forceEncoding;
     this.lineSeparator = System.getProperty("line.separator");
     this.lineLength = lineLength;
+    this.uriMap.put(mainSourceUri, mainOutputFile.getName());
   }
 
-  public Writer open(String sourceUri) throws IOException {
-    File file;
-    if (sourceUri == MAIN)
-      file = mainOutputFile;
-    else
-      file = new File(mainOutputFile.getParentFile(), mapFilename(sourceUri));
-    return new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)), encoding);
+  public Stream open(String sourceUri, String encoding) throws IOException {
+    if (encoding == null || alwaysUseDefaultEncoding)
+      encoding = defaultEncoding;
+    String javaEncoding = EncodingMap.getJavaName(encoding);
+    File file = new File(mainOutputFile.getParentFile(), mapFilename(sourceUri));
+    return new Stream(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)), javaEncoding),
+                      encoding,
+                      CharRepertoire.getInstance(javaEncoding));
   }
 
   public String reference(String fromSourceUri, String toSourceUri) {
-    if (toSourceUri.equals(MAIN))
-      return mainOutputFile.getName();
     return mapFilename(toSourceUri);
   }
 
@@ -55,17 +61,13 @@ public class LocalOutputDirectory implements OutputDirectory {
     int dot = filename.lastIndexOf('.');
     String base = dot < 0 ? filename : filename.substring(0, dot);
     filename = base + extension;
-    for (int i = 1; uriMap.containsValue(filename) || filename.equals(mainOutputFile.getName()); i++)
+    for (int i = 1; uriMap.containsValue(filename); i++)
       filename = base + Integer.toString(i) + extension;
     return filename;
   }
 
   public String getLineSeparator() {
     return lineSeparator;
-  }
-
-  public String getEncoding() {
-    return encoding;
   }
 
   public int getLineLength() {

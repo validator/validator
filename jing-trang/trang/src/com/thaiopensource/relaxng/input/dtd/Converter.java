@@ -26,6 +26,7 @@ import com.thaiopensource.relaxng.edit.ValuePattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.input.CommentTrimmer;
@@ -360,7 +361,7 @@ public class Converter {
       catch (Exception e) {
 	throw (RuntimeException)e;
       }
-      if (sc.getSchemas().get(uri) != null) {
+      if (sc.getSchemaDocumentMap().get(uri) != null) {
         // I don't think this can happen because the second and subsequent inclusions
         // will never pass the SignificanceDetector, but just in case
         super.externalIdRef(name, externalId, uri, encoding, contents);
@@ -374,7 +375,7 @@ public class Converter {
       for (int i = 0; i < contents.length; i++)
         contents[i].accept(co);
       co.finish();
-      sc.getSchemas().put(uri, included);
+      sc.getSchemaDocumentMap().put(uri, new SchemaDocument(included, encoding));
     }
 
   }
@@ -624,7 +625,9 @@ public class Converter {
       if (defaultNamespace == null)
         defaultNamespace = SchemaBuilder.INHERIT_NS;
       GrammarPattern grammar = new GrammarPattern();
-      sc.setMainSchema(grammar);
+      sc.setMainUri(dtd.getUri());
+      sc.getSchemaDocumentMap().put(dtd.getUri(),
+                                    new SchemaDocument(grammar, dtd.getEncoding()));
       ComponentOutput co = new ComponentOutput(grammar);
       dtd.accept(co);
       outputUndefinedElements(grammar.getComponents());

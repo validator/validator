@@ -12,6 +12,7 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.relaxng.edit.Combine;
 import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.List;
@@ -128,7 +129,7 @@ class GrammarPart implements ComponentVisitor {
     if (pendingIncludes.contains(href))
       throw new IncludeLoopException(c);
     pendingIncludes.add(href);
-    GrammarPattern p = (GrammarPattern)schemas.getSchemas().get(href);
+    GrammarPattern p = (GrammarPattern)((SchemaDocument)schemas.getSchemaDocumentMap().get(href)).getPattern();
     GrammarPart part = new GrammarPart(this, p);
     parts.put(href, part);
     for (Iterator iter = part.providedSet().iterator(); iter.hasNext();)

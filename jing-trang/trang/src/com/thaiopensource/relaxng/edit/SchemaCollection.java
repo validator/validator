@@ -4,21 +4,21 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class SchemaCollection {
-  private final Map schemas = new HashMap();
-  private Pattern mainSchema;
+  private final Map schemaDocumentMap = new HashMap();
+  private String mainUri;
 
   public SchemaCollection() {
   }
 
-  public Pattern getMainSchema() {
-    return mainSchema;
+  public String getMainUri() {
+    return mainUri;
   }
 
-  public void setMainSchema(Pattern mainSchema) {
-    this.mainSchema = mainSchema;
+  public void setMainUri(String mainUri) {
+    this.mainUri = mainUri;
   }
 
-  public Map getSchemas() {
-    return schemas;
+  public Map getSchemaDocumentMap() {
+    return schemaDocumentMap;
   }
 }

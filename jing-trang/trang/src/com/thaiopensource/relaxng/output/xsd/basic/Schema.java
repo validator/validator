@@ -12,6 +12,7 @@ import java.util.HashSet;
 
 public class Schema extends Annotated {
   private final String uri;
+  private final String encoding;
   private Schema parent;
   private List topLevel = new Vector();
   private Map groupMap;
@@ -21,9 +22,10 @@ public class Schema extends Annotated {
   private final List leadingComments = new Vector();
   private final List trailingComments = new Vector();
 
-  public Schema(SourceLocation location, Annotation annotation, String uri) {
+  public Schema(SourceLocation location, Annotation annotation, String uri, String encoding) {
     super(location, annotation);
     this.uri = uri;
+    this.encoding = encoding;
     this.groupMap = new HashMap();
     this.attributeGroupMap = new HashMap();
     this.simpleTypeMap = new HashMap();
@@ -31,10 +33,11 @@ public class Schema extends Annotated {
     this.subSchemas.add(this);
   }
 
-  private Schema(SourceLocation location, Annotation annotation, String uri, Schema parent) {
+  private Schema(SourceLocation location, Annotation annotation, String uri, String encoding, Schema parent) {
     super(location, annotation);
     this.parent = parent;
     this.uri = uri;
+    this.encoding = encoding;
     this.groupMap = parent.groupMap;
     this.attributeGroupMap = parent.attributeGroupMap;
     this.simpleTypeMap = parent.simpleTypeMap;
@@ -44,6 +47,10 @@ public class Schema extends Annotated {
 
   public String getUri() {
     return uri;
+  }
+
+  public String getEncoding() {
+    return encoding;
   }
 
   public Schema getParent() {
@@ -72,8 +79,8 @@ public class Schema extends Annotated {
     topLevel.add(new RootDeclaration(location, annotation, particle));
   }
 
-  public Schema addInclude(String uri, SourceLocation location, Annotation annotation) {
-    Schema included = new Schema(location, annotation, uri, this);
+  public Schema addInclude(String uri, String encoding, SourceLocation location, Annotation annotation) {
+    Schema included = new Schema(location, annotation, uri, encoding, this);
     topLevel.add(new Include(location, annotation, included));
     return included;
   }

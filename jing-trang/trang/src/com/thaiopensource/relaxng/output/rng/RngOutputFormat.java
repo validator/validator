@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.output.rng;
 
 import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFormat;
 import org.xml.sax.ErrorHandler;
@@ -17,17 +18,17 @@ XXX Specify indent
 */
 public class RngOutputFormat implements OutputFormat {
   public void output(SchemaCollection sc, OutputDirectory od, ErrorHandler eh) throws IOException {
-    outputPattern(sc.getMainSchema(), OutputDirectory.MAIN, od);
-    for (Iterator iter = sc.getSchemas().entrySet().iterator(); iter.hasNext();) {
+    for (Iterator iter = sc.getSchemaDocumentMap().entrySet().iterator(); iter.hasNext();) {
       Map.Entry entry = (Map.Entry)iter.next();
-      outputPattern((Pattern)entry.getValue(), (String)entry.getKey(), od);
+      outputPattern((SchemaDocument)entry.getValue(), (String)entry.getKey(), od);
     }
   }
 
-  private void outputPattern(Pattern p, String sourceUri, OutputDirectory od) throws IOException {
+  private void outputPattern(SchemaDocument sd, String sourceUri, OutputDirectory od) throws IOException {
     Analyzer analyzer = new Analyzer();
-    p.accept(analyzer);
-    Output.output(p,
+    sd.getPattern().accept(analyzer);
+    Output.output(sd.getPattern(),
+                  sd.getEncoding(),
                   sourceUri,
                   od,
                   analyzer.getDatatypeLibrary(),
