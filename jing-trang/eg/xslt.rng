@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.3 2001-07-07 02:34:18 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.4 2001-07-09 01:12:43 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
@@ -67,7 +67,8 @@
                <nsName/>
             </except>
          </anyName>
-         <attribute name="version" global="true">
+         <attribute>
+            <name>version</name>
             <ref name="version"/>
          </attribute>
          <ref name="literal-result-element.atts"/>
@@ -96,16 +97,20 @@
 	       </anyName>
                <ref name="avt.datatype"/>
             </attribute>
-            <attribute name="extension-element-prefixes" global="true">
+            <attribute>
+               <name>extension-element-prefixes</name>
                <ref name="prefixes.datatype"/>
 	    </attribute>
-            <attribute name="exclude-result-prefixes" global="true">
+            <attribute>
+               <name>exclude-result-prefixes</name>
                <ref name="prefixes.datatype"/>
 	    </attribute>
-            <attribute name="use-attribute-sets" global="true">
+            <attribute>
+               <name>use-attribute-sets</name>
                <ref name="qnames.datatype"/>
             </attribute>
-            <attribute name="version" global="true">
+            <attribute>
+               <name>version</name>
                <ref name="version"/>
             </attribute>
          </choice>
