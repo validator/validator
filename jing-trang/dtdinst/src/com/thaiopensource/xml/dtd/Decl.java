@@ -114,6 +114,9 @@ class Decl {
     case Entity.SEMANTIC_ENUM_GROUP:
       entity.enumGroup = Particle.particlesToEnumGroup(entity.parsed);
       return new EnumGroupDef(name, entity.enumGroup);
+    case Entity.SEMANTIC_FLAG:
+      // XXX
+      return null;
     }
     return null;
   }

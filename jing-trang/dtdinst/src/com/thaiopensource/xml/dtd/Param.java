@@ -22,6 +22,8 @@ class Param {
   // Pseudo-param representing zero or more attributes in an ATTLIST
   static final int EMPTY_ATTRIBUTE_GROUP = 16;
   static final int NOTATION_GROUP = 17;
+  static final int IGNORE = 18;
+  static final int INCLUDE = 19;
 
   static final int OTHER = 30;
 

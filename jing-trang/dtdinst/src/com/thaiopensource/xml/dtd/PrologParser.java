@@ -71,6 +71,8 @@ public class PrologParser implements Cloneable {
   public static final int ACTION_DECL_CLOSE = ACTION_IGNORE_SECT + 1;
   public static final int ACTION_ENUM_GROUP_OPEN = ACTION_DECL_CLOSE + 1;
   public static final int ACTION_NOTATION_GROUP_OPEN = ACTION_ENUM_GROUP_OPEN + 1;
+  public static final int ACTION_SECTION_STATUS_IGNORE = ACTION_NOTATION_GROUP_OPEN + 1;
+  public static final int ACTION_SECTION_STATUS_INCLUDE = ACTION_SECTION_STATUS_IGNORE + 1;
   
   private static final byte prolog0 = 0;
   private static final byte prolog1 = prolog0 + 1;
@@ -691,11 +693,11 @@ public class PrologParser implements Cloneable {
       if (tok == Tokenizer.TOK_NAME) {
 	if (token.equals("INCLUDE")) {
 	  state = condSect1;
-	  return ACTION_NONE;
+	  return ACTION_SECTION_STATUS_INCLUDE;
 	}
 	if (token.equals("IGNORE")) {
 	  state = condSect2;
-	  return ACTION_NONE;
+	  return ACTION_SECTION_STATUS_IGNORE;
 	}
       }
       break;

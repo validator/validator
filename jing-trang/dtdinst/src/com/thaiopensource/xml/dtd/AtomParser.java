@@ -183,6 +183,12 @@ class AtomParser {
 	  case PrologParser.ACTION_ATTRIBUTE_TYPE_NOTATION:
 	    p = new Param(Param.ATTRIBUTE_TYPE_NOTATION);
 	    break;
+	  case PrologParser.ACTION_SECTION_STATUS_IGNORE:
+	    p = new Param(Param.IGNORE);
+	    break;
+	  case PrologParser.ACTION_SECTION_STATUS_INCLUDE:
+	    p = new Param(Param.INCLUDE);
+	    break;
 	  default:
 	    p = new Param(Param.OTHER);
 	    p.value = as.token;
