@@ -4,7 +4,7 @@ Command-line option to define a parameter entity as INCLUDE.
 
 Interface to report warnings properly.
 
-Encoding detection
+Real implementation of EncodingMap.
 
 Don't unexpand empty entities that might be pasted.
 
