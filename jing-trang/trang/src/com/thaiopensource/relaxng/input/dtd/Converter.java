@@ -1,9 +1,10 @@
 package com.thaiopensource.relaxng.input.dtd;
 
 import java.util.Hashtable;
-import java.util.Enumeration;
+import java.util.Map;
 import java.util.Vector;
 import java.util.List;
+import java.util.Iterator;
 
 import com.thaiopensource.xml.dtd.om.*;
 import com.thaiopensource.xml.em.ExternalId;
@@ -42,14 +43,14 @@ public class Converter {
   private boolean inlineAttlistDecls = false;
   private boolean hadAny = false;
   private boolean hadDefaultValue = false;
-  private Hashtable elementNameTable = new Hashtable();
-  private Hashtable attlistDeclTable = new Hashtable();
-  private Hashtable defTable = new Hashtable();
-  private Hashtable prefixTable = new Hashtable();
+  private Map elementNameTable = new Hashtable();
+  private Map attlistDeclTable = new Hashtable();
+  private Map defTable = new Hashtable();
+  private Map prefixTable = new Hashtable();
   private String initialComment = null;
 
-  private Hashtable duplicateAttributeTable = new Hashtable();
-  private Hashtable currentDuplicateAttributeTable = null;
+  private Map duplicateAttributeTable = new Hashtable();
+  private Map currentDuplicateAttributeTable = null;
   private String defaultNamespace = null;
   private String annotationPrefix = null;
 
@@ -206,12 +207,12 @@ public class Converter {
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup) throws Exception {
       GroupPattern gp = new GroupPattern();
       if (inlineAttlistDecls) {
-        Vector groups = (Vector)attlistDeclTable.get(nameSpec.getValue());
+        List groups = (List)attlistDeclTable.get(nameSpec.getValue());
         if (groups != null) {
           currentDuplicateAttributeTable = new Hashtable();
           AttributeGroupVisitor agv = new AttributeGroupOutput(gp);
-          for (Enumeration e = groups.elements(); e.hasMoreElements();)
-            ((AttributeGroup)e.nextElement()).accept(agv);
+          for (Iterator iter = groups.iterator(); iter.hasNext();)
+            ((AttributeGroup)iter.next()).accept(agv);
         }
       }
       else
@@ -244,7 +245,7 @@ public class Converter {
         return;
       String name = nameSpec.getValue();
       currentDuplicateAttributeTable
-	= (Hashtable)duplicateAttributeTable.get(name);
+	= (Map)duplicateAttributeTable.get(name);
       if (currentDuplicateAttributeTable == null) {
 	currentDuplicateAttributeTable = new Hashtable();
 	duplicateAttributeTable.put(name, currentDuplicateAttributeTable);
@@ -383,8 +384,8 @@ public class Converter {
         attributeGroup.accept(this);
       else {
         group.add(ref(name));
-        for (Enumeration e = detector.names.elements(); e.hasMoreElements();) {
-          String tem = (String)e.nextElement();
+        for (Iterator iter = detector.names.iterator(); iter.hasNext();) {
+          String tem = (String)iter.next();
           currentDuplicateAttributeTable.put(tem, tem);
         }
       }
@@ -503,7 +504,7 @@ public class Converter {
 
   private class DuplicateAttributeDetector implements AttributeGroupVisitor {
     private boolean containsDuplicate = false;
-    private Vector names = new Vector();
+    private List names = new Vector();
 
     public void attribute(NameSpec nameSpec,
 			  Datatype datatype,
@@ -511,7 +512,7 @@ public class Converter {
       String name = nameSpec.getValue();
       if (currentDuplicateAttributeTable.get(name) != null)
 	containsDuplicate = true;
-      names.addElement(name);
+      names.add(name);
     }
 
     public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
@@ -633,9 +634,8 @@ public class Converter {
 
   private boolean colonReplacementOk() {
     Hashtable table = new Hashtable();
-    for (Enumeration e = elementNameTable.keys();
-	 e.hasMoreElements();) {
-      String name = mungeQName((String)e.nextElement());
+    for (Iterator iter = elementNameTable.keySet().iterator(); iter.hasNext();) {
+      String name = mungeQName((String)iter.next());
       if (table.get(name) != null)
 	return false;
       table.put(name, name);
@@ -669,10 +669,10 @@ public class Converter {
   }
 
   private String namingPattern() {
-    Hashtable patternTable = new Hashtable();
-    for (Enumeration e = defTable.keys();
-	 e.hasMoreElements();) {
-      String name = (String)e.nextElement();
+    Map patternTable = new Hashtable();
+    for (Iterator iter = defTable.keySet().iterator();
+	 iter.hasNext();) {
+      String name = (String)iter.next();
       for (int i = 0; i < SEPARATORS.length(); i++) {
 	char sep = SEPARATORS.charAt(i);
 	int k = name.indexOf(sep);
@@ -685,13 +685,13 @@ public class Converter {
     }
     String bestPattern = null;
     int bestCount = 0;
-    for (Enumeration e = patternTable.keys();
-	 e.hasMoreElements();) {
-      String pattern = (String)e.nextElement();
-      int count = ((Integer)patternTable.get(pattern)).intValue();
+    for (Iterator iter = patternTable.entrySet().iterator();
+	 iter.hasNext();) {
+      Map.Entry entry = (Map.Entry)iter.next();
+      int count = ((Integer)entry.getValue()).intValue();
       if (bestPattern == null || count > bestCount) {
 	bestCount = count;
-	bestPattern = pattern;
+	bestPattern = (String)entry.getKey();
       }
     }
     if (bestPattern == null)
@@ -702,7 +702,7 @@ public class Converter {
       return "#" + bestPattern.substring(bestPattern.length() - 2);
   }
 
-  private static void inc(Hashtable table, String str) {
+  private static void inc(Map table, String str) {
     Integer n = (Integer)table.get(str);
     if (n == null)
       table.put(str, new Integer(1));
@@ -711,9 +711,9 @@ public class Converter {
   }
 
   private boolean patternOk(String pattern) {
-    for (Enumeration e = elementNameTable.keys();
-	 e.hasMoreElements();) {
-      String name = mungeQName((String)e.nextElement());
+    for (Iterator iter = elementNameTable.keySet().iterator();
+	 iter.hasNext();) {
+      String name = mungeQName((String)iter.next());
       if (defTable.get(substitute(pattern, '%', name)) != null)
 	return false;
     }
@@ -737,12 +737,12 @@ public class Converter {
   }
 
   private void noteAttlist(String name, AttributeGroup group) {
-    Vector groups = (Vector)attlistDeclTable.get(name);
+    List groups = (List)attlistDeclTable.get(name);
     if (groups == null) {
       groups = new Vector();
       attlistDeclTable.put(name, groups);
     }
-    groups.addElement(group);
+    groups.add(group);
   }
 
   private void noteAttribute(String name, String defaultValue) {
@@ -836,13 +836,12 @@ public class Converter {
     int mask = ELEMENT_REF|ELEMENT_DECL;
     for (;;) {
       boolean gotOne = false;
-      for (Enumeration e = elementNameTable.keys();
-	   e.hasMoreElements();) {
-	String name = (String)e.nextElement();
-	if ((((Integer)elementNameTable.get(name)).intValue() & mask)
-	    == ELEMENT_DECL) {
+      for (Iterator iter = elementNameTable.entrySet().iterator();
+	   iter.hasNext();) {
+        Map.Entry entry = (Map.Entry)iter.next();
+	if ((((Integer)entry.getValue()).intValue() & mask) == ELEMENT_DECL) {
 	  gotOne = true;
-	  choice.getChildren().add(ref(elementDeclName(name)));
+	  choice.getChildren().add(ref(elementDeclName((String)entry.getKey())));
 	}
       }
       if (gotOne)
@@ -860,12 +859,11 @@ public class Converter {
 
 
   private void outputUndefinedElements(List components) {
-    for (Enumeration e = elementNameTable.keys();
-	 e.hasMoreElements();) {
-      String name = (String)e.nextElement();
-      if ((((Integer)elementNameTable.get(name)).intValue() & ELEMENT_DECL)
+    for (Iterator iter = elementNameTable.entrySet().iterator(); iter.hasNext();) {
+      Map.Entry entry = (Map.Entry)iter.next();
+      if ((((Integer)entry.getValue()).intValue() & ELEMENT_DECL)
 	  == 0) {
-        DefineComponent dc = new DefineComponent(elementDeclName(name), new NotAllowedPattern());
+        DefineComponent dc = new DefineComponent(elementDeclName((String)entry.getKey()), new NotAllowedPattern());
         dc.setCombine(Combine.CHOICE);
         components.add(dc);
       }
