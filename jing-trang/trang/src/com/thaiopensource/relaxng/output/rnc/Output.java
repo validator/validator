@@ -14,9 +14,6 @@ import java.util.*;
 Use \x{} escapes for characters not in repertoire of selected encoding
 
 Make long literals pretty
-
-Take advantage of
-  default namespace x = "..."
 */
 class Output {
   private final Prettyprinter pp;
@@ -101,11 +98,15 @@ class Output {
 
     boolean needNewline = false;
 
+    String defaultPrefix = null;
+    String defaultNamespace = nsb.getNamespaceUri("");
+    if (defaultNamespace != null && !defaultNamespace.equals(SchemaBuilder.INHERIT_NS))
+      defaultPrefix = nsb.getNonEmptyPrefix(defaultNamespace);
     for (Iterator iter = prefixes.iterator(); iter.hasNext();) {
       String prefix = (String)iter.next();
       String ns = nsb.getNamespaceUri(prefix);
       if (prefix.length() == 0) {
-        if (!ns.equals(SchemaBuilder.INHERIT_NS)) {
+        if (defaultPrefix == null && !ns.equals(SchemaBuilder.INHERIT_NS)) {
           pp.text("default namespace = ");
           literal(ns);
           pp.hardNewline();
@@ -113,7 +114,10 @@ class Output {
         }
       }
       else if (!prefix.equals("xml")) {
-        pp.text("namespace ");
+        if (prefix.equals(defaultPrefix))
+          pp.text("default namespace ");
+        else
+          pp.text("namespace ");
         pp.text(prefix);
         pp.text(" = ");
         if (ns.equals(SchemaBuilder.INHERIT_NS))
