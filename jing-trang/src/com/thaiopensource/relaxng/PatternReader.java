@@ -313,6 +313,18 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
+  class ListState extends PatternContainerState {
+    State create() {
+      return new ListState();
+    }
+    Pattern wrapPattern(Pattern p) {
+      Locator loc = null;
+      if (locator != null)
+	loc = new LocatorImpl(locator);
+      return patternBuilder.makeList(p, loc);
+    }
+  }
+
   class ChoiceState extends PatternContainerState {
     State create() {
       return new ChoiceState();
@@ -985,6 +997,7 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("zeroOrMore", new ZeroOrMoreState());
     patternTable.put("oneOrMore", new OneOrMoreState());
     patternTable.put("optional", new OptionalState());
+    patternTable.put("list", new ListState());
     patternTable.put("choice", new ChoiceState());
     patternTable.put("interleave", new InterleaveState());
     patternTable.put("group", new GroupState());

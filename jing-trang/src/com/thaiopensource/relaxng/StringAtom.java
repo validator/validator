@@ -38,6 +38,14 @@ class StringAtom extends Atom {
     return false;
   }
   
+  String getStringValue() {
+    return str;
+  }
+  
+  DatatypeContext getDatatypeContext() {
+    return dc;
+  }
+
   String getString() {
     return str;
   }

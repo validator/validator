@@ -230,16 +230,21 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitString(boolean normalizeWhiteSpace, String str) {
-      startElement("string");
-      attribute("whiteSpace",
-		normalizeWhiteSpace ? "normalize" : "preserve");
+    public void visitValue(Datatype dt, String str) {
+      startElement("value");
+      // XXX dump dt
       data(str);
       endElement();
     }
 
     public void visitText() {
       startElement("text");
+      endElement();
+    }
+
+    public void visitList(Pattern p) {
+      startElement("list");
+      p.accept(sequencePatternVisitor);
       endElement();
     }
   }

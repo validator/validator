@@ -15,4 +15,5 @@ interface PatternVisitor {
   void visitDatatype(Datatype dt);
   void visitValue(Datatype dt, String str);
   void visitText();
+  void visitList(Pattern p);
 }

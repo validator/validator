@@ -67,6 +67,10 @@ public class DatatypeAssignmentChecker {
       p.accept(this);
     }
 
+    public void visitList(Pattern p) {
+      p.accept(this);
+    }
+
     public void visitElement(NameClass nc, Pattern content) {
     }
 
@@ -145,7 +149,7 @@ public class DatatypeAssignmentChecker {
 	addClass(cls);
     }
 
-    public void visitDatatype(Datatype dt, String str) {
+    public void visitDatatypeValue(Datatype dt, String str) {
       addText();
     }
 

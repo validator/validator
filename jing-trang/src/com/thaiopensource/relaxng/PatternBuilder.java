@@ -139,6 +139,12 @@ public class PatternBuilder {
     return makeOptional(makeOneOrMore(p));
   }
 
+  Pattern makeList(Pattern p, Locator loc) {
+    if (p == emptyChoice)
+      return p;
+    return intern(new ListPattern(p, loc));
+  }
+
   Pattern makeElement(NameClass nameClass, Pattern content) {
     if (content.isEmptyChoice())
       return content;
