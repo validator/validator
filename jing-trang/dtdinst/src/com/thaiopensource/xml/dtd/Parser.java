@@ -3,6 +3,7 @@ package com.thaiopensource.xml.dtd;
 import java.io.Reader;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.Hashtable;
 
 public class Parser extends Token {
   private Parser parent;
@@ -26,6 +27,8 @@ public class Parser extends Token {
   private EntityManager entityManager;
   // for error messages
   private String location;
+  
+  private Hashtable atomTable = new Hashtable();
 
   static class DeclState {
     Entity entity;
@@ -110,8 +113,9 @@ public class Parser extends Token {
 
   private void prologAction(int tok, PrologParser pp, DeclState declState)
     throws IOException, PrologSyntaxException {
-    String token = bufferString(currentTokenStart, bufStart);
-    addAtom(new Atom(tok, token));
+    Atom a = makeAtom(tok, currentTokenStart, bufStart);
+    addAtom(a);
+    String token = a.getToken();
     int action = pp.action(tok, token);
     switch (action) {
     case PrologParser.ACTION_TEXT_DECL:
@@ -502,7 +506,11 @@ public class Parser extends Token {
   }
 
   private void setLastAtomEntity(Entity e) {
-    ((Atom)atoms.elementAt(atoms.size() - 1)).setEntity(e);
+    Atom a = (Atom)atoms.elementAt(atoms.size() - 1);
+    atoms.setElementAt(new Atom(a.getTokenType(),
+				a.getToken(),
+				e),
+		       atoms.size() - 1);
   }
 
   private final String bufferString(int start, int end) {
@@ -626,4 +634,44 @@ public class Parser extends Token {
       start = nextStart;
     }
   }
+
+  private Atom makeAtom(int tok, int start, int end) {
+    String token = null;
+    if (end - start == 1) {
+      switch (buf[start]) {
+      case ' ':
+	token = " ";
+	break;
+      case '\t':
+	token = "\t";
+	break;
+      case '\n':
+	token = "\n";
+	break;
+      case ',':
+	token = ",";
+	break;
+      case '|':
+	token = "|";
+	break;
+      case '(':
+	token = "(";
+	break;
+      case ')':
+	token = ")";
+	break;
+      }
+    }
+    else if (end - start == 2 && buf[start] == '\r' && buf[start + 1] == '\n')
+      token = "\n";
+    if (token == null)
+      token = bufferString(start, end);
+    Atom a = (Atom)atomTable.get(token);
+    if (a == null) {
+      a = new Atom(tok, token);
+      atomTable.put(token, a);
+    }
+    return a;
+  }
+
 }
