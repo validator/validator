@@ -88,6 +88,15 @@ class DurationDatatype extends RegexDatatype implements OrderRelation {
               && this.minutes.equals(other.minutes)
               && this.seconds.compareTo(other.seconds) == 0);
     }
+
+    public int hashCode() {
+      return (years.hashCode()
+              ^ months.hashCode()
+              ^ days.hashCode()
+              ^ hours.hashCode()
+              ^ minutes.hashCode()
+              ^ seconds.hashCode());
+    }
   }
 
   Object getValue(String str, ValidationContext vc) {
