@@ -2,3 +2,4 @@ Sign RPM file
 Detect with -lpthread is needed
 Instead of removing unneeded sources, omit them from compile list.
 Include some examples and additional documentation in the dist.
+Include xsd-test, mns-test, regex-test in jing.
