@@ -66,9 +66,6 @@ public class Converter {
 
   private static final String SEPARATORS = ".-_";
 
-  private static final String COMPATIBILITY_ANNOTATIONS_URI
-    = "http://relaxng.org/ns/compatibility/annotations/1.0";
-
   // # is the category; % is the name in the category
 
   private static final String DEFAULT_PATTERN = "#.%";
