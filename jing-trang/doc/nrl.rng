@@ -65,4 +65,10 @@
   </element>
 </define>
 
+<define name="Block.class" combine="choice">
+  <element name="abstract">
+    <ref name="Block.model"/>
+  </element>
+</define>
+
 </grammar>

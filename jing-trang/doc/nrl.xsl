@@ -5,6 +5,33 @@
 
 <xsl:output encoding="iso-8859-1"/>
 
+<xsl:template match="head">
+  <xsl:apply-templates/>
+<style type="text/css">
+body {
+  padding-left: 3em;
+  padding-top: 3em;
+  margin: 0;
+  font-family: sans-serif;
+  color: black;
+  background: white;
+  line-length: 20pt;
+  max-width: 40em;
+}
+
+h1, h2 {
+  color: #005A9C;
+  background: white;
+}
+
+h1 { font-size: 140% }
+h2 { font-size: 120% }
+pre { margin-left: 2em }
+code { font-family: sans-serif }
+</style>
+
+</xsl:template>
+
 <xsl:template match="h2">
   <h2><a name="{translate(.,' ','_')}"/>
 <xsl:number/><xsl:text> </xsl:text><xsl:apply-templates/></h2>
@@ -29,10 +56,16 @@
 
 <xsl:template match="h1">
   <h1><xsl:apply-templates/></h1>
+  <xsl:if test="../abstract">
+    <h2>Abstract</h2>
+    <xsl:apply-templates select="../abstract/*"/>
+  </xsl:if>
   <h2>Contents</h2>
   <xsl:apply-templates select="../h2|../div/h2" mode="toc"/>
   <hr/>
 </xsl:template>
+
+<xsl:template match="abstract"/>
 
 <xsl:template match="*">
   <xsl:copy>
