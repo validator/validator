@@ -26,7 +26,7 @@ public class RelaxNgWriter {
 
   // # is the category; % is the name in the category
 
-  String DEFAULT_PATTERN = "#.%";
+  static final String DEFAULT_PATTERN = "#.%";
 
   static abstract class VisitorBase implements TopLevelVisitor {
     public void processingInstruction(String target, String value) throws Exception { }
@@ -136,6 +136,197 @@ public class RelaxNgWriter {
 
   }
 
+
+  class Output extends VisitorBase implements ModelGroupVisitor,
+					      AttributeGroupVisitor,
+                                              DatatypeVisitor,
+					      EnumGroupVisitor {
+    public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
+      throws Exception {
+      w.startElement("define");
+      w.attribute("name", elementDeclName(nameSpec.getValue()));
+      w.startElement("element");
+      w.attribute("name", nameSpec.getValue());
+      ref(attlistDeclName(nameSpec.getValue()));
+      modelGroup.accept(this);
+      w.endElement();
+      w.endElement();
+      if ((nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
+	w.startElement("define");
+	w.attribute("name", attlistDeclName(nameSpec.getValue()));
+	w.attribute("combine", "interleave");
+	w.startElement("empty");
+	w.endElement();
+	w.endElement();
+      }
+    }
+
+    public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
+      throws Exception {
+      w.startElement("define");
+      w.attribute("name", attlistDeclName(nameSpec.getValue()));
+      w.attribute("combine", "interleave");
+      attributeGroup.accept(this);
+      w.endElement();
+    }
+
+    public void modelGroupDef(String name, ModelGroup modelGroup)
+      throws Exception {
+      w.startElement("define");
+      w.attribute("name", name);
+      modelGroup.accept(this);
+      w.endElement();
+    }
+
+    public void attributeGroupDef(String name, AttributeGroup attributeGroup)
+      throws Exception {
+      w.startElement("define");
+      w.attribute("name", name);
+      attributeGroup.accept(this);
+      w.endElement();
+    }
+
+    public void enumGroupDef(String name, EnumGroup enumGroup) throws Exception {
+      w.startElement("define");
+      w.attribute("name", name);
+      enumDatatype(enumGroup);
+      w.endElement();
+    }
+
+    public void datatypeDef(String name, Datatype datatype) throws Exception {
+      w.startElement("define");
+      w.attribute("name", name);
+      datatype.accept(this);
+      w.endElement();
+    }
+
+    public void choice(ModelGroup[] members) throws Exception {
+      if (members.length == 0) {
+	w.startElement("notAllowed");
+	w.endElement();
+      }
+      else if (members.length == 1)
+	members[0].accept(this);
+      else {
+	w.startElement("choice");
+	for (int i = 0; i < members.length; i++)
+	  members[i].accept(this);
+	w.endElement();
+      }
+    }
+
+    public void sequence(ModelGroup[] members) throws Exception {
+      if (members.length == 0) {
+	w.startElement("empty");
+	w.endElement();
+      }
+      else if (members.length == 1)
+	members[0].accept(this);
+      else {
+	w.startElement("group");
+	for (int i = 0; i < members.length; i++)
+	  members[i].accept(this);
+	w.endElement();
+      }
+    }
+
+    public void oneOrMore(ModelGroup member) throws Exception {
+      w.startElement("oneOrMore");
+      member.accept(this);
+      w.endElement();
+    }
+
+    public void zeroOrMore(ModelGroup member) throws Exception {
+      w.startElement("zeroOrMore");
+      member.accept(this);
+      w.endElement();
+    }
+
+    public void optional(ModelGroup member) throws Exception {
+      w.startElement("optional");
+      member.accept(this);
+      w.endElement();
+    }
+
+    public void modelGroupRef(String name, ModelGroup modelGroup)
+      throws IOException {
+      ref(name);
+    }
+
+    public void elementRef(NameSpec name) throws IOException {
+      ref(elementDeclName(name.getValue()));
+    }
+
+    public void pcdata() throws IOException {
+      w.startElement("text");
+      w.endElement();
+    }
+
+    public void any() throws IOException {
+      ref(anyName);
+    }
+
+    public void attribute(NameSpec nameSpec,
+			  Datatype datatype,
+			  AttributeDefault attributeDefault) throws Exception {
+      if (!attributeDefault.isRequired())
+	w.startElement("optional");
+      w.startElement("attribute");
+      w.attribute("name", nameSpec.getValue());
+      datatype.accept(this);
+      w.endElement();
+      if (!attributeDefault.isRequired())
+	w.endElement();
+    }
+
+    public void attributeGroupRef(String name, AttributeGroup attributeGroup)
+      throws IOException {
+      ref(name);
+    }
+
+    public void basicDatatype(String typeName) throws IOException {
+      w.startElement("data");
+      w.attribute("type", typeName);
+      w.endElement();
+    }
+    
+    public void enumDatatype(EnumGroup enumGroup) throws Exception {
+      w.startElement("choice");
+      enumGroup.accept(this);
+      w.endElement();
+    }
+
+    public void notationDatatype(EnumGroup enumGroup) throws Exception {
+      enumDatatype(enumGroup);
+    }
+
+    public void datatypeRef(String name, Datatype datatype) throws IOException {
+      ref(name);
+    }
+
+    public void enumValue(String value) throws IOException {
+      w.startElement("value");
+      w.characters(value);
+      w.endElement();
+    }
+
+    public void enumGroupRef(String name, EnumGroup enumGroup)
+      throws IOException {
+      ref(name);
+    }
+
+    private void ref(String name) throws IOException {
+      w.startElement("ref");
+      w.attribute("name", name);
+      w.endElement();
+    }
+
+    public void comment(String value) throws IOException {
+      w.comment(value);
+    }
+
+  }
+
   public RelaxNgWriter(XmlWriter w) {
     this.w = w;
   }
@@ -152,6 +343,21 @@ public class RelaxNgWriter {
       System.err.println("colonReplacement: " + colonReplacement);
     System.err.println("elementDecl: " + elementDeclPattern);
     System.err.println("attlistDecl: " + attlistDeclPattern);
+    w.startElement("grammar");
+    w.attribute("datatypeLibrary",
+		"http://www.w3.org/2001/XMLSchema-datatypes");
+    w.attribute("xmlns",
+		"http://relaxng.org/ns/structure/0.9");
+    try {
+      dtd.accept(new Output());
+    }
+    catch (RuntimeException e) {
+      throw e;
+    }
+    catch (Exception e) {
+      throw (IOException)e;
+    }
+    w.endElement();
   }
 
   void chooseNames() {
@@ -326,5 +532,4 @@ public class RelaxNgWriter {
     buf.append(pattern.substring(i + 1));
     return buf.toString();
   }
-
 }
