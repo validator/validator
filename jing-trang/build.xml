@@ -148,6 +148,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="doc/design.rng">
     <fileset dir="doc" includes="design.xml"/>
   </jing>
+  <jing rngfile="doc/nrl.rng">
+    <fileset dir="doc" includes="nrl.xml"/>
+  </jing>
 </target>
 
 <target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,xsd-test,regex-test"
@@ -394,6 +397,8 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
          style="doc/derivative.xsl"/>
   <style basedir="doc" destdir="${build.dir}" includes="design.xml"
          style="doc/design.xsl"/>
+  <style basedir="doc" destdir="${build.dir}" includes="nrl.xml"
+         style="doc/nrl.xsl"/>
   <copy todir="${build.dir}">
     <fileset dir="doc" includes="*.html"/>
   </copy>
@@ -541,7 +546,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
                 includes="jing-ant.html,jing-datatypes.html,pluggable-datatypes.html"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}"
-                includes="jing.html"
+                includes="jing.html,nrl.html"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="doc/jing-bin"
                 includes="copying.html"
