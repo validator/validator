@@ -9,5 +9,6 @@ public interface ModelGroupVisitor {
   void modelGroupRef(String name, ModelGroup modelGroup) throws Exception;
   void elementRef(String name) throws Exception;
   void pcdata() throws Exception;
+  void any() throws Exception;
 }
 

@@ -137,6 +137,11 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void any() throws Exception {
+    w.startElement("any");
+    w.endElement();
+  }
+
   public void attribute(String name,
 			boolean optional,
 			Datatype datatype,
