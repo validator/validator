@@ -536,6 +536,7 @@ class Output {
     }
 
     public Object visitValue(ValuePattern p) {
+      // XXX give an error for any prefixMap entries that are not satisfied
       startAnnotations(p);
       String lib = p.getDatatypeLibrary();
       if (lib.equals("")) {
