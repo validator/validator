@@ -124,7 +124,7 @@ class Decl {
   IncludedSection createIncludedSection(DtdBuilder db) {
     Flag flag = Param.paramsToFlag(params);
     Vector contents = declsToTopLevel(db, decls);
-    TopLevel[] tem = new TopLevel[decls.size()];
+    TopLevel[] tem = new TopLevel[contents.size()];
     for (int i = 0; i < tem.length; i++)
       tem[i] = (TopLevel)contents.elementAt(i);
     return new IncludedSection(flag, tem);
