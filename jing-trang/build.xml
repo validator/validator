@@ -98,7 +98,7 @@
   </jing>
   <delete dir="build/test"/>
   <mkdir dir="build/test"/>
-  <style basedir="test" destdir="build/test" includes="spectest.xml" extension=".stamp" style="split.xsl">
+  <style basedir="test" destdir="build/test" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="build/test"/>
   </style>
 </target>
