@@ -915,8 +915,8 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 <xsd>
 <resource name="e2.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
+  <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:group name="y">
     <xs:sequence>
       <xs:element name="y">
@@ -940,8 +940,8 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 </resource>
 <resource name="e3.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/3" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
+  <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="z">
     <xs:complexType>
       <xs:choice>
@@ -954,8 +954,8 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 </resource>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
+  <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:element name="x">
     <xs:complexType>
       <xs:choice>
@@ -1761,8 +1761,8 @@ element eg2:foo {
 <xsd>
 <resource name="eg3.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/3" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="eg1.xsd"/>
+  <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:group name="local">
     <xs:sequence>
       <xs:any namespace="##other" processContents="skip"/>
@@ -1772,8 +1772,8 @@ element eg2:foo {
 </resource>
 <resource name="eg1.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
+  <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:group name="local">
     <xs:sequence>
       <xs:any namespace="##other" processContents="skip"/>
@@ -1783,8 +1783,8 @@ element eg2:foo {
 </resource>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="eg1.xsd"/>
+  <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:element name="foo">
     <xs:complexType>
       <xs:sequence>

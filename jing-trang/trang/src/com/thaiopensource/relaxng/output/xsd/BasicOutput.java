@@ -54,6 +54,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Vector;
+import java.util.Collections;
 import java.io.IOException;
 
 public class BasicOutput {
@@ -832,7 +834,10 @@ public class BasicOutput {
     }
     for (Iterator iter = nsm.effectiveIncludes(schema.getUri()).iterator(); iter.hasNext();)
       outputInclude((String)iter.next());
-    for (Iterator iter = nsm.getTargetNamespaces().iterator(); iter.hasNext();) {
+    List targetNamespaces = new Vector();
+    targetNamespaces.addAll(nsm.getTargetNamespaces());
+    Collections.sort(targetNamespaces);
+    for (Iterator iter = targetNamespaces.iterator(); iter.hasNext();) {
       String ns = (String)iter.next();
       if (!ns.equals(targetNamespace))
         outputImport(ns, nsm.getRootSchema(ns));
