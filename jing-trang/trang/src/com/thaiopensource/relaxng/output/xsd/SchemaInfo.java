@@ -303,14 +303,14 @@ class SchemaInfo {
     grammar.componentsAccept(new GrammarVisitor());
   }
 
-  void forceGrammar() {
+  private void forceGrammar() {
     SchemaDocument sd = (SchemaDocument)sc.getSchemaDocumentMap().get(sc.getMainUri());
     sd.setPattern(convertToGrammar(sd.getPattern()));
     // TODO convert other schemas
   }
 
 
-  GrammarPattern convertToGrammar(Pattern p) {
+  private static GrammarPattern convertToGrammar(Pattern p) {
     if (p instanceof GrammarPattern)
       return (GrammarPattern)p;
     GrammarPattern g = new GrammarPattern();

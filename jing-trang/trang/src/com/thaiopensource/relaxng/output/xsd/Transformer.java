@@ -61,7 +61,7 @@ class Transformer extends SchemaTransformer {
     return new SimpleTypeUnion(t.getLocation(), t.getAnnotation(), list);
   }
 
-  private SimpleType combineEnumeration(SimpleTypeUnion orig, List transformedChildren) {
+  private static SimpleType combineEnumeration(SimpleTypeUnion orig, List transformedChildren) {
     if (transformedChildren.size() < 2)
       return null;
     Object first = transformedChildren.get(0);
@@ -291,7 +291,7 @@ class Transformer extends SchemaTransformer {
     return new AttributeGroup(a.getLocation(), a.getAnnotation(), newChildren);
   }
 
-  private int chooseUseIndex(SingleAttributeUse[] uses) {
+  private static int chooseUseIndex(SingleAttributeUse[] uses) {
     for (int i = 0; i < uses.length; i++)
       if (uses[i].getType() == null && uses[i].getDefaultValue() == null)
         return i;
@@ -449,7 +449,7 @@ class Transformer extends SchemaTransformer {
     def.setAttributeUses(getTransformedAttributeGroup(def.getName()));
   }
 
-  AttributeUse getTransformedAttributeGroup(String name) {
+  private AttributeUse getTransformedAttributeGroup(String name) {
     AttributeGroupDefinition def = getSchema().getAttributeGroup(name);
     if (!transformedAttributeGroups.contains(name)) {
       def.setAttributeUses((AttributeUse)def.getAttributeUses().accept(this));
