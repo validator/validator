@@ -331,6 +331,8 @@ class SchemaParser {
     State nextState;
     ElementAnnotationBuilder builder;
     Stack builderStack = new Stack();
+    StringBuffer textBuf;
+    Location textLoc;
 
     ForeignElementHandler(State nextState, CommentList comments) {
       this.nextState = nextState;
@@ -339,6 +341,7 @@ class SchemaParser {
 
     public void startElement(String namespaceURI, String localName,
                              String qName, Attributes atts) {
+      flushText();
       if (builder != null)
         builderStack.push(builder);
       Location loc = makeLocation();
@@ -358,6 +361,7 @@ class SchemaParser {
 
     public void endElement(String namespaceURI, String localName,
                            String qName) {
+      flushText();
       if (comments != null)
         builder.addComment(getComments());
       ParsedElementAnnotation ea = builder.makeElementAnnotation();
@@ -372,6 +376,24 @@ class SchemaParser {
     }
 
     public void characters(char ch[], int start, int length) {
+      if (textBuf == null)
+        textBuf = new StringBuffer();
+      textBuf.append(ch, start, length);
+      if (textLoc == null)
+        textLoc = makeLocation();
+    }
+
+    public void comment(String value) {
+      flushText();
+      super.comment(value);
+    }
+
+    void flushText() {
+      if (textBuf != null && textBuf.length() != 0) {
+        builder.addText(textBuf.toString(), textLoc, getComments());
+        textBuf.setLength(0);
+      }
+      textLoc = null;
     }
   }
 
