@@ -33,16 +33,8 @@ public class Attribute extends AttributeGroupMember {
     return defaultValue;
   }
 
-  public void accept(AttributeGroupVisitor visitor) throws VisitException {
-    try {
-      visitor.attribute(name, optional, datatype, defaultValue);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(AttributeGroupVisitor visitor) throws Exception {
+    visitor.attribute(name, optional, datatype, defaultValue);
   }
 
   public int getType() {

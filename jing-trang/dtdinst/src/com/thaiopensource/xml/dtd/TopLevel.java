@@ -12,5 +12,5 @@ public abstract class TopLevel {
   public static final int ENUM_GROUP_DEF = 9;
 
   public abstract int getType();
-  public abstract void accept(TopLevelVisitor visitor) throws VisitException;
+  public abstract void accept(TopLevelVisitor visitor) throws Exception;
 }

@@ -15,15 +15,7 @@ public class IgnoredSection extends TopLevel {
     return value;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.ignoredSection(value);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.ignoredSection(value);
   }
 }

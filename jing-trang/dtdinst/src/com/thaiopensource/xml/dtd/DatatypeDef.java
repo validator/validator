@@ -22,15 +22,7 @@ public class DatatypeDef extends TopLevel {
     return name;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.datatypeDef(name, datatype);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.datatypeDef(name, datatype);
   }
 }

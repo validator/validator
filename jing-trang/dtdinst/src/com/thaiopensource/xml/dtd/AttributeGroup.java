@@ -13,7 +13,7 @@ public class AttributeGroup {
     return tem;
   }
   
-  public void accept(AttributeGroupVisitor visitor) throws VisitException {
+  public void accept(AttributeGroupVisitor visitor) throws Exception {
     for (int i = 0; i < members.length; i++)
       members[i].accept(visitor);
   }

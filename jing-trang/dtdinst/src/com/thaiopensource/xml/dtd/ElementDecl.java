@@ -22,16 +22,8 @@ public class ElementDecl extends TopLevel {
     return modelGroup;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.elementDecl(name, modelGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.elementDecl(name, modelGroup);
   }
 
 }

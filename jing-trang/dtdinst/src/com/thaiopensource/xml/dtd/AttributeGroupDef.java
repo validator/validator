@@ -22,15 +22,7 @@ public class AttributeGroupDef extends TopLevel {
     return name;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.attributeGroupDef(name, attributeGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.attributeGroupDef(name, attributeGroup);
   }
 }

@@ -21,15 +21,7 @@ public class ProcessingInstruction extends TopLevel {
     return value;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.processingInstruction(target, value);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.processingInstruction(target, value);
   }
 }

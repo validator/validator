@@ -34,7 +34,7 @@ public class Dtd {
     return tem;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
+  public void accept(TopLevelVisitor visitor) throws Exception {
     int n = topLevel.size();
     for (int i = 0; i < n; i++)
       ((TopLevel)topLevel.elementAt(i)).accept(visitor);

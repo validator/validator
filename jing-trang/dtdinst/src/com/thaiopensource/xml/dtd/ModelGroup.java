@@ -11,5 +11,5 @@ public abstract class ModelGroup {
   public static final int PCDATA = 8;
 
   public abstract int getType();
-  public abstract void accept(ModelGroupVisitor visitor) throws VisitException;
+  public abstract void accept(ModelGroupVisitor visitor) throws Exception;
 }

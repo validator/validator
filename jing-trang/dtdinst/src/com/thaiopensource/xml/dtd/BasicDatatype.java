@@ -11,16 +11,8 @@ public class BasicDatatype extends Datatype {
     return type;
   }
 
-  public void accept(DatatypeVisitor visitor) throws VisitException {
-    try {
-      visitor.basicDatatype(type);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(DatatypeVisitor visitor) throws Exception {
+    visitor.basicDatatype(type);
   }
 }
 

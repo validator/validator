@@ -5,5 +5,5 @@ public abstract class AttributeGroupMember {
   public static final int ATTRIBUTE_GROUP_REF = 1;
 
   public abstract int getType();
-  public abstract void accept(AttributeGroupVisitor visitor) throws VisitException;
+  public abstract void accept(AttributeGroupVisitor visitor) throws Exception;
 }

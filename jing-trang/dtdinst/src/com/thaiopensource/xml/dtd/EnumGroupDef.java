@@ -22,15 +22,7 @@ public class EnumGroupDef extends TopLevel {
     return name;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.enumGroupDef(name, enumGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.enumGroupDef(name, enumGroup);
   }
 }

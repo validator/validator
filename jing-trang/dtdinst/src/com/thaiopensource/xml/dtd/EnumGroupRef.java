@@ -22,15 +22,7 @@ public class EnumGroupRef extends EnumGroupMember {
     return name;
   }
 
-  public void accept(EnumGroupVisitor visitor) throws VisitException {
-    try {
-      visitor.enumGroupRef(name, enumGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(EnumGroupVisitor visitor) throws Exception {
+    visitor.enumGroupRef(name, enumGroup);
   }
 }

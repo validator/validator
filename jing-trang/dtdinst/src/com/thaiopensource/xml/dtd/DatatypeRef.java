@@ -22,15 +22,7 @@ public class DatatypeRef extends Datatype {
     return name;
   }
 
-  public void accept(DatatypeVisitor visitor) throws VisitException {
-    try {
-      visitor.datatypeRef(name, datatype);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(DatatypeVisitor visitor) throws Exception {
+    visitor.datatypeRef(name, datatype);
   }
 }

@@ -9,15 +9,7 @@ public class NotationDatatype extends EnumDatatype {
     return NOTATION;
   }
 
-  public void accept(DatatypeVisitor visitor) throws VisitException {
-    try {
-      visitor.notationDatatype(getEnumGroup());
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(DatatypeVisitor visitor) throws Exception {
+    visitor.notationDatatype(getEnumGroup());
   }
 }

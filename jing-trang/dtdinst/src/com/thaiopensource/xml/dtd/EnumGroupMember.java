@@ -5,5 +5,5 @@ public abstract class EnumGroupMember {
   public static final int ENUM_GROUP_REF = 1;
 
   public abstract int getType();
-  public abstract void accept(EnumGroupVisitor visitor) throws VisitException;
+  public abstract void accept(EnumGroupVisitor visitor) throws Exception;
 }

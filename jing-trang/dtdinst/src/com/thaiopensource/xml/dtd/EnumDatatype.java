@@ -15,16 +15,8 @@ public class EnumDatatype extends Datatype {
     return enumGroup;
   }
 
-  public void accept(DatatypeVisitor visitor) throws VisitException {
-    try {
-      visitor.enumDatatype(enumGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(DatatypeVisitor visitor) throws Exception {
+    visitor.enumDatatype(enumGroup);
   }
 }
 

@@ -14,5 +14,5 @@ public abstract class Datatype {
   public static final int DATATYPE_REF = 10;
 
   public abstract int getType();
-  public abstract void accept(DatatypeVisitor visitor) throws VisitException;
+  public abstract void accept(DatatypeVisitor visitor) throws Exception;
 }

@@ -22,15 +22,7 @@ public class ModelGroupRef extends ModelGroup {
     return name;
   }
 
-  public void accept(ModelGroupVisitor visitor) throws VisitException {
-    try {
-      visitor.modelGroupRef(name, modelGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(ModelGroupVisitor visitor) throws Exception {
+    visitor.modelGroupRef(name, modelGroup);
   }
 }

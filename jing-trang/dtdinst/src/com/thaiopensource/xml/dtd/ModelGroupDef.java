@@ -22,15 +22,7 @@ public class ModelGroupDef extends TopLevel {
     return name;
   }
 
-  public void accept(TopLevelVisitor visitor) throws VisitException {
-    try {
-      visitor.modelGroupDef(name, modelGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(TopLevelVisitor visitor) throws Exception {
+    visitor.modelGroupDef(name, modelGroup);
   }
 }

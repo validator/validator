@@ -22,15 +22,7 @@ public class AttributeGroupRef extends AttributeGroupMember {
     return name;
   }
 
-  public void accept(AttributeGroupVisitor visitor) throws VisitException {
-    try {
-      visitor.attributeGroupRef(name, attributeGroup);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(AttributeGroupVisitor visitor) throws Exception {
+    visitor.attributeGroupRef(name, attributeGroup);
   }
 }

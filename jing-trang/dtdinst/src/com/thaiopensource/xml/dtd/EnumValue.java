@@ -11,16 +11,8 @@ public class EnumValue extends EnumGroupMember {
     return value;
   }
 
-  public void accept(EnumGroupVisitor visitor) throws VisitException {
-    try {
-      visitor.enumValue(value);
-    }
-    catch (RuntimeException e) {
-      throw e;
-    }
-    catch (Exception e) {
-      throw new VisitException(e);
-    }
+  public void accept(EnumGroupVisitor visitor) throws Exception {
+    visitor.enumValue(value);
   }
 
   public int getType() {
