@@ -634,8 +634,10 @@ public class PatternReader implements DatatypeContext {
       if (href == null)
 	return;
       Item i;
-      for (i = items; i != null; i = i.next)
+      for (i = items; i != null; i = i.next) {
 	i.replacementStatus = i.prp.getReplacementStatus();
+	i.prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_REQUIRE);
+      }
       try {
 	InputSource in = makeInputSource(href);
 	String systemId = in.getSystemId();
