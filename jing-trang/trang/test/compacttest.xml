@@ -2342,6 +2342,39 @@ element foo { empty }
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+xsd:string { maxLength = # short
+                         "2" }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<data type="string" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- short -->
+  <param name="maxLength">2</param>
+</data>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element # hello
+        foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- hello -->
+  <name>foo</name>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>

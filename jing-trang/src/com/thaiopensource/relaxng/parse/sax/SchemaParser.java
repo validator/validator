@@ -323,6 +323,16 @@ class SchemaParser implements ParsedPatternFuture {
         annotations = schemaBuilder.makeAnnotations(null, getContext());
       annotations.addElement(ea);
     }
+
+    void mergeLeadingComments() {
+      if (comments != null) {
+        if (annotations == null)
+          annotations = schemaBuilder.makeAnnotations(comments, getContext());
+        else
+          annotations.addLeadingComment(comments);
+        comments = null;
+      }
+    }
   }
 
   class ForeignElementHandler extends Handler {
@@ -586,7 +596,7 @@ class SchemaParser implements ParsedPatternFuture {
 
     void endAttributes() throws SAXException {
       if (name != null) {
-	nameClass = expandName(name, getNs());
+	nameClass = expandName(name, getNs(), null);
         nameClassWasAttribute = true;
       }
       else
@@ -716,6 +726,11 @@ class SchemaParser implements ParsedPatternFuture {
         return makePattern(datatypeLibrary, type);
     }
 
+    void end() throws SAXException {
+      mergeLeadingComments();
+      super.end();
+    }
+
     ParsedPattern makePattern(String datatypeLibrary, String type) {
       return schemaBuilder.makeValue(datatypeLibrary,
                                      type,
@@ -828,8 +843,10 @@ class SchemaParser implements ParsedPatternFuture {
     void end() throws SAXException {
       if (name == null)
 	return;
-      if (dpb != null)
-	dpb.addParam(name, buf.toString(), getContext(), getNs(), startLocation, annotations);
+      if (dpb == null)
+        return;
+      mergeLeadingComments();
+      dpb.addParam(name, buf.toString(), getContext(), getNs(), startLocation, annotations);
     }
   }
 
@@ -857,7 +874,7 @@ class SchemaParser implements ParsedPatternFuture {
 	  nsUse = ns;
 	else
 	  nsUse = "";
-	nameClass = expandName(name, nsUse);
+	nameClass = expandName(name, nsUse, null);
         nameClassWasAttribute = true;
       }
       else
@@ -1248,7 +1265,8 @@ class SchemaParser implements ParsedPatternFuture {
     }
 
     ParsedNameClass makeNameClass() throws SAXException {
-      return expandName(buf.toString().trim(), getNs());
+      mergeLeadingComments();
+      return expandName(buf.toString().trim(), getNs(), annotations);
     }
 
   }
@@ -1538,17 +1556,17 @@ class SchemaParser implements ParsedPatternFuture {
     }
   }
 
-  private ParsedNameClass expandName(String name, String ns) throws SAXException {
+  private ParsedNameClass expandName(String name, String ns, Annotations anno) throws SAXException {
     int ic = name.indexOf(':');
     if (ic == -1)
-      return schemaBuilder.makeName(ns, checkNCName(name), null, null, null);
+      return schemaBuilder.makeName(ns, checkNCName(name), null, null, anno);
     String prefix = checkNCName(name.substring(0, ic));
     String localName = checkNCName(name.substring(ic + 1));
     for (PrefixMapping tem = context.prefixMapping; tem != null; tem = tem.next)
       if (tem.prefix.equals(prefix))
-	return schemaBuilder.makeName(tem.uri, localName, prefix, null, null);
+	return schemaBuilder.makeName(tem.uri, localName, prefix, null, anno);
     error("undefined_prefix", prefix);
-    return schemaBuilder.makeName("", localName, null, null, null);
+    return schemaBuilder.makeName("", localName, null, null, anno);
   }
 
   private String findPrefix(String qName, String uri) {
