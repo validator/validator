@@ -280,10 +280,13 @@ public class Parser extends Token {
   }
 
   public void parse() throws IOException {
+    System.err.println("Parsing");
     parseDecls(false);
+    System.err.println("Unexpanding entities");
     for (Enumeration e = paramEntityTable.elements();
 	 e.hasMoreElements();)
       ((EntityImpl)e.nextElement()).unexpandEntities();
+    System.err.println("Dumping");
     dumpEntity("#doc", atoms);
   }
 
@@ -574,14 +577,13 @@ public class Parser extends Token {
     }
   }
 
-  private static final int IGNORE_SECT = Tokenizer.TOK_COMMA + 1;
-
   private final void skipIgnoreSect() throws IOException {
     for (;;) {
       try {
 	int sectStart = bufStart;
 	bufStart = Tokenizer.skipIgnoreSect(buf, bufStart, bufEnd);
-	addAtom(new Atom(IGNORE_SECT, new String(buf, sectStart, bufStart - sectStart)));
+	addAtom(new Atom(Tokenizer.TOK_COND_SECT_CLOSE,
+			 new String(buf, sectStart, bufStart - sectStart)));
 	return;
       }
       catch (PartialTokenException e) {
