@@ -3,7 +3,13 @@ package com.thaiopensource.validate;
 import com.thaiopensource.validate.SchemaReader;
 
 /**
- * A factory for SchemaReader.
+ * A factory for SchemaReader. A class that implements this interface can be
+ * automatically discovered by SchemaReaderLoader, if it has
+ * a 0-argument constructor and if its name is listed in the file
+ * <code>META-INF/services/com.thaiopensource.validate.SchemaReaderFactory</code>.
+ *
+ * @see SchemaReaderLoader
+ * @see SchemaReader
  */
 public interface SchemaReaderFactory {
   /**
