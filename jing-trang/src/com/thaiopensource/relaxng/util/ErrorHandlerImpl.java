@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.io.OutputStream;
+import java.io.FileNotFoundException;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
@@ -140,6 +141,8 @@ public class ErrorHandlerImpl implements ErrorHandler {
     String detail = e.getMessage();
     if (detail == null)
       detail = getString("no_detail");
+    if (e instanceof FileNotFoundException)
+      return format("file_not_found", new Object[] { detail });
     return format("exception",
 		  new Object[] { e.getClass().getName(), detail });
   }
