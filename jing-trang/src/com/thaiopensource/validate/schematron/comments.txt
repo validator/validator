@@ -39,3 +39,5 @@ on SChematron elements.
 
 18. position() and last()
 
+19. Whitespace handling in messages underspecified.
+

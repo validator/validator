@@ -9,3 +9,8 @@ Implement keys in XSL
 Try to get it working in Xalans
 
 Use system-id in LocationFilter
+
+Normalize white-space in messsages
+
+dir elements should turn into appropriate Unicode
+
