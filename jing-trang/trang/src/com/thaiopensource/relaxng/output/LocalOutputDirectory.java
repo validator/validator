@@ -16,21 +16,25 @@ public class LocalOutputDirectory implements OutputDirectory {
   private final File mainOutputFile;
   private final String lineSeparator;
   private final String extension;
-  private final String defaultEncoding;
-  private final boolean alwaysUseDefaultEncoding;
+  private String defaultEncoding;
+  private boolean alwaysUseDefaultEncoding;
   private final int lineLength;
   // maps URIs to filenames
   private final Map uriMap = new HashMap();
 
   public LocalOutputDirectory(String mainSourceUri, File mainOutputFile, String extension,
-                              String encoding, boolean forceEncoding, int lineLength) {
+                              String encoding, int lineLength) {
     this.mainOutputFile = mainOutputFile;
     this.extension = extension;
     this.defaultEncoding = encoding;
-    this.alwaysUseDefaultEncoding = forceEncoding;
     this.lineSeparator = System.getProperty("line.separator");
     this.lineLength = lineLength;
     this.uriMap.put(mainSourceUri, mainOutputFile.getName());
+  }
+
+  public void setEncoding(String encoding) {
+    defaultEncoding = encoding;
+    alwaysUseDefaultEncoding = true;
   }
 
   public Stream open(String sourceUri, String encoding) throws IOException {

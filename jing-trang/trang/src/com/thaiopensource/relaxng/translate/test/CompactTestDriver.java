@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.translate.test;
 
 import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.input.InputFormat;
@@ -154,12 +155,16 @@ public class CompactTestDriver {
 
   private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
-      SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), null, eh);
-      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, OUTPUT_ENCODING, true, LINE_LENGTH);
-      of.output(sc, od, eh);
+      SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), new String[0], eh);
+      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, null, LINE_LENGTH);
+      od.setEncoding(OUTPUT_ENCODING);
+      of.output(sc, od, new String[0], eh);
       return true;
     }
     catch (SAXException e) {
+      return false;
+    }
+    catch (InvalidParamsException e) {
       return false;
     }
     catch (InputFailedException e) {

@@ -33,4 +33,8 @@ public interface OutputDirectory {
   String reference(String fromSourceUri, String toSourceUri);
   String getLineSeparator();
   int getLineLength();
+  /**
+   * This overrides the encoding specified with open.
+   */
+  void setEncoding(String encoding);
 }

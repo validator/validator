@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.translate;
 
 import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.input.InputFormat;
@@ -24,10 +25,11 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 public class Driver {
   static private Localizer localizer = new Localizer(Driver.class);
-  private String encoding;
   private String inputType;
   private String outputType;
   private ErrorHandlerImpl eh = new ErrorHandlerImpl();
@@ -39,19 +41,24 @@ public class Driver {
   }
 
   private int doMain(String[] args) throws IncorrectSchemaException, SAXException, IOException {
+    List inputParams = new Vector();
+    List outputParams = new Vector();
     try {
-      OptionParser op = new OptionParser("i:o:e:", args);
+      OptionParser op = new OptionParser("I:O:i:o:", args);
       try {
         while (op.moveToNextOption()) {
           switch (op.getOptionChar()) {
-          case 'e':
-            encoding = op.getOptionArg();
-            break;
-          case 'i':
+          case 'I':
             inputType = op.getOptionArg();
             break;
-          case 'o':
+          case 'O':
             outputType = op.getOptionArg();
+            break;
+          case 'i':
+            inputParams.add(op.getOptionArg());
+            break;
+          case 'o':
+            outputParams.add(op.getOptionArg());
             break;
           }
         }
@@ -105,19 +112,24 @@ public class Driver {
         error(localizer.message("unrecognized_output_type", outputType));
         return 2;
       }
-      SchemaCollection sc = inFormat.load(UriOrFile.toUri(args[0]), encoding, eh);
+      SchemaCollection sc = inFormat.load(UriOrFile.toUri(args[0]),
+                                          (String[])inputParams.toArray(new String[0]),
+                                          eh);
       if (ext.length() == 0)
         ext = outputType;
-      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), new File(args[1]), ext,
-                                                    encoding == null ? DEFAULT_OUTPUT_ENCODING : encoding,
-                                                    encoding != null,
+      OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(),
+                                                    new File(args[1]),
+                                                    ext,
+                                                    DEFAULT_OUTPUT_ENCODING,
                                                     DEFAULT_LINE_LENGTH);
-      of.output(sc, od, eh);
+      of.output(sc, od, (String[])outputParams.toArray(new String[0]), eh);
       return 0;
     }
     catch (OutputFailedException e) {
     }
     catch (InputFailedException e) {
+    }
+    catch (InvalidParamsException e) {
     }
     catch (IOException e) {
       eh.printException(e);

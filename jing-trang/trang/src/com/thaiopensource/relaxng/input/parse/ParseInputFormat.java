@@ -5,6 +5,10 @@ import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
+import com.thaiopensource.relaxng.translate.util.ParamProcessor;
+import com.thaiopensource.relaxng.translate.util.EncodingParam;
+import com.thaiopensource.relaxng.translate.util.Param;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -17,10 +21,18 @@ public abstract class ParseInputFormat implements InputFormat {
   protected ParseInputFormat(boolean commentsNeedTrimming) {
     this.commentsNeedTrimming = commentsNeedTrimming;
   }
-  public SchemaCollection load(String uri, String encoding, ErrorHandler eh) throws InputFailedException, IOException, SAXException {
-    InputSource in = new InputSource(uri);
-    if (encoding != null)
-      in.setEncoding(encoding);
+
+  public SchemaCollection load(String uri, String[] params, ErrorHandler eh)
+          throws InputFailedException, InvalidParamsException, IOException, SAXException {
+    final InputSource in = new InputSource(uri);
+    ParamProcessor pp = new ParamProcessor();
+    pp.declare("encoding",
+               new EncodingParam() {
+                 protected void setEncoding(String encoding) {
+                   in.setEncoding(encoding);
+                 }
+               });
+    pp.process(params, eh);
     Parseable parseable = makeParseable(in, eh);
     try {
       return SchemaBuilderImpl.parse(parseable,

@@ -3,8 +3,10 @@ package com.thaiopensource.relaxng.output.dtd;
 import com.thaiopensource.relaxng.output.OutputFormat;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFailedException;
+import com.thaiopensource.relaxng.output.OutputDirectoryParamProcessor;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
@@ -12,8 +14,9 @@ import java.io.IOException;
 import java.io.File;
 
 public class DtdOutputFormat implements OutputFormat {
-  public void output(SchemaCollection sc, OutputDirectory od, ErrorHandler eh)
-          throws SAXException, IOException, OutputFailedException {
+  public void output(SchemaCollection sc, final OutputDirectory od, String[] params, ErrorHandler eh)
+          throws SAXException, IOException, OutputFailedException, InvalidParamsException {
+    new OutputDirectoryParamProcessor(od).process(params, eh);
     Simplifier.simplify(sc);
     try {
       ErrorReporter er = new ErrorReporter(eh, DtdOutputFormat.class);
