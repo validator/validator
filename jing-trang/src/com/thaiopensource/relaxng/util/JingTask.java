@@ -4,13 +4,12 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
-import org.apache.tools.ant.taskdefs.LogOutputStream;
 import org.apache.tools.ant.types.FileSet;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Vector;
 
 
@@ -24,16 +23,40 @@ public class JingTask extends Task {
   private File src;
   private final Vector filesets = new Vector();
   private int flags = ValidationEngine.CHECK_ID_IDREF;
+  private boolean failOnError = true;
+
+  private class LogErrorHandler extends ErrorHandlerImpl {
+    int logLevel = Project.MSG_ERR;
+
+    public void warning(SAXParseException e) throws SAXParseException {
+      logLevel = Project.MSG_WARN;
+      super.warning(e);
+    }
+
+    public void error(SAXParseException e) {
+      logLevel = Project.MSG_ERR;
+      super.error(e);
+    }
+
+    public void printException(Throwable e) {
+      logLevel = Project.MSG_ERR;
+      super.printException(e);
+    }
+
+    public void print(String message) {
+      log(message, logLevel);
+    }
+  }
 
   public void execute() throws BuildException {
     if (schemaFile == null)
-      throw new BuildException("There must be an rngFile or schemaFile attribute", 
+      throw new BuildException("There must be an rngFile or schemaFile attribute",
 			       location);
     if (src == null && filesets.size() == 0)
       throw new BuildException("There must be a file attribute or a fileset child element",
 			       location);
 
-    ErrorHandlerImpl eh = new ErrorHandlerImpl(new PrintStream(new LogOutputStream(this, Project.MSG_WARN)));
+    ErrorHandlerImpl eh = new LogErrorHandler();
 
     boolean hadError = false;
 
@@ -66,7 +89,7 @@ public class JingTask extends Task {
       hadError = true;
       eh.printException(e);
     }
-    if (hadError)
+    if (hadError && failOnError)
       throw new BuildException("Validation failed, messages should have been provided.", location);
   }
 
@@ -126,6 +149,15 @@ public class JingTask extends Task {
       flags |= ValidationEngine.FEASIBLE;
     else
       flags &= ~ValidationEngine.FEASIBLE;
+  }
+
+  /**
+   * Handles the <code>failonerror</code> attribute.
+   *
+   * @param failOnError the attribute value converted to a boolean
+   */
+  public void setFailonerror(boolean failOnError) {
+    this.failOnError = failOnError;
   }
 
   public void addFileset(FileSet set) {
