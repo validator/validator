@@ -3,12 +3,16 @@ package com.thaiopensource.relaxng.util;
 import com.thaiopensource.util.OptionParser;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.Version;
+import com.thaiopensource.util.Localizer;
+import com.thaiopensource.validate.Flag;
+import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
+import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
-import com.thaiopensource.validate.schematron.SchematronProperty;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -28,6 +32,7 @@ class Driver {
 
   private boolean timing = false;
   private String encoding = null;
+  private Localizer localizer = new Localizer(Driver.class);
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
@@ -36,6 +41,8 @@ class Driver {
     ValidateProperty.ERROR_HANDLER.put(properties, eh);
     RngProperty.CHECK_ID_IDREF.add(properties);
     SchemaReader sr = null;
+    boolean compact = false;
+
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
@@ -43,10 +50,19 @@ class Driver {
           properties.put(RngProperty.CHECK_ID_IDREF, null);
           break;
         case 'c':
-          sr = CompactSchemaReader.getInstance();
+          compact = true;
           break;
         case 'd':
-          SchematronProperty.DIAGNOSE.add(properties);
+          {
+            if (sr == null)
+              sr = new AutoSchemaReader();
+            Option option = sr.getOption(SchemaReader.BASE_URI + "diagnose");
+            if (option == null) {
+              eh.print(localizer.message("no_schematron", op.getOptionCharString()));
+              return 2;
+            }
+            properties.put(option.getPropertyId(), Flag.PRESENT);
+          }
           break;
         case 't':
           timing = true;
@@ -58,24 +74,39 @@ class Driver {
           RngProperty.FEASIBLE.add(properties);
           break;
         case 'p':
-          SchematronProperty.PHASE.put(properties, op.getOptionArg());
+          {
+            if (sr == null)
+              sr = new AutoSchemaReader();
+            Option option = sr.getOption(SchemaReader.BASE_URI + "phase");
+            if (option == null) {
+              eh.print(localizer.message("no_schematron", op.getOptionCharString()));
+              return 2;
+            }
+            try {
+              properties.put(option.getPropertyId(), option.valueOf(op.getOptionArg()));
+            }
+            catch (OptionArgumentException e) {
+              eh.print(localizer.message("invalid_phase", op.getOptionArg()));
+              return 2;
+            }
+          }
           break;
         }
       }
     }
     catch (OptionParser.InvalidOptionException e) {
-      eh.print(eh.format("invalid_option",
-                         new Object[]{ op.getOptionCharString() }));
+      eh.print(localizer.message("invalid_option", op.getOptionCharString()));
       return 2;
     }
     catch (OptionParser.MissingArgumentException e) {
-      eh.print(eh.format("option_missing_argument",
-                         new Object[]{ op.getOptionCharString() }));
+      eh.print(localizer.message("option_missing_argument",op.getOptionCharString()));
       return 2;
     }
+    if (compact)
+      sr = CompactSchemaReader.getInstance();
     args = op.getRemainingArgs();
     if (args.length < 1) {
-      eh.print(eh.format(usageKey, new Object[]{ Version.getVersion(Driver.class) }));
+      eh.print(localizer.message(usageKey, Version.getVersion(Driver.class)));
       return 2;
     }
     long startTime = System.currentTimeMillis();
@@ -108,7 +139,7 @@ class Driver {
       long endTime = System.currentTimeMillis();
       if (loadedPatternTime < 0)
         loadedPatternTime = endTime;
-      eh.print(eh.format("elapsed_time",
+      eh.print(localizer.message("elapsed_time",
 		       new Object[] {
                          new Long(loadedPatternTime - startTime),
                          new Long(endTime - loadedPatternTime),
