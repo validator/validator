@@ -2,9 +2,7 @@ package com.thaiopensource.xml.dtd;
 
 import java.io.Reader;
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
 
 /*
 TODO  Need to ensure newline normalization is done properly.
@@ -27,269 +25,11 @@ public class Parser extends Token {
   private static final int READSIZE = 1024*8;
   // Some temporary buffers
   private ReplacementTextBuffer valueBuf;
-  private Hashtable paramEntityTable;
+  private Dtd dtd;
   private Vector atoms = new Vector();
 
-  static class Atom {
-    private int tokenType;
-    private String token;
-    private EntityImpl entity;
-
-    Atom(EntityImpl entity) {
-      this.entity = entity;
-      this.tokenType = -1;
-      this.token = null;
-    }
-
-    Atom(int tokenType, String token) {
-      this.tokenType = tokenType;
-      this.token = token;
-    }
-
-    final int getTokenType() {
-      return tokenType;
-    }
-
-    final String getToken() {
-      return token;
-    }
-
-    final EntityImpl getEntity() {
-      return entity;
-    }
-
-    void setEntity(EntityImpl entity) {
-      this.entity = entity;
-    }
-
-    public int hashCode() {
-      return token.hashCode();
-    }
-
-    public boolean equals(Object obj) {
-      if (obj == null || !(obj instanceof Atom))
-	return false;
-      Atom other = (Atom)obj;
-      if (this.entity != null)
-	return this.entity == other.entity;
-      else
-	return this.tokenType == other.tokenType && this.token.equals(other.token);
-    }
-  }
-
-  static class AtomStream {
-    int tokenType;
-    String token;
-    EntityImpl entity;
-    boolean eof;
-
-    private int i;
-    private int len;
-    private Vector v;
-
-    AtomStream(Vector v) {
-      this.v = v;
-      this.i = 0;
-      this.len = v.size();
-    }
-
-    boolean advance() {
-      if (i >= len) {
-	eof = true;
-	token = null;
-	entity = null;
-	tokenType = -1;
-	return false;
-      }
-      Atom a = (Atom)v.elementAt(i);
-      token = a.token;
-      tokenType = a.tokenType;
-      entity = a.entity;
-      i++;
-      return true;
-    }
-  }
-
-  static class EntityImpl {
-    final String name;
-    EntityImpl(String name) { this.name = name; }
-    char[] text;
-    // Which parts of text came from references?
-    EntityReference[] references;
-    boolean open;
-    String notationName;
-    Vector atoms;
-    boolean mustReparse;
-    int textIndexToAtomIndex(int ti) {
-      int nAtoms = atoms.size();
-      int len = 0;
-      int atomIndex = 0;      
-      for (;;) {
-	if (len == ti)
-	  return atomIndex;
-	if (atomIndex >= nAtoms)
-	  break;
-	Atom a = (Atom)atoms.elementAt(atomIndex);
-	len += a.getToken().length();
-	if (len > ti)
-	  break;
-	atomIndex++;
-      }
-      return -1;
-    }
-
-    void unexpandEntities() {
-      if (references == null || atoms == null)
-	return;
-      Vector newAtoms = null;
-      int nCopiedAtoms = 0;
-      for (int i = 0; i < references.length; i++) {
-	int start = textIndexToAtomIndex(references[i].start);
-	int end = textIndexToAtomIndex(references[i].end);
-	if (start >= 0 && end >= 0) {
-	  if (newAtoms == null)
-	    newAtoms = new Vector();
-	  appendSlice(newAtoms, atoms, nCopiedAtoms, start);
-	  newAtoms.addElement(new Atom(references[i].entity));
-	  if (references[i].entity.atoms == null) {
-	    Vector tem = new Vector();
-	    references[i].entity.atoms = tem;
-	    appendSlice(tem, atoms, start, end);
-	    references[i].entity.unexpandEntities();
-	  }
-	  nCopiedAtoms = end;
-	}
-	else {
-	  System.err.println("Warning: could not preserve reference to entity \""
-			     + references[i].entity.name
-			     + "\" in entity \""
-			     + this.name
-			     + "\"");
-	}
-      }
-      if (newAtoms == null)
-	return;
-      appendSlice(newAtoms, atoms, nCopiedAtoms, atoms.size());
-      atoms = newAtoms;
-      references = null;
-    }
-
-    static void appendSlice(Vector to, Vector from, int start, int end) {
-      for (; start < end; start++)
-	to.addElement(from.elementAt(start));
-    }
-  }
-
   static class DeclState {
-    EntityImpl entity;
-  }
-
-  static class EntityReference {
-    EntityReference(EntityImpl entity, int start, int end) {
-      this.entity = entity;
-      this.start = start;
-      this.end = end;
-    }
-    EntityImpl entity;
-    int start;
-    int end;
-  }
-
-  static class ReplacementTextBuffer {
-    private static final int INIT_SIZE = 64;
-    private char[] buf = new char[INIT_SIZE];
-    private int len;
-    private boolean mustReparse = false;
-    private EntityReference[] refs = new EntityReference[2];
-    int nRefs;
-
-    public void clear() {
-      len = 0;
-      mustReparse = false;
-      nRefs = 0;
-    }
-
-    public void setMustReparse() {
-      mustReparse = true;
-    }
-
-    public boolean getMustReparse() {
-      return mustReparse;
-    }
-
-    public void appendReplacementText(EntityImpl entity) {
-      appendEntityReference(new EntityReference(entity, len, len + entity.text.length));
-      append(entity.text, 0, entity.text.length);
-    }
-
-    private void appendEntityReference(EntityReference r) {
-      if (nRefs == refs.length) {
-	EntityReference[] tem = refs;
-	refs = new EntityReference[tem.length << 1];
-	System.arraycopy(tem, 0, refs, 0, tem.length);
-      }
-      refs[nRefs++] = r;
-    }
-
-    public EntityReference[] getReferences() {
-      if (nRefs == 0)
-	return null;
-      EntityReference[] r = new EntityReference[nRefs];
-      System.arraycopy(refs, 0, r, 0, nRefs);
-      return r;
-    }
-
-    public void append(char c) {
-      need(1);
-      buf[len++] = c;
-    }
-
-    public void appendRefCharPair(Token t) {
-      need(2);
-      t.getRefCharPair(buf, len);
-      len += 2;
-    }
-
-    public void append(char[] cbuf, int start, int end) {
-      need(end - start);
-      for (int i = start; i < end; i++)
-	buf[len++] = cbuf[i];
-    }
-
-    private void need(int n) {
-      if (len + n <= buf.length)
-	return;
-      char[] tem = buf;
-      if (n > tem.length)
-	buf = new char[n * 2];
-      else
-	buf = new char[tem.length << 1];
-      System.arraycopy(tem, 0, buf, 0, tem.length);
-    }
-
-    public char[] getChars() {
-      char[] text = new char[len];
-      System.arraycopy(buf, 0, text, 0, len);
-      return text;
-    }
-
-    public String toString() {
-      return new String(buf, 0, len);
-    }
-
-    public int length() {
-      return len;
-    }
-
-    public char charAt(int i) {
-      if (i >= len)
-	throw new IndexOutOfBoundsException();
-      return buf[i];
-    }
-
-    public void chop() {
-      --len;
-    }
+    Entity entity;
   }
 
   public Parser(Reader in) {
@@ -298,7 +38,7 @@ public class Parser extends Token {
     this.buf = new char[READSIZE * 2];
     this.valueBuf = new ReplacementTextBuffer();
     this.bufEnd = 0;
-    this.paramEntityTable = new Hashtable();
+    this.dtd = new Dtd(atoms);
   }
 
   private Parser(char[] buf, String entityName, boolean isParameterEntity, Parser parent) {
@@ -311,39 +51,12 @@ public class Parser extends Token {
     this.bufEnd = buf.length;
     this.bufEndStreamOffset = buf.length;
     this.valueBuf = parent.valueBuf;
-    this.paramEntityTable = parent.paramEntityTable;
+    this.dtd = parent.dtd;
   }
 
-  public void parse() throws IOException {
-    System.err.println("Parsing");
+  public Dtd parse() throws IOException {
     parseDecls(false);
-    System.err.println("Unexpanding entities");
-    for (Enumeration e = paramEntityTable.elements();
-	 e.hasMoreElements();)
-      ((EntityImpl)e.nextElement()).unexpandEntities();
-    System.err.println("Reparsing");
-    try {
-      PrologParser pp = new PrologParser(PrologParser.EXTERNAL_ENTITY);
-      parseAtoms(new AtomStream(atoms), pp);
-      pp.end();
-    }
-    catch (PrologSyntaxException e) {
-      throw new Error("reparse botched");
-    }
-    System.err.println("Dumping");
-    dumpEntity("#doc", atoms);
-  }
-
-  public void parseAtoms(AtomStream as, PrologParser pp) throws PrologSyntaxException {
-    while (as.advance()) {
-      if (as.entity != null)
-	parseAtoms(new AtomStream(as.entity.atoms), pp);
-      else if (pp.action(as.tokenType, as.token)
-	       == PrologParser.ACTION_IGNORE_SECT) {
-	if (!as.advance())
-	  throw new PrologSyntaxException();
-      }
-    }
+    return dtd;
   }
 
   private void parseDecls(boolean isInternal) throws IOException {
@@ -394,7 +107,7 @@ public class Parser extends Token {
       declState.entity = null;
       break;
     case PrologParser.ACTION_PARAM_ENTITY_NAME:
-      declState.entity = createParamEntity(token);
+      declState.entity = dtd.createParamEntity(token);
       break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
       if (declState.entity != null) {
@@ -409,7 +122,7 @@ public class Parser extends Token {
       {
 	int nameStart = currentTokenStart + 1;
 	String name = new String(buf, nameStart, getNameEnd() - nameStart);
-	EntityImpl entity = lookupParamEntity(name);
+	Entity entity = dtd.lookupParamEntity(name);
 	if (entity == null) {
 	  fatal("UNDEF_PEREF", name);
 	  break;
@@ -454,7 +167,7 @@ public class Parser extends Token {
   }
 
 
-  private Parser makeParserForEntity(EntityImpl entity, String name, boolean isParameter) throws IOException {
+  private Parser makeParserForEntity(Entity entity, String name, boolean isParameter) throws IOException {
     if (entity.open)
       fatal("RECURSION");
     if (entity.notationName != null)
@@ -571,7 +284,7 @@ public class Parser extends Token {
       break;
     case Tokenizer.TOK_PARAM_ENTITY_REF:
       String name = new String(buf, start + 1, end - start - 2);
-      EntityImpl entity = lookupParamEntity(name);
+      Entity entity = dtd.lookupParamEntity(name);
       if (entity == null) {
 	fatal("UNDEF_PEREF", name);
 	break;
@@ -695,19 +408,6 @@ public class Parser extends Token {
     return true;
   }
 
-  private EntityImpl lookupParamEntity(String name) {
-    return (EntityImpl)paramEntityTable.get(name);
-  }
-
-  private EntityImpl createParamEntity(String name) {
-    EntityImpl e = (EntityImpl)paramEntityTable.get(name);
-    if (e != null)
-      return null;
-    e = new EntityImpl(name);
-    paramEntityTable.put(name, e);
-    return e;
-  }
-
   private void fatal(String s, String arg) throws IOException {
     throw new IOException(s + ": " + arg);
   }
@@ -726,48 +426,7 @@ public class Parser extends Token {
     atoms.addElement(a);
   }
 
-  private void setLastAtomEntity(EntityImpl e) {
+  private void setLastAtomEntity(Entity e) {
     ((Atom)atoms.elementAt(atoms.size() - 1)).setEntity(e);
   }
-
-  private void dumpEntity(String name, Vector atoms) {
-    System.out.println("<e name=\"" + name + "\">");
-    dumpAtoms(atoms);
-    System.out.println("</e>");
-  }
-
-  private void dumpAtoms(Vector v) {
-    int n = v.size();
-    for (int i = 0; i < n; i++) {
-      Atom a = (Atom)v.elementAt(i);
-      EntityImpl e = a.getEntity();
-      if (e != null)
-	dumpEntity(e.name, e.atoms);
-      else if (a.getTokenType() != Tokenizer.TOK_PROLOG_S) {
-	System.out.print("<t>");
-	dumpString(a.getToken());
-	System.out.println("</t>");
-      }
-    }
-  }
-  
-  private void dumpString(String s) {
-    int n = s.length();
-    for (int i = 0; i < n; i++)
-      switch (s.charAt(i)) {
-      case '<':
-	System.out.print("&lt;");
-	break;
-      case '>':
-	System.out.print("&gt;");
-	break;
-      case '&':
-	System.out.print("&amp;");
-	break;
-      default:
-	System.out.print(s.charAt(i));
-	break;
-      }
-  }
-
 }
