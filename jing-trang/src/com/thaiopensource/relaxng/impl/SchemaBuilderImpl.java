@@ -577,8 +577,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     public void define(String name, GrammarSection.Combine combine, ParsedPattern pattern, Location loc, Annotations anno)
             throws BuildException {
       RefPattern rp = grammar.lookup(name);
-      if (rp.getReplacementStatus() == RefPattern.REPLACEMENT_KEEP)
-        overrides = new Override(rp, overrides);
+      overrides = new Override(rp, overrides);
       grammar.define(rp, combine, pattern, loc);
     }
 

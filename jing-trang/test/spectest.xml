@@ -1639,6 +1639,43 @@
 <valid><foo2/></valid>
 <invalid><foo3/></invalid>
 </testCase>
+<testCase>
+<section>4.7</section>
+<resource name="level1.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="level2.rng">
+  <define name="foo">
+    <element name="bar">
+      <empty/>
+    </element>
+  </define>
+</include>
+</grammar>
+</resource>
+<resource name="level2.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="bar">
+    <element name="bar">
+      <empty/>
+    </element>
+  </define>
+</grammar>
+</resource>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <ref name="foo"/>
+</start>
+<include href="level1.rng">
+  <define name="foo">
+    <element name="foo">
+      <empty/>
+    </element>
+  </define>
+</include>
+</grammar>
+</incorrect>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.8</section>
