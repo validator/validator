@@ -1632,4 +1632,21 @@
 </b>
 </valid>
 </testCase>
+<testCase>
+<resource name="a.rnc">
+element a { empty }
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rnc" schemaType="application/x-rnc"/>
+  <lax/>
+</rules>
+</correct>
+<valid>
+<a/>
+</valid>
+<invalid>
+<b/>
+</invalid>
+</testCase>
 </testSuite>
