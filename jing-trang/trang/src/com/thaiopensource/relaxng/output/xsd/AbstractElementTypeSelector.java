@@ -113,6 +113,7 @@ class AbstractElementTypeSelector {
   }
 
   private boolean isSimpleTypeValidlyDerived(SimpleType st1, SimpleType st2) {
+    // XXX take advantage of cos-st-derived-ok 2.2.4 (SQC seems to have bugs here)
     if (st2.getAnnotation() != null)
       return false;
     if (st2 instanceof SimpleTypeRef)
