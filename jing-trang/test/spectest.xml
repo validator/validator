@@ -4,7 +4,7 @@
 <testSuite>
 <author>James Clark</author>
 <email>jjc@jclark.com</email>
-<documentation>For September 19 version of the spec.</documentation>
+<documentation>For October 23 version of the spec (except for namespace URI version).</documentation>
 <testSuite>
 <section>3</section>
 <testSuite>
@@ -6464,10 +6464,10 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 </testSuite>
-</testSuite>
 <testSuite>
-<documentation>Tests for overlapping interleave alphabets</documentation>
+<section>7.4</section>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6482,6 +6482,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6501,6 +6502,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6520,6 +6522,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6544,6 +6547,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6560,6 +6564,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6575,6 +6580,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6590,6 +6596,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6604,6 +6611,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6626,6 +6634,7 @@ before string sequence checking.</documentation>
 </valid>
 </testCase>
 <testCase>
+<section>7.4</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6648,6 +6657,7 @@ before string sequence checking.</documentation>
 </valid>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6660,6 +6670,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6674,6 +6685,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6686,6 +6698,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6698,6 +6711,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6713,6 +6727,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6728,6 +6743,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6740,6 +6756,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6755,6 +6772,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <list>
@@ -6774,6 +6792,7 @@ before string sequence checking.</documentation>
 <valid><foo>bar baz</foo></valid>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <interleave>
@@ -6784,6 +6803,7 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 <testCase>
+<section>7.4</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <mixed>
@@ -6799,5 +6819,6 @@ before string sequence checking.</documentation>
 </element>
 </incorrect>
 </testCase>
+</testSuite>
 </testSuite>
 </testSuite>
