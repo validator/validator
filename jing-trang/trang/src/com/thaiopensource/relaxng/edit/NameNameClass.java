@@ -26,10 +26,16 @@ public class NameNameClass extends NameClass {
     this.localName = localName;
   }
 
+  /**
+   * Returns non-empty string or null if there was no prefix.
+   */
   public String getPrefix() {
     return prefix;
   }
 
+  /**
+   * prefix must be non-empty string or null if there is no prefix.
+   */
   public void setPrefix(String prefix) {
     this.prefix = prefix;
   }
