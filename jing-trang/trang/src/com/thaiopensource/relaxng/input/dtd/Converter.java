@@ -56,6 +56,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Converter {
   private final Dtd dtd;
@@ -691,12 +693,12 @@ public class Converter {
   }
 
   private boolean colonReplacementOk() {
-    Hashtable table = new Hashtable();
+    Set names = new HashSet();
     for (Iterator iter = elementNameTable.keySet().iterator(); iter.hasNext();) {
       String name = mungeQName((String)iter.next());
-      if (table.get(name) != null)
+      if (names.contains(name))
 	return false;
-      table.put(name, name);
+      names.add(name);
     }
     return true;
   }
