@@ -23,6 +23,10 @@ class ChildType {
     return obj instanceof ChildType && ((ChildType)obj).flags == this.flags;
   }
 
+  public int hashCode() {
+    return flags;
+  }
+
   static ChildType choice(ChildType ct1, ChildType ct2) {
     return new ChildType(ct1.flags | ct2.flags);
   }
