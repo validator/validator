@@ -1,9 +1,9 @@
 package com.thaiopensource.xml.dtd;
 
 class Atom {
-  private int tokenType;
-  private String token;
-  private Entity entity;
+  private final int tokenType;
+  private final String token;
+  private final Entity entity;
 
   Atom(Entity entity) {
     this.entity = entity;
@@ -14,6 +14,13 @@ class Atom {
   Atom(int tokenType, String token) {
     this.tokenType = tokenType;
     this.token = token;
+    this.entity = null;
+  }
+
+  Atom(int tokenType, String token, Entity entity) {
+    this.tokenType = tokenType;
+    this.token = token;
+    this.entity = entity;
   }
 
   final int getTokenType() {
@@ -26,10 +33,6 @@ class Atom {
 
   final Entity getEntity() {
     return entity;
-  }
-
-  void setEntity(Entity entity) {
-    this.entity = entity;
   }
 
   public int hashCode() {
