@@ -1,37 +1,37 @@
 package com.thaiopensource.relaxng.output.xsd;
 
-import com.thaiopensource.relaxng.output.xsd.basic.SchemaWalker;
+import com.thaiopensource.relaxng.output.xsd.basic.Attribute;
+import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroup;
+import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupDefinition;
+import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupRef;
+import com.thaiopensource.relaxng.output.xsd.basic.AttributeUse;
+import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeComplexContent;
+import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeSimpleContent;
 import com.thaiopensource.relaxng.output.xsd.basic.Element;
 import com.thaiopensource.relaxng.output.xsd.basic.GroupDefinition;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeDefinition;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupDefinition;
+import com.thaiopensource.relaxng.output.xsd.basic.GroupRef;
+import com.thaiopensource.relaxng.output.xsd.basic.Particle;
+import com.thaiopensource.relaxng.output.xsd.basic.ParticleAll;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleChoice;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleRepeat;
-import com.thaiopensource.relaxng.output.xsd.basic.Attribute;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleType;
-import com.thaiopensource.relaxng.output.xsd.basic.GroupRef;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupRef;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRef;
-import com.thaiopensource.relaxng.output.xsd.basic.ParticleAll;
-import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeComplexContent;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleSequence;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeUnion;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeList;
-import com.thaiopensource.relaxng.output.xsd.basic.Particle;
-import com.thaiopensource.relaxng.output.xsd.basic.Schema;
-import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeSimpleContent;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeUse;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroup;
-import com.thaiopensource.relaxng.output.xsd.basic.SchemaTransformer;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.RootDeclaration;
+import com.thaiopensource.relaxng.output.xsd.basic.Schema;
+import com.thaiopensource.relaxng.output.xsd.basic.SchemaTransformer;
+import com.thaiopensource.relaxng.output.xsd.basic.SchemaWalker;
+import com.thaiopensource.relaxng.output.xsd.basic.SimpleType;
+import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeDefinition;
+import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeList;
+import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRef;
+import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeUnion;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 class ComplexTypeSelector extends SchemaWalker {
   static class Refs {
@@ -39,14 +39,13 @@ class ComplexTypeSelector extends SchemaWalker {
     final Set referencingDefinitions = new HashSet();
     boolean nonTypeReference = false;
     boolean desirable = false;
-    boolean someReferencingElementsNotMixed = false;
   }
 
   static class NamedComplexType {
-    private final boolean elementOnly;
+    private final boolean mixed;
 
-    NamedComplexType(boolean elementOnly) {
-      this.elementOnly = elementOnly;
+    NamedComplexType(boolean mixed) {
+      this.mixed = mixed;
     }
   }
 
@@ -57,7 +56,6 @@ class ComplexTypeSelector extends SchemaWalker {
   private Element parentElement;
   private int nonTypeReference = 0;
   private int undesirable = 0;
-  private boolean mixed = false;
   private final Map complexTypeMap = new HashMap();
   private final Schema schema;
   private final Transformer transformer;
@@ -210,18 +208,12 @@ class ComplexTypeSelector extends SchemaWalker {
   }
 
   public Object visitComplexContent(ComplexTypeComplexContent t) {
-    boolean oldMixed = mixed;
-    mixed = t.isMixed();
     super.visitComplexContent(t);
-    mixed = oldMixed;
     return null;
   }
 
   public Object visitSimpleContent(ComplexTypeSimpleContent t) {
-    boolean oldMixed = mixed;
-    mixed = false;
     super.visitSimpleContent(t);
-    mixed = oldMixed;
     return null;
   }
 
@@ -261,11 +253,8 @@ class ComplexTypeSelector extends SchemaWalker {
     Refs refs = lookupRefs(map, name);
     if (nonTypeReference > 0)
       refs.nonTypeReference = true;
-    else if (parentElement != null) {
+    else if (parentElement != null)
       refs.referencingElements.add(parentElement);
-      if (!mixed)
-        refs.someReferencingElementsNotMixed = true;
-    }
     else if (parentDefinition != null)
       refs.referencingDefinitions.add(parentDefinition);
     if (undesirable == 0)
@@ -309,15 +298,29 @@ class ComplexTypeSelector extends SchemaWalker {
     else if (!attributeGroupRefs.referencingDefinitions.equals(childRefs.referencingDefinitions)
              || !attributeGroupRefs.referencingElements.equals(childRefs.referencingElements))
       return false;
-    boolean elementOnly = childRefs.someReferencingElementsNotMixed;
+    boolean mixed = false;
+    boolean hadReference = false;
+    for (Iterator iter = childRefs.referencingElements.iterator(); iter.hasNext();) {
+      boolean m = ((Element)iter.next()).getComplexType().isMixed();
+      if (m != mixed) {
+        if (hadReference)
+          return false;
+        mixed = m;
+      }
+      hadReference = true;
+    }
     for (Iterator iter = childRefs.referencingDefinitions.iterator(); iter.hasNext();) {
       NamedComplexType ct = (NamedComplexType)complexTypeMap.get(iter.next());
       if (ct == null)
         return false;
-      if (ct.elementOnly)
-        elementOnly = true;
+      if (ct.mixed != mixed) {
+        if (hadReference)
+          return false;
+        mixed = ct.mixed;
+      }
+      hadReference = true;
     }
-    complexTypeMap.put(name, new NamedComplexType(elementOnly));
+    complexTypeMap.put(name, new NamedComplexType(mixed));
     return true;
   }
 
@@ -341,10 +344,10 @@ class ComplexTypeSelector extends SchemaWalker {
   ComplexTypeComplexContentExtension transformComplexContent(ComplexTypeComplexContent ct) {
     String base = particleBase(ct.getParticle());
     if (base != null) {
-      NamedComplexType nct = (NamedComplexType)complexTypeMap.get(base);
+      Particle particle = transformParticle(ct.getParticle());
       return new ComplexTypeComplexContentExtension(transformAttributeUses(ct.getAttributeUses()),
-                                                    transformParticle(ct.getParticle()),
-                                                    ct.isMixed() && nct.elementOnly,
+                                                    particle,
+                                                    particle != null && ct.isMixed(),
                                                     base);
     }
     return new ComplexTypeComplexContentExtension(ct);
@@ -372,11 +375,11 @@ class ComplexTypeSelector extends SchemaWalker {
     if (nsm.getGroupDefinitionAbstractElementName(def) != null)
       return new ComplexTypeComplexContentExtension(att,
                                                     new GroupRef(def.getParticle().getLocation(), null, name),
-                                                    !ct.elementOnly,
+                                                    ct.mixed,
                                                     null);
     return transformComplexContent(new ComplexTypeComplexContent(att,
                                                                  def.getParticle(),
-                                                                 !ct.elementOnly));
+                                                                 ct.mixed));
   }
 
   ComplexTypeSimpleContentExtension createComplexTypeForSimpleType(String name) {
