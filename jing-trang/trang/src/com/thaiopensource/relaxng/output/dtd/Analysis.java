@@ -69,7 +69,6 @@ class Analysis {
   private GrammarPart mainPart;
   private SchemaCollection schemas;
   private GrammarPattern grammarPattern;
-  private Pattern pattern;
   private AttributeTyper attributeTyper = new AttributeTyper();
   private AttributeAlphabetComputer attributeAlphabetComputer = new AttributeAlphabetComputer();
   private AttributeNamespacesComputer attributeNamespacesComputer = new AttributeNamespacesComputer();
@@ -316,7 +315,6 @@ class Analysis {
     }
 
     public Object visitName(NameNameClass nc) {
-      String ns = nc.getNamespaceUri();
       nsm.noteName(nc, true);
       return ContentType.DIRECT_SINGLE_ELEMENT;
     }
