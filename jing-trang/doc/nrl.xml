@@ -952,7 +952,7 @@ reflected in the design of RELAX Namespace.  NRL is designed to be
 able to take advantage of more recent schema languages, such as RELAX
 NG, that are not limited in this way.</p>
 
-<p>In reaction to MNS, Rick Jelliffe produced the <bib
+<p>In response to MNS, Rick Jelliffe produced the <bib
 ref="nsswitch">Namespace Switchboard</bib>, which inspired much of the
 evolution of NRL from MNS.</p>
 
