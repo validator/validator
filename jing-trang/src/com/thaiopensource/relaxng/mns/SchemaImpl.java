@@ -180,7 +180,7 @@ class SchemaImpl implements Schema {
       }
       boolean isAttribute = localName.equals("validateAttributes");
       String ns = attributes.getValue("", "ns");
-      if (!Uri.isAbsolute(ns))
+      if (!Uri.isAbsolute(ns) && (isAttribute || !ns.equals("")))
         error("ns_absolute");
       String schemaUri = attributes.getValue("", "schema");
       if (Uri.hasFragmentId(schemaUri))
