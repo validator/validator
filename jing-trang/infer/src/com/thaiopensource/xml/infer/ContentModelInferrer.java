@@ -73,12 +73,9 @@ public class ContentModelInferrer {
 
     ParticleNode makeDag(SingleNode start) {
       visit(start);
-      for (int i = 0; i < singleNodes.length; i++) {
-        if (particleNodes[i].followingNodes.isEmpty()) {
-          for (Iterator iter = singleNodes[i].followingNodes.iterator(); iter.hasNext();)
-            particleNodes[i].addFollowing(particleNodes[((SingleNode)iter.next()).index]);
-        }
-      }
+      for (int i = 0; i < singleNodes.length; i++)
+        for (Iterator iter = singleNodes[i].followingNodes.iterator(); iter.hasNext();)
+          particleNodes[i].addFollowing(particleNodes[((SingleNode)iter.next()).index]);
       return particleNodes[start.index];
     }
 
