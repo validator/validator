@@ -27,15 +27,11 @@ attributes; ANY; start based on unreferenced element.
 
 SAXEntityManager (support Norm's entity manager)
 
-Error for illegal public IDs.
-
 Error for duplicate ELEMENT declarations.
 
 Check other DTD VCs
 
 Methods on DTD giving random access to various kinds of declaration.
-
-Normalize public IDs.
 
 local.book.class
 

@@ -141,8 +141,17 @@ class Parser extends Token {
       declState.entity = db.createParamEntity(token);
       break;
     case PrologParser.ACTION_ENTITY_PUBLIC_ID:
-      if (declState.entity != null)
-	declState.entity.publicId = token.substring(1, token.length() - 1);
+      if (declState.entity != null) {
+	try {
+	  declState.entity.publicId = Tokenizer.getPublicId(buf,
+							    currentTokenStart,
+							    bufStart);
+	}
+	catch (InvalidTokenException e) {
+	  currentTokenStart = e.getOffset();
+	  fatal("INVALID_PUBLIC_ID");
+	}
+      }
       break;
     case PrologParser.ACTION_ENTITY_SYSTEM_ID:
       if (declState.entity != null) {
@@ -196,7 +205,15 @@ class Parser extends Token {
 	fatal("DUPLICATE_NOTATION", token);
       break;
     case PrologParser.ACTION_NOTATION_PUBLIC_ID:
-      declState.notation.publicId = token.substring(1, token.length() - 1);
+      try {
+	declState.notation.publicId = Tokenizer.getPublicId(buf,
+							    currentTokenStart,
+							    bufStart);
+      }
+      catch (InvalidTokenException e) {
+	currentTokenStart = e.getOffset();
+	fatal("INVALID_PUBLIC_ID");
+      }
       break;
     case PrologParser.ACTION_NOTATION_SYSTEM_ID:
       declState.notation.systemId = token.substring(1, token.length() - 1);
