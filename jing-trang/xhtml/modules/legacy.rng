@@ -2,6 +2,14 @@
 <!-- Legacy Module -->
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
 
+<define name="lang.attrib" combine="interleave">
+  <optional>
+    <attribute name="lang">
+      <ref name="LanguageCode.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
 <define name="basefont">
   <element name="basefont">
     <ref name="basefont.attlist"/>

@@ -38,12 +38,6 @@
       <ref name="LanguageCode.datatype"/>
     </attribute>
   </optional>
-  <!-- XHTML mod omits this, but that's incompatible with XHTML 1.0 -->
-  <optional>
-    <attribute name="lang">
-      <ref name="LanguageCode.datatype"/>
-    </attribute>
-  </optional>
 </define>
 
 <define name="I18n.attrib">
