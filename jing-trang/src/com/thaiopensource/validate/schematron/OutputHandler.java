@@ -12,15 +12,32 @@ class OutputHandler extends DefaultHandler {
   private String systemId = null;
   private StringBuffer message = new StringBuffer();
   private boolean inMessage = false;
+  private final String lineSeparator;
 
   OutputHandler(ErrorHandler eh) {
     this.eh = eh;
+    this.lineSeparator = System.getProperty("line.separator");
   }
 
   public void characters(char ch[], int start, int length)
           throws SAXException {
-    if (inMessage)
-      message.append(ch, start, length);
+    if (inMessage) {
+      for (int i = 0; i < length; i++) {
+        char c = ch[start + i];
+        switch (c) {
+        case ' ':
+        case '\r':
+        case '\n':
+        case '\t':
+          if (message.length() == 0 || message.charAt(message.length() - 1) != ' ')
+            message.append(' ');
+          break;
+        default:
+          message.append(c);
+          break;
+        }
+      }
+    }
   }
 
   public void ignorableWhitespace(char ch[], int start, int length)
@@ -53,7 +70,10 @@ class OutputHandler extends DefaultHandler {
       inMessage = true;
     else if (localName.equals("diagnostic")) {
       inMessage = true;
-      message.append("\n  ");
+      if (message.length() > 0 && message.charAt(message.length() - 1) == ' ')
+        message.setLength(message.length() - 1);
+      message.append(lineSeparator);
+      message.append("  ");
     }
   }
 
@@ -63,6 +83,8 @@ class OutputHandler extends DefaultHandler {
       inMessage = false;
     else if (localName.equals("failed-assertion")
              || localName.equals("report")) {
+      if (message.length() > 0 && message.charAt(message.length() - 1) == ' ')
+        message.setLength(message.length() - 1);
       eh.error(new SAXParseException(message.toString(), null, systemId, lineNumber, -1));
       message.setLength(0);
     }
