@@ -53,8 +53,4 @@ class StringAtom extends Atom {
   Object getAssignmentClass() {
     return assignmentClass;
   }
-
-  void clearAssignmentClass() {
-    assignmentClass = null;
-  }
 }

@@ -24,8 +24,4 @@ class AttributeAtom extends Atom {
       return null;
     return value.getAssignmentClass();
   }
-  void clearAssignmentClass() {
-    if (value != null)
-      value.clearAssignmentClass();
-  }
 }

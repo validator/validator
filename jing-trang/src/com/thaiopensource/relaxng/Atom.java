@@ -34,7 +34,4 @@ abstract class Atom {
   Object getAssignmentClass() {
     return null;
   }
-
-  void clearAssignmentClass() {
-  }
 }
