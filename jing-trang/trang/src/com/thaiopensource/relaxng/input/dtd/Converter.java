@@ -327,10 +327,17 @@ public class Converter {
       ChoicePattern choice = new ChoicePattern();
       enumGroup.accept(new EnumGroupOutput(choice));
       Pattern pattern;
-      if (choice.getChildren().size() == 1)
+      switch (choice.getChildren().size()) {
+      case 0:
+        pattern = new NotAllowedPattern();
+        break;
+      case 1:
         pattern = (Pattern)choice.getChildren().get(0);
-      else
+        break;
+      default:
         pattern = choice;
+        break;
+      }
       addComponent(new DefineComponent(name, pattern));
     }
 
