@@ -227,17 +227,21 @@ public class PrefixManager implements SourceUriGenerator {
       if (i < 0 || (i > 0 && ns.charAt(i - 1) == '/'))
         break;
       String segment = ns.substring(i + 1, off).toLowerCase();
-      if (Naming.isNcname(segment))
+      if (segmentOk(segment))
         return segment;
       off = i;
     }
     off = ns.indexOf(':');
     if (off >= 0) {
       String segment = ns.substring(off + 1).toLowerCase();
-      if (Naming.isNcname(segment))
+      if (segmentOk(segment))
         return segment;
     }
     return null;
+  }
+
+  private static boolean segmentOk(String segment) {
+    return Naming.isNcname(segment) && !segment.equals("ns") && !segment.equals("namespace");
   }
 
   public String generateSourceUri(String ns) {
