@@ -380,6 +380,59 @@ foreign =
 anything = (text | attribute * { text } | element * { anything })*
 </pre>
 
+<h2>Example</h2>
+
+<p>Suppose we want to validate an XHTML document that uses RDF within its
+<code>head</code> element.  The following would do the job:</p>
+
+<pre>
+&lt;rules xmlns="http://www.thaiopensource.com/ns/mns" startMode="xhtml">
+  &lt;validate ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            schema="rdfxml.rng"
+            inModes="rdf"
+            useMode="anything"/>
+  &lt;validate ns="http://www.w3.org/1999/xhtml"
+            schema="xhtml.rng"
+            inModes="xhtml"
+            prune="true">
+    &lt;context useMode="rdf">
+      &lt;element name="head"/>
+    &lt;/context>
+  &lt;/validate>
+  &lt;lax inModes="anything"/>
+&lt;/rules>
+</pre>
+
+<p>Note the following points:</p>
+
+<ul>
+
+<li>We are assuming a XHTML schema that does not allow elements and
+attributes from other namespaces. We therefore have to prune the XHTML
+to remove the RDF before validating the XHTML.</li>
+
+<li>We want the root element to be XHTML not RDF.  We therefore use a
+starting mode that allows only XHTML.</li>
+
+<li>We want to allow RDF in the <code>head</code> element. We
+therefore specify an appropriate context.</li>
+
+<li>We do not want to allow RDF anywhere else within the XHTML.  Since
+we have not specified a <code>useMode</code> attribute on the
+<code>validate</code> element for the XHTML, the <code>useMode</code>
+attribute will default to the default mode.  Since none of our rules
+apply in the default mode, the default mode will not allow
+anything.</li>
+
+<li>The schema for RDF allows elements and attributes not in the RDF
+namespace.  We do not want any validation of these beyond what is
+provided by the schema for RDF.  We therefore create an
+<code>anything</code> mode, for which processing is lax and which does
+not have any <code>validate</code> or
+<code>validateAttributes</code> rules.</li>
+
+</ul>
+
 <address>
 <a href="mailto:jjc@thaiopensource.com">James Clark</a>
 </address>
