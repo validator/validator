@@ -25,7 +25,7 @@ install: $(PROG)
 	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
 	$(srcdir)/mkinstalldirs $(DESTDIR)$(man1dir)
 	$(INSTALL_PROGRAM) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
-	$(INSTALL_DATA) $(PROG).1 $(DESTDIR)$(man1dir)/$(PROG).1
+	$(INSTALL_DATA) $(srcdir)/$(PROG).1 $(DESTDIR)$(man1dir)/$(PROG).1
 
 uninstall:
 	-rm -f $(DESTDIR)$(bindir)/$(PROG)
