@@ -3,6 +3,7 @@ package com.thaiopensource.relaxng.mns;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.relaxng.impl.Name;
 import com.thaiopensource.relaxng.parse.sax.XmlBaseHandler;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.Uri;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Stack;
 
 class SchemaImpl implements Schema {
   static final String BEARER_URI = "http://www.thaiopensoure.com/mns/instance";
@@ -46,17 +48,24 @@ class SchemaImpl implements Schema {
   static class ElementAction {
     private final Schema schema;
     private final Mode mode;
+    private final ContextMap contextMap;
     private final boolean prune;
     private final Hashset covered = new Hashset();
 
-    ElementAction(Schema schema, Mode mode, boolean prune) {
+    ElementAction(String ns, Schema schema, Mode mode, ContextMap contextMap, boolean prune) {
       this.schema = schema;
       this.mode = mode;
+      this.contextMap = contextMap;
       this.prune = prune;
+      covered.add(ns);
     }
 
     Mode getMode() {
       return mode;
+    }
+
+    ContextMap getContextMap() {
+      return contextMap;
     }
 
     Schema getSchema() {
@@ -109,6 +118,13 @@ class SchemaImpl implements Schema {
     private Locator locator;
     private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
     private int foreignDepth = 0;
+    private String contextNs;
+    private Mode contextMode;
+    private String elementNs;
+    private Stack nameStack = new Stack();
+    private boolean isRoot;
+    private int pathDepth = 0;
+
 
     Handler(MnsSchemaFactory factory, ValidatorHandler validator, ErrorHandler eh) {
       super(validator);
@@ -150,63 +166,82 @@ class SchemaImpl implements Schema {
       }
       if (!validator.isValidSoFar())
         return;
-      if (localName.equals("rules")) {
-        String modeName = attributes.getValue("", "startMode");
-        if (modeName == null)
-          modeName = DEFAULT_MODE_NAME;
-        startMode = lookupCreateMode(modeName);
-        return;
-      }
-      if (localName.equals("cover")) {
-        String ns = attributes.getValue("", "ns");
-        if (!Uri.isAbsolute(ns) && !ns.equals(""))
-          error("ns_absolute");
-        currentElementAction.covered.add(attributes.getValue("", "ns"));
-        return;
-      }
-      String modesValue = attributes.getValue("", "modes");
-      String[] modeNames;
-      if (modesValue == null)
-        modeNames = new String[] { DEFAULT_MODE_NAME };
-      else
-        modeNames = StringSplitter.split(modesValue);
-      Mode[] modes = new Mode[modeNames.length];
-      for (int i = 0; i < modes.length; i++) {
-        modes[i] = lookupCreateMode(modeNames[i]);
-        modes[i].defined = true;
-      }
-      if (localName.startsWith("strict") || localName.startsWith("lax")) {
-        boolean strict = localName.startsWith("strict");
+      if (localName.equals("rules"))
+        parseRules(attributes);
+      else if (localName.equals("cover"))
+        parseCover(attributes);
+      else if (localName.equals("context"))
+        parseContext(attributes);
+      else if (localName.equals("root"))
+        parseRoot(attributes);
+      else if (localName.equals("element"))
+        parseElement(attributes);
+      else {
         boolean isAttribute = localName.endsWith("Attributes");
-        for (int i = 0; i < modes.length; i++) {
-          if (isAttribute) {
-            if (modes[i].strictAttributesDefined)
-              error("strict_attributes_multiply_defined", modeNames[i]);
-            else {
-              modes[i].strictAttributes = strict;
-              modes[i].strictAttributesDefined = true;
-            }
-          }
+        if (localName.startsWith("strict") || localName.startsWith("lax"))
+          parseProcess(localName.startsWith("strict"), isAttribute, attributes);
+        else
+          parseValidate(isAttribute, attributes);
+      }
+    }
+
+    public void endElement(String namespaceURI, String localName,
+                           String qName)
+            throws SAXException {
+      super.endElement(namespaceURI, localName, qName);
+      xmlBaseHandler.endElement();
+      if (foreignDepth > 0) {
+        foreignDepth--;
+        return;
+      }
+     if (pathDepth > 0) {
+        pathDepth--;
+        if (pathDepth == 0)
+          endPath();
+      }
+    }
+
+
+    private void parseRules(Attributes attributes) {
+      String modeName = attributes.getValue("", "startMode");
+      if (modeName == null)
+        modeName = DEFAULT_MODE_NAME;
+      startMode = lookupCreateMode(modeName);
+    }
+
+    private void parseCover(Attributes attributes) throws SAXException {
+      String ns = getNs(attributes, false);
+      currentElementAction.covered.add(ns);
+    }
+
+    private void parseProcess(boolean strict, boolean isAttribute, Attributes attributes) throws SAXException {
+      String[] modeNames = getModeNames(attributes);
+      SchemaImpl.Mode[] modes = getModes(modeNames);
+      for (int i = 0; i < modes.length; i++) {
+        if (isAttribute) {
+          if (modes[i].strictAttributesDefined)
+            error("strict_attributes_multiply_defined", modeNames[i]);
           else {
-            if (modes[i].strictDefined)
-              error("strict_multiply_defined", modeNames[i]);
-            else {
-              modes[i].strict = strict;
-              modes[i].strictDefined = true;
-            }
+            modes[i].strictAttributes = strict;
+            modes[i].strictAttributesDefined = true;
           }
         }
-        return;
+        else {
+          if (modes[i].strictDefined)
+            error("strict_multiply_defined", modeNames[i]);
+          else {
+            modes[i].strict = strict;
+            modes[i].strictDefined = true;
+          }
+        }
       }
-      boolean isAttribute = localName.equals("validateAttributes");
-      String ns = attributes.getValue("", "ns");
-      if (!Uri.isAbsolute(ns) && (isAttribute || !ns.equals("")))
-        error("ns_absolute");
-      String schemaUri = attributes.getValue("", "schema");
-      if (Uri.hasFragmentId(schemaUri))
-        error("schema_fragment_id");
-      schemaUri = Uri.resolve(xmlBaseHandler.getBaseUri(),
-                              Uri.escapeDisallowedChars(schemaUri));
+    }
+
+    private void parseValidate(boolean isAttribute, Attributes attributes) throws SAXException {
+      String[] modeNames = getModeNames(attributes);
+      Mode[] modes = getModes(modeNames);
+      String ns = getNs(attributes, isAttribute);
+      String schemaUri = getSchema(attributes);
       try {
         if (isAttribute) {
           Schema schema = factory.createChildSchema(wrapAttributesSchema(schemaUri));
@@ -219,16 +254,12 @@ class SchemaImpl implements Schema {
         }
         else {
           Schema schema = factory.createChildSchema(new InputSource(schemaUri));
-          String modeName = attributes.getValue("", "useMode");
-          if (modeName == null)
-            modeName = DEFAULT_MODE_NAME;
-          Mode mode = lookupCreateMode(modeName);
-          if (mode.whereDefined == null && locator != null)
-            mode.whereDefined = new LocatorImpl(locator);
-          String prune = attributes.getValue("", "prune");
-          currentElementAction = new ElementAction(schema,
-                                                   mode,
-                                                   prune != null && prune.trim().equals("true"));
+          currentElementAction = new ElementAction(ns,
+                                                   schema,
+                                                   getUseMode(attributes),
+                                                   new ContextMap(),
+                                                   getPrune(attributes));
+          contextNs = ns;
           for (int i = 0; i < modes.length; i++) {
             if (modes[i].elementMap.get(ns) != null)
               error("validate_element_multiply_defined", modeNames[i], ns);
@@ -245,14 +276,103 @@ class SchemaImpl implements Schema {
       }
     }
 
-    public void endElement(String namespaceURI, String localName,
-                           String qName)
-            throws SAXException {
-      super.endElement(namespaceURI, localName, qName);
-      xmlBaseHandler.endElement();
-      if (foreignDepth > 0)
-        foreignDepth--;
+    private void parseContext(Attributes attributes) throws SAXException {
+      String ns = getNs(attributes, false);
+      if (ns != null)
+        contextNs = ns;
+      elementNs = contextNs;
+      contextMode = getUseMode(attributes);
     }
+
+    private void parseRoot(Attributes attributes) throws SAXException {
+      String ns = getNs(attributes, false);
+      if (ns != null)
+        elementNs = ns;
+      isRoot = true;
+      pathDepth++;
+    }
+
+    private void parseElement(Attributes attributes) throws SAXException {
+      String ns = getNs(attributes, false);
+      if (ns != null) {
+        if (!currentElementAction.covered.contains(ns))
+          error("context_ns_not_covered", ns);
+        elementNs = ns;
+      }
+      nameStack.push(new Name(elementNs, attributes.getValue("", "name").trim()));
+      pathDepth++;
+    }
+
+    private void endPath() throws SAXException {
+      if (!currentElementAction.contextMap.put(isRoot, nameStack, contextMode))
+        error("path_multiply_defined", displayPath(isRoot, nameStack));
+      elementNs = contextNs;
+      isRoot = false;
+      nameStack.setSize(0);
+    }
+
+    private String displayPath(boolean isRoot, Stack nameStack) {
+      StringBuffer buf = new StringBuffer();
+      for (int i = 0, len = nameStack.size(); i < len; i++) {
+        if (i > 0 || isRoot)
+          buf.append('/');
+        Name name = (Name)nameStack.elementAt(i);
+        if (name.getNamespaceUri().length() > 0) {
+          buf.append('{');
+          buf.append(name.getNamespaceUri());
+          buf.append('}');
+        }
+        buf.append(name.getLocalName());
+      }
+      return buf.toString();
+    }
+
+    private String getSchema(Attributes attributes) throws SAXException {
+      String schemaUri = attributes.getValue("", "schema");
+      if (Uri.hasFragmentId(schemaUri))
+        error("schema_fragment_id");
+      return Uri.resolve(xmlBaseHandler.getBaseUri(),
+                         Uri.escapeDisallowedChars(schemaUri));
+    }
+
+    private boolean getPrune(Attributes attributes) {
+      String value = attributes.getValue("", "prune");
+      return value != null && value.trim().equals("true");
+    }
+
+    private Mode getUseMode(Attributes attributes) {
+      String modeName = attributes.getValue("", "useMode");
+      if (modeName == null)
+        modeName = DEFAULT_MODE_NAME;
+      Mode mode = lookupCreateMode(modeName);
+      if (mode.whereDefined == null && locator != null)
+        mode.whereDefined = new LocatorImpl(locator);
+      return mode;
+    }
+
+    private String getNs(Attributes attributes, boolean forbidEmpty) throws SAXException {
+      String ns = attributes.getValue("", "ns");
+      if (ns != null && !Uri.isAbsolute(ns) && (forbidEmpty || !ns.equals("")))
+        error("ns_absolute");
+      return ns;
+    }
+
+    private Mode[] getModes(String[] modeNames) {
+      Mode[] modes = new Mode[modeNames.length];
+      for (int i = 0; i < modes.length; i++) {
+        modes[i] = lookupCreateMode(modeNames[i]);
+        modes[i].defined = true;
+      }
+      return modes;
+    }
+
+    private String[] getModeNames(Attributes attributes) {
+      String modesValue = attributes.getValue("", "modes");
+      if (modesValue == null)
+        return new String[] { DEFAULT_MODE_NAME };
+      return StringSplitter.split(modesValue);
+    }
+
 
     void error(String key) throws SAXException {
       hadError = true;

@@ -23,9 +23,7 @@
       <element name="validate">
         <ref name="validateModel"/>
         <optional>
-          <attribute name="useMode">
-            <ref name="mode"/>
-          </attribute>
+          <ref name="useModeAtt"/>
         </optional>
         <optional>
           <attribute name="prune">
@@ -36,14 +34,14 @@
           </attribute>
         </optional>
         <interleave>
-          <zeroOrMore>
-            <element name="cover">
-              <interleave>
-                <ref name="nsAtt"/>
-                <ref name="foreign"/>
-              </interleave>
-            </element>
-          </zeroOrMore>
+          <group>
+            <zeroOrMore>
+              <ref name="cover"/>
+            </zeroOrMore>
+            <zeroOrMore>
+              <ref name="context"/>
+            </zeroOrMore>
+          </group>
           <ref name="foreign"/>
         </interleave>
       </element>
@@ -54,6 +52,60 @@
         </interleave>
       </element>
     </choice>
+  </define>
+  <define name="cover">
+    <element name="cover">
+      <interleave>
+        <ref name="nsAtt"/>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="context">
+    <element name="context">
+      <optional>
+        <ref name="useModeAtt"/>
+      </optional>
+      <optional>
+        <ref name="nsAtt"/>
+      </optional>
+      <interleave>
+        <oneOrMore>
+          <choice>
+            <ref name="rootContext"/>
+            <ref name="elementContext"/>
+          </choice>
+        </oneOrMore>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="rootContext">
+    <element name="root">
+      <optional>
+        <ref name="nsAtt"/>
+      </optional>
+      <interleave>
+        <ref name="elementContext"/>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
+  </define>
+  <define name="elementContext">
+    <element name="element">
+      <optional>
+        <ref name="nsAtt"/>
+      </optional>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <interleave>
+        <optional>
+          <ref name="elementContext"/>
+        </optional>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
   </define>
   <define name="process">
     <element>
@@ -83,6 +135,11 @@
   <define name="nsAtt">
     <attribute name="ns">
       <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="useModeAtt">
+    <attribute name="useMode">
+      <ref name="mode"/>
     </attribute>
   </define>
   <define name="modesAtt">

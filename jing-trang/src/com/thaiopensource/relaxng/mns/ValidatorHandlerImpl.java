@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.mns;
 
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.relaxng.impl.Name;
 import com.thaiopensource.util.Localizer;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
@@ -30,17 +31,18 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final Subtree parent;
     final ValidatorHandler validator;
     final Schema schema;
-    final String namespace;
     final Hashset coveredNamespaces;
     final boolean prune;
     final SchemaImpl.Mode parentMode;
     final int parentLaxDepth;
-    int depth = 0;
+    final Stack context = new Stack();
+    final ContextMap contextMap;
 
-    Subtree(String namespace, Hashset coveredNamespaces, boolean prune, ValidatorHandler validator,
+    Subtree(Hashset coveredNamespaces, ContextMap contextMap,
+            boolean prune, ValidatorHandler validator,
             Schema schema, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
-      this.namespace = namespace;
       this.coveredNamespaces = coveredNamespaces;
+      this.contextMap = contextMap;
       this.prune = prune;
       this.validator = validator;
       this.schema = schema;
@@ -83,28 +85,37 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       st.validator.ignorableWhitespace(ch, start, length);
   }
 
+  private SchemaImpl.Mode getMode() {
+    if (subtrees != null) {
+      SchemaImpl.Mode mode = (SchemaImpl.Mode)subtrees.contextMap.get(subtrees.context);
+      if (mode != null)
+        return mode;
+    }
+    return currentMode;
+  }
 
   public void startElement(String uri, String localName,
                            String qName, Attributes attributes)
           throws SAXException {
     if (namespaceCovered(uri))
-      subtrees.depth++;
+      subtrees.context.push(new Name(uri, localName));
     else {
-      SchemaImpl.ElementAction elementAction = currentMode.getElementAction(uri);
+      SchemaImpl.ElementAction elementAction = getMode().getElementAction(uri);
       if (elementAction == null) {
         if (laxDepth == 0 && currentMode.isStrict())
           error("element_undeclared_namespace", uri);
         laxDepth++;
       }
       else {
-        subtrees = new Subtree(uri,
-                               elementAction.getCoveredNamespaces(),
+        subtrees = new Subtree(elementAction.getCoveredNamespaces(),
+                               elementAction.getContextMap(),
                                elementAction.getPrune(),
                                createValidatorHandler(elementAction.getSchema()),
                                elementAction.getSchema(),
                                currentMode,
                                laxDepth,
                                subtrees);
+        subtrees.context.push(new Name(uri, localName));
         currentMode = elementAction.getMode();
         laxDepth = 0;
         startSubtree(subtrees.validator);
@@ -132,8 +143,9 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private boolean namespaceCovered(String ns) {
-    return (laxDepth == 0 && subtrees != null
-            && (ns.equals(subtrees.namespace) || subtrees.coveredNamespaces.contains(ns)));
+    return (laxDepth == 0
+            && subtrees != null
+            && subtrees.coveredNamespaces.contains(ns));
   }
 
   private boolean wantsEvent(Subtree st) {
@@ -141,7 +153,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
-    Schema attributesSchema = currentMode.getAttributesSchema(ns);
+    Schema attributesSchema = getMode().getAttributesSchema(ns);
     if (attributesSchema == null) {
       if (currentMode.isStrictAttributes())
         error("attributes_undeclared_namespace", ns);
@@ -178,14 +190,15 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       st.validator.endElement(uri, localName, qName);
     if (laxDepth > 0)
       laxDepth--;
-    else if (subtrees.depth > 0)
-      subtrees.depth--;
-    else {
-      endSubtree(subtrees.validator);
-      releaseValidatorHandler(subtrees.schema, subtrees.validator);
-      currentMode = subtrees.parentMode;
-      laxDepth = subtrees.parentLaxDepth;
-      subtrees = subtrees.parent;
+    else if (!subtrees.context.empty()) {
+      subtrees.context.pop();
+      if (subtrees.context.empty()) {
+        endSubtree(subtrees.validator);
+        releaseValidatorHandler(subtrees.schema, subtrees.validator);
+        currentMode = subtrees.parentMode;
+        laxDepth = subtrees.parentLaxDepth;
+        subtrees = subtrees.parent;
+      }
     }
   }
 
