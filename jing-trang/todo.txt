@@ -1,3 +1,25 @@
+Insist that the property
+map passed to schema.createValidator contains an error handler or
+maybe use DraconianErrorHandler by default.
+
+Maybe rename Validator to ValidationHandlers.
+
+NRL needs to pass unparsed entities to sub schemas.
+
+The SAX RELAX NG parser should use any EntityResolver supplied in the
+PropertyMap by wrapping a class round the XMLReaderCreator which sets
+the specified EntityResolver before returning it.
+
+The SAX Compact syntax parser should be able to use an entity resolver.
+
+Allow PropertyIds to be used to represent SAX properties/features.
+Make use of them in the various SchemaReader implementations.
+
+Move com.thaiopensource.relaxng.util to
+com.thaiopensource.validate.driver?
+
+Should have option for specifying non-XML language in a general way.
+
 Auto-detect compact/XML syntax.
 
 Compact syntax parser should provide encoding information.
