@@ -46,12 +46,11 @@ import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.XmlWriter;
-import com.thaiopensource.relaxng.parse.sax.SAXParseable;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
-import java.io.Writer;
 import java.io.IOException;
 
 class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
@@ -100,7 +99,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
       }
     }
     atts[i++] = "xmlns";
-    atts[i++] = SAXParseable.URI;
+    atts[i++] = WellKnownNamespaces.RELAX_NG;
     if (datatypeLibrary != null) {
       atts[i++] = "datatypeLibrary";
       atts[i++] = datatypeLibrary;
