@@ -4,6 +4,7 @@ import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.input.InputFormat;
+import com.thaiopensource.relaxng.input.dtd.DtdInputFormat;
 import com.thaiopensource.relaxng.input.parse.compact.CompactParseInputFormat;
 import com.thaiopensource.relaxng.input.parse.sax.SAXParseInputFormat;
 import com.thaiopensource.relaxng.output.LocalOutputDirectory;
@@ -79,6 +80,8 @@ public class Driver {
         inFormat = new SAXParseInputFormat();
       else if (inputType.equalsIgnoreCase("rnc"))
         inFormat = new CompactParseInputFormat();
+      else if (inputType.equalsIgnoreCase("dtd"))
+        inFormat = new DtdInputFormat();
       else {
         error(localizer.message("unrecognized_input_type", inputType));
         return 2;
