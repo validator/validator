@@ -8,6 +8,8 @@ import com.thaiopensource.relaxng.impl.Pattern;
 import com.thaiopensource.relaxng.impl.PatternSchema;
 import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
 import com.thaiopensource.relaxng.impl.SchemaBuilderImpl;
+import com.thaiopensource.relaxng.impl.FeasibleTransform;
+import com.thaiopensource.relaxng.impl.FeasibleIdTypeMapSchema;
 import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.parse.compact.CompactParseable;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
@@ -37,6 +39,7 @@ public class SchemaFactory {
   private DatatypeLibraryFactory dlf = null;
   private boolean checkIdIdref = false;
   private boolean compactSyntax = false;
+  private boolean feasible = false;
 
   /**
    * Constructs a schema factory.
@@ -79,12 +82,19 @@ public class SchemaFactory {
     else
       parseable = new SAXParseable(xrc, in, eh);
     Pattern start = SchemaBuilderImpl.parse(parseable, eh, dlf, spb);
+    if (feasible)
+      start = FeasibleTransform.transform(spb, start);
     Schema schema = new PatternSchema(spb, start);
     if (spb.hasIdTypes() && checkIdIdref) {
       IdTypeMap idTypeMap = new IdTypeMapBuilder(eh, start).getIdTypeMap();
       if (idTypeMap == null)
         throw new IncorrectSchemaException();
-      schema = new CombineSchema(schema, new IdTypeMapSchema(idTypeMap));
+      Schema idSchema;
+      if (feasible)
+        idSchema = new FeasibleIdTypeMapSchema(idTypeMap);
+      else
+        idSchema = new IdTypeMapSchema(idTypeMap);
+      schema = new CombineSchema(schema, idSchema);
     }
     return schema;
   }
@@ -216,5 +226,13 @@ public class SchemaFactory {
    */
   public boolean getCompactSyntax() {
     return compactSyntax;
+  }
+
+  public void setFeasible(boolean feasible) {
+    this.feasible = feasible;
+  }
+
+  public boolean getFeasible() {
+    return feasible;
   }
 }

@@ -77,6 +77,10 @@ class ElementPattern extends Pattern {
     return f.caseElement(this);
   }
 
+  void setContent(Pattern p) {
+    this.p = p;
+  }
+
   Pattern getContent() {
     return p;
   }

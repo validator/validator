@@ -87,6 +87,13 @@ public class ValidationEngine {
     factory.setCompactSyntax(compactSyntax);
   }
 
+
+  public ValidationEngine(XMLReaderCreator xrc, ErrorHandler eh, boolean checkIdIdref, boolean compactSyntax,
+                          boolean feasible) {
+    this(xrc, eh, checkIdIdref, compactSyntax);
+    factory.setFeasible(feasible);
+  }
+
   /**
    * Loads a schema. Subsequent calls to <code>validate</code> will validate with
    * respect the loaded schema. This can be called more than once to allow

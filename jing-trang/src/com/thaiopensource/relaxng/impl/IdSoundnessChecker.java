@@ -62,6 +62,10 @@ public class IdSoundnessChecker implements ValidatorHandler {
   public void startDocument() throws SAXException {
   }
 
+  void setComplete() {
+    complete = true;
+  }
+
   public void endDocument() throws SAXException {
     for (Enumeration e = table.keys(); e.hasMoreElements();) {
       String token = (String)e.nextElement();
@@ -71,7 +75,7 @@ public class IdSoundnessChecker implements ValidatorHandler {
           error("missing_id", token, (Locator)f.nextElement());
       }
     }
-    complete = true;
+    setComplete();
   }
 
   public void startPrefixMapping(String s, String s1) throws SAXException {

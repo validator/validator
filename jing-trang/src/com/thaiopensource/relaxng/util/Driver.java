@@ -32,12 +32,13 @@ class Driver {
 
   private boolean checkId = true;
   private boolean compactSyntax = false;
+  private boolean feasible = false;
   private boolean timing = false;
   private String encoding = null;
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itce:", args);
+    OptionParser op = new OptionParser("itcfe:", args);
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
@@ -52,6 +53,9 @@ class Driver {
           break;
         case 'e':
           encoding = op.getOptionArg();
+          break;
+        case 'f':
+          feasible = true;
           break;
         }
       }
@@ -75,7 +79,8 @@ class Driver {
     long loadedPatternTime = -1;
     boolean hadError = false;
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkId, compactSyntax);
+      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh,
+                                                     checkId, compactSyntax, feasible);
       InputSource in = ValidationEngine.uriOrFileInputSource(args[0]);
       if (encoding != null)
         in.setEncoding(encoding);
