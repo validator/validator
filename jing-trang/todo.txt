@@ -19,3 +19,5 @@ Avoid slow error recovery with large schemas (eg DocBook).
 Implement xml:base.
 
 Implementing escaping in href and datatypeLibrary attributes.
+
+Do not simply ignore fragment identifiers in href attributes.
