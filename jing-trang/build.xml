@@ -9,7 +9,8 @@
   <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
 </target>
 
-<target name="compile-grammar" depends="init">
+<target name="compile-grammar" depends="init"
+        description="Compile the JavaCC grammar for the compact syntax" >
  <mkdir dir="build/src/com/thaiopensource/relaxng/parse/compact"/>
  <javacc target="src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj"
          outputdirectory="build/src/com/thaiopensource/relaxng/parse/compact"
@@ -34,7 +35,7 @@
   <javac srcdir="src:build/src" destdir="build/classes" excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java" target="1.1"/>
 </target>
 
-<target name="jar" depends="compile">
+<target name="jar" depends="compile" description="Build jing.jar" >
 
   <echo file="build/jing-manifest.txt">Manifest-Version: 1.0
 Main-Class: com/thaiopensource/relaxng/util/Driver
@@ -54,7 +55,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
 </target>
 
 <target name="exegen" depends="compile,check-exe,crimson-files,regex-files"
-        unless="exe-ok">
+        unless="exe-ok" description="Build jing.exe" >
   <exec dir="." executable="${sdkjava.dir}\bin\jexegen" failonerror="yes">
     <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
     <arg value="/nologo"/>
@@ -108,7 +109,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
              file="build/regex-files/org/apache/xerces/impl/xpath/regex/RegularExpression.class"/>
 </target>
 
-<target name="validate" depends="jar">
+<target name="validate" depends="jar" description="Validate all XML files" >
   <jing rngfile="xhtml/xhtml-basic.rng">
     <fileset dir="doc" includes="*.html,jing-win32-bin/*.html,jing-bin/*.html,regex/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
@@ -149,7 +150,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </uptodate>
 </target>
 
-<target name="test" depends="jar,split">
+<target name="test" depends="jar,split" description="Test validation in the XML syntax">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="build/test/out.log"/>
     <arg value="build/test"/>
@@ -160,7 +161,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </java>
 </target>
 
-<target name="xsd-test" depends="jar,xsd-split">
+<target name="xsd-test" depends="jar,xsd-split" description="Test the XML Schema Datatypes implementation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="build/xsdtest/out.log"/>
     <arg value="build/xsdtest"/>
@@ -201,7 +202,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="regex-test" depends="jar">
+<target name="regex-test" depends="jar" description="Test the regex implementation" >
   <jing rngfile="test/regextest.rnc" compactsyntax="true">
     <fileset dir="test" includes="regextest.xml"/>
   </jing>
@@ -219,7 +220,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="full-regex-test">
+<target name="full-regex-test" description="Test (time-consumingly) the regex implementation" >
   <ant antfile="regex-build.xml" target="full-test">
     <property name="classes.dir" value="build/regex-classes"/>
   </ant>
@@ -276,7 +277,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
          style="doc/design.xsl"/>
 </target>
 
-<target name="trang-jar" depends="jar">
+<target name="trang-jar" depends="jar" description="Build trang.jar" >
   <ant dir="trang" target="jar">
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
@@ -285,7 +286,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="trang-test" depends="jar">
+<target name="trang-test" depends="jar" description="Test compact to XML syntax conversion" >
   <ant dir="trang" target="test">
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
@@ -294,7 +295,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="trang-xsd-test" depends="jar">
+<target name="trang-xsd-test" depends="jar" description="Test compact to XSD syntax conversion" >
   <ant dir="trang" target="xsd-test">
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
@@ -339,7 +340,8 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist">
+<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist"
+  description="Build a .tar.gz containing the complete relaxng website" >
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties,META-INF/services/*"/>
     <fileset dir="build/src" includes="**/*.java"/>
@@ -399,7 +401,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 </target>
 
-<target name="clean">
+<target name="clean" description="Remove all files created during the build process">
   <delete dir="build"/>
 </target>
 
