@@ -1,19 +1,18 @@
 package com.thaiopensource.relaxng.mns;
 
-import org.xml.sax.helpers.DefaultHandler;
+import com.thaiopensource.relaxng.Schema;
+import com.thaiopensource.relaxng.ValidatorHandler;
+import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
-import com.thaiopensource.relaxng.ValidatorHandler;
-import com.thaiopensource.relaxng.Schema;
+import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
-  private final Map namespaceMap;
+  private final SchemaImpl mnsSchema;
   private ErrorHandler eh;
   private Locator locator;
   private Subtree subtrees = null;
@@ -48,8 +47,8 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
   }
 
-  ValidatorHandlerImpl(Map namespaceMap, ErrorHandler eh) {
-    this.namespaceMap = namespaceMap;
+  ValidatorHandlerImpl(SchemaImpl schema, ErrorHandler eh) {
+    this.mnsSchema = schema;
     this.eh = eh;
   }
 
@@ -76,13 +75,13 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     if (subtrees != null && uri.equals(subtrees.namespace) && subtrees.foreignDepth == 0)
       subtrees.depth++;
     else {
-      NamespaceSchemaInfo nsi = (NamespaceSchemaInfo)namespaceMap.get(uri);
-      if (nsi == null || nsi.elementSchema == null) {
+      Schema elementSchema = mnsSchema.getElementSchema(uri);
+      if (elementSchema == null) {
         if (subtrees != null)
           subtrees.foreignDepth++;
       }
       else {
-        subtrees = new Subtree(uri, createValidator(nsi.elementSchema), subtrees);
+        subtrees = new Subtree(uri, createValidator(elementSchema), subtrees);
         startSubtree(subtrees.validator);
       }
     }
@@ -99,14 +98,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
-    NamespaceSchemaInfo nsi = (NamespaceSchemaInfo)namespaceMap.get(ns);
-    if (nsi == null || nsi.attributesSchema == null)
+    Schema attributesSchema = mnsSchema.getAttributesSchema(ns);
+    if (attributesSchema == null)
       return;
-    ValidatorHandler vh = createValidator(nsi.attributesSchema);
+    ValidatorHandler vh = createValidator(attributesSchema);
     startSubtree(vh);
-    vh.startElement(MnsSchemaFactory.BEARER_URI, MnsSchemaFactory.BEARER_LOCAL_NAME, MnsSchemaFactory.BEARER_LOCAL_NAME,
+    vh.startElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME,
                     new NamespaceFilteredAttributes(ns, attributes));
-    vh.endElement(MnsSchemaFactory.BEARER_URI, MnsSchemaFactory.BEARER_LOCAL_NAME, MnsSchemaFactory.BEARER_LOCAL_NAME);
+    vh.endElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME);
     endSubtree(vh);
   }
 
