@@ -12,6 +12,8 @@ Option to set start elements.
 
 Use system-dependent line-endings on output in XmlWriter.
 
+RELAX NG: preserve directory structure on output.
+
 RELAX NG: Don't create an output file that contains just comments.
 
 Add DtdParseException to om package.
@@ -22,8 +24,6 @@ model.
 RELAX NG: annotation for included sections (d:condition="flagName")
 
 RELAX NG: sort undefined elements.
-
-RELAX NG: preserve directory structure on output.
 
 Methods on DTD giving random access to various kinds of declaration.
 
@@ -77,3 +77,5 @@ Line-wrapping for long attribute lists in XmlWriter.
 
 RELAX NG: don't output datatypeLibrary attribute if there are no
 datatypes.
+
+private and nested classes
