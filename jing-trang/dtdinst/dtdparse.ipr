@@ -57,7 +57,7 @@
     <Commit>
       <option name="NON_RECURSIVE" value="false" />
       <option name="REVISION_TAG" value="" />
-      <option name="LOG_MESSAGE" value="Fix bug with detection of duplicate attributes" />
+      <option name="LOG_MESSAGE" value="" />
       <option name="ADDITIONAL_OPTIONS" value="" />
     </Commit>
     <Diff>
@@ -67,7 +67,7 @@
     </Diff>
     <Add>
       <option name="ADD_AS_BINARY" value="false" />
-      <option name="LOG_MESSAGE" />
+      <option name="LOG_MESSAGE" value="" />
     </Add>
     <Status>
       <option name="NON_RECURSIVE" value="false" />
@@ -122,7 +122,9 @@
     <option name="HIDE_UP_TO_DATE_FILES" value="true" />
   </component>
   <component class="com.intellij.cvsSupport.CvsManager">
-    <expanded_paths />
+    <expanded_paths>
+      <path value="$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/resources" />
+    </expanded_paths>
   </component>
   <component class="com.intellij.debugger.Debugger">
     <line_breakpoints />
@@ -246,21 +248,34 @@
   </component>
   <component class="com.intellij.ide.desktop.IdeDocumentManager">
     <recent_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroupVisitor.java" column="17" line="2" />
-      <file_info url="jar://C:/jdk1.3.1/src.jar!/src/java/util/Hashtable.java" column="31" line="317" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroupRef.java" column="0" line="26" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroup.java" column="0" line="18" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="9" line="544" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="3" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/TopLevel.java" column="22" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/Dtd.java" column="8" line="5" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/TopLevelVisitor.java" column="17" line="4" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/resources/Messages.properties" column="55" line="11" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="13" line="12" />
+      <file_info url="file://$PROJECT_DIR$/index.html" column="4" line="50" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/EnumGroup.java" column="13" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Atom.java" column="6" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Param.java" column="6" line="7" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/ParamStream.java" column="6" line="4" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Parser.java" column="6" line="11" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/PrologSyntaxException.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="41" line="90" />
     </recent_files>
     <open_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="9" line="544" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="3" />
-      <active_file url="file://$PROJECT_DIR$/todo.txt" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroupRef.java" column="0" line="26" />
-      <file_info url="jar://C:/jdk1.3.1/src.jar!/src/java/util/Hashtable.java" column="31" line="317" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroup.java" column="0" line="18" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/AttributeGroupVisitor.java" column="17" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="13" line="12" />
+      <file_info url="file://$PROJECT_DIR$/index.html" column="4" line="50" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/EnumGroup.java" column="13" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Atom.java" column="6" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Param.java" column="6" line="7" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/ParamStream.java" column="6" line="4" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Parser.java" column="6" line="11" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/PrologSyntaxException.java" column="13" line="6" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="41" line="90" />
+      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" />
+      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -276,8 +291,8 @@
     </navigator>
     <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/resources" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/util" />
     </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">

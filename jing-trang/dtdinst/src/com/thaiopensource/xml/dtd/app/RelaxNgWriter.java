@@ -15,9 +15,11 @@ public class RelaxNgWriter {
   private XmlOutputCollection outCollection;
   private XmlWriter w;
   private XmlOutputMember outMember;
+  private boolean inlineAttlistDecls = false;
   private boolean hadAny = false;
   private boolean hadDefaultValue = false;
   private Hashtable elementNameTable = new Hashtable();
+  private Hashtable attlistDeclTable = new Hashtable();
   private Hashtable defTable = new Hashtable();
   private Hashtable prefixTable = new Hashtable();
   private ErrorMessageHandler errorMessageHandler = null;
@@ -102,6 +104,8 @@ public class RelaxNgWriter {
     public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
       throws Exception {
       noteElementName(nameSpec.getValue(), ATTLIST_DECL);
+      if (inlineAttlistDecls)
+        noteAttlist(nameSpec.getValue(), attributeGroup);
       attributeGroup.accept(this);
     }
 
@@ -183,11 +187,20 @@ public class RelaxNgWriter {
       w.attribute("name", elementDeclName(nameSpec.getValue()));
       w.startElement("element");
       w.attribute("name", nameSpec.getValue());
-      ref(attlistDeclName(nameSpec.getValue()));
+      if (inlineAttlistDecls) {
+        Vector groups = (Vector)attlistDeclTable.get(nameSpec.getValue());
+        if (groups != null) {
+          currentDuplicateAttributeTable = new Hashtable();
+          for (Enumeration e = groups.elements(); e.hasMoreElements();)
+            ((AttributeGroup)e.nextElement()).accept(this);
+        }
+      }
+      else
+        ref(attlistDeclName(nameSpec.getValue()));
       modelGroup.accept(groupOutput);
       w.endElement();
       w.endElement();
-      if ((nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
+      if (!inlineAttlistDecls && (nameFlags(nameSpec.getValue()) & ATTLIST_DECL) == 0) {
 	w.startElement("define");
 	w.attribute("name", attlistDeclName(nameSpec.getValue()));
 	w.attribute("combine", "interleave");
@@ -206,6 +219,8 @@ public class RelaxNgWriter {
 
     public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
       throws Exception {
+      if (inlineAttlistDecls)
+        return;
       String name = nameSpec.getValue();
       currentDuplicateAttributeTable
 	= (Hashtable)duplicateAttributeTable.get(name);
@@ -568,6 +583,10 @@ public class RelaxNgWriter {
     initialComment = str;
   }
 
+  public void setInlineAttlistDecls(boolean inlineAttlistDecls) {
+    this.inlineAttlistDecls = inlineAttlistDecls;
+  }
+
   public void writeDtd(Dtd dtd) throws IOException {
     try {
       dtd.accept(new Analyzer());
@@ -743,6 +762,15 @@ public class RelaxNgWriter {
     else
       noteNamePrefix(name);
     elementNameTable.put(name, new Integer(flags));
+  }
+
+  private void noteAttlist(String name, AttributeGroup group) {
+    Vector groups = (Vector)attlistDeclTable.get(name);
+    if (groups == null) {
+      groups = new Vector();
+      attlistDeclTable.put(name, groups);
+    }
+    groups.addElement(group);
   }
 
   private void noteAttribute(String name, String defaultValue) {

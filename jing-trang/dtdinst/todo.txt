@@ -1,4 +1,4 @@
-Option not to generate define for ATTLIST; instead put inline.
+RELAX NG generated for ANY lacks repetition.
 
 Generate definition for any in one place.
 

@@ -44,8 +44,9 @@ public class Driver {
   }
 
   public static boolean doMain(String args[]) throws IOException {
-    OptionParser opts = new OptionParser("r:", args);
+    OptionParser opts = new OptionParser("r:i", args);
     File dir = null;
+    boolean inlineAttlistDecls = false;
     try {
       while (opts.moveToNextOption()) {
 	switch (opts.getOptionChar()) {
@@ -66,7 +67,14 @@ public class Driver {
 	    }
 	  }
 	  break;
-	}
+        case 'i':
+          if (inlineAttlistDecls) {
+            error(localizer().message("DUPLICATE_OPTION", "i"));
+            return false;
+          }
+          inlineAttlistDecls = true;
+          break;
+        }
       }
     }
     catch (OptionParser.InvalidOptionException e) {
@@ -78,6 +86,10 @@ public class Driver {
       error(localizer().message("OPTION_MISSING_ARGUMENT",
                                 opts.getOptionCharString()));
       usage();
+      return false;
+    }
+    if (inlineAttlistDecls && dir == null) {
+      error(localizer().message("OPTION_DEPENDS", "i", "r"));
       return false;
     }
     args = opts.getRemainingArgs();
@@ -109,6 +121,7 @@ public class Driver {
       if (initialComment.length() != 0)
 	w.setInitialComment(" " + initialComment + " ");
       w.setErrorMessageHandler(emh);
+      w.setInlineAttlistDecls(inlineAttlistDecls);
       w.writeDtd(dtd);
       return emh.errorCount == 0;
     }

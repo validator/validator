@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>DTDinst</title>
 </head>
@@ -42,7 +42,7 @@ environment</a> installed on your system.</p>
 
 <p>To run DTDinst, use a command of the form:</p>
 
-<pre>java -jar dtdinst.jar [ -r <var>dir</var> ] <var>DTD</var></pre>
+<pre>java -jar dtdinst.jar [ -i ] [ -r <var>dir</var> ] <var>DTD</var></pre>
 
 <p>The <code><var>DTD</var></code> argument can be either a file or a
 URL.</p>
@@ -69,6 +69,12 @@ containing a RELAX NG schema to the directory
 <code>datatypes.rng</code> file corresponding to
 <code>datatypes.dtd</code>, which is referenced by
 <code>relaxCore.dtd</code>.</p>
+
+<p>The <code>-i</code> option tells DTDinst to inline <code>ATTLIST</code> declarations.
+Without this option, DTDinst will generate a <code>define</code> in the RELAX NG schema
+for each <code>ATTLIST</code> declaration in the DTD.  With this option, DTDinst will
+move the patterns generated from <code>ATTLIST</code> declarations into the corresponding
+<code>element</code> pattern.</p>
 
 <h2><a name="format">DTDinst format</a></h2>
 
