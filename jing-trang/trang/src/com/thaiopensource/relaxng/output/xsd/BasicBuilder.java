@@ -691,7 +691,7 @@ public class BasicBuilder {
 
   static private final String GUIDE_NAMESPACE = "http://www.thaiopensource.com/ns/relaxng/xsd";
 
-  private boolean getGroupEnableAbstractElements(Annotated annotated, boolean current) {
+  private static boolean getGroupEnableAbstractElements(Annotated annotated, boolean current) {
     String value = annotated.getAttributeAnnotation(GUIDE_NAMESPACE, "enableAbstractElements");
     if (value != null) {
       value = value.trim();
@@ -725,7 +725,7 @@ public class BasicBuilder {
     }
   }
 
-  private void copyComments(List fromList, List toList) {
+  private static void copyComments(List fromList, List toList) {
     for (Iterator iter = fromList.iterator(); iter.hasNext();) {
       Object obj = iter.next();
       if (obj instanceof Comment) {
