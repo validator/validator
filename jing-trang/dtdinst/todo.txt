@@ -2,7 +2,7 @@ RELAX NG: Don't create an output file that contains just comments.
 
 EntityManager that properly handles URLs.
 
-RELAX NG: Handle refs to same external entity safely.
+RELAX NG: Handle multiple refs to same external entity safely.
 
 Command-line option parser.
 
