@@ -2300,6 +2300,29 @@ element foo {
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { empty } >> x[]
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+[x[]]
+"value"
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+[x[]]
+token "value"
+]]></incorrect>
+</compact>
+</testCase>
 <!--
 <testCase>
 <compact>

@@ -2,9 +2,6 @@ Consistent namespace URIs for guiding DTD and XSD output
 
 In trang documentation, move some information about DTD conversion into general section
 
-Implement compact syntax constraint against ill-formed documents with
-multiple root elements.
-
 Give a warning for a list containing a single token.
 
 Give a more helpful message for sequence of strings

@@ -59,6 +59,7 @@ public class CompactSyntax implements Context {
   private boolean hadError = false;
   private static Localizer localizer = new Localizer(CompactSyntax.class);
   private Hashtable attributeNameTable = new Hashtable();
+  private boolean annotationsIncludeElements = false;
 
   final class LocatedString {
     private final String str;
@@ -388,7 +389,7 @@ ParsedPattern Input(Scope scope) :
 {
   Preamble()
   (LOOKAHEAD(TopLevelLookahead()) p = TopLevelGrammar(scope)
-   | p = Expr(scope, null, null) { p = afterComments(p); } <EOF>)
+   | p = Expr(true, scope, null, null) { p = afterComments(p); } <EOF>)
   { return p; }
 }
 
@@ -524,21 +525,27 @@ void DatatypesDecl() :
   }
 }
 
-ParsedPattern AnnotatedPrimaryExpr(Scope scope, Token[] except) :
+ParsedPattern AnnotatedPrimaryExpr(boolean topLevel, Scope scope, Token[] except) :
 {
   Annotations a;
   ParsedPattern p;
   ParsedElementAnnotation e;
+  Token t;
 }
 {
   a = Annotations()
-  p = PrimaryExpr(scope, a, except)
-  ( <FANNOTATE> e = AnnotationElement(false) { p = sb.annotateAfter(p, e); })*
+  p = PrimaryExpr(topLevel, scope, a, except)
+  ( t = <FANNOTATE> e = AnnotationElement(false) {
+       if (topLevel)
+         error("top_level_follow_annotation", t);
+       else
+         p = sb.annotateAfter(p, e);
+     })*
   { return p; }
 }
 
 
-ParsedPattern PrimaryExpr(Scope scope, Annotations a, Token[] except) :
+ParsedPattern PrimaryExpr(boolean topLevel, Scope scope, Annotations a, Token[] except) :
 {
   ParsedPattern p;
 }
@@ -549,11 +556,11 @@ ParsedPattern PrimaryExpr(Scope scope, Annotations a, Token[] except) :
    | p = ExternalRefExpr(scope, a)
    | p = ListExpr(scope, a)
    | p = MixedExpr(scope, a)
-   | p = ParenExpr(scope, a)
+   | p = ParenExpr(topLevel, scope, a)
    | p = IdentifierExpr(scope, a)
    | p = ParentExpr(scope, a)
-   | p = DataExpr(scope, a, except)
-   | p = ValueExpr(a)
+   | p = DataExpr(topLevel, scope, a, except)
+   | p = ValueExpr(topLevel, a)
    | p = TextExpr(a)
    | p = EmptyExpr(a)
    | p = NotAllowedExpr(a))
@@ -587,7 +594,7 @@ ParsedPattern NotAllowedExpr(Annotations a) :
   { return sb.makeNotAllowed(makeLocation(t), a); }
 }
 
-ParsedPattern Expr(Scope scope, Token t, Annotations a) :
+ParsedPattern Expr(boolean topLevel, Scope scope, Token t, Annotations a) :
 {
   ParsedPattern p;
   ParsedPattern[] patterns = new ParsedPattern[2];
@@ -596,17 +603,17 @@ ParsedPattern Expr(Scope scope, Token t, Annotations a) :
   Token[] except = new Token[1];
 }
 {
-  p = UnaryExpr(scope, hadOccur, except)
+  p = UnaryExpr(topLevel, scope, hadOccur, except)
   { patterns[0] = p; }
   (
    { checkExcept(except); }
-   (t = "|" p = UnaryExpr(scope, null, except)
+   (t = "|" p = UnaryExpr(topLevel, scope, null, except)
      { patterns = addPattern(patterns, nPatterns++, p); checkExcept(except); } )+
     { p = sb.makeChoice(patterns, nPatterns, makeLocation(t), a); }
-    | (t = "&" p = UnaryExpr(scope, null, except)
+    | (t = "&" p = UnaryExpr(topLevel, scope, null, except)
      { patterns = addPattern(patterns, nPatterns++, p); checkExcept(except); } )+
     { p = sb.makeInterleave(patterns, nPatterns, makeLocation(t), a); }
-    | (t = "," p = UnaryExpr(scope, null, except)
+    | (t = "," p = UnaryExpr(topLevel, scope, null, except)
      { patterns = addPattern(patterns, nPatterns++, p); checkExcept(except); } )+
     { p = sb.makeGroup(patterns, nPatterns, makeLocation(t), a); }
   )?
@@ -621,14 +628,14 @@ ParsedPattern Expr(Scope scope, Token t, Annotations a) :
   }
 }
 
-ParsedPattern UnaryExpr(Scope scope, boolean[] hadOccur, Token[] except) :
+ParsedPattern UnaryExpr(boolean topLevel, Scope scope, boolean[] hadOccur, Token[] except) :
 {
   ParsedPattern p;
   Token t;
   ParsedElementAnnotation e;
 }
 {
-  p = AnnotatedPrimaryExpr(scope, except)
+  p = AnnotatedPrimaryExpr(topLevel, scope, except)
   (
    {
      if (hadOccur != null) hadOccur[0] = true;
@@ -637,7 +644,12 @@ ParsedPattern UnaryExpr(Scope scope, boolean[] hadOccur, Token[] except) :
    (t = "+" { checkExcept(except); p = sb.makeOneOrMore(p, makeLocation(t), null); }
     | t = "?" { checkExcept(except); p = sb.makeOptional(p, makeLocation(t), null); }
     | t = "*" { checkExcept(except); p = sb.makeZeroOrMore(p, makeLocation(t), null); })
-   ( <FANNOTATE> e = AnnotationElement(false) { p = sb.annotateAfter(p, e); } )*
+   ( t = <FANNOTATE> e = AnnotationElement(false) {
+        if (topLevel)
+          error("top_level_follow_annotation", t);
+        else
+          p = sb.annotateAfter(p, e);
+     } )*
   )?
   { return p; }
 }
@@ -652,7 +664,7 @@ ParsedPattern ElementExpr(Scope scope, Annotations a) :
   t = "element"
   nc = NameClass(IN_ELEMENT, null)
   "{"
-  p = Expr(scope, null, null)
+  p = Expr(false, scope, null, null)
   { p = afterComments(p); }
   "}"
   { return sb.makeElement(nc, p, makeLocation(t), a); }
@@ -668,7 +680,7 @@ ParsedPattern AttributeExpr(Scope scope, Annotations a) :
   t = "attribute"
   nc = NameClass(IN_ATTRIBUTE, null)
   "{"
-  p = Expr(scope, null, null)
+  p = Expr(false, scope, null, null)
   { p = afterComments(p); }
   "}"
   { return sb.makeAttribute(nc, p, makeLocation(t), a); }
@@ -875,7 +887,7 @@ ParsedPattern ListExpr(Scope scope, Annotations a) :
 {
   t = "list"
   "{"
-  p = Expr(scope, null, null)
+  p = Expr(false, scope, null, null)
   { p = afterComments(p); }
   "}"
   { return sb.makeList(p, makeLocation(t), a); }
@@ -889,7 +901,7 @@ ParsedPattern MixedExpr(Scope scope, Annotations a) :
 {
   t = "mixed"
   "{"
-  p = Expr(scope, null, null)
+  p = Expr(false, scope, null, null)
   { p = afterComments(p); }
   "}"
   { return sb.makeMixed(p, makeLocation(t), a); }
@@ -906,13 +918,13 @@ ParsedPattern GrammarExpr(Scope scope, Annotations a) :
   { return g.endGrammar(makeLocation(t), a); }
 }
 
-ParsedPattern ParenExpr(Scope scope, Annotations a) :
+ParsedPattern ParenExpr(boolean topLevel, Scope scope, Annotations a) :
 {
   Token t;
   ParsedPattern p;
 }
 {
-  t = "(" p = Expr(scope, t, a) { p = afterComments(p); } ")"
+  t = "(" p = Expr(topLevel, scope, t, a) { p = afterComments(p); } ")"
   { return p; }
 }
 
@@ -953,7 +965,7 @@ void Start(GrammarSection section, Scope scope, Annotations a) :
   ParsedPattern p;
 }
 {
-  t = "start" combine = AssignOp() p = Expr(scope, null, null)
+  t = "start" combine = AssignOp() p = Expr(false, scope, null, null)
   { section.define(GrammarSection.START, combine, p, makeLocation(t), a); }
 }
 
@@ -964,7 +976,7 @@ void Define(GrammarSection section, Scope scope, Annotations a) :
   ParsedPattern p;
 }
 {
-  name = Identifier() combine = AssignOp() p = Expr(scope, null, null)
+  name = Identifier() combine = AssignOp() p = Expr(false, scope, null, null)
   { section.define(name.getString(), combine, p, name.getLocation(), a); }
 }
 
@@ -1098,16 +1110,22 @@ ParsedPattern IdentifierExpr(Scope scope, Annotations a) :
   }
 }
 
-ParsedPattern ValueExpr(Annotations a) :
+ParsedPattern ValueExpr(boolean topLevel, Annotations a) :
 {
   LocatedString s;
 }
 {
   s = LocatedLiteral()
-  { return sb.makeValue("", "token", s.getString(), getContext(), defaultNamespace, s.getLocation(), a); }
+  {
+    if (topLevel && annotationsIncludeElements) {
+      error("top_level_follow_annotation", s.getToken());
+      a = null;
+    }
+    return sb.makeValue("", "token", s.getString(), getContext(), defaultNamespace, s.getLocation(), a);
+  }
 }
 
-ParsedPattern DataExpr(Scope scope, Annotations a, Token[] except) :
+ParsedPattern DataExpr(boolean topLevel, Scope scope, Annotations a, Token[] except) :
 {
   Token datatypeToken;
   Location loc;
@@ -1132,7 +1150,13 @@ ParsedPattern DataExpr(Scope scope, Annotations a, Token[] except) :
     }
   }
   ((s = Literal()
-    { return sb.makeValue(datatypeUri, datatype, s, getContext(), defaultNamespace, loc, a); }
+    {
+      if (topLevel && annotationsIncludeElements) {
+        error("top_level_follow_annotation", datatypeToken);
+        a = null;
+      }
+      return sb.makeValue(datatypeUri, datatype, s, getContext(), defaultNamespace, loc, a);
+    }
   )
   | ( { dpb = sb.makeDataPatternBuilder(datatypeUri, datatype, loc); }
       ( (Params(dpb) (e = Except(scope, except))?)
@@ -1208,7 +1232,7 @@ ParsedPattern Except(Scope scope, Token[] except) :
   Token[] innerExcept = new Token[1];
 }
 {
-  t = "-" a = Annotations() p = PrimaryExpr(scope, a, innerExcept)
+  t = "-" a = Annotations() p = PrimaryExpr(false, scope, a, innerExcept)
   {
     checkExcept(innerExcept);
     except[0] = t;
@@ -1253,9 +1277,9 @@ Annotations Annotations() :
         a.addLeadingComment(comments);
     }
   )?
-  ("[" { if (a == null) a = sb.makeAnnotations(comments, getContext()); clearAttributeList(); }
+  ("[" { if (a == null) a = sb.makeAnnotations(comments, getContext()); clearAttributeList(); annotationsIncludeElements = false; }
        (LOOKAHEAD(2) PrefixedAnnotationAttribute(a, false) )*
-       ( e = AnnotationElement(false) { a.addElement(e); } )*
+       ( e = AnnotationElement(false) { a.addElement(e); annotationsIncludeElements = true; } )*
        { a.addComment(getComments()); }
   "]")?
   {
