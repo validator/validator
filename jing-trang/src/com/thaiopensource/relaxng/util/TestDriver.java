@@ -24,7 +24,7 @@ class TestDriver {
 
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
-    ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
+    eh = new ErrorHandlerImpl(System.out);
     engine = new ValidationEngine();
     engine.setXMLReaderCreator(Driver.createXMLReaderCreator());
     engine.setErrorHandler(eh);
