@@ -1,18 +1,6 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.relaxng.impl.CombineSchema;
-import com.thaiopensource.relaxng.impl.IdTypeMap;
-import com.thaiopensource.relaxng.impl.IdTypeMapBuilder;
-import com.thaiopensource.relaxng.impl.IdTypeMapSchema;
-import com.thaiopensource.relaxng.impl.Pattern;
-import com.thaiopensource.relaxng.impl.PatternSchema;
-import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
-import com.thaiopensource.relaxng.impl.SchemaBuilderImpl;
-import com.thaiopensource.relaxng.impl.FeasibleTransform;
-import com.thaiopensource.relaxng.impl.FeasibleIdTypeMapSchema;
-import com.thaiopensource.relaxng.parse.Parseable;
-import com.thaiopensource.relaxng.parse.compact.CompactParseable;
-import com.thaiopensource.relaxng.parse.sax.SAXParseable;
+import com.thaiopensource.relaxng.auto.AutoSchemaLanguage;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -36,9 +24,9 @@ public class SchemaFactory {
   private XMLReaderCreator xrc = null;
   private ErrorHandler eh = null;
   private DatatypeLibraryFactory dlf = null;
-  private boolean checkIdIdref = false;
   private boolean compactSyntax = false;
-  private boolean feasible = false;
+  private SchemaOptions options = SchemaOptions.NONE;
+  private SchemaLanguage autoSchemaLanguage = new AutoSchemaLanguage();
 
   /**
    * Constructs a schema factory.
@@ -73,29 +61,8 @@ public class SchemaFactory {
    * @throws NullPointerException if the current XMLReaderCreator is <code>null</code>
    */
   public Schema createSchema(InputSource in) throws IOException, SAXException, IncorrectSchemaException {
-    SchemaPatternBuilder spb = new SchemaPatternBuilder();
-
-    Parseable parseable;
-    if (compactSyntax)
-      parseable = new CompactParseable(in, eh);
-    else
-      parseable = new SAXParseable(xrc, in, eh);
-    Pattern start = SchemaBuilderImpl.parse(parseable, eh, dlf, spb);
-    if (feasible)
-      start = FeasibleTransform.transform(spb, start);
-    Schema schema = new PatternSchema(spb, start);
-    if (spb.hasIdTypes() && checkIdIdref) {
-      IdTypeMap idTypeMap = new IdTypeMapBuilder(eh, start).getIdTypeMap();
-      if (idTypeMap == null)
-        throw new IncorrectSchemaException();
-      Schema idSchema;
-      if (feasible)
-        idSchema = new FeasibleIdTypeMapSchema(idTypeMap);
-      else
-        idSchema = new IdTypeMapSchema(idTypeMap);
-      schema = new CombineSchema(schema, idSchema);
-    }
-    return schema;
+    SchemaLanguage lang = compactSyntax ? CompactSchemaLanguage.getInstance() : autoSchemaLanguage;
+    return lang.createSchema(xrc, in, eh, options, dlf);
   }
 
   /**
@@ -187,7 +154,10 @@ public class SchemaFactory {
    * @see <a href="http://www.oasis-open.org/committees/relax-ng/compatibility.html#id">RELAX NG DTD Compatibility</a>
    */
   public void setCheckIdIdref(boolean checkIdIdref) {
-    this.checkIdIdref = checkIdIdref;
+    if (checkIdIdref)
+      options = options.add(SchemaOptions.CHECK_ID_IDREF);
+    else
+      options = options.remove(SchemaOptions.CHECK_ID_IDREF);
   }
 
   /**
@@ -202,7 +172,7 @@ public class SchemaFactory {
    * @see <a href="http://www.oasis-open.org/committees/relax-ng/compatibility.html#id">RELAX NG DTD Compatibility</a>
    */
   public boolean getCheckIdIdref() {
-    return checkIdIdref;
+    return options.contains(SchemaOptions.CHECK_ID_IDREF);
   }
 
   /**
@@ -228,10 +198,13 @@ public class SchemaFactory {
   }
 
   public void setFeasible(boolean feasible) {
-    this.feasible = feasible;
+    if (feasible)
+      options = options.add(SchemaOptions.FEASIBLE);
+    else
+      options = options.remove(SchemaOptions.FEASIBLE);
   }
 
   public boolean getFeasible() {
-    return feasible;
+    return options.contains(SchemaOptions.FEASIBLE);
   }
 }

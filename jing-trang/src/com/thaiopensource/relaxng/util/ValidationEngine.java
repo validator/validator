@@ -15,7 +15,6 @@ import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.relaxng.ValidatorHandler;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
-import com.thaiopensource.relaxng.mns.MnsSchemaFactory;
 import com.thaiopensource.util.UriOrFile;
 
 /**
@@ -44,7 +43,6 @@ public class ValidationEngine {
    */
   public static final int COMPACT_SYNTAX = 02;
   public static final int FEASIBLE = 04;
-  public static final int MNS = 010;
 
   /**
    * Default constructor.  Equivalent to <code>ValidationEngine(null, null, CHECK_ID_IDREF)</code>.
@@ -66,7 +64,6 @@ public class ValidationEngine {
    * @see #CHECK_ID_IDREF
    * @see #COMPACT_SYNTAX
    * @see #FEASIBLE
-   * @see #MNS
    */
   public ValidationEngine(XMLReaderCreator xrc,
                           ErrorHandler eh,
@@ -75,10 +72,7 @@ public class ValidationEngine {
       xrc = new Sax2XMLReaderCreator();
     if (eh == null)
       eh = new DraconianErrorHandler();
-    if ((flags & MNS) != 0)
-      factory = new MnsSchemaFactory();
-    else
-      factory = new SchemaFactory();
+    factory = new SchemaFactory();
     factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
     this.xrc = xrc;
     factory.setXMLReaderCreator(xrc);

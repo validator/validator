@@ -1,9 +1,10 @@
 package com.thaiopensource.relaxng.mns;
 
+import com.thaiopensource.relaxng.AbstractSchema;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
-import com.thaiopensource.relaxng.AbstractSchema;
+import com.thaiopensource.relaxng.auto.SchemaFuture;
 import com.thaiopensource.relaxng.impl.Name;
 import com.thaiopensource.relaxng.parse.sax.XmlBaseHandler;
 import com.thaiopensource.util.Localizer;
@@ -21,14 +22,14 @@ import org.xml.sax.helpers.LocatorImpl;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Stack;
 
 class SchemaImpl extends AbstractSchema {
   static final String BEARER_URI = "http://www.thaiopensoure.com/mns/instance";
   static final String BEARER_LOCAL_NAME = "globalAttributesBearer";
-  private static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
+  static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
   private static final String BEARER_PREFIX = "m";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
@@ -104,9 +105,8 @@ class SchemaImpl extends AbstractSchema {
     }
   }
 
-  private class Handler extends DelegatingContentHandler {
-    private final MnsSchemaFactory factory;
-    private final ValidatorHandler validator;
+  private class Handler extends DelegatingContentHandler implements SchemaFuture {
+    private final SchemaReceiverImpl sr;
     private ElementAction currentElementAction;
     private boolean hadError = false;
     private final ErrorHandler eh;
@@ -120,23 +120,37 @@ class SchemaImpl extends AbstractSchema {
     private final Stack nameStack = new Stack();
     private boolean isRoot;
     private int pathDepth = 0;
+    private ValidatorHandler validator;
 
 
-    Handler(MnsSchemaFactory factory, ValidatorHandler validator, ErrorHandler eh) {
-      super(validator);
-      this.factory = factory;
-      this.validator = validator;
-      this.eh = eh;
+    Handler(SchemaReceiverImpl sr) {
+      this.sr = sr;
+      this.eh = sr.getErrorHandler();
     }
 
     public void setDocumentLocator(Locator locator) {
-      super.setDocumentLocator(locator);
       xmlBaseHandler.setLocator(locator);
       this.locator = locator;
     }
 
-    void checkValid() throws IncorrectSchemaException, SAXException {
-      if (!validator.isValidSoFar())
+    public void startDocument() throws SAXException {
+      try {
+        validator = sr.getMnsSchema().createValidator(eh);
+      }
+      catch (IOException e) {
+        throw new WrappedIOException(e);
+      }
+      catch (IncorrectSchemaException e) {
+        throw new RuntimeException("internal error in RNG schema for MNS");
+      }
+      setDelegate(validator);
+      if (locator != null)
+        super.setDocumentLocator(locator);
+      super.startDocument();
+    }
+
+    public Schema getSchema() throws IncorrectSchemaException, SAXException {
+      if (validator == null || !validator.isValidSoFar())
         throw new IncorrectSchemaException();
       for (Enumeration enum = modeMap.keys(); enum.hasMoreElements();) {
         String modeName = (String)enum.nextElement();
@@ -146,6 +160,13 @@ class SchemaImpl extends AbstractSchema {
       }
       if (hadError)
         throw new IncorrectSchemaException();
+      return SchemaImpl.this;
+    }
+
+    public RuntimeException unwrapException(RuntimeException e) throws SAXException, IOException, IncorrectSchemaException {
+      if (e instanceof WrappedIOException)
+        throw ((WrappedIOException)e).getException();
+      return e;
     }
 
     public void startElement(String uri, String localName,
@@ -229,7 +250,7 @@ class SchemaImpl extends AbstractSchema {
       String schemaUri = getSchema(attributes);
       try {
         if (isAttribute) {
-          Schema schema = factory.createChildSchema(wrapAttributesSchema(schemaUri));
+          Schema schema = sr.createChildSchema(wrapAttributesSchema(schemaUri));
           for (int i = 0; i < modes.length; i++) {
             if (modes[i].attributesMap.get(ns) != null)
               error("validate_attributes_multiply_defined", modeNames[i], ns);
@@ -238,7 +259,7 @@ class SchemaImpl extends AbstractSchema {
           }
         }
         else {
-          Schema schema = factory.createChildSchema(new InputSource(schemaUri));
+          Schema schema = sr.createChildSchema(new InputSource(schemaUri));
           currentElementAction = new ElementAction(ns,
                                                    schema,
                                                    getUseMode(attributes),
@@ -399,26 +420,10 @@ class SchemaImpl extends AbstractSchema {
 
   }
 
-  SchemaImpl(InputSource in, MnsSchemaFactory factory)
-          throws IOException, SAXException, IncorrectSchemaException {
-    XMLReader xr = factory.getXMLReaderCreator().createXMLReader();
-    ErrorHandler eh = factory.getErrorHandler();
-    Handler h = new Handler(factory, factory.getMnsSchema().createValidator(eh), eh);
-    xr.setContentHandler(h);
-    xr.setErrorHandler(eh);
-    try {
-      xr.parse(in);
-    }
-    catch (WrappedIOException e) {
-      throw e.getException();
-    }
-    catch (SAXException e) {
-      if (e.getException() instanceof WrappedIOException)
-        throw ((WrappedIOException)e.getException()).getException();
-      else
-        throw e;
-    }
-    h.checkValid();
+  SchemaFuture installHandlers(XMLReader in, SchemaReceiverImpl sr) {
+    Handler h = new Handler(sr);
+    in.setContentHandler(h);
+    return h;
   }
 
   public ValidatorHandler createValidator(ErrorHandler eh) {
@@ -453,4 +458,5 @@ class SchemaImpl extends AbstractSchema {
     }
     return mode;
   }
+
 }

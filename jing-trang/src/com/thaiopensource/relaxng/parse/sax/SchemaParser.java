@@ -17,6 +17,7 @@ import com.thaiopensource.relaxng.parse.CommentList;
 import com.thaiopensource.relaxng.parse.Div;
 import com.thaiopensource.relaxng.parse.ElementAnnotationBuilder;
 import com.thaiopensource.relaxng.parse.ParsedElementAnnotation;
+import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
 import com.thaiopensource.util.Uri;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Naming;
@@ -37,7 +38,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.Stack;
 
-class SchemaParser {
+class SchemaParser implements ParsedPatternFuture {
 
   private static final String relaxngURIPrefix =
           WellKnownNamespaces.RELAX_NG.substring(0, WellKnownNamespaces.RELAX_NG.lastIndexOf('/') + 1);
@@ -1421,7 +1422,7 @@ class SchemaParser {
     nameClassTable.put("choice", new NameClassChoiceState());
   }
 
-  ParsedPattern getStartPattern() throws IllegalSchemaException {
+  public ParsedPattern getParsedPattern() throws IllegalSchemaException {
     if (hadError)
       throw new IllegalSchemaException();
     return startPattern;

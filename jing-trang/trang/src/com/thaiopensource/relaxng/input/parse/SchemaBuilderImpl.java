@@ -62,6 +62,7 @@ import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.relaxng.parse.CommentList;
+import com.thaiopensource.relaxng.parse.SubParser;
 import com.thaiopensource.util.Localizer;
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
@@ -80,7 +81,7 @@ import java.util.Map;
 import java.util.Vector;
 
 class SchemaBuilderImpl implements SchemaBuilder {
-  private final Parseable parseable;
+  private final SubParser subParser;
   private final ErrorHandler eh;
   private final Map schemas;
   private final DatatypeLibraryFactory dlf;
@@ -88,8 +89,8 @@ class SchemaBuilderImpl implements SchemaBuilder {
   private boolean hadError = false;
   static private final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
 
-  private SchemaBuilderImpl(Parseable parseable, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming) {
-    this.parseable = parseable;
+  private SchemaBuilderImpl(SubParser subParser, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming) {
+    this.subParser = subParser;
     this.eh = eh;
     this.schemas = schemas;
     this.dlf = dlf;
@@ -229,7 +230,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
     finishPattern(erp, loc, anno);
     if (schemas.get(uri) == null) {
       schemas.put(uri, new Object()); // avoid possibility of infinite loop
-      schemas.put(uri, new SchemaDocument((Pattern)parseable.parseExternal(uri, this, scope)));
+      schemas.put(uri, new SchemaDocument((Pattern)subParser.parseExternal(uri, this, scope)));
     }
     return erp;
   }
@@ -346,7 +347,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
         schemas.put(uri, new Object()); // avoid possibility of infinite loop
         GrammarPattern g = new GrammarPattern();
         try {
-          ParsedPattern pattern = parseable.parseInclude(uri, SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
+          ParsedPattern pattern = subParser.parseInclude(uri, SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
           schemas.put(uri, new SchemaDocument((Pattern)pattern));
         }
         catch (IllegalSchemaException e) {

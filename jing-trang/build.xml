@@ -178,7 +178,6 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
 
 <target name="mns-test" depends="jar,mns-split" description="Test MNS validation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="-m"/>
     <arg value="build/mnstest/out.log"/>
     <arg value="build/mnstest"/>
     <classpath>

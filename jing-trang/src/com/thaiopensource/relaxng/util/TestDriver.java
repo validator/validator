@@ -22,15 +22,12 @@ class TestDriver {
     long startTime = System.currentTimeMillis();
     eh = new ErrorHandlerImpl(System.out);
     int flags = 0;
-    OptionParser op = new OptionParser("im", args);
+    OptionParser op = new OptionParser("i", args);
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
         case 'i':
           flags |= ValidationEngine.CHECK_ID_IDREF;
-          break;
-        case 'm':
-          flags |= ValidationEngine.MNS;
           break;
         }
       }

@@ -24,7 +24,7 @@ class Driver {
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itcfme:", args);
+    OptionParser op = new OptionParser("itcfe:", args);
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
@@ -42,9 +42,6 @@ class Driver {
           break;
         case 'f':
           validationFlags |= ValidationEngine.FEASIBLE;
-          break;
-        case 'm':
-          validationFlags |= ValidationEngine.MNS;
           break;
         }
       }
