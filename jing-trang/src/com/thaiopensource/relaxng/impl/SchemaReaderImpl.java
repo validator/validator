@@ -10,6 +10,7 @@ import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
 import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.util.PropertyMap;
 import org.relaxng.datatype.DatatypeLibraryFactory;
+import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -23,6 +24,8 @@ public abstract class SchemaReaderImpl implements SchemaReader {
     XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
     DatatypeLibraryFactory dlf = RngProperty.DATATYPE_LIBRARY_FACTORY.get(properties);
+    if (dlf == null)
+      dlf = new DatatypeLibraryLoader();
     Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
                                             properties.contains(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA));
     return wrapPattern(start, spb, properties);
