@@ -20,7 +20,6 @@ import com.thaiopensource.relaxng.output.xsd.basic.AttributeUse;
 import com.thaiopensource.relaxng.output.xsd.basic.SingleAttributeUse;
 import com.thaiopensource.relaxng.output.xsd.basic.Attribute;
 import com.thaiopensource.relaxng.output.xsd.basic.OptionalAttribute;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeUseVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroup;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupRef;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupDefinition;
@@ -194,7 +193,7 @@ class Transformer extends SchemaTransformer {
         }
       }
     }
-    if (wildcard == null || !multipleWildcards) {
+    if (!multipleWildcards) {
       if (children == a.getChildren())
         return a;
       return new AttributeGroup(a.getLocation(), a.getAnnotation(), children);
@@ -206,7 +205,7 @@ class Transformer extends SchemaTransformer {
         att = (AttributeUse)att.accept(new AttributeTransformer(null, null, false));
       newChildren.add(att);
     }
-    if (wildcard != null && wildcardUseIndex == -1)
+    if (wildcardUseIndex == -1)
       newChildren.add(new WildcardAttribute(a.getLocation(), null, wildcard));
     return new AttributeGroup(a.getLocation(), a.getAnnotation(), newChildren);
   }
