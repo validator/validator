@@ -216,9 +216,9 @@ validate =
   }
   | element validateAttributes { validateModel }
 
-process = element lax|strict { modesAtt }
+process = element lax|strict { modesAtt? }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt
+validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt?
 
 modesAtt = attribute modes { list { mode+ } }
 
