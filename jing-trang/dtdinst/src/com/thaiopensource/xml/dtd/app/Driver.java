@@ -49,7 +49,8 @@ public class Driver {
       error(localizer().message("NOT_DIRECTORY", args[1]));
       return false;
     }
-    Dtd dtd = new DtdParserImpl().parse(args[0], new FileEntityManager());
+    String uri = UriEntityManager.commandLineArgToUri(args[0]);
+    Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
     NameMapper mapper = new ExtensionMapper(".dtd", ".rng");
     DirectoryOutputCollection out
       = new DirectoryOutputCollection(dtd.getUri(), dir, mapper);

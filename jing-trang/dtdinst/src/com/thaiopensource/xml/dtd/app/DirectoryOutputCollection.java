@@ -1,5 +1,6 @@
 package com.thaiopensource.xml.dtd.app;
 
+import java.net.URL;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import com.thaiopensource.xml.out.XmlWriter;
 
 class DirectoryOutputCollection implements XmlOutputCollection {
 
-  private final String mainUri;
+  private final XmlOutputMember mainMember;
   private final File dir;
   private final NameMapper nameMapper;
   private final Hashtable nameTable = new Hashtable();
@@ -30,22 +31,29 @@ class DirectoryOutputCollection implements XmlOutputCollection {
     }
   }
 
-  DirectoryOutputCollection(String mainUri, File dir, NameMapper nameMapper) {
-    this.mainUri = mainUri;
+  DirectoryOutputCollection(String mainUri, File dir, NameMapper nameMapper)
+    throws IOException {
     this.dir = dir;
     this.nameMapper = nameMapper;
+    this.mainMember = mapUri(mainUri);
   }
 
-  DirectoryOutputCollection(String mainUri, File dir) {
+  DirectoryOutputCollection(String mainUri, File dir) throws IOException {
     this(mainUri, dir, null);
   }
 
   public XmlOutputMember getMain() {
-    return mapUri(mainUri);
+    return mainMember;
   }
 
-  public XmlOutputMember mapUri(String inputUri) {
-    String name = new File(inputUri).getName();
+  public XmlOutputMember mapUri(String inputUri) throws IOException {
+    String name = new URL(inputUri).getFile();
+    int slash = name.lastIndexOf('/');
+    if (slash >= 0)
+      name = name.substring(slash + 1);
+    name = new File(name).getName();
+    if (name.length() == 0)
+      throw new IOException("empty file name");
     if (nameMapper != null)
       name = nameMapper.mapName(name);
     if (nameTable.get(name) != null) {

@@ -1,10 +1,12 @@
-EntityManager that properly handles URLs.
-
 Command-line option parser.
 
 Option to set start elements.
 
 Use system-dependent line-endings on output in XmlWriter.
+
+Make UriEntityManager respect charset parameter.
+
+Make UriEntityManager get the right base URI after HTTP redirection.
 
 RELAX NG: preserve directory structure on output.
 
