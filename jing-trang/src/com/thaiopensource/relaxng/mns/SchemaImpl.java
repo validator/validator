@@ -118,7 +118,7 @@ class SchemaImpl implements Schema {
       if (localName.equals("strict") || localName.equals("lax")) {
         boolean strict = localName.equals("strict");
         for (int i = 0; i < modes.length; i++) {
-          // error if strictDefined is true
+          // XXX error if strictDefined is true
           modes[i].strict = strict;
           modes[i].strictDefined = true;
         }
@@ -131,7 +131,7 @@ class SchemaImpl implements Schema {
         if (isAttribute) {
           Schema schema = factory.createChildSchema(wrapAttributesSchema(schemaUri));
           for (int i = 0; i < modes.length; i++)
-            modes[i].attributesMap.put(ns, schema);
+            modes[i].attributesMap.put(ns, schema); // XXX error if already defined
         }
         else {
           Schema schema = factory.createChildSchema(new InputSource(schemaUri));
@@ -140,7 +140,7 @@ class SchemaImpl implements Schema {
             modeName = DEFAULT_MODE_NAME;
           currentElementAction = new ElementAction(schema, lookupCreateMode(modeName));
           for (int i = 0; i < modes.length; i++)
-            modes[i].elementMap.put(ns, currentElementAction);
+            modes[i].elementMap.put(ns, currentElementAction); // XXX error if already defined
         }
       }
       catch (IncorrectSchemaException e) {
