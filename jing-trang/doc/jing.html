@@ -32,6 +32,24 @@ ID/IDREF/IDREFS.</li>
 
 </ul>
 
+<p>Jing also has experimental support for schema languages other than
+RELAX NG; specifically</p>
+
+<ul>
+<li><a href="http://www.w3.org/TR/xmlschema-1/">W3C
+XML Schema</a> (based on <a
+href="http://xml.apache.org/xerces2-j/">Xerces-J</a>);</li>
+
+<li><a
+href="http://www.ascc.net/xml/resource/schematron/schematron.html">Schematron</a>;</li>
+
+<li><a href="nrl.html">Namespace Routing Language</a>.</li>
+
+</ul>
+
+<p>A separate <a href="jing-other.html">document</a> describes this
+support in more detail.</p>
+
 <p>Jing is available in the <a
 href="http://www.thaiopensource.com/download/">download</a>
 directory in a number of different forms:</p>
@@ -64,8 +82,8 @@ Java)</dd>
 <p>The main class is
 <code>com.thaiopensource.relaxng.util.Driver</code>.  The first
 argument expected by the main class is the name of the file containing
-the RELAX NG schema.  The second and subsequent arguments are the
-names of one or more files to be validated against this schema.</p>
+the schema.  The second and subsequent arguments are the names of one
+or more files to be validated against this schema.</p>
 
 <p>Jing accepts the following command-line options, which must precede
 the arguments specifying the schema and files to be validated:</p>
@@ -74,7 +92,7 @@ the arguments specifying the schema and files to be validated:</p>
 
 <dt><code>-c</code></dt>
 
-<dd>Uses the compact syntax for the schema.</dd>
+<dd>The schema uses RELAX NG Compact Syntax.</dd>
 
 <dt><code>-e <var>enc</var></code></dt>
 
@@ -117,20 +135,6 @@ W3C XML Schema Part 2 datatypes.  There is a separate <a
 href="jing-datatypes.html">document</a> describing this implementation
 and how to use it.</p>
 
-<p><a name="mns"/>Jing also supports <a
-href="http://www.thaiopensource.com/relaxng/mns.html">Modular
-Namespaces (MNS)</a>.  No special options are needed for this.
-Provided that you do not use the <code>-c</code> option, Jing will
-detect that the schema is an MNS schema rather than a RELAX NG schema.
-Jing allows MNS schemas to reference schemas in RELAX NG, RELAX NG
-Compact Syntax and MNS.  Note that the design of MNS is not final and
-is subject to (possibly radical) change.  ID/IDREF checking does not
-work with MNS in the way that it probably should: each
-<code>validate</code> and <code>validateAttributes</code> element
-performs ID/IDREF checking completely independently; they probably
-should share a common table of ID/IDREFs.  This behavior may change in
-a future release.</p>
-
 <p>If you wish to use Jing in your programs, you have a choice.</p>
 
 <ul>
@@ -143,7 +147,8 @@ the <a href="http://iso-relax.sourceforge.net">ISO-RELAX</a>
 SourceForge project.  Jing's implementation uses the <a
 href="http://prdownloads.sourceforge.net/iso-relax/isorelax.20030108.zip?download"
 >20030108 version</a>. Support for DTD Compatibility validation of
-ID/IDREF is not currently available via this interface.</li>
+ID/IDREF and for validation with languages other than RELAX NG is not
+currently available via this interface.</li>
 
 </ul>
 
