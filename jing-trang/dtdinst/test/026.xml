@@ -1,0 +1,10 @@
+<doctype>
+  <element name="doc">
+    <sequence/>
+  </element>
+  <attlist name="doc">
+    <attribute name="att" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+</doctype>
