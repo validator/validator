@@ -1,6 +1,7 @@
 <project name="trang" default="jar" basedir=".">
 
 <property name="build.dir" value="build"/>
+<property name="dtdinst.src" value="../dtdinst/src"/>
 <property name="jing.classes" value="../build/classes"/>
 <property name="dist.dir" value="build"/>
 
@@ -17,7 +18,7 @@
 
 <target name="compile" depends="init">
   <mkdir dir="${build.dir}/classes"/>
-  <javac srcdir="src" destdir="${build.dir}/classes"
+  <javac srcdir="src:${dtdinst.src}" destdir="${build.dir}/classes"
          classpath="${jing.classes}"/>
 </target>
 
@@ -30,6 +31,7 @@ Class-Path: jing.jar
   <jar jarfile="${dist.dir}/trang.jar" manifest="${build.dir}/trang-manifest.txt">
     <fileset dir="${build.dir}/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
+    <fileset dir="${dtdinst.src}" includes="**/*.properties"/>
   </jar>
 </target>
 
