@@ -651,8 +651,12 @@ public class RelaxNgWriter {
   }
 
   String mungeQName(String name) {
-    if (colonReplacement == null)
-      return name;
+    if (colonReplacement == null) {
+      int i = name.indexOf(':');
+      if (i < 0)
+	return name;
+      return name.substring(i + 1);
+    }
     return substitute(name, ':', colonReplacement);
   }
 
