@@ -51,6 +51,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/trang
 %{_mandir}/man1/trang.1*
 
+%doc trang-manual.html
+
 %changelog
 * Sat Feb 22 2003 James Clark <jjc@jclark.com>
 - Initial build.
