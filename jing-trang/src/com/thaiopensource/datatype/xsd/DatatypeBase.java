@@ -95,8 +95,4 @@ abstract class DatatypeBase implements Datatype {
   DatatypeBase getPrimitive() {
     return this;
   }
-
-  public Object getAssignmentClass() {
-    return null;
-  }
 }

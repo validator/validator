@@ -141,7 +141,7 @@ public class DatatypeAssignmentChecker {
     }
 
     public void visitDatatype(Datatype dt) {
-      Object cls = dt.getAssignmentClass();
+      Object cls = null;	// XXX
       if (cls == null)
 	addText();
       else

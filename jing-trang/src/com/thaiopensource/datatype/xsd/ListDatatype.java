@@ -2,10 +2,7 @@ package com.thaiopensource.datatype.xsd;
 
 import com.thaiopensource.datatype.DatatypeContext;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.Locator;
-
-class ListDatatype extends DatatypeBase implements Measure, AssignmentClass {
+class ListDatatype extends DatatypeBase implements Measure {
   private DatatypeBase itemType;
   
   ListDatatype(DatatypeBase itemType) {
@@ -87,22 +84,4 @@ class ListDatatype extends DatatypeBase implements Measure, AssignmentClass {
   public int getLength(Object obj) {
     return ((List)obj).getLength();
   }
-
-  public Object getAssignmentClass() {
-    Object obj = itemType.getAssignmentClass();
-    if (obj == null)
-      return null;
-    return this;
-  }
-
-  public void assign(DatatypeAssignmentImpl a,
-		     String value,
-		     DatatypeContext dc,
-		     Locator loc) throws SAXException {
-    String[] tokens = split(normalizeWhiteSpace(value));
-    Object cls = itemType.getAssignmentClass();
-    for (int i = 0; i < tokens.length; i++)
-      a.assign(tokens[i], cls, dc, loc);
-  }
-
 }

@@ -7,8 +7,4 @@ class AnyDatatype implements Datatype {
   public boolean allows(String str, DatatypeContext dc) {
     return true;
   }
-
-  public Object getAssignmentClass() {
-    return null;
-  }
 }

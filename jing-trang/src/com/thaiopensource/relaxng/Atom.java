@@ -28,10 +28,4 @@ abstract class Atom {
   boolean matchesElement(NameClass nc, Pattern content) {
     return false;
   }
-
-  static final Object AMBIGUOUS_ASSIGNMENT = new Object();
-
-  Object getAssignmentClass() {
-    return null;
-  }
 }

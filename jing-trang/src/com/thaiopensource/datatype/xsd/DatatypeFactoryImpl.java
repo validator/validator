@@ -6,9 +6,7 @@ import org.xml.sax.XMLReader;
 
 import com.thaiopensource.datatype.DatatypeFactory;
 import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeReader;
 import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeAssignment;
 
 public class DatatypeFactoryImpl implements DatatypeFactory {
   static private final String xsdns = "http://www.w3.org/2001/XMLSchema-datatypes";
@@ -70,10 +68,9 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("NMTOKEN", nmtokenDatatype);
     typeTable.put("NMTOKENS", list(nmtokenDatatype));
 
-    typeTable.put("ID", new IdDatatype());
-    DatatypeBase idrefType = new IdrefDatatype();
-    typeTable.put("IDREF", idrefType);
-    typeTable.put("IDREFS", list(idrefType));
+    typeTable.put("ID", ncNameType);
+    typeTable.put("IDREF", ncNameType);
+    typeTable.put("IDREFS", list(ncNameType));
 
     // Partially implemented
     DatatypeBase entityType = ncNameType;
@@ -101,16 +98,6 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     if (xsdns.equals(namespaceURI))
       return createXsdDatatype(localName);
     return null;
-  }
-
-  public DatatypeReader createDatatypeReader(String namespaceURI, DatatypeContext context) {
-    if (xsdns.equals(namespaceURI))
-      return new DatatypeReaderImpl(this, context);
-    return null;
-  }
-
-  public DatatypeAssignment createDatatypeAssignment(XMLReader xr) {
-    return new DatatypeAssignmentImpl(xr);
   }
 
   DatatypeBase createXsdDatatype(String localName) {

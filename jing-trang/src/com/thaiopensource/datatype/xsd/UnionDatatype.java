@@ -1,11 +1,8 @@
 package com.thaiopensource.datatype.xsd;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.Locator;
-
 import com.thaiopensource.datatype.DatatypeContext;
 
-class UnionDatatype extends DatatypeBase implements AssignmentClass {
+class UnionDatatype extends DatatypeBase {
   private DatatypeBase type1;
   private DatatypeBase type2;
   
@@ -46,28 +43,5 @@ class UnionDatatype extends DatatypeBase implements AssignmentClass {
 	return obj;
     }
     return null;
-  }
-
-  public Object getAssignmentClass() {
-    Object c1 = type1.getAssignmentClass();
-    Object c2 = type2.getAssignmentClass();
-    if (c1 == c2)
-      return c1;
-    return this;
-  }
-
-  public void assign(DatatypeAssignmentImpl a,
-		     String value,
-		     DatatypeContext dc,
-		     Locator loc) throws SAXException {
-    String normValue = normalizeWhiteSpace(value);
-    Object c;
-    if (type1.lexicallyAllows(normValue)
-	&& type1.allowsValue(normValue, dc))
-      c = type1.getAssignmentClass();
-    else
-      c = type2.getAssignmentClass();
-    if (c != null)
-      a.assign(value, c, dc, loc);
   }
 }

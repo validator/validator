@@ -8,7 +8,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import com.thaiopensource.datatype.DatatypeFactory;
-import com.thaiopensource.datatype.DatatypeAssignment;
 
 public class ValidationEngine {
   private XMLReaderCreator xrc;
@@ -55,12 +54,7 @@ public class ValidationEngine {
    * loadPattern must be called before any call to validate
    */
   public boolean validate(InputSource in) throws SAXException, IOException {
-    DatatypeAssignment da;
-    if (isAmbig)
-      da = null;
-    else
-      da = df.createDatatypeAssignment(xr);
-    Validator v = new Validator(p, pb, xr, da);
+    Validator v = new Validator(p, pb, xr);
     xr.parse(in);
     return v.getValid();
   }
@@ -73,12 +67,7 @@ public class ValidationEngine {
   public boolean validateMultiThread(InputSource in)
     throws SAXException, IOException {
     XMLReader xr = xrc.createXMLReader();
-    DatatypeAssignment da;
-    if (isAmbig)
-      da = null;
-    else
-      da = df.createDatatypeAssignment(xr);
-    Validator v = new Validator(p, new PatternBuilder(pb), xr, da);
+    Validator v = new Validator(p, new PatternBuilder(pb), xr);
     xr.parse(in);
     return v.getValid();
   }

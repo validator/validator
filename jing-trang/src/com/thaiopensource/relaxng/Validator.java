@@ -12,13 +12,11 @@ import org.xml.sax.Locator;
 import java.util.Hashtable;
 
 import com.thaiopensource.datatype.DatatypeContext;
-import com.thaiopensource.datatype.DatatypeAssignment;
 
 public class Validator {
   PatternBuilder b;
   Locator locator;
   private XMLReader xr;
-  DatatypeAssignment da;
   private boolean hadError = false;
   static final int RECOVERY_ATTEMPTS = 4;
   PrefixMapping prefixMapping = new PrefixMapping("xml", PatternReader.xmlURI, null);
@@ -163,11 +161,6 @@ public class Validator {
 	  else
 	    error("impossible_attribute_ignored", atts.getLocalName(i));
 	}
-	else {
-	  Object assignmentClass = a.getAssignmentClass();
-	  if (assignmentClass != null)
-	    assign(atts.getValue(i), assignmentClass);
-	}
       }
       if (!updateState(b.memoizedEndAttributes(combinedState, false))) {
 	// XXX should specify which attributes
@@ -229,11 +222,6 @@ public class Validator {
     void string(StringAtom a) throws SAXException {
       if (!updateState(b.memoizedResidual(combinedState, a)))
 	error("string_not_allowed");
-      else {
-	Object assignmentClass = a.getAssignmentClass();
-	if (assignmentClass != null)
-	  assign(a.getString(), assignmentClass);
-      }
     }
 
     public void characters(char ch[], int start, int length) throws SAXException {
@@ -273,8 +261,6 @@ public class Validator {
 	hadError = true;
       if (!combinedState.isNullable())
 	error("document_incomplete");
-      if (!hadError && da != null)
-	da.end();
     }
 
     public void setDocumentLocator(Locator loc) {
@@ -398,23 +384,14 @@ public class Validator {
     }
   }
 
-  public Validator(Pattern pattern, PatternBuilder b, XMLReader xr,
-		   DatatypeAssignment da) {
+  public Validator(Pattern pattern, PatternBuilder b, XMLReader xr) {
     this.b = b;
     this.xr = xr;
-    this.da = da;
     new UnambigHandler(pattern).set();
   }
 
   public boolean getValid() {
     return !hadError;
-  }
-
-  void assign(String value, Object assignmentClass) throws SAXException {
-    if (assignmentClass == Atom.AMBIGUOUS_ASSIGNMENT)
-      throw new Error("duplicate assignment");
-    if (!hadError && da != null)
-      da.assign(value, assignmentClass, prefixMapping, locator);
   }
 
   void error(String key) throws SAXException {

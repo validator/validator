@@ -19,9 +19,4 @@ class AttributeAtom extends Atom {
   boolean isAttribute() {
     return true;
   }
-  Object getAssignmentClass() {
-    if (value == null)
-      return null;
-    return value.getAssignmentClass();
-  }
 }

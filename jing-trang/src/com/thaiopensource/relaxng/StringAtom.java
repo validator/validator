@@ -25,17 +25,7 @@ class StringAtom extends Atom {
   }
 
   boolean matchesDatatype(Datatype dt) {
-    if (dt.allows(str, dc)) {
-      Object tem = dt.getAssignmentClass();
-      if (tem != null) {
-	if (assignmentClass == null)
-	  assignmentClass = tem;
-	else if (tem != assignmentClass)
-	  assignmentClass = AMBIGUOUS_ASSIGNMENT;
-      }
-      return true;
-    }
-    return false;
+    return dt.allows(str, dc);
   }
   
   String getStringValue() {
@@ -48,9 +38,5 @@ class StringAtom extends Atom {
 
   String getString() {
     return str;
-  }
-
-  Object getAssignmentClass() {
-    return assignmentClass;
   }
 }
