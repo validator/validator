@@ -77,14 +77,14 @@ class ChoicePattern extends BinaryPattern {
     visitor.visitChoice(p1, p2);
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     if (dad != null)
       dad.startChoice();
-    p1.checkRestrictions(context, dad);
+    p1.checkRestrictions(context, dad, alpha);
     if (dad != null)
       dad.alternative();
-    p2.checkRestrictions(context, dad);
+    p2.checkRestrictions(context, dad, alpha);
     if (dad != null)
       dad.endChoice();
   }

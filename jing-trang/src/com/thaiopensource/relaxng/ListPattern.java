@@ -46,7 +46,7 @@ class ListPattern extends Pattern {
       return b.makeEmptyChoice();
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     switch (context) {
     case DATA_EXCEPT_CONTEXT:
@@ -57,7 +57,7 @@ class ListPattern extends Pattern {
       throw new RestrictionViolationException("list_contains_list");
     }
     try {
-      p.checkRestrictions(LIST_CONTEXT, dad);
+      p.checkRestrictions(LIST_CONTEXT, dad, null);
     }
     catch (RestrictionViolationException e) {
       e.maybeSetLocator(locator);

@@ -1317,7 +1317,7 @@ public class PatternReader implements ValidationContext {
       }
       pattern = pattern.expand(patternBuilder);
       try {
-	pattern.checkRestrictions(Pattern.START_CONTEXT, null);
+	pattern.checkRestrictions(Pattern.START_CONTEXT, null, null);
 	return pattern;
       }
       catch (RestrictionViolationException e) {

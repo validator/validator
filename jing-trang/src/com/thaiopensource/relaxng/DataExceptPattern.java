@@ -30,11 +30,11 @@ class DataExceptPattern extends DataPattern {
     visitor.visitDataExcept(getDatatype(), except);
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
-    super.checkRestrictions(context, dad);
+    super.checkRestrictions(context, dad, alpha);
     try {
-      except.checkRestrictions(DATA_EXCEPT_CONTEXT, null);
+      except.checkRestrictions(DATA_EXCEPT_CONTEXT, null, null);
     }
     catch (RestrictionViolationException e) {
       e.maybeSetLocator(loc);

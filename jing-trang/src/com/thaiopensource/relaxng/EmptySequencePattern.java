@@ -13,7 +13,7 @@ class EmptySequencePattern extends Pattern {
   void accept(PatternVisitor visitor) {
     visitor.visitEmptySequence();
   }
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     switch (context) {
     case DATA_EXCEPT_CONTEXT:

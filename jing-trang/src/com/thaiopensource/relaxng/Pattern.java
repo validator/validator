@@ -33,8 +33,9 @@ public abstract class Pattern {
   }
 
   static final int EMPTY_CONTENT_TYPE = 0;
-  static final int MIXED_CONTENT_TYPE = 1;
-  static final int DATA_CONTENT_TYPE = 2;
+  static final int ELEMENT_CONTENT_TYPE = 1;
+  static final int MIXED_CONTENT_TYPE = 2;
+  static final int DATA_CONTENT_TYPE = 3;
 
   Pattern(boolean nullable, int contentType, int hc) {
     this.nullable = nullable;
@@ -96,7 +97,7 @@ public abstract class Pattern {
   static final int LIST_CONTEXT = 6;
   static final int DATA_EXCEPT_CONTEXT = 7;
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
   }
 
@@ -118,9 +119,11 @@ public abstract class Pattern {
   abstract void accept(PatternVisitor visitor);
 
   static boolean contentTypeGroupable(int ct1, int ct2) {
-    return (ct1 == EMPTY_CONTENT_TYPE
-	    || ct2 == EMPTY_CONTENT_TYPE
-	    || (ct1 == MIXED_CONTENT_TYPE && ct2 == MIXED_CONTENT_TYPE));
+    if (ct1 == EMPTY_CONTENT_TYPE || ct2 == EMPTY_CONTENT_TYPE)
+      return true;
+    if (ct1 == DATA_CONTENT_TYPE || ct2 == DATA_CONTENT_TYPE)
+      return false;
+    return true;
   }
 
 }

@@ -65,7 +65,7 @@ class OneOrMorePattern extends Pattern {
     p.checkRecursion(depth);
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
@@ -77,7 +77,8 @@ class OneOrMorePattern extends Pattern {
     p.checkRestrictions(context == ELEMENT_CONTEXT
 			? ELEMENT_REPEAT_CONTEXT
 			: context,
-			dad);
+			dad,
+			alpha);
     if (context != LIST_CONTEXT
 	&& !contentTypeGroupable(p.getContentType(), p.getContentType()))
       throw new RestrictionViolationException("one_or_more_string");

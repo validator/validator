@@ -5,6 +5,7 @@ import org.xml.sax.Locator;
 
 class ElementPattern extends Pattern {
   private Pattern p;
+  private NameClass origNameClass;
   private NameClass nameClass;
   private boolean expanded = false;
   private boolean checkedRestrictions = false;
@@ -12,11 +13,12 @@ class ElementPattern extends Pattern {
 
   ElementPattern(NameClass nameClass, Pattern p, Locator loc) {
     super(false,
-	  MIXED_CONTENT_TYPE,
+	  ELEMENT_CONTENT_TYPE,
 	  combineHashCode(ELEMENT_HASH_CODE,
 			  nameClass.hashCode(),
 			  p.hashCode()));
     this.nameClass = nameClass;
+    this.origNameClass = nameClass;
     this.p = p;
     this.loc = loc;
   }
@@ -57,7 +59,10 @@ class ElementPattern extends Pattern {
     return b.makeEmptyPatternPair();
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
+    throws RestrictionViolationException {
+    if (alpha != null)
+      alpha.addElement(origNameClass);
     if (checkedRestrictions)
       return;
     switch (context) {
@@ -70,7 +75,7 @@ class ElementPattern extends Pattern {
     }
     checkedRestrictions = true;
     try {
-      p.checkRestrictions(ELEMENT_CONTEXT, new DuplicateAttributeDetector());
+      p.checkRestrictions(ELEMENT_CONTEXT, new DuplicateAttributeDetector(), null);
     }
     catch (RestrictionViolationException e) {
       checkedRestrictions = false;

@@ -6101,4 +6101,339 @@ before string sequence checking.</documentation>
 </testCase>
 </testSuite>
 </testSuite>
+<testSuite>
+<documentation>Tests for overlapping interleave alphabets</documentation>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <element name="bar">
+      <empty/>
+    </element>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <interleave>
+      <element name="baz">
+	<empty/>
+      </element>
+      <element name="bar">
+	<empty/>
+      </element>
+    </interleave>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <group>
+      <element name="baz">
+	<empty/>
+      </element>
+      <element name="bar">
+	<empty/>
+      </element>
+    </group>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <group>
+      <element name="baz">
+	<empty/>
+      </element>
+      <interleave>
+        <element name="baz">
+          <empty/>
+        </element>
+	<element name="bar">
+	  <empty/>
+	</element>
+      </interleave>
+    </group>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <optional>
+      <element name="bar">
+	<empty/>
+      </element>
+    </optional>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <element>
+      <nsName ns=""/>
+      <empty/>
+    </element>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <element>
+      <anyName/>
+      <empty/>
+    </element>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <element name="bar">
+      <notAllowed/>
+    </element>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <element name="bar">
+      <empty/>
+    </element>
+    <element>
+      <anyName>
+        <except>
+          <name>bar</name>
+        </except>
+      </anyName>
+      <empty/>
+    </element>
+  </interleave>
+</element>
+</correct>
+<valid>
+<foo><bar/><baz/></foo>
+</valid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <choice>
+      <element name="bar">
+	<empty/>
+      </element>
+      <element name="bar">
+	<text/>
+      </element>
+    </choice>
+    <element name="baz">
+      <empty/>
+    </element>
+  </interleave>
+</element>
+</correct>
+<valid>
+<foo><bar/><baz/></foo>
+</valid>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <value>bar</value>
+      <value>bar</value>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <value>bar</value>
+      <optional>
+        <value>bar</value>
+      </optional>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <value>bar</value>
+      <value> bar </value>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <value>bar</value>
+      <value type="string">baz</value>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <choice>
+        <value>bar</value>
+        <value type="string">baz</value>
+      </choice>
+      <value>x</value>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <choice>
+        <value>bar</value>
+        <value type="string">baz</value>
+      </choice>
+      <value type="string">x</value>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <data type="token"/>
+      <data type="token"/>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <value>bar</value>
+      <interleave>
+        <value>baz</value>
+        <value>bar</value>
+      </interleave>
+    </interleave>
+  </list>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <interleave>
+      <choice>
+        <value>bar</value>
+        <group>
+          <value>bar</value>
+          <value>bar</value>
+        </group>
+      </choice>
+      <value>baz</value>
+    </interleave>
+  </list>
+</element>
+</correct>
+<valid><foo>bar baz</foo></valid>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <interleave>
+    <text/>
+    <text/>
+  </interleave>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <mixed>
+    <mixed>
+      <element name="bar">
+        <empty/>
+      </element>
+    </mixed>
+    <element name="baz">
+      <empty/>
+    </element>
+  </mixed>
+</element>
+</incorrect>
+</testCase>
+</testSuite>
 </testSuite>

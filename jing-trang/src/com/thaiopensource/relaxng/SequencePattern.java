@@ -93,7 +93,7 @@ class SequencePattern extends BinaryPattern {
     return b.makeSequence(cp1, cp2);
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha) throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_group");
@@ -103,7 +103,8 @@ class SequencePattern extends BinaryPattern {
     super.checkRestrictions(context == ELEMENT_REPEAT_CONTEXT
 			    ? ELEMENT_REPEAT_GROUP_CONTEXT
 			    : context,
-			    dad);
+			    dad,
+			    alpha);
     if (context != LIST_CONTEXT
 	&& !contentTypeGroupable(p1.getContentType(), p2.getContentType()))
       throw new RestrictionViolationException("group_string");

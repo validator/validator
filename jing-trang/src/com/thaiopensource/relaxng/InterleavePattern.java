@@ -79,20 +79,46 @@ class InterleavePattern extends BinaryPattern {
     return b.makeInterleave(cp1, cp2);
   }
 
-  void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
+  void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
+    throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_interleave");
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_interleave");
     }
-    super.checkRestrictions(context == ELEMENT_REPEAT_CONTEXT
-			    ? ELEMENT_REPEAT_INTERLEAVE_CONTEXT
-			    : context,
-			    dad);
+    if (context == ELEMENT_REPEAT_CONTEXT)
+      context = ELEMENT_REPEAT_INTERLEAVE_CONTEXT;
+    Alphabet a1;
+    if (alpha != null && alpha.isEmpty())
+      a1 = alpha;
+    else if (context == LIST_CONTEXT)
+      a1 = new ListAlphabet();
+    else
+      a1 = new ElementAlphabet();
+    p1.checkRestrictions(context, dad, a1);
+    if (a1.isEmpty())
+      p2.checkRestrictions(context, dad, a1);
+    else {
+      Alphabet a2;
+      if (context == LIST_CONTEXT)
+	a2 = new ListAlphabet();
+      else
+	a2 = new ElementAlphabet();
+      p2.checkRestrictions(context, dad, a2);
+      a1.checkOverlap(a2);
+      if (alpha != null) {
+	if (alpha != a1)
+	  alpha.addAlphabet(a1);
+	alpha.addAlphabet(a2);
+      }
+    }
     if (context != LIST_CONTEXT
 	&& !contentTypeGroupable(p1.getContentType(), p2.getContentType()))
       throw new RestrictionViolationException("interleave_string");
+    if (p1.getContentType() == MIXED_CONTENT_TYPE
+	&& p2.getContentType() == MIXED_CONTENT_TYPE)
+      throw new RestrictionViolationException("interleave_text_overlap");
   }
 
   void accept(PatternVisitor visitor) {
