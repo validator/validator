@@ -23,7 +23,7 @@ public class Validator implements KeyChecker {
   private boolean hadError = false;
   boolean keyAmbig;
 
-  static final int RECOVERY_ATTEMPTS = 4;
+  static final int RECOVERY_ATTEMPTS = 2;
   PrefixMapping prefixMapping = new PrefixMapping("xml", PatternReader.xmlURI, null);
 
   static final class PrefixMapping implements DatatypeContext {
