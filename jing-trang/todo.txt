@@ -1,23 +1,19 @@
+Maybe need to redesign reset() so that it can be used to cleanup the thread.
+
+Add DTD validator
+
 Versions should not have dashes.
 
 Add build.xml for jing.
 
-Maybe need to redesign reset() so that it can be used to cleanup the thread.
-
 Provide a validate method on Validator so that we can avoid messing
 with threads in some cases.
 
-Add file with hints about how to run jars.
-
-Test NRL option handling
+Add doc with hints about how to run jars.
 
 Set Xerces properties to read DTDs but not validate
 
 Option to control DTD parsing
-
-NRL reject messages should specify mode
-
-NRL: allow <validate> to specify name for schema; use that name in error messages. 
 
 Driver should check for options inappropriate for schema language
 
@@ -26,8 +22,6 @@ map passed to schema.createValidator contains an error handler or
 maybe use DraconianErrorHandler by default.
 
 Maybe rename Validator to ValidationHandlers.
-
-NRL needs to pass unparsed entities to sub schemas.
 
 The SAX RELAX NG parser should use any EntityResolver supplied in the
 PropertyMap by wrapping a class round the XMLReaderCreator which sets
