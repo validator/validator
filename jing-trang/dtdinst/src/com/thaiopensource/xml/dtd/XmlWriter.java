@@ -109,12 +109,36 @@ public class XmlWriter {
 	writer.write("&quot;");
 	break;
       default:
-	writer.write(c);
+	if (c >= 0x80) {
+	  if (Utf16.isSurrogate1(c)) {
+	    ++i;
+	    if (i < len) {
+	      char c2 = str.charAt(i);
+	      if (Utf16.isSurrogate2(c)) {
+		charRef(Utf16.scalarValue(c, c2));
+		break;
+	      }
+	    }
+	    throw new IOException("surrogate pair integrity failure");
+	  }
+	  charRef(c);
+	}
+	else
+	  writer.write(c);
 	break;
       }
     }
   }
 
+  private void charRef(int c) throws IOException {
+    writer.write("&#x");
+    int nDigits = c > 0xFFFF ? 6 : 4;
+    for (int i = 0; i < nDigits; i++)
+      writer.write("0123456789ABCDEF".charAt((c >> (4*(nDigits - 1 - i)))
+					     & 0xF));
+    writer.write(";");
+  }
+    
   private void indent() throws IOException {
     for (int i = 0; i < level; i++)
       writer.write(indentString);
