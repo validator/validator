@@ -2,6 +2,9 @@ package com.thaiopensource.xml.dtd.app;
 
 import java.io.IOException;
 import java.io.File;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.MissingResourceException;
 
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
@@ -109,7 +112,7 @@ public class Driver {
   }
 
   private static void usage() {
-    print(localizer().message("USAGE"));
+    print(localizer().message("USAGE", getVersion()));
   }
 
   private static Localizer localizer() {
@@ -126,5 +129,22 @@ public class Driver {
   
   private static void print(String str) {
     System.err.println(str);
+  }
+
+  private static String getVersion() {
+    InputStream in = Driver.class.getResourceAsStream("resources/Version.properties");
+    if (in != null) {
+      Properties props = new Properties();
+      try {
+	props.load(in);
+	String version = props.getProperty("version");
+	if (version != null)
+	  return version;
+      }
+      catch (IOException e) { }
+    }
+    throw new MissingResourceException("no version property",
+				       Driver.class.getName(),
+				       "version");
   }
 }
