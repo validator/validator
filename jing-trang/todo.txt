@@ -1,3 +1,5 @@
+Support URI version number of 1.0.
+
 Distinguish error for unknown datatype library and unknown datatype.
 
 Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
