@@ -134,7 +134,7 @@ class Decl {
 	t = decl.createProcessingInstruction();
 	break;
       case NOTATION:
-	t = decl.createNotationDecl();
+	t = decl.createNotationDecl(db);
 	break;
       case ELEMENT:
 	t = decl.createElementDecl();
@@ -207,8 +207,12 @@ class Decl {
     return false;
   }
   
-  NotationDecl createNotationDecl() {
-    return null;
+  NotationDecl createNotationDecl(DtdBuilder db) {
+    String name;
+    ParamStream ps = new ParamStream(params);
+    ps.advance();
+    return new NotationDecl(ps.value,
+			    db.lookupNotation(ps.value).getExternalId());
   }
 
   OverriddenDef createOverriddenDef(Entity entity, ParamStream ps) {

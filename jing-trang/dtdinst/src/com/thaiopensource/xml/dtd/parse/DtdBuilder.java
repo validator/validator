@@ -13,6 +13,7 @@ class DtdBuilder {
   private Hashtable paramEntityTable = new Hashtable();
   private Hashtable generalEntityTable = new Hashtable();
   private Hashtable normalizedTable = new Hashtable();
+  private Hashtable notationTable = new Hashtable();
 
   DtdBuilder(Vector atoms) {
     this.atoms = atoms;
@@ -46,6 +47,19 @@ class DtdBuilder {
     e = new Entity(name, false);
     generalEntityTable.put(name, e);
     return e;
+  }
+
+  Notation lookupNotation(String name) {
+    return (Notation)notationTable.get(name);
+  }
+
+  Notation createNotation(String name) {
+    Notation n = (Notation)notationTable.get(name);
+    if (n != null)
+      return null;
+    n = new Notation(name);
+    notationTable.put(name, n);
+    return n;
   }
 
   void unexpandEntities() {

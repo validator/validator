@@ -19,6 +19,7 @@ decl =
   | includedSection
   | ignoredSection
   | internalEntityDecl
+  | notationDecl
   | processingInstruction
   | comment
 
@@ -49,6 +50,8 @@ ignoredSection =
 externalIdRef = element externalIdRef { name, decl* }
 
 internalEntityDecl = element internalEntity { name, text }
+
+notationDecl = element notation { name, externalId }
 
 processingInstruction =
   element processingInstruction { attribute target { xsd:NCName }, text }

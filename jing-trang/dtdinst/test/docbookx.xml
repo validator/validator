@@ -135,7 +135,33 @@
         <enum>linespecific</enum>
         <enumGroupRef name="local.notation.class"/>
       </enumGroup>
+      <notation name="BMP" public="+//ISBN 0-7923-9432-1::Graphic Notation//NOTATION Microsoft Windows bitmap//EN"/>
+      <notation name="CGM-CHAR" public="ISO 8632/2//NOTATION Character encoding//EN"/>
+      <notation name="CGM-BINARY" public="ISO 8632/3//NOTATION Binary encoding//EN"/>
+      <notation name="CGM-CLEAR" public="ISO 8632/4//NOTATION Clear text encoding//EN"/>
+      <notation name="DITROFF" system="DITROFF"/>
+      <notation name="DVI" system="DVI"/>
+      <notation name="EPS" public="+//ISBN 0-201-18127-4::Adobe//NOTATION PostScript Language Ref. Manual//EN"/>
+      <notation name="EQN" system="EQN"/>
+      <notation name="FAX" public="-//USA-DOD//NOTATION CCITT Group 4 Facsimile Type 1 Untiled Raster//EN"/>
+      <notation name="GIF" system="GIF"/>
+      <notation name="GIF87a" public="-//CompuServe//NOTATION Graphics Interchange Format 87a//EN"/>
+      <notation name="GIF89a" public="-//CompuServe//NOTATION Graphics Interchange Format 89a//EN"/>
+      <notation name="JPG" system="JPG"/>
+      <notation name="JPEG" system="JPG"/>
+      <notation name="IGES" public="-//USA-DOD//NOTATION (ASME/ANSI Y14.26M-1987) Initial Graphics Exchange Specification//EN"/>
+      <notation name="PCX" public="+//ISBN 0-7923-9432-1::Graphic Notation//NOTATION ZSoft PCX bitmap//EN"/>
+      <notation name="PIC" system="PIC"/>
+      <notation name="PNG" system="http://www.w3.org/TR/REC-png"/>
+      <notation name="PS" system="PS"/>
+      <notation name="SGML" public="ISO 8879:1986//NOTATION Standard Generalized Markup Language//EN"/>
+      <notation name="TBL" system="TBL"/>
+      <notation name="TEX" public="+//ISBN 0-201-13448-9::Knuth//NOTATION The TeXbook//EN"/>
+      <notation name="TIFF" system="TIFF"/>
+      <notation name="WMF" public="+//ISBN 0-7923-9432-1::Graphic Notation//NOTATION Microsoft Windows Metafile//EN"/>
+      <notation name="WPG" system="WPG"/>
       <comment>WordPerfect Graphic format</comment>
+      <notation name="linespecific" system="linespecific"/>
       <comment> End of DocBook XML notations module V4.1.2 ............................. </comment>
       <comment> ...................................................................... </comment>
     </externalIdRef>

@@ -35,6 +35,7 @@ class Parser extends Token {
 
   static class DeclState {
     Entity entity;
+    Notation notation;
   }
 
   Parser(OpenEntity entity, EntityManager entityManager) {
@@ -189,6 +190,18 @@ class Parser extends Token {
 	entity.open = false;
 	break;
       }
+    case PrologParser.ACTION_NOTATION_NAME:
+      declState.notation = db.createNotation(token);
+      if (declState.notation == null)
+	fatal("DUPLICATE_NOTATION", token);
+      break;
+    case PrologParser.ACTION_NOTATION_PUBLIC_ID:
+      declState.notation.publicId = token.substring(1, token.length() - 1);
+      break;
+    case PrologParser.ACTION_NOTATION_SYSTEM_ID:
+      declState.notation.systemId = token.substring(1, token.length() - 1);
+      declState.notation.baseUri = baseUri;
+      break;
     case PrologParser.ACTION_DEFAULT_ATTRIBUTE_VALUE:
       {
 	String origValue = token.substring(1, token.length() - 1);

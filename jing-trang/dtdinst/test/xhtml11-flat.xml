@@ -205,28 +205,48 @@
       <comment> XML Notations ..................................... </comment>
       <comment> SGML and XML Notations ............................ </comment>
       <comment> W3C XML 1.0 Recommendation </comment>
+      <notation name="w3c-xml" public="ISO 8879//NOTATION Extensible Markup Language (XML) 1.0//EN"/>
       <comment> XML 1.0 CDATA </comment>
+      <notation name="cdata" public="-//W3C//NOTATION XML 1.0: CDATA//EN"/>
       <comment> SGML Formal Public Identifiers </comment>
+      <notation name="fpi" public="ISO 8879:1986//NOTATION Formal Public Identifier//EN"/>
       <comment> XHTML Notations ................................... </comment>
       <comment> Length defined for cellpadding/cellspacing </comment>
       <comment> nn for pixels or nn% for percentage length </comment>
+      <notation name="length" public="-//W3C//NOTATION XHTML Datatype: Length//EN"/>
       <comment> space-separated list of link types </comment>
+      <notation name="linkTypes" public="-//W3C//NOTATION XHTML Datatype: LinkTypes//EN"/>
       <comment> single or comma-separated list of media descriptors </comment>
+      <notation name="mediaDesc" public="-//W3C//NOTATION XHTML Datatype: MediaDesc//EN"/>
       <comment> pixel, percentage, or relative </comment>
+      <notation name="multiLength" public="-//W3C//NOTATION XHTML Datatype: MultiLength//EN"/>
       <comment> one or more digits (NUMBER) </comment>
+      <notation name="number" public="-//W3C//NOTATION XHTML Datatype: Number//EN"/>
       <comment> integer representing length in pixels </comment>
+      <notation name="pixels" public="-//W3C//NOTATION XHTML Datatype: Pixels//EN"/>
       <comment> script expression </comment>
+      <notation name="script" public="-//W3C//NOTATION XHTML Datatype: Script//EN"/>
       <comment> textual content </comment>
+      <notation name="text" public="-//W3C//NOTATION XHTML Datatype: Text//EN"/>
       <comment> Imported Notations ................................ </comment>
       <comment> a single character from [ISO10646] </comment>
+      <notation name="character" public="-//W3C//NOTATION XHTML Datatype: Character//EN"/>
       <comment> a character encoding, as per [RFC2045] </comment>
+      <notation name="charset" public="-//W3C//NOTATION XHTML Datatype: Charset//EN"/>
       <comment> a space separated list of character encodings, as per [RFC2045] </comment>
+      <notation name="charsets" public="-//W3C//NOTATION XHTML Datatype: Charsets//EN"/>
       <comment> media type, as per [RFC2045] </comment>
+      <notation name="contentType" public="-//W3C//NOTATION XHTML Datatype: ContentType//EN"/>
       <comment> comma-separated list of media types, as per [RFC2045] </comment>
+      <notation name="contentTypes" public="-//W3C//NOTATION XHTML Datatype: ContentTypes//EN"/>
       <comment> date and time information. ISO date format </comment>
+      <notation name="datetime" public="-//W3C//NOTATION XHTML Datatype: Datetime//EN"/>
       <comment> a language code, as per [RFC3066] </comment>
+      <notation name="languageCode" public="-//W3C//NOTATION XHTML Datatype: LanguageCode//EN"/>
       <comment> a Uniform Resource Identifier, see [URI] </comment>
+      <notation name="uri" public="-//W3C//NOTATION XHTML Datatype: URI//EN"/>
       <comment> a space-separated list of Uniform Resource Identifiers, see [URI] </comment>
+      <notation name="uris" public="-//W3C//NOTATION XHTML Datatype: URIs//EN"/>
       <comment> end of xhtml-notations-1.mod </comment>
     </includedSection>
     <flag name="xhtml-datatypes.module">
