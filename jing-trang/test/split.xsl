@@ -64,9 +64,18 @@
 
 <xsl:template match="resource">
   <xsl:param name="base"/>
-  <saxon:output href="{$base}/{@name}" method="xml">
-    <xsl:call-template name="copy"/>
-  </saxon:output>
+  <xsl:choose>
+    <xsl:when test="*">
+      <saxon:output href="{$base}/{@name}" method="xml">
+	<xsl:call-template name="copy"/>
+      </saxon:output>
+    </xsl:when>
+    <xsl:otherwise>
+      <saxon:output href="{$base}/{@name}" method="text" encoding="utf-8">
+	<xsl:value-of select="."/>
+      </saxon:output>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="copy">
