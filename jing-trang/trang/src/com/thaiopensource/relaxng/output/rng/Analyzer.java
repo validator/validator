@@ -34,7 +34,10 @@ import java.util.Enumeration;
 class Analyzer extends AbstractVisitor {
 
   private Object visitAnnotated(Annotated anno) {
-    noteContext(anno.getContext());
+    if (anno.getAttributeAnnotations().size() > 0
+        || anno.getChildElementAnnotations().size() > 0
+        || anno.getFollowingElementAnnotations().size() > 0)
+      noteContext(anno.getContext());
     visitAnnotationAttributes(anno.getAttributeAnnotations());
     visitAnnotationChildren(anno.getChildElementAnnotations());
     visitAnnotationChildren(anno.getFollowingElementAnnotations());
