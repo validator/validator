@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.output.test;
+package com.thaiopensource.relaxng.translate.test;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;

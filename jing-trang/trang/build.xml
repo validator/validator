@@ -12,7 +12,7 @@
 
 <target name="init">
   <mkdir dir="${build.dir}"/>
-  <property file="src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+  <property file="src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
 </target>
 
 <target name="compile" depends="init">
@@ -23,7 +23,7 @@
 
 <target name="jar" depends="compile">
   <echo file="${build.dir}/trang-manifest.txt">Manifest-Version: 1.0
-Main-Class: com/thaiopensource/relaxng/output/Driver
+Main-Class: com/thaiopensource/relaxng/translate/Driver
 Class-Path: jing.jar
 </echo>
 
@@ -68,7 +68,7 @@ Class-Path: jing.jar
 </target>
 
 <target name="test" depends="jar,split">
-  <java classname="com.thaiopensource.relaxng.output.test.CompactTestDriver" fork="yes" failonerror="yes">
+  <java classname="com.thaiopensource.relaxng.translate.test.CompactTestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/test/out.log"/>
     <arg value="${build.dir}/test"/>
     <arg value="xml"/>
@@ -81,7 +81,7 @@ Class-Path: jing.jar
 </target>
 
 <target name="xsd-test" depends="jar,xsd-split">
-  <java classname="com.thaiopensource.relaxng.output.test.CompactTestDriver" fork="yes" failonerror="yes">
+  <java classname="com.thaiopensource.relaxng.translate.test.CompactTestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/xsd-test/out.log"/>
     <arg value="${build.dir}/xsd-test"/>
     <arg value="xsd"/>
