@@ -632,7 +632,6 @@ public class PatternReader implements ValidationContext {
   class AttributeState extends PatternContainerState implements NameClassRef {
     NameClass nameClass;
     String name;
-    boolean global = false;
 
     State create() {
       return new AttributeState();
@@ -646,25 +645,11 @@ public class PatternReader implements ValidationContext {
       nameClass = nc;
     }
 
-    void setOtherAttribute(String name, String value) throws SAXException {
-      if (name.equals("global")) {
-	value = value.trim();
-	if (value.equals("true"))
-	  global = true;
-	else if (!value.equals("false"))
-	  error("global_attribute_bad_value", value);
-      }
-      else
-	super.setOtherAttribute(name, value);
-    }
-
     void endAttributes() throws SAXException {
       if (name != null) {
 	String nsUse;
 	if (ns != null)
 	  nsUse = ns;
-	else if (global)
-	  nsUse = nsInherit;
 	else
 	  nsUse = "";
 	nameClass = expandName(name, nsUse);
