@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.output.xsd;
 
-public class BuiltinSimpleTypeHierarchy {
+class BuiltinSimpleTypeHierarchy {
   private BuiltinSimpleTypeHierarchy() {
   }
   static private final String[] parentType = {
