@@ -1,37 +1,34 @@
 package com.thaiopensource.relaxng.translate.test;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.InputSource;
-import org.xml.sax.ErrorHandler;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
-
-import java.io.IOException;
-import java.io.File;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-
 import com.thaiopensource.relaxng.XMLReaderCreator;
-import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
-import com.thaiopensource.relaxng.edit.SchemaBuilderImpl;
-import com.thaiopensource.relaxng.output.rng.RngOutputFormat;
-import com.thaiopensource.relaxng.output.OutputFormat;
-import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.input.InputFailedException;
+import com.thaiopensource.relaxng.input.InputFormat;
+import com.thaiopensource.relaxng.input.parse.compact.CompactParseInputFormat;
 import com.thaiopensource.relaxng.output.LocalOutputDirectory;
+import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFailedException;
+import com.thaiopensource.relaxng.output.OutputFormat;
 import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
+import com.thaiopensource.relaxng.output.rng.RngOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
-import com.thaiopensource.relaxng.parse.compact.CompactParseable;
-import com.thaiopensource.relaxng.parse.Parseable;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
 import com.thaiopensource.relaxng.util.ErrorHandlerImpl;
+import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
 import com.thaiopensource.util.UriOrFile;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class CompactTestDriver {
 
   private XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
   private ErrorHandler eh;
+  private InputFormat inputFormat = new CompactParseInputFormat();
   private OutputFormat outputFormat;
   private OutputFormat compactOutputFormat;
   private String toDir;
@@ -157,10 +154,7 @@ public class CompactTestDriver {
 
   private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
-      Parseable parseable = new CompactParseable(new InputSource(UriOrFile.fileToUri(in)), eh);
-      SchemaCollection sc = SchemaBuilderImpl.parse(parseable,
-                                                    eh,
-                                                    new DatatypeLibraryLoader());
+      SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), null, eh);
       OutputDirectory od = new LocalOutputDirectory(out, outExt, OUTPUT_ENCODING, LINE_LENGTH);
       of.output(sc, od, eh);
       return true;
@@ -168,7 +162,7 @@ public class CompactTestDriver {
     catch (SAXException e) {
       return false;
     }
-    catch (IncorrectSchemaException e) {
+    catch (InputFailedException e) {
       return false;
     }
     catch (OutputFailedException e) {

@@ -1,6 +1,46 @@
-package com.thaiopensource.relaxng.edit;
+package com.thaiopensource.relaxng.input.parse;
 
 import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.CompositePattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.ListPattern;
+import com.thaiopensource.relaxng.edit.MixedPattern;
+import com.thaiopensource.relaxng.edit.EmptyPattern;
+import com.thaiopensource.relaxng.edit.NotAllowedPattern;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ExternalRefPattern;
+import com.thaiopensource.relaxng.edit.ChoiceNameClass;
+import com.thaiopensource.relaxng.edit.NameNameClass;
+import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.relaxng.edit.AnyNameNameClass;
+import com.thaiopensource.relaxng.edit.RefPattern;
+import com.thaiopensource.relaxng.edit.ParentRefPattern;
+import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.Component;
+import com.thaiopensource.relaxng.edit.Container;
+import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.DivComponent;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
+import com.thaiopensource.relaxng.edit.SourceLocation;
+import com.thaiopensource.relaxng.edit.Comment;
+import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.Param;
+import com.thaiopensource.relaxng.edit.AttributeAnnotation;
+import com.thaiopensource.relaxng.edit.ElementAnnotation;
+import com.thaiopensource.relaxng.edit.TextAnnotation;
+import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.DataPatternBuilder;
@@ -43,7 +83,7 @@ public class SchemaBuilderImpl implements SchemaBuilder {
   private final Map schemas;
   private final DatatypeLibraryFactory dlf;
   private boolean hadError = false;
-  static final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
+  static private final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
 
   private SchemaBuilderImpl(Parseable parseable, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf) {
     this.parseable = parseable;
@@ -611,7 +651,7 @@ public class SchemaBuilderImpl implements SchemaBuilder {
     return ns;
   }
 
-  static public SchemaCollection parse(Parseable parseable, ErrorHandler eh, DatatypeLibraryFactory dlf)
+  static SchemaCollection parse(Parseable parseable, ErrorHandler eh, DatatypeLibraryFactory dlf)
           throws IncorrectSchemaException, IOException, SAXException {
     try {
       SchemaCollection sc = new SchemaCollection();
