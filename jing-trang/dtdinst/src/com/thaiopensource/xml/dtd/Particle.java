@@ -126,9 +126,38 @@ class Particle {
       return new Choice(mgs);
   }
 
-  EnumGroup createEnumGroup() {
-    // XXX
-    return new EnumGroup(new EnumGroupMember[0]);
+  static EnumGroup particlesToEnumGroup(Vector v) {
+    int len = v.size();
+    Vector eg = new Vector();
+    for(int i = 0; i < len; i++) {
+      EnumGroupMember egm = null;
+      Particle p = (Particle)v.elementAt(i);
+      switch (p.type) {
+      case REFERENCE:
+	if (p.entity.semantic == Entity.SEMANTIC_ENUM_GROUP) {
+	  egm = new EnumGroupRef(p.entity.name,
+				 p.entity.enumGroup);
+	  int level = 0;
+	  for (;;) {
+	    p = (Particle)v.elementAt(++i);
+	    if (p.type == REFERENCE)
+	      level++;
+	    else if (p.type == REFERENCE_END
+		     && level-- == 0)
+	      break;
+	  }
+	}
+	break;
+      case NMTOKEN:
+	egm = new EnumValue(p.value);
+	break;
+      }
+      if (egm != null)
+	eg.addElement(egm);
+    }
+    EnumGroupMember[] members = new EnumGroupMember[eg.size()];
+    for (int i = 0; i < members.length; i++)
+      members[i] = (EnumGroupMember)eg.elementAt(i);
+    return new EnumGroup(members);
   }
-
 }

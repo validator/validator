@@ -103,10 +103,10 @@ class Param {
     case REFERENCE:
       return new DatatypeRef(ps.entity.name, ps.entity.datatype);
     case ATTRIBUTE_VALUE_GROUP:
-      return new EnumDatatype(ps.group.createEnumGroup());
+      return new EnumDatatype(Particle.particlesToEnumGroup(ps.group.particles));
     case ATTRIBUTE_TYPE_NOTATION:
       ps.advance();
-      return new NotationDatatype(ps.group.createEnumGroup());
+      return new NotationDatatype(Particle.particlesToEnumGroup(ps.group.particles));
     case ATTRIBUTE_TYPE:
       return new BasicDatatype(ps.value);
     }

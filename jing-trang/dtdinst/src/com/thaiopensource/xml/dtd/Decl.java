@@ -111,6 +111,9 @@ class Decl {
     case Entity.SEMANTIC_DATATYPE:
       entity.datatype = Param.paramsToDatatype(entity.parsed);
       return new DatatypeDef(name, entity.datatype);
+    case Entity.SEMANTIC_ENUM_GROUP:
+      entity.enumGroup = Particle.particlesToEnumGroup(entity.parsed);
+      return new EnumGroupDef(name, entity.enumGroup);
     }
     return null;
   }
