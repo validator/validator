@@ -76,10 +76,7 @@
 </xsl:template>
 
 <xsl:template name="copy">
-  <xsl:if test="@dtd">
-    <xsl:value-of select="@dtd" disable-output-escaping="yes"/>
-  </xsl:if>
-  <xsl:copy-of select="node()"/>
+  <xsl:copy-of select="@dtd|node()"/>
 </xsl:template>
 
 <xsl:template match="dir">

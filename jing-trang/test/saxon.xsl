@@ -15,7 +15,10 @@
 
 <xsl:template match="document" mode="output">
   <saxon:output href="{@href}" method="{@method}">
-     <xsl:copy-of select="node()"/>
+    <xsl:if test="@dtd">
+      <xsl:value-of select="@dtd" disable-output-escaping="yes"/>
+    </xsl:if>
+    <xsl:copy-of select="node()"/>
   </saxon:output>
 </xsl:template>
 
