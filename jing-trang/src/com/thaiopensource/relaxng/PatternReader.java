@@ -1495,7 +1495,7 @@ public class PatternReader implements ValidationContext {
   }
 
   public String getBaseUri() {
-    return null;
+    return xmlBaseHandler.getBaseUri();
   }
 
   public boolean isUnparsedEntity(String name) {
