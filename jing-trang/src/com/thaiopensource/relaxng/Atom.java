@@ -13,6 +13,9 @@ abstract class Atom {
   boolean matchesDatatype(Datatype dt) {
     return false;
   }
+  boolean matchesDatatype(Datatype dt, String key, String keyRef) {
+    return false;
+  }
   boolean matchesList(PatternBuilder b, Pattern p) {
     return false;
   }

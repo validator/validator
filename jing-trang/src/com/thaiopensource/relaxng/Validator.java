@@ -8,16 +8,21 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
+import org.xml.sax.helpers.LocatorImpl;
 
 import java.util.Hashtable;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import com.thaiopensource.datatype.DatatypeContext;
 
-public class Validator {
+public class Validator implements KeyChecker {
   PatternBuilder b;
   Locator locator;
   private XMLReader xr;
   private boolean hadError = false;
+  boolean keyAmbig;
+
   static final int RECOVERY_ATTEMPTS = 4;
   PrefixMapping prefixMapping = new PrefixMapping("xml", PatternReader.xmlURI, null);
 
@@ -145,10 +150,10 @@ public class Validator {
     void attributes(Attributes atts) throws SAXException {
       int len = atts.getLength();
       for (int i = 0; i < len; i++) {
-	Atom a = new AttributeAtom(atts.getURI(i),
-				   atts.getLocalName(i),
-				   atts.getValue(i),
-				   prefixMapping);
+	AttributeAtom a = new AttributeAtom(atts.getURI(i),
+					    atts.getLocalName(i),
+					    atts.getValue(i),
+					    prefixMapping);
 	if (!updateState(b.memoizedResidual(combinedState, a))) {
 	  // null says allow any value
 	  a = new AttributeAtom(atts.getURI(i),
@@ -161,6 +166,8 @@ public class Validator {
 	  else
 	    error("impossible_attribute_ignored", atts.getLocalName(i));
 	}
+	else
+	  a.checkKeys(Validator.this);
       }
       if (!updateState(b.memoizedEndAttributes(combinedState, false))) {
 	// XXX should specify which attributes
@@ -222,6 +229,8 @@ public class Validator {
     void string(StringAtom a) throws SAXException {
       if (!updateState(b.memoizedResidual(combinedState, a)))
 	error("string_not_allowed");
+      else
+	a.checkKeys(Validator.this);
     }
 
     public void characters(char ch[], int start, int length) throws SAXException {
@@ -261,6 +270,8 @@ public class Validator {
 	hadError = true;
       if (!combinedState.isNullable())
 	error("document_incomplete");
+      if (!hadError)
+	checkKeyComplete();
     }
 
     public void setDocumentLocator(Locator loc) {
@@ -384,9 +395,11 @@ public class Validator {
     }
   }
 
-  public Validator(Pattern pattern, PatternBuilder b, XMLReader xr) {
+  public Validator(Pattern pattern, PatternBuilder b, XMLReader xr,
+		   boolean keyAmbig) {
     this.b = b;
     this.xr = xr;
+    this.keyAmbig = keyAmbig;
     new UnambigHandler(pattern).set();
   }
 
@@ -407,4 +420,91 @@ public class Validator {
     if (eh != null)
       eh.error(new SAXParseException(Localizer.message(key, arg), locator));
   }
+
+  void error(String key, String arg1, String arg2, Locator loc) throws SAXException {
+    hadError = true;
+    ErrorHandler eh = xr.getErrorHandler();
+    if (eh != null)
+      eh.error(new SAXParseException(Localizer.message(key, arg1, arg2),
+				     loc));
+  }
+
+  void error(String key, String arg1, String arg2) throws SAXException {
+    hadError = true;
+    ErrorHandler eh = xr.getErrorHandler();
+    if (eh != null)
+      eh.error(new SAXParseException(Localizer.message(key, arg1, arg2),
+				     locator));
+  }
+
+  Hashtable keyTables = new Hashtable();
+
+  static class Key {
+    boolean defined;
+    Locator defLoc;
+    Vector refLocs;
+  }
+
+  private Key lookupKey(String name, Object value) {
+    Hashtable keyTable = (Hashtable)keyTables.get(name);
+    if (keyTable == null) {
+      keyTable = new Hashtable();
+      keyTables.put(name, keyTable);
+    }
+    Key key = (Key)keyTable.get(value);
+    if (key == null) {
+      key = new Key();
+      keyTable.put(value, key);
+    }
+    return key;
+  }
+
+  void checkKeyComplete() throws SAXException {
+    for (Enumeration e = keyTables.keys(); e.hasMoreElements();) {
+      String keyName = (String)e.nextElement();
+      Hashtable keyTable = (Hashtable)keyTables.get(keyName);
+      for (Enumeration f = keyTable.keys(); f.hasMoreElements();) {
+	Object value = f.nextElement();
+	Key k = (Key)keyTable.get(value);
+	if (!k.defined) {
+	  for (int i = 0; i < k.refLocs.size(); i++)
+	    error("undefined_keyref",
+		  keyName,
+		  value.toString(),
+		  (Locator)k.refLocs.elementAt(i));
+	}
+      }
+    }
+  }
+
+  public void checkKey(String name, Object value) throws SAXException {
+    if (keyAmbig)
+      return;
+    Key k = lookupKey(name, value);
+    if (k.defined)
+      error("duplicate_key", name, value.toString());
+    else {
+      k.defined = true;
+      k.defLoc = saveLocator();
+    }
+    k.refLocs = null;
+  }
+
+  public void checkKeyRef(String name, Object value) {
+    if (keyAmbig)
+      return;
+    Key k = lookupKey(name, value);
+    if (k.defined)
+      return;
+    if (k.refLocs == null)
+      k.refLocs = new Vector();
+    k.refLocs.addElement(saveLocator());
+  }
+
+  private Locator saveLocator() {
+    if (locator == null)
+      return new LocatorImpl();
+    return new LocatorImpl(locator);
+  }
+
 }

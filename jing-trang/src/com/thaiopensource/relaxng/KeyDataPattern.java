@@ -16,7 +16,7 @@ class KeyDataPattern extends SimplePattern {
   }
 
   boolean matches(Atom a) {
-    return a.matchesDatatype(dt);
+    return a.matchesDatatype(dt, key, keyRef);
   }
 
   boolean samePattern(Pattern other) {

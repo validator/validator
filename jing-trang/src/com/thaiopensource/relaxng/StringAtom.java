@@ -3,9 +3,25 @@ package com.thaiopensource.relaxng;
 import com.thaiopensource.datatype.Datatype;
 import com.thaiopensource.datatype.DatatypeContext;
 
+import org.xml.sax.SAXException;
+
 class StringAtom extends Atom {
   private String str;
   private DatatypeContext dc;
+
+  static class Key {
+    String key;
+    String keyRef;
+    Object value;
+
+    Key(String key, String keyRef, Object value) {
+      this.key = key;
+      this.keyRef = keyRef;
+      this.value = value;
+    }
+  }
+
+  private Key[] keys;
 
   StringAtom(String str, DatatypeContext dc) {
     this.str = str;
@@ -31,8 +47,7 @@ class StringAtom extends Atom {
       case ' ':
       case '\t':
 	if (tokenStart >= 0) {
-	  r = r.residual(b, new StringAtom(str.substring(tokenStart, i),
-					   dc));
+	  r = matchToken(b, r, tokenStart, i);
 	  tokenStart = -1;
 	}
 	break;
@@ -43,12 +58,46 @@ class StringAtom extends Atom {
       }
     }
     if (tokenStart >= 0)
-      r = r.residual(b, new StringAtom(str.substring(tokenStart, len),
-				       dc));
+      r = matchToken(b, r, tokenStart, len);
     return r.isNullable();
+  }
+
+  private Pattern matchToken(PatternBuilder b, Pattern p, int i, int j) {
+    StringAtom sa = new StringAtom(str.substring(i, j), dc);
+    Pattern r = p.residual(b, sa);
+    if (sa.keys != null) {
+      if (sa.keys.length != 1)
+	throw new Error("more than one key for a token");
+      if (keys == null)
+	keys = sa.keys;
+      else {
+	Key[] newKeys = new Key[keys.length + 1];
+	System.arraycopy(keys, 0, newKeys, 0, keys.length);
+	newKeys[keys.length] = sa.keys[0];
+	keys = newKeys;
+      }
+    }
+    return r;
   }
 
   boolean matchesDatatype(Datatype dt) {
     return dt.allows(str, dc);
+  }
+
+  boolean matchesDatatype(Datatype dt, String key, String keyRef) {
+    Object obj = dt.createValue(str, dc);
+    if (obj == null)
+      return false;
+    keys = new Key[]{ new Key(key, keyRef, obj) };
+    return true;
+  }
+
+  void checkKeys(KeyChecker kc) throws SAXException {
+    for (int i = 0; i < keys.length; i++) {
+      if (keys[i].key != null)
+	kc.checkKey(keys[i].key, keys[i].value);
+      if (keys[i].keyRef != null)
+	kc.checkKeyRef(keys[i].keyRef, keys[i].value);
+    }
   }
 }

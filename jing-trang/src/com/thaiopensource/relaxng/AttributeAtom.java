@@ -2,10 +2,13 @@ package com.thaiopensource.relaxng;
 
 import com.thaiopensource.datatype.DatatypeContext;
 
+import org.xml.sax.SAXException;
+
 class AttributeAtom extends Atom {
   String namespaceURI;
   String localName;
-  Atom value;
+  StringAtom value;
+
   AttributeAtom(String namespaceURI, String localName, String value, DatatypeContext dc) {
     this.namespaceURI = namespaceURI;
     this.localName = localName;
@@ -19,4 +22,8 @@ class AttributeAtom extends Atom {
   boolean isAttribute() {
     return true;
   }
+  void checkKeys(KeyChecker kc) throws SAXException {
+    value.checkKeys(kc);
+  }
+
 }

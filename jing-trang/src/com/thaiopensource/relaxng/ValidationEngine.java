@@ -16,7 +16,7 @@ public class ValidationEngine {
   private DatatypeFactory df;
   private PatternBuilder pb = new PatternBuilder();
   private Pattern p;
-  private boolean isAmbig;
+  private boolean keyAmbig;
 
   public void setXMLReaderCreator(XMLReaderCreator xrc) {
     this.xrc = xrc;
@@ -46,7 +46,7 @@ public class ValidationEngine {
     p = PatternReader.readPattern(xrc, xr, pb, df, in);
     if (p == null)
       return false;
-    isAmbig = new KeyAmbigChecker(pb, p, eh).isAmbig();
+    keyAmbig = new KeyAmbigChecker(pb, p, eh).isAmbig();
     return true;
   }
 
@@ -54,7 +54,7 @@ public class ValidationEngine {
    * loadPattern must be called before any call to validate
    */
   public boolean validate(InputSource in) throws SAXException, IOException {
-    Validator v = new Validator(p, pb, xr);
+    Validator v = new Validator(p, pb, xr, keyAmbig);
     xr.parse(in);
     return v.getValid();
   }
@@ -67,7 +67,7 @@ public class ValidationEngine {
   public boolean validateMultiThread(InputSource in)
     throws SAXException, IOException {
     XMLReader xr = xrc.createXMLReader();
-    Validator v = new Validator(p, new PatternBuilder(pb), xr);
+    Validator v = new Validator(p, new PatternBuilder(pb), xr, keyAmbig);
     xr.parse(in);
     return v.getValid();
   }
