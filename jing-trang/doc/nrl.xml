@@ -75,22 +75,22 @@ each section separately against the subschema for its namespace.</p>
 <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
               xmlns="http://www.w3.org/1999/xhtml">
 <env:Body>
-<xhtml>
+<html>
 <head>
 <title>Document 1</title>
 </head>
 <body>
 <p>...</p>
 </body>
-</xhtml>
-<xhtml>
+</html>
+<html>
 <head>
 <title>Document 2</title>
 </head>
 <body>
 <p>...</p>
 </body>
-</xhtml>
+</html>
 </env:Body>
 </env:Envelope>
 </xml>
@@ -108,25 +108,25 @@ namespace</p>
 <p>and two with the XHTML namespace:</p>
 
 <xml>
-<xhtml xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Document 1</title>
 </head>
 <body>
 <p>...</p>
 </body>
-</xhtml>
+</html>
 </xml>
 
 <xml>
-<xhtml xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Document 2</title>
 </head>
 <body>
 <p>...</p>
 </body>
-</xhtml>
+</html>
 </xml>
 
 <p>Note that two elements only belong to the same section if they have
