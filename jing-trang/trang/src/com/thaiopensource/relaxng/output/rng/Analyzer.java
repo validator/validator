@@ -83,6 +83,7 @@ class Analyzer extends AbstractVisitor {
 
   public Object visitInclude(IncludeComponent c) {
     visitAnnotated(c);
+    noteInheritNs(c.getNs());
     return visitContainer(c);
   }
 
@@ -181,6 +182,7 @@ class Analyzer extends AbstractVisitor {
   private final Map prefixMap = new HashMap();
   private boolean haveInherit = false;
   private Context lastContext = null;
+  private String noPrefixNs = null;
 
   private void noteDatatypeLibrary(String uri) {
     if (datatypeLibrary == null || datatypeLibrary.length() == 0)
@@ -190,6 +192,8 @@ class Analyzer extends AbstractVisitor {
   private void noteInheritNs(String ns) {
     if (ns == NameClass.INHERIT_NS)
       haveInherit = true;
+    else
+      noPrefixNs = ns;
   }
 
   private void noteNs(String prefix, String ns) {
@@ -217,6 +221,8 @@ class Analyzer extends AbstractVisitor {
   Map getPrefixMap() {
     if (haveInherit)
       prefixMap.remove("");
+    else if (noPrefixNs != null && !prefixMap.containsKey(""))
+      prefixMap.put("", noPrefixNs);
     prefixMap.put("xml", WellKnownNamespaces.XML);
     return prefixMap;
   }
