@@ -54,7 +54,6 @@ class SchemaParser {
   Locator locator;
   XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
   ContextImpl context = new ContextImpl();
-  private boolean inDtd = false;
 
   boolean hadError = false;
 
@@ -1522,19 +1521,22 @@ class SchemaParser {
     new RootState(grammar, scope, SchemaBuilder.INHERIT_NS).set();
   }
 
-  public void startDTD(String s, String s1, String s2) throws SAXException {
-    inDtd = true;
-  }
-
-  public void endDTD() throws SAXException {
-    inDtd = false;
-  }
 
   private Context getContext() {
     return context;
   }
 
   class LexicalHandlerImpl extends AbstractLexicalHandler {
+    private boolean inDtd = false;
+
+    public void startDTD(String s, String s1, String s2) throws SAXException {
+      inDtd = true;
+    }
+
+    public void endDTD() throws SAXException {
+      inDtd = false;
+    }
+
     public void comment(char[] chars, int start, int length) throws SAXException {
       if (!inDtd)
         ((CommentHandler)xr.getContentHandler()).comment(new String(chars, start, length));
