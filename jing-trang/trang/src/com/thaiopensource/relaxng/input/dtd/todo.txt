@@ -1,3 +1,5 @@
+Option to declare namespace prefixes: -oxmlns:foo=http://...
+
 Option to map comments into annotations (or maybe should be separate program).
 
 Generate definition for any in one place.
