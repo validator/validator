@@ -2,7 +2,7 @@
   <include href="../eg/testSuite.rng">
     <define name="correct">
       <element name="correct">
-	<externalRef href="../src/com/thaiopensource/relaxng/mns2/resources/mns2.rng"/>
+	<externalRef href="../src/com/thaiopensource/relaxng/nrl/resources/nrl.rng"/>
       </element>
     </define>
   </include>

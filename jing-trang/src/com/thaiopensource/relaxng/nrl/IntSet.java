@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 class IntSet {
   static private final int INIT_SIZE = 4;

@@ -188,27 +188,27 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </java>
 </target>
 
-<target name="mns2-split" depends="init,check-mns2-split" unless="mns2-split-not-required">
-  <jing rngfile="test/mns2test.rng">
-    <fileset dir="test" includes="mns2test.xml"/>
+<target name="nrl-split" depends="init,check-nrl-split" unless="nrl-split-not-required">
+  <jing rngfile="test/nrltest.rng">
+    <fileset dir="test" includes="nrltest.xml"/>
   </jing>
-  <delete dir="build/mns2test"/>
-  <mkdir dir="build/mns2test"/>
-  <style basedir="test" destdir="build/mns2test" includes="mns2test.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="build/mns2test"/>
+  <delete dir="build/nrltest"/>
+  <mkdir dir="build/nrltest"/>
+  <style basedir="test" destdir="build/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="build/nrltest"/>
   </style>
 </target>
 
-<target name="check-mns2-split">
-  <uptodate property="mns2-split-not-required" targetfile="build/mns2test/mns2test.stamp">
-    <srcfiles dir="test" includes="mns2test.xml"/>
+<target name="check-nrl-split">
+  <uptodate property="nrl-split-not-required" targetfile="build/nrltest/nrltest.stamp">
+    <srcfiles dir="test" includes="nrltest.xml"/>
   </uptodate>
 </target>
 
-<target name="mns2-test" depends="jar,mns2-split" description="Test MNS2 validation">
+<target name="nrl-test" depends="jar,nrl-split" description="Test NRL validation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="build/mns2test/out.log"/>
-    <arg value="build/mns2test"/>
+    <arg value="build/nrltest/out.log"/>
+    <arg value="build/nrltest"/>
     <classpath>
       <pathelement location="build/jing.jar"/>
       <pathelement path="${java.class.path}"/>

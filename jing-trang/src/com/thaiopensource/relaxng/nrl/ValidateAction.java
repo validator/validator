@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 import com.thaiopensource.relaxng.Schema;
 import org.xml.sax.SAXException;

@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 import com.thaiopensource.xml.util.Naming;
 

@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 class ElementsOrAttributes {
   private static final int ELEMENTS_FLAG = 01;

@@ -1,10 +1,9 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 import com.thaiopensource.relaxng.AbstractSchema;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
-import com.thaiopensource.relaxng.mns.DelegatingContentHandler;
 import com.thaiopensource.relaxng.auto.SchemaFuture;
 import com.thaiopensource.relaxng.parse.sax.XmlBaseHandler;
 import com.thaiopensource.util.Localizer;
@@ -26,7 +25,7 @@ import java.util.Vector;
 class SchemaImpl extends AbstractSchema {
   static private final String IMPLICIT_MODE_NAME = "#implicit";
   static private final String WRAPPER_MODE_NAME = "#wrapper";
-  static final String MNS2_URI = "http://www.thaiopensource.com/ns/mns2";
+  static final String NRL_URI = "http://www.thaiopensource.com/ns/nrl";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private Mode defaultBaseMode;
@@ -74,13 +73,13 @@ class SchemaImpl extends AbstractSchema {
 
     public void startDocument() throws SAXException {
       try {
-        validator = sr.getMnsSchema().createValidator(eh);
+        validator = sr.getNrlSchema().createValidator(eh);
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
       }
       catch (IncorrectSchemaException e) {
-        throw new RuntimeException("internal error in RNG schema for MNS");
+        throw new RuntimeException("internal error in RNG schema for NRL");
       }
       setDelegate(validator);
       if (locator != null)
@@ -129,7 +128,7 @@ class SchemaImpl extends AbstractSchema {
       String xmlBase = attributes.getValue(WellKnownNamespaces.XML, "base");
       if (xmlBase != null)
         xmlBaseHandler.xmlBaseAttribute(xmlBase);
-      if (!MNS2_URI.equals(uri) || foreignDepth > 0) {
+      if (!NRL_URI.equals(uri) || foreignDepth > 0) {
         foreignDepth++;
         return;
       }

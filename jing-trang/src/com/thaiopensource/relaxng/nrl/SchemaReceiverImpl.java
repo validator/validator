@@ -1,4 +1,4 @@
-package com.thaiopensource.relaxng.mns2;
+package com.thaiopensource.relaxng.nrl;
 
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.SAXSchemaLanguage;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 
 class SchemaReceiverImpl implements SchemaReceiver {
-  private static final String MNS2_SCHEMA = "mns2.rng";
+  private static final String NRL_SCHEMA = "nrl.rng";
   private static final String RNC_MEDIA_TYPE = "application/x-rnc";
   private final XMLReaderCreator xrc;
   private final ErrorHandler eh;
@@ -29,7 +29,7 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private final SchemaOptions options;
   private final DatatypeLibraryFactory dlf;
   private final SchemaLanguage autoSchemaLanguage;
-  private Schema mnsSchema = null;
+  private Schema nrlSchema = null;
 
   public SchemaReceiverImpl(XMLReaderCreator xrc,
                             ErrorHandler eh,
@@ -48,18 +48,18 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return new SchemaImpl(attributesSchema).installHandlers(xr, this);
   }
 
-  Schema getMnsSchema() throws IOException, IncorrectSchemaException, SAXException {
-   if (mnsSchema == null) {
+  Schema getNrlSchema() throws IOException, IncorrectSchemaException, SAXException {
+   if (nrlSchema == null) {
       String className = SchemaReceiverImpl.class.getName();
-      String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + MNS2_SCHEMA;
-      URL mnsSchemaUrl = getResource(resourceName);
-      mnsSchema = SAXSchemaLanguage.getInstance().createSchema(xrc,
-                                                               new InputSource(mnsSchemaUrl.toString()),
+      String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + NRL_SCHEMA;
+      URL nrlSchemaUrl = getResource(resourceName);
+      nrlSchema = SAXSchemaLanguage.getInstance().createSchema(xrc,
+                                                               new InputSource(nrlSchemaUrl.toString()),
                                                                eh,
                                                                SchemaOptions.NONE,
                                                                dlf);
     }
-    return mnsSchema;
+    return nrlSchema;
   }
 
   private static URL getResource(String resourceName) {
