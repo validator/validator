@@ -2,3 +2,5 @@ Preserve directory structure on output.
 
 Detect unencodable characters in comments in XmlWriter.  Also in
 attribute names (from namespace prefixes).
+
+Ant task.
