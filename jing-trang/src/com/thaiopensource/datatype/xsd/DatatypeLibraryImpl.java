@@ -6,12 +6,10 @@ import java.util.Enumeration;
 import com.thaiopensource.util.Service;
 import com.thaiopensource.datatype.xsd.regex.RegexEngine;
 import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
-import org.xml.sax.XMLReader;
 
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 import org.relaxng.datatype.DatatypeBuilder;
 
 public class DatatypeLibraryImpl implements DatatypeLibrary {
