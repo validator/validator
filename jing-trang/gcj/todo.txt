@@ -1,7 +1,6 @@
+Add make install target
+RPMS
 Fix usage messages
 Detect with -l-org-xml-sax is needed
 Detect with -lpthread is needed
 Write man pages
-In jing, clean needs to clean tests
-Add make install target
-Run test suite with trang

@@ -2,7 +2,9 @@
 
 set -e
 jing_main=com.thaiopensource.relaxng.util.Driver
+jing_test_main=com.thaiopensource.relaxng.util.TestDriver
 trang_main=com.thaiopensource.relaxng.translate.Driver
+trang_test_main=com.thaiopensource.relaxng.translate.test.CompactTestDriver
 a_jing_file=src/com/thaiopensource/relaxng/Schema.java
 crimson_version=1.1.3
 xerces_version=2.3.0
@@ -136,8 +138,8 @@ LDFLAGS=@LDFLAGS@
 
 PROG=${prog}
 MAIN=${main}
+TEST_MAIN=${test_main}
 LIBS=
-
 
 EOF
 echo SOURCES=\\ >>Makefile.in
@@ -155,6 +157,9 @@ cat <<\EOF >>Makefile.in
 $(PROG): $(PROG).o $(RESOURCES)
 	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
 
+test_$(PROG): $(PROG).o $(RESOURCES)
+	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(TEST_MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
+
 $(PROG).o: $(SOURCES)
 	$(GCJ) $(GCJFLAGS) -c -o $@ $(SOURCES)
 
@@ -167,12 +172,16 @@ dirstamp:
 	mkdir $(DIRS)
 	@>$@
 
+check: test_$(PROG)
+	cd test; $(MAKE)
+
 clean:
 	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
 	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
-
+	cd test; $(MAKE) clean
 
 .SUFFIXES: .resource
+.PHONY: check clean
 EOF
 
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
@@ -216,55 +225,100 @@ EOF
 sed -e 's/^/  /' ${top_dir}/gcj/xerces.copying.txt >>copying.txt
 
 cp -a ${top_dir}/gcj/README.redhat8 .
+mkdir test
 }
 
 prog=jing
 main=${jing_main}
+test_main=${jing_test_main}
 prog_version=${jing_version}
 prog_src_dir=${jing_src_dir}
 copying=${top_dir}/copying.txt
 setup_prog
 
-cat <<\EOF >>Makefile.in
-
-TEST_MAIN=com.thaiopensource.relaxng.util.TestDriver
-
-test_$(PROG): $(PROG).o $(RESOURCES)
-	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(TEST_MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
-
-test:
-	cd test; $(MAKE)
-
-check: test test_$(PROG)
-	./test_$(PROG) test.log test/split
-
-.PHONY: test
-EOF
-
-mkdir test
 cd test
 
-cp -a ${top_dir}/gcj/dirs.xsl .
-cp -a ${top_dir}/gcj/esplit.xsl .
+cp -a ${top_dir}/test/dir.xsl .
+cp -a ${top_dir}/test/exslt.xsl .
+cp -a ${top_dir}/test/prep.xsl .
 cp -a ${top_dir}/test/spectest.xml .
 
 cat <<\EOF >Makefile.in
 srcdir=@srcdir@
 XSLTPROC=xsltproc
 
-split/stamp: $(srcdir)/spectest.xml $(srcdir)/esplit.xsl $(srcdir)/dirs.xsl
+check: split/stamp
+	../test_jing test.log split
+
+prepped.xml: $(srcdir)/spectest.xml $(srcdir)/prep.xsl
+	$(XSLTPROC) -o $@ --stringparam dir split $(srcdir)/prep.xsl $(srcdir)/spectest.xml 2>/dev/null
+
+split/stamp: prepped.xml   $(srcdir)/exslt.xsl
 	-mkdir split
-	-mkdir `$(XSLTPROC) --stringparam dir split $(srcdir)/dirs.xsl $(srcdir)/spectest.xml 2>/dev/null`
-	$(XSLTPROC) --stringparam dir split $(srcdir)/esplit.xsl $(srcdir)/spectest.xml 2>/dev/null
+	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl prepped.xml 2>/dev/null`
+	$(XSLTPROC) $(srcdir)/exslt.xsl prepped.xml 2>/dev/null
 	@>$@
 
+clean:
+	-rm -fr split prepped.xml
 EOF
 
 cd ${top_dir}
 prog=trang
 main=${trang_main}
+test_main=${trang_test_main}
 prog_version=${trang_version}
 prog_src_dir=${trang_src_dir}
 copying=${top_dir}/trang/copying.txt
 setup_prog
 sed -e "s/@VERSION@/${trang_version}/g" ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
+cd test
+
+cp -a ${top_dir}/trang/test/compacttest.xml .
+cp -a ${top_dir}/trang/test/toxsdtest.xml .
+cp -a ${top_dir}/test/dir.xsl .
+cp -a ${top_dir}/test/exslt.xsl .
+cp -a ${top_dir}/trang/test/compactprep.xsl prep.xsl
+
+cat <<\EOF >Makefile.in
+srcdir=@srcdir@
+XSLTPROC=xsltproc
+FIXCR=sed -e "s/`echo x | tr x '\015'`/\\&\#xD;/g"
+
+check: compact-check xsd-check
+
+compact-check: compact-split/stamp
+	../test_trang xsd.log compact-split xml
+
+xsd-check: xsd-split/stamp
+	../test_trang compact.log xsd-split xsd
+
+compact-prepped.xml: $(srcdir)/compacttest.xml $(srcdir)/prep.xsl
+	$(XSLTPROC) --stringparam dir compact-split $(srcdir)/prep.xsl $(srcdir)/compacttest.xml | $(FIXCR) >$@
+
+compact-split/stamp: compact-prepped.xml $(srcdir)/exslt.xsl $(srcdir)/dir.xsl
+	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl compact-prepped.xml`
+	$(XSLTPROC) $(srcdir)/exslt.xsl compact-prepped.xml
+	@for f in compact-split/*/xml/c.rng; do \
+	  $(FIXCR) $$f >tem; mv tem $$f; \
+	done
+# Work around another bug in xsltproc
+	@f=`grep -l ' foo="val"' compact-split/*/xml/c.rng`; \
+	if [ -f "$$f" ] ; then \
+	  sed -e 's/ foo=/ rng:foo=/' $$f >tem; mv tem $$f; \
+	fi
+	@>$@
+
+xsd-prepped.xml: $(srcdir)/toxsdtest.xml $(srcdir)/prep.xsl
+	$(XSLTPROC) -o $@ --stringparam dir xsd-split $(srcdir)/prep.xsl $(srcdir)/toxsdtest.xml
+
+xsd-split/stamp: xsd-prepped.xml $(srcdir)/exslt.xsl $(srcdir)/dir.xsl
+	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl xsd-prepped.xml`
+	$(XSLTPROC) $(srcdir)/exslt.xsl xsd-prepped.xml
+	@>$@
+
+clean:
+	-rm -fr compact-split xsd-split compact-prepped.xml xsd-prepped.xml
+
+.PHONY: check xsd-check compact-check clean
+EOF
