@@ -128,8 +128,8 @@
   <javadoc sourcepath="src" destdir="build/api/datatype"
     doctitle="RELAX NG Datatype API" windowtitle="RELAX NG Datatype API"
     packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
-  <mkdir dir="build/api/relaxng"/>
-  <javadoc sourcepath="src" destdir="build/api/relaxng"
+  <mkdir dir="build/api/jing"/>
+  <javadoc sourcepath="src" destdir="build/api/jing"
     doctitle="Jing API" windowtitle="Jing API"
     packagenames="com.thaiopensource.relaxng,com.thaiopensource.relaxng.util">
     <link offline="true" href="../datatype" packagelistLoc="build/api/datatype"/>
@@ -178,15 +178,18 @@
   <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
   <zip zipfile="build/datatype-sample.zip">
     <fileset dir="datatype-sample"/>
-    <fileset dir="build/api/datatype" includes="**" prefix="api"/>
+    <zipfileset dir="build/api/datatype" includes="**" prefix="api"/>
     <fileset dir="build/datatype-sample" includes="datatype-sample.jar"/>
+  </zip>
+  <zip zipfile="build/jing-api.zip">
+    <fileset dir="build" includes="api/**"/>
   </zip>
   <zip zipfile="build/testSuite.zip">
     <fileset dir="test"/>
     <fileset dir="eg" includes="testSuite.rng"/>
   </zip>
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip,testSuite.zip"/>
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip,testSuite.zip,jing-api.zip,api/**"/>
 
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
 
