@@ -8,6 +8,8 @@ License: BSD
 Group: Applications/Text
 BuildRoot: %{_tmppath}/%{name}-root
 
+BuildRequires: gcc-java >= 3.2-7
+
 %description
 Trang converts schemas for XML between different schema languages.
 
