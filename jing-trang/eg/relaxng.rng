@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.1 2001-05-24 07:34:28 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.2 2001-05-24 07:59:41 jjc Exp $ -->
 <grammar ns="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
@@ -264,7 +264,7 @@
             <attribute>
               <anyName/>
             </attribute>
-            <anyString/>
+            <text/>
             <ref name="any"/>
           </choice>
         </zeroOrMore>
@@ -280,7 +280,7 @@
           <attribute>
             <anyName/>
           </attribute>
-          <anyString/>
+          <text/>
           <ref name="any"/>
         </choice>
       </zeroOrMore>
