@@ -1050,6 +1050,10 @@ public class PatternReader implements DatatypeContext {
     
   }
 
+  private static final int PATTERN_CONTEXT = 0;
+  private static final int ANY_NAME_CONTEXT = 1;
+  private static final int NS_NAME_CONTEXT = 2;
+
   class AnyNameState extends NameClassBaseState {
     NameClass except = null;
 
@@ -1061,10 +1065,14 @@ public class PatternReader implements DatatypeContext {
       if (localName.equals("except")) {
 	if (except != null)
 	  error("multiple_except");
-	return new NameClassChoiceState();
+	return new NameClassChoiceState(getContext());
       }
       error("expected_except", localName);
       return null;
+    }
+
+    int getContext() {
+      return ANY_NAME_CONTEXT;
     }
 
     NameClass makeNameClass() {
@@ -1107,13 +1115,51 @@ public class PatternReader implements DatatypeContext {
     private String computeNs() {
       return ns != null ? ns : nsInherit;
     }
+
+    int getContext() {
+      return NS_NAME_CONTEXT;
+    }
+
   }
 
   class NameClassChoiceState extends NameClassContainerState {
     private NameClass nameClass;
+    private int context;
+
+    NameClassChoiceState() {
+      this.context = PATTERN_CONTEXT;
+    }
+
+    NameClassChoiceState(int context) {
+      this.context = context;
+    }
+
+    void setParent(State parent) {
+      super.setParent(parent);
+      if (parent instanceof NameClassChoiceState)
+	this.context = ((NameClassChoiceState)parent).context;
+    }
 
     State create() {
       return new NameClassChoiceState();
+    }
+
+    State createChildState(String localName) throws SAXException {
+      if (localName.equals("anyName")) {
+	if (context >= ANY_NAME_CONTEXT) {
+	  error(context == ANY_NAME_CONTEXT
+		? "any_name_except_contains_any_name"
+		: "ns_name_except_contains_any_name");
+	  return null;
+	}
+      }
+      else if (localName.equals("nsName")) {
+	if (context == NS_NAME_CONTEXT) {
+	  error("ns_name_except_contains_ns_name");
+	  return null;
+	}
+      }
+      return super.createChildState(localName);
     }
 
     void endChild(NameClass nc) {
