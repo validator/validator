@@ -10,7 +10,6 @@
 <!--
 TODO:
 diagnostic
-key
 -->
 
 <xsl:param name="phase" select="'#DEFAULT'"/>
@@ -46,6 +45,7 @@ key
         <axsl:apply-templates select="/" mode="all"/>
       </result>
     </axsl:template>
+    <xsl:apply-templates select="sch:key" mode="key"/>
     <xsl:choose>
       <xsl:when test="normalize-space($phase)='#DEFAULT' and @defaultPhase">
         <xsl:call-template name="process-phase">
@@ -112,6 +112,7 @@ key
 	    <axsl:call-template name="R{$pattern-index}.{position()}"/>
 	    <axsl:apply-templates select="*" mode="all"/>
 	  </axsl:template>
+          <xsl:apply-templates select="sch:key" mode="key"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <axsl:template name="A{normalize-space(@id)}">
@@ -151,6 +152,18 @@ key
 </xsl:template>
 
 <xsl:template match="*" mode="assertion"/>
+
+<xsl:template match="sch:rule/sch:key" mode="key">
+  <axsl:key match="{../@context}" name="{@name}" use="{@path}">
+    <xsl:call-template name="location"/>
+  </axsl:key>
+</xsl:template>
+
+<xsl:template match="sch:schema/sch:key" mode="key">
+  <axsl:key match="{@match}" name="{@name}" use="{@path}">
+    <xsl:call-template name="location"/>
+  </axsl:key>
+</xsl:template>
 
 <xsl:template name="assertion">
   <xsl:copy-of select="@role|@test|@icon|@id|@xml:lang"/>
