@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Server-side Image Map Module -->
-<!-- Depends on image module. --><grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<!-- Depends on image module. -->
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
 
 <define name="img.attlist" combine="interleave">
   <optional>
