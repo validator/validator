@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class Schema {
   private final Map elementDecls = new HashMap();
+  private Particle start;
 
   public Map getElementDecls() {
     return elementDecls;
@@ -14,5 +15,13 @@ public class Schema {
 
   public ElementDecl getElementDecl(Name name) {
     return (ElementDecl)elementDecls.get(name);
+  }
+
+  public Particle getStart() {
+    return start;
+  }
+
+  public void setStart(Particle start) {
+    this.start = start;
   }
 }

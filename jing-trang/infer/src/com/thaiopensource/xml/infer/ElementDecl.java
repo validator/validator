@@ -10,7 +10,6 @@ public class ElementDecl {
   private Particle contentModel;
   private Name datatype;
   private final Map attributeDecls = new HashMap();
-  private boolean start = false;
 
   public Map getAttributeDecls() {
     return attributeDecls;
@@ -34,11 +33,4 @@ public class ElementDecl {
     this.datatype = datatype;
   }
 
-  public boolean isStart() {
-    return start;
-  }
-
-  public void setStart(boolean start) {
-    this.start = start;
-  }
 }

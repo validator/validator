@@ -104,10 +104,22 @@ public class InferHandler extends DefaultHandler {
       Map.Entry entry = (Map.Entry)iter.next();
       ElementDecl decl = ((ElementDeclInferrer)entry.getValue()).infer();
       Name name = (Name)entry.getKey();
-      decl.setStart(startSet.contains(name));
       schema.getElementDecls().put(name, decl);
     }
+    schema.setStart(makeStart());
     return schema;
+  }
+
+  private Particle makeStart() {
+    Particle start = null;
+    for (Iterator iter = startSet.iterator(); iter.hasNext();) {
+      Particle tem = new ElementParticle((Name)iter.next());
+      if (start == null)
+        start = tem;
+      else
+        start = new ChoiceParticle(start, tem);
+    }
+    return start;
   }
 
   public InferHandler(DatatypeLibraryFactory factory) {
