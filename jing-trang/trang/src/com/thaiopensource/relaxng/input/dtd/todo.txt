@@ -1,6 +1,3 @@
-Undefined elements do not contain reference to their attlists;
-undefined elements should use element pattern with notAllowed content.
-
 Option to control definition of any (anything at all, not allowed,
 choice of all defined elements, choice of all namespaces with defined
 elements).
