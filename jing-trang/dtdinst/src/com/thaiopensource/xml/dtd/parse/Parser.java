@@ -7,8 +7,10 @@ import java.util.Hashtable;
 
 import com.thaiopensource.xml.tok.*;
 import com.thaiopensource.xml.em.*;
+import com.thaiopensource.xml.util.Localizer;
 
 class Parser extends Token {
+  static Localizer localizer = new Localizer(Parser.class);
   private Parser parent;
   private Reader in;
   private char[] buf;
@@ -512,11 +514,11 @@ class Parser extends Token {
   }
 
   private void fatal(String key, String arg) throws ParseException {
-    doFatal(Localizer.message(key, arg));
+    doFatal(localizer.message(key, arg));
   }
   
   private void fatal(String key) throws ParseException {
-    doFatal(Localizer.message(key));
+    doFatal(localizer.message(key));
   }
 
   private void doFatal(String message) throws ParseException {
@@ -526,7 +528,8 @@ class Parser extends Token {
       throw new Error("positioning botch");
     Tokenizer.movePosition(buf, posOff, currentTokenStart, pos);
     posOff = currentTokenStart;
-    throw new ParseException(message,
+    throw new ParseException(localizer,
+			     message,
 			     location,
 			     pos.getLineNumber(),
 			     pos.getColumnNumber());

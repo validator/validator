@@ -2,16 +2,21 @@ package com.thaiopensource.xml.dtd.parse;
 
 import java.io.IOException;
 
+import com.thaiopensource.xml.util.Localizer;
+
 public class ParseException extends IOException {
+  private Localizer localizer;
   private String location;
   private int lineNumber;
   private int columnNumber;
 
-  public ParseException(String message,
+  public ParseException(Localizer localizer,
+			String message,
 			String location,
 			int lineNumber,
 			int columnNumber) {
     super(message);
+    this.localizer = localizer;
     this.lineNumber = lineNumber;
     this.columnNumber = columnNumber;
     this.location = location;
@@ -30,7 +35,7 @@ public class ParseException extends IOException {
   }
 
   public String getMessage() {
-    return Localizer.message("MESSAGE",
+    return localizer.message("MESSAGE",
 			     new Object[] {
 			       super.getMessage(),
 			       location,
