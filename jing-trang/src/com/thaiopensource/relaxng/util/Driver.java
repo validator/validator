@@ -1,23 +1,11 @@
 package com.thaiopensource.relaxng.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.InputStream;
-import java.util.Properties;
-import java.util.MissingResourceException;
-import java.net.URL;
-
-import org.xml.sax.helpers.XMLReaderFactory;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.SAXException;
-import org.xml.sax.InputSource;
-import org.xml.sax.ErrorHandler;
-
-import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.util.OptionParser;
 import com.thaiopensource.util.Version;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 
 class Driver {
   static private String usageKey = "usage";
