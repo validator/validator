@@ -22,11 +22,6 @@ class PatternRefPattern extends Pattern {
   static final byte COMBINE_INTERLEAVE = 2;
 
   PatternRefPattern(String name) {
-    // The referenced pattern may not be nullable, but the nullability
-    // of a PatternRefPattern is only used by PatternBuilder for simplfying
-    // choices, and in that context ip is safe to assume that ip is
-    // not nullable.
-    super(false);
     this.name = name;
   }
 
@@ -83,13 +78,6 @@ class PatternRefPattern extends Pattern {
 
   Pattern endAttributes(PatternBuilder b, boolean recovering) {
     return p.endAttributes(b, recovering);
-  }
-
-  int checkString(Locator[] loc) throws SAXException {
-    int flags = p.memoizedCheckString(loc);
-    if ((flags & DISTINGUISHES_STRINGS) != 0)
-      loc[0] = refLoc;
-    return flags;
   }
 
   boolean samePattern(Pattern other) {

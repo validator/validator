@@ -8,6 +8,7 @@ import com.thaiopensource.datatype.Datatype;
 public abstract class Pattern {
   private boolean nullable;
   private int hc;
+  private int contentType;
 
   static final int TEXT_HASH_CODE = 1;
   static final int ERROR_HASH_CODE = 3;
@@ -33,14 +34,20 @@ public abstract class Pattern {
     return hc1 * hc2;
   }
 
-  Pattern(boolean nullable, int hc) {
+  static final int EMPTY_CONTENT_TYPE = 0;
+  static final int MIXED_CONTENT_TYPE = 1;
+  static final int DATA_CONTENT_TYPE = 2;
+
+  Pattern(boolean nullable, int contentType, int hc) {
     this.nullable = nullable;
+    this.contentType = contentType;
     this.hc = hc;
   }
 
-  Pattern(boolean nullable) {
-    this.nullable = nullable;
+  Pattern() {
+    this.nullable = false;
     this.hc = hashCode();
+    this.contentType = EMPTY_CONTENT_TYPE;
   }
 
   void checkRecursion(int depth) throws SAXException { }
@@ -82,33 +89,16 @@ public abstract class Pattern {
     return b.makeEmptyPatternPair();
   }
 
-  static final int DISTINGUISHES_STRINGS = 01;
-  static final int ALLOWS_CHILDREN = 02;
+  static final int START_CONTEXT = 0;
+  static final int ELEMENT_CONTEXT = 1;
+  static final int ELEMENT_REPEAT_CONTEXT = 2;
+  static final int ELEMENT_REPEAT_GROUP_CONTEXT = 3;
+  static final int ELEMENT_REPEAT_INTERLEAVE_CONTEXT = 4;
+  static final int ATTRIBUTE_CONTEXT = 5;
+  static final int LIST_CONTEXT = 6;
+  static final int DATA_EXCEPT_CONTEXT = 7;
 
-  int checkString(Locator[] loc) throws SAXException {
-    return 0;
-  }
-
-  private Boolean distinguishesStringsValue = null;
-
-  boolean distinguishesStrings() {
-    return false;
-  }
-
-  boolean memoizedDistinguishesStrings() {
-    if (distinguishesStringsValue == null)
-      distinguishesStringsValue = (distinguishesStrings()
-				  ? Boolean.TRUE
-				  : Boolean.FALSE);
-    return distinguishesStringsValue.booleanValue();
-  }
-
-  int memoizedCheckString(Locator[] loc) throws SAXException {
-    int flags = checkString(loc);
-    distinguishesStringsValue = ((flags & DISTINGUISHES_STRINGS) != 0
-				 ? Boolean.TRUE
-				 : Boolean.FALSE);
-    return flags;
+  void checkRestrictions(int context) throws RestrictionViolationException {
   }
 
   // Know that ip is same class, distinct object, not null
@@ -116,6 +106,10 @@ public abstract class Pattern {
 
   final int patternHashCode() {
     return hc;
+  }
+
+  final int getContentType() {
+    return contentType;
   }
 
   boolean containsChoice(Pattern p) {
@@ -127,4 +121,11 @@ public abstract class Pattern {
   Datatype getDatatype() {
     return null;
   }
+
+  static boolean contentTypeGroupable(int ct1, int ct2) {
+    return (ct1 == EMPTY_CONTENT_TYPE
+	    || ct2 == EMPTY_CONTENT_TYPE
+	    || (ct1 == MIXED_CONTENT_TYPE && ct2 == MIXED_CONTENT_TYPE));
+  }
+
 }

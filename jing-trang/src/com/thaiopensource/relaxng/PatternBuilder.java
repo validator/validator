@@ -15,6 +15,7 @@ public class PatternBuilder {
 
   private final EmptySequencePattern emptySequence;
   private final EmptyChoicePattern emptyChoice;
+  private final NotAllowedPattern notAllowed;
   private final TextPattern text;
 
   private final PatternPair emptyPatternPair;
@@ -31,6 +32,7 @@ public class PatternBuilder {
     usedLimit = 0;
     emptySequence = new EmptySequencePattern();
     emptyChoice = new EmptyChoicePattern();
+    notAllowed = new NotAllowedPattern();
     text = new TextPattern();
     emptyPatternPair = new PatternPair();
     eaTable = new Hashtable();
@@ -47,6 +49,7 @@ public class PatternBuilder {
     usedLimit = parent.usedLimit;
     emptySequence = parent.emptySequence;
     emptyChoice = parent.emptyChoice;
+    notAllowed = parent.notAllowed;
     text = parent.text;
     emptyPatternPair = parent.emptyPatternPair;
     eaTable = (Hashtable)parent.eaTable.clone();
@@ -60,6 +63,9 @@ public class PatternBuilder {
   }
   Pattern makeEmptyChoice() {
     return emptyChoice;
+  }
+  Pattern makeNotAllowed() {
+    return notAllowed;
   }
   Pattern makeError() {
     return intern(new ErrorPattern());
@@ -93,20 +99,20 @@ public class PatternBuilder {
   Pattern makeText() {
     return text;
   }
-  Pattern makeValue(Datatype dt, Object obj, Locator loc) {
-    return intern(new ValuePattern(dt, obj, loc));
+  Pattern makeValue(Datatype dt, Object obj) {
+    return intern(new ValuePattern(dt, obj));
   }
 
-  Pattern makeData(Datatype dt, Locator loc) {
-    return intern(new DatatypePattern(dt, loc));
+  Pattern makeData(Datatype dt) {
+    return intern(new DatatypePattern(dt));
   }
 
-  Pattern makeKey(String name, Locator loc, Pattern p) {
-    return intern(new KeyPattern(name, loc, p));
+  Pattern makeKey(String name, Pattern p) {
+    return intern(new KeyPattern(name, p));
   }
 
-  Pattern makeKeyRef(String name, Locator loc, Pattern p) {
-    return intern(new KeyRefPattern(name, loc, p));
+  Pattern makeKeyRef(String name, Pattern p) {
+    return intern(new KeyRefPattern(name, p));
   }
 
   Pattern makeChoice(Pattern p1, Pattern p2) {
@@ -154,16 +160,14 @@ public class PatternBuilder {
     return intern(new ListPattern(p, loc));
   }
 
-  Pattern makeElement(NameClass nameClass, Pattern content) {
-    if (content.isEmptyChoice())
-      return content;
-    return intern(new ElementPattern(nameClass, content));
+  Pattern makeElement(NameClass nameClass, Pattern content, Locator loc) {
+    return intern(new ElementPattern(nameClass, content, loc));
   }
 
-  Pattern makeAttribute(NameClass nameClass, Pattern value) {
+  Pattern makeAttribute(NameClass nameClass, Pattern value, Locator loc) {
     if (value.isEmptyChoice())
       return value;
-    return intern(new AttributePattern(nameClass, value));
+    return intern(new AttributePattern(nameClass, value, loc));
   }
 
   private Pattern intern(Pattern p) {

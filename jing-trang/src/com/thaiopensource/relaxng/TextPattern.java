@@ -6,7 +6,7 @@ import org.xml.sax.Locator;
 
 class TextPattern extends Pattern {
   TextPattern() {
-    super(true, TEXT_HASH_CODE);
+    super(true, MIXED_CONTENT_TYPE, TEXT_HASH_CODE);
   }
 
   Pattern residual(PatternBuilder b, Atom a) {
@@ -16,10 +16,6 @@ class TextPattern extends Pattern {
       return b.makeEmptyChoice();
   }
 
-  int checkString(Locator[] loc) {
-    return ALLOWS_CHILDREN;
-  }
-
   boolean samePattern(Pattern other) {
     return other instanceof TextPattern;
   }
@@ -27,4 +23,16 @@ class TextPattern extends Pattern {
   void accept(PatternVisitor visitor) {
     visitor.visitText();
   }
+
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_text");
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_text");
+    case LIST_CONTEXT:
+      throw new RestrictionViolationException("list_contains_text");
+    }
+  }
+
 }

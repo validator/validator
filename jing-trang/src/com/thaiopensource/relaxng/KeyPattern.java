@@ -9,10 +9,9 @@ class KeyPattern extends StringPattern {
   private String name;
   private Pattern p;
 
-  KeyPattern(String name, Locator locator, Pattern p) {
+  KeyPattern(String name, Pattern p) {
     super(false,
-	  combineHashCode(KEY_HASH_CODE, name.hashCode(), p.hashCode()),
-	  locator);
+	  combineHashCode(KEY_HASH_CODE, name.hashCode(), p.hashCode()));
     this.p = p;
     this.name = name;
     this.dt = p.getDatatype();
@@ -25,7 +24,7 @@ class KeyPattern extends StringPattern {
   Pattern expand(PatternBuilder b) {
     Pattern ep = p.expand(b);
     if (ep != p)
-      return b.makeKey(name, getLocator(), ep);
+      return b.makeKey(name, ep);
     else
       return this;
   }

@@ -367,7 +367,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern wrapPattern(Pattern p) {
-      return patternBuilder.makeElement(nameClass, p);
+      return patternBuilder.makeElement(nameClass, p, copyLocator());
     }
   }
 
@@ -407,7 +407,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern makePattern() {
-      return patternBuilder.makeEmptyChoice();
+      return patternBuilder.makeNotAllowed();
     }
   }
 
@@ -451,7 +451,6 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern makePattern() throws SAXException {
-      Locator loc = copyLocator();
       DatatypeBuilder dtb;
       if (type == null)
 	dtb = tokenDatatypeBuilder;
@@ -461,9 +460,9 @@ public class PatternReader implements DatatypeContext {
       Object value = dt.createValue(buf.toString(), PatternReader.this);
       if (value == null) {
 	error("invalid_value", buf.toString());
-	return patternBuilder.makeData(dt, loc);
+	return patternBuilder.makeData(dt);
       }
-      return patternBuilder.makeValue(dt, value, loc);
+      return patternBuilder.makeValue(dt, value);
     }
 
   }
@@ -514,13 +513,12 @@ public class PatternReader implements DatatypeContext {
     }
 
     void end() {
-      Locator loc = copyLocator();
       Datatype dt = dtb.finish();
-      Pattern p = patternBuilder.makeData(dt, loc);
+      Pattern p = patternBuilder.makeData(dt);
       if (key != null)
-	p = patternBuilder.makeKey(key, loc, p);
+	p = patternBuilder.makeKey(key, p);
       else if (keyRef != null)
-	p = patternBuilder.makeKeyRef(keyRef, loc, p);
+	p = patternBuilder.makeKeyRef(keyRef, p);
       parent.endChild(p);
     }
   }
@@ -619,7 +617,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern wrapPattern(Pattern p) {
-      return patternBuilder.makeAttribute(nameClass, p);
+      return patternBuilder.makeAttribute(nameClass, p, copyLocator());
     }
   }
 
@@ -651,7 +649,7 @@ public class PatternReader implements DatatypeContext {
     Pattern wrapPattern(Pattern p) throws SAXException {
       if (name == null)
 	return p;
-      return patternBuilder.makeKey(name, copyLocator(), p);
+      return patternBuilder.makeKey(name, p);
     }
   }
 
@@ -662,7 +660,7 @@ public class PatternReader implements DatatypeContext {
     Pattern wrapPattern(Pattern p) throws SAXException {
       if (name == null)
 	return p;
-      return patternBuilder.makeKeyRef(name, copyLocator(), p);
+      return patternBuilder.makeKeyRef(name, p);
     }
   }
 
@@ -1277,11 +1275,17 @@ public class PatternReader implements DatatypeContext {
     if (pattern != null) {
       try {
 	pattern.checkRecursion(0);
-	pattern.memoizedCheckString(new Locator[1]);
-	return pattern.expand(patternBuilder);
       }
       catch (SAXParseException e) {
 	error(e);
+      }
+      pattern = pattern.expand(patternBuilder);
+      try {
+	pattern.checkRestrictions(Pattern.START_CONTEXT);
+	return pattern;
+      }
+      catch (RestrictionViolationException e) {
+	error(e.getMessageId(), e.getLocator());
       }
     }
     return null;

@@ -3,11 +3,8 @@ package com.thaiopensource.relaxng;
 import org.xml.sax.Locator;
 
 abstract class SimplePattern extends StringPattern {
-  private Locator locator;
-
-  SimplePattern(int hc, Locator locator) {
-    super(false, hc, locator);
-    this.locator = locator;
+  SimplePattern(int hc) {
+    super(false, hc);
   }
 
   Pattern residual(PatternBuilder b, Atom a) {

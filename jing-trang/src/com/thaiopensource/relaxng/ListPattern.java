@@ -12,6 +12,7 @@ class ListPattern extends Pattern {
 
   ListPattern(Pattern p, Locator locator) {
     super(p.isNullable(),
+	  DATA_CONTENT_TYPE,
 	  combineHashCode(LIST_HASH_CODE, p.hashCode()));
     this.p = p;
     this.locator = locator;
@@ -45,13 +46,21 @@ class ListPattern extends Pattern {
       return b.makeEmptyChoice();
   }
 
-  int checkString(Locator[] loc) {
-    if (loc[0] == null)
-      loc[0] = locator;
-    return DISTINGUISHES_STRINGS;
-  }
-
-  boolean distinguishesStrings() {
-    return true;
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_list");
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_list");
+    case LIST_CONTEXT:
+      throw new RestrictionViolationException("list_contains_list");
+    }
+    try {
+      p.checkRestrictions(LIST_CONTEXT);
+    }
+    catch (RestrictionViolationException e) {
+      e.maybeSetLocator(locator);
+      throw e;
+    }
   }
 }

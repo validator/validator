@@ -7,5 +7,6 @@ interface NameClassVisitor {
   void visitNsName(String ns);
   void visitAnyName();
   void visitName(String ns, String localName);
+  void visitNull();
   void visitError();
 }

@@ -4,14 +4,16 @@ Support DTD compatibility use of ID/IDREF/IDREFS.
 
 Support DTD compatibility use of default values.
 
-Support Datatype guideliness.
+Support Datatype guidelines.
 
 Handle <except> inside <data>
 
-Implement 7.1 restrictions
+Implement 7.1.6 restrictions on name classes.
 
 Detect duplicate attributes
 
 Avoid slow error recovery with large schemas (eg DocBook).
 
 Validate QNames/NCNames in schema.
+
+Bug with nullable data.

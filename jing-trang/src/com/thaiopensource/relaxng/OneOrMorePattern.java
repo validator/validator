@@ -8,8 +8,9 @@ class OneOrMorePattern extends Pattern {
   Pattern p;
 
   OneOrMorePattern(Pattern p) {
-    super(p.isNullable(), combineHashCode(ONE_OR_MORE_HASH_CODE,
-					  p.hashCode()));
+    super(p.isNullable(),
+	  p.getContentType(),
+	  combineHashCode(ONE_OR_MORE_HASH_CODE, p.hashCode()));
     this.p = p;
   }
 
@@ -64,18 +65,27 @@ class OneOrMorePattern extends Pattern {
     p.checkRecursion(depth);
   }
 
-  int checkString(Locator[] loc) throws SAXException {
-    int flags = p.checkString(loc);
-    if ((flags & DISTINGUISHES_STRINGS) != 0)
-      throw new SAXParseException(Localizer.message("one_or_more_string"),
-				  loc[0]);
-    return flags;
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_one_or_more");
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_one_or_more");
+    }
+    
+    p.checkRestrictions(context == ELEMENT_CONTEXT
+			? ELEMENT_REPEAT_CONTEXT
+			: context);
+    if (context != LIST_CONTEXT
+	&& !contentTypeGroupable(p.getContentType(), p.getContentType()))
+      throw new RestrictionViolationException("one_or_more_string");
   }
 
   boolean samePattern(Pattern other) {
     return (other instanceof OneOrMorePattern
 	    && p == ((OneOrMorePattern)other).p);
   }
+
   void accept(PatternVisitor visitor) {
     visitor.visitOneOrMore(p);
   }

@@ -2,7 +2,7 @@ package com.thaiopensource.relaxng;
 
 class EmptySequencePattern extends Pattern {
   EmptySequencePattern() {
-    super(true, EMPTY_SEQUENCE_HASH_CODE);
+    super(true, EMPTY_CONTENT_TYPE, EMPTY_SEQUENCE_HASH_CODE);
   }
   Pattern residual(PatternBuilder b, Atom a) {
     return b.makeEmptyChoice();

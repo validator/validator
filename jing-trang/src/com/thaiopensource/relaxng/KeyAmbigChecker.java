@@ -113,6 +113,9 @@ public class KeyAmbigChecker {
     public void visitAnyName() {
     }
 
+    public void visitNull() {
+    }
+
     public void visitName(String ns, String localName) {
     }
   }
@@ -138,6 +141,9 @@ public class KeyAmbigChecker {
 
     public void visitAnyName() {
       addName(type, OTHER, OTHER);
+    }
+
+    public void visitNull() {
     }
 
     public void visitNot(NameClass nc) {

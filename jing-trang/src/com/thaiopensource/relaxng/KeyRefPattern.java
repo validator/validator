@@ -9,10 +9,9 @@ class KeyRefPattern extends StringPattern {
   private String name;
   private Pattern p;
 
-  KeyRefPattern(String name, Locator locator, Pattern p) {
+  KeyRefPattern(String name, Pattern p) {
     super(false,
-	  combineHashCode(KEY_REF_HASH_CODE, name.hashCode(), p.hashCode()),
-	  locator);
+	  combineHashCode(KEY_REF_HASH_CODE, name.hashCode(), p.hashCode()));
     this.p = p;
     this.name = name;
     this.dt = p.getDatatype();
@@ -32,7 +31,7 @@ class KeyRefPattern extends StringPattern {
   Pattern expand(PatternBuilder b) {
     Pattern ep = p.expand(b);
     if (ep != p)
-      return b.makeKeyRef(name, getLocator(), ep);
+      return b.makeKeyRef(name, ep);
     else
       return this;
   }

@@ -93,20 +93,19 @@ class SequencePattern extends BinaryPattern {
     return b.makeSequence(cp1, cp2);
   }
 
-  int checkString(Locator[] loc) throws SAXException {
-    int flags1 = p1.memoizedCheckString(loc);
-    Locator loc1 = loc[0];
-    loc[0] = null;
-    int flags2 = p2.memoizedCheckString(loc);
-    if ((flags1 & DISTINGUISHES_STRINGS) != 0 && flags2 != 0)
-      throw new SAXParseException(Localizer.message("group_string"),
-				  loc1);
-    if ((flags2 & DISTINGUISHES_STRINGS) != 0 && flags1 != 0)
-      throw new SAXParseException(Localizer.message("group_string"),
-				  loc[0]);
-    if (loc1 != null)
-      loc[0] = loc1;
-    return flags1|flags2;
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_group");
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_group");
+    }
+    super.checkRestrictions(context == ELEMENT_REPEAT_CONTEXT
+			    ? ELEMENT_REPEAT_GROUP_CONTEXT
+			    : context);
+    if (context != LIST_CONTEXT
+	&& !contentTypeGroupable(p1.getContentType(), p2.getContentType()))
+      throw new RestrictionViolationException("group_string");
   }
 
   void accept(PatternVisitor visitor) {

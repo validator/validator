@@ -7,8 +7,8 @@ class ValuePattern extends SimplePattern {
   Object obj;
   Datatype dt;
 
-  ValuePattern(Datatype dt, Object obj, Locator locator) {
-    super(combineHashCode(VALUE_HASH_CODE, obj.hashCode()), locator);
+  ValuePattern(Datatype dt, Object obj) {
+    super(combineHashCode(VALUE_HASH_CODE, obj.hashCode()));
     this.dt = dt;
     this.obj = obj;
   }
@@ -33,4 +33,12 @@ class ValuePattern extends SimplePattern {
   Datatype getDatatype() {
     return dt;
   }
+
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_value");
+    }
+  }
+
 }

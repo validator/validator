@@ -7,22 +7,19 @@ abstract class BinaryPattern extends Pattern {
   Pattern p1;
   Pattern p2;
   BinaryPattern(boolean nullable, int hc, Pattern p1, Pattern p2) {
-    super(nullable, hc);
+    super(nullable, Math.max(p1.getContentType(), p2.getContentType()), hc);
     this.p1 = p1;
     this.p2 = p2;
   }
+
   void checkRecursion(int depth) throws SAXException {
     p1.checkRecursion(depth);
     p2.checkRecursion(depth);
   }
 
-  int checkString(Locator[] loc) throws SAXException {
-    return p1.memoizedCheckString(loc) | p2.memoizedCheckString(loc);
-  }
-
-  boolean distinguishesStrings() {
-    return (p1.memoizedDistinguishesStrings()
-	    || p2.memoizedDistinguishesStrings());
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    p1.checkRestrictions(context);
+    p2.checkRestrictions(context);
   }
 
   boolean samePattern(Pattern other) {

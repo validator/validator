@@ -174,7 +174,7 @@ public class Validator implements KeyChecker {
 	error("required_attributes_missing");
 	combinedState = b.memoizedEndAttributes(combinedState, true);
       }
-      if (combinedState.memoizedDistinguishesStrings())
+      if (combinedState.getContentType() == Pattern.DATA_CONTENT_TYPE)
 	startCollectingCharacters();
     }
 
@@ -382,7 +382,7 @@ public class Validator implements KeyChecker {
       }
       for (int i = 0; i < state.length; i++) {
 	state[i] = b.memoizedEndAttributes(state[i], false);
-	if (state[i].memoizedDistinguishesStrings())
+	if (state[i].getContentType() == Pattern.DATA_CONTENT_TYPE)
 	  startCollectingCharacters();
       }
     }

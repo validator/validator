@@ -2,7 +2,7 @@ package com.thaiopensource.relaxng;
 
 class ErrorPattern extends Pattern {
   ErrorPattern() {
-    super(false, ERROR_HASH_CODE);
+    super(false, EMPTY_CONTENT_TYPE, ERROR_HASH_CODE);
   }
   Pattern residual(PatternBuilder b, Atom a) {
     return this;

@@ -6,14 +6,17 @@ import org.xml.sax.Locator;
 class AttributePattern extends Pattern {
   private NameClass nameClass;
   private Pattern p;
+  private Locator loc;
 
-  AttributePattern(NameClass nameClass, Pattern value) {
+  AttributePattern(NameClass nameClass, Pattern value, Locator loc) {
     super(false,
+	  EMPTY_CONTENT_TYPE,
 	  combineHashCode(ATTRIBUTE_HASH_CODE,
 			  nameClass.hashCode(),
 			  value.hashCode()));
     this.nameClass = nameClass;
     this.p = value;
+    this.loc = loc;
   }
 
   Pattern residual(PatternBuilder b, Atom a) {
@@ -33,15 +36,33 @@ class AttributePattern extends Pattern {
   Pattern expand(PatternBuilder b) {
     Pattern ep = p.expand(b);
     if (ep != p)
-      return b.makeAttribute(nameClass, ep);
+      return b.makeAttribute(nameClass, ep, loc);
     else
       return this;
   }
 
-  int checkString(Locator[] loc) throws SAXException {
-    p.checkString(loc);
-    loc[0] = null;
-    return 0;
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_attribute");
+    case ELEMENT_REPEAT_GROUP_CONTEXT:
+      throw new RestrictionViolationException("one_or_more_contains_group_contains_attribute");
+    case ELEMENT_REPEAT_INTERLEAVE_CONTEXT:
+      throw new RestrictionViolationException("one_or_more_contains_interleave_contains_attribute");
+    case LIST_CONTEXT:
+      throw new RestrictionViolationException("list_contains_attribute");
+    case ATTRIBUTE_CONTEXT:
+      throw new RestrictionViolationException("attribute_contains_attribute");
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_attribute");
+    }
+    try {
+      p.checkRestrictions(ATTRIBUTE_CONTEXT);
+    }
+    catch (RestrictionViolationException e) {
+      e.maybeSetLocator(loc);
+      throw e;
+    }
   }
 
   boolean samePattern(Pattern other) {

@@ -1,19 +1,19 @@
 package com.thaiopensource.relaxng;
 
-class EmptyChoicePattern extends Pattern {
-  EmptyChoicePattern() {
+class NotAllowedPattern extends Pattern {
+  NotAllowedPattern() {
     super(false, EMPTY_CONTENT_TYPE, EMPTY_CHOICE_HASH_CODE);
   }
   Pattern residual(PatternBuilder b, Atom a) {
     return this;
   }
-  boolean isEmptyChoice() {
-    return true;
-  }
   boolean samePattern(Pattern other) {
-    return other instanceof EmptyChoicePattern;
+    return other instanceof NotAllowedPattern;
   }
   void accept(PatternVisitor visitor) {
     visitor.visitEmptyChoice();
+  }
+  Pattern expand(PatternBuilder b) {
+    return b.makeEmptyChoice();
   }
 }

@@ -330,6 +330,11 @@ public class PatternDumper {
       startElement("error");
       endElement();
     }
+    
+    public void visitNull() {
+      startElement("null"); // XXX
+      endElement();
+    }
   }
 
   class ChoiceDumpNameClassVisitor extends DumpNameClassVisitor {

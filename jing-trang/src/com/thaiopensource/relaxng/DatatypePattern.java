@@ -6,8 +6,8 @@ import com.thaiopensource.datatype.Datatype;
 class DatatypePattern extends SimplePattern {
   private Datatype dt;
 
-  DatatypePattern(Datatype dt, Locator locator) {
-    super(combineHashCode(DATA_HASH_CODE, dt.hashCode()), locator);
+  DatatypePattern(Datatype dt) {
+    super(combineHashCode(DATA_HASH_CODE, dt.hashCode()));
     this.dt = dt;
   }
 
@@ -27,5 +27,12 @@ class DatatypePattern extends SimplePattern {
 
   Datatype getDatatype() {
     return dt;
+  }
+
+  void checkRestrictions(int context) throws RestrictionViolationException {
+    switch (context) {
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_data");
+    }
   }
 }
