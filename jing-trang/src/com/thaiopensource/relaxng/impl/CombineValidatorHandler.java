@@ -96,12 +96,4 @@ public class CombineValidatorHandler implements ValidatorHandler {
     return vh1.isValidSoFar() && vh2.isValidSoFar();
   }
 
-  public void setErrorHandler(ErrorHandler eh) {
-    vh1.setErrorHandler(eh);
-    vh2.setErrorHandler(eh);
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return vh1.getErrorHandler();
-  }
 }

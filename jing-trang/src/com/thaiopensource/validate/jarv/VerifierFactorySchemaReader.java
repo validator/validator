@@ -5,11 +5,8 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidatorHandler;
-import com.thaiopensource.validate.AbstractSchema;
-import com.thaiopensource.validate.jarv.JarvConfigurationException;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierFactory;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -18,16 +15,16 @@ import java.io.IOException;
 public class VerifierFactorySchemaReader implements SchemaReader {
   private final VerifierFactory vf;
 
-  static private class SchemaImpl extends AbstractSchema {
+  static private class SchemaImpl implements Schema {
     org.iso_relax.verifier.Schema schema;
 
     private SchemaImpl(org.iso_relax.verifier.Schema schema) {
       this.schema = schema;
     }
 
-    public ValidatorHandler createValidator(ErrorHandler eh) {
+    public ValidatorHandler createValidator(PropertyMap properties) {
       try {
-        return new VerifierValidatorHandler(schema.newVerifier(), eh);
+        return new VerifierValidatorHandler(schema.newVerifier(), properties);
       }
       catch (VerifierConfigurationException e) {
         Exception cause = e.getCauseException();

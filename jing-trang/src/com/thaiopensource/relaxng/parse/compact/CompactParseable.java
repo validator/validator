@@ -1,22 +1,21 @@
 package com.thaiopensource.relaxng.parse.compact;
 
-import com.thaiopensource.relaxng.parse.Parseable;
-import com.thaiopensource.relaxng.parse.ParsedPattern;
-import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.IncludedGrammar;
+import com.thaiopensource.relaxng.parse.Parseable;
+import com.thaiopensource.relaxng.parse.ParsedPattern;
+import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
 import com.thaiopensource.xml.util.EncodingMap;
-import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 
-import java.io.Reader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.io.PushbackInputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.Reader;
 import java.net.URL;
 
 public class CompactParseable implements Parseable {

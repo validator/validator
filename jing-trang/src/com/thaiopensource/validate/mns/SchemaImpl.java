@@ -1,20 +1,15 @@
 package com.thaiopensource.validate.mns;
 
-import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.Uri;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidatorHandler;
-import com.thaiopensource.validate.mns.ContextMap;
-import com.thaiopensource.validate.mns.DelegatingContentHandler;
-import com.thaiopensource.validate.mns.Hashset;
-import com.thaiopensource.validate.mns.SchemaReceiverImpl;
-import com.thaiopensource.validate.mns.ElementsOrAttributes;
-import com.thaiopensource.validate.mns.ValidatorHandlerImpl;
 import com.thaiopensource.validate.auto.SchemaFuture;
-import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
-import com.thaiopensource.util.Localizer;
-import com.thaiopensource.util.Uri;
+import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
@@ -31,7 +26,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 
-class SchemaImpl extends AbstractSchema {
+class SchemaImpl implements Schema {
   static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
@@ -132,7 +127,7 @@ class SchemaImpl extends AbstractSchema {
 
     Handler(SchemaReceiverImpl sr) {
       this.sr = sr;
-      this.eh = sr.getErrorHandler();
+      this.eh = ValidateProperty.ERROR_HANDLER.get(sr.getProperties());
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -142,7 +137,7 @@ class SchemaImpl extends AbstractSchema {
 
     public void startDocument() throws SAXException {
       try {
-        validator = sr.getMnsSchema().createValidator(eh);
+        validator = sr.getMnsSchema().createValidator(sr.getProperties());
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
@@ -445,8 +440,8 @@ class SchemaImpl extends AbstractSchema {
     return h;
   }
 
-  public ValidatorHandler createValidator(ErrorHandler eh) {
-    return new ValidatorHandlerImpl(startMode, eh);
+  public ValidatorHandler createValidator(PropertyMap properties) {
+    return new ValidatorHandlerImpl(startMode, properties);
   }
 
   private Mode lookupCreateMode(String name) {

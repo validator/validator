@@ -17,7 +17,7 @@ import java.util.Vector;
 
 public class IdSoundnessChecker implements ValidatorHandler {
   private final IdTypeMap idTypeMap;
-  private ErrorHandler eh;
+  private final ErrorHandler eh;
   private boolean hadError;
   private Locator locator;
   private final Hashtable table = new Hashtable();
@@ -41,14 +41,6 @@ public class IdSoundnessChecker implements ValidatorHandler {
 
   public boolean isValidSoFar() {
     return !hadError;
-  }
-
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return eh;
   }
 
   public void setDocumentLocator(Locator locator) {

@@ -2,11 +2,13 @@ package com.thaiopensource.validate.mns;
 
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.mns.ContextMap;
 import com.thaiopensource.validate.mns.Hashset;
 import com.thaiopensource.validate.mns.ElementsOrAttributes;
 import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.PropertyMap;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
@@ -22,7 +24,8 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private static final String BEARER_LOCAL_NAME = "#bearer";
   private SchemaImpl.Mode currentMode;
   private int laxDepth = 0;
-  private ErrorHandler eh;
+  private final ErrorHandler eh;
+  private final PropertyMap properties;
   private Locator locator;
   private Subtree subtrees = null;
   private boolean validSoFar = true;
@@ -68,9 +71,10 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
   }
 
-  ValidatorHandlerImpl(SchemaImpl.Mode mode, ErrorHandler eh) {
+  ValidatorHandlerImpl(SchemaImpl.Mode mode, PropertyMap properties) {
     this.currentMode = mode;
-    this.eh = eh;
+    this.properties = properties;
+    this.eh = ValidateProperty.ERROR_HANDLER.get(properties);
   }
 
   public void setDocumentLocator(Locator locator) {
@@ -215,7 +219,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
        validatorHandlerCache.put(schema, stack);
      }
      if (stack.empty())
-       return schema.createValidator(eh);
+       return schema.createValidator(properties);
      return (ValidatorHandler)stack.pop();
    }
 
@@ -251,14 +255,6 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     validSoFar = true;
     subtrees = null;
     locator = null;
-  }
-
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return eh;
   }
 
   private void error(String key, String arg) throws SAXException {

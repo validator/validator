@@ -4,10 +4,8 @@ import com.thaiopensource.relaxng.impl.Pattern;
 import com.thaiopensource.relaxng.impl.ValidatorPatternBuilder;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierHandler;
-import org.iso_relax.verifier.VerifierFilter;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.XMLFilterImpl;
 
 class VerifierImpl extends org.iso_relax.verifier.impl.VerifierImpl {
   private final VerifierHandlerImpl vhi;

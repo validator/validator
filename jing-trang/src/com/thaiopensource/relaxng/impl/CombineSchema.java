@@ -1,11 +1,10 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidatorHandler;
-import org.xml.sax.ErrorHandler;
+import com.thaiopensource.util.PropertyMap;
 
-public class CombineSchema extends AbstractSchema {
+public class CombineSchema implements Schema {
   private final Schema schema1;
   private final Schema schema2;
 
@@ -14,8 +13,8 @@ public class CombineSchema extends AbstractSchema {
     this.schema2 = schema2;
   }
 
-  public ValidatorHandler createValidator(ErrorHandler eh) {
-    return new CombineValidatorHandler(schema1.createValidator(eh),
-                                       schema2.createValidator(eh));
+  public ValidatorHandler createValidator(PropertyMap properties) {
+    return new CombineValidatorHandler(schema1.createValidator(properties),
+                                       schema2.createValidator(properties));
   }
 }

@@ -1,6 +1,8 @@
 package com.thaiopensource.validate.jarv;
 
 import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.util.PropertyMap;
 import org.iso_relax.verifier.Verifier;
 import org.iso_relax.verifier.VerifierHandler;
 import org.xml.sax.Locator;
@@ -8,18 +10,22 @@ import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.EntityResolver;
 
 public class VerifierValidatorHandler implements ValidatorHandler, ErrorHandler {
   private final Verifier verifier;
   private VerifierHandler handler;
   private boolean validSoFar = true;
-  private ErrorHandler eh = null;
+  private final ErrorHandler eh;
   private SAXException storedException = null;
 
-  public VerifierValidatorHandler(Verifier verifier, ErrorHandler eh) {
+  public VerifierValidatorHandler(Verifier verifier, PropertyMap properties) {
     this.verifier = verifier;
-    this.eh = eh;
+    eh = ValidateProperty.ERROR_HANDLER.get(properties);
     verifier.setErrorHandler(this);
+    EntityResolver er = ValidateProperty.ENTITY_RESOLVER.get(properties);
+    if (er != null)
+      verifier.setEntityResolver(er);
     try {
       handler = verifier.getVerifierHandler();
     }
@@ -40,14 +46,6 @@ public class VerifierValidatorHandler implements ValidatorHandler, ErrorHandler 
       storedException = e;
     }
     validSoFar = true;
-  }
-
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return eh;
   }
 
   public void setDocumentLocator(Locator locator) {

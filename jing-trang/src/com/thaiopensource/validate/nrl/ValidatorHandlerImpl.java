@@ -9,6 +9,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXParseException;
 import com.thaiopensource.validate.ValidatorHandler;
 import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.nrl.ActionSet;
 import com.thaiopensource.validate.nrl.AttributeActionSet;
 import com.thaiopensource.validate.nrl.FilteredAttributes;
@@ -20,6 +21,7 @@ import com.thaiopensource.validate.nrl.NoResultAction;
 import com.thaiopensource.validate.nrl.ResultAction;
 import com.thaiopensource.validate.nrl.SectionState;
 import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.PropertyMap;
 
 import java.util.Vector;
 import java.util.Stack;
@@ -31,7 +33,8 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private static final String BEARER_LOCAL_NAME = "#bearer";
   private static final String NO_NS = "\0";
   private boolean validSoFar = true;
-  private ErrorHandler eh;
+  private final ErrorHandler eh;
+  private final PropertyMap properties;
   private Locator locator;
   private Section currentSection;
   private PrefixMapping prefixMapping = null;
@@ -148,8 +151,9 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
   }
 
-  ValidatorHandlerImpl(Mode mode, ErrorHandler eh) {
-    this.eh = eh;
+  ValidatorHandlerImpl(Mode mode, PropertyMap properties) {
+    this.properties = properties;
+    this.eh = ValidateProperty.ERROR_HANDLER.get(properties);
     this.startMode = mode;
     initCurrentSection();
   }
@@ -358,14 +362,6 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     prefixMapping = prefixMapping.parent;
   }
 
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return eh;
-  }
-
   private ValidatorHandler createValidatorHandler(Schema schema) {
     Stack stack = (Stack)validatorHandlerCache.get(schema);
     if (stack == null) {
@@ -373,7 +369,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       validatorHandlerCache.put(schema, stack);
     }
     if (stack.empty())
-      return schema.createValidator(eh);
+      return schema.createValidator(properties);
     return (ValidatorHandler)stack.pop();
   }
 

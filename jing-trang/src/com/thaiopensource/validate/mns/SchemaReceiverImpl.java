@@ -72,8 +72,8 @@ class SchemaReceiverImpl implements SchemaReceiver {
       return cl.getResource(resourceName);
   }
 
-  ErrorHandler getErrorHandler() {
-    return ValidateProperty.ERROR_HANDLER.get(properties);
+  PropertyMap getProperties() {
+    return properties;
   }
 
   Schema createChildSchema(InputSource inputSource, String schemaType, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {

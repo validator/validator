@@ -15,7 +15,7 @@ import java.util.Hashtable;
 public class PatternValidatorHandler extends DtdContext implements ValidatorHandler {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
-  private ErrorHandler eh;
+  protected ErrorHandler eh;
   private Hashtable recoverPatternTable;
   private PatternMemo memo;
   private boolean hadError;
@@ -263,13 +263,5 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
 
   public String getBaseUri() {
     return null;
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return eh;
-  }
-
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
   }
 }

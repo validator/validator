@@ -1,25 +1,14 @@
 package com.thaiopensource.validate.nrl;
 
-import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.Uri;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidatorHandler;
-import com.thaiopensource.validate.nrl.ActionSet;
-import com.thaiopensource.validate.nrl.AllowAction;
-import com.thaiopensource.validate.nrl.AttributeActionSet;
-import com.thaiopensource.validate.nrl.DelegatingContentHandler;
-import com.thaiopensource.validate.nrl.DelveAction;
-import com.thaiopensource.validate.nrl.ElementsOrAttributes;
-import com.thaiopensource.validate.nrl.Hashset;
-import com.thaiopensource.validate.nrl.Mode;
-import com.thaiopensource.validate.nrl.ModeUsage;
-import com.thaiopensource.validate.nrl.PassAction;
-import com.thaiopensource.validate.nrl.Path;
-import com.thaiopensource.validate.nrl.RejectAction;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
-import com.thaiopensource.util.Localizer;
-import com.thaiopensource.util.Uri;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
@@ -34,7 +23,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-class SchemaImpl extends AbstractSchema {
+class SchemaImpl implements Schema {
   static private final String IMPLICIT_MODE_NAME = "#implicit";
   static private final String WRAPPER_MODE_NAME = "#wrapper";
   static final String NRL_URI = "http://www.thaiopensource.com/ns/nrl";
@@ -75,7 +64,7 @@ class SchemaImpl extends AbstractSchema {
 
     Handler(SchemaReceiverImpl sr) {
       this.sr = sr;
-      this.eh = sr.getErrorHandler();
+      this.eh = ValidateProperty.ERROR_HANDLER.get(sr.getProperties());
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -85,7 +74,7 @@ class SchemaImpl extends AbstractSchema {
 
     public void startDocument() throws SAXException {
       try {
-        validator = sr.getNrlSchema().createValidator(eh);
+        validator = sr.getNrlSchema().createValidator(sr.getProperties());
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
@@ -446,8 +435,8 @@ class SchemaImpl extends AbstractSchema {
     return h;
   }
 
-  public ValidatorHandler createValidator(ErrorHandler eh) {
-    return new ValidatorHandlerImpl(startMode, eh);
+  public ValidatorHandler createValidator(PropertyMap properties) {
+    return new ValidatorHandlerImpl(startMode, properties);
   }
 
   private Mode getModeAttribute(Attributes attributes, String localName) {

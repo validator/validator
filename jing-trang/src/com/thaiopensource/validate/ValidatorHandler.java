@@ -33,24 +33,4 @@ public interface ValidatorHandler extends ContentHandler, DTDHandler {
    * The current <code>ErrorHandler</code> is not affected.
    */
   void reset();
-
-  /**
-   * Sets the current <code>ErrorHandler</code> to be used for reporting validation errors.  This
-   * may be called at any time, even after this <code>ValidatorHandler</code> has started to
-   * received content.
-   *
-   * @param eh the error handler to use for reporting errors; <code>null</code> if errors should
-   * not be reported
-   * @see #getErrorHandler
-   */
-  void setErrorHandler(ErrorHandler eh);
-
-  /**
-   * Returns the current <code>ErrorHandler</code> as set by <code>setErrorHandler</code>.
-   *
-   * @return the current <code>ErrorHandler</code>; maybe <code>null</code> if no <code>ErrorHandler</code>
-   * has been set.
-   * @see #setErrorHandler
-   */
-  ErrorHandler getErrorHandler();
 }

@@ -1,38 +1,36 @@
 package com.thaiopensource.validate.xerces;
 
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidatorHandler;
-import com.thaiopensource.validate.xerces.Features;
-import com.thaiopensource.validate.xerces.Properties;
-import com.thaiopensource.validate.xerces.SAXXMLErrorHandler;
-import org.apache.xerces.util.SymbolTable;
-import org.apache.xerces.util.ParserConfigurationSettings;
+import org.apache.xerces.impl.XMLErrorReporter;
+import org.apache.xerces.impl.validation.EntityState;
+import org.apache.xerces.impl.validation.ValidationManager;
+import org.apache.xerces.impl.xs.XMLSchemaValidator;
 import org.apache.xerces.util.NamespaceSupport;
+import org.apache.xerces.util.ParserConfigurationSettings;
+import org.apache.xerces.util.SymbolTable;
 import org.apache.xerces.util.XMLAttributesImpl;
 import org.apache.xerces.util.XMLSymbols;
-import org.apache.xerces.xni.grammars.XMLGrammarPool;
-import org.apache.xerces.xni.XMLLocator;
 import org.apache.xerces.xni.NamespaceContext;
 import org.apache.xerces.xni.QName;
 import org.apache.xerces.xni.XMLAttributes;
-import org.apache.xerces.xni.XMLString;
+import org.apache.xerces.xni.XMLLocator;
 import org.apache.xerces.xni.XMLResourceIdentifier;
+import org.apache.xerces.xni.XMLString;
 import org.apache.xerces.xni.XNIException;
+import org.apache.xerces.xni.grammars.XMLGrammarPool;
 import org.apache.xerces.xni.parser.XMLComponent;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.apache.xerces.xni.parser.XMLParseException;
-import org.apache.xerces.impl.xs.XMLSchemaValidator;
-import org.apache.xerces.impl.XMLErrorReporter;
-import org.apache.xerces.impl.validation.ValidationManager;
-import org.apache.xerces.impl.validation.EntityState;
-import org.xml.sax.ErrorHandler;
+import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXParseException;
 
-import java.util.Hashtable;
 import java.io.IOException;
+import java.util.Hashtable;
 
 class ValidatorHandlerImpl extends ParserConfigurationSettings implements ValidatorHandler, XMLLocator, XMLEntityResolver, EntityState {
 
@@ -67,9 +65,9 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
     Properties.ENTITY_RESOLVER,
   };
 
-  ValidatorHandlerImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, ErrorHandler errorHandler) {
+  ValidatorHandlerImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, PropertyMap properties) {
     this.symbolTable = symbolTable;
-    errorHandlerWrapper = new SAXXMLErrorHandler(errorHandler);
+    errorHandlerWrapper = new SAXXMLErrorHandler(ValidateProperty.ERROR_HANDLER.get(properties));
     components = new XMLComponent[] { errorReporter, schemaValidator };
     for (int i = 0; i < components.length; i++) {
       addRecognizedFeatures(components[i].getRecognizedFeatures());
@@ -92,14 +90,6 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
     setProperty(Properties.ENTITY_MANAGER, this);
     setProperty(Properties.ENTITY_RESOLVER, this);
     reset();
-  }
-
-  public void setErrorHandler(ErrorHandler eh) {
-    errorHandlerWrapper.setErrorHandler(eh);
-  }
-
-  public ErrorHandler getErrorHandler() {
-    return errorHandlerWrapper.getErrorHandler();
   }
 
   public boolean isValidSoFar() {

@@ -17,7 +17,10 @@ import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.validate.ValidatorHandler;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.util.UriOrFile;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.SinglePropertyMap;
 
 /**
  * Provides a simplified API for validating XML documents against RELAX NG schemas.
@@ -171,8 +174,15 @@ public class ValidationEngine {
   public boolean validate(InputSource in) throws SAXException, IOException {
     if (schema == null)
       throw new IllegalStateException("cannot validate without schema");
-    if (vh == null)
-      vh = schema.createValidator(eh);
+    if (vh == null) {
+      PropertyMap properties;
+      if (eh == null)
+        properties = PropertyMap.EMPTY;
+      else
+        properties = new SinglePropertyMap(ValidateProperty.ERROR_HANDLER,
+                                           eh);
+      vh = schema.createValidator(properties);
+    }
     else
       vh.reset();
     if (xr == null) {
