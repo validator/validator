@@ -1,37 +1,46 @@
+Error reporting.
+
 Encoding detection
+
+empty param entities at the group level
+
+Don't unexpand entities that are not properly nested.
 
 expand general entity references for default values
 
 attval normalization of default values
 
-general entities
+internal general entities in the object model
 
-notations
+notations in the object model
 
-Error reporting.
+Don't unexpand empty entities that might be pasted.
 
-Don't unexpand entities that are not properly nested.
+overridden param entity declarations
 
-Don't expand empty entities that might be pasted.
+Include sections in object model.
 
-overridden declarations
+Unparsed ignored sections in the object model.
 
-(foo %bar) where bar is empty
+Include external param entities in object model.
 
-case where entity contains just "|" or ","
+Try to parse ignored marked sections.
 
-undefined elements
+In the object model add something for case where internal param
+entity was not preserved.
 
-
-empty param entities at the group level
-ignored sections
-included sections
-external general entities
-
-
-something for case where param entity was not preserved
+Add something for case where param entity was overridden.
 
 <!ENTITY % g "(x|y)">
 <!ATTLIST foo bar NOTATION %g; #IMPLIED>
 
 Should recognize above case as enum group.
+
+Warning for unused parameter entities.
+
+Better treatment of fixed attribute values.
+
+Abstraction for string; string pasting.
+
+Translation to RELAX NG: undefined elements; namespaces; overridden
+attributes.
