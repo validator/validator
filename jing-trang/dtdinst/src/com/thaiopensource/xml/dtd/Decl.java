@@ -60,25 +60,10 @@ class Decl {
   }
 
   ElementDecl createElementDecl() {
-    ParamStream ps = new ParamStream(params);
+    ParamStream ps = new ParamStream(params, true);
     ps.advance();
     String name = ps.value;
-    ps.advance();
-    ModelGroup mg;
-    switch (ps.type) {
-    case Param.ANY:
-      mg = new Any();
-      break;
-    case Param.EMPTY:
-      mg = new Sequence(new ModelGroup[0]);
-      break;
-    case Param.MODEL_GROUP:
-      mg = ps.group.createModelGroup();
-      break;
-    default:
-      throw new Error();
-    }
-    return new ElementDecl(name, mg);
+    return new ElementDecl(name, Param.paramsToModelGroup(ps));
   }
 
   AttlistDecl createAttlistDecl() {
@@ -102,7 +87,10 @@ class Decl {
       return null;
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
-      entity.modelGroup = Particle.particlesToModelGroup(entity.parsed);
+      if (entity.referenceLevel == Entity.PARAM_LEVEL)
+	entity.modelGroup = Param.paramsToModelGroup(entity.parsed);
+      else
+	entity.modelGroup = Particle.particlesToModelGroup(entity.parsed);
       return new ModelGroupDef(name, entity.modelGroup);
     case Entity.SEMANTIC_ATTRIBUTE_GROUP:
       entity.attributeGroup = 

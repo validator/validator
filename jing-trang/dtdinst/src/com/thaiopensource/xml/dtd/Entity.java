@@ -65,6 +65,7 @@ class Entity {
 	// XXX give a warning
 	parsed = null;
 	referenceLevel = INCONSISTENT_LEVEL;
+	System.err.println("Warning: entity used inconsistently: " + name);
       }
     }
     else if (referenceLevel == NO_LEVEL) {
@@ -73,7 +74,7 @@ class Entity {
       referenceLevel = level;
     }
     else if (referenceLevel > 0) {
-      // XXX give a warning
+      System.err.println("Warning: entity used inconsistently: " + name);
       parsed = null;
       referenceLevel = INCONSISTENT_LEVEL;
     }
@@ -166,6 +167,10 @@ class Entity {
       semantic = SEMANTIC_DATATYPE;
     else if (isFlag())
       semantic = SEMANTIC_FLAG;
+    else if (isModelGroup())
+      semantic = SEMANTIC_MODEL_GROUP;
+    else
+      System.err.println("Warning: could not understand entity: " + name);
   }
 
   private boolean isAttributeGroup() {
@@ -202,6 +207,15 @@ class Entity {
 	    && !ps.advance());
   }
 
+  private boolean isModelGroup() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance()
+	    && (ps.type == Param.MODEL_GROUP
+		|| ps.type == Param.EMPTY
+		|| ps.type == Param.EMPTY)
+	    && !ps.advance());
+  }
+
   private void analyzeSemanticParticle() {
     // XXX deal with empty particles
     int n = parsed.size();
@@ -217,6 +231,8 @@ class Entity {
 	return;
       }
     }
+    if (n > 0)
+      System.err.println("Warning: could not understand entity: " + name);
   }
 }
 

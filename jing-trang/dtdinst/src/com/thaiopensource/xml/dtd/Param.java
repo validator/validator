@@ -116,5 +116,23 @@ class Param {
     throw new Error();
   }
 
+  static ModelGroup paramsToModelGroup(Vector v) {
+    return paramsToModelGroup(new ParamStream(v, true));
+  }
+
+  static ModelGroup paramsToModelGroup(ParamStream ps) {
+    ps.advance();
+    switch (ps.type) {
+    case Param.REFERENCE:
+      return new ModelGroupRef(ps.entity.name, ps.entity.modelGroup);
+    case Param.ANY:
+      return new Any();
+    case Param.EMPTY:
+      return new Sequence(new ModelGroup[0]);
+    case Param.MODEL_GROUP:
+      return ps.group.createModelGroup();
+    }
+     throw new Error();
+   }
 
 }
