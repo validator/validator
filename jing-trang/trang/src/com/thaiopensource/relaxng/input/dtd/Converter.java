@@ -64,15 +64,40 @@ public class Converter {
   private final ErrorReporter er;
   private final SchemaCollection sc = new SchemaCollection();
   private final boolean inlineAttlistDecls;
+  /**
+   * true if any uses of ANY have been encountered in the DTD
+   */
   private boolean hadAny = false;
+  /**
+   * true if any default values have been encountered in the DTD
+   */
   private boolean hadDefaultValue = false;
+  /**
+   * Maps each element name to an Integer containing a set of flags.
+   */
   private Map elementNameTable = new Hashtable();
+  /**
+   * Maps each element name to a List of attribute groups of each attlist declaration.
+   */
   private Map attlistDeclTable = new Hashtable();
-  private Map defTable = new Hashtable();
+  /**
+   * Set of strings representing names for which there are definitions in the DTD.
+   */
+  private Set definedNames = new HashSet();
+  /**
+   * Maps prefixes to namespace URIs.
+   */
   private Map prefixTable = new Hashtable();
 
-  private Map duplicateAttributeTable = new Hashtable();
-  private Map currentDuplicateAttributeTable = null;
+  /**
+   * Maps a string representing an element name to the set of names of attributes
+   * that have been declated for that element.
+   */
+  private Map attributeNamesTable = new Hashtable();
+  /**
+   * Contains the set of attribute names that have already been output in the current scope.
+   */
+  private Set attributeNames = null;
   private String defaultNamespace = null;
   private String annotationPrefix = null;
 
@@ -82,10 +107,18 @@ public class Converter {
   private String attlistDeclPattern;
   private String anyName;
 
+  /**
+   * Flags for element names used in elementDeclTable.
+   */
   private static final int ELEMENT_DECL = 01;
   private static final int ATTLIST_DECL = 02;
   private static final int ELEMENT_REF = 04;
 
+  /**
+   * Characters that will be considered for use as a replacement for colon in
+   * a QName.  Also used as separators in constructing names of definitions
+   * corresponding to element declarations and attlist declarations,
+   */
   private static final String SEPARATORS = ".-_";
 
   // # is the category; % is the name in the category
@@ -143,8 +176,7 @@ public class Converter {
     public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
       throws Exception {
       noteElementName(nameSpec.getValue(), ATTLIST_DECL);
-      if (inlineAttlistDecls)
-        noteAttlist(nameSpec.getValue(), attributeGroup);
+      noteAttlist(nameSpec.getValue(), attributeGroup);
       attributeGroup.accept(this);
     }
 
@@ -247,7 +279,7 @@ public class Converter {
       if (inlineAttlistDecls) {
         List groups = (List)attlistDeclTable.get(nameSpec.getValue());
         if (groups != null) {
-          currentDuplicateAttributeTable = new Hashtable();
+          attributeNames = new HashSet();
           AttributeGroupVisitor agv = new AttributeGroupOutput(gp);
           for (Iterator iter = groups.iterator(); iter.hasNext();)
             ((AttributeGroup)iter.next()).accept(agv);
@@ -282,19 +314,26 @@ public class Converter {
       if (inlineAttlistDecls)
         return;
       String name = nameSpec.getValue();
-      currentDuplicateAttributeTable
-	= (Map)duplicateAttributeTable.get(name);
-      if (currentDuplicateAttributeTable == null) {
-	currentDuplicateAttributeTable = new Hashtable();
-	duplicateAttributeTable.put(name, currentDuplicateAttributeTable);
+      attributeNames
+	= (Set)attributeNamesTable.get(name);
+      if (attributeNames == null) {
+	attributeNames = new HashSet();
+	attributeNamesTable.put(name, attributeNames);
       }
-      else {
-        EmptyAttributeGroupDetector emptyDetector = new EmptyAttributeGroupDetector();
-        attributeGroup.accept(emptyDetector);
-        if (!emptyDetector.containsAttribute)
+      Pattern pattern = convert(attributeGroup);
+      if (pattern instanceof EmptyPattern) {
+        // Only keep an empty definition if this is the first attlist for this element,
+        // and all attlists are also empty.  In this case, if we didn't keep the
+        // definition, we would have no definition for the attlist.
+        List decls = (List)attlistDeclTable.get(name);
+        if (decls.get(0) != attributeGroup)
           return;
+        attributeNames = new HashSet();
+        for (int i = 1, len = decls.size(); i < len; i++)
+          if (!(convert((AttributeGroup)decls.get(i)) instanceof EmptyPattern))
+            return;
       }
-      DefineComponent dc = new DefineComponent(attlistDeclName(name), convert(attributeGroup));
+      DefineComponent dc = new DefineComponent(attlistDeclName(name), pattern);
       dc.setCombine(Combine.INTERLEAVE);
       addComponent(dc);
     }
@@ -305,22 +344,25 @@ public class Converter {
     }
 
     public void attributeGroupDef(String name, AttributeGroup attributeGroup)
-      throws Exception {
+            throws Exception {
       // This takes care of duplicates within the group
-      currentDuplicateAttributeTable = new Hashtable();
+      attributeNames = new HashSet();
       Pattern pattern;
       AttributeGroupMember[] members = attributeGroup.getMembers();
-      if (members.length == 0)
+      GroupPattern group = new GroupPattern();
+      AttributeGroupVisitor agv = new AttributeGroupOutput(group);
+      for (int i = 0; i < members.length; i++)
+        members[i].accept(agv);
+      switch (group.getChildren().size()) {
+      case 0:
         pattern = new EmptyPattern();
-      else {
-        GroupPattern group = new GroupPattern();
-        AttributeGroupVisitor agv = new AttributeGroupOutput(group);
-	for (int i = 0; i < members.length; i++)
-	  members[i].accept(agv);
-        if (group.getChildren().size() == 1)
-          pattern = (Pattern)group.getChildren().get(0);
-        else
-          pattern = group;
+        break;
+      case 1:
+        pattern = (Pattern)group.getChildren().get(0);
+        break;
+      default:
+        pattern = group;
+        break;
       }
       addComponent(new DefineComponent(name, pattern));
     }
@@ -400,13 +442,11 @@ public class Converter {
                           Datatype datatype,
                           AttributeDefault attributeDefault) throws Exception {
       String name = nameSpec.getValue();
-      if (currentDuplicateAttributeTable.get(name) != null)
+      if (attributeNames.contains(name))
         return;
-      currentDuplicateAttributeTable.put(name, name);
-      if (name.equals("xmlns") || name.startsWith("xmlns:")) {
-        group.add(new EmptyPattern());
+      attributeNames.add(name);
+      if (name.equals("xmlns") || name.startsWith("xmlns:"))
         return;
-      }
       String dv = attributeDefault.getDefaultValue();
       String fv = attributeDefault.getFixedValue();
       Pattern dt;
@@ -438,10 +478,7 @@ public class Converter {
         attributeGroup.accept(this);
       else {
         group.add(ref(name));
-        for (Iterator iter = detector.names.iterator(); iter.hasNext();) {
-          String tem = (String)iter.next();
-          currentDuplicateAttributeTable.put(tem, tem);
-        }
+        attributeNames.addAll(detector.names);
       }
     }
 
@@ -564,7 +601,7 @@ public class Converter {
 			  Datatype datatype,
 			  AttributeDefault attributeDefault) {
       String name = nameSpec.getValue();
-      if (currentDuplicateAttributeTable.get(name) != null)
+      if (attributeNames.contains(name))
 	containsDuplicate = true;
       names.add(name);
     }
@@ -573,21 +610,6 @@ public class Converter {
       attributeGroup.accept(this);
     }
 
-  }
-
-  private class EmptyAttributeGroupDetector implements AttributeGroupVisitor {
-    private boolean containsAttribute = false;
-
-    public void attribute(NameSpec nameSpec,
-                          Datatype datatype,
-                          AttributeDefault attributeDefault) {
-      if (currentDuplicateAttributeTable.get(nameSpec.getValue()) == null)
-        containsAttribute = true;
-    }
-
-    public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
-      attributeGroup.accept(this);
-    }
   }
 
   private class SignificanceDetector extends VisitorBase {
@@ -662,8 +684,8 @@ public class Converter {
     for (int n = 0;; n++) {
       for (int i = 0; i < ANY_KEYWORDS.length; i++) {
 	anyName = repeatChar('_', n) + ANY_KEYWORDS[i];
-	if (defTable.get(anyName) == null) {
-	  defTable.put(anyName, anyName);
+	if (!definedNames.contains(anyName)) {
+	  definedNames.add(anyName);
 	  return;
 	}
       }
@@ -730,8 +752,7 @@ public class Converter {
 
   private String namingPattern() {
     Map patternTable = new Hashtable();
-    for (Iterator iter = defTable.keySet().iterator();
-	 iter.hasNext();) {
+    for (Iterator iter = definedNames.iterator(); iter.hasNext();) {
       String name = (String)iter.next();
       for (int i = 0; i < SEPARATORS.length(); i++) {
 	char sep = SEPARATORS.charAt(i);
@@ -774,14 +795,14 @@ public class Converter {
     for (Iterator iter = elementNameTable.keySet().iterator();
 	 iter.hasNext();) {
       String name = mungeQName((String)iter.next());
-      if (defTable.get(substitute(pattern, '%', name)) != null)
+      if (definedNames.contains(substitute(pattern, '%', name)))
 	return false;
     }
     return true;
   }
 
   private void noteDef(String name) {
-    defTable.put(name, name);
+    definedNames.add(name);
   }
 
   private void noteElementName(String name, int flags) {
@@ -976,8 +997,12 @@ public class Converter {
   private Pattern convert(AttributeGroup ag) throws Exception {
     GroupPattern group = new GroupPattern();
     ag.accept(new AttributeGroupOutput(group));
-    if (group.getChildren().size() == 1)
+    switch (group.getChildren().size()) {
+    case 0:
+      return new EmptyPattern();
+    case 1:
       return (Pattern)group.getChildren().get(0);
+    }
     return group;
   }
 
