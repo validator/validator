@@ -28,14 +28,24 @@
   </java>
 </target>
 
-<target name="website" depends="jar">
-  <mkdir dir="build/website"/>
-  <copy todir="build/website">
+<target name="dist" depends="jar">
+  <zip zipfile="build/dtdinst-src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+  </zip>
+  <copy todir="build">
     <fileset dir="." includes="index.html,copying.txt"/>
   </copy>
-  <replace file="build/website/index.html"
+  <replace file="build/index.html"
            token="@VERSION@"
            value="${version}"/>
+  <tar tarfile="build/dtdinst.tar"
+       basedir="build"
+       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt"/>
+  <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
+</target>
+
+<target name="clean">
+  <delete dir="build"/>
 </target>
 
 </project>
