@@ -8886,6 +8886,7 @@ in the text (no (0) value, the default)
           <ignore/>
         </flag>
       </includedSection>
+      <overridden name="exchange.table.module">INCLUDE</overridden>
       <attributeGroup name="tables.role.attrib">
         <attributeGroupRef name="role.attrib"/>
       </attributeGroup>
@@ -9010,6 +9011,8 @@ in the text (no (0) value, the default)
 <!-- These definitions are not directly related to the table model, but are 
      used in the default CALS table model and are usually defined elsewhere 
      (and prior to the inclusion of this table module) in a CALS DTD. -->
+      <overridden name="bodyatt"></overridden>
+      <overridden name="secur"></overridden>
 <!-- no if zero(s),
                                 yes if any other digits value -->
       <datatype name="yesorno">
@@ -9026,6 +9029,7 @@ for these entities.  However, these entities can and should be redefined
 reference to this Table Model declaration set entity) to fit the needs
 of the current application.
 -->
+      <overridden name="tbl.table.mdl">%tbl.table-titles.mdl; %tbl.table-main.mdl;</overridden>
       <attributeGroup name="tbl.table.att">
         <attribute use="optional">
           <name>tabstyle</name>
@@ -9132,6 +9136,7 @@ of the current application.
           </elementRef>
         </sequence>
       </modelGroup>
+      <overridden name="tbl.entry.mdl">(para|warning|caution|note|legend|%paracon;)*</overridden>
 <!-- =====  Element and attribute declarations follow. =====  -->
       <element>
         <name>table</name>
