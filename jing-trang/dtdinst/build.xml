@@ -1,4 +1,4 @@
-<project name="dtdparse" default="jar" basedir=".">
+<project name="dtdparse" default="test" basedir=".">
 
 <target name="compile">
   <mkdir dir="build/classes"/>
@@ -10,6 +10,15 @@
     <fileset dir="build/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
+</target>
+
+<target name="test" depends="jar">
+  <java classname="com.thaiopensource.xml.dtd.test.Driver" >
+    <arg value="test"/> 
+    <classpath>
+      <pathelement location="build/dtdparse.jar"/>
+    </classpath>
+  </java>
 </target>
 
 </project>
