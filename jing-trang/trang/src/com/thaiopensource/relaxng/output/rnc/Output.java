@@ -55,8 +55,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-inherit= on external and include
-
 Comments (top-level most important)
 
 Annotations
@@ -217,6 +215,16 @@ class Output {
     private NamespaceManager nsm = new NamespaceManager();
     private boolean isAttribute;
 
+    public void nullVisitInclude(IncludeComponent c) {
+      super.nullVisitInclude(c);
+      nsm.requireNamespace(c.getNs(), true);
+    }
+
+    public void nullVisitExternalRef(ExternalRefPattern p) {
+      super.nullVisitExternalRef(p);
+      nsm.requireNamespace(p.getNs(), true);
+    }
+
     public void nullVisitElement(ElementPattern p) {
       isAttribute = false;
       super.nullVisitElement(p);
@@ -293,6 +301,7 @@ class Output {
     public Object visitInclude(IncludeComponent c) {
       pp.text("include ");
       literal(od.reference(sourceUri, c.getHref()));
+      inherit(c.getNs());
       List components = c.getComponents();
       if (!components.isEmpty())
         body(components);
@@ -369,6 +378,7 @@ class Output {
     public Object visitExternalRef(ExternalRefPattern p) {
       pp.text("external ");
       literal(od.reference(sourceUri, p.getHref()));
+      inherit(p.getNs());
       return null;
     }
 
@@ -636,6 +646,13 @@ class Output {
         pp.hardNewline();
       ((Component)iter.next()).accept(componentOutput);
     }
+  }
+
+  private void inherit(String ns) {
+    if (ns.equals(nsb.getNamespaceUri("")))
+      return;
+    pp.text(" inherit = ");
+    pp.text(nsb.getNonEmptyPrefix(ns));
   }
 
   private void identifier(String name) {
