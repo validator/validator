@@ -24,4 +24,8 @@ public class NameSpecRef extends NameSpec {
   public void accept(NameSpecVisitor visitor) throws Exception {
     visitor.nameSpecRef(name, nameSpec);
   }
+
+  public String getValue() {
+    return nameSpec.getValue();
+  }
 }

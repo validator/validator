@@ -6,4 +6,5 @@ public abstract class NameSpec {
 
   public abstract int getType();
   public abstract void accept(NameSpecVisitor visitor) throws Exception;
+  public abstract String getValue();
 }
