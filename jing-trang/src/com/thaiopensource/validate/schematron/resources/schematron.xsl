@@ -101,7 +101,7 @@ Implement diagnostic
 </xsl:template>
 
 <xsl:template name="assertion">
-   <xsl:copy-of select="@role|@test|@icon|@xml:lang"/>
+   <xsl:copy-of select="@role|@test|@icon|@id|@xml:lang"/>
    <axsl:call-template name="location"/>
    <xsl:if test="* or normalize-space(text())">
      <statement>
