@@ -1,5 +1,3 @@
-Error reporting.
-
 Encoding detection
 
 Don't unexpand entities that are not properly nested.
@@ -43,4 +41,8 @@ Abstraction for string; string pasting.
 Translation to RELAX NG: undefined elements; namespaces; overridden
 attributes.
 
-SAXEntityManager
+SAXEntityManager (support Norm's entity manager)
+
+Error for duplicate ELEMENT declarations.
+
+Report warnings properly.
