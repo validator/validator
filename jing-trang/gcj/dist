@@ -144,6 +144,7 @@ find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resourc
 
 sed -e "s/@PROG@/${prog}/" -e "s/@PROG_VERSION@/${prog_version}/" ${top_dir}/gcj/configure.ac >configure.ac
 
+cp -a ${top_dir}/gcj/aclocal.m4 .
 cp -a ${top_dir}/gcj/install-sh .
 cp -a ${top_dir}/gcj/mkinstalldirs .
 cp -a ${top_dir}/gcj/INSTALL .
