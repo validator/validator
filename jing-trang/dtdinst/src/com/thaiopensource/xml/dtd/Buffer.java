@@ -39,8 +39,7 @@ public final class Buffer {
 
   public char[] getChars() {
     char[] text = new char[len];
-    for (int i = 0; i < len; i++)
-      text[i] = buf[i];
+    System.arraycopy(buf, 0, text, 0, len);
     return text;
   }
 
