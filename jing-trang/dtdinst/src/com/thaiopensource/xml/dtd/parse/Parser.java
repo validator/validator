@@ -250,8 +250,11 @@ class Parser extends Token {
       for (;;) {
 	int tok = tokenizeProlog();
 	prologAction(tok, pp, declState);
-	if (tok == Tokenizer.TOK_DECL_CLOSE)
+	switch (tok) {
+	case Tokenizer.TOK_DECL_CLOSE:
+	case Tokenizer.TOK_OPEN_BRACKET:
 	  fatal("PE_DECL_NESTING");
+	}
       }
     }
     catch (EndOfPrologException e) {
