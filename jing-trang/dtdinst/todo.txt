@@ -27,8 +27,6 @@ attributes; ANY; start based on unreferenced element.
 
 SAXEntityManager (support Norm's entity manager)
 
-Write test case for conditional section/pe nesting.
-
 Check for duplicate ELEMENT declarations.
 
 Check that no default value for ID.
@@ -57,3 +55,5 @@ naming convention or presence of element declarations or whether all
 references to the element are via that parameter entity.
 
 Use nameSpec for general entities.
+
+Try to make Localizer figure out the package name automatically.
