@@ -23,4 +23,26 @@ class Decl {
   Vector params;
   String value;
   Entity entity;
+
+  public boolean equals(Object obj) {
+    if (obj == null || !(obj instanceof Decl))
+      return false;
+    Decl other = (Decl)obj;
+    if (this.type != other.type)
+      return false;
+    if (this.entity != other.entity)
+      return false;
+    if (this.value != null && !this.value.equals(other.value))
+      return false;
+    if (this.params != null) {
+      int n = this.params.size();
+      if (other.params.size() != n)
+	return false;
+      for (int i = 0; i < n; i++)
+	if (!this.params.elementAt(i).equals(other.params.elementAt(i)))
+	  return false;
+    }
+    return true;
+  }
+
 }

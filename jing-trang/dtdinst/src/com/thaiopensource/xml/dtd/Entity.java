@@ -23,6 +23,35 @@ class Entity {
   String notationName;
   Vector atoms;
   boolean mustReparse;
+
+  static final int INCONSISTENT_LEVEL = -1;
+  static final int NO_LEVEL = 0;
+  static final int DECL_LEVEL = 1;
+  static final int PARAM_LEVEL = 2;
+  static final int PARTICLE_LEVEL = 2;
+
+  int referenceLevel = NO_LEVEL;
+
+  Vector parsed;
+
+  void setParsed(int level, Vector v, int start, int end) {
+    if (level == referenceLevel) {
+      if (!sliceEqual(parsed, v, start, end)) {
+	parsed = null;
+	referenceLevel = INCONSISTENT_LEVEL;
+      }
+    }
+    else if (referenceLevel == NO_LEVEL) {
+      parsed = new Vector();
+      appendSlice(parsed, v, start, end);
+      referenceLevel = level;
+    }
+    else if (referenceLevel > 0) {
+      parsed = null;
+      referenceLevel = INCONSISTENT_LEVEL;
+    }
+  }
+
   int textIndexToAtomIndex(int ti) {
     int nAtoms = atoms.size();
     int len = 0;
@@ -75,6 +104,16 @@ class Entity {
     appendSlice(newAtoms, atoms, nCopiedAtoms, atoms.size());
     atoms = newAtoms;
     references = null;
+  }
+
+  static boolean sliceEqual(Vector v1, Vector v2, int start, int end) {
+    int n = v1.size();
+    if (end - start != n)
+      return false;
+    for (int i = 0; i < n; i++)
+      if (!v1.elementAt(i).equals(v2.elementAt(start + i)))
+	return false;
+    return true;
   }
 
   static void appendSlice(Vector to, Vector from, int start, int end) {

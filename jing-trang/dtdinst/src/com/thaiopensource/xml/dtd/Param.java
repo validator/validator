@@ -30,4 +30,19 @@ class Param {
   Entity entity;
   Particle group;
   String value;
+
+  public boolean equals(Object obj) {
+    if (obj == null || !(obj instanceof Param))
+      return false;
+    Param other = (Param)obj;
+    if (this.type != other.type)
+      return false;
+    if (this.entity != other.entity)
+      return false;
+    if (this.value != null && !this.value.equals(other.value))
+      return false;
+    if (this.group != null && !this.group.equals(other.group))
+      return false;
+    return true;
+  }
 }

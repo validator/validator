@@ -38,7 +38,9 @@ class AtomParser {
 	d = new Decl(Decl.REFERENCE);
 	d.entity = as.entity;
 	v.addElement(d);
+	int start = v.size();
 	new AtomParser(new AtomStream(as.entity.atoms), pp, v).parseDecls();
+	d.entity.setParsed(Entity.DECL_LEVEL, v, start, v.size());
 	d = new Decl(Decl.REFERENCE_END);
       }
       else {
@@ -108,7 +110,9 @@ class AtomParser {
 	p = new Param(Param.REFERENCE);
 	p.entity = as.entity;
 	v.addElement(p);
+	int start = v.size();
 	new AtomParser(new AtomStream(as.entity.atoms), pp, v).parseParams();
+	p.entity.setParsed(Entity.PARAM_LEVEL, v, start, v.size());
 	p = new Param(Param.REFERENCE_END);
       }
       else {
@@ -215,9 +219,11 @@ class AtomParser {
 	p = new Particle(Particle.REFERENCE);
 	p.entity = as.entity;
 	v.addElement(p);
+	int start = v.size();
 	new AtomParser(new AtomStream(as.entity.atoms), pp, group).parseParticles();
+	p.entity.setParsed(Entity.PARTICLE_LEVEL, v, start, v.size());
 	p = new Particle(Particle.REFERENCE_END);
-      }
+      } 
       else {
 	int action = doAction();
 	switch (as.tokenType) {
