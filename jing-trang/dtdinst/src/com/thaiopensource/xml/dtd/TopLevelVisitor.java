@@ -13,5 +13,7 @@ public interface TopLevelVisitor {
     throws Exception;
   void enumGroupDef(String name, EnumGroup enumGroup) throws Exception;
   void datatypeDef(String name, Datatype datatype) throws Exception;
+  void flagDef(String name, Flag flag) throws Exception;
+  void includeSection(Flag flag, TopLevel[] contents) throws Exception;
 }
 

@@ -9,11 +9,10 @@ class Decl {
   static final int ATTLIST = 3; // params
   static final int ENTITY = 4;  // params
   static final int NOTATION = 5; // params
-  static final int START_INCLUDE_SECTION = 6; // params
-  static final int END_INCLUDE_SECTION = 7;
-  static final int IGNORE_SECTION = 8; // params + value
-  static final int COMMENT = 9; // value
-  static final int PROCESSING_INSTRUCTION = 10; // value
+  static final int INCLUDE_SECTION = 6; // params + decls
+  static final int IGNORE_SECTION = 7; // params + value
+  static final int COMMENT = 8; // value
+  static final int PROCESSING_INSTRUCTION = 9; // value
   
   Decl(int type) {
     this.type = type;
@@ -23,6 +22,7 @@ class Decl {
   Vector params;
   String value;
   Entity entity;
+  Vector decls;
 
   public boolean equals(Object obj) {
     if (obj == null || !(obj instanceof Decl))
@@ -55,6 +55,8 @@ class Decl {
       return createAttlistDecl();
     case ENTITY:
       return createEntityDecl(db);
+    case INCLUDE_SECTION:
+      return createIncludeSection(db);
     }
     return null;
   }
@@ -100,9 +102,29 @@ class Decl {
       entity.enumGroup = Particle.particlesToEnumGroup(entity.parsed);
       return new EnumGroupDef(name, entity.enumGroup);
     case Entity.SEMANTIC_FLAG:
-      // XXX
-      return null;
+      entity.flag = Param.paramsToFlag(entity.parsed);
+      return new FlagDef(name, entity.flag);
     }
     return null;
+  }
+
+  IncludeSection createIncludeSection(DtdBuilder db) {
+    Flag flag = Param.paramsToFlag(params);
+    Vector contents = declsToTopLevel(db, decls);
+    TopLevel[] tem = new TopLevel[decls.size()];
+    for (int i = 0; i < tem.length; i++)
+      tem[i] = (TopLevel)contents.elementAt(i);
+    return new IncludeSection(flag, tem);
+  }
+
+  static Vector declsToTopLevel(DtdBuilder db, Vector decls) {
+    Vector v = new Vector();
+    int n = decls.size();
+    for (int i = 0; i < n; i++) {
+      TopLevel t = ((Decl)decls.elementAt(i)).createTopLevel(db);
+      if (t != null)
+	v.addElement(t);
+    }
+    return v;
   }
 }

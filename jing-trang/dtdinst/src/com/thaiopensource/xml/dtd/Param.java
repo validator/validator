@@ -132,7 +132,24 @@ class Param {
     case Param.MODEL_GROUP:
       return ps.group.createModelGroup();
     }
-     throw new Error();
-   }
+    throw new Error();
+  }
+
+  static Flag paramsToFlag(Vector v) {
+    return paramsToFlag(new ParamStream(v, true));
+  }
+
+  static Flag paramsToFlag(ParamStream ps) {
+    ps.advance();
+    switch (ps.type) {
+    case Param.REFERENCE:
+      return new FlagRef(ps.entity.name, ps.entity.flag);
+    case Param.IGNORE:
+      return new Ignore();
+    case Param.INCLUDE:
+      return new Include();
+    }
+    throw new Error();
+  }
 
 }

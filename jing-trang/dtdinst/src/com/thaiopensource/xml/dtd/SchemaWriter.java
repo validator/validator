@@ -6,7 +6,8 @@ public class SchemaWriter implements TopLevelVisitor,
 				     ModelGroupVisitor,
 				     AttributeGroupVisitor,
 				     DatatypeVisitor,
-				     EnumGroupVisitor {
+				     EnumGroupVisitor,
+                                     FlagVisitor {
   private XmlWriter w;
   
   public SchemaWriter(XmlWriter writer) {
@@ -85,6 +86,14 @@ public class SchemaWriter implements TopLevelVisitor,
     datatype.accept(this);
     w.endElement();
   }
+
+  public void flagDef(String name, Flag flag) throws Exception {
+    w.startElement("flag");
+    w.attribute("name", name);
+    flag.accept(this);
+    w.endElement();
+  }
+
 
   public void choice(ModelGroup[] members) throws Exception {
     w.startElement("choice");
@@ -197,4 +206,28 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void flagRef(String name, Flag flag) throws IOException {
+    w.startElement("flagRef");
+    w.attribute("name", name);
+    w.endElement();
+  }
+
+  public void include() throws IOException {
+    w.startElement("include");
+    w.endElement();
+  }
+
+  public void ignore() throws IOException {
+    w.startElement("ignore");
+    w.endElement();
+  }
+
+  public void includeSection(Flag flag, TopLevel[] contents) throws Exception {
+    w.startElement("includeSection");
+    if (flag instanceof FlagRef)
+      w.attribute("flag", ((FlagRef)flag).getName());
+    for (int i = 0; i < contents.length; i++)
+      contents[i].accept(this);
+    w.endElement();
+  }
 }

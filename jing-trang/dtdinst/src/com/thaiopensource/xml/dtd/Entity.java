@@ -56,6 +56,7 @@ class Entity {
   AttributeGroup attributeGroup;
   EnumGroup enumGroup;
   Datatype datatype;
+  Flag flag;
 
   Decl decl;
 

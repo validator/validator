@@ -84,14 +84,16 @@ class AtomParser {
 	      as.advance();
 	      d.value = as.token.substring(0, as.token.length() - 3);
 	    }
-	    else
-	      d = new Decl(Decl.START_INCLUDE_SECTION);
+	    else {
+	      d = new Decl(Decl.INCLUDE_SECTION);
+	      d.decls = new Vector();
+	      new AtomParser(as, pp, d.decls).parseDecls();
+	    }
 	    d.params = params;
 	  }
 	  break;
 	case Tokenizer.TOK_COND_SECT_CLOSE:
-	  d = new Decl(Decl.END_INCLUDE_SECTION);
-	  break;
+	  return;
 	default:
 	  throw new Error("unexpected decl on reparse");
 	}
