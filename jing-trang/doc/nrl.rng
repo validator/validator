@@ -1,0 +1,68 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<include href="../xhtml/modules/datatypes.rng"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="ID.datatype">
+    <data type="NCName"/>
+  </define>
+
+  <define name="IDREF.datatype">
+    <data type="NCName"/>
+  </define>
+
+  <define name="IDREFS.datatype">
+    <list>
+      <oneOrMore>
+        <ref name="IDREF.datatype"/>
+      </oneOrMore>
+    </list>
+  </define>
+</include>
+
+<include href="../xhtml/modules/attribs.rng"/>
+<include href="../xhtml/modules/struct.rng"/>
+<include href="../xhtml/modules/text.rng"/>
+<include href="../xhtml/modules/hypertext.rng"/>
+<include href="../xhtml/modules/list.rng"/>
+<include href="../xhtml/modules/image.rng"/>
+<include href="../xhtml/modules/base.rng"/>
+<include href="../xhtml/modules/link.rng"/>
+<include href="../xhtml/modules/meta.rng"/>
+<include href="../xhtml/modules/param.rng"/>
+<include href="../xhtml/modules/object.rng"/>
+<include href="../xhtml/modules/pres.rng"/>
+<include href="../xhtml/modules/style.rng"/>
+<include href="../xhtml/modules/script.rng"/>
+<include href="../xhtml/modules/table.rng"/>
+<include href="../xhtml/modules/inlstyle.rng"/>
+<include href="../xhtml/modules/target.rng"/>
+<include href="../xhtml/modules/nameident.rng"/>
+<include href="../xhtml/modules/legacy.rng"/>
+
+<define name="Block.class" combine="choice">
+  <element name="xml">
+    <choice>
+      <ref name="anyElement"/>
+      <externalRef href="../src/com/thaiopensource/validate/nrl/resources/nrl.rng"/>
+    </choice>
+  </element>
+</define>
+
+<define name="anyElement">
+  <element>
+    <anyName>
+      <except>
+        <nsName ns="http://www.thaiopensource.com/validate/nrl"/>
+      </except>
+    </anyName>
+    <zeroOrMore>
+      <choice>
+	<ref name="anyElement"/>
+	<text/>
+	<attribute><anyName/></attribute>
+      </choice>
+    </zeroOrMore>
+  </element>
+</define>
+
+</grammar>
