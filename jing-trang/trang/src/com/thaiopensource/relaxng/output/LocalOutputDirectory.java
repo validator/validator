@@ -15,21 +15,25 @@ import java.util.HashMap;
 public class LocalOutputDirectory implements OutputDirectory {
   private final File mainOutputFile;
   private final String lineSeparator;
-  private final String extension;
+  private final String outputExtension;
   private String defaultEncoding;
   private boolean alwaysUseDefaultEncoding;
   private final int lineLength;
   // maps URIs to filenames
   private final Map uriMap = new HashMap();
+  private final String mainInputExtension;
 
   public LocalOutputDirectory(String mainSourceUri, File mainOutputFile, String extension,
                               String encoding, int lineLength) {
     this.mainOutputFile = mainOutputFile;
-    this.extension = extension;
+    this.outputExtension = extension;
     this.defaultEncoding = encoding;
     this.lineSeparator = System.getProperty("line.separator");
     this.lineLength = lineLength;
     this.uriMap.put(mainSourceUri, mainOutputFile.getName());
+    int off = mainSourceUri.lastIndexOf('/') + 1;
+    off = mainSourceUri.lastIndexOf('.', off);
+    this.mainInputExtension = off < 0 ? "" : mainSourceUri.substring(off);
   }
 
   public void setEncoding(String encoding) {
@@ -62,11 +66,14 @@ public class LocalOutputDirectory implements OutputDirectory {
 
   private String chooseFilename(String sourceUri) {
     String filename = sourceUri.substring(sourceUri.lastIndexOf('/') + 1);
-    int dot = filename.lastIndexOf('.');
-    String base = dot < 0 ? filename : filename.substring(0, dot);
-    filename = base + extension;
+    String base;
+    if (filename.endsWith(mainInputExtension))
+      base = filename.substring(0, filename.length() - mainInputExtension.length());
+    else
+      base = filename;
+    filename = base + outputExtension;
     for (int i = 1; uriMap.containsValue(filename); i++)
-      filename = base + Integer.toString(i) + extension;
+      filename = base + Integer.toString(i) + outputExtension;
     return filename;
   }
 
