@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: com/thaiopensource/xml/dtd/Driver
+Main-Class: com/thaiopensource/xml/dtd/app/Driver
