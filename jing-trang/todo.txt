@@ -1,5 +1,8 @@
 Allow jing to use OASIS catalogs.
 
+See whether there's a DTDinst bug with a parameter entity containing a
+single percent token.
+
 Allow jing to read from stdin.
 
 Put jing/trang man pages online.
