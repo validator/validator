@@ -256,15 +256,18 @@ public class Inferrer {
     Map attributeDecls = elementDecl.getAttributeDecls();
     if (attributeDecls.size() > 0) {
       GroupPattern group = new GroupPattern();
-      for (Iterator iter = attributeDecls.entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        AttributeDecl att = (AttributeDecl)entry.getValue();
+      List attributeNames = new Vector();
+      attributeNames.addAll(attributeDecls.keySet());
+      Collections.sort(attributeNames);
+      for (Iterator iter = attributeNames.iterator(); iter.hasNext();) {
+        Name attName = (Name)iter.next();
+        AttributeDecl att = (AttributeDecl)attributeDecls.get(attName);
         Pattern tem;
         if (att.getDatatype() == null)
           tem = new TextPattern();
         else
           tem = makeDatatype(att.getDatatype());
-        tem = new AttributePattern(makeNameClass((Name)entry.getKey()), tem);
+        tem = new AttributePattern(makeNameClass(attName), tem);
         if (att.isOptional())
           tem = new OptionalPattern(tem);
         group.getChildren().add(tem);
