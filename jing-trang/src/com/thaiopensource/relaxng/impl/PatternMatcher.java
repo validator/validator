@@ -210,15 +210,159 @@ public class PatternMatcher implements Cloneable, Matcher {
     return !hadError;
   }
 
-  // members are of type Name
+  static abstract class PossibleNamesFunction extends AbstractPatternFunction implements NameClassVisitor {
+    private Vector knownNames;
+    private boolean[] knownNamesAdded;
+    private Vector possibleNames;
+
+    Vector applyTo(Pattern p, Vector knownNames) {
+      this.knownNames = knownNames;
+      this.possibleNames = new Vector();
+      if (knownNames != null)
+        knownNamesAdded = new boolean[knownNames.size()];
+      p.apply(this);
+      return possibleNames;
+    }
+
+    public Object caseAfter(AfterPattern p) {
+      return p.getOperand1().apply(this);
+    }
+
+    public Object caseBinary(BinaryPattern p) {
+      p.getOperand1().apply(this);
+      p.getOperand2().apply(this);
+      return null;
+    }
+
+    public Object caseChoice(ChoicePattern p) {
+      return caseBinary(p);
+    }
+
+    public Object caseInterleave(InterleavePattern p) {
+      return caseBinary(p);
+    }
+
+    public Object caseOneOrMore(OneOrMorePattern p) {
+      return p.getOperand().apply(this);
+    }
+
+    public Object caseOther(Pattern p) {
+      return null;
+    }
+
+    public void visitChoice(NameClass nc1, NameClass nc2) {
+      nc1.accept(this);
+      nc2.accept(this);
+    }
+
+    public void visitNsName(String ns) {
+      if (knownNames == null)
+        return;
+      boolean addedAll = true;
+      for (int i = 0, len = knownNames.size(); i < len; i++) {
+        if (!knownNamesAdded[i]) {
+          Name name = (Name)knownNames.elementAt(i);
+          if (!name.getNamespaceUri().equals(ns))
+            addedAll = false;
+          else {
+            possibleNames.addElement(name);
+            knownNamesAdded[i] = true;
+          }
+        }
+      }
+      if (addedAll)
+        knownNames = null;
+    }
+
+    public void visitNsNameExcept(String ns, NameClass nc) {
+      if (knownNames == null)
+        return;
+      boolean addedAll = true;
+      for (int i = 0, len = knownNames.size(); i < len; i++) {
+        if (!knownNamesAdded[i]) {
+          Name name = (Name)knownNames.elementAt(i);
+          if (!name.getNamespaceUri().equals(ns) || nc.contains(name))
+            addedAll = false;
+          else {
+            knownNamesAdded[i] = true;
+            possibleNames.addElement(name);
+          }
+        }
+      }
+      if (addedAll)
+        knownNames = null;
+    }
+
+    public void visitAnyName() {
+      if (knownNames == null)
+        return;
+      for (int i = 0, len = knownNames.size(); i < len; i++)
+        if (!knownNamesAdded[i])
+          possibleNames.addElement(knownNames.elementAt(i));
+      knownNames = null;
+    }
+
+    public void visitAnyNameExcept(NameClass nc) {
+      if (knownNames == null)
+        return;
+      boolean addedAll = true;
+      for (int i = 0, len = knownNames.size(); i < len; i++) {
+        if (!knownNamesAdded[i]) {
+          Name name = (Name)knownNames.elementAt(i);
+          if (nc.contains(name))
+            addedAll = false;
+          else {
+            knownNamesAdded[i] = true;
+            possibleNames.addElement(name);
+          }
+        }
+      }
+      if (addedAll)
+        knownNames = null;
+    }
+
+    public void visitName(Name name) {
+      possibleNames.addElement(name);
+    }
+
+    public void visitNull() {
+    }
+
+    public void visitError() {
+    }
+  }
+
+  static class PossibleStartTagsFunction extends PossibleNamesFunction {
+    public Object caseElement(ElementPattern p) {
+      p.getNameClass().accept(this);
+      return null;
+    }
+
+    public Object caseGroup(GroupPattern p) {
+      p.getOperand1().apply(this);
+      if (p.getOperand1().isNullable())
+        p.getOperand2().apply(this);
+      return null;
+    }
+  }
+
+  static class PossibleAttributesFunction extends PossibleNamesFunction {
+    public Object caseAttribute(AttributePattern p) {
+      p.getNameClass().accept(this);
+      return null;
+    }
+
+    public Object caseGroup(GroupPattern p) {
+      return caseBinary(p);
+    }
+  }
+
   public Vector possibleStartTags(Vector knownNames) {
-    // XXX
-    return null;
+    return new PossibleStartTagsFunction().applyTo(memo.getPattern(), knownNames);
   }
 
   public Vector possibleAttributes(Vector knownNames) {
-    // XXX
-    return null;
+    return new PossibleAttributesFunction().applyTo(memo.getPattern(), knownNames);
   }
 
   private boolean setMemo(PatternMemo m) {
