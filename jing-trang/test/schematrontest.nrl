@@ -1,0 +1,17 @@
+<rules xmlns="http://www.thaiopensource.com/ns/nrl" startMode="start">
+  <mode name="start">
+    <namespace ns="">
+      <validate schema="openTestSuite.rng">
+        <context path="correct" useMode="schematron"/>
+      </validate>
+    </namespace>
+  </mode>
+  <mode name="schematron">
+    <namespace ns="http://www.ascc.net/xml/schematron">
+      <validate schema="../src/com/thaiopensource/validate/schematron/resources/schematron.rnc"
+                schemaType="application/x-rnc"
+                useMode="#pass"/>
+      <pass useMode="#pass"/>
+    </namespace>
+  </mode>
+</rules>

@@ -216,6 +216,34 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </java>
 </target>
 
+<target name="schematron-split" depends="init,check-schematron-split" unless="schematron-split-not-required">
+  <jing rngfile="test/schematrontest.nrl">
+    <fileset dir="test" includes="schematrontest.xml"/>
+  </jing>
+  <delete dir="build/schematrontest"/>
+  <mkdir dir="build/schematrontest"/>
+  <style basedir="test" destdir="build/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="build/schematrontest"/>
+  </style>
+</target>
+
+<target name="check-schematron-split">
+  <uptodate property="schematron-split-not-required" targetfile="build/schematrontest/schematrontest.stamp">
+    <srcfiles dir="test" includes="schematrontest.xml"/>
+  </uptodate>
+</target>
+
+<target name="schematron-test" depends="jar,schematron-split" description="Test Schematron validation">
+  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
+    <arg value="build/schematrontest/out.log"/>
+    <arg value="build/schematrontest"/>
+    <classpath>
+      <pathelement location="build/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
 <target name="xsd-test" depends="jar,xsd-split" description="Test the XML Schema Datatypes implementation">
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="build/xsdtest/out.log"/>
