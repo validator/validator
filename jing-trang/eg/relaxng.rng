@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.16 2001-06-08 04:08:27 jjc Exp $ -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+<!-- $Id: relaxng.rng,v 1.17 2001-07-04 08:01:59 jjc Exp $ -->
+<grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
-         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+         xmlns="http://relaxng.org/ns/structure/0.9">
   <start name="pattern">
     <choice>
       <element name="element">
@@ -103,28 +103,40 @@
         <attribute name="type">
           <data type="NCName"/>
         </attribute>
-        <optional>
-          <attribute name="key">
-            <data type="NCName"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keyRef">
-            <data type="NCName"/>
-          </attribute>
-        </optional>
         <ref name="common-atts"/>
         <interleave>
           <ref name="other"/>
-          <zeroOrMore>
-            <element name="param">
-              <attribute name="name">
-                <data type="NCName"/>
-              </attribute>
-              <text/>
-            </element>
-          </zeroOrMore>
+          <group>
+	    <zeroOrMore>
+	      <element name="param">
+		<attribute name="name">
+		  <data type="NCName"/>
+		</attribute>
+		<text/>
+	      </element>
+	    </zeroOrMore>
+            <optional>
+              <element name="except">
+		<ref name="common-atts"/>
+		<ref name="open-patterns"/>
+              </element>
+            </optional>
+          </group>
         </interleave>
+      </element>
+      <element name="key">
+	<attribute name="name">
+	  <data type="QName"/>
+	</attribute>
+        <ref name="common-atts"/>
+        <ref name="open-pattern"/>
+      </element>
+      <element name="keyRef">
+	<attribute name="name">
+	  <data type="QName"/>
+	</attribute>
+        <ref name="common-atts"/>
+        <ref name="open-pattern"/>
       </element>
       <element name="notAllowed">
         <ref name="common-atts"/>
@@ -227,45 +239,51 @@
     </interleave>
   </define>
 
+  <define name="open-pattern">
+    <interleave>
+      <ref name="other"/>
+      <ref name="pattern"/>
+    </interleave>
+  </define>
+
   <define name="name-class">
     <choice>
       <element name="name">
         <ref name="common-atts"/>
-        <mixed>
-          <ref name="other"/>
-        </mixed>
+        <text/>
       </element>
       <element name="anyName">
         <ref name="common-atts"/>
-        <ref name="other"/>
+        <ref name="except-name-class"/>
       </element>
       <element name="nsName">
         <ref name="common-atts"/>
-        <ref name="other"/>
-      </element>
-      <element name="not">
-        <ref name="common-atts"/>
-        <ref name="open-name-class"/>
-      </element>
-      <element name="difference">
-        <ref name="common-atts"/>
-        <oneOrMore>
-          <ref name="open-name-class"/>
-        </oneOrMore>
+        <ref name="except-name-class"/>
       </element>
       <element name="choice">
         <ref name="common-atts"/>
-        <oneOrMore>
-          <ref name="open-name-class"/>
-        </oneOrMore>
+        <ref name="open-name-classes"/>
       </element>
     </choice>
   </define>
 
-  <define name="open-name-class">
+  <define name="except-name-class">
     <interleave>
       <ref name="other"/>
-      <ref name="name-class"/>
+      <optional>
+        <element name="except">
+          <ref name="open-name-classes"/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+
+  <define name="open-name-classes">
+    <interleave>
+      <ref name="other"/>
+      <oneOrMore>
+        <ref name="name-class"/>
+      </oneOrMore>
     </interleave>
   </define>
 
