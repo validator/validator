@@ -819,7 +819,6 @@ public class BasicOutput {
     xw.startElement(xs("schema"));
     xw.attribute("xmlns:" + xsPrefix, WellKnownNamespaces.XML_SCHEMA);
     xw.attribute("elementFormDefault", "qualified");
-    xw.attribute("version", "1.0");
     if (!targetNamespace.equals(""))
       xw.attribute("targetNamespace", targetNamespace);
     for (Iterator iter = nsm.getTargetNamespaces().iterator(); iter.hasNext();) {

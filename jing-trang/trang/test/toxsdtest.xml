@@ -7,7 +7,7 @@ foo = xsd:token
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:token"/>
   </xs:simpleType>
@@ -23,7 +23,7 @@ foo = xsd:token { minLength = "2" maxLength = "17" }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:token">
       <xs:minLength value="2"/>
@@ -42,7 +42,7 @@ foo = "stuff"
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:token">
       <xs:enumeration value="stuff"/>
@@ -60,7 +60,7 @@ foo = xsd:integer "1" | xsd:integer "2"
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:integer">
       <xs:enumeration value="1"/>
@@ -79,7 +79,7 @@ foo = xsd:integer "1" | xsd:double "1.0"
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:union>
       <xs:simpleType>
@@ -106,7 +106,7 @@ foo = list { xsd:int* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:list itemType="xs:int"/>
   </xs:simpleType>
@@ -122,7 +122,7 @@ foo = list { xsd:int+ }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction>
       <xs:simpleType>
@@ -143,7 +143,7 @@ foo = list { xsd:int, xsd:int+ }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction>
       <xs:simpleType>
@@ -168,7 +168,7 @@ foo = list { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:token">
       <xs:length value="0"/>
@@ -186,7 +186,7 @@ foo = list { notAllowed } | xsd:int
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:int"/>
   </xs:simpleType>
@@ -202,7 +202,7 @@ foo = empty, xsd:int
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:int"/>
   </xs:simpleType>
@@ -218,7 +218,7 @@ foo = xsd:int*
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:int"/>
   </xs:simpleType>
@@ -234,7 +234,7 @@ foo = element foo { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType/>
   </xs:element>
@@ -250,7 +250,7 @@ foo = element foo { attribute bar { xsd:double }, (xsd:int | xsd:boolean) }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:simpleContent>
@@ -276,7 +276,7 @@ bar = xsd:int | xsd:boolean
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo" type="bar"/>
   <xs:simpleType name="bar">
     <xs:union memberTypes="xs:int xs:boolean"/>
@@ -294,7 +294,7 @@ foo = attribute foo { xsd:double } | element foo { xsd:double }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="bar" type="foo"/>
   <xs:complexType name="foo">
     <xs:sequence>
@@ -317,7 +317,7 @@ foo = element foo { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified" version="1.0">
+           elementFormDefault="qualified">
 <xs:element name="foo">
   <xs:complexType/>
 </xs:element>
@@ -337,7 +337,7 @@ bar = element bar { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified" version="1.0">
+           elementFormDefault="qualified">
 <xs:element name="root" abstract="true"/>
 <xs:element name="foo" substitutionGroup="root">
   <xs:complexType/>
@@ -358,7 +358,7 @@ bar = element bar { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified" version="1.0">
+           elementFormDefault="qualified">
 <xs:element name="foo">
   <xs:complexType/>
 </xs:element>
@@ -382,7 +382,7 @@ include "bar.rnc"
 </compact>
 <xsd>
 <resource name="bar.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="bar">
     <xs:complexType/>
   </xs:element>
@@ -392,7 +392,7 @@ include "bar.rnc"
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:include schemaLocation="bar.xsd"/>
   <xs:element name="foo">
     <xs:complexType>
@@ -416,7 +416,7 @@ element eg:foo { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified" version="1.0"
+           elementFormDefault="qualified"
  targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType/>
@@ -435,7 +435,7 @@ element foo { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified" version="1.0"
+           elementFormDefault="qualified"
  targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType/>
@@ -457,14 +457,14 @@ include "foo.rnc"
 </compact>
 <xsd>
 <resource name="foo.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType/>
   </xs:element>
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
   <xs:include schemaLocation="foo.xsd"/>
 </xs:schema>
 </correct>
@@ -486,7 +486,7 @@ element e1:x {
 </compact>
 <xsd>
 <resource name="e2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="y">
     <xs:complexType/>
@@ -494,7 +494,7 @@ element e1:x {
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -522,7 +522,7 @@ element e1:x {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
   <xs:element name="x">
     <xs:complexType>
       <xs:sequence>
@@ -553,7 +553,7 @@ element e1:x {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
   <xs:element name="x">
     <xs:complexType>
       <xs:sequence>
@@ -591,7 +591,7 @@ element e1:x {
 </compact>
 <xsd>
 <resource name="e2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="y">
     <xs:complexType>
@@ -603,7 +603,7 @@ element e1:x {
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -630,7 +630,7 @@ element e1:x { empty } | element e2:y { empty }
 </compact>
 <xsd>
 <resource name="e1.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:element name="x">
     <xs:complexType/>
@@ -638,7 +638,7 @@ element e1:x { empty } | element e2:y { empty }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="e1.xsd"/>
   <xs:element name="y">
     <xs:complexType/>
@@ -660,7 +660,7 @@ y = element e2:y { x? }
 </compact>
 <xsd>
 <resource name="e1.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -672,7 +672,7 @@ y = element e2:y { x? }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="e1.xsd"/>
   <xs:element name="y">
     <xs:complexType>
@@ -695,7 +695,7 @@ element e1:x { attribute e1:a { text } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
   <xs:element name="x">
     <xs:complexType>
       <xs:attribute name="a" form="qualified" use="required"/>
@@ -715,7 +715,7 @@ element x { empty } | element e1:y { empty }
 </compact>
 <xsd>
 <resource name="local.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="x">
     <xs:complexType/>
@@ -723,7 +723,7 @@ element x { empty } | element e1:y { empty }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e1="http://www.example.com/1">
   <xs:import schemaLocation="local.xsd"/>
   <xs:element name="y">
     <xs:complexType/>
@@ -747,13 +747,13 @@ include "example.rnc"
 </compact>
 <xsd>
 <resource name="example.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:import schemaLocation="c.xsd"/>
   <xs:element name="y" type="x"/>
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:eg="http://www.example.com">
   <xs:import namespace="http://www.example.com" schemaLocation="example.xsd"/>
   <xs:complexType name="x">
     <xs:sequence>
@@ -777,13 +777,13 @@ element x { attribute eg:y { text } }
 </compact>
 <xsd>
 <resource name="eg.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:import schemaLocation="c.xsd"/>
   <xs:attribute name="y"/>
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:eg="http://www.example.com">
   <xs:import namespace="http://www.example.com" schemaLocation="eg.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -802,7 +802,7 @@ element foo|bar|baz { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType/>
   </xs:element>
@@ -825,7 +825,7 @@ root = element foo|bar|baz { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:complexType name="root"/>
   <xs:element name="root" abstract="true"/>
   <xs:element name="foo" type="root" substitutionGroup="root"/>
@@ -843,7 +843,7 @@ element foo { attribute bar|baz { text } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar"/>
@@ -866,7 +866,7 @@ element e1:x { element e2:y|e2:z { element e2:y { empty } } }
 </compact>
 <xsd>
 <resource name="e2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="y">
     <xs:complexType>
@@ -889,7 +889,7 @@ element e1:x { element e2:y|e2:z { element e2:y { empty } } }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -916,7 +916,7 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 </compact>
 <xsd>
 <resource name="e2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:group name="y">
@@ -941,7 +941,7 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 </xs:schema>
 </resource>
 <resource name="e3.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/3" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/3" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="z">
@@ -955,7 +955,7 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e3="http://www.example.com/3" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/3" schemaLocation="e3.xsd"/>
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="x">
@@ -996,7 +996,7 @@ element e1:x { element e1:x|e2:y { element e1:x|e2:y { empty } } }
 </compact>
 <xsd>
 <resource name="e2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:group name="y">
     <xs:sequence>
@@ -1022,7 +1022,7 @@ element e1:x { element e1:x|e2:y { element e1:x|e2:y { empty } } }
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="e2.xsd"/>
   <xs:element name="x">
     <xs:complexType>
@@ -1065,7 +1065,7 @@ bar5 = element bar5 { empty }, element bar6 { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -1132,7 +1132,7 @@ bar = element bar { bar* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:sequence>
@@ -1161,7 +1161,7 @@ bar = element bar { bar* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -1191,13 +1191,13 @@ bar = element bar { bar* }
 </compact>
 <xsd>
 <resource name="xml.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.w3.org/XML/1998/namespace">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace">
   <xs:import schemaLocation="c.xsd"/>
   <xs:attribute name="lang" type="xs:language"/>
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:element name="foo">
     <xs:complexType>
@@ -1223,7 +1223,7 @@ bar = element bar { bar* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:simpleContent>
@@ -1250,7 +1250,7 @@ float = attribute type { "float" }, xsd:float
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:simpleContent>
@@ -1321,7 +1321,7 @@ more-atts = attribute a2 { text }?
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attributeGroup ref="atts"/>
@@ -1352,7 +1352,7 @@ element foo { attribute bar { text } | attribute bar { xsd:float } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" use="required"/>
@@ -1373,7 +1373,7 @@ bar2 = attribute bar { xsd:float }, attribute baz2 { text }?
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attributeGroup ref="bar1"/>
@@ -1408,7 +1408,7 @@ bar2 = attribute bar { xsd:float }, attribute baz2 { text }?
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:string">
@@ -1448,7 +1448,7 @@ element eg:foo { attribute * - (eg:*|local:*) { text }* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute namespace="##other" processContents="skip"/>
@@ -1473,7 +1473,7 @@ eg2 = attribute eg2:* { text } *
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute namespace="http://www.example.com/2 http://www.example.com/1" processContents="skip"/>
@@ -1503,7 +1503,7 @@ eg2 = attribute eg2:* { text } *
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attributeGroup ref="eg1"/>
@@ -1534,7 +1534,7 @@ eg2 = attribute eg1:*|eg2:* { text } *
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attributeGroup ref="eg2"/>
@@ -1558,7 +1558,7 @@ element foo { attribute * - bar { text }+, attribute bar { xsd:float } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" use="required" type="xs:float"/>
@@ -1580,7 +1580,7 @@ element eg:foo { attribute * - (local:*|(eg:* - eg:bar)) { xsd:float }* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" form="qualified" type="xs:float"/>
@@ -1599,7 +1599,7 @@ element foo { attribute * { text }* | attribute bar { xsd:string } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute processContents="skip"/>
@@ -1617,7 +1617,7 @@ element foo { attribute * - bar { text }* | attribute bar { xsd:float } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" type="xs:float"/>
@@ -1642,7 +1642,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" type="xs:float"/>
@@ -1663,7 +1663,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:sequence>
@@ -1697,13 +1697,13 @@ start = element foo1 { bar } | foo2
 </compact>
 <xsd>
 <resource name="eg1.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="eg2.xsd"/>
   <xs:element name="foo2" type="e2:bar"/>
 </xs:schema>
 </resource>
 <resource name="eg2.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="bar" abstract="true"/>
   <xs:complexType name="bar">
@@ -1724,7 +1724,7 @@ start = element foo1 { bar } | foo2
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:e2="http://www.example.com/2" xmlns:ns1="http://www.example.com/1">
   <xs:include schemaLocation="eg1.xsd"/>
   <xs:import namespace="http://www.example.com/2" schemaLocation="eg2.xsd"/>
   <xs:element name="foo1" type="e2:bar"/>
@@ -1762,7 +1762,7 @@ element eg2:foo {
 </compact>
 <xsd>
 <resource name="eg3.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/3" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/3" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="eg1.xsd"/>
   <xs:group name="local">
@@ -1773,7 +1773,7 @@ element eg2:foo {
 </xs:schema>
 </resource>
 <resource name="eg1.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/1" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/1" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:import namespace="http://www.example.com/2" schemaLocation="c.xsd"/>
   <xs:group name="local">
@@ -1784,7 +1784,7 @@ element eg2:foo {
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com/2" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:eg3="http://www.example.com/3" xmlns:eg2="http://www.example.com/2" xmlns:eg1="http://www.example.com/1">
   <xs:import namespace="http://www.example.com/3" schemaLocation="eg3.xsd"/>
   <xs:import namespace="http://www.example.com/1" schemaLocation="eg1.xsd"/>
   <xs:element name="foo">
@@ -1818,7 +1818,7 @@ element foo { x:bar { pattern = "[a-zA-Z]*" } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo" type="xs:string"/>
 </xs:schema>
 </correct>
@@ -1834,7 +1834,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" use="required">
@@ -1864,7 +1864,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" use="required">
@@ -1890,7 +1890,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:union memberTypes="xs:float">
@@ -1917,7 +1917,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:simpleContent>
@@ -1950,7 +1950,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo" abstract="true"/>
 </xs:schema>
 </correct>
@@ -1969,7 +1969,7 @@ element eg:foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:eg="http://www.example.com">
   <xs:element name="foo">
     <xs:complexType>
       <xs:choice>
@@ -1999,7 +1999,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType mixed="true">
       <xs:attribute name="format" use="required">
@@ -2026,7 +2026,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType mixed="true">
       <xs:attribute name="format" use="required" type="xs:QName"/>
@@ -2046,7 +2046,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:QName">
@@ -2070,7 +2070,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com" xmlns:ns1="http://www.example.com">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:QName">
@@ -2094,7 +2094,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:QName">
@@ -2118,7 +2118,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xsd:element name="foo">
     <xsd:simpleType>
       <xsd:restriction base="xsd:QName">
@@ -2140,7 +2140,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:QName">
@@ -2214,10 +2214,10 @@ include "foo.rnc" {
 </compact>
 <xsd>
 <resource name="foo.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"/>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:include schemaLocation="foo.xsd"/>
   <xs:element name="foo">
     <xs:complexType mixed="true"/>
@@ -2292,7 +2292,7 @@ inline |= element code { text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:complexType name="inline" mixed="true"/>
   <xs:element name="inline" abstract="true"/>
   <xs:element name="em" type="inline" substitutionGroup="inline"/>
@@ -2310,7 +2310,7 @@ inline = element em { text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:complexType name="inline" mixed="true"/>
   <xs:element name="inline" abstract="true"/>
   <xs:element name="code" type="inline" substitutionGroup="inline"/>
@@ -2329,7 +2329,7 @@ inline |= element b { text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:complexType name="inline" mixed="true"/>
   <xs:element name="inline" abstract="true"/>
   <xs:element name="code" type="inline" substitutionGroup="inline"/>
@@ -2349,7 +2349,7 @@ atts &= attribute baz { text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:attributeGroup name="atts">
     <xs:attribute name="foo" use="required"/>
     <xs:attribute name="bar" use="required"/>
@@ -2536,7 +2536,7 @@ head =		element head {
 </compact>
 <xsd>
 <resource name="xml.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.w3.org/XML/1998/namespace">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace">
   <xs:import schemaLocation="c.xsd"/>
   <xs:attribute name="lang"/>
   <xs:attribute name="base" type="xs:anyURI"/>
@@ -2597,7 +2597,7 @@ head =		element head {
   text fragments and "struct.model" for documents in extenso.
 -->
 <!-- Declarations -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <!-- Common attributes -->
   <!-- All elements (except full-document elements) can have these attributes -->
@@ -2846,7 +2846,7 @@ t = attribute x { text }, xsd:float
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo" type="t"/>
   <xs:element name="bar">
     <xs:complexType>
@@ -2878,7 +2878,7 @@ baz = element baz { bar, element xyzzy { text }* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo" type="bar"/>
   <xs:complexType name="bar">
     <xs:sequence>
@@ -2963,7 +2963,7 @@ foo = xsd:float*
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:simpleType name="foo">
     <xs:restriction base="xs:float"/>
   </xs:simpleType>
@@ -2979,7 +2979,7 @@ element foo { attribute bar { text } | element bar { text } }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:sequence>
@@ -3003,7 +3003,7 @@ element foo { attribute bar { text } | text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType mixed="true">
       <xs:attribute name="bar"/>
@@ -3021,7 +3021,7 @@ element foo { attribute bar { text } | xsd:float }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:simpleContent>
@@ -3055,7 +3055,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:sequence>
@@ -3080,7 +3080,7 @@ element foo { attribute * { xsd:float }* }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute processContents="skip"/>
@@ -3099,7 +3099,7 @@ x = xsd:normalizedString
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute processContents="skip"/>
@@ -3127,7 +3127,7 @@ element foo { attribute * { text }+ }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:anyAttribute processContents="skip"/>
@@ -3145,7 +3145,7 @@ element foo { (attribute bar { text }, attribute baz { text })? }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar"/>
@@ -3165,7 +3165,7 @@ element foo { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:annotation>
       <xs:documentation>This is a foo.</xs:documentation>
@@ -3187,7 +3187,7 @@ attribute bar { text }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" use="required">
@@ -3212,7 +3212,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:simpleType>
       <xs:restriction base="xs:token">
@@ -3237,7 +3237,7 @@ x = element foo|bar { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:complexType name="x"/>
   <xs:element name="x" abstract="true">
     <xs:annotation>
@@ -3263,7 +3263,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:all>
@@ -3299,7 +3299,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -3353,7 +3353,7 @@ grammar {
 <xsd>
 <correct>
 <!-- 0 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <!-- 1 -->
   <!-- 2 -->
   <!-- 3 -->
@@ -3381,7 +3381,7 @@ element foo {
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:element name="foo">
     <xs:complexType>
       <xs:attribute name="bar" default="xyzzy"/>
@@ -3404,13 +3404,13 @@ element foo {
 </compact>
 <xsd>
 <resource name="xml.xsd">
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://www.w3.org/XML/1998/namespace">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace">
   <xs:import schemaLocation="c.xsd"/>
   <xs:attribute name="lang" type="xs:language"/>
 </xs:schema>
 </resource>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:element name="foo">
     <xs:complexType>
