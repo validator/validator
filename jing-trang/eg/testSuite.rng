@@ -1,96 +1,92 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.1 2001-09-10 04:21:09 jjc Exp $ -->
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="">
-	<!--
-		target namespace is intentionally set to "" so as not to interfere with
-		prefix/URI bindings
-	-->
-	
-	<start>
-		<element name="testSuite">
-			<ref name="header"/>
-			<oneOrMore>
-				<choice>
-					<ref name="testCase"/>
-					<!--
-						resources are by itself a RELAX NG pattern, and it can be 
-						referenced from other patterns through <externalRef/>
-						the scope of the modules are global.
-					-->
-					<element name="resource">
-						<attribute name="href">
-							<data type="token" key="moduleName" />
-						</attribute>
-						<ref name="anyElement"/>
-					</element>
-				</choice>
-			</oneOrMore>
-		</element>
-	</start>
+<!-- $Id: testSuite.rng,v 1.2 2001-09-10 04:23:59 jjc Exp $ -->
+<grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
+  <!--
+    Target namespace is intentionally set to "" so as not to interfere with
+    prefix/URI bindings
+  -->
+  
+  <start>
+    <element name="testSuite">
+      <ref name="header"/>
+      <oneOrMore>
+        <choice>
+          <ref name="testCase"/>
+          <!--
+            Resources are by itself a RELAX NG pattern, and it can be 
+            referenced from other patterns through <externalRef/>
+            the scope of the modules are global.
+          -->
+          <element name="resource">
+            <attribute name="href"/>
+            <ref name="anyElement"/>
+          </element>
+        </choice>
+      </oneOrMore>
+    </element>
+  </start>
 
-	<define name="testCase">
-		<element name="testCase">
-			<ref name="header"/>
-			
-			<choice>
-				<!-- invalid patterns -->
-				<oneOrMore>
-					<element name="invalidPattern">
-						<ref name="anyElement"/>
-					</element>
-				</oneOrMore>
-				
-				<!-- valid pattern and test cases -->
-				<group>
-					<element name="validPattern">
-						<externalRef href="relaxng.rng"/>
-					</element>
-					<oneOrMore>
-						<choice>
-							<!-- valid test cases -->
-							<element name="valid">
-								<ref name="anyElement"/>
-							</element>
-							<!-- invalid test cases -->
-							<element name="invalid">
-								<ref name="anyElement"/>
-							</element>
-						</choice>
-					</oneOrMore>
-				</group>
-			</choice>
-		</element>
-	</define>
+  <define name="testCase">
+    <element name="testCase">
+      <ref name="header"/>
+      
+      <choice>
+        <!-- Invalid pattern -->
+        <element name="invalidPattern">
+          <ref name="anyElement"/>
+        </element>
+         
+        <!-- Valid pattern and test cases -->
+        <group>
+          <element name="validPattern">
+            <externalRef href="relaxng.rng"/>
+          </element>
+          <oneOrMore>
+            <choice>
+              <!-- valid test cases -->
+              <element name="valid">
+                <ref name="anyElement"/>
+              </element>
+              <!-- invalid test cases -->
+              <element name="invalid">
+                <ref name="anyElement"/>
+              </element>
+            </choice>
+          </oneOrMore>
+        </group>
+      </choice>
+    </element>
+  </define>
 
-	<define name="any">
-		<zeroOrMore>
-			<choice>
-				<ref name="anyElement"/>
-				<attribute>
-					<anyName/>
-					<text/>
-				</attribute>
-				<text/>
-			</choice>
-		</zeroOrMore>
-	</define>
+  <define name="any">
+    <zeroOrMore>
+      <choice>
+        <ref name="anyElement"/>
+        <attribute>
+          <anyName/>
+          <text/>
+        </attribute>
+        <text/>
+      </choice>
+    </zeroOrMore>
+  </define>
 
-	<define name="anyElement">
-		<element>
-			<anyName/>
-			<ref name="any"/>
-		</element>
-	</define>
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <ref name="any"/>
+    </element>
+  </define>
 
-	<define name="header">
-		<optional>
-			<!-- place holder for meta-information -->
-			<element name="header">
-				<zeroOrMore>
-					<ref name="anyElement"/>
-				</zeroOrMore>
-			</element>
-		</optional>
-	</define>
-	
+  <define name="header">
+    <optional>
+      <!-- Place holder for meta-information -->
+      <element name="header">
+        <zeroOrMore>
+          <ref name="anyElement"/>
+        </zeroOrMore>
+      </element>
+    </optional>
+  </define>
+  
 </grammar>
