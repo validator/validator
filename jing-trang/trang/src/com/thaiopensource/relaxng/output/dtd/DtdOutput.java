@@ -525,9 +525,9 @@ class DtdOutput {
         newlineIndent();
         NameNameClass nnc = (NameNameClass)names.get(i);
         String ns = nnc.getNamespaceUri();
-        String prefix = null;
+
         if (!ns.equals("") && ns != NameClass.INHERIT_NS) {
-          prefix = analysis.getPrefixForNamespaceUri(ns);
+          String prefix = analysis.getPrefixForNamespaceUri(ns);
           buf.append(prefix);
           buf.append(':');
         }
