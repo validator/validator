@@ -12,9 +12,9 @@ import java.util.Iterator;
 class ElementDeclInferrer {
   private final DatatypeRepertoire datatypes;
   private ContentModelInferrer contentModelInferrer;
-  private Map attributeTypeMap = new HashMap();
+  private final Map attributeTypeMap = new HashMap();
   private DatatypeInferrer valueInferrer;
-  private Set requiredAttributeNames = new HashSet();
+  private final Set requiredAttributeNames = new HashSet();
   private Set mixedContentNames = null;
 
   ElementDeclInferrer(DatatypeRepertoire datatypes, List attributeNames) {

@@ -19,13 +19,13 @@ public class InferHandler extends DefaultHandler {
   private final Map inferrerMap = new HashMap();
   private OpenElement openElement = null;
   private final Set startSet = new HashSet();
-  private List attributeNames = new Vector();
+  private final List attributeNames = new Vector();
   private final DatatypeRepertoire datatypes;
   private final StringBuffer textBuffer = new StringBuffer();
 
   private static class OpenElement {
-    OpenElement parent;
-    ElementDeclInferrer inferrer;
+    final OpenElement parent;
+    final ElementDeclInferrer inferrer;
     Name prevElementName = ContentModelInferrer.START;
 
     public OpenElement(OpenElement parent, ElementDeclInferrer inferrer) {

@@ -6,7 +6,7 @@ public class ParticleDumper implements ParticleVisitor {
 
   final private String defaultNamespace;
 
-  ParticleDumper(String defaultNamespace) {
+  private ParticleDumper(String defaultNamespace) {
     this.defaultNamespace = defaultNamespace;
   }
 

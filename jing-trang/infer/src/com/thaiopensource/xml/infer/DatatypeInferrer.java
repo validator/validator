@@ -2,7 +2,7 @@ package com.thaiopensource.xml.infer;
 
 import com.thaiopensource.relaxng.output.common.Name;
 
-public class DatatypeInferrer {
+class DatatypeInferrer {
   private final DatatypeRepertoire.Type[] possibleTypes;
   private int nTypes;
   private int typicalMask = 0;

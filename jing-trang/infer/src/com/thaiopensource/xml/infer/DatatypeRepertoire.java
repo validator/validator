@@ -11,7 +11,7 @@ public class DatatypeRepertoire {
   static private final int TOKEN_TYPICAL_MAX_LENGTH = 32;
   static private final int BINARY_TYPICAL_MIN_LENGTH = 128;
 
-  static private String[] typeNames = {
+  static private final String[] typeNames = {
     "boolean",
     "integer",
     "decimal",
@@ -76,7 +76,7 @@ public class DatatypeRepertoire {
 
   }
 
-  private Type[] types = new Type[typeNames.length];
+  private final Type[] types = new Type[typeNames.length];
   private int nTypes = 0;
 
   DatatypeRepertoire(DatatypeLibraryFactory factory) {
@@ -111,7 +111,7 @@ public class DatatypeRepertoire {
     return new Type(dt, typeName, index);
   }
 
-  public String getUri() {
+  public static String getUri() {
     return WellKnownNamespaces.XML_SCHEMA_DATATYPES;
   }
 }

@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-public class ContentModelInferrer {
-  public static final Name START = new Name("", "#start");
-  public static final Name END = new Name("", "#end");
+class ContentModelInferrer {
+  static final Name START = new Name("", "#start");
+  static final Name END = new Name("", "#end");
 
   /**
    * Maps names to nodes.
@@ -205,7 +205,7 @@ public class ContentModelInferrer {
     return new ElementParticle(name);
   }
 
-  public Set getElementNames() {
+  Set getElementNames() {
     return nameMap.keySet();
   }
 }
