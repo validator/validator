@@ -702,11 +702,11 @@ element. Therefore, before validating an attribute section, NRL
 transforms it into an XML element by creating a dummy element to hold
 the attributes. NRL also performs a corresponding transformation on
 the schema. This is schema-language dependent.  For example, in the
-case of RELAX NG, a schema <code><var>s</var></code> is transformed to
+case of RELAX NG, a schema <var>s</var> is transformed to
 <code>&lt;element>&lt;anyName/>&#160;<var>s</var>&#160;&lt;/element></code>.</p>
 
 <p>For example, suppose <code>xmlatts.rng</code> contains a schema for
-the attributes in the <code>xml</code> namespace written in RELAX
+the attributes in the <code>xml:</code> namespace written in RELAX
 NG:</p>
 
 <xml>
