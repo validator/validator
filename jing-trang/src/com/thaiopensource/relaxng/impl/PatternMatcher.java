@@ -9,7 +9,7 @@ import java.util.Hashtable;
 
 import org.relaxng.datatype.ValidationContext;
 
-public class PatternMatcher implements Cloneable, Matcher {
+class PatternMatcher implements Cloneable, Matcher {
 
   static private class Shared {
     private final Pattern start;
@@ -149,10 +149,6 @@ public class PatternMatcher implements Cloneable, Matcher {
     return error("text_not_allowed");
   }
 
-  /**
-   * Legal when matchText() is legal.
-   * @return
-   */
   public boolean isTextTyped() {
     return textTyped;
   }
