@@ -230,8 +230,8 @@ default namespace = "http://www.thaiopensource.com/ns/mns"
 
 start =
   element rules {
-     attribute startMode { mode }?,
-     (validate|lax)*
+    attribute startMode { mode }?,
+    (validate|lax)*
   }
 
 validate =
@@ -326,33 +326,40 @@ subtree with respect to the schema specified by the
 attribute prune { "true" | "false" }?
 </pre>
 
-<h2>Extensibility</h2>
-
-<p>Just as with RELAX NG, foreign elements and attributes can be added
-to MNS schemas.  Thus, the complete MNS schema is as follows:</p>
+<h2>More on modes</h2>
 
 <pre>
-default namespace mns = "http://www.thaiopensource.com/ns/mns"
-namespace local = ""
+default namespace = "http://www.thaiopensource.com/ns/mns"
 
 start =
   element rules {
     attribute startMode { mode }?,
-    ((validate|lax)* &amp; foreign)
+    (validate|lax)*
   }
 
 validate =
   element validate {
     validateModel,
-    attribute useMode { mode }?,
+    useModeAtt?,
     attribute prune { "true" | "false" }?,
-    (element cover { nsAtt &amp; foreign }* &amp; foreign)
+    element cover { nsAtt }*,
+    context*
   }
-  | element validateAttributes { validateModel &amp; foreign }
+  | element validateAttributes { validateModel }
+
+context = element context { useModeAtt?, nsAtt?, (rootContext|elementContext)+ }
+
+rootContext = element root { nsAtt?, elementContext }
+
+elementContext =
+  element element {
+    nsAtt?,
+    attribute name { xsd:NCName },
+    elementContext?
+  }
 
 lax =
   element lax {
-    inModesAtt?
     attribute allow {
       list {
         ("elements", "attributes") 
@@ -362,19 +369,95 @@ lax =
          | empty
       }
     }?,
+    inModesAtt?,
     foreign
   }
 
-validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
+validateModel =
+  nsAtt,
+  attribute schema { xsd:anyURI },
+  inModesAtt?
 
 nsAtt = attribute ns { xsd:anyURI }
+
+useModeAtt = attribute useMode { mode }
+
+inModesAtt = attribute inModes { list { mode+ } }
+
+mode = xsd:NCName | "#default"
+</pre>
+
+<h2>Extensibility</h2>
+
+<p>Just as with RELAX NG, foreign elements and attributes can be added
+to MNS schemas.  Thus, the complete MNS schema is as follows:</p>
+
+<pre>
+namespace local = ""
+default namespace mns = "http://www.thaiopensource.com/ns/mns"
+
+start =
+  element rules {
+    attribute startMode { mode }?,
+    ((validate | lax)* &amp; foreign)
+  }
+
+validate =
+  element validate {
+    validateModel,
+    useModeAtt?,
+    attribute prune { "true" | "false" }?,
+    ((cover*, context*) &amp; foreign)
+  }
+  | element validateAttributes { validateModel, foreign }
+
+cover = element cover { nsAtt, foreign }
+
+context = element context {
+    useModeAtt?,
+    nsAtt?,
+    ((rootContext|elementContext)+ &amp; foreign)
+  }
+
+rootContext = element root { nsAtt?, (elementContext &amp; foreign) }
+
+elementContext =
+  element element {
+    nsAtt?,
+    attribute name { xsd:NCName },
+    (elementContext? &amp; foreign)
+  }
+
+lax =
+  element lax {
+    attribute allow {
+      list {
+        ("elements", "attributes") 
+         | ("attributes", "elements") 
+         | "elements"
+         | "attributes"
+         | empty
+      }
+    }?,
+    inModesAtt?,
+    foreign
+  }
+
+validateModel =
+  nsAtt,
+  attribute schema { xsd:anyURI },
+  inModesAtt?
+
+nsAtt = attribute ns { xsd:anyURI }
+
+useModeAtt = attribute useMode { mode }
 
 inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
 
 foreign =
-  (attribute * - (mns:*|local:*) { text }
+  (attribute * - (mns:* | local:*) { text }
    | element * - mns:* { anything })*
 
 anything = (text | attribute * { text } | element * { anything })*
