@@ -329,6 +329,26 @@ public class CompactSyntax implements Context {
     return sb.makeAnnotations(comments, getContext());
   }
 
+  private Annotations addCommentsToChildAnnotations(Annotations a) {
+    CommentList comments = getComments();
+    if (comments == null)
+      return a;
+    if (a == null)
+      a = sb.makeAnnotations(null, getContext());
+    a.addComment(comments);
+    return a;
+  }
+
+  private Annotations addCommentsToLeadingAnnotations(Annotations a) {
+    CommentList comments = getComments();
+    if (comments == null)
+      return a;
+    if (a == null)
+      return sb.makeAnnotations(comments, getContext());
+    a.addLeadingComment(comments);
+    return a;
+  }
+
   private Annotations getTopLevelCommentsAsAnnotations() {
     CommentList comments = getTopLevelComments();
     if (comments == null)
@@ -1085,16 +1105,10 @@ String Inherit() :
 ParsedPattern ParentExpr(Scope scope, Annotations a) :
 {
   LocatedString name;
-  CommentList comments;
 }
 {
-  "parent" { comments = getComments(); } name = Identifier()
+  "parent" { a = addCommentsToChildAnnotations(a); } name = Identifier()
   {
-    if (comments != null) {
-      if (a == null)
-        a = sb.makeAnnotations(null, getContext());
-      a.addComment(comments);
-    }
     return scope.makeParentRef(name.getString(), name.getLocation(), a);
   }
 }
@@ -1220,7 +1234,7 @@ void Param(DataPatternBuilder dpb) :
   String value;
 }
 {
-  a = Annotations() name = UnprefixedName() "=" value = Literal()
+  a = Annotations() name = UnprefixedName() "=" { a = addCommentsToLeadingAnnotations(a); } value = Literal()
   { dpb.addParam(name.getString(), value, getContext(), defaultNamespace, name.getLocation(), a); }
 }
 
