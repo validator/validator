@@ -1408,9 +1408,9 @@ String Literal() :
   {
     s = unquote(t.image);
   }
-  (LOOKAHEAD(1)
+  (
     { buf = new StringBuffer(s); }
-    (LOOKAHEAD(1) t = <LITERAL> { buf.append(unquote(t.image)); })+
+    ("~" t = <LITERAL> { buf.append(unquote(t.image)); })+
     { s = buf.toString(); }
   )?
   { return s; }
@@ -1428,9 +1428,9 @@ LocatedString LocatedLiteral() :
   {
     s = unquote(t.image);
   }
-  (LOOKAHEAD(1)
+  (
     { buf = new StringBuffer(s); }
-    (LOOKAHEAD(1) t2 = <LITERAL> { buf.append(unquote(t2.image)); })+
+    ("~" t2 = <LITERAL> { buf.append(unquote(t2.image)); })+
     { s = buf.toString(); }
   )?
   { return new LocatedString(s, t); }

@@ -1780,7 +1780,7 @@ element foo { "z\x{D}\x{A}" }
 <testCase>
 <compact>
 <correct><![CDATA[
-"'"'"'
+"'"~'"'
 ]]></correct>
 </compact>
 <xml>
@@ -1792,7 +1792,7 @@ element foo { "z\x{D}\x{A}" }
 <testCase>
 <compact>
 <correct><![CDATA[
-namespace eg = "http://" "www.example.com"
+namespace eg = "http://" ~ "www.example.com"
 token "xyzzy"
 ]]></correct>
 </compact>
@@ -1805,8 +1805,8 @@ token "xyzzy"
 <testCase>
 <compact>
 <correct><![CDATA[
-datatypes xsd = "http://www.w3.org/" "2001" "/" "" "XMLSchema-datatypes" ""
-xsd:string { pattern = "foo" "|" "bar" }
+datatypes xsd = "http://www.w3.org/"~"2001"~"/"~""~"XMLSchema-datatypes"~""
+xsd:string { pattern = "foo"~"|"~"bar" }
 ]]></correct>
 </compact>
 <xml>
