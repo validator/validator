@@ -98,7 +98,7 @@ public class Validator {
 	case '\n':
 	  break;
 	default:
-	  string(new StringAtom(charBuf.toString(), prefixMapping));
+	  text();
 	  return;
 	}
       }
@@ -148,8 +148,10 @@ public class Validator {
     public void endElement(String namespaceURI,
 			   String localName,
 			   String qName) throws SAXException {
-      if (collectingCharacters)
-	flushCharacters();
+      if (collectingCharacters) {
+	collectingCharacters = false;
+	string(new StringAtom(charBuf.toString(), prefixMapping));
+      }
       if (!combinedState.isNullable() && !combinedState.isEmptyChoice())
 	error("unfinished_element");
       parent.set();
@@ -233,7 +235,7 @@ public class Validator {
     }
 
     void string(StringAtom a) throws SAXException {
-      if (!updateState(b.memoizedResidual(combinedState, a)))
+      if (!updateState(b.stringResidual(combinedState, a)))
 	error("string_not_allowed");
     }
 
@@ -368,7 +370,7 @@ public class Validator {
     void string(StringAtom a) throws SAXException {
       super.string(a);
       for (int j = 0; j < state.length; j++)
-	state[j] = b.memoizedResidual(state[j], a);
+	state[j] = b.stringResidual(state[j], a);
     }
 
     void attributes(Attributes atts) throws SAXException {

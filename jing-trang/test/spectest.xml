@@ -3594,7 +3594,7 @@ normalization of notAllowed.</documentation>
 </element>
 </correct>
 <valid><foo bar=""/></valid>
-<invalid><foo bar=" "/></invalid>
+<valid><foo bar=" "/></valid>
 <invalid><foo bar="x"/></invalid>
 </testCase>
 <testCase>
@@ -4181,9 +4181,6 @@ y
 <foo bar=" baz"/>
 </invalid>
 <invalid>
-<foo bar=" "/>
-</invalid>
-<invalid>
 <foo bar="b"/>
 </invalid>
 <invalid>
@@ -4599,9 +4596,9 @@ z
 <valid>
 <foo>x y</foo>
 </valid>
-<valid>
+<invalid>
 <foo/>
-</valid>
+</invalid>
 <invalid>
 <foo>x y z</foo>
 </invalid>
@@ -5938,5 +5935,121 @@ before string sequence checking.</documentation>
 </incorrect>
 </testCase>
 </testSuite>
+</testSuite>
+<testSuite>
+<documentation>White space</documentation>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <value type="string"/>
+</element>
+</correct>
+<valid><foo/></valid>
+<invalid><foo> </foo></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <value type="string"/>
+</element>
+</correct>
+<valid><foo/></valid>
+<invalid><foo> </foo></invalid>
+<invalid><foo>x</foo></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <choice>
+    <value type="string"/>
+    <empty/>
+  </choice>
+</element>
+</correct>
+<valid><foo/></valid>
+<valid><foo> </foo></valid>
+<invalid><foo>x</foo></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <list>
+    <data type="token"/>
+  </list>
+</element>
+</correct>
+<invalid><foo/></invalid>
+<invalid><foo> </foo></invalid>
+<valid><foo>x</foo></valid>
+<valid><foo> x </foo></valid>
+<invalid><foo>x y</foo></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+ <data type="string"
+       datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <param name="minLength">2</param>
+ </data>
+</element>
+</correct>
+<valid><foo>xx</foo></valid>
+<valid><foo>xxx</foo></valid>
+<valid><foo>  </foo></valid>
+<valid><foo>   </foo></valid>
+<invalid><foo>x</foo></invalid>
+<invalid><foo> </foo></invalid>
+<invalid><foo/></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <choice>
+    <value>x</value>
+    <element name="bar">
+      <empty/>
+    </element>
+  </choice>
+</element>
+</correct>
+<valid><foo> x </foo></valid>
+<valid><foo>x</foo></valid>
+<invalid><foo>y</foo></invalid>
+<valid><foo><bar/></foo></valid>
+<valid>
+<foo>
+<bar/>
+</foo>
+</valid>
+<invalid><foo>x<bar/></foo></invalid>
+<invalid><foo/></invalid>
+<invalid><foo><bar/>x</foo></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <choice>
+    <value>x</value>
+    <mixed>
+      <element name="bar">
+        <empty/>
+      </element>
+    </mixed>
+  </choice>
+</element>
+</correct>
+<valid><foo> x </foo></valid>
+<valid><foo>x</foo></valid>
+<invalid><foo>y</foo></invalid>
+<valid><foo><bar/></foo></valid>
+<valid>
+<foo>
+<bar/>
+</foo>
+</valid>
+<valid><foo>x<bar/></foo></valid>
+<invalid><foo/></invalid>
+<valid><foo><bar/>x</foo></valid>
+</testCase>
 </testSuite>
 </testSuite>

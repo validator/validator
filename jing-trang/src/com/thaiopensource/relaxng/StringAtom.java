@@ -14,8 +14,20 @@ class StringAtom extends Atom {
     this.vc = vc;
   }
 
-  boolean isEmpty() {
-    return str.length() == 0;
+  boolean isBlank() {
+    int len = str.length();
+    for (int i = 0; i < len; i++) {
+      switch (str.charAt(i)) {
+      case '\r':
+      case '\n':
+      case ' ':
+      case '\t':
+	break;
+      default:
+	return false;
+      }
+    }
+    return true;
   }
 
   boolean matchesString() {

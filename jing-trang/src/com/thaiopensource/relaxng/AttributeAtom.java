@@ -14,15 +14,15 @@ class AttributeAtom extends Atom {
     this.localName = localName;
     this.value = value == null ? null : new StringAtom(value, vc);
   }
+
   boolean matchesAttribute(PatternBuilder b, NameClass nc, Pattern valuePattern) {
     if (!nc.contains(namespaceURI, localName))
       return false;
     if (value == null)
       return true;
-    if (value.isEmpty() && valuePattern.isNullable())
-      return true;
-    return valuePattern.residual(b, value).isNullable();
+    return b.stringResidual(valuePattern, value).isNullable();
   }
+
   boolean isAttribute() {
     return true;
   }

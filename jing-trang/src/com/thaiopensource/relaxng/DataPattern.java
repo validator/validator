@@ -5,13 +5,9 @@ import org.relaxng.datatype.Datatype;
 class DataPattern extends StringPattern {
   private Datatype dt;
 
-  DataPattern(boolean nullable, Datatype dt) {
-    super(nullable, combineHashCode(DATA_HASH_CODE, dt.hashCode()));
-    this.dt = dt;
-  }
-
   DataPattern(Datatype dt) {
-    this(!dt.isContextDependent() && dt.isValid("", null), dt);
+    super(combineHashCode(DATA_HASH_CODE, dt.hashCode()));
+    this.dt = dt;
   }
 
   boolean matches(PatternBuilder b, Atom a) {

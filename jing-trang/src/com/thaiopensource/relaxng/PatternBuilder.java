@@ -94,6 +94,15 @@ public class PatternBuilder {
       InterleavePattern ip = (InterleavePattern)p1;
       return makeInterleave(ip.p1, makeInterleave(ip.p2, p2));
     }
+    if (false) {
+    if (p2 instanceof InterleavePattern) {
+      InterleavePattern ip = (InterleavePattern)p2;
+      if (p1.hashCode() > ip.p1.hashCode())
+	return makeInterleave(ip.p1, makeInterleave(p1, ip.p2));
+    }
+    else if (p1.hashCode() > p2.hashCode())
+      return makeInterleave(p2, p1);
+    }
     return intern(new InterleavePattern(p1, p2));
   }
   Pattern makeText() {
@@ -130,6 +139,15 @@ public class PatternBuilder {
     }
     if (p2.containsChoice(p1))
       return p2;
+    if (false) {
+    if (p2 instanceof ChoicePattern) {
+      ChoicePattern cp = (ChoicePattern)p2;
+      if (p1.hashCode() > cp.p1.hashCode())
+	return makeChoice(cp.p1, makeChoice(p1, cp.p2));
+    }
+    else if (p1.hashCode() > p2.hashCode())
+      return makeChoice(p2, p1);
+    }
     return intern(new ChoicePattern(p1, p2));
   }
 
@@ -269,6 +287,12 @@ public class PatternBuilder {
       eaTable.put(p, ea);
     }
     return ea;
+  }
+
+  Pattern stringResidual(Pattern p, StringAtom a) {
+    if (a.isBlank() && p.isNullable())
+      return p;
+    return p.residual(this, a);
   }
 
   Pattern memoizedResidual(Pattern p, Atom a) {
