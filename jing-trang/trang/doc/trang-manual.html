@@ -36,7 +36,9 @@ permission.</p>
 </ul>
 </li>
 
+<!--
 <li><a href="#examples">Examples</a></li>
+-->
 </ul>
 
 <h2><a name="introduction">Introduction</a></h2>
@@ -168,8 +170,9 @@ href="#output-modules">output</a> modules.</dd>
 <h3><a name="rng-input">RELAX NG (XML syntax) input module</a></h3>
 
 <p>This input module accepts RELAX NG schemas in XML syntax as defined
-by the <a href="http://relaxng.org/spec.html">RELAX NG 1.0 Committee
-Specification</a>.</p>
+by the RELAX NG 1.0 <a
+href="http://www.oasis-open.org/committees/relax-ng/spec.html"
+>Committee Specification</a>.</p>
 
 <p>It accept the following parameters:</p>
 
@@ -181,41 +184,133 @@ specified in the encoding declaration of the XML document.</dd>
 
 </dl>
 
+<!-- XXX mention incomplete schemas -->
+
 <h3><a name="rnc-input">RELAX NG Compact Syntax input module</a></h3>
+
+<p>This input module accepts RELAX NG schemas using the compact syntax
+as defined in the RELAX NG Compact Syntax <a
+href="http://www.oasis-open.org/committees/relax-ng/compact-20021121.html"
+>Committee Specification</a>.</p>
+
+<p>It accepts the following parameters:</p>
+
+<dl>
+<dt><code>-i encoding=<var>name</var></code></dt>
+
+<dd>Use an encoding of <var>name</var>.  By default, Trang will
+autodetect an encoding of UTF-8 or UTF-16.</dd>
+
+</dl>
+
 
 <h3><a name="dtd-input">DTD input module</a></h3>
 
-<p>Namespaces</p>
+<p>This input module accepts DTDs as defined by the XML 1.0 <a
+href="http://www.w3.org/TR/REC-xml">Recommendation</a>.</p>
 
-<p>Parameters</p>
+<!-- Say something about namespaces -->
+
+<p>It accepts the following parameters:</p>
 
 <dl>
-<dt><code>-i inline-attlist</code></dt>
-<dt><code>-i no-inline-attlist</code></dt>
-
 <dt><code>-i xmlns=<var>uri</var></code></dt>
+
+<dd>Specifies the default namespace, that is the namespace used for
+unqualified element names.</dd>
 
 <dt><code>-i xmlns:<var>prefix</var>=<var>uri</var></code></dt>
 
+<dd>Specifies the namespace for the element and attribute names using
+<code><var>prefix</var></code>.</dd>
+
+<dt><code>-i colon-replacement=<var>chars</var></code></dt>
+
+<dd><a name="colon-replacement">Replaces colons in element names by
+<code><var>chars</var></code> when constructing the names of
+definitions used to represent the element declarations and attribute
+list declarations in the DTD.  Trang generates a definition for each
+element declaration and attlist declaration in the DTD. The name of
+the definition is based on the name of the element. In RELAX NG, the
+names of definitions cannot contain colons.  However, in the DTD, the
+element name may contain a colon.  By default, Trang will first try to
+use the element names without prefixes.  If this causes a conflict, it
+will instead replace the colon by a legal name character (it try first
+to use a period).</a></dd>
+
+<dt><code>-i element-define=<var>name-pattern</var></code></dt>
+
+<dd>Specifies how to construct the name of the definition representing
+an element declaration from the name of the element.  The
+<code><var>name-pattern</var></code> must contain exactly one percent
+character.  This percent character is replaced by the name of element
+(after <a href="#colon-replacement">colon replacement</a>) and the
+result is used as the name of the definition.</dd>
+
+<dt><a name="inline-attlist"><code>-i inline-attlist</code></a></dt>
+
+<dd>Specifies not to generate definitions for attribute list
+declarations and instead move attributes declared in attribute list
+declarations into the definitions generated for element declarations.
+This is the default behavior when the output module is
+<code>xsd</code>.  Otherwise, the default behaviour is as described in
+the <a href="#no-inline-attlist"><code>-i no-inline-attlist</code></a>
+parameter.</dd>
+
+<dt><a name="no-inline-attlist"><code>-i no-inline-attlist</code></a></dt>
+
+<dd>Generates a distinct definition (with
+<code>combine="interleave"</code>) for each attribute list declaration
+in the DTD; the definition for each element declaration references the
+definition for the corresponding attribute list declaration.  This is
+the default behavior, except when the output module is
+<code>xsd</code>, for which the default behavior is as described in
+the <a href="#inline-attlist"><code>-i inline-attlist</code></a>
+parameter.</dd>
+
+<dt><code>-i attlist-define=<var>name-pattern</var></code></dt>
+
+<dd>This specifies how to construct the name of the definition
+representing an attribute list declaration from the name of the
+element. The <code><var>name-pattern</var></code> must contain exactly
+one percent character.  This percent character is replaced by the name
+of element (after <a href="#colon-replacement">colon replacement</a>)
+and the result is used as the name of the definition.</dd>
+
 <dt><code>-i any-name=<var>name</var></code></dt>
 
+<dd>Specifies the name of the definition generated for the content of
+elements declared in the DTD as having a content model of ANY.</dd>
+
 <dt><code>-i strict-any</code></dt>
-<dt><code>-i no-strict-any</code></dt>
+
+<dd>Preserves the exact semantics of ANY content models by using an
+explicit choice of references to all declared elements.  By default,
+Trang uses a wildcard that allows any element.</dd>
 
 <dt><code>-i annotation-prefix=<var>prefix</var></code></dt>
 
-<dt><code>-i colon-replacement=<var>chars</var></code></dt>
+<dd>Default values are represented using an annotation attribute
+<code><var>prefix</var>:defaultValue</code> where
+<code><var>prefix</var></code> is bound to
+<code>http://relaxng.org/ns/compatibility/annotations/1.0</code> as
+defined by the RELAX NG DTD Compatibility <a
+href="http://www.oasis-open.org/committees/relax-ng/compatibility.html"
+>Committee Specification</a>. By default, Trang will use
+<code>a</code> for <code><var>prefix</var></code> unless that
+conflicts with a prefix used in the DTD.</dd>
 
 <dt><code>-i generate-start</code></dt>
 <dt><code>-i no-generate-start</code></dt>
 
-
-<dt><code>-i element-define=<var>name-pattern</var></code></dt>
-<dt><code>-i attlist-define=<var>name-pattern</var></code></dt>
+<dd>Specifies whether Trang should generate a <code>start</code>
+element. DTDs do not indicate what elements are allowed as document
+elements.  Trang assumes that all elements that are defined but never
+referenced are allowed as document elements.</dd>
 
 </dl>
 
-<p>Limitations: marked sections</p>
+<!-- Say something about limitations wrt marked sections -->
 
 
 <h2><a name="output-modules">Output modules</a></h2>
@@ -233,15 +328,21 @@ specified in the encoding declaration of the XML document.</dd>
 <h3><a name="rng-output">RELAX NG (XML syntax) output module</a></h3>
 
 <p>This output module outputs RELAX NG schemas in XML syntax as
-defined by the <a href="http://relaxng.org/spec.html">RELAX NG 1.0
-Committee Specification</a>.</p>
+defined by the <a
+href="http://www.oasis-open.org/committees/relax-ng/spec.html">RELAX
+NG 1.0 Committee Specification</a>.</p>
 
 <h3><a name="rnc-output">RELAX NG Compact Syntax output module</a></h3>
 
+<p>This output module outputs RELAX NG schemas in compact syntax as
+defined by the RELAX NG Compact Syntax <a
+href="http://www.oasis-open.org/committees/relax-ng/compact-20021121.html"
+>Committee Specification</a>.</p>
+
 <h3><a name="dtd-output">DTD output module</a></h3>
 
-<p>The DTD output module outputs DTDs as defined by the XML 1.0
-Recommendation.</p>
+<p>This output module outputs DTDs as defined by the XML 1.0 <a
+href="http://www.w3.org/TR/REC-xml">Recommendation</a>.</p>
 
 <p>It has many limitations. There are many RELAX NG features that it
 cannot handle, including:</p>
@@ -296,6 +397,10 @@ unrestricted use of the features of RELAX NG.</li>
 </ul>
 
 <h3><a name="xsd-output">W3C XML Schema output module</a></h3>
+
+<p>This output module outputs an W3C XML Schema as defined by the XML
+Schema <a href="http://www.w3.org/TR/xmlschema-1/"
+>Recommendation</a>.</p>
 
 <p>It has the following limitations:</p>
 
@@ -357,7 +462,9 @@ that are to be translated into element declarations, whether abstract
 or not. The <code>tx:enableAbstractElements</code> attribute applies
 equally to these definitions.</p>
 
+<!--
 <h2><a name="examples">Examples</a></h2>
+-->
 
 </body>
 </html>
