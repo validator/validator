@@ -3,6 +3,7 @@ package com.thaiopensource.relaxng.mns;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.relaxng.AbstractSchema;
 import com.thaiopensource.relaxng.impl.Name;
 import com.thaiopensource.relaxng.parse.sax.XmlBaseHandler;
 import com.thaiopensource.util.Localizer;
@@ -24,7 +25,7 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Stack;
 
-class SchemaImpl implements Schema {
+class SchemaImpl extends AbstractSchema {
   static final String BEARER_URI = "http://www.thaiopensoure.com/mns/instance";
   static final String BEARER_LOCAL_NAME = "globalAttributesBearer";
   private static final String MNS_URI = "http://www.thaiopensource.com/ns/mns";
@@ -422,10 +423,6 @@ class SchemaImpl implements Schema {
 
   public ValidatorHandler createValidator(ErrorHandler eh) {
     return new ValidatorHandlerImpl(startMode, eh);
-  }
-
-  public ValidatorHandler createValidator() {
-    return createValidator(null);
   }
 
   private static InputSource wrapAttributesSchema(String attributesSchemaUri) {
