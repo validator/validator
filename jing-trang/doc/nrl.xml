@@ -201,12 +201,12 @@ which all start with the URI
 
 <dt><code>http://www.thaiopensource.com/validate/check-id-idref</code></dt>
 
-<dd>No argument.If option present, check ID/IDREF in accordance with
+<dd>No argument. If present, check ID/IDREF in accordance with
 RELAX NG DTD Compatibility specification.</dd>
 
 <dt><code>http://www.thaiopensource.com/validate/feasible</code></dt>
 
-<dd>No argument.If option present, check that the document is
+<dd>No argument. If present, check that the document is
 <em>feasibly valid</em>.  This applies to RELAX NG.  A document is
 <em>feasibly valid</em> if it could be transformed into a valid
 document by inserting any number of attributes and child elements
