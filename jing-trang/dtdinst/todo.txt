@@ -1,3 +1,5 @@
+Options to expand/not recognize various kinds of ref.
+
 Overridden general entity declarations.
 
 Overridden external parameter entity declarations.
