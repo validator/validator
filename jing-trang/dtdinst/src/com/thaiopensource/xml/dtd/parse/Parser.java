@@ -33,7 +33,8 @@ class Parser extends Token {
   // for error messages
   private String location;
   
-  private Hashtable atomTable = new Hashtable();
+  private Hashtable atomTable;
+  private Hashtable elementTable;
 
   static class DeclState {
     Entity entity;
@@ -51,6 +52,8 @@ class Parser extends Token {
     this.bufEnd = 0;
     this.db = new DtdBuilder(atoms);
     this.isInternal = false;
+    this.elementTable = new Hashtable();
+    this.atomTable = new Hashtable();
   }
 
   private Parser(OpenEntity entity, Parser parent) {
@@ -64,6 +67,8 @@ class Parser extends Token {
     this.bufEnd = 0;
     this.db = parent.db;
     this.isInternal = false;
+    this.elementTable = parent.elementTable;
+    this.atomTable = parent.atomTable;
   }
 
   private Parser(char[] buf, String entityName, Parser parent) {
@@ -77,6 +82,8 @@ class Parser extends Token {
     this.valueBuf = parent.valueBuf;
     this.db = parent.db;
     this.isInternal = true;
+    this.elementTable = parent.elementTable;
+    this.atomTable = parent.atomTable;
   }
 
   DtdBuilder parse() throws IOException {
@@ -186,6 +193,11 @@ class Parser extends Token {
 	entity.open = false;
 	break;
       }
+    case PrologParser.ACTION_ELEMENT_NAME:
+      if (elementTable.get(token) != null)
+	fatal("DUPLICATE_ELEMENT", token);
+      elementTable.put(token, token);
+      break;
     case PrologParser.ACTION_NOTATION_NAME:
       declState.notation = db.createNotation(token);
       if (declState.notation == null)

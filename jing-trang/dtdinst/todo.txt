@@ -1,6 +1,7 @@
-RELAX NG: overridden attributes.
+RELAX NG: give helpful error message if output directory does not
+exist or is a file
 
-Check for duplicate ELEMENT declarations.
+RELAX NG: overridden attributes.
 
 EntityManager that properly handles URLs.
 
@@ -11,6 +12,9 @@ Command-line option parser.
 Option to set start elements.
 
 Use system-dependent line-endings on output in XmlWriter.
+
+RELAX NG: avoid collisions from distinct entities with same
+base name but different directories
 
 RELAX NG: preserve directory structure on output.
 
