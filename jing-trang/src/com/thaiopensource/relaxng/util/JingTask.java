@@ -25,18 +25,18 @@ import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.datatype.xsd.DatatypeFactoryImpl;
 
 /**
- * Ant task to validate XML files using TREX.
+ * Ant task to validate XML files using RELAX NG.
  */
 
-public class TrexTask extends Task {
+public class JingTask extends Task {
 
-  private File trexFile;
+  private File rngFile;
   private File src;
   private Vector filesets = new Vector();
 
   public void execute() throws BuildException {
-    if (trexFile == null)
-      throw new BuildException("trexfile attribute must be set!", 
+    if (rngFile == null)
+      throw new BuildException("rngFile attribute must be set!", 
 			       location);
     if (src == null && filesets.size() == 0)
       throw new BuildException("There must be a file attribute or a fileset child element",
@@ -51,7 +51,7 @@ public class TrexTask extends Task {
       engine.setXMLReaderCreator(new Jaxp10XMLReaderCreator());
       engine.setErrorHandler(eh);
       engine.setDatatypeFactory(new DatatypeFactoryImpl());
-      if (!engine.loadPattern(fileInputSource(trexFile)))
+      if (!engine.loadPattern(fileInputSource(rngFile)))
 	hadError = true;
       else {
 	if (src != null) {
@@ -86,8 +86,8 @@ public class TrexTask extends Task {
     return new InputSource(FileURL.fileToURL(f).toString());
   }
 
-  public void setTrexfile(String trexFilename) {
-    trexFile = project.resolveFile(trexFilename);
+  public void setRngfile(String rngFilename) {
+    rngFile = project.resolveFile(rngFilename);
   }
     
   public void setFile(File file) {
