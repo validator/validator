@@ -62,18 +62,25 @@ class TestDriver {
     for (int i = 0; i < files.length; i++) {
       String f = files[i];
       int n = 0;
-      if (f.endsWith(CORRECT_SCHEMA_SUFFIX))
-	n = testCorrect(new File(dir, f));
-      else if (f.endsWith(INCORRECT_SCHEMA_SUFFIX))
-	n = testIncorrect(new File(dir, f));
+      if (f.endsWith(CORRECT_SCHEMA_SUFFIX)) {
+	String base = f.substring(0,
+				  f.length() - CORRECT_SCHEMA_SUFFIX.length());
+	n = testCorrect(new File(dir, f), new File(dir, base));
+      }
+      else if (f.endsWith(INCORRECT_SCHEMA_SUFFIX)) {
+	String base = f.substring(0,
+				  f.length() - INCORRECT_SCHEMA_SUFFIX.length());
+	n = testIncorrect(new File(dir, f), new File(dir, base));
+      }
       else if (f.endsWith(VALID_INSTANCE_SUFFIX)) {
 	String base = f.substring(0,
 				  f.length() - VALID_INSTANCE_SUFFIX.length());
 	int k = base.lastIndexOf(SCHEMA_SEP);
 	if (k >= 0) {
-	  String schema = base.substring(0, k) + CORRECT_SCHEMA_SUFFIX;
+	  base = base.substring(0, k);
+	  String schema = base + CORRECT_SCHEMA_SUFFIX;
 	  if (table.get(schema) != null)
-	    n = testValid(new File(dir, schema), new File(dir, f));
+	    n = testValid(new File(dir, schema), new File(dir, base), new File(dir, f));
 	}
       }
       else if (f.endsWith(INVALID_INSTANCE_SUFFIX)) {
@@ -81,9 +88,10 @@ class TestDriver {
 				  f.length() - INVALID_INSTANCE_SUFFIX.length());
 	int k = base.lastIndexOf(SCHEMA_SEP);
 	if (k >= 0) {
-	  String schema = base.substring(0, k) + CORRECT_SCHEMA_SUFFIX;
+	  base = base.substring(0, k);
+	  String schema = base + CORRECT_SCHEMA_SUFFIX;
 	  if (table.get(schema) != null)
-	    n = testInvalid(new File(dir, schema), new File(dir, f));
+	    n = testInvalid(new File(dir, schema), new File(dir, base), new File(dir, f));
 	}
       }
       if (n > result)
@@ -92,16 +100,16 @@ class TestDriver {
     return result;
   }
 
-  private int testCorrect(File schema) throws IOException {
-    if (!runTest(schema, null)) {
+  private int testCorrect(File schema, File dir) throws IOException {
+    if (!runTest(schema, dir, null)) {
       System.err.println("Failed: " + schema.toString());
       return 1;
     }
     return 0;
   }
 
-  private int testIncorrect(File schema) throws IOException {
-    if (runTest(schema, null)) {
+  private int testIncorrect(File schema, File dir) throws IOException {
+    if (runTest(schema, dir, null)) {
       System.err.println("Failed: " + schema.toString());
       return 1;
     }
@@ -109,29 +117,34 @@ class TestDriver {
 
   }
 
-  private int testValid(File schema, File instance) throws IOException {
-    if (!runTest(schema, instance)) {
+  private int testValid(File schema, File dir, File instance) throws IOException {
+    if (!runTest(schema, dir, instance)) {
       System.err.println("Failed: " + schema.toString() + "+" + instance.toString());
       return 1;
     }
     return 0;
   }
 
-  private int testInvalid(File schema, File instance) throws IOException {
-    if (runTest(schema, instance)) {
+  private int testInvalid(File schema, File dir, File instance) throws IOException {
+    if (runTest(schema, dir, instance)) {
       System.err.println("Failed: " + schema.toString() + "+" + instance.toString());
       return 1;
     }
     return 0;
   }
 
-  private boolean runTest(File schema, File instance) throws IOException {
+  private boolean runTest(File schema,
+			  File dir,
+			  File instance) throws IOException {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
     boolean hadError = false;
     try {
-      if (engine.loadPattern(fileInputSource(schema))) {
+      URL schemaURL = FileURL.fileToURL(schema);
+      InputSource in = new InputSource(schemaURL.openStream());
+      in.setSystemId(FileURL.fileToURL(dir).toString() + "/");
+      if (engine.loadPattern(in)) {
 	if (instance != null
-	    && !engine.validate(fileInputSource(instance)))
+	    && !engine.validate(new InputSource(FileURL.fileToURL(instance).toString())))
 	  hadError = true;
       }
       else
@@ -144,7 +157,4 @@ class TestDriver {
     return !hadError;
   }
 
-  static private InputSource fileInputSource(File f) {
-    return new InputSource(FileURL.fileToURL(f).toString());
-  }
 }
