@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RELAX NG name class analysis</title>
+</head>
+
+<body>
+
+<h1>Name class analysis</h1>
+
+<p>A RELAX NG validator has to be able to determine whether two name
+classes overlap (i.e. whether there is a name that belongs to both
+name classes). This is needed for implementing sections 7.3
+and 7.4 of the spec.</p>
+
+<p>The basic idea is two test whether any of a representative set of
+names is a member of both name classes.  The representative set of
+names is chosen such that for any name <var>n</var> that occurs in one
+or both name classes there is guaranteed to be at least one member
+<var>r</var> of the representative set of names such that, for each of
+the two name classes, <var>r</var> is a member of that name class if
+and only <var>n</var> is also a member of that name class.  When
+constructing a representative set of names for name classes involving
+<code>anyName</code> or <code>nsName</code>, it is necessary to find a
+namespace URI or a local name that is not mentioned in either name
+class.  Instead of expending effort of finding such a namespace URI or
+local name we instead use a string that is not legal as a namespace
+URI or local name, and hence is guaranteed not to occur in either name
+class.</p>
+
+<p>Here's some <a href="http://www.haskell.org">Haskell</a> code that
+implements this.  This uses datatypes from the <a
+href="derivative.html">description</a> of derivative-based
+validation.</p>
+
+<pre>
+overlap :: NameClass -> NameClass -> Bool
+overlap nc1 nc2 =
+  any (bothContain nc1 nc2) (representatives nc1 ++ representatives nc2)
+
+bothContain :: NameClass -> NameClass -> QName -> Bool
+bothContain nc1 nc2 qn = contains nc1 qn &amp;&amp; contains nc2 qn
+
+representatives :: NameClass -> [QName]
+
+illegalLocalName :: LocalName
+illegalLocalName = ""
+
+illegalUri :: Uri
+illegalUri = "\x1"
+
+representatives AnyName = [QName illegalUri illegalLocalName]
+representatives (AnyNameExcept nc) =
+  (QName illegalUri illegalLocalName) : (representatives nc)
+representatives (NsName ns) = [QName ns illegalLocalName]
+representatives (NsNameExcept ns nc) =
+  (QName ns illegalLocalName) : (representatives nc)
+representatives (Name ns ln) = [QName ns ln]
+representatives (NameClassChoice nc1 nc2) =
+  (representatives nc1) ++ (representatives nc2)
+</pre>
+
+<p>This approach can also be used to determine whether two name
+classes are equivalent. Two name classes are equivalent if and only if
+for each member of the representative set of names either both name
+classes contain that representative name or neither name classe
+contains it.</p>
+
+<address>
+<a href="mailto:jjc@jclark.com">James Clark</a>
+</address>
+</body>
+</html>
