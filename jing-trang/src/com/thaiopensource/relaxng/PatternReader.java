@@ -27,10 +27,12 @@ import com.thaiopensource.util.Uri;
 
 public class PatternReader implements ValidationContext {
 
-  static final String relaxngURI = "http://relaxng.org/ns/structure/1.0";
+  static final String relaxngURIPrefix = "http://relaxng.org/ns/structure/";
+  static final String relaxng10URI = relaxngURIPrefix + "1.0";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
   static final String xsdURI = "http://www.w3.org/2001/XMLSchema-datatypes";
 
+  String relaxngURI;
   XMLReader xr;
   XMLReaderCreator xrc;
   PatternBuilder patternBuilder;
@@ -98,12 +100,16 @@ public class PatternReader implements ValidationContext {
       this.grammar = parent.grammar;
     }
 
+    boolean isRelaxNGElement(String uri) throws SAXException {
+      return uri.equals(relaxngURI);
+    }
+
     public void startElement(String namespaceURI,
 			     String localName,
 			     String qName,
 			     Attributes atts) throws SAXException {
       xmlBaseHandler.startElement();
-      if (isPatternNamespaceURI(namespaceURI)) {
+      if (isRelaxNGElement(namespaceURI)) {
 	State state = createChildState(localName);
 	if (state == null) {
 	  xr.setContentHandler(new Skipper(this));
@@ -417,12 +423,23 @@ public class PatternReader implements ValidationContext {
     }
 
     void checkForeignElement() throws SAXException {
-      error("root_bad_namespace_uri", relaxngURI);
+      error("root_bad_namespace_uri", relaxng10URI);
     }
 
     public void endDocument() throws SAXException {
       if (!hadError)
 	startPattern = containedPattern;
+    }
+
+    boolean isRelaxNGElement(String uri) throws SAXException {
+      if (!uri.startsWith(relaxngURIPrefix))
+	return false;
+      if (!uri.equals(relaxng10URI))
+	warning("wrong_uri_version",
+		relaxng10URI.substring(relaxngURIPrefix.length()),
+		uri.substring(relaxngURIPrefix.length()));
+      relaxngURI = uri;
+      return true;
     }
 
   }
@@ -1364,14 +1381,31 @@ public class PatternReader implements ValidationContext {
     warning(key, locator);
   }
 
+  void warning(String key, String arg) throws SAXException {
+    warning(key, arg, locator);
+  }
+
+  void warning(String key, String arg1, String arg2) throws SAXException {
+    warning(key, arg1, arg2, locator);
+  }
+
   void warning(String key, Locator loc) throws SAXException {
     warning(new SAXParseException(Localizer.message(key), loc));
+  }
+
+  void warning(String key, String arg, Locator loc) throws SAXException {
+    warning(new SAXParseException(Localizer.message(key, arg), loc));
+  }
+
+  void warning(String key, String arg1, String arg2, Locator loc)
+    throws SAXException {
+    warning(new SAXParseException(Localizer.message(key, arg1, arg2), loc));
   }
 
   void warning(SAXParseException e) throws SAXException {
     ErrorHandler eh = xr.getErrorHandler();
     if (eh != null)
-      eh.error(e);
+      eh.warning(e);
   }
 
   public PatternReader(XMLReaderCreator xrc,
@@ -1495,10 +1529,6 @@ public class PatternReader implements ValidationContext {
 
   public boolean isNotation(String name) {
     return false;
-  }
-
-  boolean isPatternNamespaceURI(String s) {
-    return s.equals(relaxngURI);
   }
 
   DatatypeBuilder getDatatypeBuilder(String datatypeLibrary, String type) throws SAXException {
