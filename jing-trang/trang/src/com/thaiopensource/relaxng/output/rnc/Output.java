@@ -4,21 +4,13 @@ import com.thaiopensource.relaxng.edit.*;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
+import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Vector;
-import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 /*
-Preserve namespace context for annotations.
-
 Use \x{} escapes for characters not in repertoire of selected encoding
 
 Make long literals pretty
@@ -237,6 +229,25 @@ class Output {
     public void nullVisitElement(ElementAnnotation ea) {
       super.nullVisitElement(ea);
       noteAnnotationBinding(ea.getPrefix(), ea.getNamespaceUri());
+      noteContext(ea.getContext(), true);
+    }
+
+    private void noteContext(Context context, boolean required) {
+      if (context == null)
+        return;
+      for (Enumeration e = context.prefixes(); e.hasMoreElements();) {
+        String prefix = (String)e.nextElement();
+        // Default namespace is not relevant to annotations
+        if (!prefix.equals("")) {
+          String ns = context.resolveNamespacePrefix(prefix);
+          if (ns != null && !ns.equals(SchemaBuilder.INHERIT_NS)) {
+            if (required)
+              nsm.requireBinding(prefix, ns);
+            else
+              nsm.preferBinding(prefix, ns);
+          }
+        }
+      }
     }
 
     public void nullVisitAttribute(AttributeAnnotation a) {
@@ -253,6 +264,7 @@ class Output {
 
     public void nullVisitAnnotated(Annotated p) {
       p.leadingCommentsAccept(this);
+      noteContext(p.getContext(), !p.getAttributeAnnotations().isEmpty());
       p.attributeAnnotationsAccept(this);
       List before = (p.mayContainText()
                      ? p.getFollowingElementAnnotations()
@@ -718,6 +730,7 @@ class Output {
     }
 
     public Object visitElement(ElementAnnotation elem) {
+      checkContext(elem.getContext(), elem.getSourceLocation());
       pp.text(qualifyName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
                           // unqualified annotation element names have "" namespace
                           true));
@@ -786,6 +799,8 @@ class Output {
     pp.startGroup();
     if (!annotated.getAttributeAnnotations().isEmpty()
         || !before.isEmpty()) {
+      if (!annotated.getAttributeAnnotations().isEmpty())
+        checkContext(annotated.getContext(), annotated.getSourceLocation());
       annotationBody(annotated.getAttributeAnnotations(), before);
       pp.softNewline(" ");
     }
@@ -1004,6 +1019,21 @@ class Output {
       if (j < 0)
         break;
       i = j + 1;
+    }
+  }
+
+  private void checkContext(Context context, SourceLocation loc) {
+    if (context == null)
+      return;
+    for (Enumeration e = context.prefixes(); e.hasMoreElements();) {
+      String prefix = (String)e.nextElement();
+      // Default namespace is not relevant to annotations
+      if (!prefix.equals("")) {
+        String ns = context.resolveNamespacePrefix(prefix);
+        if (ns != null && !ns.equals(SchemaBuilder.INHERIT_NS)
+            && !nsb.getNamespaceUri(prefix).equals(ns))
+          er.warning("annotation_inconsistent_binding", prefix, ns, loc);
+      }
     }
   }
 }
