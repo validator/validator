@@ -79,6 +79,10 @@ public class SchemaPatternBuilder extends PatternBuilder {
     return schemaInterner.intern(p1);
   }
 
+  Pattern makeMixed(Pattern p) {
+    return makeInterleave(text, p);
+  }
+
   private void noteDatatype(Datatype dt) {
     if (dt.getIdType() != Datatype.ID_TYPE_NULL)
       idTypes = true;

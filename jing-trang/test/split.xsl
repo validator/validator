@@ -33,7 +33,9 @@
     </xsl:choose>
   </xsl:variable>
   <saxon:output href="{concat($b, '/', $f)}" method="xml">
-    <xsl:copy-of select="(correct|incorrect)/node()"/>
+    <xsl:for-each select="correct|incorrect">
+      <xsl:call-template name="copy"/>
+    </xsl:for-each>
   </saxon:output>
   <xsl:apply-templates select="resource|dir">
     <xsl:with-param name="base" select="$b"/>
@@ -48,7 +50,7 @@
   <xsl:param name="base"/>
   <xsl:variable name="d" select="concat($base, '/', position(), $validInstanceSuffix)"/>
   <saxon:output href="{$d}" method="xml">
-    <xsl:copy-of select="node()"/>
+    <xsl:call-template name="copy"/>
   </saxon:output>
 </xsl:template>
 
@@ -56,15 +58,22 @@
   <xsl:param name="base"/>
   <xsl:variable name="d" select="concat($base, '/', position(), $invalidInstanceSuffix)"/>
   <saxon:output href="{$d}" method="xml">
-    <xsl:copy-of select="node()"/>
+    <xsl:call-template name="copy"/>
   </saxon:output>
 </xsl:template>
 
 <xsl:template match="resource">
   <xsl:param name="base"/>
   <saxon:output href="{$base}/{@name}" method="xml">
-    <xsl:copy-of select="node()"/>
+    <xsl:call-template name="copy"/>
   </saxon:output>
+</xsl:template>
+
+<xsl:template name="copy">
+  <xsl:if test="@dtd">
+    <xsl:value-of select="@dtd" disable-output-escaping="yes"/>
+  </xsl:if>
+  <xsl:copy-of select="node()"/>
 </xsl:template>
 
 <xsl:template match="dir">

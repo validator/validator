@@ -23,6 +23,7 @@ public class PatternDumper {
   NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
   NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
   NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
+  private static final String relaxng10URI = "http://relaxng.org/ns/structure/1.0";
 
   static public void dump(PrintWriter writer, Pattern p) {
     new PatternDumper(writer).dump(p);
@@ -39,7 +40,7 @@ public class PatternDumper {
   void dump(Pattern p) {
     write("<?xml version=\"1.0\"?>");
     startElement("grammar");
-    attribute("xmlns", PatternReader.relaxng10URI);
+    attribute("xmlns", relaxng10URI);
     startElement("start");
     p.accept(groupPatternVisitor);
     endElement();

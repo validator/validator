@@ -1,0 +1,1446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+  <start>
+    <choice>
+      <ref name="gcapaper"/>
+    </choice>
+  </start>
+<!-- ========================================================== 	-->
+<!--  NOTE:	This version of the DTD is for use at XML 2001		-->
+<!--							            		-->
+<!--  FORMAL PUBLIC IDENTIFIER:						-->
+<!--	"-//GCA//DTD GCAPAP-X DTD 20010817 Vers 6.0//EN"		-->
+<!--											-->
+<!--  MODIFIED:  Lauren Wood			              		-->
+<!--		SoftQuad Software, Ltd						-->
+<!--		lauren@softquad.com						-->
+<!-- ========================================================== 	-->
+<!-- ========================================================== 	-->
+<!--  NOTE:	This version of the DTD is an offshoot of the		-->
+<!--		one modified by DPSL for SGML/XML Europe'99.		-->
+<!--		Its first use is for XML Europe 2000.			-->
+<!--									-->
+<!--  FORMAL PUBLIC IDENTIFIER:						-->
+<!--	"-//GCA//DTD GCAPAP-X DTD 20010211 Vers 5.0//EN"		-->
+<!--									-->
+<!--  MODIFIED:  Database Publishing Systems Ltd.			-->
+<!--		PH: +44 1793 512 515 (UK)				-->
+<!--		FAX:+44 1793 512 516					-->
+<!--		pam.gennusa@dpsl.co.uk					-->
+<!-- ========================================================== 	-->
+<!-- ========================================================== 	-->
+<!--  NOTE:	This version of the DTD is an offshoot of the		-->
+<!--		one modified by Mulberry Technologies 			-->
+<!--		following SGML'96.					-->
+<!--									-->
+<!--  FORMAL PUBLIC IDENTIFIER:						-->
+<!--	"-//GCA//DTD GCAPAPER.DTD 19970212 Vers 3.0a//EN"		-->
+<!-- ========================================================== 	-->
+<!--  NAME:      DTD for GCA XML Conference Proceedings.          -->
+<!--                                                            	-->
+<!--  PURPOSE:   To present a uniform method for encoding papers  -->
+<!--             presented at GCA XML conferences, thus 	      -->
+<!--             allowing the Proceedings to be made into print 	-->
+<!--             pages and electronic products prior to the     	-->
+<!--             conference and ensuring that the papers have   	-->
+<!--             uniform structure and appearance.              	-->
+<!--                                                            	-->
+<!-- ========================================================== 	-->
+<!--                         2001 Change History                  -->
+<!-- ========================================================== 	-->
+<!-- No.    REASON for/DESCRIPTION of CHANGE               DATE 	-->
+<!--  30. Include XHTML Inline Text presentation module  20010817 -->
+<!--      (b, big, i, small, sub, sup, and tt elements)           -->
+<!--  29. Remove <highlight>, <sub> and <super>          20010817 -->
+<!--  28. Change %paralevel; to %Flow.mix; to match XHTML  20010817 -->
+<!--  28. Change %paratext; to %Inline.mix; to match XHTML 20010817 -->
+<!--  27. Rename <caption> to <figcaption> to not clash 20010817  -->
+<!--      with XHTML table model (can't assume namespace support  -->
+<!--      in tools yet)                                           -->
+<!--  26. Replace OASIS table model with XHTML table model. 20010817  -->
+<!--  25. Change <cntry> to <country> element           20010817  -->
+<!--  24. Remove <state> and <province> elements        20010817  -->
+<!--  23. Add <stateorprovince> element                 20010817  -->
+<!-- ========================================================== 	-->
+<!--                         2000 Change History                  -->
+<!-- ========================================================== 	-->
+<!--                                                       		-->
+<!-- No.    REASON for/DESCRIPTION of CHANGE               DATE 	-->
+<!--	22. Add png data notation			plg	   20010214 -->
+<!--	21. add character entity references		plg	   20010211  -->
+<!--	20. remove elements <aline>, <postcode>				-->
+<!--			<phone>, and <fax>		plg	   20010210 -->
+<!--	19. remove "type" attr from <xref>		plg	   20010210 -->
+<!--	18. Add bmp data notation			plg	   20010210 -->
+<!--	17. Renamed jpeg data notation to jpg	plg	   20010210	-->
+<!--	16. Removed tiff.uncomp, tiff, and 					-->
+<!--		     line-specific data Notations	plg	   20010210 -->
+<!--  15. Added <suffix> element after <surname> 			-->
+<!--	      for "Jr., MD, III" designations     pah@ati  20000113 -->
+<!--  14. Added attributes for scaling to <graphic>  pat@ati  20000113 -->
+<!--  13. Made "bold" the default for <highlight>  pah@ati  20000113 -->
+<!--	   			-->
+<!--	   			-->
+<!--	         -->
+<!-- ========================================================== -->
+<!--								-->
+<!-- ========================================================== 	-->
+<!--                         1999 Change History                        -->
+<!-- ========================================================== 	-->
+<!--                                                       		-->
+<!-- No.    REASON for/DESCRIPTION of CHANGE               DATE 	-->
+<!--  12. Remove setas attribute as all pages	PLG	19990118	-->
+<!--	    set as single column					-->
+<!--  11. Added notation for jpeg		PLG	19990118	-->
+<!--  10. Removed <sgml.block> and <sgml> 	PLG	19990118	-->
+<!--	  clarified use of <code.block> and use 			-->
+<!--	  of CDATA section instead of <sgml.block> 			-->
+<!--	  and <sgml>							-->
+<!-- ========================================================== -->
+<!--								-->
+<!-- ========================================================== -->
+<!--                    NOTATION DECLARATIONS                   -->
+<!--                    (Notations for gif adn tiff compressed  -->
+<!--				uncompressed are included)      -->
+<!-- ========================================================== -->
+<!--                    GIF                                     -->
+<!--				JPG 					-->
+<!--				BMP					-->
+<!--				PNG					-->
+<!-- ========================================================== -->
+<!--                      CHARACTER SET ENTITIES		-->
+<!-- ========================================================== -->
+<!--
+<!ENTITY	amp 	"&#38;#38;">
+<!ENTITY 	lt	"&#38;#60;">
+<!ENTITY	gt	"&#62;">
+<!ENTITY	apos	"&#39;">
+<!ENTITY	quot	"&#34;">
+-->
+<!-- <!ENTITY % ISOamsa PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Arrow Relations//EN//XML" > -->
+<!--end of ISOamsa.module-->
+<!-- <!ENTITY % ISOamsb PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Binary Operators//EN//XML" > -->
+<!--end of ISOamsb.module-->
+<!-- <!ENTITY % ISOamsc PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Delimiters//EN//XML" > -->
+<!--end of ISOamsc.module-->
+<!-- <!ENTITY % ISOamsn PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Negated Relations//EN//XML" > -->
+<!--end of ISOamsn.module-->
+<!-- <!ENTITY % ISOamso PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Ordinary//EN//XML" > -->
+<!--end of ISOamso.module-->
+<!-- <!ENTITY % ISOamsr PUBLIC "ISO 8879:1986//ENTITIES Added Math Symbols: Relations//EN//XML" > -->
+<!--end of ISOamsr.module-->
+<!-- <!ENTITY % ISObox PUBLIC "ISO 8879:1986//ENTITIES Box and Line Drawing//EN//XML" > -->
+<!--end of ISObox.module-->
+<!-- <!ENTITY % ISOcyr1 PUBLIC "ISO 8879:1986//ENTITIES Russian Cyrillic//EN//XML" > -->
+<!--end of ISOcyr1.module-->
+<!-- <!ENTITY % ISOcyr2 PUBLIC "ISO 8879:1986//ENTITIES Non-Russian Cyrillic//EN//XML" > -->
+<!--end of ISOcyr2.module-->
+<!-- <!ENTITY % ISOdia PUBLIC "ISO 8879:1986//ENTITIES Diacritical Marks//EN//XML" > -->
+<!--end of ISOdia.module-->
+<!-- <!ENTITY % ISOgrk1 PUBLIC "ISO 8879:1986//ENTITIES Greek Letters//EN//XML" > -->
+<!--end of ISOgrk1.module-->
+<!-- <!ENTITY % ISOgrk2 PUBLIC "ISO 8879:1986//ENTITIES Monotoniko Greek//EN//XML" > -->
+<!--end of ISOgrk2.module-->
+<!-- <!ENTITY % ISOgrk3 PUBLIC "ISO 8879:1986//ENTITIES Greek Symbols//EN//XML" > -->
+<!--end of ISOgrk3.module-->
+<!--end of ISOgrk4.module-->
+<!--end of ISOlat1.module-->
+<!--end of ISOlat2.module-->
+<!--end of ISOnum.module-->
+<!--end of ISOpub.module-->
+<!--end of ISOtech.module-->
+<!-- ========================================================== -->
+<!--                      PARAMETER ENTITIES for CONTENT MODELS -->
+<!-- ========================================================== -->
+  <define name="yesorno">
+    <choice>
+      <value>0</value>
+      <value>1</value>
+    </choice>
+  </define>
+<!--                      EMPHASIS TYPES                        -->
+  <define name="emphs">
+    <choice>
+      <ref name="b"/>
+      <ref name="big"/>
+      <ref name="i"/>
+      <ref name="small"/>
+      <ref name="sub"/>
+      <ref name="sup"/>
+      <ref name="tt"/>
+    </choice>
+  </define>
+<!--                      PHRASE-LEVEL ELEMENTS                 -->
+<!--                      (small, floating inside text)         -->
+  <define name="phrase">
+    <choice>
+      <ref name="acronym"/>
+      <ref name="acronym.grp"/>
+      <ref name="bibref"/>
+      <ref name="cit"/>
+      <ref name="fnref"/>
+      <ref name="ftnote"/>
+      <ref name="inline.graphic"/>
+      <ref name="code"/>
+      <ref name="xref"/>
+      <ref name="a"/>
+    </choice>
+  </define>
+<!--                      LIST TYPES                            -->
+  <define name="lists">
+    <choice>
+      <ref name="deflist"/>
+      <ref name="randlist"/>
+      <ref name="seqlist"/>
+    </choice>
+  </define>
+<!--                      PARAGRAPH-LEVEL ITEMS                 -->
+<!--                      (at the same level as a paragraph)    -->
+  <define name="Flow.mix">
+    <choice>
+      <ref name="figure"/>
+      <ref name="graphic"/>
+      <ref name="lists"/>
+      <ref name="lquote"/>
+      <ref name="note"/>
+      <ref name="table"/>
+      <ref name="code.block"/>
+    </choice>
+  </define>
+<!--                      PARAGRAPH CONTENT                     -->
+<!--                      (inside a paragraph)                  -->
+  <define name="Inline.mix">
+    <choice>
+      <ref name="emphs"/>
+      <ref name="graphic"/>
+      <ref name="lists"/>
+      <ref name="phrase"/>
+    </choice>
+  </define>
+<!--                      XHTML Inline Presentation Module       -->
+<!-- The following entity declaration is needed but not          -->
+<!-- defined in the XHTML modules			 	           -->
+<!-- not quite the set used in HTML, but the useful attributes   -->
+<!-- for this application                                        -->
+  <define name="Common.attrib">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="title"/>
+    </optional>
+  </define>
+  <include href="xhtml-inlpres-1.mod"/>
+<!-- ========================================================== -->
+<!--                    HTML 4.0 TABLE INVOCATION               -->
+<!-- ========================================================== -->
+<!-- This DTD uses the XHTML modularized table module.          -->
+<!-- See http://www.w3.org/TR/xhtml-modularization for details. -->
+<!-- The following entity declarations are needed but not       -->
+<!-- defined in the table model				          -->
+  <define name="Character.datatype">
+    <data type="string"/>
+  </define>
+<!-- Length defined for cellpadding/cellspacing -->
+<!-- nn for pixels or nn% for percentage length -->
+  <define name="Length.datatype">
+    <data type="string"/>
+  </define>
+  <define name="Text.datatype">
+    <data type="string"/>
+  </define>
+<!-- integer representing length in pixels -->
+  <define name="Pixels.datatype">
+    <data type="string"/>
+  </define>
+<!-- one or more digits (NUMBER) -->
+  <define name="Number.datatype">
+    <data type="string"/>
+  </define>
+<!-- pixel, percentage, or relative -->
+  <define name="MultiLength.datatype">
+    <data type="string"/>
+  </define>
+<!-- content of Table caption is the same as the Figure title -->
+  <define name="caption.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="emphs"/>
+        <ref name="phrase"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <include href="xhtml-table-1.mod"/>
+<!-- ========================================================== -->
+<!--                    Graphics and File Entity Declarations.  -->
+<!-- ========================================================== -->
+<!-- Reserved for GCA use					-->
+<!-- <!ENTITY % graphics PUBLIC					-->
+<!--	"-//DPSL//ENTITIES Graphic and File Entities 9703//EN">	-->
+<!--	%graphics;						-->
+<!-- ========================================================== -->
+<!--                    ELEMENT DECLARATIONS                    -->
+<!-- ========================================================== -->
+<!--                      GCA PAPER                             	-->
+<!--                      The "secnumbers" attribute indicates    -->
+<!--                      whether the <section>, <subsec1>,		-->
+<!--                      <subsec2>, and <subsec3> elements should -->
+<!--                      be formatted as numbered sections; for	-->
+<!--                      example, <section><title>Section...	-->
+<!--                      = "1. Section", <subsec1><title>		-->
+<!--                      Subsection 1... = "1.1 Subsection 1",	-->
+<!--                      etc.  Section numbering is			-->
+<!--                      all-or-nothing and is turned on by	-->
+<!--                      setting the "secnumbers" attribute to 1: -->
+<!--                      'secnumbers="1"'.        		        -->
+  <define name="gcapaper">
+    <element name="gcapaper">
+      <ref name="gcapaper.attlist"/>
+      <ref name="front"/>
+      <ref name="body"/>
+      <optional>
+        <ref name="rear"/>
+      </optional>
+    </element>
+  </define>
+  <define name="gcapaper.attlist" combine="interleave">
+    <optional>
+      <attribute name="secnumbers" a:defaultValue="0">
+        <ref name="yesorno"/>
+      </attribute>
+    </optional>
+  </define>
+<!-- ========================================================== -->
+<!--                    FRONT MATTER ELEMENTS                   -->
+<!-- ========================================================== -->
+<!--                      FRONT MATTER                          	-->
+<!--                      The abstract is optional because this DTD	-->
+<!--                      is used for the Conference Chair		-->
+<!--                      introductions and other introductory		-->
+<!--                      material, but abstracts should be		-->
+<!--                      included in all technical papers.     	-->
+  <define name="front">
+    <element name="front">
+      <ref name="front.attlist"/>
+      <ref name="title"/>
+      <optional>
+        <ref name="subt"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="keyword"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="author"/>
+      </oneOrMore>
+      <optional>
+        <ref name="abstract"/>
+      </optional>
+    </element>
+  </define>
+  <define name="front.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      TITLE DEFINITIONS                     -->
+<!--                      MAIN TITLE                            	-->
+<!--                      The TITLE tag is used for: headings		-->
+<!--                      within the paper, figure captions, etc.	-->
+<!--                      Each type of title is formatted		-->
+<!--                      appropriately for the context.        	-->
+  <define name="title">
+    <element name="title">
+      <ref name="title.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+          <ref name="phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="title.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      SUBORDINATE TITLE                     -->
+  <define name="subt">
+    <element name="subt">
+      <ref name="subt.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+          <ref name="phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="subt.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!-- ========================================================== -->
+<!--                    AUTHOR INFORMATION ELEMENTS             -->
+<!-- ========================================================== -->
+<!--                      AUTHOR                             	   	-->
+<!--                      Multiple authors are allowed inside		-->
+<!--                      Front Matter. The author tag must be		-->
+<!--                      repeated for each author.			-->
+<!--                      The author listed first will be 		-->
+<!--			  considered the primary contact.		-->
+  <define name="author">
+    <element name="author">
+      <ref name="author.attlist"/>
+      <ref name="fname"/>
+      <ref name="surname"/>
+      <optional>
+        <ref name="suffix"/>
+      </optional>
+      <optional>
+        <ref name="jobtitle"/>
+      </optional>
+      <ref name="address"/>
+      <ref name="bio"/>
+    </element>
+  </define>
+  <define name="author.attlist" combine="interleave">
+    <optional>
+      <attribute name="refid">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+  </define>
+<!--                      FIRST NAMES & middle initial (if any) -->
+  <define name="fname">
+    <element name="fname">
+      <ref name="fname.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="fname.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      SURNAME (last name)                   -->
+  <define name="surname">
+    <element name="surname">
+      <ref name="surname.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="surname.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      SUFFIX (Jr., MD, III)                   -->
+  <define name="suffix">
+    <element name="suffix">
+      <ref name="suffix.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="suffix.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      AUTHOR'S JOB TITLE                    -->
+  <define name="jobtitle">
+    <element name="jobtitle">
+      <ref name="jobtitle.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="jobtitle.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      AUTHOR'S ADDRESS                      -->
+  <define name="address">
+    <element name="address">
+      <ref name="address.attlist"/>
+      <ref name="affil"/>
+      <zeroOrMore>
+        <ref name="subaffil"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="city"/>
+      </optional>
+      <optional>
+        <ref name="stateorprovince"/>
+      </optional>
+      <ref name="country"/>
+      <optional>
+        <ref name="email"/>
+      </optional>
+      <optional>
+        <ref name="web"/>
+      </optional>
+    </element>
+  </define>
+  <define name="address.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      BIOGRAPHY                             -->
+  <define name="bio">
+    <element name="bio">
+      <ref name="bio.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="bio.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+<!-- ========================================================== -->
+<!--                    ADDRESS COMPONENT ELEMENTS              -->
+<!-- ========================================================== -->
+<!--                      Address component elements are provided	-->
+<!--                      for some possible components (including	-->
+<!--                      electronic) of an Author's address.		-->
+<!--                      An Address consists of an Affiliation, a	-->
+<!--                      possible Sub. Affiliation, then city,          -->
+<!--                      state or province, country, email, and        -->
+<!--				  website.	Author's 		-->
+<!--                      Affiliation is  required, all other		-->
+<!--                      components are optional.              	-->
+<!--                      AUTHOR'S AFFILIATION 				-->
+<!--                      (company, university, etc.)           	-->
+  <define name="affil">
+    <element name="affil">
+      <ref name="affil.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="affil.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      AUTHOR'S SUBORDINATE AFFILIATION 		-->
+<!--                      (department, division, etc.)          	-->
+  <define name="subaffil">
+    <element name="subaffil">
+      <ref name="subaffil.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="subaffil.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      CITY, TOWN, VILLAGE, ETC              	-->
+  <define name="city">
+    <element name="city">
+      <ref name="city.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="city.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      STATE, PROVINCE, ETC              	-->
+  <define name="stateorprovince">
+    <element name="stateorprovince">
+      <ref name="stateorprovince.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="stateorprovince.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      COUNTRY OF RESIDENCE                  	-->
+  <define name="country">
+    <element name="country">
+      <ref name="country.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="country.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      ELECTRONIC E-MAIL ADDRESS             	-->
+  <define name="email">
+    <element name="email">
+      <ref name="email.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="email.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      WEB PAGE ADDRESS (URL)                	-->
+  <define name="web">
+    <element name="web">
+      <ref name="web.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="web.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!-- ========================================================== -->
+<!--                    FRONT MATTER BLOCK STRUCTURES           -->
+<!-- ========================================================== -->
+<!--                      ABSTRACT					-->
+<!--                      Is used to identify the paper's abstract.	-->
+<!--                      Abstracts SHOULD BE INCLUDED for all		-->
+<!--                      technical papers, but may not be needed	-->
+<!--                      for Conference Chair Introductions and 	-->
+<!--                      and other Introductory material.		-->
+<!--                      Generates the Section heading "ABSTRACT"	-->
+  <define name="abstract">
+    <element name="abstract">
+      <ref name="abstract.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="abstract.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      KEYWORD					-->
+<!--                      Identifies an individual word or		-->
+<!--                      phrase associated with either an entry,	-->
+<!--                      para, subt, or title. Not to be used to 	-->
+<!--			  identify acronyms.				-->
+<!--	    		  Keywords will be used to support hypertext	-->
+<!-- 			  referencing in the topic map electronic 	-->
+<!--			  version.					-->
+  <define name="keyword">
+    <element name="keyword">
+      <ref name="keyword.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="keyword.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!-- ========================================================== -->
+<!--                    BODY and SECTION MODELS                 -->
+<!-- ========================================================== -->
+<!--                      BODY						-->
+<!--                      The body of the paper may be divided 		-->
+<!--                      into sections.  Each section may be 		-->
+<!--                      divided into lower-level subsections.		-->
+<!--                      A main section and three subordinate		-->
+<!--                      subsection levels are provided.  Each		-->
+<!--                      section or subsection must have a title.	-->
+<!--                      Sections will be numbered if the 		-->
+<!--                      "secnumbers" attribute on <gcapap-s>		-->
+<!--                      is set to "1".                        	-->
+  <define name="body">
+    <element name="body">
+      <ref name="body.attlist"/>
+      <choice>
+        <group>
+          <oneOrMore>
+            <choice>
+              <ref name="para"/>
+              <ref name="Flow.mix"/>
+            </choice>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="section"/>
+          </zeroOrMore>
+        </group>
+        <oneOrMore>
+          <ref name="section"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="body.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      PARAGRAPH                             -->
+  <define name="para">
+    <element name="para">
+      <ref name="para.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="Inline.mix"/>
+          <ref name="keyword"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="para.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="section">
+    <element name="section">
+      <ref name="section.attlist"/>
+      <ref name="title"/>
+      <zeroOrMore>
+        <ref name="keyword"/>
+      </zeroOrMore>
+      <choice>
+        <group>
+          <oneOrMore>
+            <choice>
+              <ref name="para"/>
+              <ref name="Flow.mix"/>
+            </choice>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="subsec1"/>
+          </zeroOrMore>
+        </group>
+        <oneOrMore>
+          <ref name="subsec1"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="section.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="subsec1">
+    <element name="subsec1">
+      <ref name="subsec1.attlist"/>
+      <ref name="title"/>
+      <zeroOrMore>
+        <ref name="keyword"/>
+      </zeroOrMore>
+      <choice>
+        <group>
+          <oneOrMore>
+            <choice>
+              <ref name="para"/>
+              <ref name="Flow.mix"/>
+            </choice>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="subsec2"/>
+          </zeroOrMore>
+        </group>
+        <oneOrMore>
+          <ref name="subsec2"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="subsec1.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="subsec2">
+    <element name="subsec2">
+      <ref name="subsec2.attlist"/>
+      <ref name="title"/>
+      <zeroOrMore>
+        <ref name="keyword"/>
+      </zeroOrMore>
+      <choice>
+        <group>
+          <oneOrMore>
+            <choice>
+              <ref name="para"/>
+              <ref name="Flow.mix"/>
+            </choice>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="subsec3"/>
+          </zeroOrMore>
+        </group>
+        <oneOrMore>
+          <ref name="subsec3"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="subsec2.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="subsec3">
+    <element name="subsec3">
+      <ref name="subsec3.attlist"/>
+      <ref name="title"/>
+      <zeroOrMore>
+        <ref name="keyword"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="Flow.mix"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="subsec3.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+<!-- ========================================================== -->
+<!--                    REAR MATTER ELEMENTS                    -->
+<!-- ========================================================== -->
+  <define name="rear">
+    <element name="rear">
+      <ref name="rear.attlist"/>
+      <optional>
+        <ref name="acknowl"/>
+      </optional>
+      <optional>
+        <ref name="bibliog"/>
+      </optional>
+    </element>
+  </define>
+  <define name="rear.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      ACKNOWLEDGEMENTS SECTION			-->
+<!--                      Generates the section head			-->
+<!--                      "ACKNOWLEDGEMENTS"                    	-->
+  <define name="acknowl">
+    <element name="acknowl">
+      <ref name="acknowl.attlist"/>
+      <oneOrMore>
+        <optional>
+          <ref name="title"/>
+        </optional>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="acknowl.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!-- ========================================================== -->
+<!--                    BIBLIOGRAPHY SECTION                    -->
+<!-- ========================================================== -->
+<!--                      BIBLIOGRAPHY                          	-->
+<!--                      Generates Section head "BIBLIOGRAPHY"		-->
+<!--                      Formats like a definition list (in 2		-->
+<!--                      columns) with the BIBREF being the term	-->
+<!--                      (first column) and the PUB being the		-->
+<!--                      definition (2nd column).              	-->
+  <define name="bibliog">
+    <element name="bibliog">
+      <ref name="bibliog.attlist"/>
+      <oneOrMore>
+        <ref name="bibitem"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="bibliog.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      BIBLIOGRAPHIC ITEM                    -->
+  <define name="bibitem">
+    <element name="bibitem">
+      <ref name="bibitem.attlist"/>
+      <ref name="bib"/>
+      <ref name="pub"/>
+    </element>
+  </define>
+  <define name="bibitem.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+<!--                      BIBLIOGRAPHIC DESIGNATOR			-->
+<!--                      BIB contains whatever designator the		-->
+<!--                      author uses to identify publications		-->
+<!--                      listed in the bibliography			-->
+<!--                      (e.g., [LAB 87]).  BIB generates the		-->
+<!--                      square "[]" brackets fore & aft.      	-->
+  <define name="bib">
+    <element name="bib">
+      <ref name="bib.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="bib.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      PUBLICATION                           -->
+  <define name="pub">
+    <element name="pub">
+      <ref name="pub.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="pub.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      BIBLIOGRAPHIC REFERENCE               	-->
+<!--                      The attribute "refloc" points from a		-->
+<!--                      floating BIBREF to the ID of the relevant	-->
+<!--                      Bibliographic Item. The <bibref> formats	-->
+<!--                      as the same text as the formatted <bib>	-->
+<!--                      element within the <bibitem> being		-->
+<!--                      referenced.  For example, for the bibitem	-->
+<!--                      <bibitem id="bib1"><bib>LAB 87</>...</>,	-->
+<!--                      the bibliographic reference <bibref		-->
+<!--                      refid="bib1"> formats as "[LAB 87]".  	-->
+  <define name="bibref">
+    <element name="bibref">
+      <ref name="bibref.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="bibref.attlist" combine="interleave">
+    <attribute name="refloc">
+      <data type="IDREF"/>
+    </attribute>
+  </define>
+<!-- ========================================================== -->
+<!--                    GENERAL ELEMENTS                        -->
+<!-- ========================================================== -->
+<!-- ========================================================== -->
+<!--                    PARAGRAPH-LEVEL ELEMENTS                -->
+<!-- ========================================================== -->
+<!--                      LONG QUOTATION				-->
+<!--                      (Block Quote, Extract, or extended quote)	-->
+<!--                      Will set in a font other than the default	-->
+<!--                      paragraph font and may use a different	-->
+<!--                      indent pattern.                       	-->
+  <define name="lquote">
+    <element name="lquote">
+      <ref name="lquote.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="lquote.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      NOTE IN TEXT					-->
+<!--                      Generates the run-in head "NOTE: "    	-->
+  <define name="note">
+    <element name="note">
+      <ref name="note.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="note.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--ELEM  para            PARAGRAPH is defined with Body/Section-->
+<!--                      CODE.BLOCK                            	-->
+<!--                      The CODE.BLOCK element is generally		-->
+<!--                      formatted "as is", but it is possible, for	-->
+<!--                      example, to make parts of it bold. All	-->
+<!--                      spaces and line endings are preserved.	-->
+<!--                      CODE.BLOCK will set in a monospace font.	-->
+<!--			  "&lt; must be used for a "<" and		-->
+<!--			  "&amp;" must be used for an "&" in 		-->
+<!--			  <code> and <code-block>. 			-->
+<!--			  Alternatively, within either of them		-->
+<!--			  use a CDATA section (i.e. "<![CDATA[" 	-->
+<!--			  and "]]>" delimiters around their		-->
+<!--			  content in order for "<" and "&" 		-->
+<!--			  to be used directly and not 			-->
+<!--			  interpreted as markup.			-->
+  <define name="code.block">
+    <element name="code.block">
+      <ref name="code.block.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="b"/>
+          <ref name="i"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="code.block.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--
+<!ATTLIST code.block 	format NOTATION (linespecific) "linespecific"		>
+-->
+<!-- ========================================================== -->
+<!--                  FIGURE ELEMENTS (PARAGRAPH-LEVEL)         -->
+<!-- ========================================================== -->
+<!--                      FIGURE                                -->
+  <define name="figure">
+    <element name="figure">
+      <ref name="figure.attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <optional>
+        <ref name="figcaption"/>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <ref name="graphic"/>
+          <ref name="code.block"/>
+          <ref name="para"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="figure.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+<!--                      FIGURE CAPTION                        	-->
+<!--                      Description of the contents of the		-->
+<!--                      figure, note about some feature of the	-->
+<!--                      figure, or note about the source of the	-->
+<!--                      figure. This is in addition to the		-->
+<!--                      (usually brief) descriptive title		-->
+<!--                      of the figure.  Figure Titles and Figure	-->
+<!--                      Captions will look distinctly different,	-->
+<!--                      by position or typography or both.    	-->
+  <define name="figcaption">
+    <element name="figcaption">
+      <ref name="figcaption.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="figcaption.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      GRAPHIC                               	-->
+<!--                      GRAPHIC may be used by itself for an		-->
+<!--                      unnumbered, untitled illustration, or		-->
+<!--                      used in FIGURE when the illustration		-->
+<!--                      should be numbered and, optionally,		-->
+<!--                      titled.					                       -->
+<!--                      The "figname" attribute contains an		-->
+<!--                      entity reference that identifies the		-->
+<!--                      graphic.                              	-->
+<!--                      To resize the graphic, set the scalefit -->
+<!--                      to "1" and adjust the width and height -->
+<!--                      attributes accordingly.                -->
+  <define name="graphic">
+    <element name="graphic">
+      <ref name="graphic.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="graphic.attlist" combine="interleave">
+    <attribute name="figname">
+      <data type="ENTITY"/>
+    </attribute>
+    <optional>
+      <attribute name="scalefit" a:defaultValue="0">
+        <choice>
+          <value>1</value>
+          <value>0</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width" a:defaultValue="5in"/>
+    </optional>
+    <optional>
+      <attribute name="height" a:defaultValue="3in"/>
+    </optional>
+  </define>
+<!--                      INLINE GRAPHIC                        	-->
+<!--                      Graphic appearing in a line of text,		-->
+<!--                      and, presumably, approximately the same	-->
+<!--                      size as the surrounding text, such as an	-->
+<!--                      icon.						-->
+<!--                      The "figname" attribute contains an		-->
+<!--                      entity reference that identifies the		-->
+<!--                      graphic.                              	-->
+  <define name="inline.graphic">
+    <element name="inline.graphic">
+      <ref name="inline.graphic.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="inline.graphic.attlist" combine="interleave">
+    <attribute name="figname">
+      <data type="ENTITY"/>
+    </attribute>
+  </define>
+<!-- ========================================================== -->
+<!--                    LISTS (PARAGRAPH-LEVEL)                 -->
+<!-- ========================================================== -->
+<!--                      RANDOM (unordered) LIST               	-->
+<!--                      The "style" attribute indicates what		-->
+<!--                      type of list is desired. A simple list	-->
+<!--                      is one with no item prefix.           	-->
+  <define name="randlist">
+    <element name="randlist">
+      <ref name="randlist.attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="randlist.attlist" combine="interleave">
+    <optional>
+      <attribute name="style" a:defaultValue="bulleted">
+        <choice>
+          <value>simple</value>
+          <value>bulleted</value>
+          <value>dashed</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+<!--                      SEQUENTIAL (ordered) LIST             	-->
+<!--                      The "number" attribute indicates the		-->
+<!--                      type of prefix desired:			-->
+<!--                      (e.g.    arabic    1, 2, 3, 4,...		-->
+<!--                               ualpha    A, B, C, D,...		-->
+<!--                               uroman    I, II, III, IV,...		-->
+<!--                               lalpha    a, b, c, d,...		-->
+<!--                               lroman    i, ii, iii, iv,...)	-->
+  <define name="seqlist">
+    <element name="seqlist">
+      <ref name="seqlist.attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="seqlist.attlist" combine="interleave">
+    <optional>
+      <attribute name="number" a:defaultValue="arabic">
+        <choice>
+          <value>arabic</value>
+          <value>ualpha</value>
+          <value>uroman</value>
+          <value>lalpha</value>
+          <value>lroman</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+<!--                      LIST ITEM                             -->
+  <define name="li">
+    <element name="li">
+      <ref name="li.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="li.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION LIST                       	-->
+<!--                      A two-column list (which may have both an	-->
+<!--                      overall list title and column headings)	-->
+<!--                      where the first column is term and the	-->
+<!--                      second column is a definition/explanation	-->
+<!--                      of that term.                         	-->
+  <define name="deflist">
+    <element name="deflist">
+      <ref name="deflist.attlist"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <optional>
+        <ref name="term.heading"/>
+        <optional>
+          <ref name="def.heading"/>
+        </optional>
+      </optional>
+      <oneOrMore>
+        <ref name="def.item"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="deflist.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION LIST: TERM HEADING         -->
+  <define name="term.heading">
+    <element name="term.heading">
+      <ref name="term.heading.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+          <ref name="phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="term.heading.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION LIST: DEFINITION HEADING   -->
+  <define name="def.heading">
+    <element name="def.heading">
+      <ref name="def.heading.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+          <ref name="phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="def.heading.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION LIST: ITEM                 -->
+  <define name="def.item">
+    <element name="def.item">
+      <ref name="def.item.attlist"/>
+      <ref name="def.term"/>
+      <ref name="def"/>
+    </element>
+  </define>
+  <define name="def.item.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION LIST TERM                  -->
+  <define name="def.term">
+    <element name="def.term">
+      <ref name="def.term.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+          <ref name="phrase"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="def.term.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      DEFINITION                            -->
+  <define name="def">
+    <element name="def">
+      <ref name="def.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="def.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!-- ========================================================== -->
+<!--                    PHRASE-LEVEL ELEMENTS                   -->
+<!-- ========================================================== -->
+<!--                      ACRONYM GROUP                         	-->
+<!--                      (The acronym and the expansion in 1 box.)	-->
+<!--                      The first time an acronym is used in the	-->
+<!--                      text of a paper, Acronym Group can be		-->
+<!--                      used to supply the definition as well as	-->
+<!--                      the acronym at that point in the text.	-->
+<!--                         For subsequent uses, the			-->
+<!--                      definition is not necessary. Acronym		-->
+<!--                      Groups will be formatted as "ACRONYM		-->
+<!--                      (Expansion)" (e.g., "GCA (Graphic		-->
+<!--                      Communications Association)").  Acronyms	-->
+<!--                      and expansions may also be extracted for	-->
+<!--                      use in a glossary published as part of	-->
+<!--                      the proceedings.                      	-->
+<!--                      ACRONYM GROUP                         	-->
+  <define name="acronym.grp">
+    <element name="acronym.grp">
+      <ref name="acronym.grp.attlist"/>
+      <ref name="acronym"/>
+      <ref name="expansion"/>
+    </element>
+  </define>
+  <define name="acronym.grp.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      ACRONYM (the actual acronym)          -->
+  <define name="acronym">
+    <element name="acronym">
+      <ref name="acronym.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="acronym.attlist" combine="interleave">
+    <optional>
+      <attribute name="refid">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+  </define>
+<!--                      ACRONYM EXPANSION				-->
+<!--                      (the expansion of the acronym)        	-->
+  <define name="expansion">
+    <element name="expansion">
+      <ref name="expansion.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="expansion.attlist" combine="interleave">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+<!--ELEM bibref           BIBREF is defined with Bibliography   -->
+<!--                      CITATION (Cited Title)			-->
+<!--                      Title of book, paper, or article that is	-->
+<!--                      mentioned by the author in a sentence.	-->
+<!--                      The intent of <cit> is to allow a 		-->
+<!--                      reference to another document to take		-->
+<!--                      a special typographic treatment, such 	-->
+<!--                      as italics.					-->
+<!--                                                            	-->
+  <define name="cit">
+    <element name="cit">
+      <ref name="cit.attlist"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="emphs"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="cit.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      FOOTNOTE                              -->
+  <define name="ftnote">
+    <element name="ftnote">
+      <ref name="ftnote.attlist"/>
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="ftnote.attlist" combine="interleave">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+  </define>
+<!--                      FOOTNOTE REFERENCE				-->
+<!--                      The attribute "refloc" is used to point	-->
+<!--                      to the ID of the footnote being		-->
+<!--                      referenced.                           	-->
+  <define name="fnref">
+    <element name="fnref">
+      <ref name="fnref.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="fnref.attlist" combine="interleave">
+    <attribute name="refloc">
+      <data type="IDREF"/>
+    </attribute>
+  </define>
+<!--ELEM inline.graphic   INLINE GRAPHIC is defined with Figure -->
+<!--                      INLINE CODE FRAGMENTS	<code> 			-->
+<!--                      Inline element for SGML/XML or other		-->
+<!--                      expressions that are an inline phrase 	-->
+<!--			  possibly mixed with other text.		-->
+<!--                      Use <code.block> for blocks of text   	-->
+<!--			  that are lines of code or blocks of		-->
+<!--			  SGML or XML text.				-->
+<!--			  <code> will set in a monospace font.  	-->
+<!--			  "&lt; must be used for a "<" and		-->
+<!--			  "&amp;" must be used for an "&" in 		-->
+<!--			  <code> and <code-block>. 			-->
+<!--			  Alternatively, within either of them		-->
+<!--			  use a CDATA section (i.e. "<![CDATA[" 	-->
+<!--			  and "]]>" delimiters around their		-->
+<!--			  content in order for "<" and "&" 		-->
+<!--			  to be used directly and not 			-->
+<!--			  interpreted as markup.			-->
+  <define name="code">
+    <element name="code">
+      <ref name="code.attlist"/>
+      <text/>
+    </element>
+  </define>
+  <define name="code.attlist" combine="interleave">
+    <empty/>
+  </define>
+<!--                      CROSS REFERENCE                       	-->
+<!--                      The attribute "refloc" is used to point to	-->
+<!--                      the ID of the item being referenced.		-->
+  <define name="xref">
+    <element name="xref">
+      <ref name="xref.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="xref.attlist" combine="interleave">
+    <attribute name="refloc">
+      <data type="IDREF"/>
+    </attribute>
+  </define>
+<!--			  A						-->
+<!--			  References to external web-based documents 	-->
+<!--			  may be made using the <a href="uri"> 		-->
+<!--			  construct. In the hard copy           	-->
+<!--			  version of the proceedings, the URI will be 	-->
+<!--			  printed/visible. In the HTML version of the 	-->
+<!--			  proceedings, the URI will be visible and 	-->
+<!--			  treated as a link.				-->
+  <define name="a">
+    <element name="a">
+      <ref name="a.attlist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="a.attlist" combine="interleave">
+    <attribute name="href"/>
+  </define>
+<!-- ==================  End GCA Paper DTD ==================== -->
+</grammar>

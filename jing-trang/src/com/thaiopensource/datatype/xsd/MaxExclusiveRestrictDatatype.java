@@ -13,6 +13,6 @@ class MaxExclusiveRestrictDatatype extends ValueRestrictDatatype {
   }
 
   boolean satisfiesRestriction(Object value) {
-    return order.compareValue(limit, value) > 0;
+    return order.isLessThan(value, limit);
   }
 }

@@ -1,0 +1,1933 @@
+<testSuite>
+<testCase>
+<compact>
+<correct>
+element foo { empty }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { text }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <text/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+# RELAX NG syntax expressed in compact syntax.
+
+default namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace local = ""
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = pattern
+
+pattern =
+  element element { (nameQName | nameClass), (common & pattern+) }
+  | element attribute { (nameQName | nameClass), (common & pattern?) }
+  | element group|interleave|choice|optional
+            |zeroOrMore|oneOrMore|list|mixed { common & pattern+ }
+  | element ref|parentRef { nameNCName, common }
+  | element empty|notAllowed|text { common }
+  | element data { type, param*, (common & exceptPattern?) }
+  | element value { commonAttributes, type?, xsd:string }
+  | element externalRef { href, common }
+  | element grammar { common & grammarContent* }
+
+param = element param { commonAttributes, nameNCName, xsd:string }
+
+exceptPattern = element except { common & pattern+ }
+
+grammarContent = 
+  definition
+  | element div { common & grammarContent* }
+  | element include { href, (common & includeContent*) }
+
+includeContent =
+  definition
+  | element div { common & includeContent* }
+
+definition =
+  element start { combine?, (common & pattern+) }
+  | element define { nameNCName, combine?, (common & pattern+) }
+
+combine = attribute combine { "choice" | "interleave" }
+
+nameClass = 
+  element name { commonAttributes, xsd:QName }
+  | element anyName { common & exceptNameClass? }
+  | element nsName { common & exceptNameClass? }
+  | element choice { common & nameClass+ }
+
+exceptNameClass = element except { common & nameClass+ }
+
+nameQName = attribute name { xsd:QName }
+nameNCName = attribute name { xsd:NCName }
+href = attribute href { xsd:anyURI }
+type = attribute type { xsd:NCName }
+
+common = commonAttributes, foreignElement*
+
+commonAttributes = 
+  attribute ns { xsd:string }?,
+  attribute datatypeLibrary { xsd:anyURI }?,
+  foreignAttribute*
+
+foreignElement = element * - rng:* { (anyAttribute | text | anyElement)* }
+foreignAttribute = attribute * - (rng:*|local:*) { text }
+anyElement = element * { (anyAttribute | text | anyElement)* }
+anyAttribute = attribute * { text }
+
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- RELAX NG syntax expressed in compact syntax. -->
+<grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="pattern"/>
+  </start>
+  <define name="pattern">
+    <choice>
+      <element name="element">
+        <choice>
+          <ref name="nameQName"/>
+          <ref name="nameClass"/>
+        </choice>
+        <interleave>
+          <ref name="common"/>
+          <oneOrMore>
+            <ref name="pattern"/>
+          </oneOrMore>
+        </interleave>
+      </element>
+      <element name="attribute">
+        <choice>
+          <ref name="nameQName"/>
+          <ref name="nameClass"/>
+        </choice>
+        <interleave>
+          <ref name="common"/>
+          <optional>
+            <ref name="pattern"/>
+          </optional>
+        </interleave>
+      </element>
+      <element>
+        <choice>
+          <name>group</name>
+          <name>interleave</name>
+          <name>choice</name>
+          <name>optional</name>
+          <name>zeroOrMore</name>
+          <name>oneOrMore</name>
+          <name>list</name>
+          <name>mixed</name>
+        </choice>
+        <interleave>
+          <ref name="common"/>
+          <oneOrMore>
+            <ref name="pattern"/>
+          </oneOrMore>
+        </interleave>
+      </element>
+      <element>
+        <choice>
+          <name>ref</name>
+          <name>parentRef</name>
+        </choice>
+        <ref name="nameNCName"/>
+        <ref name="common"/>
+      </element>
+      <element>
+        <choice>
+          <name>empty</name>
+          <name>notAllowed</name>
+          <name>text</name>
+        </choice>
+        <ref name="common"/>
+      </element>
+      <element name="data">
+        <ref name="type"/>
+        <zeroOrMore>
+          <ref name="param"/>
+        </zeroOrMore>
+        <interleave>
+          <ref name="common"/>
+          <optional>
+            <ref name="exceptPattern"/>
+          </optional>
+        </interleave>
+      </element>
+      <element name="value">
+        <ref name="commonAttributes"/>
+        <optional>
+          <ref name="type"/>
+        </optional>
+        <data type="string"/>
+      </element>
+      <element name="externalRef">
+        <ref name="href"/>
+        <ref name="common"/>
+      </element>
+      <element name="grammar">
+        <interleave>
+          <ref name="common"/>
+          <zeroOrMore>
+            <ref name="grammarContent"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="param">
+    <element name="param">
+      <ref name="commonAttributes"/>
+      <ref name="nameNCName"/>
+      <data type="string"/>
+    </element>
+  </define>
+  <define name="exceptPattern">
+    <element name="except">
+      <interleave>
+        <ref name="common"/>
+        <oneOrMore>
+          <ref name="pattern"/>
+        </oneOrMore>
+      </interleave>
+    </element>
+  </define>
+  <define name="grammarContent">
+    <choice>
+      <ref name="definition"/>
+      <element name="div">
+        <interleave>
+          <ref name="common"/>
+          <zeroOrMore>
+            <ref name="grammarContent"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+      <element name="include">
+        <ref name="href"/>
+        <interleave>
+          <ref name="common"/>
+          <zeroOrMore>
+            <ref name="includeContent"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="includeContent">
+    <choice>
+      <ref name="definition"/>
+      <element name="div">
+        <interleave>
+          <ref name="common"/>
+          <zeroOrMore>
+            <ref name="includeContent"/>
+          </zeroOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="definition">
+    <choice>
+      <element name="start">
+        <optional>
+          <ref name="combine"/>
+        </optional>
+        <interleave>
+          <ref name="common"/>
+          <oneOrMore>
+            <ref name="pattern"/>
+          </oneOrMore>
+        </interleave>
+      </element>
+      <element name="define">
+        <ref name="nameNCName"/>
+        <optional>
+          <ref name="combine"/>
+        </optional>
+        <interleave>
+          <ref name="common"/>
+          <oneOrMore>
+            <ref name="pattern"/>
+          </oneOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="combine">
+    <attribute name="combine">
+      <choice>
+        <value>choice</value>
+        <value>interleave</value>
+      </choice>
+    </attribute>
+  </define>
+  <define name="nameClass">
+    <choice>
+      <element name="name">
+        <ref name="commonAttributes"/>
+        <data type="QName"/>
+      </element>
+      <element name="anyName">
+        <interleave>
+          <ref name="common"/>
+          <optional>
+            <ref name="exceptNameClass"/>
+          </optional>
+        </interleave>
+      </element>
+      <element name="nsName">
+        <interleave>
+          <ref name="common"/>
+          <optional>
+            <ref name="exceptNameClass"/>
+          </optional>
+        </interleave>
+      </element>
+      <element name="choice">
+        <interleave>
+          <ref name="common"/>
+          <oneOrMore>
+            <ref name="nameClass"/>
+          </oneOrMore>
+        </interleave>
+      </element>
+    </choice>
+  </define>
+  <define name="exceptNameClass">
+    <element name="except">
+      <interleave>
+        <ref name="common"/>
+        <oneOrMore>
+          <ref name="nameClass"/>
+        </oneOrMore>
+      </interleave>
+    </element>
+  </define>
+  <define name="nameQName">
+    <attribute name="name">
+      <data type="QName"/>
+    </attribute>
+  </define>
+  <define name="nameNCName">
+    <attribute name="name">
+      <data type="NCName"/>
+    </attribute>
+  </define>
+  <define name="href">
+    <attribute name="href">
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="type">
+    <attribute name="type">
+      <data type="NCName"/>
+    </attribute>
+  </define>
+  <define name="common">
+    <ref name="commonAttributes"/>
+    <zeroOrMore>
+      <ref name="foreignElement"/>
+    </zeroOrMore>
+  </define>
+  <define name="commonAttributes">
+    <optional>
+      <attribute name="ns">
+        <data type="string"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="datatypeLibrary">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <ref name="foreignAttribute"/>
+    </zeroOrMore>
+  </define>
+  <define name="foreignElement">
+    <element>
+      <anyName>
+        <except>
+          <nsName/>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <choice>
+          <ref name="anyAttribute"/>
+          <text/>
+          <ref name="anyElement"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="foreignAttribute">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName/>
+          <nsName ns=""/>
+        </except>
+      </anyName>
+    </attribute>
+  </define>
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <zeroOrMore>
+        <choice>
+          <ref name="anyAttribute"/>
+          <text/>
+          <ref name="anyElement"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="anyAttribute">
+    <attribute>
+      <anyName/>
+    </attribute>
+  </define>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+# Based on http://www.w3.org/TR/2001/WD-rdf-syntax-grammar-20010906/
+
+namespace local = ""
+namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = RDF
+RDF = element rdf:RDF { attribute xml:base { URI-reference }?, node* } | node
+node = description | typedNode
+description = element rdf:Description {
+                idAboutAttr?, bagIdAttr?, propertyAttr*, propertyElt*
+              }
+typedNode = element * - (local:*
+                         |rdf:Description|rdf:RDF
+                         |rdf:ID|rdf:about|rdf:aboutEach
+                         |rdf:bagID|rdf:parseType|rdf:resource) {
+              idAboutAttr?, bagIdAttr?, propertyAttr*, propertyElt*
+            }
+propertyElt = element * - (local:*
+                           |rdf:Description|rdf:RDF
+                           |rdf:ID|rdf:about|rdf:aboutEach
+                           |rdf:bagID|rdf:parseType|rdf:resource) {
+                (idAttr?, (node
+                           | string
+                           | (parseLiteral, literal)
+                           | (parseResource, propertyElt*)
+                           | (parseOther, any)
+                           | (bagIdAttr?, propertyAttr*)))
+                 | (resourceAttr, bagIdAttr?, propertyAttr*)
+              }
+idAboutAttr = idAttr | aboutAttr | aboutEachAttr
+idAttr = attribute rdf:ID { IDsymbol }
+aboutAttr = attribute rdf:about { URI-reference }
+aboutEachAttr = attribute rdf:aboutEach { URI-reference }
+bagIdAttr = attribute rdf:bagID { IDsymbol }
+propertyAttr = typeAttr | propAttr
+propAttr = attribute * - (local:*|rdf:type|rdf:li
+                          |rdf:Description|rdf:RDF
+                          |rdf:ID|rdf:about|rdf:aboutEach
+                          |rdf:bagID|rdf:parseType|rdf:resource) {
+             string
+           }
+typeAttr = attribute rdf:type { URI-reference }
+resourceAttr = attribute rdf:resource { URI-reference }
+parseLiteral = attribute rdf:parseType { "Literal" }
+parseResource = attribute rdf:parseType { "Resource" }
+parseOther = attribute rdf:parseType { token - ("Literal"|"Resource") }
+URI-reference = string
+IDsymbol = xsd:NMTOKEN
+literal = any
+any = mixed { element * { attribute * { text }*, any }* }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- Based on http://www.w3.org/TR/2001/WD-rdf-syntax-grammar-20010906/ -->
+<grammar xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="RDF"/>
+  </start>
+  <define name="RDF">
+    <choice>
+      <element name="rdf:RDF">
+        <optional>
+          <attribute name="xml:base">
+            <ref name="URI-reference"/>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="node"/>
+        </zeroOrMore>
+      </element>
+      <ref name="node"/>
+    </choice>
+  </define>
+  <define name="node">
+    <choice>
+      <ref name="description"/>
+      <ref name="typedNode"/>
+    </choice>
+  </define>
+  <define name="description">
+    <element name="rdf:Description">
+      <optional>
+        <ref name="idAboutAttr"/>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="propertyElt"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="typedNode">
+    <element>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <name>rdf:Description</name>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+        </except>
+      </anyName>
+      <optional>
+        <ref name="idAboutAttr"/>
+      </optional>
+      <optional>
+        <ref name="bagIdAttr"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="propertyAttr"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="propertyElt"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="propertyElt">
+    <element>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <name>rdf:Description</name>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+        </except>
+      </anyName>
+      <choice>
+        <group>
+          <optional>
+            <ref name="idAttr"/>
+          </optional>
+          <choice>
+            <ref name="node"/>
+            <data type="string" datatypeLibrary=""/>
+            <group>
+              <ref name="parseLiteral"/>
+              <ref name="literal"/>
+            </group>
+            <group>
+              <ref name="parseResource"/>
+              <zeroOrMore>
+                <ref name="propertyElt"/>
+              </zeroOrMore>
+            </group>
+            <group>
+              <ref name="parseOther"/>
+              <ref name="any"/>
+            </group>
+            <group>
+              <optional>
+                <ref name="bagIdAttr"/>
+              </optional>
+              <zeroOrMore>
+                <ref name="propertyAttr"/>
+              </zeroOrMore>
+            </group>
+          </choice>
+        </group>
+        <group>
+          <ref name="resourceAttr"/>
+          <optional>
+            <ref name="bagIdAttr"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="propertyAttr"/>
+          </zeroOrMore>
+        </group>
+      </choice>
+    </element>
+  </define>
+  <define name="idAboutAttr">
+    <choice>
+      <ref name="idAttr"/>
+      <ref name="aboutAttr"/>
+      <ref name="aboutEachAttr"/>
+    </choice>
+  </define>
+  <define name="idAttr">
+    <attribute name="rdf:ID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="aboutAttr">
+    <attribute name="rdf:about">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="aboutEachAttr">
+    <attribute name="rdf:aboutEach">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="bagIdAttr">
+    <attribute name="rdf:bagID">
+      <ref name="IDsymbol"/>
+    </attribute>
+  </define>
+  <define name="propertyAttr">
+    <choice>
+      <ref name="typeAttr"/>
+      <ref name="propAttr"/>
+    </choice>
+  </define>
+  <define name="propAttr">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <name>rdf:type</name>
+          <name>rdf:li</name>
+          <name>rdf:Description</name>
+          <name>rdf:RDF</name>
+          <name>rdf:ID</name>
+          <name>rdf:about</name>
+          <name>rdf:aboutEach</name>
+          <name>rdf:bagID</name>
+          <name>rdf:parseType</name>
+          <name>rdf:resource</name>
+        </except>
+      </anyName>
+      <data type="string" datatypeLibrary=""/>
+    </attribute>
+  </define>
+  <define name="typeAttr">
+    <attribute name="rdf:type">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="resourceAttr">
+    <attribute name="rdf:resource">
+      <ref name="URI-reference"/>
+    </attribute>
+  </define>
+  <define name="parseLiteral">
+    <attribute name="rdf:parseType">
+      <value>Literal</value>
+    </attribute>
+  </define>
+  <define name="parseResource">
+    <attribute name="rdf:parseType">
+      <value>Resource</value>
+    </attribute>
+  </define>
+  <define name="parseOther">
+    <attribute name="rdf:parseType">
+      <data type="token" datatypeLibrary="">
+        <except>
+          <value>Literal</value>
+          <value>Resource</value>
+        </except>
+      </data>
+    </attribute>
+  </define>
+  <define name="URI-reference">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="IDsymbol">
+    <data type="NMTOKEN"/>
+  </define>
+  <define name="literal">
+    <ref name="any"/>
+  </define>
+  <define name="any">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+            </attribute>
+          </zeroOrMore>
+          <ref name="any"/>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+#	ibtwsh.dtd
+#	This is the Itsy Bitsy Teeny Weeny Simple Hypertext DTD.
+#	Its public identifier is -//XML-DEV List//DTD IBTWSH 6.0//EN
+#	The contents are dedicated to the public domain by
+#		the author, John Cowan <cowan@ccil.org>, except that
+#		John Cowan retains the moral right to be known as the author.
+#	This is draft 6.2
+#	Diff from 6.1: rel|rel now rel|rev, th|td@headers now IDREFS,
+#		table width no longer an integer, non-basic table attrs gone,
+#		rowspan and colspan must be non-negative
+#	Diff from 6.0: added attributes to ul, comment about img, new meta
+
+# This is a RELAX NG schema which describes a subset of XHTML Basic for
+# use within other schemas.  It is by intention equivalent
+# (within its scope) to -//W3C//DTD XHTML 1.1//EN, but is
+# not a derived work in the copyright sense.
+
+# It is often convenient for XML documents to have a bit of
+# documentation somewhere in them.  In the absence of a schema like
+# this one, that documentation winds up being <text/> only, which is
+# a pity, because rich text adds measurably to the readability of
+# documents.  By incorporating this schema by reference (as an
+# external parameter entity) into another schema, that schema inherits
+# the capabilities of this one.  Using HTML-compatible elements
+# and attributes allows the documentation to be passed straight
+# through to HTML renderers.
+
+# Current HTML renderers can cope with most XML tags, but empty
+# tags require special treatment.  Inserting a space before the
+# terminating "/>" usually makes the "/" (which is not HTML)
+# invisible.  Using "<tag></tag>" is not as effective, as the
+# latter is often misinterpreted as a second "<tag>".
+
+# Note that since the elements of this schema are intended to be
+# used within domain-specific elements of the surrounding DTD,
+# it is not necessary that every fragment begin with an "html"
+# element, as in HTML.  Recommended <define>s for elements
+# containing documentation are "horiz.model" for simple
+# text fragments and "struct.model" for documents in extenso.
+
+# Declarations
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+
+# Common attributes
+
+# All elements (except full-document elements) can have these attributes
+
+all =		attribute id {xsd:ID}?,
+		attribute class {token}?,
+		attribute title {text}?
+
+# All non-empty elements can have these attributes
+
+i18n =		attribute xml:lang {text}?,
+		attribute dir {"ltr" | "rtl"}?
+
+basic =		all, i18n
+
+
+# Models
+
+t = text
+horiz.model =	basic & t & horiz*
+vert.model =	vert* & horiz.model
+struct.model = 	basic & vert*
+
+
+# Horizontal formatting elements
+
+horiz =		a | br | horiz.other
+
+a =		element a {
+			attribute href {xsd:anyURI}?,
+			attribute name {text}?,
+			attribute rel | rev {xsd:anyURI}?,
+			horiz.model
+			}
+
+br =		element br {all, empty}
+
+horiz.other =	element abbr | acronym | cite | code |
+			dfn | em | img | kbd | q | samp | span |
+			strong | var {horiz.model}
+
+
+# Vertical formatting elements
+
+vert	=	header | List | table | vert.other
+
+header = 	element h1 | h2 | h3 {horiz.model}
+
+
+List =		element dl {basic, element dt | dd {horiz.model}+ } |
+		element ol|ul {basic, element li {horiz.model}+ }
+
+aligns = 	attribute align {"left" | "center" | "right" | "justified"}?,
+		attribute valign {"top" | "middle" | "bottom" | "baseline"}?
+
+table = 	element table {
+			basic,
+			attribute summary {text}?,
+			element caption {horiz.model}?,
+			element tr {
+				basic,
+				aligns,
+				tabledata+}+
+			}
+
+tabledata =	element th | td {
+			aligns,
+			attribute abbr {text}?,
+			attribute axis {text}?,
+			attribute colspan {xsd:nonNegativeInteger}?,
+			attribute headers {xsd:IDREFS}?,
+			attribute rowspan {xsd:nonNegativeInteger}?,
+			attribute scope {"row" | "col" | "rowgroup" | "colgroup"}?,
+			vert.model
+			}
+
+vert.other =	element address {horiz.model} |
+		element blockquote {attribute cite {xsd:anyURI}?, struct.model} |
+		element div {struct.model} |
+		element p {horiz.model} |
+		element pre {horiz.model}
+
+
+# Support for complete HTML documents
+
+start = 	element html {
+			i18n,
+			attribute xml:base {xsd:anyURI}?,
+			attribute xml:space {"preserve" | "default"}?,
+			head,
+			element body {basic, vert*}
+			}
+
+head =		element head {
+			i18n,
+			element title {i18n, text},
+			element meta {
+				attribute name|http-equiv {token}?,
+				attribute content {text},
+				empty
+				}*
+			}
+
+# END OF ibtwsh.rnx
+
+
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!--
+  	ibtwsh.dtd
+  	This is the Itsy Bitsy Teeny Weeny Simple Hypertext DTD.
+  	Its public identifier is -//XML-DEV List//DTD IBTWSH 6.0//EN
+  	The contents are dedicated to the public domain by
+  		the author, John Cowan <cowan@ccil.org>, except that
+  		John Cowan retains the moral right to be known as the author.
+  	This is draft 6.2
+  	Diff from 6.1: rel|rel now rel|rev, th|td@headers now IDREFS,
+  		table width no longer an integer, non-basic table attrs gone,
+  		rowspan and colspan must be non-negative
+  	Diff from 6.0: added attributes to ul, comment about img, new meta
+-->
+<!--
+  This is a RELAX NG schema which describes a subset of XHTML Basic for
+  use within other schemas.  It is by intention equivalent
+  (within its scope) to -//W3C//DTD XHTML 1.1//EN, but is
+  not a derived work in the copyright sense.
+-->
+<!--
+  It is often convenient for XML documents to have a bit of
+  documentation somewhere in them.  In the absence of a schema like
+  this one, that documentation winds up being <text/> only, which is
+  a pity, because rich text adds measurably to the readability of
+  documents.  By incorporating this schema by reference (as an
+  external parameter entity) into another schema, that schema inherits
+  the capabilities of this one.  Using HTML-compatible elements
+  and attributes allows the documentation to be passed straight
+  through to HTML renderers.
+-->
+<!--
+  Current HTML renderers can cope with most XML tags, but empty
+  tags require special treatment.  Inserting a space before the
+  terminating "/>" usually makes the "/" (which is not HTML)
+  invisible.  Using "<tag></tag>" is not as effective, as the
+  latter is often misinterpreted as a second "<tag>".
+-->
+<!--
+  Note that since the elements of this schema are intended to be
+  used within domain-specific elements of the surrounding DTD,
+  it is not necessary that every fragment begin with an "html"
+  element, as in HTML.  Recommended <define>s for elements
+  containing documentation are "horiz.model" for simple
+  text fragments and "struct.model" for documents in extenso.
+-->
+<!-- Declarations -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- Common attributes -->
+  <!-- All elements (except full-document elements) can have these attributes -->
+  <define name="all">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class">
+        <data type="token" datatypeLibrary=""/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="title"/>
+    </optional>
+  </define>
+  <!-- All non-empty elements can have these attributes -->
+  <define name="i18n">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="dir">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="basic">
+    <ref name="all"/>
+    <ref name="i18n"/>
+  </define>
+  <!-- Models -->
+  <define name="t">
+    <text/>
+  </define>
+  <define name="horiz.model">
+    <interleave>
+      <ref name="basic"/>
+      <ref name="t"/>
+      <zeroOrMore>
+        <ref name="horiz"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="vert.model">
+    <interleave>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+      <ref name="horiz.model"/>
+    </interleave>
+  </define>
+  <define name="struct.model">
+    <interleave>
+      <ref name="basic"/>
+      <zeroOrMore>
+        <ref name="vert"/>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <!-- Horizontal formatting elements -->
+  <define name="horiz">
+    <choice>
+      <ref name="a"/>
+      <ref name="br"/>
+      <ref name="horiz.other"/>
+    </choice>
+  </define>
+  <define name="a">
+    <element name="a">
+      <optional>
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name"/>
+      </optional>
+      <optional>
+        <attribute>
+          <choice>
+            <name ns="">rel</name>
+            <name ns="">rev</name>
+          </choice>
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <ref name="all"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="horiz.other">
+    <element>
+      <choice>
+        <name>abbr</name>
+        <name>acronym</name>
+        <name>cite</name>
+        <name>code</name>
+        <name>dfn</name>
+        <name>em</name>
+        <name>img</name>
+        <name>kbd</name>
+        <name>q</name>
+        <name>samp</name>
+        <name>span</name>
+        <name>strong</name>
+        <name>var</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <!-- Vertical formatting elements -->
+  <define name="vert">
+    <choice>
+      <ref name="header"/>
+      <ref name="List"/>
+      <ref name="table"/>
+      <ref name="vert.other"/>
+    </choice>
+  </define>
+  <define name="header">
+    <element>
+      <choice>
+        <name>h1</name>
+        <name>h2</name>
+        <name>h3</name>
+      </choice>
+      <ref name="horiz.model"/>
+    </element>
+  </define>
+  <define name="List">
+    <choice>
+      <element name="dl">
+        <ref name="basic"/>
+        <oneOrMore>
+          <element>
+            <choice>
+              <name>dt</name>
+              <name>dd</name>
+            </choice>
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+      <element>
+        <choice>
+          <name>ol</name>
+          <name>ul</name>
+        </choice>
+        <ref name="basic"/>
+        <oneOrMore>
+          <element name="li">
+            <ref name="horiz.model"/>
+          </element>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="aligns">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <choice>
+          <value>top</value>
+          <value>middle</value>
+          <value>bottom</value>
+          <value>baseline</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="table">
+    <element name="table">
+      <ref name="basic"/>
+      <optional>
+        <attribute name="summary"/>
+      </optional>
+      <optional>
+        <element name="caption">
+          <ref name="horiz.model"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tr">
+          <ref name="basic"/>
+          <ref name="aligns"/>
+          <oneOrMore>
+            <ref name="tabledata"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tabledata">
+    <element>
+      <choice>
+        <name>th</name>
+        <name>td</name>
+      </choice>
+      <ref name="aligns"/>
+      <optional>
+        <attribute name="abbr"/>
+      </optional>
+      <optional>
+        <attribute name="axis"/>
+      </optional>
+      <optional>
+        <attribute name="colspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="headers">
+          <data type="IDREFS"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rowspan">
+          <data type="nonNegativeInteger"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="scope">
+          <choice>
+            <value>row</value>
+            <value>col</value>
+            <value>rowgroup</value>
+            <value>colgroup</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="vert.model"/>
+    </element>
+  </define>
+  <define name="vert.other">
+    <choice>
+      <element name="address">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="blockquote">
+        <optional>
+          <attribute name="cite">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <ref name="struct.model"/>
+      </element>
+      <element name="div">
+        <ref name="struct.model"/>
+      </element>
+      <element name="p">
+        <ref name="horiz.model"/>
+      </element>
+      <element name="pre">
+        <ref name="horiz.model"/>
+      </element>
+    </choice>
+  </define>
+  <!-- Support for complete HTML documents -->
+  <start>
+    <element name="html">
+      <ref name="i18n"/>
+      <optional>
+        <attribute name="xml:base">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="xml:space">
+          <choice>
+            <value>preserve</value>
+            <value>default</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="head"/>
+      <element name="body">
+        <ref name="basic"/>
+        <zeroOrMore>
+          <ref name="vert"/>
+        </zeroOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="head">
+    <element name="head">
+      <ref name="i18n"/>
+      <element name="title">
+        <ref name="i18n"/>
+        <text/>
+      </element>
+      <zeroOrMore>
+        <element name="meta">
+          <optional>
+            <attribute>
+              <choice>
+                <name ns="">name</name>
+                <name ns="">http-equiv</name>
+              </choice>
+              <data type="token" datatypeLibrary=""/>
+            </attribute>
+          </optional>
+          <attribute name="content"/>
+          <empty/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+<!-- END OF ibtwsh.rnx -->
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<resource name="x.rnx">
+foo
+</resource>
+<correct><![CDATA[
+start = externalRef "x.rnx"
+foo = element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<resource name="x.rng">
+<ref name="foo" xmlns="http://relaxng.org/ns/structure/1.0"/>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <externalRef href="x.rng"/>
+  </start>
+  <define name="foo">
+    <element name="foo">
+      <empty/>
+    </element>
+  </define>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element * - foo - bar { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+string - "foo"*
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+string - "foo" | string - "bar"
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+string - string - "foo"
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg = "http://www.example.com"
+[ eg:x = "foo" eg:x = "foo" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace eg1 = "http://www.example.com"
+namespace eg2 = "http://www.example.com"
+[ eg1:x = "foo" eg2:x = "foo" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace xmlns = "http://www.example.com"
+[ xmlns:x = "foo" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace xns = "http://www.w3.org/2000/xmlns"
+[ xns:x = "foo" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace xml = "http://www.example.com"
+[ xml:space = "default" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace xm = "http://www.w3.org/XML/1998/namespace"
+[ xm:space = "default" ]
+element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace xml = "http://www.w3.org/XML/1998/namespace"
+[ xml:space = "default" ]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" xml:space="default">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+foo [ xmlns = "bar" ]
+start = element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+namespace local = ""
+foo [ local:xmlns = "bar" ]
+start = element foo { empty }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo { empty }
+# comment
+| element bar { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="foo">
+    <empty/>
+  </element>
+  <!-- comment -->
+  <element name="bar">
+    <empty/>
+  </element>
+</choice>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo { empty }
+# comment
+*
+]]></correct>
+</compact>
+<xml>
+<correct>
+<zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="foo">
+    <empty/>
+  </element>
+  <!-- comment -->
+</zeroOrMore>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+# comment
+namespace eg = ""
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- comment -->
+<element name="foo"  xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace eg = 
+# comment
+""
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- comment -->
+<element name="foo"  xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace # comment
+eg = ""
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- comment -->
+<element name="foo"  xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+[
+# comment
+]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- comment -->
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace eg = "http://www.example.com"
+[
+# comment
+eg:foo = "stuff"
+]
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:eg="http://www.example.com" eg:foo="stuff">
+  <!-- comment -->
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element foo # comment
+{ empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- comment -->
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+start = grammar { start = parent # comment
+foo }
+foo = element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+      <parentRef name="foo">
+	<!-- comment -->
+      </parentRef>
+    </start>
+  </grammar>
+</start>
+<define name="foo">
+  <element name="foo">
+    <empty/>
+  </element>
+</define>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+# :--:---:-
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- :- -:- - -:- -->
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<bug>
+<compact>
+<incorrect><![CDATA[
+namespace x = ""
+namespace y = inherit
+
+element x:* - y:z { empty }
+]]></incorrect>
+</compact>
+</bug>
+<testCase>
+<compact>
+<correct><![CDATA[
+\xxxxx = element foo { empty }
+start = \xxxxx]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<define name="xxxxx">
+  <element name="foo">
+    <empty/>
+  </element>
+</define>
+<start>
+  <ref name="xxxxx"/>
+</start>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { "\x{D800}" }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { "\x{110000}" }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { empty \x{7d]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { empty \x{7d }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { "\x{}" }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<correct>
+\x{65}l\xxxxx{00065}ment\x{20}foo { empty \x{7d}
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element \\x{66}oo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+element \xx\x{66}oo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="xxfoo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "\x{10300}" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>&#x10300;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "&#x0e00;" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>&#x0e00;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "z
+" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>z&#xA;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "z\x{A}" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>z&#xA;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "z\x{D}" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>z&#xD;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct>
+element foo { "z\x{D}\x{A}" }
+</correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <value>z&#xD;&#xA;</value>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+"'"'"'
+]]></correct>
+</compact>
+<xml>
+<correct>
+<value xmlns="http://relaxng.org/ns/structure/1.0">'"</value>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace eg = "http://" "www.example.com"
+token "xyzzy"
+]]></correct>
+</compact>
+<xml>
+<correct>
+<value xmlns="http://relaxng.org/ns/structure/1.0">xyzzy</value>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+datatypes xsd = "http://www.w3.org/" "2001" "/" "" "XMLSchema-datatypes" ""
+xsd:string { pattern = "foo" "|" "bar" }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<data type="string" xmlns="http://relaxng.org/ns/structure/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<param name="pattern">foo|bar</param>
+</data>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+## This is a comment
+## about a foo.
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <a:documentation>This is a comment
+about a foo.</a:documentation>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+## This is a formal comment
+## about a foo.
+# Regular comment.
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- Regular comment. -->
+<element name="foo" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <a:documentation>This is a formal comment
+about a foo.</a:documentation>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+## This is a formal comment
+## about a foo.
+start = element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <a:documentation>This is a formal comment
+about a foo.</a:documentation>
+    <element name="foo">
+      <empty/>
+    </element>
+  </start>
+</grammar>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+# This is a regular comment
+## This is a formal comment
+element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<!-- This is a regular comment -->
+<element name="foo" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <a:documentation>This is a formal comment</a:documentation>
+  <empty/>
+</element>
+</correct>
+</xml>
+</testCase>
+<testCase>
+<compact>
+<correct><![CDATA[element foo { empty }
+#]]></correct>
+</compact>
+<xml>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+<!---->
+</correct>
+</xml>
+</testCase>
+<!--
+<testCase>
+<compact>
+<correct><![CDATA[
+]]></correct>
+</compact>
+<xml>
+<correct>
+</correct>
+</xml>
+</testCase>
+-->
+<!--
+<testCase>
+<compact>
+<incorrect><![CDATA[
+]]></incorrect>
+</compact>
+</testCase>
+-->
+</testSuite>

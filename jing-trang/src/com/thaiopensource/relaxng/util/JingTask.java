@@ -31,7 +31,8 @@ public class JingTask extends Task {
   private File rngFile;
   private File src;
   private Vector filesets = new Vector();
-  private boolean checkid = false;
+  private boolean checkid = true;
+  private boolean compactsyntax = false;
 
   public void execute() throws BuildException {
     if (rngFile == null)
@@ -46,7 +47,7 @@ public class JingTask extends Task {
     boolean hadError = false;
 
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkid);
+      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkid, compactsyntax);
       if (!engine.loadSchema(ValidationEngine.fileInputSource(rngFile)))
 	hadError = true;
       else {
@@ -98,6 +99,15 @@ public class JingTask extends Task {
    */
   public void setCheckid(boolean checkid) {
     this.checkid = checkid;
+  }
+
+  /**
+   * Handles the <code>compactsyntax</code> attribute.
+   *
+   * @param compactsyntax the attribute value converted to a boolean
+   */
+  public void setCompactsyntax(boolean compactsyntax) {
+    this.compactsyntax = compactsyntax;
   }
 
   public void addFileset(FileSet set) {

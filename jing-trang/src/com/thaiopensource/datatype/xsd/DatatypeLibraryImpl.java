@@ -4,6 +4,8 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 
 import com.thaiopensource.util.Service;
+import com.thaiopensource.datatype.xsd.regex.RegexEngine;
+import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
 import org.xml.sax.XMLReader;
 
 import org.relaxng.datatype.DatatypeLibrary;
@@ -29,6 +31,8 @@ public class DatatypeLibraryImpl implements DatatypeLibrary {
   static private final String UNSIGNED_INT_MAX = "4294967295";
   static private final String UNSIGNED_SHORT_MAX = "65535";
   static private final String UNSIGNED_BYTE_MAX = "255";
+  // Follow RFC 3066 syntax.
+  static private final String LANGUAGE_PATTERN = "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*";
 
   public DatatypeLibraryImpl() {
     this.regexEngine = findRegexEngine();
@@ -39,7 +43,7 @@ public class DatatypeLibraryImpl implements DatatypeLibrary {
 
     DatatypeBase decimalType = new DecimalDatatype();
     typeTable.put("decimal", decimalType);
-    DatatypeBase integerType = new ScaleRestrictDatatype(decimalType, 0);
+    DatatypeBase integerType = new IntegerRestrictDatatype(decimalType);
     typeTable.put("integer", integerType);
     typeTable.put("nonPositiveInteger", restrictMax(integerType, "0"));
     typeTable.put("negativeInteger", restrictMax(integerType, "-1"));
@@ -74,35 +78,45 @@ public class DatatypeLibraryImpl implements DatatypeLibrary {
 
     typeTable.put("NOTATION", new QNameDatatype());
 
-    // Partially implemented
-    DatatypeBase entityType = ncNameType;
+    typeTable.put("base64Binary", new Base64BinaryDatatype());
+    typeTable.put("hexBinary", new HexBinaryDatatype());
+    typeTable.put("anyURI", new AnyUriDatatype());
+    typeTable.put("language", new RegexDatatype(LANGUAGE_PATTERN));
+
+    typeTable.put("dateTime", new DateTimeDatatype("Y-M-DTt"));
+    typeTable.put("time", new DateTimeDatatype("t"));
+    typeTable.put("date", new DateTimeDatatype("Y-M-D"));
+    typeTable.put("gYearMonth", new DateTimeDatatype("Y-M"));
+    typeTable.put("gYear", new DateTimeDatatype("Y"));
+    typeTable.put("gMonthDay", new DateTimeDatatype("--M-D"));
+    typeTable.put("gDay", new DateTimeDatatype("---D"));
+    typeTable.put("gMonth", new DateTimeDatatype("--M"));
+
+    DatatypeBase entityType = new EntityDatatype();
     typeTable.put("ENTITY", entityType);
     typeTable.put("ENTITIES", list(entityType));
-    typeTable.put("language", new LanguageDatatype());
-
-    // Not implemented yet
-    typeTable.put("anyURI", new StringDatatype());
-    typeTable.put("base64Binary", new StringDatatype());
-    typeTable.put("hexBinary", new StringDatatype());
-    typeTable.put("duration", new StringDatatype());
-    typeTable.put("dateTime", new StringDatatype());
-    typeTable.put("time", new StringDatatype());
-    typeTable.put("date", new StringDatatype());
-    typeTable.put("gYearMonth", new StringDatatype());
-    typeTable.put("gYear", new StringDatatype());
-    typeTable.put("gMonthDay", new StringDatatype());
-    typeTable.put("gDay", new StringDatatype());
-    typeTable.put("gMonth", new StringDatatype());
+    // Partially implemented
+    typeTable.put("duration", new DurationDatatype());
   }
 
-  public DatatypeBuilder createDatatypeBuilder(String localName) {
+  public DatatypeBuilder createDatatypeBuilder(String localName) throws DatatypeException {
     DatatypeBase base = (DatatypeBase)typeTable.get(localName);
     if (base == null)
-      return null;
+      throw new DatatypeException();
+    if (base instanceof RegexDatatype) {
+      try {
+        ((RegexDatatype)base).compile(getRegexEngine());
+      }
+      catch (RegexSyntaxException e) {
+        throw new DatatypeException(DatatypeBuilderImpl.localizer.message("regex_internal_error", localName));
+      }
+    }
     return new DatatypeBuilderImpl(this, base);
   }
 
-  RegexEngine getRegexEngine() {
+  RegexEngine getRegexEngine() throws DatatypeException {
+    if (regexEngine == null)
+      throw new DatatypeException(DatatypeBuilderImpl.localizer.message("regex_impl_not_found"));
     return regexEngine;
   }
 
@@ -121,11 +135,17 @@ public class DatatypeLibraryImpl implements DatatypeLibrary {
   private RegexEngine findRegexEngine() {
     Enumeration e = new Service(RegexEngine.class).getProviders();
     if (!e.hasMoreElements())
-      return new NullRegexEngine();
+      return null;
     return (RegexEngine)e.nextElement();
   }
 
   public Datatype createDatatype(String type) throws DatatypeException {
     return createDatatypeBuilder(type).createDatatype();
+  }
+
+  static public void main(String[] args) throws DatatypeException {
+    System.err.println(new DatatypeLibraryImpl().createDatatype(args[0]).isValid(args[1], null)
+                       ? "valid"
+                       : "invalid");
   }
 }

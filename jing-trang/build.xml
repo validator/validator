@@ -9,19 +9,40 @@
   <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
 </target>
 
-<target name="compile" depends="init">
+<target name="compile-grammar" depends="init">
+ <mkdir dir="build/src/com/thaiopensource/relaxng/parse/compact"/>
+ <javacc target="src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj"
+         outputdirectory="build/src/com/thaiopensource/relaxng/parse/compact"
+         javacchome="lib"
+         />
+ <delete quiet="true">
+  <fileset dir="build/src/com/thaiopensource/relaxng/parse/compact"
+           includes="UCode_UCodeESC_CharStream.java"/>
+ </delete>
+ <replace file="build/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
+   token="java.io.IOException" value="EOFException"/>
+</target>
 
+<target name="regex-gen">
+  <ant antfile="regex-build.xml" target="gen">
+    <property name="UnicodeData.file" value="lib/UnicodeData-3.1.0.txt"/>
+  </ant>
+</target>
+
+<target name="compile" depends="compile-grammar,regex-gen">
   <mkdir dir="build/classes"/>
-  <javac srcdir="src" destdir="build/classes"/>
-
+  <javac srcdir="src:build/src" destdir="build/classes" excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java" target="1.1"/>
 </target>
 
 <target name="jar" depends="compile">
 
-  <jar jarfile="build/jing.jar" manifest="src/META-INF/MANIFEST.MF">
+  <echo file="build/jing-manifest.txt">Manifest-Version: 1.0
+Main-Class: com/thaiopensource/relaxng/util/Driver
+</echo>
+
+  <jar jarfile="build/jing.jar" manifest="build/jing-manifest.txt">
     <fileset dir="build/classes"/>
-    <fileset dir="src" includes="**/*.properties"/>
-    <fileset dir="src" includes="META-INF/services/*"/>
+    <fileset dir="src" includes="**/*.properties,META-INF/services/*"/>
   </jar>
 
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
@@ -32,7 +53,7 @@
 
 </target>
 
-<target name="exegen" depends="compile,check-exe,xp-files,sax-files"
+<target name="exegen" depends="compile,check-exe,crimson-files,regex-files"
         unless="exe-ok">
   <exec dir="." executable="${sdkjava.dir}\bin\jexegen" failonerror="yes">
     <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
@@ -44,10 +65,10 @@
     <arg value="META-INF\services\*"/>
     <arg value="/base:build\classes"/>
     <arg value="*.class"/>
-    <arg value="/base:build\xp-files"/>
+    <arg value="/base:build\crimson-files"/>
     <arg value="*.*"/>
-    <arg value="/base:build\sax-files"/>
-    <arg value="org\xml\sax\*.*"/>
+    <arg value="/base:build\regex-files"/>
+    <arg value="*.*"/>
   </exec>
 </target>
 
@@ -58,39 +79,55 @@
   </uptodate>
 </target>
 
-<target name="xp-files" depends="check-xp-files" unless="xp-files-ok">
-  <mkdir dir="build/xp-files"/>
-  <unzip src="lib/xp.jar" dest="build/xp-files"/>
-  <delete dir="build/xp-files/META-INF"/>
+<target name="crimson-files" depends="check-crimson-files" unless="crimson-files-ok">
+  <mkdir dir="build/crimson-files"/>
+  <unzip src="lib/crimson.jar" dest="build/crimson-files"/>
+  <delete dir="build/crimson-files/org/w3c"/>
+  <delete dir="build/crimson-files/org/apache/crimson/tree"/>
+  <delete file="build/crimson-files/META-INF/services/javax.xml.parsers.DocumentBuilderFactory"/>
+  <delete file="build/crimson-files/javax/xml/parsers/DocumentBuilder.class"/>
+  <delete file="build/crimson-files/javax/xml/parsers/DocumentBuilderFactory.class"/>
+  <delete dir="build/crimson-files/org/apache/crimson/jaxp/DocumentBuilderImpl.class"/>
+  <delete dir="build/crimson-files/org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class"/>
 </target>
 
-<target name="sax-files" depends="check-sax-files" unless="sax-files-ok">
-  <mkdir dir="build/sax-files"/>
-  <unzip src="lib/sax.jar" dest="build/sax-files"/>
+<target name="check-crimson-files">
+  <available property="crimson-files-ok"
+             file="build/crimson-files/org/apache/crimson/parser/XMLReaderImpl.class"/>
 </target>
 
-<target name="check-xp-files">
-  <available property="xp-files-ok"
-             file="build/xp-files/com/jclark/xml/sax/Driver.class"/>
+<target name="regex-files" depends="check-regex-files" unless="regex-files-ok">
+  <mkdir dir="build/regex-files"/>
+  <unzip src="lib/regex2.jar" dest="build/regex-files"/>
+  <delete dir="build/regex-files/META-INF"/>
 </target>
 
-<target name="check-sax-files">
-  <available property="sax-files-ok"
-             file="build/sax-files/org/xml/sax/Parser.class"/>
+<target name="check-regex-files">
+  <available property="regex-files-ok"
+             file="build/regex-files/org/apache/xerces/impl/xpath/regex/RegularExpression.class"/>
 </target>
 
 <target name="validate" depends="jar">
   <jing rngfile="xhtml/xhtml-basic.rng">
-    <fileset dir="doc" includes="**/*.html"/>
+    <fileset dir="doc" includes="*.html,jing-win32-bin/*.html,jing-bin/*.html,regex/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
     <fileset dir="test" includes="index.html"/>
+  </jing>
+  <jing rngfile="xhtml/xhtml.rng">
+    <fileset dir="doc/compact" includes="*.html"/>
   </jing>
   <jing rngfile="eg/relaxng.rng">
     <fileset dir="eg" includes="*.rng"/>
     <fileset dir="xhtml" includes="**/*.rng"/>
   </jing>
+  <jing rngfile="doc/compact/relaxng.rnc" compactsyntax="true">
+    <fileset dir="eg" includes="relaxng.rng"/>
+  </jing>
   <jing rngfile="eg/xslt.rng">
-     <fileset dir="convert" includes="*.xsl"/>
+    <fileset dir="convert" includes="*.xsl"/>
+  </jing>
+  <jing rngfile="doc/design.rng">
+    <fileset dir="doc" includes="design.xml"/>
   </jing>
 </target>
 
@@ -120,6 +157,82 @@
       <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
+</target>
+
+<target name="xsd-test" depends="jar,xsd-split">
+  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
+    <arg value="build/xsdtest/out.log"/>
+    <arg value="build/xsdtest"/>
+    <classpath>
+      <pathelement location="build/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="check-xsd-split">
+  <uptodate property="xsd-split-not-required" targetfile="build/xsdtest/xsdtest.stamp">
+    <srcfiles dir="test" includes="xsdtest.xml,xsdtest.xsl,xsdtest.rnc,split.xsl"/>
+  </uptodate>
+</target>
+
+
+<target name="xsd-split" depends="jar,check-xsd-split" unless="xsd-split-not-required">
+  <jing rngfile="test/xsdtest.rnc" compactsyntax="true">
+    <fileset dir="test" includes="xsdtest.xml"/>
+  </jing>
+  <delete dir="build/xsdtest"/>
+  <mkdir dir="build/xsdtest"/>
+  <style basedir="test" destdir="build/xsdtest" includes="xsdtest.xml" extension=".xml"
+         style="test/xsdtest.xsl"/>
+  <jing rngfile="eg/testSuite.rng">
+    <fileset dir="build/xsdtest" includes="xsdtest.xml"/>
+  </jing>
+  <style basedir="build/xsdtest" destdir="build/xsdtest" includes="xsdtest.xml"
+         extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="build/xsdtest"/>
+  </style>
+</target>
+
+<target name="regex-jar">
+  <ant antfile="regex-build.xml" target="jar">
+    <property name="classes.dir" value="build/regex-classes"/>
+  </ant>
+</target>
+
+<target name="regex-test" depends="jar">
+  <jing rngfile="test/regextest.rnc" compactsyntax="true">
+    <fileset dir="test" includes="regextest.xml"/>
+  </jing>
+  <ant antfile="regex-build.xml" target="test">
+    <property name="classes.dir" value="build/regex-classes"/>
+  </ant>
+</target>
+
+<target name="xerces-regex-test" depends="jar">
+  <jing rngfile="test/regextest.rnc" compactsyntax="true">
+    <fileset dir="test" includes="regextest.xml"/>
+  </jing>
+  <ant antfile="regex-build.xml" target="xerces-test">
+    <property name="classes.dir" value="build/regex-classes"/>
+  </ant>
+</target>
+
+<target name="full-regex-test">
+  <ant antfile="regex-build.xml" target="full-test">
+    <property name="classes.dir" value="build/regex-classes"/>
+  </ant>
+</target>
+
+<target name="regex-dist">
+  <ant antfile="regex-build.xml" target="dist">
+    <property name="classes.dir" value="build/regex-classes"/>
+    <property name="apidoc.dir" value="build/regex-apidoc"/>
+    <property name="build.xml" value="regex-build.xml"/>
+    <property name="UnicodeData.file" value="lib/UnicodeData-3.1.0.txt"/>
+    <property name="doc.src.dir" value="doc/regex"/>
+    <property name="doc.build.dir" value="build/regex-doc"/>
+  </ant>
 </target>
 
 <target name="javadoc" depends="init">
@@ -158,11 +271,42 @@
 <target name="doc">
   <style basedir="doc" destdir="build" includes="derivative.xml"
          style="doc/derivative.xsl"/>
+  <style basedir="doc" destdir="build" includes="design.xml"
+         style="doc/design.xsl"/>
 </target>
 
-<target name="dist" depends="jar, exegen, validate, test, javadoc, datatype-sample, doc">
+<target name="trang-jar" depends="jar">
+  <ant dir="trang" target="jar">
+    <property name="build.dir" value="../build/trang"/>
+    <property name="dist.dir" value="../build"/>
+    <property name="jing.classes" value="../build/classes"/>
+    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+  </ant>
+</target>
+
+<target name="trang-test" depends="jar">
+  <ant dir="trang" target="test">
+    <property name="build.dir" value="../build/trang"/>
+    <property name="dist.dir" value="../build"/>
+    <property name="jing.classes" value="../build/classes"/>
+    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+  </ant>
+</target>
+
+<target name="trang-dist" depends="jar">
+  <ant dir="trang" target="dist">
+    <property name="build.dir" value="../build/trang"/>
+    <property name="dist.dir" value="../build"/>
+    <property name="jing.classes" value="../build/classes"/>
+    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+  </ant>
+</target>
+
+<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist">
   <zip zipfile="build/jing-src.zip">
-    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+    <fileset dir="src" includes="**/*.java,**/*.properties,META-INF/services/*"/>
+    <fileset dir="build/src" includes="**/*.java"/>
+    <zipfileset dir="build" includes="jing-manifest.txt" fullpath="META-INF/MANIFEST.MF"/>
   </zip>
   <zip zipfile="build/xhtml-rng.zip">
     <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
@@ -173,9 +317,34 @@
     <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
     <fileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"/>
   </copy>
+  <mkdir dir="build/compact"/>
+  <copy todir="build/compact">
+    <fileset dir="doc/compact" includes="*.html"/>
+  </copy>
+  <copy file="doc/compact/relaxng.rnc"
+        tofile="build/compact/relaxng.rnc.txt"/>
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
+  <mkdir dir="build/jing-win32-bin"/>
+  <copy todir="build/jing-win32-bin">
+    <fileset dir="doc/jing-win32-bin" includes="readme.html"/>
+  </copy>
+  <replace file="build/jing-win32-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="build/jing-win32-bin.zip">
+    <fileset dir="build/jing-win32-bin" includes="readme.html"/>
+    <fileset dir="doc/jing-win32-bin" includes="apache-license.txt"/>
+    <fileset dir="build" includes="jing.exe,copying.txt"/>
+  </zip>
+  <mkdir dir="build/jing-bin"/>
+  <copy todir="build/jing-bin">
+    <fileset dir="doc/jing-bin" includes="readme.html"/>
+  </copy>
+  <replace file="build/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="build/jing-bin.zip">
+    <fileset dir="build/jing-bin" includes="readme.html"/>
+    <fileset dir="build" includes="jing.jar,copying.txt"/>
+  </zip>
   <unzip src="build/xhtml-rng.zip" dest="build"/>
-  <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
+  <move file="build/xhtml-rng.zip" todir="build/xhtml"/>
   <zip zipfile="build/datatype-sample.zip">
     <fileset dir="datatype-sample"/>
     <zipfileset dir="build/api/datatype" includes="**" prefix="api"/>
@@ -189,10 +358,8 @@
     <fileset dir="eg" includes="testSuite.rng"/>
   </zip>
   <tar tarfile="build/relaxng.tar" basedir="build"
-    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,datatype-sample.zip,testSuite.zip,jing-api.zip,api/**"/>
-
+    includes="*.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**"/>
   <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
-
 </target>
 
 <target name="clean">

@@ -162,22 +162,35 @@ public class IdSoundnessChecker implements ValidatorHandler {
   public void skippedEntity(String s) throws SAXException {
   }
 
+  public void notationDecl(String name,
+                           String publicId,
+                           String systemId)
+          throws SAXException {
+  }
+
+  public void unparsedEntityDecl(String name,
+                                 String publicId,
+                                 String systemId,
+                                 String notationName)
+          throws SAXException {
+  }
+
   private void error(String key) throws SAXException {
     hadError = true;
     if (eh != null)
-      eh.error(new SAXParseException(Localizer.message(key), locator));
+      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
   }
 
   private void error(String key, String arg) throws SAXException {
     hadError = true;
     if (eh != null)
-      eh.error(new SAXParseException(Localizer.message(key, arg), locator));
+      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
   }
 
   private void error(String key, String arg, Locator loc) throws SAXException {
     hadError = true;
     if (eh != null)
-      eh.error(new SAXParseException(Localizer.message(key, arg),
+      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg),
                                      loc));
   }
 

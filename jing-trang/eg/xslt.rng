@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.7 2001-10-23 06:00:46 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.8 2002-04-30 07:00:05 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
@@ -187,7 +187,7 @@
       <ref name="extension.atts"/>
       <optional>
 	 <attribute name="id">
-	    <data type="ID"/>
+	    <data type="NCName"/>
 	 </attribute>
       </optional>
       <optional>

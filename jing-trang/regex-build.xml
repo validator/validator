@@ -1,0 +1,173 @@
+<project name="regex" default="jar" basedir=".">
+
+<property name="version" value="20020430"/>
+<property name="build.xml" value="build.xml"/>
+<property name="build.dir" value="build"/>
+<property name="classes.dir" value="${build.dir}/classes"/>
+<property name="apidoc.dir" value="${build.dir}/apidoc"/>
+<property name="jar.file" value="${build.dir}/xsdregex.jar"/>
+<property name="UnicodeData.file" value="UnicodeData-3.1.0.txt"/>
+<property name="doc.src.dir" value="doc-src"/>
+<property name="doc.build.dir" value="${build.dir}/doc"/>
+<property name="util.src"
+          value="com/thaiopensource/util/Utf16.java,
+                 com/thaiopensource/util/Localizer.java,
+                 com/thaiopensource/util/Service.java,
+                 com/thaiopensource/util/UriOrFile.java"/>
+
+<target name="init">
+  <mkdir dir="${build.dir}"/>
+</target>
+
+<target name="compile-gen" depends="init">
+  <mkdir dir="${build.dir}/gen"/>
+  <javac srcdir="src" destdir="${build.dir}/gen" includes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java,com/thaiopensource/xml/util/Naming.java"/>
+</target>
+
+<target name="gen" depends="compile-gen,check-gen" unless="gen-ok">
+  <mkdir dir="${build.dir}/src/com/thaiopensource/datatype/xsd/regex/jdk1_4"/>
+  <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.NamingExceptionsGen" fork="yes" failonerror="yes">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.NamingExceptions"/>
+    <arg value="${build.dir}/src"/>
+    <classpath>
+      <pathelement location="${build.dir}/gen"/>
+    </classpath>
+  </java>
+  <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.CategoriesGen" fork="yes" failonerror="yes">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.Categories"/>
+    <arg value="${build.dir}/src"/>
+    <arg value="${UnicodeData.file}"/>
+    <classpath>
+      <pathelement location="${build.dir}/gen"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="check-gen">
+  <uptodate property="gen-ok"
+    targetfile="${build.dir}/src/com/thaiopensource/datatype/xsd/regex/jdk1_4/Categories.java">
+    <srcfiles dir="${build.dir}/gen" includes="**/*.class"/>
+  </uptodate>
+</target>
+
+<target name="check-xerces">
+  <available property="xerces-available"
+             classname="org.apache.xerces.utils.regex.RegularExpression"/>
+</target>
+
+<target name="compile-xerces" depends="check-xerces" if="xerces-available">
+  <javac srcdir="src" destdir="${classes.dir}" 
+         includes="com/thaiopensource/datatype/xsd/regex/xerces/*.java"
+         target="1.1"/>
+</target>
+
+<target name="check-xerces2">
+  <available property="xerces2-available" 
+             classname="org.apache.xerces.impl.xpath.regex.RegularExpression"/>
+</target>
+
+<target name="compile-xerces2" depends="check-xerces2" if="xerces2-available">
+  <javac srcdir="src" destdir="${classes.dir}" 
+         includes="com/thaiopensource/datatype/xsd/regex/xerces2/*.java"
+         target="1.1"/>
+</target>
+
+<target name="check-jdk1_4">
+  <available property="jdk1_4-available" classname="java.util.regex.Pattern"/>
+</target>
+
+<target name="compile-jdk1_4" depends="check-jdk1_4,gen" if="jdk1_4-available">
+  <javac srcdir="src:${build.dir}/src" destdir="${classes.dir}" 
+         includes="com/thaiopensource/datatype/xsd/regex/jdk1_4/*.java"
+         target="1.1"/>
+</target>
+
+<target name="compile-base">
+  <mkdir dir="${classes.dir}"/>
+  <javac srcdir="src" destdir="${classes.dir}" 
+         includes="com/thaiopensource/datatype/xsd/regex/*.java,
+                   com/thaiopensource/datatype/xsd/regex/test/*.java,
+                   ${util.src}"
+          target="1.1"/>
+</target>
+
+<target name="compile" depends="compile-base,compile-xerces,compile-xerces2,compile-jdk1_4"/>
+
+<target name="jar" depends="compile">
+  <jar jarfile="${jar.file}">
+    <fileset dir="${classes.dir}"/>
+    <fileset dir="src" includes="com/thaiopensource/datatype/xsd/regex/**/*.properties,META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"/>
+  </jar>
+</target>
+
+<target name="test" depends="jar">
+  <java classname="com.thaiopensource.datatype.xsd.regex.test.TestDriver" fork="yes" failonerror="yes">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="test/regextest.xml"/>
+    <classpath>
+      <pathelement location="${jar.file}"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="full-test" depends="test">
+  <echo>This will take about 5 minutes on a fast machine.</echo>
+  <java classname="com.thaiopensource.datatype.xsd.regex.test.CategoryTest" fork="yes" failonerror="yes">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="lib/UnicodeData-3.1.0.txt"/>
+    <classpath>
+      <pathelement location="${jar.file}"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="xerces-test" depends="jar">
+  <java classname="com.thaiopensource.datatype.xsd.regex.test.TestDriver" fork="yes" failonerror="yes">
+    <arg value="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
+    <arg value="test/regextest.xml"/>
+    <classpath>
+      <pathelement location="${jar.file}"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="javadoc" depends="init">
+  <mkdir dir="${apidoc.dir}"/>
+  <javadoc sourcepath="src" destdir="${apidoc.dir}"
+    packagenames="com.thaiopensource.datatype.xsd.regex,com.thaiopensource.datatype.xsd.regex.jdk1_4"/>
+</target>
+
+<target name="doc" depends="init">
+  <mkdir dir="${doc.build.dir}"/>
+  <copy file="${doc.src.dir}/readme.html"
+        todir="${doc.build.dir}"/>
+  <replace file="${doc.build.dir}/readme.html" token="@VERSION@" value="${version}"/>
+</target>
+
+<target name="dist" depends="jar,javadoc,doc,test">
+  <zip zipfile="${build.dir}/xsdregex.zip">
+    <zipfileset dir="${doc.build.dir}" prefix="xsdregex-${version}" includes="readme.html"/>
+    <zipfileset dir="${doc.src.dir}" prefix="xsdregex-${version}/doc-src"/>
+    <zipfileset prefix="xsdregex-${version}/src" dir="src"
+      includes="com/thaiopensource/datatype/xsd/regex/**/*.java,
+                com/thaiopensource/datatype/xsd/regex/**/*.properties,
+                com/thaiopensource/xml/util/Naming.java,
+                ${util.src},
+                META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"/>
+    <zipfileset prefix="xsdregex-${version}/test" dir="test"
+      includes="regextest.xml,regextest.rnc"/>
+    <zipfileset prefix="xsdregex-${version}" dir="." includes="copying.txt"/>
+    <zipfileset dir="." includes="${jar.file}" fullpath="xsdregex-${version}/xsdregex.jar"/>
+    <zipfileset dir="." includes="${build.xml}" fullpath="xsdregex-${version}/build.xml"/>
+    <zipfileset dir="${apidoc.dir}" prefix="xsdregex-${version}/apidoc"/>
+  </zip>
+</target>
+
+<target name="clean">
+  <delete dir="${build.dir}"/>
+</target>
+
+</project>

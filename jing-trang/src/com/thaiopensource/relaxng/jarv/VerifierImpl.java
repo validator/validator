@@ -4,8 +4,10 @@ import com.thaiopensource.relaxng.impl.Pattern;
 import com.thaiopensource.relaxng.impl.ValidatorPatternBuilder;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierHandler;
+import org.iso_relax.verifier.VerifierFilter;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.XMLFilterImpl;
 
 class VerifierImpl extends org.iso_relax.verifier.impl.VerifierImpl {
   private final VerifierHandlerImpl vhi;
@@ -13,6 +15,7 @@ class VerifierImpl extends org.iso_relax.verifier.impl.VerifierImpl {
 
   VerifierImpl(Pattern start, ValidatorPatternBuilder builder) throws VerifierConfigurationException {
     vhi = new VerifierHandlerImpl(start, builder);
+    reader.setDTDHandler(vhi);
   }
 
   public VerifierHandler getVerifierHandler() throws SAXException {
@@ -27,4 +30,5 @@ class VerifierImpl extends org.iso_relax.verifier.impl.VerifierImpl {
     vhi.setErrorHandler(handler);
     super.setErrorHandler(handler);
   }
+
 }

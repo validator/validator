@@ -50,8 +50,7 @@ class RefPattern extends Pattern {
     }
     else if (depth == checkRecursionDepth)
       // XXX try to recover from this?
-      throw new SAXParseException(Localizer.message("recursive_reference",
-						    name),
+      throw new SAXParseException(SchemaBuilderImpl.localizer.message("recursive_reference", name),
 				  refLoc);
   }
 

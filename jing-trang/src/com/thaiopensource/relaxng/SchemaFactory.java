@@ -5,9 +5,12 @@ import com.thaiopensource.relaxng.impl.IdTypeMap;
 import com.thaiopensource.relaxng.impl.IdTypeMapBuilder;
 import com.thaiopensource.relaxng.impl.IdTypeMapSchema;
 import com.thaiopensource.relaxng.impl.Pattern;
-import com.thaiopensource.relaxng.impl.PatternReader;
 import com.thaiopensource.relaxng.impl.PatternSchema;
 import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
+import com.thaiopensource.relaxng.impl.SchemaBuilderImpl;
+import com.thaiopensource.relaxng.parse.Parseable;
+import com.thaiopensource.relaxng.parse.compact.CompactParseable;
+import com.thaiopensource.relaxng.parse.sax.SAXParseable;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -33,6 +36,7 @@ public class SchemaFactory {
   private ErrorHandler eh = null;
   private DatatypeLibraryFactory dlf = null;
   private boolean checkIdIdref = false;
+  private boolean compactSyntax = false;
 
   /**
    * Constructs a schema factory.
@@ -68,15 +72,16 @@ public class SchemaFactory {
    */
   public Schema createSchema(InputSource in) throws IOException, SAXException, IncorrectSchemaException {
     SchemaPatternBuilder spb = new SchemaPatternBuilder();
-    XMLReader xr = xrc.createXMLReader();
-    if (eh != null)
-      xr.setErrorHandler(eh);
-    Pattern start = PatternReader.readPattern(xrc, xr, spb, dlf, in);
-    if (start == null)
-      throw new IncorrectSchemaException();
+
+    Parseable parseable;
+    if (compactSyntax)
+      parseable = new CompactParseable(in, eh);
+    else
+      parseable = new SAXParseable(xrc, in, eh);
+    Pattern start = SchemaBuilderImpl.parse(parseable, eh, dlf, spb);
     Schema schema = new PatternSchema(spb, start);
     if (spb.hasIdTypes() && checkIdIdref) {
-      IdTypeMap idTypeMap = new IdTypeMapBuilder(xr, start).getIdTypeMap();
+      IdTypeMap idTypeMap = new IdTypeMapBuilder(eh, start).getIdTypeMap();
       if (idTypeMap == null)
         throw new IncorrectSchemaException();
       schema = new CombineSchema(schema, new IdTypeMapSchema(idTypeMap));
@@ -189,5 +194,27 @@ public class SchemaFactory {
    */
   public boolean getCheckIdIdref() {
     return checkIdIdref;
+  }
+
+  /**
+   * Specifies whether to use the compact syntax to parse the RELAX NG schema rather than the normal XML syntax.
+   *
+   * @param compactSyntax <code>true</code> if the compact syntax should be used; <code>false</code>
+   * if the XML syntax should be used
+   * @see #getCompactSyntax
+   */
+  public void setCompactSyntax(boolean compactSyntax) {
+    this.compactSyntax = compactSyntax;
+  }
+
+  /**
+   * Indicates whether the compact syntax will be used to parse the RELAX NG schema rather than
+   * the normal XML syntax.
+   *
+   * @return <code>true</code> if the compact syntax will be used; <code>false</code> if the XML
+   * syntax will be used
+   */
+  public boolean getCompactSyntax() {
+    return compactSyntax;
   }
 }

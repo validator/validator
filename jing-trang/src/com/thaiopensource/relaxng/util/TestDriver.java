@@ -48,7 +48,7 @@ class TestDriver {
       return 2;
     }
     args = op.getRemainingArgs();
-    engine = new ValidationEngine(Driver.createXMLReaderCreator(), eh, checkId);
+    engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkId);
     int result = 0;
     for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));

@@ -1,0 +1,211 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Trang</title>
+</head>
+<body>
+<h1>Trang</h1>
+<h2>Translator for RELAX NG Schemas</h2>
+
+<p>Copyright &#169; 2002 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>Trang translates schemas written in RELAX NG into different
+formats. In particular, it can</p>
+
+<ul>
+
+<li>translate a RELAX NG schema in the compact syntax into the XML syntax</li>
+
+<li>translate a RELAX NG schema in either the XML or compact syntax
+into a DTD</li>
+
+</ul>
+
+<p>Trang aims to produce human-understandable schemas; it tries for a
+translation that preserves all aspects of the input schema that may be
+significant to a human reader, including the definitions, the way the
+schema is divided into files, annotations and comments.</p>
+
+<p>The implementation is available for download as</p>
+
+<ul>
+<li>a <a href="trang-bin.zip">JAR</a> file</li>
+
+<li><a href="trang-src.zip">source code</a> (this uses the
+<a href="jing-src.zip">Jing source code</a>)</li>
+
+</ul>
+
+<p>The main class is
+<code>com.thaiopensource.relaxng.output.Driver</code>.</p>
+
+<p>Trang requires at least two command-line arguments: the first is
+the URI or filename of the schema to be translated; the second is the
+output filename.</p>
+
+<p>Trang infers the input and output format from the extension of
+input and output filenames as follows:</p>
+
+<dl>
+
+<dt><code>.rng</code></dt>
+<dd>RELAX NG (XML syntax)</dd>
+
+<dt><code>.rnc</code></dt>
+
+<dd>RELAX NG compact syntax</dd>
+
+<dt><code>.dtd</code></dt>
+
+<dd>XML 1.0 DTDs</dd>
+
+</dl>
+
+<p>This inference can be overridden using the <code>-i</code> and
+<code>-o</code> options.</p>
+
+<p>Trang accepts the following command-line options:</p>
+
+<dl>
+
+<dt><code>-i <var>format</var></code></dt>
+
+<dd><code><var>format</var></code> specifies the input format as follows:
+
+<dl>
+
+<dt><code>rng</code></dt>
+<dd>RELAX NG (XML syntax)</dd>
+
+<dt><code>rnc</code></dt>
+
+<dd>RELAX NG compact syntax</dd>
+
+</dl>
+</dd>
+
+<dt><code>-o <var>format</var></code></dt>
+
+<dd><code><var>format</var></code> specifies the output format
+as follows:
+
+<dl>
+
+<dt><code>rng</code></dt>
+<dd>RELAX NG (XML syntax)</dd>
+
+<dt><code>dtd</code></dt>
+
+<dd>XML 1.0 DTDs</dd>
+
+</dl>
+</dd>
+
+
+<dt><code>-e <var>enc</var></code></dt>
+
+<dd>Use the encoding <code><var>enc</var></code> for schema input and
+output.</dd>
+
+</dl>
+
+<h2>DTD output</h2>
+
+<p>The DTD output module of Trang has many limitations. There are many
+RELAX NG features that it cannot handle, including:</p>
+
+<ul>
+
+<li>Wildcards</li>
+
+<li>Multiple <code>element</code> patterns with the same name</li>
+
+<li><code>externalRef</code></li>
+
+<li>overriding definitions (in an <code>include</code>)</li>
+
+<li>combining definitions with <code>combine="choice"</code></li>
+
+</ul>
+
+<p>However, Trang can handle many RELAX NG features, including some
+that go beyond the capabilities of DTDs.  When some part of a RELAX NG
+schema cannot be represented exactly in DTD, Trang will try to
+<i>approximate</i> it. The approximation will always be more general,
+that is, the DTD will allow everything that is allowed by the RELAX NG
+schema, but there may be some things that are allowed by the DTD that
+are not allowed by the RELAX NG schema.  For example, if the RELAX NG
+schema specifies that the content of an element is a string conforming
+to some datatype, then Trang will make the content of the element be
+<code>(#PCDATA)</code>; or if the RELAX NG schema specifies a choice
+between two attributes <var>x</var> and <var>y</var>, then the DTD
+will allow both <var>x</var> and <var>y</var> optionally. Whenever
+Trang approximates, it will give a warning message.</p>
+
+<p>If you want to be able to generate a DTD but need to use some
+feature of RELAX NG that Trang is unable to convert into a DTD, then
+you might try one of the following approaches:</p>
+
+<ul>
+
+<li>Create a RELAX NG schema including the features you need, and then
+use XSLT (or some other XML transformation language) to transform the
+schema into something that Trang can handle, perhaps making use of
+annotations in the schema to guide the transformation.</li>
+
+<li>Create a RELAX NG schema <var>S</var><sub>1</sub> which uses only
+features that Trang can handle but which, consequently, does not
+capture all the desired constraints; then create a second RELAX NG
+schema <var>S</var><sub>2</sub> that <code>include</code>s
+<var>S</var><sub>1</sub>, and overrides definitions in
+<var>S</var><sub>1</sub> replacing them with definitions that make
+unrestricted use of the features of RELAX NG.</li>
+
+</ul>
+
+<h2>Future plans</h2>
+
+<p>Trang is constructed around a RELAX NG object model designed to
+support schema conversion.  Trang can support additional input and
+output formats simply by adding modules that convert these formats
+from and to this object model.</p>
+
+<p>Features planned for future releases include:</p>
+
+<ul>
+
+<li>Provide an output module for W3C XML Schema</li>
+
+<li>Provide an output module for the RELAX NG compact syntax</li>
+
+<li>Enhance the DTD output module to support more features of RELAX
+NG</li>
+
+<li>Adapt <a href="http://www.thaiopensource.com/dtdinst/">DTDinst</a> for use
+as a DTD input module</li>
+
+</ul>
+
+<h2>Related software</h2>
+
+<p><a href="http://www.thaiopensource.com/dtdinst/">DTDinst</a>
+translates from DTDs into RELAX NG; like Trang, it tries for a
+translation that preserves definitions and file structure.  Trang can
+handle all the features in RELAX NG schemas generated by DTDinst.</p>
+
+<p>The <a
+href="http://www.sun.com/software/xml/developers/relaxngconverter/">Sun
+RELAX NG Converter</a> converts from a variety of different schema
+languages into RELAX NG.  However, it is based on an object model
+which is designed to support validation, and so does not preserve
+aspects of the input schemas that are irrelevant for validation (such
+as the definitional structure).</p>
+
+<address><a href="mailto:jjc@jclark.com">James Clark</a></address>
+
+</body>
+</html>

@@ -2,6 +2,9 @@ package com.thaiopensource.relaxng.impl;
 
 import org.relaxng.datatype.ValidationContext;
 
+/**
+ * DerivType for a Pattern whose derivative wrt any data is always the same.
+ */
 class SingleDataDerivType extends DataDerivType {
   private PatternMemo memo;
 

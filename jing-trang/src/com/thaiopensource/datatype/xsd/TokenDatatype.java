@@ -1,6 +1,7 @@
 package com.thaiopensource.datatype.xsd;
 
 import org.relaxng.datatype.ValidationContext;
+import com.thaiopensource.util.Utf16;
 
 class TokenDatatype extends DatatypeBase implements Measure {
 
@@ -30,13 +31,8 @@ class TokenDatatype extends DatatypeBase implements Measure {
     int len = str.length();
     int nSurrogatePairs = 0;
     for (int i = 0; i < len; i++)
-      if (isSurrogate1(str.charAt(i)))
+      if (Utf16.isSurrogate1(str.charAt(i)))
 	nSurrogatePairs++;
     return len - nSurrogatePairs;
-  }
-
-  // Is first char of surrogate pair?
-  static private boolean isSurrogate1(char c) {
-    return (c & 0xFC00) == 0xD800;
   }
 }

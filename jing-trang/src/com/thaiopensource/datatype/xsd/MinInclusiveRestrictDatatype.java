@@ -12,7 +12,7 @@ class MinInclusiveRestrictDatatype extends ValueRestrictDatatype {
     this.limit = limit;
   }
 
-  boolean satisfiesRestriction(Object value) {
-    return order.compareValue(value, limit) >= 0;
+ boolean satisfiesRestriction(Object value) {
+    return order.isLessThan(limit, value) || super.sameValue(value, limit);
   }
 }

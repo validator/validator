@@ -40,6 +40,6 @@ class DataDataDerivType extends DataDerivType {
         return ddt;
       return InconsistentDataDerivType.getInstance();
     }
-    return ddt.combine(ddt);
+    return ddt.combine(this);
   }
 }

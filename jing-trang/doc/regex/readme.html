@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>XSD to Java Regular Expression Translator</title>
+</head>
+<body>
+<h1>XSD to Java Regular Expression Translator</h1>
+
+<p>Copyright &#169; 2002 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>The main component of this distribution is code for translating from
+the regular expression syntax of
+<a href="http://www.w3.org/TR/xmlschema-2/#regexs">XML Schema Part
+2</a> into the syntax of regular expressions used by the JDK 1.4
+<code>java.util.regex</code> package.  Although these two syntaxes are
+superficially similar, there are numerous differences, many of them
+rather subtle.</p>
+
+<ul>
+
+<li><code>xsdregex.jar</code> contains the compiled code</li>
+
+<li>the <code>src</code> directory contains the source code</li>
+
+<li>there is also <a
+href="apidoc/com/thaiopensource/datatype/xsd/regex/jdk1_4/Translator.html">API
+documentation</a></li>
+
+</ul>
+
+<p>There is also some supporting code:</p>
+
+<ul>
+
+<li>a simple <a
+href="apidoc/com/thaiopensource/datatype/xsd/regex/package-summary.html">API</a>
+for matching regular expressions</li>
+
+<li>implementations of this interface using
+
+<ul>
+<li>the Xerces 1 regular expression implementation</li>
+<li>the Xerces 2 regular expression implementation</li>
+<li>translation into JDK 1.4 <code>java.util.regex</code> regular expressions</li>
+</ul>
+</li>
+
+<li>testing framework using this interface (in the package
+<code>com.thaiopensource.datatype.xsd.regex.test</code> and in the
+<code>test</code> directory)</li>
+
+<li>code for dynamically loading the appropriate implementation using
+the service provider approach</li>
+
+</ul>
+
+<p>To compile from source, you will need:</p>
+
+<ul>
+
+<li><a href="http://java.sun.com/j2se/1.4/download.html">JDK 1.4</a> (i.e. J2SE 1.4 SDK)</li>
+
+<li><a
+href="http://www.unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt">UnicodeData-3.1.0.txt</a>
+one of the files in the <a href="http://www.unicode.org">Unicode</a>
+character database</li>
+
+<li>if you want support for Xerces 1-based regular expression implementation,
+<a href="http://xml.apache.org/xerces-j/index.html">Xerces Java
+1</a></li>
+
+<li>if you want support for Xerces 2-based regular expression implementation,
+<a href="http://xml.apache.org/xerces2-j/index.html">Xerces Java
+2</a></li>
+
+<li><a href="http://jakarta.apache.org/ant/">Ant</a></li>
+
+</ul>
+
+<p>Compile by applying Ant to the included
+<code>build.xml</code> file.</p>
+
+<address>
+<a href="mailto:jjc@jclark.com">James Clark</a>
+</address>
+</body>
+</html>

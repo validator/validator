@@ -1,0 +1,93 @@
+<project name="trang" default="jar" basedir=".">
+
+<property name="build.dir" value="build"/>
+<property name="jing.classes" value="../build/classes"/>
+<property name="dist.dir" value="build"/>
+
+<taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
+  <classpath>
+    <pathelement location="${dist.dir}/jing.jar"/>
+  </classpath>
+</taskdef>
+
+<target name="init">
+  <mkdir dir="${build.dir}"/>
+  <property file="src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+</target>
+
+<target name="compile" depends="init">
+  <mkdir dir="${build.dir}/classes"/>
+  <javac srcdir="src" destdir="${build.dir}/classes"
+         classpath="${jing.classes}"/>
+</target>
+
+<target name="jar" depends="compile">
+  <echo file="${build.dir}/trang-manifest.txt">Manifest-Version: 1.0
+Main-Class: com/thaiopensource/relaxng/output/Driver
+Class-Path: jing.jar
+</echo>
+
+  <jar jarfile="${dist.dir}/trang.jar" manifest="${build.dir}/trang-manifest.txt">
+    <fileset dir="${build.dir}/classes"/>
+    <fileset dir="src" includes="**/*.properties"/>
+  </jar>
+</target>
+
+<target name="split" depends="init,check-split" unless="split-not-required">
+  <jing rngfile="test/compacttest.rnc" compactsyntax="yes">
+    <fileset dir="test" includes="compacttest.xml"/>
+  </jing>
+  <delete dir="${build.dir}/test"/>
+  <mkdir dir="${build.dir}/test"/>
+  <style basedir="test" destdir="${build.dir}/test" includes="compacttest.xml" extension=".stamp" style="test/compactsplit.xsl">
+    <param name="dir" expression="trang/${build.dir}/test"/>
+  </style>
+</target>
+
+<target name="check-split">
+  <uptodate property="split-not-required" targetfile="${build.dir}/test/compacttest.stamp">
+    <srcfiles dir="test" includes="compacttest.xml,compactsplit.xsl"/>
+  </uptodate>
+</target>
+
+<target name="test" depends="jar,split">
+  <java classname="com.thaiopensource.relaxng.output.test.CompactTestDriver" fork="yes" failonerror="yes">
+    <arg value="${build.dir}/test/out.log"/>
+    <arg value="${build.dir}/test"/>
+    <classpath>
+      <pathelement location="${dist.dir}/trang.jar"/>
+      <pathelement location="${dist.dir}/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="validate" depends="jar">
+  <jing rngfile="../xhtml/xhtml.rng">
+    <fileset dir="doc" includes="*.html"/>
+  </jing>
+</target>
+
+<target name="dist" depends="jar,validate,test">
+  <zip zipfile="${dist.dir}/trang-src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+    <zipfileset dir="${build.dir}" includes="trang-manifest.txt"
+       fullpath="META-INF/MANIFEST.MF"/>
+  </zip>
+  <mkdir dir="${build.dir}/doc"/>
+  <copy todir="${build.dir}/doc">
+    <fileset dir="doc" includes="readme.html"/>
+  </copy>
+  <replace file="${build.dir}/doc/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="${dist.dir}/trang-bin.zip">
+    <fileset dir="${build.dir}/doc" includes="readme.html"/>
+    <fileset dir="." includes="copying.txt"/>
+    <fileset dir="${dist.dir}" includes="trang.jar,jing.jar"/>
+  </zip>
+  <copy todir="${dist.dir}">
+    <fileset dir="doc" includes="trang.html"/>
+  </copy>
+  <replace file="${dist.dir}/trang.html" token="@VERSION@" value="${version}"/>
+</target>
+
+</project>

@@ -1,8 +1,9 @@
 package com.thaiopensource.relaxng.impl;
 
 import org.xml.sax.SAXException;
+import com.thaiopensource.relaxng.parse.ParsedPattern;
 
-public abstract class Pattern {
+public abstract class Pattern implements ParsedPattern {
   private boolean nullable;
   private int hc;
   private int contentType;

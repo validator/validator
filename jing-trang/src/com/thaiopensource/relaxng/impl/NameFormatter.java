@@ -6,8 +6,8 @@ class NameFormatter {
     String localName = name.getLocalName();
     String namespaceUri = name.getNamespaceUri();
     if (namespaceUri.equals(""))
-      return Localizer.message("name_absent_namespace", localName);
+      return SchemaBuilderImpl.localizer.message("name_absent_namespace", localName);
     else
-      return Localizer.message("name_with_namespace", namespaceUri, localName);
+      return SchemaBuilderImpl.localizer.message("name_with_namespace", namespaceUri, localName);
   }
 }

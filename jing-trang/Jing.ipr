@@ -4,9 +4,17 @@
   <component class="com.intellij.ant.AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/build.xml">
       <useEmacsModeOutput value="true" />
-      <useCustomJdk value="false" />
+      <useCustomJdk value="true" />
+      <customJdkName value="java version &quot;1.4.0&quot;" />
       <useJavaw value="false" />
       <includeProjectClasspath value="true" />
+      <maximumHeapSize value="128" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/trang/build.xml">
+      <useEmacsModeOutput value="true" />
+      <useCustomJdk value="false" />
+      <useJavaw value="false" />
+      <includeProjectClasspath value="false" />
       <maximumHeapSize value="128" />
     </buildFile>
   </component>
@@ -65,13 +73,13 @@
       <option name="NON_RECURSIVE" value="false" />
       <option name="CREATE_MISSING_DIRECTORIES" value="true" />
       <option name="DONT_CHANGE_FILES" value="false" />
-      <option name="QUIET_MODE" value="false" />
+      <option name="QUIET_MODE" value="true" />
       <option name="ADDITIONAL_OPTIONS" value="" />
     </Update>
     <Commit>
       <option name="NON_RECURSIVE" value="false" />
       <option name="REVISION_TAG" value="" />
-      <option name="LOG_MESSAGE" value="Make the constructor public" />
+      <option name="LOG_MESSAGE" value="Implement duration equality" />
       <option name="ADDITIONAL_OPTIONS" value="" />
     </Commit>
     <Diff>
@@ -111,7 +119,7 @@
       <option name="NON_RECURSIVE" value="false" />
       <option name="FORCE_RECURSIVE" value="false" />
     </Editors>
-    <option name="CLIENT_PATH" value="c:/bin/cvs.exe" />
+    <option name="CLIENT_PATH" value="C:/bin/cvs.exe" />
     <option name="EXTERNAL_DIFF_PATH" value="" />
     <option name="CVS_ENABLED" value="true" />
     <option name="USE_EXTERNAL_DIFF" value="false" />
@@ -131,7 +139,7 @@
     <option name="SHOW_REMOVE_OPTIONS" value="true" />
     <option name="SHOW_LOG_OPTIONS" value="true" />
     <option name="SHOW_EDITORS_OPTIONS" value="true" />
-    <option name="HIDE_UNKNOWN_FILES" value="false" />
+    <option name="HIDE_UNKNOWN_FILES" value="true" />
     <option name="HIDE_MISSING_FILES" value="false" />
     <option name="HIDE_UP_TO_DATE_FILES" value="true" />
   </component>
@@ -139,7 +147,34 @@
     <expanded_paths />
   </component>
   <component class="com.intellij.debugger.Debugger">
-    <line_breakpoints />
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/edit/ValuePattern.java" line="12">
+        <option name="ENABLED" value="true" />
+        <option name="SUSPEND_VM" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="LOG_MESSAGE" value="" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INVERSE_CLASS_FILLTERS" value="false" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/rng/Output.java" line="245">
+        <option name="ENABLED" value="true" />
+        <option name="SUSPEND_VM" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="LOG_MESSAGE" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INVERSE_CLASS_FILLTERS" value="false" />
+      </breakpoint>
+    </line_breakpoints>
     <exception_breakpoints>
       <breakpoint_any>
         <option name="ENABLED" value="false" />
@@ -156,9 +191,56 @@
         <option name="NOTIFY_CAUGHT" value="false" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
       </breakpoint_any>
+      <breakpoint class_name="java.lang.NullPointerException">
+        <option name="ENABLED" value="true" />
+        <option name="SUSPEND_VM" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="LOG_MESSAGE" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INVERSE_CLASS_FILLTERS" value="false" />
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+      </breakpoint>
+      <breakpoint class_name="java.lang.IllegalArgumentException">
+        <option name="ENABLED" value="true" />
+        <option name="SUSPEND_VM" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="LOG_MESSAGE" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INVERSE_CLASS_FILLTERS" value="false" />
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+      </breakpoint>
     </exception_breakpoints>
     <field_breakpoints />
-    <method_breakpoints />
+    <method_breakpoints>
+      <breakpoint url="jar://C:/j2sdk1.4.0/src.zip!/java/util/GregorianCalendar.java" line="2051">
+        <option name="ENABLED" value="false" />
+        <option name="SUSPEND_VM" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CONDITION" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="LOG_MESSAGE" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INVERSE_CLASS_FILLTERS" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="WATCH_ENTRY" value="true" />
+        <option name="WATCH_EXIT" value="true" />
+      </breakpoint>
+    </method_breakpoints>
   </component>
   <component class="com.intellij.debugger.settings.DebuggerSettings">
     <option name="TRACING_FILTERS_ENABLED" value="true" />
@@ -244,11 +326,101 @@
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5000" />
     </configuration>
-    <configuration name="Unnamed" type="Application" default="false" selected="true">
+    <configuration name="Unnamed" type="Application" default="false" selected="false">
       <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" value="c.rng 4.i.xml" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/test/280" />
+    </configuration>
+    <configuration name="106" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="i.rng" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/test/106" />
+    </configuration>
+    <configuration name="113" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="i.rng" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/test/113" />
+    </configuration>
+    <configuration name="data" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="data.rng" />
+      <option name="WORKING_DIRECTORY" value="E:/temp" />
+    </configuration>
+    <configuration name="testsuite" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="eg\testSuite.rng test\spectest.xml" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="output" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="eg\relaxng.rng build\relaxng1.rng" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="dtdout" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.dtd.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="docbookx.rng docbookx.dtd" />
+      <option name="WORKING_DIRECTORY" value="E:/temp/docbook" />
+    </configuration>
+    <configuration name="convtest" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="compact\c.rnc out\c.rng" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/trang/test/037" />
+    </configuration>
+    <configuration name="iconvtest" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.dtd.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="i.rng i.dtd" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/convtest/011" />
+    </configuration>
+    <configuration name="ibtwsh6" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="ibtwsh6.rngnx ibtwsh6.dtd" />
+      <option name="WORKING_DIRECTORY" value="E:/temp" />
+    </configuration>
+    <configuration name="testSuite" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="eg\testSuite.rng build\testSuite.dtd" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="compare" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.test.Compare" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="in1.xml in2.xml" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build" />
+    </configuration>
+    <configuration name="nonxmltest" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.output.test.NonXmlTestDriver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="build\trang\test\log build\trang\test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="categoryTest" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.datatype.xsd.regex.CategoryTest" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl lib/UnicodeData-3.1.0.txt" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="dateTime" type="Application" default="false" selected="false">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.datatype.xsd.DatatypeLibraryImpl" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="dateTime 2001-12-01T15:43:21" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="jingbug" type="Application" default="false" selected="true">
+      <option name="MAIN_CLASS_NAME" value="com.thaiopensource.relaxng.util.Driver" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" value="-c watdii.txt" />
+      <option name="WORKING_DIRECTORY" value="C:/temp" />
     </configuration>
   </component>
   <component class="com.intellij.ide.SelectInManager">
@@ -267,25 +439,34 @@
   </component>
   <component class="com.intellij.ide.desktop.IdeDocumentManager">
     <recent_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp11XMLReaderCreator.java" column="54" line="10" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax2XMLReaderCreator.java" column="15" line="12" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/JingTask.java" column="0" line="23" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SchemaFactory.java" column="32" line="13" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternSchema.java" column="13" line="6" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierImpl.java" column="36" line="14" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/package.html" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/SchemaImpl.java" column="70" line="18" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryLoaderImpl.java" column="35" line="3" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryImpl.java" column="10" line="28" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierHandlerImpl.java" column="48" line="3" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/PatternValidatorHandler.java" column="13" line="12" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" column="13" line="9" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/parse/sax/SchemaParser.java" column="25" line="1323" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/IdSoundnessChecker.java" column="31" line="178" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/SchemaImpl.java" column="6" line="9" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryImpl.java" column="13" line="22" />
+      <file_info url="jar://$PROJECT_DIR$/lib/isorelax.jar!/org/iso_relax/verifier/impl/VerifierImpl.class" column="17" line="31" />
+      <file_info url="jar://$PROJECT_DIR$/lib/isorelax.jar!/org/iso_relax/verifier/VerifierConfigurationException.class" column="13" line="8" />
+      <file_info url="jar://C:/j2sdk1.4.0/src.zip!/org/xml/sax/helpers/XMLFilterImpl.java" column="7" line="187" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierHandlerImpl.java" column="2" line="8" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierImpl.java" column="0" line="34" />
+      <file_info url="file://$PROJECT_DIR$/src/org/relaxng/datatype/ValidationContext.java" column="16" line="52" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/SchemaBuilderImpl.java" column="19" line="266" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/edit/SchemaBuilderImpl.java" column="19" line="132" />
+      <file_info url="file://$PROJECT_DIR$/build/src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.java" column="17" line="198" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/parse/sax/DtdContext.java" column="17" line="31" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DurationDatatype.java" column="73" line="214" />
     </recent_files>
     <open_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" column="13" line="9" />
-      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces2/RegexEngineImpl.java" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/parse/sax/DtdContext.java" column="17" line="31" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DurationDatatype.java" column="73" line="214" />
+      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/DurationDatatype.java" />
+      <file_info url="file://$PROJECT_DIR$/src/org/relaxng/datatype/ValidationContext.java" column="16" line="52" />
+      <file_info url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/edit/SchemaBuilderImpl.java" column="19" line="132" />
+      <file_info url="file://$PROJECT_DIR$/build/src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.java" column="17" line="198" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl/SchemaBuilderImpl.java" column="19" line="266" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierHandlerImpl.java" column="2" line="8" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierFactoryImpl.java" column="13" line="22" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv/VerifierImpl.java" column="0" line="34" />
+      <file_info url="jar://C:/j2sdk1.4.0/src.zip!/org/xml/sax/helpers/XMLFilterImpl.java" column="7" line="187" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -297,13 +478,18 @@
   <component class="com.intellij.ide.navigator.impl.ProjectNavigatorSettings">
     <navigator id="ClasspathNavigator" flattenPackages="false" showMembers="false" />
     <navigator id="ProjectNavigator" flattenPackages="true" showMembers="false">
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/test" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$" />
     </navigator>
     <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/impl" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/util" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output/test" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src/com/thaiopensource/relaxng/output" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/trang/src" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/util" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/jarv" />
     </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">
@@ -333,7 +519,7 @@
     <option name="OPEN_IN_BROWSER" value="false" />
   </component>
   <component class="com.intellij.projectRoots.ProjectRootContainer">
-    <jdk name="java version &quot;1.3.1_02&quot;" />
+    <jdk name="java version &quot;1.4.0&quot;" />
     <root file="file://$PROJECT_DIR$/classes">
       <property name="type" value="outputPath" />
     </root>
@@ -362,6 +548,12 @@
       <property name="type" value="projectFiles" />
     </root>
     <root file="file://$PROJECT_DIR$/src">
+      <property name="type" value="sourcePathEntry" />
+    </root>
+    <root file="file://$PROJECT_DIR$/build/src">
+      <property name="type" value="sourcePathEntry" />
+    </root>
+    <root file="file://$PROJECT_DIR$/trang/src">
       <property name="type" value="sourcePathEntry" />
     </root>
   </component>

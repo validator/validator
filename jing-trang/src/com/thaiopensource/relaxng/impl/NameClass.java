@@ -1,6 +1,8 @@
 package com.thaiopensource.relaxng.impl;
 
-public interface NameClass {
+import com.thaiopensource.relaxng.parse.ParsedNameClass;
+
+public interface NameClass extends ParsedNameClass {
   static final int SPECIFICITY_NONE = -1;
   static final int SPECIFICITY_ANY_NAME = 0;
   static final int SPECIFICITY_NS_NAME = 1;

@@ -7,15 +7,16 @@ import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeBuilder;
 import org.relaxng.datatype.ValidationContext;
 import org.relaxng.datatype.DatatypeException;
+import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
+import com.thaiopensource.util.Localizer;
 
 class DatatypeBuilderImpl implements DatatypeBuilder {
-  static final private String bundleName
-    = "com.thaiopensource.datatype.xsd.resources.Messages";
+  static final Localizer localizer = new Localizer(DatatypeBuilderImpl.class);
 
   private DatatypeBase base;
   private DatatypeLibraryImpl library;
 
-  DatatypeBuilderImpl(DatatypeLibraryImpl library, DatatypeBase base) {
+  DatatypeBuilderImpl(DatatypeLibraryImpl library, DatatypeBase base) throws DatatypeException {
     this.library = library;
     this.base = base;
   }
@@ -53,12 +54,14 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
 
   private void addPatternParam(String value) throws DatatypeException {
     try {
-      RegexEngine engine = library.getRegexEngine();
       base = new PatternRestrictDatatype(base,
-					 engine.compile(value));
+					 library.getRegexEngine().compile(value));
     }
-    catch (InvalidRegexException e) {
-      error("invalid_regex", e.getMessage());
+    catch (RegexSyntaxException e) {
+      int pos = e.getPosition();
+      if (pos == RegexSyntaxException.UNKNOWN_POSITION)
+        pos = DatatypeException.UNKNOWN;
+      error("invalid_regex", e.getMessage(), pos);
     }
   }
 
@@ -140,21 +143,15 @@ class DatatypeBuilderImpl implements DatatypeBuilder {
   }
 
   private void error(String key) throws DatatypeException {
-    throw new DatatypeException(message(key));
+    throw new DatatypeException(localizer.message(key));
   }
 
   private void error(String key, String arg) throws DatatypeException {
-    throw new DatatypeException(message(key, arg));
+    throw new DatatypeException(localizer.message(key, arg));
   }
 
-  static private String message(String key) {
-    return MessageFormat.format(ResourceBundle.getBundle(bundleName).getString(key),
-				new Object[]{});
-  }
-
-  static private String message(String key, Object arg) {
-    return MessageFormat.format(ResourceBundle.getBundle(bundleName).getString(key),
-			        new Object[]{arg});
+  private void error(String key, String arg, int pos) throws DatatypeException {
+    throw new DatatypeException(pos, localizer.message(key, arg));
   }
 
   // Return -1 for anything that is not a nonNegativeInteger

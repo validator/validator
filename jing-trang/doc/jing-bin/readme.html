@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Jing binary distribution</title>
+</head>
+<body>
+<h1>Jing binary distribution</h1>
+
+<p>Copyright &#169; 2001, 2002 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<p>The file <code>jing.jar</code> contains a version of the Jing RELAX
+NG validator for use with a Java runtime.</p>
+
+<p>The most straightforward way to run this is to install version 1.4
+of the Java Runtime Environment (JRE), which can be downloaded <a
+href="http://java.sun.com/j2se/1.4/download.html">here</a>.</p>
+
+<p>Once you have installed JRE 1.4, you can run Jing by using the
+command:</p>
+
+<pre>java -jar jing.jar <var>file</var>.rng <var>file</var>.xml</pre>
+
+<p>If <code><var>file</var>.rng</code> is a correct schema and
+<code><var>file</var>.xml</code> is valid with respect to
+<code><var>file</var>.rng</code>, then Jing will generate no output.
+Otherwise, it will generate one or more error messages.</p>
+
+<p>It is also possible to run jing using versions 1.2 or 1.3 or the
+Java runtime, but to do so you must first install an implementation of
+<a href="http://java.sun.com/xml/">Java API for XML Processing (JAXP)
+1.1</a> as an extension.  One suitable implementation is Crimson,
+which can be downloaded <a
+href="http://xml.apache.org/dist/crimson/">here</a>.  The
+<code>crimson.jar</code> file must be copied into the
+<code>lib/ext</code> subdirectory of the Java home directory.</p>
+
+<p>If for some reason you do not wish to install JAXP 1.1 as an
+extension, then you can instead use a command such as:</p>
+
+<pre>java -cp jing.jar;crimson.jar com.thaiopensource.relaxng.util.Driver <var>file</var>.rng <var>file</var>.xml</pre>
+
+<p>For more information about the features provided by Jing, see this
+<a href="http://www.thaiopensource.com/relaxng/jing.html"
+>document</a>.</p>
+
+</body>
+</html>

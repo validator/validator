@@ -1,0 +1,825 @@
+<?xml-stylesheet href="design.xsl" type="text/xsl"?>
+<!--
+QNames
+
+design for specifiability: selection of features; kernel
+
+More about transition from DTD
+
+design for human communication
+
+closure important when schemas are inferred?
+
+xsi:schemaLocation: cannot use schema language to control
+
+-->
+<gcapaper>
+<front>
+<title>The Design of RELAX NG</title>
+<author><fname>James</fname><surname>Clark</surname>
+<address>
+<affil>Thai Open Source Software Center Ltd</affil>
+<city>Bangkok</city>
+<country>Thailand</country>
+<email>jjc@thaiopensource.com</email>
+</address>
+<bio>
+<para>James Clark has been involved with SGML and XML for more than 10
+years, both in contributing to standards and in creating open source
+software. James was technical lead of the XML WG during the creation
+of the XML 1.0 Recommendation. He was editor of the XPath and XSLT
+Recommendations. He was the main author of the DSSSL (ISO 10179)
+standard. Currently, he is chair of the OASIS RELAX NG TC and editor
+of the RELAX NG specification.</para>
+
+<para>The open source software that James has written includes SGML
+parsers (sgmls and SP), a DSSSL implementation (Jade), XML parsers
+(expat and XP), an XPath/XSLT processor (XT) and a RELAX NG validator
+(Jing). Prior to his involvement with SGML and XML, James wrote the
+GNU groff typesetting system.</para>
+
+<para>James read Mathematics and Philosophy at Merton College, Oxford,
+where he obtained First Class Honours. James lives in Thailand, where
+he runs the Thai Open Source Software Center.</para>
+
+</bio>
+</author>
+<abstract>
+
+<para>RELAX NG is a new schema language for XML.  This paper discusses
+various aspects of the design of RELAX NG including the treatment of
+attributes, datatyping, mixed content, unordered content namespaces,
+cross-references and modularity.</para>
+
+</abstract>
+
+</front>
+<body>
+
+<note><para>The latest version of this paper is available at <a
+href="http://www.thaiopensource.com/relaxng/design.html"/>.</para></note>
+
+<section>
+<title>Introduction</title>
+
+<para>RELAX NG is a schema language for XML, based on TREX <bibref
+refloc="trex"/> and RELAX <bibref refloc="relax"/>.  At the time of
+writing, RELAX NG is being standardized in OASIS by the RELAX NG
+Technical Committee (TC).  A tutorial <bibref refloc="tutorial"/> and
+language specification <bibref refloc="spec"/> have been published by
+the TC.  This paper describes the thinking behind the design of RELAX
+NG.  It represents the personal views of the author and is not the
+official position of the TC.</para>
+
+</section>
+
+<section>
+<title>Evolution of DTDs</title>
+
+<para>RELAX NG is an evolution and generalization of XML DTDs <bibref
+refloc="xml-rec"/>. It shares the same grammar-based paradigm. Based
+on experience with SGML and XML, RELAX NG both adds and subtracts
+features relative to XML DTDs.  The evolutionary nature of RELAX NG
+has a number of advantages.  XML DTDs can be automatically converted
+into RELAX NG <bibref refloc="dtdinst"/>. Experts in designing SGML
+and XML DTDs will find their skills transfer to designing RELAX NG.
+Design patterns that are used in XML DTDs can be used in RELAX NG.
+Overall, RELAX NG is much more mature and it is possible to have a
+higher degree of confidence in its design than it would be if it were
+based on a completely different paradigm.</para>
+
+</section>
+
+<section>
+<title>Schema structure</title>
+
+<para>A major goal of RELAX NG is that it be easy to learn and easy to
+use. One aspect of RELAX NG that promotes this is that the schema can
+follow the structure of the document.  Nesting of patterns in the
+schema can be used to model nesting of elements in the instance. There
+is no need to flatten the natural hierarchical structure of the
+document into a list of element declarations, as you would have to do
+with DTDs (although RELAX NG allows such flattening if the schema
+author chooses).</para>
+
+</section>
+
+<section>
+<title>Declarations and definitions</title>
+
+<para>An XML DTD consists of a number of top-level declarations.  Each
+declaration associates a name (the left hand side of the declaration)
+with some kind of object (the right hand side of the declaration).
+With some kinds of declaration (e.g. ELEMENT, ATTLIST) the name on the
+left hand side occurs in the instance, for others (parameter entity
+declarations) the name is purely internal to the DTD. Similarly, W3C
+XML Schema <bibref refloc="xmlschema-1"/> distinguishes between
+definitions and declarations.  The name of a declaration occurs in an
+instance, whereas names of definitions are internal to the schema.
+RELAX NG avoids this complexity.  RELAX NG has, in the terminology of
+W3C XML Schema, only definitions.  There is no concept of a
+declaration.  Names on the left hand side of a definition are always
+internal to the schema. Names occurring in the instance always occur
+only within the right hand side of a definition.  This approach comes
+from XDuce <bibref refloc="xduce"/>.</para>
+
+</section>
+
+<section>
+<title>Composability</title>
+
+<para>RELAX NG is designed to be highly composable.  A schema language
+(or indeed a programming language) provides a number of atomic objects
+and a number of methods of composition.  The methods of composition
+can be used to combine atomic objects into compound objects which can
+in turn be composed into further compound objects.  The composability
+of the language is the degree to which the various methods of
+composition can be applied uniformly to all the various objects of the
+language, both atomic and compound.  For example, RELAX NG provides a
+<code>choice</code> element that can be applied uniformly to elements,
+attributes, datatypes and enumerated values. This is not mere
+syntactic overloading.  The <code>choice</code> element has a single
+uniform semantic in all these cases and can have a single
+implementation.  Another example is the <code>grammar</code> element,
+which is the container for definitions.  The <code>grammar</code>
+element is just another pattern and can be composed in just the same
+way as other patterns.  Composability improves ease of learning and
+ease of use.  Composability also tends to improve the ratio between
+complexity and power: for a given amount of complexity, a more
+composable language will be more powerful than a less composable
+one.</para>
+
+</section>
+
+<section>
+<title>Closure</title>
+
+<para>A property related to composability is closure.  RELAX NG is
+closed under union: for any two RELAX NG schemas, there is a RELAX NG
+schema for its union.  RELAX NG's composability makes the construction
+of the union trivial: just wrap the two schemas in a
+<code>choice</code> element.  Closure under union implies that the
+content model of an element can be context dependent.  This is a major
+difference from XML DTDs, which requires an element of the particular
+name to use the same content model throughout the document.  The
+design of RELAX NG is informed by the theory of finite tree automata
+<bibref refloc="tata"/>; this makes closure possible and ensures that
+implementations can be efficient, despite the major increase in
+expressive power.</para>
+
+</section>
+
+<section>
+<title>XML syntax</title>
+
+<para>RELAX NG uses XML instance syntax to express schemas.  Although
+this makes for a rather verbose schema language, it has some major
+advantages.  Since a user of an XML schema language must necessarily
+already learn XML instance syntax, using XML instance syntax for the
+schema language reduces the learning burden on a schema user.  It also
+allows XML tools and technologies to be applied to the schema.  For
+example, a schema can be used to specify the syntax of the schema
+language. Another important benefit of XML syntax is extensibility.
+RELAX NG has an open syntax that allows the RELAX NG defined elements
+and attributes to be annotated with elements and attributes from other
+namespaces. RELAX NG DTD Compatibility <bibref
+refloc="compatibility"/> uses this annotation mechanism to extend
+RELAX NG with a mechanism for declaring default values for attributes.
+RelaxNGCC <bibref refloc="relaxngcc"/> uses this annotation mechanism
+to allow users to embed Java code in RELAX NG schemas, which gets
+executed as an XML document is parsed against the schema.  An
+unofficial non-XML syntax for RELAX NG has also been developed <bibref
+refloc="nonxml"/>.  The non-XML syntax can be used for authoring RELAX
+NG schemas by hand and can then be transformed into the standard RELAX
+NG XML syntax for interchange.</para>
+
+</section>
+
+<section>
+<title>Attributes</title>
+
+<para>One of the questions most frequently asked by newcomers to the
+SGML and XML world is how to choose whether to use an attribute or
+element to represent something. Reasonable people differ on the answer
+to this question.  In many cases, the choice is somewhat arbitrary and
+is largely a matter of the taste of the document designer.  RELAX NG
+therefore aims to treat attributes as uniformly as possible with
+elements.  In this respect RELAX NG is very different from many XML
+schema languages such as XML DTDs, W3C XML Schema and RELAX, which
+each provide separate facilities for dealing with elements and with
+attributes.  This aspect of RELAX NG comes from TREX.  One inspiration
+for this was XSLT and XPath, which are two successful technologies
+that take an approach that is even-handed as between elements and
+attributes.  This uniform treatment is a significant factor in
+simplifying the language: there is one set of facilities that is
+applied uniformly to elements and attributes rather than two distinct
+sets of facilities.</para>
+
+<para>The mechanism that RELAX NG uses to give attributes uniform
+treatment to attributes is to extend DTD-style content models to
+include attributes as well as elements.  The content of an XML element
+consists a sequence of elements and strings.  Accordingly, a model for
+the content of an XML element can be understood to be denoting a set
+of such sequences.  The XML DTD content model operators
+(<code>|,*+?</code>) correspond to operations on such sets.  For
+example, the choice operator (<code>|</code>) corresponds to set
+union.  To extend content models to include attributes, we first
+augment the content of an XML element with its attributes; instead of
+the content of an element, we use an attribute-set/content pair.  The
+content is a sequence of elements and strings as before.  The
+attribute set is a set of name/value pairs.  An extended content model
+thus denotes a set of attribute-set/content pairs.  Each of the
+content model operators can be applied in a natural way to these sets
+of pairs.  For example, the choice operator corresponds to set union
+just as before.  The sequence operator (<code>,</code>) concatenates
+the content sequences occurring in its operands, but unions the
+attribute-sets.  This ensures that the extended content models respect
+the unorderedness of attributes.  At first, it might seem that the
+repetition operators (<code>*+</code>) make no sense for attributes,
+but in fact, when wildcards are allowed for attribute names,
+repetition of attributes becomes necessary.  Although the theory
+underlying extended content models is a little tricky, in practice
+they are both easy to use and very powerful.</para>
+
+<para>The extension of content models to handle attributes creates a
+difficulty for attribute defaulting.  For example, if the content
+model allows either attribute A or attribute B or neither attribute,
+how would attribute defaulting handle the absence of both attribute A
+and attribute B?  Would defaulting add an attribute A or an attribute
+B?  RELAX NG's solution is simply not to do attribute defaulting.
+Attribute defaulting is a kind of transformation: a transformation
+that adds attributes.  But it is a very limited kind of
+transformation. Not only can it do nothing but add attributes, but it
+can only add an attribute when the value of the attribute to be added
+does not depend on the context, although it is often necessary for
+attributes to be defaulted in a context-dependent way, for example by
+inheritance.  Although there is certainly a need for special-purpose
+transformation languages, it is not clear why this kind of
+transformation should alone be privileged by being included in a
+schema language. Omission of attribute defaulting is also consistent
+with the policy of equal treatment for elements and attributes.  W3C
+XML Schema provides defaulting for both elements and attributes, but
+its defaulting for elements is quite different from its defaulting for
+attributes: defaulting for elements adds content to elements that were
+specified as empty, whereas defaulting for attributes adds attributes
+that were not specified at all.  For compatibility with XML DTDs,
+RELAX NG DTD Compatibility defines an annotation that can be used to
+specify default attributes values. However, this can only be used for
+content models that do not go beyond XML DTDs in their use of
+attributes.</para>
+
+</section>
+
+<section>
+<title>Infoset modification</title>
+
+<para>The omission of support for default attributes from RELAX NG is
+part of a general policy in RELAX NG of not modifying or augmenting
+the infoset <bibref refloc="infoset"/>.  RELAX NG validation does not
+involve changing the information about the document that is passed to
+an application.  One reason for this is that the processes of
+validation and infoset modification need to be capable of being
+performed independently. In some situations, there is a need to ensure
+that a document is valid with respect to some schema but no need to
+perform any additional processing at that stage and hence no need for
+an augmented infoset. In other situations, a document is already known
+to be valid but an augmented infoset is needed for additional
+processing.</para>
+
+<para>The fact the RELAX NG validation does not involve infoset
+modification does not imply that applications cannot derive useful
+information from RELAX NG schemas.  For example, it is possible to use
+a RELAX NG schema to assign types to elements and attributes; Sun's
+Multi-Schema Validator <bibref refloc="msv"/> supports this.  Type
+assignment requires additional restrictions on RELAX NG schemas beyond
+those imposed by RELAX NG itself.  There is a range of possible
+restrictions that can be imposed to facilitate type assignment: the
+more severe the restriction, the easier type assignment becomes;
+assigning types to elements which can contain subelements requires
+different restrictions than merely assigning datatypes to the string
+values of element and attributes.  By layering type assignment on top
+of RELAX NG validation, applications that do not require type
+assignment do not need to pay the cost for a feature that they do not
+use. It is also more flexible.  For example, it allows there to be two
+schemas for a document: one strict schema that captures as many
+constraints as possible but does not satisfy the restrictions
+necessary for type assignment and another looser schema that cannot
+express all the constraints but which can be used for type assignment.
+One advantage to not performing type assignment with RELAX NG is that
+RELAX NG works well with existing APIs such as DOM and SAX. Type
+assignment would require major changes to report the types assignment
+to elements and attributes.</para>
+
+</section>
+
+<section>
+<title>Datatyping</title>
+
+<para>XML DTDs have a built-in, limited, rather ad hoc set of
+datatypes, which can be applied only to the values of attributes and
+not to the content of elements.  RELAX NG differs in two major
+respects. Firstly, it allows datatypes to be specified uniformly for
+both attribute values and element content; this is in accordance with
+the philosophy of uniform treatment for elements and attributes.
+Secondly, RELAX NG decouples the schema language from the set of
+datatypes. RELAX NG is not tied to a single set of datatypes.  The
+philosophy of RELAX NG is, like XML, to restrict itself purely to
+syntax.  This restriction allows RELAX NG to be both simple and
+general.  Defining specific datatypes is not simply a matter of syntax
+but involves semantics as well. The issue of what datatypes are useful
+is both more application-dependent and more open-ended than the purely
+syntactic issues that RELAX NG deals with.  Instead, RELAX NG
+introduces the concept of a datatype library, which provides a
+semantic model for a collection of datatypes.  Any collection of
+datatypes that can fit into the RELAX NG semantic model can
+potentially be used as a RELAX NG datatype library.  In particular, the
+datatypes defined by W3C XML Schema Part 2 <bibref
+refloc="xmlschema-2"/> can be used as a datatype library; the RELAX NG
+TC has published a set of guidelines <bibref refloc="guidelines"/> for
+this in order to promote interoperability.  A vendor-independent Java
+interface has been developed for datatype libraries <bibref
+refloc="interface"/>.  Any collection of datatypes implemented using
+this interface can be dynamically plugged in to any RELAX NG validator
+that supports this interface.</para>
+
+<para>W3C XML Schema Part 2 defines both a collection of primitive
+datatypes and methods for deriving datatypes.  With RELAX NG, the
+functionality relating to specific primitive datatypes is factored out
+into independent datatype libraries.  However, the functionality
+relating to deriving datatypes is included in RELAX NG.  W3C XML
+Schema Part 2 provides three methods for deriving datatypes.
+Derivation by restriction is provided in RELAX NG by allowing a
+reference to a datatype in a datatype library to specify a list of
+named parameters.  Derivation by union is provided in RELAX NG by
+allowing the <code>choice</code> element to be applied to datatypes
+just as it is to elements or attributes.  Derivation by list is
+provided in RELAX NG by the <code>list</code> element.  The
+<code>list</code> element allows the normal RELAX NG content model
+operators (<code>group</code>, <code>interleave</code>,
+<code>choice</code>, <code>oneOrMore</code>, <code>zeroOrMore</code>,
+<code>optional</code>) to be used for specifying the sequence of
+tokens comprising the list.  It is more powerful than the W3C XML
+Schema Part 2, which allows only a minimum and maximum length for the
+number of tokens in the sequence to be specified .</para>
+
+</section>
+
+<section>
+<title>Mixed content</title>
+
+<para>SGML does not restrict the occurrence of <code>#PCDATA</code> in
+content models.  However, SGML suffers from the infamous pernicious
+mixed content bug, which causes certain content models involving
+<code>#PCDATA</code> to treat whitespace between tags as significant
+in surprising ways.  This bug in SGML motivated XML to drastically
+restrict the use of <code>#PCDATA</code> in content models.
+Unfortunately, this prohibits many perfectly reasonable content
+models. RELAX NG restores the generality of SGML by removing the
+restriction on <code>#PCDATA</code>.  (In RELAX NG,
+<code>#PCDATA</code> is represented by a <code>text</code> element.)
+It solves the pernicious mixed content bug by observing that the
+pernicious mixed content bug only arises in SGML because SGML parsers
+need to report whether whitespace is significant and
+insignificant. RELAX NG does no modify or augment the infoset and it
+therefore does not need to decide whether whitespace in mixed
+content is significant.  RELAX NG can therefore lift the restriction
+imposed by XML without reintroducing the problem that motivated the
+imposition of the restriction.</para>
+
+</section>
+
+<section>
+<title>Unordered content</title>
+
+<para>SGML provides an <code>&amp;</code> operator: <code>A &amp;
+B</code> matches <code>A</code> followed by <code>B</code> or
+<code>B</code> followed by <code>A</code>. XML removed the
+<code>&amp;</code> operator.  RELAX NG reintroduces it with a twist.
+In SGML, a content model of <code>A &amp; B*</code> requires all the
+<code>B</code> elements to be consecutive: the required <code>A</code>
+element cannot occur in between two <code>B</code> elements.  Usually,
+users use the <code>&amp;</code> operator because they want to allow
+child elements to occur in any order, so this restriction is
+undesirable. In RELAX NG, the corresponding operator has interleaving
+semantics.  It matches any interleaving of a sequence containing a
+single <code>A</code> element and a sequence containing zero or more
+<code>B</code> elements; it thus allows the <code>A</code> element to
+occur anywhere, including between two <code>B</code> elements.</para>
+
+<para>XML removed the <code>&amp;</code> operator mainly because of
+the <code>&amp;</code> operator's reputation for implementation
+complexity.  The most difficult part of implementing the
+<code>&amp;</code> operator in SGML is detecting whether a content
+model including <code>&amp;</code> is 1-unambiguous.  Unlike SGML, XML
+and W3C XML Schema, RELAX NG does not restrict content models to be
+1-unambiguous, so this implementation difficulty is removed.  The
+classic implementation technique for SGML and XML content models is to
+construct a Glushkov automaton.  The 1-unambiguity restriction is
+helpful for this technique because it ensures that the Glushkov
+automaton is deterministic.  An interleaving operator causes
+difficulty with this technique.  However, there is an alternative
+implementation technique available <bibref refloc="validate"/> based
+on derivatives of regular expressions <bibref refloc="derivatives"/>.
+This handles content models that are not 1-unambiguous without any
+additional effort and can deal with interleaving without difficulty.
+RELAX NG imposes restrictions on the use of interleave which are
+sufficient to ensure that a derivative-based implementation will not
+exhibit exponential behavior.</para>
+
+</section>
+
+<section>
+<title>Namespaces</title>
+
+<para>The XML Namespaces Recommendation <bibref refloc="xml-names"/>
+was published after the XML 1.0 Recommendation.  XML Namespaces are
+layered on top of XML 1.0 and do not affect the semantics of XML 1.0
+including the semantics of DTD validation. This means that DTD
+validation is not namespace-aware: it treats prefixes of element and
+attribute names as significant. On a namespace-aware view, it is the
+namespace URIs to which the prefixes are bound that should be
+significant rather than the prefixes themselves.  RELAX NG validation
+is namespace-aware.  For many applications of XML, namespaces are
+critical.  However, there are also many other uses of XML,
+particularly in closed environments, where namespaces are not needed.
+RELAX NG therefore tries to ensure that none of the complexity related
+to namespaces affects users that do not make use of the namespaces
+support.</para>
+
+<para>The mechanisms introduced by the XML Namespaces Recommendation
+are purely syntactic.  The XML 1.0 Recommendation provides a syntax
+for representing a tree of elements and attributes in which each
+element and attribute is labeled with a simple, unstructured name.
+The XML Namespaces Recommendation extends this to allow the label of
+elements and attributes to be qualified with a namespace URI.  This is
+all it does <bibref refloc="xmlns"/>. It makes no guarantees that the
+namespace URI refers to anything.  The namespace URI is just part of
+the label of an element or attribute.  RELAX NG takes this same
+syntactic view. It makes no assumptions about the usage of XML
+namespaces that go beyond what is specified in the XML Namespaces
+Recommendation.  This contrasts with the approach of W3C XML Schema,
+which assumes that a namespace URI is associated with a schema.  The
+advantages of the RELAX NG approach are simplicity and generality.
+RELAX NG has no problems representing vocabularies such as XSLT and
+RDF that make atypical use of XML namespaces.</para>
+
+<para>The purpose of XML Namespaces is to enable extensibility.
+Extensions defined by a particular organization can be clearly
+identified by using a namespace URI controlled by that organization.
+To support this, a schema language needs to be able to specify that a
+schema is open to various kinds of extension at various points.  For
+example, a schema language needs to be able to say that an arbitrary
+attribute is allowed on an element provided the name of the attribute
+is namespace qualified.  RELAX NG provides very general support for
+this through the idea of a name class.  A name class denotes a set of
+names, where a name is a pair consisting of a namespace URI and a
+local name. There are three kinds of atomic name class: a single
+specific name, any name with a particular namespace URI and any name
+whatsoever.  Name classes can be composed using set union and set
+difference.  RDF provides a good example of where this flexibility is
+needed: in RDF the name of an element specifying a property can be
+anything with a non-null namespace URI except
+<code>rdf:Description</code>, <code>rdf:RDF</code>,
+<code>rdf:ID</code>, <code>rdf:about</code>,
+<code>rdf:aboutEach</code>, <code>rdf:bagID</code>,
+<code>rdf:parseType</code> or <code>rdf:resource</code>.  An important
+feature of RELAX NG is that the name of an element is specified
+independently of its attributes and content. When the name of an
+element is specified as an open name class, all the normal facilities
+of RELAX NG remain available for specifying its attributes and
+content.  For example, in XSLT an element such as <code>xsl:if</code>
+can contain certain specific elements from the XSLT namespace and
+arbitrary elements from non-XSLT namespaces.  These non-XSLT elements
+specify literal result elements; although the names of these elements
+can be from any non-XSLT namespace, their contents have the same
+constraints as elements from the XSLT namespace such as
+<code>xsl:if</code>. RELAX NG's support for extensibility avoids
+making any assumptions about what extensibility policies are
+appropriate for schemas, but instead provides general facilities that
+are sufficient to describe almost any extensibility policy that a
+schema author may choose.</para>
+
+</section>
+
+<section>
+<title>Customization</title>
+
+<para>The main mechanism provided by XML DTDs for customization is
+overriding the parameter entity definitions.  RELAX NG also supports
+definition overriding, but provides two improvements.  One is that
+RELAX NG makes the order of definitions within a grammar
+insignificant. A definition is not required to come before references
+to that definition.  Overriding definitions are distinguished by being
+placed within the <code>include</code> element that references the
+schema containing the overridden definition, in a similar fashion to
+the internal subset of a <code>DOCTYPE</code> declaration.  This gives
+schema authors the freedom to order their definitions as they see fit.
+It also makes it explicit when a definition is overriding another
+definition.  The other improvement is that RELAX NG allows multiple
+definitions to be combined together.  This is similar to the way that
+XML 1.0 DTDs allow multiple attribute list declarations for a single
+element type.  Unlike XML 1.0 DTDs, RELAX NG requires schema authors
+to indicate explicitly when a definition is to be combined (by using a
+<code>combine</code> attribute) and allows combination of arbitrary
+patterns using either the <code>interleave</code> or
+<code>choice</code> operator rather than restricting the facility to
+just attributes.</para>
+
+</section>
+
+<section>
+<title>Inheritance</title>
+
+<para>One of the most significant differences between RELAX NG and W3C
+XML Schema is that RELAX NG does not have any concept of
+inheritance. The support for inheritance in W3C XML Schema is probably
+the major contributor to the considerable complexity of W3C XML Schema
+Part 1. Yet, the inheritance mechanisms in W3C XML Schema do not allow
+W3C XML Schema to express any constraints that cannot be expressed in
+RELAX NG. Although W3C XML Schema has a very complex type system with
+two type hierarchies, one for elements (called substitution groups)
+and one for complex types, it supports only single inheritance.
+However, modern object-oriented languages, such as Java and C#,
+support multiple inheritance (at least for interfaces). Thus, in
+general the inheritance structure of a class hierarchy cannot be
+represented in a schema. Inheritance has proven to be very useful in
+modeling languages such as UML.  However, I would argue that trying to
+make an XML schema language also be a modeling language is not a good
+idea.  An XML schema language has to be concerned with syntactic
+details, such as whether to use elements or attributes, which are
+irrelevant to the conceptual model.  Instead, I believe it is better
+to use a standard modeling language such as UML, which provides full
+multiple inheritance, to do conceptual modeling, and then generate
+schemas and class definitions from the model <bibref refloc="uml"/>.
+If a schema language is used in this way, then there is no need for it
+to support inheritance; the role of the schema language is purely to
+describe the XML syntax used to represent the conceptual model.  RELAX
+NG has the advantage in this role that it provides more flexibility in
+the choice of syntax.  For example, in W3C XML Schema the
+<code>xsi:type</code> attribute is a special case; it is the only
+attribute that can affect the content model of an element.  In RELAX
+NG, any attribute can affect the content model in a quite general way.
+Thus, in situations where W3C XML Schema forces the use of the
+<code>xsi:type</code> attribute, RELAX NG allows the schema designer
+to choose the attribute name (or indeed choose to use a subelement
+instead of an attribute).</para>
+
+</section>
+
+<section>
+<title>Identity constraints</title>
+
+<para>The RELAX NG TC spent a considerable amount of time considering
+what support RELAX NG should provide for enforcing identity
+(uniqueness and cross-reference) constraints. In the end, the
+conclusion was that identity constraints were better separated out
+into a separate specification.  Accordingly, RELAX NG itself provides
+no support for identity constraints.  RELAX NG DTD Compatibility
+<bibref refloc="compatibility"/> provides support for traditional XML
+ID/IDREF attributes.  There were a number of reasons for preferring
+separation. One reason is the relative difference in maturity. RELAX
+NG is based on finite tree automata; this is an area of computer
+science that has been studied for many years and is accordingly mature
+and well understood.  The use of grammars for specifying document
+structures is based on more than 15 years of practical experience. By
+contrast, the area of identity constraints (beyond simple ID/IDREF
+constraints) is much less mature and is still the subject of active
+research.  Another reason is that it is often desirable to perform
+grammar processing separately from identity constraint processing.
+For example, it may be known that a particular document is valid with
+respect to a grammar but not known that it satisfies identity
+constraints.  The type system of the language that was used to
+generate a document may well be able to guarantee that it is valid
+with respect to the grammar; it is unlikely that it will be able to
+guarantee that it satisfies the identity constraints.  A document
+assembled from a number of components may guaranteed to be valid with
+respect to a grammar because of the validity of the components, but
+this will often not be the case with identity constraints.  Even when
+a document is known to satisfy the identity constraints as well as be
+valid with respect to the grammar, it may be necessary to perform
+identity constraint processing in order to allow application programs
+to follow references.  Another reason is that no single identity
+constraint language is suitable for all applications.  Different
+applications have identity constraints of vastly different complexity.
+Some applications have complex constraints that span multiple
+documents <bibref refloc="xlinkit"/>. Other applications need only a
+modest increment on the XML ID/IDREF mechanism.  A solution that is
+sufficient for those applications with complex requirements is likely
+to be overkill for those applications with simpler
+requirements.</para>
+
+<para>W3C XML Schema <bibref refloc="xmlschema-1"/> provides a quite
+sophisticated identity-constraint mechanism.  However, it has
+something of the feel of a specification within a specification.  An
+element or attribute in the instance that participates in an identity
+constraint plays one of three roles: it can be a scope in which the
+constraint is enforced; it can be a target, which is an object which
+is unique in the scope; or it can be a field, which is part of the key
+which identifies the target within its scope.  In W3C XML Schema, the
+target and field are identified using an XPath.  However, the scope is
+identified by including the identity constraint specification in the
+declaration of the scoping element.  This leads to the restriction
+that although identity constraints are hierarchical, there is no way
+to specify a reference to a key in another part of the hierarchy. A
+better approach would be to use a path also to specify the scope, thus
+completely decoupling the specification of identity constraints from
+the rest of the schema and opening the way to more complete
+constraints on key references.</para>
+
+</section>
+
+<section>
+<title>Associating schemas with documents</title>
+
+<para>With XML 1.0, the XML document uses a <code>DOCTYPE</code>
+declaration to identify the DTD with respect to which it is valid.
+There is no provision for a document to be validated with respect to
+DTD that is specified independently of the document.  This is
+unsatisfactory for interchange.  When a document recipient receives a
+document from an untrusted sender, the recipient may need to check
+that the document is valid with respect to a particular DTD.  The
+recipient cannot assume that the <code>DOCTYPE</code> declaration of
+the document correctly identifies that DTD.  The recipient may want to
+validate against a DTD different from that used by the author: for
+example, the recipient may validate against a generalized, public DTD,
+whereas the author may validate against a restrictive, private DTD
+that is a subset of the public DTD.  Unlike XML 1.0, RELAX NG does not
+tie a document to a single schema.  The RELAX NG validation process
+has two inputs: a document and a schema against which to validate the
+document.</para>
+
+<para>In fact, RELAX NG does not define any mechanism for associating
+a document with a RELAX NG schema.  Although it is useful to be able
+to specify rules for determining the schema to be used to validate a
+particular document, this problem is not specific to RELAX NG.
+Validation is just one of many processes that can be applied to an XML
+document.  For example, a user may wish to perform XInclude <bibref
+refloc="xinclude"/> processing or XSLT processing.  A user may wish to
+perform validation before or after any of these other processes.  The
+problem of associating a schema with a document is really just a
+special case of the problem of associating processing with a
+document. What is needed is a solution that can specify a series of
+processes to be applied to a document.</para>
+
+</section>
+
+<section>
+<title>Database NULLs</title>
+
+<para>XML users coming from the database world sometimes wish to
+represent database NULLs explicitly in an XML document.  There are two
+plausible ways that a document might do this.  One is to use an
+attribute to signal that an element has null content.  This requires
+that the schema language be able to specify a choice between data and
+the presence of a particular attribute.  Another way is to use an
+element to signal that an element has null content.  This requires
+that the schema language be able to specify a choice between data and
+the presence of a particular element. W3C XML Schema does not meet
+either of the above requirements; thus without some special treatment
+for database NULLs, it would be awkward to explicitly represent
+database NULLs in document. W3C XML Schema provides a special built-in
+<code>xsi:nil</code> attribute to deal with this. The situation with
+RELAX NG is different.  RELAX NG can handle both of the above
+requirements.  Thus, there is no need for RELAX NG to provide any
+special facility for database NULLs.  If it is desired to standardize
+a representation of NULL, then this can be done without changing RELAX
+NG. Indeed, it is possible for RELAX NG explicitly to model the
+semantics of <code>xsi:nil</code> that are built-in to W3C XML
+Schema.</para>
+
+</section>
+
+<section>
+<title>Conclusion</title>
+
+<para>RELAX NG is designed to complement the XML 1.0 and XML
+Namespaces Recommendations.  It is easy to learn and use, and has a
+level of complexity in the implementation and specification that is in
+the same ballpark as these Recommendations.  It has a limited scope
+chosen on the basis of careful consideration of issues of modularity
+and layering. In particular, it restricts itself to dealing purely
+with syntax, and is thus, like XML itself, applicable to a wide range
+of application domains.  It is a conservative, evolutionary refinement
+of well-proven ideas from SGML and XML DTDs.  It is non-intrusive and
+aims to avoid unnecessarily constraining the freedom of schema authors
+to design their XML vocabularies as they see fit.</para>
+
+</section>
+
+</body>
+
+<rear>
+
+<acknowl>
+<para>Murata Makoto and other members of the OASIS RELAX NG TC
+participated in the design of RELAX NG.</para>
+</acknowl>
+<bibliog>
+
+<bibitem id="xmlschema-2">Paul V. Biron, Ashok Malhotra, editors.
+<i>XML Schema Part 2: Datatypes</i>.  W3C (World Wide Web Consortium),
+2001.  See <a href="http://www.w3.org/TR/xmlschema-2/"/>.</bibitem>
+
+<bibitem id="xml-names">Tim Bray, Dave Hollander, and Andrew Layman,
+editors.  <i>Namespaces in XML</i>.  W3C (World Wide Web Consortium),
+1999.  See <a href="http://www.w3.org/TR/REC-xml-names/"/>.</bibitem>
+
+<bibitem id="xml-rec">Tim Bray, Jean Paoli, and
+C. M. Sperberg-McQueen, Eve Maler, editors.  <i>Extensible Markup
+Language (XML) 1.0 Second Edition</i>.  W3C (World Wide Web
+Consortium), 2000.  See <a
+href="http://www.w3.org/TR/REC-xml"/>.</bibitem>
+
+<bibitem id="derivatives">Janusz A. Brzozowski. <i>Derivatives of
+Regular Expressions</i>. Journal of the ACM, Volume 11, Issue 4,
+1964.</bibitem>
+
+<bibitem id="uml">Dave Carlson. <i>Modeling XML Vocabularies with
+UML</i>. 2001. See <a
+href="http://www.xml.com/pub/a/2001/08/22/uml.html"/>.</bibitem>
+
+<bibitem id="dtdinst">James Clark. <i>DTDinst</i>.  Thai Open Source
+Software Center, 2001.  Available from <a
+href="http://www.thaiopensource.com/dtdinst/"/>.</bibitem>
+
+<bibitem id="xmlns">James Clark. <i>XML Namespaces</i>. 1999. See
+<a href="http://www.jclark.com/xml/xmlns.htm"/>.</bibitem>
+
+<bibitem id="nonxml">James Clark. <i>RELAX NG Non-XML Syntax</i>.
+Thai Open Source Software Center, 2001.  See <a
+href="http://www.thaiopensource.com/relaxng/nonxml/"/>.</bibitem>
+
+<bibitem id="trex">James Clark. <i>TREX - Tree Regular Expressions for
+XML</i>.  Thai Open Source Software Center, 2001.  See <a
+href="http://www.thaiopensource.com/trex/"/>.</bibitem>
+
+<bibitem id="interface">James Clark, KAWAGUCHI Kohsuke. <i>Datatype
+interface for RELAX NG</i>.  Available from <a
+href="http://sourceforge.net/projects/relaxng"/>.</bibitem>
+
+<bibitem id="guidelines">James Clark, KAWAGUCHI Kohsuke,
+editors. <i>Guidelines for using W3C XML Schema Datatypes with RELAX
+NG</i>.  OASIS, 2001.  See <a
+href="http://www.oasis-open.org/committees/relax-ng/xsd.html"/>.</bibitem>
+
+<bibitem id="compatibility">James Clark, MURATA Makoto,
+editors. <i>RELAX NG DTD Compatibility</i>.  OASIS, 2001.  See <a
+href="http://www.oasis-open.org/committees/relax-ng/compatibility.html"/>.</bibitem>
+
+<bibitem id="spec">James Clark, MURATA Makoto, editors. <i>RELAX NG
+Specification</i>.  OASIS, 2001.  See <a
+href="http://www.oasis-open.org/committees/relax-ng/spec.html"/>.</bibitem>
+
+<bibitem id="tutorial">James Clark, MURATA Makoto, editors. <i>RELAX
+NG Tutorial</i>.  OASIS, 2001.  See <a
+href="http://www.oasis-open.org/committees/relax-ng/tutorial.html"/>.</bibitem>
+
+<bibitem id="tata">H. Comon, M. Dauchet, R. Gilleron, F. Jacquemard,
+D. Lugiez, S. Tison and M. Tommasi.  <i>Tree Automata Techniques and
+Applications</i>. 1997.  Available at <a
+href="http://www.grappa.univ-lille3.fr/tata/"/>.</bibitem>
+
+<bibitem id="infoset">John Cowan, Richard Tobin, editors.  <i>XML
+Information Set</i>.  W3C (World Wide Web Consortium), 2001. See <a
+href="http://www.w3.org/TR/xml-infoset/"/>.</bibitem>
+
+<bibitem id="validate">Joe English. <i>How to validate
+XML</i>. 1999.  See <a
+href="http://www.flightlab.com/~joe/sgml/validate.html"/>.</bibitem>
+
+<bibitem id="xduce">Haruo Hosoya. <i>XDuce: A Typed XML Processing
+Language</i>.  See <a href="http://xduce.sourceforge.net"/>.</bibitem>
+
+<bibitem id="msv">KAWAGUCHI Kohsuke. <i>Sun Multi-Schema XML
+Validator</i>.  Available from <a
+href="http://www.sun.com/software/xml/developers/multischema/"/>.</bibitem>
+
+<bibitem id="relax">MURATA Makoto.  <i>RELAX (Regular Language
+description for XML)</i>.  INSTAC (Information Technology Research and
+Standardization Center), 2001.  See <a
+href="http://www.xml.gr.jp/relax/"/>.</bibitem>
+
+<bibitem id="xinclude">Jonathan Marsh, David Orchard, editors.  <i>XML
+Inclusions (XInclude) Version 1.0</i>.  W3C (World Wide Web
+Consortium), 2001. See <a
+href="http://www.w3.org/TR/xinclude/"/>.</bibitem>
+
+<bibitem id="xlinkit">Christian Nentwich, Wolfgang Emmerich and
+Anthony Finkelstein.  <i>xlinkit: links that make
+sense</i>. Department of Computer Science, University College London,
+2001.  See <a
+href="http://www.cs.ucl.ac.uk/staff/c.nentwich/publications/RN/ht2001.html"/>.</bibitem>
+
+<bibitem id="relaxngcc">Daisuke Okajima. <i>RelaxNGCC (RelaxNG
+compiler compiler)</i>.  2001. See <a
+href="http://homepage2.nifty.com/okajima/relaxngcc/index_en.htm"/>.</bibitem>
+
+<bibitem id="xmlschema-1">Henry S. Thompson, David Beech, Murray
+Maloney, Noah Mendelsohn, editors.  <i>XML Schema Part 1:
+Structures</i>.  W3C (World Wide Web Consortium), 2001.  See <a
+href="http://www.w3.org/TR/xmlschema-1/"/>.</bibitem>
+
+</bibliog>
+
+</rear>
+</gcapaper>

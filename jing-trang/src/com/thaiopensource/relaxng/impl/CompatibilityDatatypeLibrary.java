@@ -11,6 +11,7 @@ class CompatibilityDatatypeLibrary implements DatatypeLibrary {
   private DatatypeLibrary xsdDatatypeLibrary = null;
 
   static final String URI = "http://relaxng.org/ns/compatibility/datatypes/1.0";
+  static final String xsdURI = "http://www.w3.org/2001/XMLSchema-datatypes";
 
   CompatibilityDatatypeLibrary(DatatypeLibraryFactory factory) {
     this.factory = factory;
@@ -20,7 +21,7 @@ class CompatibilityDatatypeLibrary implements DatatypeLibrary {
           throws DatatypeException {
     if (type.equals("ID") || type.equals("IDREF") || type.equals("IDREFS")) {
       if (xsdDatatypeLibrary == null) {
-        xsdDatatypeLibrary = factory.createDatatypeLibrary(PatternReader.xsdURI);
+        xsdDatatypeLibrary = factory.createDatatypeLibrary(xsdURI);
         if (xsdDatatypeLibrary == null)
           throw new DatatypeException();
       }

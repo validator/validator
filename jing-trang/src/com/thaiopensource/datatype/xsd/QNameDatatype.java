@@ -1,29 +1,11 @@
 package com.thaiopensource.datatype.xsd;
 
 import org.relaxng.datatype.ValidationContext;
+import com.thaiopensource.xml.util.Naming;
 
 class QNameDatatype extends DatatypeBase {
   public boolean lexicallyAllows(String str) {
-    int len = str.length();
-    int i = str.indexOf(':');
-    if (i < 0)
-      return isNcName(str, 0, len);
-    else
-      return isNcName(str, 0, i) && isNcName(str, i + 1, len);
-  }
-
-  private static boolean isNcName(String str, int i, int j) {
-    if (i >= j)
-      return false;
-    char c = str.charAt(i);
-    if (c == ':' || !Naming.isNameStartChar(c))
-      return false;
-    for (++i; i < j; i++) {
-      c = str.charAt(i);
-      if (c == ':' || !Naming.isNameChar(c))
-	return false;
-    }
-    return true;
+    return Naming.isQname(str);
   }
 
   static class QName {

@@ -1,0 +1,528 @@
+<testSuite>
+<testCase>
+<correct>
+<element ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <empty/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns:x="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0" name="x:foo">
+  <empty/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo" ns="">
+  <empty/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo" ns="http://www.example.com/1">
+  <element name="bar" ns="http://www.example.com/2">
+    <empty/>
+  </element>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="x:foo" xmlns:x="http://www.example.com/1">
+  <element name="x:bar" xmlns:x="http://www.example.com/2">
+    <empty/>
+  </element>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <attribute ns="http://www.example.com" name="bar"/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <attribute xmlns:x="http://www.example.com" name="x:bar"/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<start>
+<element name="foo">
+  <ref name="foo.body"/>
+</element>
+</start>
+
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x"/>
+<define name="foo.body">
+  <text/>
+</define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="x">
+    <mixed>
+     <zeroOrMore>
+       <element name="foo"><empty/></element>
+     </zeroOrMore>
+   </mixed>
+  </define>
+  <define name="y">
+    <element name="x"><ref name="x"/></element>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<start>
+<element name="foo">
+  <ref name="y"/>
+</element>
+</start>
+
+<define name="z">
+  <text/>
+</define>
+
+
+</grammar>
+</resource>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<include href="x"/>
+
+<define name="y">
+  <ref name="z"/>
+</define>
+
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<define name="x">
+  <ref name="x"/>
+</define>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<define name="y">
+  <ref name="x"/>
+</define>
+<define name="x">
+  <element name="x">
+    <ref name="x"/>
+  </element>
+  <ref name="x"/>
+</define>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<define name="x">
+  <element name="x">
+    <optional>
+      <ref name="x"/>
+    </optional>
+  </element>
+</define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x"/>
+</grammar>
+</resource>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x"/>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x"/>
+<include href="x"/>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <optional>
+    <attribute name="a1"/>
+    <attribute name="a2"/>
+  </optional>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo">
+      <optional>
+         <ref name="att"/>
+      </optional>
+    </element>
+  </start>
+  <define name="att">
+    <attribute name="att"/>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo">
+      <zeroOrMore>
+         <ref name="att"/>
+      </zeroOrMore>
+    </element>
+  </start>
+  <define name="att">
+    <attribute name="att"/>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo">
+      <oneOrMore>
+         <ref name="att"/>
+      </oneOrMore>
+    </element>
+  </start>
+  <define name="att">
+    <attribute name="att"/>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <zeroOrMore>
+    <attribute name="att"/>
+  </zeroOrMore>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <zeroOrMore>
+    <attribute name="a1"/>
+    <attribute name="a2"/>
+  </zeroOrMore>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <oneOrMore>
+    <attribute name="att"/>
+  </oneOrMore>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo">
+      <attribute name="att">
+        <ref name="t"/>
+      </attribute>
+    </element>
+  </start>
+  <define name="t">
+    <text/>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="foo">
+      <mixed>
+        <ref name="c"/>
+      </mixed>
+    </element>
+  </start>
+  <define name="c">
+    <zeroOrMore>
+      <element name="bar"><empty/></element>
+    </zeroOrMore>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="bar"><notAllowed/></element>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <choice>
+   <element name="bar"><empty/></element>
+   <text/>
+  </choice>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <data type="string"/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar"/>
+  <data type="string"/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <mixed>
+    <attribute name="bar"/>
+    <zeroOrMore>
+      <element name="bar"><empty/></element>
+    </zeroOrMore>
+  </mixed>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <zeroOrMore>
+   <choice>
+     <element name="bar"><empty/></element>
+     <mixed>
+       <attribute name="baz"/>
+     </mixed>
+   </choice>
+  </zeroOrMore>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar"><empty/></attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar"><notAllowed/></attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar">
+    <list><oneOrMore><data type="token"/></oneOrMore></list>
+  </attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar">
+    <choice datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+      <data type="integer"/>
+      <data type="double"/>
+    </choice>
+  </attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <optional>
+    <attribute name="bar" a:defaultValue="multi&#xA;lines"
+               xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+  </optional>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar"><value>xyzzy</value></attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="bar"><value>+</value></attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+<element name="foo">
+  <attribute name="bar"><ref name="v"/></attribute>
+</element>
+</start>
+<define name="v"><value>+</value></define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo"><empty/></element>
+</start>
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x"/>
+<define name="x"><text/></define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo"><empty/></element>
+</start>
+</grammar>
+</resource>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x" xmlns:dtd="http://www.thaiopensource.com/ns/relaxng/dtd" dtd:entityName="xyzzy"/>
+<define name="x"><text/></define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <attribute><choice><name>a1</name><name>a2</name></choice></attribute>
+</element>
+</correct>
+</testCase>
+<testCase>
+<resource name="x">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo"><empty/></element>
+</start>
+</grammar>
+</resource>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<include href="x">
+  <start>
+    <element name="bar"><empty/></element>
+  </start>
+</include>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
+  <element name="foo">
+    <empty/>
+  </element>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="foo"/>
+  </start>
+  <define name="foo">
+    <element name="foo">
+      <optional>
+         <ref name="foo"/>
+      </optional>
+    </element>
+  </define>
+</grammar>
+</correct>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <define name="atts">
+    <attribute name="att2"/>
+  </define>
+  <start>
+    <element name="foo">
+      <ref name="atts"/>
+    </element>
+  </start>
+  <define name="atts" combine="interleave">
+    <attribute name="att1"/>
+  </define>
+</grammar>
+</correct>
+</testCase>
+</testSuite>

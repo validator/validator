@@ -13,6 +13,6 @@ class MinExclusiveRestrictDatatype extends ValueRestrictDatatype {
   }
 
   boolean satisfiesRestriction(Object value) {
-    return order.compareValue(value, limit) > 0;
+    return order.isLessThan(limit, value);
   }
 }

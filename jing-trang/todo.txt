@@ -1,11 +1,22 @@
+Handle comments embedded within strings better.
+
+Make SAX-based parser preserve element annotations.
+
+SAXParser and comment formatting.
+
+Trang should output a:documentation as comments in the DTD.
+
+Put location information in error messages into a standard format
+understandable by Emacs.
+
+More helpful syntax error messages with non-XML syntax parser.
+
+Namespace declarations in element annotations (also issue for TC).
+
 Support for IDREF checking via JARV.
 
 In a big choice or interleave or attribute group, memoization for each
 binary pattern is inefficient.
-
-Distinguish error for unknown datatype library and unknown datatype.
-
-Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
 
 Option to recover from unknown datatype libraries.
 
@@ -13,17 +24,11 @@ More helpful error message for duplicate attributes.
 
 Implement ValidationContext.getBaseUri in the instance.
 
-Implement ValidationContext.isUnparsedEntity.
-
-Implement ValidationContext.isNotation.
-
 Support infoset modification for ID/IDREF/IDREFS.
 
 Support DTD compatibility use of default values.
 
 Option to do XInclude before validation.
-
-Integrate the non-XML syntax.
 
 Maybe introduce a variant of the element pattern that has a mapping
 from names to content models.
@@ -31,3 +36,8 @@ from names to content models.
 Better error message for wrong namespace URI.
 
 Option to be verbose.
+
+On output, using character escapes for things outside repertoire of
+character encoding.
+
+Streaming validation of data.

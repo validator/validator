@@ -41,4 +41,12 @@ class RestrictDatatype extends DatatypeBase {
   public int getIdType() {
     return base.getIdType();
   }
+
+  public boolean sameValue(Object value1, Object value2) {
+    return base.sameValue(value1, value2);
+  }
+
+  public int valueHashCode(Object value) {
+    return base.valueHashCode(value);
+  }
 }

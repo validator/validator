@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.DTDHandler;
 
 /**
  * A SAX 2 content handler that validates the content it receives.  A <code>ValidatorHandler</code>
@@ -9,10 +10,12 @@ import org.xml.sax.ErrorHandler;
  * can be used to validate only a single document at a time. It can be used to validate a sequence of
  * documents by calling <code>reset</code> between documents.  If multiple documents must be validated
  * concurrently, then a separate <code>ValidatorHandler</code> must be used for each document.
+ * <code>ValidatorHandler</code> extends <code>DTDHandler</code> so that validation can have access
+ * to information about the DTD, specifically the unparsed entities and notations.
  *
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
-public interface ValidatorHandler extends ContentHandler {
+public interface ValidatorHandler extends ContentHandler, DTDHandler {
   /**
    * Reports whether the content received so far is valid.  If this is called before
    * <code>endDocument</code>, then it reports whether the content received so far

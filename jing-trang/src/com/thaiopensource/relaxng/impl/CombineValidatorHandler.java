@@ -70,6 +70,23 @@ public class CombineValidatorHandler implements ValidatorHandler {
     vh2.skippedEntity(s);
   }
 
+  public void notationDecl(String name,
+                           String publicId,
+                           String systemId)
+          throws SAXException {
+    vh1.notationDecl(name, publicId, systemId);
+    vh2.notationDecl(name, publicId, systemId);
+  }
+
+  public void unparsedEntityDecl(String name,
+                                 String publicId,
+                                 String systemId,
+                                 String notationName)
+          throws SAXException {
+    vh1.unparsedEntityDecl(name, publicId, systemId, notationName);
+    vh2.unparsedEntityDecl(name, publicId, systemId, notationName);
+  }
+
   public void reset() {
     vh1.reset();
     vh2.reset();

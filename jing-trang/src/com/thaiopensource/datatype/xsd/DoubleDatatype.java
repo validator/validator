@@ -67,20 +67,14 @@ class DoubleDatatype extends DatatypeBase implements OrderRelation {
     return this;
   }
 
-  public int compareValue(Object obj1, Object obj2) {
-    double d1 = ((Double)obj1).doubleValue();
-    double d2 = ((Double)obj2).doubleValue();
-    if (d1 < d2)
-      return COMPARE_LESS_THAN;
-    if (d1 > d2)
-      return COMPARE_GREATER_THAN;
-    long bits1 = Double.doubleToLongBits(d1);
-    long bits2 = Double.doubleToLongBits(d2);
-    if (bits1 == bits2)
-      return COMPARE_EQUAL;
-    if (Double.isNaN(d1) || Double.isNaN(d2))
-      return COMPARE_INCOMPARABLE;
-    // Must be +0 and -0
-    return bits1 < bits2 ? COMPARE_LESS_THAN : COMPARE_GREATER_THAN;
+  public boolean isLessThan(Object obj1, Object obj2) {
+    return ((Double)obj1).doubleValue() < ((Double)obj2).doubleValue();
+  }
+
+  public boolean sameValue(Object value1, Object value2) {
+    double d1 = ((Double)value1).doubleValue();
+    double d2 = ((Double)value2).doubleValue();
+    // NaN = NaN
+    return d1 == d2 || (d1 != d1 && d2 != d2);
   }
 }

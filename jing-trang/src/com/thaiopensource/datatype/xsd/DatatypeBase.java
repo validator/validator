@@ -1,7 +1,5 @@
 package com.thaiopensource.datatype.xsd;
 
-import java.util.StringTokenizer;
-
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
@@ -76,13 +74,48 @@ abstract class DatatypeBase implements Datatype2 {
   }
 
   static private final String collapseWhiteSpace(String s) {
-    StringBuffer buf = new StringBuffer();
-    for (StringTokenizer e = new StringTokenizer(s); e.hasMoreElements();) {
-      if (buf.length() > 0)
-	buf.append(' ');
-      buf.append((String)e.nextElement());
+    int i = collapseStart(s);
+    if (i < 0)
+      return s;
+    StringBuffer buf = new StringBuffer(s.substring(0, i));
+    boolean collapsing = (i == 0 || s.charAt(i - 1) == ' ');
+    for (int len = s.length(); i < len; i++) {
+      char c = s.charAt(i);
+      switch (c) {
+      case '\r':
+      case '\n':
+      case '\t':
+      case ' ':
+        if (!collapsing) {
+          buf.append(' ');
+          collapsing = true;
+        }
+        break;
+      default:
+        collapsing = false;
+        buf.append(c);
+        break;
+      }
     }
+    if (buf.length() > 0 && buf.charAt(buf.length() - 1) == ' ')
+      buf.setLength(buf.length() - 1);
     return buf.toString();
+  }
+
+  static private final int collapseStart(String s) {
+    for (int i = 0, len = s.length(); i < len; i++) {
+      switch (s.charAt(i)) {
+      case ' ':
+        if (i == 0 || s.charAt(i - 1) == ' ' || i == len - 1)
+          return i;
+        break;
+      case '\r':
+      case '\n':
+      case '\t':
+        return i;
+      }
+    }
+    return -1;
   }
 
   static private final String replaceWhiteSpace(String s) {

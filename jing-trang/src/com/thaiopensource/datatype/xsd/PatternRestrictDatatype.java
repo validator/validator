@@ -1,5 +1,7 @@
 package com.thaiopensource.datatype.xsd;
 
+import com.thaiopensource.datatype.xsd.regex.Regex;
+
 class PatternRestrictDatatype extends RestrictDatatype {
   private Regex pattern;
 

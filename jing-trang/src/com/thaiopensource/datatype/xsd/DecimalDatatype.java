@@ -58,8 +58,8 @@ class DecimalDatatype extends DatatypeBase implements OrderRelation {
     return this;
   }
 
-  public int compareValue(Object obj1, Object obj2) {
-    return ((BigDecimal)obj1).compareTo((BigDecimal)obj2);
+  public boolean isLessThan(Object obj1, Object obj2) {
+    return ((BigDecimal)obj1).compareTo((BigDecimal)obj2) < 0;
   }
 
   /**

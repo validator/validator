@@ -1,7 +1,9 @@
 package com.thaiopensource.datatype.xsd;
 
+import com.thaiopensource.xml.util.Naming;
+
 class NCNameDatatype extends NameDatatype {
   public boolean lexicallyAllows(String str) {
-    return super.lexicallyAllows(str) && str.indexOf(':') == -1;
+    return Naming.isNcname(str);
   }
 }

@@ -1,0 +1,16 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <include href="gcapaper.rng">
+    <define name="bibitem">
+      <element name="bibitem">
+	<ref name="bibitem.attlist"/>
+	<zeroOrMore>
+	  <choice>
+	    <text/>
+	    <ref name="emphs"/>
+	    <ref name="a"/>
+	  </choice>
+	</zeroOrMore>
+      </element>
+    </define>
+  </include>
+</grammar>

@@ -5,7 +5,6 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -13,7 +12,7 @@ import java.util.Vector;
 
 public class IdTypeMapBuilder {
   private boolean hadError;
-  private final XMLReader xr;
+  private final ErrorHandler eh;
   private final PatternFunction idTypeFunction = new IdTypeFunction();
   private final IdTypeMapImpl idTypeMap = new IdTypeMapImpl();
   private final Hashtable elementProcessed = new Hashtable();
@@ -209,10 +208,9 @@ public class IdTypeMapBuilder {
 
   private void error(String key, Locator locator) {
     hadError = true;
-    ErrorHandler eh = xr.getErrorHandler();
     if (eh != null)
       try {
-        eh.error(new SAXParseException(Localizer.message(key), locator));
+        eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
       }
       catch (SAXException e) {
         throw new WrappedSAXException(e);
@@ -221,12 +219,9 @@ public class IdTypeMapBuilder {
 
   private void error(String key, Name arg1, Name arg2, Locator locator) {
    hadError = true;
-   ErrorHandler eh = xr.getErrorHandler();
    if (eh != null)
      try {
-       eh.error(new SAXParseException(Localizer.message(key,
-                                                        NameFormatter.format(arg1),
-                                                        NameFormatter.format(arg2)),
+       eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, NameFormatter.format(arg1), NameFormatter.format(arg2)),
                                       locator));
      }
      catch (SAXException e) {
@@ -234,8 +229,8 @@ public class IdTypeMapBuilder {
      }
   }
 
-  public IdTypeMapBuilder(XMLReader xr, Pattern pattern) throws SAXException {
-    this.xr = xr;
+  public IdTypeMapBuilder(ErrorHandler eh, Pattern pattern) throws SAXException {
+    this.eh = eh;
     try {
       pattern.apply(new BuildFunction(null, null));
       for (Enumeration e = possibleConflicts.elements();

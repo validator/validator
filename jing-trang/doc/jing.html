@@ -20,44 +20,25 @@ href="http://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html"
 >RELAX NG DTD Compatibility</a>, specifically checking of
 ID/IDREF/IDREFS.</p>
 
-<p>The implementation is available for download as a <a
-href="jing.jar">JAR</a> file and as a <a href="jing.exe">Win32
-executable</a> for use with the Microsoft Java VM.</p>
+<p>The implementation is available for download as</p>
 
-<p>To invoke the Win32 executable, simply copy <code>jing.exe</code>
-to a directory in your path and run the command</p>
+<ul>
+<li>a <a href="jing-bin.zip">JAR</a> file</li>
 
-<pre>jing <var>file</var>.rng <var>file</var>.xml</pre>
+<li>a <a href="jing-win32-bin.zip">Win32 executable</a> for use with
+the Microsoft Java VM</li>
 
-<p>If <code><var>file</var>.rng</code> is a correct schema and
-<code><var>file</var>.rng</code> is valid with respect to
-<code><var>file</var>.rng</code>, then Jing will generate no output.
-Otherwise, it will generate one or more error messages.</p>
+<li><a href="jing-src.zip">source code</a></li>
 
-<p>To use Jing packaged as a JAR file, you must have an implementation
-of the <a href="http://java.sun.com/xml/">Java API for XML Processing
-(JAXP) 1.1</a> in your CLASSPATH.  The main class for Jing is
+</ul>
+
+<p>The main class is
 <code>com.thaiopensource.relaxng.util.Driver</code>.  The first
 argument expected by the main class is the name of the file containing
 the RELAX NG schema.  The second and subsequent arguments are the
-names of one or more files to be validated against this schema. So,
-for example, on Windows, the command:</p>
+names of one or more files to be validated against this schema.</p>
 
-<pre>c:\jdk1.3\bin\java -cp c:\lib\jing.jar;c:\lib\jaxp.jar;c:\lib\crimson.jar com.thaiopensource.relaxng.util.Driver doc.rng doc.xml</pre>
-
-<p>would validate the XML document contained in <code>doc.xml</code>
-against the RELAX NG schema contained in <code>doc.rng</code>. Obviously,
-you must replace <code>c:\lib</code> by the path to the directory
-where you have put the various JAR files. The command will be
-slightly different on non-Windows machines.  Consult your Java
-documentation.</p>
-
-<p>Alternatively, if you have JAXP installed as a Java extension, you
-can simply use:</p>
-
-<pre>c:\jdk1.3\bin\java -jar jing.jar doc.rng doc.xml</pre>
-
-<p>Jing understands a couple of command-line options:</p>
+<p>Jing accepts the following command-line options:</p>
 
 <dl>
 
@@ -67,8 +48,19 @@ can simply use:</p>
 Jing enforces the constraints imposed by RELAX NG DTD Compatibility
 with respect to ID/IDREF/IDREFS.</dd>
 
+<dt><code>-c</code></dt>
+
+<dd>Uses the <a href="compact/syntax.html">compact syntax</a> for the
+schema.</dd>
+
+<dt><code>-e <var>enc</var></code></dt>
+
+<dd>Uses the encoding <code><var>enc</var></code> to read the
+schema.</dd>
+
 <dt><code>-t</code></dt>
-<dd>Print the time used by Jing for loading the schema and
+
+<dd>Prints the time used by Jing for loading the schema and
 for validation.</dd>
 
 </dl>
@@ -82,11 +74,10 @@ more information on creating your own datatype libraries, including a
 sample, download <a
 href="datatype-sample.zip">datatype-sample.zip</a>.</p>
 
-<p>Jing also includes an <a
-href="jing-datatypes.html">implementation</a> of a datatype library
-for the W3C XML Schema Part 2 datatypes.</p>
-
-<p>The <a href="jing-src.zip">source</a> is also available.</p>
+<p>Jing also includes an implementation of a datatype library for the
+W3C XML Schema Part 2 datatypes.  There is a separate <a
+href="jing-datatypes.html">document</a> describing this implementation
+and how to use it.</p>
 
 <p>If you wish to use Jing in your programs, you have a choice.</p>
 

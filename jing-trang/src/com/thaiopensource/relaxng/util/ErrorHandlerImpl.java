@@ -10,7 +10,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 
-class ErrorHandlerImpl implements ErrorHandler {
+public class ErrorHandlerImpl implements ErrorHandler {
   private PrintWriter err;
   
   private String bundleName
@@ -72,7 +72,7 @@ class ErrorHandlerImpl implements ErrorHandler {
     print(format("fatal", new Object[] { message, loc }));
   }
 
-  void print(String message) {
+  public void print(String message) {
     if (message.length() != 0) {
       err.println(message);
       err.flush();
