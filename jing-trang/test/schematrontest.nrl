@@ -10,8 +10,8 @@
     <namespace ns="http://www.ascc.net/xml/schematron">
       <validate schema="../src/com/thaiopensource/validate/schematron/resources/schematron.rnc"
                 schemaType="application/x-rnc"
-                useMode="#pass"/>
-      <pass useMode="#pass"/>
+                useMode="#attach"/>
+      <attach useMode="#attach"/>
     </namespace>
   </mode>
 </rules>
