@@ -1,7 +1,3 @@
-Implement default phase
-
-Add property to set phase
-
 Implement diagnostics: checking, XSL, output, property
 
 Implement keys in XSL
@@ -13,4 +9,3 @@ Use system-id in LocationFilter
 Normalize white-space in messsages
 
 dir elements should turn into appropriate Unicode
-
