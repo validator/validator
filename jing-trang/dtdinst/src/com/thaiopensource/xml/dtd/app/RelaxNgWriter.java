@@ -39,6 +39,18 @@ public class RelaxNgWriter {
 
   static final String DEFAULT_PATTERN = "#.%";
 
+  String[] ELEMENT_KEYWORDS = {
+    "element", "elem", "e"
+  };
+
+  String[] ATTLIST_KEYWORDS = {
+    "attlist", "attributes", "attribs", "atts", "a"
+  };
+
+  String[] ANY_KEYWORDS = {
+    "any", "ANY", "anyElement"
+  };
+
   static abstract class VisitorBase implements TopLevelVisitor {
     public void processingInstruction(String target, String value) throws Exception { }
     public void comment(String value) throws Exception { }
@@ -169,6 +181,13 @@ public class RelaxNgWriter {
 	w.attribute("combine", "interleave");
 	w.startElement("empty");
 	w.endElement();
+	w.endElement();
+      }
+      if (anyName != null) {
+	w.startElement("define");
+	w.attribute("name", anyName);
+	w.attribute("combine", "choice");
+	ref(elementDeclName(nameSpec.getValue()));
 	w.endElement();
       }
     }
@@ -446,7 +465,15 @@ public class RelaxNgWriter {
   void chooseAny() {
     if (!hadAny)
       return;
-    // XXX
+    for (int n = 0;; n++) {
+      for (int i = 0; i < ANY_KEYWORDS.length; i++) {
+	anyName = repeatChar('_', n) + ANY_KEYWORDS[i];
+	if (defTable.get(anyName) == null) {
+	  defTable.put(anyName, anyName);
+	  return;
+	}
+      }
+    }
   }
 
   void chooseColonReplacement() {
@@ -472,13 +499,6 @@ public class RelaxNgWriter {
     }
     return true;
   }
-
-  String[] ELEMENT_KEYWORDS = {
-    "element", "elem", "e"
-  };
-  String[] ATTLIST_KEYWORDS = {
-    "attlist", "attributes", "attribs", "atts", "a"
-  };
 
   void chooseDeclPatterns() {
     // XXX Try to match length and case of best prefix
@@ -677,6 +697,14 @@ public class RelaxNgWriter {
     }
     w.endElement();
     w.endElement();
+    if (anyName != null) {
+      w.startElement("define");
+      w.attribute("name", anyName);
+      w.attribute("combine", "choice");
+      w.startElement("text");
+      w.endElement();
+      w.endElement();
+    }
   }
 
   

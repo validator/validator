@@ -18,8 +18,6 @@ model.
 
 RELAX NG: overridden attributes.
 
-RELAX NG: ANY (includes PCDATA)
-
 RELAX NG: default values
 
 RELAX NG: use FIXED values to construct datatype
