@@ -4,7 +4,7 @@ import java.io.Writer;
 import java.io.IOException;
 import java.io.CharConversionException;
 
-import com.thaiopensource.xml.util.Utf16;
+import com.thaiopensource.util.Utf16;
 
 public class XmlWriter {
   static final private String indentString = "  ";

@@ -1,4 +1,4 @@
-package com.thaiopensource.xml.util;
+package com.thaiopensource.util;
 
 public abstract class Utf16 {
   // 110110XX XXXXXX 110111XX XXXXXX
