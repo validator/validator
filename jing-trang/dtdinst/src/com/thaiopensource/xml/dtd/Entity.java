@@ -131,6 +131,20 @@ class Entity {
     return false;
   }
 
+  int textIndexToAtomIndexOccur(int ti) {
+    if (ti == text.length)
+      return -1;
+    switch (text[ti]) {
+    case '*':
+    case '?':
+    case '+':
+      break;
+    default:
+      return -1;
+    }
+    return textIndexToAtomIndex(ti + 1);
+  }
+
   int textIndexToAtomIndex(int ti) {
     int nAtoms = atoms.size();
     int len = 0;
@@ -157,7 +171,9 @@ class Entity {
     for (int i = 0; i < references.length; i++) {
       int start = textIndexToAtomIndex(references[i].start);
       int end = textIndexToAtomIndex(references[i].end);
-      if (start >= 0 && end >= 0 && atomsAreProperlyNested(start, end)) {
+      if (start >= 0
+	  && end >= 0
+	  && atomsAreProperlyNested(start, end, true)) {
 	if (newAtoms == null)
 	  newAtoms = new Vector();
 	appendSlice(newAtoms, atoms, nCopiedAtoms, start);
@@ -166,6 +182,26 @@ class Entity {
 	  Vector tem = new Vector();
 	  references[i].entity.atoms = tem;
 	  appendSlice(tem, atoms, start, end);
+	  references[i].entity.unexpandEntities();
+	}
+	nCopiedAtoms = end;
+      }
+      else if (start >= 0
+	       && (end = textIndexToAtomIndexOccur(references[i].end)) >= 0
+	       && atomsAreProperlyNested(start, end, false)) {
+	// This deals with a case like %foo;* by turning it into (%foo;)*.
+	if (newAtoms == null)
+	  newAtoms = new Vector();
+	Atom[] split = splitAtom((Atom)atoms.elementAt(end - 1));
+	appendSlice(newAtoms, atoms, nCopiedAtoms, start);
+	newAtoms.addElement(new Atom(Tokenizer.TOK_OPEN_PAREN, "("));
+	newAtoms.addElement(new Atom(references[i].entity));
+	newAtoms.addElement(split[1]);
+	if (references[i].entity.atoms == null) {
+	  Vector tem = new Vector();
+	  references[i].entity.atoms = tem;
+	  appendSlice(tem, atoms, start, end - 1);
+	  tem.addElement(split[0]);
 	  references[i].entity.unexpandEntities();
 	}
 	nCopiedAtoms = end;
@@ -184,8 +220,35 @@ class Entity {
     atoms = newAtoms;
     references = null;
   }
-
-  private boolean atomsAreProperlyNested(int start, int end) {
+  
+  private static Atom[] splitAtom(Atom atom) {
+    Atom[] split = new Atom[2];
+    switch (atom.getTokenType()) {
+    case Tokenizer.TOK_NAME_QUESTION:
+      split[1] = new Atom(Tokenizer.TOK_CLOSE_PAREN_QUESTION, ")?");
+      break;
+    case Tokenizer.TOK_NAME_ASTERISK:
+      split[1] = new Atom(Tokenizer.TOK_CLOSE_PAREN_ASTERISK, ")*");
+      break;
+    case Tokenizer.TOK_NAME_PLUS:
+      split[1] = new Atom(Tokenizer.TOK_CLOSE_PAREN_PLUS, ")+");
+      break;
+    case Tokenizer.TOK_CLOSE_PAREN_QUESTION:
+    case Tokenizer.TOK_CLOSE_PAREN_ASTERISK:
+    case Tokenizer.TOK_CLOSE_PAREN_PLUS:
+      split[0] = new Atom(Tokenizer.TOK_CLOSE_PAREN, ")");
+      split[1] = atom;
+      return split;
+    }
+    split[0] = new Atom(Tokenizer.TOK_NAME,
+			atom.getToken().substring(0,
+						  atom.getToken().length() - 1));
+    return split;
+  }
+	
+  private boolean atomsAreProperlyNested(int start,
+					 int end,
+					 boolean allowConnectors) {
     int level = 0;
     for (int i = start; i < end; i++)
       switch (((Atom)atoms.elementAt(i)).getTokenType()) {
@@ -206,6 +269,11 @@ class Entity {
 	break;
       case Tokenizer.TOK_COND_SECT_CLOSE:
 	if ((level -= 2) < 0)
+	  return false;
+	break;
+      case Tokenizer.TOK_OR:
+      case Tokenizer.TOK_COMMA:
+	if (!allowConnectors && level == 0)
 	  return false;
 	break;
       }

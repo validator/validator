@@ -3621,7 +3621,7 @@
           </elementRef>
           <optional>
             <elementRef>
-              <name>rtc</name>
+              <nameSpecRef name="rtc.qname"/>
             </elementRef>
           </optional>
         </sequence>
@@ -5220,18 +5220,18 @@
         <sequence>
           <optional>
             <elementRef>
-              <name>caption</name>
+              <nameSpecRef name="caption.qname"/>
             </elementRef>
           </optional>
           <choice>
             <zeroOrMore>
               <elementRef>
-                <name>col</name>
+                <nameSpecRef name="col.qname"/>
               </elementRef>
             </zeroOrMore>
             <zeroOrMore>
               <elementRef>
-                <name>colgroup</name>
+                <nameSpecRef name="colgroup.qname"/>
               </elementRef>
             </zeroOrMore>
           </choice>
@@ -5239,23 +5239,23 @@
             <sequence>
               <optional>
                 <elementRef>
-                  <name>thead</name>
+                  <nameSpecRef name="thead.qname"/>
                 </elementRef>
               </optional>
               <optional>
                 <elementRef>
-                  <name>tfoot</name>
+                  <nameSpecRef name="tfoot.qname"/>
                 </elementRef>
               </optional>
               <oneOrMore>
                 <elementRef>
-                  <name>tbody</name>
+                  <nameSpecRef name="tbody.qname"/>
                 </elementRef>
               </oneOrMore>
             </sequence>
             <oneOrMore>
               <elementRef>
-                <name>tr</name>
+                <nameSpecRef name="tr.qname"/>
               </elementRef>
             </oneOrMore>
           </choice>
