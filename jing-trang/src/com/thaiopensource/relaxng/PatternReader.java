@@ -154,7 +154,7 @@ public class PatternReader implements ValidationContext {
 	  else if (name.equals("datatypeLibrary")) {
 	    datatypeLibrary = atts.getValue(i);
 	    int flags = checkUri(datatypeLibrary);
-	    if ((flags & UriChecker.RELATIVE) != 0 && !ns.equals(""))
+	    if ((flags & UriChecker.RELATIVE) != 0 && !datatypeLibrary.equals(""))
 	      error("relative_datatype_library");
 	    if ((flags & UriChecker.FRAGMENT) != 0)
 	      error("fragment_identifier_datatype_library");
