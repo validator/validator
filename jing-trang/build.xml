@@ -82,8 +82,11 @@
     <fileset dir="doc" includes="**/*.html"/>
   </jing>
   <jing rngfile="eg/relaxng.rng">
-    <fileset dir="eg" includes="relaxng.rng"/>
+    <fileset dir="eg" includes="*.rng"/>
     <fileset dir="xhtml" includes="**/*.rng"/>
+  </jing>
+  <jing rngfile="eg/xslt.rng">
+     <fileset dir="convert" includes="*.xsl"/>
   </jing>
 </target>
 
@@ -99,7 +102,7 @@
     <fileset dir="." includes="copying.txt"/>
     <fileset dir="doc" includes="*.html"/>
     <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
-    <fileset dir="eg" includes="relaxng.rng"/>
+    <fileset dir="eg" includes="relaxng.rng,xslt.rng"/>
   </copy>
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
   <unzip src="build/xhtml-rng.zip" dest="build"/>
