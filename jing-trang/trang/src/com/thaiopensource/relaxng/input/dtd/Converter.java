@@ -48,7 +48,6 @@ public class Converter {
   private Map attlistDeclTable = new Hashtable();
   private Map defTable = new Hashtable();
   private Map prefixTable = new Hashtable();
-  private String initialComment = null;
 
   private Map duplicateAttributeTable = new Hashtable();
   private Map currentDuplicateAttributeTable = null;
