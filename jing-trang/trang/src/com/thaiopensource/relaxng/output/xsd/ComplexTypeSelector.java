@@ -70,8 +70,6 @@ class ComplexTypeSelector extends SchemaWalker {
   private final Schema schema;
   private final Transformer transformer;
   private final ParticleVisitor baseFinder = new BaseFinder();
-  private final Map abstractElementComplexTypeMap = new HashMap();
-  private final ComplexType urType = new ComplexTypeNotAllowedContent();
 
   class Transformer extends SchemaTransformer {
     Transformer(Schema schema) {
@@ -343,7 +341,7 @@ class ComplexTypeSelector extends SchemaWalker {
     return (AttributeUse)atts.accept(transformer);
   }
 
-  private String particleBase(Particle particle) {
+  String particleBase(Particle particle) {
     if (particle == null)
       return null;
     return (String)particle.accept(baseFinder);
@@ -400,125 +398,7 @@ class ComplexTypeSelector extends SchemaWalker {
                                                                schema.getSimpleType(name).getSimpleType()));
   }
 
-  boolean attributeGroupBelongsToComplexType(String name) {
+  boolean isComplexType(String name) {
     return complexTypeMap.get(name) != null;
-  }
-
-  ComplexType getAbstractElementComplexType(Name name, NamespaceManager nsm) {
-    ComplexType ct = (ComplexType)abstractElementComplexTypeMap.get(name);
-    if (ct == null) {
-      ct = computeAbstractElementComplexType(name, nsm);
-      if (ct == null)
-        ct = urType;
-      abstractElementComplexTypeMap.put(name, ct);
-    }
-    if (ct == urType)
-      return null;
-    return ct;
-  }
-
-  ComplexType computeAbstractElementComplexType(Name name, NamespaceManager nsm) {
-    List members = nsm.getAbstractElementSubstitutionGroupMembers(name);
-    if (members == null)
-      return null;
-    ComplexType commonType = null;
-    for (Iterator iter = members.iterator(); iter.hasNext();) {
-      ComplexType ct = getElementComplexType((Name)iter.next(), nsm);
-      if (ct == null)
-        return null;
-      if (commonType == null)
-        commonType = ct;
-      else {
-        commonType = commonBaseType(commonType, ct);
-        if (commonType == null)
-          return null;
-      }
-    }
-    return commonType;
-  }
-
-  private ComplexType commonBaseType(ComplexType ct1, ComplexType ct2) {
-    if (ct1.equals(ct2))
-      return ct1;
-    if (hasBaseType(ct1, ct2))
-      return ct2;
-    if (hasBaseType(ct2, ct1))
-      return ct1;
-    return null;
-  }
-
-  private boolean hasBaseType(ComplexType ct1, ComplexType ct2) {
-    if (ct1 instanceof ComplexTypeComplexContent && ct2 instanceof ComplexTypeComplexContent)
-      return hasBaseTypeComplexContent((ComplexTypeComplexContent)ct1, (ComplexTypeComplexContent)ct2);
-    if (ct1 instanceof ComplexTypeSimpleContent && ct2 instanceof ComplexTypeSimpleContent)
-      return hasBaseTypeSimpleContent((ComplexTypeSimpleContent)ct1, (ComplexTypeSimpleContent)ct2);
-    return false;
-  }
-
-  private boolean hasBaseTypeComplexContent(ComplexTypeComplexContent ct1, ComplexTypeComplexContent ct2) {
-    ComplexTypeComplexContentExtension ex = transformComplexContent(ct2);
-    String base = ex.getBase();
-    if (base == null || ex.getParticle() != null || !ex.getAttributeUses().equals(AttributeGroup.EMPTY) || ex.isMixed())
-      return false;
-    Particle particle = ct1.getParticle();
-    for (;;) {
-      String tem = particleBase(particle);
-      if (base.equals(tem))
-        return true;
-      if (tem == null)
-        break;
-      if (complexTypeMap.get(tem) == null)
-        break;
-      particle = schema.getGroup(tem).getParticle();
-    }
-    return false;
-  }
-
-  private boolean hasBaseTypeSimpleContent(ComplexTypeSimpleContent ct1, ComplexTypeSimpleContent ct2) {
-    ComplexTypeSimpleContentExtension ex = transformSimpleContent(ct2);
-    if (!ex.getAttributeUses().equals(AttributeGroup.EMPTY))
-      return false;
-    String base = ex.getBase();
-    String builtinBase = null;
-    if (base == null) {
-      if (ex.getSimpleType() instanceof SimpleTypeRestriction) {
-        SimpleTypeRestriction restriction = (SimpleTypeRestriction)ex.getSimpleType();
-        if (restriction.getFacets().size() > 0
-                || restriction.getAnnotation() != null)
-          return false;
-        builtinBase = restriction.getName();
-      }
-      else if (ex.getSimpleType() instanceof SimpleTypeRef)
-        base = ((SimpleTypeRef)ex.getSimpleType()).getName();
-      else
-        return false;
-    }
-    SimpleType st = ct1.getSimpleType();
-    for (;;) {
-      if (!(st instanceof SimpleTypeRef))
-        break;
-      String tem = ((SimpleTypeRef)st).getName();
-      if (tem.equals(base))
-        return true;
-      if (complexTypeMap.get(tem) == null)
-        return false;
-      st = schema.getSimpleType(tem).getSimpleType();
-    }
-    if (!(st instanceof SimpleTypeRestriction))
-      return false;
-    String builtinType = ((SimpleTypeRestriction)st).getName();
-    do {
-      if (builtinType.equals(builtinBase))
-        return true;
-      builtinType = BuiltinSimpleTypeHierarchy.getParentType(builtinType);
-    } while (builtinType != null);
-    return false;
-  }
-
-  private ComplexType getElementComplexType(Name name, NamespaceManager nsm) {
-    Element element = nsm.getGlobalElement(name);
-    if (element != null)
-      return element.getComplexType();
-    return getAbstractElementComplexType(name, nsm);
   }
 }

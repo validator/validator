@@ -79,6 +79,7 @@ public class BasicOutput {
   private final OutputDirectory od;
   private final String sourceUri;
   private final ComplexTypeSelector complexTypeSelector;
+  private final AbstractElementTypeSelector abstractElementTypeSelector;
   private final Set globalElementsDefined;
   private final Set globalAttributesDefined;
   private final String xsPrefix;
@@ -633,7 +634,7 @@ public class BasicOutput {
       xw.startElement(xs("element"));
       xw.attribute("name", name.getLocalName());
       xw.attribute("abstract", "true");
-      outputComplexType(name, complexTypeSelector.getAbstractElementComplexType(name, nsm), def);
+      outputComplexType(name, abstractElementTypeSelector.getAbstractElementType(name, nsm), def);
       xw.endElement();
       return true;
     }
@@ -720,7 +721,7 @@ public class BasicOutput {
     }
 
     public void visitAttributeGroup(AttributeGroupDefinition def) {
-      if (complexTypeSelector.attributeGroupBelongsToComplexType(def.getName()))
+      if (complexTypeSelector.isComplexType(def.getName()))
         return;
       xw.startElement(xs("attributeGroup"));
       xw.attribute("name", def.getName());
@@ -768,11 +769,12 @@ public class BasicOutput {
                      Options options, ErrorReporter er) throws IOException {
     NamespaceManager nsm = new NamespaceManager(schema, guide, pm);
     ComplexTypeSelector cts = new ComplexTypeSelector(schema);
+    AbstractElementTypeSelector aets = new AbstractElementTypeSelector(schema, nsm, cts);
     Set globalElementsDefined = new HashSet();
     Set globalAttributesDefined = new HashSet();
     try {
       for (Iterator iter = schema.getSubSchemas().iterator(); iter.hasNext();)
-        new BasicOutput((Schema)iter.next(), er, od, options, nsm, pm, cts,
+        new BasicOutput((Schema)iter.next(), er, od, options, nsm, pm, cts, aets,
                         globalElementsDefined, globalAttributesDefined).output();
     }
     catch (XmlWriter.WrappedException e) {
@@ -782,11 +784,13 @@ public class BasicOutput {
 
   public BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od, Options options,
                      NamespaceManager nsm, PrefixManager pm, ComplexTypeSelector complexTypeSelector,
+                     AbstractElementTypeSelector abstractElementTypeSelector,
                      Set globalElementsDefined, Set globalAttributesDefined) throws IOException {
     this.schema = schema;
     this.nsm = nsm;
     this.pm = pm;
     this.complexTypeSelector = complexTypeSelector;
+    this.abstractElementTypeSelector = abstractElementTypeSelector;
     this.globalElementsDefined = globalElementsDefined;
     this.globalAttributesDefined = globalAttributesDefined;
     this.sourceUri = schema.getUri();
@@ -1017,7 +1021,7 @@ public class BasicOutput {
     Name substitutionGroup = nsm.getSubstitutionGroup(elementName);
     if (substitutionGroup != null) {
       xw.attribute("substitutionGroup", qualifyName(substitutionGroup));
-      if (ct != null && ct.equals(complexTypeSelector.getAbstractElementComplexType(substitutionGroup, nsm)))
+      if (ct != null && ct.equals(abstractElementTypeSelector.getAbstractElementType(substitutionGroup, nsm)))
         ct = null;
     }
     if (ct != null) {
