@@ -70,11 +70,11 @@
 </xsl:template>
 
 <!-- Define the marked section keywords as ignore in teikey2. -->
-<xsl:template match="overridden[starts-with(@name,'TEI.') 
-                                and not(@name='TEI.XML')
-                                and not(@name='TEI.general')
-                                and normalize-space(.) = 'IGNORE']">
-  <define name="{@name}">
+<xsl:template match="overridden[flag[starts-with(@name,'TEI.') 
+                                     and not(@name='TEI.XML')
+                                     and not(@name='TEI.general')
+                                     and ignore]]">
+  <define name="{flag/@name}">
     <ref name="IGNORE"/>
   </define>
 </xsl:template>
