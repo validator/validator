@@ -2043,6 +2043,44 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
+<element xmlns="http://relaxng.org/ns/structure/0.9">
+  <anyName>
+    <except>
+      <name>foo</name>
+      <name>bar</name>
+      <name>baz</name>
+    </except>
+  </anyName>
+  <empty/>
+</element>
+</correct>
+<valid><xyzzy/></valid>
+<invalid><foo/></invalid>
+<invalid><bar/></invalid>
+<invalid><baz/></invalid>
+</testCase>
+<testCase>
+<section>4.12</section>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <data type="token">
+    <except>
+      <value>x</value>
+      <value>y</value>
+      <value>z</value>
+    </except>
+  </data>
+</element>
+</correct>
+<valid><foo/></valid>
+<valid><foo>xyz</foo></valid>
+<invalid><foo>x</foo></invalid>
+<invalid><foo>y</foo></invalid>
+<invalid><foo>y</foo></invalid>
+</testCase>
+<testCase>
+<section>4.12</section>
+<correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
 </element>
