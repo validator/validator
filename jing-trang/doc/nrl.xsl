@@ -32,7 +32,7 @@ pre { margin-left: 2em }
 </xsl:template>
 
 <xsl:template match="h2">
-  <h2><a name="{translate(.,' ','_')}"/>
+  <h2><a name="{translate(normalize-space(),' ','_')}"/>
 <xsl:number/><xsl:text> </xsl:text><xsl:apply-templates/></h2>
 </xsl:template>
 
@@ -209,6 +209,16 @@ pre { margin-left: 2em }
 
 <xsl:template match="bib">
   <a href="#{@ref}"><xsl:value-of select="."/></a>
+</xsl:template>
+
+<xsl:template match="href">
+  <a href="#{translate(normalize-space(),' ','_')}">
+    <xsl:for-each select="//h2[normalize-space()=normalize-space(current())]">
+      <xsl:number/>
+    </xsl:for-each>
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="."/>
+  </a>
 </xsl:template>
 
 </xsl:stylesheet>
