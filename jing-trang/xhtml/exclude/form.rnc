@@ -1,0 +1,26 @@
+# Checks exclusions applying to form and basic-form modules.
+# This schema is intended to be used in addition to xhtml.rng.
+
+default namespace = "http://www.w3.org/1999/xhtml"
+
+start = normalElement
+
+normalElement = element * - (form|label|button) { normalContent }
+normalContent =
+  (normalElement | formElement | labelElement | buttonElement
+   | anyAttribute | text)*
+formElement = element form { formContent }
+formContent =
+  (element * - (form|label|button) { formContent }
+   | labelElement | buttonElement | anyAttribute | text)*
+labelElement = element label { labelContent }
+labelContent = 
+  (element * - (form|label|button) { labelContent }
+   | buttonElement | anyAttribute | text)*
+buttonElement = element button { buttonContent }
+buttonContent =
+  (element * - (a|input|select|textarea|label|button|form
+                |isindex|fieldset|iframe) {
+     buttonContent
+   } | anyAttribute | text)*
+anyAttribute = attribute * { text }
