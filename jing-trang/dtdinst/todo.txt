@@ -1,3 +1,6 @@
+Maybe should disallow colons in names other than element and attribute
+names per the Namespaces Rec.
+
 Translation to RELAX NG: undefined elements; namespaces; overridden
 attributes; ANY; start based on unreferenced element.
 
@@ -50,6 +53,3 @@ XML declaration is consistent with auto-detected encoding.
 Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
 
 Cleanup handling of newline normalization.
-
-Maybe should disallow colons in names other than element and attribute
-names per the Namespaces Rec.
