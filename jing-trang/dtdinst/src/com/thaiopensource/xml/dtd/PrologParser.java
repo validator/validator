@@ -69,7 +69,9 @@ public class PrologParser implements Cloneable {
   public static final int ACTION_INNER_PARAM_ENTITY_REF = ACTION_OUTER_PARAM_ENTITY_REF + 1;
   public static final int ACTION_IGNORE_SECT = ACTION_INNER_PARAM_ENTITY_REF + 1;
   public static final int ACTION_DECL_CLOSE = ACTION_IGNORE_SECT + 1;
-
+  public static final int ACTION_ENUM_GROUP_OPEN = ACTION_DECL_CLOSE + 1;
+  public static final int ACTION_NOTATION_GROUP_OPEN = ACTION_ENUM_GROUP_OPEN + 1;
+  
   private static final byte prolog0 = 0;
   private static final byte prolog1 = prolog0 + 1;
   private static final byte prolog2 = prolog1 + 1;
@@ -463,7 +465,7 @@ public class PrologParser implements Cloneable {
       case Tokenizer.TOK_OPEN_PAREN:
 	groupLevel = 1;
 	state = attlist3;
-	return ACTION_NONE;
+	return ACTION_ENUM_GROUP_OPEN;
       }
       break;
     case attlist3:
@@ -489,7 +491,7 @@ public class PrologParser implements Cloneable {
       if (tok == Tokenizer.TOK_OPEN_PAREN) {
 	state = attlist6;
 	groupLevel = 1;
-	return ACTION_NONE;
+	return ACTION_NOTATION_GROUP_OPEN;
       }
       break;
     case attlist6:

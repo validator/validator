@@ -21,6 +21,7 @@ class Param {
   static final int ATTRIBUTE_VALUE_GROUP = 15; // a group in an ATTLIST
   // Pseudo-param representing zero or more attributes in an ATTLIST
   static final int EMPTY_ATTRIBUTE_GROUP = 16;
+  static final int NOTATION_GROUP = 17;
 
   static final int OTHER = 30;
 

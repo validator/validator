@@ -125,9 +125,17 @@ class AtomParser {
 	case Tokenizer.TOK_DECL_CLOSE:
 	  return false;
 	case Tokenizer.TOK_OPEN_PAREN:
-	  p = new Param(action == PrologParser.ACTION_GROUP_OPEN
-			? Param.MODEL_GROUP
-			: Param.ATTRIBUTE_VALUE_GROUP);
+	  switch (action) {
+	  case PrologParser.ACTION_GROUP_OPEN:
+	    p = new Param(Param.MODEL_GROUP);
+	    break;
+	  case PrologParser.ACTION_ENUM_GROUP_OPEN:
+	    p = new Param(Param.ATTRIBUTE_VALUE_GROUP);
+	    break;
+	  case PrologParser.ACTION_NOTATION_GROUP_OPEN:
+	    p = new Param(Param.NOTATION_GROUP);
+	    break;
+	  }
 	  p.group = parseGroup();
 	  break;
 	case Tokenizer.TOK_LITERAL:
