@@ -790,51 +790,66 @@ possible</i>, means that the implementation must detect when an
 initial sequence <var>s</var> of events is such that there is no valid
 sequence of events that starts with <var>s</var>.</p>
 
-<p>@@@</p>
+<p>This is straightforward with the algorithm above.  Detecting the
+error as soon as possible is equivalent to detecting when the current
+pattern becomes <code>NotAllowed</code>.  Note that this relies on the
+<name>choice</name>, <name>interleave</name>, <name>group</name> and
+<name>after</name> functions recognizing the algebraic identities
+involving <code>NotAllowed</code>.  The current pattern immediately
+before it becomes <code>NotAllowed</code> describes what was expected
+and can be used to diagnose the error.</p>
 
-<p>Error recovery is something of a black art.  Here are some of the
-error recovery techniques that Jing implements:</p>
-
-<ul>
-
-<li>If an attribute causes an error, then recover by trying to match
-that attribute with a special wildcard value which matches any
-pattern; if that fails then simply ignore the attribute.</li>
-
-<li>If <name>startTagCloseDeriv</name> causes an error, then replace
-all <code>attribute</code> patterns by <code>empty</code> (i.e. assume
-all attributes match).</li>
-
-<li>If there are no potential patterns for an element of a particular
-name, try to find a potential pattern by searching the current
-pattern; in the first instance, search for a potential pattern at the
-current element depth (i.e. the search cannot pass through any
-<code>element</code> patterns); if that still fails to find a
-potential pattern, then search at element depth 1 (i.e. the search can
-pass through at most one <code>element</code> pattern).</li>
-
-<li>If the content of an element does not match any of the potential
-patterns, then recover by assuming it matches all of them.</li>
-
-<li>If a text node causes an error, ignore the text node.</li>
-
-</ul>
-
-<p>Here are some error recovery techniques I hope to implement in the future:</p>
+<p>It some scenarios it may be sufficient to produce a single error
+message for an invalid document, and to cease validation as soon as it
+is determined that the document is invalid.  In other scenarios, it
+may desirable to attempt to recover from the error and continute
+validation so as to find subsequent errors in the document.  Jing
+recovers from validation errors as follows:</p>
 
 <ul>
 
-<li>Suppose we are current expecting elements A, B, C, B, D in that
-order.  Suppose we see a B element (which is an error since only A is
-allowed at the current point). After parsing the B element, we should
-recover using a pattern of ((C, B, D)|D).  At the moment, after
-parsing the B element, Jing continues as if the B element had not been
-encountered.</li>
+<li>If <name>startTagOpenDeriv</name> causes an error, then Jing first
+tries to recover on the assumption that some required elements have
+been omitted.  In effect, it transforms the pattern by making the
+first operand of each <code>Group</code> optional and then retries
+<code>startTagOpenDeriv</code>.  If this still causes an error, then
+the purposes of validating following siblings, it ignores the
+element. For the purpose of validating the element itself, it searches
+the whole schema for <code>element</code> patterns with a name class
+that contains the name of the start-tag open.  If it finds one or more
+such <code>element</code> patterns, then it uses a <code>choice</code>
+of the content of all <code>element</code> patterns that have a
+name-class that contains the name of the start-tag open with maximum
+specificity.  A name-class that contains the name by virtue of a
+<code>name</code> element is considered more specific than one that
+contains the name by virtue of a <code>nsName</code> or
+<code>anyName</code> element; similarly, a name-class that contains
+the name by virtue of a <code>nsName</code> element is considered more
+specific than one that contains the name by virtue of a
+<code>anyName</code> element.  If there is no such element pattern,
+then it validates only any maximal subtrees rooted in an element for
+which the schema does contain an <code>element</code>
+pattern. Anything outside the maximal subtrees is ignored.</li>
 
-<li>If no potential patterns are found for an element of a particular
-name, then the entire schema should be searched for potential
-patterns, first looking for patterns for that name, and then looking
-for pattern for the namespace of that name.</li>
+<li>If <code>startAttributeDeriv</code> causes an error, then it
+recovers by ignoring the attribute.</li>
+
+<li>If <name>startTagCloseDeriv</name> causes an error, it recovers by
+replacing all <code>attribute</code> patterns by
+<code>empty</code>.</li>
+
+<li>If <name>textDeriv</name> (used only for an attribute value or for
+an element that contains no child elements) causes an error, then it
+recovers by replacing the first operands of all top-level
+<code>After</code> patterns (i.e. <code>After</code> patterns not
+inside another <code>After</code> pattern) by <code>empty</code>.</li>
+
+<li>If <name>mixedTextDeriv</name> causes an error, it recovers by
+ignoring the text node.</li>
+
+<li>If <name>endTagDeriv</name> causes an error, it recovers by using
+a <code>choice</code> of the second operands of all top-level
+<code>After</code> patterns.</li>
 
 </ul>
 
