@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.28 2001-10-23 05:53:26 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.29 2001-11-28 10:17:30 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/1.0"
          xmlns="http://relaxng.org/ns/structure/1.0">
@@ -274,9 +274,7 @@
 
   <define name="common-atts">
     <optional>
-      <attribute name="ns">
-        <data type="anyURI"/>
-      </attribute>
+      <attribute name="ns"/>
     </optional>
     <optional>
       <attribute name="datatypeLibrary">
