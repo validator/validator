@@ -568,7 +568,17 @@ class Output {
     }
 
     public Object visitValue(ValuePattern p) {
-      // XXX give an error for any prefixMap entries that are not satisfied
+      for (Iterator iter = p.getPrefixMap().entrySet().iterator(); iter.hasNext();) {
+        Map.Entry entry = (Map.Entry)iter.next();
+        String prefix = (String)entry.getKey();
+        String uri = (String)entry.getValue();
+        if (!uri.equals(nsb.getNamespaceUri(prefix))) {
+          if (prefix.equals(""))
+            er.error("value_inconsistent_default_binding", uri, p.getSourceLocation());
+          else
+            er.error("value_inconsistent_binding", prefix, uri, p.getSourceLocation());
+        }
+      }
       startAnnotations(p);
       String lib = p.getDatatypeLibrary();
       if (lib.equals("")) {
