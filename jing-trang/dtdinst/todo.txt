@@ -1,10 +1,23 @@
+Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
+naming convention or presence of element declarations or whether all
+references to the element are via that parameter entity.
+
 Deal with external parameter entities referenced within declarations.
 
-Options to expand/not recognize various kinds of ref.
+Translation to RELAX NG: undefined elements; namespaces; overridden
+attributes; ANY; start based on unreferenced element.
+
+Methods on DTD giving random access to various kinds of declaration.
+
+Check for duplicate ELEMENT declarations.
 
 Overridden general entity declarations.
 
 Overridden external parameter entity declarations.
+
+Try to parse overridden declarations.
+
+Command-line options to expand/not recognize various kinds of ref.
 
 Command-line option to define a parameter entity as INCLUDE.
 
@@ -12,18 +25,11 @@ maybe distinguish char entities in object model
 
 Try to parse ignored marked sections.
 
-Try to parse overridden declarations.
-
 Warning for unused parameter entities.
 
 String pasting.
 
-Translation to RELAX NG: undefined elements; namespaces; overridden
-attributes; ANY; start based on unreferenced element.
-
 SAXEntityManager (support Norm's entity manager)
-
-Check for duplicate ELEMENT declarations.
 
 Check that no default value for ID.
 
@@ -41,12 +47,6 @@ Check that attribute defaults are legal.
 Check that notation name of unparsed external entity is declared.
 
 Check no duplicate element names in mixed content model.
-
-Methods on DTD giving random access to various kinds of declaration.
-
-Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
-naming convention or presence of element declarations or whether all
-references to the element are via that parameter entity.
 
 Use nameSpec for general entities.
 
