@@ -589,7 +589,7 @@ the rule:</p>
 <h2>Open schemas</h2>
 
 <p>Up to now, sections validated by one subschema have not
-participated in the validation of parent subsections.  Modern schema
+participated in the validation of parent sections.  Modern schema
 languages, such as W3C XML Schema and RELAX NG, can use wildcards to
 allow elements and attributes from any namespace in particular
 contexts.  It is useful to take advantage of this in order to allow
