@@ -47,10 +47,9 @@ class Path {
   }
 
   private static final int START = 0;
-  private static final int AFTER_INITIAL_SLASH = 1;
-  private static final int IN_NAME = 2;
-  private static final int AFTER_NAME = 3;
-  private static final int AFTER_SLASH = 4;
+  private static final int IN_NAME = 1;
+  private static final int AFTER_NAME = 2;
+  private static final int AFTER_SLASH = 3;
 
   static Vector parse(String str) throws ParseException {
     int state = START;
@@ -72,27 +71,21 @@ class Path {
         break;
       case '/':
         switch (state) {
-        case AFTER_NAME:
-          state = AFTER_SLASH;
-          break;
         case IN_NAME:
           names.addElement(makeName(str, nameStartIndex, i));
-          state = AFTER_SLASH;
           break;
         case START:
           root = true;
-          state = AFTER_INITIAL_SLASH;
           break;
         case AFTER_SLASH:
-        case AFTER_INITIAL_SLASH:
           throw new ParseException("unexpected_slash");
         }
+        state = AFTER_SLASH;
         break;
       case '|':
         switch (state) {
         case START:
           throw new ParseException("empty_path");
-        case AFTER_INITIAL_SLASH:
         case AFTER_NAME:
           break;
         case AFTER_SLASH:
@@ -111,7 +104,6 @@ class Path {
         case AFTER_NAME:
           throw new ParseException("expected_slash");
         case AFTER_SLASH:
-        case AFTER_INITIAL_SLASH:
         case START:
           nameStartIndex = i;
           state = IN_NAME;
@@ -125,7 +117,6 @@ class Path {
     switch (state) {
     case START:
       throw new ParseException("empty_path");
-    case AFTER_INITIAL_SLASH:
     case AFTER_NAME:
       break;
     case AFTER_SLASH:
