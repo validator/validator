@@ -13,6 +13,11 @@ permission.</p>
 
 <h3>Version @VERSION@</h3>
 
+<p>Trang is constructed around a RELAX NG object model designed to
+support schema conversion.  Trang can support additional input and
+output formats simply by adding modules that convert these formats
+from and to this object model.</p>
+
 <p>Trang translates schemas written in <a
 href="http://relaxng.org">RELAX NG</a> into different formats. In
 particular, it can</p>
@@ -36,6 +41,8 @@ translation that preserves all aspects of the input schema that may be
 significant to a human reader, including the definitions, the way the
 schema is divided into files, annotations and comments.</p>
 
+<h2>Getting Trang</h2>
+
 <p>The implementation is available for download as</p>
 
 <ul>
@@ -46,238 +53,12 @@ schema is divided into files, annotations and comments.</p>
 
 </ul>
 
-<p>The main class is
-<code>com.thaiopensource.relaxng.translate.Driver</code>.</p>
+<h2>Further information</h2>
 
-<p>Trang requires at least two command-line arguments: the first is
-the URI or filename of the schema to be translated; the second is the
-output filename.</p>
-
-<p>Trang infers the input and output format from the extension of
-input and output filenames as follows:</p>
-
-<dl>
-
-<dt><code>.rng</code></dt>
-<dd>RELAX NG (XML syntax)</dd>
-
-<dt><code>.rnc</code></dt>
-
-<dd>RELAX NG compact syntax</dd>
-
-<dt><code>.dtd</code></dt>
-
-<dd>XML 1.0 DTD</dd>
-
-<dt><code>.xsd</code></dt>
-
-<dd>W3C XML Schema</dd>
-
-</dl>
-
-<p>This inference can be overridden using the <code>-i</code> and
-<code>-o</code> options.</p>
-
-<p>Trang accepts the following command-line options:</p>
-
-<dl>
-
-<dt><code>-i <var>format</var></code></dt>
-
-<dd><code><var>format</var></code> specifies the input format as follows:
-
-<dl>
-
-<dt><code>rng</code></dt>
-<dd>RELAX NG (XML syntax)</dd>
-
-<dt><code>rnc</code></dt>
-
-<dd>RELAX NG compact syntax</dd>
-
-</dl>
-</dd>
-
-<dt><code>-o <var>format</var></code></dt>
-
-<dd><code><var>format</var></code> specifies the output format
-as follows:
-
-<dl>
-
-<dt><code>rng</code></dt>
-
-<dd>RELAX NG (XML syntax)</dd>
-
-<dt><code>rnc</code></dt>
-
-<dd>RELAX NG compact syntax</dd>
-
-<dt><code>dtd</code></dt>
-
-<dd>XML 1.0 DTD</dd>
-
-<dt><code>xsd</code></dt>
-
-<dd>W3C XML Schema</dd>
-
-</dl>
-</dd>
-
-
-<dt><code>-e <var>enc</var></code></dt>
-
-<dd>Use the encoding <code><var>enc</var></code> for schema input and
-output.</dd>
-
-</dl>
-
-<h2>DTD output</h2>
-
-<p>The DTD output module of Trang has many limitations. There are many
-RELAX NG features that it cannot handle, including:</p>
-
-<ul>
-
-<li>Wildcards</li>
-
-<li>Multiple <code>element</code> patterns with the same name</li>
-
-<li><code>externalRef</code></li>
-
-<li>overriding definitions (in an <code>include</code>)</li>
-
-<li>combining definitions with <code>combine="choice"</code></li>
-
-</ul>
-
-<p>However, Trang can handle many RELAX NG features, including some
-that go beyond the capabilities of DTDs.  When some part of a RELAX NG
-schema cannot be represented exactly in DTD, Trang will try to
-<i>approximate</i> it. The approximation will always be more general,
-that is, the DTD will allow everything that is allowed by the RELAX NG
-schema, but there may be some things that are allowed by the DTD that
-are not allowed by the RELAX NG schema.  For example, if the RELAX NG
-schema specifies that the content of an element is a string conforming
-to some datatype, then Trang will make the content of the element be
-<code>(#PCDATA)</code>; or if the RELAX NG schema specifies a choice
-between two attributes <var>x</var> and <var>y</var>, then the DTD
-will allow both <var>x</var> and <var>y</var> optionally. Whenever
-Trang approximates, it will give a warning message.</p>
-
-<p>If you want to be able to generate a DTD but need to use some
-feature of RELAX NG that Trang is unable to convert into a DTD, then
-you might try one of the following approaches:</p>
-
-<ul>
-
-<li>Create a RELAX NG schema including the features you need, and then
-use XSLT (or some other XML transformation language) to transform the
-schema into something that Trang can handle, perhaps making use of
-annotations in the schema to guide the transformation.</li>
-
-<li>Create a RELAX NG schema <var>S</var><sub>1</sub> which uses only
-features that Trang can handle but which, consequently, does not
-capture all the desired constraints; then create a second RELAX NG
-schema <var>S</var><sub>2</sub> that <code>include</code>s
-<var>S</var><sub>1</sub>, and overrides definitions in
-<var>S</var><sub>1</sub> replacing them with definitions that make
-unrestricted use of the features of RELAX NG.</li>
-
-</ul>
-
-<h2>W3C XML Schema</h2>
-
-<p>This is still under active development. It currently has several
-limitations including:</p>
-
-<ul>
-
-<li>it may generate schemas that violate W3C XML Schema's restrictions
-on ambiguous content models;</li>
-
-<li>it may generate schemas that violate W3C XML Schema's restrictions
-on consistent element types;</li>
-
-<li>when the RELAX NG schema cannot be represented by W3C XML Schema,
-a generalization is generated; it should give a warning in this case,
-but does not always do so.</li>
-
-</ul>
-
-<p>More information is available in the <a
-href="convert-to-xsd-talk.html">slides</a> for a talk given a XML
-2002.</p>
-
-<p>Annotations can be added to the RELAX NG schema to guide the
-translation.  These annotations have the namespace URI
-<code>http://www.thaiopensource.com/ns/relaxng/xsd</code>. This document
-will use the convention that the prefix <code>tx</code> refers to this
-namespace URI; in other words, it will assume a namespace declaration
-of</p>
-
-<pre>xmlns:tx="http://www.thaiopensource.com/ns/relaxng/xsd"</pre>
-
-<p>Currently, only one annotation is supported, an attribute
-<code>tx:enableAbstractElements</code>.  The value of this must be
-<code>true</code> or <code>false</code>.  It applies to RELAX NG
-<code>define</code> elements.  Trang will try to translate a
-<code>define</code> that contains a choice of element patterns into an
-abstract element declaration, which will be used as the head of a
-substitution group whose members are the elements in the choice.  If
-<code>tx:enableAbstractElements="false"</code> is specified, then
-trang will not do this (which means the <code>define</code> will
-typically be translated into a group definition).</p>
-
-<p>The <code>tx:enableAbstractElements</code> attribute is inherited
-in a similar way to the <code>ns</code> attribute: it can be specified
-on a <code>grammar</code>, <code>div</code> or <code>include</code>
-element to enable or disable the use of abstract elements for all
-descendant <code>define</code> elements. In the absence of any
-inherited <code>tx:enableAbstractElements</code> attribute, the use of
-abstract elements in enabled.</p>
-
-<p>It can happen that the same element name occurs in a choice in more
-than one <code>define</code> element; at most one of these
-<code>define</code> elements can be translated to an abstract element.
-In this case, trang will not translate any of them to an abstract
-element, unless the use of abstract elements has been disabled by
-<code>tx:enableAbstractElements</code> for all except one of the
-<code>define</code> elements.</p>
-
-<p>In fact, the use of abstract elements is not restricted to the case
-where the <code>define</code> consists of a <code>choice</code> that
-contains only <code>element</code> patterns; the <code>choice</code>
-may also contain <code>ref</code> patterns referring to definitions
-that are to be translated into element declarations, whether abstract
-or not. The <code>tx:enableAbstractElements</code> attribute applies
-equally to these definitions.</p>
-
-<h2>Future plans</h2>
-
-<p>Trang is constructed around a RELAX NG object model designed to
-support schema conversion.  Trang can support additional input and
-output formats simply by adding modules that convert these formats
-from and to this object model.</p>
-
-<p>Features planned for future releases include:</p>
-
-<ul>
-
-<li>Enhance the DTD output module to support more features of RELAX
-NG</li>
-
-<li>Adapt <a href="http://www.thaiopensource.com/dtdinst/">DTDinst</a> for use
-as a DTD input module</li>
-
-</ul>
+<p>Detailed information about using Trang is in the <a
+href="trang-manual.html">manual</a>.</p>
 
 <h2>Related software</h2>
-
-<p><a href="http://www.thaiopensource.com/dtdinst/">DTDinst</a>
-translates from DTDs into RELAX NG; like Trang, it tries for a
-translation that preserves definitions and file structure.  Trang can
-handle all the features in RELAX NG schemas generated by DTDinst.</p>
 
 <p>The <a
 href="http://www.sun.com/software/xml/developers/relaxngconverter/">Sun
@@ -287,7 +68,7 @@ which is designed to support validation, and so does not preserve
 aspects of the input schemas that are irrelevant for validation (such
 as the definitional structure).</p>
 
-<address><a href="mailto:jjc@jclark.com">James Clark</a></address>
+<address><a href="mailto:jjc@thaiopensource.com">James Clark</a></address>
 
 </body>
 </html>

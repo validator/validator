@@ -1,0 +1,367 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Trang Manual</title>
+</head>
+<body>
+
+<h1>Trang Manual</h1>
+
+<p>Copyright &#169; 2002, 2003 Thai Open Source Software Center Ltd</p>
+
+<p>See the file <a href="copying.txt">copying.txt</a> for copying
+permission.</p>
+
+<h3>Version @VERSION@</h3>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#running">Running Trang</a></li>
+<li><a href="#arguments">Command-line arguments</a></li>
+<li><a href="#input-modules">Input modules</a>
+<ul>
+<li><a href="#rng-input">RELAX NG (XML syntax)</a></li>
+<li><a href="#rnc-input">RELAX NG (compact syntax)</a></li>
+<li><a href="#dtd-input">XML DTD</a></li>
+</ul>
+</li>
+
+<li><a href="#output-modules">Output modules</a>
+<ul>
+<li><a href="#rng-output">RELAX NG (XML syntax)</a></li>
+<li><a href="#rnc-output">RELAX NG (compact syntax)</a></li>
+<li><a href="#dtd-output">XML DTD</a></li>
+<li><a href="#xsd-output">W3C XML Schema</a></li>
+</ul>
+</li>
+
+<li><a href="#examples">Examples</a></li>
+</ul>
+
+<h2><a name="introduction">Introduction</a></h2>
+
+<p>Trang takes as input a schema written in any of the following formats:</p>
+
+<ul>
+<li>RELAX NG (XML syntax)</li>
+<li>RELAX NG (compact syntax)</li>
+<li>XML 1.0 DTD</li>
+</ul>
+
+<p>and produces as output a schema written in any of the following formats:</p>
+
+<ul>
+<li>RELAX NG (XML syntax)</li>
+<li>RELAX NG (compact syntax)</li>
+<li>XML 1.0 DTD</li>
+<li>W3C XML Schema</li>
+</ul>
+
+<p>Trang uses an internal representation based on RELAX NG.  For each
+supported input format, there is an input module that converts a
+schema in that input format into this internal representation.  For
+each supported output format, there is an output module that converts
+the internal representation into a schema in that output format.
+Thus, any supported input format can be translated to any supported
+output format.</p>
+
+<h2><a name="running">Running Trang</a></h2>
+
+<p>The file <code>trang.jar</code> contains Trang packaged for use
+with a Java runtime.  It depends on <code>jing.jar</code>, which must
+be put in the same directory as <code>trang.jar</code>.</p>
+
+<p>The most straightforward way to run this is to install version 1.4
+of the Java Runtime Environment (JRE), which can be downloaded <a
+href="http://java.sun.com/j2se/1.4/download.html">here</a>.  Once you
+have installed JRE 1.4, you can run Trang by using the command:</p>
+
+<pre>java -jar trang.jar <var>args</var></pre>
+
+<p>where <code><var>args</var></code> are additional command-line
+arguments described <a href="#arguments">below</a>.</p>
+
+<p>It is also possible to run Trang using versions 1.2 or 1.3 or the
+Java runtime, but to do so you must first install an implementation of
+<a href="http://java.sun.com/xml/">Java API for XML Processing (JAXP)
+1.1</a> as an extension.  One suitable implementation is Crimson,
+which can be downloaded <a
+href="http://xml.apache.org/dist/crimson/">here</a>.  The
+<code>crimson.jar</code> file must be copied into the
+<code>lib/ext</code> subdirectory of the Java home directory.</p>
+
+<p>If for some reason you do not wish to install JAXP 1.1 as an
+extension, then you must specify the classpath and main class
+explicitly using a command of the form:</p>
+
+<pre>java -cp trang.jar;jing.jar;crimson.jar com.thaiopensource.relaxng.translate.Driver <var>args</var></pre>
+
+<h2><a name="arguments">Command-line arguments</a></h2>
+
+<p>Trang requires at least two command-line arguments: the first is
+the URI or filename of the schema to be translated; the second is the
+output filename.</p>
+
+<p>Trang infers the input and output modules to be used from the
+extension of input and output filenames as follows:</p>
+
+<dl>
+
+<dt><code>.rng</code></dt>
+<dd>RELAX NG (XML syntax)</dd>
+
+<dt><code>.rnc</code></dt>
+
+<dd>RELAX NG (compact syntax)</dd>
+
+<dt><code>.dtd</code></dt>
+
+<dd>XML 1.0 DTD</dd>
+
+<dt><code>.xsd</code></dt>
+
+<dd>W3C XML Schema</dd>
+
+</dl>
+
+<p>This inference can be overridden using the <code>-I</code> and
+<code>-O</code> options.</p>
+
+<p>Trang accepts the following command-line options:</p>
+
+<dl>
+
+<dt><code>-I <a href="#rng-input">rng</a></code></dt>
+<dt><code>-I <a href="#rnc-input">rnc</a></code></dt>
+<dt><code>-I <a href="#dtd-input">dtd</a></code></dt>
+
+<dd>Specifies the input module.</dd>
+
+<dt><code>-O <a href="#rng-output">rng</a></code></dt>
+<dt><code>-O <a href="#rnc-output">rnc</a></code></dt>
+<dt><code>-O <a href="#rng-output">dtd</a></code></dt>
+<dt><code>-O <a href="#xsd-output">xsd</a></code></dt>
+
+<dd>Specifies the output module.</dd>
+
+<dt><code>-i <var>param</var></code></dt>
+<dt><code>-o <var>param</var></code></dt>
+
+<dd>Specifies an additional parameter for an input (<code>-i</code>)
+or output (<code>-o</code>) module.  The <code>-i</code> and
+<code>-o</code> options may be used multiple times in order to specify
+multiple parameters.  There are two kinds of parameter: boolean
+parameters and string-valued parameters.  A string-valued parameter is
+specified using the form
+<code><var>name</var>=<var>value</var></code>.  A boolean parameter is
+specified using the form <code><var>name</var></code> or
+<code>no-<var>name</var></code>.  The applicable parameters depend on
+the particular input and output module and are described in the
+documentation for the <a href="#input-modules">input</a> or <a
+href="#output-modules">output</a> modules.</dd>
+
+</dl>
+
+<h2><a name="input-modules">Input modules</a></h2>
+
+<h3><a name="rng-input">RELAX NG (XML syntax) input module</a></h3>
+
+<p>This input module accepts RELAX NG schemas in XML syntax as defined
+by the <a href="http://relaxng.org/spec.html">RELAX NG 1.0 Committee
+Specification</a>.</p>
+
+<p>It accept the following parameters:</p>
+
+<dl>
+<dt><code>-i encoding=<var>name</var></code></dt>
+
+<dd>Use an encoding of <var>name</var> rather than the encoding
+specified in the encoding declaration of the XML document.</dd>
+
+</dl>
+
+<h3><a name="rnc-input">RELAX NG Compact Syntax input module</a></h3>
+
+<h3><a name="dtd-input">DTD input module</a></h3>
+
+<p>Namespaces</p>
+
+<p>Parameters</p>
+
+<dl>
+<dt><code>-i inline-attlist</code></dt>
+<dt><code>-i no-inline-attlist</code></dt>
+
+<dt><code>-i xmlns=<var>uri</var></code></dt>
+
+<dt><code>-i xmlns:<var>prefix</var>=<var>uri</var></code></dt>
+
+<dt><code>-i any-name=<var>name</var></code></dt>
+
+<dt><code>-i strict-any</code></dt>
+<dt><code>-i no-strict-any</code></dt>
+
+<dt><code>-i annotation-prefix=<var>prefix</var></code></dt>
+
+<dt><code>-i colon-replacement=<var>chars</var></code></dt>
+
+<dt><code>-i generate-start</code></dt>
+<dt><code>-i no-generate-start</code></dt>
+
+
+<dt><code>-i element-define=<var>name-pattern</var></code></dt>
+<dt><code>-i attlist-define=<var>name-pattern</var></code></dt>
+
+</dl>
+
+<p>Limitations: marked sections</p>
+
+
+<h2><a name="output-modules">Output modules</a></h2>
+
+<p>All output modules accept the following parameter:</p>
+
+<dl>
+
+<dt><code>-o encoding=<var>name</var></code></dt>
+
+<dd>Use an encoding of <var>name</var> for the output files.</dd>
+
+</dl>
+
+<h3><a name="rng-output">RELAX NG (XML syntax) output module</a></h3>
+
+<p>This output module outputs RELAX NG schemas in XML syntax as
+defined by the <a href="http://relaxng.org/spec.html">RELAX NG 1.0
+Committee Specification</a>.</p>
+
+<h3><a name="rnc-output">RELAX NG Compact Syntax output module</a></h3>
+
+<h3><a name="dtd-output">DTD output module</a></h3>
+
+<p>The DTD output module outputs DTDs as defined by the XML 1.0
+Recommendation.</p>
+
+<p>It has many limitations. There are many RELAX NG features that it
+cannot handle, including:</p>
+
+<ul>
+
+<li>Wildcards</li>
+
+<li>Multiple <code>element</code> patterns with the same name</li>
+
+<li><code>externalRef</code></li>
+
+<li>overriding definitions (in an <code>include</code>)</li>
+
+<li>combining definitions with <code>combine="choice"</code></li>
+
+</ul>
+
+<p>However, it can handle many RELAX NG features, including some
+that go beyond the capabilities of DTDs.  When some part of a RELAX NG
+schema cannot be represented exactly in DTD, Trang will try to
+<i>approximate</i> it. The approximation will always be more general,
+that is, the DTD will allow everything that is allowed by the RELAX NG
+schema, but there may be some things that are allowed by the DTD that
+are not allowed by the RELAX NG schema.  For example, if the RELAX NG
+schema specifies that the content of an element is a string conforming
+to some datatype, then Trang will make the content of the element be
+<code>(#PCDATA)</code>; or if the RELAX NG schema specifies a choice
+between two attributes <var>x</var> and <var>y</var>, then the DTD
+will allow both <var>x</var> and <var>y</var> optionally. Whenever
+Trang approximates, it will give a warning message.</p>
+
+<p>If you want to be able to generate a DTD but need to use some
+feature of RELAX NG that Trang is unable to convert into a DTD, then
+you might try one of the following approaches:</p>
+
+<ul>
+
+<li>Create a RELAX NG schema including the features you need, and then
+use XSLT (or some other XML transformation language) to transform the
+schema into something that Trang can handle, perhaps making use of
+annotations in the schema to guide the transformation.</li>
+
+<li>Create a RELAX NG schema <var>S</var><sub>1</sub> which uses only
+features that Trang can handle but which, consequently, does not
+capture all the desired constraints; then create a second RELAX NG
+schema <var>S</var><sub>2</sub> that <code>include</code>s
+<var>S</var><sub>1</sub>, and overrides definitions in
+<var>S</var><sub>1</sub> replacing them with definitions that make
+unrestricted use of the features of RELAX NG.</li>
+
+</ul>
+
+<h3><a name="xsd-output">W3C XML Schema output module</a></h3>
+
+<p>It has the following limitations:</p>
+
+<ul>
+
+<li>it may generate schemas that violate W3C XML Schema's restrictions
+on ambiguous content models;</li>
+
+<li>it may generate schemas that violate W3C XML Schema's restrictions
+on consistent element types;</li>
+
+<li>when the RELAX NG schema cannot be represented by W3C XML Schema,
+a generalization is generated; it should give a warning in this case,
+but does not always do so.</li>
+
+</ul>
+
+<p>Some background information is available in the <a
+href="convert-to-xsd-talk.html">slides</a> for a talk given a XML
+2002.</p>
+
+<p>Annotations can be added to the RELAX NG schema to guide the
+translation.  These annotations have the namespace URI
+<code>http://www.thaiopensource.com/ns/relaxng/xsd</code>. This document
+will use the convention that the prefix <code>tx</code> refers to this
+namespace URI; in other words, it will assume a namespace declaration
+of</p>
+
+<pre>xmlns:tx="http://www.thaiopensource.com/ns/relaxng/xsd"</pre>
+
+<p>Currently, only one annotation is supported, an attribute
+<code>tx:enableAbstractElements</code>.  The value of this must be
+<code>true</code> or <code>false</code>.  It applies to RELAX NG
+<code>define</code> elements.  Trang will try to translate a
+<code>define</code> that contains a choice of element patterns into an
+abstract element declaration, which will be used as the head of a
+substitution group whose members are the elements in the choice.  If
+<code>tx:enableAbstractElements="false"</code> is specified, then
+Trang will not do this (which means the <code>define</code> will
+typically be translated into a group definition).</p>
+
+<p>The <code>tx:enableAbstractElements</code> attribute is inherited
+in a similar way to the <code>ns</code> attribute: it can be specified
+on a <code>grammar</code>, <code>div</code> or <code>include</code>
+element to enable or disable the use of abstract elements for all
+descendant <code>define</code> elements. In the absence of any
+inherited <code>tx:enableAbstractElements</code> attribute, the use of
+abstract elements in enabled.</p>
+
+<p>It can happen that the same element name occurs in a choice in more
+than one <code>define</code> element; at most one of these
+<code>define</code> elements can be translated to an abstract element.
+In this case, Trang will not translate any of them to an abstract
+element, unless the use of abstract elements has been disabled by
+<code>tx:enableAbstractElements</code> for all except one of the
+<code>define</code> elements.</p>
+
+<p>In fact, the use of abstract elements is not restricted to the case
+where the <code>define</code> consists of a <code>choice</code> that
+contains only <code>element</code> patterns; the <code>choice</code>
+may also contain <code>ref</code> patterns referring to definitions
+that are to be translated into element declarations, whether abstract
+or not. The <code>tx:enableAbstractElements</code> attribute applies
+equally to these definitions.</p>
+
+<h2><a name="examples">Examples</a></h2>
+
+</body>
+</html>
