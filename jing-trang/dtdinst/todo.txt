@@ -59,3 +59,7 @@ Support EBCDIC in EncodingDetectInputStream.
 
 EncodingDetectInputStream should support entities that need an XmlDecl
 rather than a TextDecl.
+
+In EncodingDetectInputStream should check that encoding specified in
+XML declaration is consistent with auto-detected encoding.
+
