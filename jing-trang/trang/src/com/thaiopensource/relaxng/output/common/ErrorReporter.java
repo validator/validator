@@ -9,7 +9,7 @@ import com.thaiopensource.util.Localizer;
 public class ErrorReporter {
   private final Localizer localizer;
   private final ErrorHandler eh;
-  boolean hadError = false;
+  private boolean hadError = false;
 
   static public class WrappedSAXException extends RuntimeException {
     private final SAXException exception;

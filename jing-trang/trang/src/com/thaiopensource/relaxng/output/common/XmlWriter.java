@@ -156,7 +156,7 @@ public class XmlWriter {
       newline();
   }
 
-  public void data(String s) {
+  private void data(String s) {
     int n = s.length();
     for (int i = 0; i < n; i++) {
       char c = s.charAt(i);
