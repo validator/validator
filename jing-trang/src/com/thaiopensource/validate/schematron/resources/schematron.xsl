@@ -6,6 +6,12 @@
 	xmlns:saxon="http://icl.com/saxon"
         xmlns:xj="http://xml.apache.org/xslt/java">
 
+<!--
+TODO:
+Implement subject
+Implement diagnostic
+-->
+
 <xsl:param name="phase" select="'#ALL'"/>
 
 <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
