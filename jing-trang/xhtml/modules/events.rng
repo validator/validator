@@ -201,4 +201,8 @@
   <ref name="Events.attrib"/>
 </define>
 
+<define name="CommonIdRequired.attrib" combine="interleave">
+  <ref name="Events.attrib"/>
+</define>
+
 </grammar>
