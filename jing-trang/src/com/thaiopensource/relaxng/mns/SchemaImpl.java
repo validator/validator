@@ -152,6 +152,9 @@ class SchemaImpl implements Schema {
         return;
       }
       if (localName.equals("cover")) {
+        String ns = attributes.getValue("", "ns");
+        if (!Uri.isAbsolute(ns) && !ns.equals(""))
+          error("ns_absolute");
         currentElementAction.covered.add(attributes.getValue("", "ns"));
         return;
       }
