@@ -9,6 +9,7 @@ import java.util.Enumeration;
 /*
 TODO  Need to ensure newline normalization is done properly.
 Don't unexpand entities that are not properly nested.
+Don't expand empty entities that might be pasted.
 */
 
 public class Parser extends Token {
