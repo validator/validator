@@ -245,15 +245,7 @@ validate =
 lax = 
   element lax {
     inModesAtt?,
-    attribute allow {
-      list {
-        ("elements", "attributes") 
-         | ("attributes", "elements") 
-         | "elements"
-         | "attributes"
-         | empty
-      }
-    }?
+    attribute allow { elementsOrAttributes }?
   }
 
 validateModel = nsAtt, attribute schema { xsd:anyURI }, inModesAtt?
@@ -263,6 +255,15 @@ nsAtt = attribute ns { xsd:anyURI }
 inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
+
+elementsOrAttributes =
+  list {
+    ("elements", "attributes") 
+     | ("attributes", "elements") 
+     | "elements"
+     | "attributes"
+     | empty
+  }
 </pre>
 
 <p>The selection of validation subjects takes place with respect to a
@@ -360,15 +361,7 @@ elementContext =
 
 lax =
   element lax {
-    attribute allow {
-      list {
-        ("elements", "attributes") 
-         | ("attributes", "elements") 
-         | "elements"
-         | "attributes"
-         | empty
-      }
-    }?,
+    attribute allow { elementsOrAttributes }?,
     inModesAtt?,
     foreign
   }
@@ -385,6 +378,15 @@ useModeAtt = attribute useMode { mode }
 inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
+
+elementsOrAttributes =
+  list {
+    ("elements", "attributes") 
+     | ("attributes", "elements") 
+     | "elements"
+     | "attributes"
+     | empty
+  }
 </pre>
 
 <h2>Extensibility</h2>
@@ -430,15 +432,7 @@ elementContext =
 
 lax =
   element lax {
-    attribute allow {
-      list {
-        ("elements", "attributes") 
-         | ("attributes", "elements") 
-         | "elements"
-         | "attributes"
-         | empty
-      }
-    }?,
+    attribute allow { elementsOrAttributes }?,
     inModesAtt?,
     foreign
   }
@@ -455,6 +449,15 @@ useModeAtt = attribute useMode { mode }
 inModesAtt = attribute inModes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
+
+elementsOrAttributes =
+  list {
+    ("elements", "attributes") 
+     | ("attributes", "elements") 
+     | "elements"
+     | "attributes"
+     | empty
+  }
 
 foreign =
   (attribute * - (mns:* | local:*) { text }
