@@ -17,7 +17,6 @@ import org.xml.sax.EntityResolver;
 import java.io.IOException;
 
 public class SAXParseable implements Parseable {
-  static public final String URI = SchemaParser.relaxng10URI;
   private final XMLReaderCreator xrc;
   private final InputSource in;
   private final ErrorHandler eh;
