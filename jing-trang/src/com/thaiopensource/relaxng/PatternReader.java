@@ -648,10 +648,11 @@ public class PatternReader implements DatatypeContext {
 	    error("recursive_include", systemId);
 	    return;
 	  }
-	readPattern(PatternReader.this,
-		    in,
-		    grammar,
-		    ns == null ? nsInherit : ns);
+	if (readPattern(PatternReader.this,
+			in,
+			grammar,
+			ns == null ? nsInherit : ns) == null)
+	  hadError = true;
       }
       catch (IOException e) {
 	throw new SAXException(e);
