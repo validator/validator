@@ -116,7 +116,7 @@ class SchemaImpl implements Schema {
     private String contextNs;
     private Mode contextMode;
     private String elementNs;
-    private Stack nameStack = new Stack();
+    private final Stack nameStack = new Stack();
     private boolean isRoot;
     private int pathDepth = 0;
 

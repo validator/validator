@@ -8,7 +8,7 @@ import java.util.Hashtable;
 class ContextMap {
   private Object rootValue;
   private Object otherValue;
-  private Hashtable nameTable = new Hashtable();
+  private final Hashtable nameTable = new Hashtable();
 
   Object get(Vector context) {
     return get(context, context.size());
