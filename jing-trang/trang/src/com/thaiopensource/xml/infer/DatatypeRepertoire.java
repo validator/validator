@@ -67,12 +67,44 @@ public class DatatypeRepertoire {
   }
 
   static private class UriType extends Type {
+
     private UriType(Datatype dt, String name, int index) {
       super(dt, name, index);
     }
 
     public boolean isTypical(String value) {
-      return Uri.isAbsolute(value);
+      return Uri.isAbsolute(value) && !containsEmbeddedWhitespace(value) && !containsExcluded(value);
+    }
+
+    static private final String EXCLUDED = "<>\"{}|\\^`";
+
+    private static boolean containsExcluded(String value) {
+      for (int i = 0; i < EXCLUDED.length(); i++)
+        if (value.indexOf(EXCLUDED.charAt(i)) >= 0)
+          return true;
+      return false;
+    }
+
+    // anyURI is derived from token so there's nothing wrong with leading and trailing whitespace
+    private static boolean containsEmbeddedWhitespace(String value) {
+      int state = 0;
+      for (int i = 0, len = value.length(); i < len; i++)
+        switch (value.charAt(i)) {
+        case ' ':
+        case '\t':
+        case '\r':
+        case '\n':
+          if (state == 1)
+            state = 2;
+          break;
+        default:
+          if (state == 2)
+            return true;
+          if (state == 0)
+            state = 1;
+          break;
+        }
+      return false;
     }
 
   }
