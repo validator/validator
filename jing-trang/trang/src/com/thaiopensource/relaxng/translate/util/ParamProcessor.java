@@ -60,7 +60,7 @@ public class ParamProcessor {
           lookupParam(name).set(false);
         }
         else {
-          name = param.substring(3);
+          name = param;
           lookupParam(name).set(true);
         }
       }
