@@ -15,7 +15,7 @@ Explain how NRL can improve RELAX NG modularity
 
 <div class="titlepage">
 <p><b>Author:</b> James Clark &lt;jjc@thaiopensource.com><br />
-<b>Date:</b> 2003-06-08</p>
+<b>Date:</b> 2003-06-10</p>
 <p>Copyright &#169; Thai Open Source Software Center Ltd</p>
 </div>
 
@@ -952,7 +952,7 @@ reflected in the design of RELAX Namespace.  NRL is designed to be
 able to take advantage of more recent schema languages, such as RELAX
 NG, that are not limited in this way.</p>
 
-<p>In reaction to MNS, Rick Jellife produced the <bib
+<p>In reaction to MNS, Rick Jelliffe produced the <bib
 ref="nsswitch">Namespace Switchboard</bib>, which inspired much of the
 evolution of NRL from MNS.</p>
 
