@@ -1,0 +1,249 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Modular Namespaces (MNS)</title>
+</head>
+<body>
+<h1>Modular Namespaces (MNS)</h1>
+
+<p>In its simplest form, a Modular Namespaces (MNS) schema consists of a
+mapping from namespace URIs to schema URIs.  An MNS schema is written
+in XML.  Here is a RELAX NG compact syntax schema for this simplest
+form of MNS schema:</p>
+
+<pre>
+default namespace = "http://www.thaiopensource.com/ns/mns"
+
+element rules {
+  element validateElement {
+    attribute ns { xsd:anyURI },
+    attribute schema { xsd:anyURI }
+  }*
+}
+</pre>
+
+<p>Validity of an instance with respect to a MNS schema is determined
+as follows.  First, a set of <em>validation subjects</em> is
+identified.  Each validation subject is an element in the instance.
+Associated with each validation subject is a schema.  If all the
+validation subjects are valid with respect to their associated
+schemas, then the instance is considered valid with respect to the MNS
+schema.</p>
+
+<p>It is important to understand that when a validation subject is
+validated with respect to its schema, then it is validated along with
+all its descendants and attributes.  One validation subject may have
+other validation subjects as ancestors. In this case, a validation
+subject will be validated with respect to more than one schema: not
+only as part of validation with respect to its schema, but also as
+part of validation of the ancestor validation subjects with respect to
+their schemas.</p>
+
+<p>By default, an element is a <em>potential validation subject</em>
+if has no parent or if its namespace URI is different from that of its
+parent. A potential validation subject becomes a validation subject if
+there is <code>validateElement</code> rule for its namespace URI.  The
+associated schema is specified by the <code>schema</code> attribute of
+the <code>validateElement</code> element.</p>
+
+<p>MNS has additional features that provide further control over the
+selection of validation subjects and their associated schemas.</p>
+
+<h2>Global attributes</h2>
+
+<p>Attributes can also be validation subjects:</p>
+
+<pre>
+default namespace = "http://www.thaiopensource.com/ns/mns"
+
+element rules {
+  element validateElement|validateAttributes {
+    attribute ns { xsd:anyURI },
+    attribute schema { xsd:anyURI }
+  }*
+}
+</pre>
+
+<p>If an element has attributes that are namespace qualified with a
+namespace URI other than the namespace URI of the element itself, then
+the set of all attributes on that element with that namespace URI is a
+potential validation subject.  If there is a
+<code>validateAttributes</code> element for that namespace URI, then it
+becomes a validation subject.  The associated schema is specified by
+the <code>schema</code> attribute of the <code>validateAttributes</code>
+element.</p>
+
+<p>Note that it is <code>validationAttribute<b>s</b></code>, because
+attributes are validated as a set with respect to their schema, but it
+is <code>validationElement</code> because an element is individually
+validated with respect to its schema.</p>
+
+<h2>Strict processing</h2>
+
+<p>The <code>rules</code> element may include an empty
+<code>strict</code> element:</p>
+
+<pre>
+default namespace = "http://www.thaiopensource.com/ns/mns"
+
+element rules {
+   element validateElement|validateAttribute {
+    attribute ns { xsd:anyURI },
+    attribute schema { xsd:anyURI }
+   }*
+   &amp; element strict { empty }?
+}
+</pre>
+
+<p>This makes processing <em>strict</em> instead of <em>lax</em>.
+With strict processing, it is an error if there is no schema specified
+for the namespace of a potential validation subject.</p>
+
+<p class="note">Should strictness be specified separately for element
+and attribute potential validation subjects?</p>
+
+<h2>Validation subjects with multiple namespaces</h2>
+
+<p>By default, an element is a potential validation subject if its
+namespace URI is different from its parent.  This behavior can be
+changed by adding one or more <code>cover</code> children to the
+<code>validateElement</code> element.</p>
+
+<pre>
+default namespace = "http://www.thaiopensource.com/ns/mns"
+
+start =
+  element rules {
+     validate* &amp; element strict { empty }?
+  }
+
+validate =
+  element validateElement {
+    validateModel,
+    element subsume { nsAtt }*
+  }
+  | element validateAttributes { validateModel }
+
+validateModel = nsAtt, attribute schema { xsd:anyURI }
+
+nsAtt = attribute ns { xsd:anyURI }
+</pre>
+
+<p>With the introduction of <code>cover</code> elements, the rule is
+that an element is a potential validation subject if it is not
+<em>covered</em> by an ancestor validation subject.  Each validation
+subject has a set of namespace URIs that it covers.  A validation
+subject always covers it own namespace URI.  In addition, it covers
+the namespace URIs specified by the <code>cover</code> elements in its
+<code>validationElement</code> element.  The set elements covered by a
+validation subject is determined from the set of namespace URI that it
+covers by the following two rules:</p>
+
+<ul>
+
+<li>a validation subject covers itself;</li>
+
+<li>an element is covered by a validation subject if its parent
+element and its namespace URI is covered by that validation
+subject.</li>
+
+</ul>
+
+<p>The rule for attributes is very similar. A set of attributes is a
+potential validation subject if and only if:</p>
+
+<ul>
+
+<li>the attributes are namespace qualified with a namespace URI
+different from the namespace URI of the parent element, and</li>
+
+<li>the attributes are not covered by an ancestor validation
+subject.</li>
+
+</ul>
+
+<p>An attribute is covered by a validation subject if its parent
+element and its namespace URI are covered by that validation
+subject.</p>
+
+<h2>Modes</h2>
+
+<p>The selection of validation subjects and associated schemas may
+need to be context dependent.  For example, not all namespace URIs may
+be acceptable for the document element, or the document element may
+need to be validated against a different schema from that used for
+subtrees with the same namespace URI.</p>
+
+<p>Context dependence is specified by means of modes.</p>
+
+<pre>
+default namespace = "http://www.thaiopensource.com/ns/mns"
+
+start =
+  element rules {
+     attribute startMode { mode }?,
+     (validate|process)*
+  }
+
+validate =
+  element validateElement {
+    validateModel,
+    attribute useMode { mode }?,
+    element subsume { nsAtt }*
+  }
+  | element validateAttributes { validateModel }
+
+process = element lax|strict { modesAtt }
+
+validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt
+
+modesAtt = attribute modes { list { mode+ } }
+
+nsAtt = attribute ns { xsd:anyURI }
+
+mode = xsd:NCName | "#default"
+</pre>
+
+<p>The selection of validation subjects takes place with respect to a
+named mode.  A mode is named by an NCName.  In addition, there is a
+default mode named <code>#default</code>.  The
+<code>validationElement</code> and <code>validateAttributes</code>
+elements have an optional <code>modes</code> attribute, which
+specifies the modes in which the elements are applicable; it defaults
+to the default mode.  It is an error if there is a mode and a
+namespace URI for which more than one <code>validationElement</code>
+or <code>validateAttributes</code> element is applicable.  Thus, when
+an element is selected as a validation subject there is a unique
+applicable <code>validateElement</code> element.</p>
+
+<p>The mode used to select whether a particular element or set of
+attributes is a validation subject is specified by the
+<code>useMode</code> attribute of the <code>validateElement</code>
+element applicable to the nearest ancestor validation subject.  The
+<code>useMode</code> attribute defaults to the default mode.  If an
+element or set of attributes has no ancestor validation subject, then
+the mode used is determined by the <code>startMode</code> attribute on
+the <code>rules</code> element; this also defaults to the default
+mode.  Looking at this more procedurally, processing is top-down; the
+starting mode is specified by the <code>startMode</code> attribute.
+Within each validation subject element, processing switches to the
+mode specified by the <code>useMode</code> attribute.</p>
+
+<p>Whether processing is strict or lax also depends on the mode.  The
+<code>strict</code> element has a <code>modes</code> attribute that
+specifies the modes in which it applies. As usual, the
+<code>modes</code> attribute defaults to the default mode.  There is
+also a <code>lax</code> element that allows the processing for a mode
+to be explicitly specified as <code>lax</code>.</p>
+
+<p>For every mode named in a <code>useMode</code> attribute other than
+the default mode, there must be at least one
+<code>validateElement</code>, <code>validateAttribute</code>,
+<code>lax</code> or <code>strict</code> element that includes that
+mode in its <code>modes</code> attribute.</p>
+
+<address>
+<a href="mailto:jjc@jclark.com">James Clark</a>
+</address>
+
+</body>
+</html>
