@@ -1,0 +1,97 @@
+#!/bin/sh
+
+## fixup usage error messages
+
+set -e
+a_jing_file=src/com/thaiopensource/relaxng/Schema.java
+crimson_version=1.1.3
+xerces_version=2.3.0
+build_dir=build/gcj
+jing_version_properties=src/com/thaiopensource/relaxng/util/resources/Version.properties
+trang_version_properties=trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties
+crimson_unwanted="
+org/w3c
+org/xml
+org/apache/crimson/tree
+org/apache/crimson/jaxp/DocumentBuilderImpl.java
+org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.java
+javax/xml/parsers/DocumentBuilder.java
+javax/xml/parsers/DocumentBuilderFactory.java
+META-INF/services/javax.xml.parsers.DocumentBuilderFactory
+META-INF/services/javax.xml.transform.TransformerFactory
+META-INF/jaxp-javax.manifest
+META-INF/manifest.crimson
+"
+jing_unwanted="
+com/thaiopensource/datatype/xsd/regex/jdk1_4
+com/thaiopensource/datatype/xsd/regex/xerces
+com/thaiopensource/relaxng/jarv
+com/thaiopensource/relaxng/util/JingTask.java
+META-INF/services/org.iso_relax.verifier.VerifierFactoryLoader
+"
+
+if [ -f ../${a_jing_file} ]; then
+    cd ..
+elif [ ! -f ${a_jing_file} ]; then
+    echo You are in the wrong directory >&2
+    exit 1
+fi
+
+top_dir=`pwd`
+
+rm -fr ${build_dir}
+test -f ${build_dir} || mkdir -p ${build_dir}
+
+. ${jing_version_properties}
+jing_version=`echo $version | tr -d -`
+
+. ${trang_version_properties}
+trang_version=`echo $version | tr -d -`
+
+jing_src_dir=${build_dir}/src/jing-${jing_version}
+trang_src_dir=${build_dir}/src/trang-${trang_version}
+
+mkdir -p ${jing_src_dir} ${trang_src_dir}
+
+(ls src/META-INF/services/*.*; find src -name '*.java' -or -name '*.jj' -or -name '*.properties' -or -name '*.rng') | cpio --quiet -p -d ${jing_src_dir}
+
+cd ${jing_src_dir}/src
+rm -fr ${jing_unwanted}
+
+echo com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl >META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine
+
+cd ${top_dir}
+CLASSPATH=lib/JavaCC.zip gij COM.sun.labs.javacc.Main -output_directory=${jing_src_dir}/src/com/thaiopensource/relaxng/parse/compact  ${jing_src_dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj >/dev/null
+
+f=${jing_src_dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java
+sed -e 's/java.io.IOException/EOFException/g' $f >${build_dir}/tem
+mv ${build_dir}/tem $f
+
+
+cd ${build_dir}
+tar xfz ${top_dir}/gcj/crimson-${crimson_version}-src.tar.gz crimson-${crimson_version}/src
+cd crimson-${crimson_version}/src
+
+rm -fr ${crimson_unwanted}
+find org javax -type f -not -name '*.java' -not -name '*.properties' | xargs rm -f
+
+cd ${top_dir}
+cp -a ${build_dir}/crimson-${crimson_version}/src/* ${jing_src_dir}/src
+rm -fr ${build_dir}/crimson-${crimson_version}
+
+cd ${build_dir}
+
+xerces_src_dir=xerces-`echo ${xerces_version} | tr . _`/src
+
+tar xfz ${top_dir}/gcj/Xerces-J-src.${xerces_version}.tar.gz ${xerces_src_dir}/org/apache/xerces/impl/xpath/regex
+cd ${top_dir}
+cp -a ${build_dir}/${xerces_src_dir}/* ${jing_src_dir}/src
+rm -fr ${build_dir}/${xerces_src_dir}
+
+cp -a ${jing_src_dir}/src ${trang_src_dir}
+
+cd dtdinst
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
+cd ../trang
+find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
+cd ..
