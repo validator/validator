@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.5 2001-05-24 08:30:07 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.6 2001-05-24 09:19:54 jjc Exp $ -->
 <grammar ns="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
@@ -145,25 +145,32 @@
 
   <define name="grammar-element">
     <choice>
+      <ref name="start-element"/>
       <ref name="define-element"/>
-      <element name="start">
-	<optional>
-	  <attribute name="name"/>
-	</optional>
-        <ref name="combine-att"/>
-	<ref name="common-atts"/>
-	<ref name="open-patterns"/>
-      </element>
       <element name="include">
 	<attribute name="href"/>
         <interleave>
           <ref name="other"/>
 	  <zeroOrMore>
-	    <ref name="define-element"/>
+            <choice>
+  	      <ref name="start-element"/>
+  	      <ref name="define-element"/>
+            </choice>
 	  </zeroOrMore>
         </interleave>
       </element>
     </choice>
+  </define>
+
+  <define name="start-element">
+    <element name="start">
+      <optional>
+	<attribute name="name"/>
+      </optional>
+      <ref name="combine-att"/>
+      <ref name="common-atts"/>
+      <ref name="open-patterns"/>
+    </element>
   </define>
 
   <define name="define-element">
