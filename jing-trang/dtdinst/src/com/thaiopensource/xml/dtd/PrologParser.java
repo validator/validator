@@ -164,7 +164,7 @@ public class PrologParser implements Cloneable {
     }
   }
 
-  public int action(int tok, char[] buf, int start, int end) throws PrologSyntaxException {
+  public int action(int tok, String token) throws PrologSyntaxException {
     switch (state) {
     case prolog0:
       state = prolog1;
@@ -173,7 +173,7 @@ public class PrologParser implements Cloneable {
       /* fall through */
     case prolog1:
       if (tok == Tokenizer.TOK_DECL_OPEN
-	  && matches(buf, start + 2, end, "DOCTYPE")) {
+	  && matches(token, 2, "DOCTYPE")) {
 	state = doctype0;
 	return ACTION_NONE;
       }
@@ -201,11 +201,11 @@ public class PrologParser implements Cloneable {
 	state = prolog2;
 	return ACTION_DOCTYPE_CLOSE;
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "SYSTEM")) {
+	if (token.equals("SYSTEM")) {
 	  state = doctype3;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start, end, "PUBLIC")) {
+	if (token.equals("PUBLIC")) {
 	  state = doctype2;
 	  return ACTION_NONE;
 	}
@@ -262,19 +262,19 @@ public class PrologParser implements Cloneable {
     case internalSubset:
       switch (tok) {
       case Tokenizer.TOK_DECL_OPEN:
-	if (matches(buf, start + 2, end, "ENTITY")) {
+	if (matches(token, 2, "ENTITY")) {
 	  state = entity0;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start + 2, end, "ATTLIST")) {
+	if (matches(token, 2, "ATTLIST")) {
 	  state = attlist0;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start + 2, end, "ELEMENT")) {
+	if (matches(token, 2, "ELEMENT")) {
 	  state = element0;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start + 2, end, "NOTATION")) {
+	if (matches(token, 2, "NOTATION")) {
 	  state = notation0;
 	  return ACTION_NONE;
 	}
@@ -309,18 +309,20 @@ public class PrologParser implements Cloneable {
     case entity2:
       switch (tok) {
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "SYSTEM")) {
+	if (token.equals("SYSTEM")) {
 	  state = entity4;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start, end, "PUBLIC")) {
+	if (token.equals("PUBLIC")) {
 	  state = entity3;
 	  return ACTION_NONE;
 	}
 	break;
       case Tokenizer.TOK_LITERAL:
 	state = declClose;
-	return documentEntity ? ACTION_ENTITY_VALUE_NO_PEREFS : ACTION_ENTITY_VALUE_WITH_PEREFS;
+	return (documentEntity
+		? ACTION_ENTITY_VALUE_NO_PEREFS
+		: ACTION_ENTITY_VALUE_WITH_PEREFS);
       }
       break;
     case entity3:
@@ -341,7 +343,7 @@ public class PrologParser implements Cloneable {
 	state = documentEntity ? internalSubset : externalSubset1;
 	return ACTION_DECL_CLOSE;
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "NDATA")) {
+	if (token.equals("NDATA")) {
 	  state = entity6;
 	  return ACTION_NONE;
 	}
@@ -358,18 +360,20 @@ public class PrologParser implements Cloneable {
     case entity7:
       switch (tok) {
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "SYSTEM")) {
+	if (token.equals("SYSTEM")) {
 	  state = entity9;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start, end, "PUBLIC")) {
+	if (token.equals("PUBLIC")) {
 	  state = entity8;
 	  return ACTION_NONE;
 	}
 	break;
       case Tokenizer.TOK_LITERAL:
 	state = declClose;
-	return documentEntity ? ACTION_ENTITY_VALUE_NO_PEREFS : ACTION_ENTITY_VALUE_WITH_PEREFS;
+	return (documentEntity
+		? ACTION_ENTITY_VALUE_NO_PEREFS
+		: ACTION_ENTITY_VALUE_WITH_PEREFS);
       }
       break;
     case entity8:
@@ -393,11 +397,11 @@ public class PrologParser implements Cloneable {
     case notation1:
       switch (tok) {
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "SYSTEM")) {
+	if (token.equals("SYSTEM")) {
 	  state = notation3;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start, end, "PUBLIC")) {
+	if (token.equals("PUBLIC")) {
 	  state = notation2;
 	  return ACTION_NONE;
 	}
@@ -446,11 +450,11 @@ public class PrologParser implements Cloneable {
       switch (tok) {
       case Tokenizer.TOK_NAME:
 	for (int i = 0; i < attributeTypes.length; i++)
-	  if (matches(buf, start, end, attributeTypes[i])) {
+	  if (token.equals(attributeTypes[i])) {
 	    state = attlist8;
 	    return ACTION_ATTRIBUTE_TYPE_CDATA + i;
 	  }
-	if (matches(buf, start, end, "NOTATION")) {
+	if (token.equals("NOTATION")) {
 	  state = attlist5;
 	  return ACTION_NONE;
 	}
@@ -508,15 +512,15 @@ public class PrologParser implements Cloneable {
     case attlist8:
       switch (tok) {
       case Tokenizer.TOK_POUND_NAME:
-	if (matches(buf, start + 1, end, "IMPLIED")) {
+	if (matches(token, 1, "IMPLIED")) {
 	  state = attlist1;
 	  return ACTION_IMPLIED_ATTRIBUTE_VALUE;
 	}
-	if (matches(buf, start + 1, end, "REQUIRED")) {
+	if (matches(token, 1, "REQUIRED")) {
 	  state = attlist1;
 	  return ACTION_REQUIRED_ATTRIBUTE_VALUE;
 	}
-	if (matches(buf, start + 1, end, "FIXED")) {
+	if (matches(token, 1, "FIXED")) {
 	  state = attlist9;
 	  return ACTION_NONE;
 	}
@@ -541,11 +545,11 @@ public class PrologParser implements Cloneable {
     case element1:
       switch (tok) {
       case Tokenizer.TOK_NAME:
-	if (matches(buf, start, end, "EMPTY")) {
+	if (token.equals("EMPTY")) {
 	  state = declClose;
 	  return ACTION_CONTENT_EMPTY;
 	}
-	if (matches(buf, start, end, "ANY")) {
+	if (token.equals("ANY")) {
 	  state = declClose;
 	  return ACTION_CONTENT_ANY;
 	}
@@ -560,7 +564,7 @@ public class PrologParser implements Cloneable {
     case element2:
       switch (tok) {
       case Tokenizer.TOK_POUND_NAME:
-	if (matches(buf, start + 1, end, "PCDATA")) {
+	if (matches(token, 1, "PCDATA")) {
 	  state = element3;
 	  return ACTION_CONTENT_PCDATA;
 	}
@@ -682,11 +686,11 @@ public class PrologParser implements Cloneable {
       break;
     case condSect0:
       if (tok == Tokenizer.TOK_NAME) {
-	if (matches(buf, start, end, "INCLUDE")) {
+	if (token.equals("INCLUDE")) {
 	  state = condSect1;
 	  return ACTION_NONE;
 	}
-	if (matches(buf, start, end, "IGNORE")) {
+	if (token.equals("IGNORE")) {
 	  state = condSect2;
 	  return ACTION_NONE;
 	}
@@ -729,13 +733,11 @@ public class PrologParser implements Cloneable {
     return groupLevel;
   }
 
-  private static boolean matches(char[] buf, int start, int end, String str) {
-    if (end - start != str.length())
+  private static boolean matches(String token, int off, String key) {
+    int keyLen = key.length();
+    if (token.length() - off != keyLen)
       return false;
-    for (int i = 0; start != end; start++, i++)
-      if (str.charAt(i) != buf[start])
-	return false;
-    return true;
+    return token.regionMatches(off, key, 0, keyLen);
   }
 
   private static final String[] attributeTypes = {

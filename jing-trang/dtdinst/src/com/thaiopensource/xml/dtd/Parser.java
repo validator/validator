@@ -327,10 +327,11 @@ public class Parser extends Token {
 
   private void prologAction(int tok, PrologParser pp, DeclState declState)
     throws IOException, PrologSyntaxException {
-    addAtom(new Atom(tok, new String(buf,
-				     currentTokenStart,
-				     bufStart - currentTokenStart)));
-    int action = pp.action(tok, buf, currentTokenStart, bufStart);
+    String token = new String(buf,
+			      currentTokenStart,
+			      bufStart - currentTokenStart);
+    addAtom(new Atom(tok, token));
+    int action = pp.action(tok, token);
     switch (action) {
     case PrologParser.ACTION_IGNORE_SECT:
       skipIgnoreSect();
@@ -339,13 +340,8 @@ public class Parser extends Token {
       declState.entity = null;
       break;
     case PrologParser.ACTION_PARAM_ENTITY_NAME:
-      {
-	String name = new String(buf,
-				 currentTokenStart,
-				 bufStart - currentTokenStart);
-	declState.entity = createParamEntity(name);
-	break;
-      }
+      declState.entity = createParamEntity(token);
+      break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
       if (declState.entity != null) {
 	makeReplacementText();
