@@ -77,13 +77,6 @@ class ChoicePattern extends BinaryPattern {
     visitor.visitChoice(p1, p2);
   }
 
-  Datatype getDatatype() {
-    Datatype dt = p1.getDatatype();
-    if (dt != null)
-      return dt;
-    return p2.getDatatype();
-  }
-
   void checkRestrictions(int context, DuplicateAttributeDetector dad)
     throws RestrictionViolationException {
     if (dad != null)

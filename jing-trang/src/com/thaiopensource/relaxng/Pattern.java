@@ -117,10 +117,6 @@ public abstract class Pattern {
 
   abstract void accept(PatternVisitor visitor);
 
-  Datatype getDatatype() {
-    return null;
-  }
-
   static boolean contentTypeGroupable(int ct1, int ct2) {
     return (ct1 == EMPTY_CONTENT_TYPE
 	    || ct2 == EMPTY_CONTENT_TYPE

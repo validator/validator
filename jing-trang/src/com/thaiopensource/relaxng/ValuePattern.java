@@ -29,10 +29,6 @@ class ValuePattern extends StringPattern {
     visitor.visitValue(dt, obj);
   }
 
-  Datatype getDatatype() {
-    return dt;
-  }
-
   void checkRestrictions(int context, DuplicateAttributeDetector dad)
     throws RestrictionViolationException {
     switch (context) {

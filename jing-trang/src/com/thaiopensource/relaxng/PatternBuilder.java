@@ -104,7 +104,7 @@ public class PatternBuilder {
   }
 
   Pattern makeData(Datatype dt) {
-    return intern(new DatatypePattern(dt));
+    return intern(new DataPattern(dt));
   }
 
   Pattern makeChoice(Pattern p1, Pattern p2) {

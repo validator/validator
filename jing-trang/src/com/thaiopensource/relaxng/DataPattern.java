@@ -2,10 +2,10 @@ package com.thaiopensource.relaxng;
 
 import com.thaiopensource.datatype.Datatype;
 
-class DatatypePattern extends StringPattern {
+class DataPattern extends StringPattern {
   private Datatype dt;
 
-  DatatypePattern(Datatype dt) {
+  DataPattern(Datatype dt) {
     super(false, combineHashCode(DATA_HASH_CODE, dt.hashCode()));
     this.dt = dt;
   }
@@ -15,17 +15,13 @@ class DatatypePattern extends StringPattern {
   }
 
   boolean samePattern(Pattern other) {
-    if (!(other instanceof DatatypePattern))
+    if (other.getClass() != this.getClass())
       return false;
-    return dt.equals(((DatatypePattern)other).dt);
+    return dt.equals(((DataPattern)other).dt);
   }
 
   void accept(PatternVisitor visitor) {
-    visitor.visitDatatype(dt);
-  }
-
-  Datatype getDatatype() {
-    return dt;
+    visitor.visitData(dt);
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad)
