@@ -20,7 +20,7 @@ class TestDriver {
 
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
-    eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
+    eh = new ErrorHandlerImpl(System.out);
     int flags = 0;
     OptionParser op = new OptionParser("im", args);
     try {
@@ -46,6 +46,7 @@ class TestDriver {
       return 2;
     }
     args = op.getRemainingArgs();
+    eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
     engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, flags);
     int result = 0;
     for (int i = 1; i < args.length; i++) {
