@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.4 2001-07-09 01:12:43 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.5 2001-07-13 03:57:13 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
@@ -34,7 +34,10 @@
             </except>
          </anyName>
          <grammar>
-            <start name="any">
+            <start>
+              <ref name="any"/>
+            </start>
+            <define name="any">
 	       <zeroOrMore>
 		  <choice>
 		     <attribute>
@@ -47,7 +50,7 @@
 		     </element>
 		  </choice>
 	       </zeroOrMore>
-            </start>
+            </define>
          </grammar>
       </element>
    </define>

@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.21 2001-07-13 00:43:51 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.22 2001-07-13 03:55:57 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
          xmlns="http://relaxng.org/ns/structure/0.9">
-  <start name="pattern">
+  <start>
+    <ref name="pattern"/>
+  </start>
+
+  <define name="pattern">
     <choice>
       <element name="element">
         <choice>
