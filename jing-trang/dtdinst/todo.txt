@@ -3,16 +3,11 @@ exist or is a file
 
 EntityManager that properly handles URLs.
 
-RELAX NG: Handle multiple refs to same external entity safely.
-
 Command-line option parser.
 
 Option to set start elements.
 
 Use system-dependent line-endings on output in XmlWriter.
-
-RELAX NG: avoid collisions from distinct entities with same
-base name but different directories
 
 RELAX NG: preserve directory structure on output.
 
