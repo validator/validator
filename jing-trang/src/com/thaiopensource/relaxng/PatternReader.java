@@ -36,7 +36,6 @@ public class PatternReader implements DatatypeContext {
   static final byte COMBINE_CHOICE = 1;
   static final byte COMBINE_INTERLEAVE = 2;
 
-  String patternNS;
   XMLReader xr;
   XMLReaderCreator xrc;
   PatternBuilder patternBuilder;
@@ -85,10 +84,6 @@ public class PatternReader implements DatatypeContext {
 
     abstract State create();
     abstract State createChildState(String localName) throws SAXException;
-
-    boolean isPatternNamespaceURI(String s) {
-      return s.equals(patternNS);
-    }
 
     public void setDocumentLocator(Locator loc) {
       locator = loc;
@@ -410,13 +405,6 @@ public class PatternReader implements DatatypeContext {
 	startPattern = containedPattern;
     }
 
-    boolean isPatternNamespaceURI(String s) {
-      if (s.equals(relaxngURI) || s.equals("")) {
-	patternNS = s;
-	return true;
-      }
-      return false;
-    }
   }
 
   class NotAllowedState extends EmptyContentState {
@@ -1184,4 +1172,9 @@ public class PatternReader implements DatatypeContext {
 	return p.uri;
     return null;
   }
+
+  boolean isPatternNamespaceURI(String s) {
+    return s.equals(relaxngURI);
+  }
+
 }
