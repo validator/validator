@@ -50,33 +50,16 @@ appropriate xs:notation declaration based on annotations.
 
 Deal with xsi attributes.
 
-Make use of element substitution groups; may affect which elements are
-global.  A group that consists of a choice of global elements is
-eligible to made a substitution group; the choice may also contain
-references to groups that are themselves eligible to be substitution
-groups. The choice should not have any annotations. If the name of the
-group is the same as the name of one of the elements in the choice,
-then the group disappears and that element becomes the head; in this
-case, the use of a substitution group should probably be prevented if
-the define has an annotation.  If the name of the group is not the
-same as one of the elements of the choice, then we generate an
-abstract element with the same name of the group. What if the name of
-the group clashes with an existing non-abstract global element?  We
-should probably try to avoid this situation when choosing which
-element particles are to become global elements.  If we cannot, we
-could either forgo the use of a substitution group, or modify the name
-by adding a prefix or suffix.  The possibility of using a substitution
-group should be able to influence whether we choose to use a global
-element for a particular element particle.
-
 A define whose pattern is equivalent to notAllowed should be preserved
 in the intermediate form, since it may correspond to the abstract head
-of a subsitution group (probably need an annotation to control this).
+of a substitution group (probably need an annotation to control this).
 
-Better support for combine="choice".  If element substitution groups
-are supported, then combine="choice" can be supported much better.
+Think about how annotations should work with substitution group support.
+
+Better support for combine="choice".  Now that element substitution groups
+are supported, combine="choice" can be supported much better.
 Intermediate form needs support for combine="choice".  If a
-combine="choice" turns out to be substition group, then there's no
+combine="choice" turns out to be substitution group, then there's no
 problem.  Otherwise we can distinguish three cases:
 
 - same file: choose one to be the main definition; for the others two

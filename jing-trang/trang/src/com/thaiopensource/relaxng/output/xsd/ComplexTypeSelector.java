@@ -366,14 +366,20 @@ class ComplexTypeSelector extends SchemaWalker {
     return new ComplexTypeSimpleContentExtension(ct);
   }
 
-  ComplexTypeComplexContentExtension createComplexTypeForGroup(String name) {
+  ComplexTypeComplexContentExtension createComplexTypeForGroup(String name, NamespaceManager nsm) {
     NamedComplexType ct = (NamedComplexType)complexTypeMap.get(name);
     if (ct == null)
       return null;
     AttributeGroupDefinition attDef = schema.getAttributeGroup(name);
     AttributeUse att = attDef == null ? AttributeGroup.EMPTY : attDef.getAttributeUses();
+    GroupDefinition def = schema.getGroup(name);
+    if (nsm.getGroupDefinitionAbstractElementName(def) != null)
+      return new ComplexTypeComplexContentExtension(att,
+                                                    new GroupRef(def.getParticle().getLocation(), null, name),
+                                                    !ct.elementOnly,
+                                                    null);
     return transformComplexContent(new ComplexTypeComplexContent(att,
-                                                                 schema.getGroup(name).getParticle(),
+                                                                 def.getParticle(),
                                                                  !ct.elementOnly));
   }
 

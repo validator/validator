@@ -500,6 +500,7 @@ public class BasicOutput {
         globalElementsDefined.add(name);
         xw.startElement(xs("element"));
         xw.attribute("name", name.getLocalName());
+        outputSubstitutionGroup(name);
         ComplexType type = p.getComplexType();
         if (type instanceof ComplexTypeNotAllowedContent)
           xw.attribute("abstract", "true");
@@ -597,22 +598,34 @@ public class BasicOutput {
   class SchemaOutput extends AbstractSchemaVisitor {
     public void visitGroup(GroupDefinition def) {
       Particle particle = def.getParticle();
-      ComplexTypeComplexContentExtension ct = complexTypeSelector.createComplexTypeForGroup(def.getName());
-      if (ct != null)
+      ComplexTypeComplexContentExtension ct = complexTypeSelector.createComplexTypeForGroup(def.getName(), nsm);
+      if (ct != null) {
         outputComplexTypeComplexContent(ct, def.getName(), def);
-      else if (nsm.isGroupDefinitionOmitted(def))
-        ;
-      else if (!tryElementChoiceSameType(def)) {
+        tryAbstractElement(def);
+      }
+      else if (!nsm.isGroupDefinitionOmitted(def)
+               && !tryElementChoiceSameType(def)
+               && !tryAbstractElement(def)) {
         xw.startElement(xs("group"));
         xw.attribute("name", def.getName());
         outputAnnotation(def);
-        if (!tryElementChoiceSameType(def)) {
-          particleOutput.context = NAMED_GROUP_CONTEXT;
-          particle.accept(particleOutput);
-        }
+        particleOutput.context = NAMED_GROUP_CONTEXT;
+        particle.accept(particleOutput);
         xw.endElement();
       }
       particle.accept(globalElementOutput);
+    }
+
+    private boolean tryAbstractElement(GroupDefinition def) {
+      Name name = nsm.getGroupDefinitionAbstractElementName(def);
+      if (name == null)
+        return false;
+      xw.startElement(xs("element"));
+      xw.attribute("name", name.getLocalName());
+      xw.attribute("abstract", "true");
+      outputSubstitutionGroup(name);
+      xw.endElement();
+      return true;
     }
 
     private boolean tryElementChoiceSameType(GroupDefinition def) {
@@ -651,24 +664,26 @@ public class BasicOutput {
           return false;
         outputComplexTypeSimpleContent(t, def.getName(), null);
       }
-      xw.startElement(xs("group"));
-      xw.attribute("name", def.getName());
-      outputAnnotation(def);
-      xw.startElement(xs("choice"));
-      for (iter = children.iterator(); iter.hasNext();) {
-        Element element = (Element)iter.next();
-        xw.startElement(xs("element"));
-        if (nsm.isGlobal(element))
-          xw.attribute("ref", qualifyName(element.getName()));
-        else {
-          xw.attribute("name", element.getName().getLocalName());
-          xw.attribute("type", def.getName());
-          outputAnnotation(element);
+      if (!tryAbstractElement(def)) {
+        xw.startElement(xs("group"));
+        xw.attribute("name", def.getName());
+        outputAnnotation(def);
+        xw.startElement(xs("choice"));
+        for (iter = children.iterator(); iter.hasNext();) {
+          Element element = (Element)iter.next();
+          xw.startElement(xs("element"));
+          if (nsm.isGlobal(element))
+            xw.attribute("ref", qualifyName(element.getName()));
+          else {
+            xw.attribute("name", element.getName().getLocalName());
+            xw.attribute("type", def.getName());
+            outputAnnotation(element);
+          }
+          xw.endElement();
         }
         xw.endElement();
+        xw.endElement();
       }
-      xw.endElement();
-      xw.endElement();
       for (iter = children.iterator(); iter.hasNext();) {
         Element element = (Element)iter.next();
         if (nsm.isGlobal(element) && !globalElementsDefined.contains(element.getName())) {
@@ -676,6 +691,7 @@ public class BasicOutput {
           xw.startElement(xs("element"));
           xw.attribute("name", element.getName().getLocalName());
           xw.attribute("type", def.getName());
+          outputSubstitutionGroup(element.getName());
           outputAnnotation(element);
           xw.endElement();
         }
@@ -978,6 +994,12 @@ public class BasicOutput {
     xw.endElement();
     xw.endElement();
     xw.endElement();
+  }
+
+  private void outputSubstitutionGroup(Name elementName) {
+    Name substitutionGroup = nsm.getSubstitutionGroup(elementName);
+    if (substitutionGroup != null)
+      xw.attribute("substitutionGroup", qualifyName(substitutionGroup));
   }
 
   void outputAnnotation(Annotated annotated) {

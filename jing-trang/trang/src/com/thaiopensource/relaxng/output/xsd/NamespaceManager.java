@@ -13,6 +13,9 @@ import com.thaiopensource.relaxng.output.xsd.basic.Definition;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardAttribute;
+import com.thaiopensource.relaxng.output.xsd.basic.SchemaVisitor;
+import com.thaiopensource.relaxng.output.xsd.basic.ParticleChoice;
+import com.thaiopensource.relaxng.output.xsd.basic.GroupRef;
 import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 
@@ -28,6 +31,8 @@ public class NamespaceManager {
   private final Schema schema;
   private final Map elementNameMap = new HashMap();
   private final Map attributeNameMap = new HashMap();
+  private final Map substitutionGroupMap = new HashMap();
+  private final Map groupDefinitionAbstractElementMap = new HashMap();
 
   private static final String ANON = "anon";
 
@@ -298,6 +303,7 @@ public class NamespaceManager {
     schema.accept(new RootMarker());
     assignTargetNamespaces();
     new GlobalElementSelector(schema);
+    findSubstitutionGroups();
     chooseRootSchemas(sug);
     new StructureMover(schema);
   }
@@ -436,15 +442,133 @@ public class NamespaceManager {
     return name;
   }
 
+  static class GroupDefinitionFinder extends SchemaWalker {
+    List list = new Vector();
+
+    public void visitGroup(GroupDefinition def) {
+      list.add(def);
+    }
+
+    static List findGroupDefinitions(Schema schema) {
+      GroupDefinitionFinder gdf = new GroupDefinitionFinder();
+      schema.accept(gdf);
+      return gdf.list;
+    }
+  }
+
+  private void findSubstitutionGroups() {
+    List groups = GroupDefinitionFinder.findGroupDefinitions(schema);
+    Map elementNameToGroupName = new HashMap();
+    for (;;) {
+      Set newAbstractElements = new HashSet();
+      for (Iterator iter = groups.iterator(); iter.hasNext();) {
+        GroupDefinition def = (GroupDefinition)iter.next();
+        if (getGroupDefinitionAbstractElementName(def) == null) {
+          Name elementName = abstractElementName(def);
+          boolean ok = false;
+          if (elementName != null) {
+            List members = substitutionGroupMembers(def);
+            if (members != null) {
+              ok = true;
+              elementNameToGroupName.put(elementName, def.getName());
+              for (Iterator memberIter = members.iterator(); memberIter.hasNext();) {
+                Name member = (Name)memberIter.next();
+                Name old = getSubstitutionGroup(member);
+                if (old != null && !old.equals(elementName)) {
+                  newAbstractElements.remove(old);
+                  ok = false;
+                  break;
+                }
+                substitutionGroupMap.put(member, elementName);
+              }
+            }
+          }
+          if (ok)
+            newAbstractElements.add(elementName);
+        }
+      }
+      if (newAbstractElements.size() == 0)
+        break;
+      for (Iterator iter = newAbstractElements.iterator(); iter.hasNext();) {
+        Name name = (Name)iter.next();
+        groupDefinitionAbstractElementMap.put(elementNameToGroupName.get(name), name);
+      }
+    }
+    for (Iterator iter = substitutionGroupMap.entrySet().iterator(); iter.hasNext();) {
+      Map.Entry entry = (Map.Entry)iter.next();
+      Name head = (Name)entry.getValue();
+      if (groupDefinitionAbstractElementMap.get(elementNameToGroupName.get(head)) == null)
+        iter.remove();
+    }
+  }
+
+  private Name abstractElementName(GroupDefinition def) {
+    Name name = new Name(getTargetNamespace(def.getParentSchema().getUri()), def.getName());
+    if (lookupElementName(name).globalType != null)
+      return null;
+    return name;
+  }
+
+  private List substitutionGroupMembers(GroupDefinition def) {
+    Particle particle = def.getParticle();
+    if (!(particle instanceof ParticleChoice))
+      return null;
+    List members = new Vector();
+    if (!particleChoiceMembers((ParticleChoice)particle, members)
+        || members.size() < 2)
+      return null;
+    return members;
+  }
+
+  private boolean particleChoiceMembers(ParticleChoice choice, List members) {
+    for (Iterator iter = choice.getChildren().iterator(); iter.hasNext();) {
+      Particle child = (Particle)iter.next();
+      if (child instanceof Element) {
+        Element e = (Element)child;
+        if (!isGlobal(e))
+          return false;
+        members.add(e.getName());
+      }
+      else if (child instanceof GroupRef) {
+        Name name = getElementNameForGroupRef(schema.getGroup(((GroupRef)child).getName()));
+        if (name == null)
+          return false;
+        members.add(name);
+      }
+      else if (child instanceof ParticleChoice) {
+        if (!particleChoiceMembers((ParticleChoice)child, members))
+          return false;
+      }
+      else
+        return false;
+    }
+    return true;
+  }
+
   Name getElementNameForGroupRef(GroupDefinition def) {
+    Name abstractElementName = getGroupDefinitionAbstractElementName(def);
+    if (abstractElementName != null)
+      return abstractElementName;
+    return getGroupDefinitionSingleElementName(def);
+  }
+
+  boolean isGroupDefinitionOmitted(GroupDefinition def) {
+    return getGroupDefinitionSingleElementName(def) != null;
+  }
+
+  Name getGroupDefinitionAbstractElementName(GroupDefinition def) {
+    return (Name)groupDefinitionAbstractElementMap.get(def.getName());
+  }
+
+  private Name getGroupDefinitionSingleElementName(GroupDefinition def) {
     Particle particle = def.getParticle();
     if (!(particle instanceof Element) || !isGlobal((Element)particle))
       return null;
     return ((Element)particle).getName();
   }
 
-  boolean isGroupDefinitionOmitted(GroupDefinition def) {
-    return getElementNameForGroupRef(def) != null;
+  Name getSubstitutionGroup(Name name) {
+    return (Name)substitutionGroupMap.get(name);
   }
 
   String getTargetNamespace(String schemaUri) {
