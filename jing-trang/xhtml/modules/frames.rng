@@ -8,12 +8,7 @@
     <element name="html">
       <ref name="html.attlist"/>
       <ref name="head"/>
-      <!-- We depart from XHTML mod here. It's silly for the frames module
-	   to require the use of frames. -->
-      <choice>
-	<ref name="body"/>
-	<ref name="frameset"/>
-      </choice>
+      <ref name="frameset"/>
     </element>
   </define>
 
