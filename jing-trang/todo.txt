@@ -1,8 +1,15 @@
+Versions should not have dashes.
+
+Add build.xml for jing.
+
 Maybe need to redesign reset() so that it can be used to cleanup the thread.
 
-Test NRL option handling
+Provide a validate method on Validator so that we can avoid messing
+with threads in some cases.
 
-Write NRL tutorial
+Add file with hints about how to run jars.
+
+Test NRL option handling
 
 Set Xerces properties to read DTDs but not validate
 
