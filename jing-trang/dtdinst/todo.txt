@@ -1,14 +1,6 @@
-RELAX NG: option to map comments into annotations (or maybe should be separate program)
-
-RELAX NG: generate definition for any in one place.
-
 Support OASIS catalogs.
 
-RELAX NG: output overridden definitions
-
-RELAX NG: try to preserve marked sections
-
-Option for properties file to set properties
+Option for properties file to set properties.
 
 Option to set start elements.
 
@@ -16,16 +8,10 @@ Make UriEntityManager respect charset parameter.
 
 Make UriEntityManager get the right base URI after HTTP redirection.
 
-RELAX NG: preserve directory structure on output.
-
 Add DtdParseException to om package.
 
 Maybe better to avoid empty sequences and empty choices in the object
 model.
-
-RELAX NG: annotation for included sections (d:condition="flagName")
-
-RELAX NG: sort undefined elements.
 
 Methods on DTD giving random access to various kinds of declaration.
 
@@ -74,8 +60,5 @@ Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
 Cleanup handling of newline normalization.
 
 Line-wrapping for long attribute lists in XmlWriter.
-
-RELAX NG: don't output datatypeLibrary attribute if there are no
-datatypes.
 
 private and nested classes
