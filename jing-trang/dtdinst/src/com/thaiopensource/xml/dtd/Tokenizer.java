@@ -138,7 +138,7 @@ public class Tokenizer {
 
   /**
    * Represents whitespace in the prolog.
-   * The token contains one or more whitespace characters.
+   * The token contains one whitespace character.
    */
   public static final int TOK_PROLOG_S = TOK_PARAM_ENTITY_REF + 1;
 
@@ -1672,30 +1672,16 @@ public class Tokenizer {
 	throw new InvalidTokenException(off);
       }
     case CT_CR:
-      if (off + 1 == end)
+      off += 1;
+      if (off == end)
 	throw new ExtensibleTokenException(TOK_PROLOG_S);
-      /* fall through */
+      if (charType(buf[off]) == CT_LF)
+	off += 1;
+      token.tokenEnd = off;
+      return TOK_PROLOG_S;
     case CT_S:
     case CT_LF:
-      for (;;) {
-	off += 1;
-	if (off == end)
-	  break;
-	switch (charType(buf[off])) {
-	case CT_S:
-	case CT_LF:
-	  break;
-	case CT_CR:
-	  /* don't split CR/LF pair */
-	  if (off + 1 != end)
-	    break;
-	  /* fall through */
-	default:
-	  token.tokenEnd = off;
-	  return TOK_PROLOG_S;
-	}
-      }
-      token.tokenEnd = off;
+      token.tokenEnd = off + 1;
       return TOK_PROLOG_S;
     case CT_PERCNT:
       return scanPercent(buf, off + 1, end, token);
