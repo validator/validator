@@ -308,6 +308,7 @@ public class Converter {
 			      String uri, String encoding, TopLevel[] contents)
       throws Exception {
       if (uri == null) {
+        // I don't think this can happen
 	super.externalIdRef(name, externalId, uri, encoding, contents);
 	return;
       }
@@ -320,6 +321,12 @@ public class Converter {
       catch (Exception e) {
 	throw (RuntimeException)e;
       }
+      if (sc.getSchemas().get(uri) != null) {
+        // I don't think this can happen because the second and subsequent inclusions
+        // will never pass the SignificanceDetector, but just in case
+        super.externalIdRef(name, externalId, uri, encoding, contents);
+        return;
+      }
       IncludeComponent ic = new IncludeComponent(uri);
       ic.setNs(defaultNamespace);
       components.add(ic);
@@ -327,7 +334,6 @@ public class Converter {
       TopLevelVisitor tlv = new ComponentOutput(included);
       for (int i = 0; i < contents.length; i++)
         contents[i].accept(tlv);
-      // XXX what if included multiple times
       sc.getSchemas().put(uri, included);
     }
 
