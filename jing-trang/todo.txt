@@ -1,5 +1,3 @@
-Compact syntax: triple-quoted literals
-
 Compact syntax: disallow newlines in single-quoted strings,
 but allow in triple-quoted literals
 

@@ -2095,6 +2095,18 @@ start = element foo { empty }
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+""""'""" ~ '''x''""y'''
+]]></correct>
+</compact>
+<xml>
+<correct>
+<value xmlns="http://relaxng.org/ns/structure/1.0">"'x''""y</value>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>
