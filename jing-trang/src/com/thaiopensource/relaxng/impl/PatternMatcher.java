@@ -1,13 +1,15 @@
 package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.xml.util.Name;
+import com.thaiopensource.relaxng.match.Matcher;
+import com.thaiopensource.util.Equal;
 
 import java.util.Vector;
 import java.util.Hashtable;
 
 import org.relaxng.datatype.ValidationContext;
 
-public class PatternMatcher implements Cloneable {
+public class PatternMatcher implements Cloneable, Matcher {
 
   static private class Shared {
     private final Pattern start;
@@ -39,7 +41,7 @@ public class PatternMatcher implements Cloneable {
   }
 
   private PatternMemo memo;
-  private boolean textMaybeTyped;
+  private boolean textTyped;
   private boolean hadError;
   private boolean ignoreNextEndTag;
   private String errorMessage;
@@ -48,6 +50,21 @@ public class PatternMatcher implements Cloneable {
   PatternMatcher(Pattern start, ValidatorPatternBuilder builder) {
     shared = new Shared(start, builder);
     memo = builder.getPatternMemo(start);
+  }
+
+  public boolean equals(Object obj) {
+    PatternMatcher other = (PatternMatcher)obj;
+    if (other == null)
+      return false;
+    return (memo == other.memo
+            && hadError == other.hadError
+            && Equal.equal(errorMessage, other.errorMessage)
+            && ignoreNextEndTag == other.ignoreNextEndTag
+            && textTyped == other.textTyped);
+  }
+
+  public int hashCode() {
+    return memo.hashCode();
   }
 
   public Object clone() {
@@ -59,8 +76,8 @@ public class PatternMatcher implements Cloneable {
     }
   }
 
-  public PatternMatcher copy() {
-    return (PatternMatcher)clone();
+  public Matcher copy() {
+    return (Matcher)clone();
   }
 
   public boolean matchStartDocument() {
@@ -110,12 +127,12 @@ public class PatternMatcher implements Cloneable {
       // XXX should specify which attributes
       ret = error("required_attributes_missing");
     }
-    textMaybeTyped = memo.getPattern().getContentType() == Pattern.DATA_CONTENT_TYPE;
+    textTyped = memo.getPattern().getContentType() == Pattern.DATA_CONTENT_TYPE;
     return ret;
   }
 
   public boolean matchText(String string, ValidationContext vc, boolean nextTagIsEndTag) {
-    if (textMaybeTyped && nextTagIsEndTag) {
+    if (textTyped && nextTagIsEndTag) {
       ignoreNextEndTag = true;
       return setDataDeriv(string, vc);
     }
@@ -136,12 +153,12 @@ public class PatternMatcher implements Cloneable {
    * Legal when matchText() is legal.
    * @return
    */
-  public boolean isTextMaybeTyped() {
-    return textMaybeTyped;
+  public boolean isTextTyped() {
+    return textTyped;
   }
 
   private boolean setDataDeriv(String string, ValidationContext vc) {
-    textMaybeTyped = false;
+    textTyped = false;
     if (!setMemo(memo.textOnly())) {
       memo = memo.recoverAfter();
       return error("only_text_not_allowed");
@@ -168,9 +185,9 @@ public class PatternMatcher implements Cloneable {
       ignoreNextEndTag = false;
       return true;
     }
-    if (textMaybeTyped)
+    if (textTyped)
       return setDataDeriv("", vc);
-    textMaybeTyped = false;
+    textTyped = false;
     if (setMemo(memo.endTagDeriv()))
       return true;
     PatternMemo next = memo.recoverAfter();
