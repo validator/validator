@@ -90,29 +90,11 @@ public class PatternBuilder {
     }
     return intern(new InterleavePattern(p1, p2));
   }
-  Pattern makeConcur(Pattern p1, Pattern p2) {
-    if (p1 == emptySequence && p2.isNullable())
-      return p1;
-    if (p2 == emptySequence && p1.isNullable())
-      return p2;
-    if (p1 == emptyChoice || p2 == emptyChoice)
-      return emptyChoice;
-    if (p1 instanceof ConcurPattern) {
-      ConcurPattern cp = (ConcurPattern)p1;
-      return makeConcur(cp.p1, makeConcur(cp.p2, p2));
-    }
-    if (p1 == p2)
-      return p1;
-    return intern(new ConcurPattern(p1, p2));
-  }
   Pattern makeText() {
     return text;
   }
-  Pattern makeString(boolean normalizeWhiteSpace, String str, Locator loc) {
-    if (normalizeWhiteSpace)
-      return intern(new NormalizeStringPattern(str, loc));
-    else
-      return intern(new PreserveStringPattern(str, loc));
+  Pattern makeValue(Datatype dt, String str, Locator loc) {
+    return intern(new ValuePattern(dt, str, loc));
   }
   Pattern makeDatatype(Datatype dt, Locator loc) {
     return intern(new DatatypePattern(dt, loc));

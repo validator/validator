@@ -58,11 +58,6 @@ public class DatatypeAssignmentChecker {
       p2.accept(this);
     }
 
-    public void visitConcur(Pattern p1, Pattern p2) {
-      p1.accept(this);
-      // p2.accept(this);
-    }
-
     public void visitChoice(Pattern p1, Pattern p2) {
       p1.accept(this);
       p2.accept(this);
@@ -81,7 +76,7 @@ public class DatatypeAssignmentChecker {
     public void visitDatatype(Datatype dt) {
     }
 
-    public void visitString(boolean normalizeWhiteSpace, String str) {
+    public void visitValue(Datatype dt, String str) {
     }
 
     public void visitText() {
@@ -150,7 +145,7 @@ public class DatatypeAssignmentChecker {
 	addClass(cls);
     }
 
-    public void visitString(boolean normalizeWhiteSpace, String str) {
+    public void visitDatatype(Datatype dt, String str) {
       addText();
     }
 

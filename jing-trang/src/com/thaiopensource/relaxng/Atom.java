@@ -6,10 +6,7 @@ abstract class Atom {
   boolean matchesString() {
     return false;
   }
-  boolean matchesPreserveString(String s) {
-    return false;
-  }
-  boolean matchesNormalizeString(String s) {
+  boolean matchesDatatypeValue(Datatype dt, String s) {
     return false;
   }
   boolean matchesDatatype(Datatype dt) {

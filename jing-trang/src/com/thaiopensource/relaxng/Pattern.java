@@ -16,7 +16,7 @@ public abstract class Pattern {
   static final int INTERLEAVE_HASH_CODE = 17;
   static final int ONE_OR_MORE_HASH_CODE = 19;
   static final int ELEMENT_HASH_CODE = 23;
-  static final int STRING_HASH_CODE = 27;
+  static final int VALUE_HASH_CODE = 27;
   static final int ATTRIBUTE_HASH_CODE = 29;
   static final int DATA_HASH_CODE = 31;
 

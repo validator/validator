@@ -439,24 +439,16 @@ public class PatternReader implements DatatypeContext {
     }
   }
 
-  class StringState extends EmptyContentState {
+  class ValueState extends EmptyContentState {
     StringBuffer buf = new StringBuffer();
-    boolean normalizeWhiteSpace = true;
 
     State create() {
-      return new StringState();
+      return new ValueState();
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
-      if (name.equals("whiteSpace")) {
-	value = value.trim();
-	if (value.equals("preserve"))
-	  normalizeWhiteSpace = false;
-	else if (!value.equals("normalize"))
-	  error("white_space_attribute_bad_value", value);
-      }
-      else
-	super.setOtherAttribute(name, value);
+      // XXX handle type
+      super.setOtherAttribute(name, value);
     }
 
     public void characters(char[] ch, int start, int len) {
@@ -467,7 +459,9 @@ public class PatternReader implements DatatypeContext {
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
-      return patternBuilder.makeString(normalizeWhiteSpace, buf.toString(), loc);
+      return patternBuilder.makeValue(new AnyDatatype(),
+				      StringNormalizer.normalize(buf.toString()),
+				      loc);
     }
 
   }
@@ -999,7 +993,7 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("attribute", new AttributeState());
     patternTable.put("empty", new EmptyState());
     patternTable.put("text", new TextState());
-    patternTable.put("string", new StringState());
+    patternTable.put("value", new ValueState());
     patternTable.put("data", new DataState());
     patternTable.put("notAllowed", new NotAllowedState());
     patternTable.put("grammar", new GrammarState());

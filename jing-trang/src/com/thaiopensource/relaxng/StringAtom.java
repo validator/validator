@@ -18,11 +18,7 @@ class StringAtom extends Atom {
     return true;
   }
 
-  boolean matchesPreserveString(String s) {
-    return str.equals(s);
-  }
-
-  boolean matchesNormalizeString(String s) {
+  boolean matchesDatatypeValue(Datatype dt, String s) {
     if (normStr == null)
       normStr = StringNormalizer.normalize(str);
     return normStr.equals(s);
