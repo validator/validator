@@ -37,11 +37,11 @@ public class Driver {
   private static final int DEFAULT_LINE_LENGTH = 72;
   private static final int DEFAULT_INDENT = 2;
 
-  static public void main(String[] args) throws IncorrectSchemaException, SAXException, IOException {
+  static public void main(String[] args) {
     System.exit(new Driver().doMain(args));
   }
 
-  private int doMain(String[] args) throws IncorrectSchemaException, SAXException, IOException {
+  private int doMain(String[] args) {
     List inputParams = new Vector();
     List outputParams = new Vector();
     try {

@@ -313,7 +313,7 @@ public class Translator {
     return buf.toString();
   }
 
-  private void copyCurChar() throws RegexSyntaxException {
+  private void copyCurChar() {
     result.append(curChar);
     advance();
   }

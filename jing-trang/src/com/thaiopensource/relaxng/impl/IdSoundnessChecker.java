@@ -138,7 +138,7 @@ public class IdSoundnessChecker implements ValidatorHandler {
     entry.hadId = true;
   }
 
-  private void idref(String token) throws SAXException {
+  private void idref(String token) {
     Entry entry = (Entry)table.get(token);
     if (entry == null) {
       entry = new Entry();

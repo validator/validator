@@ -50,7 +50,6 @@ import com.thaiopensource.xml.dtd.om.TopLevel;
 import com.thaiopensource.xml.dtd.om.TopLevelVisitor;
 import com.thaiopensource.xml.em.ExternalId;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
-import org.xml.sax.SAXException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -667,7 +666,7 @@ public class Converter {
     this.options = options;
   }
 
-  public SchemaCollection convert() throws SAXException {
+  public SchemaCollection convert() {
     try {
       dtd.accept(new Analyzer());
       chooseNames();
