@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.15 2001-06-02 08:46:40 jjc Exp $ -->
-<grammar namespace="http://relaxng.org/ns/structure/0.9"
-         datatypeNamespace="http://www.w3.org/2001/XMLSchema-datatypes"
-         xmlns="http://relaxng.org/ns/structure/0.9">
+<!-- $Id: relaxng.rng,v 1.16 2001-06-08 04:08:27 jjc Exp $ -->
+<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+         ns="http://relaxng.org/ns/structure/0.9"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start name="pattern">
     <choice>
       <element name="element">
@@ -20,9 +20,9 @@
         <ref name="common-atts"/>
         <choice>
           <group>
-	    <attribute name="name">
-	      <data type="QName"/>
-	    </attribute>
+            <attribute name="name">
+              <data type="QName"/>
+            </attribute>
             <optional>
               <attribute name="global">
                 <data type="boolean"/>
@@ -139,35 +139,48 @@
       </element>
       <element name="grammar">
         <ref name="common-atts"/>
-        <interleave>
-          <ref name="other"/>
-          <oneOrMore>
-            <ref name="grammar-element"/>
-          </oneOrMore>
-        </interleave>
+        <ref name="grammar-content"/>
       </element>
     </choice>
   </start>
 
-  <define name="grammar-element">
-    <choice>
-      <ref name="start-element"/>
-      <ref name="define-element"/>
-      <element name="include">
-        <attribute name="href">
-          <data type="anyURI"/>
-        </attribute>
-        <interleave>
-          <ref name="other"/>
-          <zeroOrMore>
-            <choice>
-              <ref name="start-element"/>
-              <ref name="define-element"/>
-            </choice>
-          </zeroOrMore>
-        </interleave>
-      </element>
-    </choice>
+  <define name="grammar-content">
+    <interleave>
+      <ref name="other"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="start-element"/>
+          <ref name="define-element"/>
+          <element name="div">
+            <ref name="common-atts"/>
+            <ref name="grammar-content"/>
+          </element>
+          <element name="include">
+            <attribute name="href">
+              <data type="anyURI"/>
+            </attribute>
+            <ref name="common-atts"/>
+            <ref name="include-content"/>
+          </element>
+        </choice>
+      </zeroOrMore>
+    </interleave>
+  </define>
+
+  <define name="include-content">
+    <interleave>
+      <ref name="other"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="start-element"/>
+          <ref name="define-element"/>
+          <element name="div">
+            <ref name="common-atts"/>
+            <ref name="include-content"/>
+          </element>
+        </choice>
+      </zeroOrMore>
+    </interleave>
   </define>
 
   <define name="start-element">
@@ -226,7 +239,7 @@
         <ref name="common-atts"/>
         <ref name="other"/>
       </element>
-      <element name="namespaceName">
+      <element name="nsName">
         <ref name="common-atts"/>
         <ref name="other"/>
       </element>
@@ -258,12 +271,12 @@
 
   <define name="common-atts">
     <optional>
-      <attribute name="namespace">
+      <attribute name="ns">
         <data type="anyURI"/>
       </attribute>
     </optional>
     <optional>
-      <attribute name="datatypeNamespace">
+      <attribute name="datatypeLibrary">
         <data type="anyURI"/>
       </attribute>
     </optional>
@@ -271,8 +284,8 @@
       <attribute>
         <not>
           <choice>
-            <namespaceName/>
-            <namespaceName namespace=""/>
+            <nsName/>
+            <nsName ns=""/>
           </choice>
         </not>
       </attribute>
@@ -283,7 +296,7 @@
     <zeroOrMore>
       <element>
         <not>
-          <namespaceName/>
+          <nsName/>
         </not>
         <zeroOrMore>
           <choice>
