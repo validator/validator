@@ -17,8 +17,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-Annotations and comments (in progress)
-
 Use \x{} escapes for characters not in repertoire of selected encoding
 
 Avoid lines with excessive complexity
@@ -80,11 +78,20 @@ class Output {
   }
 
   private void topLevel(Pattern p) {
+    boolean implicitGrammar = p instanceof GrammarPattern && p.getAttributeAnnotations().isEmpty();
+    if (implicitGrammar && !p.getLeadingComments().isEmpty()) {
+      leadingComments(p);
+      pp.hardNewline();
+    }
     outputNamespaceDeclarations();
     outputDatatypeLibraryDeclarations(p);
-    // XXX deal with annotations
-    if (p instanceof GrammarPattern)
+    if (implicitGrammar) {
+      for (Iterator iter = p.getChildElementAnnotations().iterator(); iter.hasNext();) {
+        ((AnnotationChild)iter.next()).accept(annotationChildOutput);
+        pp.hardNewline();
+      }
       innerBody(((GrammarPattern)p).getComponents());
+    }
     else
       p.accept(patternOutput);
     pp.hardNewline();
@@ -248,8 +255,8 @@ class Output {
   }
 
   class ComponentOutput implements ComponentVisitor {
-    // XXX output annotations
     public Object visitDefine(DefineComponent c) {
+      startAnnotations(c);
       pp.startGroup();
       String name = c.getName();
       if (name == DefineComponent.START)
@@ -270,22 +277,27 @@ class Output {
       c.getBody().accept(noParenPatternOutput);
       pp.endNest();
       pp.endGroup();
+      endAnnotations(c);
       return null;
     }
 
     public Object visitDiv(DivComponent c) {
+      startAnnotations(c);
       pp.text("div");
       body(c);
+      endAnnotations(c);
       return null;
     }
 
     public Object visitInclude(IncludeComponent c) {
+      startAnnotations(c);
       pp.text("include ");
       literal(od.reference(sourceUri, c.getHref()));
       inherit(c.getNs());
       List components = c.getComponents();
       if (!components.isEmpty())
         body(components);
+      endAnnotations(c);
       return null;
     }
   }
@@ -648,9 +660,21 @@ class Output {
     }
 
     public Object visitComment(Comment c) {
-      pp.text("#");
-      // XXX output the comment
-      pp.hardNewline();
+      String value = c.getValue();
+      int i = 0;
+      for (;;) {
+        if (i >= value.length() || value.charAt(i) == '\t')
+          pp.text("#");
+        else
+          pp.text("# ");
+        int j = value.indexOf('\n', i);
+        String tem = j < 0 ? value.substring(i) : value.substring(i, j);
+        encode(tem);
+        pp.hardNewline();
+        if (j < 0)
+          break;
+        i = j + 1;
+      }
       return null;
     }
 
@@ -682,7 +706,7 @@ class Output {
 
   private boolean startAnnotations(Annotated annotated) {
     if (!annotated.getLeadingComments().isEmpty()) {
-      // XXX output the comments
+      leadingComments(annotated);
       if (!hasAnnotations(annotated))
         return false;
     }
@@ -704,11 +728,25 @@ class Output {
     if (!annotated.mayContainText()) {
       for (Iterator iter = annotated.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
         pp.softNewline(" ");
-        ((AnnotationChild)iter.next()).accept(followingAnnotationChildOutput);
+        AnnotationChildVisitor output = (annotated instanceof Component
+                                         ? annotationChildOutput
+                                         : followingAnnotationChildOutput);
+        ((AnnotationChild)iter.next()).accept(output);
       }
     }
     if (hasAnnotations(annotated))
       pp.endGroup();
+  }
+
+  private void leadingComments(Annotated annotated) {
+    boolean first = true;
+    for (Iterator iter = annotated.getLeadingComments().iterator(); iter.hasNext();) {
+      if (!first)
+        pp.hardNewline();
+      else
+        first = false;
+      ((Comment)iter.next()).accept(annotationChildOutput);
+    }
   }
 
   private void annotationBody(List attributes, List children) {
