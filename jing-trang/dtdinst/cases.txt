@@ -1,12 +1,10 @@
-Command-line option to define a parameter entity as INCLUDE.
+Create NotationDecl objects.
 
-Interface to report warnings properly.
+Command-line option to define a parameter entity as INCLUDE.
 
 Real implementation of EncodingMap.
 
 Don't unexpand empty entities that might be pasted.
-
-Create NotationDecl objects.
 
 external general entities
 
@@ -15,11 +13,6 @@ maybe distinguish char entities in object model
 Try to parse ignored marked sections.
 
 Try to parse overridden declarations.
-
-In the object model add something for case where internal param
-entity was not preserved.
-
-Add something for case where param entity was overridden.
 
 <!ENTITY % g "(x|y)">
 <!ATTLIST foo bar NOTATION %g; #IMPLIED>

@@ -93,7 +93,9 @@ class Decl {
       entity.nameSpec = Param.paramsToNameSpec(entity.parsed);
       return new NameSpecDef(name, entity.nameSpec);
     }
-    return null;
+    if (entity.problem == Entity.NO_PROBLEM)
+      throw new RuntimeException("unexplained problem for entity " + entity.name);
+    return new ParamDef(name, entity.entityValue);
   }
 
   TopLevel createGeneralEntityDecl(DtdBuilder db, String name) {

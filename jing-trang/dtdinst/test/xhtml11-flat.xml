@@ -32,6 +32,7 @@
 
          "-//W3C//DTD XHTML 1.1//EN"
 -->
+  <param name="XHTML.version">-//W3C//DTD XHTML 1.1//EN</param>
 <!-- Use this URI to identify the default namespace:
 
          "http://www.w3.org/1999/xhtml"
@@ -42,8 +43,10 @@
   <flag name="NS.prefixed">
     <ignore/>
   </flag>
+  <param name="XHTML.prefix"></param>
 <!-- Reserved for use with the XLink namespace:
 -->
+  <param name="XLINK.xmlns"></param>
   <attributeGroup name="XLINK.xmlns.attrib"/>
 <!-- For example, if you are using XHTML 1.1 directly, use the FPI
      in the DOCTYPE declaration, with the xmlns attribute on the
@@ -60,6 +63,7 @@
      (none)
 -->
 <!-- reserved for future use with document profiles -->
+  <param name="XHTML.profile"></param>
 <!-- Bidirectional Text features
      This feature-test entity is used to declare elements
      and attributes used for bidirectional text support.
@@ -328,6 +332,7 @@
 <!-- end of xhtml-datatypes-1.mod -->
     </includedSection>
 <!-- placeholder for XLink support module -->
+    <param name="xhtml-xlink.mod"></param>
     <flag name="xhtml-qname.module">
       <include/>
     </flag>
@@ -382,6 +387,7 @@
 <!-- 2. Declare a parameter entity (eg., %XHTML.xmlns;) containing
         the URI reference used to identify the XHTML namespace:
 -->
+      <param name="XHTML.xmlns">http://www.w3.org/1999/xhtml</param>
 <!-- 3. Declare parameter entities (eg., %XHTML.prefix;) containing
         the default namespace prefix string(s) to use when prefixing
         is enabled. This may be overridden in the DTD driver or the
@@ -399,13 +405,16 @@
       <ignoredSection flag="XHTML.prefixed">
 &lt;!ENTITY % XHTML.pfx  &quot;%XHTML.prefix;:&quot; &gt;
 </ignoredSection>
+      <param name="XHTML.pfx"></param>
 <!-- declare qualified name extensions here ............ -->
+      <param name="xhtml-qname-extra.mod"></param>
 <!-- 5. The parameter entity %XHTML.xmlns.extra.attrib; may be
         redeclared to contain any non-XHTML namespace declaration
         attributes for namespaces embedded in XHTML. The default
         is an empty string.  XLink should be included here if used
         in the DTD.
 -->
+      <param name="XHTML.xmlns.extra.attrib"></param>
 <!-- The remainder of Section A is only followed in XHTML, not extensions. -->
 <!-- Declare a parameter entity %NS.decl.attrib; containing
      all XML Namespace declarations used in the DTD, plus the
@@ -418,6 +427,7 @@
       %XHTML.xmlns.extra.attrib;&quot;
 &gt;
 </ignoredSection>
+      <param name="NS.decl.attrib">%XHTML.xmlns.extra.attrib;</param>
 <!-- This is a placeholder for future XLink support.
 -->
       <duplicate name="XLINK.xmlns.attrib"/>
@@ -440,11 +450,13 @@
         <attributeGroupRef name="XLINK.xmlns.attrib"/>
       </attributeGroup>
 <!-- placeholder for qualified name redeclarations -->
+      <param name="xhtml-qname.redecl"></param>
 <!-- Section B: XHTML Qualified Names ::::::::::::::::::::::::::::: -->
 <!-- 6. This section declares parameter entities used to provide
         namespace-qualified names for all XHTML element types.
 -->
 <!-- module:  xhtml-applet-1.mod -->
+      <param name="applet.qname">%XHTML.pfx;applet</param>
 <!-- module:  xhtml-base-1.mod -->
       <nameSpec name="base.qname">
         <name>base</name>
@@ -719,6 +731,7 @@
       </nameSpec>
 <!-- Provisional XHTML 2.0 Qualified Names  ...................... -->
 <!-- module:  xhtml-image-2.mod -->
+      <param name="alt.qname">%XHTML.pfx;alt</param>
 <!-- end of xhtml-qname-1.mod -->
     </includedSection>
     <overridden name="xhtml-events.module">IGNORE</overridden>
@@ -1066,6 +1079,7 @@
 <!-- end of xhtml-attribs-1.mod -->
     </includedSection>
 <!-- placeholder for content model redeclarations -->
+    <param name="xhtml-model.redecl"></param>
     <flag name="xhtml-model.module">
       <include/>
     </flag>

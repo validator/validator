@@ -156,6 +156,8 @@ public class Parser extends Token {
 	declState.entity.text = valueBuf.getChars();
 	declState.entity.entityValue = token.substring(1, token.length() - 1);
 	declState.entity.mustReparse = valueBuf.getMustReparse();
+	if (declState.entity.mustReparse)
+	  declState.entity.problem = Entity.REPARSE_PROBLEM;
 	declState.entity.references = valueBuf.getReferences();
       }
       break;
@@ -232,6 +234,7 @@ public class Parser extends Token {
 
 
   private Parser makeParserForEntity(Entity entity, String name) throws IOException {
+    entity.noteReferenced();
     if (entity.open)
       fatal("RECURSION");
     if (entity.notationName != null)
@@ -354,12 +357,11 @@ public class Parser extends Token {
 	fatal("UNDEF_PEREF", name);
 	break;
       }
-      if (entity.text != null && !entity.mustReparse)
+      if (entity.text != null && !entity.mustReparse) {
+	entity.noteReferenced();
 	value.appendReplacementText(entity);
+      }
       else {
-	System.err.println("Warning: reparsed reference to entity \""
-			   + name
-			   + "\"");
 	Parser parser = makeParserForEntity(entity, name);
 	if (parser != null) {
 	  entity.open = true;

@@ -31,6 +31,18 @@ class Entity {
   String notationName;
   Vector atoms;
   boolean mustReparse;
+  static final int NO_PROBLEM = 0;
+  static final int INCONSISTENT_LEVEL_PROBLEM = 1;
+  static final int INCONSISTENT_PARSE_PROBLEM = 2;
+  static final int UNEXPAND_PROBLEM = 3;
+  static final int UNKNOWN_SEMANTIC_PROBLEM = 4;
+  static final int EMPTY_PARTICLE_PROBLEM = 5;
+  static final int REPARSE_PROBLEM = 6;
+  static final int UNREFERENCED_PROBLEM = 7;
+  static final int INTERNAL_DECL_PROBLEM = 8;
+  static final int NOT_PARSED_PROBLEM = 9;
+
+  int problem = UNREFERENCED_PROBLEM;
 
   static final int INCONSISTENT_LEVEL = -1;
   static final int NO_LEVEL = 0;
@@ -74,10 +86,9 @@ class Entity {
       return;
     if (level == referenceLevel) {
       if (!sliceEqual(parsed, v, start, end)) {
-	// XXX give a warning
 	parsed = null;
 	referenceLevel = INCONSISTENT_LEVEL;
-	System.err.println("Warning: entity used inconsistently: " + name);
+	problem = INCONSISTENT_PARSE_PROBLEM;
       }
       return;
     }
@@ -103,7 +114,7 @@ class Entity {
 	  return;
       }
     }
-    System.err.println("Warning: entity used inconsistently: " + name);
+    problem = INCONSISTENT_LEVEL_PROBLEM;
     parsed = null;
     referenceLevel = INCONSISTENT_LEVEL;
   }
@@ -207,13 +218,8 @@ class Entity {
 	}
 	nCopiedAtoms = end;
       }
-      else {
-	System.err.println("Warning: could not preserve reference to entity \""
-			   + references[i].entity.name
-			   + "\" in entity \""
-			   + this.name
-			   + "\"");
-      }
+      else
+	references[i].entity.problem = UNEXPAND_PROBLEM;
     }
     if (newAtoms == null)
       return;
@@ -297,12 +303,20 @@ class Entity {
   }
 
   void analyzeSemantic() {
+    if (problem != NO_PROBLEM)
+      return;
     switch (referenceLevel) {
     case PARAM_LEVEL:
       analyzeSemanticParam();
       break;
     case PARTICLE_LEVEL:
       analyzeSemanticParticle();
+      break;
+    case DECL_LEVEL:
+      problem = INTERNAL_DECL_PROBLEM;
+      break;
+    case NO_LEVEL:
+      problem = NOT_PARSED_PROBLEM;
       break;
     }
   }
@@ -319,7 +333,7 @@ class Entity {
     else if (isNameSpec())
       semantic = SEMANTIC_NAME_SPEC;
     else
-      System.err.println("Warning: could not understand entity: " + name);
+      problem = UNKNOWN_SEMANTIC_PROBLEM;
   }
 
   private boolean isAttributeGroup() {
@@ -391,7 +405,7 @@ class Entity {
 	return;
       }
     }
-    System.err.println("Warning: could not understand entity: " + name);
+    problem = UNKNOWN_SEMANTIC_PROBLEM;
   }
 
   static final int GROUP_MODEL_GROUP_FLAGS 
@@ -410,7 +424,7 @@ class Entity {
 	return;
       }
     }
-    System.err.println("Warning: could not understand entity: " + name);
+    problem = EMPTY_PARTICLE_PROBLEM;
   }
 
   ModelGroup toModelGroup() {
@@ -427,6 +441,11 @@ class Entity {
 
   ExternalId getExternalId() {
     return new ExternalId(systemId, publicId, baseUri);
+  }
+
+  void noteReferenced() {
+    if (problem == UNREFERENCED_PROBLEM)
+      problem = NO_PROBLEM;
   }
 }
 

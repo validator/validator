@@ -9175,7 +9175,9 @@ in the text (no (0) value, the default)
           <datatype name="yesorno">
             <cdata/>
           </datatype>
+          <param name="titles">title?</param>
 <!-- default for use in entry content -->
+          <param name="paracon">#PCDATA</param>
 <!--
 The parameter entities as defined below provide the CALS table model
 as published (as part of the Example DTD) in MIL-HDBK-28001.
@@ -9186,6 +9188,9 @@ for these entities.  However, these entities can and should be redefined
 reference to this Table Model declaration set entity) to fit the needs
 of the current application.
 -->
+          <param name="tbl.table.name">(table|chart)</param>
+          <param name="tbl.table-titles.mdl">%titles;,</param>
+          <param name="tbl.table-main.mdl">(tgroup+|graphic+)</param>
           <overridden name="tbl.table.mdl">%tbl.table-titles.mdl; %tbl.table-main.mdl;</overridden>
           <attributeGroup name="tbl.table.att">
             <attribute>
@@ -17194,6 +17199,7 @@ OtherCredit. -->
           <modelGroupRef name="local.article.class"/>
         </choice>
       </modelGroup>
+      <param name="local.book.class"></param>
       <modelGroup name="book.class">
         <elementRef>
           <name>book</name>

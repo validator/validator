@@ -319,6 +319,13 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void paramDef(String name, String value) throws IOException {
+    w.startElement("param");
+    w.attribute("name", name);
+    w.characters(value);
+    w.endElement();
+  }
+
   public void defaultValue(String value) throws Exception {
     w.startElement("default");
     w.characters(value);

@@ -84,6 +84,7 @@ and TEI.2.corpus elements.-->
 <!--Embed local modifications to TEI parameter entities.  Declare
 entity as empty string first, in case user has no mods and has not
 declared it.-->
+    <param name="TEI.extensions.ent"></param>
 <!-- end of [DSTOVLE]  3.6.2-->
 <!--Embed entities for TEI generic identifiers.-->
     <externalId name="TEI.elementNames" system="teigis2.ent"/>
@@ -151,6 +152,10 @@ declared it.-->
       <nameSpec name="n.att">
         <name>att</name>
       </nameSpec>
+      <param name="n.attDef">attDef</param>
+      <param name="n.attList">attList</param>
+      <param name="n.attName">attName</param>
+      <param name="n.attlDecl">attlDecl</param>
       <nameSpec name="n.author">
         <name>author</name>
       </nameSpec>
@@ -163,6 +168,7 @@ declared it.-->
       <nameSpec name="n.back">
         <name>back</name>
       </nameSpec>
+      <param name="n.baseWsd">baseWsd</param>
       <nameSpec name="n.bibl">
         <name>bibl</name>
       </nameSpec>
@@ -175,6 +181,7 @@ declared it.-->
       <nameSpec name="n.biblStruct">
         <name>biblStruct</name>
       </nameSpec>
+      <param name="n.bicond">bicond</param>
       <nameSpec name="n.birth">
         <name>birth</name>
       </nameSpec>
@@ -238,24 +245,33 @@ declared it.-->
       <nameSpec name="n.channel">
         <name>channel</name>
       </nameSpec>
+      <param name="n.character">character</param>
+      <param name="n.characters">characters</param>
+      <param name="n.children">children</param>
       <nameSpec name="n.cit">
         <name>cit</name>
       </nameSpec>
       <nameSpec name="n.cl">
         <name>cl</name>
       </nameSpec>
+      <param name="n.class">class</param>
       <nameSpec name="n.classCode">
         <name>classCode</name>
       </nameSpec>
       <nameSpec name="n.classDecl">
         <name>classDecl</name>
       </nameSpec>
+      <param name="n.classDoc">classDoc</param>
+      <param name="n.classes">classes</param>
       <nameSpec name="n.closer">
         <name>closer</name>
       </nameSpec>
+      <param name="n.codedCharSet">codedCharSet</param>
+      <param name="n.col">col</param>
       <nameSpec name="n.colloc">
         <name>colloc</name>
       </nameSpec>
+      <param name="n.cond">cond</param>
       <nameSpec name="n.constitution">
         <name>constitution</name>
       </nameSpec>
@@ -274,6 +290,8 @@ declared it.-->
       <nameSpec name="n.damage">
         <name>damage</name>
       </nameSpec>
+      <param name="n.dataDesc">dataDesc</param>
+      <param name="n.datatype">datatype</param>
       <nameSpec name="n.date">
         <name>date</name>
       </nameSpec>
@@ -289,9 +307,11 @@ declared it.-->
       <nameSpec name="n.day">
         <name>day</name>
       </nameSpec>
+      <param name="n.declaration">declaration</param>
       <nameSpec name="n.def">
         <name>def</name>
       </nameSpec>
+      <param name="n.default">default</param>
       <nameSpec name="n.del">
         <name>del</name>
       </nameSpec>
@@ -301,6 +321,7 @@ declared it.-->
       <nameSpec name="n.derivation">
         <name>derivation</name>
       </nameSpec>
+      <param name="n.desc">desc</param>
       <nameSpec name="n.descrip">
         <name>descrip</name>
       </nameSpec>
@@ -310,6 +331,7 @@ declared it.-->
       <nameSpec name="n.dictScrap">
         <name>dictScrap</name>
       </nameSpec>
+      <param name="n.direction">direction</param>
       <nameSpec name="n.distance">
         <name>distance</name>
       </nameSpec>
@@ -391,12 +413,16 @@ declared it.-->
       <nameSpec name="n.eg">
         <name>eg</name>
       </nameSpec>
+      <param name="n.elemDecl">elemDecl</param>
       <nameSpec name="n.emph">
         <name>emph</name>
       </nameSpec>
       <nameSpec name="n.encodingDesc">
         <name>encodingDesc</name>
       </nameSpec>
+      <param name="n.entDoc">entDoc</param>
+      <param name="n.entName">entName</param>
+      <param name="n.entitySet">entitySet</param>
       <nameSpec name="n.entry">
         <name>entry</name>
       </nameSpec>
@@ -412,15 +438,19 @@ declared it.-->
       <nameSpec name="n.equipment">
         <name>equipment</name>
       </nameSpec>
+      <param name="n.equiv">equiv</param>
       <nameSpec name="n.etym">
         <name>etym</name>
       </nameSpec>
       <nameSpec name="n.event">
         <name>event</name>
       </nameSpec>
+      <param name="n.exceptions">exceptions</param>
+      <param name="n.exemplum">exemplum</param>
       <nameSpec name="n.expan">
         <name>expan</name>
       </nameSpec>
+      <param name="n.extFigure">extFigure</param>
       <nameSpec name="n.extent">
         <name>extent</name>
       </nameSpec>
@@ -430,6 +460,8 @@ declared it.-->
       <nameSpec name="n.fAlt">
         <name>fAlt</name>
       </nameSpec>
+      <param name="n.fDecl">fDecl</param>
+      <param name="n.fDescr">fDescr</param>
       <nameSpec name="n.fLib">
         <name>fLib</name>
       </nameSpec>
@@ -445,6 +477,7 @@ declared it.-->
       <nameSpec name="n.fileDesc">
         <name>fileDesc</name>
       </nameSpec>
+      <param name="n.files">files</param>
       <nameSpec name="n.firstLang">
         <name>firstLang</name>
       </nameSpec>
@@ -472,6 +505,9 @@ declared it.-->
       <nameSpec name="n.fs">
         <name>fs</name>
       </nameSpec>
+      <param name="n.fsConstraints">fsConstraints</param>
+      <param name="n.fsDecl">fsDecl</param>
+      <param name="n.fsDescr">fsDescr</param>
       <nameSpec name="n.fsLib">
         <name>fsLib</name>
       </nameSpec>
@@ -559,6 +595,9 @@ declared it.-->
       <nameSpec name="n.idno">
         <name>idno</name>
       </nameSpec>
+      <param name="n.if">if</param>
+      <param name="n.iff">iff</param>
+      <param name="n.ihs">ihs</param>
       <nameSpec name="n.imprimatur">
         <name>imprimatur</name>
       </nameSpec>
@@ -652,6 +691,7 @@ declared it.-->
       <nameSpec name="n.lg5">
         <name>lg5</name>
       </nameSpec>
+      <param name="n.line">line</param>
       <nameSpec name="n.link">
         <name>link</name>
       </nameSpec>
@@ -790,6 +830,9 @@ declared it.-->
       <nameSpec name="n.pVar">
         <name>pVar</name>
       </nameSpec>
+      <param name="n.page">page</param>
+      <param name="n.parents">parents</param>
+      <param name="n.part">part</param>
       <nameSpec name="n.particDesc">
         <name>particDesc</name>
       </nameSpec>
@@ -910,6 +953,7 @@ declared it.-->
       <nameSpec name="n.relation">
         <name>relation</name>
       </nameSpec>
+      <param name="n.remarks">remarks</param>
       <nameSpec name="n.rendition">
         <name>rendition</name>
       </nameSpec>
@@ -958,6 +1002,7 @@ declared it.-->
       <nameSpec name="n.samplingDecl">
         <name>samplingDecl</name>
       </nameSpec>
+      <param name="n.script">script</param>
       <nameSpec name="n.scriptStmt">
         <name>scriptStmt</name>
       </nameSpec>
@@ -1051,6 +1096,7 @@ declared it.-->
       <nameSpec name="n.stress">
         <name>stress</name>
       </nameSpec>
+      <param name="n.string">string</param>
       <nameSpec name="n.subc">
         <name>subc</name>
       </nameSpec>
@@ -1078,6 +1124,7 @@ declared it.-->
       <nameSpec name="n.tag">
         <name>tag</name>
       </nameSpec>
+      <param name="n.tagDoc">tagDoc</param>
       <nameSpec name="n.tagUsage">
         <name>tagUsage</name>
       </nameSpec>
@@ -1093,6 +1140,7 @@ declared it.-->
       <nameSpec name="n.teiCorpus.2">
         <name>teiCorpus.2</name>
       </nameSpec>
+      <param name="n.teiFsd2">teiFsd2</param>
       <nameSpec name="n.teiHeader">
         <name>teiHeader</name>
       </nameSpec>
@@ -1111,6 +1159,7 @@ declared it.-->
       <nameSpec name="n.textDesc">
         <name>textDesc</name>
       </nameSpec>
+      <param name="n.then">then</param>
       <nameSpec name="n.tig">
         <name>tig</name>
       </nameSpec>
@@ -1156,6 +1205,7 @@ declared it.-->
       <nameSpec name="n.triangle">
         <name>triangle</name>
       </nameSpec>
+      <param name="n.tsd">tsd</param>
       <nameSpec name="n.u">
         <name>u</name>
       </nameSpec>
@@ -1171,9 +1221,13 @@ declared it.-->
       <nameSpec name="n.vAlt">
         <name>vAlt</name>
       </nameSpec>
+      <param name="n.vDefault">vDefault</param>
+      <param name="n.vRange">vRange</param>
       <nameSpec name="n.val">
         <name>val</name>
       </nameSpec>
+      <param name="n.valDesc">valDesc</param>
+      <param name="n.valList">valList</param>
       <nameSpec name="n.variantEncoding">
         <name>variantEncoding</name>
       </nameSpec>
@@ -1183,6 +1237,7 @@ declared it.-->
       <nameSpec name="n.vocal">
         <name>vocal</name>
       </nameSpec>
+      <param name="n.vol">vol</param>
       <nameSpec name="n.w">
         <name>w</name>
       </nameSpec>
@@ -1240,6 +1295,7 @@ entities depending on the value of TEI.XML-->
 <!--These parameter entities are used as keywords to express
 rules or constraints which cannot be fully expressed in SGML; their
 expansions show the nearest SGML equivalent.-->
+      <param name="INHERITED">#IMPLIED</param>
       <datatype name="ISO-date">
         <cdata/>
       </datatype>
@@ -1279,7 +1335,10 @@ sets.-->
 <!--III. Declare TEI.XML and associated omissibility
 indicators-->
       <overridden name="TEI.XML">IGNORE</overridden>
-      <includedSection flag="TEI.XML"/>
+      <includedSection flag="TEI.XML">
+        <param name="om.RO"></param>
+        <param name="om.RR"></param>
+      </includedSection>
       <overridden name="om.RO">- o</overridden>
       <overridden name="om.RR">- -</overridden>
 <!-- end of [DSTKEYS]  3.8.5-->
@@ -1345,6 +1404,8 @@ some may be from other tag sets.-->
           </elementRef>
         </choice>
       </modelGroup>
+      <param name="x.date"></param>
+      <param name="m.date">%x.date; %n.date; | %n.dateRange; | %n.dateStruct;</param>
       <modelGroup name="x.data">
         <choice/>
       </modelGroup>
@@ -1759,6 +1820,8 @@ some may be from other tag sets.-->
       </modelGroup>
 <!-- end of [DSTECLO]  3.7.4-->
 <!-- [DSTECMI] 3.7.9: Misc. Element Class Models -->
+      <param name="x.agent"></param>
+      <param name="m.agent">%x.agent; %n.name;</param>
       <modelGroup name="x.addrPart">
         <choice/>
       </modelGroup>
@@ -2761,6 +2824,7 @@ Current versions are available from the Text Encoding Initiative.-->
               </elementRef>
             </choice>
           </modelGroup>
+          <param name="seq">(%m.common; | %m.comp.terminology;)* </param>
           <modelGroup name="mix.terminology">
             <modelGroupRef name="m.comp.terminology"/>
           </modelGroup>
@@ -2986,6 +3050,9 @@ modifications to these DTDs should be performed as specified
 in the Guidelines in chapter "Modifying the TEI DTD."-->
 <!--These materials subject to revision.
 Current versions are available from the Text Encoding Initiative.-->
+          <param name="a.edit">
+      resp IDREF %INHERITED;
+      cert CDATA #IMPLIED</param>
 <!-- end of [DPHENT]  18.-->
         </externalIdRef>
       </includedSection>
@@ -3166,6 +3233,9 @@ Current versions are available from the Text Encoding Initiative.-->
               <implied/>
             </attribute>
           </attributeGroup>
+          <param name="a.placePart">
+      %a.names;
+      %a.typed;</param>
           <attributeGroup name="a.temporalExpr">
             <attributeGroupRef name="a.names"/>
             <attributeGroupRef name="a.typed"/>
@@ -3361,6 +3431,10 @@ component.plus for use in general base tag set.-->
             </optional>
           </sequence>
         </modelGroup>
+        <param name="component.plus">(%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries; %gen.terminology; TEI...end)
+|
+( (%m.common;)+, (%gen.verse; %gen.drama; %gen.spoken; %gen.dictionaries;
+%gen.terminology; TEI...end)?</param>
 <!--(End of marked section for general base.)-->
       </includedSection>
 <!-- end of [DSTECMX]  3.7.8-->
@@ -3650,6 +3724,7 @@ by the user.-->
 <!-- [DSTOVLO] 3.6.2: Embed local element declarations, etc. -->
 <!--Embedding local modifications here allows user modifications
 to use all the standard TEI element classes and parameter entities.-->
+    <param name="TEI.extensions.dtd"></param>
 <!-- end of [DSTOVLO]  3.6.2-->
 <!-- [DSTOVCO] 3.6.3: Embed the core tag sets -->
 <!--These occur in all documents and are therefore defined

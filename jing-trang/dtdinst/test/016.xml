@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <param name="e1"></param>
+  <modelGroup name="e2">
+    <elementRef>
+      <name>foo</name>
+    </elementRef>
+  </modelGroup>
+  <element>
+    <name>doc</name>
+    <modelGroupRef name="e2"/>
+  </element>
+  <element>
+    <name>foo</name>
+    <sequence/>
+  </element>
+</doctype>

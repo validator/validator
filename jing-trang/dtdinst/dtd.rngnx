@@ -13,6 +13,7 @@ decl =
   | nameSpecDef
   | externalIdDef
   | overriddenDef
+  | paramDef
   | duplicateDef
   | externalIdRef
   | includedSection
@@ -33,6 +34,8 @@ nameSpecDef = element nameSpec { name, nameSpec }
 externalIdDef = element externalId { name, externalId }
 
 overriddenDef = element overridden { name, text }
+
+paramDef = element param { name, text }
 
 duplicateDef = element duplicate { name }
 

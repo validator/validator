@@ -356,6 +356,7 @@ MAINTAINER:
       <modelGroupRef name="illus.class"/>
     </choice>
   </modelGroup>
+  <param name="entry.mix">%list.class;|note|eg|graphic|%ednote.class;</param>
   <modelGroup name="hdr.mix">
     <choice>
       <modelGroupRef name="p.class"/>
@@ -641,6 +642,7 @@ MAINTAINER:
         found, using the IDREF mechanism.  %def.att; is for optional
         def attributes, and %def-req.att; is for required def
         attributes. -->
+  <param name="def.att">def                    IDREF           #IMPLIED</param>
   <attributeGroup name="def-req.att">
     <attribute>
       <name>def</name>
@@ -653,6 +655,7 @@ MAINTAINER:
         using the IDREF mechanism.  %ref.att; is for optional
         ref attributes, and %ref-req.att; is for required ref
         attributes. -->
+  <param name="ref.att">ref                    IDREF           #IMPLIED</param>
   <attributeGroup name="ref-req.att">
     <attribute>
       <name>ref</name>

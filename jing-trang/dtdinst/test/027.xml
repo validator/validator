@@ -6,6 +6,7 @@
   <ignoredSection flag="SGML">
 &lt;!ENTITY % RR &quot;- -&quot;&gt;
 </ignoredSection>
+  <param name="RR"></param>
   <element>
     <name>doc</name>
     <pcdata/>
