@@ -150,7 +150,7 @@ class DtdOutput {
   }
 
   class GroupContentModelOutput extends ChoiceContentModelOutput {
-    public Object visitGroup(Pattern p) {
+    public Object visitGroup(GroupPattern p) {
       p.accept(nestedContentModelOutput);
       return null;
     }
