@@ -44,7 +44,7 @@ public class RelaxNgWriter {
   private static final String SEPARATORS = ".-_";
 
   private static final String COMPATIBILITY_ANNOTATIONS_URI
-    = "http://relaxng.org/ns/compatibility/annotations/0.9";
+    = "http://relaxng.org/ns/compatibility/annotations/1.0";
 
   // # is the category; % is the name in the category
 
@@ -875,7 +875,7 @@ public class RelaxNgWriter {
     w.attribute("datatypeLibrary",
 		"http://www.w3.org/2001/XMLSchema-datatypes");
     w.attribute("xmlns",
-		"http://relaxng.org/ns/structure/0.9");
+		"http://relaxng.org/ns/structure/1.0");
     if (annotationPrefix != null)
       w.attribute("xmlns:" + annotationPrefix,
 		  COMPATIBILITY_ANNOTATIONS_URI);
