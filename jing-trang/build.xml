@@ -308,7 +308,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
     <property name="jing.classes" value="../build/classes"/>
-    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
@@ -317,7 +317,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
     <property name="jing.classes" value="../build/classes"/>
-    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
@@ -326,7 +326,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
     <property name="jing.classes" value="../build/classes"/>
-    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
@@ -335,7 +335,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
     <property name="jing.classes" value="../build/classes"/>
-    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
@@ -344,7 +344,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
     <property name="build.dir" value="../build/trang"/>
     <property name="dist.dir" value="../build"/>
     <property name="jing.classes" value="../build/classes"/>
-    <property file="trang/src/com/thaiopensource/relaxng/output/resources/Version.properties"/>
+    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
   </ant>
 </target>
 
