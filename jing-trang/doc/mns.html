@@ -27,6 +27,7 @@ p.note { margin-left: 1in; font-size: smaller; font-style: italic }
 <li><a href="#more-modes">More on modes</a></li>
 <li><a href="#extensibility">Extensibility</a></li>
 <li><a href="#example">Example</a></li>
+<li><a href="#xsd">Comparison with W3C XML Schema</a></li>
 </ul>
 
 <hr />
@@ -685,6 +686,41 @@ provided by the schema for RDF.  We therefore create an
 <code>anything</code> mode, for which processing is lax and which does
 not have any <code>validate</code> or
 <code>validateAttributes</code> rules.</li>
+
+</ul>
+
+<h2><a name="xsd">Comparison with W3C XML Schema</a></h2>
+
+<p><a href="http://www.w3.org/TR/xmlschema-1">W3C XML Schema</a> (XSD)
+includes features for namespace modulariy that are similar in some
+ways to MNS. Like MNS, XSD validation uses a mapping from namespace
+URIs to schemas.  However, there are important differences.</p>
+
+<ul>
+
+<li>XSD does not mandate a particular way to specify the
+mapping. Implementations can get the mapping from
+<code>xsi:schemaLocation</code> attributes in the instance, or it may
+be supplied by the user. With MNS, the mapping is explicit and
+implementation independent.</li>
+
+<li>XSD requires the schemas for all namespaces to be in a single
+schema language, namely XSD.  MNS allows schema languages to be
+mixed.</li>
+
+<li>In XSD, the mapping from namespace URIs to schemas is context
+independent and uniform throughout a document.  In MNS, the mapping
+can <a href="#modes">change with the context</a>.</li>
+
+<li>In XSD, a single schema only has a single target namespace.  In
+MNS, a single schema can <a href="#multiple">cover</a> any number of
+target namespaces.</li>
+
+<li>In XSD, schemas must always indicate explicitly where elements and
+attributes from namespaces other than the target namespace can
+occur. MNS allows this possibility, but also allows schemas to be
+retroactively opened up to extension by using the <a
+href="#pruning">pruning</a> feature.</li>
 
 </ul>
 
