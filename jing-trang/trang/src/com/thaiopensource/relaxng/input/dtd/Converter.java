@@ -38,9 +38,10 @@ import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import org.xml.sax.SAXException;
 
 public class Converter {
-  private ErrorReporter er;
-  private SchemaCollection sc = new SchemaCollection();
-  private boolean inlineAttlistDecls = false;
+  private final Dtd dtd;
+  private final ErrorReporter er;
+  private final SchemaCollection sc = new SchemaCollection();
+  private final boolean inlineAttlistDecls;
   private boolean hadAny = false;
   private boolean hadDefaultValue = false;
   private Map elementNameTable = new Hashtable();
@@ -564,11 +565,13 @@ public class Converter {
     }
   }
 
-  public Converter(ErrorReporter er) {
+  public Converter(Dtd dtd, ErrorReporter er, boolean inlineAttlistDecls) {
+    this.dtd = dtd;
     this.er = er;
+    this.inlineAttlistDecls = inlineAttlistDecls;
   }
 
-  public SchemaCollection convertDtd(Dtd dtd) throws SAXException {
+  public SchemaCollection convert() throws SAXException {
     try {
       dtd.accept(new Analyzer());
       chooseNames();
