@@ -27,3 +27,5 @@ Integrate the non-XML syntax.
 
 Maybe introduce a variant of the element pattern that has a mapping
 from names to content models.
+
+Better error message for wrong namespace URI.
