@@ -41,10 +41,10 @@ class SchemaImpl implements Schema {
   }
 
   static class ElementAction {
-    private Schema schema;
-    private Mode mode;
-    private boolean prune;
-    private Hashset covered = new Hashset();
+    private final Schema schema;
+    private final Mode mode;
+    private final boolean prune;
+    private final Hashset covered = new Hashset();
 
     ElementAction(Schema schema, Mode mode, boolean prune) {
       this.schema = schema;
@@ -73,8 +73,8 @@ class SchemaImpl implements Schema {
     private boolean defined = false;
     private boolean strict = false;
     private boolean strictDefined = false;
-    private Hashtable elementMap = new Hashtable();
-    private Hashtable attributesMap = new Hashtable();
+    private final Hashtable elementMap = new Hashtable();
+    private final Hashtable attributesMap = new Hashtable();
 
     boolean isStrict() {
       return strict;

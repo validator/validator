@@ -20,7 +20,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private boolean complete = false;
   private final Hashset attributeNamespaces = new Hashset();
   private PrefixMapping prefixMapping = null;
-  private Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
+  private final Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
 
   static private class Subtree {
     final Subtree parent;
