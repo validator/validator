@@ -22,14 +22,21 @@ public class Parser extends Token {
   private DtdBuilder db;
   private Vector atoms = new Vector();
   private final boolean isInternal;
+  private String baseUri;
+  private EntityManager entityManager;
+  // for error messages
+  private String location;
 
   static class DeclState {
     Entity entity;
   }
 
-  public Parser(Reader in) {
-    this.in = in;
-    this.parent = null;
+  public Parser(OpenEntity entity, EntityManager entityManager) {
+    this.in = entity.getReader();
+    this.baseUri = entity.getBaseUri();
+    this.location = entity.getLocation();
+    this.entityManager = entityManager;
+    this.parent = parent;
     this.buf = new char[READSIZE * 2];
     this.valueBuf = new ReplacementTextBuffer();
     this.bufEnd = 0;
@@ -37,13 +44,25 @@ public class Parser extends Token {
     this.isInternal = false;
   }
 
-  private Parser(char[] buf, String entityName, boolean isParameterEntity, Parser parent) {
+  private Parser(OpenEntity entity, Parser parent) {
+    this.in = entity.getReader();
+    this.baseUri = entity.getBaseUri();
+    this.location = entity.getLocation();
+    this.entityManager = parent.entityManager;
+    this.parent = parent;
+    this.buf = new char[READSIZE * 2];
+    this.valueBuf = new ReplacementTextBuffer();
+    this.bufEnd = 0;
+    this.db = parent.db;
+    this.isInternal = false;
+  }
+
+  private Parser(char[] buf, String entityName, Parser parent) {
     // this.internalEntityName = entityName;
-    // this.isParameterEntity = isParameterEntity;
     this.buf = buf;
     this.parent = parent;
-    //baseURL = parent.baseURL;
-    //entityManager = parent.entityManager;
+    this.baseUri = parent.baseUri;
+    this.entityManager = parent.entityManager;
     this.bufEnd = buf.length;
     this.bufEndStreamOffset = buf.length;
     this.valueBuf = parent.valueBuf;
@@ -104,6 +123,16 @@ public class Parser extends Token {
     case PrologParser.ACTION_PARAM_ENTITY_NAME:
       declState.entity = db.createParamEntity(token);
       break;
+    case PrologParser.ACTION_ENTITY_PUBLIC_ID:
+      if (declState.entity != null)
+	declState.entity.publicId = token.substring(1, token.length() - 1);
+      break;
+    case PrologParser.ACTION_ENTITY_SYSTEM_ID:
+      if (declState.entity != null) {
+	declState.entity.systemId = token.substring(1, token.length() - 1);
+	declState.entity.baseUri = baseUri;
+      }
+      break;
     case PrologParser.ACTION_ENTITY_VALUE_WITH_PEREFS:
       if (declState.entity != null) {
 	makeReplacementText();
@@ -122,7 +151,7 @@ public class Parser extends Token {
 	  fatal("UNDEF_PEREF", name);
 	  break;
 	}
-	Parser parser = makeParserForEntity(entity, name, true);
+	Parser parser = makeParserForEntity(entity, name);
 	if (parser == null) {
 	  //XXX
 	  break;
@@ -162,21 +191,19 @@ public class Parser extends Token {
   }
 
 
-  private Parser makeParserForEntity(Entity entity, String name, boolean isParameter) throws IOException {
+  private Parser makeParserForEntity(Entity entity, String name) throws IOException {
     if (entity.open)
       fatal("RECURSION");
     if (entity.notationName != null)
       fatal("UNPARSED_REF");
     if (entity.text != null)
-      return new Parser(entity.text, name, isParameter, this);
-    // XXX
-    return null;
+      return new Parser(entity.text, name, this);
 
-    //OpenEntity openEntity
-    //  = entityManager.open(entity.systemId, entity.baseURL, entity.publicId);
-    //if (openEntity == null)
-    //  return null;
-    //return new EntityParser(openEntity, entityManager, app, locale, this);
+    OpenEntity openEntity
+      = entityManager.open(entity.systemId, entity.baseUri, entity.publicId);
+    if (openEntity == null)
+      return null;
+    return new Parser(openEntity, this);
   }
 
 
@@ -293,7 +320,7 @@ public class Parser extends Token {
 	System.err.println("Warning: reparsed reference to entity \""
 			   + name
 			   + "\"");
-	Parser parser = makeParserForEntity(entity, name, true);
+	Parser parser = makeParserForEntity(entity, name);
 	if (parser != null) {
 	  entity.open = true;
 	  parser.parseEntityValue(value);
