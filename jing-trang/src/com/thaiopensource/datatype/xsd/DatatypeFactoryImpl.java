@@ -11,7 +11,7 @@ import com.thaiopensource.datatype.DatatypeContext;
 import com.thaiopensource.datatype.DatatypeAssignment;
 
 public class DatatypeFactoryImpl implements DatatypeFactory {
-  static private final String xsdns = "http://www.w3.org/2000/10/XMLSchema";
+  static private final String xsdns = "http://www.w3.org/2001/XMLSchema-datatypes";
   private final Hashtable typeTable = new Hashtable();
   private RegexEngine regexEngine;
 
@@ -36,7 +36,7 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
   public DatatypeFactoryImpl(RegexEngine regexEngine) {
     this.regexEngine = regexEngine;
     typeTable.put("string", new StringDatatype());
-    typeTable.put("CDATA", new CdataDatatype());
+    typeTable.put("normalizedString", new CdataDatatype());
     typeTable.put("token", new TokenDatatype());
     typeTable.put("boolean", new BooleanDatatype());
 
@@ -83,11 +83,18 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("language", new LanguageDatatype());
 
     // Not implemented yet
-    typeTable.put("uriReference", new StringDatatype());
-    // binary not directly useable
-    // Most date/time types omitted because likely to change
-    typeTable.put("timeDuration", new StringDatatype());
-    typeTable.put("timeInstant", new StringDatatype());
+    typeTable.put("anyURI", new StringDatatype());
+    typeTable.put("base64Binary", new StringDatatype());
+    typeTable.put("hexBinary", new StringDatatype());
+    typeTable.put("duration", new StringDatatype());
+    typeTable.put("dateTime", new StringDatatype());
+    typeTable.put("time", new StringDatatype());
+    typeTable.put("date", new StringDatatype());
+    typeTable.put("gYearMonth", new StringDatatype());
+    typeTable.put("gYear", new StringDatatype());
+    typeTable.put("gMonthDay", new StringDatatype());
+    typeTable.put("gDay", new StringDatatype());
+    typeTable.put("gMonth", new StringDatatype());
   }
 
   public Datatype createDatatype(String namespaceURI, String localName) {
