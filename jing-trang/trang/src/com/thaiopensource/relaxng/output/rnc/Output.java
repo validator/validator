@@ -180,6 +180,11 @@ class Output {
         nsm.preferBinding(nc.getPrefix(), nc.getNamespaceUri());
     }
 
+    public void nullVisitNsName(NsNameNameClass nc) {
+      super.nullVisitNsName(nc);
+      nsm.requireNamespace(nc.getNs(), false);
+    }
+
     public void nullVisitValue(ValuePattern p) {
       super.nullVisitValue(p);
       for (Iterator iter = p.getPrefixMap().entrySet().iterator(); iter.hasNext();) {
@@ -418,15 +423,32 @@ class Output {
 
   class NoParenNameClassOutput implements NameClassVisitor {
     public Object visitAnyName(AnyNameNameClass nc) {
-      pp.text("*");
-      // XXX except
+      NameClass e = nc.getExcept();
+      if (e == null)
+        pp.text("*");
+      else {
+        pp.text("* - ");
+        pp.startNest("* - ");
+        e.accept(nameClassOutput);
+        pp.endNest();
+      }
       return null;
     }
 
     public Object visitNsName(NsNameNameClass nc) {
-      pp.text(nsb.getNonEmptyPrefix(nc.getNs()));
-      pp.text(":*");
-      // XXX except
+      String prefix = nsb.getNonEmptyPrefix(nc.getNs());
+      NameClass e = nc.getExcept();
+      if (e == null) {
+        pp.text(prefix);
+        pp.text(":*");
+      }
+      else {
+        String str = prefix + ":* - ";
+        pp.text(str);
+        pp.startNest(str);
+        e.accept(nameClassOutput);
+        pp.endNest();
+      }
       return null;
     }
 
@@ -454,11 +476,41 @@ class Output {
 
   class NameClassOutput extends NoParenNameClassOutput {
     public Object visitChoice(ChoiceNameClass nc) {
-      pp.text("(");
-      pp.startNest("(");
-      super.visitChoice(nc);
-      pp.endNest();
-      pp.text(")");
+      if (nc.getChildren().size() == 1)
+        super.visitChoice(nc);
+      else {
+        pp.text("(");
+        pp.startNest("(");
+        noParenNameClassOutput.visitChoice(nc);
+        pp.endNest();
+        pp.text(")");
+      }
+      return null;
+    }
+
+    public Object visitAnyName(AnyNameNameClass nc) {
+      if (nc.getExcept() != null) {
+        pp.text("(");
+        pp.startNest("(");
+        noParenNameClassOutput.visitAnyName(nc);
+        pp.endNest();
+        pp.text(")");
+      }
+      else
+        noParenNameClassOutput.visitAnyName(nc);
+      return null;
+    }
+
+    public Object visitNsName(NsNameNameClass nc) {
+      if (nc.getExcept() != null) {
+        pp.text("(");
+        pp.startNest("(");
+        noParenNameClassOutput.visitNsName(nc);
+        pp.endNest();
+        pp.text(")");
+      }
+      else
+        noParenNameClassOutput.visitNsName(nc);
       return null;
     }
   }
