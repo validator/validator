@@ -147,7 +147,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
 
   private void initCurrentSection() {
     currentSection = new Section(NO_NS, null);
-    currentSection.addChildMode(new ModeUsage(startMode), null);
+    currentSection.addChildMode(new ModeUsage(startMode, startMode), null);
   }
 
   public void setDocumentLocator(Locator locator) {

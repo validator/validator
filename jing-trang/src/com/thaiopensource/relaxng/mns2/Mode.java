@@ -4,27 +4,27 @@ import org.xml.sax.Locator;
 import org.xml.sax.helpers.LocatorImpl;
 
 import java.util.Hashtable;
+import java.util.Enumeration;
 
 class Mode {
   static final String ANY_NAMESPACE = "##any";
   static final int ATTRIBUTE_PROCESSING_NONE = 0;
   static final int ATTRIBUTE_PROCESSING_QUALIFIED = 1;
   static final int ATTRIBUTE_PROCESSING_FULL = 2;
+  static final Mode CURRENT = new Mode("#current", null);
 
   private final String name;
-  private final boolean attributesSchema;
   private Mode baseMode;
   private boolean defined;
   private Locator whereDefined;
   private Locator whereUsed;
   private final Hashtable elementMap = new Hashtable();
   private final Hashtable attributeMap = new Hashtable();
-  private int attributeProcessing;
+  private int attributeProcessing = -1;
 
-  Mode(String name, boolean attributesSchema) {
+  Mode(String name, Mode baseMode) {
     this.name = name;
-    this.attributesSchema = attributesSchema;
-    this.attributeProcessing = attributesSchema ? ATTRIBUTE_PROCESSING_FULL : ATTRIBUTE_PROCESSING_NONE;
+    this.baseMode = baseMode;
   }
 
   String getName() {
@@ -43,11 +43,6 @@ class Mode {
     ActionSet actions = getElementActionsExplicit(ns);
     if (actions == null) {
       actions = getElementActionsExplicit(ANY_NAMESPACE);
-      if (actions == null) {
-        actions = new ActionSet();
-        actions.addNoResultAction(new RejectAction(new ModeUsage(this)));
-        elementMap.put(ANY_NAMESPACE, actions);
-      }
       // this is not correct: it breaks a derived mode that use anyNamespace
       // elementMap.put(ns, actions);
     }
@@ -58,8 +53,10 @@ class Mode {
     ActionSet actions = (ActionSet)elementMap.get(ns);
     if (actions == null && baseMode != null) {
       actions = baseMode.getElementActionsExplicit(ns);
-      if (actions != null)
+      if (actions != null) {
+        actions = actions.changeCurrentMode(this);
         elementMap.put(ns, actions);
+      }
     }
     return actions;
   }
@@ -68,14 +65,6 @@ class Mode {
     AttributeActionSet actions = getAttributeActionsExplicit(ns);
     if (actions == null) {
       actions = getAttributeActionsExplicit(ANY_NAMESPACE);
-      if (actions == null) {
-        actions = new AttributeActionSet();
-        if (attributesSchema)
-          actions.setReject(true);
-        else
-          actions.setPass(true);
-        attributeMap.put(ANY_NAMESPACE, actions);
-      }
       // this is not correct: it breaks a derived mode that use anyNamespace
       // attributeMap.put(ns, actions);
     }
@@ -93,6 +82,22 @@ class Mode {
   }
 
   int getAttributeProcessing() {
+    if (attributeProcessing == -1) {
+      if (baseMode != null)
+        attributeProcessing = baseMode.getAttributeProcessing();
+      else
+        attributeProcessing = ATTRIBUTE_PROCESSING_NONE;
+      for (Enumeration enum = attributeMap.keys(); enum.hasMoreElements() && attributeProcessing != ATTRIBUTE_PROCESSING_FULL;) {
+        String ns = (String)enum.nextElement();
+        AttributeActionSet actions = (AttributeActionSet)attributeMap.get(ns);
+        if (!actions.getPass()
+            || actions.getReject()
+            || actions.getSchemas().length > 0)
+          attributeProcessing = ((ns.equals("") || ns.equals(ANY_NAMESPACE))
+                                ? ATTRIBUTE_PROCESSING_FULL
+                                : ATTRIBUTE_PROCESSING_QUALIFIED);
+      }
+    }
     return attributeProcessing;
   }
 
@@ -129,13 +134,6 @@ class Mode {
   boolean bindAttribute(String ns, AttributeActionSet actions) {
     if (attributeMap.get(ns) != null)
       return false;
-    if (attributeProcessing != ATTRIBUTE_PROCESSING_FULL
-        && (!actions.getPass()
-            || actions.getReject()
-            || actions.getSchemas().length > 0))
-      attributeProcessing = ((ns.equals("") || ns.equals(ANY_NAMESPACE))
-                             ? ATTRIBUTE_PROCESSING_FULL
-                             : ATTRIBUTE_PROCESSING_QUALIFIED);
     attributeMap.put(ns, actions);
     return true;
   }

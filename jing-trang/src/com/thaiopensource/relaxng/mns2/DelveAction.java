@@ -10,4 +10,8 @@ class DelveAction extends ResultAction {
   void perform(ValidatorHandler handler, SectionState state) {
     state.addChildMode(getModeUsage(), handler);
   }
+
+  ResultAction changeCurrentMode(Mode mode) {
+    return new DelveAction(getModeUsage().changeCurrentMode(mode));
+  }
 }

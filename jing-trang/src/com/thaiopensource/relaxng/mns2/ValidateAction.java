@@ -15,6 +15,10 @@ class ValidateAction extends NoResultAction {
     state.addNewValidator(schema, getModeUsage());
   }
 
+  NoResultAction changeCurrentMode(Mode mode) {
+    return new ValidateAction(getModeUsage().changeCurrentMode(mode), schema);
+  }
+
   public boolean equals(Object obj) {
     return super.equals(obj) && schema.equals(((ValidateAction)obj).schema);
   }

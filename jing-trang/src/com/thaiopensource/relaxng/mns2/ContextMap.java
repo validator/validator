@@ -5,6 +5,7 @@ import com.thaiopensource.util.Equal;
 import java.util.Vector;
 import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 class ContextMap {
   private Object rootValue;
@@ -74,5 +75,49 @@ class ContextMap {
         return false;
     }
     return true;
+  }
+
+  static private class Enumerator implements Enumeration {
+    private Object rootValue;
+    private Object otherValue;
+    private Enumeration subMapValues;
+    private Enumeration subMaps;
+
+    private Enumerator(ContextMap map) {
+      rootValue = map.rootValue;
+      otherValue = map.otherValue;
+      subMaps = map.nameTable.elements();
+    }
+
+    private void prep() {
+      while ((subMapValues == null || !subMapValues.hasMoreElements()) && subMaps.hasMoreElements())
+        subMapValues = ((ContextMap)subMaps.nextElement()).values();
+    }
+
+    public boolean hasMoreElements() {
+      prep();
+      return rootValue != null || otherValue != null || (subMapValues != null && subMapValues.hasMoreElements());
+    }
+
+    public Object nextElement() {
+      if (rootValue != null) {
+        Object tem = rootValue;
+        rootValue = null;
+        return tem;
+      }
+      if (otherValue != null) {
+        Object tem = otherValue;
+        otherValue = null;
+        return tem;
+      }
+      prep();
+      if (subMapValues == null)
+        throw new NoSuchElementException();
+      return subMapValues.nextElement();
+    }
+  }
+
+  Enumeration values() {
+    return new Enumerator(this);
   }
 }

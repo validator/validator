@@ -13,4 +13,8 @@ class RejectAction extends NoResultAction {
     state.addChildMode(modeUsage, null);
     state.addAttributeValidationModeUsage(modeUsage);
   }
+
+  NoResultAction changeCurrentMode(Mode mode) {
+    return new RejectAction(getModeUsage().changeCurrentMode(mode));
+  }
 }

@@ -29,6 +29,7 @@ class SchemaImpl extends AbstractSchema {
   static final String MNS2_URI = "http://www.thaiopensource.com/ns/mns2";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
+  private final Mode builtinMode;
   private final boolean attributesSchema;
 
   static private final class WrappedIOException extends RuntimeException {
@@ -53,7 +54,6 @@ class SchemaImpl extends AbstractSchema {
     private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
     private int foreignDepth = 0;
     private Mode currentMode = null;
-    private Mode defaultMode = null;
     private String defaultSchemaType;
     private ValidatorHandler validator;
     private ElementsOrAttributes match;
@@ -175,17 +175,13 @@ class SchemaImpl extends AbstractSchema {
       if (startMode == null) {
         startMode = lookupCreateMode(IMPLICIT_MODE_NAME);
         currentMode = startMode;
-        defaultMode = startMode;
         startMode.noteDefined(null);
-      }
-      else {
-        defaultMode = getModeAttribute(attributes, "defaultMode");
       }
       startMode.noteUsed(locator);
       if (attributesSchema) {
         Mode wrapper = lookupCreateMode(WRAPPER_MODE_NAME);
         ActionSet actions = new ActionSet();
-        actions.addNoResultAction(new AllowAction(new ModeUsage(startMode)));
+        actions.addNoResultAction(new AllowAction(new ModeUsage(startMode, startMode)));
         wrapper.bindElement(Mode.ANY_NAMESPACE, actions);
         wrapper.noteDefined(null);
         startMode = wrapper;
@@ -268,7 +264,7 @@ class SchemaImpl extends AbstractSchema {
       }
     }
 
-    private void parsePass(Attributes attributes) throws SAXException {
+    private void parsePass(Attributes attributes) {
       if (attributeActions != null)
         attributeActions.setPass(true);
       if (actions != null) {
@@ -279,7 +275,7 @@ class SchemaImpl extends AbstractSchema {
         modeUsage = null;
     }
 
-    private void parseDelve(Attributes attributes) throws SAXException {
+    private void parseDelve(Attributes attributes) {
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
         actions.setResultAction(new DelveAction(modeUsage));
@@ -288,7 +284,7 @@ class SchemaImpl extends AbstractSchema {
         modeUsage = null;
     }
 
-    private void parseAllow(Attributes attributes) throws SAXException {
+    private void parseAllow(Attributes attributes) {
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
         actions.addNoResultAction(new AllowAction(modeUsage));
@@ -297,7 +293,7 @@ class SchemaImpl extends AbstractSchema {
         modeUsage = null;
     }
 
-    private void parseReject(Attributes attributes) throws SAXException {
+    private void parseReject(Attributes attributes) {
       if (actions != null) {
         modeUsage = getModeUsage(attributes);
         actions.addNoResultAction(new RejectAction(modeUsage));
@@ -353,21 +349,14 @@ class SchemaImpl extends AbstractSchema {
       return eoa;
     }
 
-    private ModeUsage getModeUsage(Attributes attributes) throws SAXException {
-      return new ModeUsage(getUseMode(attributes));
+    private ModeUsage getModeUsage(Attributes attributes) {
+      return new ModeUsage(getUseMode(attributes), currentMode);
     }
 
-    private Mode getUseMode(Attributes attributes) throws SAXException {
+    private Mode getUseMode(Attributes attributes) {
       Mode mode = getModeAttribute(attributes, "useMode");
-      if (mode == null) {
-        if (defaultMode == null) {
-          error("use_mode_required");
-          mode = lookupCreateMode(IMPLICIT_MODE_NAME);
-          mode.noteDefined(locator);
-        }
-        else
-          mode = defaultMode;
-      }
+      if (mode == null)
+        return Mode.CURRENT;
       mode.noteUsed(locator);
       return mode;
     }
@@ -411,6 +400,16 @@ class SchemaImpl extends AbstractSchema {
 
   SchemaImpl(boolean attributesSchema) {
     this.attributesSchema = attributesSchema;
+    builtinMode = new Mode("#builtin", null);
+    ActionSet actions = new ActionSet();
+    actions.addNoResultAction(new RejectAction(new ModeUsage(Mode.CURRENT, builtinMode)));
+    builtinMode.bindElement(Mode.ANY_NAMESPACE, actions);
+    AttributeActionSet attributeActions = new AttributeActionSet();
+    if (attributesSchema)
+      attributeActions.setReject(true);
+    else
+      attributeActions.setPass(true);
+    builtinMode.bindAttribute(Mode.ANY_NAMESPACE, attributeActions);
   }
 
   SchemaFuture installHandlers(XMLReader in, SchemaReceiverImpl sr) {
@@ -433,7 +432,7 @@ class SchemaImpl extends AbstractSchema {
     name = name.trim();
     Mode mode = (Mode)modeMap.get(name);
     if (mode == null) {
-      mode = new Mode(name, attributesSchema);
+      mode = new Mode(name, builtinMode);
       modeMap.put(name, mode);
     }
     return mode;

@@ -1,7 +1,5 @@
 package com.thaiopensource.relaxng.mns2;
 
-import com.thaiopensource.relaxng.ValidatorHandler;
-
 class AllowAction extends NoResultAction {
   AllowAction(ModeUsage modeUsage) {
     super(modeUsage);
@@ -10,5 +8,9 @@ class AllowAction extends NoResultAction {
   void perform(SectionState state) {
     state.addChildMode(getModeUsage(), null);
     state.addAttributeValidationModeUsage(getModeUsage());
+  }
+
+  NoResultAction changeCurrentMode(Mode mode) {
+    return new AllowAction(getModeUsage().changeCurrentMode(mode));
   }
 }

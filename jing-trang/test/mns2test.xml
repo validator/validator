@@ -861,10 +861,10 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 </grammar>
 </resource>
 <correct>
-<rules startMode="root" defaultMode="pass" xmlns="http://www.thaiopensource.com/ns/mns2">
+<rules startMode="root" xmlns="http://www.thaiopensource.com/ns/mns2">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng">
+      <validate schema="xhtml.rng" useMode="pass">
         <context path="head" useMode="rdf"/>
       </validate>
     </namespace>
@@ -876,7 +876,7 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
   </mode>
   <mode name="rdf">
     <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng"/>
+      <validate schema="rdfxml.rng" useMode="pass"/>
     </namespace>
   </mode>
 </rules>
@@ -1472,14 +1472,13 @@ attribute a:y { text }
 </rules>
 </resource>
 <correct>
-<rules xmlns="http://www.thaiopensource.com/ns/mns2"
-  startMode="start" defaultMode="cover">
+<rules xmlns="http://www.thaiopensource.com/ns/mns2" startMode="start">
 <mode name="start" extends="c">
   <namespace ns="http://www.example.org/a">
-    <validate schema="ab.mns"/>
+    <validate schema="ab.mns" useMode="cover"/>
   </namespace>
   <namespace ns="http://www.example.org/b">
-    <validate schema="ab.mns"/>
+    <validate schema="ab.mns" useMode="cover"/>
   </namespace>
 </mode>
 <mode name="cover" extends="c">

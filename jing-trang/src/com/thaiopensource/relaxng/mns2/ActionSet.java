@@ -22,4 +22,14 @@ class ActionSet {
   NoResultAction[] getNoResultActions() {
     return noResultActions;
   }
+
+  ActionSet changeCurrentMode(Mode mode) {
+    ActionSet actions = new ActionSet();
+    if (this.resultAction != null)
+      actions.resultAction = this.resultAction.changeCurrentMode(mode);
+    actions.noResultActions = new NoResultAction[this.noResultActions.length];
+    for (int i = 0; i < actions.noResultActions.length; i++)
+      actions.noResultActions[i] = this.noResultActions[i].changeCurrentMode(mode);
+    return actions;
+  }
 }

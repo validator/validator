@@ -9,4 +9,5 @@ abstract class NoResultAction extends Action {
   }
 
   abstract void perform(SectionState state) throws SAXException;
+  abstract NoResultAction changeCurrentMode(Mode mode);
 }

@@ -11,11 +11,6 @@
             <attribute name="startMode">
               <ref name="modeName"/>
             </attribute>
-            <optional>
-              <attribute name="defaultMode">
-                <ref name="modeName"/>
-              </attribute>
-            </optional>
             <oneOrMore>
               <ref name="mode"/>
             </oneOrMore>
@@ -112,13 +107,11 @@
           <ref name="foreign"/>
         </interleave>
       </element>
-      <element name="allow">
-        <interleave>
-          <ref name="modeUsage"/>
-          <ref name="foreign"/>
-        </interleave>
-      </element>
-      <element name="reject">
+      <element>
+        <choice>
+          <name>allow</name>
+          <name>reject</name>
+        </choice>
         <interleave>
           <ref name="modeUsage"/>
           <ref name="foreign"/>
@@ -127,20 +120,16 @@
     </choice>
   </define>
   <define name="resultAction">
-    <choice>
-      <element name="pass">
-        <interleave>
-          <ref name="modeUsage"/>
-          <ref name="foreign"/>
-        </interleave>
-      </element>
-      <element name="delve">
-        <interleave>
-          <ref name="modeUsage"/>
-          <ref name="foreign"/>
-        </interleave>
-      </element>
-    </choice>
+    <element>
+      <choice>
+        <name>pass</name>
+        <name>delve</name>
+      </choice>
+      <interleave>
+        <ref name="modeUsage"/>
+        <ref name="foreign"/>
+      </interleave>
+    </element>
   </define>
   <define name="modeUsage">
     <optional>
@@ -153,9 +142,11 @@
         <attribute name="path">
           <ref name="path"/>
         </attribute>
-        <attribute name="useMode">
-          <ref name="modeName"/>
-        </attribute>
+        <optional>
+          <attribute name="useMode">
+            <ref name="modeName"/>
+          </attribute>
+        </optional>
       </element>
     </zeroOrMore>
   </define>

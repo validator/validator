@@ -15,4 +15,8 @@ class PassAction extends ResultAction {
       state.addAttributeValidationModeUsage(modeUsage);
     state.addChildMode(modeUsage, handler);
   }
+
+  ResultAction changeCurrentMode(Mode mode) {
+    return new PassAction(getModeUsage().changeCurrentMode(mode));
+  }
 }

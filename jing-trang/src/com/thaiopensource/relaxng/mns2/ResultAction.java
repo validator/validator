@@ -9,4 +9,5 @@ abstract class ResultAction extends Action {
   }
 
   abstract void perform(ValidatorHandler handler, SectionState state) throws SAXException;
+  abstract ResultAction changeCurrentMode(Mode mode);
 }
