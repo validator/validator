@@ -1,20 +1,54 @@
-<grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-         ns="http://www.thaiopensource.com/ns/mns"
-         xmlns="http://relaxng.org/ns/structure/1.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+  ns="http://www.thaiopensource.com/ns/mns"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="rules">
+      <optional>
+        <attribute name="startMode">
+          <ref name="mode"/>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <choice>
-          <element name="validateElement">
-            <ref name="commonAttributes"/>
-          </element>
-          <element name="validateAttributes">
-            <ref name="commonAttributes"/>
-          </element>
+          <ref name="validateElement"/>
+          <ref name="validateAttributes"/>
+          <ref name="process"/>
         </choice>
       </zeroOrMore>
     </element>
   </start>
+  <define name="validateElement">
+    <element name="validateElement">
+      <ref name="commonAttributes"/>
+      <optional>
+        <attribute name="useMode">
+          <ref name="mode"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <element name="subsume">
+          <attribute name="ns">
+            <data type="anyURI"/>
+          </attribute>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="validateAttributes">
+    <element name="validateAttributes">
+      <ref name="commonAttributes"/>
+    </element>
+  </define>
+  <define name="process">
+    <element>
+      <choice>
+        <name>lax</name>
+        <name>strict</name>
+      </choice>
+      <ref name="modesAttribute"/>
+    </element>
+  </define>
   <define name="commonAttributes">
     <attribute name="ns">
       <data type="anyURI"/>
@@ -22,5 +56,23 @@
     <attribute name="schema">
       <data type="anyURI"/>
     </attribute>
+    <ref name="modesAttribute"/>
+  </define>
+  <define name="modesAttribute">
+    <optional>
+      <attribute name="modes">
+        <list>
+          <oneOrMore>
+            <ref name="mode"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mode">
+    <choice>
+      <data type="NCName"/>
+      <value>#default</value>
+    </choice>
   </define>
 </grammar>
