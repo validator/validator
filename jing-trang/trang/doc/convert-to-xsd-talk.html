@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Converting RELAX NG to XSD</title>
+<style type="text/css">
+body { font-family: Arial }
+h1 { text-align: center }
+h2 { text-align: center }
+p { font-size: larger }
+div.group { margin-left: 40pt }
+pre { font-size: larger; font-family: monospace; margin-left: 20pt }
+code { font-size: larger; font-family: monospace }
+</style></head>
+<body>
+<p>These are the slides for a talk given at the XML 2002
+conference in Baltimore.  They have been
+combined into a single HTML file.</p>
+<hr />
+<h1>Converting RELAX NG to XSD</h1>
+<h2>James Clark</h2>
+<hr />
+<h1>Goals</h1>
+
+<p>Good-quality XSD</p>
+<p>Structure (define/include) preserving</p>
+<p>Approximate where necessary</p>
+<p>Useful rather than perfect</p>
+
+<hr />
+<h1>Conversion strategy</h1>
+
+<p>Build RELAX NG object model</p>
+<p>Convert RELAX NG object model to intermediate form</p>
+<p>Perform transformations on intermediate form</p>
+<p>Generate XSD from intermediate form</p>
+
+<hr />
+<h1>Intermediate form</h1>
+
+<p>Schema language between RELAX NG and XSD</p>
+<p>Abstract, no syntax</p>
+<p>No mixed element/attribute content models</p>
+<p>Clean, simple semantics</p>
+<p>Schema structure more controlled than RELAX NG</p>
+
+<hr />
+<h1>Intermediate schema components</h1>
+
+<p><i>Simple type definition</i> associates local name with simple
+type</p>
+
+<p><i>Attribute group definition</i> associates local name with
+attribute use</p>
+
+<p><i>Group definition</i> associates local name with particle</p>
+
+<p><i>Start declaration</i> declares particle that document
+element must match</p>
+
+<p><i>Include</i> references a schema</p>
+
+<hr />
+<h1>Points to note</h1>
+
+<p>Order of components not semantically significant</p>
+
+<p>Simple type definitions, attribute group definitions, group
+definitions have distinct symbol spaces</p>
+
+<p>Definitions are named with local names not QNames</p>
+
+<p>Builtin simple types do not have simple type definitions</p>
+
+<p>No target namespace associated with a schema</p>
+
+<p>No complex type declarations, element declarations or attribute
+declarations</p>
+
+<hr />
+<h1>Simple types</h1>
+
+<p><i>Restriction</i> contains the name of builtin simple
+type and list of facets</p>
+
+<p><i>List</i> contains a simple type
+and a minimum/maximum number of occurrences</p>
+
+<p><i>Union</i> contains a list of simple types</p>
+
+<p><i>Reference</i> contains a local name referring to a simple
+type definition</p>
+
+<hr />
+<h1>Particles</h1>
+
+<p><i>Element</i> contains an expanded QName
+and a complex type</p>
+
+<p><i>Wildcard element</i> contains a wildcard</p>
+
+<p><i>Repeat</i> contains a particle and a minimum/maximum
+number of occurrences</p>
+
+<p><i>Sequence</i> contains one or more particles</p>
+
+<p><i>Choice</i> contains one or more particles</p>
+
+<p><i>Interleave</i> contains one or more particles</p>
+
+<p><i>Reference</i> contains a local name referring to a group
+definition</p>
+
+<hr />
+
+<h1>Complex types</h1>
+
+<p><i>Complex content</i> contains attribute use,
+a particle, a mixed flag</p>
+
+<p><i>Simple content</i> contains attribute use,
+a simple type</p>
+
+<hr />
+<h1>Attribute uses</h1>
+
+<p><i>Attribute</i> contains an expanded QName and a simple type</p>
+
+<p><i>Optional attribute</i> contains an attribute and a default
+value</p>
+
+<p><i>Wildcard attribute</i> contains a wildcard</p>
+
+<p><i>Attribute group</i> contains a list of zero or more
+attributes</p>
+
+<p><i>Attribute use choice</i> contains a list of one or
+more attribute uses</p>
+
+<p><i>Reference</i> contains a local name referring to an
+attribute group definition</p>
+
+<hr />
+
+<h1>Wildcard</h1>
+
+<p>Positive/negative flag</p>
+<p>Set of namespace URIs</p>
+<p>Set of excluded expanded QNames</p>
+
+<hr />
+<h1>Conversion from RELAX NG to intermediate form</h1>
+<hr />
+<h1>Pattern analysis</h1>
+
+<p>Flags computed based on possible matches of the pattern</p>
+
+<div class="group">
+
+<p><i>empty</i> says if there is a match whose content is empty</p>
+
+<p><i>text</i> says if there is a match whose content includes a
+text node that is matched against a text pattern</p>
+
+<p><i>data</i> says if there is a match whose content includes a
+text node that is matched against a data, value or list
+pattern</p>
+
+<p><i>attribute</i> says if there is a match that includes an
+attribute</p>
+
+<p><i>element</i> says if there a match whose content includes an
+element</p>
+
+</div>
+
+<p>Sufficient to allow conversion to intermediate form</p>
+<p>Can compute flags for patterns from subpatterns</p>
+
+<hr />
+<h1>Converting patterns</h1>
+
+<p>A pattern can be converted in three ways:</p>
+
+<div class="group">
+<p>A pattern may be converted to a particle</p>
+<p>A pattern may be converted to a simple type</p>
+<p>A pattern may be converted to an attribute use</p>
+</div>
+
+<p>A single pattern may be converted both to a particle or a
+simple type and to an attribute use</p>
+
+<p><code>element</code> patterns are treated like
+<code>empty</code> when converting to an attribute use</p>
+
+<p><code>attribute</code> patterns are treated like
+<code>empty</code> when converting to a particle or simple
+type</p>
+
+<hr />
+<h1>Converting name classes</h1>
+
+<p>A name class is converted to:</p>
+
+<div class="group">
+<p>a set of expanded QNames</p>
+<p>a wildcard</p>
+</div>
+
+<hr />
+
+<h1>Converting an element pattern to a particle</h1>
+
+<p>Split name class into wildcard and list of expanded names</p>
+
+<p>Generate wildcard element particle for wildcard</p>
+
+<p>Generate element particle for each expanded name by converting
+body of element pattern to a complex type</p>
+
+<p>Combine with choice particle</p>
+
+<hr />
+
+<h1>Converting element body to a complex type</h1>
+
+<p>If body has <i>element</i> flag, then use a complex type with
+complex content and convert body to a particle</p>
+
+<p>Mixed if body has either <i>data</i> or <i>text</i> flag</p>
+
+<p>If body has <i>data</i> flag but neither <i>text</i> nor
+<i>element</i> flag, then use a complex type with simple
+content and convert body to a simple type</p>
+
+<p>In addition, convert body to an attribute use</p>
+
+<hr />
+
+<h1>Converting a define</h1>
+
+<p>If body has <i>attribute</i> flag, then generate an attribute
+group definition by converting body to an attribute use</p>
+
+<p>If body has <i>element</i> flag, then generate a group definition
+by converting body to a particle</p>
+
+<p>If body has <i>data</i> flag but neither <i>text</i> nor
+<i>element</i> flag, then generate a simple type definition by
+converting body to simple type</p>
+
+<hr />
+<h1>Converting a list</h1>
+
+<p>Intermediate form like XSD not RELAX NG</p>
+<p>Compute minimum and maximum number of tokens in list</p>
+<p>Compute union of simple types of possible members of list</p>
+
+<hr />
+<h1>Transformations on intermediate form</h1>
+
+<p>Transform out attribute choice</p>
+<p>Transform out interleave except where XSD allows it</p>
+<p>Combine attribute wildcards</p>
+<p>Combine unions of simple types with enumeration facet</p>
+
+<hr />
+<h1>Conversion from intermediate form into XSD</h1>
+<hr />
+<h1>Namespace analysis</h1>
+
+<p>Assign target namespace to each file in intermediate schema</p>
+<p>Choose or create principal file for every namespace</p>
+<p>Determine which attributes, element particles need
+to be moved</p>
+<p>Determine which negative wildcards need to be moved</p>
+<p>Determine which attributes, element particles should be global</p>
+<p>Null namespace needs special treatment</p>
+
+<hr />
+<h1>Complex type analysis</h1>
+
+<p>Identify cases where complex type can be used instead of</p>
+
+<div class="group">
+<p>Simple type definition and optionally attribute group definition, or</p>
+<p>Group definition and optionally attribute group definition</p>
+</div>
+
+<p>All references must be such that they can turn into</p>
+
+<div class="group">
+<p>the type of an element</p>
+<p>the base type of a complex type extension</p>
+</div>
+
+<hr />
+<h1>XSD output</h1>
+
+<p>Take advantage of XSD shorthands</p>
+
+<p>Generate complex type definitions</p>
+
+<p>Generate global element/attribute declarations</p>
+
+<p>Generate bridging definitions for non-global moved
+elements/attributes</p>
+
+<p>Generate bridging definitions for negative wildcards</p>
+
+<p>Deal with attribute wildcards</p>
+
+<hr />
+<h1>Possible improvements</h1>
+
+<p>Avoid violating <i>unique particle attribution</i> constraint</p>
+<p>Avoid violating <i>element declarations consistent</i> constraint</p>
+<p>Take advantage of substitution groups</p>
+<p>Better handling of interleave</p>
+<p>Inform user about all approximations</p>
+<p>Generate annotations using eg Schematron to make approximations exact</p>
+<p>Handle RELAX NG overrides using redefine</p>
+
+<hr />
+<h1>Implementation</h1>
+
+<p>Trang (Translator for RELAX NG Schemas)</p>
+<p>Open source</p>
+<p>http://www.thaiopensource.com/relaxng/trang.html</p>
+
+</body>
+</html>
