@@ -97,3 +97,5 @@ Handle the case where the head of a substitution group should be a non-abstract 
 (remember to deal with type derivation restriction).
 
 Deal with non top-level commments.
+
+Annotations to control block and final attributes.
