@@ -11,6 +11,7 @@ import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.out.XmlWriter;
 import com.thaiopensource.util.OptionParser;
+import com.thaiopensource.util.UriOrFile;
 
 public class Driver {
 
@@ -103,7 +104,7 @@ public class Driver {
       usage();
       return false;
     }
-    String uri = UriEntityManager.commandLineArgToUri(args[0]);
+    String uri = UriOrFile.toUri(args[0]);
     Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
     if (dir == null) {
       XmlWriter w = new XmlOutputStreamWriter(System.out, dtd.getEncoding());
