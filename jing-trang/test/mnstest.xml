@@ -463,4 +463,85 @@
 </eg:a>
 </valid>
 </testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <strict/>
+  <strict/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <strict/>
+  <lax/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <strict modes="a b"/>
+  <strict modes="b c"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <strict modes="a b a"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="" schema="a.rng#foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="" schema="a.rng#foo"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="" schema="a.rng"/>
+  <validateElement ns="" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<attribute xmlns:eg="http://example.com" name="eg:a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</attribute>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateAttributes ns="http://example.com" schema="a.rng"/>
+  <validateAttributes ns="http://example.com" schema="a.rng"/>
+</rules>
+</incorrect>
+</testCase>
 </testSuite>
