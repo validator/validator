@@ -161,6 +161,7 @@ class AtomParser {
 	  p = new Param(Param.PERCENT);
 	  break;
 	case Tokenizer.TOK_NAME:
+	case Tokenizer.TOK_PREFIXED_NAME:
 	  switch (action) {
 	  case PrologParser.ACTION_CONTENT_ANY:
 	    p = new Param(Param.ANY);
@@ -284,6 +285,7 @@ class AtomParser {
 	  p = new Particle(Particle.PCDATA);
 	  break;
 	case Tokenizer.TOK_NAME:
+	case Tokenizer.TOK_PREFIXED_NAME:
 	  p = new Particle(action == PrologParser.ACTION_CONTENT_ELEMENT
 			   ? Particle.ELEMENT_NAME
 			   : Particle.NMTOKEN);

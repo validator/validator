@@ -194,7 +194,9 @@ public class PrologParser implements Cloneable {
       }
       break;
     case doctype0:
-      if (tok == Tokenizer.TOK_NAME) {
+      switch (tok) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = doctype1;
 	return ACTION_DOCTYPE_NAME;
       }
@@ -438,7 +440,9 @@ public class PrologParser implements Cloneable {
       }
       break;
     case attlist0:
-      if (tok == Tokenizer.TOK_NAME) {
+      switch (tok) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = attlist1;
 	return ACTION_ATTLIST_ELEMENT_NAME;
       }
@@ -449,6 +453,7 @@ public class PrologParser implements Cloneable {
 	state = documentEntity ? internalSubset : externalSubset1;
 	return ACTION_NONE;
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = attlist2;
 	return ACTION_ATTRIBUTE_NAME;
       }
@@ -476,6 +481,7 @@ public class PrologParser implements Cloneable {
       switch (tok) {
       case Tokenizer.TOK_NMTOKEN:
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = attlist4;
 	return ACTION_ATTRIBUTE_ENUM_VALUE;
       }
@@ -544,7 +550,9 @@ public class PrologParser implements Cloneable {
       }
       break;
     case element0:
-      if (tok == Tokenizer.TOK_NAME) {
+      switch (tok) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = element1;
 	return ACTION_ELEMENT_NAME;
       }
@@ -582,6 +590,7 @@ public class PrologParser implements Cloneable {
 	state = element6;
 	return ACTION_GROUP_OPEN;
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = element7;
 	return ACTION_CONTENT_ELEMENT;
       case Tokenizer.TOK_NAME_QUESTION:
@@ -608,7 +617,9 @@ public class PrologParser implements Cloneable {
       }
       break;
     case element4:
-      if (tok == Tokenizer.TOK_NAME) {
+      switch (tok) {
+      case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = element5;
 	return ACTION_CONTENT_ELEMENT;
       }
@@ -636,6 +647,7 @@ public class PrologParser implements Cloneable {
 	groupLevel += 1;
 	return ACTION_GROUP_OPEN;
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
 	state = element7;
 	return ACTION_CONTENT_ELEMENT;
       case Tokenizer.TOK_NAME_QUESTION:

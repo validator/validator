@@ -153,14 +153,19 @@ public class Tokenizer {
   public static final int TOK_DECL_CLOSE = TOK_DECL_OPEN + 1;
 
   /**
-   * Represents a name in the prolog.
+   * Represents an unprefixed name in the prolog.
    */
   public static final int TOK_NAME = TOK_DECL_CLOSE + 1;
 
   /**
+   * Represents a name with a prefix.
+   */
+  public static final int TOK_PREFIXED_NAME = TOK_NAME + 1;
+
+  /**
    * Represents a name token in the prolog that is not a name.
    */
-  public static final int TOK_NMTOKEN = TOK_NAME + 1;
+  public static final int TOK_NMTOKEN = TOK_PREFIXED_NAME + 1;
 
   /**
    * Represents <code>#NAME</code> in the prolog.
@@ -275,7 +280,8 @@ public class Tokenizer {
   static final int CT_LSQB = CT_NUM + 1;
   static final int CT_S = CT_LSQB + 1;
   static final int CT_NMSTRT = CT_S + 1;
-  static final int CT_NAME = CT_NMSTRT + 1;
+  static final int CT_COLON = CT_NMSTRT + 1;
+  static final int CT_NAME = CT_COLON + 1;
   static final int CT_MINUS = CT_NAME + 1;
   static final int CT_OTHER = CT_MINUS + 1;
   static final int CT_PERCNT = CT_OTHER + 1;
@@ -301,7 +307,7 @@ public class Tokenizer {
     /* 0x2C */ CT_COMMA, CT_MINUS, CT_NAME, CT_SOL,
     /* 0x30 */ CT_NAME, CT_NAME, CT_NAME, CT_NAME,
     /* 0x34 */ CT_NAME, CT_NAME, CT_NAME, CT_NAME,
-    /* 0x38 */ CT_NAME, CT_NAME, CT_NMSTRT, CT_SEMI,
+    /* 0x38 */ CT_NAME, CT_NAME, CT_COLON, CT_SEMI,
     /* 0x3C */ CT_LT, CT_EQUALS, CT_GT, CT_QUEST,
     /* 0x40 */ CT_OTHER, CT_NMSTRT, CT_NMSTRT, CT_NMSTRT,
     /* 0x44 */ CT_NMSTRT, CT_NMSTRT, CT_NMSTRT, CT_NMSTRT,
@@ -723,6 +729,7 @@ public class Tokenizer {
       case CT_NMSTRT:
       case CT_NAME:
       case CT_MINUS:
+      case CT_COLON:
 	off += 1;
 	break;
       case CT_LEAD2:
@@ -997,6 +1004,7 @@ public class Tokenizer {
   private static
   int scanAtts(int nameStart, char[] buf, int off, int end, ContentToken token)
        throws PartialTokenException, InvalidTokenException {
+    boolean hadColon = false;
     int nameEnd = -1;
     while (off != end) {
       switch (charType(buf[off])) {
@@ -1004,6 +1012,28 @@ public class Tokenizer {
       case CT_NAME:
       case CT_MINUS:
 	off += 1;
+	break;
+      case CT_COLON:
+	if (hadColon)
+	  throw new InvalidTokenException(off);
+	hadColon = true;
+	off += 1;
+	if (off == end)
+	  throw new PartialTokenException();
+	switch (charType(buf[off])) {
+	case CT_NMSTRT:
+	  off += 1;
+	  break;
+	case CT_LEAD2:
+	  if (end - off < 2)
+	    throw new PartialCharException(off);
+	  if (charType2(buf, off) != CT_NMSTRT)
+	    throw new InvalidTokenException(off);
+	  off += 2;
+	  break;
+	default:
+	  throw new InvalidTokenException(off);
+	}
 	break;
       case CT_LEAD2:
 	if (end - off < 2)
@@ -1038,6 +1068,7 @@ public class Tokenizer {
 	  if (nameEnd < 0)
 	    nameEnd = off;
 	  int open;
+	  hadColon = false;
 	  for (;;) {
 	  
 	    off += 1;
@@ -1213,6 +1244,7 @@ public class Tokenizer {
       throw new InvalidTokenException(off);
     }
     /* we have a start-tag */
+    boolean hadColon = false;
     token.nameEnd = -1;
     token.clearAttributes();
     while (off != end) {
@@ -1228,6 +1260,28 @@ public class Tokenizer {
 	if (!isNameChar2(buf, off))
 	  throw new InvalidTokenException(off);
 	off += 2;
+	break;
+      case CT_COLON:
+	if (hadColon)
+	  throw new InvalidTokenException(off);
+	hadColon = true;
+	off += 1;
+	if (off == end)
+	  throw new PartialTokenException();
+	switch (charType(buf[off])) {
+	case CT_NMSTRT:
+	  off += 1;
+	  break;
+	case CT_LEAD2:
+	  if (end - off < 2)
+	    throw new PartialCharException(off);
+	  if (charType2(buf, off) != CT_NMSTRT)
+	    throw new InvalidTokenException(off);
+	  off += 2;
+	  break;
+	default:
+	  throw new InvalidTokenException(off);
+	}
 	break;
       case CT_S:
       case CT_CR:
@@ -1763,6 +1817,7 @@ public class Tokenizer {
       break;
     case CT_NAME:
     case CT_MINUS:
+    case CT_COLON:
       tok = TOK_NMTOKEN;
       off += 1;
       break;
@@ -1794,18 +1849,47 @@ public class Tokenizer {
       case CT_LF:
 	token.tokenEnd = off;
 	return tok;
+      case CT_COLON:
+	off += 1;
+	switch (tok) {
+	case TOK_NAME:
+	  if (off == end)
+	    throw new PartialCharException(off);
+	  tok = TOK_PREFIXED_NAME;
+	  switch (charType(buf[off])) {
+	  case CT_NMSTRT:
+	    off += 1;
+	    break;
+	  case CT_LEAD2:
+	    if (end - off < 2)
+	      throw new PartialCharException(off);
+	    if (isNameChar2(buf, off)) {
+	      off += 2;
+	      break;
+	    }
+	    // fall through
+	  default:
+	    tok = TOK_NMTOKEN;
+	    break;
+	  }
+	  break;
+	case TOK_PREFIXED_NAME:
+	  tok = TOK_NMTOKEN;
+	  break;
+	}
+	break;
       case CT_PLUS:
-	if (tok != TOK_NAME)
+	if (tok == TOK_NMTOKEN)
 	  throw new InvalidTokenException(off);
 	token.tokenEnd = off + 1;
 	return TOK_NAME_PLUS;
       case CT_AST:
-	if (tok != TOK_NAME)
+	if (tok == TOK_NMTOKEN)
 	  throw new InvalidTokenException(off);
 	token.tokenEnd = off + 1;
 	return TOK_NAME_ASTERISK;
       case CT_QUEST:
-	if (tok != TOK_NAME)
+	if (tok == TOK_NMTOKEN)
 	  throw new InvalidTokenException(off);
 	token.tokenEnd = off + 1;
 	return TOK_NAME_QUESTION;
@@ -2095,6 +2179,7 @@ public class Tokenizer {
       case CT_AST:
       case CT_PERCNT:
       case CT_NUM:
+      case CT_COLON:
 	sbuf.append(c);
 	break;
       case CT_S:

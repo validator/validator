@@ -8,9 +8,6 @@ Command-line option parser.
 
 Allow RelaxNgWriter to report errors.
 
-Should disallow colons in names other than element and attribute
-names per the Namespaces Rec.
-
 Add DtdParseException to om package.
 
 Maybe better to avoid empty sequences and empty choices in the object

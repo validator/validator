@@ -305,6 +305,7 @@ class Entity {
     if (i > 0) {
       switch (((Atom)atoms.elementAt(i - 1)).getTokenType()) {
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
       case Tokenizer.TOK_NMTOKEN:
 	return true;
       }
@@ -312,6 +313,7 @@ class Entity {
     if (i < atoms.size()) {
       switch (((Atom)atoms.elementAt(i)).getTokenType()) {
       case Tokenizer.TOK_NAME:
+      case Tokenizer.TOK_PREFIXED_NAME:
       case Tokenizer.TOK_NAME_QUESTION:
       case Tokenizer.TOK_NAME_ASTERISK:
       case Tokenizer.TOK_NAME_PLUS:
