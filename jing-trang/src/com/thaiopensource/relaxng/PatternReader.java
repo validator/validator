@@ -39,6 +39,8 @@ public class PatternReader implements DatatypeContext {
   Hashtable patternTable;
   Hashtable nameClassTable;
   final OpenIncludes openIncludes;
+  Datatype stringDatatype = new StringDatatype();
+  Datatype tokenDatatype = new TokenDatatype();
 
   static class PrefixMapping {
     final String prefix;
@@ -217,9 +219,9 @@ public class PatternReader implements DatatypeContext {
       return null;
     }
 
-    abstract Pattern makePattern();
+    abstract Pattern makePattern() throws SAXException;
 
-    void end() {
+    void end() throws SAXException {
       parent.endChild(makePattern());
     }
   }
@@ -430,7 +432,7 @@ public class PatternReader implements DatatypeContext {
 
   class ValueState extends EmptyContentState {
     StringBuffer buf = new StringBuffer();
-    String typeName;
+    String type;
 
     State create() {
       return new ValueState();
@@ -438,7 +440,7 @@ public class PatternReader implements DatatypeContext {
 
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
-	typeName = value.trim();
+	type = value.trim();
       else
 	super.setOtherAttribute(name, value);
     }
@@ -447,21 +449,29 @@ public class PatternReader implements DatatypeContext {
       buf.append(ch, start, len);
     }
 
-    Pattern makePattern() {
+    Pattern makePattern() throws SAXException {
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
-      // XXX construct appropriate datatype
-      return patternBuilder.makeValue(new AnyDatatype(),
-				      StringNormalizer.normalize(buf.toString()),
-				      loc);
+      Datatype dt;
+      if (type == null)
+	dt = tokenDatatype;
+      else
+	dt = getDatatype(datatypeLibrary, type);
+      Object value = dt.createValue(buf.toString(), PatternReader.this);
+      if (value == null) {
+	error("invalid_value", buf.toString());
+	return patternBuilder.makeDatatype(dt, null, null, loc);
+      }
+      return patternBuilder.makeValue(dt, value, loc);
     }
 
   }
 
   class DataState extends EmptyContentState {
-    Datatype dt;
-    String typeName;
+    String type;
+    String key;
+    String keyRef;
 
     State create() {
       return new DataState();
@@ -469,43 +479,30 @@ public class PatternReader implements DatatypeContext {
 
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
-	typeName = value.trim();
+	type = value.trim();
       else if (name.equals("key"))
-	; // XXX
+	key = value.trim();
       else if (name.equals("keyRef"))
-	; // XXX
+	keyRef = value.trim();
       else
 	super.setOtherAttribute(name, value);
     }
 
     void endAttributes() throws SAXException {
-      if (typeName == null)
+      if (type == null)
 	error("missing_type_attribute");
-      else if ("".equals(datatypeLibrary)) {
-	if (typeName.equals("string"))
-	  dt = new AnyDatatype();
-	else if (typeName.equals("token"))
-	  dt = new AnyDatatype();
-	else
-	  error("unrecognized_builtin_datatype", typeName);
-      }
-      else {
-	dt = datatypeFactory.createDatatype(datatypeLibrary,
-					    typeName);
-	if (dt == null) {
-	  error("unrecognized_datatype",
-		datatypeLibrary,
-		typeName);
-	  dt = new AnyDatatype();
-	}
-      }
     }
 
-    Pattern makePattern() {
+    Pattern makePattern() throws SAXException {
+      Datatype dt;
+      if (type == null)
+	dt = stringDatatype;
+      else
+	dt = getDatatype(datatypeLibrary, type);
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
-      return patternBuilder.makeDatatype(dt, loc);
+      return patternBuilder.makeDatatype(dt, key, keyRef, loc);
     }
   }
 
@@ -1288,4 +1285,21 @@ public class PatternReader implements DatatypeContext {
     return s.equals(relaxngURI);
   }
 
+  Datatype getDatatype(String datatypeLibrary, String type) throws SAXException {
+    if ("".equals(datatypeLibrary)) {
+      if (type.equals("string"))
+	return stringDatatype;
+      if (type.equals("token"))
+	return tokenDatatype;
+      error("unrecognized_builtin_datatype", type);
+    }
+    else {
+      Datatype dt = datatypeFactory.createDatatype(datatypeLibrary,
+						   type);
+      if (dt != null)
+	return dt;
+      error("unrecognized_datatype", datatypeLibrary, type);
+    }
+    return stringDatatype;
+  }
 }

@@ -30,6 +30,13 @@ abstract class DatatypeBase implements Datatype {
     return lexicallyAllows(str) && allowsValue(str, dc);
   }
 
+  public Object createValue(String str, DatatypeContext dc) {
+    str = normalizeWhiteSpace(str);
+    if (!lexicallyAllows(str))
+      return null;
+    return getValue(str, dc);
+  }
+
   final String normalizeWhiteSpace(String str) {
     switch (whiteSpace) {
     case WHITE_SPACE_COLLAPSE:

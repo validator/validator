@@ -4,17 +4,17 @@ import org.xml.sax.Locator;
 import com.thaiopensource.datatype.Datatype;
 
 class ValuePattern extends SimplePattern {
-  String str;
+  Object obj;
   Datatype dt;
 
-  ValuePattern(Datatype dt, String str, Locator locator) {
-    super(combineHashCode(VALUE_HASH_CODE, str.hashCode()), locator);
+  ValuePattern(Datatype dt, Object obj, Locator locator) {
+    super(combineHashCode(VALUE_HASH_CODE, obj.hashCode()), locator);
     this.dt = dt;
-    this.str = str;
+    this.obj = obj;
   }
 
   boolean matches(Atom a) {
-    return a.matchesDatatypeValue(dt, str);
+    return a.matchesDatatypeValue(dt, obj);
   }
 
   boolean samePattern(Pattern other) {
@@ -23,10 +23,10 @@ class ValuePattern extends SimplePattern {
     if (!(other instanceof ValuePattern))
       return false;
     return (dt.equals(((ValuePattern)other).dt)
-	    && str.equals(((ValuePattern)other).str));
+	    && obj.equals(((ValuePattern)other).obj));
   }
 
   void accept(PatternVisitor visitor) {
-    visitor.visitValue(dt, str);
+    visitor.visitValue(dt, obj);
   }
 }

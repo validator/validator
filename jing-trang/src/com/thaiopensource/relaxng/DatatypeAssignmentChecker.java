@@ -79,7 +79,7 @@ public class DatatypeAssignmentChecker {
     public void visitDatatype(Datatype dt) {
     }
 
-    public void visitValue(Datatype dt, String str) {
+    public void visitValue(Datatype dt, Object obj) {
     }
 
     public void visitText() {

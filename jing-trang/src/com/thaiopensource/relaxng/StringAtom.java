@@ -5,7 +5,6 @@ import com.thaiopensource.datatype.DatatypeContext;
 
 class StringAtom extends Atom {
   private String str;
-  private String normStr;
   private DatatypeContext dc;
   private Object assignmentClass = null;
 
@@ -18,10 +17,8 @@ class StringAtom extends Atom {
     return true;
   }
 
-  boolean matchesDatatypeValue(Datatype dt, String s) {
-    if (normStr == null)
-      normStr = StringNormalizer.normalize(str);
-    return normStr.equals(s);
+  boolean matchesDatatypeValue(Datatype dt, Object obj) {
+    return obj.equals(dt.createValue(str, dc));
   }
 
   boolean matchesDatatype(Datatype dt) {

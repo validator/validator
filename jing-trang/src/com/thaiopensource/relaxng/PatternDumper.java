@@ -230,10 +230,10 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitValue(Datatype dt, String str) {
+    public void visitValue(Datatype dt, Object obj) {
       startElement("value");
       // XXX dump dt
-      data(str);
+      data(obj.toString());
       endElement();
     }
 

@@ -93,10 +93,11 @@ public class PatternBuilder {
   Pattern makeText() {
     return text;
   }
-  Pattern makeValue(Datatype dt, String str, Locator loc) {
-    return intern(new ValuePattern(dt, str, loc));
+  Pattern makeValue(Datatype dt, Object obj, Locator loc) {
+    return intern(new ValuePattern(dt, obj, loc));
   }
-  Pattern makeDatatype(Datatype dt, Locator loc) {
+  Pattern makeDatatype(Datatype dt, String key, String keyRef, Locator loc) {
+    // XXX handle key and keyRef
     return intern(new DatatypePattern(dt, loc));
   }
 

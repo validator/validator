@@ -7,7 +7,7 @@ abstract class Atom {
   boolean matchesString() {
     return false;
   }
-  boolean matchesDatatypeValue(Datatype dt, String s) {
+  boolean matchesDatatypeValue(Datatype dt, Object obj) {
     return false;
   }
   boolean matchesDatatype(Datatype dt) {
