@@ -43,11 +43,13 @@ class SchemaImpl implements Schema {
   static class ElementAction {
     private Schema schema;
     private Mode mode;
+    private boolean prune;
     private Hashset covered = new Hashset();
 
-    ElementAction(Schema schema, Mode mode) {
+    ElementAction(Schema schema, Mode mode, boolean prune) {
       this.schema = schema;
       this.mode = mode;
+      this.prune = prune;
     }
 
     Mode getMode() {
@@ -56,6 +58,10 @@ class SchemaImpl implements Schema {
 
     Schema getSchema() {
       return schema;
+    }
+
+    boolean getPrune() {
+      return prune;
     }
 
     Hashset getCoveredNamespaces() {
@@ -175,7 +181,10 @@ class SchemaImpl implements Schema {
           String modeName = attributes.getValue("", "useMode");
           if (modeName == null)
             modeName = DEFAULT_MODE_NAME;
-          currentElementAction = new ElementAction(schema, lookupCreateMode(modeName));
+          String prune = attributes.getValue("", "prune");
+          currentElementAction = new ElementAction(schema,
+                                                   lookupCreateMode(modeName),
+                                                   prune != null && prune.trim().equals("true"));
           for (int i = 0; i < modes.length; i++) {
             if (modes[i].elementMap.get(ns) != null)
               error("validate_element_multiply_defined", modeNames[i], ns);

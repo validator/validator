@@ -26,6 +26,14 @@
           <ref name="mode"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="prune">
+          <choice>
+            <value>true</value>
+            <value>false</value>
+          </choice>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <element name="cover">
           <attribute name="ns">

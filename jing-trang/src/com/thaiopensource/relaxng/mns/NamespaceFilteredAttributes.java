@@ -4,28 +4,34 @@ import org.xml.sax.Attributes;
 
 class NamespaceFilteredAttributes implements Attributes {
   private final String ns;
+  private final boolean keepLocal;
   private final Attributes attributes;
   private final int[] indexMap;
   private final int[] reverseIndexMap;
 
-  public NamespaceFilteredAttributes(String ns, Attributes attributes) {
+  public NamespaceFilteredAttributes(String ns, boolean keepLocal, Attributes attributes) {
     this.ns = ns;
+    this.keepLocal = keepLocal;
     this.attributes = attributes;
     int n = 0;
     for (int i = 0, len = attributes.getLength(); i < len; i++)
-      if (attributes.getURI(i).equals(ns))
+      if (keepAttribute(attributes.getURI(i)))
         n++;
     indexMap = new int[n];
     reverseIndexMap = new int[attributes.getLength()];
     n = 0;
     for (int i = 0, len = attributes.getLength(); i < len; i++) {
-      if (attributes.getURI(i).equals(ns)) {
+      if (keepAttribute(attributes.getURI(i))) {
         reverseIndexMap[i] = n;
         indexMap[n++] = i;
       }
       else
         reverseIndexMap[i] = -1;
     }
+  }
+
+  private boolean keepAttribute(String uri) {
+    return uri.equals(ns) || (keepLocal && uri.equals(""));
   }
 
   public int getLength() {
@@ -77,13 +83,13 @@ class NamespaceFilteredAttributes implements Attributes {
   }
 
   public String getType(String uri, String localName) {
-    if (ns.equals(uri))
+    if (keepAttribute(uri))
       return attributes.getType(uri, localName);
     return null;
   }
 
   public String getValue(String uri, String localName) {
-    if (ns.equals(uri))
+    if (keepAttribute(uri))
       return attributes.getValue(uri, localName);
     return null;
   }

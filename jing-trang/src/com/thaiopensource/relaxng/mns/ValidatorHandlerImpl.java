@@ -27,13 +27,16 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final ValidatorHandler validator;
     final String namespace;
     final Hashset coveredNamespaces;
+    final boolean prune;
     final SchemaImpl.Mode parentMode;
     final int parentLaxDepth;
     int depth = 0;
 
-    Subtree(String namespace, Hashset coveredNamespaces, ValidatorHandler validator, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
+    Subtree(String namespace, Hashset coveredNamespaces, boolean prune, ValidatorHandler validator,
+            SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.namespace = namespace;
       this.coveredNamespaces = coveredNamespaces;
+      this.prune = prune;
       this.validator = validator;
       this.parentMode = parentMode;
       this.parentLaxDepth = parentLaxDepth;
@@ -64,13 +67,13 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
 
   public void characters(char ch[], int start, int length)
           throws SAXException {
-    for (Subtree st = subtrees; st != null; st = st.parent)
+    for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
       st.validator.characters(ch, start, length);
   }
 
   public void ignorableWhitespace(char ch[], int start, int length)
           throws SAXException {
-    for (Subtree st = subtrees; st != null; st = st.parent)
+    for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
       st.validator.ignorableWhitespace(ch, start, length);
   }
 
@@ -90,6 +93,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       else {
         subtrees = new Subtree(uri,
                                elementAction.getCoveredNamespaces(),
+                               elementAction.getPrune(),
                                createValidator(elementAction.getSchema()),
                                currentMode,
                                laxDepth,
@@ -99,8 +103,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         startSubtree(subtrees.validator);
       }
     }
-    for (Subtree st = subtrees; st != null; st = st.parent)
-      st.validator.startElement(uri, localName, qName, attributes);
+    for (Subtree st = subtrees; wantsEvent(st); st = st.parent) {
+      Attributes prunedAtts;
+      if (st.prune)
+        prunedAtts = new NamespaceFilteredAttributes(uri, true, attributes);
+      else
+        prunedAtts = attributes;
+      st.validator.startElement(uri, localName, qName, prunedAtts);
+    }
     for (int i = 0, len = attributes.getLength(); i < len; i++) {
       String ns = attributes.getURI(i);
       if (!ns.equals("")
@@ -119,6 +129,10 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
             && (ns.equals(subtrees.namespace) || subtrees.coveredNamespaces.contains(ns)));
   }
 
+  private boolean wantsEvent(Subtree st) {
+    return st != null && (!st.prune || (laxDepth == 0 && st == subtrees));
+  }
+
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
     Schema attributesSchema = currentMode.getAttributesSchema(ns);
     if (attributesSchema == null) {
@@ -129,7 +143,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     ValidatorHandler vh = createValidator(attributesSchema);
     startSubtree(vh);
     vh.startElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME,
-                    new NamespaceFilteredAttributes(ns, attributes));
+                    new NamespaceFilteredAttributes(ns, false, attributes));
     vh.endElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME);
     endSubtree(vh);
   }
@@ -157,7 +171,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
 
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
-    for (Subtree st = subtrees; st != null; st = st.parent)
+    for (Subtree st = subtrees; wantsEvent(st); st = st.parent)
       st.validator.endElement(uri, localName, qName);
     if (laxDepth > 0)
       laxDepth--;
