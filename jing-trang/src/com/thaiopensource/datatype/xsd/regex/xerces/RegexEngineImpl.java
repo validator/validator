@@ -8,6 +8,15 @@ import org.apache.xerces.utils.regex.RegularExpression;
 import org.apache.xerces.utils.regex.ParseException;
 
 public class RegexEngineImpl implements RegexEngine {
+  public RegexEngineImpl() {
+    // Force a linkage error on instantiation if the Xerces classes
+    // are not available.
+    try {
+      new RegularExpression("", "X");
+    }
+    catch (ParseException e) {
+    }
+  }
   public Regex compile(String expr) throws InvalidRegexException {
     try {
       final RegularExpression re = new RegularExpression(expr, "X");
