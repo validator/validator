@@ -1,16 +1,18 @@
 Encoding detection
 
-Don't unexpand entities that are not properly nested.
-
 expand general entity references for default values
 
 attval normalization of default values
 
-internal general entities in the object model
-
-notations in the object model
+Don't unexpand entities that are not properly nested.
 
 Don't unexpand empty entities that might be pasted.
+
+Create NotationDecl objects.
+
+external general entities
+
+maybe distinguish char entities in object model
 
 overridden param entity declarations
 
@@ -46,3 +48,9 @@ Error for illegal public IDs.
 Error for duplicate ELEMENT declarations.
 
 Check other DTD VCs
+
+Methods on DTD giving random access to various kinds of declaration.
+
+Normalize public IDs.
+
+local.book.class
