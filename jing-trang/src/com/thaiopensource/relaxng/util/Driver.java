@@ -131,9 +131,9 @@ class Driver {
     if (className == null)
       return new Jaxp11XMLReaderCreator();
     else if (isSax2)
-      return new XMLReaderCreatorImpl2(className);
+      return new Sax2XMLReaderCreator(className);
     else
-      return new XMLReaderCreatorImpl1(className);
+      return new Sax1XMLReaderCreator(className);
   }
 
   static private String getVersion() {

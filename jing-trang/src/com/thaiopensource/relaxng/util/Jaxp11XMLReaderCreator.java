@@ -7,10 +7,20 @@ import org.xml.sax.SAXException;
 
 import com.thaiopensource.relaxng.XMLReaderCreator;
 
+/**
+ * An <code>XMLReaderCreator</code> that uses JAXP 1.1 to create <code>XMLReader</code>s.
+ * An instance of this class is <em>not</em> safe for concurrent access by multiple threads.
+ *
+ * @see SAXParserFactory
+ * @author <a href="mailto:jjc@jclark.com">James Clark</a>
+ */
 public class Jaxp11XMLReaderCreator implements XMLReaderCreator {
     
-  private SAXParserFactory factory;
+  private final SAXParserFactory factory;
 
+  /**
+   * Default constructor.
+   */
   public Jaxp11XMLReaderCreator() {
     factory = SAXParserFactory.newInstance();
     factory.setNamespaceAware(true);

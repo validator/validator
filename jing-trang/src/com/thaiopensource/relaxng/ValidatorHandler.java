@@ -47,6 +47,7 @@ public interface ValidatorHandler extends ContentHandler {
    *
    * @param eh the error handler to use for reporting errors; <code>null</code> if errors should
    * not be reported
+   * @see #getErrorHandler
    */
   void setErrorHandler(ErrorHandler eh);
 
@@ -55,6 +56,7 @@ public interface ValidatorHandler extends ContentHandler {
    *
    * @return the current <code>ErrorHandler</code>; maybe <code>null</code> if no <code>ErrorHandler</code>
    * has been set.
+   * @see #setErrorHandler
    */
   ErrorHandler getErrorHandler();
 }

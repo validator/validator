@@ -111,7 +111,7 @@
       <option name="NON_RECURSIVE" value="false" />
       <option name="FORCE_RECURSIVE" value="false" />
     </Editors>
-    <option name="CLIENT_PATH" value="C:/bin/cvs.exe" />
+    <option name="CLIENT_PATH" value="c:/Program Files/cvs-1.10-win/cvs.exe" />
     <option name="EXTERNAL_DIFF_PATH" value="" />
     <option name="CVS_ENABLED" value="true" />
     <option name="USE_EXTERNAL_DIFF" value="false" />
@@ -137,7 +137,7 @@
   </component>
   <component class="com.intellij.cvsSupport.CvsManager">
     <expanded_paths>
-      <path value="$PROJECT_DIR$/src/com/thaiopensource/relaxng" />
+      <path value="$PROJECT_DIR$" />
     </expanded_paths>
   </component>
   <component class="com.intellij.debugger.Debugger">
@@ -269,34 +269,34 @@
   </component>
   <component class="com.intellij.ide.desktop.IdeDocumentManager">
     <recent_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/Pattern.java" column="0" line="97" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/ChoicePattern.java" column="0" line="29" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/BinaryPattern.java" column="0" line="34" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/PatternBuilder.java" column="60" line="100" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DatatypeValue.java" column="13" line="14" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivType.java" column="11" line="6" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/InconsistentDataDerivType.java" column="2" line="13" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/PatternMemo.java" column="0" line="62" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SingleDataDerivType.java" column="6" line="4" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivTypeFunction.java" column="19" line="8" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/BlankDataDerivType.java" column="2" line="27" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/ValueDataDerivType.java" column="3" line="53" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDataDerivType.java" column="28" line="42" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivFunction.java" column="9" line="16" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/ValidationEngine.java" column="6" line="16" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/IncorrectSchemaException.java" column="25" line="9" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/XMLReaderCreator.java" column="21" line="9" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/AbstractSchema.java" column="52" line="3" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/ValidatorHandler.java" column="44" line="2" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivFunction.java" column="6" line="5" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/package.html" column="0" line="7" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/FileURL.java" column="22" line="10" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax1XMLReaderCreator.java" column="79" line="12" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SchemaFactory.java" column="33" line="13" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp11XMLReaderCreator.java" column="54" line="10" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax2XMLReaderCreator.java" column="15" line="12" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/JingTask.java" column="39" line="23" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/package.html" column="0" line="0" />
     </recent_files>
     <open_files>
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/PatternMemo.java" column="0" line="62" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivFunction.java" column="9" line="16" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
-      <active_file url="file://$PROJECT_DIR$/todo.txt" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivType.java" column="11" line="6" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivTypeFunction.java" column="19" line="8" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/InconsistentDataDerivType.java" column="2" line="13" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/ValueDataDerivType.java" column="3" line="53" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SingleDataDerivType.java" column="6" line="4" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/BlankDataDerivType.java" column="2" line="27" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDataDerivType.java" column="28" line="42" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/DataDerivFunction.java" column="6" line="5" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/SchemaFactory.java" column="33" line="13" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/package.html" column="0" line="7" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax1XMLReaderCreator.java" column="79" line="12" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/FileURL.java" column="22" line="10" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" column="68" line="12" />
+      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp10XMLReaderCreator.java" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/package.html" column="0" line="0" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Jaxp11XMLReaderCreator.java" column="54" line="10" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/JingTask.java" column="39" line="23" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util/Sax2XMLReaderCreator.java" column="15" line="12" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -312,8 +312,9 @@
     </navigator>
     <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng" />
-      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces" />
       <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/datatype/xsd/regex/xerces" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/relaxng/util" />
     </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">

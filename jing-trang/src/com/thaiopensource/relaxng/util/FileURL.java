@@ -3,9 +3,21 @@ package com.thaiopensource.relaxng.util;
 import java.io.File;
 import java.net.URL;
 
+/**
+ * Provides a static method for converting a <code>File</code> to a <code>URL</code>.
+ *
+ * @author <a href="mailto:jjc@jclark.com">James Clark</a>
+ */
 public class FileURL {
   /**
-   * Converts a File to a URL.
+   * Prevents creating an instance of this class.
+   */
+  private FileURL() { }
+  /**
+   * Converts a <code>File</code> to a <code>URL</code>.
+   *
+   * @param file the <code>File</code> to convert
+   * @return a <code>URL</code> locating the specified <code>File</code>.
    */
   static public URL fileToURL(File file) {
     String path = file.getAbsolutePath();

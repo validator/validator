@@ -7,6 +7,8 @@ import org.xml.sax.XMLReader;
  * A factory for <code>XMLReader</code>s.  Thread-safety is determined by each particular
  * implementation of this interface.
  *
+ * @see SchemaFactory
+ *
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public interface XMLReaderCreator {

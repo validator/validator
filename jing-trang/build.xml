@@ -124,7 +124,28 @@
 
 <target name="javadoc" depends="init">
   <mkdir dir="build/api"/>
-  <javadoc sourcepath="src" destdir="build/api" packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
+  <mkdir dir="build/api/datatype"/>
+  <javadoc sourcepath="src" destdir="build/api/datatype"
+    doctitle="RELAX NG Datatype API" windowtitle="RELAX NG Datatype API"
+    packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
+  <mkdir dir="build/api/relaxng"/>
+  <javadoc sourcepath="src" destdir="build/api/relaxng"
+    doctitle="Jing API" windowtitle="Jing API"
+    packagenames="com.thaiopensource.relaxng,com.thaiopensource.relaxng.util">
+    <link offline="true" href="../datatype" packagelistLoc="build/api/datatype"/>
+    <link offline="true" href="http://www.saxproject.org/apidoc" packagelistLoc="extapidoc/sax"/>
+    <link offline="true" href="http://java.sun.com/products/jdk/1.3/docs/api" packagelistLoc="extapidoc/jdk/1.3"/>
+    <link offline="true" href="http://java.sun.com/xml/jaxp/dist/1.1/docs/api" packagelistLoc="extapidoc/jaxp/1.1"/>
+  </javadoc>
+</target>
+
+<target name="doccheck" depends="init">
+  <mkdir dir="build/doccheck"/>
+  <javadoc sourcepath="src"
+           destdir="build/doccheck"
+           packagenames="com.thaiopensource.relaxng,com.thaiopensource.relaxng.util"
+           doclet="com.sun.tools.doclets.doccheck.DocCheck"
+           docletpath="lib/doccheck.jar"/>
 </target>
 
 <target name="datatype-sample" depends="jar">
@@ -152,7 +173,7 @@
   <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
   <zip zipfile="build/datatype-sample.zip">
     <fileset dir="datatype-sample"/>
-    <fileset dir="build" includes="api/**"/>
+    <fileset dir="build/api/datatype" includes="**" prefix="api"/>
     <fileset dir="build/datatype-sample" includes="datatype-sample.jar"/>
   </zip>
   <zip zipfile="build/testSuite.zip">
