@@ -453,14 +453,17 @@ public class PatternReader implements DatatypeContext {
 
   class ValueState extends EmptyContentState {
     StringBuffer buf = new StringBuffer();
+    String typeName;
 
     State create() {
       return new ValueState();
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
-      // XXX handle type
-      super.setOtherAttribute(name, value);
+      if (name.equals("type"))
+	typeName = value.trim();
+      else
+	super.setOtherAttribute(name, value);
     }
 
     public void characters(char[] ch, int start, int len) {
@@ -471,6 +474,7 @@ public class PatternReader implements DatatypeContext {
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
+      // XXX construct appropriate datatype
       return patternBuilder.makeValue(new AnyDatatype(),
 				      StringNormalizer.normalize(buf.toString()),
 				      loc);
