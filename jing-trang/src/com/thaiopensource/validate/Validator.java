@@ -37,15 +37,17 @@ import org.xml.sax.DTDHandler;
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public interface Validator {
-
-
   /**
    * Returns the ContentHandler that will receive the XML document.
-   * Information about the XML document ot be validated must be
+   * Information about the XML document to be validated must be
    * reported by calling methods on the returned ContentHandler.
-   * The same object will always be returned unless <code>reset</code>
-   * is called: this method does not change the state of the Validator.
+   * When validation of an XML document has been completed (either
+   * endDocument has been called or validation has been abandoned
+   * prematurely), reset() must be called. This method does not change
+   * the state of the Validator: the same object will always be returned
+   * unless <code>reset</code> is called.
    *
+   * @see #reset()
    * @return a ContentHandler, never <code>null</code>
    */
   ContentHandler getContentHandler();
@@ -63,9 +65,8 @@ public interface Validator {
   DTDHandler getDTDHandler();
 
    /**
-    * Prepares to parse another document.  After completing validation
-    * of a document, <code>reset</code> must be called before
-    * attempting to validate another document. This may create new
+    * Cleans up after validating a document.  After completing validation
+    * of a document, <code>reset</code> must be called. This may create new
     * ContentHandler and DTDHandler objects or may simply reinitialize
     * the state of the existing objects.
     */
