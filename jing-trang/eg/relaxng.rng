@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.17 2001-07-04 08:01:59 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.18 2001-07-04 08:16:17 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://relaxng.org/ns/structure/0.9"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -287,6 +287,13 @@
     </interleave>
   </define>
 
+  <define name="open-name-class">
+    <interleave>
+      <ref name="other"/>
+      <ref name="name-class"/>
+    </interleave>
+  </define>
+
   <define name="common-atts">
     <optional>
       <attribute name="ns">
@@ -300,12 +307,12 @@
     </optional>
     <zeroOrMore>
       <attribute>
-        <not>
-          <choice>
+        <anyName>
+          <except>
             <nsName/>
             <nsName ns=""/>
-          </choice>
-        </not>
+          </except>
+        </anyName>
       </attribute>
     </zeroOrMore>
   </define>
@@ -313,9 +320,11 @@
   <define name="other">
     <zeroOrMore>
       <element>
-        <not>
-          <nsName/>
-        </not>
+        <anyName>
+          <except>
+            <nsName/>
+          </except>
+        </anyName>
         <zeroOrMore>
           <choice>
             <attribute>
