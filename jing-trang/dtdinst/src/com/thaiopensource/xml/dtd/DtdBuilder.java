@@ -53,7 +53,7 @@ class DtdBuilder {
     Vector v = new Vector();
     int n = decls.size();
     for (int i = 0; i < n; i++) {
-      TopLevel t = ((Decl)decls.elementAt(i)).createTopLevel();
+      TopLevel t = ((Decl)decls.elementAt(i)).createTopLevel(this);
       if (t != null)
 	v.addElement(t);
     }

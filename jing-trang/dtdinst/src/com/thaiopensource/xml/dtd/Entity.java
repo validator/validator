@@ -46,6 +46,9 @@ class Entity {
   static final int SEMANTIC_DATATYPE = 4;
 
   int semantic = SEMANTIC_NONE;
+  ModelGroup modelGroup;
+
+  Decl decl;
 
   Vector parsed;
 
@@ -152,30 +155,6 @@ class Entity {
       semantic = SEMANTIC_ATTRIBUTE_GROUP;
     else if (isDatatype())
       semantic = SEMANTIC_DATATYPE;
-  }
-
-  static class ParamStream {
-    int type;
-    private int i = 0;
-    private Vector v;
-
-    ParamStream(Vector v) {
-      this.v = v;
-    }
-    boolean advance() {
-      while (i < v.size()) {
-	type = ((Param)v.elementAt(i++)).type;
-	switch (type) {
-	case Param.REFERENCE:
-	case Param.REFERENCE_END:
-	  break;
-	default:
-	  return true;
-	}
-      }
-      type = -1;
-      return false;
-    }
   }
 
   private boolean isAttributeGroup() {

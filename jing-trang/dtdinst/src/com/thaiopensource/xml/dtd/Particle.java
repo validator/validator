@@ -45,4 +45,84 @@ class Particle {
     return true;
   }
 
+  ModelGroup createModelGroup() {
+    ModelGroup mg;
+    switch (type) {
+    case GROUP:
+      mg = particlesToModelGroup(particles);
+      break;
+    case ELEMENT_NAME:
+      mg = new ElementRef(value);
+      break;
+    case PCDATA:
+      mg = new Pcdata();
+      break;
+    default:
+      return null;
+    }
+    switch (occur) {
+    case '?':
+      mg = new Optional(mg);
+      break;
+    case '+':
+      mg = new OneOrMore(mg);
+      break;
+    case '*':
+      mg = new ZeroOrMore(mg);
+      break;
+    }
+    return mg;
+  }
+
+  static ModelGroup particlesToModelGroup(Vector v) {
+    int len = v.size();
+    boolean isSequence = false;
+    for (int i = 0; i < len; i++) {
+      if (((Particle)v.elementAt(i)).type == CONNECT_SEQ) {
+	isSequence = true;
+	break;
+      }
+    }
+    ModelGroup[] mgs = new ModelGroup[0];
+    for(int i = 0; i < len; i++) {
+      ModelGroup mg = null;
+      Particle p = (Particle)v.elementAt(i);
+      switch (p.type) {
+      case REFERENCE:
+	if (p.entity.semantic == Entity.SEMANTIC_MODEL_GROUP) {
+	  mg = new ModelGroupRef(p.entity.name,
+				 p.entity.modelGroup);
+	  int level = 0;
+	  for (;;) {
+	    p = (Particle)v.elementAt(++i);
+	    if (p.type == REFERENCE)
+	      level++;
+	    else if (p.type == REFERENCE_END
+		     && level-- == 0)
+	      break;
+	  }
+	}
+	break;
+      case GROUP:
+      case ELEMENT_NAME:
+      case PCDATA:
+	mg = p.createModelGroup();
+	break;
+      }
+      if (mg != null) {
+	ModelGroup[] tem = mgs;
+	mgs = new ModelGroup[mgs.length + 1];
+	System.arraycopy(tem, 0, mgs, 0, tem.length);
+	mgs[mgs.length - 1] = mg;
+      }
+    }
+    if (mgs.length == 0)
+      return null;
+    else if (mgs.length == 1)
+      return mgs[0];
+    else if (isSequence)
+      return new Sequence(mgs);
+    else
+      return new Choice(mgs);
+  }
 }

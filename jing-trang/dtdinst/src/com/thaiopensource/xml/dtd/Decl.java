@@ -45,4 +45,57 @@ class Decl {
     return true;
   }
 
+  TopLevel createTopLevel(DtdBuilder db) {
+    switch (type) {
+    case COMMENT:
+      return new Comment(value);
+    case ELEMENT:
+      return createElementDecl();
+    case ENTITY:
+      return createEntityDecl(db);
+    }
+    return null;
+  }
+
+  ElementDecl createElementDecl() {
+    ParamStream ps = new ParamStream(params);
+    ps.advance();
+    String name = ps.value;
+    ps.advance();
+    ModelGroup mg;
+    switch (ps.type) {
+    case Param.ANY:
+      mg = new Any();
+      break;
+    case Param.EMPTY:
+      mg = new Sequence(new ModelGroup[0]);
+      break;
+    case Param.MODEL_GROUP:
+      mg = ps.group.createModelGroup();
+      break;
+    default:
+      throw new Error();
+    }
+    return new ElementDecl(name, mg);
+  }
+
+  TopLevel createEntityDecl(DtdBuilder db) {
+    ParamStream ps = new ParamStream(params);
+    ps.advance();
+    if (ps.type != Param.PERCENT)
+      return null;
+    ps.advance();
+    String name = ps.value;
+    Entity entity = db.lookupParamEntity(name);
+    if (entity.decl == null)
+      entity.decl = this;
+    if (entity.decl != this)
+      return null;
+    switch (entity.semantic) {
+    case Entity.SEMANTIC_MODEL_GROUP:
+      entity.modelGroup = Particle.particlesToModelGroup(entity.parsed);
+      return new ModelGroupDef(name, entity.modelGroup);
+    }
+    return null;
+  }
 }
