@@ -1275,10 +1275,10 @@ void PrefixedAnnotationAttribute(Annotations a, boolean allowUnqualified) :
       error("inherited_annotation_namespace", t);
     else if (ns.length() == 0 && !allowUnqualified)
       error("unqualified_annotation_attribute", t);
-    else if (ns.length() == 0
+    /*else if (ns.length() == 0
              && qn.length() - colon - 1 == 5
              && qn.regionMatches(colon + 1, "xmlns", 0, 5))
-      error("xmlns_annotation_attribute", t);
+      error("xmlns_annotation_attribute", t);*/
     else if (ns.equals(WellKnownNamespaces.XMLNS))
       error("xmlns_annotation_attribute_uri", t);
     else {
