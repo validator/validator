@@ -30,7 +30,6 @@ import com.thaiopensource.relaxng.edit.GrammarPattern;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
-import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.output.xsd.basic.Occurs;
@@ -706,17 +705,43 @@ public class BasicBuilder {
       if (obj instanceof ElementAnnotation) {
         ElementAnnotation element = (ElementAnnotation)obj;
         if (element.getNamespaceUri().equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS)
-                && element.getLocalName().equals("documentation")) {
-          List children = element.getChildren();
-          if (children.size() == 1) {
-            AnnotationChild child = (AnnotationChild)children.get(0);
-            if (child instanceof TextAnnotation)
-              return new Annotation(((TextAnnotation)child).getValue());
-          }
+            && element.getLocalName().equals("documentation")) {
+          String value = getAtomicValue(element);
+          if (value == null)
+            break;
+          return new Annotation(value);
         }
       }
     }
     return null;
+  }
+
+  private static String getAtomicValue(ElementAnnotation elem) {
+    String value = null;
+    StringBuffer buf = null;
+    List children = elem.getChildren();
+    for (int i = 0, len = children.size(); i < len; i++) {
+      Object obj = children.get(i);
+      if (obj instanceof TextAnnotation) {
+        String tem = ((TextAnnotation)obj).getValue();
+        if (buf != null)
+          buf.append(tem);
+        else if (value == null)
+          value = tem;
+        else {
+          buf = new StringBuffer(value);
+          buf.append(tem);
+          value = null;
+        }
+      }
+      else if (obj instanceof ElementAnnotation)
+        return null;
+    }
+    if (buf != null)
+      return buf.toString();
+    if (value != null)
+      return value;
+    return "";
   }
 
   static private final String GUIDE_NAMESPACE = "http://www.thaiopensource.com/ns/relaxng/xsd";
