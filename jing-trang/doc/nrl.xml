@@ -451,7 +451,7 @@ will be used to search for a matching rule:</p>
 <li>a wildcard rule in <var>y</var></li>
 </ol>
 
-<p>Thus, another way to specify that there is a default rule of</p>
+<p>The requirement that there is an implicit rule of</p>
 
 <xml>
 <anyNamespace>
@@ -459,8 +459,8 @@ will be used to search for a matching rule:</p>
 </anyNamespace>
 </xml>
 
-<p>is to specify that the default value of the <code>extends</code>
-attribute is <code>#reject</code>.</p>
+<p>can be restated as a requirement that the default value of the
+<code>extends</code> attribute is <code>#reject</code>.</p>
 
 <h2>Transparent namespaces</h2>
 
