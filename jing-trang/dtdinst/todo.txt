@@ -1,3 +1,7 @@
+Think of a better name (dtdinst)
+
+Test cases for overriding.
+
 Detect improperly balanced overridden entities.
 
 RELAX NG: output overridden definitions
