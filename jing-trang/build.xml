@@ -2,7 +2,7 @@
 
 <property name="sdkjava.dir" value="c:\Program Files\Microsoft SDK for Java 4.0"/>
 
-<target name="all" depends="jar, exegen"/>
+<target name="all" depends="jar, exegen, validate"/>
 
 <target name="init">
   <mkdir dir="build"/>
@@ -23,14 +23,13 @@
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
 
-  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.TrexTask">
+  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
     <classpath>
       <pathelement location="build/jing.jar"/>
     </classpath>
   </taskdef>
 
 </target>
-
 
 <target name="exegen" depends="compile,check-exe,xp-files,sax-files"
         unless="exe-ok">
@@ -78,16 +77,42 @@
              file="build/sax-files/org/xml/sax/Parser.class"/>
 </target>
 
-<target name="xhtml" depends="init">
-  <zip zipfile="build/xhtml-trex.zip">
-    <fileset dir="." includes="xhtml/**/*.trex,xhtml/index.html"/>
-  </zip>
-</target>
-
 <target name="src" depends="init">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
+</target>
+
+<target name="validate" depends="jar">
+  <jing rngfile="xhtml/xhtml-basic.rng">
+     <fileset dir="doc" includes="**/*.html"/>
+  </jing>
+</target>
+
+<target name="xhtml" depends="init">
+  <zip zipfile="build/xhtml-rng.zip">
+    <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
+  </zip>
+</target>
+
+<target name="doc">
+  <copy file="copying.txt" todir="build"/>
+  <copy file="doc/jing.html" todir="build"/>
+  <copy file="doc/jing-ant.html" todir="build"/>
+  <copy file="doc/jing-datatypes.html" todir="build"/>
+  <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
+</target>
+
+<target name="dist" depends="jar, exegen, validate, src, doc, xhtml">
+
+  <unzip src="build/xhtml-rng.zip" dest="build"/>
+  <copy file="build/xhtml-rng.zip" todir="build/xhtml"/>
+
+  <tar tarfile="build/relaxng.tar" basedir="build"
+    includes="jing.jar,jing.exe,jing-src.zip,copying.txt,*.html,xhtml/**"/>
+
+  <gzip zipfile="build/relaxng.tar.gz" src="build/relaxng.tar"/>
+
 </target>
 
 <target name="clean">
