@@ -1,5 +1,3 @@
-Allow version number of 0.9 with a warning.
-
 Distinguish error for unknown datatype library and unknown datatype.
 
 Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
