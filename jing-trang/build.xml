@@ -153,4 +153,11 @@
   <javadoc sourcepath="src" destdir="build/api" packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
 </target>
 
+<target name="datatype-sample" depends="jar">
+  <ant dir="datatype-sample">
+    <property name="build.dir" value="../build/datatype-sample"/>
+    <property name="jing.jar" value="../build/jing.jar"/>
+  </ant>
+</target>
+
 </project>
