@@ -1,13 +1,15 @@
+Finish description of error recovery.
+
+Support Xerces 2 regexes.
+
 Include the API doc in the distrib.
 
 Add mention of API and JARV to the distribution.
 
-Document the public API.
-
 Support for IDREF checking via JARV.
 
-In a big choice or interleave or attribute group, memoization for each binary pattern is
-inefficient.
+In a big choice or interleave or attribute group, memoization for each
+binary pattern is inefficient.
 
 Distinguish error for unknown datatype library and unknown datatype.
 
