@@ -169,7 +169,60 @@ class DateTimeDatatype extends RegexDatatype implements OrderRelation {
     }
     else
       leapMilliseconds = 0;
-    GregorianCalendar cal = new GregorianCalendar();
+    try {
+      GregorianCalendar cal = CalendarFactory.getCalendar();
+      Date date;
+      if (cal == CalendarFactory.cal) {
+        synchronized (cal) {
+          date = createDate(cal, tzOffset, negative, year, month, day, hours, minutes, seconds, milliseconds);
+        }
+      }
+      else
+        date = createDate(cal, tzOffset, negative, year, month, day, hours, minutes, seconds, milliseconds);
+      return new DateTime(date, leapMilliseconds, hasTimeZone);
+    }
+    catch (IllegalArgumentException e) {
+      return null;
+    }
+  }
+
+  // The GregorianCalendar constructor is incredibly slow with some
+  // versions of GCJ (specifically the version shipped with RedHat 9).
+  // This code attempts to detect when construction is slow.
+  // When it is, we synchronize access to a single
+  // object; otherwise, we create a new object each time we need it
+  // so as to avoid thread lock contention.
+
+  static class CalendarFactory {
+    static private final int UNKNOWN = -1;
+    static private final int SLOW = 0;
+    static private final int FAST = 1;
+    static private final int LIMIT = 10;
+    static private int speed = UNKNOWN;
+    static GregorianCalendar cal = new GregorianCalendar();
+
+    static GregorianCalendar getCalendar() {
+      // Don't need to synchronize this because speed is atomic.
+      switch (speed) {
+      case SLOW:
+        return cal;
+      case FAST:
+        return new GregorianCalendar();
+      }
+      // Note that we are not timing the first construction (which happens
+      // at class initialization), since that may involve one-time cache
+      // initialization.
+      long start = System.currentTimeMillis();
+      GregorianCalendar tem = new GregorianCalendar();
+      long time = System.currentTimeMillis() - start;
+      speed =  time > LIMIT ? SLOW : FAST;
+      return tem;
+    }
+  }
+
+  private static Date createDate(GregorianCalendar cal, int tzOffset, boolean negative,
+                                 int year, int month, int day,
+                                 int hours, int minutes, int seconds, int milliseconds) {
     cal.setLenient(false);
     cal.setGregorianChange(new Date(Long.MIN_VALUE));
     cal.clear();
@@ -181,13 +234,8 @@ class DateTimeDatatype extends RegexDatatype implements OrderRelation {
     month -= 1;
     cal.set(year, month, day, hours, minutes, seconds);
     cal.set(Calendar.MILLISECOND, milliseconds);
-    try {
-      checkDate(cal.isLeapYear(year), month, day); // for GCJ
-      return new DateTime(cal.getTime(), leapMilliseconds, hasTimeZone);
-    }
-    catch (IllegalArgumentException e) {
-      return null;
-    }
+    checkDate(cal.isLeapYear(year), month, day); // for GCJ
+    return cal.getTime();
   }
 
   static private void checkDate(boolean isLeapYear, int month, int day) {
