@@ -11,7 +11,7 @@ class ListPattern extends Pattern {
   Locator locator;
 
   ListPattern(Pattern p, Locator locator) {
-    super(p.isNullable(),
+    super(false,
 	  DATA_CONTENT_TYPE,
 	  combineHashCode(LIST_HASH_CODE, p.hashCode()));
     this.p = p;
