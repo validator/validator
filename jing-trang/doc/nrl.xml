@@ -411,6 +411,128 @@ the rule:</p>
 </xml>
 
 
+<h2>Element-name context</h2>
+
+<p>So far we have seen how to make the processing of an element depend
+on the namespace URIs of its ancestors.  NRL also allows the
+processing to depend on the element names of its ancestors.  For
+example, suppose we wish to allow RDF to occur only as a child of the
+<code>head</code> element of XHTML.  We can do this as follows:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng">
+        <context path="head" useMode="rdf"/>
+      </validate>
+    </namespace>
+  </mode>
+  <mode name="rdf">
+    <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <validate schema="rdfxml.rng" useMode="#attach"/>
+    </namespace>
+  </mode>
+</rules>
+</xml>
+
+<p>Any element that takes a <code>useMode</code> attribute can also
+have one or more <code>context</code> children that override the
+<code>useMode</code> attribute in specific contexts.  The
+<code>path</code> attribute specifies a test to be applied to the
+parent element of the element or attribute section to be processed.
+The <code>path</code> attribute allows a restricted form of XPath: a
+list of one or more unqualified names separated by <code>/</code>,
+optionally preceded by <code>/</code>.  It is interpreted like a
+pattern in XSLT, except that the names are implicitly qualified with
+the namespace URI of the containing <code>namespace</code> element.
+When more than one path matches, the most specific is chosen.  It is
+an error to have two or more equally specific paths. The path is
+tested against a single section not the entire document: a path of
+<code>/foo</code> means a <code>foo</code> element that is the root of
+a section; it does not mean a <code>foo</code> element that is the
+root of the document.</p>
+
+<h2>Attributes</h2>
+
+<p>Up to now, we have considered attributes to be inseparably attached
+to their parent elements.  Although this is the default behaviour is
+to attach attributes to their parent elements, attributes are in fact
+considered to be separate sections and can be processed
+separately. Attributes with the same namespace URI and same parent
+element are grouped in a single section.</p>
+
+<p>A <code>namespace</code> or <code>anyNamespace</code> element can
+have a <code>match</code> attribute, whose value must be a list of one
+or two of the tokens <code>attributes</code> and
+<code>elements</code>. If the value includes the token
+<code>attributes</code>, the rule matches attribute sections.</p>
+
+<p>The default behaviours of attaching attributes to their parent
+elements occurs because the default value of the <code>match</code>
+attribute is <code>elements</code> and because all of the built-in
+modes include a rule:</p>
+
+<xml>
+<anyNamespace match="attributes">
+  <attach/>
+</anyNamespace>
+</xml>
+
+<p>Most, if not all, XML schema languages do not have any notion of
+validating a set of attributes; they know only how to validate an XML
+element. Therefore, before validating an attribute section, NRL
+transforms it into an XML element by creating a dummy element to hold
+the attributes. NRL also performs a corresponding transformation on
+the schema. This is schema-language dependent.  For example, in the
+case of RELAX NG, a schema <code><var>s</var></code> is transformed to
+<code>&lt;element>&lt;anyName/>&#160;<var>s</var>&#160;&lt;/element></code>.</p>
+
+<p>For example, suppose <code>xmlatts.rng</code> contains a schema for
+the attributes in the <code>xml</code> namespace written in RELAX
+NG:</p>
+
+<xml>
+<group xmlns="http://relaxng.org/ns/structure/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <optional>
+    <attribute name="xml:lang">
+      <choice>
+        <data type="language"/>
+        <value></value>
+      </choice>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="xml:base">
+      <data type="anyURI"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="xml:space">
+      <choice>
+	<value>preserve</value>
+	<value>default</value>
+      </choice>
+    </attribute>
+  </optional>
+</group>
+</xml>
+
+<p>An NRL schema could use this as follows:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+<namespace ns="http://www.w3.org/1999/xhtml">
+  <validate schema="xhtml.rng"/>
+</namespace>
+<namespace ns="http://www.w3.org/XML/1998/namespace" match="attributes">
+  <validate schema="xmlatts.rng"/>
+</namespace>
+</rules>
+</xml>
+
+
 <h2>Mode inheritance</h2>
 
 <p>One mode can <i>extend</i> another mode. Suppose in our SOAP+XHTML
@@ -556,31 +678,7 @@ element inserted|deleted { empty }
 </rules>
 </xml>
 
-
-<h2>Element-name context</h2>
-
-<p>So far we have seen how to make the processing of an element depend
-on the namespace URIs of its ancestors.  NRL also allows the
-processing to depend on the element names of its ancestors.  For
-example, suppose we wish to allow RDF to occur only as a child of the
-<code>head</code> element of XHTML.  We can do this as follows:</p>
-
-<xml>
-<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
-  <mode name="root">
-    <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng">
-        <context path="head" useMode="rdf"/>
-      </validate>
-    </namespace>
-  </mode>
-  <mode name="rdf">
-    <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng" useMode="#attach"/>
-    </namespace>
-  </mode>
-</rules>
-</xml>
+<p>XXX</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
@@ -613,102 +711,6 @@ example, suppose we wish to allow RDF to occur only as a child of the
       <attach/>
     </namespace>
   </mode>
-</rules>
-</xml>
-
-<p>Any element that takes a <code>useMode</code> attribute can also
-have one or more <code>context</code> children that override the
-<code>useMode</code> attribute in specific contexts.  The
-<code>path</code> attribute specifies a test to be applied to the
-parent element of the element or attribute section to be processed.
-The <code>path</code> attribute allows a restricted form of XPath: a
-list of one or more unqualified names separated by <code>/</code>,
-optionally preceded by <code>/</code>.  It is interpreted like a
-pattern in XSLT, except that the names are implicitly qualified with
-the namespace URI of the containing <code>namespace</code> element.
-When more than one path matches, the most specific is chosen.  It is
-an error to have two or more equally specific paths. The path is
-tested against a single section not the entire document: a path of
-<code>/foo</code> means a <code>foo</code> element that is the root of
-a section; it does not mean a <code>foo</code> element that is the
-root of the document.</p>
-
-<h2>Attributes</h2>
-
-<p>Up to now, we have considered attributes to be inseparably attached
-to their parent elements.  Although this is the default behaviour is
-to attach attributes to their parent elements, attributes are in fact
-considered to be separate sections and can be processed
-separately. Attributes with the same namespace URI and same parent
-element are grouped in a single section.</p>
-
-<p>A <code>namespace</code> or <code>anyNamespace</code> element can
-have a <code>match</code> attribute, whose value must be a list of one
-or two of the tokens <code>attributes</code> and
-<code>elements</code>. If the value includes the token
-<code>attributes</code>, the rule matches attribute sections.</p>
-
-<p>The default behaviours of attaching attributes to their parent
-elements occurs because the default value of the <code>match</code>
-attribute is <code>elements</code> and because all of the built-in
-modes include a rule:</p>
-
-<xml>
-<anyNamespace match="attributes">
-  <attach/>
-</anyNamespace>
-</xml>
-
-<p>Most, if not all, XML schema languages do not have any notion of
-validating a set of attributes; they know only how to validate an XML
-element. Therefore, before validating an attribute section, NRL
-transforms it into an XML element by creating a dummy element to hold
-the attributes. NRL also performs a corresponding transformation on
-the schema. This is schema-language dependent.  For example, in the
-case of RELAX NG, a schema <code><var>s</var></code> is transformed to
-<code>&lt;element>&lt;anyName/>&#160;<var>s</var>&#160;&lt;/element></code>.</p>
-
-<p>For example, suppose <code>xmlatts.rng</code> contains a schema for
-the attributes in the <code>xml</code> namespace written in RELAX
-NG:</p>
-
-<xml>
-<group xmlns="http://relaxng.org/ns/structure/1.0"
-  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <optional>
-    <attribute name="xml:lang">
-      <choice>
-        <data type="language"/>
-        <value></value>
-      </choice>
-    </attribute>
-  </optional>
-  <optional>
-    <attribute name="xml:base">
-      <data type="anyURI"/>
-    </attribute>
-  </optional>
-  <optional>
-    <attribute name="xml:space">
-      <choice>
-	<value>preserve</value>
-	<value>default</value>
-      </choice>
-    </attribute>
-  </optional>
-</group>
-</xml>
-
-<p>An NRL schema could use this as follows:</p>
-
-<xml>
-<rules xmlns="http://www.thaiopensource.com/validate/nrl">
-<namespace ns="http://www.w3.org/1999/xhtml">
-  <validate schema="xhtml.rng"/>
-</namespace>
-<namespace ns="http://www.w3.org/XML/1998/namespace" match="attributes">
-  <validate schema="xmlatts.rng"/>
-</namespace>
 </rules>
 </xml>
 
