@@ -500,4 +500,10 @@
   </choice>
 </define>
 
+<!-- With the legacy module and the frames modules, the html
+     element can contain either body or frameset. -->
+<define name="frameset" combine="choice">
+  <ref name="body"/>
+</define>
+
 </grammar>

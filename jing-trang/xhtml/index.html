@@ -7,8 +7,8 @@
 
 <p>This directory contains an implementataion in RELAX NG of the
 modularization of XHTML specified by the <a
-href="http://www.w3.org/TR/2001/PR-xhtml-modularization-20010222/"
->Modularization of XHTML Proposed Recommendation</a>.</p>
+href="http://www.w3.org/TR/2001/REC-xhtml-modularization-20010410"
+>Modularization of XHTML Recommendation</a>.</p>
 
 <p>The RELAX NG patterns have not been mechanically derived from the DTDs.
 Rather, they have been hand-crafted so as to produce good quality RELAX NG
@@ -42,13 +42,6 @@ appropriately.</p>
 
 <li>The frames module is used instead of the struct module, rather
 than in addition to it.</li>
-
-<li>The frames module redefines the <code>html</code> content model to
-allow <code>head</code> to be followed by either <code>body</code> or
-<code>frameset</code> rather than just <code>frameset</code>.</li>
-
-<li>The legacy module allows the <code>lang</code> attribute in
-addition to the <code>xml:lang</code> attribute.</li>
 
 <li>In the frames module, the <code>frameset</code> element does not
 restrict the optional <code>noframes</code> element to follow all the
