@@ -3,7 +3,9 @@ package com.thaiopensource.relaxng.mns;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.relaxng.parse.sax.XmlBaseHandler;
 import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.Uri;
 import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
@@ -13,6 +15,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.LocatorImpl;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -70,6 +73,7 @@ class SchemaImpl implements Schema {
   }
 
   static class Mode {
+    private Locator whereDefined;
     private boolean defined = false;
     private boolean strict = false;
     private boolean strictDefined = false;
@@ -97,6 +101,8 @@ class SchemaImpl implements Schema {
     private final ErrorHandler eh;
     private final Localizer localizer = new Localizer(SchemaImpl.class);
     private Locator locator;
+    private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
+    private int foreignDepth = 0;
 
     Handler(MnsSchemaFactory factory, ValidatorHandler validator, ErrorHandler eh) {
       super(validator);
@@ -107,6 +113,7 @@ class SchemaImpl implements Schema {
 
     public void setDocumentLocator(Locator locator) {
       super.setDocumentLocator(locator);
+      xmlBaseHandler.setLocator(locator);
       this.locator = locator;
     }
 
@@ -117,7 +124,7 @@ class SchemaImpl implements Schema {
         String modeName = (String)enum.nextElement();
         Mode mode = (Mode)modeMap.get(modeName);
         if (!mode.defined && !modeName.equals(DEFAULT_MODE_NAME))
-          error("undefined_mode", modeName); // XXX should have location
+          error("undefined_mode", modeName, mode.whereDefined);
       }
       if (hadError)
         throw new IncorrectSchemaException();
@@ -127,8 +134,16 @@ class SchemaImpl implements Schema {
                              String qName, Attributes attributes)
             throws SAXException {
       super.startElement(uri, localName, qName, attributes);
-      if (!validator.isValidSoFar() || !MNS_URI.equals(uri))
-        return; // XXX make schema open
+      xmlBaseHandler.startElement();
+      String xmlBase = attributes.getValue(WellKnownNamespaces.XML, "base");
+      if (xmlBase != null)
+        xmlBaseHandler.xmlBaseAttribute(xmlBase);
+      if (!MNS_URI.equals(uri) || foreignDepth > 0) {
+        foreignDepth++;
+        return;
+      }
+      if (!validator.isValidSoFar())
+        return;
       if (localName.equals("rules")) {
         String modeName = attributes.getValue("", "startMode");
         if (modeName == null)
@@ -165,7 +180,13 @@ class SchemaImpl implements Schema {
       }
       boolean isAttribute = localName.equals("validateAttributes");
       String ns = attributes.getValue("", "ns");
+      if (!Uri.isAbsolute(ns))
+        error("ns_absolute");
       String schemaUri = attributes.getValue("", "schema");
+      if (Uri.hasFragmentId(schemaUri))
+        error("schema_fragment_id");
+      schemaUri = Uri.resolve(xmlBaseHandler.getBaseUri(),
+                              Uri.escapeDisallowedChars(schemaUri));
       try {
         if (isAttribute) {
           Schema schema = factory.createChildSchema(wrapAttributesSchema(schemaUri));
@@ -181,9 +202,12 @@ class SchemaImpl implements Schema {
           String modeName = attributes.getValue("", "useMode");
           if (modeName == null)
             modeName = DEFAULT_MODE_NAME;
+          Mode mode = lookupCreateMode(modeName);
+          if (mode.whereDefined == null && locator != null)
+            mode.whereDefined = new LocatorImpl(locator);
           String prune = attributes.getValue("", "prune");
           currentElementAction = new ElementAction(schema,
-                                                   lookupCreateMode(modeName),
+                                                   mode,
                                                    prune != null && prune.trim().equals("true"));
           for (int i = 0; i < modes.length; i++) {
             if (modes[i].elementMap.get(ns) != null)
@@ -201,6 +225,15 @@ class SchemaImpl implements Schema {
       }
     }
 
+    public void endElement(String namespaceURI, String localName,
+                           String qName)
+            throws SAXException {
+      super.endElement(namespaceURI, localName, qName);
+      xmlBaseHandler.endElement();
+      if (foreignDepth > 0)
+        foreignDepth--;
+    }
+
     void error(String key) throws SAXException {
       hadError = true;
       if (eh == null)
@@ -209,6 +242,13 @@ class SchemaImpl implements Schema {
     }
 
     void error(String key, String arg) throws SAXException {
+      hadError = true;
+      if (eh == null)
+        return;
+      eh.error(new SAXParseException(localizer.message(key, arg), locator));
+    }
+
+    void error(String key, String arg, Locator locator) throws SAXException {
       hadError = true;
       if (eh == null)
         return;
