@@ -20,6 +20,7 @@ import com.thaiopensource.relaxng.output.OutputFormat;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.LocalOutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFailedException;
+import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
 import com.thaiopensource.relaxng.parse.compact.CompactParseable;
 import com.thaiopensource.relaxng.parse.Parseable;
@@ -31,7 +32,8 @@ public class CompactTestDriver {
 
   private XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
   private ErrorHandler eh;
-  private OutputFormat of;
+  private OutputFormat outputFormat;
+  private OutputFormat compactOutputFormat;
   private String toDir;
   private String toExt;
 
@@ -45,12 +47,13 @@ public class CompactTestDriver {
   private int doMain(String[] args) throws IOException {
     eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
     if (args[2].equals("xsd")) {
-      of = new XsdOutputFormat();
+      outputFormat = new XsdOutputFormat();
       toExt = XSD_EXTENSION;
       toDir = XSD_DIR;
     }
     else {
-      of = new RngOutputFormat();
+      outputFormat = new RngOutputFormat();
+      compactOutputFormat = new RncOutputFormat();
       toExt = XML_EXTENSION;
       toDir = XML_DIR;
     }
@@ -91,14 +94,25 @@ public class CompactTestDriver {
     boolean passed = true;
     if (correct.exists()) {
       File output = new File(outputDir, CORRECT_SCHEMA_NAME + toExt);
-      if (!run(correct, output) || !compareDir(xmlDir, outputDir)) {
+      if (!run(correct, output, outputFormat, toExt)
+          || !compareDir(xmlDir, outputDir)) {
         passed = false;
         failed(correct);
+      }
+      else if (toExt.equals(XML_EXTENSION)) {
+        cleanDir(outputDir);
+        File output2 = new File(outputDir, CORRECT_SCHEMA_NAME + COMPACT_EXTENSION);
+        if (!run(correct, output2, compactOutputFormat, COMPACT_EXTENSION)
+            || !run(output2, output, outputFormat, toExt)
+            || !compareDir(xmlDir, outputDir)) {
+          passed = false;
+          failed(correct);
+        }
       }
     }
     if (incorrect.exists()) {
       File output = new File(outputDir, INCORRECT_SCHEMA_NAME + toExt);
-      if (run(incorrect, output)) {
+      if (run(incorrect, output, outputFormat, toExt)) {
         passed = false;
         failed(incorrect);
       }
@@ -127,17 +141,27 @@ public class CompactTestDriver {
     return false;
   }
 
+  private void cleanDir(File dir) {
+    String[] files = dir.list();
+    for (int i = 0; i < files.length; i++) {
+      File file = new File(dir, files[i]);
+      if (file.isDirectory())
+        cleanDir(file);
+      file.delete();
+    }
+  }
+
   private void failed(File f) {
     System.err.println(f.toString() + " failed");
   }
 
-  private boolean run(File in, File out) throws IOException {
+  private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
       Parseable parseable = new CompactParseable(new InputSource(UriOrFile.fileToUri(in)), eh);
       SchemaCollection sc = SchemaBuilderImpl.parse(parseable,
                                                     eh,
                                                     new DatatypeLibraryLoader());
-      OutputDirectory od = new LocalOutputDirectory(out, toExt, OUTPUT_ENCODING, LINE_LENGTH);
+      OutputDirectory od = new LocalOutputDirectory(out, outExt, OUTPUT_ENCODING, LINE_LENGTH);
       of.output(sc, od, eh);
       return true;
     }
