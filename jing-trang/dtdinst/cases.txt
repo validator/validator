@@ -2,8 +2,6 @@ Error reporting.
 
 Encoding detection
 
-empty param entities at the group level
-
 Don't unexpand entities that are not properly nested.
 
 expand general entity references for default values
