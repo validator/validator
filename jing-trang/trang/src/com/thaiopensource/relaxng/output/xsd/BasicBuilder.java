@@ -163,8 +163,29 @@ public class BasicBuilder {
     public Object visitList(ListPattern p) {
       SourceLocation location = p.getSourceLocation();
       Pattern child = p.getChild();
-      if (si.getChildType(child).equals(ChildType.EMPTY))
+      ChildType childType = si.getChildType(child);
+      if (childType.equals(ChildType.EMPTY))
         return makeEmptySimpleType(location);
+      boolean bad = false;
+      if (childType.contains(ChildType.ELEMENT)) {
+        er.warning("list_contains_element", location);
+        bad = true;
+      }
+      if (childType.contains(ChildType.ATTRIBUTE)) {
+        er.warning("list_contains_attribute", location);
+        bad = true;
+      }
+      if (childType.contains(ChildType.TEXT)) {
+        er.warning("list_contains_text", location);
+        bad = true;
+      }
+      if (bad)
+        return makeStringType(location);
+      // the type isn't NOT_ALLOWED, because the list would have type NOT_ALLOWED if it was
+      // the type isn't EMPTY (checked above)
+      // the type does not contain TEXT, ELEMENT or ATTRIBUTE (checked above)
+      // therefore the type must contain DATA
+      // so the preconditions for calling accept(this) are met
       return new SimpleTypeList(location,
                                 makeAnnotation(p),
                                 (SimpleType)child.accept(this),
@@ -258,10 +279,7 @@ public class BasicBuilder {
         mixed = true;
       if (particle == null && mixed && attributeUses.equals(AttributeGroup.EMPTY))
         type = new ComplexTypeSimpleContent(attributeUses,
-                                            new SimpleTypeRestriction(p.getSourceLocation(),
-                                                                      null,
-                                                                      "string",
-                                                                      Collections.EMPTY_LIST));
+                                            makeStringType(p.getSourceLocation()));
       else if (ct.contains(ChildType.DATA) && !mixed && particle == null) {
         SimpleType simpleType = (SimpleType)child.accept(simpleTypeBuilder);
         if (ct.contains(ChildType.EMPTY))
@@ -614,6 +632,13 @@ public class BasicBuilder {
     List facets = new Vector();
     facets.add(new Facet(location, null, "length", "0"));
     return new SimpleTypeRestriction(location, null, "token", facets);
+  }
+
+  private static SimpleType makeStringType(SourceLocation sourceLocation) {
+    return new SimpleTypeRestriction(sourceLocation,
+                                     null,
+                                     "string",
+                                     Collections.EMPTY_LIST);
   }
 
   private Name makeName(NameNameClass nc) {
