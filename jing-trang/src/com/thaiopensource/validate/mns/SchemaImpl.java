@@ -9,6 +9,7 @@ import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
+import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.WellKnownNamespaces;

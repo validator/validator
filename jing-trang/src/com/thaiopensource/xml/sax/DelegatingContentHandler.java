@@ -1,4 +1,4 @@
-package com.thaiopensource.validate.nrl;
+package com.thaiopensource.xml.sax;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
