@@ -103,7 +103,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
 
   private Group noBreakGroup = null;
 
-  public StreamingPrettyprinter(String lineSep, Writer w, String encoding) {
+  public StreamingPrettyprinter(String lineSep, Writer w) {
     this.lineSep = lineSep;
     this.w = w;
     head = makeSegment();
