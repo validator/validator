@@ -121,11 +121,13 @@ report =
   }
 rule =
   element rule {
-    (attribute abstract { "true" }
-     | (attribute context { path }, attribute abstract { "false" }?)),
     attribute role { role }?,
     attribute id { xsd:ID }?,
-    (foreign & (assert | report | key | extends)+)
+    (foreign
+     & ((attribute abstract { "true" }, (assert | report | extends)+)
+        | (attribute context { path },
+           attribute abstract { "false" }?,
+           (assert | report | key | extends)+)))
   }
 span =
   element span {
