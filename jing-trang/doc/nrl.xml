@@ -468,8 +468,28 @@ will be used to search for a matching rule:</p>
 
 <h2>Element-name context</h2>
 
-<p>XXX</p>
+<p>So far we have seen how to make the processing of an element depend
+on the namespace URIs of its ancestors.  NRL also allows the
+processing to depend on the element names of its ancestors.  For
+example, suppose we wish to allow RDF to occur as a child of the
+<code>head</code> element of XHTML.  We can do this as follows:</p>
 
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+  <mode name="root">
+    <namespace ns="http://www.w3.org/1999/xhtml">
+      <validate schema="xhtml.rng">
+        <context path="head" useMode="rdf"/>
+      </validate>
+    </namespace>
+  </mode>
+  <mode name="rdf">
+    <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <validate schema="rdfxml.rng" useMode="#attach"/>
+    </namespace>
+  </mode>
+</rules>
+</xml>
 
 <h2>Attributes</h2>
 
