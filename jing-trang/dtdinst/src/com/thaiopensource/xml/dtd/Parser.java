@@ -26,8 +26,8 @@ public class Parser extends Token {
       try {
 	tok = tokenizeProlog();
       }
-      catch (EndOfPrologException e) { }
-      catch (EmptyTokenException e) { }
+      catch (EndOfPrologException e) { return; }
+      catch (EmptyTokenException e) { return; }
     }
       
   }
