@@ -49,17 +49,17 @@ key
     <xsl:choose>
       <xsl:when test="normalize-space($phase)='#DEFAULT' and @defaultPhase">
         <xsl:call-template name="process-phase">
-          <xsl:with-param name="$p" select="normalize-space(@defaultPhase)"/>
+          <xsl:with-param name="p" select="normalize-space(@defaultPhase)"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="normalize-space($phase)='#DEFAULT'">
         <xsl:call-template name="process-phase">
-          <xsl:with-param name="$p" select="'#ALL'"/>
+          <xsl:with-param name="p" select="'#ALL'"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="process-phase">
-          <xsl:with-param name="$p" select="normalize-space($phase)"/>
+          <xsl:with-param name="p" select="normalize-space($phase)"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -79,7 +79,7 @@ key
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="$active-patterns" select="key('phase',$p)/sch:active/@id"/>
+      <xsl:variable name="active-patterns" select="key('phase',$p)/sch:active/@id"/>
       <xsl:call-template name="process-patterns">
         <xsl:with-param name="patterns" select="
               sch:pattern[@id and $active-patterns[normalize-space(.)
@@ -281,7 +281,9 @@ key
       <xsl:call-template name="location"/>
     </err:error>
   </xsl:if>
-  <xsl:if test="normalize-space($phase) != '#ALL'" and not(key('phase',normalize-space($phase)))">
+  <xsl:if test="normalize-space($phase) != '#DEFAULT'
+                and normalize-space($phase) != '#ALL'
+                and not(key('phase',normalize-space($phase)))">
     <err:error message="phase_missing" arg="{normalize-space($phase)}"/>
   </xsl:if>
   <xsl:apply-templates select="sch:phase/sch:active|sch:pattern/sch:rule/sch:*" mode="check"/>
