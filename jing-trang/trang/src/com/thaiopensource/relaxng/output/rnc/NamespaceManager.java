@@ -61,7 +61,9 @@ class NamespaceManager {
     "", SchemaBuilder.INHERIT_NS,
     "inherit", SchemaBuilder.INHERIT_NS,
     "", "",
-    "local", ""
+    "local", "",
+    "rng", WellKnownNamespaces.RELAX_NG,
+    "a", WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS
   };
 
 
