@@ -3,6 +3,7 @@
 <property name="regex-version" value="20020430"/>
 <property name="build.xml" value="build.xml"/>
 <property name="build.dir" value="build"/>
+<property name="dist.dir" value="build/dist"/>
 <property name="classes.dir" value="${build.dir}/classes"/>
 <property name="apidoc.dir" value="${build.dir}/apidoc"/>
 <property name="jar.file" value="${build.dir}/xsdregex.jar"/>
@@ -17,6 +18,7 @@
 
 <target name="init">
   <mkdir dir="${build.dir}"/>
+  <mkdir dir="${dist.dir}"/>
 </target>
 
 <target name="compile-gen" depends="init">
@@ -148,7 +150,7 @@
 </target>
 
 <target name="dist" depends="jar,javadoc,doc,test">
-  <zip zipfile="${build.dir}/xsdregex.zip">
+  <zip zipfile="${dist.dir}/xsdregex-${regex-version}.zip">
     <zipfileset dir="${doc.build.dir}" prefix="xsdregex-${regex-version}" includes="readme.html"/>
     <zipfileset dir="${doc.src.dir}" prefix="xsdregex-${regex-version}/doc-src"/>
     <zipfileset prefix="xsdregex-${regex-version}/src" dir="src"
@@ -164,6 +166,7 @@
     <zipfileset dir="." includes="${build.xml}" fullpath="xsdregex-${regex-version}/build.xml"/>
     <zipfileset dir="${apidoc.dir}" prefix="xsdregex-${regex-version}/apidoc"/>
   </zip>
+  <checksum file="${dist.dir}/xsdregex-${regex-version}.zip" fileext=".md5"/>
 </target>
 
 <target name="clean">

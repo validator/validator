@@ -1,10 +1,22 @@
-NRL reject messages should specify mode
-
-Driver should check for options inappropriate for schema language
+Make jing.jar and trang.jar be executable.
 
 Use a rewindable stream during autodetection
 
 Maybe need to redesign reset() so that it can be used to cleanup the thread.
+
+Test NRL option handling
+
+Write NRL tutorial
+
+Set Xerces properties to read DTDs but not validate
+
+Option to control DTD parsing
+
+NRL reject messages should specify mode
+
+NRL: allow <validate> to specify name for schema; use that name in error messages. 
+
+Driver should check for options inappropriate for schema language
 
 Insist that the property
 map passed to schema.createValidator contains an error handler or

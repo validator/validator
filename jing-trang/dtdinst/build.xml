@@ -1,12 +1,21 @@
 <project name="dtdinst" default="test" basedir=".">
 
 <property name="build.dir" value="build"/>
+<property name="website.dir" value="build/website"/>
 <property name="dist.dir" value="build/dist"/>
 <property name="jing.src" value="../src"/>
 <property name="jar.dir" value="../build"/>
 
+<property name="jing.src.includes"
+          value="com/thaiopensource/xml/util/EncodingMap.java,
+                 com/thaiopensource/util/UriOrFile.java,
+                 com/thaiopensource/util/Localizer.java,
+                 com/thaiopensource/util/Version.java,
+                 com/thaiopensource/util/Utf16.java"/>
+
 <target name="init">
   <mkdir dir="${build.dir}"/>
+  <mkdir dir="${website.dir}"/>
   <mkdir dir="${dist.dir}"/>
   <property file="src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
 </target>
@@ -14,18 +23,15 @@
 <target name="compile" depends="init">
   <mkdir dir="${build.dir}/classes"/>
   <javac srcdir="src:${jing.src}" destdir="${build.dir}/classes"
-         includes="com/thaiopensource/xml/**,
-                   com/thaiopensource/util/UriOrFile.java,
-                   com/thaiopensource/util/Localizer.java,
-                   com/thaiopensource/util/Version.java,
-                   com/thaiopensource/util/Utf16.java,"
-         excludes="com/thaiopensource/xml/util/Naming.java,
-                   com/thaiopensource/xml/util/WellKnownNamespaces.java"
-  />
+         includes="com/thaiopensource/xml/dtd/**,
+                   com/thaiopensource/xml/em/**,
+                   com/thaiopensource/xml/out/**,
+                   com/thaiopensource/xml/tok/**,
+                   ${jing.src.includes}"/>
 </target>
 
 <target name="jar" depends="compile">
-  <jar jarfile="${dist.dir}/dtdinst.jar" manifest="manifest.txt">
+  <jar jarfile="${build.dir}/dtdinst.jar" manifest="manifest.txt">
     <fileset dir="${build.dir}/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
@@ -37,7 +43,7 @@
     <arg value="test"/>
     <arg value="${build.dir}/test"/>
     <classpath>
-      <pathelement location="${dist.dir}/dtdinst.jar"/>
+      <pathelement location="${build.dir}/dtdinst.jar"/>
     </classpath>
   </java>
 </target>
@@ -48,33 +54,44 @@
         failonerror="yes"
         classpath="${jar.dir}/trang.jar;${jar.dir}/jing.jar">
     <arg value="dtdinst.rnc"/>
-    <arg value="${dist.dir}/dtdinst.rng"/>
+    <arg value="${website.dir}/dtdinst.rng"/>
   </java>
 </target>
 
 <target name="example">
-  <mkdir dir="${dist.dir}/example"/>
-  <copy todir="${dist.dir}/example">
+  <mkdir dir="${website.dir}/example"/>
+  <copy todir="${website.dir}/example">
     <fileset dir="example" includes="*.dtd"/>
     <mapper type="glob" from="*.dtd" to="*.dtd.txt"/>
   </copy>
-  <copy todir="${dist.dir}/example">
+  <copy todir="${website.dir}/example">
     <fileset dir="example" includes="*.ent,*.xml"/>
   </copy>
 </target>
 
-<target name="dist" depends="jar,example,translate-schema,test">
-  <zip zipfile="${dist.dir}/dtdinst-src.zip">
-    <fileset dir="src" includes="**/*.java,**/*.properties"/>
-  </zip>
-  <copy todir="${dist.dir}">
+<target name="website" depends="example,translate-schema">
+  <copy todir="${website.dir}">
     <fileset dir="." includes="index.html,copying.txt,dtdinst2rng.xsl"/>
   </copy>
-  <copy file="dtdinst.rnc" tofile="${dist.dir}/dtdinst.rnc.txt"/>
-  <copy file="teixml.dtd" tofile="${dist.dir}/teixml.dtd.txt"/>
-  <replace file="${dist.dir}/index.html"
+  <copy file="dtdinst.rnc" tofile="${website.dir}/dtdinst.rnc.txt"/>
+  <copy file="teixml.dtd" tofile="${website.dir}/teixml.dtd.txt"/>
+  <replace file="${website.dir}/index.html"
            token="@VERSION@"
            value="${version}"/>
+</target>
+
+<target name="dist" depends="jar,test,website">
+  <zip zipfile="${build.dir}/src.zip">
+    <fileset dir="src" includes="**/*.java,**/*.properties"/>
+    <fileset dir="${jing.src}" includes="${jing.src.includes}"/>
+  </zip>
+  <zip zipfile="${dist.dir}/dtdinst-${version}.zip">
+    <zipfileset dir="${website.dir}" prefix="dtdinst-${version}"/>
+    <zipfileset dir="${build.dir}"
+                includes="src.zip,dtdinst.jar"
+                prefix="dtdinst-${version}"/>
+  </zip>
+  <checksum file="${dist.dir}/dtdinst-${version}.zip" fileext=".md5"/>
 </target>
 
 <target name="clean">

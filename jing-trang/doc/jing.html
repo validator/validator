@@ -6,9 +6,9 @@
 <h1>Jing</h1>
 <h2>A RELAX NG validator in Java</h2>
 
-<p>Copyright &#169; 2001, 2002 Thai Open Source Software Center Ltd</p>
+<p>Copyright &#169; 2001, 2002, 2003 Thai Open Source Software Center Ltd</p>
 
-<p>See the file <a href="copying.txt">copying.txt</a> for copying
+<p>See the file <a href="copying.html">copying.html</a> for copying
 permission.</p>
 
 <h3>Version @VERSION@</h3>
@@ -32,20 +32,34 @@ ID/IDREF/IDREFS.</li>
 
 </ul>
 
-<p>The implementation is available for download as</p>
+<p>The implementation is available for <a
+href="http://www.thaiopensource.com/download/">download</a>
+in a number of different forms:</p>
 
-<ul>
-<li>a <a href="jing-bin.zip">JAR</a> file</li>
+<dl>
+<dt><code>jing-<var>version</var>.zip</code></dt>
 
-<li>a <a href="jing-win32-bin.zip">Win32 executable</a> for use with
-the Microsoft Java VM</li>
+<dd>the main Jing distribution for use with a Java Runtime
+Environment, including binaries, source code, documentation</dd>
 
-<li><a href="jing-src.zip">zipped source code</a></li>
+<dt><code>win32/jing-<var>version</var>-win32-bin.zip</code></dt>
 
-<li><a href="gcj/">source code packaged for compilation with GCJ (GNU
-Compiler for Java) and RPMs for Linux compiled with GCJ</a></li>
+<dd>a Win32 executable for use with the Microsoft Java VM</dd>
 
-</ul>
+<dt><code>gcj/jing-<var>version</var>.tar.gz</code></dt>
+
+<dd>source code packaged for compilation with GCJ (GNU Compiler for
+Java)</dd>
+
+<dt><code>gcj/jing-<var>version</var>-<var>release</var>.i386.rpm</code></dt>
+
+<dd>RPM for Linux compiled with GCJ</dd>
+
+<dt><code>gcj/jing-<var>version</var>-<var>release</var>.src.rpm</code></dt>
+
+<dd>source RPM for Linux for compilation with GCJ</dd>
+
+</dl>
 
 <p>The main class is
 <code>com.thaiopensource.relaxng.util.Driver</code>.  The first
@@ -93,14 +107,10 @@ for validation.</dd>
 
 </dl>
 
-<p>Jing uses a vendor-independent Java interface for RELAX NG datatype
-libraries, developed by James Clark and KAWAGUCHI Kohsuke and hosted
-at SourceForge in the <a
-href="http://sourceforge.net/projects/relaxng">relaxng</a> project.
-Jing can use any datatype library that implements this interface.  For
-more information on creating your own datatype libraries, including a
-sample, download <a
-href="datatype-sample.zip">datatype-sample.zip</a>.</p>
+<p>Jing uses a vendor-independent <a
+href="pluggable-datatypes.html">pluggable datatypes API</a> that
+allows datatype libraries to be added at runtime and be interoperable
+with Java-based RELAX NG implementation that supports the API.</p>
 
 <p>Jing also includes an implementation of a datatype library for the
 W3C XML Schema Part 2 datatypes.  There is a separate <a
@@ -125,10 +135,8 @@ a future release.</p>
 
 <ul>
 
-<li>You can use Jing's
-native API.  The documentation of Jing's API can
-be <a href="api/jing/index.html">browsed</a> online, or can be <a
-href="jing-api.zip">downloaded</a>.</li>
+<li>You can use Jing's <a href="api/jing/index.html">native
+API</a>.</li>
 
 <li>You can use JARV (Java API for RELAX Verifiers).  JARV is part of
 the <a href="http://iso-relax.sourceforge.net">ISO-RELAX</a>

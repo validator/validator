@@ -1,0 +1,7 @@
+%_rpmdir %{jingdir}/build/dist/gcj
+%_srcrpmdir %{jingdir}/build/dist/gcj
+%_specdir %{jingdir}/build/gcj-rpm
+%_sourcedir %{jingdir}/build/gcj-rpm
+%_builddir %{jingdir}/build/gcj-rpm
+%_rpmfilename	%%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+%packager	James Clark <jjc@thaiopensource.com>
