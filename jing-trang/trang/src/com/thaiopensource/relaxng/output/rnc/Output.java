@@ -1064,6 +1064,8 @@ class Output {
           ++i;
         }
         else if (!cr.contains(c)) {
+          if (start < i)
+            encodeBuf.append(str.substring(start, i));
           escape(c);
           start = i + 1;
         }
