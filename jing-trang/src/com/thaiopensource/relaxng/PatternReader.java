@@ -78,6 +78,7 @@ public class PatternReader implements DatatypeContext {
     State parent;
     String nsInherit;
     String ns;
+    String datatypeLibrary;
     Grammar grammar;
 
     void set() {
@@ -101,6 +102,7 @@ public class PatternReader implements DatatypeContext {
 	this.nsInherit = parent.ns;
       else
 	this.nsInherit = parent.nsInherit;
+      this.datatypeLibrary = parent.datatypeLibrary;
       this.grammar = parent.grammar;
     }
 
@@ -150,6 +152,8 @@ public class PatternReader implements DatatypeContext {
 	    setName(atts.getValue(i).trim());
 	  else if (name.equals("ns"))
 	    ns = atts.getValue(i);
+	  else if (name.equals("datatypeLibrary"))
+	    datatypeLibrary = atts.getValue(i);
 	  else
 	    setOtherAttribute(name, atts.getValue(i));
 	}
@@ -375,6 +379,7 @@ public class PatternReader implements DatatypeContext {
     RootState(Grammar grammar, String ns) {
       this.grammar = grammar;
       this.nsInherit = ns;
+      this.datatypeLibrary = "";
     }
 
     State create() {
@@ -469,7 +474,7 @@ public class PatternReader implements DatatypeContext {
 
   class DataState extends EmptyContentState {
     Datatype dt;
-    String patternName;
+    String typeName;
 
     State create() {
       return new DataState();
@@ -477,22 +482,29 @@ public class PatternReader implements DatatypeContext {
 
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
-	patternName = value.trim();
+	typeName = value.trim();
       else
 	super.setOtherAttribute(name, value);
     }
 
     void endAttributes() throws SAXException {
-      if (patternName == null)
+      if (typeName == null)
 	error("missing_type_attribute");
+      else if ("".equals(datatypeLibrary)) {
+	if (typeName.equals("string"))
+	  dt = new AnyDatatype();
+	else if (typeName.equals("token"))
+	  dt = new AnyDatatype();
+	else
+	  error("unrecognized_builtin_datatype", typeName);
+      }
       else {
-	SimpleNameClass snc = expandName(patternName, ns != null ? ns : nsInherit);
-	dt = datatypeFactory.createDatatype(snc.getNamespaceURI(),
-					    snc.getLocalName());
+	dt = datatypeFactory.createDatatype(datatypeLibrary,
+					    typeName);
 	if (dt == null) {
 	  error("unrecognized_datatype",
-		snc.getNamespaceURI(),
-		snc.getLocalName());
+		datatypeLibrary,
+		typeName);
 	  dt = new AnyDatatype();
 	}
       }
