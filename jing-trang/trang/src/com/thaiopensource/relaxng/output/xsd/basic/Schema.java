@@ -76,6 +76,10 @@ public class Schema extends Annotated {
     return included;
   }
 
+  public void addComment(String content, SourceLocation location) {
+    topLevel.add(new Comment(location, content));
+  }
+
   public GroupDefinition getGroup(String name) {
     return (GroupDefinition)groupMap.get(name);
   }

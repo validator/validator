@@ -19,4 +19,7 @@ public class AbstractSchemaVisitor implements SchemaVisitor {
 
   public void visitRoot(RootDeclaration decl) {
   }
+
+  public void visitComment(Comment comment) {
+  }
 }

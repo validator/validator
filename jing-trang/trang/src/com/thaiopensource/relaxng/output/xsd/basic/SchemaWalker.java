@@ -107,6 +107,9 @@ public abstract class SchemaWalker implements
     include.getIncludedSchema().accept(this);
   }
 
+  public void visitComment(Comment comment) {
+  }
+
   public Object visitComplexContent(ComplexTypeComplexContent t) {
     t.getAttributeUses().accept(this);
     if (t.getParticle() == null)

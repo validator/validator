@@ -38,6 +38,9 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
     include.getIncludedSchema().accept(this);
   }
 
+  public void visitComment(Comment comment) {
+  }
+
   public Object visitRepeat(ParticleRepeat p) {
     Particle child = (Particle)p.getChild().accept(this);
     if (child == p.getChild())
