@@ -54,8 +54,6 @@ A define whose pattern is equivalent to notAllowed should be preserved
 in the intermediate form, since it may correspond to the abstract head
 of a substitution group (probably need an annotation to control this).
 
-Think about how annotations should work with substitution group support.
-
 Better support for combine="choice".  Now that element substitution groups
 are supported, combine="choice" can be supported much better.
 Intermediate form needs support for combine="choice".  If a

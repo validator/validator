@@ -600,8 +600,12 @@ public class BasicOutput {
       Particle particle = def.getParticle();
       ComplexTypeComplexContentExtension ct = complexTypeSelector.createComplexTypeForGroup(def.getName(), nsm);
       if (ct != null) {
-        outputComplexTypeComplexContent(ct, def.getName(), def);
-        tryAbstractElement(def);
+        Annotated anno;
+        if (tryAbstractElement(def))
+          anno = null;
+        else
+          anno = def;
+        outputComplexTypeComplexContent(ct, def.getName(), anno);
       }
       else if (!nsm.isGroupDefinitionOmitted(def)
                && !tryElementChoiceSameType(def)
@@ -624,6 +628,7 @@ public class BasicOutput {
       xw.attribute("name", name.getLocalName());
       xw.attribute("abstract", "true");
       outputSubstitutionGroup(name);
+      outputAnnotation(def);
       xw.endElement();
       return true;
     }
