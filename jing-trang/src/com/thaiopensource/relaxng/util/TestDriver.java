@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.util;
 
 import com.thaiopensource.util.OptionParser;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.util.Localizer;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.rng.RngProperty;
@@ -21,6 +22,7 @@ class TestDriver {
 
   private ValidationDriver driver;
   private ErrorHandlerImpl eh;
+  private Localizer localizer = new Localizer(TestDriver.class);
   private int nTests = 0;
 
   public int doMain(String[] args) throws IOException {
@@ -38,13 +40,11 @@ class TestDriver {
       }
     }
     catch (OptionParser.InvalidOptionException e) {
-      eh.print(eh.format("invalid_option",
-                         new Object[]{ op.getOptionCharString() }));
+      eh.print(localizer.message("invalid_option", op.getOptionCharString()));
       return 2;
     }
     catch (OptionParser.MissingArgumentException e) {
-      eh.print(eh.format("option_missing_argument",
-                         new Object[]{ op.getOptionCharString() }));
+      eh.print(localizer.message("option_missing_argument", op.getOptionCharString()));
       return 2;
     }
     args = op.getRemainingArgs();
