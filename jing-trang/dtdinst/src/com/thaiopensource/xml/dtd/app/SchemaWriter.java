@@ -263,7 +263,8 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void externalIdRef(String name, ExternalId xid, TopLevel[] contents)
+  public void externalIdRef(String name, ExternalId xid, String uri,
+			    String encoding, TopLevel[] contents)
     throws Exception {
     w.startElement("externalIdRef");
     w.attribute("name", name);

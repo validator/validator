@@ -27,6 +27,14 @@ public class XmlWriter {
     this.cr = cr;
   }
 
+  public void close() throws IOException {
+    writer.close();
+  }
+
+  public void flush() throws IOException {
+    writer.flush();
+  }
+
   public void writeXmlDecl(String enc) throws IOException {
     writer.write("<?xml version=\"1.0\" encoding=\"");
     writer.write(enc);

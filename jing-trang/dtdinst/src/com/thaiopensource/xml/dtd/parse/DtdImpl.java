@@ -7,14 +7,20 @@ import com.thaiopensource.xml.dtd.om.TopLevel;
 import com.thaiopensource.xml.dtd.om.TopLevelVisitor;
 
 class DtdImpl implements Dtd {
-  private Vector topLevel;
-  private String encoding;
+  private final Vector topLevel;
+  private final String encoding;
+  private final String uri;
 
-  DtdImpl(Vector topLevel, String encoding) {
+  DtdImpl(Vector topLevel, String uri, String encoding) {
     this.topLevel = topLevel;
+    this.uri = uri;
     this.encoding = encoding;
   }
 
+  public String getUri() {
+    return uri;
+  }
+    
   public String getEncoding() {
     return encoding;
   }

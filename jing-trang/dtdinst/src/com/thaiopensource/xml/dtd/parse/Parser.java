@@ -269,6 +269,8 @@ class Parser extends Token {
       = entityManager.open(new ExternalId(entity.systemId, entity.publicId, entity.baseUri));
     if (openEntity == null)
       return null;
+    entity.encoding = openEntity.getEncoding();
+    entity.uri = openEntity.getBaseUri();
     Parser p = new Parser(openEntity, this);
     p.skipTextDecl();
     return p;

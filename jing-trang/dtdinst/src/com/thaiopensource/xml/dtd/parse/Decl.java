@@ -192,6 +192,8 @@ class Decl {
       tem[i] = (TopLevel)v.elementAt(i);
     return new ExternalIdRef(entity.name,
 			     entity.getExternalId(),
+			     entity.uri,
+			     entity.encoding,
 			     tem);
   }
 

@@ -23,8 +23,8 @@ public interface TopLevelVisitor {
   void nameSpecDef(String name, NameSpec nameSpec) throws Exception;
   void overriddenDef(Def def, boolean isDuplicate) throws Exception;
   void externalIdDef(String name, ExternalId externalId) throws Exception;
-  void externalIdRef(String name, ExternalId externalId, TopLevel[] contents)
-    throws Exception;
+  void externalIdRef(String name, ExternalId externalId, String uri,
+		     String encoding, TopLevel[] contents) throws Exception;
   void paramDef(String name, String value) throws Exception;
   void attributeDefaultDef(String name, AttributeDefault ad) throws Exception;
 }

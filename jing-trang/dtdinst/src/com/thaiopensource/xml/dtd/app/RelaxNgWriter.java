@@ -9,7 +9,9 @@ import com.thaiopensource.xml.out.XmlWriter;
 import com.thaiopensource.xml.em.ExternalId;
 
 public class RelaxNgWriter {
+  private XmlOutputCollection outCollection;
   private XmlWriter w;
+  private XmlOutputMember outMember;
   private boolean hadAny = false;
   private Hashtable elementNameTable = new Hashtable();
   private Hashtable defTable = new Hashtable();
@@ -54,7 +56,8 @@ public class RelaxNgWriter {
     public void nameSpecDef(String name, NameSpec nameSpec) throws Exception { }
     public void overriddenDef(Def def, boolean isDuplicate) throws Exception { }
     public void externalIdDef(String name, ExternalId externalId) throws Exception { }
-    public void externalIdRef(String name, ExternalId externalId, TopLevel[] contents)
+    public void externalIdRef(String name, ExternalId externalId,
+			      String uri, String encoding, TopLevel[] contents)
       throws Exception {
       for (int i = 0; i < contents.length; i++)
 	contents[i].accept(this);
@@ -352,6 +355,30 @@ public class RelaxNgWriter {
       w.comment(value);
     }
 
+    public void externalIdRef(String name, ExternalId externalId,
+			      String uri, String encoding, TopLevel[] contents)
+      throws Exception {
+      if (uri == null) {
+	super.externalIdRef(name, externalId, uri, encoding, contents);
+	return;
+      }
+      XmlOutputMember outMemberSave = outMember;
+      XmlWriter wSave = w;
+      outMember = outCollection.mapUri(uri);
+      w = outMember.open(encoding);
+      String systemId = outMember.getSystemId(outMemberSave);
+      w.writeXmlDecl(encoding);
+      startGrammar();
+      super.externalIdRef(name, externalId, uri, encoding, contents);
+      endGrammar();
+      w.close();
+      w = wSave;
+      outMember = outMemberSave;
+      w.startElement("include");
+      w.attribute("href", systemId);
+      w.endElement();
+    }
+
   }
 
   class GroupOutput extends Output {
@@ -376,8 +403,8 @@ public class RelaxNgWriter {
     }
   }
 
-  public RelaxNgWriter(XmlWriter w) {
-    this.w = w;
+  public RelaxNgWriter(XmlOutputCollection outCollection) {
+    this.outCollection = outCollection;
   }
 
   public void writeDtd(Dtd dtd) throws IOException {
@@ -388,12 +415,10 @@ public class RelaxNgWriter {
       throw (RuntimeException)e;
     }
     chooseNames();
-    w.startElement("grammar");
-    w.attribute("datatypeLibrary",
-		"http://www.w3.org/2001/XMLSchema-datatypes");
-    w.attribute("xmlns",
-		"http://relaxng.org/ns/structure/0.9");
-    outputNamespaces();
+    outMember = outCollection.getMain();
+    w = outMember.open(dtd.getEncoding());
+    w.writeXmlDecl(dtd.getEncoding());
+    startGrammar();
     outputStart();
     try {
       dtd.accept(explicitOutput);
@@ -405,7 +430,8 @@ public class RelaxNgWriter {
       throw (IOException)e;
     }
     outputUndefinedElements();
-    w.endElement();
+    endGrammar();
+    w.close();
   }
 
   void chooseNames() {
@@ -670,6 +696,19 @@ public class RelaxNgWriter {
   void ref(String name) throws IOException {
     w.startElement("ref");
     w.attribute("name", name);
+    w.endElement();
+  }
+
+  void startGrammar() throws IOException {
+    w.startElement("grammar");
+    w.attribute("datatypeLibrary",
+		"http://www.w3.org/2001/XMLSchema-datatypes");
+    w.attribute("xmlns",
+		"http://relaxng.org/ns/structure/0.9");
+    outputNamespaces();
+  }
+  
+  void endGrammar() throws IOException {
     w.endElement();
   }
 }

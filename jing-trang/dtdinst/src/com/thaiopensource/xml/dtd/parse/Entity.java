@@ -29,6 +29,8 @@ class Entity {
   String systemId;
   String publicId;
   String baseUri;
+  String encoding;
+  String uri;
   Entity overrides;
   boolean overridden;
   // Which parts of text came from references?

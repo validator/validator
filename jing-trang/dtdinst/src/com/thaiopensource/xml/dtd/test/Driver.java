@@ -1,8 +1,6 @@
 package com.thaiopensource.xml.dtd.test;
 
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,13 +8,12 @@ import java.io.OutputStream;
 import java.io.BufferedInputStream;
 import java.util.Hashtable;
 
-import com.thaiopensource.xml.out.CharRepertoire;
 import com.thaiopensource.xml.out.XmlWriter;
-import com.thaiopensource.xml.util.EncodingMap;
 import com.thaiopensource.xml.dtd.om.DtdParser;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.dtd.app.SchemaWriter;
+import com.thaiopensource.xml.dtd.app.XmlOutputStreamWriter;
 import com.thaiopensource.xml.dtd.app.FileEntityManager;
 
 public class Driver {
@@ -64,11 +61,8 @@ public class Driver {
   private static void runTest(File inFile, OutputStream out) throws IOException {
     DtdParser dtdParser = new DtdParserImpl();
     Dtd dtd = dtdParser.parse(inFile.toString(), new FileEntityManager());
-    String enc = EncodingMap.getJavaName(dtd.getEncoding());
-    BufferedWriter w = new BufferedWriter(new OutputStreamWriter(out, enc));
-    CharRepertoire cr = CharRepertoire.getInstance(enc);
-    new SchemaWriter(new XmlWriter(w, cr)).writeDtd(dtd);
+    XmlWriter w = new XmlOutputStreamWriter(out, dtd.getEncoding());
+    new SchemaWriter(w).writeDtd(dtd);
     w.close();
   }
-
 }

@@ -1,9 +1,26 @@
+RELAX NG: Don't create an output file that contains just comments.
+
+EntityManager that properly handles URLs.
+
+RELAX NG: Handle refs to same external entity safely.
+
+Command-line option parser.
+
+Allow RelaxNgWriter to report errors.
+
 Should disallow colons in names other than element and attribute
 names per the Namespaces Rec.
 
+Move CDATA out of BasicDatatype; change Basic to Tokenized.
+
+Add DtdParseException to om package.
+
+Maybe better to avoid empty sequences and empty choices in the object
+model.
+
 RELAX NG: overridden attributes.
 
-RELAX NG: ANY (does it include PCDATA?)
+RELAX NG: ANY (includes PCDATA)
 
 RELAX NG: default values
 
@@ -15,7 +32,7 @@ RELAX NG: annotation for included sections (d:condition="flagName")
 
 RELAX NG: sort undefined elements.
 
-RELAX NG: multi file output.
+RELAX NG: preserve directory structure on output.
 
 Check for duplicate ELEMENT declarations.
 
