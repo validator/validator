@@ -1695,6 +1695,40 @@ applies at the syntax level.</documentation>
 <foo/>
 </invalid>
 </testCase>
+<testCase>
+<correct>
+<group xmlns="http://relaxng.org/ns/structure/1.0">
+  <element ns="http://www.example.com">
+    <name>foo</name>
+    <empty/>
+  </element>
+</group>
+</correct>
+<valid><foo xmlns="http://www.example.com"/></valid>
+<invalid><foo/></invalid>
+</testCase>
+<testCase>
+<correct>
+<element ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <name>foo</name>
+  <empty/>
+</element>
+</correct>
+<valid><foo xmlns="http://www.example.com"/></valid>
+<invalid><foo/></invalid>
+</testCase>
+<testCase>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute ns="http://www.example.com">
+    <name>bar</name>
+    <text/>
+  </attribute>
+</element>
+</correct>
+<valid><foo xmlns:x="http://www.example.com" x:bar="whatever"/></valid>
+<invalid><foo bar="whatever"/></invalid>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.10</section>
