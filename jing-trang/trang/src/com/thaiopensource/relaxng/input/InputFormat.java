@@ -8,6 +8,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 
 public interface InputFormat {
-  SchemaCollection load(String uri, String[] params, ErrorHandler eh)
+  SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh)
           throws InputFailedException, InvalidParamsException, IOException, SAXException;
 }

@@ -114,6 +114,7 @@ public class Driver {
       }
       SchemaCollection sc = inFormat.load(UriOrFile.toUri(args[0]),
                                           (String[])inputParams.toArray(new String[0]),
+                                          outputType.toLowerCase(),
                                           eh);
       if (ext.length() == 0)
         ext = outputType;
@@ -122,7 +123,7 @@ public class Driver {
                                                     ext,
                                                     DEFAULT_OUTPUT_ENCODING,
                                                     DEFAULT_LINE_LENGTH);
-      of.output(sc, od, (String[])outputParams.toArray(new String[0]), eh);
+      of.output(sc, od, (String[])outputParams.toArray(new String[0]), inputType.toLowerCase(), eh);
       return 0;
     }
     catch (OutputFailedException e) {

@@ -22,7 +22,7 @@ public abstract class ParseInputFormat implements InputFormat {
     this.commentsNeedTrimming = commentsNeedTrimming;
   }
 
-  public SchemaCollection load(String uri, String[] params, ErrorHandler eh)
+  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh)
           throws InputFailedException, InvalidParamsException, IOException, SAXException {
     final InputSource in = new InputSource(uri);
     ParamProcessor pp = new ParamProcessor();

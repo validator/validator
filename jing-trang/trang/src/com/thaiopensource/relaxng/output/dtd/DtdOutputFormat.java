@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.File;
 
 public class DtdOutputFormat implements OutputFormat {
-  public void output(SchemaCollection sc, final OutputDirectory od, String[] params, ErrorHandler eh)
+  public void output(SchemaCollection sc, final OutputDirectory od, String[] params, String inputFormat, ErrorHandler eh)
           throws SAXException, IOException, OutputFailedException, InvalidParamsException {
     new OutputDirectoryParamProcessor(od).process(params, eh);
     Simplifier.simplify(sc);

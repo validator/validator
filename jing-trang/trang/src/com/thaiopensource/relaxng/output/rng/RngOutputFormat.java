@@ -19,7 +19,7 @@ import java.util.Map;
 XXX Specify indent
 */
 public class RngOutputFormat implements OutputFormat {
-  public void output(SchemaCollection sc, OutputDirectory od, String[] params, ErrorHandler eh)
+  public void output(SchemaCollection sc, OutputDirectory od, String[] params, String inputFormat, ErrorHandler eh)
           throws IOException, InvalidParamsException, SAXException {
     new OutputDirectoryParamProcessor(od).process(params, eh);
     for (Iterator iter = sc.getSchemaDocumentMap().entrySet().iterator(); iter.hasNext();) {

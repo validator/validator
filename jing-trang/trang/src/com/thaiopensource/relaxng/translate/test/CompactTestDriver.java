@@ -155,10 +155,10 @@ public class CompactTestDriver {
 
   private boolean run(File in, File out, OutputFormat of, String outExt) throws IOException {
     try {
-      SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), new String[0], eh);
+      SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), new String[0], null, eh);
       OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, null, LINE_LENGTH);
       od.setEncoding(OUTPUT_ENCODING);
-      of.output(sc, od, new String[0], eh);
+      of.output(sc, od, new String[0], null, eh);
       return true;
     }
     catch (SAXException e) {

@@ -5,8 +5,5 @@ Fix John Cowan's bug.
 
 Preserve directory structure on output.
 
-Defaults for input/output params should depend on output/input type
-(e.g. set inline-attlist-decls DTD input when XSD output).
-
 Detect unencodable characters in comments in XmlWriter.  Also in
 attribute names (from namespace prefixes).

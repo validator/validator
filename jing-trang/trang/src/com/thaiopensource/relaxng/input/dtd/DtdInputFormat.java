@@ -69,10 +69,14 @@ public class DtdInputFormat implements InputFormat {
     abstract void setDeclPattern(String pattern);
   }
 
-  public SchemaCollection load(String uri, String[] params, ErrorHandler eh)
+  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh)
           throws InvalidParamsException, IOException, SAXException {
     final ErrorReporter er = new ErrorReporter(eh, DtdInputFormat.class);
     final Converter.Options options = new Converter.Options();
+    if ("xsd".equals(outputFormat)) {
+      options.inlineAttlistDecls = true;
+      options.generateStart = false;
+    }
     ParamProcessor pp = new ParamProcessor();
     pp.declare("inline-attlist",
                new AbstractParam() {
