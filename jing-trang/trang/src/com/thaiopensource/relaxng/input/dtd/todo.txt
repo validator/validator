@@ -1,10 +1,4 @@
-Option to control definition of any (anything at all, not allowed,
-choice of all defined elements, choice of all namespaces with defined
-elements).
-
 Option to map comments into annotations (or maybe should be separate program).
-
-Generate definition for any in one place.
 
 Output overridden definitions.
 

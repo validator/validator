@@ -103,6 +103,12 @@ public class DtdInputFormat implements InputFormat {
                    options.anyName = value;
                  }
                });
+    pp.declare("strict-any",
+               new AbstractParam() {
+                 public void set(boolean value) {
+                   options.strictAny = value;
+                 }
+               });
     pp.declare("annotation-prefix",
                new NCNameParam() {
                  protected void setNCName(String value) {

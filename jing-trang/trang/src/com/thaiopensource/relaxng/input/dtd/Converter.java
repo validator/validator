@@ -1,31 +1,6 @@
 package com.thaiopensource.relaxng.input.dtd;
 
-import com.thaiopensource.relaxng.edit.AttributeAnnotation;
-import com.thaiopensource.relaxng.edit.AttributePattern;
-import com.thaiopensource.relaxng.edit.ChoicePattern;
-import com.thaiopensource.relaxng.edit.Combine;
-import com.thaiopensource.relaxng.edit.Component;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.DefineComponent;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.NameNameClass;
-import com.thaiopensource.relaxng.edit.NotAllowedPattern;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.SchemaCollection;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.Comment;
-import com.thaiopensource.relaxng.edit.Annotated;
-import com.thaiopensource.relaxng.edit.SchemaDocument;
+import com.thaiopensource.relaxng.edit.*;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.input.CommentTrimmer;
@@ -56,6 +31,7 @@ public class Converter {
   static class Options {
     boolean inlineAttlistDecls;
     boolean generateStart = true;
+    boolean strictAny;
     String elementDeclPattern;
     String attlistDeclPattern;
     String colonReplacement;
@@ -308,7 +284,7 @@ public class Converter {
         dc.setCombine(Combine.INTERLEAVE);
         addComponent(dc);
       }
-      if (anyName != null) {
+      if (anyName != null && options.strictAny) {
         DefineComponent dc = new DefineComponent(anyName, ref(elementDeclName(nameSpec.getValue())));
         dc.setCombine(Combine.CHOICE);
         addComponent(dc);
@@ -592,7 +568,9 @@ public class Converter {
     }
 
     public void any() {
-      pattern = new ZeroOrMorePattern(ref(anyName));
+      pattern = ref(anyName);
+      if (options.strictAny)
+        pattern = new ZeroOrMorePattern(pattern);
     }
 
   }
@@ -1015,9 +993,22 @@ public class Converter {
   private void outputAny(List components) {
     if (!hadAny)
       return;
-    DefineComponent dc = new DefineComponent(anyName, new TextPattern());
-    dc.setCombine(Combine.CHOICE);
-    components.add(dc);
+    if (options.strictAny) {
+      DefineComponent dc = new DefineComponent(anyName, new TextPattern());
+      dc.setCombine(Combine.CHOICE);
+      components.add(dc);
+    }
+    else {
+      // any = (element * { attribute * { text }*, any } | text)*
+      CompositePattern group = new GroupPattern();
+      group.getChildren().add(new ZeroOrMorePattern(new AttributePattern(new AnyNameNameClass(),
+                                                                         new TextPattern())));
+      group.getChildren().add(ref(anyName));
+      CompositePattern choice = new ChoicePattern();
+      choice.getChildren().add(new ElementPattern(new AnyNameNameClass(), group));
+      choice.getChildren().add(new TextPattern());
+      components.add(new DefineComponent(anyName, new ZeroOrMorePattern(choice)));
+    }
   }
 
   private void outputUndefinedElements(List components) {
