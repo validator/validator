@@ -2284,7 +2284,7 @@ public class Tokenizer {
     System.arraycopy(asciiTypeTable, 0, charTypeTable[0], 0, 128);
   }
 
-  static private int charType(char c) {
+  static int charType(char c) {
     return charTypeTable[c >> 8][c & 0xFF];
   }
 

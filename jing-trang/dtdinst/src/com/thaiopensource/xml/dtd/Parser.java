@@ -114,6 +114,15 @@ public class Parser extends Token {
     addAtom(new Atom(tok, token));
     int action = pp.action(tok, token);
     switch (action) {
+    case PrologParser.ACTION_TEXT_DECL:
+      try {
+	new TextDecl(buf, currentTokenStart, bufStart);
+      }
+      catch (InvalidTokenException e) {
+	currentTokenStart = e.getOffset();
+	fatal("INVALID_TEXT_DECL");
+      }
+      break;
     case PrologParser.ACTION_IGNORE_SECT:
       skipIgnoreSect();
       break;
