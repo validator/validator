@@ -127,10 +127,8 @@ cd ${prog_src_dir}
 
 cat <<EOF >Makefile.in
 SHELL=/bin/sh
-srcdir = @srcdir@/src
-# put the value on a separate line to stop configure messing with it
-VPATH = \\
-@srcdir@/src
+srcdir = @srcdir@
+VPATH = @srcdir@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 
@@ -147,16 +145,18 @@ LIBS=
 
 EOF
 echo SOURCES=\\ >>Makefile.in
-find src -name '*.java' | sed -e 's/^src/  $(srcdir)/' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+find src -name '*.java' | sed -e 's;^;  $(srcdir)/;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
 
 echo RESOURCES=\\ >>Makefile.in
-find src -type f -not -name '*.java' -not -name '*.jj' | sed -e 's;^src/;  ;' -e 's/$/.o/' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+find src -type f -not -name '*.java' -not -name '*.jj' | sed -e 's;^;  ;' -e 's/$/.o/' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
 
-echo DIRS=\\ >>Makefile.in
+echo DIRS=src \\ >>Makefile.in
 
-find src/* -type d -not -name '*.java' -not -name '*.jj' | sed -e 's;^src/;  ;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+find src/* -type d -not -name '*.java' -not -name '*.jj' | sed -e 's;^;  ;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
 
 cat <<\EOF >>Makefile.in
+
+all: $(PROG) test_$(PROG)
 
 $(PROG): $(PROG).o $(RESOURCES)
 	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
@@ -168,12 +168,12 @@ $(PROG).o: $(SOURCES)
 	$(GCJ) $(GCJFLAGS) -c -o $@ $(SOURCES)
 
 .resource.o:
-	$(GCJ) $(GCJFLAGS) -c -o $@ --resource=`echo $@ | sed -e 's/.o$$//'` $<
+	$(GCJ) $(GCJFLAGS) -c -o $@ --resource=`echo $@ | sed -e 's;src/;;' -e 's/.o$$//'` $<
 
 $(RESOURCES): dirstamp
 
 dirstamp:
-	mkdir $(DIRS)
+	for d in $(DIRS); do test -d $$d || mkdir $$d; done
 	@>$@
 
 check: test_$(PROG)
@@ -181,16 +181,28 @@ check: test_$(PROG)
 
 install: $(PROG)
 	$(NORMAL_INSTALL)
-	$(INSTALL) -d $(bindir)
-	$(INSTALL) $(PROG) $(bindir)/$(PROG)
+	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
+	$(INSTALL) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
 
 clean:
 	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
 	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
 	cd test; $(MAKE) clean
 
+$(srcdir)/configure: configure.ac
+	cd $(srcdir) && autoconf
+     
+Makefile: Makefile.in config.status
+	./config.status
+     
+config.status: configure
+	./config.status --recheck
+
+distclean: clean
+	-rm -f config.status config.cache config.log
+
 .SUFFIXES: .resource
-.PHONY: check clean install
+.PHONY: all check distclean clean install
 EOF
 
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
@@ -211,6 +223,7 @@ AC_OUTPUT
 EOF
 
 cp -a ${top_dir}/gcj/install-sh .
+cp -a ${top_dir}/gcj/mkinstalldirs .
 cp -a ${top_dir}/gcj/INSTALL .
 
 autoconf
