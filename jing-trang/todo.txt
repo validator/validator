@@ -2,8 +2,6 @@ Use Crimson in jing.exe (but maybe not JDK 1.1 compatible).
 
 Option to recover from unknown datatype libraries.
 
-Sample of datatype extensibility
-
 Revise XHTML for compatibility with final Rec.
 
 More helpful error message for duplicate attributes.
@@ -14,12 +12,8 @@ Implement ValidationContext.isUnparsedEntity.
 
 Implement ValidationContext.isNotation.
 
-Datatype documentation.
-
 Support DTD compatibility use of ID/IDREF/IDREFS.
 
 Support DTD compatibility use of default values.
-
-Support Datatype guidelines.
 
 Avoid slow error recovery with large schemas (eg DocBook).
