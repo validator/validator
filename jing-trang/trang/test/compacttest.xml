@@ -2073,6 +2073,28 @@ element foo { empty }
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[
+namespace eg = "http://www.example.com"
+
+[eg:foo [ "x" "y" ~ "z" "z" "y" ]]
+start = element foo { empty }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar xmlns:eg="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <eg:foo>xyzzy</eg:foo>
+    <element name="foo">
+      <empty/>
+    </element>
+  </start>
+</grammar>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>
