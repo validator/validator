@@ -148,7 +148,12 @@ public class DatatypeLibraryLoader implements DatatypeLibraryFactory {
 
 	    Enumeration getResources(String resName) {
 	      try {
-		return cl.getResources(resName);
+                Enumeration resources = cl.getResources(resName);
+                if (resources.hasMoreElements())
+                  return resources;
+                // Some application servers apparently do not implement findResources
+                // in their class loaders, so fall back to getResource.
+                return new Singleton(cl.getResource(resName));
 	      }
 	      catch (IOException e) {
 		return new Singleton(null);
