@@ -1,12 +1,10 @@
-Name : NameSpec ; NameSpecRef : NameSpec
+Add TEI to test cases.
 
 Encoding detection
 
 expand general entity references for default values
 
 attval normalization of default values
-
-Don't unexpand entities that are not properly nested.
 
 Don't unexpand empty entities that might be pasted.
 
@@ -36,10 +34,10 @@ Warning for unused parameter entities.
 
 Better treatment of fixed attribute values.
 
-Abstraction for string; string pasting.
+String pasting.
 
 Translation to RELAX NG: undefined elements; namespaces; overridden
-attributes.
+attributes; ANY; start based on unreferenced element.
 
 SAXEntityManager (support Norm's entity manager)
 
@@ -57,14 +55,7 @@ Normalize public IDs.
 
 local.book.class
 
-<!ELEMENT % n.x "x">
-<!ELEMENT %n.x; EMPTY>
-<!ATTLIST %n.x; att CDATA #IMPLIED>
-<!ELEMENT doc (%n.x)>
+Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
+naming convention or presence of element declarations.
 
-
-n.x = 
-x = element x { attlist.x, model.x }
-model.x = empty
-attlist.x &= attribute att { xsd:CDATA }?
-model.doc = n.x
+Name spec for general entities.
