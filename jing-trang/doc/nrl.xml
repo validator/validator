@@ -988,6 +988,12 @@ FCD.</li>
 provide <href>Mode inheritance</href>.  The FCD may use nesting to
 avoid the need to name modes in some cases.</li>
 
+<li>The FCD is expected to provide syntactic sugar for an action
+equivalent to <code>&lt;attach useMode="#allow"/></code>, except that
+instead of <code>#allow</code>, it uses a mode that allows attributes
+as well as elements.  The idea is to allow subschemas to use empty
+elements as placeholders.</li>
+
 <li>The FCD is expected to provide a schema inclusion mechanism (not just
 using NRL as a subschema).</li>
 
