@@ -5,6 +5,7 @@ public abstract class TopLevel {
   public static final int ATTLIST_DECL = 2;
   public static final int PROCESSING_INSTRUCTION = 3;
   public static final int COMMENT = 4;
+  public static final int NOTATION_DECL = 5;
   public static final int MODEL_GROUP_DEF = 6;
   public static final int ATTRIBUTE_GROUP_DEF = 7;
   public static final int DATATYPE_DEF = 8;

@@ -16,4 +16,5 @@ public interface TopLevelVisitor {
   void includedSection(Flag flag, TopLevel[] contents) throws Exception;
   void ignoredSection(Flag flag, String contents) throws Exception;
   void internalEntityDecl(String name, String value) throws Exception;
+  void notationDecl(String name, ExternalId externalId) throws Exception;
 }

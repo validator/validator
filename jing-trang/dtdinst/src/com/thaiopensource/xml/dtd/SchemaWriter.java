@@ -242,4 +242,23 @@ public class SchemaWriter implements TopLevelVisitor,
     w.characters(value);
     w.endElement();
   }
+
+  public void notationDecl(String name, ExternalId xid) throws IOException {
+    w.startElement("notation");
+    w.attribute("name", name);
+    externalId(xid);
+    w.endElement();
+  }
+
+  private void externalId(ExternalId xid) throws IOException {
+    attributeIfNotNull("system", xid.getSystemId());
+    attributeIfNotNull("public", xid.getPublicId());
+    attributeIfNotNull("xml:base", xid.getBaseUri());
+  }
+
+  private void attributeIfNotNull(String name, String value)
+    throws IOException {
+    if (value != null)
+      w.attribute(name, value);
+  }
 }
