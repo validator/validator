@@ -246,7 +246,7 @@ public class PatternReader implements DatatypeContext {
       return patternBuilder.makeSequence(p1, p2);
     }
 
-    Pattern wrapPattern(Pattern p) {
+    Pattern wrapPattern(Pattern p) throws SAXException {
       return p;
     }
 
@@ -308,10 +308,7 @@ public class PatternReader implements DatatypeContext {
       return new ListState();
     }
     Pattern wrapPattern(Pattern p) {
-      Locator loc = null;
-      if (locator != null)
-	loc = new LocatorImpl(locator);
-      return patternBuilder.makeList(p, loc);
+      return patternBuilder.makeList(p, copyLocator());
     }
   }
 
@@ -454,9 +451,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     Pattern makePattern() throws SAXException {
-      Locator loc = null;
-      if (locator != null)
-	loc = new LocatorImpl(locator);
+      Locator loc = copyLocator();
       DatatypeBuilder dtb;
       if (type == null)
 	dtb = tokenDatatypeBuilder;
@@ -466,7 +461,7 @@ public class PatternReader implements DatatypeContext {
       Object value = dt.createValue(buf.toString(), PatternReader.this);
       if (value == null) {
 	error("invalid_value", buf.toString());
-	return patternBuilder.makeDatatype(dt, null, null, loc);
+	return patternBuilder.makeData(dt, loc);
       }
       return patternBuilder.makeValue(dt, value, loc);
     }
@@ -493,10 +488,18 @@ public class PatternReader implements DatatypeContext {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
 	type = value.trim();
-      else if (name.equals("key"))
+      else if (name.equals("key")) {
+	warning("key_attribute_deprecated");
+	if (keyRef != null)
+	  error("key_key_ref");
 	key = value.trim();
-      else if (name.equals("keyRef"))
+      }
+      else if (name.equals("keyRef")) {
+	warning("key_ref_attribute_deprecated");
+	if (key != null)
+	  error("key_key_ref");
 	keyRef = value.trim();
+      }
       else
 	super.setOtherAttribute(name, value);
     }
@@ -511,10 +514,14 @@ public class PatternReader implements DatatypeContext {
     }
 
     void end() {
-      Locator loc = null;
-      if (locator != null)
-	loc = new LocatorImpl(locator);
-      parent.endChild(patternBuilder.makeDatatype(dtb.finish(), key, keyRef, loc));
+      Locator loc = copyLocator();
+      Datatype dt = dtb.finish();
+      Pattern p = patternBuilder.makeData(dt, loc);
+      if (key != null)
+	p = patternBuilder.makeKey(dt, key, loc, p);
+      else if (keyRef != null)
+	p = patternBuilder.makeKeyRef(dt, keyRef, loc, p);
+      parent.endChild(p);
     }
   }
 
@@ -613,6 +620,56 @@ public class PatternReader implements DatatypeContext {
 
     Pattern wrapPattern(Pattern p) {
       return patternBuilder.makeAttribute(nameClass, p);
+    }
+  }
+
+  abstract class SinglePatternContainerState extends PatternContainerState {
+    State createChildState(String localName) throws SAXException {
+      if (containedPattern == null)
+	return super.createChildState(localName);
+      error("too_many_children");
+      return null;
+    }
+  }
+
+  class KeyState extends SinglePatternContainerState {
+    String name;
+
+    State create() {
+      return new KeyState();
+    }
+
+    void setName(String name) {
+      this.name = name;
+    }
+
+    void endAttributes() throws SAXException {
+      if (name == null)
+	error("missing_name_attribute");
+    }
+
+    Pattern wrapPattern(Pattern p) throws SAXException {
+      if (name == null)
+	return p;
+      Datatype dt = p.getDatatype();
+      if (dt == null) {
+	error("bad_key_content");
+	return p;
+      }
+      return makeKey(dt, copyLocator(), p);
+    }
+
+    Pattern makeKey(Datatype dt, Locator loc, Pattern p) {
+      return patternBuilder.makeKey(dt, name, loc, p);
+    }
+  }
+
+  class KeyRefState extends KeyState {
+    State create() {
+      return new KeyRefState();
+    }
+    Pattern makeKey(Datatype dt, Locator loc, Pattern p) {
+      return patternBuilder.makeKeyRef(dt, name, loc, p);
     }
   }
 
@@ -1200,6 +1257,8 @@ public class PatternReader implements DatatypeContext {
     patternTable.put("text", new TextState());
     patternTable.put("value", new ValueState());
     patternTable.put("data", new DataState());
+    patternTable.put("key", new KeyState());
+    patternTable.put("keyRef", new KeyRefState());
     patternTable.put("notAllowed", new NotAllowedState());
     patternTable.put("grammar", new GrammarState());
     patternTable.put("ref", new RefState());
@@ -1409,5 +1468,11 @@ public class PatternReader implements DatatypeContext {
       error("unrecognized_datatype", datatypeLibrary, type);
     }
     return stringDatatypeBuilder;
+  }
+
+  Locator copyLocator() {
+    if (locator == null)
+      return null;
+    return new LocatorImpl(locator);
   }
 }

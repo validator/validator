@@ -16,6 +16,7 @@ public class PatternDumper {
   private Vector patternList = new Vector();
   private Hashtable patternTable = new Hashtable();
 
+  PatternVisitor patternVisitor = new DumpPatternVisitor();
   PatternVisitor sequencePatternVisitor = new SequenceDumpPatternVisitor();
   PatternVisitor choicePatternVisitor = new ChoiceDumpPatternVisitor();
   PatternVisitor interleavePatternVisitor = new InterleaveDumpPatternVisitor();
@@ -221,12 +222,26 @@ public class PatternDumper {
     public void visitAttribute(NameClass nc, Pattern value) {
       startElement("attribute");
       nc.accept(nameClassVisitor);
-      value.accept(sequencePatternVisitor);
+      value.accept(patternVisitor);
       endElement();
     }
 
-    public void visitDatatype(Datatype dt, String key, String keyRef) {
+    public void visitDatatype(Datatype dt) {
       startElement("text");	// XXX
+      endElement();
+    }
+
+    public void visitKey(String name, Pattern p) {
+      startElement("key");
+      attribute("name", name);
+      p.accept(patternVisitor);
+      endElement();
+    }
+
+    public void visitKeyRef(String name, Pattern p) {
+      startElement("keyRef");
+      attribute("name", name);
+      p.accept(patternVisitor);
       endElement();
     }
 

@@ -29,4 +29,8 @@ class ValuePattern extends SimplePattern {
   void accept(PatternVisitor visitor) {
     visitor.visitValue(dt, obj);
   }
+
+  Datatype getDatatype() {
+    return dt;
+  }
 }

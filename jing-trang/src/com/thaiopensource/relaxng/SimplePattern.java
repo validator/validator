@@ -2,12 +2,11 @@ package com.thaiopensource.relaxng;
 
 import org.xml.sax.Locator;
 
-abstract class SimplePattern extends Pattern {
+abstract class SimplePattern extends StringPattern {
   private Locator locator;
 
   SimplePattern(int hc, Locator locator) {
-    super(false, // XXX should depend on whether it matches empty string
-	  hc);
+    super(false, hc, locator);
     this.locator = locator;
   }
 
@@ -16,16 +15,6 @@ abstract class SimplePattern extends Pattern {
       return b.makeEmptySequence();
     else
       return b.makeEmptyChoice();
-  }
-
-  int checkString(Locator[] loc) {
-    if (loc[0] == null)
-      loc[0] = locator;
-    return DISTINGUISHES_STRINGS;
-  }
-
-  boolean distinguishesStrings() {
-    return true;
   }
 
   abstract boolean matches(Atom a);

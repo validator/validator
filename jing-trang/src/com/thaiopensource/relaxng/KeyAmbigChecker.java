@@ -78,7 +78,13 @@ public class KeyAmbigChecker {
     public void visitAttribute(NameClass ns, Pattern value) {
     }
 
-    public void visitDatatype(Datatype dt, String key, String keyRef) {
+    public void visitKey(String name, Pattern p) {
+    }
+
+    public void visitKeyRef(String name, Pattern p) {
+    }
+
+    public void visitDatatype(Datatype dt) {
     }
 
     public void visitValue(Datatype dt, Object obj) {
@@ -150,8 +156,16 @@ public class KeyAmbigChecker {
       inList = saveInList;
     }
 
-    public void visitDatatype(Datatype dt, String key, String keyRef) {
-      addText(inList, key, keyRef);
+    public void visitDatatype(Datatype dt) {
+      addText(inList, null, null);
+    }
+
+    public void visitKey(String name, Pattern p) {
+      addText(inList, name, null);
+    }
+
+    public void visitKeyRef(String name, Pattern p) {
+      addText(inList, null, name);
     }
 
     public void visitDatatypeValue(Datatype dt, String str) {

@@ -97,10 +97,16 @@ public class PatternBuilder {
     return intern(new ValuePattern(dt, obj, loc));
   }
 
-  Pattern makeDatatype(Datatype dt, String key, String keyRef, Locator loc) {
-    if (key != null || keyRef != null)
-      return intern(new KeyDataPattern(dt, key, keyRef, loc));
+  Pattern makeData(Datatype dt, Locator loc) {
     return intern(new DatatypePattern(dt, loc));
+  }
+
+  Pattern makeKey(Datatype dt, String name, Locator loc, Pattern p) {
+    return intern(new KeyPattern(dt, name, loc, p));
+  }
+
+  Pattern makeKeyRef(Datatype dt, String name, Locator loc, Pattern p) {
+    return intern(new KeyRefPattern(dt, name, loc, p));
   }
 
   Pattern makeChoice(Pattern p1, Pattern p2) {

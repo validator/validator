@@ -84,12 +84,12 @@ class StringAtom extends Atom {
     return dt.allows(str, dc);
   }
 
-  boolean matchesDatatype(Datatype dt, String key, String keyRef) {
-    Object obj = dt.createValue(str, dc);
-    if (obj == null)
-      return false;
-    keys = new Key[]{ new Key(key, keyRef, obj) };
-    return true;
+  void setKey(Datatype dt, String name) {
+    keys = new Key[] { new Key(name, null, dt.createValue(str, dc)) };
+  }
+
+  void setKeyRef(Datatype dt, String name) {
+    keys = new Key[] { new Key(null, name, dt.createValue(str, dc)) };
   }
 
   void checkKeys(KeyChecker kc) throws SAXException {

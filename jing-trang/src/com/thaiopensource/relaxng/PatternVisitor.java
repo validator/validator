@@ -12,7 +12,9 @@ interface PatternVisitor {
   void visitOneOrMore(Pattern p);
   void visitElement(NameClass nc, Pattern content);
   void visitAttribute(NameClass ns, Pattern value);
-  void visitDatatype(Datatype dt, String key, String keyRef);
+  void visitDatatype(Datatype dt);
+  void visitKey(String name, Pattern p);
+  void visitKeyRef(String name, Pattern p);
   void visitValue(Datatype dt, Object obj);
   void visitText();
   void visitList(Pattern p);

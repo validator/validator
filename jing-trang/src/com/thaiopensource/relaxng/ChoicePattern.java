@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng;
 
+import com.thaiopensource.datatype.Datatype;
+
 class ChoicePattern extends BinaryPattern {
   ChoicePattern(Pattern p1, Pattern p2) {
     super(p1.isNullable() || p2.isNullable(),
@@ -74,4 +76,12 @@ class ChoicePattern extends BinaryPattern {
   void accept(PatternVisitor visitor) {
     visitor.visitChoice(p1, p2);
   }
+
+  Datatype getDatatype() {
+    Datatype dt = p1.getDatatype();
+    if (dt != null)
+      return dt;
+    return p2.getDatatype();
+  }
 }
+
