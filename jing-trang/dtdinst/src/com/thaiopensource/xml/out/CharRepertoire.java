@@ -62,6 +62,10 @@ public class CharRepertoire {
     catch (UnsupportedEncodingException e) {
       return false;
     }
+    // work around gcj bug (libgcj/9802)
+    catch (RuntimeException e) {
+      return false;
+    }
   }
 
 }
