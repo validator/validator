@@ -6,14 +6,16 @@ import java.util.Enumeration;
 
 class Dtd {
   private Vector atoms;
+  private Vector decls = new Vector();
+
   private Hashtable paramEntityTable = new Hashtable();
 
   Dtd(Vector atoms) {
     this.atoms = atoms;
   }
 
-  Vector getAtoms() {
-    return atoms;
+  Vector getDecls() {
+    return decls;
   }
 
   Entity lookupParamEntity(String name) {
@@ -33,6 +35,12 @@ class Dtd {
     for (Enumeration e = paramEntityTable.elements();
 	 e.hasMoreElements();)
       ((Entity)e.nextElement()).unexpandEntities();
+  }
+  
+  void createDecls() {
+    new AtomParser(new AtomStream(atoms),
+		   new PrologParser(PrologParser.EXTERNAL_ENTITY),
+		   decls).parse();
   }
 
   void dump() {

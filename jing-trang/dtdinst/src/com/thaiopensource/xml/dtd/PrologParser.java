@@ -42,7 +42,8 @@ public class PrologParser implements Cloneable {
   public static final int ACTION_ATTRIBUTE_TYPE_ENTITIES = ACTION_ATTRIBUTE_TYPE_ENTITY + 1;
   public static final int ACTION_ATTRIBUTE_TYPE_NMTOKEN = ACTION_ATTRIBUTE_TYPE_ENTITIES + 1;
   public static final int ACTION_ATTRIBUTE_TYPE_NMTOKENS = ACTION_ATTRIBUTE_TYPE_NMTOKEN + 1;
-  public static final int ACTION_ATTRIBUTE_ENUM_VALUE = ACTION_ATTRIBUTE_TYPE_NMTOKENS + 1;
+  public static final int ACTION_ATTRIBUTE_TYPE_NOTATION = ACTION_ATTRIBUTE_TYPE_NMTOKENS + 1;
+  public static final int ACTION_ATTRIBUTE_ENUM_VALUE = ACTION_ATTRIBUTE_TYPE_NOTATION + 1;
   public static final int ACTION_ATTRIBUTE_NOTATION_VALUE = ACTION_ATTRIBUTE_ENUM_VALUE + 1;
   public static final int ACTION_ATTLIST_ELEMENT_NAME = ACTION_ATTRIBUTE_NOTATION_VALUE + 1;
   public static final int ACTION_IMPLIED_ATTRIBUTE_VALUE = ACTION_ATTLIST_ELEMENT_NAME + 1;
@@ -456,7 +457,7 @@ public class PrologParser implements Cloneable {
 	  }
 	if (token.equals("NOTATION")) {
 	  state = attlist5;
-	  return ACTION_NONE;
+	  return ACTION_ATTRIBUTE_TYPE_NOTATION;
 	}
 	break;
       case Tokenizer.TOK_OPEN_PAREN:
@@ -522,7 +523,7 @@ public class PrologParser implements Cloneable {
 	}
 	if (matches(token, 1, "FIXED")) {
 	  state = attlist9;
-	  return ACTION_NONE;
+	  return ACTION_FIXED_ATTRIBUTE_VALUE;
 	}
 	break;
       case Tokenizer.TOK_LITERAL:
@@ -533,7 +534,7 @@ public class PrologParser implements Cloneable {
     case attlist9:
       if (tok == Tokenizer.TOK_LITERAL) {
 	state = attlist1;
-	return ACTION_FIXED_ATTRIBUTE_VALUE;
+	return ACTION_DEFAULT_ATTRIBUTE_VALUE;
       }
       break;
     case element0:
