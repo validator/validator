@@ -77,6 +77,39 @@ public class Parser extends Token {
     }
   }
 
+  static class AtomStream {
+    int tokenType;
+    String token;
+    EntityImpl entity;
+    boolean eof;
+
+    private int i;
+    private int len;
+    private Vector v;
+
+    AtomStream(Vector v) {
+      this.v = v;
+      this.i = 0;
+      this.len = v.size();
+    }
+
+    boolean advance() {
+      if (i >= len) {
+	eof = true;
+	token = null;
+	entity = null;
+	tokenType = -1;
+	return false;
+      }
+      Atom a = (Atom)v.elementAt(i);
+      token = a.token;
+      tokenType = a.tokenType;
+      entity = a.entity;
+      i++;
+      return true;
+    }
+  }
+
   static class EntityImpl {
     final String name;
     EntityImpl(String name) { this.name = name; }
@@ -288,8 +321,29 @@ public class Parser extends Token {
     for (Enumeration e = paramEntityTable.elements();
 	 e.hasMoreElements();)
       ((EntityImpl)e.nextElement()).unexpandEntities();
+    System.err.println("Reparsing");
+    try {
+      PrologParser pp = new PrologParser(PrologParser.EXTERNAL_ENTITY);
+      parseAtoms(new AtomStream(atoms), pp);
+      pp.end();
+    }
+    catch (PrologSyntaxException e) {
+      throw new Error("reparse botched");
+    }
     System.err.println("Dumping");
     dumpEntity("#doc", atoms);
+  }
+
+  public void parseAtoms(AtomStream as, PrologParser pp) throws PrologSyntaxException {
+    while (as.advance()) {
+      if (as.entity != null)
+	parseAtoms(new AtomStream(as.entity.atoms), pp);
+      else if (pp.action(as.tokenType, as.token)
+	       == PrologParser.ACTION_IGNORE_SECT) {
+	if (!as.advance())
+	  throw new PrologSyntaxException();
+      }
+    }
   }
 
   private void parseDecls(boolean isInternal) throws IOException {
