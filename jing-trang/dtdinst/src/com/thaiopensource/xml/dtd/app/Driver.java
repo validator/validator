@@ -53,8 +53,14 @@ public class Driver {
 	  }
 	  dir = new File(opts.getOptionArg());
 	  if (!dir.isDirectory()) {
-	    error(localizer().message("NOT_DIRECTORY", args[1]));
-	    return false;
+	    if (dir.exists()) {
+	      error(localizer().message("NOT_DIRECTORY", args[1]));
+	      return false;
+	    }
+	    if (!dir.mkdirs()) {
+	      error(localizer().message("CANNOT_MKDIR", args[1]));
+	      return false;
+	    }
 	  }
 	  break;
 	}
