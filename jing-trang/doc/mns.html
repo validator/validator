@@ -353,8 +353,8 @@ rootContext = element root { nsAtt?, elementContext }
 
 elementContext =
   element element {
-    nsAtt?,
     attribute name { xsd:NCName },
+    nsAtt?,
     elementContext?
   }
 
