@@ -30,13 +30,13 @@ class DirectoryOutputCollection implements XmlOutputCollection {
     }
   }
 
-  DirectoryOutputCollection(String mainUri, String dir, NameMapper nameMapper) {
+  DirectoryOutputCollection(String mainUri, File dir, NameMapper nameMapper) {
     this.mainUri = mainUri;
-    this.dir = new File(dir);
+    this.dir = dir;
     this.nameMapper = nameMapper;
   }
 
-  DirectoryOutputCollection(String mainUri, String dir) {
+  DirectoryOutputCollection(String mainUri, File dir) {
     this(mainUri, dir, null);
   }
 
