@@ -2,7 +2,6 @@ package com.thaiopensource.relaxng.output.rnc;
 
 import java.io.Writer;
 import java.io.IOException;
-import java.util.Stack;
 
 public class StreamingPrettyprinter implements Prettyprinter {
   private final String lineSep;
@@ -81,7 +80,8 @@ public class StreamingPrettyprinter implements Prettyprinter {
   private int nextSegmentSerial = 0;
   private Group currentGroup = new Group(null);
   private int currentIndent = 0;
-  private Stack indentStack = new Stack();
+  private int[] indentStack = new int[10];
+  private int indentLevel = 0;
   /**
    * The total width of the segments between head and tail inclusive.
    */
@@ -127,12 +127,17 @@ public class StreamingPrettyprinter implements Prettyprinter {
   }
 
   public void startNest(String indent) {
-    indentStack.push(new Integer(currentIndent));
+    if (indentLevel >= indentStack.length) {
+      int[] newStack = new int[indentStack.length * 2];
+      System.arraycopy(indentStack, 0, newStack, 0, indentStack.length);
+      indentStack = newStack;
+    }
+    indentStack[indentLevel++] = currentIndent;
     currentIndent += indent.length();
   }
 
   public void endNest() {
-    currentIndent = ((Integer)indentStack.pop()).intValue();
+    currentIndent = indentStack[--indentLevel];
   }
 
   public void text(String str) {
