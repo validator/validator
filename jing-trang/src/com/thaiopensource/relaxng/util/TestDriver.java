@@ -8,6 +8,7 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.xml.sax.SAXException;
+import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,6 +31,9 @@ class TestDriver {
     eh = new ErrorHandlerImpl(System.out);
     OptionParser op = new OptionParser("i", args);
     PropertyMapBuilder properties = new PropertyMapBuilder();
+    // This is an optimization.  It ensures that all SchemaReaders share a
+    // single DatatypeLibraryLoader.
+    RngProperty.DATATYPE_LIBRARY_FACTORY.put(properties, new DatatypeLibraryLoader());
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
