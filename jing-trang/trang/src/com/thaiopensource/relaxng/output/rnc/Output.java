@@ -17,18 +17,16 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-Use \x{} escapes for characters not in repertoire of selected encoding
-
-Avoid lines with excessive complexity
+Preserve namespace context for annotations.
 
 Make use of ##
+
+Use \x{} escapes for characters not in repertoire of selected encoding
 
 Make long literals pretty
 
 Take advantage of
   default namespace x = "..."
-
-Preserve namespace context for annotations.
 */
 class Output {
   private final Prettyprinter pp;
@@ -37,6 +35,7 @@ class Output {
   private final ErrorReporter er;
   private final NamespaceManager.NamespaceBindings nsb;
   private final Map datatypeLibraryMap = new HashMap();
+  private final ComplexityCache complexityCache = new ComplexityCache();
   private final NameClassVisitor nameClassOutput = new NameClassOutput(true);
   private final NameClassVisitor noParenNameClassOutput = new NameClassOutput(false);
   private final PatternVisitor noParenPatternOutput = new PatternOutput(false);
@@ -342,16 +341,30 @@ class Output {
       pp.startNest(key);
       p.getNameClass().accept(noParenNameClassOutput);
       pp.endNest();
-      pp.startGroup();
+      braceChild(p);
+      endAnnotations(p);
+    }
+
+    private void braceChild(UnaryPattern p) {
+      Pattern child = p.getChild();
+      boolean isSimple = !complexityCache.isComplex(child);
+      if (isSimple)
+        pp.startGroup();
       pp.text(" {");
       pp.startNest(indent);
-      pp.softNewline(" ");
-      p.getChild().accept(noParenPatternOutput);
+      if (isSimple)
+        pp.softNewline(" ");
+      else
+        pp.hardNewline();
+      child.accept(noParenPatternOutput);
       pp.endNest();
-      pp.softNewline(" ");
+      if (isSimple)
+        pp.softNewline(" ");
+      else
+        pp.hardNewline();
       pp.text("}");
-      pp.endGroup();
-      endAnnotations(p);
+      if (isSimple)
+        pp.endGroup();
     }
 
     public Object visitOneOrMore(OneOrMorePattern p) {
@@ -443,13 +456,7 @@ class Output {
     private void prefix(UnaryPattern p, String key) {
       startAnnotations(p);
       pp.text(key);
-      pp.text(" {");
-      pp.startNest(indent);
-      pp.softNewline(" ");
-      p.getChild().accept(noParenPatternOutput);
-      pp.endNest();
-      pp.softNewline(" ");
-      pp.text("}");
+      braceChild(p);
       endAnnotations(p);
     }
 
@@ -472,7 +479,9 @@ class Output {
       boolean useParens = alwaysUseParens;
       if (startAnnotations(p))
         useParens = true;
-      pp.startGroup();
+      boolean isSimple = !complexityCache.isComplex(p);
+      if (isSimple)
+        pp.startGroup();
       if (useParens) {
         pp.text("(");
         pp.startNest("(");
@@ -483,7 +492,10 @@ class Output {
         if (!first) {
           if (sepBeforeNewline)
             pp.text(sep);
-          pp.softNewline(" ");
+          if (isSimple)
+            pp.softNewline(" ");
+          else
+            pp.hardNewline();
           if (!sepBeforeNewline) {
             pp.text(sep);
             pp.startNest(sep);
@@ -499,7 +511,8 @@ class Output {
         pp.endNest();
         pp.text(")");
       }
-      pp.endGroup();
+      if (isSimple)
+        pp.endGroup();
       endAnnotations(p);
     }
 
