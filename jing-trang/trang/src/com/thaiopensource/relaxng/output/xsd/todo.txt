@@ -99,3 +99,4 @@ Handle the case where the head of a substitution group should be a non-abstract 
 
 Deal with non top-level commments.
 
+Option to control value of processContents on wildcards.

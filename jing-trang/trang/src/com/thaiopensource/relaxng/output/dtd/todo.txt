@@ -9,7 +9,6 @@ Allow mixed(repeat(NOT_ALLOWED))
 Prettier formatting of ATTLISTs
 Order requiredParamEntities by definition order
 Customizable indent and line length
-Make LocalOutputDirectory preserve directory structure
 Approximate <list> by NMTOKENS when possible
 Have a top-level annotation indicating a redefinition point (as in DocBook)
 Recognize definitions being used as INCLUDE/IGNORE (as in TEI)
@@ -23,3 +22,4 @@ Support for ANY
 Approximate wildcards intelligently
 Handle interleave of zero or more element class with model group
 Turn elements with content <value type="string"></value> into EMPTY.
+Deal with characters outside repertoire of character encoding.
