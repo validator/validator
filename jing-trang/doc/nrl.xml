@@ -457,7 +457,8 @@ schema, we could use it as follows:</p>
 <p>This will cause SVG sections occurring within XHTML to be attached
 to the parent XHTML section and be validated as part of it.</p>
 
-<!-- XXX introduce RDF example -->
+<p>RDF is another example where <code>attach</code> is necessary.
+RDF can contain elements from arbitrary namespaces.</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
@@ -480,6 +481,8 @@ to the parent XHTML section and be validated as part of it.</p>
 </xml>
 
 <!-- XXX NRL as subschema for NRL -->
+
+<h2>Open schemas</h2>
 
 <!-- XXX Have an example will validate and attach for the same namespace -->
 
@@ -510,6 +513,22 @@ just the rule:</p>
   </mode>
 </rules>
 </xml>
+
+<p>Suppose you are not interested in the namespace-based capabilities of
+NRL, but you simply want to validate a document concurrently against
+two schemas.  The simplest way is like this:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+  <anyNamespace>
+    <validate schema="xhtml.rng" useMode="#attach"/>
+    <validate schema="xhtml.sch" useMode="#attach"/>
+  </anyNamespace>
+</rules>
+</xml>
+
+<p>The <code>useMode="#attach"</code> ensures that the document will
+be validated as is, rather than divided into sections.</p>
 
 <p>Similarly, there is a built-in mode named <code>#reject</code>,
 which contains just the rule:</p>
@@ -878,6 +897,8 @@ href="http://www.thaiopensource.com/relang/jing.html"
 <p>Schematron</p>
 
 <p>RELAX NG</p>
+
+<p>W3C XML Schema</p>
 
 <h2>NRL schema</h2>
 
