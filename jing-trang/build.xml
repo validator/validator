@@ -153,7 +153,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
 </target>
 
-<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,xsd-test,regex-test"
+<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,picl-test,xsd-test,regex-test"
         description="Test all aspects of validation"/>
 
 <target name="spec-split" depends="init, check-spec-split" unless="spec-split-not-required">
@@ -261,6 +261,34 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/schematrontest/out.log"/>
     <arg value="${build.dir}/schematrontest"/>
+    <classpath>
+      <pathelement location="${build.dir}/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
+    </classpath>
+  </java>
+</target>
+
+<target name="picl-split" depends="init,check-picl-split" unless="picl-split-not-required">
+  <jing rngfile="test/picltest.nrl">
+    <fileset dir="test" includes="picltest.xml"/>
+  </jing>
+  <delete dir="${build.dir}/picltest"/>
+  <mkdir dir="${build.dir}/picltest"/>
+  <style basedir="test" destdir="${build.dir}/picltest" includes="picltest.xml" extension=".stamp" style="test/split.xsl">
+    <param name="dir" expression="${build.dir}/picltest"/>
+  </style>
+</target>
+
+<target name="check-picl-split">
+  <uptodate property="picl-split-not-required" targetfile="${build.dir}/picltest/picltest.stamp">
+    <srcfiles dir="test" includes="picltest.xml"/>
+  </uptodate>
+</target>
+
+<target name="picl-test" depends="jar,picl-split" description="Test PICL validation">
+  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
+    <arg value="${build.dir}/picltest/out.log"/>
+    <arg value="${build.dir}/picltest"/>
     <classpath>
       <pathelement location="${build.dir}/jing.jar"/>
       <pathelement path="${java.class.path}"/>
