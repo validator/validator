@@ -55,6 +55,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
+inherit= on external and include
+
 Comments (top-level most important)
 
 Annotations
