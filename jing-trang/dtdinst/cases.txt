@@ -14,8 +14,6 @@ Don't unexpand empty entities that might be pasted.
 
 overridden param entity declarations
 
-Include sections in object model.
-
 Unparsed ignored sections in the object model.
 
 Include external param entities in object model.
@@ -43,6 +41,10 @@ attributes.
 
 SAXEntityManager (support Norm's entity manager)
 
+Interface to report warnings properly.
+
+Error for illegal public IDs.
+
 Error for duplicate ELEMENT declarations.
 
-Report warnings properly.
+Check other DTD VCs
