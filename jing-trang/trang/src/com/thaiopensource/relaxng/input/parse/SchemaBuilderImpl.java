@@ -77,7 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class SchemaBuilderImpl implements SchemaBuilder {
+class SchemaBuilderImpl implements SchemaBuilder {
   private final Parseable parseable;
   private final ErrorHandler eh;
   private final Map schemas;
