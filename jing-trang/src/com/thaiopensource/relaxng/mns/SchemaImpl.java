@@ -3,18 +3,22 @@ package com.thaiopensource.relaxng.mns;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.ValidatorHandler;
-import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.StringSplitter;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +30,18 @@ class SchemaImpl implements Schema {
   private final Map modeMap = new HashMap();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
+
+  static private final class WrappedIOException extends RuntimeException {
+    private final IOException exception;
+
+    private WrappedIOException(IOException exception) {
+      this.exception = exception;
+    }
+
+    private IOException getException() {
+      return exception;
+    }
+  }
 
   static class ElementAction {
     private Schema schema;
@@ -74,16 +90,34 @@ class SchemaImpl implements Schema {
     private final MnsSchemaFactory factory;
     private final ValidatorHandler validator;
     private ElementAction currentElementAction;
-    private boolean incorrectChildSchemas = false;
+    private boolean hadError = false;
+    private final ErrorHandler eh;
+    private final Localizer localizer = new Localizer(SchemaImpl.class);
+    private Locator locator;
 
-    Handler(MnsSchemaFactory factory, ValidatorHandler validator) {
+    Handler(MnsSchemaFactory factory, ValidatorHandler validator, ErrorHandler eh) {
       super(validator);
       this.factory = factory;
       this.validator = validator;
+      this.eh = eh;
     }
 
-    void checkValid() throws IncorrectSchemaException {
-      if (incorrectChildSchemas || !validator.isValidSoFar())
+    public void setDocumentLocator(Locator locator) {
+      super.setDocumentLocator(locator);
+      this.locator = locator;
+    }
+
+    void checkValid() throws IncorrectSchemaException, SAXException {
+      if (!validator.isValidSoFar())
+        throw new IncorrectSchemaException();
+      for (Iterator iter = modeMap.entrySet().iterator(); iter.hasNext();) {
+        Map.Entry entry = (Map.Entry)iter.next();
+        String modeName = (String)entry.getKey();
+        Mode mode = (Mode)entry.getValue();
+        if (!mode.defined && !modeName.equals(DEFAULT_MODE_NAME))
+          error("undefined_mode", modeName); // XXX should have location
+      }
+      if (hadError)
         throw new IncorrectSchemaException();
     }
 
@@ -118,9 +152,12 @@ class SchemaImpl implements Schema {
       if (localName.equals("strict") || localName.equals("lax")) {
         boolean strict = localName.equals("strict");
         for (int i = 0; i < modes.length; i++) {
-          // XXX error if strictDefined is true
-          modes[i].strict = strict;
-          modes[i].strictDefined = true;
+          if (modes[i].strictDefined)
+            error("strict_multiply_defined", modeNames[i]);
+          else {
+            modes[i].strict = strict;
+            modes[i].strictDefined = true;
+          }
         }
         return;
       }
@@ -130,8 +167,12 @@ class SchemaImpl implements Schema {
       try {
         if (isAttribute) {
           Schema schema = factory.createChildSchema(wrapAttributesSchema(schemaUri));
-          for (int i = 0; i < modes.length; i++)
-            modes[i].attributesMap.put(ns, schema); // XXX error if already defined
+          for (int i = 0; i < modes.length; i++) {
+            if (modes[i].attributesMap.get(ns) != null)
+              error("validate_attributes_multiply_defined", modeNames[i], ns);
+            else
+              modes[i].attributesMap.put(ns, schema);
+          }
         }
         else {
           Schema schema = factory.createChildSchema(new InputSource(schemaUri));
@@ -139,29 +180,65 @@ class SchemaImpl implements Schema {
           if (modeName == null)
             modeName = DEFAULT_MODE_NAME;
           currentElementAction = new ElementAction(schema, lookupCreateMode(modeName));
-          for (int i = 0; i < modes.length; i++)
-            modes[i].elementMap.put(ns, currentElementAction); // XXX error if already defined
+          for (int i = 0; i < modes.length; i++) {
+            if (modes[i].elementMap.get(ns) != null)
+              error("validate_element_multiply_defined", modeNames[i], ns);
+            else
+              modes[i].elementMap.put(ns, currentElementAction);
+          }
         }
       }
       catch (IncorrectSchemaException e) {
-        incorrectChildSchemas = true;
+        hadError = true;
       }
       catch (IOException e) {
-        // XXX wrap and rethrow
+        throw new WrappedIOException(e);
       }
     }
+
+    void error(String key) throws SAXException {
+      hadError = true;
+      if (eh == null)
+        return;
+      eh.error(new SAXParseException(localizer.message(key), locator));
+    }
+
+    void error(String key, String arg) throws SAXException {
+      hadError = true;
+      if (eh == null)
+        return;
+      eh.error(new SAXParseException(localizer.message(key, arg), locator));
+    }
+
+    void error(String key, String arg1, String arg2) throws SAXException {
+      hadError = true;
+      if (eh == null)
+        return;
+      eh.error(new SAXParseException(localizer.message(key, arg1, arg2), locator));
+    }
+
   }
 
   SchemaImpl(InputSource in, MnsSchemaFactory factory)
           throws IOException, SAXException, IncorrectSchemaException {
     XMLReader xr = factory.getXMLReaderCreator().createXMLReader();
     ErrorHandler eh = factory.getErrorHandler();
-    Handler h = new Handler(factory, factory.getMnsSchema().createValidator(eh));
+    Handler h = new Handler(factory, factory.getMnsSchema().createValidator(eh), eh);
     xr.setContentHandler(h);
     xr.setErrorHandler(eh);
-    xr.parse(in);
+    try {
+      xr.parse(in);
+    }
+    catch (WrappedIOException e) {
+      throw e.getException();
+    }
+    catch (SAXException e) {
+      if (e.getException() instanceof WrappedIOException)
+        throw ((WrappedIOException)e.getException()).getException();
+      else
+        throw e;
+    }
     h.checkValid();
-    // XXX warn for undefined modes
   }
 
   public ValidatorHandler createValidator(ErrorHandler eh) {
