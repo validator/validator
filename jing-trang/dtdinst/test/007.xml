@@ -4,13 +4,15 @@
     <name>doc</name>
     <sequence/>
   </element>
-  <param name="e">(x)</param>
+  <enumGroup name="e">
+    <enum>x</enum>
+  </enumGroup>
   <attlist>
     <name>doc</name>
     <attribute>
       <name>a</name>
       <tokenized name="NOTATION">
-        <enum>x</enum>
+        <enumGroupRef name="e"/>
       </tokenized>
       <implied/>
     </attribute>

@@ -86,7 +86,7 @@ class Decl {
       entity.datatype = Param.paramsToDatatype(entity.parsed);
       return new DatatypeDef(name, entity.datatype);
     case Entity.SEMANTIC_ENUM_GROUP:
-      entity.enumGroup = Particle.particlesToEnumGroup(entity.parsed);
+      entity.enumGroup = entity.toEnumGroup();
       return new EnumGroupDef(name, entity.enumGroup);
     case Entity.SEMANTIC_FLAG:
       entity.flag = Param.paramsToFlag(entity.parsed);

@@ -100,11 +100,18 @@ class Param {
       return new EnumDatatype(Particle.particlesToEnumGroup(ps.group.particles));
     case ATTRIBUTE_TYPE_NOTATION:
       ps.advance();
-      return new NotationDatatype(Particle.particlesToEnumGroup(ps.group.particles));
+      return new NotationDatatype(paramToEnumGroup(ps));
     case ATTRIBUTE_TYPE:
       return new BasicDatatype(ps.value);
     }
     throw new Error();
+  }
+
+  static EnumGroup paramToEnumGroup(ParamStream ps) {
+    if (ps.type == REFERENCE)
+      return new EnumGroup(new EnumGroupMember[]{new EnumGroupRef(ps.entity.name, ps.entity.enumGroup)});
+    else
+      return Particle.particlesToEnumGroup(ps.group.particles);
   }
 
   static AttributeDefault paramsToAttributeDefault(Vector v) {

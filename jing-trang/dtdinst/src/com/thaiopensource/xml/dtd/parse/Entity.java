@@ -362,6 +362,8 @@ class Entity {
       semantic = SEMANTIC_NAME_SPEC;
     else if (isAttributeDefault())
       semantic = SEMANTIC_ATTRIBUTE_DEFAULT;
+    else if (isEnumGroup())
+      semantic = SEMANTIC_ENUM_GROUP;
     else
       problem = UNKNOWN_SEMANTIC_PROBLEM;
   }
@@ -427,6 +429,11 @@ class Entity {
 	    && !ps.advance());
   }
 
+  private boolean isEnumGroup() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance() && ps.type == Param.NOTATION_GROUP && !ps.advance());
+  }
+
   private void analyzeSemanticParticle() {
     int n = parsed.size();
     if (n == 0) {
@@ -477,6 +484,13 @@ class Entity {
 	return new Choice(new ModelGroup[0]);
     }
     return Particle.particlesToModelGroup(parsed);
+  }
+
+  EnumGroup toEnumGroup() {
+    if (referenceLevel == PARTICLE_LEVEL)
+      return Particle.particlesToEnumGroup(parsed);
+    else
+      return Particle.particlesToEnumGroup(((Param)parsed.elementAt(0)).group.particles);
   }
 
   ExternalId getExternalId() {
