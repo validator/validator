@@ -218,7 +218,7 @@ public class IdSoundnessChecker implements ValidatorHandler {
        tokenStart = i;
     }
     if (tokenStart >= 0)
-      tokens[nTokens++] = str.substring(tokenStart, len);
+      tokens[nTokens] = str.substring(tokenStart, len);
     return tokens;
   }
 

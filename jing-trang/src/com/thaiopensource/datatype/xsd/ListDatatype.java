@@ -52,7 +52,7 @@ class ListDatatype extends DatatypeBase implements Measure {
 	tokens[nTokens++] = s.substring(tokenStart, i);
 	tokenStart = i + 1;
       }
-    tokens[nTokens++] = s.substring(tokenStart);
+    tokens[nTokens] = s.substring(tokenStart);
     return tokens;
   }
 
