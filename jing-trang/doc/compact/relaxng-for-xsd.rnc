@@ -1,5 +1,5 @@
-# RELAX NG syntax expressed in RELAX NG compact syntax, but generalized
-# so as to stay within the expressive power of W3C XML Schema.
+# A schema for RELAX NG syntax staying within the
+# expressive power of W3C XML Schema.
 
 default namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace local = ""
