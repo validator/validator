@@ -1,37 +1,19 @@
 package com.thaiopensource.xml.dtd.app;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.InputStream;
-import java.util.Properties;
-import java.util.MissingResourceException;
-
+import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
-import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.out.XmlWriter;
-import com.thaiopensource.util.OptionParser;
-import com.thaiopensource.util.UriOrFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.MissingResourceException;
+import java.util.Properties;
 
 public class Driver {
-
   private static final int FAILURE_EXIT_CODE = 1;
-
-  private static class ErrorMessageHandlerImpl implements ErrorMessageHandler {
-    private int errorCount = 0;
-
-    public void message(ErrorMessage message) {
-      switch (message.getSeverity()) {
-      case ErrorMessage.WARNING:
-	error(message.getMessage());
-	break;
-      case ErrorMessage.ERROR:
-	errorCount++;
-	warning(message.getMessage());
-	break;
-      }
-    }
-  }
+  private static Localizer localizer = new Localizer(Driver.class);
 
   public static void main(String[] args) {
     try {
@@ -45,103 +27,34 @@ public class Driver {
   }
 
   public static boolean doMain(String args[]) throws IOException {
-    OptionParser opts = new OptionParser("r:i", args);
-    File dir = null;
-    boolean inlineAttlistDecls = false;
-    try {
-      while (opts.moveToNextOption()) {
-	switch (opts.getOptionChar()) {
-	case 'r':
-	  if (dir != null) {
-	    error(localizer().message("DUPLICATE_OPTION", "r"));
-	    return false;
-	  }
-	  dir = new File(opts.getOptionArg());
-	  if (!dir.isDirectory()) {
-	    if (dir.exists()) {
-	      error(localizer().message("NOT_DIRECTORY", args[1]));
-	      return false;
-	    }
-	    if (!dir.mkdirs()) {
-	      error(localizer().message("CANNOT_MKDIR", args[1]));
-	      return false;
-	    }
-	  }
-	  break;
-        case 'i':
-          if (inlineAttlistDecls) {
-            error(localizer().message("DUPLICATE_OPTION", "i"));
-            return false;
-          }
-          inlineAttlistDecls = true;
-          break;
-        }
-      }
-    }
-    catch (OptionParser.InvalidOptionException e) {
-      error(localizer().message("INVALID_OPTION", opts.getOptionCharString()));
-      usage();
-      return false;
-    }
-    catch (OptionParser.MissingArgumentException e) {
-      error(localizer().message("OPTION_MISSING_ARGUMENT",
-                                opts.getOptionCharString()));
-      usage();
-      return false;
-    }
-    if (inlineAttlistDecls && dir == null) {
-      error(localizer().message("OPTION_DEPENDS", "i", "r"));
-      return false;
-    }
-    args = opts.getRemainingArgs();
     if (args.length == 0) {
-      error(localizer().message("MISSING_ARGUMENT"));
+      error(localizer.message("MISSING_ARGUMENT"));
       usage();
       return false;
     }
     if (args.length > 1) {
-      error(localizer().message("TOO_MANY_ARGUMENTS"));
+      error(localizer.message("TOO_MANY_ARGUMENTS"));
       usage();
       return false;
     }
     String uri = UriOrFile.toUri(args[0]);
     Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
-    if (dir == null) {
-      XmlWriter w = new XmlOutputStreamWriter(System.out, dtd.getEncoding());
-      new SchemaWriter(w).writeDtd(dtd);
-      w.close();
-      return true;
-    }
-    else {
-      NameMapper mapper = new ExtensionMapper(".dtd", ".rng");
-      DirectoryOutputCollection out
-	= new DirectoryOutputCollection(dtd.getUri(), dir, mapper);
-      RelaxNgWriter w = new RelaxNgWriter(out);
-      ErrorMessageHandlerImpl emh = new ErrorMessageHandlerImpl();
-      String initialComment = localizer().message("COMMENT", getVersion());
-      if (initialComment.length() != 0)
-	w.setInitialComment(" " + initialComment + " ");
-      w.setErrorMessageHandler(emh);
-      w.setInlineAttlistDecls(inlineAttlistDecls);
-      w.writeDtd(dtd);
-      return emh.errorCount == 0;
-    }
+    XmlWriter w = new XmlOutputStreamWriter(System.out, dtd.getEncoding());
+    new SchemaWriter(w).writeDtd(dtd);
+    w.close();
+    return true;
   }
 
   private static void usage() {
-    print(localizer().message("USAGE", getVersion()));
-  }
-
-  private static Localizer localizer() {
-    return RelaxNgWriter.localizer;
+    print(localizer.message("USAGE", getVersion()));
   }
 
   private static void error(String str) {
-    print(localizer().message("ERROR", str));
+    print(localizer.message("ERROR", str));
   }
 
   private static void warning(String str) {
-    print(localizer().message("WARNING", str));
+    print(localizer.message("WARNING", str));
   }
   
   private static void print(String str) {
