@@ -622,8 +622,8 @@ section will participate in two validations:</p>
 
 <li>it will be validated independently against the XHTML schema, and</li>
 
-<li>it will be attached to the SOAP section and validated along with
-the SOAP section</li>
+<li>it will be attached to the SOAP section and validated together
+with the SOAP section against the SOAP schema</li>
 
 </ul>
 
