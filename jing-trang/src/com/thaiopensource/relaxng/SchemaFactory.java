@@ -1,5 +1,13 @@
 package com.thaiopensource.relaxng;
 
+import com.thaiopensource.relaxng.impl.CombineSchema;
+import com.thaiopensource.relaxng.impl.IdTypeMap;
+import com.thaiopensource.relaxng.impl.IdTypeMapBuilder;
+import com.thaiopensource.relaxng.impl.IdTypeMapSchema;
+import com.thaiopensource.relaxng.impl.Pattern;
+import com.thaiopensource.relaxng.impl.PatternReader;
+import com.thaiopensource.relaxng.impl.PatternSchema;
+import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
