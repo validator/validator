@@ -2,14 +2,14 @@ default namespace = "http://www.thaiopensource.com/validate/picl"
 
 start = element constraints { inherited, constraints }
 
-constraints = (key|ref|scope|union)+
+constraints = (key|ref|context|union)+
 
-scope = element scope { select, inherited, constraints }
+context = element context { select, inherited, constraints }
 
 key =
   element key {
     attribute allowDuplicates { xsd:boolean }?,
-    attribute name { xsd:NCName }?, # names must be unique in the scope
+    attribute name { xsd:NCName }?, # names must be unique in the context
     select,
     inherited,
     element field {
@@ -25,7 +25,7 @@ key =
 union =
   element union {
     inherited,
-    attribute name { xsd:NCName }?, # names must be unique in the scope
+    attribute name { xsd:NCName }?, # names must be unique in the context
     key+
   }
 
@@ -37,7 +37,7 @@ ref =
   }
 
 refBody =
-    attribute name { xsd:NCName }, # refers to key or union in same scope
+    attribute name { xsd:NCName }, # refers to key or union in same context
     inherited,
     element field { select, inherited, convert?, dflt? }+,
     element ref { refBody }?
