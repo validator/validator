@@ -87,10 +87,7 @@ class Decl {
       return null;
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
-      if (entity.referenceLevel == Entity.PARAM_LEVEL)
-	entity.modelGroup = Param.paramsToModelGroup(entity.parsed);
-      else
-	entity.modelGroup = Particle.particlesToModelGroup(entity.parsed);
+      entity.modelGroup = entity.toModelGroup();
       return new ModelGroupDef(name, entity.modelGroup);
     case Entity.SEMANTIC_ATTRIBUTE_GROUP:
       entity.attributeGroup = 

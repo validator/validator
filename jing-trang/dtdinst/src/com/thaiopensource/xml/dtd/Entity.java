@@ -39,6 +39,8 @@ class Entity {
   static final int GROUP_CONTAINS_SEQ = 02;
   static final int GROUP_CONTAINS_PCDATA = 04;
   static final int GROUP_CONTAINS_GROUP = 010;
+  static final int GROUP_CONTAINS_ELEMENT_NAME = 020;
+  static final int GROUP_CONTAINS_NMTOKEN = 040;
 
   int groupFlags = 0;
 
@@ -217,8 +219,11 @@ class Entity {
   }
 
   private void analyzeSemanticParticle() {
-    // XXX deal with empty particles
     int n = parsed.size();
+    if (n == 0) {
+      analyzeEmptySemanticParticle();
+      return;
+    }
     for (int i = 0; i < n; i++) {
       switch (((Particle)parsed.elementAt(i)).type) {
       case Particle.GROUP:
@@ -231,8 +236,38 @@ class Entity {
 	return;
       }
     }
-    if (n > 0)
-      System.err.println("Warning: could not understand entity: " + name);
+    System.err.println("Warning: could not understand entity: " + name);
+  }
+
+  static final int GROUP_MODEL_GROUP_FLAGS 
+    = GROUP_CONTAINS_PCDATA|GROUP_CONTAINS_GROUP|GROUP_CONTAINS_ELEMENT_NAME;
+
+  private void analyzeEmptySemanticParticle() {
+    if ((groupFlags & GROUP_MODEL_GROUP_FLAGS) == 0) {
+      semantic = SEMANTIC_ENUM_GROUP;
+      return;
+    }
+    if ((groupFlags & GROUP_CONTAINS_NMTOKEN) == 0) {
+      switch (groupFlags & (GROUP_CONTAINS_SEQ|GROUP_CONTAINS_OR)) {
+      case GROUP_CONTAINS_SEQ:
+      case GROUP_CONTAINS_OR:
+	semantic = SEMANTIC_MODEL_GROUP;
+	return;
+      }
+    }
+    System.err.println("Warning: could not understand entity: " + name);
+  }
+
+  ModelGroup toModelGroup() {
+    if (referenceLevel == PARAM_LEVEL)
+      return Param.paramsToModelGroup(parsed);
+    if (parsed.size() == 0) {
+      if ((groupFlags & GROUP_CONTAINS_SEQ) != 0)
+	return new Sequence(new ModelGroup[0]);
+      else
+	return new Choice(new ModelGroup[0]);
+    }
+    return Particle.particlesToModelGroup(parsed);
   }
 }
 

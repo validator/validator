@@ -75,15 +75,9 @@ class Particle {
   }
 
   static ModelGroup particlesToModelGroup(Vector v) {
+    Vector mgs = new Vector();
     int len = v.size();
     boolean isSequence = false;
-    for (int i = 0; i < len; i++) {
-      if (((Particle)v.elementAt(i)).type == CONNECT_SEQ) {
-	isSequence = true;
-	break;
-      }
-    }
-    ModelGroup[] mgs = new ModelGroup[0];
     for(int i = 0; i < len; i++) {
       ModelGroup mg = null;
       Particle p = (Particle)v.elementAt(i);
@@ -92,6 +86,9 @@ class Particle {
 	if (p.entity.semantic == Entity.SEMANTIC_MODEL_GROUP) {
 	  mg = new ModelGroupRef(p.entity.name,
 				 p.entity.modelGroup);
+	  if (p.entity.parsed.size() == 0
+	      && ((p.entity.groupFlags & Entity.GROUP_CONTAINS_SEQ) != 0))
+	    isSequence = true;
 	  int level = 0;
 	  for (;;) {
 	    p = (Particle)v.elementAt(++i);
@@ -108,22 +105,24 @@ class Particle {
       case PCDATA:
 	mg = p.createModelGroup();
 	break;
+      case CONNECT_SEQ:
+	isSequence = true;
+	break;
       }
-      if (mg != null) {
-	ModelGroup[] tem = mgs;
-	mgs = new ModelGroup[mgs.length + 1];
-	System.arraycopy(tem, 0, mgs, 0, tem.length);
-	mgs[mgs.length - 1] = mg;
-      }
+      if (mg != null)
+	mgs.addElement(mg);
     }
-    if (mgs.length == 0)
+    if (mgs.size() == 0)
       return null;
-    else if (mgs.length == 1)
-      return mgs[0];
-    else if (isSequence)
-      return new Sequence(mgs);
+    if (mgs.size() == 1)
+      return (ModelGroup)mgs.elementAt(0);
+    ModelGroup[] tem = new ModelGroup[mgs.size()];
+    for (int i = 0; i < tem.length; i++)
+      tem[i] = (ModelGroup)mgs.elementAt(i);
+    if (isSequence)
+      return new Sequence(tem);
     else
-      return new Choice(mgs);
+      return new Choice(tem);
   }
 
   static EnumGroup particlesToEnumGroup(Vector v) {

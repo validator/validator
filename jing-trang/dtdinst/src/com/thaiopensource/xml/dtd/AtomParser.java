@@ -241,6 +241,12 @@ class AtomParser {
       case Particle.PCDATA:
 	flags |= Entity.GROUP_CONTAINS_PCDATA;
 	break;
+      case Particle.ELEMENT_NAME:
+	flags |= Entity.GROUP_CONTAINS_ELEMENT_NAME;
+	break;
+      case Particle.NMTOKEN:
+	flags |= Entity.GROUP_CONTAINS_NMTOKEN;
+	break;
       }
     }
     for (int i = 0; i < n; i++) {
