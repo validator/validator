@@ -1,73 +1,83 @@
 <project name="dtdinst" default="test" basedir=".">
 
+<property name="build.dir" value="build"/>
+<property name="dist.dir" value="build/dist"/>
+<property name="jing.src" value="../src"/>
+<property name="jar.dir" value="../build"/>
+
 <target name="init">
-  <mkdir dir="build"/>
+  <mkdir dir="${build.dir}"/>
+  <mkdir dir="${dist.dir}"/>
   <property file="src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
 </target>
 
 <target name="compile" depends="init">
-  <mkdir dir="build/classes"/>
-  <javac srcdir="src" destdir="build/classes"/>
+  <mkdir dir="${build.dir}/classes"/>
+  <javac srcdir="src:${jing.src}" destdir="${build.dir}/classes"
+         includes="com/thaiopensource/xml/**,
+                   com/thaiopensource/util/UriOrFile.java,
+                   com/thaiopensource/util/Localizer.java,
+                   com/thaiopensource/util/Utf16.java"
+         excludes="com/thaiopensource/xml/util/Naming.java,
+                   com/thaiopensource/xml/util/WellKnownNamespaces.java"
+  />
 </target>
 
 <target name="jar" depends="compile">
-  <jar jarfile="build/dtdinst.jar" manifest="manifest.txt">
-    <fileset dir="build/classes"/>
+  <jar jarfile="${dist.dir}/dtdinst.jar" manifest="manifest.txt">
+    <fileset dir="${build.dir}/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
 </target>
 
 <target name="test" depends="jar">
-  <mkdir dir="build/test"/>
-  <java classname="com.thaiopensource.xml.dtd.test.Driver" >
+  <mkdir dir="${build.dir}/test"/>
+  <java classname="com.thaiopensource.xml.dtd.test.Driver" fork="true" failonerror="yes">
     <arg value="test"/>
-    <arg value="build/test"/>
+    <arg value="${build.dir}/test"/>
     <classpath>
-      <pathelement location="build/dtdinst.jar"/>
+      <pathelement location="${dist.dir}/dtdinst.jar"/>
     </classpath>
   </java>
 </target>
 
 <target name="translate-schema" depends="init">
-  <java classname="com.thaiopensource.relaxng.output.Driver"
+  <java classname="com.thaiopensource.relaxng.translate.Driver"
         fork="true"
-        classpath="../jing/build/trang.jar;../jing/build/jing.jar;../jing/lib/crimson.jar">
+        failonerror="yes"
+        classpath="${jar.dir}/trang.jar;${jar.dir}/jing.jar">
     <arg value="dtdinst.rnc"/>
-    <arg value="dtdinst.rng"/>
+    <arg value="${dist.dir}/dtdinst.rng"/>
   </java>
 </target>
 
-<target name="example" depends="jar">
-  <mkdir dir="build/example"/>
-  <copy todir="build/example">
+<target name="example">
+  <mkdir dir="${dist.dir}/example"/>
+  <copy todir="${dist.dir}/example">
     <fileset dir="example" includes="*.dtd"/>
     <mapper type="glob" from="*.dtd" to="*.dtd.txt"/>
   </copy>
-  <copy todir="build/example">
+  <copy todir="${dist.dir}/example">
     <fileset dir="example" includes="*.ent,*.xml"/>
   </copy>
 </target>
 
-<target name="dist" depends="jar,example,translate-schema">
-  <zip zipfile="build/dtdinst-src.zip">
+<target name="dist" depends="jar,example,translate-schema,test">
+  <zip zipfile="${dist.dir}/dtdinst-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
-  <copy todir="build">
+  <copy todir="${dist.dir}">
     <fileset dir="." includes="index.html,copying.txt,dtdinst2rng.xsl"/>
   </copy>
-  <copy file="dtdinst.rnc" tofile="build/dtdinst.rnc.txt"/>
-  <copy file="teixml.dtd" tofile="build/teixml.dtd.txt"/>
-  <replace file="build/index.html"
+  <copy file="dtdinst.rnc" tofile="${dist.dir}/dtdinst.rnc.txt"/>
+  <copy file="teixml.dtd" tofile="${dist.dir}/teixml.dtd.txt"/>
+  <replace file="${dist.dir}/index.html"
            token="@VERSION@"
            value="${version}"/>
-  <tar tarfile="build/dtdinst.tar"
-       basedir="build"
-       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rnc.txt,dtdinst.rng,dtdinst2rng.xsl,teixml.dtd.txt,example/*"/>
-  <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
 </target>
 
 <target name="clean">
-  <delete dir="build"/>
+  <delete dir="${build.dir}"/>
 </target>
 
 </project>
