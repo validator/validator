@@ -53,24 +53,6 @@ can be the empty string to specify the absent namespace URI.</p>
 <p>MNS has additional features that provide further control over the
 selection of validation subjects and their associated schemas.</p>
 
-<p>Normally, schema languages (including RELAX NG) validate an element
-with respect to a schema, not a set of attributes.  To work around
-this, MNS performs parallel transformations on the set of attributes
-and on the schema.  The set of attributes is transformed by attaching
-the attributes to an element with a particular namespace name and
-namespace URI. The schema identified by a
-<code>validateAttributes</code> element is transformed to match. In
-the case of RELAX NG, when a <code>validateAttributes</code> element
-specifies a schema of <code><var>s</var></code>, MNS actually uses a
-schema of:</p>
-
-<pre>
-element <var>e</var> { external "<var>s</var>" }
-</pre>
-
-<p>where <code><var>e</var></code> is the name of the element used to
-which the attributes were attached.</p>
-
 <h2>Global attributes</h2>
 
 <p>Attributes can also be validation subjects:</p>
@@ -101,6 +83,23 @@ attributes are validated as a set with respect to their schema, but it
 is <code>validationElement</code> because an element is individually
 validated with respect to its schema.</p>
 
+<p>Normally, schema languages (including RELAX NG) validate an element
+rather than a set of attributes.  To work around this, MNS performs
+parallel transformations on the set of attributes and on the schema.
+The set of attributes is transformed by attaching the attributes to an
+element with a particular namespace name and namespace URI. The schema
+identified by a <code>validateAttributes</code> element is transformed
+to match. In the case of RELAX NG, when a
+<code>validateAttributes</code> element specifies a schema of
+<code><var>s</var></code>, MNS actually uses a schema of:</p>
+
+<pre>
+element <var>e</var> { external "<var>s</var>" }
+</pre>
+
+<p>where <code><var>e</var></code> is the name of the element to which
+the attributes were attached.</p>
+
 <h2>Strict processing</h2>
 
 <p>The <code>rules</code> element may include an empty
@@ -119,8 +118,9 @@ element rules {
 </pre>
 
 <p>This makes processing <em>strict</em> instead of <em>lax</em>.
-With strict processing, it is an error if there is no schema specified
-for the namespace of a potential validation subject.</p>
+With strict processing, it is an error if there is no applicable
+<code>validateElement</code> or <code>validateAttributes</code>
+element for a potential validation subject.</p>
 
 <p class="note">Should strictness be specified separately for element
 and attribute potential validation subjects?</p>
