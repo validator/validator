@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.4 2001-05-24 08:24:26 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.5 2001-05-24 08:30:07 jjc Exp $ -->
 <grammar ns="http://relaxng.org/main/ns/0.1"
          xmlns="http://relaxng.org/main/ns/0.1">
   <start name="pattern">
@@ -157,7 +157,7 @@
       <element name="include">
 	<attribute name="href"/>
         <interleave>
-          <ref name="open"/>
+          <ref name="other"/>
 	  <zeroOrMore>
 	    <ref name="define-element"/>
 	  </zeroOrMore>
