@@ -178,14 +178,39 @@ class DateTimeDatatype extends RegexDatatype implements OrderRelation {
     cal.set(Calendar.DST_OFFSET, 0);
     cal.set(Calendar.ERA, negative ? GregorianCalendar.BC : GregorianCalendar.AD);
     // months in ISO8601 start with 1; months in Java start with 0
-    cal.set(year, month - 1, day, hours, minutes, seconds);
+    month -= 1;
+    cal.set(year, month, day, hours, minutes, seconds);
     cal.set(Calendar.MILLISECOND, milliseconds);
     try {
+      checkDate(cal.isLeapYear(year), month, day); // for GCJ
       return new DateTime(cal.getTime(), leapMilliseconds, hasTimeZone);
     }
     catch (IllegalArgumentException e) {
       return null;
     }
+  }
+
+  static private void checkDate(boolean isLeapYear, int month, int day) {
+    if (month < 0 || month > 11 || day < 1)
+      throw new IllegalArgumentException();
+    int dayMax;
+    switch (month) {
+    // Thirty days have September, April, June and November...
+    case Calendar.SEPTEMBER:
+    case Calendar.APRIL:
+    case Calendar.JUNE:
+    case Calendar.NOVEMBER:
+      dayMax = 30;
+      break;
+    case Calendar.FEBRUARY:
+      dayMax = isLeapYear ? 29 : 28;
+      break;
+    default:
+      dayMax = 31;
+      break;
+    }
+    if (day > dayMax)
+      throw new IllegalArgumentException();
   }
 
   static private int parseTimeZone(String str, int i) {
