@@ -1,0 +1,6 @@
+<!ENTITY % SGML "IGNORE">
+<![%SGML;[
+<!ENTITY % RR "- -">
+]]>
+<!ENTITY % RR "">
+<!ELEMENT doc %RR; (#PCDATA)>
