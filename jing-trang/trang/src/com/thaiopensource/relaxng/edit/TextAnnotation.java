@@ -14,4 +14,8 @@ public class TextAnnotation extends AnnotationChild {
   public void setValue(String value) {
     this.value = value;
   }
+
+  public Object accept(AnnotationChildVisitor visitor) {
+    return visitor.visitText(this);
+  }
 }

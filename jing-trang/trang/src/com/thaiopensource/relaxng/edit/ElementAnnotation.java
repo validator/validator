@@ -58,4 +58,18 @@ public class ElementAnnotation extends AnnotationChild {
   public void setContext(Context context) {
     this.context = context;
   }
+
+  public Object accept(AnnotationChildVisitor visitor) {
+    return visitor.visitElement(this);
+  }
+
+  public void attributesAccept(AttributeAnnotationVisitor visitor) {
+    for (int i = 0, len = attributes.size();  i < len; i++)
+      ((AttributeAnnotation)attributes.get(i)).accept(visitor);
+  }
+
+  public void childrenAccept(AnnotationChildVisitor visitor) {
+    for (int i = 0, len = children.size();  i < len; i++)
+      ((AnnotationChild)children.get(i)).accept(visitor);
+  }
 }

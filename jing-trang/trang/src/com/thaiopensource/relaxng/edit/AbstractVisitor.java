@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.edit;
 
-public class AbstractVisitor implements ComponentVisitor, PatternVisitor, NameClassVisitor {
+public class AbstractVisitor implements ComponentVisitor, PatternVisitor, NameClassVisitor,
+        AnnotationChildVisitor, AttributeAnnotationVisitor {
   public Object visitDefine(DefineComponent c) {
     return visitComponent(c);
   }
@@ -126,6 +127,26 @@ public class AbstractVisitor implements ComponentVisitor, PatternVisitor, NameCl
   }
 
   public Object visitNameClass(NameClass nc) {
+    return null;
+  }
+
+  public Object visitText(TextAnnotation ta) {
+    return visitAnnotationChild(ta);
+  }
+
+  public Object visitComment(Comment c) {
+    return visitAnnotationChild(c);
+  }
+
+  public Object visitElement(ElementAnnotation ea) {
+    return visitAnnotationChild(ea);
+  }
+
+  public Object visitAnnotationChild(AnnotationChild ac) {
+    return null;
+  }
+
+  public Object visitAttribute(AttributeAnnotation a) {
     return null;
   }
 }

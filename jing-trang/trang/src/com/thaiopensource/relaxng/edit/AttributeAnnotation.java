@@ -46,4 +46,8 @@ public class AttributeAnnotation extends SourceObject {
   public void setValue(String value) {
     this.value = value;
   }
+
+  public Object accept(AttributeAnnotationVisitor visitor) {
+    return visitor.visitAttribute(this);
+  }
 }

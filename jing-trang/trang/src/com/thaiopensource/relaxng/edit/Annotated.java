@@ -49,4 +49,24 @@ public abstract class Annotated extends SourceObject {
     }
     return null;
   }
+
+  public void attributeAnnotationsAccept(AttributeAnnotationVisitor visitor) {
+    for (int i = 0, len = attributeAnnotations.size();  i < len; i++)
+      ((AttributeAnnotation)attributeAnnotations.get(i)).accept(visitor);
+  }
+
+  public void childElementAnnotationsAccept(AnnotationChildVisitor visitor) {
+    for (int i = 0, len = childElementAnnotations.size();  i < len; i++)
+      ((AnnotationChild)childElementAnnotations.get(i)).accept(visitor);
+  }
+
+  public void followingElementAnnotationsAccept(AnnotationChildVisitor visitor) {
+    for (int i = 0, len = followingElementAnnotations.size();  i < len; i++)
+      ((AnnotationChild)followingElementAnnotations.get(i)).accept(visitor);
+  }
+
+  public void leadingCommentsAccept(AnnotationChildVisitor visitor) {
+    for (int i = 0, len = leadingComments.size();  i < len; i++)
+      ((Comment)leadingComments.get(i)).accept(visitor);
+  }
 }

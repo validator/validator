@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.edit;
 
-public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentVisitor {
+public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentVisitor,
+        AnnotationChildVisitor, AttributeAnnotationVisitor {
   public final Object visitElement(ElementPattern p) {
     nullVisitElement(p);
     return null;
@@ -17,6 +18,10 @@ public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentV
   }
 
   public void nullVisitAnnotated(Annotated p) {
+    p.leadingCommentsAccept(this);
+    p.attributeAnnotationsAccept(this);
+    p.childElementAnnotationsAccept(this);
+    p.followingElementAnnotationsAccept(this);
   }
 
   public final Object visitChoice(ChoiceNameClass nc) {
@@ -270,5 +275,45 @@ public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentV
 
   public void nullVisitNotAllowed(NotAllowedPattern p) {
     nullVisitPattern(p);
+  }
+
+  public final Object visitText(TextAnnotation ta) {
+    nullVisitText(ta);
+    return null;
+  }
+
+  public void nullVisitText(TextAnnotation ta) {
+    nullVisitAnnotationChild(ta);
+  }
+
+  public final Object visitComment(Comment c) {
+    nullVisitComment(c);
+    return null;
+  }
+
+  public void nullVisitComment(Comment c) {
+    nullVisitAnnotationChild(c);
+  }
+
+  public final Object visitElement(ElementAnnotation ea) {
+    nullVisitElement(ea);
+    return null;
+  }
+
+  public void nullVisitElement(ElementAnnotation ea) {
+    nullVisitAnnotationChild(ea);
+    ea.attributesAccept(this);
+    ea.childrenAccept(this);
+  }
+
+  public void nullVisitAnnotationChild(AnnotationChild ac) {
+  }
+
+  public final Object visitAttribute(AttributeAnnotation a) {
+    nullVisitAttribute(a);
+    return null;
+  }
+
+  public void nullVisitAttribute(AttributeAnnotation a) {
   }
 }
