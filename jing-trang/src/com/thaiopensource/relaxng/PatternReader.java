@@ -595,6 +595,8 @@ public class PatternReader implements DatatypeContext {
 	return new StartState();
       if (localName.equals("include"))
 	return new IncludeState();
+      if (localName.equals("div"))
+	return new MergeGrammarState();
       error("expected_define", localName);
       return null;
     }
