@@ -4,7 +4,7 @@
 	xmlns:sch="http://www.ascc.net/xml/schematron"
         xmlns:loc="http://www.thaiopensource.com/ns/location"
 	xmlns:saxon="http://icl.com/saxon"
-        xmlns:xj="http://xml.apache.org/xslt/java">
+        xmlns:xj="http://xml.apache.org/xalan/java">
 
 <!--
 TODO:
