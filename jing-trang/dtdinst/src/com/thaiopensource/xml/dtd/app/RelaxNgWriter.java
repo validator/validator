@@ -24,9 +24,9 @@ public class RelaxNgWriter {
   private String defaultNamespace = null;
   private String annotationPrefix = null;
 
-  Output groupOutput = new GroupOutput();
-  Output choiceOutput = new ChoiceOutput();
-  Output explicitOutput = new Output();
+  private Output groupOutput = new GroupOutput();
+  private Output choiceOutput = new ChoiceOutput();
+  private Output explicitOutput = new Output();
 
   // These variables control the names use for definitions.
   private String colonReplacement = null;
@@ -34,32 +34,32 @@ public class RelaxNgWriter {
   private String attlistDeclPattern;
   private String anyName;
 
-  static final int ELEMENT_DECL = 01;
-  static final int ATTLIST_DECL = 02;
-  static final int ELEMENT_REF = 04;
+  private static final int ELEMENT_DECL = 01;
+  private static final int ATTLIST_DECL = 02;
+  private static final int ELEMENT_REF = 04;
 
-  static final String SEPARATORS = ".-_";
+  private static final String SEPARATORS = ".-_";
 
-  static final String COMPATIBILITY_ANNOTATIONS_URI
+  private static final String COMPATIBILITY_ANNOTATIONS_URI
     = "http://relaxng.org/ns/compatibility/annotations/0.9";
 
   // # is the category; % is the name in the category
 
-  static final String DEFAULT_PATTERN = "#.%";
+  private static final String DEFAULT_PATTERN = "#.%";
 
-  String[] ELEMENT_KEYWORDS = {
+  private String[] ELEMENT_KEYWORDS = {
     "element", "elem", "e"
   };
 
-  String[] ATTLIST_KEYWORDS = {
+  private String[] ATTLIST_KEYWORDS = {
     "attlist", "attributes", "attribs", "atts", "a"
   };
 
-  String[] ANY_KEYWORDS = {
+  private String[] ANY_KEYWORDS = {
     "any", "ANY", "anyElement"
   };
 
-  static abstract class VisitorBase implements TopLevelVisitor {
+  private static abstract class VisitorBase implements TopLevelVisitor {
     public void processingInstruction(String target, String value) throws Exception { }
     public void comment(String value) throws Exception { }
     public void flagDef(String name, Flag flag) throws Exception { }
@@ -87,8 +87,8 @@ public class RelaxNgWriter {
   }
 
 
-  class Analyzer extends VisitorBase implements ModelGroupVisitor,
-                                                AttributeGroupVisitor {
+  private class Analyzer extends VisitorBase implements ModelGroupVisitor,
+							AttributeGroupVisitor {
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
       throws Exception {
       noteElementName(nameSpec.getValue(), ELEMENT_DECL);
@@ -169,10 +169,10 @@ public class RelaxNgWriter {
   }
 
 
-  class Output extends VisitorBase implements ModelGroupVisitor,
-					      AttributeGroupVisitor,
-                                              DatatypeVisitor,
-					      EnumGroupVisitor {
+  private class Output extends VisitorBase implements ModelGroupVisitor,
+						      AttributeGroupVisitor,
+						      DatatypeVisitor,
+						      EnumGroupVisitor {
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
       throws Exception {
       w.startElement("define");
@@ -329,7 +329,16 @@ public class RelaxNgWriter {
       String dv = attributeDefault.getDefaultValue();
       if (dv != null)
 	w.attribute(annotationPrefix + ":defaultValue", dv);
-      if (datatype.getType() != Datatype.CDATA)
+      String fv = attributeDefault.getFixedValue();
+      if (fv != null) {
+	w.startElement("value");
+	String typeName = valueType(datatype);
+	if (typeName != null)
+	  w.attribute("type", typeName);
+	w.characters(fv);
+	w.endElement();
+      }
+      else if (datatype.getType() != Datatype.CDATA)
 	datatype.accept(explicitOutput);
       w.endElement();
       if (!attributeDefault.isRequired())
@@ -343,7 +352,7 @@ public class RelaxNgWriter {
 
     public void cdataDatatype() throws IOException {
       w.startElement("data");
-      w.attribute("name", "string");
+      w.attribute("type", "string");
       w.endElement();
     }
 
@@ -418,7 +427,7 @@ public class RelaxNgWriter {
 
   }
 
-  class GroupOutput extends Output {
+  private class GroupOutput extends Output {
     public void sequence(ModelGroup[] members) throws Exception {
       if (members.length == 0)
 	super.sequence(members);
@@ -429,7 +438,7 @@ public class RelaxNgWriter {
     }
   }
 
-  class ChoiceOutput extends Output {
+  private class ChoiceOutput extends Output {
     public void choice(ModelGroup[] members) throws Exception {
       if (members.length == 0)
 	super.choice(members);
@@ -475,14 +484,14 @@ public class RelaxNgWriter {
     w.close();
   }
 
-  void chooseNames() {
+  private void chooseNames() {
     chooseAny();
     chooseColonReplacement();
     chooseDeclPatterns();
     chooseAnnotationPrefix();
   }
 
-  void chooseAny() {
+  private void chooseAny() {
     if (!hadAny)
       return;
     for (int n = 0;; n++) {
@@ -496,7 +505,7 @@ public class RelaxNgWriter {
     }
   }
 
-  void chooseAnnotationPrefix() {
+  private void chooseAnnotationPrefix() {
     if (!hadDefaultValue)
       return;
     for (int n = 0;; n++) {
@@ -506,7 +515,7 @@ public class RelaxNgWriter {
     }
   }
 
-  void chooseColonReplacement() {
+  private void chooseColonReplacement() {
     if (colonReplacementOk())
       return;
     for (int n = 1;; n++) {
@@ -518,7 +527,7 @@ public class RelaxNgWriter {
     }
   }
   
-  boolean colonReplacementOk() {
+  private boolean colonReplacementOk() {
     Hashtable table = new Hashtable();
     for (Enumeration e = elementNameTable.keys();
 	 e.hasMoreElements();) {
@@ -530,7 +539,7 @@ public class RelaxNgWriter {
     return true;
   }
 
-  void chooseDeclPatterns() {
+  private void chooseDeclPatterns() {
     // XXX Try to match length and case of best prefix
     String pattern = namingPattern();
     if (patternOk("%"))
@@ -540,7 +549,7 @@ public class RelaxNgWriter {
     attlistDeclPattern = choosePattern(pattern, ATTLIST_KEYWORDS);
   }
 
-  String choosePattern(String metaPattern, String[] keywords) {
+  private String choosePattern(String metaPattern, String[] keywords) {
     for (;;) {
       for (int i = 0; i < keywords.length; i++) {
 	String pattern = substitute(metaPattern, '#', keywords[i]);
@@ -555,7 +564,7 @@ public class RelaxNgWriter {
     }
   }
 
-  String namingPattern() {
+  private String namingPattern() {
     Hashtable patternTable = new Hashtable();
     for (Enumeration e = defTable.keys();
 	 e.hasMoreElements();) {
@@ -589,7 +598,7 @@ public class RelaxNgWriter {
       return "#" + bestPattern.substring(bestPattern.length() - 2);
   }
 
-  static void inc(Hashtable table, String str) {
+  private static void inc(Hashtable table, String str) {
     Integer n = (Integer)table.get(str);
     if (n == null)
       table.put(str, new Integer(1));
@@ -597,7 +606,7 @@ public class RelaxNgWriter {
       table.put(str, new Integer(n.intValue() + 1));
   }
 
-  boolean patternOk(String pattern) {
+  private boolean patternOk(String pattern) {
     for (Enumeration e = elementNameTable.keys();
 	 e.hasMoreElements();) {
       String name = mungeQName((String)e.nextElement());
@@ -607,11 +616,11 @@ public class RelaxNgWriter {
     return true;
   }
 
-  void noteDef(String name) {
+  private void noteDef(String name) {
     defTable.put(name, name);
   }
 
-  void noteElementName(String name, int flags) {
+  private void noteElementName(String name, int flags) {
     Integer n = (Integer)elementNameTable.get(name);
     if (n != null) {
       flags |= n.intValue();
@@ -623,7 +632,7 @@ public class RelaxNgWriter {
     elementNameTable.put(name, new Integer(flags));
   }
 
-  void noteAttribute(String name, String defaultValue) {
+  private void noteAttribute(String name, String defaultValue) {
     if (name.equals("xmlns")) {
       if (defaultValue != null) {
 	if (defaultNamespace != null
@@ -661,22 +670,22 @@ public class RelaxNgWriter {
       prefixTable.put(prefix, "");
   }
 
-  int nameFlags(String name) {
+  private int nameFlags(String name) {
     Integer n = (Integer)elementNameTable.get(name);
     if (n == null)
       return 0;
     return n.intValue();
   }
 
-  String elementDeclName(String name) {
+  private String elementDeclName(String name) {
     return substitute(elementDeclPattern, '%', mungeQName(name));
   }
 
-  String attlistDeclName(String name) {
+  private String attlistDeclName(String name) {
     return substitute(attlistDeclPattern, '%', mungeQName(name));
   }
 
-  String mungeQName(String name) {
+  private String mungeQName(String name) {
     if (colonReplacement == null) {
       int i = name.indexOf(':');
       if (i < 0)
@@ -686,7 +695,7 @@ public class RelaxNgWriter {
     return substitute(name, ':', colonReplacement);
   }
 
-  static String repeatChar(char c, int n) {
+  private static String repeatChar(char c, int n) {
     char[] buf = new char[n];
     for (int i = 0; i < n; i++)
       buf[i] = c;
@@ -695,7 +704,7 @@ public class RelaxNgWriter {
 
   /* Replace the first occurrence of ch in pattern by value. */
 
-  static String substitute(String pattern, char ch, String value) {
+  private static String substitute(String pattern, char ch, String value) {
     int i = pattern.indexOf(ch);
     if (i < 0)
       return pattern;
@@ -706,7 +715,7 @@ public class RelaxNgWriter {
     return buf.toString();
   }
 
-  void outputNamespaces() throws IOException {
+  private void outputNamespaces() throws IOException {
     for (Enumeration e = prefixTable.keys();
 	 e.hasMoreElements();) {
       String prefix = (String)e.nextElement();
@@ -720,7 +729,7 @@ public class RelaxNgWriter {
       w.attribute("ns", defaultNamespace);
   }
 
-  void outputStart() throws IOException {
+  private void outputStart() throws IOException {
     w.startElement("start");
     w.startElement("choice");
     // Use the defined but unreferenced elements.
@@ -756,7 +765,7 @@ public class RelaxNgWriter {
   }
 
   
-  void outputUndefinedElements() throws IOException {
+  private void outputUndefinedElements() throws IOException {
     for (Enumeration e = elementNameTable.keys();
 	 e.hasMoreElements();) {
       String name = (String)e.nextElement();
@@ -772,13 +781,13 @@ public class RelaxNgWriter {
     }
   }
 
-  void ref(String name) throws IOException {
+  private void ref(String name) throws IOException {
     w.startElement("ref");
     w.attribute("name", name);
     w.endElement();
   }
 
-  void startGrammar() throws IOException {
+  private void startGrammar() throws IOException {
     w.startElement("grammar");
     w.attribute("datatypeLibrary",
 		"http://www.w3.org/2001/XMLSchema-datatypes");
@@ -790,23 +799,23 @@ public class RelaxNgWriter {
     outputNamespaces();
   }
   
-  void endGrammar() throws IOException {
+  private void endGrammar() throws IOException {
     w.endElement();
   }
 
-  void error(String key) {
+  private void error(String key) {
     reportError(localizer.message(key));
   }
 
-  void error(String key, String arg) {
+  private void error(String key, String arg) {
     reportError(localizer.message(key, arg));
   }
 
-  void warning(String key) {
+  private void warning(String key) {
     reportWarning(localizer.message(key));
   }
 
-  void warning(String key, String arg) {
+  private void warning(String key, String arg) {
     reportWarning(localizer.message(key, arg));
   }
 
@@ -821,5 +830,16 @@ public class RelaxNgWriter {
   private void report(ErrorMessage em) {
     if (errorMessageHandler != null)
       errorMessageHandler.message(em);
+  }
+
+  private static String valueType(Datatype datatype) {
+    datatype = datatype.deref();
+    switch (datatype.getType()) {
+    case Datatype.CDATA:
+      return "string";
+    case Datatype.TOKENIZED:
+      return ((TokenizedDatatype)datatype).getTypeName();
+    }
+    return null;
   }
 }
