@@ -17,6 +17,9 @@ class Entity {
   final String name;
   Entity(String name) { this.name = name; }
   char[] text;
+  String systemId;
+  String publicId;
+  String baseUri;
   // Which parts of text came from references?
   Reference[] references;
   boolean open;
@@ -44,6 +47,7 @@ class Entity {
   static final int SEMANTIC_ATTRIBUTE_GROUP = 2;
   static final int SEMANTIC_ENUM_GROUP = 3;
   static final int SEMANTIC_DATATYPE = 4;
+  static final int SEMANTIC_FLAG = 5;
 
   int semantic = SEMANTIC_NONE;
   ModelGroup modelGroup;
@@ -58,6 +62,7 @@ class Entity {
   void setParsed(int level, Vector v, int start, int end) {
     if (level == referenceLevel) {
       if (!sliceEqual(parsed, v, start, end)) {
+	// XXX give a warning
 	parsed = null;
 	referenceLevel = INCONSISTENT_LEVEL;
       }
@@ -68,6 +73,7 @@ class Entity {
       referenceLevel = level;
     }
     else if (referenceLevel > 0) {
+      // XXX give a warning
       parsed = null;
       referenceLevel = INCONSISTENT_LEVEL;
     }
@@ -158,20 +164,21 @@ class Entity {
       semantic = SEMANTIC_ATTRIBUTE_GROUP;
     else if (isDatatype())
       semantic = SEMANTIC_DATATYPE;
+    else if (isFlag())
+      semantic = SEMANTIC_FLAG;
   }
 
   private boolean isAttributeGroup() {
     ParamStream ps = new ParamStream(parsed);
     if (!ps.advance())
       return false;
-    if (ps.type == Param.EMPTY_ATTRIBUTE_GROUP)
-      return true;
     do {
-      if (ps.type != Param.ATTRIBUTE_NAME
-	  || !ps.advance()
-	  || (ps.type == Param.ATTRIBUTE_TYPE_NOTATION && !ps.advance())
-	  || !ps.advance()
-	  || (ps.type == Param.FIXED && !ps.advance()))
+      if (ps.type != Param.EMPTY_ATTRIBUTE_GROUP
+	  && (ps.type != Param.ATTRIBUTE_NAME
+	      || !ps.advance()
+	      || (ps.type == Param.ATTRIBUTE_TYPE_NOTATION && !ps.advance())
+	      || !ps.advance()
+	      || (ps.type == Param.FIXED && !ps.advance())))
 	return false;
     } while (ps.advance());
     return true;
@@ -184,6 +191,14 @@ class Entity {
 		|| ps.type == Param.ATTRIBUTE_VALUE_GROUP
 		|| (ps.type == Param.ATTRIBUTE_TYPE_NOTATION
 		    && ps.advance()))
+	    && !ps.advance());
+  }
+
+  private boolean isFlag() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance()
+	    && (ps.type == Param.INCLUDE
+		|| ps.type == Param.IGNORE)
 	    && !ps.advance());
   }
 
