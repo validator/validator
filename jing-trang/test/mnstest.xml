@@ -180,4 +180,287 @@
 </rules>
 </incorrect>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://www.example.com/a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<resource name="b.rng">
+<attribute name="b:b" xmlns:b="http://www.example.com/b" xmlns="http://relaxng.org/ns/structure/1.0">
+  <text/>
+</attribute>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://www.example.com/a" schema="a.rng" prune="true"/>
+  <validateAttributes ns="http://www.example.com/b" schema="b.rng"/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a"/>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b:b xmlns:b="http://www.example.com/b" b:a="whatever"/>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="" xmlns:b="http://www.example.com/b" b:a="whatever"/>
+</a>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="" xmlns:b="http://www.example.com/b" b:b="whatever"/>
+</a>
+</valid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="">
+    <c xmlns:b="http://www.example.com/b" b:b="whatever"/>
+  </b>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="">
+    <c xmlns:b="http://www.example.com/b" b:c="whatever"/>
+  </b>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="eg:a" xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:eg="http://www.example.com">
+  <element name="b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://www.example.com" schema="a.rng">
+    <cover ns=""/>
+  </validateElement>
+</rules>
+</correct>
+<valid>
+<eg:a xmlns:eg="http://www.example.com">
+  <b/>
+</eg:a>
+</valid>
+<valid>
+<a>
+<eg:a xmlns:eg="http://www.example.com">
+  <b/>
+</eg:a>
+</a>
+</valid>
+<invalid>
+<eg:a xmlns:eg="http://www.example.com"/>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="http://www.example.com/a">
+  <element name="b" ns="http://www.example.com/b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://www.example.com/a" schema="a.rng">
+    <cover ns="http://www.example.com/b"/>
+  </validateElement>
+  <strict/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<invalid>
+<a>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"><c/></b>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b" att="val"/>
+</a>
+</invalid>
+<invalid>
+<a xmlns="http://www.example.com/a" att="val">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="http://www.example.com/a">
+  <element name="b" ns="http://www.example.com/b">
+    <empty/>
+  </element>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://www.example.com/a" schema="a.rng" prune="true">
+    <cover ns="http://www.example.com/b"/>
+  </validateElement>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b"/>
+</a>
+  </b>
+</a>
+</invalid>
+<valid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+    <c xmlns="">
+      <a xmlns="http://www.example.com/a">
+	<b xmlns="http://www.example.com/b"/>
+      </a>
+    </c>
+  </b>
+</a>
+</valid>
+<invalid>
+<a xmlns="http://www.example.com/a">
+  <b xmlns="http://www.example.com/b">
+    <c xmlns="">
+      <a xmlns="http://www.example.com/a">
+	<b xmlns="http://www.example.com/b" att="val"/>
+      </a>
+    </c>
+  </b>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<incorrect>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://example.com" schema="a.rng" mode="a"/>
+</rules>
+</incorrect>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" ns="http://example.com" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
+  <strict modes="#default"/>
+  <lax modes="a"/>
+</rules>
+</correct>
+<valid>
+<a xmlns="http://example.com"/>
+</valid>
+<invalid>
+<b><a xmlns="http://example.com"/></b>
+</invalid>
+<valid>
+<a xmlns="http://example.com"><b xmlns=""/></a>
+</valid>
+<valid>
+<a xmlns="http://example.com">
+  <b xmlns="">
+     <c xmlns="http://example.com"/>
+  </b>
+</a>
+</valid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="http://example.com">
+<start>
+  <element name="a">
+    <ref name="any"/>
+  </element>
+</start>
+<define name="any">
+  <zeroOrMore>
+    <element>
+      <anyName/>
+      <ref name="any"/>
+    </element>
+  </zeroOrMore>
+</define>
+</grammar>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validateElement modes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
+  <strict modes="#default"/>
+  <lax modes="a"/>
+</rules>
+</correct>
+<valid>
+<eg:a xmlns:eg="http://example.com"/>
+</valid>
+<invalid>
+<eg:b xmlns:eg="http://example.com"/>
+</invalid>
+<invalid>
+<a>
+<eg:a xmlns:eg="http://example.com"/>
+</a>
+</invalid>
+<valid>
+<eg:a xmlns:eg="http://example.com">
+  <eg:b/>
+</eg:a>
+</valid>
+<invalid>
+<eg:a xmlns:eg="http://example.com">
+  <local>
+   <eg:b/>
+  </local>
+</eg:a>
+</invalid>
+<valid>
+<eg:a xmlns:eg="http://example.com">
+  <local>
+   <eg:a/>
+  </local>
+</eg:a>
+</valid>
+</testCase>
 </testSuite>
