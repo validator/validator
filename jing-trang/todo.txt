@@ -1,3 +1,5 @@
+Auto-detect compact/XML syntax/MNS.
+
 Compact syntax parser should provide encoding information.
 
 Give a warning for a list containing a single token.
