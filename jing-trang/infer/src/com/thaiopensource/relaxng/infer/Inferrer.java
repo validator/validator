@@ -185,7 +185,7 @@ public class Inferrer {
       }
       if (contentPattern instanceof GroupPattern)
         group.getChildren().addAll(((GroupPattern)contentPattern).getChildren());
-      else
+      else if (!(contentPattern instanceof EmptyPattern))
         group.getChildren().add(contentPattern);
       contentPattern = group;
     }
