@@ -1,9 +1,12 @@
 <doctype>
-  <element name="doc">
+  <element>
+    <name>doc</name>
     <sequence/>
   </element>
-  <attlist name="doc">
-    <attribute name="att" use="optional">
+  <attlist>
+    <name>doc</name>
+    <attribute use="optional">
+      <name>att</name>
       <basic name="CDATA"/>
     </attribute>
   </attlist>

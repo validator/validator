@@ -1,9 +1,9 @@
 package com.thaiopensource.xml.dtd;
 
 public interface TopLevelVisitor {
-  void elementDecl(String name, ModelGroup modelGroup)
+  void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
     throws Exception;
-  void attlistDecl(String name, AttributeGroup attributeGroup)
+  void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
     throws Exception;
   void processingInstruction(String target, String value) throws Exception;
   void comment(String value) throws Exception;
@@ -17,4 +17,5 @@ public interface TopLevelVisitor {
   void ignoredSection(Flag flag, String contents) throws Exception;
   void internalEntityDecl(String name, String value) throws Exception;
   void notationDecl(String name, ExternalId externalId) throws Exception;
+  void nameSpecDef(String name, NameSpec nameSpec) throws Exception;
 }

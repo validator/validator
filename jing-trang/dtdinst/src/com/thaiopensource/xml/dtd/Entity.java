@@ -54,6 +54,7 @@ class Entity {
   static final int SEMANTIC_ENUM_GROUP = 3;
   static final int SEMANTIC_DATATYPE = 4;
   static final int SEMANTIC_FLAG = 5;
+  static final int SEMANTIC_NAME_SPEC = 6;
 
   int semantic = SEMANTIC_NONE;
   ModelGroup modelGroup;
@@ -61,6 +62,7 @@ class Entity {
   EnumGroup enumGroup;
   Datatype datatype;
   Flag flag;
+  NameSpec nameSpec;
 
   Decl decl;
 
@@ -84,20 +86,19 @@ class Entity {
       referenceLevel = level;
       return;
     }
-    if (parsed.size() == 1 && end - start == 1) {
+    if (parsed.size() == end - start) {
       if (level == PARAM_LEVEL && referenceLevel == PARTICLE_LEVEL) {
-	if (paramParticleConsistent((Param)v.elementAt(start),
-				    (Particle)parsed.elementAt(0))) {
+	if (paramsParticlesConsistent(v, start, parsed, 0, end - start)) {
 	  // For element name case, otherwise particle will be
 	  // ambiguous with model group.
 	  referenceLevel = PARAM_LEVEL;
-	  parsed.setElementAt(v.elementAt(start), 0);
+	  parsed = new Vector();
+	  appendSlice(parsed, v, start, end);
 	  return;
 	}
       }
       else if (level == PARTICLE_LEVEL && referenceLevel == PARAM_LEVEL) {
-	if (paramParticleConsistent((Param)parsed.elementAt(0),
-				    (Particle)v.elementAt(start)))
+	if (paramsParticlesConsistent(parsed, 0, v, start, end - start))
 	  return;
       }
     }
@@ -106,9 +107,27 @@ class Entity {
     referenceLevel = INCONSISTENT_LEVEL;
   }
 
+  static boolean paramsParticlesConsistent(Vector params, int i,
+					   Vector particles, int j,
+					   int n) {
+    for (int k = 0; k < n; k++)
+      if (!paramParticleConsistent((Param)params.elementAt(i + k),
+				   (Particle)particles.elementAt(j + k)))
+	return false;
+    return true;
+  }
+
   static boolean paramParticleConsistent(Param param, Particle particle) {
-    if (param.type == Param.MODEL_GROUP && param.group.equals(particle))
-      return true;
+    switch (param.type) {
+    case Param.MODEL_GROUP:
+      return param.group.equals(particle);
+    case Param.ELEMENT_NAME:
+      return particle.type == Particle.ELEMENT_NAME;
+    case Param.REFERENCE:
+      return particle.type == Particle.REFERENCE;
+    case Param.REFERENCE_END:
+      return particle.type == Particle.REFERENCE_END;
+    }
     return false;
   }
 
@@ -228,6 +247,8 @@ class Entity {
       semantic = SEMANTIC_FLAG;
     else if (isModelGroup())
       semantic = SEMANTIC_MODEL_GROUP;
+    else if (isNameSpec())
+      semantic = SEMANTIC_NAME_SPEC;
     else
       System.err.println("Warning: could not understand entity: " + name);
   }
@@ -272,6 +293,14 @@ class Entity {
 	    && (ps.type == Param.MODEL_GROUP
 		|| ps.type == Param.EMPTY
 		|| ps.type == Param.EMPTY)
+	    && !ps.advance());
+  }
+
+  private boolean isNameSpec() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance()
+	    && (ps.type == Param.ELEMENT_NAME
+		|| ps.type == Param.ATTRIBUTE_NAME)
 	    && !ps.advance());
   }
 

@@ -7,7 +7,7 @@ public interface ModelGroupVisitor {
   void zeroOrMore(ModelGroup member) throws Exception;
   void optional(ModelGroup member) throws Exception;
   void modelGroupRef(String name, ModelGroup modelGroup) throws Exception;
-  void elementRef(String name) throws Exception;
+  void elementRef(NameSpec name) throws Exception;
   void pcdata() throws Exception;
   void any() throws Exception;
 }

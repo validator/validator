@@ -1,11 +1,15 @@
 <doctype>
   <modelGroup name="e1">
-    <elementRef name="foo"/>
+    <elementRef>
+      <name>foo</name>
+    </elementRef>
   </modelGroup>
-  <element name="foo">
+  <element>
+    <name>foo</name>
     <modelGroupRef name="e1"/>
   </element>
-  <element name="bar">
+  <element>
+    <name>bar</name>
     <modelGroupRef name="e1"/>
   </element>
 </doctype>

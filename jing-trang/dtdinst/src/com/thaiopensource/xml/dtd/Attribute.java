@@ -1,24 +1,24 @@
 package com.thaiopensource.xml.dtd;
 
 public class Attribute extends AttributeGroupMember {
-  private final String name;
+  private final NameSpec nameSpec;
   private final boolean optional;
   private final Datatype datatype;
   private final String defaultValue;
 
-  public Attribute(String name,
+  public Attribute(NameSpec nameSpec,
 		   boolean optional,
 		   Datatype datatype,
 		   String defaultValue) {
-    this.name = name;
+    this.nameSpec = nameSpec;
     this.optional = optional;
     this.datatype = datatype;
     this.defaultValue = defaultValue;
   }
 
   
-  public String getName() {
-    return name;
+  public NameSpec getNameSpec() {
+    return nameSpec;
   }
 
   public boolean isOptional() {
@@ -34,7 +34,7 @@ public class Attribute extends AttributeGroupMember {
   }
 
   public void accept(AttributeGroupVisitor visitor) throws Exception {
-    visitor.attribute(name, optional, datatype, defaultValue);
+    visitor.attribute(nameSpec, optional, datatype, defaultValue);
   }
 
   public int getType() {

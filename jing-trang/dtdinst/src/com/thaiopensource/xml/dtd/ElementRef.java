@@ -2,22 +2,22 @@ package com.thaiopensource.xml.dtd;
 
 public class ElementRef extends ModelGroup {
   
-  private final String name;
+  private final NameSpec nameSpec;
 
-  public ElementRef(String name) {
-    this.name = name;
+  public ElementRef(NameSpec nameSpec) {
+    this.nameSpec = nameSpec;
   }
 
   public int getType() {
     return ELEMENT_REF;
   }
 
-  public String getName() {
-    return name;
+  public NameSpec getNameSpec() {
+    return nameSpec;
   }
 
   public void accept(ModelGroupVisitor visitor) throws Exception {
-    visitor.elementRef(name);
+    visitor.elementRef(nameSpec);
   }
   
 }

@@ -52,7 +52,7 @@ class Particle {
       mg = particlesToModelGroup(particles);
       break;
     case ELEMENT_NAME:
-      mg = new ElementRef(value);
+      mg = new ElementRef(new Name(value));
       break;
     case PCDATA:
       mg = new Pcdata();
@@ -83,21 +83,20 @@ class Particle {
       Particle p = (Particle)v.elementAt(i);
       switch (p.type) {
       case REFERENCE:
-	if (p.entity.semantic == Entity.SEMANTIC_MODEL_GROUP) {
+	switch (p.entity.semantic) {
+	case Entity.SEMANTIC_MODEL_GROUP:
 	  mg = new ModelGroupRef(p.entity.name,
 				 p.entity.modelGroup);
 	  if (p.entity.parsed.size() == 0
 	      && ((p.entity.groupFlags & Entity.GROUP_CONTAINS_SEQ) != 0))
 	    isSequence = true;
-	  int level = 0;
-	  for (;;) {
-	    p = (Particle)v.elementAt(++i);
-	    if (p.type == REFERENCE)
-	      level++;
-	    else if (p.type == REFERENCE_END
-		     && level-- == 0)
-	      break;
-	  }
+	  i = indexOfReferenceEnd(v, i);
+	  break;
+	case Entity.SEMANTIC_NAME_SPEC:
+	  mg = new ElementRef(new NameSpecRef(p.entity.name,
+					      p.entity.nameSpec));
+	  i = indexOfReferenceEnd(v, i);
+	  break;
 	}
 	break;
       case GROUP:
@@ -123,6 +122,19 @@ class Particle {
       return new Sequence(tem);
     else
       return new Choice(tem);
+  }
+
+  private static int indexOfReferenceEnd(Vector v, int i) {
+    int level = 0;
+    for (;;) {
+      Particle p = (Particle)v.elementAt(++i);
+      if (p.type == REFERENCE)
+	level++;
+      else if (p.type == REFERENCE_END
+	       && level-- == 0)
+	break;
+    }
+    return i;
   }
 
   static EnumGroup particlesToEnumGroup(Vector v) {

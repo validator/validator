@@ -10,18 +10,22 @@ decl =
   | enumGroupDef
   | datatypeDef
   | flagDef
+  | nameSpecDef
   | includedSection
   | ignoredSection
   | internalEntityDecl
   | processingInstruction
 
-elementDecl = element element { qname, modelGroup }
+
+elementDecl = element element { nameSpec, modelGroup }
 
 modelGroupDef = element modelGroup { name, modelGroup }
 
 datatypeDef = element datatype { name, datatype }
 
 flagDef = element flag { name, flag }
+
+nameSpecDef = element nameSpec { name, nameSpec }
 
 includedSection = 
   element includedSection { attribute flag { xsd:NCName }?, decl* }
@@ -59,17 +63,17 @@ flag =
   | element ignore { empty }
   | element flagRef { name }
 
-attlistDecl = element attlist { qname, attributeGroup }
+attlistDecl = element attlist { nameSpec, attributeGroup }
 
 attributeGroupDef = element attributeGroup { name, attributeGroup }
 
 attributeGroup =
-  (element attribute { qname, use, defaultValue, datatype }
+  (element attribute { nameSpec, use, defaultValue, datatype }
    | element attributeGroupRef { name } )*
 
 modelGroup =
   element modelGroupRef { name }
-  | element elementRef { name }
+  | element elementRef { nameSpec }
   | element oneOrMore { modelGroup }
   | element zeroOrMore { modelGroup }
   | element optional { modelGroup }
@@ -79,7 +83,7 @@ modelGroup =
 
 name = attribute name { xsd:NCName }
 
-qname = attribute name { xsd:Name }
+nameSpec = element name { xsd:Name } | element nameSpecRef { name }
 
 defaultValue = attribute default { text }?
 

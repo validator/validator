@@ -5,7 +5,8 @@
   <ignoredSection flag="SGML">
 &lt;!ENTITY % RR &quot;- -&quot;&gt;
 </ignoredSection>
-  <element name="doc">
+  <element>
+    <name>doc</name>
     <pcdata/>
   </element>
 </doctype>

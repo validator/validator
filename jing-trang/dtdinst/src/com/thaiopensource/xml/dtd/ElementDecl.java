@@ -2,11 +2,11 @@ package com.thaiopensource.xml.dtd;
 
 public class ElementDecl extends TopLevel {
   
-  private final String name;
+  private final NameSpec nameSpec;
   private final ModelGroup modelGroup;
 
-  public ElementDecl(String name, ModelGroup modelGroup) {
-    this.name = name;
+  public ElementDecl(NameSpec nameSpec, ModelGroup modelGroup) {
+    this.nameSpec = nameSpec;
     this.modelGroup = modelGroup;
   }
 
@@ -14,8 +14,8 @@ public class ElementDecl extends TopLevel {
     return ELEMENT_DECL;
   }
 
-  public String getName() {
-    return name;
+  public NameSpec getNameSpec() {
+    return nameSpec;
   }
   
   public ModelGroup getModelGroup() {
@@ -23,7 +23,7 @@ public class ElementDecl extends TopLevel {
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.elementDecl(name, modelGroup);
+    visitor.elementDecl(nameSpec, modelGroup);
   }
 
 }

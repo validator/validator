@@ -109,7 +109,8 @@
      Common Attributes module in order to be included in %Core.attrib;.
 -->
     <attributeGroup name="style.attrib">
-      <attribute name="style" use="optional">
+      <attribute use="optional">
+        <name>style</name>
         <basic name="CDATA"/>
       </attribute>
     </attributeGroup>
@@ -420,7 +421,8 @@
 &gt;
 </ignoredSection>
       <attributeGroup name="XHTML.xmlns.attrib">
-        <attribute name="xmlns" use="required" default="http://www.w3.org/1999/xhtml">
+        <attribute use="required" default="http://www.w3.org/1999/xhtml">
+          <name>xmlns</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
         <attributeGroupRef name="XLINK.xmlns.attrib"/>
@@ -432,28 +434,277 @@
 -->
 <!-- module:  xhtml-applet-1.mod -->
 <!-- module:  xhtml-base-1.mod -->
+      <nameSpec name="base.qname">
+        <name>base</name>
+      </nameSpec>
 <!-- module:  xhtml-bdo-1.mod -->
+      <nameSpec name="bdo.qname">
+        <name>bdo</name>
+      </nameSpec>
 <!-- module:  xhtml-blkphras-1.mod -->
+      <nameSpec name="address.qname">
+        <name>address</name>
+      </nameSpec>
+      <nameSpec name="blockquote.qname">
+        <name>blockquote</name>
+      </nameSpec>
+      <nameSpec name="pre.qname">
+        <name>pre</name>
+      </nameSpec>
+      <nameSpec name="h1.qname">
+        <name>h1</name>
+      </nameSpec>
+      <nameSpec name="h2.qname">
+        <name>h2</name>
+      </nameSpec>
+      <nameSpec name="h3.qname">
+        <name>h3</name>
+      </nameSpec>
+      <nameSpec name="h4.qname">
+        <name>h4</name>
+      </nameSpec>
+      <nameSpec name="h5.qname">
+        <name>h5</name>
+      </nameSpec>
+      <nameSpec name="h6.qname">
+        <name>h6</name>
+      </nameSpec>
 <!-- module:  xhtml-blkpres-1.mod -->
+      <nameSpec name="hr.qname">
+        <name>hr</name>
+      </nameSpec>
 <!-- module:  xhtml-blkstruct-1.mod -->
+      <nameSpec name="div.qname">
+        <name>div</name>
+      </nameSpec>
+      <nameSpec name="p.qname">
+        <name>p</name>
+      </nameSpec>
 <!-- module:  xhtml-edit-1.mod -->
+      <nameSpec name="ins.qname">
+        <name>ins</name>
+      </nameSpec>
+      <nameSpec name="del.qname">
+        <name>del</name>
+      </nameSpec>
 <!-- module:  xhtml-form-1.mod -->
+      <nameSpec name="form.qname">
+        <name>form</name>
+      </nameSpec>
+      <nameSpec name="label.qname">
+        <name>label</name>
+      </nameSpec>
+      <nameSpec name="input.qname">
+        <name>input</name>
+      </nameSpec>
+      <nameSpec name="select.qname">
+        <name>select</name>
+      </nameSpec>
+      <nameSpec name="optgroup.qname">
+        <name>optgroup</name>
+      </nameSpec>
+      <nameSpec name="option.qname">
+        <name>option</name>
+      </nameSpec>
+      <nameSpec name="textarea.qname">
+        <name>textarea</name>
+      </nameSpec>
+      <nameSpec name="fieldset.qname">
+        <name>fieldset</name>
+      </nameSpec>
+      <nameSpec name="legend.qname">
+        <name>legend</name>
+      </nameSpec>
+      <nameSpec name="button.qname">
+        <name>button</name>
+      </nameSpec>
 <!-- module:  xhtml-hypertext-1.mod -->
+      <nameSpec name="a.qname">
+        <name>a</name>
+      </nameSpec>
 <!-- module:  xhtml-image-1.mod -->
+      <nameSpec name="img.qname">
+        <name>img</name>
+      </nameSpec>
 <!-- module:  xhtml-inlphras-1.mod -->
+      <nameSpec name="abbr.qname">
+        <name>abbr</name>
+      </nameSpec>
+      <nameSpec name="acronym.qname">
+        <name>acronym</name>
+      </nameSpec>
+      <nameSpec name="cite.qname">
+        <name>cite</name>
+      </nameSpec>
+      <nameSpec name="code.qname">
+        <name>code</name>
+      </nameSpec>
+      <nameSpec name="dfn.qname">
+        <name>dfn</name>
+      </nameSpec>
+      <nameSpec name="em.qname">
+        <name>em</name>
+      </nameSpec>
+      <nameSpec name="kbd.qname">
+        <name>kbd</name>
+      </nameSpec>
+      <nameSpec name="q.qname">
+        <name>q</name>
+      </nameSpec>
+      <nameSpec name="samp.qname">
+        <name>samp</name>
+      </nameSpec>
+      <nameSpec name="strong.qname">
+        <name>strong</name>
+      </nameSpec>
+      <nameSpec name="var.qname">
+        <name>var</name>
+      </nameSpec>
 <!-- module:  xhtml-inlpres-1.mod -->
+      <nameSpec name="b.qname">
+        <name>b</name>
+      </nameSpec>
+      <nameSpec name="big.qname">
+        <name>big</name>
+      </nameSpec>
+      <nameSpec name="i.qname">
+        <name>i</name>
+      </nameSpec>
+      <nameSpec name="small.qname">
+        <name>small</name>
+      </nameSpec>
+      <nameSpec name="sub.qname">
+        <name>sub</name>
+      </nameSpec>
+      <nameSpec name="sup.qname">
+        <name>sup</name>
+      </nameSpec>
+      <nameSpec name="tt.qname">
+        <name>tt</name>
+      </nameSpec>
 <!-- module:  xhtml-inlstruct-1.mod -->
+      <nameSpec name="br.qname">
+        <name>br</name>
+      </nameSpec>
+      <nameSpec name="span.qname">
+        <name>span</name>
+      </nameSpec>
 <!-- module:  xhtml-ismap-1.mod (also csismap, ssismap) -->
+      <nameSpec name="map.qname">
+        <name>map</name>
+      </nameSpec>
+      <nameSpec name="area.qname">
+        <name>area</name>
+      </nameSpec>
 <!-- module:  xhtml-link-1.mod -->
+      <nameSpec name="link.qname">
+        <name>link</name>
+      </nameSpec>
 <!-- module:  xhtml-list-1.mod -->
+      <nameSpec name="dl.qname">
+        <name>dl</name>
+      </nameSpec>
+      <nameSpec name="dt.qname">
+        <name>dt</name>
+      </nameSpec>
+      <nameSpec name="dd.qname">
+        <name>dd</name>
+      </nameSpec>
+      <nameSpec name="ol.qname">
+        <name>ol</name>
+      </nameSpec>
+      <nameSpec name="ul.qname">
+        <name>ul</name>
+      </nameSpec>
+      <nameSpec name="li.qname">
+        <name>li</name>
+      </nameSpec>
 <!-- module:  xhtml-meta-1.mod -->
+      <nameSpec name="meta.qname">
+        <name>meta</name>
+      </nameSpec>
 <!-- module:  xhtml-param-1.mod -->
+      <nameSpec name="param.qname">
+        <name>param</name>
+      </nameSpec>
 <!-- module:  xhtml-object-1.mod -->
+      <nameSpec name="object.qname">
+        <name>object</name>
+      </nameSpec>
 <!-- module:  xhtml-script-1.mod -->
+      <nameSpec name="script.qname">
+        <name>script</name>
+      </nameSpec>
+      <nameSpec name="noscript.qname">
+        <name>noscript</name>
+      </nameSpec>
 <!-- module:  xhtml-struct-1.mod -->
+      <nameSpec name="html.qname">
+        <name>html</name>
+      </nameSpec>
+      <nameSpec name="head.qname">
+        <name>head</name>
+      </nameSpec>
+      <nameSpec name="title.qname">
+        <name>title</name>
+      </nameSpec>
+      <nameSpec name="body.qname">
+        <name>body</name>
+      </nameSpec>
 <!-- module:  xhtml-style-1.mod -->
+      <nameSpec name="style.qname">
+        <name>style</name>
+      </nameSpec>
 <!-- module:  xhtml-table-1.mod -->
+      <nameSpec name="table.qname">
+        <name>table</name>
+      </nameSpec>
+      <nameSpec name="caption.qname">
+        <name>caption</name>
+      </nameSpec>
+      <nameSpec name="thead.qname">
+        <name>thead</name>
+      </nameSpec>
+      <nameSpec name="tfoot.qname">
+        <name>tfoot</name>
+      </nameSpec>
+      <nameSpec name="tbody.qname">
+        <name>tbody</name>
+      </nameSpec>
+      <nameSpec name="colgroup.qname">
+        <name>colgroup</name>
+      </nameSpec>
+      <nameSpec name="col.qname">
+        <name>col</name>
+      </nameSpec>
+      <nameSpec name="tr.qname">
+        <name>tr</name>
+      </nameSpec>
+      <nameSpec name="th.qname">
+        <name>th</name>
+      </nameSpec>
+      <nameSpec name="td.qname">
+        <name>td</name>
+      </nameSpec>
 <!-- module:  xhtml-ruby-1.mod -->
+      <nameSpec name="ruby.qname">
+        <name>ruby</name>
+      </nameSpec>
+      <nameSpec name="rbc.qname">
+        <name>rbc</name>
+      </nameSpec>
+      <nameSpec name="rtc.qname">
+        <name>rtc</name>
+      </nameSpec>
+      <nameSpec name="rb.qname">
+        <name>rb</name>
+      </nameSpec>
+      <nameSpec name="rt.qname">
+        <name>rt</name>
+      </nameSpec>
+      <nameSpec name="rp.qname">
+        <name>rp</name>
+      </nameSpec>
 <!-- Provisional XHTML 2.0 Qualified Names  ...................... -->
 <!-- module:  xhtml-image-2.mod -->
 <!-- end of xhtml-qname-1.mod -->
@@ -496,139 +747,181 @@
      for element type names (eg., %a.qname;) are redeclared.
 -->
       <attributeGroup name="Events.attrib">
-        <attribute name="onclick" use="optional">
+        <attribute use="optional">
+          <name>onclick</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="ondblclick" use="optional">
+        <attribute use="optional">
+          <name>ondblclick</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onmousedown" use="optional">
+        <attribute use="optional">
+          <name>onmousedown</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onmouseup" use="optional">
+        <attribute use="optional">
+          <name>onmouseup</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onmouseover" use="optional">
+        <attribute use="optional">
+          <name>onmouseover</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onmousemove" use="optional">
+        <attribute use="optional">
+          <name>onmousemove</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onmouseout" use="optional">
+        <attribute use="optional">
+          <name>onmouseout</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onkeypress" use="optional">
+        <attribute use="optional">
+          <name>onkeypress</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onkeydown" use="optional">
+        <attribute use="optional">
+          <name>onkeydown</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onkeyup" use="optional">
+        <attribute use="optional">
+          <name>onkeyup</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attributeGroup>
 <!-- additional attributes on anchor element
 -->
-      <attlist name="a">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="a.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on form element
 -->
-      <attlist name="form">
-        <attribute name="onsubmit" use="optional">
+      <attlist>
+        <nameSpecRef name="form.qname"/>
+        <attribute use="optional">
+          <name>onsubmit</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onreset" use="optional">
+        <attribute use="optional">
+          <name>onreset</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on label element
 -->
-      <attlist name="label">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="label.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on input element
 -->
-      <attlist name="input">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="input.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onselect" use="optional">
+        <attribute use="optional">
+          <name>onselect</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onchange" use="optional">
+        <attribute use="optional">
+          <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on select element
 -->
-      <attlist name="select">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="select.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onchange" use="optional">
+        <attribute use="optional">
+          <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on textarea element
 -->
-      <attlist name="textarea">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="textarea.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onselect" use="optional">
+        <attribute use="optional">
+          <name>onselect</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onchange" use="optional">
+        <attribute use="optional">
+          <name>onchange</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on button element
 -->
-      <attlist name="button">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="button.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on body element
 -->
-      <attlist name="body">
-        <attribute name="onload" use="optional">
+      <attlist>
+        <nameSpecRef name="body.qname"/>
+        <attribute use="optional">
+          <name>onload</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onunload" use="optional">
+        <attribute use="optional">
+          <name>onunload</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
 <!-- additional attributes on area element
 -->
-      <attlist name="area">
-        <attribute name="onfocus" use="optional">
+      <attlist>
+        <nameSpecRef name="area.qname"/>
+        <attribute use="optional">
+          <name>onfocus</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
-        <attribute name="onblur" use="optional">
+        <attribute use="optional">
+          <name>onblur</name>
           <datatypeRef name="Script.datatype"/>
         </attribute>
       </attlist>
@@ -660,17 +953,20 @@
      %NS.decl.attrib; is declared in the XHTML Qname module.
 -->
       <attributeGroup name="id.attrib">
-        <attribute name="id" use="optional">
+        <attribute use="optional">
+          <name>id</name>
           <basic name="ID"/>
         </attribute>
       </attributeGroup>
       <attributeGroup name="class.attrib">
-        <attribute name="class" use="optional">
+        <attribute use="optional">
+          <name>class</name>
           <basic name="NMTOKENS"/>
         </attribute>
       </attributeGroup>
       <attributeGroup name="title.attrib">
-        <attribute name="title" use="optional">
+        <attribute use="optional">
+          <name>title</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
       </attributeGroup>
@@ -682,13 +978,15 @@
         <attributeGroupRef name="Core.extra.attrib"/>
       </attributeGroup>
       <attributeGroup name="lang.attrib">
-        <attribute name="xml:lang" use="optional">
+        <attribute use="optional">
+          <name>xml:lang</name>
           <datatypeRef name="LanguageCode.datatype"/>
         </attribute>
       </attributeGroup>
       <includedSection flag="XHTML.bidi">
         <attributeGroup name="dir.attrib">
-          <attribute name="dir" use="optional">
+          <attribute use="optional">
+            <name>dir</name>
             <enumChoice>
               <enum>ltr</enum>
               <enum>rtl</enum>
@@ -779,11 +1077,21 @@
       <modelGroup name="HeadOpts.mix">
         <zeroOrMore>
           <choice>
-            <elementRef name="script"/>
-            <elementRef name="style"/>
-            <elementRef name="meta"/>
-            <elementRef name="link"/>
-            <elementRef name="object"/>
+            <elementRef>
+              <nameSpecRef name="script.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="style.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="meta.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="link.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="object.qname"/>
+            </elementRef>
           </choice>
         </zeroOrMore>
       </modelGroup>
@@ -792,8 +1100,12 @@
 -->
       <modelGroup name="Edit.class">
         <choice>
-          <elementRef name="ins"/>
-          <elementRef name="del"/>
+          <elementRef>
+            <nameSpecRef name="ins.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="del.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
 <!-- script and noscript are used to contain scripts
@@ -801,8 +1113,12 @@
 -->
       <modelGroup name="Script.class">
         <choice>
-          <elementRef name="script"/>
-          <elementRef name="noscript"/>
+          <elementRef>
+            <nameSpecRef name="script.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="noscript.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="Misc.extra">
@@ -821,63 +1137,125 @@
 <!-- ....................  Inline Elements  ...................... -->
       <modelGroup name="InlStruct.class">
         <choice>
-          <elementRef name="br"/>
-          <elementRef name="span"/>
+          <elementRef>
+            <nameSpecRef name="br.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="span.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="InlPhras.class">
         <choice>
-          <elementRef name="em"/>
-          <elementRef name="strong"/>
-          <elementRef name="dfn"/>
-          <elementRef name="code"/>
-          <elementRef name="samp"/>
-          <elementRef name="kbd"/>
-          <elementRef name="var"/>
-          <elementRef name="cite"/>
-          <elementRef name="abbr"/>
-          <elementRef name="acronym"/>
-          <elementRef name="q"/>
+          <elementRef>
+            <nameSpecRef name="em.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="strong.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="dfn.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="code.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="samp.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="kbd.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="var.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="cite.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="abbr.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="acronym.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="q.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="InlPres.class">
         <choice>
-          <elementRef name="tt"/>
-          <elementRef name="i"/>
-          <elementRef name="b"/>
-          <elementRef name="big"/>
-          <elementRef name="small"/>
-          <elementRef name="sub"/>
-          <elementRef name="sup"/>
+          <elementRef>
+            <nameSpecRef name="tt.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="i.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="b.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="big.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="small.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="sub.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="sup.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="I18n.class">
-        <elementRef name="bdo"/>
+        <elementRef>
+          <nameSpecRef name="bdo.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="Anchor.class">
-        <elementRef name="a"/>
+        <elementRef>
+          <nameSpecRef name="a.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="InlSpecial.class">
         <choice>
-          <elementRef name="img"/>
-          <elementRef name="map"/>
-          <elementRef name="object"/>
+          <elementRef>
+            <nameSpecRef name="img.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="map.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="object.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="InlForm.class">
         <choice>
-          <elementRef name="input"/>
-          <elementRef name="select"/>
-          <elementRef name="textarea"/>
-          <elementRef name="label"/>
-          <elementRef name="button"/>
+          <elementRef>
+            <nameSpecRef name="input.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="select.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="textarea.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="label.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="button.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="Inline.extra">
         <choice/>
       </modelGroup>
       <modelGroup name="Ruby.class">
-        <elementRef name="ruby"/>
+        <elementRef>
+          <nameSpecRef name="ruby.qname"/>
+        </elementRef>
       </modelGroup>
 <!-- %Inline.class; includes all inline elements,
      used as a component in mixes
@@ -960,45 +1338,81 @@
 -->
       <modelGroup name="Heading.class">
         <choice>
-          <elementRef name="h1"/>
-          <elementRef name="h2"/>
-          <elementRef name="h3"/>
-          <elementRef name="h4"/>
-          <elementRef name="h5"/>
-          <elementRef name="h6"/>
+          <elementRef>
+            <nameSpecRef name="h1.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="h2.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="h3.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="h4.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="h5.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="h6.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="List.class">
         <choice>
-          <elementRef name="ul"/>
-          <elementRef name="ol"/>
-          <elementRef name="dl"/>
+          <elementRef>
+            <nameSpecRef name="ul.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="ol.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="dl.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="Table.class">
-        <elementRef name="table"/>
+        <elementRef>
+          <nameSpecRef name="table.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="Form.class">
-        <elementRef name="form"/>
+        <elementRef>
+          <nameSpecRef name="form.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="Fieldset.class">
-        <elementRef name="fieldset"/>
+        <elementRef>
+          <nameSpecRef name="fieldset.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="BlkStruct.class">
         <choice>
-          <elementRef name="p"/>
-          <elementRef name="div"/>
+          <elementRef>
+            <nameSpecRef name="p.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="div.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="BlkPhras.class">
         <choice>
-          <elementRef name="pre"/>
-          <elementRef name="blockquote"/>
-          <elementRef name="address"/>
+          <elementRef>
+            <nameSpecRef name="pre.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="blockquote.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="address.qname"/>
+          </elementRef>
         </choice>
       </modelGroup>
       <modelGroup name="BlkPres.class">
-        <elementRef name="hr"/>
+        <elementRef>
+          <nameSpecRef name="hr.qname"/>
+        </elementRef>
       </modelGroup>
       <modelGroup name="BlkSpecial.class">
         <choice>
@@ -1895,7 +2309,8 @@
         <modelGroup name="br.content">
           <sequence/>
         </modelGroup>
-        <element name="br">
+        <element>
+          <nameSpecRef name="br.qname"/>
           <modelGroupRef name="br.content"/>
         </element>
 <!-- end of br.element -->
@@ -1904,7 +2319,8 @@
         <include/>
       </flag>
       <includedSection flag="br.attlist">
-        <attlist name="br">
+        <attlist>
+          <nameSpecRef name="br.qname"/>
           <attributeGroupRef name="Core.attrib"/>
         </attlist>
 <!-- end of br.attlist -->
@@ -1922,7 +2338,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="span">
+        <element>
+          <nameSpecRef name="span.qname"/>
           <modelGroupRef name="span.content"/>
         </element>
 <!-- end of span.element -->
@@ -1931,7 +2348,8 @@
         <include/>
       </flag>
       <includedSection flag="span.attlist">
-        <attlist name="span">
+        <attlist>
+          <nameSpecRef name="span.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of span.attlist -->
@@ -1977,7 +2395,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="abbr">
+        <element>
+          <nameSpecRef name="abbr.qname"/>
           <modelGroupRef name="abbr.content"/>
         </element>
 <!-- end of abbr.element -->
@@ -1986,7 +2405,8 @@
         <include/>
       </flag>
       <includedSection flag="abbr.attlist">
-        <attlist name="abbr">
+        <attlist>
+          <nameSpecRef name="abbr.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of abbr.attlist -->
@@ -2003,7 +2423,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="acronym">
+        <element>
+          <nameSpecRef name="acronym.qname"/>
           <modelGroupRef name="acronym.content"/>
         </element>
 <!-- end of acronym.element -->
@@ -2012,7 +2433,8 @@
         <include/>
       </flag>
       <includedSection flag="acronym.attlist">
-        <attlist name="acronym">
+        <attlist>
+          <nameSpecRef name="acronym.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of acronym.attlist -->
@@ -2029,7 +2451,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="cite">
+        <element>
+          <nameSpecRef name="cite.qname"/>
           <modelGroupRef name="cite.content"/>
         </element>
 <!-- end of cite.element -->
@@ -2038,7 +2461,8 @@
         <include/>
       </flag>
       <includedSection flag="cite.attlist">
-        <attlist name="cite">
+        <attlist>
+          <nameSpecRef name="cite.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of cite.attlist -->
@@ -2055,7 +2479,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="code">
+        <element>
+          <nameSpecRef name="code.qname"/>
           <modelGroupRef name="code.content"/>
         </element>
 <!-- end of code.element -->
@@ -2064,7 +2489,8 @@
         <include/>
       </flag>
       <includedSection flag="code.attlist">
-        <attlist name="code">
+        <attlist>
+          <nameSpecRef name="code.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of code.attlist -->
@@ -2081,7 +2507,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="dfn">
+        <element>
+          <nameSpecRef name="dfn.qname"/>
           <modelGroupRef name="dfn.content"/>
         </element>
 <!-- end of dfn.element -->
@@ -2090,7 +2517,8 @@
         <include/>
       </flag>
       <includedSection flag="dfn.attlist">
-        <attlist name="dfn">
+        <attlist>
+          <nameSpecRef name="dfn.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of dfn.attlist -->
@@ -2107,7 +2535,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="em">
+        <element>
+          <nameSpecRef name="em.qname"/>
           <modelGroupRef name="em.content"/>
         </element>
 <!-- end of em.element -->
@@ -2116,7 +2545,8 @@
         <include/>
       </flag>
       <includedSection flag="em.attlist">
-        <attlist name="em">
+        <attlist>
+          <nameSpecRef name="em.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of em.attlist -->
@@ -2133,7 +2563,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="kbd">
+        <element>
+          <nameSpecRef name="kbd.qname"/>
           <modelGroupRef name="kbd.content"/>
         </element>
 <!-- end of kbd.element -->
@@ -2142,7 +2573,8 @@
         <include/>
       </flag>
       <includedSection flag="kbd.attlist">
-        <attlist name="kbd">
+        <attlist>
+          <nameSpecRef name="kbd.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of kbd.attlist -->
@@ -2159,7 +2591,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="q">
+        <element>
+          <nameSpecRef name="q.qname"/>
           <modelGroupRef name="q.content"/>
         </element>
 <!-- end of q.element -->
@@ -2168,9 +2601,11 @@
         <include/>
       </flag>
       <includedSection flag="q.attlist">
-        <attlist name="q">
+        <attlist>
+          <nameSpecRef name="q.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute name="cite" use="optional">
+          <attribute use="optional">
+            <name>cite</name>
             <datatypeRef name="URI.datatype"/>
           </attribute>
         </attlist>
@@ -2188,7 +2623,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="samp">
+        <element>
+          <nameSpecRef name="samp.qname"/>
           <modelGroupRef name="samp.content"/>
         </element>
 <!-- end of samp.element -->
@@ -2197,7 +2633,8 @@
         <include/>
       </flag>
       <includedSection flag="samp.attlist">
-        <attlist name="samp">
+        <attlist>
+          <nameSpecRef name="samp.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of samp.attlist -->
@@ -2214,7 +2651,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="strong">
+        <element>
+          <nameSpecRef name="strong.qname"/>
           <modelGroupRef name="strong.content"/>
         </element>
 <!-- end of strong.element -->
@@ -2223,7 +2661,8 @@
         <include/>
       </flag>
       <includedSection flag="strong.attlist">
-        <attlist name="strong">
+        <attlist>
+          <nameSpecRef name="strong.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of strong.attlist -->
@@ -2240,7 +2679,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="var">
+        <element>
+          <nameSpecRef name="var.qname"/>
           <modelGroupRef name="var.content"/>
         </element>
 <!-- end of var.element -->
@@ -2249,7 +2689,8 @@
         <include/>
       </flag>
       <includedSection flag="var.attlist">
-        <attlist name="var">
+        <attlist>
+          <nameSpecRef name="var.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of var.attlist -->
@@ -2295,7 +2736,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="div">
+        <element>
+          <nameSpecRef name="div.qname"/>
           <modelGroupRef name="div.content"/>
         </element>
 <!-- end of div.element -->
@@ -2304,7 +2746,8 @@
         <include/>
       </flag>
       <includedSection flag="div.attlist">
-        <attlist name="div">
+        <attlist>
+          <nameSpecRef name="div.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of div.attlist -->
@@ -2321,7 +2764,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="p">
+        <element>
+          <nameSpecRef name="p.qname"/>
           <modelGroupRef name="p.content"/>
         </element>
 <!-- end of p.element -->
@@ -2330,7 +2774,8 @@
         <include/>
       </flag>
       <includedSection flag="p.attlist">
-        <attlist name="p">
+        <attlist>
+          <nameSpecRef name="p.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of p.attlist -->
@@ -2376,7 +2821,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="address">
+        <element>
+          <nameSpecRef name="address.qname"/>
           <modelGroupRef name="address.content"/>
         </element>
 <!-- end of address.element -->
@@ -2385,7 +2831,8 @@
         <include/>
       </flag>
       <includedSection flag="address.attlist">
-        <attlist name="address">
+        <attlist>
+          <nameSpecRef name="address.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of address.attlist -->
@@ -2399,7 +2846,8 @@
             <modelGroupRef name="Block.mix"/>
           </oneOrMore>
         </modelGroup>
-        <element name="blockquote">
+        <element>
+          <nameSpecRef name="blockquote.qname"/>
           <modelGroupRef name="blockquote.content"/>
         </element>
 <!-- end of blockquote.element -->
@@ -2408,9 +2856,11 @@
         <include/>
       </flag>
       <includedSection flag="blockquote.attlist">
-        <attlist name="blockquote">
+        <attlist>
+          <nameSpecRef name="blockquote.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute name="cite" use="optional">
+          <attribute use="optional">
+            <name>cite</name>
             <datatypeRef name="URI.datatype"/>
           </attribute>
         </attlist>
@@ -2426,18 +2876,29 @@
               <pcdata/>
               <modelGroupRef name="InlStruct.class"/>
               <modelGroupRef name="InlPhras.class"/>
-              <elementRef name="tt"/>
-              <elementRef name="i"/>
-              <elementRef name="b"/>
+              <elementRef>
+                <nameSpecRef name="tt.qname"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="i.qname"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="b.qname"/>
+              </elementRef>
               <modelGroupRef name="I18n.class"/>
               <modelGroupRef name="Anchor.class"/>
-              <elementRef name="script"/>
-              <elementRef name="map"/>
+              <elementRef>
+                <nameSpecRef name="script.qname"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="map.qname"/>
+              </elementRef>
               <modelGroupRef name="Inline.extra"/>
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="pre">
+        <element>
+          <nameSpecRef name="pre.qname"/>
           <modelGroupRef name="pre.content"/>
         </element>
 <!-- end of pre.element -->
@@ -2446,9 +2907,11 @@
         <include/>
       </flag>
       <includedSection flag="pre.attlist">
-        <attlist name="pre">
+        <attlist>
+          <nameSpecRef name="pre.qname"/>
           <attributeGroupRef name="Common.attrib"/>
-          <attribute name="xml:space" use="required" default="preserve">
+          <attribute use="required" default="preserve">
+            <name>xml:space</name>
             <enumChoice>
               <enum>preserve</enum>
             </enumChoice>
@@ -2469,7 +2932,8 @@
         <include/>
       </flag>
       <includedSection flag="h1.element">
-        <element name="h1">
+        <element>
+          <nameSpecRef name="h1.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h1.element -->
@@ -2478,7 +2942,8 @@
         <include/>
       </flag>
       <includedSection flag="h1.attlist">
-        <attlist name="h1">
+        <attlist>
+          <nameSpecRef name="h1.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h1.attlist -->
@@ -2487,7 +2952,8 @@
         <include/>
       </flag>
       <includedSection flag="h2.element">
-        <element name="h2">
+        <element>
+          <nameSpecRef name="h2.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h2.element -->
@@ -2496,7 +2962,8 @@
         <include/>
       </flag>
       <includedSection flag="h2.attlist">
-        <attlist name="h2">
+        <attlist>
+          <nameSpecRef name="h2.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h2.attlist -->
@@ -2505,7 +2972,8 @@
         <include/>
       </flag>
       <includedSection flag="h3.element">
-        <element name="h3">
+        <element>
+          <nameSpecRef name="h3.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h3.element -->
@@ -2514,7 +2982,8 @@
         <include/>
       </flag>
       <includedSection flag="h3.attlist">
-        <attlist name="h3">
+        <attlist>
+          <nameSpecRef name="h3.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h3.attlist -->
@@ -2523,7 +2992,8 @@
         <include/>
       </flag>
       <includedSection flag="h4.element">
-        <element name="h4">
+        <element>
+          <nameSpecRef name="h4.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h4.element -->
@@ -2532,7 +3002,8 @@
         <include/>
       </flag>
       <includedSection flag="h4.attlist">
-        <attlist name="h4">
+        <attlist>
+          <nameSpecRef name="h4.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h4.attlist -->
@@ -2541,7 +3012,8 @@
         <include/>
       </flag>
       <includedSection flag="h5.element">
-        <element name="h5">
+        <element>
+          <nameSpecRef name="h5.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h5.element -->
@@ -2550,7 +3022,8 @@
         <include/>
       </flag>
       <includedSection flag="h5.attlist">
-        <attlist name="h5">
+        <attlist>
+          <nameSpecRef name="h5.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h5.attlist -->
@@ -2559,7 +3032,8 @@
         <include/>
       </flag>
       <includedSection flag="h6.element">
-        <element name="h6">
+        <element>
+          <nameSpecRef name="h6.qname"/>
           <modelGroupRef name="Heading.content"/>
         </element>
 <!-- end of h6.element -->
@@ -2568,7 +3042,8 @@
         <include/>
       </flag>
       <includedSection flag="h6.attlist">
-        <attlist name="h6">
+        <attlist>
+          <nameSpecRef name="h6.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of h6.attlist -->
@@ -2620,7 +3095,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="a">
+      <element>
+        <nameSpecRef name="a.qname"/>
         <modelGroupRef name="a.content"/>
       </element>
 <!-- end of a.element -->
@@ -2629,30 +3105,39 @@
       <include/>
     </flag>
     <includedSection flag="a.attlist">
-      <attlist name="a">
+      <attlist>
+        <nameSpecRef name="a.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="href" use="optional">
+        <attribute use="optional">
+          <name>href</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="charset" use="optional">
+        <attribute use="optional">
+          <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
         </attribute>
-        <attribute name="type" use="optional">
+        <attribute use="optional">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="hreflang" use="optional">
+        <attribute use="optional">
+          <name>hreflang</name>
           <datatypeRef name="LanguageCode.datatype"/>
         </attribute>
-        <attribute name="rel" use="optional">
+        <attribute use="optional">
+          <name>rel</name>
           <datatypeRef name="LinkTypes.datatype"/>
         </attribute>
-        <attribute name="rev" use="optional">
+        <attribute use="optional">
+          <name>rev</name>
           <datatypeRef name="LinkTypes.datatype"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
       </attlist>
@@ -2696,12 +3181,17 @@
       <modelGroup name="dl.content">
         <oneOrMore>
           <choice>
-            <elementRef name="dt"/>
-            <elementRef name="dd"/>
+            <elementRef>
+              <nameSpecRef name="dt.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="dd.qname"/>
+            </elementRef>
           </choice>
         </oneOrMore>
       </modelGroup>
-      <element name="dl">
+      <element>
+        <nameSpecRef name="dl.qname"/>
         <modelGroupRef name="dl.content"/>
       </element>
 <!-- end of dl.element -->
@@ -2710,7 +3200,8 @@
       <include/>
     </flag>
     <includedSection flag="dl.attlist">
-      <attlist name="dl">
+      <attlist>
+        <nameSpecRef name="dl.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of dl.attlist -->
@@ -2728,7 +3219,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="dt">
+      <element>
+        <nameSpecRef name="dt.qname"/>
         <modelGroupRef name="dt.content"/>
       </element>
 <!-- end of dt.element -->
@@ -2737,7 +3229,8 @@
       <include/>
     </flag>
     <includedSection flag="dt.attlist">
-      <attlist name="dt">
+      <attlist>
+        <nameSpecRef name="dt.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of dt.attlist -->
@@ -2755,7 +3248,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="dd">
+      <element>
+        <nameSpecRef name="dd.qname"/>
         <modelGroupRef name="dd.content"/>
       </element>
 <!-- end of dd.element -->
@@ -2764,7 +3258,8 @@
       <include/>
     </flag>
     <includedSection flag="dd.attlist">
-      <attlist name="dd">
+      <attlist>
+        <nameSpecRef name="dd.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of dd.attlist -->
@@ -2776,10 +3271,13 @@
     <includedSection flag="ol.element">
       <modelGroup name="ol.content">
         <oneOrMore>
-          <elementRef name="li"/>
+          <elementRef>
+            <nameSpecRef name="li.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="ol">
+      <element>
+        <nameSpecRef name="ol.qname"/>
         <modelGroupRef name="ol.content"/>
       </element>
 <!-- end of ol.element -->
@@ -2788,7 +3286,8 @@
       <include/>
     </flag>
     <includedSection flag="ol.attlist">
-      <attlist name="ol">
+      <attlist>
+        <nameSpecRef name="ol.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of ol.attlist -->
@@ -2800,10 +3299,13 @@
     <includedSection flag="ul.element">
       <modelGroup name="ul.content">
         <oneOrMore>
-          <elementRef name="li"/>
+          <elementRef>
+            <nameSpecRef name="li.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="ul">
+      <element>
+        <nameSpecRef name="ul.qname"/>
         <modelGroupRef name="ul.content"/>
       </element>
 <!-- end of ul.element -->
@@ -2812,7 +3314,8 @@
       <include/>
     </flag>
     <includedSection flag="ul.attlist">
-      <attlist name="ul">
+      <attlist>
+        <nameSpecRef name="ul.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of ul.attlist -->
@@ -2830,7 +3333,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="li">
+      <element>
+        <nameSpecRef name="li.qname"/>
         <modelGroupRef name="li.content"/>
       </element>
 <!-- end of li.element -->
@@ -2839,7 +3343,8 @@
       <include/>
     </flag>
     <includedSection flag="li.attlist">
-      <attlist name="li">
+      <attlist>
+        <nameSpecRef name="li.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of li.attlist -->
@@ -2888,7 +3393,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="ins">
+      <element>
+        <nameSpecRef name="ins.qname"/>
         <modelGroupRef name="ins.content"/>
       </element>
 <!-- end of ins.element -->
@@ -2897,12 +3403,15 @@
       <include/>
     </flag>
     <includedSection flag="ins.attlist">
-      <attlist name="ins">
+      <attlist>
+        <nameSpecRef name="ins.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="cite" use="optional">
+        <attribute use="optional">
+          <name>cite</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="datetime" use="optional">
+        <attribute use="optional">
+          <name>datetime</name>
           <datatypeRef name="Datetime.datatype"/>
         </attribute>
       </attlist>
@@ -2921,7 +3430,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="del">
+      <element>
+        <nameSpecRef name="del.qname"/>
         <modelGroupRef name="del.content"/>
       </element>
 <!-- end of del.element -->
@@ -2930,12 +3440,15 @@
       <include/>
     </flag>
     <includedSection flag="del.attlist">
-      <attlist name="del">
+      <attlist>
+        <nameSpecRef name="del.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="cite" use="optional">
+        <attribute use="optional">
+          <name>cite</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="datetime" use="optional">
+        <attribute use="optional">
+          <name>datetime</name>
           <datatypeRef name="Datetime.datatype"/>
         </attribute>
       </attlist>
@@ -2986,7 +3499,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="bdo">
+      <element>
+        <nameSpecRef name="bdo.qname"/>
         <modelGroupRef name="bdo.content"/>
       </element>
 <!-- end of bdo.element -->
@@ -2995,12 +3509,15 @@
       <include/>
     </flag>
     <includedSection flag="bdo.attlist">
-      <attlist name="bdo">
+      <attlist>
+        <nameSpecRef name="bdo.qname"/>
         <attributeGroupRef name="Core.attrib"/>
-        <attribute name="xml:lang" use="optional">
+        <attribute use="optional">
+          <name>xml:lang</name>
           <datatypeRef name="LanguageCode.datatype"/>
         </attribute>
-        <attribute name="dir" use="required">
+        <attribute use="required">
+          <name>dir</name>
           <enumChoice>
             <enum>ltr</enum>
             <enum>rtl</enum>
@@ -3071,13 +3588,23 @@
 </ignoredSection>
       <modelGroup name="Ruby.content.simple">
         <sequence>
-          <elementRef name="rb"/>
+          <elementRef>
+            <nameSpecRef name="rb.qname"/>
+          </elementRef>
           <choice>
-            <elementRef name="rt"/>
+            <elementRef>
+              <nameSpecRef name="rt.qname"/>
+            </elementRef>
             <sequence>
-              <elementRef name="rp"/>
-              <elementRef name="rt"/>
-              <elementRef name="rp"/>
+              <elementRef>
+                <nameSpecRef name="rp.qname"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="rt.qname"/>
+              </elementRef>
+              <elementRef>
+                <nameSpecRef name="rp.qname"/>
+              </elementRef>
             </sequence>
           </choice>
         </sequence>
@@ -3086,10 +3613,16 @@
     <includedSection flag="Ruby.complex">
       <modelGroup name="Ruby.content.complex">
         <sequence>
-          <elementRef name="rbc"/>
-          <elementRef name="rtc"/>
+          <elementRef>
+            <nameSpecRef name="rbc.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="rtc.qname"/>
+          </elementRef>
           <optional>
-            <elementRef name="rtc"/>
+            <elementRef>
+              <name>rtc</name>
+            </elementRef>
           </optional>
         </sequence>
       </modelGroup>
@@ -3113,7 +3646,8 @@
           <modelGroupRef name="Ruby.content.complex"/>
         </choice>
       </modelGroup>
-      <element name="ruby">
+      <element>
+        <nameSpecRef name="ruby.qname"/>
         <modelGroupRef name="ruby.content"/>
       </element>
 <!-- end of ruby.element -->
@@ -3126,10 +3660,13 @@
       <includedSection flag="rbc.element">
         <modelGroup name="rbc.content">
           <oneOrMore>
-            <elementRef name="rb"/>
+            <elementRef>
+              <nameSpecRef name="rb.qname"/>
+            </elementRef>
           </oneOrMore>
         </modelGroup>
-        <element name="rbc">
+        <element>
+          <nameSpecRef name="rbc.qname"/>
           <modelGroupRef name="rbc.content"/>
         </element>
 <!-- end of rbc.element -->
@@ -3141,10 +3678,13 @@
       <includedSection flag="rtc.element">
         <modelGroup name="rtc.content">
           <oneOrMore>
-            <elementRef name="rt"/>
+            <elementRef>
+              <nameSpecRef name="rt.qname"/>
+            </elementRef>
           </oneOrMore>
         </modelGroup>
-        <element name="rtc">
+        <element>
+          <nameSpecRef name="rtc.qname"/>
           <modelGroupRef name="rtc.content"/>
         </element>
 <!-- end of rtc.element -->
@@ -3164,7 +3704,8 @@
       <modelGroup name="rb.content">
         <modelGroupRef name="NoRuby.content"/>
       </modelGroup>
-      <element name="rb">
+      <element>
+        <nameSpecRef name="rb.qname"/>
         <modelGroupRef name="rb.content"/>
       </element>
 <!-- end of rb.element -->
@@ -3183,7 +3724,8 @@
       <modelGroup name="rt.content">
         <modelGroupRef name="NoRuby.content"/>
       </modelGroup>
-      <element name="rt">
+      <element>
+        <nameSpecRef name="rt.qname"/>
         <modelGroupRef name="rt.content"/>
       </element>
 <!-- end of rt.element -->
@@ -3194,8 +3736,10 @@
         <include/>
       </flag>
       <includedSection flag="rt.attlist">
-        <attlist name="rt">
-          <attribute name="rbspan" use="optional" default="1">
+        <attlist>
+          <nameSpecRef name="rt.qname"/>
+          <attribute use="optional" default="1">
+            <name>rbspan</name>
             <datatypeRef name="Number.datatype"/>
           </attribute>
         </attlist>
@@ -3211,7 +3755,8 @@
         <modelGroup name="rp.content">
           <pcdata/>
         </modelGroup>
-        <element name="rp">
+        <element>
+          <nameSpecRef name="rp.qname"/>
           <modelGroupRef name="rp.content"/>
         </element>
 <!-- end of rp.element -->
@@ -3239,7 +3784,8 @@
         <include/>
       </flag>
       <includedSection flag="Ruby.common.attlist">
-        <attlist name="ruby">
+        <attlist>
+          <nameSpecRef name="ruby.qname"/>
           <attributeGroupRef name="Ruby.common.attrib"/>
         </attlist>
 <!-- end of Ruby.common.attlist -->
@@ -3250,7 +3796,8 @@
           <include/>
         </flag>
         <includedSection flag="Rbc.common.attlist">
-          <attlist name="rbc">
+          <attlist>
+            <nameSpecRef name="rbc.qname"/>
             <attributeGroupRef name="Ruby.common.attrib"/>
           </attlist>
 <!-- end of Rbc.common.attlist -->
@@ -3260,7 +3807,8 @@
           <include/>
         </flag>
         <includedSection flag="Rtc.common.attlist">
-          <attlist name="rtc">
+          <attlist>
+            <nameSpecRef name="rtc.qname"/>
             <attributeGroupRef name="Ruby.common.attrib"/>
           </attlist>
 <!-- end of Rtc.common.attlist -->
@@ -3271,7 +3819,8 @@
         <include/>
       </flag>
       <includedSection flag="Rb.common.attlist">
-        <attlist name="rb">
+        <attlist>
+          <nameSpecRef name="rb.qname"/>
           <attributeGroupRef name="Ruby.common.attrib"/>
         </attlist>
 <!-- end of Rb.common.attlist -->
@@ -3281,7 +3830,8 @@
         <include/>
       </flag>
       <includedSection flag="Rt.common.attlist">
-        <attlist name="rt">
+        <attlist>
+          <nameSpecRef name="rt.qname"/>
           <attributeGroupRef name="Ruby.common.attrib"/>
         </attlist>
 <!-- end of Rt.common.attlist -->
@@ -3292,7 +3842,8 @@
           <include/>
         </flag>
         <includedSection flag="Rp.common.attlist">
-          <attlist name="rp">
+          <attlist>
+            <nameSpecRef name="rp.qname"/>
             <attributeGroupRef name="Ruby.common.attrib"/>
           </attlist>
 <!-- end of Rp.common.attlist -->
@@ -3366,7 +3917,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="b">
+        <element>
+          <nameSpecRef name="b.qname"/>
           <modelGroupRef name="b.content"/>
         </element>
 <!-- end of b.element -->
@@ -3375,7 +3927,8 @@
         <include/>
       </flag>
       <includedSection flag="b.attlist">
-        <attlist name="b">
+        <attlist>
+          <nameSpecRef name="b.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of b.attlist -->
@@ -3392,7 +3945,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="big">
+        <element>
+          <nameSpecRef name="big.qname"/>
           <modelGroupRef name="big.content"/>
         </element>
 <!-- end of big.element -->
@@ -3401,7 +3955,8 @@
         <include/>
       </flag>
       <includedSection flag="big.attlist">
-        <attlist name="big">
+        <attlist>
+          <nameSpecRef name="big.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of big.attlist -->
@@ -3418,7 +3973,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="i">
+        <element>
+          <nameSpecRef name="i.qname"/>
           <modelGroupRef name="i.content"/>
         </element>
 <!-- end of i.element -->
@@ -3427,7 +3983,8 @@
         <include/>
       </flag>
       <includedSection flag="i.attlist">
-        <attlist name="i">
+        <attlist>
+          <nameSpecRef name="i.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of i.attlist -->
@@ -3444,7 +4001,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="small">
+        <element>
+          <nameSpecRef name="small.qname"/>
           <modelGroupRef name="small.content"/>
         </element>
 <!-- end of small.element -->
@@ -3453,7 +4011,8 @@
         <include/>
       </flag>
       <includedSection flag="small.attlist">
-        <attlist name="small">
+        <attlist>
+          <nameSpecRef name="small.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of small.attlist -->
@@ -3470,7 +4029,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="sub">
+        <element>
+          <nameSpecRef name="sub.qname"/>
           <modelGroupRef name="sub.content"/>
         </element>
 <!-- end of sub.element -->
@@ -3479,7 +4039,8 @@
         <include/>
       </flag>
       <includedSection flag="sub.attlist">
-        <attlist name="sub">
+        <attlist>
+          <nameSpecRef name="sub.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of sub.attlist -->
@@ -3496,7 +4057,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="sup">
+        <element>
+          <nameSpecRef name="sup.qname"/>
           <modelGroupRef name="sup.content"/>
         </element>
 <!-- end of sup.element -->
@@ -3505,7 +4067,8 @@
         <include/>
       </flag>
       <includedSection flag="sup.attlist">
-        <attlist name="sup">
+        <attlist>
+          <nameSpecRef name="sup.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of sup.attlist -->
@@ -3522,7 +4085,8 @@
             </choice>
           </zeroOrMore>
         </modelGroup>
-        <element name="tt">
+        <element>
+          <nameSpecRef name="tt.qname"/>
           <modelGroupRef name="tt.content"/>
         </element>
 <!-- end of tt.element -->
@@ -3531,7 +4095,8 @@
         <include/>
       </flag>
       <includedSection flag="tt.attlist">
-        <attlist name="tt">
+        <attlist>
+          <nameSpecRef name="tt.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of tt.attlist -->
@@ -3572,7 +4137,8 @@
         <modelGroup name="hr.content">
           <sequence/>
         </modelGroup>
-        <element name="hr">
+        <element>
+          <nameSpecRef name="hr.qname"/>
           <modelGroupRef name="hr.content"/>
         </element>
 <!-- end of hr.element -->
@@ -3581,7 +4147,8 @@
         <include/>
       </flag>
       <includedSection flag="hr.attlist">
-        <attlist name="hr">
+        <attlist>
+          <nameSpecRef name="hr.qname"/>
           <attributeGroupRef name="Common.attrib"/>
         </attlist>
 <!-- end of hr.attlist -->
@@ -3636,7 +4203,8 @@
       <modelGroup name="link.content">
         <sequence/>
       </modelGroup>
-      <element name="link">
+      <element>
+        <nameSpecRef name="link.qname"/>
         <modelGroupRef name="link.content"/>
       </element>
 <!-- end of link.element -->
@@ -3645,27 +4213,35 @@
       <include/>
     </flag>
     <includedSection flag="link.attlist">
-      <attlist name="link">
+      <attlist>
+        <nameSpecRef name="link.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="charset" use="optional">
+        <attribute use="optional">
+          <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
         </attribute>
-        <attribute name="href" use="optional">
+        <attribute use="optional">
+          <name>href</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="hreflang" use="optional">
+        <attribute use="optional">
+          <name>hreflang</name>
           <datatypeRef name="LanguageCode.datatype"/>
         </attribute>
-        <attribute name="type" use="optional">
+        <attribute use="optional">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="rel" use="optional">
+        <attribute use="optional">
+          <name>rel</name>
           <datatypeRef name="LinkTypes.datatype"/>
         </attribute>
-        <attribute name="rev" use="optional">
+        <attribute use="optional">
+          <name>rev</name>
           <datatypeRef name="LinkTypes.datatype"/>
         </attribute>
-        <attribute name="media" use="optional">
+        <attribute use="optional">
+          <name>media</name>
           <datatypeRef name="MediaDesc.datatype"/>
         </attribute>
       </attlist>
@@ -3709,7 +4285,8 @@
       <modelGroup name="meta.content">
         <sequence/>
       </modelGroup>
-      <element name="meta">
+      <element>
+        <nameSpecRef name="meta.qname"/>
         <modelGroupRef name="meta.content"/>
       </element>
 <!-- end of meta.element -->
@@ -3718,19 +4295,24 @@
       <include/>
     </flag>
     <includedSection flag="meta.attlist">
-      <attlist name="meta">
+      <attlist>
+        <nameSpecRef name="meta.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
-        <attribute name="http-equiv" use="optional">
+        <attribute use="optional">
+          <name>http-equiv</name>
           <basic name="NMTOKEN"/>
         </attribute>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="NMTOKEN"/>
         </attribute>
-        <attribute name="content" use="required">
+        <attribute use="required">
+          <name>content</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="scheme" use="optional">
+        <attribute use="optional">
+          <name>scheme</name>
           <basic name="CDATA"/>
         </attribute>
       </attlist>
@@ -3778,7 +4360,8 @@
       <modelGroup name="base.content">
         <sequence/>
       </modelGroup>
-      <element name="base">
+      <element>
+        <nameSpecRef name="base.qname"/>
         <modelGroupRef name="base.content"/>
       </element>
 <!-- end of base.element -->
@@ -3787,9 +4370,11 @@
       <include/>
     </flag>
     <includedSection flag="base.attlist">
-      <attlist name="base">
+      <attlist>
+        <nameSpecRef name="base.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute name="href" use="required">
+        <attribute use="required">
+          <name>href</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
       </attlist>
@@ -3800,20 +4385,28 @@
         <modelGroupRef name="HeadOpts.mix"/>
         <choice>
           <sequence>
-            <elementRef name="title"/>
+            <elementRef>
+              <nameSpecRef name="title.qname"/>
+            </elementRef>
             <modelGroupRef name="HeadOpts.mix"/>
             <optional>
               <sequence>
-                <elementRef name="base"/>
+                <elementRef>
+                  <nameSpecRef name="base.qname"/>
+                </elementRef>
                 <modelGroupRef name="HeadOpts.mix"/>
               </sequence>
             </optional>
           </sequence>
           <sequence>
-            <elementRef name="base"/>
+            <elementRef>
+              <nameSpecRef name="base.qname"/>
+            </elementRef>
             <modelGroupRef name="HeadOpts.mix"/>
             <sequence>
-              <elementRef name="title"/>
+              <elementRef>
+                <nameSpecRef name="title.qname"/>
+              </elementRef>
               <modelGroupRef name="HeadOpts.mix"/>
             </sequence>
           </sequence>
@@ -3859,7 +4452,8 @@
       <modelGroup name="script.content">
         <pcdata/>
       </modelGroup>
-      <element name="script">
+      <element>
+        <nameSpecRef name="script.qname"/>
         <modelGroupRef name="script.content"/>
       </element>
 <!-- end of script.element -->
@@ -3868,23 +4462,29 @@
       <include/>
     </flag>
     <includedSection flag="script.attlist">
-      <attlist name="script">
+      <attlist>
+        <nameSpecRef name="script.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute name="charset" use="optional">
+        <attribute use="optional">
+          <name>charset</name>
           <datatypeRef name="Charset.datatype"/>
         </attribute>
-        <attribute name="type" use="required">
+        <attribute use="required">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="src" use="optional">
+        <attribute use="optional">
+          <name>src</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="defer" use="optional">
+        <attribute use="optional">
+          <name>defer</name>
           <enumChoice>
             <enum>defer</enum>
           </enumChoice>
         </attribute>
-        <attribute name="xml:space" use="required" default="preserve">
+        <attribute use="required" default="preserve">
+          <name>xml:space</name>
           <enumChoice>
             <enum>preserve</enum>
           </enumChoice>
@@ -3902,7 +4502,8 @@
           <modelGroupRef name="Block.mix"/>
         </oneOrMore>
       </modelGroup>
-      <element name="noscript">
+      <element>
+        <nameSpecRef name="noscript.qname"/>
         <modelGroupRef name="noscript.content"/>
       </element>
 <!-- end of noscript.element -->
@@ -3911,7 +4512,8 @@
       <include/>
     </flag>
     <includedSection flag="noscript.attlist">
-      <attlist name="noscript">
+      <attlist>
+        <nameSpecRef name="noscript.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of noscript.attlist -->
@@ -3954,7 +4556,8 @@
       <modelGroup name="style.content">
         <pcdata/>
       </modelGroup>
-      <element name="style">
+      <element>
+        <nameSpecRef name="style.qname"/>
         <modelGroupRef name="style.content"/>
       </element>
 <!-- end of style.element -->
@@ -3963,17 +4566,21 @@
       <include/>
     </flag>
     <includedSection flag="style.attlist">
-      <attlist name="style">
+      <attlist>
+        <nameSpecRef name="style.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="title.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
-        <attribute name="type" use="required">
+        <attribute use="required">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="media" use="optional">
+        <attribute use="optional">
+          <name>media</name>
           <datatypeRef name="MediaDesc.datatype"/>
         </attribute>
-        <attribute name="xml:space" use="required" default="preserve">
+        <attribute use="required" default="preserve">
+          <name>xml:space</name>
           <enumChoice>
             <enum>preserve</enum>
           </enumChoice>
@@ -4022,7 +4629,8 @@
       <modelGroup name="img.content">
         <sequence/>
       </modelGroup>
-      <element name="img">
+      <element>
+        <nameSpecRef name="img.qname"/>
         <modelGroupRef name="img.content"/>
       </element>
 <!-- end of img.element -->
@@ -4031,21 +4639,27 @@
       <include/>
     </flag>
     <includedSection flag="img.attlist">
-      <attlist name="img">
+      <attlist>
+        <nameSpecRef name="img.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="src" use="required">
+        <attribute use="required">
+          <name>src</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="alt" use="required">
+        <attribute use="required">
+          <name>alt</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="longdesc" use="optional">
+        <attribute use="optional">
+          <name>longdesc</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="height" use="optional">
+        <attribute use="optional">
+          <name>height</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
-        <attribute name="width" use="optional">
+        <attribute use="optional">
+          <name>width</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
       </attlist>
@@ -4092,7 +4706,8 @@
       <modelGroup name="area.content">
         <sequence/>
       </modelGroup>
-      <element name="area">
+      <element>
+        <nameSpecRef name="area.qname"/>
         <modelGroupRef name="area.content"/>
       </element>
 <!-- end of area.element -->
@@ -4112,29 +4727,37 @@
       <include/>
     </flag>
     <includedSection flag="area.attlist">
-      <attlist name="area">
+      <attlist>
+        <nameSpecRef name="area.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="href" use="optional">
+        <attribute use="optional">
+          <name>href</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="shape" use="optional" default="rect">
+        <attribute use="optional" default="rect">
+          <name>shape</name>
           <datatypeRef name="Shape.datatype"/>
         </attribute>
-        <attribute name="coords" use="optional">
+        <attribute use="optional">
+          <name>coords</name>
           <datatypeRef name="Coords.datatype"/>
         </attribute>
-        <attribute name="nohref" use="optional">
+        <attribute use="optional">
+          <name>nohref</name>
           <enumChoice>
             <enum>nohref</enum>
           </enumChoice>
         </attribute>
-        <attribute name="alt" use="required">
+        <attribute use="required">
+          <name>alt</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
       </attlist>
@@ -4143,35 +4766,44 @@
 <!-- modify anchor attribute definition list
      to allow for client-side image maps
 -->
-    <attlist name="a">
-      <attribute name="shape" use="optional" default="rect">
+    <attlist>
+      <nameSpecRef name="a.qname"/>
+      <attribute use="optional" default="rect">
+        <name>shape</name>
         <datatypeRef name="Shape.datatype"/>
       </attribute>
-      <attribute name="coords" use="optional">
+      <attribute use="optional">
+        <name>coords</name>
         <datatypeRef name="Coords.datatype"/>
       </attribute>
     </attlist>
 <!-- modify img attribute definition list
      to allow for client-side image maps
 -->
-    <attlist name="img">
-      <attribute name="usemap" use="optional">
+    <attlist>
+      <nameSpecRef name="img.qname"/>
+      <attribute use="optional">
+        <name>usemap</name>
         <basic name="IDREF"/>
       </attribute>
     </attlist>
 <!-- modify form input attribute definition list
      to allow for client-side image maps
 -->
-    <attlist name="input">
-      <attribute name="usemap" use="optional">
+    <attlist>
+      <nameSpecRef name="input.qname"/>
+      <attribute use="optional">
+        <name>usemap</name>
         <basic name="IDREF"/>
       </attribute>
     </attlist>
 <!-- modify object attribute definition list
      to allow for client-side image maps
 -->
-    <attlist name="object">
-      <attribute name="usemap" use="optional">
+    <attlist>
+      <nameSpecRef name="object.qname"/>
+      <attribute use="optional">
+        <name>usemap</name>
         <basic name="IDREF"/>
       </attribute>
     </attlist>
@@ -4191,11 +4823,14 @@
         <oneOrMore>
           <choice>
             <modelGroupRef name="Block.mix"/>
-            <elementRef name="area"/>
+            <elementRef>
+              <nameSpecRef name="area.qname"/>
+            </elementRef>
           </choice>
         </oneOrMore>
       </modelGroup>
-      <element name="map">
+      <element>
+        <nameSpecRef name="map.qname"/>
         <modelGroupRef name="map.content"/>
       </element>
 <!-- end of map.element -->
@@ -4204,9 +4839,11 @@
       <include/>
     </flag>
     <includedSection flag="map.attlist">
-      <attlist name="map">
+      <attlist>
+        <nameSpecRef name="map.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
-        <attribute name="id" use="required">
+        <attribute use="required">
+          <name>id</name>
           <basic name="ID"/>
         </attribute>
         <attributeGroupRef name="class.attrib"/>
@@ -4245,15 +4882,19 @@
      This adds the 'ismap' attribute to the img and input elements
      to support server-side processing of a user selection.
 -->
-    <attlist name="img">
-      <attribute name="ismap" use="optional">
+    <attlist>
+      <nameSpecRef name="img.qname"/>
+      <attribute use="optional">
+        <name>ismap</name>
         <enumChoice>
           <enum>ismap</enum>
         </enumChoice>
       </attribute>
     </attlist>
-    <attlist name="input">
-      <attribute name="ismap" use="optional">
+    <attlist>
+      <nameSpecRef name="input.qname"/>
+      <attribute use="optional">
+        <name>ismap</name>
         <enumChoice>
           <enum>ismap</enum>
         </enumChoice>
@@ -4298,7 +4939,8 @@
       <modelGroup name="param.content">
         <sequence/>
       </modelGroup>
-      <element name="param">
+      <element>
+        <nameSpecRef name="param.qname"/>
         <modelGroupRef name="param.content"/>
       </element>
 <!-- end of param.element -->
@@ -4307,23 +4949,28 @@
       <include/>
     </flag>
     <includedSection flag="param.attlist">
-      <attlist name="param">
+      <attlist>
+        <nameSpecRef name="param.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="id.attrib"/>
-        <attribute name="name" use="required">
+        <attribute use="required">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="value" use="optional">
+        <attribute use="optional">
+          <name>value</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="valuetype" use="optional" default="data">
+        <attribute use="optional" default="data">
+          <name>valuetype</name>
           <enumChoice>
             <enum>data</enum>
             <enum>ref</enum>
             <enum>object</enum>
           </enumChoice>
         </attribute>
-        <attribute name="type" use="optional">
+        <attribute use="optional">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
       </attlist>
@@ -4373,11 +5020,14 @@
           <choice>
             <pcdata/>
             <modelGroupRef name="Flow.mix"/>
-            <elementRef name="param"/>
+            <elementRef>
+              <nameSpecRef name="param.qname"/>
+            </elementRef>
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="object">
+      <element>
+        <nameSpecRef name="object.qname"/>
         <modelGroupRef name="object.content"/>
       </element>
 <!-- end of object.element -->
@@ -4386,44 +5036,57 @@
       <include/>
     </flag>
     <includedSection flag="object.attlist">
-      <attlist name="object">
+      <attlist>
+        <nameSpecRef name="object.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="declare" use="optional">
+        <attribute use="optional">
+          <name>declare</name>
           <enumChoice>
             <enum>declare</enum>
           </enumChoice>
         </attribute>
-        <attribute name="classid" use="optional">
+        <attribute use="optional">
+          <name>classid</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="codebase" use="optional">
+        <attribute use="optional">
+          <name>codebase</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="data" use="optional">
+        <attribute use="optional">
+          <name>data</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="type" use="optional">
+        <attribute use="optional">
+          <name>type</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="codetype" use="optional">
+        <attribute use="optional">
+          <name>codetype</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="archive" use="optional">
+        <attribute use="optional">
+          <name>archive</name>
           <datatypeRef name="URIs.datatype"/>
         </attribute>
-        <attribute name="standby" use="optional">
+        <attribute use="optional">
+          <name>standby</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="height" use="optional">
+        <attribute use="optional">
+          <name>height</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
-        <attribute name="width" use="optional">
+        <attribute use="optional">
+          <name>width</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
       </attlist>
@@ -4467,7 +5130,8 @@
      CALS to avoid a name clash with the valign attribute.
 -->
     <attributeGroup name="frame.attrib">
-      <attribute name="frame" use="optional">
+      <attribute use="optional">
+        <name>frame</name>
         <enumChoice>
           <enum>void</enum>
           <enum>above</enum>
@@ -4488,7 +5152,8 @@
        "none" if border is absent or border="0" otherwise "all"
 -->
     <attributeGroup name="rules.attrib">
-      <attribute name="rules" use="optional">
+      <attribute use="optional">
+        <name>rules</name>
         <enumChoice>
           <enum>none</enum>
           <enum>groups</enum>
@@ -4501,7 +5166,8 @@
 <!-- horizontal alignment attributes for cell contents
 -->
     <attributeGroup name="CellHAlign.attrib">
-      <attribute name="align" use="optional">
+      <attribute use="optional">
+        <name>align</name>
         <enumChoice>
           <enum>left</enum>
           <enum>center</enum>
@@ -4510,17 +5176,20 @@
           <enum>char</enum>
         </enumChoice>
       </attribute>
-      <attribute name="char" use="optional">
+      <attribute use="optional">
+        <name>char</name>
         <datatypeRef name="Character.datatype"/>
       </attribute>
-      <attribute name="charoff" use="optional">
+      <attribute use="optional">
+        <name>charoff</name>
         <datatypeRef name="Length.datatype"/>
       </attribute>
     </attributeGroup>
 <!-- vertical alignment attribute for cell contents
 -->
     <attributeGroup name="CellVAlign.attrib">
-      <attribute name="valign" use="optional">
+      <attribute use="optional">
+        <name>valign</name>
         <enumChoice>
           <enum>top</enum>
           <enum>middle</enum>
@@ -4532,7 +5201,8 @@
 <!-- scope is simpler than axes attribute for common tables
 -->
     <attributeGroup name="scope.attrib">
-      <attribute name="scope" use="optional">
+      <attribute use="optional">
+        <name>scope</name>
         <enumChoice>
           <enum>row</enum>
           <enum>col</enum>
@@ -4549,35 +5219,50 @@
       <modelGroup name="table.content">
         <sequence>
           <optional>
-            <elementRef name="caption"/>
+            <elementRef>
+              <name>caption</name>
+            </elementRef>
           </optional>
           <choice>
             <zeroOrMore>
-              <elementRef name="col"/>
+              <elementRef>
+                <name>col</name>
+              </elementRef>
             </zeroOrMore>
             <zeroOrMore>
-              <elementRef name="colgroup"/>
+              <elementRef>
+                <name>colgroup</name>
+              </elementRef>
             </zeroOrMore>
           </choice>
           <choice>
             <sequence>
               <optional>
-                <elementRef name="thead"/>
+                <elementRef>
+                  <name>thead</name>
+                </elementRef>
               </optional>
               <optional>
-                <elementRef name="tfoot"/>
+                <elementRef>
+                  <name>tfoot</name>
+                </elementRef>
               </optional>
               <oneOrMore>
-                <elementRef name="tbody"/>
+                <elementRef>
+                  <name>tbody</name>
+                </elementRef>
               </oneOrMore>
             </sequence>
             <oneOrMore>
-              <elementRef name="tr"/>
+              <elementRef>
+                <name>tr</name>
+              </elementRef>
             </oneOrMore>
           </choice>
         </sequence>
       </modelGroup>
-      <element name="table">
+      <element>
+        <nameSpecRef name="table.qname"/>
         <modelGroupRef name="table.content"/>
       </element>
 <!-- end of table.element -->
@@ -4586,23 +5271,29 @@
       <include/>
     </flag>
     <includedSection flag="table.attlist">
-      <attlist name="table">
+      <attlist>
+        <nameSpecRef name="table.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="summary" use="optional">
+        <attribute use="optional">
+          <name>summary</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="width" use="optional">
+        <attribute use="optional">
+          <name>width</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
-        <attribute name="border" use="optional">
+        <attribute use="optional">
+          <name>border</name>
           <datatypeRef name="Pixels.datatype"/>
         </attribute>
         <attributeGroupRef name="frame.attrib"/>
         <attributeGroupRef name="rules.attrib"/>
-        <attribute name="cellspacing" use="optional">
+        <attribute use="optional">
+          <name>cellspacing</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
-        <attribute name="cellpadding" use="optional">
+        <attribute use="optional">
+          <name>cellpadding</name>
           <datatypeRef name="Length.datatype"/>
         </attribute>
       </attlist>
@@ -4621,7 +5312,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="caption">
+      <element>
+        <nameSpecRef name="caption.qname"/>
         <modelGroupRef name="caption.content"/>
       </element>
 <!-- end of caption.element -->
@@ -4630,7 +5322,8 @@
       <include/>
     </flag>
     <includedSection flag="caption.attlist">
-      <attlist name="caption">
+      <attlist>
+        <nameSpecRef name="caption.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of caption.attlist -->
@@ -4646,10 +5339,13 @@
     <includedSection flag="thead.element">
       <modelGroup name="thead.content">
         <oneOrMore>
-          <elementRef name="tr"/>
+          <elementRef>
+            <nameSpecRef name="tr.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="thead">
+      <element>
+        <nameSpecRef name="thead.qname"/>
         <modelGroupRef name="thead.content"/>
       </element>
 <!-- end of thead.element -->
@@ -4658,7 +5354,8 @@
       <include/>
     </flag>
     <includedSection flag="thead.attlist">
-      <attlist name="thead">
+      <attlist>
+        <nameSpecRef name="thead.qname"/>
         <attributeGroupRef name="Common.attrib"/>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -4676,10 +5373,13 @@
     <includedSection flag="tfoot.element">
       <modelGroup name="tfoot.content">
         <oneOrMore>
-          <elementRef name="tr"/>
+          <elementRef>
+            <nameSpecRef name="tr.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="tfoot">
+      <element>
+        <nameSpecRef name="tfoot.qname"/>
         <modelGroupRef name="tfoot.content"/>
       </element>
 <!-- end of tfoot.element -->
@@ -4688,7 +5388,8 @@
       <include/>
     </flag>
     <includedSection flag="tfoot.attlist">
-      <attlist name="tfoot">
+      <attlist>
+        <nameSpecRef name="tfoot.qname"/>
         <attributeGroupRef name="Common.attrib"/>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -4705,10 +5406,13 @@
     <includedSection flag="tbody.element">
       <modelGroup name="tbody.content">
         <oneOrMore>
-          <elementRef name="tr"/>
+          <elementRef>
+            <nameSpecRef name="tr.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="tbody">
+      <element>
+        <nameSpecRef name="tbody.qname"/>
         <modelGroupRef name="tbody.content"/>
       </element>
 <!-- end of tbody.element -->
@@ -4717,7 +5421,8 @@
       <include/>
     </flag>
     <includedSection flag="tbody.attlist">
-      <attlist name="tbody">
+      <attlist>
+        <nameSpecRef name="tbody.qname"/>
         <attributeGroupRef name="Common.attrib"/>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -4734,10 +5439,13 @@
     <includedSection flag="colgroup.element">
       <modelGroup name="colgroup.content">
         <zeroOrMore>
-          <elementRef name="col"/>
+          <elementRef>
+            <nameSpecRef name="col.qname"/>
+          </elementRef>
         </zeroOrMore>
       </modelGroup>
-      <element name="colgroup">
+      <element>
+        <nameSpecRef name="colgroup.qname"/>
         <modelGroupRef name="colgroup.content"/>
       </element>
 <!-- end of colgroup.element -->
@@ -4746,12 +5454,15 @@
       <include/>
     </flag>
     <includedSection flag="colgroup.attlist">
-      <attlist name="colgroup">
+      <attlist>
+        <nameSpecRef name="colgroup.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="span" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>span</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="width" use="optional">
+        <attribute use="optional">
+          <name>width</name>
           <datatypeRef name="MultiLength.datatype"/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
@@ -4779,7 +5490,8 @@
       <modelGroup name="col.content">
         <sequence/>
       </modelGroup>
-      <element name="col">
+      <element>
+        <nameSpecRef name="col.qname"/>
         <modelGroupRef name="col.content"/>
       </element>
 <!-- end of col.element -->
@@ -4788,12 +5500,15 @@
       <include/>
     </flag>
     <includedSection flag="col.attlist">
-      <attlist name="col">
+      <attlist>
+        <nameSpecRef name="col.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="span" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>span</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="width" use="optional">
+        <attribute use="optional">
+          <name>width</name>
           <datatypeRef name="MultiLength.datatype"/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
@@ -4809,12 +5524,17 @@
       <modelGroup name="tr.content">
         <oneOrMore>
           <choice>
-            <elementRef name="th"/>
-            <elementRef name="td"/>
+            <elementRef>
+              <nameSpecRef name="th.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="td.qname"/>
+            </elementRef>
           </choice>
         </oneOrMore>
       </modelGroup>
-      <element name="tr">
+      <element>
+        <nameSpecRef name="tr.qname"/>
         <modelGroupRef name="tr.content"/>
       </element>
 <!-- end of tr.element -->
@@ -4823,7 +5543,8 @@
       <include/>
     </flag>
     <includedSection flag="tr.attlist">
-      <attlist name="tr">
+      <attlist>
+        <nameSpecRef name="tr.qname"/>
         <attributeGroupRef name="Common.attrib"/>
         <attributeGroupRef name="CellHAlign.attrib"/>
         <attributeGroupRef name="CellVAlign.attrib"/>
@@ -4846,7 +5567,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="th">
+      <element>
+        <nameSpecRef name="th.qname"/>
         <modelGroupRef name="th.content"/>
       </element>
 <!-- end of th.element -->
@@ -4855,22 +5577,28 @@
       <include/>
     </flag>
     <includedSection flag="th.attlist">
-      <attlist name="th">
+      <attlist>
+        <nameSpecRef name="th.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="abbr" use="optional">
+        <attribute use="optional">
+          <name>abbr</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="axis" use="optional">
+        <attribute use="optional">
+          <name>axis</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="headers" use="optional">
+        <attribute use="optional">
+          <name>headers</name>
           <basic name="IDREFS"/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
-        <attribute name="rowspan" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>rowspan</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="colspan" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>colspan</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
@@ -4891,7 +5619,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="td">
+      <element>
+        <nameSpecRef name="td.qname"/>
         <modelGroupRef name="td.content"/>
       </element>
 <!-- end of td.element -->
@@ -4900,22 +5629,28 @@
       <include/>
     </flag>
     <includedSection flag="td.attlist">
-      <attlist name="td">
+      <attlist>
+        <nameSpecRef name="td.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="abbr" use="optional">
+        <attribute use="optional">
+          <name>abbr</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="axis" use="optional">
+        <attribute use="optional">
+          <name>axis</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="headers" use="optional">
+        <attribute use="optional">
+          <name>headers</name>
           <basic name="IDREFS"/>
         </attribute>
         <attributeGroupRef name="scope.attrib"/>
-        <attribute name="rowspan" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>rowspan</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="colspan" use="optional" default="1">
+        <attribute use="optional" default="1">
+          <name>colspan</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
         <attributeGroupRef name="CellHAlign.attrib"/>
@@ -4980,11 +5715,14 @@
         <oneOrMore>
           <choice>
             <modelGroupRef name="BlkNoForm.mix"/>
-            <elementRef name="fieldset"/>
+            <elementRef>
+              <nameSpecRef name="fieldset.qname"/>
+            </elementRef>
           </choice>
         </oneOrMore>
       </modelGroup>
-      <element name="form">
+      <element>
+        <nameSpecRef name="form.qname"/>
         <modelGroupRef name="form.content"/>
       </element>
 <!-- end of form.element -->
@@ -4993,24 +5731,30 @@
       <include/>
     </flag>
     <includedSection flag="form.attlist">
-      <attlist name="form">
+      <attlist>
+        <nameSpecRef name="form.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="action" use="required">
+        <attribute use="required">
+          <name>action</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="method" use="optional" default="get">
+        <attribute use="optional" default="get">
+          <name>method</name>
           <enumChoice>
             <enum>get</enum>
             <enum>post</enum>
           </enumChoice>
         </attribute>
-        <attribute name="enctype" use="optional" default="application/x-www-form-urlencoded">
+        <attribute use="optional" default="application/x-www-form-urlencoded">
+          <name>enctype</name>
           <datatypeRef name="ContentType.datatype"/>
         </attribute>
-        <attribute name="accept-charset" use="optional">
+        <attribute use="optional">
+          <name>accept-charset</name>
           <datatypeRef name="Charsets.datatype"/>
         </attribute>
-        <attribute name="accept" use="optional">
+        <attribute use="optional">
+          <name>accept</name>
           <datatypeRef name="ContentTypes.datatype"/>
         </attribute>
       </attlist>
@@ -5027,10 +5771,18 @@
         <zeroOrMore>
           <choice>
             <pcdata/>
-            <elementRef name="input"/>
-            <elementRef name="select"/>
-            <elementRef name="textarea"/>
-            <elementRef name="button"/>
+            <elementRef>
+              <nameSpecRef name="input.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="select.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="textarea.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="button.qname"/>
+            </elementRef>
             <modelGroupRef name="InlStruct.class"/>
             <modelGroupRef name="InlPhras.class"/>
             <modelGroupRef name="I18n.class"/>
@@ -5042,7 +5794,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="label">
+      <element>
+        <nameSpecRef name="label.qname"/>
         <modelGroupRef name="label.content"/>
       </element>
 <!-- end of label.element -->
@@ -5051,12 +5804,15 @@
       <include/>
     </flag>
     <includedSection flag="label.attlist">
-      <attlist name="label">
+      <attlist>
+        <nameSpecRef name="label.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="for" use="optional">
+        <attribute use="optional">
+          <name>for</name>
           <basic name="IDREF"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
       </attlist>
@@ -5070,7 +5826,8 @@
       <modelGroup name="input.content">
         <sequence/>
       </modelGroup>
-      <element name="input">
+      <element>
+        <nameSpecRef name="input.qname"/>
         <modelGroupRef name="input.content"/>
       </element>
 <!-- end of input.element -->
@@ -5095,51 +5852,65 @@
       </datatype>
 <!-- attribute 'name' required for all but submit & reset
 -->
-      <attlist name="input">
+      <attlist>
+        <nameSpecRef name="input.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="type" use="optional" default="text">
+        <attribute use="optional" default="text">
+          <name>type</name>
           <datatypeRef name="InputType.class"/>
         </attribute>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="value" use="optional">
+        <attribute use="optional">
+          <name>value</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="checked" use="optional">
+        <attribute use="optional">
+          <name>checked</name>
           <enumChoice>
             <enum>checked</enum>
           </enumChoice>
         </attribute>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="readonly" use="optional">
+        <attribute use="optional">
+          <name>readonly</name>
           <enumChoice>
             <enum>readonly</enum>
           </enumChoice>
         </attribute>
-        <attribute name="size" use="optional">
+        <attribute use="optional">
+          <name>size</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="maxlength" use="optional">
+        <attribute use="optional">
+          <name>maxlength</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="src" use="optional">
+        <attribute use="optional">
+          <name>src</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
-        <attribute name="alt" use="optional">
+        <attribute use="optional">
+          <name>alt</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
-        <attribute name="accept" use="optional">
+        <attribute use="optional">
+          <name>accept</name>
           <datatypeRef name="ContentTypes.datatype"/>
         </attribute>
       </attlist>
@@ -5153,12 +5924,17 @@
       <modelGroup name="select.content">
         <oneOrMore>
           <choice>
-            <elementRef name="optgroup"/>
-            <elementRef name="option"/>
+            <elementRef>
+              <nameSpecRef name="optgroup.qname"/>
+            </elementRef>
+            <elementRef>
+              <nameSpecRef name="option.qname"/>
+            </elementRef>
           </choice>
         </oneOrMore>
       </modelGroup>
-      <element name="select">
+      <element>
+        <nameSpecRef name="select.qname"/>
         <modelGroupRef name="select.content"/>
       </element>
 <!-- end of select.element -->
@@ -5167,25 +5943,31 @@
       <include/>
     </flag>
     <includedSection flag="select.attlist">
-      <attlist name="select">
+      <attlist>
+        <nameSpecRef name="select.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="size" use="optional">
+        <attribute use="optional">
+          <name>size</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="multiple" use="optional">
+        <attribute use="optional">
+          <name>multiple</name>
           <enumChoice>
             <enum>multiple</enum>
           </enumChoice>
         </attribute>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
       </attlist>
@@ -5198,10 +5980,13 @@
     <includedSection flag="optgroup.element">
       <modelGroup name="optgroup.content">
         <oneOrMore>
-          <elementRef name="option"/>
+          <elementRef>
+            <nameSpecRef name="option.qname"/>
+          </elementRef>
         </oneOrMore>
       </modelGroup>
-      <element name="optgroup">
+      <element>
+        <nameSpecRef name="optgroup.qname"/>
         <modelGroupRef name="optgroup.content"/>
       </element>
 <!-- end of optgroup.element -->
@@ -5210,14 +5995,17 @@
       <include/>
     </flag>
     <includedSection flag="optgroup.attlist">
-      <attlist name="optgroup">
+      <attlist>
+        <nameSpecRef name="optgroup.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="label" use="required">
+        <attribute use="required">
+          <name>label</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
       </attlist>
@@ -5231,7 +6019,8 @@
       <modelGroup name="option.content">
         <pcdata/>
       </modelGroup>
-      <element name="option">
+      <element>
+        <nameSpecRef name="option.qname"/>
         <modelGroupRef name="option.content"/>
       </element>
 <!-- end of option.element -->
@@ -5240,22 +6029,27 @@
       <include/>
     </flag>
     <includedSection flag="option.attlist">
-      <attlist name="option">
+      <attlist>
+        <nameSpecRef name="option.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="selected" use="optional">
+        <attribute use="optional">
+          <name>selected</name>
           <enumChoice>
             <enum>selected</enum>
           </enumChoice>
         </attribute>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="label" use="optional">
+        <attribute use="optional">
+          <name>label</name>
           <datatypeRef name="Text.datatype"/>
         </attribute>
-        <attribute name="value" use="optional">
+        <attribute use="optional">
+          <name>value</name>
           <basic name="CDATA"/>
         </attribute>
       </attlist>
@@ -5269,7 +6063,8 @@
       <modelGroup name="textarea.content">
         <pcdata/>
       </modelGroup>
-      <element name="textarea">
+      <element>
+        <nameSpecRef name="textarea.qname"/>
         <modelGroupRef name="textarea.content"/>
       </element>
 <!-- end of textarea.element -->
@@ -5278,31 +6073,39 @@
       <include/>
     </flag>
     <includedSection flag="textarea.attlist">
-      <attlist name="textarea">
+      <attlist>
+        <nameSpecRef name="textarea.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="rows" use="required">
+        <attribute use="required">
+          <name>rows</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="cols" use="required">
+        <attribute use="required">
+          <name>cols</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="readonly" use="optional">
+        <attribute use="optional">
+          <name>readonly</name>
           <enumChoice>
             <enum>readonly</enum>
           </enumChoice>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
       </attlist>
@@ -5320,12 +6123,15 @@
         <zeroOrMore>
           <choice>
             <pcdata/>
-            <elementRef name="legend"/>
+            <elementRef>
+              <nameSpecRef name="legend.qname"/>
+            </elementRef>
             <modelGroupRef name="Flow.mix"/>
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="fieldset">
+      <element>
+        <nameSpecRef name="fieldset.qname"/>
         <modelGroupRef name="fieldset.content"/>
       </element>
 <!-- end of fieldset.element -->
@@ -5334,7 +6140,8 @@
       <include/>
     </flag>
     <includedSection flag="fieldset.attlist">
-      <attlist name="fieldset">
+      <attlist>
+        <nameSpecRef name="fieldset.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of fieldset.attlist -->
@@ -5352,7 +6159,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="legend">
+      <element>
+        <nameSpecRef name="legend.qname"/>
         <modelGroupRef name="legend.content"/>
       </element>
 <!-- end of legend.element -->
@@ -5361,9 +6169,11 @@
       <include/>
     </flag>
     <includedSection flag="legend.attlist">
-      <attlist name="legend">
+      <attlist>
+        <nameSpecRef name="legend.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
       </attlist>
@@ -5388,7 +6198,8 @@
           </choice>
         </zeroOrMore>
       </modelGroup>
-      <element name="button">
+      <element>
+        <nameSpecRef name="button.qname"/>
         <modelGroupRef name="button.content"/>
       </element>
 <!-- end of button.element -->
@@ -5397,30 +6208,37 @@
       <include/>
     </flag>
     <includedSection flag="button.attlist">
-      <attlist name="button">
+      <attlist>
+        <nameSpecRef name="button.qname"/>
         <attributeGroupRef name="Common.attrib"/>
-        <attribute name="name" use="optional">
+        <attribute use="optional">
+          <name>name</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="value" use="optional">
+        <attribute use="optional">
+          <name>value</name>
           <basic name="CDATA"/>
         </attribute>
-        <attribute name="type" use="optional" default="submit">
+        <attribute use="optional" default="submit">
+          <name>type</name>
           <enumChoice>
             <enum>button</enum>
             <enum>submit</enum>
             <enum>reset</enum>
           </enumChoice>
         </attribute>
-        <attribute name="disabled" use="optional">
+        <attribute use="optional">
+          <name>disabled</name>
           <enumChoice>
             <enum>disabled</enum>
           </enumChoice>
         </attribute>
-        <attribute name="tabindex" use="optional">
+        <attribute use="optional">
+          <name>tabindex</name>
           <datatypeRef name="Number.datatype"/>
         </attribute>
-        <attribute name="accesskey" use="optional">
+        <attribute use="optional">
+          <name>accesskey</name>
           <datatypeRef name="Character.datatype"/>
         </attribute>
       </attlist>
@@ -5483,7 +6301,8 @@
       <modelGroup name="title.content">
         <pcdata/>
       </modelGroup>
-      <element name="title">
+      <element>
+        <nameSpecRef name="title.qname"/>
         <modelGroupRef name="title.content"/>
       </element>
 <!-- end of title.element -->
@@ -5492,7 +6311,8 @@
       <include/>
     </flag>
     <includedSection flag="title.attlist">
-      <attlist name="title">
+      <attlist>
+        <nameSpecRef name="title.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
       </attlist>
@@ -5503,7 +6323,8 @@
       <include/>
     </flag>
     <includedSection flag="head.element">
-      <element name="head">
+      <element>
+        <nameSpecRef name="head.qname"/>
         <modelGroupRef name="head.content"/>
       </element>
 <!-- end of head.element -->
@@ -5515,11 +6336,13 @@
 <!-- reserved for future use with document profiles
 -->
       <attributeGroup name="profile.attrib">
-        <attribute name="profile" use="optional" default="">
+        <attribute use="optional" default="">
+          <name>profile</name>
           <datatypeRef name="URI.datatype"/>
         </attribute>
       </attributeGroup>
-      <attlist name="head">
+      <attlist>
+        <nameSpecRef name="head.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>
         <attributeGroupRef name="profile.attrib"/>
@@ -5536,7 +6359,8 @@
           <modelGroupRef name="Block.mix"/>
         </oneOrMore>
       </modelGroup>
-      <element name="body">
+      <element>
+        <nameSpecRef name="body.qname"/>
         <modelGroupRef name="body.content"/>
       </element>
 <!-- end of body.element -->
@@ -5545,7 +6369,8 @@
       <include/>
     </flag>
     <includedSection flag="body.attlist">
-      <attlist name="body">
+      <attlist>
+        <nameSpecRef name="body.qname"/>
         <attributeGroupRef name="Common.attrib"/>
       </attlist>
 <!-- end of body.attlist -->
@@ -5557,11 +6382,16 @@
     <includedSection flag="html.element">
       <modelGroup name="html.content">
         <sequence>
-          <elementRef name="head"/>
-          <elementRef name="body"/>
+          <elementRef>
+            <nameSpecRef name="head.qname"/>
+          </elementRef>
+          <elementRef>
+            <nameSpecRef name="body.qname"/>
+          </elementRef>
         </sequence>
       </modelGroup>
-      <element name="html">
+      <element>
+        <nameSpecRef name="html.qname"/>
         <modelGroupRef name="html.content"/>
       </element>
 <!-- end of html.element -->
@@ -5573,14 +6403,16 @@
 <!-- version attribute value defined in driver
 -->
       <attributeGroup name="XHTML.version.attrib">
-        <attribute name="version" use="required" default="-//W3C//DTD XHTML 1.1//EN">
+        <attribute use="required" default="-//W3C//DTD XHTML 1.1//EN">
+          <name>version</name>
           <datatypeRef name="FPI.datatype"/>
         </attribute>
       </attributeGroup>
 <!-- see the Qualified Names module for information
      on how to extend XHTML using XML namespaces
 -->
-      <attlist name="html">
+      <attlist>
+        <nameSpecRef name="html.qname"/>
         <attributeGroupRef name="XHTML.xmlns.attrib"/>
         <attributeGroupRef name="XHTML.version.attrib"/>
         <attributeGroupRef name="I18n.attrib"/>

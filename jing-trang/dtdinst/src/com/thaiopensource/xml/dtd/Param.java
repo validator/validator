@@ -60,14 +60,17 @@ class Param {
     while (ps.advance()) {
       AttributeGroupMember agm = null;
       switch (ps.type) {
-      case REFERENCE:
-	agm = new AttributeGroupRef(ps.entity.name, ps.entity.attributeGroup);
-	break;
       case EMPTY_ATTRIBUTE_GROUP:
 	break;
+      case REFERENCE:
+	if (ps.entity.semantic == Entity.SEMANTIC_ATTRIBUTE_GROUP) {
+	  agm = new AttributeGroupRef(ps.entity.name, ps.entity.attributeGroup);
+	  break;
+	}
+	// fall through
       case ATTRIBUTE_NAME:
 	{
-	  String name = ps.value;
+	  NameSpec nameSpec = currentParamToNameSpec(ps);
 	  Datatype datatype = paramsToDatatype(ps);
 	  ps.advance();
 	  boolean optional = true;
@@ -84,7 +87,7 @@ class Param {
 	    defaultValue = ps.value;
 	    break;
 	  }
-	  agm = new Attribute(name, optional, datatype, defaultValue);
+	  agm = new Attribute(nameSpec, optional, datatype, defaultValue);
 	}
       }
       if (agm != null)
@@ -148,6 +151,26 @@ class Param {
       return new Ignore();
     case Param.INCLUDE:
       return new Include();
+    }
+    throw new Error();
+  }
+
+  static NameSpec paramsToNameSpec(Vector v) {
+    return paramsToNameSpec(new ParamStream(v, true));
+  }
+
+  static NameSpec paramsToNameSpec(ParamStream ps) {
+    ps.advance();
+    return currentParamToNameSpec(ps);
+  }
+
+  static private NameSpec currentParamToNameSpec(ParamStream ps) {
+    switch (ps.type) {
+    case Param.REFERENCE:
+      return new NameSpecRef(ps.entity.name, ps.entity.nameSpec);
+    case Param.ELEMENT_NAME:
+    case Param.ATTRIBUTE_NAME:
+      return new Name(ps.value);
     }
     throw new Error();
   }

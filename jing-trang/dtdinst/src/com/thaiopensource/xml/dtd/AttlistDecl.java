@@ -2,11 +2,11 @@ package com.thaiopensource.xml.dtd;
 
 public class AttlistDecl extends TopLevel {
   
-  private final String elementName;
+  private final NameSpec elementNameSpec;
   private final AttributeGroup attributeGroup;
 
-  public AttlistDecl(String elementName, AttributeGroup attributeGroup) {
-    this.elementName = elementName;
+  public AttlistDecl(NameSpec elementNameSpec, AttributeGroup attributeGroup) {
+    this.elementNameSpec = elementNameSpec;
     this.attributeGroup = attributeGroup;
   }
 
@@ -14,8 +14,8 @@ public class AttlistDecl extends TopLevel {
     return ATTLIST_DECL;
   }
 
-  public String getElementName() {
-    return elementName;
+  public NameSpec getElementNameSpec() {
+    return elementNameSpec;
   }
   
   public AttributeGroup getAttributeGroup() {
@@ -23,7 +23,7 @@ public class AttlistDecl extends TopLevel {
   }
 
   public void accept(TopLevelVisitor visitor) throws Exception {
-    visitor.attlistDecl(elementName, attributeGroup);
+    visitor.attlistDecl(elementNameSpec, attributeGroup);
   }
 
 }

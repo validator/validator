@@ -7,7 +7,8 @@ public class SchemaWriter implements TopLevelVisitor,
 				     AttributeGroupVisitor,
 				     DatatypeVisitor,
 				     EnumGroupVisitor,
-                                     FlagVisitor {
+                                     FlagVisitor,
+                                     NameSpecVisitor {
   private XmlWriter w;
   
   public SchemaWriter(XmlWriter writer) {
@@ -28,18 +29,18 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void elementDecl(String name, ModelGroup modelGroup)
+  public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
     throws Exception {
     w.startElement("element");
-    w.attribute("name", name);
+    nameSpec.accept(this);
     modelGroup.accept(this);
     w.endElement();
   }
 
-  public void attlistDecl(String name, AttributeGroup attributeGroup)
+  public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
     throws Exception {
     w.startElement("attlist");
-    w.attribute("name", name);
+    nameSpec.accept(this);
     attributeGroup.accept(this);
     w.endElement();
   }
@@ -130,9 +131,9 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void elementRef(String name) throws Exception {
+  public void elementRef(NameSpec nameSpec) throws Exception {
     w.startElement("elementRef");
-    w.attribute("name", name);
+    nameSpec.accept(this);
     w.endElement();
   }
 
@@ -146,16 +147,16 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
-  public void attribute(String name,
+  public void attribute(NameSpec nameSpec,
 			boolean optional,
 			Datatype datatype,
 			String defaultValue)
     throws Exception {
     w.startElement("attribute");
-    w.attribute("name", name);
     w.attribute("use", optional ? "optional" : "required");
     if (defaultValue != null)
       w.attribute("default", defaultValue);
+    nameSpec.accept(this);
     datatype.accept(this);
     w.endElement();
   }
@@ -261,4 +262,24 @@ public class SchemaWriter implements TopLevelVisitor,
     if (value != null)
       w.attribute(name, value);
   }
+
+  public void nameSpecDef(String name, NameSpec nameSpec) throws Exception {
+    w.startElement("nameSpec");
+    w.attribute("name", name);
+    nameSpec.accept(this);
+    w.endElement();
+  }
+
+  public void name(String value) throws IOException {
+    w.startElement("name");
+    w.characters(value);
+    w.endElement();
+  }
+
+  public void nameSpecRef(String name, NameSpec nameSpec) throws Exception {
+    w.startElement("nameSpecRef");
+    w.attribute("name", name);
+    w.endElement();
+  }
+
 }

@@ -1,3 +1,5 @@
+Name : NameSpec ; NameSpecRef : NameSpec
+
 Encoding detection
 
 expand general entity references for default values
@@ -54,3 +56,15 @@ Methods on DTD giving random access to various kinds of declaration.
 Normalize public IDs.
 
 local.book.class
+
+<!ELEMENT % n.x "x">
+<!ELEMENT %n.x; EMPTY>
+<!ATTLIST %n.x; att CDATA #IMPLIED>
+<!ELEMENT doc (%n.x)>
+
+
+n.x = 
+x = element x { attlist.x, model.x }
+model.x = empty
+attlist.x &= attribute att { xsd:CDATA }?
+model.doc = n.x

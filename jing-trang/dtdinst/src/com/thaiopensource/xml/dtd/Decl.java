@@ -69,16 +69,14 @@ class Decl {
 
   ElementDecl createElementDecl() {
     ParamStream ps = new ParamStream(params, true);
-    ps.advance();
-    String name = ps.value;
-    return new ElementDecl(name, Param.paramsToModelGroup(ps));
+    NameSpec nameSpec = Param.paramsToNameSpec(ps);
+    return new ElementDecl(nameSpec, Param.paramsToModelGroup(ps));
   }
 
   AttlistDecl createAttlistDecl() {
     ParamStream ps = new ParamStream(params, true);
-    ps.advance();
-    String name = ps.value;
-    return new AttlistDecl(name, Param.paramsToAttributeGroup(ps));
+    NameSpec nameSpec = Param.paramsToNameSpec(ps);
+    return new AttlistDecl(nameSpec, Param.paramsToAttributeGroup(ps));
   }
     
   TopLevel createEntityDecl(DtdBuilder db) {
@@ -110,6 +108,9 @@ class Decl {
     case Entity.SEMANTIC_FLAG:
       entity.flag = Param.paramsToFlag(entity.parsed);
       return new FlagDef(name, entity.flag);
+    case Entity.SEMANTIC_NAME_SPEC:
+      entity.nameSpec = Param.paramsToNameSpec(entity.parsed);
+      return new NameSpecDef(name, entity.nameSpec);
     }
     return null;
   }

@@ -1,8 +1,12 @@
 <doctype>
-  <element name="foo">
+  <element>
+    <name>foo</name>
     <sequence/>
   </element>
-  <element name="bar">
-    <elementRef name="EMPTY"/>
+  <element>
+    <name>bar</name>
+    <elementRef>
+      <name>EMPTY</name>
+    </elementRef>
   </element>
 </doctype>

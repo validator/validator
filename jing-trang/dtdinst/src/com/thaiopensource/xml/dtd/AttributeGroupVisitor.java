@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.dtd;
 
 public interface AttributeGroupVisitor {
-  void attribute(String name,
+  void attribute(NameSpec nameSpec,
 		 boolean optional,
 		 Datatype datatype,
 		 String defaultValue)
