@@ -585,7 +585,43 @@ href="http://www.y12.doe.gov/sgml/sc34/document/0363.htm"
 href="http://www.thaiopensource.com/relang/jing.html"
 >http://www.thaiopensource.com/relang/jing.html</a></p>
 
-<h2>NRL Schema</h2>
+<h2>NRL schema</h2>
+
+<p>NRL elements can be extended with arbitrary attributes provided the
+attributes are namespace qualified and their namespace is not the NRL
+namespace; they can also be extended with arbitrary child elements
+with any namespace (including the absent namespace) other than the NRL
+namespace. We could provide a RELAX NG schema that fully described
+NRL, but the extensibility would make the schema harder to understand.
+So instead we provide a RELAX NG schema (in compact syntax) that does
+not allow extensibility, and provide an NRL schema to make it
+extensible.</p>
+
+<p>The following NRL schema describes the extensibility:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
+<mode name="root">
+  <namespace ns="http://www.thaiopensource.com/validate/nrl">
+    <validate schema="nrl.rnc" schemaType="application/x-rnc" useMode="extend"/>
+  </namespace>
+</mode>
+<mode name="extend">
+  <namespace ns="http://www.thaiopensource.com/validate/nrl" match="attributes">
+    <reject/>
+  </namespace>
+  <namespace ns="" match="attributes">
+    <attach/>
+  </namespace>
+  <anyNamespace match="elements attributes">
+    <allow useMode="#attach"/>
+  </anyNamespace>
+</mode>
+</rules>
+</xml>
+
+<p>The following RELAX NG compact syntax schema describes the syntax
+without the extensibility.</p>
 
 <pre>
 default namespace = "http://www.thaiopensource.com/validate/nrl"
