@@ -36,7 +36,18 @@
   </java>
 </target>
 
-<target name="dist" depends="jar,translate-schema">
+<target name="example" depends="jar">
+  <mkdir dir="build/example"/>
+  <copy todir="build/example">
+    <fileset dir="example" includes="*.dtd"/>
+    <mapper type="glob" from="*.dtd" to="*.dtd.txt"/>
+  </copy>
+  <copy todir="build/example">
+    <fileset dir="example" includes="*.ent,*.xml"/>
+  </copy>
+</target>  
+
+<target name="dist" depends="jar,example,translate-schema">
   <zip zipfile="build/dtdinst-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
@@ -50,7 +61,7 @@
            value="${version}"/>
   <tar tarfile="build/dtdinst.tar"
        basedir="build"
-       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,teixml.dtd.txt"/>
+       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,teixml.dtd.txt,example/*"/>
   <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
 </target>
 

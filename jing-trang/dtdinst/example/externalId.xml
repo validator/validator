@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <externalId name="decls" system="externalId.ent"/>
+  <externalIdRef name="decls">
+    <element>
+      <name>doc</name>
+      <sequence/>
+    </element>
+  </externalIdRef>
+</doctype>

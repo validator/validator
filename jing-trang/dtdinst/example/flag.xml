@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <flag name="presentation">
+    <include/>
+  </flag>
+  <includedSection flag="presentation">
+    <element>
+      <name>big</name>
+      <pcdata/>
+    </element>
+    <element>
+      <name>small</name>
+      <pcdata/>
+    </element>
+  </includedSection>
+  <element>
+    <name>em</name>
+    <pcdata/>
+  </element>
+  <element>
+    <name>para</name>
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <elementRef>
+          <name>em</name>
+        </elementRef>
+        <elementRef>
+          <name>big</name>
+        </elementRef>
+        <elementRef>
+          <name>small</name>
+        </elementRef>
+      </choice>
+    </zeroOrMore>
+  </element>
+</doctype>

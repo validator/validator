@@ -1,0 +1,6 @@
+<!ENTITY % inherited "#IMPLIED">
+<!ENTITY % security  "security NMTOKEN %inherited;">
+<!ELEMENT div (para*, div*)>
+<!ELEMENT para (#PCDATA)>
+<!ATTLIST div %security;>
+<!ATTLIST para %security;>

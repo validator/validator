@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctype>
+  <datatype name="date">
+    <cdata/>
+  </datatype>
+  <element>
+    <name>holiday</name>
+    <sequence/>
+  </element>
+  <attlist>
+    <name>holiday</name>
+    <attribute>
+      <name>startDate</name>
+      <datatypeRef name="date"/>
+      <required/>
+    </attribute>
+    <attribute>
+      <name>endDate</name>
+      <datatypeRef name="date"/>
+      <required/>
+    </attribute>
+  </attlist>
+</doctype>

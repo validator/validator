@@ -1,0 +1,2 @@
+<!ENTITY % e "EMPTY">
+<!ELEMENT %e; %e;>
