@@ -4,7 +4,9 @@
 <!ENTITY % TEI.drama "INCLUDE">
 <!ENTITY % TEI.spoken "INCLUDE">
 <!ENTITY % TEI.dictionaries "INCLUDE">
+<!-- Terminology doesn't seem to mix with dictionaries, so leave it out.
 <!ENTITY % TEI.terminology "INCLUDE">
+-->
 <!ENTITY % TEI.mixed "INCLUDE">
 <!ENTITY % TEI.linking "INCLUDE">
 <!ENTITY % TEI.analysis "INCLUDE">
@@ -18,3 +20,8 @@
 <!ENTITY % TEI.corpus "INCLUDE">
 <!ENTITY % tei2.dtd SYSTEM "tei2.dtd">
 %tei2.dtd;
+<!ELEMENT %n.att; (#PCDATA)>
+<!ELEMENT %n.gi; (#PCDATA)>
+<!ELEMENT %n.tag; (#PCDATA)>
+<!ELEMENT %n.val; (#PCDATA)>
+<!ELEMENT %n.dictScrap; EMPTY>
