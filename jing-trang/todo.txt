@@ -1,3 +1,6 @@
+Implement compact syntax constraint against ill-formed documents with
+multiple root elements.
+
 Give a warning for a list containing a single token.
 
 Give a more helpful message for sequence of strings
