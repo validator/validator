@@ -11,6 +11,7 @@ decl =
   | datatypeDef
   | flagDef
   | includeSection
+  | ignoreSection
 
 elementDecl = element element { qname, modelGroup }
 
@@ -22,6 +23,9 @@ flagDef = element flag { name, flag }
 
 includeSection = 
   element includeSection { attribute flag { xsd:NCName }?, decl* }
+
+ignoreSection = 
+  element ignoreSection { attribute flag { xsd:NCName }?, text }
 
 datatype =
   element basic { 
