@@ -3,6 +3,8 @@
 ## fixup usage error messages
 
 set -e
+jing_main=com.thaiopensource.relaxng.util.Driver
+trang_main=com.thaiopensource.relaxng.translate.Driver
 a_jing_file=src/com/thaiopensource/relaxng/Schema.java
 crimson_version=1.1.3
 xerces_version=2.3.0
@@ -81,12 +83,13 @@ rm -fr ${build_dir}/crimson-${crimson_version}
 
 cd ${build_dir}
 
-xerces_src_dir=xerces-`echo ${xerces_version} | tr . _`/src
+xerces_top_dir=xerces-`echo ${xerces_version} | tr . _`
+xerces_src_dir=${xerces_top_dir}/src
 
 tar xfz ${top_dir}/gcj/Xerces-J-src.${xerces_version}.tar.gz ${xerces_src_dir}/org/apache/xerces/impl/xpath/regex
 cd ${top_dir}
 cp -a ${build_dir}/${xerces_src_dir}/* ${jing_src_dir}/src
-rm -fr ${build_dir}/${xerces_src_dir}
+rm -fr ${build_dir}/${xerces_top_dir}
 
 cp -a ${jing_src_dir}/src ${trang_src_dir}
 
@@ -95,3 +98,82 @@ find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang
 cd ../trang
 find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
 cd ..
+
+
+setup_prog() {
+
+cd ${prog_src_dir}
+
+cat <<EOF >Makefile.in
+srcdir = @srcdir@/src
+VPATH = @srcdir@/src
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+GCJ = @GCJ@
+GCJ_FLAGS = -g -O
+
+PROG=${prog}
+MAIN=${main}
+LDFLAGS = 
+
+EOF
+echo SOURCES=\\ >>Makefile.in
+find src -name '*.java' | sed -e 's/^src/  $(srcdir)/' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+
+echo RESOURCES=\\ >>Makefile.in
+find src -type f -not -name '*.java' -not -name '*.jj' | sed -e 's;^src/;  ;' -e 's/$/.o/' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+
+echo DIRS=\\ >>Makefile.in
+
+find src/* -type d -not -name '*.java' -not -name '*.jj' | sed -e 's;^src/;  ;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
+
+cat <<\EOF >>Makefile.in
+
+$(PROG): $(PROG).o $(RESOURCES)
+	$(GCJ) $(GCJ_FLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES)
+
+$(PROG).o: $(SOURCES)
+	$(GCJ) $(GCJ_FLAGS) -c -o $@ $(SOURCES)
+
+.resource.o:
+	$(GCJ) $(GCJ_FLAGS) -c -o $@ --resource=`echo $@ | sed -e 's/.o$$//'` $<
+
+$(RESOURCES): dirstamp
+
+dirstamp:
+	mkdir $(DIRS)
+	@>$@
+
+clean:
+	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
+	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
+
+
+.SUFFIXES: .resource
+EOF
+
+find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
+
+cat <<EOF >configure.ac
+AC_INIT(${prog}, ${prog_version})
+AC_CHECK_PROG(GCJ, gcj, gcj)
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+EOF
+
+autoconf
+}
+
+prog=jing
+main=${jing_main}
+prog_version=${jing_version}
+prog_src_dir=${jing_src_dir}
+setup_prog
+cd ${top_dir}
+prog=trang
+main=${trang_main}
+prog_version=${trang_version}
+prog_src_dir=${trang_src_dir}
+setup_prog
