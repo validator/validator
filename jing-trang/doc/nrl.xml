@@ -45,6 +45,8 @@ is an example:</p>
 <p>The absent namespace can be mapped to a namespace URI by using
 <code>ns=""</code>.</p>
 
+<h2>Specifying the schema</h2>
+
 <p>In most cases the schema will be in some namespaced XML dialect,
 and the type of schema can be automatically detected from the
 namespace URI of the root element.  In cases where the schema is not
@@ -64,6 +66,8 @@ used.</p>
 </namespace>
 </rules>
 </xml>
+
+<p>XXX schema options</p>
 
 <h2>Processing model</h2>
 
@@ -302,7 +306,39 @@ possibility, NRL allows the rule for a namespace to specify that
 elements from that namespace should be attached to a parent section
 and be validated together with that parent section.</p>
 
-<p>XXX SVG+XHTML example</p>
+<p>Suppose we have RELAX NG schemas for XHTML and for SVG.  We could
+use these directly as subschemas in NRL.  But we might prefer instead
+to use RELAX NG mechanisms to combine these into a single RELAX NG
+schema. This would allow us conveniently to allow SVG elements only to
+occur in places where XHTML block and inline elements are allowed and
+to disallow them in places that make no sense (for example, as
+children of a <code>ul</code> element).  If we have such a combined
+schema, we could use it as follows:</p>
+
+<xml>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="soap">
+<mode name="soap">
+  <namespace ns="http://schemas.xmlsoap.org/soap/envelope/">
+    <validate schema="soap-envelope.xsd" useMode="xhtml"/>
+  </namespace>
+</mode>
+<mode name="xhtml">
+  <namespace ns="http://www.w3.org/1999/xhtml">
+    <validate schema="xhtml+svg.rng" useMode="svg"/>
+  </namespace>
+</mode>
+<mode name="svg">
+  <namespace ns="http://www.w3.org/2000/svg">
+    <attach/>
+  </namespace>
+</mode>
+</rules>
+</xml>
+
+<p>This will cause SVG sections occurring within XHTML to be attached
+to the parent XHTML section and be validated as part of it.</p>
+
+<p>XXX introduce RDF example</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
