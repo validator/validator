@@ -7,7 +7,7 @@
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/0.9"
   xmlns="http://relaxng.org/ns/structure/0.9">
 
-<xsl:import href="rng.xsl"/>
+<xsl:import href="dtdinst2rng.xsl"/>
 
 <xsl:output indent="yes" encoding="iso-8859-1"/>
 
