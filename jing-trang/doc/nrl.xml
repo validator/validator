@@ -34,6 +34,9 @@ Namespaces (MNS)</bib> language.</p>
 
 </abstract>
 
+<div>
+
+<div>
 <h2>Getting started</h2>
 
 <p>In its simplest form, an NRL schema consists of a mapping from
@@ -61,6 +64,9 @@ is an example:</p>
 <p>The absent namespace can be mapped to a schema by using
 <code>ns=""</code>.</p>
 
+</div>
+
+<div>
 <h2>Processing model</h2>
 
 <p>NRL validation has two inputs: a document to be validated and an
@@ -138,6 +144,9 @@ part of the same section as the root element.</p>
 <p>This validation process can be refined in several ways, which
 are described in the following sections.</p>
 
+</div>
+
+<div>
 <h2>Specifying the schema</h2>
 
 <p>In most cases the schema will be in some namespaced XML vocabulary,
@@ -284,6 +293,9 @@ attribute may be added to the <code>option</code> element:</p>
 <p>If there is a <code>mustSupport</code> attribute and the NRL
 implementation cannot support the option, it must report an error.</p>
 
+</div>
+
+<div>
 <h2>Concurrent validation</h2>
 
 <p>Multiple <code>validate</code> elements can be specified for a
@@ -307,6 +319,9 @@ schema. The NRL schema would be like this:</p>
 </rules>
 </xml>
 
+</div>
+
+<div>
 <h2>Built-in schemas</h2>
 
 <p>Instead of a <code>validate</code> element, you can use an
@@ -337,6 +352,9 @@ Thus, in the above example, if the SVG contained an embedded XHTML
 section, then that XHTML section would be validated against
 <code>xhtml.rng</code>.</p>
 
+</div>
+
+<div>
 <h2>Namespace wildcards</h2>
 
 <p>You can use an <code>anyNamespace</code> element instead of a
@@ -389,7 +407,9 @@ implied:</p>
   <reject/>
 </anyNamespace>
 </xml>
+</div>
 
+<div>
 <h2>Modes</h2>
 
 <p>You can apply different rules in different contexts by using
@@ -434,6 +454,9 @@ namespace; so if the XHTML were to contain a SOAP
 <p>The <code>reject</code> and <code>allow</code> elements can have a
 <code>useMode</code> attribute as well.</p>
 
+</div>
+
+<div>
 <h2>Related namespaces</h2>
 
 <p>A single subschema may not handle just a single namespace; it may
@@ -524,6 +547,9 @@ XHTML and SVG.</p>
 </rules>
 </xml>
 
+</div>
+
+<div>
 <h2>Built-in modes</h2>
 
 <p>There is a built-in mode named <code>#attach</code>, which contains
@@ -585,7 +611,9 @@ the rule:</p>
   <allow/>
 </anyNamespace>
 </xml>
+</div>
 
+<div>
 <h2>Open schemas</h2>
 
 <p>Up to now, sections validated by one subschema have not
@@ -627,6 +655,9 @@ with the SOAP section against the SOAP schema</li>
 
 </ul>
 
+</div>
+
+<div>
 <h2>Element-name context</h2>
 
 <p>So far we have seen how to make the processing of an element depend
@@ -670,6 +701,9 @@ entire document: a path of <code>/foo</code> means a <code>foo</code>
 element that is the root of a section; it does not mean a
 <code>foo</code> element that is the root of the document.</p>
 
+</div>
+
+<div>
 <h2>Attributes</h2>
 
 <p>Up to now, we have considered attributes to be inseparably attached
@@ -751,7 +785,9 @@ NG:</p>
 </rules>
 </xml>
 
+</div>
 
+<div>
 <h2>Mode inheritance</h2>
 
 <p>One mode can <i>extend</i> another mode. Suppose in our SOAP+XHTML
@@ -805,6 +841,9 @@ will be used to search for a matching rule:</p>
 <p>can be restated as a requirement that the default value of the
 <code>extends</code> attribute is <code>#reject</code>.</p>
 
+</div>
+
+<div>
 <h2>Transparent namespaces</h2>
 
 <p>Many schema languages can deal with the kind of extensibility that
@@ -938,6 +977,9 @@ accomplishes this:</p>
 </rules>
 </xml>
 
+</div>
+
+<div>
 <h2>Related work</h2>
 
 <p>The fundamental idea of dividing the instance into sections, each
@@ -1010,12 +1052,19 @@ DSDL. Comments on NRL would be useful input to the Part 4 FCD
 preparation process. See the <bib ref="dsdl.org">DSDL web site</bib>
 for information on how to make comments.</p>
 
-<h2>Acknowledgments</h2>
+</div>
+
+<div>
+<h2>Acknowledgements</h2>
 
 <p>Thanks to Murata Makoto and Rick Jelliffe for helpful comments.</p>
+</div>
+
+</div>
 
 <div class="back">
 
+<div>
 <h2>References</h2>
 
 <bibliography>
@@ -1062,7 +1111,10 @@ Selection of Validation Candidates,
 <url>http://www.thaiopensource.com/relaxng/mns.html</url></bibentry>
 
 </bibliography>
+</div>
 
+
+<div>
 <h2>NRL schema</h2>
 
 <p>NRL elements can be extended with arbitrary attributes provided the
@@ -1176,6 +1228,9 @@ path =
   }
 </pre>
 
+</div>
+
+<div>
 <h2>Formal semantics</h2>
 
 <p>In order to describe the semantics of NRL, it is convenient to
@@ -1372,6 +1427,8 @@ maybeCons (Just x) xs = (x:xs)
 <p>This does not yet deal with element-name context. To deal with this,
 we would need to change each of the Actions that has a Mode parameter
 to take a more complex structure.</p>
+
+</div>
 
 </div>
 
