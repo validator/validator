@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-class ContentModelInferrer {
-  static final Name START = new Name("", "#start");
-  static final Name END = new Name("", "#end");
+public class ContentModelInferrer {
+  public static final Name START = new Name("", "#start");
+  public static final Name END = new Name("", "#end");
 
   /**
    * Maps names to nodes.
@@ -175,11 +175,11 @@ class ContentModelInferrer {
     }
   }
 
-  void addSequence(Name e1, Name e2) {
+  public void addSequence(Name e1, Name e2) {
     lookup(e1).followingNodes.add(lookup(e2));
   }
 
-  void setMulti(Name e) {
+  public void setMulti(Name e) {
     lookup(e).multi = true;
   }
 
@@ -192,8 +192,7 @@ class ContentModelInferrer {
     return node;
   }
 
-
-  Particle inferContentModel() {
+  public Particle inferContentModel() {
     ParticleNode start = new StronglyConnectedComponentsFinder(nameMap.size()).makeDag(lookup(START));
     int nNodes = start.index + 1;
     return new ParticleBuilder(nNodes).build(start);
@@ -205,7 +204,7 @@ class ContentModelInferrer {
     return new ElementParticle(name);
   }
 
-  Set getElementNames() {
+  public Set getElementNames() {
     return nameMap.keySet();
   }
 }
