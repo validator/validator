@@ -148,4 +148,9 @@
   <delete dir="build"/>
 </target>
 
+<target name="javadoc" depends="init">
+  <mkdir dir="build/api"/>
+  <javadoc sourcepath="src" destdir="build/api" packagenames="org.relaxng.datatype,org.relaxng.datatype.helpers"/>
+</target>
+
 </project>
