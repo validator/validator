@@ -101,3 +101,7 @@ Deal with non top-level commments.
 Annotations to control block and final attributes.
 
 Consider turning attribute groups (without paired group or simple type) into complex type.
+
+Map element with <text/> only content onto element with simple type of string
+(or at least provide option for this).
+
