@@ -57,6 +57,8 @@ class Decl {
       return createEntityDecl(db);
     case INCLUDE_SECTION:
       return createIncludeSection(db);
+    case IGNORE_SECTION:
+      return createIgnoreSection();
     }
     return null;
   }
@@ -126,5 +128,9 @@ class Decl {
 	v.addElement(t);
     }
     return v;
+  }
+
+  IgnoreSection createIgnoreSection() {
+    return new IgnoreSection(Param.paramsToFlag(params), value);
   }
 }

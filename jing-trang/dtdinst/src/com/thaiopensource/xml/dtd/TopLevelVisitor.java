@@ -15,5 +15,6 @@ public interface TopLevelVisitor {
   void datatypeDef(String name, Datatype datatype) throws Exception;
   void flagDef(String name, Flag flag) throws Exception;
   void includeSection(Flag flag, TopLevel[] contents) throws Exception;
+  void ignoreSection(Flag flag, String contents) throws Exception;
 }
 

@@ -230,4 +230,12 @@ public class SchemaWriter implements TopLevelVisitor,
       contents[i].accept(this);
     w.endElement();
   }
+
+  public void ignoreSection(Flag flag, String contents) throws Exception {
+    w.startElement("ignoreSection");
+    if (flag instanceof FlagRef)
+      w.attribute("flag", ((FlagRef)flag).getName());
+    w.characters(contents);
+    w.endElement();
+  }
 }

@@ -12,6 +12,7 @@ public abstract class TopLevel {
   public static final int ENUM_GROUP_DEF = 9;
   public static final int FLAG_DEF = 10;
   public static final int INCLUDE_SECTION = 11;
+  public static final int IGNORE_SECTION = 12;
 
   public abstract int getType();
   public abstract void accept(TopLevelVisitor visitor) throws Exception;
