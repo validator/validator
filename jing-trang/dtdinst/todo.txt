@@ -2,9 +2,6 @@ Overridden general entity declarations.
 
 Overridden external parameter entity declarations.
 
-EncodeDetectInputStream should support entities that need an XmlDecl
-rather than a TextDecl.
-
 Command-line option to define a parameter entity as INCLUDE.
 
 maybe distinguish char entities in object model
@@ -57,3 +54,8 @@ naming convention or presence of element declarations or whether all
 references to the element are via that parameter entity.
 
 Use nameSpec for general entities.
+
+Support EBCDIC in EncodingDetectInputStream.
+
+EncodingDetectInputStream should support entities that need an XmlDecl
+rather than a TextDecl.
