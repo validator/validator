@@ -39,6 +39,7 @@ public class PatternReader implements ValidationContext {
   Locator locator;
   PrefixMapping prefixMapping;
   XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
+  AttributeNameClassChecker attributeNameClassChecker = new AttributeNameClassChecker();
   boolean hadError = false;
 
   Hashtable patternTable;
@@ -665,7 +666,10 @@ public class PatternReader implements ValidationContext {
       super.end();
     }
 
-    Pattern wrapPattern(Pattern p) {
+    Pattern wrapPattern(Pattern p) throws SAXException {
+      String messageId = attributeNameClassChecker.checkNameClass(nameClass);
+      if (messageId != null)
+	error(messageId);
       return patternBuilder.makeAttribute(nameClass, p, copyLocator());
     }
 

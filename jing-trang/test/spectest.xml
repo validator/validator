@@ -2485,6 +2485,191 @@ applies at the syntax level.</documentation>
 </grammar>
 </incorrect>
 </testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute name="xmlns">
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<correct>
+<element name="xmlns" xmlns="http://relaxng.org/ns/structure/0.9">
+  <empty/>
+</element>
+</correct>
+<valid><xmlns/></valid>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute name=" xmlns">
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <optional>
+    <notAllowed/>
+    <attribute name="xmlns">
+      <text/>
+    </attribute>
+  </optional>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <element name="foo">
+      <empty/>
+    </element>
+  </start>
+  <define name="foo">
+    <attribute name="xmlns">
+      <text/>
+    </attribute>
+  </define>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute name="xmlns" ns="">
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute>
+    <choice>
+      <name ns="">xmlns</name>
+      <name>foo</name>
+    </choice>
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute>
+    <name ns="">xmlns</name>
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute>
+    <name>xmlns</name>
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute>
+    <name>
+      xmlns
+    </name>
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute>
+    <choice>
+      <name>foo</name>
+      <name ns="">xmlns</name>
+    </choice>
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <name>xmlns</name>
+	</except>
+      </anyName>
+      <text/>
+    </attribute>
+  </oneOrMore>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <oneOrMore>
+    <attribute>
+      <nsName ns="">
+	<except>
+	  <name>xmlns</name>
+	</except>
+      </nsName>
+      <text/>
+    </attribute>
+  </oneOrMore>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute ns="http://www.w3.org/2000/xmlns" name="bar">
+    <text/>
+  </attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>4.16</section>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.w3.org/2000/xmlns">
+  <empty/>
+</element>
+</correct>
+<valid><foo xmlns="http://www.w3.org/2000/xmlns"/></valid>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.17</section>
