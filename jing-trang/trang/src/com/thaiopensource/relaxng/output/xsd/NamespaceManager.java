@@ -459,41 +459,49 @@ public class NamespaceManager {
   private void findSubstitutionGroups() {
     List groups = GroupDefinitionFinder.findGroupDefinitions(schema);
     Map elementNameToGroupName = new HashMap();
-    for (;;) {
-      Set newAbstractElements = new HashSet();
-      for (Iterator iter = groups.iterator(); iter.hasNext();) {
-        GroupDefinition def = (GroupDefinition)iter.next();
-        if (getGroupDefinitionAbstractElementName(def) == null) {
-          Name elementName = abstractElementName(def);
-          boolean ok = false;
-          if (elementName != null) {
-            List members = substitutionGroupMembers(def);
-            if (members != null) {
-              ok = true;
-              elementNameToGroupName.put(elementName, def.getName());
-              for (Iterator memberIter = members.iterator(); memberIter.hasNext();) {
-                Name member = (Name)memberIter.next();
-                Name old = getSubstitutionGroup(member);
-                if (old != null && !old.equals(elementName)) {
-                  newAbstractElements.remove(old);
-                  ok = false;
-                  break;
-                }
-                substitutionGroupMap.put(member, elementName);
-              }
-            }
+    while (addAbstractElements(groups, elementNameToGroupName))
+      ;
+    cleanSubstitutionGroupMap(elementNameToGroupName);
+  }
+
+  private boolean addAbstractElements(List groups, Map elementNameToGroupName) {
+    Set newAbstractElements = new HashSet();
+    for (Iterator iter = groups.iterator(); iter.hasNext();) {
+      GroupDefinition def = (GroupDefinition)iter.next();
+      if (getGroupDefinitionAbstractElementName(def) == null) {
+        Name elementName = abstractElementName(def);
+        if (elementName != null) {
+          List members = substitutionGroupMembers(def);
+          if (members != null) {
+            elementNameToGroupName.put(elementName, def.getName());
+            addSubstitutionGroup(elementName, members, newAbstractElements);
           }
-          if (ok)
-            newAbstractElements.add(elementName);
         }
       }
-      if (newAbstractElements.size() == 0)
-        break;
-      for (Iterator iter = newAbstractElements.iterator(); iter.hasNext();) {
-        Name name = (Name)iter.next();
-        groupDefinitionAbstractElementMap.put(elementNameToGroupName.get(name), name);
-      }
     }
+    if (newAbstractElements.size() == 0)
+      return false;
+    for (Iterator iter = newAbstractElements.iterator(); iter.hasNext();) {
+      Name name = (Name)iter.next();
+      groupDefinitionAbstractElementMap.put(elementNameToGroupName.get(name), name);
+    }
+    return true;
+  }
+
+  private void addSubstitutionGroup(Name elementName, List members, Set newAbstractElements) {
+    for (Iterator memberIter = members.iterator(); memberIter.hasNext();) {
+      Name member = (Name)memberIter.next();
+      Name old = getSubstitutionGroup(member);
+      if (old != null && !old.equals(elementName)) {
+        newAbstractElements.remove(old);
+        return;
+      }
+      substitutionGroupMap.put(member, elementName);
+    }
+    newAbstractElements.add(elementName);
+  }
+
+  private void cleanSubstitutionGroupMap(Map elementNameToGroupName) {
     for (Iterator iter = substitutionGroupMap.entrySet().iterator(); iter.hasNext();) {
       Map.Entry entry = (Map.Entry)iter.next();
       Name head = (Name)entry.getValue();
