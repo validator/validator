@@ -2,16 +2,24 @@ package com.thaiopensource.validate.picl;
 
 import org.xml.sax.Locator;
 
-abstract class ValueSelectionHandler implements SelectionHandler {
-  public void selectAttribute(ErrorContext ec, Path path, String value) {
-    select(ec, null, value);
+class ValueSelectionHandler implements SelectionHandler {
+  private final SelectedValueHandler handler;
+
+  ValueSelectionHandler(SelectedValueHandler handler) {
+    this.handler = handler;
   }
 
-  class ValueHandlerImpl implements ValueHandler {
+  public void selectAttribute(ErrorContext ec, Path path, String value) {
+    handler.select(ec, null, value, value);
+  }
+
+  static class ValueHandlerImpl implements ValueHandler {
     private final StringBuffer buf = new StringBuffer();
     private final Locator locator;
+    private final SelectedValueHandler handler;
 
-    ValueHandlerImpl(Locator locator) {
+    ValueHandlerImpl(SelectedValueHandler handler, Locator locator) {
+      this.handler = handler;
       this.locator = locator;
     }
 
@@ -23,20 +31,17 @@ abstract class ValueSelectionHandler implements SelectionHandler {
     }
 
     public void valueComplete(ErrorContext ec) {
-      select(ec, locator, buf.toString());
+      String value = buf.toString();
+      handler.select(ec, locator, value, value);
     }
   }
 
   public void selectElement(ErrorContext ec, Path path, PatternManager pm) {
-    pm.registerValueHandler(new ValueHandlerImpl(ec.saveLocator()));
+    pm.registerValueHandler(new ValueHandlerImpl(handler, ec.saveLocator()));
   }
 
   public void selectComplete(ErrorContext ec) {
+    handler.selectComplete(ec);
   }
 
-  /**
-   * If locator is non-null, it is a non-volatile location to be used for errors.
-   * If locator is null, then the ErrorContext's location should be used.
-   */
-  abstract void select(ErrorContext ec, Locator locator, String value);
-}
+ }

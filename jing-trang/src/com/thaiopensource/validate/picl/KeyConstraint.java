@@ -19,7 +19,7 @@ class KeyConstraint implements Constraint {
       table = new Hashtable();
     }
 
-    KeyInfo lookupCreate(String key) {
+    KeyInfo lookupCreate(Object key) {
       KeyInfo info = (KeyInfo)table.get(key);
       if (info == null) {
         info = new KeyInfo();
@@ -34,27 +34,29 @@ class KeyConstraint implements Constraint {
   }
 
   static class KeyInfo {
+    String representation;
     Locator firstKeyLocator;
     Vector pendingRefLocators;
   }
 
-  static class KeySelectionHandler extends ValueSelectionHandler {
+  static class KeySelectionHandler extends SelectedValueHandler {
     private final KeyIndex index;
 
     KeySelectionHandler(KeyIndex index) {
       this.index = index;
     }
 
-    void select(ErrorContext ec, Locator locator, String value) {
+    void select(ErrorContext ec, Locator locator, Object value, String representation) {
       KeyInfo info = index.lookupCreate(value);
       if (info.firstKeyLocator == null) {
         if (locator == null)
           locator = ec.saveLocator();
         info.firstKeyLocator = locator;
         info.pendingRefLocators = null;
+        info.representation = representation;
       }
       else
-        ec.error(locator, "duplicate_key", value);
+        ec.error(locator, "duplicate_key", representation);
     }
   }
 
@@ -63,6 +65,6 @@ class KeyConstraint implements Constraint {
   }
 
   void activate(PatternManager pm, KeyIndex index) {
-    pm.registerPattern(key, new KeySelectionHandler(index));
+    pm.registerPattern(key, new ValueSelectionHandler(new KeySelectionHandler(index)));
   }
 }

@@ -12,30 +12,22 @@ start =
 
 finalStart = element constraints { inherited, constraints }
 
-constraints = (key|ref|context|union)+
+constraints = (target|ref|context)+
 
-context = element context { select, inherited, constraints }
+context = element context { select?, inherited, constraints }
 
-key =
+target =
   element key|map {
-    attribute name { xsd:NCName }?, # names must be unique in the context
+    attribute name { xsd:NCName }?, # names are scoped to the context
     select,
     inherited,
     element field {
-      attribute type { xsd:NCName }?,
       select,
       inherited,
       convert?,
       dflt?
     }*,
     constraints?
-  }
-
-union =
-  element union {
-    inherited,
-    attribute name { xsd:NCName }?, # names must be unique in the context
-    key+
   }
 
 ref =
@@ -46,11 +38,10 @@ ref =
   }
 
 refBody =
-    attribute name { xsd:NCName }, # refers to key or union in same context
+    attribute name { xsd:NCName }?, # names are scoped to same context
     inherited,
     element field { select, inherited, convert?, dflt? }+,
     element ref { refBody }?
-
 
 select = attribute select { path }
 convert = attribute convert { "detag" | "split" | "localFragmentId" }
