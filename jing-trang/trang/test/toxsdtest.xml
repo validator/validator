@@ -656,9 +656,9 @@ y = element e2:y { x? }
 </correct>
 </compact>
 <xsd>
-<resource name="c.xsd">
+<resource name="e2.xsd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/2" xmlns:e2="http://www.example.com/2" xmlns:e1="http://www.example.com/1">
-  <xs:import namespace="http://www.example.com/1" schemaLocation="e1.xsd"/>
+  <xs:import namespace="http://www.example.com/1" schemaLocation="c.xsd"/>
   <xs:element name="y">
     <xs:complexType>
       <xs:sequence>
@@ -931,9 +931,7 @@ element e1:x { element e2:y|e3:z { element e1:x|e1:v { empty } } }
   </xs:group>
   <xs:group name="y1">
     <xs:sequence>
-      <xs:element name="y">
-        <xs:complexType mixed="true"/>
-      </xs:element>
+      <xs:element name="y" type="xs:string"/>
     </xs:sequence>
   </xs:group>
 </xs:schema>
@@ -1735,9 +1733,7 @@ start = element foo1 { bar } | foo2
   </xs:group>
   <xs:group name="baz1">
     <xs:sequence>
-      <xs:element name="baz">
-        <xs:complexType mixed="true"/>
-      </xs:element>
+      <xs:element name="baz" type="xs:string"/>
     </xs:sequence>
   </xs:group>
 </xs:schema>
@@ -1976,9 +1972,7 @@ element eg:foo {
             <xs:choice/>
           </xs:complexType>
         </xs:element>
-        <xs:element name="baz" form="unqualified">
-          <xs:complexType mixed="true"/>
-        </xs:element>
+        <xs:element name="baz" form="unqualified" type="xs:string"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -2217,9 +2211,7 @@ include "foo.rnc" {
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
   <xs:include schemaLocation="foo.xsd"/>
-  <xs:element name="foo">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="foo" type="xs:string"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2291,9 +2283,7 @@ inline |= element code { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:element name="inline" abstract="true">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="inline" abstract="true" type="xs:string"/>
   <xs:element name="em" substitutionGroup="inline"/>
   <xs:element name="code" substitutionGroup="inline"/>
 </xs:schema>
@@ -2310,9 +2300,7 @@ inline = element em { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:element name="inline" abstract="true">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="inline" abstract="true" type="xs:string"/>
   <xs:element name="code" substitutionGroup="inline"/>
   <xs:element name="em" substitutionGroup="inline"/>
 </xs:schema>
@@ -2330,9 +2318,7 @@ inline |= element b { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:element name="inline" abstract="true">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="inline" abstract="true" type="xs:string"/>
   <xs:element name="code" substitutionGroup="inline"/>
   <xs:element name="em" substitutionGroup="inline"/>
   <xs:element name="b" substitutionGroup="inline"/>
@@ -2887,9 +2873,7 @@ baz = element baz { bar, element xyzzy { text }* }
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="bar"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="bar">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="bar" type="xs:string"/>
   <xs:element name="baz">
     <xs:complexType>
       <xs:complexContent>
@@ -2901,9 +2885,7 @@ baz = element baz { bar, element xyzzy { text }* }
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-  <xs:element name="xyzzy">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="xyzzy" type="xs:string"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2990,9 +2972,7 @@ element foo { attribute bar { text } | element bar { text } }
       <xs:attribute name="bar"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="bar">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="bar" type="xs:string"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -3275,15 +3255,11 @@ element foo {
       </xs:all>
     </xs:complexType>
   </xs:element>
-  <xs:element name="bar1">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="bar1" type="xs:string"/>
   <xs:element name="bar2">
     <xs:complexType/>
   </xs:element>
-  <xs:element name="bar3">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="bar3" type="xs:string"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -3310,9 +3286,7 @@ element foo {
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="bar1">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="bar1" type="xs:string"/>
   <xs:element name="bar2">
     <xs:complexType>
       <xs:sequence>
@@ -3321,12 +3295,8 @@ element foo {
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="baz1">
-    <xs:complexType mixed="true"/>
-  </xs:element>
-  <xs:element name="baz2">
-    <xs:complexType mixed="true"/>
-  </xs:element>
+  <xs:element name="baz1" type="xs:string"/>
+  <xs:element name="baz2" type="xs:string"/>
 </xs:schema>
 </correct>
 </xsd>
