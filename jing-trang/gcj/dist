@@ -193,6 +193,8 @@ to which the following license applies.
 
 EOF
 sed -e 's/^/  /' ${top_dir}/gcj/xerces.copying.txt >>copying.txt
+
+cp -a ${top_dir}/gcj/README.redhat8 .
 }
 
 prog=jing

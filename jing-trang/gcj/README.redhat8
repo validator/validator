@@ -1,0 +1,18 @@
+GCJ as shipped in RedHat 8.0 has a bug in the list of libraries that
+it uses to link with.  Amongst other things, this causes any Java
+program that throws an unhandled exception to hang while printing a
+stack trace.  See <http://gcc.gnu.org/ml/java/2003-02/msg00016.html>.
+If you are running RedHat 8.0, I recommend you apply the following
+patch before compiling:
+
+--- /usr/lib/gcc-lib/i386-redhat-linux/3.2/libgcj.spec~ 2002-09-04 04:03:39.000000000 +0100
++++ /usr/lib/gcc-lib/i386-redhat-linux/3.2/libgcj.spec  2002-12-10 15:59:39.000000000 +0000
+@@ -4,6 +4,6 @@
+ # to link with libgcj.
+ #
+ %rename lib liborig
+-*lib: -lgcj -lm    -lz   -ldl %(libgcc) %(liborig)
++*lib: -lgcj -lm  -lpthread  -lz   -ldl %(libgcc) %(liborig)
+ 
+ *jc1: -fhash-synchronization -fno-use-divide-subroutine  -fuse-boehm-gc -fnon-call-exceptions -fkeep-inline-functions
+
