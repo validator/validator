@@ -233,6 +233,7 @@ public class PatternDumper {
     public void visitValue(Datatype dt, Object obj) {
       startElement("value");
       // XXX dump dt
+      // XXX toString will not handle QName
       data(obj.toString());
       endElement();
     }
