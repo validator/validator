@@ -2,7 +2,7 @@
 <!-- Tables Module -->
 <!-- This builds on the basic tables module, unlike with the DTD
 implementation. -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
 <include href="basic-table.rng">
 

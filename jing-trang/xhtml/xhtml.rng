@@ -2,7 +2,7 @@
 <!-- This corresponds to the union of transitional and frameset. -->
 
 <grammar ns="http://www.w3.org/1999/xhtml"
-         xmlns="http://relaxng.org/ns/structure/0.9">
+         xmlns="http://relaxng.org/ns/structure/1.0">
 
 <include href="modules/datatypes.rng"/>
 <include href="modules/attribs.rng"/>

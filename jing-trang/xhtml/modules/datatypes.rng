@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Datatypes Module -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
 <!-- Length defined for cellpadding/cellspacing -->

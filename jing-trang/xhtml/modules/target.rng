@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Target Module -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
 <define name="a.attlist" combine="interleave">
   <ref name="target.attrib"/>

@@ -4,7 +4,7 @@
 <testSuite>
 <author>James Clark</author>
 <email>jjc@jclark.com</email>
-<documentation>For October 23 version of the spec (except for namespace URI version).</documentation>
+<documentation>For October 23 version of the spec.</documentation>
 <testSuite>
 <section>3</section>
 <testSuite>
@@ -18,7 +18,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <empty/>
   </element>
@@ -33,7 +33,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <define name="bar">
     <text/>
   </define>
@@ -44,7 +44,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <name>foo</name>
   <empty/>
 </element>
@@ -53,7 +53,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <group>
     <name>bar</name>
   </group>
@@ -63,7 +63,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName>
     <except>
       <name>foo</name>
@@ -79,7 +79,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName>
     <except>
       <name>foo</name>
@@ -95,7 +95,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <data type="token">
     <except>
       <value>foo</value>
@@ -110,7 +110,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty name="bar"/>
 </element>
 </incorrect>
@@ -118,7 +118,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo" extra="bar">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo" extra="bar">
   <empty/>
 </element>
 </incorrect>
@@ -126,7 +126,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty>
     <empty/>
   </empty>
@@ -136,7 +136,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <text>
     <empty/>
   </text>
@@ -146,7 +146,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <choice>
     <text/>
     <notAllowed>
@@ -159,7 +159,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo">
       <empty/>
@@ -176,7 +176,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <grammar>
       <start>
@@ -200,7 +200,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start name="foo">
     <element name="foo">
       <empty/>
@@ -212,7 +212,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo" ns="http://www.example.com">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo" ns="http://www.example.com">
   <attribute name="bar" global="true">
     <text/>
   </attribute>
@@ -222,7 +222,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <not>
     <name>foo</name>
   </not>
@@ -233,7 +233,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <difference>
     <anyName/>
     <name>foo</name>
@@ -245,7 +245,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <data type="token" key="foo"/>
 </element>
 </incorrect>
@@ -253,7 +253,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <data type="token" keyRef="foo"/>
 </element>
 </incorrect>
@@ -261,7 +261,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <keyRef name="foo">
     <data type="token"/>
   </keyRef>
@@ -271,7 +271,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <key name="foo">
     <data type="token"/>
   </key>
@@ -284,14 +284,14 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
 </element>
 </incorrect>
 </testCase>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name>foo</name>
 </element>
 </incorrect>
@@ -299,14 +299,14 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
 </element>
 </incorrect>
 </testCase>
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute/>
 </element>
 </incorrect>
@@ -314,7 +314,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group/>
 </element>
 </incorrect>
@@ -322,7 +322,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave/>
 </element>
 </incorrect>
@@ -330,7 +330,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice/>
 </element>
 </incorrect>
@@ -338,7 +338,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional/>
 </element>
 </incorrect>
@@ -346,7 +346,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <zeroOrMore/>
 </element>
 </incorrect>
@@ -354,7 +354,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore/>
 </element>
 </incorrect>
@@ -362,7 +362,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list/>
 </element>
 </incorrect>
@@ -370,7 +370,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <mixed/>
 </element>
 </incorrect>
@@ -378,7 +378,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <choice/>
   <empty/>
 </element>
@@ -387,7 +387,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName>
     <except/>
   </anyName>
@@ -398,7 +398,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName ns="">
     <except/>
   </nsName>
@@ -409,7 +409,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string">
     <except/>
   </data>
@@ -419,7 +419,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data/>
 </element>
 </incorrect>
@@ -427,7 +427,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string">
     <param/>
   </data>
@@ -437,7 +437,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <grammar>
     <start/>
   </grammar>
@@ -447,7 +447,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="bar">
       <empty/>
@@ -460,7 +460,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <externalRef/>
 </element>
 </incorrect>
@@ -468,7 +468,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include/>
   <start>
     <element name="foo">
@@ -481,7 +481,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -498,7 +498,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref/>
   </start>
@@ -513,7 +513,7 @@
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <grammar>
       <start>
@@ -536,7 +536,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="foo_bar:xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo_bar:xyzzy">
   <empty/>
 </element>
 </incorrect>
@@ -545,7 +545,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="foobar:xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foobar:xyzzy">
   <empty/>
 </element>
 </correct>
@@ -557,7 +557,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http:ok">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http:ok">
   <empty/>
 </element>
 </correct>
@@ -569,7 +569,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="foo:">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo:">
   <empty/>
 </element>
 </incorrect>
@@ -578,7 +578,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com/%">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%">
   <empty/>
 </element>
 </incorrect>
@@ -587,7 +587,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com/%xx">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%xx">
   <empty/>
 </element>
 </incorrect>
@@ -596,7 +596,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com/%Aa">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%Aa">
   <empty/>
 </element>
 </correct>
@@ -608,7 +608,7 @@
 <section>3</section>
 <documentation>Value of datatypeLibrary attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" datatypeLibrary="xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="xyzzy">
   <empty/>
 </element>
 </incorrect>
@@ -617,7 +617,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy">
   <empty/>
 </element>
 </incorrect>
@@ -626,7 +626,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="xyzzy#foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy#foo:bar">
   <empty/>
 </element>
 </incorrect>
@@ -635,7 +635,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="xyzzy?foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy?foo:bar">
   <empty/>
 </element>
 </incorrect>
@@ -644,7 +644,7 @@
 <section>3</section>
 <documentation>Value of ns attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="xyzzy/foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy/foo:bar">
   <empty/>
 </element>
 </incorrect>
@@ -652,7 +652,7 @@
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo:bar">
   <empty/>
 </element>
 </correct>
@@ -663,7 +663,7 @@
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="">
   <empty/>
 </element>
 </correct>
@@ -674,7 +674,7 @@
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" datatypeLibrary="">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="">
   <empty/>
 </element>
 </correct>
@@ -685,7 +685,7 @@
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data datatypeLibrary="" type="string"/>
 </element>
 </correct>
@@ -698,7 +698,7 @@
 <documentation>Value of ns attribute must not be relative. Requirement
 applies at the syntax level.</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty ns="xyzzy"/>
 </element>
 </incorrect>
@@ -707,7 +707,7 @@ applies at the syntax level.</documentation>
 <section>3</section>
 <documentation>Value of datatypeLibrary attribute must not contain fragment identifier</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9"
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0"
           datatypeLibrary="http://www.example.com#xyzzy">
   <empty/>
 </element>
@@ -717,7 +717,7 @@ applies at the syntax level.</documentation>
 <section>3</section>
 <documentation>Value of datatypeLibrary attribute must not contain fragment identifier</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9"
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0"
           datatypeLibrary="http://www.example.com#">
   <empty/>
 </element>
@@ -729,7 +729,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="&#xE14;&#xE35;">
     <empty/>
   </element>
@@ -742,7 +742,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="&#xE35;" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="&#xE35;" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </incorrect>
@@ -750,7 +750,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </incorrect>
@@ -758,7 +758,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name>&#xE35;</name>
   <empty/>
 </element>
@@ -767,7 +767,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="&#xE35;"/>
   <empty/>
 </element>
@@ -776,7 +776,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="&#xE35;"/>
   </start>
@@ -791,7 +791,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="&#xE14;&#xE35;"/>
   </start>
@@ -809,7 +809,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name=""/>
   </start>
@@ -824,7 +824,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="x y"/>
   </start>
@@ -839,7 +839,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
          xmlns:x="http://www.example.com/x">
   <start>
     <ref name="x:y"/>
@@ -855,7 +855,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9"
+<element xmlns="http://relaxng.org/ns/structure/1.0"
          xmlns:x="http://www.example.com/x"
          name="x:&#xE35;">
   <empty/>
@@ -865,7 +865,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9"
+<element xmlns="http://relaxng.org/ns/structure/1.0"
          xmlns:x="http://www.example.com/x"
          name="x:y:z">
   <empty/>
@@ -875,7 +875,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9"
+<element xmlns="http://relaxng.org/ns/structure/1.0"
          xmlns:x="http://www.example.com/x"
          name="x:">
   <empty/>
@@ -888,7 +888,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -901,7 +901,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <attribute name="bar">
     <text/>
     <empty/>
@@ -912,7 +912,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <attribute>
     <name>bar</name>
     <text/>
@@ -927,7 +927,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<r:element name="foo" xmlns:r="http://relaxng.org/ns/structure/0.9" r:a="val">
+<r:element name="foo" xmlns:r="http://relaxng.org/ns/structure/1.0" r:a="val">
   <r:empty/>
 </r:element>
 </incorrect>
@@ -935,7 +935,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name>foo<eg:comment xmlns:eg="http://www.example.com"/></name>
   <empty/>
 </element>
@@ -944,7 +944,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <value>foo<eg:comment xmlns:eg="http://www.example.com"/></value>
 </element>
 </incorrect>
@@ -952,7 +952,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <data type="string"><eg:comment xmlns:eg="http://www.example.com"/></data>
 </element>
 </correct>
@@ -963,10 +963,10 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty>
     <ext xmlns="http://www.example.com">
-      <element xmlns="http://relaxng.org/ns/structure/0.9"/>
+      <element xmlns="http://relaxng.org/ns/structure/1.0"/>
     </ext>
   </empty>
 </element>
@@ -978,7 +978,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9" xmlns:eg="http://www.example.com">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:eg="http://www.example.com">
   <eg:comment/>
   <eg:comment/>
   <start>
@@ -1009,7 +1009,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"  xmlns:eg="http://www.example.com"
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"  xmlns:eg="http://www.example.com"
   eg:comment="">
   <start eg:comment="">
     <element eg:comment="">
@@ -1027,7 +1027,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/0.9" xmlns="http://www.example.com">
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.example.com">
   <comment/>
   <comment/>
   <rng:start>
@@ -1052,7 +1052,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>3</section>
 <correct>
-<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/0.9">
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <comment/>
   <comment/>
   <rng:start>
@@ -1083,7 +1083,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.2</section>
 <correct>
-<element name="&#xA;&#xD;&#x20;&#x9;foo&#xA;&#xD;&#x20;&#x9;" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="&#xA;&#xD;&#x20;&#x9;foo&#xA;&#xD;&#x20;&#x9;" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="&#xA;&#xD;&#x20;&#x9;bar&#xA;&#xD;&#x20;&#x9;"/>
 </element>
 </correct>
@@ -1094,7 +1094,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="&#xA;&#xD;&#x20;&#x9;string&#xA;&#xD;&#x20;&#x9;">bar</value>
 </element>
 </correct>
@@ -1108,7 +1108,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="&#xA;&#xD;&#x20;&#x9;string&#xA;&#xD;&#x20;&#x9;"/>
 </element>
 </correct>
@@ -1119,7 +1119,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.2</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name>&#xA;&#xD;&#x20;&#x9;foo&#xA;&#xD;&#x20;&#x9;</name>
   <attribute><name>&#xA;&#xD;&#x20;&#x9;bar&#xA;&#xD;&#x20;&#x9;</name></attribute>
 </element>
@@ -1131,7 +1131,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.2</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start combine="&#xA;&#xD;&#x20;&#x9;choice&#xA;&#xD;&#x20;&#x9;">
     <ref name="&#xA;&#xD;&#x20;&#x9;x&#xA;&#xD;&#x20;&#x9;"/>
   </start>
@@ -1160,7 +1160,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value datatypeLibrary="http://www.example.com/this-does-not-exist">bar</value>
 </element>
 </correct>
@@ -1188,13 +1188,13 @@ applies at the syntax level.</documentation>
 <section>4.5</section>
 <dir name="sub">
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 </dir>
 <correct>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9"
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0"
              xml:base="sub/y" href="x"/>
 </correct>
 <valid>
@@ -1207,26 +1207,26 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.5</section>
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="bar">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="bar">
   <empty/>
 </element>
 </resource>
 <dir name="sub1">
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="bar">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="bar">
   <empty/>
 </element>
 </resource>
 <dir name="sub3">
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 </dir>
 </dir>
 <correct>
-<group xmlns="http://relaxng.org/ns/structure/0.9" xml:base="sub1/">
+<group xmlns="http://relaxng.org/ns/structure/1.0" xml:base="sub1/">
   <group>
     <group xml:base="sub2">
       <group>
@@ -1248,12 +1248,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.5</section>
 <resource name="x">
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </resource>
 <incorrect>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x#foo"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x#foo"/>
 </incorrect>
 </testCase>
 </testSuite>
@@ -1262,12 +1262,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.6</section>
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 <correct>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </correct>
 <valid>
 <foo/>
@@ -1279,12 +1279,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.6</section>
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 <correct>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x" ns="http://www.example.com"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x" ns="http://www.example.com"/>
 </correct>
 <valid>
 <foo xmlns="http://www.example.com"/>
@@ -1296,35 +1296,35 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.6</section>
 <resource name="x">
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </resource>
 <incorrect>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </incorrect>
 </testCase>
 <testCase>
 <section>4.6</section>
 <resource name="x">
-<start xmlns="http://relaxng.org/ns/structure/0.9">
+<start xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <empty/>
   </element>
 </start>
 </resource>
 <incorrect>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </incorrect>
 </testCase>
 <testCase>
 <section>4.6</section>
 <resource name="x">
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="y"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="y"/>
 </resource>
 <resource name="y">
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </resource>
 <incorrect>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="x"/>
 </incorrect>
 </testCase>
 <testCase>
@@ -1332,18 +1332,18 @@ applies at the syntax level.</documentation>
 <documentation>Same value of href before resolution, but not a loop.</documentation>
 <dir name="sub">
 <resource name="x">
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="sub/x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="sub/x"/>
 </resource>
 <dir name="sub">
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 </dir>
 </dir>
 <correct>
-<externalRef xmlns="http://relaxng.org/ns/structure/0.9" href="sub/x"/>
+<externalRef xmlns="http://relaxng.org/ns/structure/1.0" href="sub/x"/>
 </correct>
 <valid>
 <foo/>
@@ -1358,7 +1358,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -1367,7 +1367,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </correct>
@@ -1381,7 +1381,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -1390,7 +1390,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x" ns="http://www.example.com"/>
 </grammar>
 </correct>
@@ -1404,12 +1404,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="y"/>
 </grammar>
 </resource>
 <resource name="y">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -1418,7 +1418,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </correct>
@@ -1432,12 +1432,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </resource>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </incorrect>
@@ -1445,12 +1445,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </resource>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </incorrect>
@@ -1458,17 +1458,17 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="y"/>
 </grammar>
 </resource>
 <resource name="y">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </resource>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
 </grammar>
 </incorrect>
@@ -1477,13 +1477,13 @@ applies at the syntax level.</documentation>
 <section>4.7</section>
 <dir name="sub">
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="sub/x"/>
 </grammar>
 </resource>
 <dir name="sub">
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -1494,7 +1494,7 @@ applies at the syntax level.</documentation>
 </dir>
 </dir>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="sub/x"/>
 </grammar>
 </correct>
@@ -1508,7 +1508,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <define name="foo">
     <element name="foo">
       <empty/>
@@ -1517,7 +1517,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x">
     <start>
       <ref name="foo"/>
@@ -1529,7 +1529,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <define name="foo">
     <element name="foo">
       <empty/>
@@ -1538,7 +1538,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
   <start>
     <ref name="foo"/>
@@ -1551,14 +1551,14 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
 </grammar>
 </resource>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x">
     <define name="foo">
       <element name="foo">
@@ -1572,14 +1572,14 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="x"/>
   <define name="foo">
     <element name="foo">
@@ -1594,7 +1594,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.7</section>
 <resource name="x">
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <define name="foo" combine="choice">
     <element name="foo3">
       <empty/>
@@ -1603,7 +1603,7 @@ applies at the syntax level.</documentation>
 </grammar>
 </resource>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
@@ -1631,7 +1631,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.8</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com" name="foo">
   <attribute name="bar" ns="http://www.example.com"/>
 </element>
 </correct>
@@ -1645,7 +1645,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.8</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com" name="foo">
   <attribute name="bar"/>
 </element>
 </correct>
@@ -1662,7 +1662,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.9</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.example.com" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com" name="foo">
   <attribute>
     <name>bar</name>
   </attribute>
@@ -1679,12 +1679,12 @@ applies at the syntax level.</documentation>
 <section>4.6</section>
 <section>4.9</section>
 <resource name="x">
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <empty/>
 </element>
 </resource>
 <correct>
-<group ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/0.9" >
+<group ns="http://www.example.com" xmlns="http://relaxng.org/ns/structure/1.0" >
 <externalRef href="x"/>
 </group>
 </correct>
@@ -1701,7 +1701,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.10</section>
 <incorrect>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo:bar">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo:bar">
   <empty/>
 </element>
 </incorrect>
@@ -1709,7 +1709,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.10</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="eg:foo" xmlns:eg="http://www.example.com">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="eg:foo" xmlns:eg="http://www.example.com">
   <empty/>
 </element>
 </correct>
@@ -1723,7 +1723,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.10</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo" xmlns:eg="http://www.example.com">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo" xmlns:eg="http://www.example.com">
   <attribute name="eg:bar"/>
 </element>
 </correct>
@@ -1737,7 +1737,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.10</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <attribute name="xml:lang"/>
 </element>
 </correct>
@@ -1754,7 +1754,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.11</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <div ns="http://www.example.com">
     <div>
       <start>
@@ -1782,7 +1782,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
 <start>
   <element name="foo">
@@ -1832,7 +1832,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <element name="bar">
       <empty/>
@@ -1875,7 +1875,7 @@ applies at the syntax level.</documentation>
 <section>4.12</section>
 <section>4.15</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <zeroOrMore>
     <element name="bar">
       <empty/>
@@ -1918,7 +1918,7 @@ applies at the syntax level.</documentation>
 <section>4.12</section>
 <section>4.14</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <element name="bar">
       <empty/>
@@ -1960,7 +1960,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <value>x</value>
     <value>y</value>
@@ -1979,7 +1979,7 @@ applies at the syntax level.</documentation>
 <section>4.12</section>
 <section>4.13</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <mixed>
     <element name="bar">
       <empty/>
@@ -2021,7 +2021,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name>foo</name>
   <element name="bar">
     <empty/>
@@ -2062,7 +2062,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName>
     <except>
       <name>foo</name>
@@ -2081,7 +2081,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="token">
     <except>
       <value>x</value>
@@ -2100,7 +2100,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
 </element>
 </correct>
@@ -2117,7 +2117,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name>bar</name>
   </attribute>
@@ -2136,7 +2136,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="bar">
       <empty/>
@@ -2178,7 +2178,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <element name="bar1">
       <empty/>
@@ -2200,7 +2200,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar1">
       <empty/>
@@ -2226,7 +2226,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="bar">
       <empty/>
@@ -2240,7 +2240,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -2254,7 +2254,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.12</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <element name="bar">
       <empty/>
@@ -2271,7 +2271,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.13</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <mixed>
     <element name="bar">
       <empty/>
@@ -2292,7 +2292,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.14</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <element name="bar">
       <empty/>
@@ -2311,7 +2311,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.15</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <zeroOrMore>
     <element name="bar">
       <empty/>
@@ -2331,7 +2331,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <anyName>
@@ -2348,7 +2348,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <anyName>
@@ -2368,7 +2368,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <nsName ns="">
@@ -2385,7 +2385,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <nsName ns="">
@@ -2405,7 +2405,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <nsName ns="">
@@ -2422,7 +2422,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element>
     <nsName ns="">
@@ -2443,7 +2443,7 @@ applies at the syntax level.</documentation>
 <section>4.16</section>
 <documentation>Tests that 4.16 is before 4.20.</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <zeroOrMore>
@@ -2466,7 +2466,7 @@ applies at the syntax level.</documentation>
 <section>4.16</section>
 <documentation>Tests that 4.16 is before removal of unreachable definitions.</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <empty/>
@@ -2488,7 +2488,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="xmlns">
     <text/>
   </attribute>
@@ -2498,7 +2498,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <correct>
-<element name="xmlns" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="xmlns" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </correct>
@@ -2507,7 +2507,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name=" xmlns">
     <text/>
   </attribute>
@@ -2517,7 +2517,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <notAllowed/>
     <attribute name="xmlns">
@@ -2530,7 +2530,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -2547,7 +2547,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="xmlns" ns="">
     <text/>
   </attribute>
@@ -2557,7 +2557,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <choice>
       <name ns="">xmlns</name>
@@ -2571,7 +2571,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name ns="">xmlns</name>
     <text/>
@@ -2582,7 +2582,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name>xmlns</name>
     <text/>
@@ -2593,7 +2593,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name>
       xmlns
@@ -2606,7 +2606,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <choice>
       <name>foo</name>
@@ -2620,7 +2620,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName>
@@ -2637,7 +2637,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <nsName ns="">
@@ -2654,7 +2654,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute ns="http://www.w3.org/2000/xmlns" name="bar">
     <text/>
   </attribute>
@@ -2664,7 +2664,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9" ns="http://www.w3.org/2000/xmlns">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.w3.org/2000/xmlns">
   <empty/>
 </element>
 </correct>
@@ -2673,7 +2673,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="token">
     <param name="minLength">2</param>
   </data>
@@ -2683,7 +2683,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="tok"/>
 </element>
 </incorrect>
@@ -2691,7 +2691,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="tok"/>
 </element>
 </incorrect>
@@ -2699,7 +2699,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <notAllowed/>
     <data type="token">
@@ -2712,7 +2712,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <notAllowed/>
     <data type="tok"/>
@@ -2723,7 +2723,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <notAllowed/>
     <value type="tok"/>
@@ -2734,7 +2734,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <empty/>
@@ -2751,7 +2751,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <empty/>
@@ -2766,7 +2766,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.16</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <empty/>
@@ -2784,7 +2784,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <ref name="x"/>
 </start>
@@ -2809,7 +2809,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start name="x">
   <element name="foo1">
     <empty/>
@@ -2831,7 +2831,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <ref name="x"/>
 </start>
@@ -2851,7 +2851,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start name="x">
   <element name="foo1">
     <empty/>
@@ -2868,7 +2868,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <ref name="x"/>
 </start>
@@ -2905,7 +2905,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start combine="choice">
   <element name="foo1">
     <empty/>
@@ -2939,7 +2939,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <ref name="x"/>
@@ -2966,7 +2966,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
 <grammar>
 <start name="x" combine="choice">
   <element name="bar1">
@@ -2990,7 +2990,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <ref name="x"/>
@@ -3029,7 +3029,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
 <grammar>
 <start combine="interleave">
   <element name="bar1">
@@ -3065,7 +3065,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <ref name="x"/>
@@ -3092,7 +3092,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.17</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9"> 
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0"> 
 <grammar>
 <start name="x">
   <element name="bar1">
@@ -3120,7 +3120,7 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>grammar must have a start</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <define name="foo">
     <element name="foo">
       <empty/>
@@ -3133,14 +3133,14 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.18</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
     </element>
   </start>
   <define name="bar">
-    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+    <grammar xmlns="http://relaxng.org/ns/structure/1.0">
       <define name="foo">
 	<element name="foo">
 	  <empty/>
@@ -3155,13 +3155,13 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.19</documentation>
 <incorrect>
-<choice xmlns="http://relaxng.org/ns/structure/0.9">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <empty/>
   </element>
   <group>
     <notAllowed/>
-    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+    <grammar xmlns="http://relaxng.org/ns/structure/1.0">
       <define name="foo">
 	<element name="foo">
 	  <empty/>
@@ -3176,7 +3176,7 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>every ref must have a def</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
@@ -3187,7 +3187,7 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.18</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -3203,7 +3203,7 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.19</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <choice>
       <element name="foo">
@@ -3222,9 +3222,9 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>every parentRef must have a def</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
-    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+    <grammar xmlns="http://relaxng.org/ns/structure/1.0">
       <start>
 	<parentRef name="foo"/>
       </start>
@@ -3242,14 +3242,14 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.18</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
     </element>
   </start>
   <define name="bar">
-    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+    <grammar xmlns="http://relaxng.org/ns/structure/1.0">
       <start>
 	<parentRef name="foo"/>
       </start>
@@ -3267,7 +3267,7 @@ applies at the syntax level.</documentation>
 <section>4.18</section>
 <documentation>4.17 is before 4.19</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <choice>
       <element name="foo">
@@ -3275,7 +3275,7 @@ applies at the syntax level.</documentation>
       </element>
       <group>
 	<notAllowed/>
-	<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+	<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 	  <start>
 	    <parentRef name="foo"/>
 	  </start>
@@ -3294,7 +3294,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.18</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
@@ -3303,7 +3303,7 @@ applies at the syntax level.</documentation>
       <element name="foo">
         <empty/>
       </element>
-      <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+      <grammar xmlns="http://relaxng.org/ns/structure/1.0">
         <start>
 	  <parentRef name="foo"/>
         </start>
@@ -3316,12 +3316,12 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.18</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
   <define name="foo">
-    <grammar xmlns="http://relaxng.org/ns/structure/0.9">
+    <grammar xmlns="http://relaxng.org/ns/structure/1.0">
       <start>
 	<ref name="foo"/>
       </start>
@@ -3339,7 +3339,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.18</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <grammar>
       <start>
@@ -3365,7 +3365,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.18</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="foo"/>
   </start>
@@ -3394,7 +3394,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.19</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <ref name="bar"/>
@@ -3414,7 +3414,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.19</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <ref name="bar"/>
@@ -3442,7 +3442,7 @@ applies at the syntax level.</documentation>
 <testCase>
 <section>4.19</section>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <empty/>
@@ -3461,7 +3461,7 @@ applies at the syntax level.</documentation>
 <documentation>Tests that recursion detection happens before
 normalization of notAllowed.</documentation>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <choice>
       <element name="foo">
@@ -3493,7 +3493,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName/>
   <empty/>
 </element>
@@ -3508,7 +3508,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName>
     <except>
       <name ns="">foo</name>
@@ -3530,7 +3530,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <anyName>
     <except>
       <nsName ns=""/>
@@ -3549,7 +3549,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName ns=""/>
   <empty/>
 </element>
@@ -3564,7 +3564,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName ns="http://www.example.com"/>
   <empty/>
 </element>
@@ -3585,7 +3585,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName ns="http://www.example.com">
     <except>
       <name ns="http://www.example.com">foo</name>
@@ -3607,7 +3607,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <nsName ns="http://www.example.com">
     <except>
       <name ns="">foo</name>
@@ -3632,7 +3632,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name ns="http://www.example.com">foo</name>
   <empty/>
 </element>
@@ -3653,7 +3653,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name ns="">foo</name>
   <empty/>
 </element>
@@ -3674,7 +3674,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.1</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <name ns="">foo</name>
     <name ns="">bar</name>
@@ -3700,7 +3700,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.1</section>
 <correct>
-<choice xmlns="http://relaxng.org/ns/structure/0.9">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <empty/>
   </element>
@@ -3722,7 +3722,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.1</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <group>
       <element name="bar1">
@@ -3768,7 +3768,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.1</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <group>
       <attribute name="bar1">
@@ -3814,7 +3814,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.1</section>
 <correct>
-<choice xmlns="http://relaxng.org/ns/structure/0.9">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <element name="bar">
       <empty/>
@@ -3855,7 +3855,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="bar">
       <empty/>
@@ -3888,7 +3888,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <attribute name="bar">
       <text/>
@@ -3909,7 +3909,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <attribute name="bar">
       <text/>
@@ -3936,7 +3936,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <attribute name="baz">
       <text/>
@@ -3963,7 +3963,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <attribute name="bar">
       <text/>
@@ -3990,7 +3990,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.2</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="baz">
       <empty/>
@@ -4020,7 +4020,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <empty/>
 </element>
 </correct>
@@ -4057,7 +4057,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar">
     <empty/>
   </attribute>
@@ -4070,7 +4070,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <empty/>
   </list>
@@ -4085,7 +4085,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar">
     <list>
       <empty/>
@@ -4100,7 +4100,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="bar">
       <empty/>
@@ -4129,7 +4129,7 @@ normalization of notAllowed.</documentation>
 </testCase>
 <testCase>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <empty/>
     <attribute name="bar">
@@ -4157,7 +4157,7 @@ normalization of notAllowed.</documentation>
 <testCase>
 <section>6.2.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <text/>
 </element>
 </correct>
@@ -4184,7 +4184,7 @@ y
 <testCase>
 <section>6.2.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <text/>
     <element name="bar">
@@ -4224,7 +4224,7 @@ y
 <testCase>
 <section>6.2.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <group>
     <element name="bar">
       <empty/>
@@ -4265,7 +4265,7 @@ y
 <testCase>
 <section>6.2.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -4312,7 +4312,7 @@ y
 <testCase>
 <section>6.2.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar">
     <text/>
   </attribute>
@@ -4340,7 +4340,7 @@ y
 <testCase>
 <section>6.2.5</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <element name="bar">
       <empty/>
@@ -4364,7 +4364,7 @@ y
 <testCase>
 <section>6.2.5</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <group>
       <element name="bar">
@@ -4399,7 +4399,7 @@ y
 <testCase>
 <section>6.2.5</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <nsName ns=""/>
@@ -4430,7 +4430,7 @@ y
 <testCase>
 <section>6.2.5</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <choice>
       <attribute name="bar">
@@ -4462,7 +4462,7 @@ y
 <testCase>
 <section>6.2.6</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -4495,7 +4495,7 @@ y
 <testCase>
 <section>6.2.6</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <group>
       <element name="bar1">
@@ -4539,7 +4539,7 @@ y
 <testCase>
 <section>6.2.6</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <attribute name="bar">
       <text/>
@@ -4569,7 +4569,7 @@ y
 <testCase>
 <section>6.2.6</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -4602,7 +4602,7 @@ y
 <testCase>
 <section>6.2.7</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name ns="">bar</name>
     <value type="string" datatypeLibrary="">baz</value>
@@ -4631,7 +4631,7 @@ y
 <testCase>
 <section>6.2.7</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name ns="">bar</name>
     <choice>
@@ -4666,7 +4666,7 @@ y
 <testCase>
 <section>6.2.7</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute>
     <name ns="">bar</name>
     <value type="string"/>
@@ -4686,7 +4686,7 @@ y
 <testCase>
 <section>6.2.7</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9">
+<element xmlns="http://relaxng.org/ns/structure/1.0">
   <name ns="">foo</name>
   <group>
     <element>
@@ -4727,7 +4727,7 @@ y
 <section>6.2.7</section>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="string"/>
 </element>
 </correct>
@@ -4739,7 +4739,7 @@ y
 <section>6.2.7</section>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <value type="string"/>
     <empty/>
@@ -4755,7 +4755,7 @@ y
 <section>6.2.8</section>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <data type="token"/>
   </list>
@@ -4772,7 +4772,7 @@ y
 <section>6.2.8</section>
 <requires datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"/>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
  <data type="string"
        datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
    <param name="minLength">2</param>
@@ -4791,7 +4791,7 @@ y
 <section>6.2.7</section>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <value>x</value>
     <element name="bar">
@@ -4817,7 +4817,7 @@ y
 <section>6.2.7</section>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <value>x</value>
     <mixed>
@@ -4847,7 +4847,7 @@ y
 <testCase>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string">
     <except>
       <choice>
@@ -4874,7 +4874,7 @@ y
 <testCase>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string"/>
 </element>
 </correct>
@@ -4885,7 +4885,7 @@ y
 <testCase>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value/>
 </element>
 </correct>
@@ -4896,7 +4896,7 @@ y
 <testCase>
 <section>6.2.8</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string">
     <except>
       <value/>
@@ -4917,7 +4917,7 @@ y
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string" datatypeLibrary=""/>
 </element>
 </correct>
@@ -4950,7 +4950,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="token" datatypeLibrary=""/>
 </element>
 </correct>
@@ -4983,7 +4983,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="string" datatypeLibrary="">x</value>
 </element>
 </correct>
@@ -4995,7 +4995,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="string" datatypeLibrary=""> x</value>
 </element>
 </correct>
@@ -5007,7 +5007,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="token" datatypeLibrary="">x</value>
 </element>
 </correct>
@@ -5021,7 +5021,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="token" datatypeLibrary="">x y</value>
 </element>
 </correct>
@@ -5033,7 +5033,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="token" datatypeLibrary="">&#xA;&#xD;&#x9;&#x20;x&#xA;&#xD;&#x9;&#x20;</value>
 </element>
 </correct>
@@ -5047,7 +5047,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="token" datatypeLibrary="">x&#xA;&#xD;&#x9;&#x20;y</value>
 </element>
 </correct>
@@ -5062,7 +5062,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="decimal" datatypeLibrary=""/>
 </element>
 </incorrect>
@@ -5070,7 +5070,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <value type="decimal" datatypeLibrary=""/>
 </element>
 </incorrect>
@@ -5078,7 +5078,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="string" datatypeLibrary="">
     <param name="length">2</param>
   </data>
@@ -5088,7 +5088,7 @@ z
 <testCase>
 <section>6.2.9</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <data type="token" datatypeLibrary="">
     <param name="length">2</param>
   </data>
@@ -5101,7 +5101,7 @@ z
 <testCase>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <value type="string">x</value>
   </list>
@@ -5120,7 +5120,7 @@ z
 <testCase>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <oneOrMore>
       <value type="string">x</value>
@@ -5144,7 +5144,7 @@ z
 <testCase>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <group>
       <value type="string">x</value>
@@ -5169,7 +5169,7 @@ z
 <testCase>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <group>
       <data type="token"/>
@@ -5191,7 +5191,7 @@ z
 <testCase>
 <section>6.2.10</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <value>x y</value>
   </list>
@@ -5211,7 +5211,7 @@ z
 <testCase>
 <section>7.1.1</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <attribute name="bar">
@@ -5227,7 +5227,7 @@ z
 <testCase>
 <section>7.1.1</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <attribute name="bar">
@@ -5246,7 +5246,7 @@ z
 <testCase>
 <section>7.1.1</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <attribute name="bar">
@@ -5260,7 +5260,7 @@ z
 <testCase>
 <section>7.1.1</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <attribute name="bar">
@@ -5277,7 +5277,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5294,7 +5294,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5315,7 +5315,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5341,7 +5341,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5358,7 +5358,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5379,7 +5379,7 @@ z
 <testCase>
 <section>7.1.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -5405,7 +5405,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5421,7 +5421,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5440,7 +5440,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5456,7 +5456,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5475,7 +5475,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5491,7 +5491,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5510,7 +5510,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <list>
@@ -5527,7 +5527,7 @@ z
 <testCase>
 <section>7.1.3</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5543,7 +5543,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5561,7 +5561,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5577,7 +5577,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5595,7 +5595,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5614,7 +5614,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5633,7 +5633,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5651,7 +5651,7 @@ z
 <testCase>
 <section>7.1.4</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <data type="string">
@@ -5667,7 +5667,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <attribute name="foo"/>
 </start>
@@ -5677,7 +5677,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <data type="string"/>
 </start>
@@ -5687,7 +5687,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <data type="string"/>
@@ -5702,7 +5702,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <value>foo</value>
@@ -5717,7 +5717,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <text/>
 </start>
@@ -5727,7 +5727,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <text/>
@@ -5742,7 +5742,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <list>
     <data type="token"/>
@@ -5754,7 +5754,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <element name="foo">
@@ -5771,7 +5771,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <group>
     <element name="foo">
@@ -5788,7 +5788,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <element name="foo">
@@ -5810,7 +5810,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <interleave>
     <element name="foo">
@@ -5827,7 +5827,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <element name="foo">
@@ -5849,7 +5849,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <oneOrMore>
     <element name="foo">
@@ -5863,7 +5863,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <oneOrMore>
@@ -5882,7 +5882,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <empty/>
 </start>
@@ -5892,7 +5892,7 @@ z
 <testCase>
 <section>7.1.5</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <choice>
     <element name="foo">
@@ -5910,7 +5910,7 @@ z
 <section>4.18</section>
 <documentation>Tests that constraints are post-normalization</documentation>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <grammar>
     <start>
       <text/>
@@ -5927,7 +5927,7 @@ z
 <section>7</section>
 <section>4.18</section>
 <incorrect>
-<text xmlns="http://relaxng.org/ns/structure/0.9"/>
+<text xmlns="http://relaxng.org/ns/structure/1.0"/>
 </incorrect>
 </testCase>
 <testCase>
@@ -5935,7 +5935,7 @@ z
 <section>7</section>
 <section>4.20</section>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <optional>
     <attribute name="bar">
       <group>
@@ -5957,7 +5957,7 @@ z
 <documentation>The nested attribute element is normalized out because
 of the not allowed.</documentation>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <attribute name="bar">
     <choice>
       <text/>
@@ -5979,7 +5979,7 @@ of the not allowed.</documentation>
 <section>4.12</section>
 <documentation>The group element is normalized out.</documentation>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -6003,7 +6003,7 @@ of the not allowed.</documentation>
 <section>4.21</section>
 <documentation>The group element is normalized out.</documentation>
 <correct>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 <start>
   <element name="foo">
     <oneOrMore>
@@ -6028,7 +6028,7 @@ of the not allowed.</documentation>
 <section>4.20</section>
 <documentation>The attribute elements are all normalized out.</documentation>
 <correct>
-<element xmlns="http://relaxng.org/ns/structure/0.9" name="foo">
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="foo">
   <optional>
     <attribute name="a1">
       <attribute name="a2">
@@ -6050,7 +6050,7 @@ of the not allowed.</documentation>
 <testCase>
 <section>7.2</section>
 <incorrect>
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <element name="foo">
       <group>
@@ -6068,7 +6068,7 @@ before string sequence checking.</documentation>
 <section>7.2</section>
 <section>4.20</section>
 <correct>
-<choice xmlns="http://relaxng.org/ns/structure/0.9">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
   <element name="foo">
     <empty/>
   </element>
@@ -6092,7 +6092,7 @@ before string sequence checking.</documentation>
 <section>7.2</section>
 <documentation>notAllowed in an element is not normalized</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <group>
       <element name="bar">
@@ -6114,7 +6114,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <attribute name="bar"/>
 </element>
@@ -6123,7 +6123,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <zeroOrMore>
     <attribute name="bar"/>
@@ -6134,7 +6134,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute name="bar"/>
   </oneOrMore>
@@ -6147,7 +6147,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <attribute name="bar"/>
     <attribute name="bar"/>
@@ -6158,7 +6158,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <optional>
     <attribute name="bar"/>
   </optional>
@@ -6171,7 +6171,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <oneOrMore>
     <attribute>
@@ -6184,7 +6184,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <oneOrMore>
     <attribute>
@@ -6201,7 +6201,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <oneOrMore>
     <attribute>
@@ -6233,7 +6233,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <oneOrMore>
     <attribute>
@@ -6246,7 +6246,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <oneOrMore>
     <attribute>
@@ -6263,7 +6263,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName/>
@@ -6280,7 +6280,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName/>
@@ -6297,7 +6297,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <nsName ns=""/>
@@ -6318,7 +6318,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName>
@@ -6339,7 +6339,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName>
@@ -6364,7 +6364,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <anyName>
@@ -6394,7 +6394,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <oneOrMore>
     <attribute>
       <nsName ns="http://www.example.com/1"/>
@@ -6416,7 +6416,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <choice>
     <attribute name="bar"/>
     <attribute name="bar"/>
@@ -6430,7 +6430,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute name="bar"/>
   <choice>
     <attribute name="baz"/>
@@ -6442,7 +6442,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute><anyName/><text/></attribute>
 </element>
 </incorrect>
@@ -6450,7 +6450,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute><nsName ns =""/><text/></attribute>
 </element>
 </incorrect>
@@ -6458,7 +6458,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.3</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <attribute><choice><nsName ns =""/><name>foo</name></choice><text/></attribute>
 </element>
 </incorrect>
@@ -6469,7 +6469,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6484,7 +6484,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6504,7 +6504,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6524,7 +6524,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6549,7 +6549,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6566,7 +6566,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6582,7 +6582,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6598,7 +6598,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6613,7 +6613,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <element name="bar">
       <empty/>
@@ -6636,7 +6636,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <choice>
       <element name="bar">
@@ -6659,7 +6659,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <value>bar</value>
@@ -6672,7 +6672,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <value>bar</value>
@@ -6687,7 +6687,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <value>bar</value>
@@ -6700,7 +6700,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <value>bar</value>
@@ -6713,7 +6713,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <choice>
@@ -6729,7 +6729,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <choice>
@@ -6745,7 +6745,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <data type="token"/>
@@ -6758,7 +6758,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <value>bar</value>
@@ -6774,7 +6774,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <list>
     <interleave>
       <choice>
@@ -6794,7 +6794,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <interleave>
     <text/>
     <text/>
@@ -6805,7 +6805,7 @@ before string sequence checking.</documentation>
 <testCase>
 <section>7.4</section>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
   <mixed>
     <mixed>
       <element name="bar">

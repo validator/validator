@@ -27,7 +27,7 @@ import com.thaiopensource.util.Uri;
 
 public class PatternReader implements ValidationContext {
 
-  static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
+  static final String relaxngURI = "http://relaxng.org/ns/structure/1.0";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
   static final String xsdURI = "http://www.w3.org/2001/XMLSchema-datatypes";
 

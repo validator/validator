@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Hypertext Module -->
 <!-- Depends on text module. -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
 <define name="a">
   <element name="a">

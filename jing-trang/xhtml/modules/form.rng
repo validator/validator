@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Forms Module -->
-<!-- Unlike the DTD implementation, this builds on the basic-form module --><grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<!-- Unlike the DTD implementation, this builds on the basic-form module --><grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
 <include href="basic-form.rng">
 
