@@ -1032,7 +1032,7 @@ ParsedPattern ExternalRefExpr(Scope scope, Annotations a) :
   String ns;
 }
 {
-  t = "externalRef" href = Literal()
+  t = "external" href = Literal()
   ns = Inherit()
   {
     try {
@@ -1450,7 +1450,7 @@ Token Keyword() :
   | t = "empty"
   | t = "text"
   | t = "parent"
-  | t = "externalRef"
+  | t = "external"
   | t = "notAllowed"
   | t = "start"
   | t = "include"

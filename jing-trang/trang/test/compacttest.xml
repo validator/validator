@@ -1254,7 +1254,7 @@ head =		element head {
 foo
 </resource>
 <correct><![CDATA[
-start = externalRef "x.rnc"
+start = external "x.rnc"
 foo = element foo { empty }
 ]]></correct>
 </compact>

@@ -21,6 +21,6 @@ incorrect-compact = element compact { compact-resources, element incorrect { com
 
 compact = attribute encoding { token }?, text
 
-rng = externalRef "../../doc/compact/relaxng.rnc"
+rng = external "../../doc/compact/relaxng.rnc"
 
 name = attribute name { string }
