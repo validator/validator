@@ -571,7 +571,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <fileset dir="doc/jing-win32-bin" includes="readme.html"/>
   </copy>
   <replace file="${build.dir}/jing-win32-bin/readme.html" token="@VERSION@" value="${version}"/>
-  <zip zipfile="${build.dir}/jing-${version}-win32-bin.zip">
+  <zip zipfile="${build.dir}/dist/jing-${version}-win32-bin.zip">
     <fileset dir="${build.dir}/jing-win32-bin" includes="readme.html"/>
     <fileset dir="doc/jing-win32-bin" includes="apache-license.txt"/>
     <fileset dir="${build.dir}" includes="jing.exe,copying.html"/>
