@@ -18,4 +18,8 @@ class NullNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitNull();
   }
+
+  public boolean isOpen() {
+    return false;
+  }
 }

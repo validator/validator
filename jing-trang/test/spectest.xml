@@ -2446,7 +2446,7 @@ applies at the syntax level.</documentation>
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
 <start>
   <element name="foo">
-    <optional>
+    <zeroOrMore>
       <attribute>
 	<anyName>
 	  <except>
@@ -2456,7 +2456,7 @@ applies at the syntax level.</documentation>
 	<text/>
       </attribute>
       <notAllowed/>
-    </optional>
+    </zeroOrMore>
   </element>
 </start>
 </grammar>
@@ -5864,9 +5864,11 @@ before string sequence checking.</documentation>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
-  <attribute>
-    <anyName/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName/>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5875,13 +5877,15 @@ before string sequence checking.</documentation>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
-  <attribute>
-    <anyName>
-      <except>
-        <name>baz</name>
-      </except>
-    </anyName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <name>baz</name>
+	</except>
+      </anyName>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5890,13 +5894,15 @@ before string sequence checking.</documentation>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
-  <attribute>
-    <anyName>
-      <except>
-        <name>bar</name>
-      </except>
-    </anyName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <name>bar</name>
+	</except>
+      </anyName>
+    </attribute>
+  </oneOrMore>
 </element>
 </correct>
 <valid>
@@ -5914,18 +5920,17 @@ before string sequence checking.</documentation>
 <invalid>
 <foo xyzzy="val"/>
 </invalid>
-<invalid>
-<foo bar="val" xyzzy="anotherval" baz=""/>
-</invalid>
 </testCase>
 <testCase>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
-  <attribute>
-    <nsName ns=""/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <nsName ns=""/>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5934,13 +5939,15 @@ before string sequence checking.</documentation>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
   <attribute name="bar"/>
-  <attribute>
-    <nsName ns="">
-      <except>
-        <name>baz</name>
-      </except>
-     </nsName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <nsName ns="">
+	<except>
+	  <name>baz</name>
+	</except>
+       </nsName>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5948,12 +5955,16 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <anyName/>
-  </attribute>
-  <attribute>
-    <nsName ns=""/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName/>
+    </attribute>
+  </oneOrMore>
+  <oneOrMore>
+    <attribute>
+      <nsName ns=""/>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5961,12 +5972,16 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <anyName/>
-  </attribute>
-  <attribute>
-    <anyName/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName/>
+    </attribute>
+  </oneOrMore>
+  <oneOrMore>
+    <attribute>
+      <anyName/>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5974,16 +5989,20 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <nsName ns=""/>
-  </attribute>
-  <attribute>
-    <nsName ns="">
-      <except>
-        <name>bar</name>
-      </except>
-    </nsName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <nsName ns=""/>
+    </attribute>
+  </oneOrMore>
+  <oneOrMore>
+    <attribute>
+      <nsName ns="">
+	<except>
+	  <name>bar</name>
+	</except>
+      </nsName>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -5991,17 +6010,19 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <anyName>
-      <except>
-        <nsName>
-          <except>
-            <name>foo</name>
-          </except>
-        </nsName>
-      </except>
-    </anyName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <nsName>
+	    <except>
+	      <name>foo</name>
+	    </except>
+	  </nsName>
+	</except>
+      </anyName>
+    </attribute>
+  </oneOrMore>
   <attribute name="foo"/>
 </element>
 </incorrect>
@@ -6010,20 +6031,24 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <incorrect>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <anyName>
-      <except>
-        <nsName>
-          <except>
-            <name>foo</name>
-          </except>
-        </nsName>
-      </except>
-    </anyName>
-  </attribute>
-  <attribute>
-    <nsName/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <nsName>
+	    <except>
+	      <name>foo</name>
+	    </except>
+	  </nsName>
+	</except>
+      </anyName>
+    </attribute>
+  </oneOrMore>
+  <oneOrMore>
+    <attribute>
+      <nsName/>
+    </attribute>
+  </oneOrMore>
 </element>
 </incorrect>
 </testCase>
@@ -6031,17 +6056,19 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <anyName>
-      <except>
-        <nsName>
-          <except>
-            <name>bar</name>
-          </except>
-        </nsName>
-      </except>
-    </anyName>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <anyName>
+	<except>
+	  <nsName>
+	    <except>
+	      <name>bar</name>
+	    </except>
+	  </nsName>
+	</except>
+      </anyName>
+    </attribute>
+  </oneOrMore>
   <attribute name="baz"/>
 </element>
 </correct>
@@ -6059,12 +6086,16 @@ before string sequence checking.</documentation>
 <section>7.3</section>
 <correct>
 <element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
-  <attribute>
-    <nsName ns="http://www.example.com/1"/>
-  </attribute>
-  <attribute>
-    <nsName ns="http://www.example.com/2"/>
-  </attribute>
+  <oneOrMore>
+    <attribute>
+      <nsName ns="http://www.example.com/1"/>
+    </attribute>
+  </oneOrMore>
+  <oneOrMore>
+    <attribute>
+      <nsName ns="http://www.example.com/2"/>
+    </attribute>
+  </oneOrMore>
 </element>
 </correct>
 <valid>
@@ -6432,6 +6463,30 @@ before string sequence checking.</documentation>
       <empty/>
     </element>
   </mixed>
+</element>
+</incorrect>
+</testCase>
+</testSuite>
+<testSuite>
+<documentation>Fix for issue 65</documentation>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute><anyName/><text/></attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute><nsName ns =""/><text/></attribute>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/0.9">
+  <attribute><choice><nsName ns =""/><name>foo</name></choice><text/></attribute>
 </element>
 </incorrect>
 </testCase>

@@ -8,4 +8,8 @@ class ErrorNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitError();
   }
+
+  public boolean isOpen() {
+    return false;
+  }
 }

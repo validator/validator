@@ -46,6 +46,10 @@ class AttributePattern extends Pattern {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_attribute");
+    case ELEMENT_CONTEXT:
+      if (nameClass.isOpen())
+	throw new RestrictionViolationException("open_name_class_not_repeated");
+      break;
     case ELEMENT_REPEAT_GROUP_CONTEXT:
       throw new RestrictionViolationException("one_or_more_contains_group_contains_attribute");
     case ELEMENT_REPEAT_INTERLEAVE_CONTEXT:

@@ -38,4 +38,8 @@ class SimpleNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitName(namespaceURI, localName);
   }
+
+  public boolean isOpen() {
+    return false;
+  }
 }

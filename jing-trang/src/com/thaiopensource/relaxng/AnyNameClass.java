@@ -17,4 +17,8 @@ class AnyNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitAnyName();
   }
+
+  public boolean isOpen() {
+    return true;
+  }
 }

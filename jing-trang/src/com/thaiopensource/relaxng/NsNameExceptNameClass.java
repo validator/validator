@@ -30,5 +30,9 @@ class NsNameExceptNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitNsNameExcept(namespaceURI, nameClass);
   }
+
+  public boolean isOpen() {
+    return true;
+  }
 }
 

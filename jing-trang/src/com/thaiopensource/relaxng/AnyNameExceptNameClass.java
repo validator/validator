@@ -25,4 +25,8 @@ class AnyNameExceptNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitAnyNameExcept(nameClass);
   }
+
+  public boolean isOpen() {
+    return true;
+  }
 }

@@ -26,7 +26,12 @@ class ChoiceNameClass implements NameClass {
     return (nameClass1.equals(other.nameClass1)
 	    && nameClass2.equals(other.nameClass2));
   }
+
   public void accept(NameClassVisitor visitor) {
     visitor.visitChoice(nameClass1, nameClass2);
+  }
+
+  public boolean isOpen() {
+    return nameClass1.isOpen() || nameClass2.isOpen();
   }
 }

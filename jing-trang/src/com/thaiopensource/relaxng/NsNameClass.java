@@ -25,4 +25,8 @@ class NsNameClass implements NameClass {
   public void accept(NameClassVisitor visitor) {
     visitor.visitNsName(namespaceURI);
   }
+
+  public boolean isOpen() {
+    return true;
+  }
 }
