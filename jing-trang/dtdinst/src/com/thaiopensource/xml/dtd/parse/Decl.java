@@ -118,10 +118,9 @@ class Decl {
 
   TopLevel createGeneralEntityDecl(DtdBuilder db, String name) {
     Entity entity = db.lookupGeneralEntity(name);
-    if (entity.decl == null)
-      entity.decl = this;
-    if (entity.decl != this)
-      return null;
+    while (entity.decl != null)
+      entity = entity.overrides;
+    entity.decl = this;
     if (entity.text == null)
       return new ExternalEntityDecl(name, entity.getExternalId());
     else

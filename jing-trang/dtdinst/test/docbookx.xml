@@ -1772,6 +1772,7 @@
           <comment> LATIN SMALL LIGATURE IJ </comment>
           <internalEntity name="IJlig">&#x0132;</internalEntity>
           <comment> LATIN CAPITAL LIGATURE IJ </comment>
+          <internalEntity name="inodot">&#x0131;</internalEntity>
           <comment> LATIN SMALL LETTER DOTLESS I </comment>
           <internalEntity name="iogon">&#x012F;</internalEntity>
           <comment> LATIN SMALL LETTER I WITH OGONEK </comment>

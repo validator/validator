@@ -1,0 +1,4 @@
+<!ENTITY e "foo">
+<!ENTITY e "bar">
+<!ENTITY e SYSTEM "baz">
+<!ELEMENT doc EMPTY>
