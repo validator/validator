@@ -19,7 +19,7 @@ public class XmlWriter {
   private int level = 0;
   private String[] topLevelAttributes;
 
-  public class WrappedException extends RuntimeException {
+  public static class WrappedException extends RuntimeException {
     private IOException cause;
 
     public Throwable getCause() {

@@ -12,7 +12,7 @@ class ModelBreaker {
   private int modelPos;
   private ModelBreaker nested = null;
 
-  private class BreakIterator {
+  private static class BreakIterator {
     private final String model;
     private int pos = 0;
     private final int length;

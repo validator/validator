@@ -654,7 +654,7 @@ class Parser extends Token {
     return buf.toString();
   }
 
-  class AttributeValueException extends Exception {
+  static class AttributeValueException extends Exception {
     int offset;
     String key;
     String arg;
