@@ -1,8 +1,15 @@
-<project name="dtdparse" default="compile" basedir=".">
+<project name="dtdparse" default="jar" basedir=".">
 
 <target name="compile">
   <mkdir dir="build/classes"/>
   <javac srcdir="src" destdir="build/classes"/>
+</target>
+
+<target name="jar">
+  <jar jarfile="build/dtdparse.jar" manifest="dtdparse.mf">
+    <fileset dir="build/classes"/>
+    <fileset dir="src" includes="**/*.properties"/>
+  </jar>
 </target>
 
 </project>
