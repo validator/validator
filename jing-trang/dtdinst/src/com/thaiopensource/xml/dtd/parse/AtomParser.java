@@ -27,8 +27,8 @@ class AtomParser {
   }
 
   void parse() {
-    parseDecls();
     try {
+      parseDecls();
       pp.end();
     }
     catch (PrologSyntaxException e) {
@@ -36,7 +36,7 @@ class AtomParser {
     }
   }
 
-  private void parseDecls() {
+  private void parseDecls() throws PrologSyntaxException {
     while (as.advance()) {
       Decl d = null;
       if (as.entity != null) {
@@ -110,18 +110,46 @@ class AtomParser {
 
   // Return true for IGNORE status keyword spec
 
-  private boolean parseParams() {
+  private boolean parseParams() throws PrologSyntaxException {
     while (as.advance()) {
       Param p = null;
       if (as.entity != null) {
 	p = new Param(Param.REFERENCE);
 	p.entity = as.entity;
+	PrologParser ppSaved;
+	if (p.entity.overrides != null)
+	  ppSaved = (PrologParser)pp.clone();
+	else
+	  ppSaved = null;
 	v.addElement(p);
 	int start = v.size();
 	new AtomParser(db, new AtomStream(as.entity.atoms), pp, v).parseParams();
 	if (v.size() == start && pp.expectingAttributeName())
 	  v.addElement(new Param(Param.EMPTY_ATTRIBUTE_GROUP));
 	p.entity.setParsed(Entity.PARAM_LEVEL, v, start, v.size());
+	for (Entity overridden = p.entity.overrides;
+	     overridden != null;
+	     overridden = overridden.overrides) {
+	  if (overridden.atoms != null) {
+	    Vector tem = new Vector();
+	    AtomParser ap = new AtomParser(db,
+					   new AtomStream(overridden.atoms),
+					   (PrologParser)ppSaved.clone(),
+					   tem);
+	    try {
+	      ap.parseParams();
+	      if (tem.size() == 0 && ap.pp.expectingAttributeName())
+		tem.addElement(new Param(Param.EMPTY_ATTRIBUTE_GROUP));
+	      if (ap.pp.isCompatible(pp))
+		overridden.setParsed(Entity.PARAM_LEVEL, tem, 0, tem.size());
+	      else
+		overridden.inconsistentParse();
+	    }
+	    catch (PrologSyntaxException e) {
+	      overridden.inconsistentParse();
+	    }
+	  }
+	}
 	p = new Param(Param.REFERENCE_END);
       }
       else {
@@ -230,7 +258,7 @@ class AtomParser {
     return false;
   }
 
-  private Particle parseGroup() {
+  private Particle parseGroup() throws PrologSyntaxException {
     Particle g = new Particle(Particle.GROUP);
     g.particles = new Vector();
     new AtomParser(db, as, pp, g).parseParticles();
@@ -266,16 +294,47 @@ class AtomParser {
     return g;
   }
 
-  private void parseParticles() {
+  private void parseParticles() throws PrologSyntaxException {
     while (as.advance()) {
       Particle p = null;
       if (as.entity != null) {
 	p = new Particle(Particle.REFERENCE);
 	p.entity = as.entity;
+	PrologParser ppSaved;
+	if (p.entity.overrides != null)
+	  ppSaved = (PrologParser)pp.clone();
+	else
+	  ppSaved = null;
 	v.addElement(p);
 	int start = v.size();
 	new AtomParser(db, new AtomStream(as.entity.atoms), pp, group).parseParticles();
 	p.entity.setParsed(Entity.PARTICLE_LEVEL, v, start, v.size());
+	for (Entity overridden = p.entity.overrides;
+	     overridden != null;
+	     overridden = overridden.overrides) {
+	  if (overridden.atoms != null) {
+	    Particle g = new Particle(Particle.GROUP);
+	    g.particles = new Vector();
+	    AtomParser ap = new AtomParser(db,
+					   new AtomStream(overridden.atoms),
+					   (PrologParser)ppSaved.clone(),
+					   g);
+	    try {
+	      ap.parseParticles();
+	      if (ap.pp.isCompatible(pp))
+		overridden.setParsed(Entity.PARTICLE_LEVEL,
+				     g.particles,
+				     0,
+				     g.particles.size());
+	      else
+		overridden.inconsistentParse();
+
+	    }
+	    catch (PrologSyntaxException e) {
+	      overridden.inconsistentParse();
+	    }
+	  }
+	}
 	p = new Particle(Particle.REFERENCE_END);
       } 
       else {
@@ -341,12 +400,7 @@ class AtomParser {
     }
   }
 
-  private int doAction() {
-    try {
-      return pp.action(as.tokenType, as.token);
-    }
-    catch (PrologSyntaxException e) {
-      throw new Error("syntax error on reparse");
-    }
+  private int doAction() throws PrologSyntaxException {
+    return pp.action(as.tokenType, as.token);
   }
 }

@@ -1007,7 +1007,9 @@ subset.</comment>
         <ignore/>
       </flag>
       <overridden>
-        <param name="TEI.terminology">IGNORE</param>
+        <flag name="TEI.terminology">
+          <ignore/>
+        </flag>
       </overridden>
       <comment>Now the mixed
 bases.</comment>
@@ -1052,7 +1054,9 @@ sets.</comment>
       <comment>III. Declare TEI.XML and associated omissibility
 indicators</comment>
       <overridden>
-        <param name="TEI.XML">IGNORE</param>
+        <flag name="TEI.XML">
+          <ignore/>
+        </flag>
       </overridden>
       <includedSection flag="TEI.XML">
         <param name="om.RO"></param>
@@ -2175,7 +2179,9 @@ component.plus for use in general base tag set.--&gt;
       </includedSection>
       <comment>Default declaration.</comment>
       <overridden>
-        <param name="component">(%m.common;)</param>
+        <modelGroup name="component">
+          <modelGroupRef name="m.common"/>
+        </modelGroup>
       </overridden>
       <overridden>
         <duplicate name="TEI.singleBase"/>
@@ -2395,7 +2401,7 @@ string, as shown here.  </comment>
       <attributeGroup name="a.analysis"/>
       <attributeGroup name="a.linking"/>
       <overridden>
-        <param name="a.terminology"></param>
+        <attributeGroup name="a.terminology"/>
       </overridden>
       <attributeGroup name="a.global">
         <attributeGroupRef name="a.terminology"/>
@@ -8470,7 +8476,9 @@ otherform, or gram.  There may be multiple notes, admins, descrips
 otherforms, and grams appearing in any order.  xRef, date, biblRef
 can appear in all positions in termEntry.</comment>
           <overridden>
-            <param name="termEntry">INCLUDE</param>
+            <flag name="termEntry">
+              <include/>
+            </flag>
           </overridden>
           <ignoredSection flag="termEntry">
 

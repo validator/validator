@@ -164,9 +164,11 @@ class Parser extends Token {
       declState.entity.text = valueBuf.getChars();
       declState.entity.entityValue = token.substring(1, token.length() - 1);
       declState.entity.mustReparse = valueBuf.getMustReparse();
+      declState.entity.references = valueBuf.getReferences();
       if (declState.entity.mustReparse)
 	declState.entity.problem = Entity.REPARSE_PROBLEM;
-      declState.entity.references = valueBuf.getReferences();
+      else if (declState.entity.overridden && declState.entity.isParameter)
+	declState.entity.atoms = tokenizeOverriddenEntity(declState.entity.text);
       break;
     case PrologParser.ACTION_INNER_PARAM_ENTITY_REF:
     case PrologParser.ACTION_OUTER_PARAM_ENTITY_REF:
@@ -486,6 +488,37 @@ class Parser extends Token {
 	fatal("IGNORE_SECT_CHAR");
       }
     }
+  }
+
+  private Vector tokenizeOverriddenEntity(char[] text) {
+    Vector v = new Vector();
+    try {
+      Token t = new Token();
+      int start = 0;
+      for (;;) {
+	int tok;
+	int tokenEnd;
+	try {
+	  tok = Tokenizer.tokenizeProlog(text, start, text.length, t);
+	  tokenEnd = t.getTokenEnd();
+	}
+	catch (ExtensibleTokenException e) {
+	  tok = e.getTokenType();
+	  tokenEnd = text.length;
+	}
+	v.addElement(new Atom(tok,
+			      new String(text, start, tokenEnd - start)));
+	
+	start = tokenEnd;
+      }
+    }
+    catch (EmptyTokenException e) {
+      return v;
+    }
+    catch (EndOfPrologException e) { }
+    catch (PartialTokenException e) { }
+    catch (InvalidTokenException e) { }
+    return null;
   }
 
   /* The size of the buffer is always a multiple of READSIZE.

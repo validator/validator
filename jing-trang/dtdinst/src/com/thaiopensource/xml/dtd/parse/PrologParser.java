@@ -748,6 +748,14 @@ public class PrologParser implements Cloneable {
     }
   }
 
+  public boolean isCompatible(PrologParser orig) {
+    if (groupLevel > 0
+	&& connector[groupLevel - 1] != 0
+	&& connector[groupLevel - 1] != orig.connector[groupLevel - 1])
+      return false;
+    return true;
+  }
+
   public final int getGroupLevel() {
     return groupLevel;
   }

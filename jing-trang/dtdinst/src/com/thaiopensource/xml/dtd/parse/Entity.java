@@ -94,15 +94,18 @@ class Entity {
 
   Vector parsed;
 
+  void inconsistentParse() {
+    parsed = null;
+    referenceLevel = INCONSISTENT_LEVEL;
+    problem = INCONSISTENT_PARSE_PROBLEM;
+  }
+
   void setParsed(int level, Vector v, int start, int end) {
     if (referenceLevel < 0)
       return;
     if (level == referenceLevel) {
-      if (!sliceEqual(parsed, v, start, end)) {
-	parsed = null;
-	referenceLevel = INCONSISTENT_LEVEL;
-	problem = INCONSISTENT_PARSE_PROBLEM;
-      }
+      if (!sliceEqual(parsed, v, start, end))
+	inconsistentParse();
       return;
     }
     if (referenceLevel == NO_LEVEL) {
@@ -232,7 +235,7 @@ class Entity {
 	}
 	nCopiedAtoms = end;
       }
-      else
+      else if (!overridden)
 	references[i].entity.problem = UNEXPAND_PROBLEM;
     }
     if (newAtoms == null)
@@ -240,6 +243,8 @@ class Entity {
     appendSlice(newAtoms, atoms, nCopiedAtoms, atoms.size());
     atoms = newAtoms;
     references = null;
+    if (overrides != null)
+      overrides.unexpandEntities();
   }
   
   private static Atom[] splitAtom(Atom atom) {
@@ -356,6 +361,24 @@ class Entity {
       problem = NOT_PARSED_PROBLEM;
       break;
     }
+    for (Entity e = overrides; e != null; e = e.overrides)
+      e.analyzeSemanticOverride(this);
+  }
+
+  private void analyzeSemanticOverride(Entity orig) {
+    if (parsed == null || problem != NO_PROBLEM)
+      return;
+    switch (referenceLevel) {
+    case PARAM_LEVEL:
+      analyzeSemanticParam();
+      break;
+    case PARTICLE_LEVEL:
+      groupFlags = orig.groupFlags;
+      analyzeSemanticParticle();
+      break;
+    }
+    if (semantic != orig.semantic)
+      semantic = SEMANTIC_NONE;
   }
 
   private void analyzeSemanticParam() {
@@ -523,6 +546,8 @@ class Entity {
   void noteReferenced() {
     if (problem == UNREFERENCED_PROBLEM)
       problem = NO_PROBLEM;
+    if (overrides != null)
+      overrides.noteReferenced();
   }
 
   String ambiguousNameSpec() {

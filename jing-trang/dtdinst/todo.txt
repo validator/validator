@@ -1,8 +1,14 @@
+Detect improperly balanced overridden entities.
+
+Use system-dependent line-endings on output in XmlWriter.
+
+RELAX NG: output overridden definitions
+
+RELAX NG: try to preserve marked sections
+
 Option for properties file to set properties
 
 Option to set start elements.
-
-Use system-dependent line-endings on output in XmlWriter.
 
 Make UriEntityManager respect charset parameter.
 
@@ -22,8 +28,6 @@ RELAX NG: annotation for included sections (d:condition="flagName")
 RELAX NG: sort undefined elements.
 
 Methods on DTD giving random access to various kinds of declaration.
-
-Try to parse overridden declarations.
 
 Command-line options to expand/not recognize various kinds of ref.
 

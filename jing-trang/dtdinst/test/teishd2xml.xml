@@ -960,7 +960,9 @@ sets.</comment>
       <comment>III. Declare TEI.XML and associated omissibility
 indicators</comment>
       <overridden>
-        <param name="TEI.XML">IGNORE</param>
+        <flag name="TEI.XML">
+          <ignore/>
+        </flag>
       </overridden>
       <includedSection flag="TEI.XML">
         <param name="om.RO"></param>

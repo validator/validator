@@ -80,7 +80,7 @@ of the current application.
 <!ENTITY % tbl.hdft.mdl         "colspec*,row+">
 <!ENTITY % tbl.row.mdl          "(entry|entrytbl)+">
 <!ENTITY % tbl.entrytbl.mdl     "colspec*,spanspec*,thead?,tbody">
-<!ENTITY % tbl.entry.mdl        "(para|warning|caution|note|legend|%paracon;)*">
+<!ENTITY % tbl.entry.mdl        "%paracon;|para|warning|caution|note|legend">
 <!-- =====  Element and attribute declarations follow. =====  -->
 
 <!ELEMENT table (%tbl.table.mdl;)>

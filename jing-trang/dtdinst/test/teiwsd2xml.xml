@@ -497,7 +497,9 @@ Initiative.</comment>
     </externalIdRef>
     <comment>Insert switch for XML/SGML </comment>
     <overridden>
-      <param name="TEI.XML">IGNORE</param>
+      <flag name="TEI.XML">
+        <ignore/>
+      </flag>
     </overridden>
     <includedSection flag="TEI.XML">
       <param name="om.RO"></param>
@@ -919,7 +921,9 @@ Initiative.</comment>
       </attlist>
     </includedSection>
     <overridden>
-      <param name="figure">INCLUDE</param>
+      <flag name="figure">
+        <include/>
+      </flag>
     </overridden>
     <ignoredSection flag="figure">
 

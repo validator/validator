@@ -1311,27 +1311,41 @@ replacement text 'INCLUDE', in the document's DTD
 subset.</comment>
       <comment>Base tag sets first.</comment>
       <overridden>
-        <param name="TEI.prose">IGNORE</param>
+        <flag name="TEI.prose">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.verse">IGNORE</param>
+        <flag name="TEI.verse">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.drama">IGNORE</param>
+        <flag name="TEI.drama">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.spoken">IGNORE</param>
+        <flag name="TEI.spoken">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.dictionaries">IGNORE</param>
+        <flag name="TEI.dictionaries">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.terminology">IGNORE</param>
+        <flag name="TEI.terminology">
+          <ignore/>
+        </flag>
       </overridden>
       <comment>Now the mixed
 bases.</comment>
       <overridden>
-        <param name="TEI.general">IGNORE</param>
+        <flag name="TEI.general">
+          <ignore/>
+        </flag>
       </overridden>
       <flag name="TEI.mixed">
         <ignore/>
@@ -1339,39 +1353,61 @@ bases.</comment>
       <comment>Now additional tag
 sets.</comment>
       <overridden>
-        <param name="TEI.linking">IGNORE</param>
+        <flag name="TEI.linking">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.analysis">IGNORE</param>
+        <flag name="TEI.analysis">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.fs">IGNORE</param>
+        <flag name="TEI.fs">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.certainty">IGNORE</param>
+        <flag name="TEI.certainty">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.transcr">IGNORE</param>
+        <flag name="TEI.transcr">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.textcrit">IGNORE</param>
+        <flag name="TEI.textcrit">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.names.dates">IGNORE</param>
+        <flag name="TEI.names.dates">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.nets">IGNORE</param>
+        <flag name="TEI.nets">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.figures">IGNORE</param>
+        <flag name="TEI.figures">
+          <ignore/>
+        </flag>
       </overridden>
       <overridden>
-        <param name="TEI.corpus">IGNORE</param>
+        <flag name="TEI.corpus">
+          <ignore/>
+        </flag>
       </overridden>
       <comment>III. Declare TEI.XML and associated omissibility
 indicators</comment>
       <overridden>
-        <param name="TEI.XML">IGNORE</param>
+        <flag name="TEI.XML">
+          <ignore/>
+        </flag>
       </overridden>
       <includedSection flag="TEI.XML">
         <param name="om.RO"></param>
@@ -3367,19 +3403,29 @@ bases).</comment>
       <comment>Default declarations for the 'mix.' entities used for mixed
 and general bases.</comment>
       <overridden>
-        <param name="mix.verse"></param>
+        <modelGroup name="mix.verse">
+          <choice/>
+        </modelGroup>
       </overridden>
       <overridden>
-        <param name="mix.drama"></param>
+        <modelGroup name="mix.drama">
+          <choice/>
+        </modelGroup>
       </overridden>
       <overridden>
-        <param name="mix.spoken"></param>
+        <modelGroup name="mix.spoken">
+          <choice/>
+        </modelGroup>
       </overridden>
       <overridden>
-        <param name="mix.dictionaries"></param>
+        <modelGroup name="mix.dictionaries">
+          <choice/>
+        </modelGroup>
       </overridden>
       <overridden>
-        <param name="mix.terminology"></param>
+        <modelGroup name="mix.terminology">
+          <choice/>
+        </modelGroup>
       </overridden>
       <ignoredSection flag="TEI.mixed">
 &lt;!ENTITY  % TEI.singleBase 'IGNORE' &gt;
@@ -3482,19 +3528,29 @@ is not in use, its entity will expand to the empty string.</comment>
         <comment>Default declarations for all the entities gen.verse,
 etc.</comment>
         <overridden>
-          <param name="gen.verse"></param>
+          <modelGroup name="gen.verse">
+            <choice/>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="gen.drama"></param>
+          <modelGroup name="gen.drama">
+            <choice/>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="gen.spoken"></param>
+          <modelGroup name="gen.spoken">
+            <choice/>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="gen.dictionaries"></param>
+          <modelGroup name="gen.dictionaries">
+            <choice/>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="gen.terminology"></param>
+          <modelGroup name="gen.terminology">
+            <choice/>
+          </modelGroup>
         </overridden>
         <comment>Now we are ready to declare component.seq and
 component.plus for use in general base tag set.</comment>
@@ -3526,65 +3582,117 @@ component.plus for use in general base tag set.</comment>
       <comment> end of [DSTECMX]  3.7.8</comment>
       <includedSection flag="TEI.prose">
         <overridden>
-          <param name="component">(%m.common;)</param>
+          <modelGroup name="component">
+            <modelGroupRef name="m.common"/>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <includedSection flag="TEI.verse">
         <overridden>
-          <param name="component">(%m.common; | %m.comp.verse;)</param>
+          <modelGroup name="component">
+            <choice>
+              <modelGroupRef name="m.common"/>
+              <modelGroupRef name="m.comp.verse"/>
+            </choice>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <includedSection flag="TEI.drama">
         <overridden>
-          <param name="component">(%m.common; | %m.comp.drama;)</param>
+          <modelGroup name="component">
+            <choice>
+              <modelGroupRef name="m.common"/>
+              <modelGroupRef name="m.comp.drama"/>
+            </choice>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <includedSection flag="TEI.spoken">
         <overridden>
-          <param name="component">(%m.common; | %m.comp.spoken;)</param>
+          <modelGroup name="component">
+            <choice>
+              <modelGroupRef name="m.common"/>
+              <modelGroupRef name="m.comp.spoken"/>
+            </choice>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <includedSection flag="TEI.dictionaries">
         <overridden>
-          <param name="component">(%m.common; | %m.comp.dictionaries;)</param>
+          <modelGroup name="component">
+            <choice>
+              <modelGroupRef name="m.common"/>
+              <modelGroupRef name="m.comp.dictionaries"/>
+            </choice>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <includedSection flag="TEI.terminology">
         <overridden>
-          <param name="component">(%m.common; | %m.comp.terminology;)</param>
+          <modelGroup name="component">
+            <choice>
+              <modelGroupRef name="m.common"/>
+              <modelGroupRef name="m.comp.terminology"/>
+            </choice>
+          </modelGroup>
         </overridden>
         <overridden>
-          <param name="TEI.singleBase">INCLUDE</param>
+          <flag name="TEI.singleBase">
+            <include/>
+          </flag>
         </overridden>
       </includedSection>
       <comment>Default declaration.</comment>
       <overridden>
-        <param name="component">(%m.common;)</param>
+        <modelGroup name="component">
+          <modelGroupRef name="m.common"/>
+        </modelGroup>
       </overridden>
       <overridden>
-        <param name="TEI.singleBase">INCLUDE</param>
+        <flag name="TEI.singleBase">
+          <include/>
+        </flag>
       </overridden>
       <comment>The entity component.seq is always a starred sequence of
 component elements.  Its definition does not vary with the base (unless
 we are using the general base, in which case it has already been defined
 above), but the meaning of the definition does.</comment>
       <overridden>
-        <param name="component.seq">((%component;), (%m.Incl;)*)*</param>
+        <modelGroup name="component.seq">
+          <zeroOrMore>
+            <sequence>
+              <modelGroupRef name="component"/>
+              <zeroOrMore>
+                <modelGroupRef name="m.Incl"/>
+              </zeroOrMore>
+            </sequence>
+          </zeroOrMore>
+        </modelGroup>
       </overridden>
       <comment>The following entities do not vary with the base.</comment>
       <modelGroup name="paraContent">
@@ -3761,13 +3869,13 @@ attributes (they do this in their .ent file), then they are inherited by
 GLOBAL; otherwise the parameter entities referred to expand to the empty
 string, as shown here.  </comment>
       <overridden>
-        <param name="a.analysis"></param>
+        <attributeGroup name="a.analysis"/>
       </overridden>
       <overridden>
-        <param name="a.linking"></param>
+        <attributeGroup name="a.linking"/>
       </overridden>
       <overridden>
-        <param name="a.terminology"></param>
+        <attributeGroup name="a.terminology"/>
       </overridden>
       <attributeGroup name="a.global">
         <attributeGroupRef name="a.terminology"/>
@@ -9697,7 +9805,9 @@ Current versions are available from the Text Encoding Initiative.</comment>
         <comment>(LBL is declared with USG, elsewhere.)</comment>
         <comment>Elements for morphological information:</comment>
         <overridden>
-          <param name="gram">INCLUDE</param>
+          <flag name="gram">
+            <include/>
+          </flag>
         </overridden>
         <ignoredSection flag="gram">
 
@@ -10627,10 +10737,12 @@ to provide documentation that applies to the whole entry.</comment>
 since we are not now using the tag set for
 dictionaries.</comment>
           <overridden>
-            <param name="a.dictionaries"></param>
+            <attributeGroup name="a.dictionaries"/>
           </overridden>
           <overridden>
-            <param name="gram">INCLUDE</param>
+            <flag name="gram">
+              <include/>
+            </flag>
           </overridden>
           <ignoredSection flag="gram">
 
