@@ -229,9 +229,9 @@ process = element lax|strict { modesAtt? }
 
 validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt?
 
-modesAtt = attribute modes { list { mode+ } }
-
 nsAtt = attribute ns { xsd:anyURI }
+
+modesAtt = attribute modes { list { mode+ } }
 
 mode = xsd:NCName | "#default"
 </pre>
@@ -276,6 +276,56 @@ the default mode, there must be at least one
 <code>validateElement</code>, <code>validateAttribute</code>,
 <code>lax</code> or <code>strict</code> element that includes that
 mode in its <code>modes</code> attribute.</p>
+
+<h2>Pruning</h2>
+
+<p>The <code>validateElement</code> element can have a boolean
+<code>prune</code> attribute.</p>
+
+<pre>
+attribute prune { "true" | "false" }?
+</pre>
+
+<h2>Extensibility</h2>
+
+<p>Just as with RELAX NG, foreign elements and attributes can be added
+to MNS schemas.  Thus, the complete MNS schema is as follows:</p>
+
+<pre>
+default namespace mns = "http://www.thaiopensource.com/ns/mns"
+namespace local = ""
+
+start =
+  element rules {
+    attribute startMode { mode }?,
+    ((validate|process)* &amp; foreign)
+  }
+
+validate =
+  element validateElement {
+    validateModel,
+    attribute useMode { mode }?,
+    attribute prune { "true" | "false" }?,
+    (element cover { nsAtt &amp; foreign }* &amp; foreign)
+  }
+  | element validateAttributes { validateModel &amp; foreign }
+
+process = element lax|strict { modesAtt? &amp; foreign }
+
+validateModel = nsAtt, attribute schema { xsd:anyURI }, modesAtt?
+
+nsAtt = attribute ns { xsd:anyURI }
+
+modesAtt = attribute modes { list { mode+ } }
+
+mode = xsd:NCName | "#default"
+
+foreign =
+  (attribute * - (mns:*|local:*) { text }
+   | element * - mns:* { anything })*
+
+anything = (text | attribute * { text } | element * { anything })*
+</pre>
 
 <address>
 <a href="mailto:jjc@thaiopensource.com">James Clark</a>
