@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.13 2001-06-02 08:38:42 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.14 2001-06-02 08:39:44 jjc Exp $ -->
 <grammar namespace="http://relaxng.org/ns/structure/0.9"
          datatypeNamespace="http://www.w3.org/2001/XMLSchema-datatypes"
          xmlns="http://relaxng.org/ns/structure/0.9">
@@ -61,11 +61,7 @@
         <ref name="common-atts"/>
         <ref name="open-patterns"/>
       </element>
-      <element name="zeroOrMoreTokens">
-        <ref name="common-atts"/>
-        <ref name="open-patterns"/>
-      </element>
-      <element name="oneOrMoreTokens">
+      <element name="list">
         <ref name="common-atts"/>
         <ref name="open-patterns"/>
       </element>
