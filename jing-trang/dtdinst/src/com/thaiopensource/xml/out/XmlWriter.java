@@ -179,7 +179,7 @@ public class XmlWriter {
 	if (inAttribute)
 	  writer.write("&#xA;");
 	else
-	  writer.write('\n');
+	  writer.write(newline);
 	break;
       default:
 	if (Utf16.isSurrogate1(c)) {
