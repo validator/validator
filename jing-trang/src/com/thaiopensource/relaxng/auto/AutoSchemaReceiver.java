@@ -17,6 +17,7 @@ import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.relaxng.Schema;
 import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.SchemaOptions;
+import com.thaiopensource.util.Localizer;
 
 public class AutoSchemaReceiver implements SchemaReceiver {
   private final XMLReaderCreator xrc;
@@ -48,10 +49,13 @@ public class AutoSchemaReceiver implements SchemaReceiver {
                              String qName, Attributes attributes)
             throws SAXException {
       SchemaReceiver sr = srf.createSchemaReceiver(uri, xrc, eh, options, dlf, null);
-      if (sr == null)
-        // XXX localize properly
-        throw new SAXParseException("do not know any schema language with namespace URI \"" + uri + "\"",
-                                    locator);
+      if (sr == null) {
+        Localizer localizer = new Localizer(AutoSchemaReceiver.class);
+        String detail = ("".equals(uri)
+                         ? localizer.message("no_namespace")
+                         : localizer.message("unknown_namespace", uri));
+        throw new SAXParseException(detail, locator);
+      }
       sf = sr.installHandlers(xr);
       ContentHandler contentHandler = xr.getContentHandler();
       if (contentHandler == null)
