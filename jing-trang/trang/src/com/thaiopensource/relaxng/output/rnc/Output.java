@@ -27,6 +27,8 @@ Make long literals pretty
 
 Take advantage of
   default namespace x = "..."
+
+Preserve namespace context for annotations.
 */
 class Output {
   private final Prettyprinter pp;
