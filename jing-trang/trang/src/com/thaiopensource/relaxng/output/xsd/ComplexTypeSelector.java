@@ -9,7 +9,6 @@ import com.thaiopensource.relaxng.output.xsd.basic.ParticleChoice;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleRepeat;
 import com.thaiopensource.relaxng.output.xsd.basic.Attribute;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleType;
-import com.thaiopensource.relaxng.output.xsd.basic.ParticleGroup;
 import com.thaiopensource.relaxng.output.xsd.basic.GroupRef;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupRef;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRef;
@@ -27,17 +26,12 @@ import com.thaiopensource.relaxng.output.xsd.basic.SchemaTransformer;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.RootDeclaration;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
-import com.thaiopensource.relaxng.output.xsd.basic.ComplexType;
-import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeNotAllowedContent;
-import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRestriction;
-import com.thaiopensource.relaxng.output.common.Name;
 
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 class ComplexTypeSelector extends SchemaWalker {
   static class Refs {
@@ -49,11 +43,9 @@ class ComplexTypeSelector extends SchemaWalker {
   }
 
   static class NamedComplexType {
-    private final boolean complex;
     private final boolean elementOnly;
 
-    NamedComplexType(boolean complex, boolean elementOnly) {
-      this.complex = complex;
+    NamedComplexType(boolean elementOnly) {
       this.elementOnly = elementOnly;
     }
   }
@@ -133,8 +125,8 @@ class ComplexTypeSelector extends SchemaWalker {
     this.schema = schema;
     transformer = new Transformer(schema);
     schema.accept(this);
-    chooseComplexTypes(true, groupMap);
-    chooseComplexTypes(false, simpleTypeMap);
+    chooseComplexTypes(groupMap);
+    chooseComplexTypes(simpleTypeMap);
   }
 
   public void visitGroup(GroupDefinition def) {
@@ -289,14 +281,13 @@ class ComplexTypeSelector extends SchemaWalker {
     return refs;
   }
 
-  private void chooseComplexTypes(boolean complex, Map definitionMap) {
+  private void chooseComplexTypes(Map definitionMap) {
     for (;;) {
       boolean foundOne = false;
       for (Iterator iter = definitionMap.entrySet().iterator(); iter.hasNext();) {
         Map.Entry entry = (Map.Entry)iter.next();
         String name = (String)entry.getKey();
         if (createComplexType(name,
-                              complex,
                               (Refs)entry.getValue(),
                               (Refs)attributeGroupMap.get(name)))
           foundOne = true;
@@ -306,7 +297,7 @@ class ComplexTypeSelector extends SchemaWalker {
     }
   }
 
-  private boolean createComplexType(String name, boolean complex, Refs childRefs, Refs attributeGroupRefs) {
+  private boolean createComplexType(String name, Refs childRefs, Refs attributeGroupRefs) {
     if (complexTypeMap.get(name) != null)
       return false;
     if (childRefs.nonTypeReference)
@@ -326,7 +317,7 @@ class ComplexTypeSelector extends SchemaWalker {
       if (ct.elementOnly)
         elementOnly = true;
     }
-    complexTypeMap.put(name, new NamedComplexType(complex, elementOnly));
+    complexTypeMap.put(name, new NamedComplexType(elementOnly));
     return true;
   }
 
