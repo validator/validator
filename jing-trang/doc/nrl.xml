@@ -217,16 +217,20 @@ by wrapping every <code>data</code>, <code>list</code>,
 transformed schema. This option is useful while a document is still
 under construction.</dd>
 
-</dl>
+<dt><code>http://www.thaiopensource.com/validate/schema</code></dt>
 
-<p>XXX schema option for XSD</p>
+<dd>Argument is a URI specifying an additional schema to be used
+for validation. This applies to W3C XML Schema.  This option
+may be specified multiple times, once for each additional schema.</dd>
+
+</dl>
 
 <p>For convenience, the URI specified by the <code>name</code>
 attribute may be relative; if it is, it will be resolved relative to
 the NRL namespace URI.  The result is that the standard options above
 can be specified without the
 <code>http://www.thaiopensource.com/validate/</code> prefix. For
-example,</p>
+example,</p> 
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl">
