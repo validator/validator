@@ -674,6 +674,7 @@ public class Converter {
       outputUndefinedElements(grammar.getComponents());
       if (options.generateStart)
         outputStart(grammar.getComponents());
+      outputAny(grammar.getComponents());
       co.finish();
       return sc;
     }
@@ -996,7 +997,6 @@ public class Converter {
 
   private void outputStart(List components) {
     ChoicePattern choice = new ChoicePattern();
-    components.add(new DefineComponent(DefineComponent.START, choice));
     // Use the defined but unreferenced elements.
     // If there aren't any, use all defined elements.
     int mask = ELEMENT_REF|ELEMENT_DECL;
@@ -1013,16 +1013,19 @@ public class Converter {
       if (gotOne)
 	break;
       if (mask == ELEMENT_DECL)
-	break;
+        return;
       mask = ELEMENT_DECL;
     }
-    if (anyName != null) {
-      DefineComponent dc = new DefineComponent(anyName, new TextPattern());
-      dc.setCombine(Combine.CHOICE);
-      components.add(dc);
-    }
+    components.add(new DefineComponent(DefineComponent.START, choice));
   }
 
+  private void outputAny(List components) {
+    if (!hadAny)
+      return;
+    DefineComponent dc = new DefineComponent(anyName, new TextPattern());
+    dc.setCombine(Combine.CHOICE);
+    components.add(dc);
+  }
 
   private void outputUndefinedElements(List components) {
     for (Iterator iter = elementNameTable.entrySet().iterator(); iter.hasNext();) {
