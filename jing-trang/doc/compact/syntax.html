@@ -448,6 +448,10 @@ datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 element height { xsd:double }
 </pre>
 
+<p>In fact, in the above example, the <code>datatypes</code>
+declaration is not required: if there is no declaration for the prefix
+<code>xsd</code>, then the above declaration will be assumed.</p>
+
 <p>A <code>namespace</code> declaration declares a prefix used in a
 QName specifying the name of an element or attribute.  For
 example,</p>
