@@ -106,19 +106,15 @@
 </define>
 
 <define name="ID.datatype">
-  <data type="NCName"/>
+  <data type="ID"/>
 </define>
 
 <define name="IDREF.datatype">
-  <data type="NCName"/>
+  <data type="IDREF"/>
 </define>
 
 <define name="IDREFS.datatype">
-  <list>
-    <oneOrMore>
-      <data type="NCName"/>
-    </oneOrMore>
-  </list>
+  <data type="IDREFS"/>
 </define>
 
 </grammar>
