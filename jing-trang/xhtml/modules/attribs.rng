@@ -49,4 +49,13 @@
   <ref name="I18n.attrib"/>
 </define>
 
+<define name="CommonIdRequired.attrib">
+  <attribute name="id">
+    <ref name="ID.datatype"/>
+  </attribute>
+  <ref name="class.attrib"/>
+  <ref name="title.attrib"/>
+  <ref name="I18n.attrib"/>
+</define>
+
 </grammar>
