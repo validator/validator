@@ -1,7 +1,5 @@
 RELAX NG: overridden attributes.
 
-RELAX NG: use FIXED values to construct datatype
-
 Check for duplicate ELEMENT declarations.
 
 EntityManager that properly handles URLs.
