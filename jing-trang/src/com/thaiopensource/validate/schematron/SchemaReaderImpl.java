@@ -36,6 +36,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TransformerHandler;
+import javax.xml.transform.sax.TemplatesHandler;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -391,6 +393,58 @@ class SchemaReaderImpl implements SchemaReader {
                                     -1);
      }
    }
+
+
+  // This is an alternative approach for implementing createSchema.
+  // This approach uses SAXTransformerFactory. We will stick with
+  // the original for now since it works and is debugged.  Also
+  // Saxon 6.5.2 prints to System.err in TemplatesHandlerImpl.getTemplates().
+
+  private Schema createSchema2(InputSource in, PropertyMap properties)
+            throws IOException, SAXException, IncorrectSchemaException {
+    ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
+    CountingErrorHandler ceh = new CountingErrorHandler(eh);
+    String systemId = in.getSystemId();
+    try {
+      SAXTransformerFactory factory = (SAXTransformerFactory)transformerFactoryClass.newInstance();
+      initTransformerFactory(factory);
+      TransformerHandler transformerHandler = factory.newTransformerHandler(schematron);
+      // XXX set up phase and diagnose
+      PropertyMapBuilder builder = new PropertyMapBuilder(properties);
+      ValidateProperty.ERROR_HANDLER.put(builder, ceh);
+      Validator validator = schematronSchema.createValidator(builder.toPropertyMap());
+      XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
+      XMLReader xr = xrc.createXMLReader();
+      xr.setContentHandler(new ForkContentHandler(validator.getContentHandler(),
+                                                  transformerHandler));
+      factory.setErrorListener(new SAXErrorListener(ceh, systemId));
+      TemplatesHandler templatesHandler = factory.newTemplatesHandler();
+      LocationFilter stage2 = new LocationFilter(new ErrorFilter(templatesHandler, ceh, localizer), systemId);
+      transformerHandler.setResult(new SAXResult(stage2));
+      xr.setErrorHandler(ceh);
+      xr.parse(in);
+      SAXException exception = stage2.getException();
+      if (exception != null)
+        throw exception;
+      if (ceh.getHadErrorOrFatalError())
+        throw new IncorrectSchemaException();
+      return new SchemaImpl(templatesHandler.getTemplates(),
+                            transformerFactoryClass,
+                            properties,
+                            supportedPropertyIds);
+    }
+    catch (TransformerConfigurationException e) {
+      throw new SAXException(localizer.message("unexpected_schema_creation_error"));
+    }
+    catch (InstantiationException e) {
+      throw new SAXException(e);
+    }
+    catch (IllegalAccessException e) {
+      throw new SAXException(e);
+    }
+  }
+
+  // This implementation was written in ignorance of SAXTransformerFactory.
 
   public Schema createSchema(InputSource in, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
