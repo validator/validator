@@ -3,14 +3,15 @@
 	xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias"
 	xmlns:sch="http://www.ascc.net/xml/schematron"
         xmlns:loc="http://www.thaiopensource.com/ns/location"
+        xmlns:err="http://www.thaiopensource.com/ns/error"
 	xmlns:saxon="http://icl.com/saxon"
         xmlns:xj="http://xml.apache.org/xalan/java">
 
 <!--
 TODO:
-subject
 diagnostic
 defaultPhase
+key
 -->
 
 <xsl:param name="phase" select="'#ALL'"/>
@@ -19,11 +20,24 @@ defaultPhase
 
 <xsl:output indent="yes"/>
 
-<xsl:template match="/">
+<xsl:key name="rule"
+         match="/sch:schema/sch:pattern/sch:rule[@id]"
+         use="normalize-space(@id)"/>
+
+<xsl:key name="pattern"
+         match="/sch:schema/sch:pattern[@id]"
+         use="normalize-space(@id)"/>
+
+<xsl:key name="diagnostic"
+         match="/sch:schema/sch:diagnostic[@id]"
+         use="normalize-space(@id)"/>
+
+<xsl:template match="sch:schema">
   <axsl:stylesheet version="1.0">
     <xsl:for-each select="sch:ns">
       <xsl:attribute name="{concat(@prefix,':dummy-for-xmlns')}" namespace="{@uri}"/>
     </xsl:for-each>
+    <xsl:apply-templates select="." mode="check"/>
     <axsl:template match="/">
       <result>
         <axsl:apply-templates select="/" mode="all"/>
@@ -31,12 +45,16 @@ defaultPhase
     </axsl:template>
     <xsl:choose>
       <xsl:when test="$phase='#ALL'">
-	<xsl:apply-templates select="*/sch:pattern" mode="pattern"/>
+        <xsl:call-template name="process-patterns">
+          <xsl:with-param name="patterns" select="sch:pattern"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:for-each select="*/sch:phase[normalize-space(@id)=normalize-space($phase)]/sch:active">
 	  <xsl:variable name="id" select="normalize-space(current()/@pattern)"/>
-	  <xsl:apply-templates select="/*/sch:pattern[normalize-space(@id)=$id]" mode="pattern"/>
+          <xsl:call-template name="process-patterns">
+  	    <xsl:with-param name="patterns" select="/*/sch:pattern[normalize-space(@id)=$id]"/>
+          </xsl:call-template>
 	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
@@ -47,39 +65,43 @@ defaultPhase
   </axsl:stylesheet>
 </xsl:template>
 
-<xsl:template match="*" mode="pattern">
-  <xsl:variable name="pattern-index" select="position()"/>
-  <xsl:variable name="last" select="last()"/>
-  <xsl:variable name="not-last" select="not(position()=$last)"/>
-  <xsl:for-each select="sch:rule">
-    <xsl:choose>
-      <xsl:when test="@context">
-	<axsl:template match="{@context}" mode="M{$pattern-index}" priority="{1 + (1 div position())}"
-                       name="R{$pattern-index}.{position()}">
-          <xsl:call-template name="location"/>
-	  <xsl:apply-templates select="*" mode="assertion"/>
-	  <xsl:if test="$not-last">
-	     <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
-	  </xsl:if>
-	</axsl:template>
-	<axsl:template match="{@context}" mode="all" priority="{($last + 1 - $pattern-index) + (1 div position())}">
-          <xsl:call-template name="location"/>
-	  <axsl:call-template name="R{$pattern-index}.{position()}"/>
-          <axsl:apply-templates select="*" mode="all"/>
-	</axsl:template>
-      </xsl:when>
-      <xsl:otherwise>
-        <axsl:template name="A{normalize-space(@id)}">
-	  <xsl:apply-templates select="*" mode="assertion"/>
-        </axsl:template>
-      </xsl:otherwise>
-    </xsl:choose>
+<xsl:template name="process-patterns">
+  <xsl:param name="patterns"/>
+  <xsl:variable name="npatterns" select="count($patterns)"/>
+  <xsl:for-each select="$patterns">
+    <xsl:variable name="pattern-index" select="position()"/>
+    <xsl:variable name="not-last" select="not(position()=$npatterns)"/>
+    <xsl:for-each select="sch:rule">
+      <xsl:choose>
+	<xsl:when test="@context">
+	  <axsl:template match="{@context}" mode="M{$pattern-index}" priority="{1 + (1 div position())}"
+			 name="R{$pattern-index}.{position()}">
+	    <xsl:call-template name="location"/>
+	    <xsl:apply-templates select="*" mode="assertion"/>
+	    <xsl:if test="$not-last">
+	       <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
+	    </xsl:if>
+	  </axsl:template>
+	  <axsl:template match="{@context}" mode="all"
+			 priority="{($npatterns + 1 - $pattern-index) + (1 div position())}">
+	    <xsl:call-template name="location"/>
+	    <axsl:call-template name="R{$pattern-index}.{position()}"/>
+	    <axsl:apply-templates select="*" mode="all"/>
+	  </axsl:template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <axsl:template name="A{normalize-space(@id)}">
+	    <xsl:apply-templates select="*" mode="assertion"/>
+	  </axsl:template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    <axsl:template match="*" mode="M{$pattern-index}">
+      <xsl:if test="$not-last">
+	 <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
+      </xsl:if>
+    </axsl:template>
   </xsl:for-each>
-  <axsl:template match="*" mode="M{$pattern-index}">
-    <xsl:if test="$not-last">
-       <axsl:apply-templates select="." mode="M{$pattern-index + 1}"/>
-    </xsl:if>
-  </axsl:template>
 </xsl:template>
 
 <xsl:template match="sch:extends" mode="assertion">
@@ -104,14 +126,30 @@ defaultPhase
   </axsl:if>
 </xsl:template>
 
+<xsl:template match="*" mode="assertion"/>
+
 <xsl:template name="assertion">
-   <xsl:copy-of select="@role|@test|@icon|@id|@xml:lang"/>
-   <axsl:call-template name="location"/>
-   <xsl:if test="* or normalize-space(text())">
-     <statement>
-       <xsl:apply-templates/>
-     </statement>
-   </xsl:if>
+  <xsl:copy-of select="@role|@test|@icon|@id|@xml:lang"/>
+  <xsl:choose>
+    <xsl:when test="@subject">
+      <axsl:for-each select="{@subject}">
+	<xsl:call-template name="location"/>
+        <xsl:call-template name="assertion-body"/>
+      </axsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="assertion-body"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="assertion-body">
+  <axsl:call-template name="location"/>
+  <xsl:if test="* or normalize-space(text())">
+    <statement>
+      <xsl:apply-templates/>
+    </statement>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="sch:name">
@@ -153,7 +191,7 @@ defaultPhase
   </span>
 </xsl:template>
 
-<xsl:template match="*" mode="assertion"/>
+<xsl:template match="*"/>
 
 <xsl:variable name="saxon"
               select="function-available('saxon:lineNumber')
@@ -210,6 +248,61 @@ defaultPhase
 	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
       </xsl:attribute>
     </xsl:when>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="sch:schema" mode="check">
+  <xsl:apply-templates select="sch:phase/sch:active|sch:pattern/sch:rule/sch:*" mode="check"/>
+</xsl:template>
+
+<xsl:template match="sch:active" mode="check">
+  <xsl:if test="not(key('pattern', normalize-space(@pattern)))">
+    <err:error message="active_missing" arg="{normalize-space(@pattern)}">
+      <xsl:call-template name="location"/>
+    </err:error>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="sch:extends" mode="check">
+  <xsl:variable name="r" select="key('rule', normalize-space(@rule))"/>
+  <xsl:if test="not($r)">
+    <err:error message="extends_missing" arg="{normalize-space(@rule)}">
+      <xsl:call-template name="location"/>
+    </err:error>
+  </xsl:if>
+  <xsl:if test="$r/@context">
+    <err:error message="extends_concrete" arg="{normalize-space(@rule)}">
+      <xsl:call-template name="location"/>
+    </err:error>
+  </xsl:if>
+  <xsl:apply-templates mode="check-cycles" select="$r">
+    <xsl:with-param name="nodes" select=".."/>
+    <xsl:with-param name="node-to-check" select="."/>
+  </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="*" mode="check"/>
+
+<xsl:template mode="check-cycles" match="sch:rule">
+  <xsl:param name="nodes" select="/.."/>
+  <xsl:param name="node-to-check"/>
+  <xsl:variable name="nodes-or-self" select="$nodes|."/>
+  <xsl:choose>
+    <xsl:when test="count($nodes) = count($nodes-or-self)">
+      <xsl:for-each select="$node-to-check">
+        <err:error message="extends_cycle" arg="{normalize-space(@rule)}">
+          <xsl:call-template name="location"/>
+        </err:error>
+      </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="sch:extends">
+        <xsl:apply-templates select="key('rule',normalize-space(@rule))" mode="check-cycles">
+          <xsl:with-param name="nodes" select="$nodes-or-self"/>
+          <xsl:with-param name="node-to-check" select="$node-to-check"/>
+        </xsl:apply-templates>
+      </xsl:for-each>
+    </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 

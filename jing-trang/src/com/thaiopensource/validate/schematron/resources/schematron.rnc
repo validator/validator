@@ -4,144 +4,162 @@
 # This version has the 1.6 feature that sch:key element with @match 
 # is allowed under sch:schema. This is not part of 1.5 proper.
 
-default namespace = "http://www.ascc.net/xml/schematron"
-namespace xsi = "http://www.w3.org/2000/10/XMLSchema-instance"
+default namespace sch = "http://www.ascc.net/xml/schematron"
+namespace local = ""
 
 start = schema
 
 # Element declarations
 schema =
   element schema {
-    attribute xsi:schemaLocation { uri }?,
     attribute id { xsd:ID }?,
     attribute fpi { fpi }?,
-    attribute ns { fpi }?,
-    attribute schemaVersion { text }?,
+    attribute ns { uri }?,
+    attribute schemaVersion { non-empty-string }?,
     attribute defaultPhase { xsd:IDREF }?,
-    attribute icon { uri }?,
-    attribute version { text }?,
-    attribute xml:lang { xsd:NMTOKEN }?,
-    title?,
-    ns*,
-    p*,
-    (phase | key)*,
-    pattern+,
-    p*,
-    diagnostics?
+    attribute icon { non-empty-string }?,
+    attribute version { non-empty-string }?,
+    (foreign
+     & (title?,
+        ns*,
+        p*,
+        (phase | key-with-match)*,
+        pattern+,
+        p*,
+        diagnostics?))
   }
 active =
   element active {
     attribute pattern { xsd:IDREF },
-    (text | dir | emph | span)*
+    (foreign & (text | dir | emph | span)*)
   }
 assert =
   element assert {
     attribute test { expr },
-    attribute role { xsd:NMTOKEN }?,
+    attribute role { role }?,
     attribute id { xsd:ID }?,
     attribute diagnostics { xsd:IDREFS }?,
     attribute icon { uri }?,
     attribute subject { path }?,
-    attribute xml:lang { xsd:NMTOKEN }?,
-    (text | name | emph | dir | span)*
+    (foreign & (text | name | emph | dir | span)*)
   }
 dir =
   element dir {
     attribute value { "ltr" | "rtl" }?,
-    text
+    (foreign & text)
   }
 emph = element emph { text }
 extends =
   element extends {
     attribute rule { xsd:IDREF },
-    empty
+    foreign-empty
   }
 diagnostic =
   element diagnostic {
     attribute id { xsd:ID },
     attribute icon { uri }?,
-    attribute xml:lang { xsd:NMTOKEN }?,
-    (text | value-of | emph | dir | span)*
+    (foreign & (text | value-of | emph | dir | span)*)
   }
-diagnostics = element diagnostics { diagnostic* }
+diagnostics = element diagnostics { foreign & diagnostic* }
 key =
   element key {
-    attribute match { text }?,
     attribute name { xsd:NMTOKEN },
     attribute path { path },
     attribute icon { uri }?,
-    empty
+    foreign-empty
+  }
+key-with-match =
+  element key {
+    attribute match { path },
+    attribute name { xsd:NMTOKEN },
+    attribute path { path },
+    attribute icon { uri }?,
+    foreign-empty
   }
 name =
   element name {
     attribute path { path }?,
-    empty
+    foreign-empty
   }
 ns =
   element ns {
     attribute uri { uri },
     attribute prefix { xsd:NMTOKEN }?,
-    empty
+    foreign-empty
   }
 p =
   element p {
-    attribute xml:lang { text }?,
     attribute id { xsd:ID }?,
-    attribute class { text }?,
+    attribute class { non-empty-string }?,
     attribute icon { uri }?,
-    (text | dir | emph | span)*
+    (foreign & (text | dir | emph | span)*)
   }
 pattern =
   element pattern {
-    attribute name { text },
+    attribute name { non-empty-string },
     attribute see { uri }?,
     attribute id { xsd:ID }?,
     attribute icon { uri }?,
-    p*,
-    rule*
+    (foreign & (p*, rule*))
   }
 phase =
   element phase {
     attribute id { xsd:ID },
     attribute fpi { fpi }?,
     attribute icon { uri }?,
-    p*,
-    active*
+    (foreign & (p*, active*))
   }
 report =
   element report {
     attribute test { expr },
-    attribute role { xsd:NMTOKEN }?,
+    attribute role { role }?,
     attribute id { xsd:ID }?,
     attribute diagnostics { xsd:IDREFS }?,
     attribute icon { uri }?,
     attribute subject { path }?,
-    attribute xml:lang { text }?,
-    (text | name | emph | dir | span)*
+    (foreign & (text | name | emph | dir | span)*)
   }
 rule =
   element rule {
-    attribute context { path }?,
-    attribute abstract { "true" | "false" }?,
-    attribute role { xsd:NMTOKEN }?,
+    (attribute abstract { "true" }
+     | (attribute context { path }, attribute abstract { "false" }?)),
+    attribute role { role }?,
     attribute id { xsd:ID }?,
-    (assert | report | key | extends)+
+    (foreign & (assert | report | key | extends)+)
   }
 span =
   element span {
-    attribute class { text }?,
-    text
+    attribute class { non-empty-string }?,
+    (foreign & text)
   }
 title = element title { (text | dir)* }
 value-of =
   element value-of {
     attribute select { path },
-    empty
+    foreign-empty
+  }
+
+foreign = foreign-attributes, foreign-element*
+
+foreign-empty = foreign-attributes
+
+foreign-attributes = attribute * - local:* { text }*
+foreign-element =
+  element * - sch:* {
+    (attribute * { text }
+     | foreign-element
+     | schema
+     | text)*
   }
 
 # Data types
 
-uri = string
+uri = xsd:anyURI
 path = string
 expr = string
 fpi = string
+lang = xsd:language
+
+role = xsd:NCName
+
+non-empty-string = xsd:token { minLength = "1" }
