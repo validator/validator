@@ -130,21 +130,6 @@ public class PrettyprinterImpl implements Prettyprinter {
     }
   }
 
-  public static class WrappedException extends RuntimeException {
-    private IOException cause;
-
-    public Throwable getCause() {
-      return cause;
-    }
-
-    public IOException getIOException() {
-      return cause;
-    }
-
-    private WrappedException(IOException cause) {
-      this.cause = cause;
-    }
-  }
 
   public PrettyprinterImpl(String lineSep, Writer w, String encoding) {
     this.lineSep = lineSep;
