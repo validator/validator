@@ -72,12 +72,25 @@ class SchemaReaderImpl implements SchemaReader {
 
   private void initTransformerFactory(TransformerFactory factory) {
     String name = factory.getClass().getName();
-    if (name.equals("com.icl.saxon.TransformerFactoryImpl")) {
-      try {
+    try {
+      if (name.equals("com.icl.saxon.TransformerFactoryImpl"))
         factory.setAttribute("http://icl.com/saxon/feature/linenumbering",
                              Boolean.TRUE);
+      else if (name.equals("org.apache.xalan.processor.TransformerFactoryImpl")) {
+        // Try both the documented URI and the URI that the code expects.
+        try {
+          // This is the URI that the code expects.
+          factory.setAttribute("http://xml.apache.org/xalan/properties/source-location",
+                               Boolean.TRUE);
+        }
+        catch (IllegalArgumentException e) {
+          // This is the URI that's documented.
+          factory.setAttribute("http://apache.org/xalan/features/source_location",
+                               Boolean.TRUE);
+        }
       }
-      catch (IllegalArgumentException e) { }
+    }
+    catch (IllegalArgumentException e) {
     }
   }
 
@@ -171,6 +184,7 @@ class SchemaReaderImpl implements SchemaReader {
 
     public void setDocumentLocator(Locator locator) {
       this.locator = locator;
+      super.setDocumentLocator(locator);
     }
 
     public void startElement(String namespaceURI, String localName,
@@ -187,9 +201,15 @@ class SchemaReaderImpl implements SchemaReader {
   static class LocationFilter extends DelegatingContentHandler implements Locator {
     private final String systemId;
     private int lineNumber = -1;
+    private SAXException exception = null;
+
     LocationFilter(ContentHandler delegate, String systemId) {
       super(delegate);
       this.systemId = systemId;
+    }
+
+    SAXException getException() {
+      return exception;
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -215,7 +235,13 @@ class SchemaReaderImpl implements SchemaReader {
       }
       else
         lineNumber = -1;
-      super.startElement(namespaceURI, localName, qName, atts);
+      try {
+        super.startElement(namespaceURI, localName, qName, atts);
+      }
+      catch (SAXException e) {
+        this.exception = e;
+        setDelegate(null);
+      }
       lineNumber = -1;
     }
 
@@ -256,9 +282,12 @@ class SchemaReaderImpl implements SchemaReader {
     public void parse(InputSource input)
             throws IOException, SAXException {
       try {
-        transformer.transform(transformSource,
-                              new SAXResult(new LocationFilter(new ErrorFilter(contentHandler, ceh, localizer),
-                                                               systemId)));
+        LocationFilter handler = new LocationFilter(new ErrorFilter(contentHandler, ceh, localizer),
+                                                                    systemId);
+        transformer.transform(transformSource, new SAXResult(handler));
+        SAXException exception = handler.getException();
+        if (exception != null)
+          throw exception;
       }
       catch (TransformerException e) {
         if (e.getException() instanceof IOException)
@@ -280,9 +309,11 @@ class SchemaReaderImpl implements SchemaReader {
 
   static class SAXErrorListener implements ErrorListener {
      private final ErrorHandler eh;
+     private final String systemId;
      private boolean hadError = false;
-     SAXErrorListener(ErrorHandler eh) {
+     SAXErrorListener(ErrorHandler eh, String systemId) {
        this.eh = eh;
+       this.systemId = systemId;
      }
 
      boolean getHadError() {
@@ -291,8 +322,9 @@ class SchemaReaderImpl implements SchemaReader {
 
      public void warning(TransformerException exception)
              throws TransformerException {
+       SAXParseException spe = transform(exception);
        try {
-         eh.warning(transform(exception));
+         eh.warning(spe);
        }
        catch (SAXException e) {
          throw new TransformerException(new UserException(e));
@@ -301,9 +333,10 @@ class SchemaReaderImpl implements SchemaReader {
 
      public void error(TransformerException exception)
              throws TransformerException {
+       hadError = true;
+       SAXParseException spe = transform(exception);
        try {
-         hadError = true;
-         eh.error(transform(exception));
+         eh.error(spe);
        }
        catch (SAXException e) {
          throw new TransformerException(new UserException(e));
@@ -312,22 +345,35 @@ class SchemaReaderImpl implements SchemaReader {
 
      public void fatalError(TransformerException exception)
              throws TransformerException {
+       hadError = true;
+       SAXParseException spe = transform(exception);
        try {
-         hadError = true;
-         eh.fatalError(transform(exception));
+         eh.fatalError(spe);
        }
        catch (SAXException e) {
          throw new TransformerException(new UserException(e));
        }
      }
 
-     SAXParseException transform(TransformerException exception) {
+     SAXParseException transform(TransformerException exception) throws TransformerException {
+       Throwable cause = exception.getException();
+       // Xalan takes it upon itself to catch exceptions and pass them to the ErrorListener.
+       if (cause instanceof RuntimeException)
+         throw (RuntimeException)cause;
+       if (cause instanceof SAXException
+           || cause instanceof IncorrectSchemaException
+           || cause instanceof IOException)
+         throw exception;
        SourceLocator locator = exception.getLocator();
        if (locator == null)
          return new SAXParseException(exception.getMessage(), null);
+       // Xalan sometimes loses the systemId; work around this.
+       String s = locator.getSystemId();
+       if (s == null)
+        s = systemId;
        return new SAXParseException(exception.getMessage(),
                                     null,
-                                    locator.getSystemId(),
+                                    s,
                                     locator.getLineNumber(),
                                     -1);
      }
@@ -336,7 +382,7 @@ class SchemaReaderImpl implements SchemaReader {
   public Schema createSchema(InputSource in, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
-    SAXErrorListener errorListener = new SAXErrorListener(eh);
+    SAXErrorListener errorListener = new SAXErrorListener(eh, in.getSystemId());
     UserWrapErrorHandler ueh1 = new UserWrapErrorHandler(eh);
     UserWrapErrorHandler ueh2 = new UserWrapErrorHandler(eh);
     try {
