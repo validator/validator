@@ -32,6 +32,7 @@ m4_ifval([$1],
   AC_CHECK_TOOL(GCJ, gcj)
 fi])
 test -z "$GCJ" && AC_MSG_ERROR([GCJ not found in \$PATH])
+test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
 ])
 
 AC_DEFUN([TRY_ORG_XML_SAX],
