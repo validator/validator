@@ -238,30 +238,33 @@ named mode.  A mode is named by an NCName.  In addition, there is a
 default mode named <code>#default</code>.  The
 <code>validationElement</code> and <code>validateAttributes</code>
 elements have an optional <code>modes</code> attribute, which
-specifies the modes in which the elements are applicable; it defaults
-to the default mode.  It is an error if there is a mode and a
-namespace URI for which more than one <code>validationElement</code>
-or <code>validateAttributes</code> element is applicable.  Thus, when
-an element is selected as a validation subject there is a unique
-applicable <code>validateElement</code> element.</p>
+specifies the modes in which the elements are applicable.  The default
+value of the <code>modes</code> attribute is the default mode.  It is an
+error if there is a mode and a namespace URI for which more than one
+<code>validationElement</code> or <code>validateAttributes</code>
+element is applicable.  Thus, when an element is selected as a
+validation subject there is a unique applicable
+<code>validateElement</code> element.</p>
 
 <p>The mode used to select whether a particular element or set of
 attributes is a validation subject is specified by the
 <code>useMode</code> attribute of the <code>validateElement</code>
 element applicable to the nearest ancestor validation subject.  The
-<code>useMode</code> attribute defaults to the default mode.  If an
-element or set of attributes has no ancestor validation subject, then
-the mode used is determined by the <code>startMode</code> attribute on
-the <code>rules</code> element; this also defaults to the default
-mode.  Looking at this more procedurally, processing is top-down; the
-starting mode is specified by the <code>startMode</code> attribute.
-Within each validation subject element, processing switches to the
-mode specified by the <code>useMode</code> attribute.</p>
+default value of the <code>useMode</code> attribute is the default
+mode.  If an element or set of attributes has no ancestor validation
+subject, then the mode used is determined by the
+<code>startMode</code> attribute on the <code>rules</code> element;
+the default value of the <code>startMode</code> attribute is also the
+default mode.  Looking at this more procedurally, processing is
+top-down; the starting mode is specified by the <code>startMode</code>
+attribute.  Within each validation subject element, processing
+switches to the mode specified by the <code>useMode</code>
+attribute.</p>
 
 <p>Whether processing is strict or lax also depends on the mode.  The
 <code>strict</code> element has a <code>modes</code> attribute that
-specifies the modes in which it applies. As usual, the
-<code>modes</code> attribute defaults to the default mode.  There is
+specifies the modes in which it applies. As usual, the default value
+of the <code>modes</code> attribute is the default mode.  There is
 also a <code>lax</code> element that allows the processing for a mode
 to be explicitly specified as <code>lax</code>.</p>
 
