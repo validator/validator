@@ -7,7 +7,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.datatype.Datatype;
-import com.thaiopensource.datatype.DatatypeContext;
 
 public class DatatypeAssignmentChecker {
   private PatternBuilder patternBuilder;
