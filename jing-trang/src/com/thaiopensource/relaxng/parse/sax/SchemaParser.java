@@ -1058,10 +1058,8 @@ class SchemaParser implements ParsedPatternFuture {
     }
 
     ParsedPattern makePattern() {
-      return makePattern(scope);
-    }
-
-    ParsedPattern makePattern(Scope scope) {
+      if (name == null)
+        return schemaBuilder.makeErrorPattern();
       return scope.makeRef(name, startLocation, annotations);
     }
   }
@@ -1072,6 +1070,8 @@ class SchemaParser implements ParsedPatternFuture {
     }
 
     ParsedPattern makePattern() {
+      if (name == null)
+        return schemaBuilder.makeErrorPattern();
       return scope.makeParentRef(name, startLocation, annotations);
     }
   }
