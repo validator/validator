@@ -229,7 +229,6 @@ class AtomParser {
 	switch (as.tokenType) {
 	case Tokenizer.TOK_POUND_NAME:
 	  p = new Particle(Particle.PCDATA);
-	  group.sep = '|';
 	  break;
 	case Tokenizer.TOK_NAME:
 	  p = new Particle(action == PrologParser.ACTION_CONTENT_ELEMENT
@@ -271,10 +270,10 @@ class AtomParser {
 	  group.occur = '+';
 	  return;
 	case Tokenizer.TOK_OR:
-	  group.sep = '|';
+	  p = new Particle(Particle.CONNECT_OR);
 	  break;
 	case Tokenizer.TOK_COMMA:
-	  group.sep = ',';
+	  p = new Particle(Particle.CONNECT_SEQ);
 	  break;
 	case Tokenizer.TOK_PROLOG_S:
 	  break;
