@@ -204,7 +204,7 @@ Initiative.-->
 <!ENTITY % figure 'INCLUDE' >
 <![ %figure; [
 
-<!ELEMENT %n.figure; %om.RR;  CDATA> 
+<!ELEMENT %n.figure; %om.RR;  (#PCDATA)> 
 <!ATTLIST %n.figure;  
       %a.global;
       notation CDATA #REQUIRED
