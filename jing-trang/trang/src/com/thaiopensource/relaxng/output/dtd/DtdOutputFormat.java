@@ -22,7 +22,7 @@ public class DtdOutputFormat implements OutputFormat {
       ErrorReporter er = new ErrorReporter(eh, DtdOutputFormat.class);
       Analysis analysis = new Analysis(sc, er);
       if (!er.getHadError())
-        DtdOutput.output(analysis, od, er);
+        DtdOutput.output(!inputFormat.equals("xml"), analysis, od, er);
       if (er.getHadError())
         throw new OutputFailedException();
     }

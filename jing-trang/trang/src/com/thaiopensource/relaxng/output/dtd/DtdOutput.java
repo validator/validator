@@ -47,6 +47,7 @@ import java.util.Set;
 import java.util.Vector;
 
 class DtdOutput {
+  private final boolean warnDatatypes;
   private final String sourceUri;
   private Writer writer;
   private String encoding;
@@ -84,7 +85,8 @@ class DtdOutput {
 
   static private final String DTD_URI = "http://www.thaiopensource.com/ns/relaxng/dtd";
 
-  private DtdOutput(String sourceUri, Analysis analysis, Set reservedEntityNames, OutputDirectory od, ErrorReporter er) {
+  private DtdOutput(boolean warnDatatypes, String sourceUri, Analysis analysis, Set reservedEntityNames, OutputDirectory od, ErrorReporter er) {
+    this.warnDatatypes = warnDatatypes;
     this.sourceUri = sourceUri;
     this.analysis = analysis;
     this.reservedEntityNames = reservedEntityNames;
@@ -619,7 +621,7 @@ class DtdOutput {
         er.warning("unrecognized_datatype", p.getSourceLocation());
         buf.append("CDATA");
       }
-      else {
+      else if (warnDatatypes) {
         if (!info.isExact())
           er.warning("datatype_approx", p.getType(), info.closestType(), p.getSourceLocation());
         else {
@@ -666,7 +668,8 @@ class DtdOutput {
 
   class TopLevelSimpleTypeOutput extends SimpleTypeOutput {
     public Object visitList(ListPattern p) {
-      er.warning("list_approx", p.getSourceLocation());
+      if (warnDatatypes)
+        er.warning("list_approx", p.getSourceLocation());
       buf.append("CDATA");
       return null;
     }
@@ -685,7 +688,8 @@ class DtdOutput {
         }
         else {
           String type = info.closestType();
-          er.warning("value_approx", type, p.getSourceLocation());
+          if (warnDatatypes)
+            er.warning("value_approx", type, p.getSourceLocation());
           buf.append(type);
         }
       }
@@ -700,7 +704,8 @@ class DtdOutput {
         buf.append(')');
       }
       else if (t == ContentType.SIMPLE_TYPE_CHOICE) {
-        er.warning("datatype_choice_approx", p.getSourceLocation());
+        if (warnDatatypes)
+          er.warning("datatype_choice_approx", p.getSourceLocation());
         buf.append("CDATA");
       }
       else
@@ -783,9 +788,9 @@ class DtdOutput {
     elementQueue.clear();
   }
 
-  static void output(Analysis analysis, OutputDirectory od, ErrorReporter er) throws IOException {
+  static void output(boolean warnDatatypes, Analysis analysis, OutputDirectory od, ErrorReporter er) throws IOException {
     try {
-      new DtdOutput(analysis.getMainUri(), analysis, new HashSet(), od, er).topLevelOutput();
+      new DtdOutput(warnDatatypes, analysis.getMainUri(), analysis, new HashSet(), od, er).topLevelOutput();
     }
     catch (WrappedIOException e) {
       throw e.cause;
@@ -907,7 +912,7 @@ class DtdOutput {
       return;
     }
     pendingIncludes.add(href);
-    DtdOutput sub = new DtdOutput(href, analysis, reservedEntityNames, od, er);
+    DtdOutput sub = new DtdOutput(warnDatatypes, href, analysis, reservedEntityNames, od, er);
     GrammarPattern g = (GrammarPattern)analysis.getSchema(href);
     sub.subOutput(g);
     requiredParamEntities.addAll(sub.externallyRequiredParamEntities);
@@ -1048,7 +1053,8 @@ class DtdOutput {
       buf.append(")*");
     }
     else if (ct.isA(ContentType.SIMPLE_TYPE)) {
-      er.warning("data_content_approx", p.getSourceLocation());
+      if (warnDatatypes)
+        er.warning("data_content_approx", p.getSourceLocation());
       buf.append("(#PCDATA)");
     }
     else if (ct == ContentType.NOT_ALLOWED)

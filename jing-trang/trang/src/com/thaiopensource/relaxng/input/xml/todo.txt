@@ -1,7 +1,5 @@
 Choose default namespace.
 
-Avoid approximation warnings from Trang output modules.
-
 Should we reconsider always inlining elements that are referenced only once?
 
 Deal with QName datatype.
