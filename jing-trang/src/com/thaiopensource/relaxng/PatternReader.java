@@ -3,8 +3,6 @@ package com.thaiopensource.relaxng;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.io.IOException;
-import java.net.URL;
-import java.net.MalformedURLException;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.XMLReader;
@@ -25,6 +23,8 @@ import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeBuilder;
 import org.relaxng.datatype.DatatypeException;
 
+import com.thaiopensource.util.Uri;
+
 public class PatternReader implements ValidationContext {
 
   static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
@@ -38,6 +38,7 @@ public class PatternReader implements ValidationContext {
   Pattern startPattern;
   Locator locator;
   PrefixMapping prefixMapping;
+  XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
   boolean hadError = false;
 
   Hashtable patternTable;
@@ -83,6 +84,7 @@ public class PatternReader implements ValidationContext {
 
     public void setDocumentLocator(Locator loc) {
       locator = loc;
+      xmlBaseHandler.setLocator(loc);
     }
 
     void setParent(State parent) {
@@ -99,6 +101,7 @@ public class PatternReader implements ValidationContext {
 			     String localName,
 			     String qName,
 			     Attributes atts) throws SAXException {
+      xmlBaseHandler.startElement();
       if (isPatternNamespaceURI(namespaceURI)) {
 	State state = createChildState(localName);
 	if (state == null) {
@@ -119,6 +122,7 @@ public class PatternReader implements ValidationContext {
     public void endElement(String namespaceURI,
 			   String localName,
 			   String qName) throws SAXException {
+      xmlBaseHandler.endElement();
       parent.set();
       end();
     }
@@ -148,15 +152,17 @@ public class PatternReader implements ValidationContext {
 	    setName(atts.getValue(i).trim());
 	  else if (name.equals("ns")) {
 	    ns = atts.getValue(i);
-	    if ((checkUri(ns) & UriChecker.RELATIVE) != 0 && !ns.equals(""))
+	    checkUri(ns);
+	    if (!ns.equals("") && !Uri.isAbsolute(ns))
 	      error("relative_ns");
 	  }
 	  else if (name.equals("datatypeLibrary")) {
 	    datatypeLibrary = atts.getValue(i);
-	    int flags = checkUri(datatypeLibrary);
-	    if ((flags & UriChecker.RELATIVE) != 0 && !datatypeLibrary.equals(""))
+	    checkUri(datatypeLibrary);
+	    if (!datatypeLibrary.equals("")
+		&& !Uri.isAbsolute(datatypeLibrary))
 	      error("relative_datatype_library");
-	    if ((flags & UriChecker.FRAGMENT) != 0)
+	    if (Uri.hasFragmentId(datatypeLibrary))
 	      error("fragment_identifier_datatype_library");
 	  }
 	  else
@@ -164,6 +170,9 @@ public class PatternReader implements ValidationContext {
 	}
 	else if (uri.equals(relaxngURI))
 	  error("qualified_attribute", atts.getLocalName(i));
+	else if (uri.equals(xmlURI)
+		 && atts.getLocalName(i).equals("base"))
+	  xmlBaseHandler.xmlBaseAttribute(atts.getValue(i));
       }
       endAttributes();
     }
@@ -1433,15 +1442,7 @@ public class PatternReader implements ValidationContext {
 
   InputSource makeInputSource(String systemId)
     throws IOException, SAXException {
-    if (locator != null) {
-      String base = locator.getSystemId();
-      if (base != null) {
-	try {
-	  systemId = new URL(new URL(base), systemId).toString();
-	}
-	catch (MalformedURLException e) { }
-      }
-    }
+    systemId = Uri.resolve(xmlBaseHandler.getBaseUri(), systemId);
     EntityResolver er = xr.getEntityResolver();
     if (er != null) {
       InputSource inputSource = er.resolveEntity(null, systemId);
@@ -1546,13 +1547,8 @@ public class PatternReader implements ValidationContext {
     return new LocatorImpl(locator);
   }
   
-  int checkUri(String s) throws SAXException {
-    try {
-      return UriChecker.checkUri(s);
-    }
-    catch (UriChecker.InvalidUriException e) {
+  void checkUri(String s) throws SAXException {
+    if (!Uri.isValid(s))
       error("invalid_uri", s);
-      return 0;
-    }
   }
 }
