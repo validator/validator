@@ -1,3 +1,5 @@
+Put location information in the object model.
+
 Support OASIS catalogs.
 
 Option for properties file to set properties.
