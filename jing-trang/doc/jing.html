@@ -54,14 +54,16 @@ schema.</dd>
 
 <dt><code>-f</code></dt>
 
-<dd>Checks that the document is <em>feasibly valid</em>.  A document is
-<em>feasibly valid</em> if it could be transformed into a valid document
-by inserting any number of attributes and child elements anywhere in
-the tree.  This is equivalent to transforming the schema by wrapping
-every <code>data</code>, <code>list</code>, <code>element</code> and
-<code>attribute</code> element in an <code>optional</code> element and
-then validating against the transformed schema. This option may be
-useful while a document is still under construction.</dd>
+<dd>Checks that the document is <em>feasibly valid</em>.  A document
+is <em>feasibly valid</em> if it could be transformed into a valid
+document by inserting any number of attributes and child elements
+anywhere in the tree.  This is equivalent to transforming the schema
+by wrapping every <code>data</code>, <code>list</code>,
+<code>element</code> and <code>attribute</code> element in an
+<code>optional</code> element and then validating against the
+transformed schema. This option may be useful while a document is
+still under construction.  This option also disables checking that for
+every IDREF there is a corresponding ID.</dd>
 
 <dt><code>-i</code></dt>
 
