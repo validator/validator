@@ -1,3 +1,5 @@
+Support OASIS catalogs.
+
 Write some documentation.
 
 RELAX NG: output overridden definitions
