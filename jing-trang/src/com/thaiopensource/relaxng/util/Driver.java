@@ -1,8 +1,14 @@
 package com.thaiopensource.relaxng.util;
 
 import com.thaiopensource.util.OptionParser;
+import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.Version;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.ValidationDriver;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
+import com.thaiopensource.validate.rng.RngProperty;
+import com.thaiopensource.validate.schematron.SchematronProperty;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -20,21 +26,24 @@ class Driver {
     System.exit(new Driver().doMain(args));
   }
 
-  private int validationFlags = ValidationEngine.CHECK_ID_IDREF;
   private boolean timing = false;
   private String encoding = null;
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itcfe:", args);
+    OptionParser op = new OptionParser("itcfe:p:", args);
+    PropertyMapBuilder properties = new PropertyMapBuilder();
+    ValidateProperty.ERROR_HANDLER.put(properties, eh);
+    RngProperty.CHECK_ID_IDREF.add(properties);
+    SchemaReader sr = null;
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
         case 'i':
-          validationFlags &= ~ValidationEngine.CHECK_ID_IDREF;
+          properties.put(RngProperty.CHECK_ID_IDREF, null);
           break;
         case 'c':
-          validationFlags |= ValidationEngine.COMPACT_SYNTAX;
+          sr = CompactSchemaReader.getInstance();
           break;
         case 't':
           timing = true;
@@ -43,7 +52,10 @@ class Driver {
           encoding = op.getOptionArg();
           break;
         case 'f':
-          validationFlags |= ValidationEngine.FEASIBLE;
+          RngProperty.FEASIBLE.add(properties);
+          break;
+        case 'p':
+          SchematronProperty.PHASE.put(properties, op.getOptionArg());
           break;
         }
       }
@@ -67,14 +79,14 @@ class Driver {
     long loadedPatternTime = -1;
     boolean hadError = false;
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, validationFlags);
-      InputSource in = ValidationEngine.uriOrFileInputSource(args[0]);
+      ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), sr);
+      InputSource in = ValidationDriver.uriOrFileInputSource(args[0]);
       if (encoding != null)
         in.setEncoding(encoding);
-      if (engine.loadSchema(in)) {
+      if (driver.loadSchema(in)) {
         loadedPatternTime = System.currentTimeMillis();
 	for (int i = 1; i < args.length; i++) {
-	  if (!engine.validate(ValidationEngine.uriOrFileInputSource(args[i])))
+	  if (!driver.validate(ValidationDriver.uriOrFileInputSource(args[i])))
 	    hadError = true;
 	}
       }

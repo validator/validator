@@ -1,7 +1,10 @@
 package com.thaiopensource.relaxng.util;
 
 import com.thaiopensource.util.OptionParser;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.ValidationDriver;
+import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.xml.sax.SAXException;
 
@@ -16,20 +19,20 @@ class TestDriver {
     System.exit(new TestDriver().doMain(args));
   }
 
-  private ValidationEngine engine;
+  private ValidationDriver driver;
   private ErrorHandlerImpl eh;
   private int nTests = 0;
 
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
     eh = new ErrorHandlerImpl(System.out);
-    int flags = 0;
     OptionParser op = new OptionParser("i", args);
+    PropertyMapBuilder properties = new PropertyMapBuilder();
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
         case 'i':
-          flags |= ValidationEngine.CHECK_ID_IDREF;
+          RngProperty.CHECK_ID_IDREF.add(properties);
           break;
         }
       }
@@ -46,7 +49,8 @@ class TestDriver {
     }
     args = op.getRemainingArgs();
     eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
-    engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, flags);
+    ValidateProperty.ERROR_HANDLER.put(properties, eh);
+    driver = new ValidationDriver(properties.toPropertyMap());
     int result = 0;
     for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));
@@ -122,7 +126,7 @@ class TestDriver {
   private boolean loadSchema(File schema) throws IOException {
     nTests++;
     try {
-      if (engine.loadSchema(ValidationEngine.fileInputSource(schema)))
+      if (driver.loadSchema(ValidationDriver.fileInputSource(schema)))
 	return true;
     }
     catch (SAXException e) {
@@ -134,7 +138,7 @@ class TestDriver {
   private boolean validateInstance(File instance) throws IOException {
     nTests++;
     try {
-      if (engine.validate(ValidationEngine.fileInputSource(instance)))
+      if (driver.validate(ValidationDriver.fileInputSource(instance)))
 	return true;
     }
     catch (SAXException e) {

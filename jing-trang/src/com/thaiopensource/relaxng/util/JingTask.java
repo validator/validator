@@ -1,5 +1,13 @@
 package com.thaiopensource.relaxng.util;
 
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.Flag;
+import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.ValidationDriver;
+import com.thaiopensource.validate.schematron.SchematronProperty;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
+import com.thaiopensource.validate.rng.RngProperty;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
@@ -12,12 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
-import com.thaiopensource.xml.sax.ErrorHandlerImpl;
-
 
 /**
- * Ant task to validate XML files using RELAX NG.
+ * Ant task to validate XML files using RELAX NG or other schema languages.
  */
 
 public class JingTask extends Task {
@@ -25,8 +30,9 @@ public class JingTask extends Task {
   private File schemaFile;
   private File src;
   private final Vector filesets = new Vector();
-  private int flags = ValidationEngine.CHECK_ID_IDREF;
+  private PropertyMapBuilder properties = new PropertyMapBuilder();
   private boolean failOnError = true;
+  private SchemaReader schemaReader = null;
 
   private class LogErrorHandler extends ErrorHandlerImpl {
     int logLevel = Project.MSG_ERR;
@@ -51,6 +57,10 @@ public class JingTask extends Task {
     }
   }
 
+  public JingTask() {
+    RngProperty.CHECK_ID_IDREF.add(properties);
+  }
+
   public void execute() throws BuildException {
     if (schemaFile == null)
       throw new BuildException("There must be an rngFile or schemaFile attribute",
@@ -64,12 +74,12 @@ public class JingTask extends Task {
     boolean hadError = false;
 
     try {
-      ValidationEngine engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, flags);
-      if (!engine.loadSchema(ValidationEngine.fileInputSource(schemaFile)))
+      ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
+      if (!driver.loadSchema(ValidationDriver.fileInputSource(schemaFile)))
 	hadError = true;
       else {
 	if (src != null) {
-	  if (!engine.validate(ValidationEngine.fileInputSource(src)))
+	  if (!driver.validate(ValidationDriver.fileInputSource(src)))
 	    hadError = true;
 	}
 	for (int i = 0; i < filesets.size(); i++) {
@@ -78,7 +88,7 @@ public class JingTask extends Task {
 	  File dir = fs.getDir(project);
 	  String[] srcs = ds.getIncludedFiles();
 	  for (int j = 0; j < srcs.length; j++) {
-	    if (!engine.validate(ValidationEngine.fileInputSource(new File(dir, srcs[j]))))
+	    if (!driver.validate(ValidationDriver.fileInputSource(new File(dir, srcs[j]))))
 	      hadError = true;
 	  }
 	}
@@ -124,10 +134,8 @@ public class JingTask extends Task {
    * @param checkid the attribute value converted to a boolean
    */
   public void setCheckid(boolean checkid) {
-    if (checkid)
-      flags |= ValidationEngine.CHECK_ID_IDREF;
-    else
-      flags &= ~ValidationEngine.CHECK_ID_IDREF;
+    properties.put(RngProperty.CHECK_ID_IDREF,
+                   checkid ? Flag.PRESENT : null);
   }
 
   /**
@@ -136,10 +144,7 @@ public class JingTask extends Task {
    * @param compactsyntax the attribute value converted to a boolean
    */
   public void setCompactsyntax(boolean compactsyntax) {
-    if (compactsyntax)
-      flags |= ValidationEngine.COMPACT_SYNTAX;
-    else
-      flags &= ~ValidationEngine.COMPACT_SYNTAX;
+    schemaReader = compactsyntax ? CompactSchemaReader.getInstance() : null;
   }
 
   /**
@@ -148,10 +153,16 @@ public class JingTask extends Task {
    * @param feasible the attribute value converted to a boolean
    */
   public void setFeasible(boolean feasible) {
-    if (feasible)
-      flags |= ValidationEngine.FEASIBLE;
-    else
-      flags &= ~ValidationEngine.FEASIBLE;
+    properties.put(RngProperty.FEASIBLE, feasible ? Flag.PRESENT : null);
+  }
+
+  /**
+   * Handles the phase attribute.
+   *
+   * @param phase the attribute value
+   */
+  public void setPhase(String phase) {
+    SchematronProperty.PHASE.put(properties, phase);
   }
 
   /**
