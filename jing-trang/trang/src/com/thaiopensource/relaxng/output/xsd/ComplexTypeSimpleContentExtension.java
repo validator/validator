@@ -4,7 +4,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeSimpleContent;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeUse;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleType;
 
-public class ComplexTypeSimpleContentExtension extends ComplexTypeSimpleContent {
+class ComplexTypeSimpleContentExtension extends ComplexTypeSimpleContent {
   private final String base;
 
   ComplexTypeSimpleContentExtension(AttributeUse attributeUses, SimpleType simpleType, String base) {
