@@ -42,8 +42,19 @@ recently <a href="http://www.y12.doe.gov/sgml/sc34/document/0363.htm"
 (DSDL) -- Part 4: Selection of Validation Candidates.</p>
 
 <p>This document presents a language named Modular Namespaces (MNS),
-which is an evolution of the ideas in RELAX Namespace and DSDL Part
-4.</p>
+which is an evolution of the ideas in RELAX Namespace and DSDL Part 4.
+RELAX Namespace was designed to work well with RELAX Core. RELAX Core
+cannot deal with documents that use multiple namespaces, nor does it
+provide any namespace-based wildcards.  These limitations of RELAX
+Core are reflected in the design of RELAX Namespace.  MNS is designed
+to be able to take advantage of more recent schema languages, such as
+RELAX NG, that are not limited in this way.</p>
+
+<p>A sample implementation of MNS is included in <a href="jing.html#mns"
+>Jing</a>.</p>
+
+<p>It is hoped that this will be a useful contribution to the future
+development of DSDL Part 4.</p>
 
 <h2><a name="basics">Basics</a></h2>
 
