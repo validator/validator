@@ -146,10 +146,19 @@ public class PatternReader implements ValidationContext {
 	  String name = atts.getLocalName(i);
 	  if (name.equals("name"))
 	    setName(atts.getValue(i).trim());
-	  else if (name.equals("ns"))
+	  else if (name.equals("ns")) {
 	    ns = atts.getValue(i);
-	  else if (name.equals("datatypeLibrary"))
+	    if ((checkUri(ns) & UriChecker.RELATIVE) != 0 && !ns.equals(""))
+	      error("relative_ns");
+	  }
+	  else if (name.equals("datatypeLibrary")) {
 	    datatypeLibrary = atts.getValue(i);
+	    int flags = checkUri(datatypeLibrary);
+	    if ((flags & UriChecker.RELATIVE) != 0 && !ns.equals(""))
+	      error("relative_datatype_library");
+	    if ((flags & UriChecker.FRAGMENT) != 0)
+	      error("fragment_identifier_datatype_library");
+	  }
 	  else
 	    setOtherAttribute(name, atts.getValue(i));
 	}
@@ -736,8 +745,10 @@ public class PatternReader implements ValidationContext {
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
-      if (name.equals("href"))
+      if (name.equals("href")) {
 	href = value;
+	checkUri(href);
+      }
       else
 	super.setOtherAttribute(name, value);
     }
@@ -887,8 +898,10 @@ public class PatternReader implements ValidationContext {
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
-      if (name.equals("href"))
+      if (name.equals("href")) {
 	href = value;
+	checkUri(href);
+      }
       else
 	super.setOtherAttribute(name, value);
     }
@@ -1531,5 +1544,15 @@ public class PatternReader implements ValidationContext {
     if (locator == null)
       return null;
     return new LocatorImpl(locator);
+  }
+  
+  int checkUri(String s) throws SAXException {
+    try {
+      return UriChecker.checkUri(s);
+    }
+    catch (UriChecker.InvalidUriException e) {
+      error("invalid_uri", s);
+      return 0;
+    }
   }
 }
