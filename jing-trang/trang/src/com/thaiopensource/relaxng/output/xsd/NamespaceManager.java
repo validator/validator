@@ -109,7 +109,7 @@ public class NamespaceManager {
 
     TargetNamespaceSelector(Schema schema) {
       schema.accept(this);
-      lookupSourceUri(schema.getUri()).targetNamespace = selectTargetNamespace(schema);
+      lookupSourceUri(schema.getUri()).targetNamespace = selectTargetNamespace();
     }
 
     public Object visitElement(Element element) {
@@ -164,7 +164,7 @@ public class NamespaceManager {
       new TargetNamespaceSelector(include.getIncludedSchema());
     }
 
-    String selectTargetNamespace(Schema schema) {
+    String selectTargetNamespace() {
       Map.Entry best = null;
       for (Iterator iter = namespaceUsageMap.entrySet().iterator(); iter.hasNext();) {
         Map.Entry tem = (Map.Entry)iter.next();
