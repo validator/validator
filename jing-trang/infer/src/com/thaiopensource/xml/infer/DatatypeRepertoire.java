@@ -13,6 +13,7 @@ public class DatatypeRepertoire {
 
   static private final String[] typeNames = {
     "boolean",
+    // XXX add int?
     "integer",
     "decimal",
     "double",
