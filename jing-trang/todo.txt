@@ -1,5 +1,3 @@
-Finish description of error recovery.
-
 Exclude JARV stuff when building jing.exe.
 
 Support Xerces 2 regexes.
