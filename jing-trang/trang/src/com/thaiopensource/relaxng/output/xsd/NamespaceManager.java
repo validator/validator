@@ -510,38 +510,35 @@ public class NamespaceManager {
   }
 
   private List substitutionGroupMembers(GroupDefinition def) {
-    Particle particle = def.getParticle();
-    if (!(particle instanceof ParticleChoice))
+    if (def.getParticle() instanceof Element)
       return null;
     List members = new Vector();
-    if (!particleChoiceMembers((ParticleChoice)particle, members)
-        || members.size() < 2)
+    if (!particleMembers(def.getParticle(), members))
       return null;
     return members;
   }
 
-  private boolean particleChoiceMembers(ParticleChoice choice, List members) {
-    for (Iterator iter = choice.getChildren().iterator(); iter.hasNext();) {
-      Particle child = (Particle)iter.next();
-      if (child instanceof Element) {
-        Element e = (Element)child;
-        if (!isGlobal(e))
-          return false;
-        members.add(e.getName());
-      }
-      else if (child instanceof GroupRef) {
-        Name name = getElementNameForGroupRef(schema.getGroup(((GroupRef)child).getName()));
-        if (name == null)
-          return false;
-        members.add(name);
-      }
-      else if (child instanceof ParticleChoice) {
-        if (!particleChoiceMembers((ParticleChoice)child, members))
-          return false;
-      }
-      else
+  private boolean particleMembers(Particle child, List members) {
+    if (child instanceof Element) {
+      Element e = (Element)child;
+      if (!isGlobal(e))
         return false;
+      members.add(e.getName());
     }
+    else if (child instanceof GroupRef) {
+      Name name = getElementNameForGroupRef(schema.getGroup(((GroupRef)child).getName()));
+      if (name == null)
+        return false;
+      members.add(name);
+    }
+    else if (child instanceof ParticleChoice) {
+      for (Iterator iter = ((ParticleChoice)child).getChildren().iterator(); iter.hasNext();) {
+        if (!particleMembers((Particle)iter.next(), members))
+          return false;
+      }
+    }
+    else
+      return false;
     return true;
   }
 
