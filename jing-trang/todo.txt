@@ -1,4 +1,4 @@
-Fix John C's problem with ID/IDREF and name classes.
+Predeclare xsd prefix.
 
 Document that XHTML modularization implementation does not implement
 exclusions.

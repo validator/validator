@@ -153,21 +153,14 @@ public class IdTypeMapBuilder {
     public Object caseAttribute(AttributePattern p) {
       int idType = ((Integer)p.getContent().apply(idTypeFunction)).intValue();
       if (idType != Datatype.ID_TYPE_NULL) {
-        if (!(elementNameClass instanceof SimpleNameClass)) {
-          error("id_element_name_class", locator);
-          return null;
-        }
         NameClass attributeNameClass = p.getNameClass();
         if (!(attributeNameClass instanceof SimpleNameClass)) {
           error("id_attribute_name_class", p.getLocator());
           return null;
         }
-        Name elementName = ((SimpleNameClass)elementNameClass).getName();
-        Name attributeName = ((SimpleNameClass)attributeNameClass).getName();
-        int tem = idTypeMap.getIdType(elementName, attributeName);
-        if (tem !=  Datatype.ID_TYPE_NULL && tem != idType)
-          error("id_type_conflict", elementName, attributeName, locator);
-        idTypeMap.add(elementName, attributeName, idType);
+        elementNameClass.accept(new ElementNameClassVisitor(((SimpleNameClass)attributeNameClass).getName(),
+                                                            locator,
+                                                            idType));
       }
       else
         notePossibleConflict(elementNameClass, p.getNameClass(), locator);
@@ -203,6 +196,56 @@ public class IdTypeMapBuilder {
 
     public Object caseOther(Pattern p) {
       return null;
+    }
+  }
+
+  private class ElementNameClassVisitor implements NameClassVisitor {
+    private final Name attributeName;
+    private final Locator locator;
+    private final int idType;
+
+    ElementNameClassVisitor(Name attributeName, Locator locator, int idType) {
+      this.attributeName = attributeName;
+      this.locator = locator;
+      this.idType = idType;
+    }
+
+    public void visitChoice(NameClass nc1, NameClass nc2) {
+      nc1.accept(this);
+      nc2.accept(this);
+    }
+
+    public void visitName(Name elementName) {
+      int tem = idTypeMap.getIdType(elementName, attributeName);
+      if (tem !=  Datatype.ID_TYPE_NULL && tem != idType)
+        error("id_type_conflict", elementName, attributeName, locator);
+      idTypeMap.add(elementName, attributeName, idType);
+    }
+
+    public void visitNsName(String ns) {
+      visitOther();
+    }
+
+    public void visitNsNameExcept(String ns, NameClass nc) {
+      visitOther();
+    }
+
+    public void visitAnyName() {
+      visitOther();
+    }
+
+    public void visitAnyNameExcept(NameClass nc) {
+      visitOther();
+    }
+
+    public void visitNull() {
+    }
+
+    public void visitError() {
+    }
+
+    private void visitOther() {
+      error("id_element_name_class", locator);
     }
   }
 
