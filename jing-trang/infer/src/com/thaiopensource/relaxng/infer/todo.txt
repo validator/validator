@@ -8,3 +8,5 @@ and y has a refCount of 1, then merge x and y into a single ParticleNode.
 Avoid approximation warnings from Trang output modules.
 
 Should we reconsider always inlining elements that are referenced only once?
+
+Deal with QName datatype.
