@@ -38,6 +38,7 @@ import com.thaiopensource.relaxng.edit.Container;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NullVisitor;
+import com.thaiopensource.relaxng.edit.Param;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
@@ -434,11 +435,47 @@ class Output {
 
     public Object visitData(DataPattern p) {
       String lib = p.getDatatypeLibrary();
+      String qn;
       if (!lib.equals(""))
-        pp.text((String)datatypeLibraryMap.get(lib) + ":");
-      pp.text(p.getType());
-      // XXX params
-      // XXX except
+        qn = (String)datatypeLibraryMap.get(lib) + ":" + p.getType();
+      else
+        qn = p.getType();
+      pp.text(qn);
+      List params = p.getParams();
+      if (params.size() > 0) {
+        pp.startGroup();
+        pp.text(" {");
+        pp.startNest(indent);
+        for (Iterator iter = params.iterator(); iter.hasNext();) {
+          pp.softNewline(" ");
+          Param param = (Param)iter.next();
+          pp.text(param.getName());
+          pp.text(" = ");
+          literal(param.getValue());
+        }
+        pp.endNest();
+        pp.softNewline(" ");
+        pp.text("}");
+        pp.endGroup();
+      }
+      Pattern e = p.getExcept();
+      if (e != null) {
+        if (params.size() == 0) {
+          pp.text(" - ");
+          pp.startNest(qn + " - ");
+          e.accept(patternOutput);
+          pp.endNest();
+        }
+        else {
+          pp.startGroup();
+          pp.softNewline(" ");
+          pp.text("- ");
+          pp.startNest("- ");
+          e.accept(patternOutput);
+          pp.endNest();
+          pp.endGroup();
+        }
+      }
       return null;
     }
 
@@ -614,13 +651,46 @@ class Output {
       if (i != 0)
         pp.text(" ~ ");
       pp.text(bestDelim);
-      // XXX need to deal NL, CR, \x{
-      pp.text(str.substring(i, bestEnd));
+      encode(str.substring(i, bestEnd));
       pp.text(bestDelim);
       i = bestEnd;
       if (i == len)
         break;
     }
+  }
+
+  private void encode(String str) {
+    int start = 0;
+    int len = str.length();
+    for (int i = 0; i < len; i++) {
+      switch (str.charAt(i)) {
+      case '\\':
+        if (!startsWithEscapeOpen(str, i))
+          break;
+        // fall through
+      case '\r':
+      case '\n':
+        if (start < i)
+          pp.text(str.substring(start, i));
+        pp.text("\\x{");
+        pp.text(Integer.toHexString(str.charAt(i)));
+        pp.text("}");
+        start = i + 1;
+        break;
+      }
+    }
+    if (start == 0)
+      pp.text(str);
+    else if (start != len)
+      pp.text(str.substring(start, len));
+  }
+
+  static private boolean startsWithEscapeOpen(String str, int off) {
+    if (!str.startsWith("\\x", off))
+      return false;
+    for (off += 2; str.startsWith("x", off); off++)
+      ;
+    return str.startsWith("{", off);
   }
 
   /**
