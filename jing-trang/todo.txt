@@ -17,5 +17,3 @@ Support Datatype guidelines.
 Avoid slow error recovery with large schemas (eg DocBook).
 
 Implementing escaping in href and datatypeLibrary attributes.
-
-Do not simply ignore fragment identifiers in href attributes.
