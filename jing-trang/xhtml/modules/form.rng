@@ -149,7 +149,7 @@
         <text/>
         <ref name="legend"/>
         <ref name="Inline.class"/>
-        <ref name="Block.mix"/>
+        <ref name="Block.class"/>
       </choice>
     </zeroOrMore>
   </element>
