@@ -1,12 +1,17 @@
-<project name="dtdparse" default="test" basedir=".">
+<project name="dtdinst" default="test" basedir=".">
 
-<target name="compile">
+<target name="init">
+  <mkdir dir="build"/>
+  <property file="src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
+</target>
+
+<target name="compile" depends="init">
   <mkdir dir="build/classes"/>
   <javac srcdir="src" destdir="build/classes"/>
 </target>
 
 <target name="jar" depends="compile">
-  <jar jarfile="build/dtdparse.jar" manifest="dtdparse.mf">
+  <jar jarfile="build/dtdinst.jar" manifest="manifest.txt">
     <fileset dir="build/classes"/>
     <fileset dir="src" includes="**/*.properties"/>
   </jar>
@@ -15,12 +20,22 @@
 <target name="test" depends="jar">
   <mkdir dir="build/test"/>
   <java classname="com.thaiopensource.xml.dtd.test.Driver" >
-    <arg value="test"/> 
+    <arg value="test"/>
     <arg value="build/test"/> 
     <classpath>
-      <pathelement location="build/dtdparse.jar"/>
+      <pathelement location="build/dtdinst.jar"/>
     </classpath>
   </java>
+</target>
+
+<target name="website" depends="jar">
+  <mkdir dir="build/website"/>
+  <copy todir="build/website">
+    <fileset dir="." includes="index.html"/>
+  </copy>
+  <replace file="build/website/index.html"
+           token="@VERSION@"
+           value="${version}"/>
 </target>
 
 </project>
