@@ -589,9 +589,9 @@ childrenDeriv cx p children = stripChildrenDeriv cx p children
 stripChildrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
 stripChildrenDeriv _ p [] = p
 stripChildrenDeriv cx p (h:t) = 
-  stripChildrenDeriv (if strip h then p else (childDeriv cx p h)) t
+  stripChildrenDeriv cx (if strip h then p else (childDeriv cx p h)) t
 
-strip :: ChildNode -> Boolean
+strip :: ChildNode -> Bool
 strip (TextNode s) = whitespace s
 strip _ = False
 </haskell>
