@@ -4,35 +4,70 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 
 /**
- * A SAX 2 content handler that validates the content it receives.  A <code>ValidatorHandler</code>
- * is <em>not</em> safe for concurrent access for multiple threads. A single <code>ValidatorHandler</code>
- * can be used to validate only a single document at a time. It can be used to validate a sequence of
- * documents by calling <code>reset</code> between documents.  If multiple documents must be validated
- * concurrently, then a separate <code>ValidatorHandler</code> must be used for each document.
- * <code>ValidatorHandler</code> extends <code>DTDHandler</code> so that validation can have access
- * to information about the DTD, specifically the unparsed entities and notations.
+ * Validates an XML document with respect to a schema.  The schema is
+ * determined when the <code>Validator</code> is created and cannot be
+ * changed.  The XML document is provided to the <code>Validator</code>
+ * by calling methods of the <code>ContentHandler</code> object returned
+ * by <code>getContentHandler</code>; the methods must be called in
+ * the sequence specified by the <code>ContentHandler</code>
+ * interface.  If the <code>getDTDHandler</code> method returns
+ * a non-null object, then method calls must be made on it
+ * reporting DTD information.
+ *
+ * <p>Any errors will be reported to the <code>ErrorHandler</code>
+ * specified when the <code>Validator</code> was created.  If, after the
+ * call to the <code>endDocument</code> method, no errors have been
+ * reported, then the XML document is valid.
+ *
+ * <p>A single <code>Validator</code> object is <em>not</em> safe for
+ * concurrent access from multiple threads. A single
+ * <code>ValidatorHandler</code> can be used to validate only a single
+ * document at a time.
+ *
+ * <p>After completing validation of an XML document (i.e. after calling
+ * the <code>endDocument</code> on the <code>ContentHandler</code>),
+ * <code>reset</code> can be called to allow validation of another
+ * document. The <code>reset</code> method may create new <code>ContentHandler</code>
+ * and <code>DTDHandler</code> objects or may simply reinitialize the
+ * state of the existing objects.  Therefore, <code>getContentHandler</code>
+ * and <code>getDTDHandler</code> must be called after <code>reset</code>
+ * to retrieve the objects to which the XML document to be validated
+ * must be provided.
  *
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public interface Validator {
+
+
   /**
-   * Reports whether the content received so far is valid.  If this is called before
-   * <code>endDocument</code>, then it reports whether the content received so far
-   * is such that subsequent content may result in a valid document.  If this is
-   * called after <code>endDocument</code>, then it reports whether the content
-   * received constitutes a valid document.
+   * Returns the ContentHandler that will receive the XML document.
+   * Information about the XML document ot be validated must be
+   * reported by calling methods on the returned ContentHandler.
+   * The same object will always be returned unless <code>reset</code>
+   * is called: this method does not change the state of the Validator.
    *
-   * @return <code>true</code> if the content is valid; <code>false</code> otherwise.
+   * @return a ContentHandler, never <code>null</code>
    */
-  boolean isValidSoFar();
+  ContentHandler getContentHandler();
 
   /**
-   * Prepares to receive the content of another document.  Immediately after <code>reset</code> is called
-   * <code>isValidSoFar</code> will return <code>true</code> and <code>isComplete</code> will return false.
-   * The current <code>ErrorHandler</code> is not affected.
+   * Returns a DTDHandler. Information about the DTD must be reported
+   * by calling methods on the returned object, unless <code>null</code>
+   * is returned.  The same object will always be returned unless
+   * <code>reset</code> is called: this method does not change the state
+   * of the Validator.
+   *
+   * @return a DTDHandler, maybe <code>null</code> if DTD information is
+   * not significant to the <code>Validator</code>
    */
-  void reset();
-
-  ContentHandler getContentHandler();
   DTDHandler getDTDHandler();
+
+   /**
+    * Prepares to parse another document.  After completing validation
+    * of a document, <code>reset</code> must be called before
+    * attempting to validate another document. This may create new
+    * ContentHandler and DTDHandler objects or may simply reinitialize
+    * the state of the existing objects.
+    */
+   void reset();
 }

@@ -20,7 +20,6 @@ import java.util.Vector;
 public class IdSoundnessChecker implements Validator, ContentHandler {
   private final IdTypeMap idTypeMap;
   private final ErrorHandler eh;
-  private boolean hadError;
   private Locator locator;
   private final Hashtable table = new Hashtable();
 
@@ -38,11 +37,6 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   public void reset() {
     table.clear();
     locator = null;
-    hadError = false;
-  }
-
-  public boolean isValidSoFar() {
-    return !hadError;
   }
 
   public ContentHandler getContentHandler() {
@@ -177,21 +171,15 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   }
 
   private void error(String key) throws SAXException {
-    hadError = true;
-    if (eh != null)
-      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
+    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
   }
 
   private void error(String key, String arg) throws SAXException {
-    hadError = true;
-    if (eh != null)
-      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
+    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
   }
 
   private void error(String key, String arg, Locator loc) throws SAXException {
-    hadError = true;
-    if (eh != null)
-      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg),
-                                     loc));
+    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg),
+                                   loc));
   }
 }

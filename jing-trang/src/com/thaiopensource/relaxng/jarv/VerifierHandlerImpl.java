@@ -3,14 +3,17 @@ package com.thaiopensource.relaxng.jarv;
 import com.thaiopensource.relaxng.impl.Pattern;
 import com.thaiopensource.relaxng.impl.PatternValidator;
 import com.thaiopensource.relaxng.impl.ValidatorPatternBuilder;
+import com.thaiopensource.xml.sax.CountingErrorHandler;
 import org.iso_relax.verifier.VerifierHandler;
 import org.xml.sax.ErrorHandler;
 
 class VerifierHandlerImpl extends PatternValidator implements VerifierHandler {
   private boolean complete = false;
+  private final CountingErrorHandler ceh;
 
-  VerifierHandlerImpl(Pattern pattern, ValidatorPatternBuilder builder) {
-    super(pattern, builder, null);
+  VerifierHandlerImpl(Pattern pattern, ValidatorPatternBuilder builder, CountingErrorHandler ceh) {
+    super(pattern, builder, ceh);
+    this.ceh = ceh;
   }
 
   public void endDocument() {
@@ -21,10 +24,15 @@ class VerifierHandlerImpl extends PatternValidator implements VerifierHandler {
   public boolean isValid() throws IllegalStateException {
     if (!complete)
       throw new IllegalStateException();
-    return isValidSoFar();
+    return !ceh.getHadErrorOrFatalError();
   }
 
-  public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
+  void setErrorHandler(ErrorHandler eh) {
+    ceh.setErrorHandler(eh);
+  }
+
+  public void reset() {
+    super.reset();
+    ceh.reset();
   }
 }

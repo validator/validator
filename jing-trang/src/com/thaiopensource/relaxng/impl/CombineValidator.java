@@ -24,10 +24,6 @@ public class CombineValidator implements Validator {
     createHandlers();
   }
 
-  public boolean isValidSoFar() {
-    return v1.isValidSoFar() && v2.isValidSoFar();
-  }
-
   public ContentHandler getContentHandler() {
     return contentHandler;
   }

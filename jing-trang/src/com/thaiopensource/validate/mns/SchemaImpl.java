@@ -3,6 +3,7 @@ package com.thaiopensource.validate.mns;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.Uri;
+import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
@@ -10,6 +11,7 @@ import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
+import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
@@ -112,6 +114,7 @@ class SchemaImpl implements Schema {
     private ElementAction currentElementAction;
     private boolean hadError = false;
     private final ErrorHandler eh;
+    private final CountingErrorHandler ceh;
     private final Localizer localizer = new Localizer(SchemaImpl.class);
     private Locator locator;
     private final XmlBaseHandler xmlBaseHandler = new XmlBaseHandler();
@@ -129,6 +132,7 @@ class SchemaImpl implements Schema {
     Handler(SchemaReceiverImpl sr) {
       this.sr = sr;
       this.eh = ValidateProperty.ERROR_HANDLER.get(sr.getProperties());
+      this.ceh = new CountingErrorHandler(eh);
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -138,7 +142,9 @@ class SchemaImpl implements Schema {
 
     public void startDocument() throws SAXException {
       try {
-        validator = sr.getMnsSchema().createValidator(sr.getProperties());
+        PropertyMapBuilder builder = new PropertyMapBuilder(sr.getProperties());
+        ValidateProperty.ERROR_HANDLER.put(builder, ceh);
+        validator = sr.getMnsSchema().createValidator(builder.toPropertyMap());
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
@@ -153,7 +159,7 @@ class SchemaImpl implements Schema {
     }
 
     public Schema getSchema() throws IncorrectSchemaException, SAXException {
-      if (validator == null || !validator.isValidSoFar())
+      if (validator == null || ceh.getHadErrorOrFatalError())
         throw new IncorrectSchemaException();
       for (Enumeration enum = modeMap.keys(); enum.hasMoreElements();) {
         String modeName = (String)enum.nextElement();
@@ -184,7 +190,7 @@ class SchemaImpl implements Schema {
         foreignDepth++;
         return;
       }
-      if (!validator.isValidSoFar())
+      if (ceh.getHadErrorOrFatalError())
         return;
       if (localName.equals("rules"))
         parseRules(attributes);

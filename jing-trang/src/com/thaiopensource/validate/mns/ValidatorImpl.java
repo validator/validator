@@ -30,7 +30,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   private final PropertyMap properties;
   private Locator locator;
   private Subtree subtrees = null;
-  private boolean validSoFar = true;
   private final Hashset attributeNamespaces = new Hashset();
   private PrefixMapping prefixMapping = null;
   private final Localizer localizer = new Localizer(ValidatorImpl.class);
@@ -178,8 +177,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
                     new NamespaceFilteredAttributes(ns, false, attributes));
     ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
     endSubtree(ch);
-    if (!validator.isValidSoFar())
-      validSoFar = false;
     releaseValidator(attributesSchema, validator);
   }
 
@@ -207,8 +204,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       subtrees.context.pop();
       if (subtrees.context.empty()) {
         endSubtree(subtrees.validator.getContentHandler());
-        if (!subtrees.validator.isValidSoFar())
-          validSoFar = false;
         releaseValidator(subtrees.schema, subtrees.validator);
         currentMode = subtrees.parentMode;
         laxDepth = subtrees.parentLaxDepth;
@@ -249,15 +244,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     prefixMapping = prefixMapping.parent;
   }
 
-  public boolean isValidSoFar() {
-    for (Subtree st = subtrees; st != null; st = st.parent)
-      if (!st.validator.isValidSoFar())
-        return false;
-    return validSoFar;
-  }
-
   public void reset() {
-    validSoFar = true;
     subtrees = null;
     locator = null;
   }
@@ -271,9 +258,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   }
 
   private void error(String key, String arg) throws SAXException {
-    validSoFar = false;
-    if (eh == null)
-      return;
     eh.error(new SAXParseException(localizer.message(key, arg), locator));
   }
 }

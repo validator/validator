@@ -33,7 +33,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   private static final String BEARER_URI = "";
   private static final String BEARER_LOCAL_NAME = "#bearer";
   private static final String NO_NS = "\0";
-  private boolean validSoFar = true;
   private final ErrorHandler eh;
   private final PropertyMap properties;
   private Locator locator;
@@ -137,7 +136,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
       if (eh != null)
         eh.error(new SAXParseException(localizer.message("reject_element", ns),
                                        locator));
-      validSoFar = false;
     }
 
   }
@@ -261,7 +259,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     AttributeActionSet actions = mode.getAttributeActions(ns);
     if (actions.getReject() && !attributeNamespaceRejected) {
       attributeNamespaceRejected = true;
-      validSoFar = false;
       if (eh != null)
         eh.error(new SAXParseException(localizer.message("reject_attribute", ns),
                                        locator));
@@ -285,8 +282,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     ch.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME, attributes);
     ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
     cleanupHandler(ch);
-    if (!validator.isValidSoFar())
-      validSoFar = false;
     releaseValidator(schema, validator);
   }
 
@@ -337,8 +332,6 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     for (int i = 0, len = currentSection.validators.size(); i < len; i++) {
       Validator validator = (Validator)currentSection.validators.elementAt(i);
       cleanupHandler(validator.getContentHandler());
-      if (!validator.isValidSoFar())
-        validSoFar = false;
       releaseValidator((Schema)currentSection.schemas.elementAt(i), validator);
     }
     currentSection = currentSection.parent;
@@ -382,18 +375,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     ((Stack)validatorHandlerCache.get(schema)).push(vh);
   }
 
-  public boolean isValidSoFar() {
-    for (Section s = currentSection; s != null; s = s.parent) {
-      for (int i = 0, len = s.validators.size(); i < len; i++) {
-        if (!((Validator)s.validators.elementAt(i)).isValidSoFar())
-          return false;
-      }
-    }
-    return validSoFar;
-  }
-
   public void reset() {
-    validSoFar = true;
     initCurrentSection();
   }
 

@@ -12,6 +12,7 @@ import org.apache.xerces.util.ParserConfigurationSettings;
 import org.apache.xerces.util.SymbolTable;
 import org.apache.xerces.util.XMLAttributesImpl;
 import org.apache.xerces.util.XMLSymbols;
+import org.apache.xerces.util.ErrorHandlerWrapper;
 import org.apache.xerces.xni.NamespaceContext;
 import org.apache.xerces.xni.QName;
 import org.apache.xerces.xni.XMLAttributes;
@@ -24,6 +25,7 @@ import org.apache.xerces.xni.parser.XMLComponent;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.apache.xerces.xni.parser.XMLParseException;
+import org.apache.xerces.xni.parser.XMLErrorHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -43,7 +45,6 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
   private XMLAttributes attributes = new XMLAttributesImpl();
   private SymbolTable symbolTable;
   private XMLComponent[] components;
-  private SAXXMLErrorHandler errorHandlerWrapper;
   private Locator locator;
   private Hashtable entityTable = new Hashtable();
   private boolean pushedContext = false;
@@ -69,7 +70,7 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
 
   ValidatorImpl(SymbolTable symbolTable, XMLGrammarPool grammarPool, PropertyMap properties) {
     this.symbolTable = symbolTable;
-    errorHandlerWrapper = new SAXXMLErrorHandler(ValidateProperty.ERROR_HANDLER.get(properties));
+    XMLErrorHandler errorHandlerWrapper = new ErrorHandlerWrapper(ValidateProperty.ERROR_HANDLER.get(properties));
     components = new XMLComponent[] { errorReporter, schemaValidator };
     for (int i = 0; i < components.length; i++) {
       addRecognizedFeatures(components[i].getRecognizedFeatures());
@@ -94,12 +95,7 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
     reset();
   }
 
-  public boolean isValidSoFar() {
-    return !errorHandlerWrapper.getHadError();
-  }
-
   public void reset() {
-    errorHandlerWrapper.reset();
     validationManager.reset();
     namespaceContext.reset();
     for (int i = 0; i < components.length; i++)

@@ -14,6 +14,7 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.xml.sax.Sax2XMLReaderCreator;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
+import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.IncorrectSchemaException;
@@ -28,7 +29,7 @@ import com.thaiopensource.util.SinglePropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
 
 /**
- * Provides a simplified API for validating XML documents against RELAX NG schemas.
+ * Provides a simplified API for validating XML documents against schemas.
  * This class is neither reentrant nor safe for access from multiple threads.
  *
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
@@ -36,7 +37,7 @@ import com.thaiopensource.util.PropertyMapBuilder;
 public class ValidationEngine {
   private final XMLReaderCreator xrc;
   private XMLReader xr;
-  private final ErrorHandler eh;
+  private final CountingErrorHandler eh;
   private final SchemaReader sr;
   private final PropertyMap schemaProperties;
   private final PropertyMap instanceProperties;
@@ -49,7 +50,7 @@ public class ValidationEngine {
    */
   public static final int CHECK_ID_IDREF = 01;
   /**
-   * Flag indicating that the schema is in the compact syntax rather than the XML syntax.
+   * Flag indicating that the schema is in the RELAX NG compact syntax rather than the XML syntax.
    * @see #ValidationEngine(com.thaiopensource.xml.sax.XMLReaderCreator, ErrorHandler, int)
    */
   public static final int COMPACT_SYNTAX = 02;
@@ -86,10 +87,10 @@ public class ValidationEngine {
     this.xrc = xrc;
     if (eh == null)
       eh = new DraconianErrorHandler();
-    instanceProperties = new SinglePropertyMap(ValidateProperty.ERROR_HANDLER,
-                                               eh);
     ValidateProperty.ERROR_HANDLER.put(builder, eh);
-    this.eh = eh;
+    this.eh = new CountingErrorHandler(eh);
+    instanceProperties = new SinglePropertyMap(ValidateProperty.ERROR_HANDLER,
+                                               this.eh);
     RngProperty.DATATYPE_LIBRARY_FACTORY.put(builder,
                                              new DatatypeLibraryLoader());
     if ((flags & CHECK_ID_IDREF) != 0)
@@ -129,7 +130,7 @@ public class ValidationEngine {
    * @param eh the <code>ErrorHandler</code> to be used for reporting errors; if <code>null</code>
    * uses <code>DraconianErrorHandler</code>
    * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
-   * @param compactSyntax <code>true</code> if the compact syntax should be used to parse the schema;
+   * @param compactSyntax <code>true</code> if the RELAX NG compact syntax should be used to parse the schema;
    * <code>false</code> if the XML syntax should be used
    * @see com.thaiopensource.xml.sax.DraconianErrorHandler
    * @see com.thaiopensource.xml.sax.Sax2XMLReaderCreator
@@ -190,20 +191,20 @@ public class ValidationEngine {
     if (schema == null)
       throw new IllegalStateException("cannot validate without schema");
     if (validator == null)
-     validator = schema.createValidator(instanceProperties);
+      validator = schema.createValidator(instanceProperties);
     else
       validator.reset();
     if (xr == null) {
       xr = xrc.createXMLReader();
-      if (eh != null)
-        xr.setErrorHandler(eh);
+      xr.setErrorHandler(eh);
     }
+    eh.reset();
     xr.setContentHandler(validator.getContentHandler());
     DTDHandler dh = validator.getDTDHandler();
     if (dh != null)
       xr.setDTDHandler(dh);
     xr.parse(in);
-    return validator.isValidSoFar();
+    return !eh.getHadErrorOrFatalError();
   }
 
   /**

@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.jarv;
 
 import com.thaiopensource.relaxng.impl.Pattern;
 import com.thaiopensource.relaxng.impl.ValidatorPatternBuilder;
+import com.thaiopensource.xml.sax.CountingErrorHandler;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierHandler;
 import org.xml.sax.ErrorHandler;
@@ -12,7 +13,8 @@ class VerifierImpl extends org.iso_relax.verifier.impl.VerifierImpl {
   private boolean needReset = false;
 
   VerifierImpl(Pattern start, ValidatorPatternBuilder builder) throws VerifierConfigurationException {
-    vhi = new VerifierHandlerImpl(start, builder);
+    vhi = new VerifierHandlerImpl(start, builder,
+                                  new CountingErrorHandler(errorHandler));
     reader.setDTDHandler(vhi);
   }
 

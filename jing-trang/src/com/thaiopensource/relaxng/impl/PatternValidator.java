@@ -17,7 +17,7 @@ import java.util.Hashtable;
 public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
-  protected ErrorHandler eh;
+  private final ErrorHandler eh;
   private Hashtable recoverPatternTable;
   private PatternMemo memo;
   private boolean hadError;
@@ -208,10 +208,6 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     clearDtdContext();
   }
 
-  public boolean isValidSoFar() {
-    return !hadError;
-  }
-
   public ContentHandler getContentHandler() {
     return this;
   }
@@ -224,8 +220,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     if (hadError && memo.isNotAllowed())
       return;
     hadError = true;
-    if (eh != null)
-      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
+    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
   }
 
   private void error(String key, Name arg) throws SAXException {
@@ -236,8 +231,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     if (hadError && memo.isNotAllowed())
       return;
     hadError = true;
-    if (eh != null)
-      eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
+    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
   }
 
   /* Return false if m is notAllowed. */
