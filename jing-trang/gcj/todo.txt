@@ -4,3 +4,4 @@ Fix usage messages
 Write man pages
 Detect with -l-org-xml-sax is needed
 Detect with -lpthread is needed
+Don't use -g when building RPMs
