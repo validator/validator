@@ -147,7 +147,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
       return true;
     }
     if (ns.length() == 0) {
-      if (!isAttribute)
+      if (!isAttribute && !"".equals(prefixMap.get("")))
         return false;
       xw.attribute("name", nnc.getLocalName());
       return true;

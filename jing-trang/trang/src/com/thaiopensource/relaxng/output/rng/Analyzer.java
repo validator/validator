@@ -183,10 +183,10 @@ class Analyzer extends AbstractVisitor {
       haveInherit = true;
       return;
     }
-    if (ns == null || ns.length() == 0)
-      return;
     if (prefix == null)
       prefix = "";
+    if (ns == null || (ns.length() == 0 && prefix.length() != 0))
+      return;
     prefixMap.put(prefix, ns);
   }
 
