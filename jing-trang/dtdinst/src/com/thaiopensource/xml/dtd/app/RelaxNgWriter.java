@@ -15,6 +15,7 @@ public class RelaxNgWriter {
   private XmlWriter w;
   private XmlOutputMember outMember;
   private boolean hadAny = false;
+  private boolean hadDefaultValue = false;
   private Hashtable elementNameTable = new Hashtable();
   private Hashtable defTable = new Hashtable();
   private Hashtable prefixTable = new Hashtable();
@@ -492,6 +493,8 @@ public class RelaxNgWriter {
   }
 
   void chooseAnnotationPrefix() {
+    if (!hadDefaultValue)
+      return;
     for (int n = 0;; n++) {
       annotationPrefix = repeatChar('_', n) + "a";
       if (prefixTable.get(annotationPrefix) == null)
@@ -638,8 +641,11 @@ public class RelaxNgWriter {
 	  prefixTable.put(prefix, defaultValue);
       }
     }
-    else
+    else {
+      if (defaultValue != null)
+	hadDefaultValue = true;
       noteNamePrefix(name);
+    }
   }
 
   private void noteNamePrefix(String name) {
@@ -774,8 +780,9 @@ public class RelaxNgWriter {
 		"http://www.w3.org/2001/XMLSchema-datatypes");
     w.attribute("xmlns",
 		"http://relaxng.org/ns/structure/0.9");
-    w.attribute("xmlns:" + annotationPrefix,
-		COMPATIBILITY_ANNOTATIONS_URI);
+    if (annotationPrefix != null)
+      w.attribute("xmlns:" + annotationPrefix,
+		  COMPATIBILITY_ANNOTATIONS_URI);
     outputNamespaces();
   }
   
