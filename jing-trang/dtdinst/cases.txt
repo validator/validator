@@ -18,6 +18,8 @@ Include external param entities in object model.
 
 Try to parse ignored marked sections.
 
+Try to parse overridden declarations.
+
 In the object model add something for case where internal param
 entity was not preserved.
 
