@@ -32,14 +32,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     final ValidatorHandler validator;
     final Schema schema;
     final Hashset coveredNamespaces;
-    final boolean prune;
+    final ElementsOrAttributes prune;
     final SchemaImpl.Mode parentMode;
     final int parentLaxDepth;
     final Stack context = new Stack();
     final ContextMap contextMap;
 
     Subtree(Hashset coveredNamespaces, ContextMap contextMap,
-            boolean prune, ValidatorHandler validator,
+            ElementsOrAttributes prune, ValidatorHandler validator,
             Schema schema, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.coveredNamespaces = coveredNamespaces;
       this.contextMap = contextMap;
@@ -103,7 +103,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       SchemaImpl.Mode mode = getMode();
       SchemaImpl.ElementAction elementAction = mode.getElementAction(uri);
       if (elementAction == null) {
-        if (laxDepth == 0 && mode.isStrictElements())
+        if (laxDepth == 0 && !mode.getLax().containsElements())
           error("element_undeclared_namespace", uri);
         laxDepth++;
       }
@@ -124,7 +124,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     }
     for (Subtree st = subtrees; wantsEvent(st); st = st.parent) {
       Attributes prunedAtts;
-      if (st.prune)
+      if (st.prune.containsAttributes())
         prunedAtts = new NamespaceFilteredAttributes(uri, true, attributes);
       else
         prunedAtts = attributes;
@@ -150,14 +150,14 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private boolean wantsEvent(Subtree st) {
-    return st != null && (!st.prune || (laxDepth == 0 && st == subtrees));
+    return st != null && (!st.prune.containsElements() || (laxDepth == 0 && st == subtrees));
   }
 
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
     SchemaImpl.Mode mode = getMode();
     Schema attributesSchema = mode.getAttributesSchema(ns);
     if (attributesSchema == null) {
-      if (mode.isStrictAttributes())
+      if (!mode.getLax().containsAttributes())
         error("attributes_undeclared_namespace", ns);
       return;
     }

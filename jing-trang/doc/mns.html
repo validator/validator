@@ -213,7 +213,7 @@ this.</p>
 elements and cover attributes?</p>
 
 <p class="note">Should it be possible to cover all namespaces except a
-particular finite set of namespaces?</p>
+particular (possibly empty) finite set of namespaces?</p>
 
 <h2>Modes</h2>
 
@@ -317,14 +317,16 @@ fact, a list of between zero and two distinct tokens from the set
 schemas that are <em>closed</em>.  Open schemas allow attributes and
 elements in other namespaces; closed schemas are not. Sometimes it is
 necessary to treat a closed schema as open.  This can be done by
-adding a <code>prune="true"</code> attribute to
-<code>validate</code>.  This has the effect of removing all
-potential validation candidates from the subtree before validating the
+adding a <code>prune</code> attribute to <code>validate</code>.  This
+has the effect of removing all potential validation candidates that
+are elements or attributes from the subtree before validating the
 subtree with respect to the schema specified by the
-<code>validate</code>.</p>
+<code>validate</code>, according as the value of the
+<code>prune</code> attribute contains the token <code>elements</code>
+or <code>attributes</code>.</p>
 
 <pre>
-attribute prune { "true" | "false" }?
+attribute prune { elementsOrAttributes }?
 </pre>
 
 <h2>More on modes</h2>
@@ -342,7 +344,7 @@ validate =
   element validate {
     validateModel,
     useModeAtt?,
-    attribute prune { "true" | "false" }?,
+    attribute prune { elementsOrAttributes }?,
     element cover { nsAtt }*,
     context*
   }
@@ -408,7 +410,7 @@ validate =
   element validate {
     validateModel,
     useModeAtt?,
-    attribute prune { "true" | "false" }?,
+    attribute prune { elementsOrAttributes }?,
     ((cover*, context*) &amp; foreign)
   }
   | element validateAttributes { validateModel, foreign }
@@ -480,7 +482,7 @@ anything = (text | attribute * { text } | element * { anything })*
   &lt;validate ns="http://www.w3.org/1999/xhtml"
             schema="xhtml.rng"
             inModes="xhtml"
-            prune="true">
+            prune="elements">
     &lt;context useMode="rdf">
       &lt;element name="head"/>
     &lt;/context>
@@ -495,7 +497,7 @@ anything = (text | attribute * { text } | element * { anything })*
 
 <li>We are assuming a XHTML schema that does not allow elements and
 attributes from other namespaces. We therefore have to prune the XHTML
-to remove the RDF before validating the XHTML.</li>
+to remove the RDF elements before validating the XHTML.</li>
 
 <li>We want the root element to be XHTML not RDF.  We therefore use a
 starting mode that allows only XHTML.</li>

@@ -27,10 +27,7 @@
         </optional>
         <optional>
           <attribute name="prune">
-            <choice>
-              <value>true</value>
-              <value>false</value>
-            </choice>
+            <ref name="elementsOrAttributes"/>
           </attribute>
         </optional>
         <interleave>
@@ -107,21 +104,7 @@
     <element name="lax">
       <optional>
         <attribute name="allow">
-          <list>
-            <choice>
-              <group>
-                <value>elements</value>
-                <value>attributes</value>
-              </group>
-              <group>
-                <value>attributes</value>
-                <value>elements</value>
-              </group>
-              <value>elements</value>
-              <value>attributes</value>
-              <empty/>
-            </choice>
-          </list>
+          <ref name="elementsOrAttributes"/>
         </attribute>
       </optional>
       <optional>
@@ -163,6 +146,23 @@
       <data type="NCName"/>
       <value>#default</value>
     </choice>
+  </define>
+  <define name="elementsOrAttributes">
+    <list>
+      <choice>
+        <group>
+          <value>elements</value>
+          <value>attributes</value>
+        </group>
+        <group>
+          <value>attributes</value>
+          <value>elements</value>
+        </group>
+        <value>elements</value>
+        <value>attributes</value>
+        <empty/>
+      </choice>
+    </list>
   </define>
   <define name="foreign">
     <zeroOrMore>

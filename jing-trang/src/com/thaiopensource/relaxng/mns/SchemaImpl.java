@@ -32,8 +32,7 @@ class SchemaImpl implements Schema {
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
-  private static final boolean STRICT_ELEMENTS_DEFAULT = true;
-  private static final boolean STRICT_ATTRIBUTES_DEFAULT = true;
+  private static final ElementsOrAttributes LAX_DEFAULT = ElementsOrAttributes.NEITHER;
 
   static private final class WrappedIOException extends RuntimeException {
     private final IOException exception;
@@ -51,10 +50,10 @@ class SchemaImpl implements Schema {
     private final Schema schema;
     private final Mode mode;
     private final ContextMap contextMap;
-    private final boolean prune;
+    private final ElementsOrAttributes prune;
     private final Hashset covered = new Hashset();
 
-    ElementAction(String ns, Schema schema, Mode mode, ContextMap contextMap, boolean prune) {
+    ElementAction(String ns, Schema schema, Mode mode, ContextMap contextMap, ElementsOrAttributes prune) {
       this.schema = schema;
       this.mode = mode;
       this.contextMap = contextMap;
@@ -74,7 +73,7 @@ class SchemaImpl implements Schema {
       return schema;
     }
 
-    boolean getPrune() {
+    ElementsOrAttributes getPrune() {
       return prune;
     }
 
@@ -86,18 +85,13 @@ class SchemaImpl implements Schema {
   static class Mode {
     private Locator whereDefined;
     private boolean defined = false;
-    private boolean strictElements = STRICT_ELEMENTS_DEFAULT;
-    private boolean strictAttributes = STRICT_ATTRIBUTES_DEFAULT;
+    private ElementsOrAttributes lax = LAX_DEFAULT;
     private boolean strictDefined = false;
     private final Hashtable elementMap = new Hashtable();
     private final Hashtable attributesMap = new Hashtable();
 
-    boolean isStrictElements() {
-      return strictElements;
-    }
-
-    boolean isStrictAttributes() {
-      return strictAttributes;
+    ElementsOrAttributes getLax() {
+      return lax;
     }
 
     Schema getAttributesSchema(String ns) {
@@ -215,20 +209,13 @@ class SchemaImpl implements Schema {
     private void parseLax(Attributes attributes) throws SAXException {
       String[] modeNames = getInModes(attributes);
       SchemaImpl.Mode[] modes = getModes(modeNames);
-      String allow = attributes.getValue("", "allow");
-      boolean strictElements, strictAttributes;
-      if (allow == null)
-        strictElements = strictAttributes = false;
-      else {
-        strictElements = allow.indexOf("elements") < 0;
-        strictAttributes = allow.indexOf("attributes") < 0;
-      }
+      ElementsOrAttributes lax = toElementsOrAttributes(attributes.getValue("", "allow"),
+                                                        ElementsOrAttributes.BOTH);
       for (int i = 0; i < modes.length; i++) {
         if (modes[i].strictDefined)
           error("lax_multiply_defined", modeNames[i]);
         else {
-          modes[i].strictElements = strictElements;
-          modes[i].strictAttributes = strictAttributes;
+          modes[i].lax = lax;
           modes[i].strictDefined = true;
         }
       }
@@ -331,9 +318,20 @@ class SchemaImpl implements Schema {
                          Uri.escapeDisallowedChars(schemaUri));
     }
 
-    private boolean getPrune(Attributes attributes) {
-      String value = attributes.getValue("", "prune");
-      return value != null && value.trim().equals("true");
+    private ElementsOrAttributes getPrune(Attributes attributes) {
+      return toElementsOrAttributes(attributes.getValue("", "prune"),
+                                    ElementsOrAttributes.NEITHER);
+    }
+
+    private ElementsOrAttributes toElementsOrAttributes(String value, ElementsOrAttributes defaultValue) {
+      if (value == null)
+        return defaultValue;
+      ElementsOrAttributes eoa = ElementsOrAttributes.NEITHER;
+      if (value.indexOf("elements") >= 0)
+        eoa = eoa.addElements();
+      if (value.indexOf("attributes") >= 0)
+        eoa = eoa.addAttributes();
+      return eoa;
     }
 
     private Mode getUseMode(Attributes attributes) {

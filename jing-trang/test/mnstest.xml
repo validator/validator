@@ -91,7 +91,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="" schema="a.rng" prune="true"/>
+  <validate ns="" schema="a.rng" prune="elements attributes"/>
   <lax/>
 </rules>
 </correct>
@@ -196,7 +196,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="http://www.example.com/a" schema="a.rng" prune="true"/>
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="elements"/>
   <validateAttributes ns="http://www.example.com/b" schema="b.rng"/>
   <lax/>
 </rules>
@@ -327,7 +327,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="http://www.example.com/a" schema="a.rng" prune="true">
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="elements">
     <cover ns="http://www.example.com/b"/>
   </validate>
   <lax/>
@@ -390,7 +390,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
+  <validate ns="http://example.com" schema="a.rng" useMode="a" prune="elements"/>
   <lax inModes="a"/>
 </rules>
 </correct>
@@ -571,7 +571,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="" schema="a.rng" prune="true"/>
+  <validate ns="" schema="a.rng" prune="attributes elements"/>
   <lax allow="attributes"/>
 </rules>
 </correct>
@@ -592,7 +592,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="" schema="a.rng" prune="true"/>
+  <validate ns="" schema="a.rng" prune="attributes elements"/>
   <lax allow="elements"/>
 </rules>
 </correct>
@@ -1410,7 +1410,7 @@
   <validate ns="http://www.w3.org/1999/xhtml"
             schema="xhtml.rng"
             inModes="xhtml"
-            prune="true">
+            prune="elements">
     <context useMode="rdf">
       <element name="head"/>
     </context>
@@ -1559,7 +1559,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="" schema="a.rng" prune="true">
+  <validate ns="" schema="a.rng" prune="elements">
     <context useMode="anythingGoes">
       <element name="a">
         <element name="b"/>
@@ -1603,7 +1603,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validate ns="" schema="a.rng" prune="true">
+  <validate ns="" schema="a.rng" prune="elements">
     <context useMode="anythingGoes">
       <root>
         <element name="b"/>
