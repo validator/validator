@@ -28,6 +28,7 @@ public class PatternReader implements DatatypeContext {
 
   static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
+  static final String xsdURI = "http://www.w3.org/2001/XMLSchema-datatypes";
 
   XMLReader xr;
   XMLReaderCreator xrc;
@@ -45,6 +46,7 @@ public class PatternReader implements DatatypeContext {
     = new BuiltinDatatypeBuilder(new StringDatatype());
   DatatypeBuilder tokenDatatypeBuilder
     = new BuiltinDatatypeBuilder(new TokenDatatype());
+  Datatype ncNameDatatype;
 
   static class PrefixMapping {
     final String prefix;
@@ -138,7 +140,6 @@ public class PatternReader implements DatatypeContext {
 	if (atts.getURI(i).length() == 0) {
 	  String name = atts.getLocalName(i);
 	  if (name.equals("name"))
-	    // XXX check that ip is a name
 	    setName(atts.getValue(i).trim());
 	  else if (name.equals("ns"))
 	    ns = atts.getValue(i);
@@ -347,7 +348,7 @@ public class PatternReader implements DatatypeContext {
     NameClass nameClass;
     String name;
 
-    void setName(String name) throws SAXException {
+    void setName(String name) {
       this.name = name;
     }
 
@@ -441,7 +442,7 @@ public class PatternReader implements DatatypeContext {
 
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
-	type = value.trim();
+	type = checkNCName(value.trim());
       else
 	super.setOtherAttribute(name, value);
     }
@@ -494,7 +495,7 @@ public class PatternReader implements DatatypeContext {
 
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("type"))
-	type = value.trim();
+	type = checkNCName(value.trim());
       else
 	super.setOtherAttribute(name, value);
     }
@@ -540,8 +541,8 @@ public class PatternReader implements DatatypeContext {
       return new ParamState(null);
     }
 
-    void setName(String name) {
-      this.name = name;
+    void setName(String name) throws SAXException {
+      this.name = checkNCName(name);
     }
 
     void endAttributes() throws SAXException {
@@ -797,7 +798,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     void setName(String name) throws SAXException {
-      this.name = name;
+      this.name = checkNCName(name);
     }
 
     Pattern makePattern() {
@@ -894,8 +895,8 @@ public class PatternReader implements DatatypeContext {
       return new DefineState(null);
     }
 
-    void setName(String name) {
-      this.name = name;
+    void setName(String name) throws SAXException {
+      this.name = checkNCName(name);
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
@@ -993,8 +994,8 @@ public class PatternReader implements DatatypeContext {
       checkCombine(grammar.startPatternRef());
     }
 
-    void setName(String name) {
-      this.name = name;
+    void setName(String name) throws SAXException {
+      this.name = checkNCName(name);
     }
 
     void sendPatternToParent(Pattern p) {
@@ -1312,6 +1313,12 @@ public class PatternReader implements DatatypeContext {
     this.patternBuilder = patternBuilder;
     this.xr = xr;
     this.datatypeFactory = datatypeFactory;
+    DatatypeBuilder dtb = datatypeFactory.createDatatypeBuilder(xsdURI,
+								"NCName");
+    if (dtb != null)
+      this.ncNameDatatype = dtb.finish();
+    else
+      this.ncNameDatatype = new StringDatatype();
     openIncludes = null;
     init(null, "");
   }
@@ -1324,6 +1331,7 @@ public class PatternReader implements DatatypeContext {
     this.xrc = parent.xrc;
     this.patternBuilder = parent.patternBuilder;
     this.datatypeFactory = parent.datatypeFactory;
+    this.ncNameDatatype = parent.ncNameDatatype;
     this.xr = xr;
     this.openIncludes = new OpenIncludes(systemId, parent.openIncludes);
     init(grammar, ns);
@@ -1339,14 +1347,20 @@ public class PatternReader implements DatatypeContext {
   SimpleNameClass expandName(String name, String ns) throws SAXException {
     int ic = name.indexOf(':');
     if (ic == -1)
-      return new SimpleNameClass(ns, name);
-    String prefix = name.substring(0, ic);
-    String localName = name.substring(ic + 1);
+      return new SimpleNameClass(ns, checkNCName(name));
+    String prefix = checkNCName(name.substring(0, ic));
+    String localName = checkNCName(name.substring(ic + 1));
     for (PrefixMapping tem = prefixMapping; tem != null; tem = tem.next)
       if (tem.prefix.equals(prefix))
 	return new SimpleNameClass(tem.uri, localName);
     error("undefined_prefix", prefix);
     return new SimpleNameClass("", localName);
+  }
+
+  String checkNCName(String str) throws SAXException {
+    if (!ncNameDatatype.allows(str, null))
+      error("invalid_ncname", str);
+    return str;
   }
 
   InputSource makeInputSource(String systemId)

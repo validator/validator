@@ -1,7 +1,5 @@
 More helpful error message for duplicate attributes.
 
-Validate QNames/NCNames in schema.
-
 Use SF datatype library interface.
 
 Support DTD compatibility use of ID/IDREF/IDREFS.
