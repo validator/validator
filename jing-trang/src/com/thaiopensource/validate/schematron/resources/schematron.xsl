@@ -129,6 +129,26 @@ Implement diagnostic
   </axsl:value-of>
 </xsl:template>
 
+<xsl:template match="sch:dir">
+  <dir>
+    <xsl:copy-of select="@value"/>
+    <xsl:apply-templates/>
+  </dir>
+</xsl:template>
+
+<xsl:template match="sch:emph">
+  <emph>
+    <xsl:apply-templates/>
+  </emph>
+</xsl:template>
+
+<xsl:template match="sch:span">
+  <span>
+    <xsl:copy-of select="@class"/>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
 <xsl:template match="*" mode="assertion"/>
 
 <xsl:variable name="saxon"
