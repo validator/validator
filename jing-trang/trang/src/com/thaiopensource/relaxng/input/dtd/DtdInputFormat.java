@@ -155,11 +155,4 @@ public class DtdInputFormat implements InputFormat {
     }
   }
 
-  public boolean isInlineAttlistDecls() {
-    return inlineAttlistDecls;
-  }
-
-  public void setInlineAttlistDecls(boolean inlineAttlistDecls) {
-    this.inlineAttlistDecls = inlineAttlistDecls;
-  }
 }
