@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_bindir}/trang
-
+%{_mandir}/man1/trang.1*
 
 %changelog
 * Sat Feb 22 2003 James Clark <jjc@jclark.com>

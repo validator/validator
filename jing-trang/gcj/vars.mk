@@ -5,10 +5,14 @@ prefix = @prefix@
 exec_prefix = @exec_prefix@
 
 bindir = @bindir@
+mandir = @mandir@
+man1dir = $(mandir)/man1
 GCJ=@GCJ@
 GCJFLAGS=@GCJFLAGS@
 LDFLAGS=@LDFLAGS@
-INSTALL=@INSTALL@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
 PROG=@PROG@
 MAIN=@MAIN@
 TEST_MAIN=@TEST_MAIN@

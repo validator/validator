@@ -23,10 +23,13 @@ check: test_$(PROG)
 
 install: $(PROG)
 	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
-	$(INSTALL) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
+	$(srcdir)/mkinstalldirs $(DESTDIR)$(man1dir)
+	$(INSTALL_PROGRAM) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
+	$(INSTALL_DATA) $(PROG).1 $(DESTDIR)$(man1dir)/$(PROG).1
 
 uninstall:
 	-rm -f $(DESTDIR)$(bindir)/$(PROG)
+	-rm -f $(DESTDIR)$(man1dir)/$(PROG).1
 
 clean:
 	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)

@@ -1,0 +1,121 @@
+.TH trang 1 @VERSION@
+.SH NAME
+trang \- convert between different schema languages for XML
+.SH SYNOPSIS
+.B trang
+.RB [ \-I
+.BR rng | rnc | dtd | xml ]
+.RB [ \-O
+.BR rng | rnc | dtd | xsd ]
+.RB [ \-i
+.IR input-param ]
+.RB [ \-o
+.IR output-param ]
+.IR input-file " ..."
+.I output-file
+.SH DESCRIPTION
+.B trang
+takes as input a schema written in any of the following formats:
+.IP
+RELAX NG (XML syntax)
+.IP
+RELAX NG (compact syntax)
+.IP
+XML 1.0 DTD
+.PP
+and produces as output a schema written in any of the following formats:
+.IP
+RELAX NG (XML syntax)
+.IP
+RELAX NG (compact syntax)
+.IP
+XML 1.0 DTD
+.IP
+W3C XML Schema
+.PP
+Trang can also infer a schema from one or more example XML
+documents.
+.PP
+Trang uses an internal representation based on RELAX NG.  For each
+supported input format, there is an input module that converts a
+schema in that input format into this internal representation.  For
+each supported output format, there is an output module that converts
+the internal representation into a schema in that output format.
+Thus, any supported input format can be translated to any supported
+output format.
+.PP
+Trang requires two command-line arguments: the first is the URI or
+filename of the schema to be translated; the second is the output
+filename.
+.PP
+Trang infers the input and output modules to be used from the
+extension of input and output filenames as follows:
+.TP
+.B .rng
+RELAX NG (XML syntax)
+.TP
+.B .rnc
+RELAX NG (compact syntax)
+.TP
+.B .dtd
+XML 1.0 DTD
+.TP
+.B .xsd
+W3C XML Schema
+.TP
+.B .xml
+XML documents (used as examples from which to infer a schema)
+.PP
+This inference can be overridden using the 
+.B \-I
+and
+.B \-O
+options.
+.LP
+When the input is XML documents used as examples to infer a schema,
+more than one input file may be specified as arguments.  All the input
+files are specified before the output file.
+.SH OPTIONS
+.TP
+.BR "\-I rng" | rnc | dtd | xml
+Specifies which input module to use.
+.TP
+.BR "\-O rng" | rnc | dtd | xsd
+Specifies which output module to use.
+.TP
+.BI \-i " input-param"
+.TP
+.BI \-o " output-param"
+Specifies a parameter for an input
+.RB ( \-i )
+or output
+.RB ( \-o )
+module.
+The
+.B \-i
+and
+.B \-o
+options may be used multiple times in order to specify
+multiple parameters.  There are two kinds of parameter: boolean
+parameters and string-valued parameters.  A string-valued parameter is
+specified using the form
+.IB name = value\fR.
+A boolean parameter is
+specified using the form
+.I name
+or
+.BI no- name\fR.
+The applicable parameters depend on
+the particular input and output module.
+For details, see the HTML documentation.
+.SH "SEE ALSO"
+.BR jing (1)
+.LP
+Trang Manual
+.PP
+http://relaxng.org
+.SH AUTHOR
+James Clark (jjc@jclark.com)
+.PP
+This product includes software developed by the
+Apache Software Foundation (http://www.apache.org/).
