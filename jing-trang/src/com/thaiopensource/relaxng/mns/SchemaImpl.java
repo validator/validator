@@ -76,12 +76,18 @@ class SchemaImpl implements Schema {
     private Locator whereDefined;
     private boolean defined = false;
     private boolean strict = false;
+    private boolean strictAttributes = false;
     private boolean strictDefined = false;
+    private boolean strictAttributesDefined = false;
     private final Hashtable elementMap = new Hashtable();
     private final Hashtable attributesMap = new Hashtable();
 
     boolean isStrict() {
       return strict;
+    }
+
+    boolean isStrictAttributes() {
+      return strictAttributes;
     }
 
     Schema getAttributesSchema(String ns) {
@@ -169,14 +175,25 @@ class SchemaImpl implements Schema {
         modes[i] = lookupCreateMode(modeNames[i]);
         modes[i].defined = true;
       }
-      if (localName.equals("strict") || localName.equals("lax")) {
-        boolean strict = localName.equals("strict");
+      if (localName.startsWith("strict") || localName.startsWith("lax")) {
+        boolean strict = localName.startsWith("strict");
+        boolean isAttribute = localName.endsWith("Attributes");
         for (int i = 0; i < modes.length; i++) {
-          if (modes[i].strictDefined)
-            error("strict_multiply_defined", modeNames[i]);
+          if (isAttribute) {
+            if (modes[i].strictAttributesDefined)
+              error("strict_attributes_multiply_defined", modeNames[i]);
+            else {
+              modes[i].strictAttributes = strict;
+              modes[i].strictAttributesDefined = true;
+            }
+          }
           else {
-            modes[i].strict = strict;
-            modes[i].strictDefined = true;
+            if (modes[i].strictDefined)
+              error("strict_multiply_defined", modeNames[i]);
+            else {
+              modes[i].strict = strict;
+              modes[i].strictDefined = true;
+            }
           }
         }
         return;

@@ -20,7 +20,7 @@
   </start>
   <define name="validate">
     <choice>
-      <element name="validateElement">
+      <element name="validate">
         <ref name="validateModel"/>
         <optional>
           <attribute name="useMode">
@@ -60,6 +60,8 @@
       <choice>
         <name>lax</name>
         <name>strict</name>
+        <name>laxAttributes</name>
+        <name>strictAttributes</name>
       </choice>
       <interleave>
         <optional>

@@ -143,7 +143,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
     Schema attributesSchema = currentMode.getAttributesSchema(ns);
     if (attributesSchema == null) {
-      if (currentMode.isStrict())
+      if (currentMode.isStrictAttributes())
         error("attributes_undeclared_namespace", ns);
       return;
     }

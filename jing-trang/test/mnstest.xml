@@ -12,7 +12,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
 </rules>
 </correct>
 <valid>
@@ -89,7 +89,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng" prune="true"/>
+  <validate ns="" schema="a.rng" prune="true"/>
 </rules>
 </correct>
 <valid>
@@ -114,7 +114,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
   <strict/>
 </rules>
 </correct>
@@ -135,7 +135,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://www.example.com" schema="a.rng"/>
+  <validate ns="http://www.example.com" schema="a.rng"/>
   <strict/>
 </rules>
 </correct>
@@ -156,7 +156,7 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns" ns="">
-  <validateElement ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
 </rules>
 </incorrect>
 </testCase>
@@ -176,7 +176,7 @@
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns=""/>
+  <validate ns=""/>
 </rules>
 </incorrect>
 </testCase>
@@ -193,7 +193,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://www.example.com/a" schema="a.rng" prune="true"/>
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="true"/>
   <validateAttributes ns="http://www.example.com/b" schema="b.rng"/>
 </rules>
 </correct>
@@ -246,9 +246,9 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://www.example.com" schema="a.rng">
+  <validate ns="http://www.example.com" schema="a.rng">
     <cover ns=""/>
-  </validateElement>
+  </validate>
 </rules>
 </correct>
 <valid>
@@ -278,9 +278,9 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://www.example.com/a" schema="a.rng">
+  <validate ns="http://www.example.com/a" schema="a.rng">
     <cover ns="http://www.example.com/b"/>
-  </validateElement>
+  </validate>
   <strict/>
 </rules>
 </correct>
@@ -323,9 +323,9 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://www.example.com/a" schema="a.rng" prune="true">
+  <validate ns="http://www.example.com/a" schema="a.rng" prune="true">
     <cover ns="http://www.example.com/b"/>
-  </validateElement>
+  </validate>
 </rules>
 </correct>
 <valid>
@@ -373,7 +373,7 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://example.com" schema="a.rng" useMode="a"/>
+  <validate ns="http://example.com" schema="a.rng" useMode="a"/>
 </rules>
 </incorrect>
 </testCase>
@@ -385,7 +385,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
+  <validate ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
   <strict modes="#default"/>
   <lax modes="a"/>
 </rules>
@@ -427,7 +427,7 @@
 </resource>
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement modes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
+  <validate modes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
   <strict modes="#default"/>
   <lax modes="a"/>
 </rules>
@@ -502,7 +502,7 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng#foo"/>
+  <validate ns="" schema="a.rng#foo"/>
 </rules>
 </incorrect>
 </testCase>
@@ -514,7 +514,7 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng#foo"/>
+  <validate ns="" schema="a.rng#foo"/>
 </rules>
 </incorrect>
 </testCase>
@@ -526,8 +526,8 @@
 </resource>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <validateElement ns="" schema="a.rng"/>
-  <validateElement ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
+  <validate ns="" schema="a.rng"/>
 </rules>
 </incorrect>
 </testCase>
@@ -553,11 +553,11 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns" xmlns:x="http://example.com" x:foo="stuff">
   <x:bar/>
-  <validateElement ns="" schema="a.rng" x:att="val">
+  <validate ns="" schema="a.rng" x:att="val">
     <x:foo>
-      <validateElement/>
+      <validate/>
     </x:foo>
-  </validateElement>
+  </validate>
   <x:baz/>
 </rules>
 </correct>
@@ -567,5 +567,47 @@
 <invalid>
 <b/>
 </invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="true"/>
+  <strict/>
+</rules>
+</correct>
+<valid>
+<a xmlns:x="http://example.com" x:foo="bar"/>
+</valid>
+<invalid>
+<a xmlns:x="http://example.com">
+  <x:foo/>
+</a>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0">
+  <empty/>
+</element>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="true"/>
+  <strictAttributes/>
+</rules>
+</correct>
+<invalid>
+<a xmlns:x="http://example.com" x:foo="bar"/>
+</invalid>
+<valid>
+<a xmlns:x="http://example.com">
+  <x:foo/>
+</a>
+</valid>
 </testCase>
 </testSuite>
