@@ -388,6 +388,10 @@ public class RelaxNgWriter {
       w.comment(value);
     }
 
+    public void processingInstruction(String target, String value) throws IOException {
+      w.processingInstruction(target, value);
+    }
+
     public void externalIdRef(String name, ExternalId externalId,
 			      String uri, String encoding, TopLevel[] contents)
       throws Exception {

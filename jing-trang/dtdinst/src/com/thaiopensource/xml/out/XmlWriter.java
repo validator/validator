@@ -115,6 +115,23 @@ public class XmlWriter {
       writer.write(newline);
   }
 
+  public void processingInstruction(String target, String str) throws IOException {
+    if (state == IN_START_TAG) {
+      writer.write('>');
+      state = OTHER;
+      writer.write(newline);
+    }
+    writer.write("<?");
+    outputMarkup(target);
+    if (str.length() != 0) {
+      writer.write(' ');
+      outputMarkup(str);
+    }
+    writer.write("?>");
+    if (state != AFTER_DATA)
+      writer.write(newline);
+  }
+
   private void outputMarkup(String str) throws IOException {
     int len = str.length();
     for (int i = 0; i < len; i++) {

@@ -15,8 +15,6 @@ RELAX NG: overridden attributes.
 
 RELAX NG: use FIXED values to construct datatype
 
-RELAX NG: processing instructions
-
 RELAX NG: annotation for included sections (d:condition="flagName")
 
 RELAX NG: sort undefined elements.
