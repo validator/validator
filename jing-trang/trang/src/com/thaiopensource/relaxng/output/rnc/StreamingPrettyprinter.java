@@ -250,7 +250,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
       w.close();
     }
     catch (IOException e) {
-      throw new WrappedException(e);
+      throw new Prettyprinter.WrappedException(e);
     }
   }
 
@@ -259,7 +259,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
       w.write(chars, off, len);
     }
     catch (IOException e) {
-      throw new WrappedException(e);
+      throw new Prettyprinter.WrappedException(e);
     }
   }
 
@@ -270,7 +270,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
         w.write(' ');
     }
     catch (IOException e) {
-      throw new WrappedException(e);
+      throw new Prettyprinter.WrappedException(e);
     }
   }
 }

@@ -43,14 +43,15 @@ public class LocalOutputDirectory implements OutputDirectory {
     alwaysUseDefaultEncoding = true;
   }
 
-  public Stream open(String sourceUri, String encoding) throws IOException {
+  public OutputDirectory.Stream open(String sourceUri, String encoding) throws IOException {
     if (encoding == null || alwaysUseDefaultEncoding)
       encoding = defaultEncoding;
     String javaEncoding = EncodingMap.getJavaName(encoding);
     File file = new File(mainOutputFile.getParentFile(), mapFilename(sourceUri));
-    return new Stream(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)), javaEncoding),
-                      encoding,
-                      CharRepertoire.getInstance(javaEncoding));
+    return new OutputDirectory.Stream(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)),
+							     javaEncoding),
+				      encoding,
+				      CharRepertoire.getInstance(javaEncoding));
   }
 
   public String reference(String fromSourceUri, String toSourceUri) {

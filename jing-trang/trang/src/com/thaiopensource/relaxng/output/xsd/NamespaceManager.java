@@ -219,11 +219,6 @@ public class NamespaceManager {
   class StructureMover extends SchemaWalker {
     private final String currentNamespace;
 
-    StructureMover(Schema schema) {
-      this(getTargetNamespace(schema.getUri()));
-      schema.accept(this);
-    }
-
     StructureMover(String currentNamespace) {
       this.currentNamespace = currentNamespace;
     }
@@ -268,7 +263,8 @@ public class NamespaceManager {
     }
 
     public void visitInclude(Include include) {
-      new StructureMover(include.getIncludedSchema());
+      Schema included = include.getIncludedSchema();
+      included.accept(new StructureMover(getTargetNamespace(included.getUri())));
     }
 
     public Object visitWildcardElement(WildcardElement p) {
@@ -300,7 +296,7 @@ public class NamespaceManager {
     new GlobalElementSelector(schema);
     findSubstitutionGroups(guide);
     chooseRootSchemas(sug);
-    new StructureMover(schema);
+    schema.accept(new StructureMover(getTargetNamespace(schema.getUri())));
   }
 
   private void assignTargetNamespaces() {

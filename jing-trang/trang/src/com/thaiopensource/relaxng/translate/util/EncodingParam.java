@@ -5,7 +5,7 @@ import com.thaiopensource.xml.util.EncodingMap;
 import java.io.UnsupportedEncodingException;
 
 public abstract class EncodingParam extends AbstractParam {
-  public void set(String value) throws InvalidValueException {
+  public void set(String value) throws InvalidParamValueException {
     try {
       "x".getBytes(EncodingMap.getJavaName(value));
     }
@@ -15,5 +15,5 @@ public abstract class EncodingParam extends AbstractParam {
     setEncoding(value);
   }
 
-  protected abstract void setEncoding(String encoding) throws InvalidValueException;
+  protected abstract void setEncoding(String encoding) throws InvalidParamValueException;
 }

@@ -3,7 +3,7 @@ package com.thaiopensource.relaxng.translate.util;
 import com.thaiopensource.util.Uri;
 
 public abstract class AbsoluteUriParam extends AbstractParam {
-  public void set(String value) throws InvalidValueException {
+  public void set(String value) throws InvalidParamValueException {
     if (!Uri.isValid(value))
       throw new ParamProcessor.LocalizedInvalidValueException("invalid_uri");
     if (!Uri.isAbsolute(value))
@@ -11,5 +11,5 @@ public abstract class AbsoluteUriParam extends AbstractParam {
     setAbsoluteUri(value);
   }
 
-  protected abstract void setAbsoluteUri(String value) throws InvalidValueException;
+  protected abstract void setAbsoluteUri(String value) throws InvalidParamValueException;
 }

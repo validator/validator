@@ -17,7 +17,7 @@ public class ParamProcessor {
 
   private static class BadParamException extends Exception { }
 
-  static class LocalizedInvalidValueException extends Param.InvalidValueException {
+  static class LocalizedInvalidValueException extends InvalidParamValueException {
     private final String key;
 
     LocalizedInvalidValueException(String key) {
@@ -74,7 +74,7 @@ public class ParamProcessor {
     catch (LocalizedInvalidValueException e) {
       er.error("invalid_param_value_detail", name, er.getLocalizer().message(e.key), null);
     }
-    catch (Param.InvalidValueException e) {
+    catch (InvalidParamValueException e) {
       String detail = e.getMessage();
       if (detail != null)
         er.error("invalid_param_value_detail", name, detail, null);
@@ -87,7 +87,7 @@ public class ParamProcessor {
       else
         er.error("invalid_param_value", name, null);
     }
-    catch (Param.ValuePresenceException e) {
+    catch (ParamValuePresenceException e) {
       if (off < 0)
         er.error("param_value_required", name, null);
       else

@@ -11,7 +11,7 @@ public abstract class EnumParam extends AbstractParam {
     return values;
   }
 
-  public void set(String value) throws InvalidValueException {
+  public void set(String value) throws InvalidParamValueException {
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(value)) {
         setEnum(i);
@@ -22,5 +22,5 @@ public abstract class EnumParam extends AbstractParam {
     throw new ParamProcessor.LocalizedInvalidValueException("invalid_enum");
   }
 
-  abstract protected void setEnum(int value) throws InvalidValueException;
+  abstract protected void setEnum(int value) throws InvalidParamValueException;
 }

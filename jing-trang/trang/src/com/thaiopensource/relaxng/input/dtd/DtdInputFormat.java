@@ -11,6 +11,7 @@ import com.thaiopensource.relaxng.translate.util.ParamFactory;
 import com.thaiopensource.relaxng.translate.util.AbsoluteUriParam;
 import com.thaiopensource.relaxng.translate.util.NCNameParam;
 import com.thaiopensource.relaxng.translate.util.NmtokenParam;
+import com.thaiopensource.relaxng.translate.util.InvalidParamValueException;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.dtd.parse.ParseException;
@@ -53,13 +54,13 @@ public class DtdInputFormat implements InputFormat {
       this.localizer = localizer;
     }
 
-    public void set(String value) throws InvalidValueException {
+    public void set(String value) throws InvalidParamValueException {
       if (value.indexOf('%') < 0)
-        throw new InvalidValueException(localizer.message("no_percent"));
+        throw new InvalidParamValueException(localizer.message("no_percent"));
       if (value.lastIndexOf('%') != value.indexOf('%'))
-        throw new InvalidValueException(localizer.message("multiple_percent"));
+        throw new InvalidParamValueException(localizer.message("multiple_percent"));
       if (!Naming.isNcname(value.replace('%', 'x')))
-        throw new InvalidValueException(localizer.message("not_ncname_with_percent"));
+        throw new InvalidParamValueException(localizer.message("not_ncname_with_percent"));
       setDeclPattern(value);
     }
 
@@ -83,7 +84,7 @@ public class DtdInputFormat implements InputFormat {
                });
     pp.declare("xmlns",
                new AbsoluteUriParam() {
-                 public void set(String value) throws InvalidValueException {
+                 public void set(String value) throws InvalidParamValueException {
                    if (value.equals(""))
                     setAbsoluteUri(value);
                    else

@@ -13,7 +13,7 @@ public abstract class IntegerParam extends AbstractParam {
     this(Integer.MIN_VALUE, Integer.MAX_VALUE);
   }
 
-  public void set(String value) throws InvalidValueException {
+  public void set(String value) throws InvalidParamValueException {
     try {
       int n = Integer.parseInt(value);
       if (n < minValue || n > maxValue)
@@ -25,5 +25,5 @@ public abstract class IntegerParam extends AbstractParam {
     }
   }
 
-  protected abstract void setInteger(int value) throws InvalidValueException;
+  protected abstract void setInteger(int value) throws InvalidParamValueException;
 }
