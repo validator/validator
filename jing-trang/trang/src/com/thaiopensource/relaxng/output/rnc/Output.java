@@ -39,6 +39,10 @@ import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NullVisitor;
 import com.thaiopensource.relaxng.edit.Param;
+import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.AttributeAnnotation;
+import com.thaiopensource.relaxng.edit.ElementAnnotation;
+import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
@@ -77,10 +81,10 @@ class Output {
   private final ErrorReporter er;
   private final NamespaceManager.NamespaceBindings nsb;
   private final Map datatypeLibraryMap = new HashMap();
-  private final NameClassVisitor nameClassOutput = new NameClassOutput();
-  private final NameClassVisitor noParenNameClassOutput = new NoParenNameClassOutput();
-  private final PatternVisitor noParenPatternOutput = new NoParenPatternOutput();
-  private final PatternVisitor patternOutput = new PatternOutput();
+  private final NameClassVisitor nameClassOutput = new NameClassOutput(true);
+  private final NameClassVisitor noParenNameClassOutput = new NameClassOutput(false);
+  private final PatternVisitor noParenPatternOutput = new PatternOutput(false);
+  private final PatternVisitor patternOutput = new PatternOutput(true);
   private final ComponentVisitor componentOutput = new ComponentOutput();
   private boolean isAttributeNameClass;
 
@@ -309,10 +313,18 @@ class Output {
     }
   }
 
-  class NoParenPatternOutput implements PatternVisitor {
+  class PatternOutput implements PatternVisitor {
+    private final boolean alwaysUseParens;
+
+    PatternOutput(boolean alwaysUseParens) {
+      this.alwaysUseParens = alwaysUseParens;
+    }
+
     public Object visitGrammar(GrammarPattern p) {
+      startAnnotations(p);
       pp.text("grammar");
       body(p);
+      endAnnotations(p);
       return null;
     }
 
@@ -329,6 +341,7 @@ class Output {
     }
 
     private void nameClassed(NameClassedPattern p, String key) {
+      startAnnotations(p);
       pp.text(key);
       pp.startNest(key);
       p.getNameClass().accept(noParenNameClassOutput);
@@ -342,6 +355,7 @@ class Output {
       pp.softNewline(" ");
       pp.text("}");
       pp.endGroup();
+      endAnnotations(p);
     }
 
     public Object visitOneOrMore(OneOrMorePattern p) {
@@ -360,40 +374,63 @@ class Output {
     }
 
     private void postfix(UnaryPattern p, String op) {
-      p.getChild().accept(patternOutput);
-      pp.text(op);
+      if (!startAnnotations(p)) {
+        p.getChild().accept(patternOutput);
+        pp.text(op);
+      }
+      else {
+        pp.text("(");
+        pp.startNest("(");
+        p.getChild().accept(patternOutput);
+        pp.endNest();
+        pp.text(")");
+        pp.text(op);
+      }
+      endAnnotations(p);
     }
 
     public Object visitRef(RefPattern p) {
+      startAnnotations(p);
       identifier(p.getName());
+      endAnnotations(p);
       return null;
     }
 
     public Object visitParentRef(ParentRefPattern p) {
+      startAnnotations(p);
       pp.text("parent ");
       identifier(p.getName());
+      endAnnotations(p);
       return null;
     }
 
     public Object visitExternalRef(ExternalRefPattern p) {
+      startAnnotations(p);
       pp.text("external ");
       literal(od.reference(sourceUri, p.getHref()));
       inherit(p.getNs());
+      endAnnotations(p);
       return null;
     }
 
     public Object visitText(TextPattern p) {
+      startAnnotations(p);
       pp.text("text");
+      endAnnotations(p);
       return null;
     }
 
     public Object visitEmpty(EmptyPattern p) {
+      startAnnotations(p);
       pp.text("empty");
+      endAnnotations(p);
       return null;
     }
 
     public Object visitNotAllowed(NotAllowedPattern p) {
+      startAnnotations(p);
       pp.text("notAllowed");
+      endAnnotations(p);
       return null;
     }
 
@@ -408,6 +445,7 @@ class Output {
     }
 
     private void prefix(UnaryPattern p, String key) {
+      startAnnotations(p);
       pp.text(key);
       pp.text(" {");
       pp.startNest(indent);
@@ -416,6 +454,7 @@ class Output {
       pp.endNest();
       pp.softNewline(" ");
       pp.text("}");
+      endAnnotations(p);
     }
 
     public Object visitChoice(ChoicePattern p) {
@@ -434,7 +473,15 @@ class Output {
     }
 
     void composite(CompositePattern p, String sep, boolean sepBeforeNewline) {
+      boolean useParens = alwaysUseParens;
+      if (startAnnotations(p))
+        useParens = true;
       pp.startGroup();
+      if (useParens) {
+        pp.text("(");
+        pp.startNest("(");
+      }
+
       boolean first = true;
       for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
         if (!first) {
@@ -452,10 +499,16 @@ class Output {
         else if (!sepBeforeNewline)
           pp.endNest();
       }
+      if (useParens) {
+        pp.endNest();
+        pp.text(")");
+      }
       pp.endGroup();
+      endAnnotations(p);
     }
 
     public Object visitData(DataPattern p) {
+      startAnnotations(p);
       String lib = p.getDatatypeLibrary();
       String qn;
       if (!lib.equals(""))
@@ -493,15 +546,18 @@ class Output {
           pp.softNewline(" ");
           pp.text("- ");
           pp.startNest("- ");
+          // XXX think we need parentheses if e has following annotations
           e.accept(patternOutput);
           pp.endNest();
           pp.endGroup();
         }
       }
+      endAnnotations(p);
       return null;
     }
 
     public Object visitValue(ValuePattern p) {
+      startAnnotations(p);
       String lib = p.getDatatypeLibrary();
       if (lib.equals("")) {
         if (!p.getType().equals("token"))
@@ -510,58 +566,80 @@ class Output {
       else
         pp.text((String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ");
       literal(p.getValue());
+      endAnnotations(p);
       return null;
     }
 
   }
 
-  class PatternOutput extends NoParenPatternOutput {
-    void composite(CompositePattern p, String sep, boolean sepBeforeNewline) {
-      pp.text("(");
-      pp.startNest("(");
-      super.composite(p, sep, sepBeforeNewline);
-      pp.endNest();
-      pp.text(")");
-    }
-  }
+  class NameClassOutput implements NameClassVisitor {
+    private final boolean alwaysUseParens;
 
-  class NoParenNameClassOutput implements NameClassVisitor {
+    NameClassOutput(boolean alwaysUseParens) {
+      this.alwaysUseParens = alwaysUseParens;
+    }
+
     public Object visitAnyName(AnyNameNameClass nc) {
       NameClass e = nc.getExcept();
-      if (e == null)
+      if (e == null) {
+        startAnnotations(nc);
         pp.text("*");
+      }
       else {
-        pp.text("* - ");
-        pp.startNest("* - ");
+        boolean useParens = startAnnotations(nc) || alwaysUseParens;
+        String s = useParens ?  "(* - " : "* - ";
+        pp.text(s);
+        pp.startNest(s);
         e.accept(nameClassOutput);
+        if (useParens)
+          pp.text(")");
         pp.endNest();
       }
+      endAnnotations(nc);
       return null;
     }
 
     public Object visitNsName(NsNameNameClass nc) {
-      String prefix = nsb.getNonEmptyPrefix(nc.getNs());
       NameClass e = nc.getExcept();
+      String prefix = nsb.getNonEmptyPrefix(nc.getNs());
       if (e == null) {
+        startAnnotations(nc);
         pp.text(prefix);
         pp.text(":*");
       }
       else {
-        String str = prefix + ":* - ";
-        pp.text(str);
-        pp.startNest(str);
+        boolean useParens = startAnnotations(nc) || alwaysUseParens;
+        String s = useParens ? "(" : "";
+        s += prefix;
+        s += ":* - ";
+        pp.text(s);
+        pp.startNest(s);
         e.accept(nameClassOutput);
         pp.endNest();
+        if (useParens)
+          pp.text(")");
       }
+      endAnnotations(nc);
       return null;
     }
 
     public Object visitName(NameNameClass nc) {
+      startAnnotations(nc);
       pp.text(qualifyName(nc.getNamespaceUri(), nc.getPrefix(), nc.getLocalName(), isAttributeNameClass));
+      endAnnotations(nc);
       return null;
     }
 
     public Object visitChoice(ChoiceNameClass nc) {
+      boolean useParens = alwaysUseParens;
+      if (startAnnotations(nc))
+        useParens = true;
+      else if (nc.getChildren().size() == 1)
+        useParens = false;
+      if (useParens) {
+        pp.text("(");
+        pp.startNest("(");
+      }
       pp.startGroup();
       boolean first = true;
       for (Iterator iter = nc.getChildren().iterator(); iter.hasNext();) {
@@ -574,49 +652,92 @@ class Output {
         ((NameClass)iter.next()).accept(nameClassOutput);
       }
       pp.endGroup();
+      if (useParens) {
+        pp.endNest();
+        pp.text(")");
+      }
+      endAnnotations(nc);
       return null;
     }
   }
 
-  class NameClassOutput extends NoParenNameClassOutput {
-    public Object visitChoice(ChoiceNameClass nc) {
-      if (nc.getChildren().size() == 1)
-        super.visitChoice(nc);
-      else {
-        pp.text("(");
-        pp.startNest("(");
-        noParenNameClassOutput.visitChoice(nc);
-        pp.endNest();
-        pp.text(")");
-      }
-      return null;
-    }
+  private static boolean hasAnnotations(Annotated annotated) {
+    return (!annotated.getChildElementAnnotations().isEmpty()
+            || !annotated.getAttributeAnnotations().isEmpty()
+            || !annotated.getFollowingElementAnnotations().isEmpty());
+  }
 
-    public Object visitAnyName(AnyNameNameClass nc) {
-      if (nc.getExcept() != null) {
-        pp.text("(");
-        pp.startNest("(");
-        noParenNameClassOutput.visitAnyName(nc);
-        pp.endNest();
-        pp.text(")");
-      }
-      else
-        noParenNameClassOutput.visitAnyName(nc);
-      return null;
+  private boolean startAnnotations(Annotated annotated) {
+    if (!annotated.getLeadingComments().isEmpty()) {
+      // XXX output the comments
+      if (!hasAnnotations(annotated))
+        return false;
     }
+    else if (!hasAnnotations(annotated))
+      return false;
+    pp.startGroup();
+    List before = (annotated.mayContainText()
+                   ? annotated.getFollowingElementAnnotations()
+                   : annotated.getChildElementAnnotations());
+    if (!annotated.getAttributeAnnotations().isEmpty()
+        || !before.isEmpty()) {
+      annotationBody(annotated.getAttributeAnnotations(), before);
+      pp.softNewline(" ");
+    }
+    return true;
+  }
 
-    public Object visitNsName(NsNameNameClass nc) {
-      if (nc.getExcept() != null) {
-        pp.text("(");
-        pp.startNest("(");
-        noParenNameClassOutput.visitNsName(nc);
-        pp.endNest();
-        pp.text(")");
+  private void endAnnotations(Annotated annotated) {
+    if (!annotated.mayContainText()) {
+      for (Iterator iter = annotated.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
+        Object obj = iter.next();
+        if (obj instanceof ElementAnnotation) {
+          pp.softNewline(" ");
+          pp.text(">> ");
+          pp.startNest(">> ");
+          elementAnnotation((ElementAnnotation)obj);
+          pp.endNest();
+        }
       }
-      else
-        noParenNameClassOutput.visitNsName(nc);
-      return null;
     }
+    if (hasAnnotations(annotated))
+      pp.endGroup();
+  }
+
+  private void annotationBody(List attributes, List children) {
+    pp.startGroup();
+    pp.text("[");
+    pp.startNest(indent);
+    for (Iterator iter = attributes.iterator(); iter.hasNext();) {
+      AttributeAnnotation att = (AttributeAnnotation)iter.next();
+      pp.softNewline(" ");
+      pp.text(qualifyName(att.getNamespaceUri(), att.getPrefix(), att.getLocalName(), true));
+      pp.text(" = ");
+      literal(att.getValue());
+    }
+    for (Iterator iter = children.iterator(); iter.hasNext();) {
+      Object obj = iter.next();
+      if (obj instanceof ElementAnnotation) {
+        pp.softNewline(" ");
+        elementAnnotation((ElementAnnotation)obj);
+      }
+      else if (obj instanceof TextAnnotation) {
+        pp.softNewline(" ");
+        literal(((TextAnnotation)obj).getValue());
+      }
+    }
+    pp.endNest();
+    pp.softNewline(" ");
+    pp.text("]");
+    pp.endGroup();
+  }
+
+  private void elementAnnotation(ElementAnnotation elem) {
+    pp.text(qualifyName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
+                        // unqualified annotation element names have "" namespace
+                        true));
+    pp.text(" ");
+    annotationBody(elem.getAttributes(), elem.getChildren());
   }
 
   private void body(Container container) {
