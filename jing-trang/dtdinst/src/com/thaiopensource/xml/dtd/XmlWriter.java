@@ -54,7 +54,7 @@ public class XmlWriter {
     case AFTER_DATA:
       writer.write("</");
       writer.write(pop());
-      writer.write("/>");
+      writer.write('>');
       break;
     }
     writer.write(newline);
