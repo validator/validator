@@ -184,6 +184,9 @@ install: $(PROG)
 	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
 	$(INSTALL) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
 
+uninstall:
+	-rm -f $(DESTDIR)$(bindir)/$(PROG)
+
 clean:
 	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
 	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
@@ -202,7 +205,7 @@ distclean: clean
 	-rm -f config.status config.cache config.log
 
 .SUFFIXES: .resource
-.PHONY: all check distclean clean install
+.PHONY: all check distclean clean install uninstall
 EOF
 
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
