@@ -5,7 +5,7 @@ jing_main=com.thaiopensource.relaxng.util.Driver
 jing_test_main=com.thaiopensource.relaxng.util.TestDriver
 trang_main=com.thaiopensource.relaxng.translate.Driver
 trang_test_main=com.thaiopensource.relaxng.translate.test.CompactTestDriver
-a_jing_file=src/com/thaiopensource/relaxng/Schema.java
+a_jing_file=src/com/thaiopensource/relaxng/util/Driver.java
 crimson_version=1.1.3
 xerces_version=2.3.0
 build_dir=build/gcj
@@ -29,25 +29,16 @@ com/thaiopensource/datatype/xsd/regex/jdk1_4
 com/thaiopensource/datatype/xsd/regex/xerces
 com/thaiopensource/relaxng/jarv
 com/thaiopensource/relaxng/util/JingTask.java
+com/thaiopensource/validate/xerces
+com/thaiopensource/validate/schematron
+com/thaiopensource/validate/jarv
 META-INF/services/org.iso_relax.verifier.VerifierFactoryLoader
 "
 jing_unwanted_in_trang="
 com/thaiopensource/relaxng/impl
-com/thaiopensource/relaxng/mns
-com/thaiopensource/relaxng/auto
-com/thaiopensource/relaxng/AbstractSchema.java
-com/thaiopensource/relaxng/CompactSchemaLanguage.java
-com/thaiopensource/relaxng/IncorrectSchemaException.java
-com/thaiopensource/relaxng/SAXSchemaLanguage.java
+com/thaiopensource/relaxng/util
 com/thaiopensource/relaxng/SchemaFactory.java
-com/thaiopensource/relaxng/Schema.java
-com/thaiopensource/relaxng/SchemaLanguage.java
-com/thaiopensource/relaxng/SchemaOptions.java
-com/thaiopensource/relaxng/ValidatorHandler.java
-com/thaiopensource/relaxng/util/Driver.java
-com/thaiopensource/relaxng/util/ExegenDriver.java
-com/thaiopensource/relaxng/util/TestDriver.java
-com/thaiopensource/relaxng/util/ValidationEngine.java
+com/thaiopensource/validate
 "
 jing_test="dir.xsl exslt.xsl prep.xsl
 spectest.xml xsdtest.xml xsdtest.xsl mnstest.xml"
@@ -116,6 +107,11 @@ tar xfz ${top_dir}/gcj/Xerces-J-src.${xerces_version}.tar.gz ${xerces_src_dir}/o
 cd ${top_dir}
 cp -a ${build_dir}/${xerces_src_dir}/* ${jing_src_dir}/src
 rm -fr ${build_dir}/${xerces_top_dir}
+cd ${jing_src_dir}
+patch -p0 <${top_dir}/gcj/xerces-regex.patch
+rm -f `find src -name '*~'`
+
+cd ${top_dir}
 
 cp -a ${jing_src_dir}/src ${trang_src_dir}
 
