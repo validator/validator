@@ -85,8 +85,6 @@ class Decl {
 
   Def createDef(DtdBuilder db, Entity entity) {
     String name = entity.name;
-    if (entity.text == null)
-      return new ExternalIdDef(name, entity.getExternalId());
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
       entity.modelGroup = entity.toModelGroup();
@@ -113,6 +111,8 @@ class Decl {
     }
     if (entity.problem == Entity.NO_PROBLEM && !entity.overridden)
       throw new RuntimeException("unexplained problem for entity " + entity.name);
+    if (entity.text == null)
+      return new ExternalIdDef(name, entity.getExternalId());
     return new ParamDef(name, entity.entityValue);
   }
 
