@@ -1,48 +1,6 @@
 package com.thaiopensource.relaxng.output.rnc;
 
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.ComponentVisitor;
-import com.thaiopensource.relaxng.edit.NameClassVisitor;
-import com.thaiopensource.relaxng.edit.PatternVisitor;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.NameNameClass;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.NameClassedPattern;
-import com.thaiopensource.relaxng.edit.AttributePattern;
-import com.thaiopensource.relaxng.edit.UnaryPattern;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.ParentRefPattern;
-import com.thaiopensource.relaxng.edit.ExternalRefPattern;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.ListPattern;
-import com.thaiopensource.relaxng.edit.MixedPattern;
-import com.thaiopensource.relaxng.edit.AnyNameNameClass;
-import com.thaiopensource.relaxng.edit.NsNameNameClass;
-import com.thaiopensource.relaxng.edit.ChoiceNameClass;
-import com.thaiopensource.relaxng.edit.ChoicePattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.InterleavePattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.DivComponent;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.NotAllowedPattern;
-import com.thaiopensource.relaxng.edit.DefineComponent;
-import com.thaiopensource.relaxng.edit.Combine;
-import com.thaiopensource.relaxng.edit.Component;
-import com.thaiopensource.relaxng.edit.Container;
-import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.NullVisitor;
-import com.thaiopensource.relaxng.edit.Param;
-import com.thaiopensource.relaxng.edit.Annotated;
-import com.thaiopensource.relaxng.edit.AttributeAnnotation;
-import com.thaiopensource.relaxng.edit.ElementAnnotation;
-import com.thaiopensource.relaxng.edit.TextAnnotation;
+import com.thaiopensource.relaxng.edit.*;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
@@ -59,9 +17,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*
-Comments (top-level most important)
-
-Annotations
+Annotations and comments (in progress)
 
 Use \x{} escapes for characters not in repertoire of selected encoding
 
@@ -86,6 +42,8 @@ class Output {
   private final PatternVisitor noParenPatternOutput = new PatternOutput(false);
   private final PatternVisitor patternOutput = new PatternOutput(true);
   private final ComponentVisitor componentOutput = new ComponentOutput();
+  private final AnnotationChildVisitor annotationChildOutput = new AnnotationChildOutput();
+  private final AnnotationChildVisitor followingAnnotationChildOutput = new FollowingAnnotationChildOutput();
   private boolean isAttributeNameClass;
 
   static private final String indent = "  ";
@@ -124,6 +82,7 @@ class Output {
   private void topLevel(Pattern p) {
     outputNamespaceDeclarations();
     outputDatatypeLibraryDeclarations(p);
+    // XXX deal with annotations
     if (p instanceof GrammarPattern)
       innerBody(((GrammarPattern)p).getComponents());
     else
@@ -264,6 +223,23 @@ class Output {
       }
     }
 
+    public void nullVisitElement(ElementAnnotation ea) {
+      super.nullVisitElement(ea);
+      noteAnnotationBinding(ea.getPrefix(), ea.getNamespaceUri());
+    }
+
+    public void nullVisitAttribute(AttributeAnnotation a) {
+      super.nullVisitAttribute(a);
+      noteAnnotationBinding(a.getPrefix(), a.getNamespaceUri());
+    }
+
+    private void noteAnnotationBinding(String prefix, String ns) {
+      if (ns.length() != 0)
+        nsm.requireNamespace(ns, false);
+      if (prefix != null)
+        nsm.preferBinding(prefix, ns);
+    }
+
     static NamespaceManager.NamespaceBindings createBindings(Pattern p) {
       NamespaceVisitor nsv = new NamespaceVisitor();
       p.accept(nsv);
@@ -272,6 +248,7 @@ class Output {
   }
 
   class ComponentOutput implements ComponentVisitor {
+    // XXX output annotations
     public Object visitDefine(DefineComponent c) {
       pp.startGroup();
       String name = c.getName();
@@ -523,6 +500,7 @@ class Output {
         pp.startNest(indent);
         for (Iterator iter = params.iterator(); iter.hasNext();) {
           pp.softNewline(" ");
+          // XXX output annotations for param
           Param param = (Param)iter.next();
           pp.text(param.getName());
           pp.text(" = ");
@@ -661,6 +639,39 @@ class Output {
     }
   }
 
+  class AnnotationChildOutput implements AnnotationChildVisitor {
+    public Object visitText(TextAnnotation ta) {
+      literal(ta.getValue());
+      return null;
+    }
+
+    public Object visitComment(Comment c) {
+      pp.text("#");
+      // XXX output the comment
+      pp.hardNewline();
+      return null;
+    }
+
+    public Object visitElement(ElementAnnotation elem) {
+      pp.text(qualifyName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
+                          // unqualified annotation element names have "" namespace
+                          true));
+      pp.text(" ");
+      annotationBody(elem.getAttributes(), elem.getChildren());
+      return null;
+    }
+  }
+
+  class FollowingAnnotationChildOutput extends AnnotationChildOutput {
+    public Object visitElement(ElementAnnotation elem) {
+      pp.text(">> ");
+      pp.startNest(">> ");
+      super.visitElement(elem);
+      pp.endNest();
+      return null;
+    }
+  }
+
   private static boolean hasAnnotations(Annotated annotated) {
     return (!annotated.getChildElementAnnotations().isEmpty()
             || !annotated.getAttributeAnnotations().isEmpty()
@@ -690,14 +701,8 @@ class Output {
   private void endAnnotations(Annotated annotated) {
     if (!annotated.mayContainText()) {
       for (Iterator iter = annotated.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
-        Object obj = iter.next();
-        if (obj instanceof ElementAnnotation) {
-          pp.softNewline(" ");
-          pp.text(">> ");
-          pp.startNest(">> ");
-          elementAnnotation((ElementAnnotation)obj);
-          pp.endNest();
-        }
+        pp.softNewline(" ");
+        ((AnnotationChild)iter.next()).accept(followingAnnotationChildOutput);
       }
     }
     if (hasAnnotations(annotated))
@@ -716,28 +721,13 @@ class Output {
       literal(att.getValue());
     }
     for (Iterator iter = children.iterator(); iter.hasNext();) {
-      Object obj = iter.next();
-      if (obj instanceof ElementAnnotation) {
-        pp.softNewline(" ");
-        elementAnnotation((ElementAnnotation)obj);
-      }
-      else if (obj instanceof TextAnnotation) {
-        pp.softNewline(" ");
-        literal(((TextAnnotation)obj).getValue());
-      }
+      pp.softNewline(" ");
+      ((AnnotationChild)iter.next()).accept(annotationChildOutput);
     }
     pp.endNest();
     pp.softNewline(" ");
     pp.text("]");
     pp.endGroup();
-  }
-
-  private void elementAnnotation(ElementAnnotation elem) {
-    pp.text(qualifyName(elem.getNamespaceUri(), elem.getPrefix(), elem.getLocalName(),
-                        // unqualified annotation element names have "" namespace
-                        true));
-    pp.text(" ");
-    annotationBody(elem.getAttributes(), elem.getChildren());
   }
 
   private void body(Container container) {
