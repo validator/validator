@@ -17,6 +17,7 @@ import com.thaiopensource.relaxng.parse.CommentList;
 import com.thaiopensource.util.Uri;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Naming;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.ValidationContext;
 import org.xml.sax.Attributes;
@@ -40,10 +41,9 @@ Deal with element annotations
 */
 class SchemaParser {
 
-  static final String relaxngURIPrefix = "http://relaxng.org/ns/structure/";
-  static final String relaxng10URI = relaxngURIPrefix + "1.0";
-  static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
-  static final String xsdURI = "http://www.w3.org/2001/XMLSchema-datatypes";
+  static final String relaxngURIPrefix =
+          WellKnownNamespaces.RELAX_NG.substring(0, WellKnownNamespaces.RELAX_NG.lastIndexOf('/') + 1);
+  static final String relaxng10URI = WellKnownNamespaces.RELAX_NG;
   static final Localizer localizer = new Localizer(SchemaParser.class);
 
   String relaxngURI;
@@ -77,7 +77,7 @@ class SchemaParser {
     PrefixMapping prefixMapping;
 
     AbstractContext() {
-      prefixMapping = new PrefixMapping("xml", xmlURI, null);
+      prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
     }
 
     AbstractContext(AbstractContext context) {
@@ -240,7 +240,7 @@ class SchemaParser {
 	}
 	else if (uri.equals(relaxngURI))
 	  error("qualified_attribute", atts.getLocalName(i));
-	else if (uri.equals(xmlURI)
+	else if (uri.equals(WellKnownNamespaces.XML)
 		 && atts.getLocalName(i).equals("base"))
 	  xmlBaseHandler.xmlBaseAttribute(atts.getValue(i));
         else {
@@ -550,7 +550,7 @@ class SchemaParser {
     }
 
     void checkForeignElement() throws SAXException {
-      error("root_bad_namespace_uri", relaxng10URI);
+      error("root_bad_namespace_uri", WellKnownNamespaces.RELAX_NG);
     }
 
     void endChild(ParsedPattern pattern) {
@@ -560,9 +560,9 @@ class SchemaParser {
     boolean isRelaxNGElement(String uri) throws SAXException {
       if (!uri.startsWith(relaxngURIPrefix))
 	return false;
-      if (!uri.equals(relaxng10URI))
+      if (!uri.equals(WellKnownNamespaces.RELAX_NG))
 	warning("wrong_uri_version",
-		relaxng10URI.substring(relaxngURIPrefix.length()),
+		WellKnownNamespaces.RELAX_NG.substring(relaxngURIPrefix.length()),
 		uri.substring(relaxngURIPrefix.length()));
       relaxngURI = uri;
       return true;

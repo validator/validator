@@ -5,6 +5,8 @@ import org.relaxng.datatype.DatatypeLibraryFactory;
 
 import java.util.Hashtable;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
+
 class BuiltinDatatypeLibraryFactory implements DatatypeLibraryFactory {
   private final Hashtable cache = new Hashtable();
   private final DatatypeLibraryFactory factory;
@@ -15,7 +17,7 @@ class BuiltinDatatypeLibraryFactory implements DatatypeLibraryFactory {
 
   BuiltinDatatypeLibraryFactory(DatatypeLibraryFactory factory) {
     this.factory = factory;
-    cache.put(CompatibilityDatatypeLibrary.URI,
+    cache.put(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_DATATYPES,
               new CompatibilityDatatypeLibrary(this));
   }
 

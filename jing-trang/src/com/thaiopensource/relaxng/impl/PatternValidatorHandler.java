@@ -2,6 +2,7 @@ package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.relaxng.ValidatorHandler;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.relaxng.datatype.ValidationContext;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
@@ -21,9 +22,8 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
   private boolean complete;
   private boolean collectingCharacters;
   private StringBuffer charBuf = new StringBuffer();
-  private PrefixMapping prefixMapping = new PrefixMapping("xml", xmlURI, null);
+  private PrefixMapping prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
   private Locator locator;
-  private static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
 
   private static final class PrefixMapping {
     private final String prefix;
@@ -205,7 +205,7 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
     collectingCharacters = false;
     locator = null;
     memo = builder.getPatternMemo(start);
-    prefixMapping = new PrefixMapping("xml", xmlURI, null);
+    prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
     clearDtdContext();
   }
 

@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
+
 public class PatternDumper {
   private boolean startTagOpen = false;
   private Vector tagStack = new Vector();
@@ -23,7 +25,6 @@ public class PatternDumper {
   NameClassVisitor nameClassVisitor = new DumpNameClassVisitor();
   NameClassVisitor choiceNameClassVisitor = new ChoiceDumpNameClassVisitor();
   NameClassVisitor differenceNameClassVisitor = new DifferenceDumpNameClassVisitor();
-  private static final String relaxng10URI = "http://relaxng.org/ns/structure/1.0";
 
   static public void dump(PrintWriter writer, Pattern p) {
     new PatternDumper(writer).dump(p);
@@ -40,7 +41,7 @@ public class PatternDumper {
   void dump(Pattern p) {
     write("<?xml version=\"1.0\"?>");
     startElement("grammar");
-    attribute("xmlns", relaxng10URI);
+    attribute("xmlns", WellKnownNamespaces.RELAX_NG);
     startElement("start");
     p.accept(groupPatternVisitor);
     endElement();

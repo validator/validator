@@ -1,7 +1,8 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
+
 class AttributeNameClassChecker implements NameClassVisitor {
-  private static final String XMLNS_URI = "http://www.w3.org/2000/xmlns";
   private String errorMessageId = null;
   
   public void visitChoice(NameClass nc1, NameClass nc2) {
@@ -10,7 +11,7 @@ class AttributeNameClassChecker implements NameClassVisitor {
   }
 
   public void visitNsName(String ns) {
-    if (ns.equals(XMLNS_URI))
+    if (ns.equals(WellKnownNamespaces.XMLNS))
       errorMessageId = "xmlns_uri_attribute";
   }
 
