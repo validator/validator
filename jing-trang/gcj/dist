@@ -125,24 +125,8 @@ setup_prog() {
 
 cd ${prog_src_dir}
 
-cat <<EOF >Makefile.in
-SHELL=/bin/sh
-srcdir = @srcdir@
-VPATH = @srcdir@
-prefix = @prefix@
-exec_prefix = @exec_prefix@
+sed -e "s/@PROG@/${prog}/" -e "s/@MAIN@/${main}/" -e "s/@TEST_MAIN@/${test_main}/" ${top_dir}/gcj/vars.mk >Makefile.in
 
-bindir = @bindir@
-GCJ=@GCJ@
-GCJFLAGS=@GCJFLAGS@
-LDFLAGS=@LDFLAGS@
-INSTALL=@INSTALL@
-PROG=${prog}
-MAIN=${main}
-TEST_MAIN=${test_main}
-LIBS=
-
-EOF
 echo SOURCES=\\ >>Makefile.in
 find src -name '*.java' | sed -e 's;^;  $(srcdir)/;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
 
@@ -153,75 +137,10 @@ echo DIRS=src \\ >>Makefile.in
 
 find src/* -type d -not -name '*.java' -not -name '*.jj' | sed -e 's;^;  ;' -e 's/$/ \\/' -e '$s/ \\//' >>Makefile.in
 
-cat <<\EOF >>Makefile.in
-
-all: $(PROG) test_$(PROG)
-
-$(PROG): $(PROG).o $(RESOURCES)
-	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
-
-test_$(PROG): $(PROG).o $(RESOURCES)
-	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(TEST_MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
-
-$(PROG).o: $(SOURCES)
-	$(GCJ) $(GCJFLAGS) -c -o $@ $(SOURCES)
-
-.resource.o:
-	$(GCJ) $(GCJFLAGS) -c -o $@ --resource=`echo $@ | sed -e 's;src/;;' -e 's/.o$$//'` $<
-
-$(RESOURCES): dirstamp
-
-dirstamp:
-	for d in $(DIRS); do test -d $$d || mkdir $$d; done
-	@>$@
-
-check: test_$(PROG)
-	cd test; $(MAKE)
-
-install: $(PROG)
-	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir)
-	$(INSTALL) $(PROG) $(DESTDIR)$(bindir)/$(PROG)
-
-uninstall:
-	-rm -f $(DESTDIR)$(bindir)/$(PROG)
-
-clean:
-	-rm -f dirstamp $(PROG) $(PROG).o $(RESOURCES)
-	-rmdir `for d in $(DIRS); do echo $$d; done | sort -r`
-	cd test; $(MAKE) clean
-
-$(srcdir)/configure: configure.ac
-	cd $(srcdir) && autoconf
-     
-Makefile: Makefile.in config.status
-	./config.status
-     
-config.status: configure
-	./config.status --recheck
-
-distclean: clean
-	-rm -f config.status config.cache config.log
-
-.SUFFIXES: .resource
-.PHONY: all check distclean clean install uninstall
-EOF
-
+cat ${top_dir}/gcj/rules.mk >>Makefile.in
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
 
-echo "AC_INIT(${prog}, ${prog_version})" >configure.ac
-cat <<\EOF >>configure.ac
-AC_PROG_INSTALL
-AC_ARG_VAR([GCJ], [Java compiler command])
-AC_ARG_VAR([GCJFLAGS], [Java compiler flags])
-AC_ARG_VAR([LDFLAGS], [linker flags])
-if test -z "$GCJ"; then
-  AC_CHECK_TOOL(GCJ, gcj)
-fi
-test -z "$GCJ" && AC_MSG_ERROR([GCJ not found in \$PATH])
-test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
-AC_CONFIG_FILES([Makefile test/Makefile])
-AC_OUTPUT
-EOF
+sed -e "s/@PROG@/${prog}/" -e "s/@PROG_VERSION@/${prog_version}/" ${top_dir}/gcj/configure.ac >configure.ac
 
 cp -a ${top_dir}/gcj/install-sh .
 cp -a ${top_dir}/gcj/mkinstalldirs .
@@ -271,25 +190,7 @@ cp -a ${top_dir}/test/exslt.xsl .
 cp -a ${top_dir}/test/prep.xsl .
 cp -a ${top_dir}/test/spectest.xml .
 
-cat <<\EOF >Makefile.in
-srcdir=@srcdir@
-XSLTPROC=xsltproc
-
-check: split/stamp
-	../test_jing test.log split
-
-prepped.xml: $(srcdir)/spectest.xml $(srcdir)/prep.xsl
-	$(XSLTPROC) -o $@ --stringparam dir split $(srcdir)/prep.xsl $(srcdir)/spectest.xml 2>/dev/null
-
-split/stamp: prepped.xml   $(srcdir)/exslt.xsl
-	-mkdir split
-	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl prepped.xml 2>/dev/null`
-	$(XSLTPROC) $(srcdir)/exslt.xsl prepped.xml 2>/dev/null
-	@>$@
-
-clean:
-	-rm -fr split prepped.xml
-EOF
+cp -a ${top_dir}/gcj/test_jing.mk Makefile.in
 
 cd ${top_dir}
 prog=trang
@@ -307,49 +208,7 @@ cp -a ${top_dir}/trang/test/toxsdtest.xml .
 cp -a ${top_dir}/test/dir.xsl .
 cp -a ${top_dir}/test/exslt.xsl .
 cp -a ${top_dir}/trang/test/compactprep.xsl prep.xsl
-
-cat <<\EOF >Makefile.in
-srcdir=@srcdir@
-XSLTPROC=xsltproc
-FIXCR=sed -e "s/`echo x | tr x '\015'`/\\&\#xD;/g"
-
-check: compact-check xsd-check
-
-compact-check: compact-split/stamp
-	../test_trang xsd.log compact-split xml
-
-xsd-check: xsd-split/stamp
-	../test_trang compact.log xsd-split xsd
-
-compact-prepped.xml: $(srcdir)/compacttest.xml $(srcdir)/prep.xsl
-	$(XSLTPROC) --stringparam dir compact-split $(srcdir)/prep.xsl $(srcdir)/compacttest.xml | $(FIXCR) >$@
-
-compact-split/stamp: compact-prepped.xml $(srcdir)/exslt.xsl $(srcdir)/dir.xsl
-	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl compact-prepped.xml`
-	$(XSLTPROC) $(srcdir)/exslt.xsl compact-prepped.xml
-	@for f in compact-split/*/xml/c.rng; do \
-	  $(FIXCR) $$f >tem; mv tem $$f; \
-	done
-# Work around another bug in xsltproc
-	@f=`grep -l ' foo="val"' compact-split/*/xml/c.rng`; \
-	if [ -f "$$f" ] ; then \
-	  sed -e 's/ foo=/ rng:foo=/' $$f >tem; mv tem $$f; \
-	fi
-	@>$@
-
-xsd-prepped.xml: $(srcdir)/toxsdtest.xml $(srcdir)/prep.xsl
-	$(XSLTPROC) -o $@ --stringparam dir xsd-split $(srcdir)/prep.xsl $(srcdir)/toxsdtest.xml
-
-xsd-split/stamp: xsd-prepped.xml $(srcdir)/exslt.xsl $(srcdir)/dir.xsl
-	-mkdir `$(XSLTPROC) $(srcdir)/dir.xsl xsd-prepped.xml`
-	$(XSLTPROC) $(srcdir)/exslt.xsl xsd-prepped.xml
-	@>$@
-
-clean:
-	-rm -fr compact-split xsd-split compact-prepped.xml xsd-prepped.xml
-
-.PHONY: check xsd-check compact-check clean
-EOF
+cp -a ${top_dir}/gcj/test_trang.mk Makefile.in
 
 cd ${top_dir}
 cd ${jing_src_dir}/..
