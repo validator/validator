@@ -755,11 +755,6 @@ any = mixed { element * { attribute * { text }*, any }* }
 # containing documentation are "horiz.model" for simple
 # text fragments and "struct.model" for documents in extenso.
 
-# Declarations
-
-datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
-
-
 # Common attributes
 
 # All elements (except full-document elements) can have these attributes
@@ -870,53 +865,52 @@ head =		element head {
 </compact>
 <xml>
 <correct>
-<!--
-  	ibtwsh.dtd
-  	This is the Itsy Bitsy Teeny Weeny Simple Hypertext DTD.
-  	Its public identifier is -//XML-DEV List//DTD IBTWSH 6.0//EN
-  	The contents are dedicated to the public domain by
-  		the author, John Cowan <cowan@ccil.org>, except that
-  		John Cowan retains the moral right to be known as the author.
-  	This is draft 6.2
-  	Diff from 6.1: rel|rel now rel|rev, th|td@headers now IDREFS,
-  		table width no longer an integer, non-basic table attrs gone,
-  		rowspan and colspan must be non-negative
-  	Diff from 6.0: added attributes to ul, comment about img, new meta
--->
-<!--
-  This is a RELAX NG schema which describes a subset of XHTML Basic for
-  use within other schemas.  It is by intention equivalent
-  (within its scope) to -//W3C//DTD XHTML 1.1//EN, but is
-  not a derived work in the copyright sense.
--->
-<!--
-  It is often convenient for XML documents to have a bit of
-  documentation somewhere in them.  In the absence of a schema like
-  this one, that documentation winds up being <text/> only, which is
-  a pity, because rich text adds measurably to the readability of
-  documents.  By incorporating this schema by reference (as an
-  external parameter entity) into another schema, that schema inherits
-  the capabilities of this one.  Using HTML-compatible elements
-  and attributes allows the documentation to be passed straight
-  through to HTML renderers.
--->
-<!--
-  Current HTML renderers can cope with most XML tags, but empty
-  tags require special treatment.  Inserting a space before the
-  terminating "/>" usually makes the "/" (which is not HTML)
-  invisible.  Using "<tag></tag>" is not as effective, as the
-  latter is often misinterpreted as a second "<tag>".
--->
-<!--
-  Note that since the elements of this schema are intended to be
-  used within domain-specific elements of the surrounding DTD,
-  it is not necessary that every fragment begin with an "html"
-  element, as in HTML.  Recommended <define>s for elements
-  containing documentation are "horiz.model" for simple
-  text fragments and "struct.model" for documents in extenso.
--->
-<!-- Declarations -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    	ibtwsh.dtd
+    	This is the Itsy Bitsy Teeny Weeny Simple Hypertext DTD.
+    	Its public identifier is -//XML-DEV List//DTD IBTWSH 6.0//EN
+    	The contents are dedicated to the public domain by
+    		the author, John Cowan <cowan@ccil.org>, except that
+    		John Cowan retains the moral right to be known as the author.
+    	This is draft 6.2
+    	Diff from 6.1: rel|rel now rel|rev, th|td@headers now IDREFS,
+    		table width no longer an integer, non-basic table attrs gone,
+    		rowspan and colspan must be non-negative
+    	Diff from 6.0: added attributes to ul, comment about img, new meta
+  -->
+  <!--
+    This is a RELAX NG schema which describes a subset of XHTML Basic for
+    use within other schemas.  It is by intention equivalent
+    (within its scope) to -//W3C//DTD XHTML 1.1//EN, but is
+    not a derived work in the copyright sense.
+  -->
+  <!--
+    It is often convenient for XML documents to have a bit of
+    documentation somewhere in them.  In the absence of a schema like
+    this one, that documentation winds up being <text/> only, which is
+    a pity, because rich text adds measurably to the readability of
+    documents.  By incorporating this schema by reference (as an
+    external parameter entity) into another schema, that schema inherits
+    the capabilities of this one.  Using HTML-compatible elements
+    and attributes allows the documentation to be passed straight
+    through to HTML renderers.
+  -->
+  <!--
+    Current HTML renderers can cope with most XML tags, but empty
+    tags require special treatment.  Inserting a space before the
+    terminating "/>" usually makes the "/" (which is not HTML)
+    invisible.  Using "<tag></tag>" is not as effective, as the
+    latter is often misinterpreted as a second "<tag>".
+  -->
+  <!--
+    Note that since the elements of this schema are intended to be
+    used within domain-specific elements of the surrounding DTD,
+    it is not necessary that every fragment begin with an "html"
+    element, as in HTML.  Recommended <define>s for elements
+    containing documentation are "horiz.model" for simple
+    text fragments and "struct.model" for documents in extenso.
+  -->
   <!-- Common attributes -->
   <!-- All elements (except full-document elements) can have these attributes -->
   <define name="all">
