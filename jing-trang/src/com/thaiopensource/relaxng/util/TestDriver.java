@@ -11,8 +11,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
-import com.thaiopensource.relaxng.ValidationEngine;
 import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.util.OptionParser;
 
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
@@ -29,10 +29,33 @@ class TestDriver {
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
     eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
+    boolean checkId = false;
+    OptionParser op = new OptionParser("i", args);
+    try {
+      while (op.moveToNextOption()) {
+        switch (op.getOptionChar()) {
+        case 'i':
+          checkId = true;
+          break;
+        }
+      }
+    }
+    catch (OptionParser.InvalidOptionException e) {
+      eh.print(eh.format("invalid_option",
+                         new Object[]{ op.getOptionCharString() }));
+      return 2;
+    }
+    catch (OptionParser.MissingArgumentException e) {
+      eh.print(eh.format("option_missing_argument",
+                         new Object[]{ op.getOptionCharString() }));
+      return 2;
+    }
+    args = op.getRemainingArgs();
     engine = new ValidationEngine();
     engine.setXMLReaderCreator(Driver.createXMLReaderCreator());
     engine.setErrorHandler(eh);
     engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
+    engine.setCheckId(checkId);
     int result = 0;
     for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));

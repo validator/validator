@@ -7,8 +7,9 @@ import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.relaxng.datatype.helpers.StreamingValidatorImpl;
+import com.thaiopensource.datatype.Datatype2;
 
-abstract class DatatypeBase implements Datatype {
+abstract class DatatypeBase implements Datatype2 {
   abstract boolean lexicallyAllows(String str);
   private final int whiteSpace;
 
@@ -74,7 +75,7 @@ abstract class DatatypeBase implements Datatype {
     return null;
   }
 
-  static final String collapseWhiteSpace(String s) {
+  static private final String collapseWhiteSpace(String s) {
     StringBuffer buf = new StringBuffer();
     for (StringTokenizer e = new StringTokenizer(s); e.hasMoreElements();) {
       if (buf.length() > 0)
@@ -84,7 +85,7 @@ abstract class DatatypeBase implements Datatype {
     return buf.toString();
   }
 
-  static final String replaceWhiteSpace(String s) {
+  static private final String replaceWhiteSpace(String s) {
     int len = s.length();
     for (int i = 0; i < len; i++)
       switch (s.charAt(i)) {
@@ -112,6 +113,10 @@ abstract class DatatypeBase implements Datatype {
   }
 
   public boolean isContextDependent() {
+    return false;
+  }
+
+  public boolean alwaysValid() {
     return false;
   }
 

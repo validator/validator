@@ -1,0 +1,94 @@
+package com.thaiopensource.relaxng;
+
+import org.xml.sax.ContentHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.Attributes;
+import org.xml.sax.ErrorHandler;
+
+class CombineValidatorHandler implements ValidatorHandler {
+  private final ValidatorHandler vh1;
+  private final ValidatorHandler vh2;
+
+  CombineValidatorHandler(ValidatorHandler ch1, ValidatorHandler ch2) {
+    this.vh1 = ch1;
+    this.vh2 = ch2;
+  }
+
+  public void setDocumentLocator(Locator locator) {
+    vh1.setDocumentLocator(locator);
+    vh2.setDocumentLocator(locator);
+  }
+
+  public void startDocument() throws SAXException {
+    vh1.startDocument();
+    vh2.startDocument();
+  }
+
+  public void endDocument() throws SAXException {
+    vh1.endDocument();
+    vh2.endDocument();
+  }
+
+  public void startPrefixMapping(String s, String s1) throws SAXException {
+    vh1.startPrefixMapping(s, s1);
+    vh2.startPrefixMapping(s, s1);
+  }
+
+  public void endPrefixMapping(String s) throws SAXException {
+    vh1.endPrefixMapping(s);
+    vh2.endPrefixMapping(s);
+  }
+
+  public void startElement(String s, String s1, String s2, Attributes attributes) throws SAXException {
+    vh1.startElement(s, s1, s2, attributes);
+    vh2.startElement(s, s1, s2, attributes);
+  }
+
+  public void endElement(String s, String s1, String s2) throws SAXException {
+    vh1.endElement(s, s1, s2);
+    vh2.endElement(s, s1, s2);
+  }
+
+  public void characters(char[] chars, int i, int i1) throws SAXException {
+    vh1.characters(chars, i, i1);
+    vh2.characters(chars, i, i1);
+  }
+
+  public void ignorableWhitespace(char[] chars, int i, int i1) throws SAXException {
+    vh1.ignorableWhitespace(chars, i, i1);
+    vh2.ignorableWhitespace(chars, i, i1);
+  }
+
+  public void processingInstruction(String s, String s1) throws SAXException {
+    vh1.processingInstruction(s, s1);
+    vh2.processingInstruction(s, s1);
+  }
+
+  public void skippedEntity(String s) throws SAXException {
+    vh1.skippedEntity(s);
+    vh2.skippedEntity(s);
+  }
+
+  public void reset() {
+    vh1.reset();
+    vh2.reset();
+  }
+
+  public boolean isValid() {
+    return vh1.isValid() && vh2.isValid();
+  }
+
+  public boolean isComplete() {
+    return vh1.isComplete(); // vh2 should be the same
+  }
+
+  public void setErrorHandler(ErrorHandler eh) {
+    vh1.setErrorHandler(eh);
+    vh2.setErrorHandler(eh);
+  }
+
+  public ErrorHandler getErrorHandler() {
+    return vh1.getErrorHandler();
+  }
+}

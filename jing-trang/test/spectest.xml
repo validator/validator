@@ -6771,4 +6771,38 @@ before string sequence checking.</documentation>
 </testCase>
 </testSuite>
 </testSuite>
+<testSuite>
+<documentation>Regressions</documentation>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<start>
+  <element name="foo">
+    <choice>
+      <group>
+        <attribute name="bar"><empty/></attribute>
+        <element name="baz1"><empty/></element>
+      </group>
+      <group>
+        <attribute name="bar"><text/></attribute>
+        <element name="baz2"><empty/></element>
+      </group>
+    </choice>
+  </element>
+</start>
+</grammar>
+</correct>
+<valid>
+<foo bar=" "><baz1/></foo>
+</valid>
+</testCase>
+<testCase>
+<correct>
+<notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
+</correct>
+<invalid>
+<foo/>
+</invalid>
+</testCase>
+</testSuite>
 </testSuite>

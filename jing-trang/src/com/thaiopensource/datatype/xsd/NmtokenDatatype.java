@@ -14,4 +14,7 @@ class NmtokenDatatype extends TokenDatatype {
     // Surrogates are not possible in an NMTOKEN.
     return ((String)obj).length();
   }
+  public boolean alwaysValid() {
+    return false;
+  }
 }

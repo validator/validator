@@ -13,6 +13,10 @@ class TokenDatatype extends DatatypeBase implements Measure {
     return true;
   }
 
+  public boolean alwaysValid() {
+    return true;
+  }
+
   Object getValue(String str, ValidationContext vc) {
     return str;
   }

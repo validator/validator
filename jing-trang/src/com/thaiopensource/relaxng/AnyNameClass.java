@@ -2,8 +2,12 @@ package com.thaiopensource.relaxng;
 
 class AnyNameClass implements NameClass {
 
-  public boolean contains(String namespaceURI, String localName) {
+  public boolean contains(Name name) {
     return true;
+  }
+
+  public int containsSpecificity(Name name) {
+    return SPECIFICITY_ANY_NAME;
   }
 
   public boolean equals(Object obj) {

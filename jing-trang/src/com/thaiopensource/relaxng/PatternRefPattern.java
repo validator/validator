@@ -12,6 +12,7 @@ class PatternRefPattern extends Pattern {
   private boolean combineImplicit = false;
   private byte combineType = COMBINE_NONE;
   private byte replacementStatus = REPLACEMENT_KEEP;
+  private boolean expanded = false;
 
   static final byte REPLACEMENT_KEEP = 0;
   static final byte REPLACEMENT_REQUIRE = 1;
@@ -54,30 +55,12 @@ class PatternRefPattern extends Pattern {
 				  refLoc);
   }
 
-  Pattern expand(PatternBuilder b) {
-    return p.expand(b);
-  }
-
-  Pattern residual(PatternBuilder b, Atom a) {
-    return p.residual(b, a);
-  }
-
-  void initialContentPatterns(String namespaceURI, String localName, PatternSet ts) {
-    p.initialContentPatterns(namespaceURI, localName, ts);
-  }
-
-  Pattern combinedInitialContentPattern(PatternBuilder b,
-				  String namespaceURI,
-				  String localName,
-				  int recoveryLevel) {
-    return p.combinedInitialContentPattern(b,
-					namespaceURI,
-					localName,
-					recoveryLevel);
-  }
-
-  Pattern endAttributes(PatternBuilder b, boolean recovering) {
-    return p.endAttributes(b, recovering);
+  Pattern expand(SchemaPatternBuilder b) {
+    if (!expanded) {
+      p = p.expand(b);
+      expanded = true;
+    }
+    return p;
   }
 
   boolean samePattern(Pattern other) {
@@ -86,6 +69,10 @@ class PatternRefPattern extends Pattern {
 
   void accept(PatternVisitor visitor) {
     p.accept(visitor);
+  }
+
+  Object apply(PatternFunction f) {
+    return f.caseRef(this);
   }
 
   byte getReplacementStatus() {

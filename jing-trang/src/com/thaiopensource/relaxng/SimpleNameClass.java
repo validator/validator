@@ -2,41 +2,37 @@ package com.thaiopensource.relaxng;
 
 class SimpleNameClass implements NameClass {
 
-  private final String namespaceURI;
-  private final String localName;
+  private final Name name;
 
-  SimpleNameClass(String namespaceURI, String localName) {
-    this.namespaceURI = namespaceURI;
-    this.localName = localName;
+  SimpleNameClass(Name name) {
+    this.name = name;
   }
 
-  public boolean contains(String namespaceURI, String localName) {
-    return (this.localName.equals(localName)
-	    && this.namespaceURI.equals(namespaceURI));
+  public boolean contains(Name name) {
+    return this.name.equals(name);
+  }
+
+  public int containsSpecificity(Name name) {
+    return contains(name) ? SPECIFICITY_NAME : SPECIFICITY_NONE;
   }
 
   public int hashCode() {
-    return namespaceURI.hashCode() ^ localName.hashCode();
+    return name.hashCode();
   }
 
   public boolean equals(Object obj) {
     if (obj == null || !(obj instanceof SimpleNameClass))
       return false;
     SimpleNameClass other = (SimpleNameClass)obj;
-    return (namespaceURI.equals(other.namespaceURI)
-	    && localName.equals(other.localName));
+    return name.equals(other.name);
   }
 
-  String getNamespaceURI() {
-    return namespaceURI;
-  }
-
-  String getLocalName() {
-    return localName;
+  Name getName() {
+    return name;
   }
 
   public void accept(NameClassVisitor visitor) {
-    visitor.visitName(namespaceURI, localName);
+    visitor.visitName(name);
   }
 
   public boolean isOpen() {

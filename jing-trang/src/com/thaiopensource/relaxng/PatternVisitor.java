@@ -3,10 +3,10 @@ package com.thaiopensource.relaxng;
 import org.relaxng.datatype.Datatype;
 
 interface PatternVisitor {
-  void visitEmptySequence();
-  void visitEmptyChoice();
+  void visitEmpty();
+  void visitNotAllowed();
   void visitError();
-  void visitSequence(Pattern p1, Pattern p2);
+  void visitGroup(Pattern p1, Pattern p2);
   void visitInterleave(Pattern p1, Pattern p2);
   void visitChoice(Pattern p1, Pattern p2);
   void visitOneOrMore(Pattern p);

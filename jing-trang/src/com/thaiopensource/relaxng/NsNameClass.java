@@ -2,28 +2,32 @@ package com.thaiopensource.relaxng;
 
 class NsNameClass implements NameClass {
 
-  private final String namespaceURI;
+  private final String namespaceUri;
 
-  NsNameClass(String namespaceURI) {
-    this.namespaceURI = namespaceURI;
+  NsNameClass(String namespaceUri) {
+    this.namespaceUri = namespaceUri;
   }
 
-  public boolean contains(String namespaceURI, String localName) {
-    return this.namespaceURI.equals(namespaceURI);
+  public boolean contains(Name name) {
+    return this.namespaceUri.equals(name.getNamespaceUri());
+  }
+
+  public int containsSpecificity(Name name) {
+    return contains(name) ? SPECIFICITY_NS_NAME : SPECIFICITY_NONE;
   }
 
   public int hashCode() {
-    return namespaceURI.hashCode();
+    return namespaceUri.hashCode();
   }
 
   public boolean equals(Object obj) {
     if (obj == null || !(obj instanceof NsNameClass))
       return false;
-    return namespaceURI.equals(((NsNameClass)obj).namespaceURI);
+    return namespaceUri.equals(((NsNameClass)obj).namespaceUri);
   }
 
   public void accept(NameClassVisitor visitor) {
-    visitor.visitNsName(namespaceURI);
+    visitor.visitNsName(namespaceUri);
   }
 
   public boolean isOpen() {

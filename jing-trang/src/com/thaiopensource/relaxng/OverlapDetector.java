@@ -14,9 +14,8 @@ class OverlapDetector implements NameClassVisitor {
     nc2.accept(this);      
   }
 
-  private void probe(String namespaceURI, String localName) {
-    if (nc1.contains(namespaceURI, localName)
-	&& nc2.contains(namespaceURI, localName))
+  private void probe(Name name) {
+    if (nc1.contains(name) && nc2.contains(name))
       overlaps = true;
   }
 
@@ -26,25 +25,25 @@ class OverlapDetector implements NameClassVisitor {
   }
 
   public void visitNsName(String ns) {
-    probe(ns, IMPOSSIBLE);
+    probe(new Name(ns, IMPOSSIBLE));
   }
 
   public void visitNsNameExcept(String ns, NameClass ex) {
-    probe(ns, IMPOSSIBLE);
+    probe(new Name(ns, IMPOSSIBLE));
     ex.accept(this);
   }
 
   public void visitAnyName() {
-    probe(IMPOSSIBLE, IMPOSSIBLE);
+    probe(new Name(IMPOSSIBLE, IMPOSSIBLE));
   }
 
   public void visitAnyNameExcept(NameClass ex) {
-    probe(IMPOSSIBLE, IMPOSSIBLE);
+    probe(new Name(IMPOSSIBLE, IMPOSSIBLE));
     ex.accept(this);
   }
 
-  public void visitName(String ns, String localName) {
-    probe(ns, localName);
+  public void visitName(Name name) {
+    probe(name);
   }
 
   public void visitNull() {
@@ -56,11 +55,11 @@ class OverlapDetector implements NameClassVisitor {
   static boolean overlap(NameClass nc1, NameClass nc2) {
     if (nc2 instanceof SimpleNameClass) {
       SimpleNameClass snc = (SimpleNameClass)nc2;
-      return nc1.contains(snc.getNamespaceURI(), snc.getLocalName());
+      return nc1.contains(snc.getName());
     }
     if (nc1 instanceof SimpleNameClass) {
       SimpleNameClass snc = (SimpleNameClass)nc1;
-      return nc2.contains(snc.getNamespaceURI(), snc.getLocalName());
+      return nc2.contains(snc.getName());
     }
     return new OverlapDetector(nc1, nc2).overlaps;
   }

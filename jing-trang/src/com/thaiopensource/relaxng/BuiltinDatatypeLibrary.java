@@ -5,7 +5,7 @@ import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeBuilder;
 import org.relaxng.datatype.DatatypeException;
 
-public class BuiltinDatatypeLibrary implements DatatypeLibrary {
+class BuiltinDatatypeLibrary implements DatatypeLibrary {
   private final DatatypeBuilder tokenDatatypeBuilder
     = new BuiltinDatatypeBuilder(new TokenDatatype());
   private final DatatypeBuilder stringDatatypeBuilder

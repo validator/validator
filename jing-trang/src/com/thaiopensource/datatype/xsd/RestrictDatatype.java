@@ -37,4 +37,8 @@ class RestrictDatatype extends DatatypeBase {
   DatatypeBase getPrimitive() {
     return base.getPrimitive();
   }
+
+  public int getIdType() {
+    return base.getIdType();
+  }
 }

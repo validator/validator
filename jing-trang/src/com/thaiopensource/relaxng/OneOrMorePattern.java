@@ -14,51 +14,12 @@ class OneOrMorePattern extends Pattern {
     this.p = p;
   }
 
-  Pattern expand(PatternBuilder b) {
+  Pattern expand(SchemaPatternBuilder b) {
     Pattern ep = p.expand(b);
     if (ep != p)
       return b.makeOneOrMore(ep);
     else
       return this;
-  }
-
-  Pattern residual(PatternBuilder b, Atom a) {
-    Pattern tr = b.memoizedResidual(p, a);
-    if (tr.isEmptyChoice())
-      return tr;
-    return b.makeSequence(tr, b.makeZeroOrMore(p));
-  }
-
-  PatternPair unambigContentPattern(PatternBuilder b,
-			      String namespaceURI,
-			      String localName) {
-    PatternPair cp = b.memoizedUnambigContentPattern(p, namespaceURI, localName);
-    if (cp == null || cp.isEmpty())
-      return cp;
-    return new PatternPair(cp.getContentPattern(),
-			b.makeSequence(cp.getResidualPattern(),
-				       b.makeZeroOrMore(p)));
-  }
-
-  Pattern endAttributes(PatternBuilder b, boolean recovering) {
-    Pattern cp = b.memoizedEndAttributes(p, recovering);
-    if (cp == p)
-      return this;
-    return b.makeOneOrMore(p);
-  }
-
-  void initialContentPatterns(String namespaceURI, String localName, PatternSet ts) {
-    p.initialContentPatterns(namespaceURI, localName, ts);
-  }
-
-  Pattern combinedInitialContentPattern(PatternBuilder b,
-				  String namespaceURI,
-				  String localName,
-				  int recoveryLevel) {
-    return p.combinedInitialContentPattern(b,
-					namespaceURI,
-					localName,
-					recoveryLevel);
   }
 
   void checkRecursion(int depth) throws SAXException {
@@ -91,5 +52,13 @@ class OneOrMorePattern extends Pattern {
 
   void accept(PatternVisitor visitor) {
     visitor.visitOneOrMore(p);
+  }
+
+  Object apply(PatternFunction f) {
+    return f.caseOneOrMore(this);
+  }
+
+  Pattern getOperand() {
+    return p;
   }
 }

@@ -1,17 +1,17 @@
 package com.thaiopensource.relaxng;
 
-class EmptySequencePattern extends Pattern {
-  EmptySequencePattern() {
-    super(true, EMPTY_CONTENT_TYPE, EMPTY_SEQUENCE_HASH_CODE);
-  }
-  Pattern residual(PatternBuilder b, Atom a) {
-    return b.makeEmptyChoice();
+class EmptyPattern extends Pattern {
+  EmptyPattern() {
+    super(true, EMPTY_CONTENT_TYPE, EMPTY_HASH_CODE);
   }
   boolean samePattern(Pattern other) {
-    return other instanceof EmptySequencePattern;
+    return other instanceof EmptyPattern;
   }
   void accept(PatternVisitor visitor) {
-    visitor.visitEmptySequence();
+    visitor.visitEmpty();
+  }
+  Object apply(PatternFunction f) {
+    return f.caseEmpty(this);
   }
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {

@@ -20,14 +20,12 @@ class DataExceptPattern extends DataPattern {
     return except.samePattern(((DataExceptPattern)other).except);
   }
 
-  boolean matches(PatternBuilder b, Atom a) {
-    if (!super.matches(b, a))
-      return false;
-    return !except.residual(b, a).isNullable();
-  }
-
   void accept(PatternVisitor visitor) {
     visitor.visitDataExcept(getDatatype(), except);
+  }
+
+  Object apply(PatternFunction f) {
+    return f.caseDataExcept(this);
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
@@ -40,5 +38,9 @@ class DataExceptPattern extends DataPattern {
       e.maybeSetLocator(loc);
       throw e;
     }
+  }
+
+  Pattern getExcept() {
+    return except;
   }
 }

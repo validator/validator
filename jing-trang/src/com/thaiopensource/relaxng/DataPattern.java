@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng;
 
 import org.relaxng.datatype.Datatype;
+import com.thaiopensource.datatype.Datatype2;
 
 class DataPattern extends StringPattern {
   private Datatype dt;
@@ -8,10 +9,6 @@ class DataPattern extends StringPattern {
   DataPattern(Datatype dt) {
     super(combineHashCode(DATA_HASH_CODE, dt.hashCode()));
     this.dt = dt;
-  }
-
-  boolean matches(PatternBuilder b, Atom a) {
-    return a.matchesDatatype(dt);
   }
 
   boolean samePattern(Pattern other) {
@@ -24,8 +21,16 @@ class DataPattern extends StringPattern {
     visitor.visitData(dt);
   }
 
+  Object apply(PatternFunction f) {
+    return f.caseData(this);
+  }
+
   Datatype getDatatype() {
     return dt;
+  }
+
+  boolean allowsAnyString() {
+    return dt instanceof Datatype2 && ((Datatype2)dt).alwaysValid();
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)

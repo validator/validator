@@ -116,8 +116,8 @@
     <arg value="build/test/out.log"/>
     <arg value="build/test"/>
     <classpath>
-      <pathelement path="${java.class.path}"/>
       <pathelement location="build/jing.jar"/>
+      <pathelement path="${java.class.path}"/>
     </classpath>
   </java>
 </target>

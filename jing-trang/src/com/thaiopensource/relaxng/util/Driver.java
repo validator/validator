@@ -15,8 +15,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
 import org.xml.sax.ErrorHandler;
 
-import com.thaiopensource.relaxng.ValidationEngine;
 import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.util.OptionParser;
 
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
@@ -35,20 +35,50 @@ class Driver {
     System.exit(new Driver().doMain(args));
   }
 
+  private boolean checkId = true;
+  private boolean timing = false;
+
   public int doMain(String[] args) {
-    long startTime = System.currentTimeMillis();
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
+    OptionParser op = new OptionParser("it", args);
+    try {
+      while (op.moveToNextOption()) {
+        switch (op.getOptionChar()) {
+        case 'i':
+          checkId = false;
+          break;
+        case 't':
+          timing = true;
+          break;
+        }
+      }
+    }
+    catch (OptionParser.InvalidOptionException e) {
+      eh.print(eh.format("invalid_option",
+                         new Object[]{ op.getOptionCharString() }));
+      return 2;
+    }
+    catch (OptionParser.MissingArgumentException e) {
+      eh.print(eh.format("option_missing_argument",
+                         new Object[]{ op.getOptionCharString() }));
+      return 2;
+    }
+    args = op.getRemainingArgs();
     if (args.length < 1) {
       eh.print(eh.format(usageKey, new Object[]{ getVersion() }));
       return 2;
     }
+    long startTime = System.currentTimeMillis();
+    long loadedPatternTime = -1;
     boolean hadError = false;
     try {
       ValidationEngine engine = new ValidationEngine();
       engine.setXMLReaderCreator(createXMLReaderCreator());
       engine.setErrorHandler(eh);
       engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
+      engine.setCheckId(checkId);
       if (engine.loadPattern(fileInputSource(args[0]))) {
+        loadedPatternTime = System.currentTimeMillis();
 	for (int i = 1; i < args.length; i++) {
 	  if (!engine.validate(fileInputSource(args[i])))
 	    hadError = true;
@@ -65,9 +95,17 @@ class Driver {
       hadError = true;
       eh.printException(e);
     }
-    eh.print(eh.format("elapsed_time",
-		       new Object[] { new Long(System.currentTimeMillis()
-					       - startTime) }));
+    if (timing) {
+      long endTime = System.currentTimeMillis();
+      if (loadedPatternTime < 0)
+        loadedPatternTime = endTime;
+      eh.print(eh.format("elapsed_time",
+		       new Object[] {
+                         new Long(loadedPatternTime - startTime),
+                         new Long(endTime - loadedPatternTime),
+                         new Long(endTime - startTime)
+                       }));
+    }
     if (hadError)
       return 1;
     return 0;

@@ -12,10 +12,6 @@ class ValuePattern extends StringPattern {
     this.obj = obj;
   }
 
-  boolean matches(PatternBuilder b, Atom a) {
-    return a.matchesDatatypeValue(dt, obj);
-  }
-
   boolean samePattern(Pattern other) {
     if (getClass() != other.getClass())
       return false;
@@ -29,12 +25,24 @@ class ValuePattern extends StringPattern {
     visitor.visitValue(dt, obj);
   }
 
+  Object apply(PatternFunction f) {
+    return f.caseValue(this);
+  }
+
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     switch (context) {
     case START_CONTEXT:
       throw new RestrictionViolationException("start_contains_value");
     }
+  }
+
+  Datatype getDatatype() {
+    return dt;
+  }
+
+  Object getValue() {
+    return obj;
   }
 
 }

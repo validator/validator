@@ -25,7 +25,7 @@ import org.relaxng.datatype.DatatypeException;
 
 import com.thaiopensource.util.Uri;
 
-public class PatternReader implements ValidationContext {
+class PatternReader {
 
   static final String relaxngURIPrefix = "http://relaxng.org/ns/structure/";
   static final String relaxng10URI = relaxngURIPrefix + "1.0";
@@ -35,7 +35,7 @@ public class PatternReader implements ValidationContext {
   String relaxngURI;
   XMLReader xr;
   XMLReaderCreator xrc;
-  PatternBuilder patternBuilder;
+  SchemaPatternBuilder patternBuilder;
   DatatypeLibraryFactory datatypeLibraryFactory;
   Pattern startPattern;
   Locator locator;
@@ -71,7 +71,7 @@ public class PatternReader implements ValidationContext {
     }
   }
 
-  abstract class State implements ContentHandler {
+  abstract class State implements ContentHandler, ValidationContext {
     State parent;
     String nsInherit;
     String ns;
@@ -218,6 +218,31 @@ public class PatternReader implements ValidationContext {
       prefixMapping = prefixMapping.next;
     }
 
+    public String resolveNamespacePrefix(String prefix) {
+      if (prefix.equals(""))
+        return ns == null ? nsInherit : ns;
+      for (PrefixMapping p = prefixMapping; p != null; p = p.next)
+        if (p.prefix.equals(prefix))
+          return p.uri;
+      return null;
+    }
+
+    public String getBaseUri() {
+      return xmlBaseHandler.getBaseUri();
+    }
+
+    public boolean isUnparsedEntity(String name) {
+      return false;
+    }
+
+    public boolean isNotation(String name) {
+      return false;
+    }
+
+    boolean isPatternNamespaceURI(String s) {
+      return s.equals(relaxngURI);
+    }
+
   }
 
   class Skipper extends DefaultHandler {
@@ -271,7 +296,7 @@ public class PatternReader implements ValidationContext {
     }
 
     Pattern combinePattern(Pattern p1, Pattern p2) {
-      return patternBuilder.makeSequence(p1, p2);
+      return patternBuilder.makeGroup(p1, p2);
     }
 
     Pattern wrapPattern(Pattern p) throws SAXException {
@@ -450,7 +475,7 @@ public class PatternReader implements ValidationContext {
     }
 
     Pattern makePattern() {
-      return patternBuilder.makeNotAllowed();
+      return patternBuilder.makeUnexpandedNotAllowed();
     }
   }
 
@@ -460,7 +485,7 @@ public class PatternReader implements ValidationContext {
     }
 
     Pattern makePattern() {
-      return patternBuilder.makeEmptySequence();
+      return patternBuilder.makeEmpty();
     }
   }
 
@@ -505,7 +530,7 @@ public class PatternReader implements ValidationContext {
 	dtb = getDatatypeBuilder(datatypeLibrary, type);
       try {
 	Datatype dt = dtb.createDatatype();
-	Object value = dt.createValue(buf.toString(), PatternReader.this);
+	Object value = dt.createValue(buf.toString(), this);
 	if (value != null)
 	  return patternBuilder.makeValue(dt, value);
 	error("invalid_value", buf.toString());
@@ -632,7 +657,7 @@ public class PatternReader implements ValidationContext {
       if (name == null)
 	return;
       try {
-	dtb.addParameter(name, buf.toString(), PatternReader.this);
+	dtb.addParameter(name, buf.toString(), this);
       }
       catch (DatatypeException e) {
 	String detail = e.getMessage();
@@ -820,7 +845,7 @@ public class PatternReader implements ValidationContext {
 
     void end() throws SAXException {
       // need a non-null pattern to avoid error
-      parent.endChild(patternBuilder.makeEmptySequence());
+      parent.endChild(patternBuilder.makeEmpty());
     }
   }
 
@@ -1410,7 +1435,7 @@ public class PatternReader implements ValidationContext {
 
   public PatternReader(XMLReaderCreator xrc,
 		       XMLReader xr,
-		       PatternBuilder patternBuilder,
+		       SchemaPatternBuilder patternBuilder,
 		       DatatypeLibraryFactory factory) {
     this.xrc = xrc;
     this.patternBuilder = patternBuilder;
@@ -1446,14 +1471,14 @@ public class PatternReader implements ValidationContext {
   SimpleNameClass expandName(String name, String ns) throws SAXException {
     int ic = name.indexOf(':');
     if (ic == -1)
-      return new SimpleNameClass(ns, checkNCName(name));
+      return new SimpleNameClass(new Name(ns, checkNCName(name)));
     String prefix = checkNCName(name.substring(0, ic));
     String localName = checkNCName(name.substring(ic + 1));
     for (PrefixMapping tem = prefixMapping; tem != null; tem = tem.next)
       if (tem.prefix.equals(prefix))
-	return new SimpleNameClass(tem.uri, localName);
+	return new SimpleNameClass(new Name(tem.uri, localName));
     error("undefined_prefix", prefix);
-    return new SimpleNameClass("", localName);
+    return new SimpleNameClass(new Name("", localName));
   }
 
   String checkNCName(String str) throws SAXException {
@@ -1490,7 +1515,7 @@ public class PatternReader implements ValidationContext {
 
   public static Pattern readPattern(XMLReaderCreator xrc,
 				    XMLReader xr,
-				    PatternBuilder patternBuilder,
+				    SchemaPatternBuilder patternBuilder,
 				    DatatypeLibraryFactory datatypeLibraryFactory,
 				    InputSource in) throws SAXException, IOException {
     PatternReader pr = new PatternReader(xrc, xr, patternBuilder, datatypeLibraryFactory);
@@ -1510,25 +1535,6 @@ public class PatternReader implements ValidationContext {
 					 ns);
     xr.parse(in);
     return pr.getStartPattern();
-  }
-
-  public String resolveNamespacePrefix(String prefix) {
-    for (PrefixMapping p = prefixMapping; p != null; p = p.next)
-      if (p.prefix.equals(prefix))
-	return p.uri;
-    return null;
-  }
-
-  public String getBaseUri() {
-    return xmlBaseHandler.getBaseUri();
-  }
-
-  public boolean isUnparsedEntity(String name) {
-    return false;
-  }
-
-  public boolean isNotation(String name) {
-    return false;
   }
 
   DatatypeBuilder getDatatypeBuilder(String datatypeLibrary, String type) throws SAXException {

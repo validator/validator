@@ -25,9 +25,9 @@ class AttributeNameClassChecker implements NameClassVisitor {
     nc.accept(this);
   }
 
-  public void visitName(String ns, String localName) {
-    visitNsName(ns);
-    if (ns.equals("") && localName.equals("xmlns"))
+  public void visitName(Name name) {
+    visitNsName(name.getNamespaceUri());
+    if (name.equals(new Name("", "xmlns")))
       errorMessageId = "xmlns_attribute";
   }
 

@@ -15,6 +15,8 @@ class BuiltinDatatypeLibraryFactory implements DatatypeLibraryFactory {
 
   BuiltinDatatypeLibraryFactory(DatatypeLibraryFactory factory) {
     this.factory = factory;
+    cache.put(CompatibilityDatatypeLibrary.URI,
+              new CompatibilityDatatypeLibrary(this));
   }
 
   public DatatypeLibrary createDatatypeLibrary(String uri) {

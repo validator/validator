@@ -6,6 +6,7 @@ import org.xml.sax.Locator;
 abstract class BinaryPattern extends Pattern {
   Pattern p1;
   Pattern p2;
+
   BinaryPattern(boolean nullable, int hc, Pattern p1, Pattern p2) {
     super(nullable, Math.max(p1.getContentType(), p2.getContentType()), hc);
     this.p1 = p1;
@@ -30,4 +31,11 @@ abstract class BinaryPattern extends Pattern {
     return p1 == b.p1 && p2 == b.p2;
   }
 
+  Pattern getOperand1() {
+    return p1;
+  }
+
+  Pattern getOperand2() {
+    return p2;
+  }
 }

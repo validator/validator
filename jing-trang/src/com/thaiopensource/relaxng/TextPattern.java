@@ -9,19 +9,16 @@ class TextPattern extends Pattern {
     super(true, MIXED_CONTENT_TYPE, TEXT_HASH_CODE);
   }
 
-  Pattern residual(PatternBuilder b, Atom a) {
-    if (a.matchesString())
-      return this;
-    else
-      return b.makeEmptyChoice();
-  }
-
   boolean samePattern(Pattern other) {
     return other instanceof TextPattern;
   }
 
   void accept(PatternVisitor visitor) {
     visitor.visitText();
+  }
+
+  Object apply(PatternFunction f) {
+    return f.caseText(this);
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)

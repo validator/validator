@@ -18,7 +18,7 @@ class ListPattern extends Pattern {
     this.locator = locator;
   }
 
-  Pattern expand(PatternBuilder b) {
+  Pattern expand(SchemaPatternBuilder b) {
     Pattern ep = p.expand(b);
     if (ep != p)
       return b.makeList(ep, locator);
@@ -39,11 +39,8 @@ class ListPattern extends Pattern {
     visitor.visitList(p);
   }
 
-  Pattern residual(PatternBuilder b, Atom a) {
-    if (a.matchesList(b, p))
-      return b.makeEmptySequence();
-    else
-      return b.makeEmptyChoice();
+  Object apply(PatternFunction f) {
+    return f.caseList(this);
   }
 
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
@@ -63,5 +60,9 @@ class ListPattern extends Pattern {
       e.maybeSetLocator(locator);
       throw e;
     }
+  }
+  
+  Pattern getOperand() {
+    return p;
   }
 }

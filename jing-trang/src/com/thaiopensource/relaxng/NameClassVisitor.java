@@ -6,7 +6,7 @@ interface NameClassVisitor {
   void visitNsNameExcept(String ns, NameClass nc);
   void visitAnyName();
   void visitAnyNameExcept(NameClass nc);
-  void visitName(String ns, String localName);
+  void visitName(Name name);
   void visitNull();
   void visitError();
 }

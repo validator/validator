@@ -8,8 +8,12 @@ class AnyNameExceptNameClass implements NameClass {
     this.nameClass = nameClass;
   }
 
-  public boolean contains(String namespaceURI, String localName) {
-    return !nameClass.contains(namespaceURI, localName);
+  public boolean contains(Name name) {
+    return !nameClass.contains(name);
+  }
+
+  public int containsSpecificity(Name name) {
+    return contains(name) ? SPECIFICITY_ANY_NAME : SPECIFICITY_NONE;
   }
 
   public boolean equals(Object obj) {

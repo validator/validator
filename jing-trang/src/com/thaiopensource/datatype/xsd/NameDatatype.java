@@ -16,4 +16,8 @@ class NameDatatype extends TokenDatatype {
     // Surrogates are not possible in an Name.
     return ((String)obj).length();
   }
+
+  public boolean alwaysValid() {
+    return false;
+  }
 }

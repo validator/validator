@@ -5,8 +5,9 @@ import org.relaxng.datatype.ValidationContext;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.relaxng.datatype.helpers.StreamingValidatorImpl;
+import com.thaiopensource.datatype.Datatype2;
 
-class StringDatatype implements Datatype {
+class StringDatatype implements Datatype2 {
   public boolean isValid(String str, ValidationContext vc) {
     return true;
   }
@@ -22,6 +23,10 @@ class StringDatatype implements Datatype {
 
   public boolean isContextDependent() {
     return false;
+  }
+
+  public boolean alwaysValid() {
+    return true;
   }
 
   public int getIdType() {

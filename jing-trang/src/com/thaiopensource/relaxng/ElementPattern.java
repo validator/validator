@@ -23,42 +23,6 @@ class ElementPattern extends Pattern {
     this.loc = loc;
   }
 
-  Pattern residual(PatternBuilder b, Atom a) {
-    if (a.matchesElement(nameClass, p))
-      return b.makeEmptySequence();
-    else
-      return b.makeEmptyChoice();
-  }
-
-  void initialContentPatterns(String namespaceURI,
-			   String localName,
-			   PatternSet ts) {
-    if (nameClass.contains(namespaceURI, localName))
-      ts.add(p);
-  }
-
-  Pattern combinedInitialContentPattern(PatternBuilder b,
-				  String namespaceURI,
-				  String localName,
-                                  int recoveryLevel) {
-    if (nameClass.contains(namespaceURI, localName))
-      return p;
-    if (recoveryLevel > 1)
-      return p.combinedInitialContentPattern(b,
-					  namespaceURI,
-					  localName,
-					  recoveryLevel - 1);
-    return b.makeEmptyChoice();
-  }
-
-  PatternPair unambigContentPattern(PatternBuilder b,
-			      String namespaceURI,
-			      String localName) {
-    if (nameClass.contains(namespaceURI, localName))
-      return new PatternPair(p, b.makeEmptySequence());
-    return b.makeEmptyPatternPair();
-  }
-
   void checkRestrictions(int context, DuplicateAttributeDetector dad, Alphabet alpha)
     throws RestrictionViolationException {
     if (alpha != null)
@@ -84,11 +48,11 @@ class ElementPattern extends Pattern {
     }
   }
 
-  Pattern expand(PatternBuilder b) {
+  Pattern expand(SchemaPatternBuilder b) {
     if (!expanded) {
       expanded = true;
       p = p.expand(b);
-      if (p.isEmptyChoice())
+      if (p.isNotAllowed())
 	nameClass = new NullNameClass();
     }
     return this;
@@ -107,5 +71,21 @@ class ElementPattern extends Pattern {
 
   void accept(PatternVisitor visitor) {
     visitor.visitElement(nameClass, p);
+  }
+
+  Object apply(PatternFunction f) {
+    return f.caseElement(this);
+  }
+
+  Pattern getContent() {
+    return p;
+  }
+
+  NameClass getNameClass() {
+    return nameClass;
+  }
+
+  Locator getLocator() {
+    return loc;
   }
 }

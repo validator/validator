@@ -5,4 +5,8 @@ class LanguageDatatype extends TokenDatatype {
     // TODO
     return true;
   }
+
+  public boolean alwaysValid() {
+    return false;
+  }
 }
