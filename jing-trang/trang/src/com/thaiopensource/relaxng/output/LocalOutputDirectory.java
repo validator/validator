@@ -31,9 +31,9 @@ public class LocalOutputDirectory implements OutputDirectory {
     this.lineSeparator = System.getProperty("line.separator");
     this.lineLength = lineLength;
     this.uriMap.put(mainSourceUri, mainOutputFile.getName());
-    int off = mainSourceUri.lastIndexOf('/') + 1;
-    off = mainSourceUri.lastIndexOf('.', off);
-    this.mainInputExtension = off < 0 ? "" : mainSourceUri.substring(off);
+    int slashOff = mainSourceUri.lastIndexOf('/');
+    int dotOff = mainSourceUri.lastIndexOf('.');
+    this.mainInputExtension = dotOff > 0 && dotOff > slashOff ? mainSourceUri.substring(dotOff) : "";
   }
 
   public void setEncoding(String encoding) {
