@@ -5,7 +5,6 @@ import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.Combine;
 import com.thaiopensource.relaxng.edit.Component;
-import com.thaiopensource.relaxng.edit.Container;
 import com.thaiopensource.relaxng.edit.DataPattern;
 import com.thaiopensource.relaxng.edit.DefineComponent;
 import com.thaiopensource.relaxng.edit.ElementPattern;
