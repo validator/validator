@@ -185,7 +185,7 @@ public class BasicOutput {
       if (!occ.equals(Occurs.ZERO_OR_MORE)) {
         xw.endElement();
         if (occ.getMin() == occ.getMax()) {
-          xw.startElement("length");
+          xw.startElement(xs("length"));
           xw.attribute("value", Integer.toString(occ.getMin()));
           xw.endElement();
         }
