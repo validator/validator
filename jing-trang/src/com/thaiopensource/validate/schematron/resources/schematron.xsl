@@ -10,15 +10,18 @@
 <!--
 TODO:
 diagnostic
-defaultPhase
 key
 -->
 
-<xsl:param name="phase" select="'#ALL'"/>
+<xsl:param name="phase" select="'#DEFAULT'"/>
 
 <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
 <xsl:output indent="yes"/>
+
+<xsl:key name="phase"
+         match="/sch:schema/sch:phase[@id]"
+         use="normalize-space(@id)"/>
 
 <xsl:key name="rule"
          match="/sch:schema/sch:pattern/sch:rule[@id]"
@@ -44,18 +47,20 @@ key
       </result>
     </axsl:template>
     <xsl:choose>
-      <xsl:when test="$phase='#ALL'">
-        <xsl:call-template name="process-patterns">
-          <xsl:with-param name="patterns" select="sch:pattern"/>
+      <xsl:when test="normalize-space($phase)='#DEFAULT' and @defaultPhase">
+        <xsl:call-template name="process-phase">
+          <xsl:with-param name="$p" select="normalize-space(@defaultPhase)"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="normalize-space($phase)='#DEFAULT'">
+        <xsl:call-template name="process-phase">
+          <xsl:with-param name="$p" select="'#ALL'"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:for-each select="*/sch:phase[normalize-space(@id)=normalize-space($phase)]/sch:active">
-	  <xsl:variable name="id" select="normalize-space(current()/@pattern)"/>
-          <xsl:call-template name="process-patterns">
-  	    <xsl:with-param name="patterns" select="/*/sch:pattern[normalize-space(@id)=$id]"/>
-          </xsl:call-template>
-	</xsl:for-each>
+        <xsl:call-template name="process-phase">
+          <xsl:with-param name="$p" select="normalize-space($phase)"/>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
     <axsl:template match="*|/" mode="all">
@@ -63,6 +68,25 @@ key
     </axsl:template>
     <xsl:call-template name="define-location"/>
   </axsl:stylesheet>
+</xsl:template>
+
+<xsl:template name="process-phase">
+  <xsl:param name="p"/>
+  <xsl:choose>
+    <xsl:when test="$p='#ALL'">
+      <xsl:call-template name="process-patterns">
+	<xsl:with-param name="patterns" select="sch:pattern"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:variable name="$active-patterns" select="key('phase',$p)/sch:active/@id"/>
+      <xsl:call-template name="process-patterns">
+        <xsl:with-param name="patterns" select="
+              sch:pattern[@id and $active-patterns[normalize-space(.)
+                                                   =normalize-space(current()/@id)]]"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="process-patterns">
@@ -252,6 +276,14 @@ key
 </xsl:template>
 
 <xsl:template match="sch:schema" mode="check">
+  <xsl:if test="@defaultPhase and not(key('phase',normalize-space(@defaultPhase)))">
+    <err:error message="default_phase_missing" arg="{normalize-space(@defaultPhase)}">
+      <xsl:call-template name="location"/>
+    </err:error>
+  </xsl:if>
+  <xsl:if test="normalize-space($phase) != '#ALL'" and not(key('phase',normalize-space($phase)))">
+    <err:error message="phase_missing" arg="{normalize-space($phase)}"/>
+  </xsl:if>
   <xsl:apply-templates select="sch:phase/sch:active|sch:pattern/sch:rule/sch:*" mode="check"/>
 </xsl:template>
 
