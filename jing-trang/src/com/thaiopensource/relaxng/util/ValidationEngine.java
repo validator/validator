@@ -13,27 +13,32 @@ import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.xml.sax.Sax2XMLReaderCreator;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
-import com.thaiopensource.relaxng.SchemaFactory;
 import com.thaiopensource.validate.ValidatorHandler;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.validate.rng.RngProperty;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.SinglePropertyMap;
+import com.thaiopensource.util.PropertyMapBuilder;
 
 /**
  * Provides a simplified API for validating XML documents against RELAX NG schemas.
  * This class is neither reentrant nor safe for access from multiple threads.
  *
- * @see SchemaFactory
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public class ValidationEngine {
   private final XMLReaderCreator xrc;
   private XMLReader xr;
   private final ErrorHandler eh;
-  private final SchemaFactory factory;
+  private final SchemaReader sr;
+  private final PropertyMap schemaProperties;
+  private final PropertyMap instanceProperties;
   private ValidatorHandler vh;
   private Schema schema;
 
@@ -73,19 +78,28 @@ public class ValidationEngine {
   public ValidationEngine(XMLReaderCreator xrc,
                           ErrorHandler eh,
                           int flags) {
+    PropertyMapBuilder builder = new PropertyMapBuilder();
     if (xrc == null)
       xrc = new Sax2XMLReaderCreator();
+    ValidateProperty.XML_READER_CREATOR.put(builder, xrc);
+    this.xrc = xrc;
     if (eh == null)
       eh = new DraconianErrorHandler();
-    factory = new SchemaFactory();
-    factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
-    this.xrc = xrc;
-    factory.setXMLReaderCreator(xrc);
+    instanceProperties = new SinglePropertyMap(ValidateProperty.ERROR_HANDLER,
+                                               eh);
+    ValidateProperty.ERROR_HANDLER.put(builder, eh);
     this.eh = eh;
-    factory.setErrorHandler(eh);
-    factory.setCheckIdIdref((flags & CHECK_ID_IDREF) != 0);
-    factory.setCompactSyntax((flags & COMPACT_SYNTAX) != 0);
-    factory.setFeasible((flags & FEASIBLE) != 0);
+    RngProperty.DATATYPE_LIBRARY_FACTORY.put(builder,
+                                             new DatatypeLibraryLoader());
+    if ((flags & CHECK_ID_IDREF) != 0)
+      RngProperty.CHECK_ID_IDREF.add(builder);
+    if ((flags & FEASIBLE) != 0)
+      RngProperty.FEASIBLE.add(builder);
+    schemaProperties = builder.toPropertyMap();
+    if ((flags & COMPACT_SYNTAX) != 0)
+      sr = CompactSchemaReader.getInstance();
+    else
+      sr = new AutoSchemaReader();
   }
 
   /**
@@ -152,7 +166,7 @@ public class ValidationEngine {
    */
   public boolean loadSchema(InputSource in) throws SAXException, IOException {
     try {
-      schema = factory.createSchema(in);
+      schema = sr.createSchema(in, schemaProperties);
       vh = null;
       return true;
     }
@@ -174,15 +188,8 @@ public class ValidationEngine {
   public boolean validate(InputSource in) throws SAXException, IOException {
     if (schema == null)
       throw new IllegalStateException("cannot validate without schema");
-    if (vh == null) {
-      PropertyMap properties;
-      if (eh == null)
-        properties = PropertyMap.EMPTY;
-      else
-        properties = new SinglePropertyMap(ValidateProperty.ERROR_HANDLER,
-                                           eh);
-      vh = schema.createValidator(properties);
-    }
+    if (vh == null)
+     vh = schema.createValidator(instanceProperties);
     else
       vh.reset();
     if (xr == null) {
