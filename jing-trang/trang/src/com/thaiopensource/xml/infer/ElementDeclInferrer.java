@@ -67,6 +67,7 @@ class ElementDeclInferrer {
         // Previously had all elements contained only white space.
         // Equivalent to an empty content model.
         contentModelInferrer.endSequence();
+        valueInferrer = null;
       }
       else
         useMixedContent();
