@@ -109,8 +109,11 @@ public class PatternReader implements ValidationContext {
 	state.set();
 	state.attributes(atts);
       }
-      else
+      else {
+	if (!allowForeignElements())
+	  error("foreign_element_char_content");
 	xr.setContentHandler(new Skipper(this));
+      }
     }
 
     public void endElement(String namespaceURI,
@@ -129,6 +132,10 @@ public class PatternReader implements ValidationContext {
     }
 
     void endAttributes() throws SAXException {
+    }
+
+    boolean allowForeignElements() {
+      return true;
     }
 
     void attributes(Attributes atts) throws SAXException {
@@ -451,6 +458,10 @@ public class PatternReader implements ValidationContext {
       buf.append(ch, start, len);
     }
 
+    boolean allowForeignElements() {
+      return false;
+    }
+
     Pattern makePattern() throws SAXException {
       DatatypeBuilder dtb;
       if (type == null)
@@ -576,6 +587,10 @@ public class PatternReader implements ValidationContext {
 
     public void characters(char[] ch, int start, int len) {
       buf.append(ch, start, len);
+    }
+
+    boolean allowForeignElements() {
+      return false;
     }
     
     void end() throws SAXException {
@@ -1089,6 +1104,10 @@ public class PatternReader implements ValidationContext {
 
     public void characters(char[] ch, int start, int len) {
       buf.append(ch, start, len);
+    }
+
+    boolean allowForeignElements() {
+      return false;
     }
 
     NameClass makeNameClass() throws SAXException {
