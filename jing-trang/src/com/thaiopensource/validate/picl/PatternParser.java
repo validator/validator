@@ -268,6 +268,9 @@ class PatternParser {
       "",
       ".//.",
       ".//",
+      "foo / @ bar",
+      "child::foo:bar",
+      "attribute::baz"
     };
     NamespaceContext nsc = new NamespaceContext() {
       String getNamespaceUri(String prefix) {
