@@ -9,4 +9,7 @@ public abstract class Datatype {
 
   public abstract int getType();
   public abstract void accept(DatatypeVisitor visitor) throws Exception;
+  public Datatype deref() {
+    return this;
+  }
 }

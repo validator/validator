@@ -25,4 +25,8 @@ public class DatatypeRef extends Datatype {
   public void accept(DatatypeVisitor visitor) throws Exception {
     visitor.datatypeRef(name, datatype);
   }
+
+  public Datatype deref() {
+    return datatype.deref();
+  }
 }
