@@ -1,4 +1,4 @@
-Auto-detect compact/XML syntax/MNS.
+Auto-detect compact/XML syntax.
 
 Compact syntax parser should provide encoding information.
 
