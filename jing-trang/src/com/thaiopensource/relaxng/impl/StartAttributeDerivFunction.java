@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 class StartAttributeDerivFunction extends StartTagOpenDerivFunction {
   StartAttributeDerivFunction(Name name, ValidatorPatternBuilder builder) {
     super(name, builder);

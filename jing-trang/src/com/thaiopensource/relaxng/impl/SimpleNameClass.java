@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 
 class SimpleNameClass implements NameClass {
 

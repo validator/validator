@@ -17,7 +17,7 @@ import com.thaiopensource.relaxng.output.dtd.DtdOutputFormat;
 import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
 import com.thaiopensource.relaxng.output.rng.RngOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
-import com.thaiopensource.relaxng.util.ErrorHandlerImpl;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.OptionParser;
 import com.thaiopensource.util.UriOrFile;

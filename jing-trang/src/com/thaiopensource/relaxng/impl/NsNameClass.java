@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 class NsNameClass implements NameClass {
 
   private final String namespaceUri;

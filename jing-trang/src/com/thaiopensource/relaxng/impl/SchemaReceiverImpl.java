@@ -1,12 +1,15 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.relaxng.IncorrectSchemaException;
-import com.thaiopensource.relaxng.auto.SchemaReceiver;
-import com.thaiopensource.relaxng.Schema;
-import com.thaiopensource.relaxng.SchemaOptions;
-import com.thaiopensource.relaxng.auto.SchemaFuture;
+import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.validate.auto.SchemaReceiver;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.rng.RngProperty;
+import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
+import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.BuildException;
+import com.thaiopensource.util.PropertyMap;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -16,24 +19,22 @@ import java.io.IOException;
 
 public class SchemaReceiverImpl implements SchemaReceiver {
   private final ParseReceiver parser;
-  private final ErrorHandler eh;
-  private final DatatypeLibraryFactory dlf;
-  private final SchemaOptions options;
+  private final PropertyMap properties;
 
-  public SchemaReceiverImpl(ParseReceiver parser, ErrorHandler eh, SchemaOptions options, DatatypeLibraryFactory dlf) {
+  public SchemaReceiverImpl(ParseReceiver parser, PropertyMap properties) {
     this.parser = parser;
-    this.eh = eh;
-    this.options = options;
-    this.dlf = dlf;
+    this.properties = properties;
   }
 
   public SchemaFuture installHandlers(XMLReader xr) throws SAXException {
     final SchemaPatternBuilder pb = new SchemaPatternBuilder();
+    final ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
+    final DatatypeLibraryFactory dlf = RngProperty.DATATYPE_LIBRARY_FACTORY.get(properties);
     final PatternFuture pf = SchemaBuilderImpl.installHandlers(parser, xr, eh, dlf, pb);
     return new SchemaFuture() {
       public Schema getSchema() throws IncorrectSchemaException, SAXException, IOException {
-        return SchemaLanguageImpl.wrapPattern(pf.getPattern(options.contains(SchemaOptions.ATTRIBUTES)),
-                                              pb, eh, options);
+        return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(NrlSchemaReceiverFactory.ATTRIBUTE_SCHEMA)),
+                                              pb, properties);
       }
       public RuntimeException unwrapException(RuntimeException e) throws SAXException, IOException, IncorrectSchemaException {
         if (e instanceof BuildException)

@@ -1,8 +1,8 @@
 package com.thaiopensource.xml.infer;
 
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.output.common.Name;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.util.UriOrFile;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;

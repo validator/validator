@@ -1,6 +1,15 @@
 package com.thaiopensource.relaxng;
 
-import com.thaiopensource.relaxng.auto.AutoSchemaLanguage;
+import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.Flag;
+import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
+import com.thaiopensource.validate.rng.RngProperty;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -21,12 +30,9 @@ import java.io.IOException;
  * @author <a href="mailto:jjc@jclark.com">James Clark</a>
  */
 public class SchemaFactory {
-  private XMLReaderCreator xrc = null;
-  private ErrorHandler eh = null;
-  private DatatypeLibraryFactory dlf = null;
+  private PropertyMapBuilder properties = new PropertyMapBuilder();
   private boolean compactSyntax = false;
-  private SchemaOptions options = SchemaOptions.NONE;
-  private SchemaLanguage autoSchemaLanguage = new AutoSchemaLanguage();
+  private SchemaReader autoSchemaLanguage = new AutoSchemaReader();
 
   /**
    * Constructs a schema factory.
@@ -57,12 +63,12 @@ public class SchemaFactory {
    * @throws IOException if an I/O error occurs
    * @throws SAXException if there is an XML parsing error and the XMLReader or ErrorHandler
    * throws a SAXException
-   * @throws IncorrectSchemaException if the XML document was not a correct RELAX NG schema
+   * @throws com.thaiopensource.validate.IncorrectSchemaException if the XML document was not a correct RELAX NG schema
    * @throws NullPointerException if the current XMLReaderCreator is <code>null</code>
    */
   public Schema createSchema(InputSource in) throws IOException, SAXException, IncorrectSchemaException {
-    SchemaLanguage lang = compactSyntax ? CompactSchemaLanguage.getInstance() : autoSchemaLanguage;
-    return lang.createSchema(xrc, in, eh, options, dlf);
+    SchemaReader lang = compactSyntax ? CompactSchemaReader.getInstance() : autoSchemaLanguage;
+    return lang.createSchema(in, properties.toPropertyMap());
   }
 
   /**
@@ -76,7 +82,7 @@ public class SchemaFactory {
    * @see #getXMLReaderCreator
    */
   public void setXMLReaderCreator(XMLReaderCreator xrc) {
-    this.xrc = xrc;
+    properties.put(ValidateProperty.XML_READER_CREATOR, xrc);
   }
 
   /**
@@ -90,7 +96,7 @@ public class SchemaFactory {
    * @see #setXMLReaderCreator
    */
   public XMLReaderCreator getXMLReaderCreator() {
-    return xrc;
+    return (XMLReaderCreator)properties.get(ValidateProperty.XML_READER_CREATOR);
   }
 
   /**
@@ -102,7 +108,7 @@ public class SchemaFactory {
    * @see #getErrorHandler
    */
   public void setErrorHandler(ErrorHandler eh) {
-    this.eh = eh;
+    properties.put(ValidateProperty.ERROR_HANDLER, eh);
   }
 
   /**
@@ -115,7 +121,7 @@ public class SchemaFactory {
    * @see #setErrorHandler
    */
   public ErrorHandler getErrorHandler() {
-    return eh;
+    return (ErrorHandler)properties.get(ValidateProperty.ERROR_HANDLER);
   }
 
   /**
@@ -127,7 +133,7 @@ public class SchemaFactory {
    * @see #getDatatypeLibraryFactory
    */
   public void setDatatypeLibraryFactory(DatatypeLibraryFactory dlf) {
-    this.dlf = dlf;
+    properties.put(RngProperty.DATATYPE_LIBRARY_FACTORY, dlf);
   }
 
   /**
@@ -140,7 +146,7 @@ public class SchemaFactory {
    * @see #setDatatypeLibraryFactory
    */
   public DatatypeLibraryFactory getDatatypeLibraryFactory() {
-    return dlf;
+    return (DatatypeLibraryFactory)properties.get(RngProperty.DATATYPE_LIBRARY_FACTORY);
   }
 
   /**
@@ -154,10 +160,7 @@ public class SchemaFactory {
    * @see <a href="http://www.oasis-open.org/committees/relax-ng/compatibility.html#id">RELAX NG DTD Compatibility</a>
    */
   public void setCheckIdIdref(boolean checkIdIdref) {
-    if (checkIdIdref)
-      options = options.add(SchemaOptions.CHECK_ID_IDREF);
-    else
-      options = options.remove(SchemaOptions.CHECK_ID_IDREF);
+    properties.put(RngProperty.CHECK_ID_IDREF, checkIdIdref ? Flag.PRESENT : null);
   }
 
   /**
@@ -172,7 +175,7 @@ public class SchemaFactory {
    * @see <a href="http://www.oasis-open.org/committees/relax-ng/compatibility.html#id">RELAX NG DTD Compatibility</a>
    */
   public boolean getCheckIdIdref() {
-    return options.contains(SchemaOptions.CHECK_ID_IDREF);
+    return properties.contains(RngProperty.CHECK_ID_IDREF);
   }
 
   /**
@@ -198,13 +201,10 @@ public class SchemaFactory {
   }
 
   public void setFeasible(boolean feasible) {
-    if (feasible)
-      options = options.add(SchemaOptions.FEASIBLE);
-    else
-      options = options.remove(SchemaOptions.FEASIBLE);
+    properties.put(RngProperty.FEASIBLE, feasible ? Flag.PRESENT : null);
   }
 
   public boolean getFeasible() {
-    return options.contains(SchemaOptions.FEASIBLE);
+    return properties.contains(RngProperty.FEASIBLE);
   }
 }

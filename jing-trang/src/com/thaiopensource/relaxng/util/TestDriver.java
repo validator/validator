@@ -1,6 +1,8 @@
 package com.thaiopensource.relaxng.util;
 
 import com.thaiopensource.util.OptionParser;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedWriter;

@@ -1,8 +1,9 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.validate.ValidatorHandler;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.util.Name;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
@@ -18,7 +19,6 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
   private Hashtable recoverPatternTable;
   private PatternMemo memo;
   private boolean hadError;
-  private boolean complete;
   private boolean collectingCharacters;
   private final StringBuffer charBuf = new StringBuffer();
   private PrefixMapping prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
@@ -170,7 +170,6 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
 
   public void endDocument() {
     // XXX maybe check that memo.isNullable if !hadError
-    complete = true;
   }
 
   public void setDocumentLocator(Locator loc) {
@@ -200,7 +199,6 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
 
   public void reset() {
     hadError = false;
-    complete = false;
     collectingCharacters = false;
     locator = null;
     memo = builder.getPatternMemo(start);
@@ -210,10 +208,6 @@ public class PatternValidatorHandler extends DtdContext implements ValidatorHand
 
   public boolean isValidSoFar() {
     return !hadError;
-  }
-
-  public boolean isComplete() {
-    return complete;
   }
 
   private void error(String key) throws SAXException {

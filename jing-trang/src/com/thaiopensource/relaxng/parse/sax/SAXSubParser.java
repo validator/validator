@@ -7,7 +7,7 @@ import com.thaiopensource.relaxng.parse.IncludedGrammar;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.Scope;
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;

@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.util.Name;
 
 class AttributeNameClassChecker implements NameClassVisitor {
   private String errorMessageId = null;

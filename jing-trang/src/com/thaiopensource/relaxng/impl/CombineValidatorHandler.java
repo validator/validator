@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.validate.ValidatorHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
@@ -94,10 +94,6 @@ public class CombineValidatorHandler implements ValidatorHandler {
 
   public boolean isValidSoFar() {
     return vh1.isValidSoFar() && vh2.isValidSoFar();
-  }
-
-  public boolean isComplete() {
-    return vh1.isComplete(); // vh2 should be the same
   }
 
   public void setErrorHandler(ErrorHandler eh) {

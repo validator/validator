@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 public interface NameClassVisitor {
   void visitChoice(NameClass nc1, NameClass nc2);
   void visitNsName(String ns);

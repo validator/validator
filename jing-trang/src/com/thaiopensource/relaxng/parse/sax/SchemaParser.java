@@ -22,6 +22,8 @@ import com.thaiopensource.util.Uri;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.sax.XmlBaseHandler;
+import com.thaiopensource.xml.sax.AbstractLexicalHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;

@@ -4,7 +4,7 @@ import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

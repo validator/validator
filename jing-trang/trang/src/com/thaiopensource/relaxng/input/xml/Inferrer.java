@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.input.xml;
 
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
@@ -20,7 +20,7 @@ import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.Name;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.infer.AttributeDecl;
 import com.thaiopensource.xml.infer.ChoiceParticle;
 import com.thaiopensource.xml.infer.ElementDecl;

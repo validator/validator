@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+
 
 /**
  * Ant task to validate XML files using RELAX NG.

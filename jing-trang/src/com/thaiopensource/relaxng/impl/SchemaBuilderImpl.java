@@ -22,8 +22,9 @@ import com.thaiopensource.relaxng.parse.CommentList;
 import com.thaiopensource.relaxng.parse.SubParser;
 import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
-import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.util.Localizer;
+import com.thaiopensource.xml.util.Name;
 
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;

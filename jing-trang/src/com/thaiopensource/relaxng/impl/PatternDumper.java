@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.xml.util.Name;
 
 public class PatternDumper {
   private boolean startTagOpen = false;

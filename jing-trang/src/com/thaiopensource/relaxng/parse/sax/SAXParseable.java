@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.parse.sax;
 
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.Parseable;

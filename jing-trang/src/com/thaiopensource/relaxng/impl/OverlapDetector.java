@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 class OverlapDetector implements NameClassVisitor {
   private final NameClass nc1;
   private final NameClass nc2;

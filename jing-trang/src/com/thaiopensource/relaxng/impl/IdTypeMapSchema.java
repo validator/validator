@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.relaxng.AbstractSchema;
-import com.thaiopensource.relaxng.ValidatorHandler;
+import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.validate.ValidatorHandler;
 import org.xml.sax.ErrorHandler;
 
 public class IdTypeMapSchema extends AbstractSchema {

@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 class ChoiceNameClass implements NameClass {
 
   private final NameClass nameClass1;

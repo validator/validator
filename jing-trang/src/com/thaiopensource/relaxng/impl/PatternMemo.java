@@ -4,6 +4,8 @@ import org.relaxng.datatype.ValidationContext;
 
 import java.util.Hashtable;
 
+import com.thaiopensource.xml.util.Name;
+
 final class PatternMemo {
   private final Pattern pattern;
   private final ValidatorPatternBuilder builder;

@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.io.File;
 
 import com.thaiopensource.util.UriOrFile;
-import com.thaiopensource.relaxng.XMLReaderCreator;
-import com.thaiopensource.relaxng.parse.sax.AbstractLexicalHandler;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.AbstractLexicalHandler;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
 public class Compare {
   static public boolean compare(File file1, File file2, XMLReaderCreator xrc) throws SAXException, IOException {

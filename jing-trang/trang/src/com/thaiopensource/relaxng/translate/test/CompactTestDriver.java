@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.translate.test;
 
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
@@ -13,8 +13,8 @@ import com.thaiopensource.relaxng.output.OutputFormat;
 import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
 import com.thaiopensource.relaxng.output.rng.RngOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
-import com.thaiopensource.relaxng.util.ErrorHandlerImpl;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.util.UriOrFile;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

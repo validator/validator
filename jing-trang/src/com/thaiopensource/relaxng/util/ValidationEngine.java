@@ -10,11 +10,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.Sax2XMLReaderCreator;
+import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.relaxng.SchemaFactory;
-import com.thaiopensource.relaxng.ValidatorHandler;
-import com.thaiopensource.relaxng.Schema;
-import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.validate.ValidatorHandler;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.util.UriOrFile;
 
 /**
@@ -34,12 +36,12 @@ public class ValidationEngine {
 
   /**
    * Flag indicating that ID/IDREF/IDREFS should be checked.
-   * @see #ValidationEngine(XMLReaderCreator, ErrorHandler, int)
+   * @see #ValidationEngine(com.thaiopensource.xml.sax.XMLReaderCreator, ErrorHandler, int)
    */
   public static final int CHECK_ID_IDREF = 01;
   /**
    * Flag indicating that the schema is in the compact syntax rather than the XML syntax.
-   * @see #ValidationEngine(XMLReaderCreator, ErrorHandler, int)
+   * @see #ValidationEngine(com.thaiopensource.xml.sax.XMLReaderCreator, ErrorHandler, int)
    */
   public static final int COMPACT_SYNTAX = 02;
   public static final int FEASIBLE = 04;
@@ -59,8 +61,8 @@ public class ValidationEngine {
    * uses <code>DraconianErrorHandler</code>
    * @param flags bitwise OR of flags selected from <code>CHECK_ID_IDREF</code>, <code>COMPACT_SYNTAX</code>,
    * <code>FEASIBLE</code>, <code>MNS</code>
-   * @see DraconianErrorHandler
-   * @see Sax2XMLReaderCreator
+   * @see com.thaiopensource.xml.sax.DraconianErrorHandler
+   * @see com.thaiopensource.xml.sax.Sax2XMLReaderCreator
    * @see #CHECK_ID_IDREF
    * @see #COMPACT_SYNTAX
    * @see #FEASIBLE
@@ -91,8 +93,8 @@ public class ValidationEngine {
    * @param eh the <code>ErrorHandler</code> to be used for reporting errors; if <code>null</code>
    * uses <code>DraconianErrorHandler</code>
    * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
-   * @see DraconianErrorHandler
-   * @see Sax2XMLReaderCreator
+   * @see com.thaiopensource.xml.sax.DraconianErrorHandler
+   * @see com.thaiopensource.xml.sax.Sax2XMLReaderCreator
    * @deprecated
    */
   public ValidationEngine(XMLReaderCreator xrc,
@@ -111,8 +113,8 @@ public class ValidationEngine {
    * @param checkIdIdref <code>true</code> if ID/IDREF/IDREFS should be checked; <code>false</code> otherwise
    * @param compactSyntax <code>true</code> if the compact syntax should be used to parse the schema;
    * <code>false</code> if the XML syntax should be used
-   * @see DraconianErrorHandler
-   * @see Sax2XMLReaderCreator
+   * @see com.thaiopensource.xml.sax.DraconianErrorHandler
+   * @see com.thaiopensource.xml.sax.Sax2XMLReaderCreator
    * @deprecated
    */
   public ValidationEngine(XMLReaderCreator xrc, ErrorHandler eh, boolean checkIdIdref, boolean compactSyntax) {

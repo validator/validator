@@ -1,4 +1,0 @@
-com.thaiopensource.relaxng.auto.SAXSchemaReceiverFactory
-com.thaiopensource.relaxng.mns.MnsSchemaReceiverFactory
-com.thaiopensource.relaxng.nrl.NrlSchemaReceiverFactory
-com.thaiopensource.relaxng.auto.SchemaLanguageLoaderSchemaReceiverFactory

@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.thaiopensource.xml.util.Name;
+
 public class IdTypeMapBuilder {
   private boolean hadError;
   private final ErrorHandler eh;

@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+
 class ErrorNameClass implements NameClass {
   public boolean contains(Name name) {
     return false;

@@ -1,13 +1,13 @@
 package com.thaiopensource.relaxng.jarv;
 
-import com.thaiopensource.relaxng.IncorrectSchemaException;
-import com.thaiopensource.relaxng.XMLReaderCreator;
+import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.impl.SchemaBuilderImpl;
 import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
 import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
-import com.thaiopensource.relaxng.util.DraconianErrorHandler;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.DraconianErrorHandler;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import org.iso_relax.verifier.Schema;
 import org.iso_relax.verifier.VerifierFactory;
 import org.relaxng.datatype.DatatypeLibraryFactory;

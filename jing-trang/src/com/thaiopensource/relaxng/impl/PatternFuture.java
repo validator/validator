@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
 import org.xml.sax.SAXException;
-import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.validate.IncorrectSchemaException;
 
 import java.io.IOException;
 
