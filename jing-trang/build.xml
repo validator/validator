@@ -302,7 +302,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist">
+<target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist">
   <zip zipfile="build/jing-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties,META-INF/services/*"/>
     <fileset dir="build/src" includes="**/*.java"/>
