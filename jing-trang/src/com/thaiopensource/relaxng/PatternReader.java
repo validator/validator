@@ -936,22 +936,36 @@ public class PatternReader implements ValidationContext {
     }
   }
 
-  class DefineState extends PatternContainerState {
-    String name;
-    private IncludeState include;
-
+  abstract class DefinitionState extends PatternContainerState {
     byte combine = PatternRefPattern.COMBINE_NONE;
 
-    DefineState(IncludeState include) {
+    private IncludeState include;
+
+    DefinitionState(IncludeState include) {
       this.include = include;
     }
 
-    State create() {
-      return new DefineState(null);
-    }
-
-    void setName(String name) throws SAXException {
-      this.name = checkNCName(name);
+    void setPattern(PatternRefPattern prp, Pattern p) {
+      switch (prp.getReplacementStatus()) {
+      case PatternRefPattern.REPLACEMENT_KEEP:
+	if (include != null)
+	  include.add(prp);
+	if (prp.getPattern() == null)
+	  prp.setPattern(p);
+	else if (prp.getCombineType()
+		 == PatternRefPattern.COMBINE_INTERLEAVE)
+	  prp.setPattern(patternBuilder.makeInterleave(prp.getPattern(),
+						       p));
+	else
+	  prp.setPattern(patternBuilder.makeChoice(prp.getPattern(),
+						   p));
+	break;
+      case PatternRefPattern.REPLACEMENT_REQUIRE:
+	prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_IGNORE);
+	break;
+      case PatternRefPattern.REPLACEMENT_IGNORE:
+	break;
+      }
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
@@ -966,13 +980,6 @@ public class PatternReader implements ValidationContext {
       }
       else
 	super.setOtherAttribute(name, value);
-    }
-
-    void endAttributes() throws SAXException {
-      if (name == null)
-	error("missing_name_attribute");
-      else 
-	checkCombine(grammar.makePatternRef(name));
     }
 
     void checkCombine(PatternRefPattern prp) throws SAXException {
@@ -1002,28 +1009,28 @@ public class PatternReader implements ValidationContext {
 	break;
       }
     }
+  }
 
-    void setPattern(PatternRefPattern prp, Pattern p) {
-      switch (prp.getReplacementStatus()) {
-      case PatternRefPattern.REPLACEMENT_KEEP:
-	if (include != null)
-	  include.add(prp);
-	if (prp.getPattern() == null)
-	  prp.setPattern(p);
-	else if (prp.getCombineType()
-		 == PatternRefPattern.COMBINE_INTERLEAVE)
-	  prp.setPattern(patternBuilder.makeInterleave(prp.getPattern(),
-						       p));
-	else
-	  prp.setPattern(patternBuilder.makeChoice(prp.getPattern(),
-						   p));
-	break;
-      case PatternRefPattern.REPLACEMENT_REQUIRE:
-	prp.setReplacementStatus(PatternRefPattern.REPLACEMENT_IGNORE);
-	break;
-      case PatternRefPattern.REPLACEMENT_IGNORE:
-	break;
-      }
+  class DefineState extends DefinitionState {
+    String name;
+
+    DefineState(IncludeState include) {
+      super(include);
+    }
+
+    State create() {
+      return new DefineState(null);
+    }
+
+    void setName(String name) throws SAXException {
+      this.name = checkNCName(name);
+    }
+
+    void endAttributes() throws SAXException {
+      if (name == null)
+	error("missing_name_attribute");
+      else 
+	checkCombine(grammar.makePatternRef(name));
     }
 
     void sendPatternToParent(Pattern p) {
@@ -1033,7 +1040,7 @@ public class PatternReader implements ValidationContext {
 
   }
 
-  class StartState extends DefineState {
+  class StartState extends DefinitionState {
 
     StartState(IncludeState include) {
       super(include);
@@ -1044,18 +1051,10 @@ public class PatternReader implements ValidationContext {
     }
 
     void endAttributes() throws SAXException {
-      if (name != null)
-	checkCombine(grammar.makePatternRef(name));
       checkCombine(grammar.startPatternRef());
     }
 
-    void setName(String name) throws SAXException {
-      this.name = checkNCName(name);
-    }
-
     void sendPatternToParent(Pattern p) {
-      if (name != null)
-	setPattern(grammar.makePatternRef(name), p);
       setPattern(grammar.startPatternRef(), p);
     }
 
