@@ -99,3 +99,5 @@ Handle the case where the head of a substitution group should be a non-abstract 
 Deal with non top-level commments.
 
 Annotations to control block and final attributes.
+
+Consider turning attribute groups (without paired group or simple type) into complex type.
