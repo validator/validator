@@ -514,6 +514,7 @@ class Output {
       }
       Pattern e = p.getExcept();
       if (e != null) {
+        // XXX need parentheses if e has following annotations
         if (params.size() == 0) {
           pp.text(" - ");
           pp.startNest(qn + " - ");
@@ -525,7 +526,6 @@ class Output {
           pp.softNewline(" ");
           pp.text("- ");
           pp.startNest("- ");
-          // XXX think we need parentheses if e has following annotations
           e.accept(patternOutput);
           pp.endNest();
           pp.endGroup();
