@@ -217,7 +217,7 @@ public class Translator {
    *
    * @param regexp a String containing a regular expression in the syntax of XML Schemas Part 2
    * @return a String containing a regular expression in the syntax of java.util.regex.Pattern
-   * @throws InvalidRegexExpression if <code>regexp</code> is not a regular expression in the
+   * @throws RegexSyntaxException if <code>regexp</code> is not a regular expression in the
    * syntax of XML Schemas Part 2
    * @see java.util.regex.Pattern
    * @see <a href="http://www.w3.org/TR/xmlschema-2/#regexs">XML Schema Part 2</a>
@@ -596,7 +596,7 @@ public class Translator {
     void inClassOutputBmp(StringBuffer buf) {
       if (isJavaMetaChar(c))
         buf.append('\\');
-      buf.append((char)c);
+      buf.append(c);
     }
 
   }
