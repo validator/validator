@@ -171,6 +171,9 @@ AC_OUTPUT
 EOF
 
 autoconf
+
+rm -fr autom4te*
+
 }
 
 prog=jing
