@@ -281,27 +281,30 @@ public class PatternDumper {
       endElement();
     }
 
-    public void visitDifference(NameClass nc1, NameClass nc2) {
-      startElement("difference");
-      nc1.accept(differenceNameClassVisitor);
-      nc2.accept(nameClassVisitor);
-      endElement();
-    }
-
-    public void visitNot(NameClass nc) {
-      startElement("not");
-      nc.accept(nameClassVisitor);
-      endElement();
-    }
-
     public void visitNsName(String ns) {
       startElement("nsName");
       attribute("ns", ns);
       endElement();
     }
 
+    public void visitNsNameExcept(String ns, NameClass nc) {
+      startElement("nsName");
+      startElement("except");
+      nc.accept(choiceNameClassVisitor);
+      endElement();
+      endElement();
+    }
+
     public void visitAnyName() {
       startElement("anyName");
+      endElement();
+    }
+
+    public void visitAnyNameExcept(NameClass nc) {
+      startElement("anyName");
+      startElement("except");
+      nc.accept(choiceNameClassVisitor);
+      endElement();
       endElement();
     }
 
@@ -318,8 +321,7 @@ public class PatternDumper {
     }
     
     public void visitNull() {
-      startElement("null"); // XXX
-      endElement();
+      visitAnyName();
     }
   }
 

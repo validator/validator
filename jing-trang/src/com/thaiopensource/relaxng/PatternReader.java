@@ -1068,15 +1068,18 @@ public class PatternReader implements DatatypeContext {
     }
 
     NameClass makeNameClass() {
-      NameClass nc = makeNameClassNoExcept();
       if (except == null)
-	return nc;
+	return makeNameClassNoExcept();
       else
-	return new DifferenceNameClass(nc, except);
+	return makeNameClassExcept(except);
     }
 
     NameClass makeNameClassNoExcept() {
       return new AnyNameClass();
+    }
+
+    NameClass makeNameClassExcept(NameClass except) {
+      return new AnyNameExceptNameClass(except);
     }
 
     void endChild(NameClass nameClass) {
@@ -1094,20 +1097,30 @@ public class PatternReader implements DatatypeContext {
     }
 
     NameClass makeNameClassNoExcept() {
-      return new NsNameClass(ns != null ? ns : nsInherit);
+      return new NsNameClass(computeNs());
+    }
+
+    NameClass makeNameClassExcept(NameClass except) {
+      return new NsNameExceptNameClass(computeNs(), except);
+    }
+
+    private String computeNs() {
+      return ns != null ? ns : nsInherit;
     }
   }
 
-  abstract class NameClassMultiContainerState extends NameClassContainerState {
-    NameClass nameClass;
+  class NameClassChoiceState extends NameClassContainerState {
+    private NameClass nameClass;
 
-    abstract NameClass combineNameClass(NameClass nc1, NameClass nc2);
+    State create() {
+      return new NameClassChoiceState();
+    }
 
     void endChild(NameClass nc) {
       if (nameClass == null)
 	nameClass = nc;
       else
-	nameClass = combineNameClass(nameClass, nc);
+	nameClass = new ChoiceNameClass(nameClass, nc);
     }
 
     void end() throws SAXException {
@@ -1117,16 +1130,6 @@ public class PatternReader implements DatatypeContext {
 	return;
       }
       parent.endChild(nameClass);
-    }
-  }
-
-  class NameClassChoiceState extends NameClassMultiContainerState {
-    State create() {
-      return new NameClassChoiceState();
-    }
-
-    NameClass combineNameClass(NameClass nc1, NameClass nc2) {
-      return new ChoiceNameClass(nc1, nc2);
     }
   }
 

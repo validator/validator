@@ -11,7 +11,7 @@ class AnyNameClass implements NameClass {
   }
 
   public int hashCode() {
-    return getClass().hashCode();
+    return AnyNameClass.class.hashCode();
   }
 
   public void accept(NameClassVisitor visitor) {
