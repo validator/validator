@@ -21,6 +21,7 @@ public class RelaxNgWriter {
   private ErrorMessageHandler errorMessageHandler = null;
 
   private String defaultNamespace = null;
+  private String annotationPrefix = null;
 
   Output groupOutput = new GroupOutput();
   Output choiceOutput = new ChoiceOutput();
@@ -37,6 +38,9 @@ public class RelaxNgWriter {
   static final int ELEMENT_REF = 04;
 
   static final String SEPARATORS = ".-_";
+
+  static final String COMPATIBILITY_ANNOTATIONS_URI
+    = "http://relaxng.org/ns/compatibility/annotations/0.9";
 
   // # is the category; % is the name in the category
 
@@ -321,6 +325,9 @@ public class RelaxNgWriter {
 	w.startElement("optional");
       w.startElement("attribute");
       w.attribute("name", name);
+      String dv = attributeDefault.getDefaultValue();
+      if (dv != null)
+	w.attribute(annotationPrefix + ":defaultValue", dv);
       if (datatype.getType() != Datatype.CDATA)
 	datatype.accept(explicitOutput);
       w.endElement();
@@ -467,6 +474,7 @@ public class RelaxNgWriter {
     chooseAny();
     chooseColonReplacement();
     chooseDeclPatterns();
+    chooseAnnotationPrefix();
   }
 
   void chooseAny() {
@@ -480,6 +488,14 @@ public class RelaxNgWriter {
 	  return;
 	}
       }
+    }
+  }
+
+  void chooseAnnotationPrefix() {
+    for (int n = 0;; n++) {
+      annotationPrefix = repeatChar('_', n) + "a";
+      if (prefixTable.get(annotationPrefix) == null)
+	return;
     }
   }
 
@@ -758,6 +774,8 @@ public class RelaxNgWriter {
 		"http://www.w3.org/2001/XMLSchema-datatypes");
     w.attribute("xmlns",
 		"http://relaxng.org/ns/structure/0.9");
+    w.attribute("xmlns:" + annotationPrefix,
+		COMPATIBILITY_ANNOTATIONS_URI);
     outputNamespaces();
   }
   
