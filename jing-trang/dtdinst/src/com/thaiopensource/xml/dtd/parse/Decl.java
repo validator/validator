@@ -70,20 +70,20 @@ class Decl {
     Entity entity = db.lookupParamEntity(name);
     if (entity.decl == null) {
       entity.decl = this;
-      return createDef(db, entity);
+      return createDef(entity);
     }
     else {
       Entity overridden = entity.overrides;
       while (overridden.decl != null)
 	overridden = overridden.overrides;
       overridden.decl = this;
-      return new OverriddenDef(createDef(db, overridden),
+      return new OverriddenDef(createDef(overridden),
 			       entity.entityValue != null
 			       && entity.entityValue.equals(overridden.entityValue));
     }
   }
 
-  Def createDef(DtdBuilder db, Entity entity) {
+  static Def createDef(Entity entity) {
     String name = entity.name;
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
