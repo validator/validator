@@ -28,7 +28,7 @@ import com.thaiopensource.datatype.DatatypeFactory;
 
 public class PatternReader implements DatatypeContext {
 
-  static final String trexURI = "http://www.thaiopensource.com/trex";
+  static final String relaxngURI = "http://relaxng.org/ns/structure/0.9";
   static final String xmlURI = "http://www.w3.org/XML/1998/namespace";
 
   // Declaring these in DefineState gives JVC indigestion.
@@ -123,7 +123,7 @@ public class PatternReader implements DatatypeContext {
 	state.attributes(atts);
       }
       else {
-	String role = atts.getValue(trexURI, "role");
+	String role = atts.getValue(relaxngURI, "role");
 	if (role != null)
 	  startElementRole(role, namespaceURI, localName, qName, atts);
 	else
@@ -171,7 +171,7 @@ public class PatternReader implements DatatypeContext {
 	  else
 	    setOtherAttribute(name, atts.getValue(i));
 	}
-      // XXX disallow attributes from trexURI namespace?
+      // XXX disallow attributes from relaxngURI namespace?
       endAttributes();
     }
 
@@ -567,7 +567,7 @@ public class PatternReader implements DatatypeContext {
     }
 
     boolean isPatternNamespaceURI(String s) {
-      if (s.equals(trexURI) || s.equals("")) {
+      if (s.equals(relaxngURI) || s.equals("")) {
 	patternNS = s;
 	return true;
       }
