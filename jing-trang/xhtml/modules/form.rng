@@ -9,7 +9,7 @@
       <ref name="form.attlist"/>
       <oneOrMore>
 	<choice>
-	  <ref name="Block.mix"/>
+	  <ref name="Block.class"/>
 	  <ref name="fieldset"/>
 	</choice>
       </oneOrMore>
