@@ -10,6 +10,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.Stack;
+import java.util.Hashtable;
+
 class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private SchemaImpl.Mode currentMode;
   private int laxDepth = 0;
@@ -21,10 +24,12 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private final Hashset attributeNamespaces = new Hashset();
   private PrefixMapping prefixMapping = null;
   private final Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
+  private final Hashtable validatorHandlerCache = new Hashtable();
 
   static private class Subtree {
     final Subtree parent;
     final ValidatorHandler validator;
+    final Schema schema;
     final String namespace;
     final Hashset coveredNamespaces;
     final boolean prune;
@@ -33,11 +38,12 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     int depth = 0;
 
     Subtree(String namespace, Hashset coveredNamespaces, boolean prune, ValidatorHandler validator,
-            SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
+            Schema schema, SchemaImpl.Mode parentMode, int parentLaxDepth, Subtree parent) {
       this.namespace = namespace;
       this.coveredNamespaces = coveredNamespaces;
       this.prune = prune;
       this.validator = validator;
+      this.schema = schema;
       this.parentMode = parentMode;
       this.parentLaxDepth = parentLaxDepth;
       this.parent = parent;
@@ -94,7 +100,8 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         subtrees = new Subtree(uri,
                                elementAction.getCoveredNamespaces(),
                                elementAction.getPrune(),
-                               createValidator(elementAction.getSchema()),
+                               createValidatorHandler(elementAction.getSchema()),
+                               elementAction.getSchema(),
                                currentMode,
                                laxDepth,
                                subtrees);
@@ -140,17 +147,13 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
         error("attributes_undeclared_namespace", ns);
       return;
     }
-    ValidatorHandler vh = createValidator(attributesSchema);
+    ValidatorHandler vh = createValidatorHandler(attributesSchema);
     startSubtree(vh);
     vh.startElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME,
                     new NamespaceFilteredAttributes(ns, false, attributes));
     vh.endElement(SchemaImpl.BEARER_URI, SchemaImpl.BEARER_LOCAL_NAME, SchemaImpl.BEARER_LOCAL_NAME);
     endSubtree(vh);
-  }
-
-  private ValidatorHandler createValidator(Schema schema) {
-    // XXX use per-schema pool of validator handlers
-    return schema.createValidator(eh);
+    releaseValidatorHandler(attributesSchema, vh);
   }
 
   private void startSubtree(ValidatorHandler vh) throws SAXException {
@@ -179,11 +182,28 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       subtrees.depth--;
     else {
       endSubtree(subtrees.validator);
+      releaseValidatorHandler(subtrees.schema, subtrees.validator);
       currentMode = subtrees.parentMode;
       laxDepth = subtrees.parentLaxDepth;
       subtrees = subtrees.parent;
     }
   }
+
+  private ValidatorHandler createValidatorHandler(Schema schema) {
+     Stack stack = (Stack)validatorHandlerCache.get(schema);
+     if (stack == null) {
+       stack = new Stack();
+       validatorHandlerCache.put(schema, stack);
+     }
+     if (stack.empty())
+       return schema.createValidator(eh);
+     return (ValidatorHandler)stack.pop();
+   }
+
+   private void releaseValidatorHandler(Schema schema, ValidatorHandler vh) {
+     vh.reset();
+     ((Stack)validatorHandlerCache.get(schema)).push(vh);
+   }
 
   public void endDocument()
           throws SAXException {
