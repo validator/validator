@@ -31,14 +31,14 @@ of the <a href="http://java.sun.com/xml/">Java API for XML Processing
 (JAXP) 1.1</a> in your CLASSPATH.  The main class for Jing is
 <code>com.thaiopensource.relaxng.util.Driver</code>.  The first
 argument expected by the main class is the name of the file containing
-the RELAX NG pattern.  The second and subsequent arguments are the
-names of one or more files to be validated against this pattern. So,
+the RELAX NG schema.  The second and subsequent arguments are the
+names of one or more files to be validated against this schema. So,
 for example, on Windows, the command:</p>
 
 <pre>c:\jdk1.3\bin\java -cp c:\lib\jing.jar;c:\lib\jaxp.jar;c:\lib\crimson.jar com.thaiopensource.relaxng.util.Driver doc.rng doc.xml</pre>
 
 <p>would validate the XML document contained in <code>doc.xml</code>
-against the RELAX NG pattern contained in <code>doc.rng</code>.Obviously,
+against the RELAX NG schema contained in <code>doc.rng</code>.Obviously,
 you must replace <code>c:\lib</code> by the path to the directory
 where you have put the various JAR files. The command will be
 slightly different on non-Windows machines.  Consult your Java
