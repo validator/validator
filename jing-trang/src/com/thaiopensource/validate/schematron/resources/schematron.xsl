@@ -8,8 +8,9 @@
 
 <!--
 TODO:
-Implement subject
-Implement diagnostic
+subject
+diagnostic
+defaultPhase
 -->
 
 <xsl:param name="phase" select="'#ALL'"/>
@@ -20,6 +21,9 @@ Implement diagnostic
 
 <xsl:template match="/">
   <axsl:stylesheet version="1.0">
+    <xsl:for-each select="sch:ns">
+      <xsl:attribute name="{concat(@prefix,':dummy-for-xmlns')}" namespace="{@uri}"/>
+    </xsl:for-each>
     <axsl:template match="/">
       <result>
         <axsl:apply-templates select="/" mode="all"/>
