@@ -287,7 +287,7 @@ class ValidatorHandlerImpl extends ParserConfigurationSettings implements Valida
 
   public XMLInputSource resolveEntity(XMLResourceIdentifier resourceIdentifier)
           throws XNIException, IOException {
-    throw new IOException();
+    return null;
   }
 
   public String getPublicId() {
