@@ -42,12 +42,6 @@ names of one or more files to be validated against this schema.</p>
 
 <dl>
 
-<dt><code>-i</code></dt>
-
-<dd>Disables checking of ID/IDREF/IDREFS. By default,
-Jing enforces the constraints imposed by RELAX NG DTD Compatibility
-with respect to ID/IDREF/IDREFS.</dd>
-
 <dt><code>-c</code></dt>
 
 <dd>Uses the <a href="compact/syntax.html">compact syntax</a> for the
@@ -57,6 +51,23 @@ schema.</dd>
 
 <dd>Uses the encoding <code><var>enc</var></code> to read the
 schema.</dd>
+
+<dt><code>-f</code></dt>
+
+<dd>Check that the document is <em>feasibly valid</em>.  A document is
+<em>feasibly valid</em> if it could be transformed into a valid document
+by inserting any number of attributes and child elements anywhere in
+the tree.  This is equivalent to transforming the schema by wrapping
+every <code>data</code>, <code>list</code>, <code>element</code> and
+<code>attribute</code> element in an <code>optional</code> element and
+then validating against the transformed schema. This option may be
+useful while a document is still under construction.</dd>
+
+<dt><code>-i</code></dt>
+
+<dd>Disables checking of ID/IDREF/IDREFS. By default,
+Jing enforces the constraints imposed by RELAX NG DTD Compatibility
+with respect to ID/IDREF/IDREFS.</dd>
 
 <dt><code>-t</code></dt>
 
