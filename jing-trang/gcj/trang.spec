@@ -15,7 +15,7 @@ Trang converts schemas for XML between different schema languages.
 %setup -q
 
 %build
-%configure
+%configure GCJFLAGS="${GCJFLAGS:-%optflags}"
 make
 
 %install
