@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.6 2001-09-20 04:20:49 jjc Exp $ -->
+<!-- $Id: testSuite.rng,v 1.7 2001-09-20 09:24:19 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
@@ -117,7 +117,7 @@
     <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
           type="string">
       <!-- one or more RFC 2396 pchars -->
-      <param name="pattern">[-A-Za-z0-9:@&amp;=+$,_.!~*'()]+</param>
+      <param name="pattern">([-A-Za-z0-9:@&amp;=+$,_.!~*'()]|%[0-9a-fA-F][0-9a-fA-F])+</param>
     </data>
   </define>
   
