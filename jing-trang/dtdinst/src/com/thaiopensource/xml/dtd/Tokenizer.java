@@ -336,7 +336,7 @@ public class Tokenizer {
   public static void movePosition(final char[] buf, int off, int end, Position pos) {
     int lineNumber = pos.lineNumber;
     /* Maintain invariant: off - colStart = colNumber */
-    int colStart = off - (pos.columnNumber << 1);
+    int colStart = off - pos.columnNumber;
     while (off != end) {
       switch (buf[off++]) {
       case '\n':
@@ -344,7 +344,7 @@ public class Tokenizer {
 	colStart = off;
 	break;
       case '\r':
-	if (off != end && buf[off] == 0 && buf[off + 1] == '\n')
+	if (off != end && buf[off] == '\n')
 	  off += 1;
 	lineNumber++;
 	colStart = off;
@@ -352,7 +352,7 @@ public class Tokenizer {
       }
     }
     pos.lineNumber = lineNumber;
-    pos.columnNumber = (off - colStart) >> 1;
+    pos.columnNumber = off - colStart;
   }
 
   private static
