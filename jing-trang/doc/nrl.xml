@@ -49,7 +49,7 @@ is an example:</p>
 <code>xhtml.rng</code> is the subschema for the namespace URI
 <code>http://www.w3.org/1999/xhtml</code>.</p>
 
-<p>The absent namespace can be mapped to a namespace URI by using
+<p>The absent namespace can be mapped to a schema by using
 <code>ns=""</code>.</p>
 
 <h2>Processing model</h2>
@@ -131,13 +131,13 @@ are described in the following sections.</p>
 
 <h2>Specifying the schema</h2>
 
-<p>In most cases the schema will be in some namespaced XML dialect,
+<p>In most cases the schema will be in some namespaced XML vocabulary,
 and the type of schema can be automatically detected from the
 namespace URI of the root element.  In cases where the schema is not
 in XML and there is no MIME type information available to determine
 the type, a <code>schemaType</code> attribute can be used to specify the
 type.  The value of this should be a MIME media type.  For RELAX NG
-compact syntax, a value of <code>application/x-rnc</code> should be
+Compact Syntax, a value of <code>application/x-rnc</code> should be
 used.</p>
 
 <xml>
@@ -395,7 +395,7 @@ mode in which their child sections are processed.  The
 <code>rules</code> element must have a <code>startMode</code>
 attribute specifying which mode to use for the root element.</p>
 
-<p>For example, suppose we want to require that root element come from
+<p>For example, suppose we want to require that the root element come from
 <code>http://schemas.xmlsoap.org/soap/envelope/</code> namespace.</p>
 
 <xml>
@@ -415,20 +415,20 @@ attribute specifying which mode to use for the root element.</p>
 
 <p>If a <code>validate</code> element does not specify a
 <code>useMode</code> attribute, then the mode remains unchanged. Thus,
-in the above example, child sections with the XHTML will be processed
-in mode <code>body</code>, which does not allow the SOAP namespace; so
-if the XHTML were to contain a SOAP <code>env:Envelope</code> element,
-it would be rejected.</p>
+in the above example, child sections inside an XHTML section will be
+processed in mode <code>body</code>, which does not allow the SOAP
+namespace; so if the XHTML were to contain a SOAP
+<code>env:Envelope</code> element, it would be rejected.</p>
 
 <p>The <code>reject</code> and <code>allow</code> elements can have a
 <code>useMode</code> attribute as well.</p>
 
 <h2>Related namespaces</h2>
 
-<p>A single subschema may not just handle a single namespace; it may
+<p>A single subschema may not handle just a single namespace; it may
 be handle two or more related namespaces.  To deal with this
 possibility, NRL allows the rule for a namespace to specify that
-elements from that namespace should be attached to a parent section
+elements from that namespace are to be attached to a parent section
 and be validated together with that parent section.</p>
 
 <p>Suppose we have RELAX NG schemas for XHTML and for SVG.  We could
@@ -541,9 +541,9 @@ just the rule:</p>
 </rules>
 </xml>
 
-<p>Suppose you are not interested in the namespace-based capabilities of
-NRL, but you just want to validate a document concurrently against
-two schemas.  The simplest way is like this:</p>
+<p>Suppose you are not interested in the namespace-sectioning
+capabilities of NRL, but you just want to validate a document
+concurrently against two schemas.  The simplest way is like this:</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl">
@@ -964,6 +964,8 @@ href="http://www.thaiopensource.com/relang/jing.html"
 <p>RELAX NG</p>
 
 <p>W3C XML Schema</p>
+
+<p>MNS</p>
 
 <h2>NRL schema</h2>
 
