@@ -1552,4 +1552,94 @@
 </rules>
 </incorrect>
 </testCase>
+<testCase>
+<resource name="a.rng">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="a">
+    <element name="b">
+      <empty/>
+    </element>
+  </element>
+  <element name="b">
+    <empty/>
+  </element>
+</choice>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="true">
+    <context useMode="anythingGoes">
+      <element name="a">
+        <element name="b"/>
+      </element>
+    </context>
+  </validate>
+  <lax inModes="anythingGoes"/>
+  <strict/>
+</rules>
+</correct>
+<valid>
+<a>
+  <b>
+    <foo xmlns="http://example.org"/>
+  </b>
+</a>
+</valid>
+<invalid>
+<a>
+  <foo xmlns="http://example.org"/>
+  <b/>
+</a>
+</invalid>
+<invalid>
+<b>
+  <foo xmlns="http://example.org"/>
+</b>
+</invalid>
+</testCase>
+<testCase>
+<resource name="a.rng">
+<choice xmlns="http://relaxng.org/ns/structure/1.0">
+  <element name="a">
+    <element name="b">
+      <empty/>
+    </element>
+  </element>
+  <element name="b">
+    <empty/>
+  </element>
+</choice>
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/ns/mns">
+  <validate ns="" schema="a.rng" prune="true">
+    <context useMode="anythingGoes">
+      <root>
+        <element name="b"/>
+      </root>
+    </context>
+    <context>
+      <element name="b"/>
+      <element name="a">
+        <element name="b"/>
+      </element>
+    </context>
+  </validate>
+  <lax inModes="anythingGoes"/>
+  <strict/>
+</rules>
+</correct>
+<invalid>
+<a>
+  <b>
+    <foo xmlns="http://example.org"/>
+  </b>
+</a>
+</invalid>
+<valid>
+<b>
+  <foo xmlns="http://example.org"/>
+</b>
+</valid>
+</testCase>
 </testSuite>
