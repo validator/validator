@@ -2,3 +2,6 @@ overridden declarations
 
 (foo %bar) where bar is empty
 
+case where entity contains just "|" or "," (maybe don't unexpand these)
+
+undefined elements
