@@ -192,7 +192,7 @@ public final class UCode_UCodeESC_CharStream {
     }
 
     switch (c) {
-    case '\n':
+    case NEWLINE_MARKER:
       prevCharIsLF = true;
       break;
     case '\t':
