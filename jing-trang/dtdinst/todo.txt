@@ -1,5 +1,3 @@
-RELAX NG: Don't create an output file that contains just comments.
-
 Option for properties file to set properties
 
 Option to set start elements.

@@ -427,6 +427,15 @@ public class RelaxNgWriter {
 	super.externalIdRef(name, externalId, uri, encoding, contents);
 	return;
       }
+      SignificanceDetector sd = new SignificanceDetector();
+      try {
+	sd.externalIdRef(name, externalId, uri, encoding, contents);
+	if (!sd.significant)
+	  return;
+      }
+      catch (Exception e) {
+	throw (RuntimeException)e;
+      }
       XmlOutputMember outMemberSave = outMember;
       XmlWriter wSave = w;
       outMember = outCollection.mapUri(uri);
@@ -480,6 +489,38 @@ public class RelaxNgWriter {
 
     public void attributeGroupRef(String name, AttributeGroup attributeGroup) throws Exception {
       attributeGroup.accept(this);
+    }
+
+  }
+
+  private class SignificanceDetector extends VisitorBase {
+    boolean significant = false;
+    public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup)
+      throws Exception {
+      significant = true;
+    }
+
+    public void attlistDecl(NameSpec nameSpec, AttributeGroup attributeGroup)
+      throws Exception {
+      significant = true;
+    }
+
+    public void modelGroupDef(String name, ModelGroup modelGroup)
+      throws Exception {
+      significant = true;
+    }
+
+    public void attributeGroupDef(String name, AttributeGroup attributeGroup)
+      throws Exception {
+      significant = true;
+    }
+
+    public void enumGroupDef(String name, EnumGroup enumGroup) {
+      significant = true;
+    }
+
+    public void datatypeDef(String name, Datatype datatype) {
+      significant = true;
     }
 
   }
