@@ -1,0 +1,2932 @@
+<doctype>
+<!-- ............................................................... -->
+<!-- XML specification DTD ......................................... -->
+<!-- ............................................................... -->
+<!--
+TYPICAL INVOCATION:
+#  <!DOCTYPE spec PUBLIC
+#       "-//W3C//DTD Specification V2.1//EN"
+#       "http://www.w3.org/XML/1998/06/xmlspec-v21.dtd">
+
+PURPOSE:
+  This XML DTD is for W3C specifications and other technical reports.
+  It is based in part on the TEI Lite and Sweb DTDs.
+
+DEPENDENCIES:
+  None.
+
+CHANGE HISTORY:
+  The list of changes is at the end of the DTD.
+
+  For all details, see the design report at:
+
+#   <http://www.w3.org/XML/1998/06/xmlspec-report-v21.htm>
+
+  Search this file for "#" in the first column to see change history
+  comments.  To find changes made this time, search for "2000-03-07".
+
+MAINTAINER:
+  Eve Maler
+  Sun Microsystems, Inc.
+  elm@east.sun.com
+  voice: +1 781 442 3190
+  fax:   +1 781 442 1437
+-->
+<!-- ............................................................... -->
+<!-- Entities for characters and symbols ........................... -->
+<!-- ............................................................... -->
+<!--
+#1998-03-10: maler: Added &ldquo; and &rdquo;.
+#                   Used 8879:1986-compatible decimal character
+#                   references.
+#                   Merged charent.mod file back into main file.
+#1998-05-14: maler: Fixed ldquo and rdquo.  Gave mdash a real number.
+#1998-12-03: maler: Escaped the leading ampersands.
+-->
+  <internalEntity name="lt">&amp;#60;</internalEntity>
+  <internalEntity name="gt">&gt;</internalEntity>
+  <internalEntity name="amp">&amp;#38;</internalEntity>
+  <internalEntity name="apos">'</internalEntity>
+  <internalEntity name="quot">&quot;</internalEntity>
+  <internalEntity name="nbsp">&#x00A0;</internalEntity>
+  <internalEntity name="mdash">&amp;#x2014;</internalEntity>
+  <internalEntity name="ldquo">&amp;#x201C;</internalEntity>
+  <internalEntity name="rdquo">&amp;#x201D;</internalEntity>
+<!-- ............................................................... -->
+<!-- Entities for classes of standalone elements ................... -->
+<!-- ............................................................... -->
+<!--
+#1997-10-16: maler: Added table to %illus.class;.
+#1997-11-28: maler: Added htable to %illus.class;.
+#1997-12-29: maler: IGNOREd table.
+#1998-03-10: maler: Removed SGML Open-specific %illus.class;.
+#                   Added "local" entities for customization.
+#1998-05-14: maler: Added issue to %note.class;.
+#                   Removed %[local.]statusp.class;.
+#1998-05-21: maler: Added constraintnote to %note.class;.
+#1998-08-22: maler: Changed htable to table in %illus.class;.
+#                   Added definitions to %illus.class;.
+#2000-03-07: maler: Added proto and example to %illus.class;.
+-->
+  <modelGroup name="local.p.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="p.class">
+    <choice>
+      <elementRef name="p"/>
+      <modelGroupRef name="local.p.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.list.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="list.class">
+    <choice>
+      <elementRef name="ulist"/>
+      <elementRef name="olist"/>
+      <elementRef name="slist"/>
+      <elementRef name="glist"/>
+      <modelGroupRef name="local.list.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.speclist.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="speclist.class">
+    <choice>
+      <elementRef name="orglist"/>
+      <elementRef name="blist"/>
+      <modelGroupRef name="local.speclist.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.note.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="note.class">
+    <choice>
+      <elementRef name="note"/>
+      <elementRef name="issue"/>
+      <elementRef name="wfcnote"/>
+      <elementRef name="vcnote"/>
+      <elementRef name="constraintnote"/>
+      <modelGroupRef name="local.note.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.illus.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="illus.class">
+    <choice>
+      <elementRef name="eg"/>
+      <elementRef name="graphic"/>
+      <elementRef name="scrap"/>
+      <elementRef name="table"/>
+      <elementRef name="definitions"/>
+      <elementRef name="proto"/>
+      <elementRef name="example"/>
+      <modelGroupRef name="local.illus.class"/>
+    </choice>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Entities for classes of phrase-level elements ................. -->
+<!-- ............................................................... -->
+<!--
+#1997-12-29: maler: Added xspecref to %ref.class;.
+#1998-03-10: maler: Added %ednote.class;.
+#                   Added "local" entities for customization.
+#2000-03-07: maler: Added function, var, el, att, and attval to
+#                   %tech.class;.
+#                   Added sub, sup, and phrase to %emph.class;.
+-->
+  <modelGroup name="local.annot.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="annot.class">
+    <choice>
+      <elementRef name="footnote"/>
+      <modelGroupRef name="local.annot.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.termdef.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="termdef.class">
+    <choice>
+      <elementRef name="termdef"/>
+      <elementRef name="term"/>
+      <modelGroupRef name="local.termdef.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.emph.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="emph.class">
+    <choice>
+      <elementRef name="emph"/>
+      <elementRef name="phrase"/>
+      <elementRef name="quote"/>
+      <elementRef name="sub"/>
+      <elementRef name="sup"/>
+      <modelGroupRef name="local.emph.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.ref.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="ref.class">
+    <choice>
+      <elementRef name="bibref"/>
+      <elementRef name="specref"/>
+      <elementRef name="termref"/>
+      <elementRef name="titleref"/>
+      <elementRef name="xspecref"/>
+      <elementRef name="xtermref"/>
+      <modelGroupRef name="local.ref.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.loc.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="loc.class">
+    <choice>
+      <elementRef name="loc"/>
+      <modelGroupRef name="local.loc.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.tech.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="tech.class">
+    <choice>
+      <elementRef name="kw"/>
+      <elementRef name="nt"/>
+      <elementRef name="xnt"/>
+      <elementRef name="code"/>
+      <elementRef name="function"/>
+      <elementRef name="var"/>
+      <elementRef name="el"/>
+      <elementRef name="att"/>
+      <elementRef name="attval"/>
+      <modelGroupRef name="local.tech.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="local.ednote.class">
+    <choice/>
+  </modelGroup>
+  <modelGroup name="ednote.class">
+    <choice>
+      <elementRef name="ednote"/>
+      <modelGroupRef name="local.ednote.class"/>
+    </choice>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Entities for mixtures of standalone elements .................. -->
+<!-- ............................................................... -->
+<!--
+#1997-09-30: maler: Created %p.mix; to eliminate p from self.
+#1997-09-30: maler: Added %speclist.class; to %obj.mix; and %p.mix;.
+#1997-09-30: maler: Added %note.class; to %obj.mix; and %p.mix;.
+#1997-10-16: maler: Created %entry.mix;.  Note that some elements
+#                   left out here are still allowed in termdef,
+#                   which entry can contain through %p.pcd.mix;.
+#1997-11-28: maler: Added %p.class; to %statusobj.mix;.
+#1998-03-10: maler: Added %ednote.class; to all mixtures, except
+#                   %p.mix; and %statusobj.mix;, because paragraphs
+#                   and status paragraphs will contain ednote
+#                   through %p.pcd.mix;.
+#1998-03-23: maler: Added %termdef.mix; (broken out from
+#                    %termdef.pcd.mix;).
+#1998-05-14: maler: Removed %statusobj.mix; and all mentions of
+#                   %statusp.mix;.
+-->
+  <modelGroup name="div.mix">
+    <choice>
+      <modelGroupRef name="p.class"/>
+      <modelGroupRef name="list.class"/>
+      <modelGroupRef name="speclist.class"/>
+      <modelGroupRef name="note.class"/>
+      <modelGroupRef name="illus.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="obj.mix">
+    <choice>
+      <modelGroupRef name="p.class"/>
+      <modelGroupRef name="list.class"/>
+      <modelGroupRef name="speclist.class"/>
+      <modelGroupRef name="note.class"/>
+      <modelGroupRef name="illus.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="p.mix">
+    <choice>
+      <modelGroupRef name="list.class"/>
+      <modelGroupRef name="speclist.class"/>
+      <modelGroupRef name="note.class"/>
+      <modelGroupRef name="illus.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="hdr.mix">
+    <choice>
+      <modelGroupRef name="p.class"/>
+      <modelGroupRef name="list.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="termdef.mix">
+    <choice>
+      <modelGroupRef name="note.class"/>
+      <modelGroupRef name="illus.class"/>
+    </choice>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Entities for mixtures of #PCDATA and phrase-level elements .... -->
+<!-- ............................................................... -->
+<!--    Note that %termdef.pcd.mix contains %note.class;
+        and %illus.class;, considered standalone elements. -->
+<!--
+#1997-09-30: maler: Added scrap and %note.class; to %termdef.pcd.mix;.
+#1997-11-28: maler: Added %loc.class; to %p.pcd.mix;.
+#1998-03-10: maler: Added %ednote.class; to all mixtures.
+#1998-03-23: maler: Moved some %termdef.pcd.mix; stuff out to
+#                   %termdef.mix;.
+#1998-05-14: maler: Removed %statusp.pcd.mix;.
+#1998-05-21: maler: Added constraint element to %eg.pcd.mix;.
+#1999-07-02: maler: Added %loc.class; to %head.pcd.mix;,
+#                   %label.pcd.mix;, %eg.pcd.mix;, %termdef.pcd.mix;,
+#                   %tech.pcd.mix; (net: all PCD mixes have it).
+#                   Removed unused %loc.pcd.mix;.
+-->
+  <modelGroup name="p.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="annot.class"/>
+      <modelGroupRef name="termdef.class"/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="ref.class"/>
+      <modelGroupRef name="tech.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="head.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="annot.class"/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="tech.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="label.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="annot.class"/>
+      <modelGroupRef name="termdef.class"/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="tech.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="eg.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="annot.class"/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+      <elementRef name="constraint"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="termdef.pcd.mix">
+    <choice>
+      <pcdata/>
+      <elementRef name="term"/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="ref.class"/>
+      <modelGroupRef name="tech.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="bibl.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="emph.class"/>
+      <modelGroupRef name="ref.class"/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="tech.pcd.mix">
+    <choice>
+      <pcdata/>
+      <modelGroupRef name="loc.class"/>
+      <modelGroupRef name="ednote.class"/>
+    </choice>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Entities for customizable content models ...................... -->
+<!-- ............................................................... -->
+<!--
+#1998-03-10: maler: Added customization entities.
+#1998-05-14: maler: Allowed prevlocs and latestloc in either order.
+#1999-07-02: maler: Made version optional; added copyright element.
+#2000-03-07: maler: Allowed status and abstract in opposite order.
+-->
+  <modelGroup name="spec.mdl">
+    <sequence>
+      <elementRef name="header"/>
+      <optional>
+        <elementRef name="front"/>
+      </optional>
+      <elementRef name="body"/>
+      <optional>
+        <elementRef name="back"/>
+      </optional>
+    </sequence>
+  </modelGroup>
+  <modelGroup name="header.mdl">
+    <sequence>
+      <elementRef name="title"/>
+      <optional>
+        <elementRef name="subtitle"/>
+      </optional>
+      <optional>
+        <elementRef name="version"/>
+      </optional>
+      <elementRef name="w3c-designation"/>
+      <elementRef name="w3c-doctype"/>
+      <elementRef name="pubdate"/>
+      <zeroOrMore>
+        <elementRef name="notice"/>
+      </zeroOrMore>
+      <elementRef name="publoc"/>
+      <optional>
+        <choice>
+          <sequence>
+            <elementRef name="prevlocs"/>
+            <optional>
+              <elementRef name="latestloc"/>
+            </optional>
+          </sequence>
+          <sequence>
+            <elementRef name="latestloc"/>
+            <optional>
+              <elementRef name="prevlocs"/>
+            </optional>
+          </sequence>
+        </choice>
+      </optional>
+      <elementRef name="authlist"/>
+      <optional>
+        <elementRef name="copyright"/>
+      </optional>
+      <choice>
+        <sequence>
+          <elementRef name="status"/>
+          <elementRef name="abstract"/>
+        </sequence>
+        <sequence>
+          <elementRef name="abstract"/>
+          <elementRef name="status"/>
+        </sequence>
+      </choice>
+      <optional>
+        <elementRef name="pubstmt"/>
+      </optional>
+      <optional>
+        <elementRef name="sourcedesc"/>
+      </optional>
+      <elementRef name="langusage"/>
+      <elementRef name="revisiondesc"/>
+    </sequence>
+  </modelGroup>
+  <modelGroup name="pubdate.mdl">
+    <sequence>
+      <optional>
+        <elementRef name="day"/>
+      </optional>
+      <elementRef name="month"/>
+      <elementRef name="year"/>
+    </sequence>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Entities for common attributes ................................ -->
+<!-- ............................................................... -->
+<!--
+#2000-03-07: maler: Added %argtypes;.
+-->
+<!--    argtypes:
+        Values for function prototype argument datatypes. -->
+  <datatype name="argtypes">
+    <enumChoice>
+      <enum>boolean</enum>
+      <enum>expression</enum>
+      <enum>location-set</enum>
+      <enum>node-set</enum>
+      <enum>number</enum>
+      <enum>object</enum>
+      <enum>point</enum>
+      <enum>range</enum>
+      <enum>string</enum>
+    </enumChoice>
+  </datatype>
+<!--    key attribute:
+        Optionally provides a sorting or indexing key, for cases when
+        the element content is inappropriate for this purpose. -->
+  <attributeGroup name="key.att">
+    <attribute name="key" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!--    def attribute:
+        Points to the element where the relevant definition can be
+        found, using the IDREF mechanism.  %def.att; is for optional
+        def attributes, and %def-req.att; is for required def
+        attributes. -->
+  <attributeGroup name="def-req.att">
+    <attribute name="def" use="required">
+      <basic name="IDREF"/>
+    </attribute>
+  </attributeGroup>
+<!--    ref attribute:
+        Points to the element where more information can be found,
+        using the IDREF mechanism.  %ref.att; is for optional
+        ref attributes, and %ref-req.att; is for required ref
+        attributes. -->
+  <attributeGroup name="ref-req.att">
+    <attribute name="ref" use="required">
+      <basic name="IDREF"/>
+    </attribute>
+  </attributeGroup>
+<!--
+#1998-03-23: maler: Added show and actuate attributes to href.
+#                   Added semi-common xml:space attribute.
+#1998-08-22: maler: Used new xlink:form and #IMPLIED features.
+#1999-07-02: maler: Reorganized XLink-related entities completely;
+#                   added xmlns:xlink attribute to the mix.
+#2000-03-07: maler: Updated XLink usage to February 2000 draft,
+#                   except that href still has no namespace prefix.
+-->
+<!--    xmlns:xlink and xlink:type attributes:
+        xmlns:xlink declares the association of the xlink prefix
+        with the namespace created by the XLink specification.
+        xlink:type identifies an element as an XLink "simple" linking
+        element. -->
+  <attributeGroup name="simple-xlink.att">
+    <attribute name="xmlns:xlink" use="required" default="http://www.w3.org/1999/xlink">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="xlink:type" use="required" default="simple">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!--    href attributes:
+        The href attribute locates the remote-resource half of a
+        simple link; the element on which the href appears is the
+        local-resource half.  Some elements are usable links only if
+        the author chooses to supply a functional href.  The attribute
+        name should really be xlink:href, but is kept without the
+        prefix for now in order to be backwards-compatible. -->
+  <attributeGroup name="href.att">
+    <attribute name="href" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="href-req.att">
+    <attribute name="href" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!--    xlink:show and xlink:actuate attributes:
+        These attributes offer instructions to the display engine
+        about how to handle traversal to resource indicated by an
+        href locator. -->
+  <attributeGroup name="auto-embed.att">
+    <attribute name="xlink:show" use="required" default="embed">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="xlink:actuate" use="required" default="onLoad">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="user-replace.att">
+    <attribute name="xlink:show" use="required" default="replace">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="xlink:actuate" use="required" default="onRequest">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="user-new.att">
+    <attribute name="xlink:show" use="required" default="new">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="xlink:actuate" use="required" default="onRequest">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!--    xml:space attribute:
+        Indicates that the element contains whitespace that the
+        formatter or other application should retain, as appropriate
+        to its function. -->
+  <attributeGroup name="xmlspace.att">
+    <attribute name="xml:space" use="required" default="preserve">
+      <enumChoice>
+        <enum>default</enum>
+        <enum>preserve</enum>
+      </enumChoice>
+    </attribute>
+  </attributeGroup>
+<!--
+#2000-03-07: maler: Added common diff attribute.  Made %role.att;.
+-->
+<!--    diff attribute:
+        Indicates in what way the element has changed.  When a value
+        is not provided, that subelement should inherit a value from
+        its parent.  If the root element has no value supplied,
+        assume "off". -->
+  <attributeGroup name="diff.att">
+    <attribute name="diff" use="optional">
+      <enumChoice>
+        <enum>chg</enum>
+        <enum>add</enum>
+        <enum>del</enum>
+        <enum>off</enum>
+      </enumChoice>
+    </attribute>
+  </attributeGroup>
+<!--    role attribute:
+        Extends the useful life of the DTD by allowing authors to
+        make a subtype of any element.  No default. -->
+  <attributeGroup name="role.att">
+    <attribute name="role" use="optional">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attributeGroup>
+<!--    Common attributes:
+        Every element has an ID attribute for links, a role
+        attribute, and a diff attribute. %common.att; is for
+        common attributes where the ID is optional, and
+        %common-idreq.att; is for common attributes where the
+        ID is required. -->
+  <attributeGroup name="common.att">
+    <attribute name="id" use="optional">
+      <basic name="ID"/>
+    </attribute>
+    <attributeGroupRef name="role.att"/>
+    <attributeGroupRef name="diff.att"/>
+  </attributeGroup>
+  <attributeGroup name="common-idreq.att">
+    <attribute name="id" use="required">
+      <basic name="ID"/>
+    </attribute>
+    <attributeGroupRef name="role.att"/>
+    <attributeGroupRef name="diff.att"/>
+  </attributeGroup>
+<!-- ............................................................... -->
+<!-- Common elements ............................................... -->
+<!-- ............................................................... -->
+<!--    head: Title on divisions, productions, and the like -->
+  <element name="head">
+    <zeroOrMore>
+      <modelGroupRef name="head.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="head">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Major specification structure ................................. -->
+<!-- ............................................................... -->
+<!--
+#1998-03-10: maler: Made spec content model easily customizable.
+#1999-07-02: maler: Added doctype atts and status att.
+#2000-03-07: maler: Added cr, issues, and dispcmts to w3c-doctype.
+-->
+  <element name="spec">
+    <modelGroupRef name="spec.mdl"/>
+  </element>
+<!--    w3c-doctype attributes:
+        Indicates the type of document, so that the appropriate
+        stylesheet or workflow routing can be applied.  Should
+        *not* generate any text (such as the "REC-" or "NOTE-"
+        prefix on the W3C designation content).  No default.  If
+        w3c-doctype is "other", other-doctype should be filled in.
+
+        status attribute:
+        Indicates the stage of review of the document.  May affect
+        the stylesheet's treatment of ednotes (e.g., whether to
+        output them).  No default. -->
+  <attlist name="spec">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="w3c-doctype" use="optional">
+      <enumChoice>
+        <enum>cr</enum>
+        <enum>dispcmts</enum>
+        <enum>issues</enum>
+        <enum>note</enum>
+        <enum>other</enum>
+        <enum>pr</enum>
+        <enum>rec</enum>
+        <enum>wd</enum>
+      </enumChoice>
+    </attribute>
+    <attribute name="other-doctype" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="status" use="optional">
+      <enumChoice>
+        <enum>int-review</enum>
+        <enum>ext-review</enum>
+        <enum>final</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+  <element name="front">
+    <oneOrMore>
+      <elementRef name="div1"/>
+    </oneOrMore>
+  </element>
+  <attlist name="front">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="body">
+    <oneOrMore>
+      <elementRef name="div1"/>
+    </oneOrMore>
+  </element>
+  <attlist name="body">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1997-09-30: maler: Added inform-div1 to back content.
+-->
+  <element name="back">
+    <choice>
+      <sequence>
+        <oneOrMore>
+          <elementRef name="div1"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <elementRef name="inform-div1"/>
+        </zeroOrMore>
+      </sequence>
+      <oneOrMore>
+        <elementRef name="inform-div1"/>
+      </oneOrMore>
+    </choice>
+  </element>
+  <attlist name="back">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="div1">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef name="div2"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="div1">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1997-09-30: maler: Added inform-div1 declarations.
+#2000-03-07: maler: Added div5 level.
+-->
+<!--    inform-div1: Non-normative division in back matter -->
+  <element name="inform-div1">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef name="div2"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="inform-div1">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="div2">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef name="div3"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="div2">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="div3">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef name="div4"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="div3">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="div4">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <elementRef name="div5"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="div4">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="div5">
+    <sequence>
+      <elementRef name="head"/>
+      <zeroOrMore>
+        <modelGroupRef name="div.mix"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="div5">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Specification header .......................................... -->
+<!-- ............................................................... -->
+<!--
+#1998-03-10: maler: Made header content model easily customizable.
+-->
+  <element name="header">
+    <modelGroupRef name="header.mdl"/>
+  </element>
+  <attlist name="header">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of title: "Extensible Cheese Language (XCL)" -->
+  <element name="title">
+    <pcdata/>
+  </element>
+  <attlist name="title">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of subtitle: "A Cheesy Specification" -->
+  <element name="subtitle">
+    <pcdata/>
+  </element>
+  <attlist name="subtitle">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of version: "Version 666.0" -->
+  <element name="version">
+    <pcdata/>
+  </element>
+  <attlist name="version">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of w3c-designation: "WD-xcl-19991231" -->
+  <element name="w3c-designation">
+    <pcdata/>
+  </element>
+  <attlist name="w3c-designation">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of w3c-doctype: "W3C Working Draft" -->
+  <element name="w3c-doctype">
+    <pcdata/>
+  </element>
+  <attlist name="w3c-doctype">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-03-10: maler: Made pubdate content model easily customizable.
+-->
+  <element name="pubdate">
+    <modelGroupRef name="pubdate.mdl"/>
+  </element>
+  <attlist name="pubdate">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="day">
+    <pcdata/>
+  </element>
+  <attlist name="day">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="month">
+    <pcdata/>
+  </element>
+  <attlist name="month">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="year">
+    <pcdata/>
+  </element>
+  <attlist name="year">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Declared copyright element.
+-->
+  <element name="copyright">
+    <oneOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="copyright">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    Example of notice: "This draft is for public comment..." -->
+  <element name="notice">
+    <oneOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="notice">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Broadened models of *loc to %p.pcd.mix;.
+-->
+  <element name="publoc">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="publoc">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="prevlocs">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="prevlocs">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="latestloc">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="latestloc">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--      loc (defined in "Phrase-level elements" below) -->
+  <element name="authlist">
+    <oneOrMore>
+      <elementRef name="author"/>
+    </oneOrMore>
+  </element>
+  <attlist name="authlist">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1997-09-30: maler: Made affiliation optional.
+#1998-03-10: maler: Made email optional.
+-->
+  <element name="author">
+    <sequence>
+      <elementRef name="name"/>
+      <optional>
+        <elementRef name="affiliation"/>
+      </optional>
+      <optional>
+        <elementRef name="email"/>
+      </optional>
+    </sequence>
+  </element>
+  <attlist name="author">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="name">
+    <pcdata/>
+  </element>
+  <attlist name="name">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="key.att"/>
+  </attlist>
+  <element name="affiliation">
+    <pcdata/>
+  </element>
+  <attlist name="affiliation">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+  <element name="email">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        email functions as a hypertext reference through this
+        required attribute.  Typically the reference would use
+        the mailto: scheme.  E.g.:
+
+<email href="mailto:elm@arbortext.com">elm@arbortext.com</email>
+        -->
+  <attlist name="email">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href-req.att"/>
+    <attributeGroupRef name="user-new.att"/>
+  </attlist>
+<!--
+#1998-05-15: maler: Changed status content from %statusobj.mix;
+#                   to plain %obj.mix;.  statusp is obsolete.
+-->
+  <element name="status">
+    <oneOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="status">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="abstract">
+    <zeroOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="abstract">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="pubstmt">
+    <oneOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="pubstmt">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="sourcedesc">
+    <oneOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="sourcedesc">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="langusage">
+    <oneOrMore>
+      <elementRef name="language"/>
+    </oneOrMore>
+  </element>
+  <attlist name="langusage">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="language">
+    <pcdata/>
+  </element>
+  <attlist name="language">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="revisiondesc">
+    <oneOrMore>
+      <modelGroupRef name="hdr.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="revisiondesc">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Paragraph ..................................................... -->
+<!-- ............................................................... -->
+<!--
+#1997-09-30: maler: Changed from %obj.mix; to %p.mix;.
+#1997-12-29: maler: Changed order of %p.mix; and %p.pcd.mix;
+#                   references.
+#1997-12-29: maler: Changed order of %statusobj.mix; and
+#                   %statusp.pcd.mix; references.
+#1998-05-14: maler: Removed statusp declarations.
+-->
+  <element name="p">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="p.pcd.mix"/>
+        <modelGroupRef name="p.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <attlist name="p">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Regular lists ................................................. -->
+<!-- ............................................................... -->
+<!--    ulist: Unordered list, typically bulleted. -->
+  <element name="ulist">
+    <oneOrMore>
+      <elementRef name="item"/>
+    </oneOrMore>
+  </element>
+<!--    spacing attribute:
+        Use "normal" to get normal vertical spacing for items;
+        use "compact" to get less spacing.  The default is dependent
+        on the stylesheet. -->
+  <attlist name="ulist">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="spacing" use="optional">
+      <enumChoice>
+        <enum>normal</enum>
+        <enum>compact</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+<!--    olist: Ordered list, typically numbered. -->
+  <element name="olist">
+    <oneOrMore>
+      <elementRef name="item"/>
+    </oneOrMore>
+  </element>
+<!--    spacing attribute:
+        Use "normal" to get normal vertical spacing for items;
+        use "compact" to get less spacing.  The default is dependent
+        on the stylesheet. -->
+  <attlist name="olist">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="spacing" use="optional">
+      <enumChoice>
+        <enum>normal</enum>
+        <enum>compact</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+  <element name="item">
+    <oneOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="item">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    slist: Simple list, typically with no mark. -->
+  <element name="slist">
+    <oneOrMore>
+      <elementRef name="sitem"/>
+    </oneOrMore>
+  </element>
+  <attlist name="slist">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="sitem">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="sitem">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    glist: Glossary list, typically two-column. -->
+  <element name="glist">
+    <oneOrMore>
+      <elementRef name="gitem"/>
+    </oneOrMore>
+  </element>
+  <attlist name="glist">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="gitem">
+    <sequence>
+      <elementRef name="label"/>
+      <elementRef name="def"/>
+    </sequence>
+  </element>
+  <attlist name="gitem">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="label">
+    <zeroOrMore>
+      <modelGroupRef name="label.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="label">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="def">
+    <zeroOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="def">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Special lists ................................................. -->
+<!-- ............................................................... -->
+<!--    blist: Bibliography list. -->
+  <element name="blist">
+    <oneOrMore>
+      <elementRef name="bibl"/>
+    </oneOrMore>
+  </element>
+  <attlist name="blist">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+  <element name="bibl">
+    <zeroOrMore>
+      <modelGroupRef name="bibl.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+<!--    href attribute:
+        bibl optionally functions as a hypertext reference to the
+        referred-to resource through this attribute.  E.g.:
+
+        <bibl href="http://www.my.com/doc.htm">My Document</bibl>
+        -->
+  <attlist name="bibl">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href.att"/>
+    <attributeGroupRef name="user-replace.att"/>
+    <attributeGroupRef name="key.att"/>
+  </attlist>
+<!--    orglist: Organization member list. -->
+  <element name="orglist">
+    <oneOrMore>
+      <elementRef name="member"/>
+    </oneOrMore>
+  </element>
+  <attlist name="orglist">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1997-09-30: maler: Added optional affiliation.
+-->
+  <element name="member">
+    <sequence>
+      <elementRef name="name"/>
+      <optional>
+        <elementRef name="affiliation"/>
+      </optional>
+      <optional>
+        <elementRef name="role"/>
+      </optional>
+    </sequence>
+  </element>
+  <attlist name="member">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--      name (defined in "Specification header" above) -->
+<!--      affiliation (defined in "Specification header" above) -->
+  <element name="role">
+    <pcdata/>
+  </element>
+  <attlist name="role">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Notes ......................................................... -->
+<!-- ............................................................... -->
+  <element name="note">
+    <oneOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="note">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-05-14: maler: Declared issue element.
+#2000-03-07: maler: Added head, source, resolution, and status.
+-->
+  <element name="issue">
+    <sequence>
+      <optional>
+        <elementRef name="head"/>
+      </optional>
+      <zeroOrMore>
+        <elementRef name="source"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <modelGroupRef name="obj.mix"/>
+      </oneOrMore>
+      <optional>
+        <elementRef name="resolution"/>
+      </optional>
+    </sequence>
+  </element>
+<!--    status attribute:
+        Indicates whether the issue is open or closed.  Note that
+        the lack of a resolution element does not necessarily mean
+        that the issue is still open. -->
+  <attlist name="issue">
+    <attribute name="id" use="required">
+      <basic name="ID"/>
+    </attribute>
+    <attributeGroupRef name="role.att"/>
+    <attributeGroupRef name="diff.att"/>
+    <attribute name="status" use="optional" default="open">
+      <enumChoice>
+        <enum>open</enum>
+        <enum>closed</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+  <element name="source">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="source">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="resolution">
+    <oneOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="resolution">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    wfcnote: Well-formedness constraint note. -->
+  <element name="wfcnote">
+    <sequence>
+      <elementRef name="head"/>
+      <oneOrMore>
+        <modelGroupRef name="obj.mix"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+<!--    ID attribute:
+        wfcnote must have an ID so that it can be pointed to
+        from a wfc element in a production. -->
+  <attlist name="wfcnote">
+    <attributeGroupRef name="common-idreq.att"/>
+  </attlist>
+<!--    vcnote: Validity constraint note. -->
+  <element name="vcnote">
+    <sequence>
+      <elementRef name="head"/>
+      <oneOrMore>
+        <modelGroupRef name="obj.mix"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+<!--    ID attribute:
+        vcnote must have an ID so that it can be pointed to
+        from a vc element in a production. -->
+  <attlist name="vcnote">
+    <attributeGroupRef name="common-idreq.att"/>
+  </attlist>
+<!--
+#1998-05-21: maler: Declared generic constraintnote element.
+-->
+<!--    constraintnote: Generic constraint note. -->
+  <element name="constraintnote">
+    <sequence>
+      <elementRef name="head"/>
+      <oneOrMore>
+        <modelGroupRef name="obj.mix"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+<!--    ID attribute:
+        constraintnote must have an ID so that it can be
+        pointed to from a constraint element in a production. -->
+<!--    type attribute:
+        constraintnote must have a type value keyword so that
+        it can be correctly characterized in the specification. -->
+  <attlist name="constraintnote">
+    <attributeGroupRef name="common-idreq.att"/>
+    <attribute name="type" use="required">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Basic display elements ........................................ -->
+<!-- ............................................................... -->
+<!--
+#1998-03-23: maler: Added xml:space attribute.
+-->
+<!--    eg: Example element, with whitespace respected. -->
+  <element name="eg">
+    <zeroOrMore>
+      <modelGroupRef name="eg.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="eg">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="xmlspace.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Removed the xml:attributes attribute.
+#                   Added %local.graphic.att;.
+-->
+<!--    graphic: Displayed graphic.  Graphic data should be
+        displayed at the point where it is referenced.  Not
+        actually conforming to XLink right now. -->
+  <element name="graphic">
+    <sequence/>
+  </element>
+<!--    source attribute:
+        The graphic data must reside at the location pointed to. -->
+  <attributeGroup name="local.graphic.att"/>
+  <attlist name="graphic">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attribute name="source" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+    <attributeGroupRef name="auto-embed.att"/>
+    <attribute name="alt" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attributeGroupRef name="local.graphic.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Added proto element structure.
+-->
+<!--    proto: Function prototype, in the XPath/XPointer style. -->
+  <element name="proto">
+    <zeroOrMore>
+      <elementRef name="arg"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="proto">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="name" use="required">
+      <basic name="NMTOKEN"/>
+    </attribute>
+    <attribute name="return-type" use="required">
+      <datatypeRef name="argtypes"/>
+    </attribute>
+  </attlist>
+  <element name="arg">
+    <sequence/>
+  </element>
+  <attlist name="arg">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="type" use="required">
+      <datatypeRef name="argtypes"/>
+    </attribute>
+    <attribute name="occur" use="optional">
+      <enumChoice>
+        <enum>opt</enum>
+        <enum>req</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+<!--
+#2000-03-07: maler: Added example element.
+-->
+  <element name="example">
+    <sequence>
+      <optional>
+        <elementRef name="head"/>
+      </optional>
+      <oneOrMore>
+        <modelGroupRef name="obj.mix"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <attlist name="example">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- EBNF .......................................................... -->
+<!-- ............................................................... -->
+<!--
+#1997-11-28: maler: Added prodgroup to scrap and defined it.
+#1998-05-21: maler: Added constraint to prod.
+#1999-07-02: maler: Added prodrecap to scrap; broadened scrap model.
+#                   Added headstyle attribute to scrap.
+-->
+<!--    scrap: Collection of EBNF language productions. -->
+  <element name="scrap">
+    <sequence>
+      <elementRef name="head"/>
+      <oneOrMore>
+        <choice>
+          <elementRef name="prodgroup"/>
+          <elementRef name="prod"/>
+          <elementRef name="bnf"/>
+          <elementRef name="prodrecap"/>
+        </choice>
+      </oneOrMore>
+    </sequence>
+  </element>
+<!--    lang attribute:
+        The scrap can link to a description of the language used,
+        found in a language element in the header.
+        headstyle attribute:
+        Allows a scrap title to be suppressed from output.  To be
+        used only when a scrap title directly next to a section
+        title is distracting or repetetive. -->
+  <attlist name="scrap">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="lang" use="optional">
+      <basic name="IDREF"/>
+    </attribute>
+    <attribute name="headstyle" use="optional" default="show">
+      <enumChoice>
+        <enum>show</enum>
+        <enum>suppress</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+<!--    prodgroup: Sub-collection of productions, needed for
+        formatting reasons. -->
+  <element name="prodgroup">
+    <oneOrMore>
+      <elementRef name="prod"/>
+    </oneOrMore>
+  </element>
+<!--    pcw<n> attributes:
+        Presentational attributes to control the width
+        of the "pseudo-table" columns used to output
+        groups of productions. -->
+  <attlist name="prodgroup">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="pcw1" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="pcw2" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="pcw3" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="pcw4" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="pcw5" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+<!--    prod: EBNF language production. -->
+  <element name="prod">
+    <sequence>
+      <elementRef name="lhs"/>
+      <oneOrMore>
+        <sequence>
+          <elementRef name="rhs"/>
+          <zeroOrMore>
+            <choice>
+              <elementRef name="com"/>
+              <elementRef name="wfc"/>
+              <elementRef name="vc"/>
+              <elementRef name="constraint"/>
+            </choice>
+          </zeroOrMore>
+        </sequence>
+      </oneOrMore>
+    </sequence>
+  </element>
+<!--    ID attribute:
+        The production must have an ID so that cross-references
+        (specref) and mentions of nonterminals (nt) can link to
+        it. -->
+  <attlist name="prod">
+    <attributeGroupRef name="common-idreq.att"/>
+  </attlist>
+<!--    lhs: Left-hand side of production. -->
+  <element name="lhs">
+    <pcdata/>
+  </element>
+  <attlist name="lhs">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    rhs: Right-hand side of production; may have many
+        "right-hand sides," one to a line. -->
+  <element name="rhs">
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <elementRef name="nt"/>
+        <elementRef name="xnt"/>
+        <elementRef name="com"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <attlist name="rhs">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--      nt and xnt (defined in "Phrase-level elements" below) -->
+<!--
+#1997-11-28: maler: Added loc and bibref to com content.
+-->
+<!--    com: Production comment. -->
+  <element name="com">
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <elementRef name="loc"/>
+        <elementRef name="bibref"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <attlist name="com">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    wfc: Reference to a well-formedness constraint; should
+        generate the head of the wfcnote pointed to. -->
+  <element name="wfc">
+    <sequence/>
+  </element>
+<!--    def attribute:
+        Each well formedness tagline in a production must link to the
+        wfcnote that defines it. -->
+  <attlist name="wfc">
+    <attributeGroupRef name="def-req.att"/>
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    vc: Reference to a validity constraint; should generate
+        the head of the vcnote pointed to. -->
+  <element name="vc">
+    <sequence/>
+  </element>
+<!--    def attribute:
+        Each validity tagline in a production must link to the vcnote
+        that defines it. -->
+  <attlist name="vc">
+    <attributeGroupRef name="def-req.att"/>
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-05-21: maler: Declared generic constraint element.
+-->
+<!--    constraint: Reference to a generic constraint; should
+        generate the head of the constraintnote pointed to. -->
+  <element name="constraint">
+    <sequence/>
+  </element>
+<!--    def attribute:
+        Each constraint tagline in a production must link to the
+        constraint note that defines it. -->
+  <attlist name="constraint">
+    <attributeGroupRef name="def-req.att"/>
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-03-23: maler: Added xml:space attribute.
+-->
+<!--    bnf: Un-marked-up EBNF production, with whitespace
+        respected. -->
+  <element name="bnf">
+    <zeroOrMore>
+      <modelGroupRef name="eg.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="bnf">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="xmlspace.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Declared prodrecap.
+-->
+<!--    prodrecap: Reference to production or bnf that appears
+        in its "normative" form elsewhere in the spec; should
+        generate a copy of the original production, without
+        a production number next to it. -->
+  <element name="prodrecap">
+    <sequence/>
+  </element>
+  <attlist name="prodrecap">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="ref-req.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Table ......................................................... -->
+<!-- ............................................................... -->
+<!--
+#1997-10-16: maler: Added table mechanism.
+#1997-11-28: maler: Added non-null system ID to entity declaration.
+#                   Added HTML table module.
+#1997-12-29: maler: IGNOREd SGML Open table model.
+#1998-03-10: maler: Removed SGML Open table model.
+#                   Merged html-tbl.mod file into main file.
+#                   Added %common.att; to all HTML table elements.
+#1998-05-14: maler: Replaced table model with full HTML 4.0 model.
+#                   Removed htable in favor of table.
+#                   Removed htbody in favor of tbody.
+-->
+  <attributeGroup name="cellhalign.att">
+    <attribute name="align" use="optional">
+      <enumChoice>
+        <enum>left</enum>
+        <enum>center</enum>
+        <enum>right</enum>
+        <enum>justify</enum>
+        <enum>char</enum>
+      </enumChoice>
+    </attribute>
+    <attribute name="char" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="charoff" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="cellvalign.att">
+    <attribute name="valign" use="optional">
+      <enumChoice>
+        <enum>top</enum>
+        <enum>middle</enum>
+        <enum>bottom</enum>
+        <enum>baseline</enum>
+      </enumChoice>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="thtd.att">
+    <attribute name="abbr" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="axis" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="headers" use="optional">
+      <basic name="IDREFS"/>
+    </attribute>
+    <attribute name="scope" use="optional">
+      <enumChoice>
+        <enum>row</enum>
+        <enum>col</enum>
+        <enum>rowgroup</enum>
+        <enum>colgroup</enum>
+      </enumChoice>
+    </attribute>
+    <attribute name="rowspan" use="optional" default="1">
+      <basic name="NMTOKEN"/>
+    </attribute>
+    <attribute name="colspan" use="optional" default="1">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="width.att">
+    <attribute name="width" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+  <attributeGroup name="span.att">
+    <attribute name="span" use="optional" default="1">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attributeGroup>
+<!--    table: HTML-based geometric table model. -->
+  <element name="table">
+    <sequence>
+      <optional>
+        <elementRef name="caption"/>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <elementRef name="col"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <elementRef name="colgroup"/>
+        </zeroOrMore>
+      </choice>
+      <optional>
+        <elementRef name="thead"/>
+      </optional>
+      <optional>
+        <elementRef name="tfoot"/>
+      </optional>
+      <oneOrMore>
+        <elementRef name="tbody"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <attlist name="table">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="width.att"/>
+    <attribute name="summary" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="border" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="frame" use="optional">
+      <enumChoice>
+        <enum>void</enum>
+        <enum>above</enum>
+        <enum>below</enum>
+        <enum>hsides</enum>
+        <enum>lhs</enum>
+        <enum>rhs</enum>
+        <enum>vsides</enum>
+        <enum>box</enum>
+        <enum>border</enum>
+      </enumChoice>
+    </attribute>
+    <attribute name="rules" use="optional">
+      <enumChoice>
+        <enum>none</enum>
+        <enum>groups</enum>
+        <enum>rows</enum>
+        <enum>cols</enum>
+        <enum>all</enum>
+      </enumChoice>
+    </attribute>
+    <attribute name="cellspacing" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+    <attribute name="cellpadding" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+  <element name="caption">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="caption">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="col">
+    <sequence/>
+  </element>
+  <attlist name="col">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="span.att"/>
+    <attributeGroupRef name="width.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="colgroup">
+    <zeroOrMore>
+      <elementRef name="col"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="colgroup">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="span.att"/>
+    <attributeGroupRef name="width.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="thead">
+    <oneOrMore>
+      <elementRef name="tr"/>
+    </oneOrMore>
+  </element>
+  <attlist name="thead">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="tfoot">
+    <oneOrMore>
+      <elementRef name="tr"/>
+    </oneOrMore>
+  </element>
+  <attlist name="tfoot">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="tbody">
+    <oneOrMore>
+      <elementRef name="tr"/>
+    </oneOrMore>
+  </element>
+  <attlist name="tbody">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="tr">
+    <oneOrMore>
+      <choice>
+        <elementRef name="th"/>
+        <elementRef name="td"/>
+      </choice>
+    </oneOrMore>
+  </element>
+  <attlist name="tr">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="th">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="p.pcd.mix"/>
+        <modelGroupRef name="p.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <attlist name="th">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="thtd.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+  <element name="td">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="p.pcd.mix"/>
+        <modelGroupRef name="p.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <attlist name="td">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="thtd.att"/>
+    <attributeGroupRef name="cellhalign.att"/>
+    <attributeGroupRef name="cellvalign.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- IDL structures for DOM specifications ......................... -->
+<!-- ............................................................... -->
+<!-- ............................................................... -->
+<!-- Specialized entities for classes .............................. -->
+  <modelGroup name="idl-desc.class">
+    <choice>
+      <elementRef name="p"/>
+      <elementRef name="note"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-tdef.class">
+    <choice>
+      <elementRef name="typedef"/>
+      <elementRef name="constant"/>
+      <elementRef name="exception"/>
+      <elementRef name="reference"/>
+      <elementRef name="group"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-mod.class">
+    <choice>
+      <elementRef name="module"/>
+      <elementRef name="interface"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-struct.class">
+    <choice>
+      <elementRef name="struct"/>
+      <elementRef name="enum"/>
+      <elementRef name="sequence"/>
+      <elementRef name="union"/>
+      <elementRef name="typename"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-meth.class">
+    <choice>
+      <elementRef name="method"/>
+      <elementRef name="attribute"/>
+    </choice>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Specialized entities for mixtures ............................. -->
+<!--    Quick reference to content model mixtures:
+
+                        desc tdef mod struct meth
+group                     x    x   x    x      x
+definitions, module       x    x   x
+interface                 x    x               x
+typedef, case, component                x
+-->
+  <modelGroup name="idl-grp.mix">
+    <choice>
+      <modelGroupRef name="idl-desc.class"/>
+      <modelGroupRef name="idl-tdef.class"/>
+      <modelGroupRef name="idl-mod.class"/>
+      <modelGroupRef name="idl-struct.class"/>
+      <modelGroupRef name="idl-meth.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-defn.mix">
+    <choice>
+      <modelGroupRef name="idl-desc.class"/>
+      <modelGroupRef name="idl-tdef.class"/>
+      <modelGroupRef name="idl-mod.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-intfc.mix">
+    <choice>
+      <modelGroupRef name="idl-desc.class"/>
+      <modelGroupRef name="idl-tdef.class"/>
+      <modelGroupRef name="idl-meth.class"/>
+    </choice>
+  </modelGroup>
+  <modelGroup name="idl-type.mix">
+    <modelGroupRef name="idl-struct.class"/>
+  </modelGroup>
+<!-- ............................................................... -->
+<!-- Specialized entities for common attributes .................... -->
+<!--    name attribute:
+        Provides a name.  Required. -->
+  <attributeGroup name="idl-name.att">
+    <attribute name="name" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!--    type attribute:
+        Provides a type.  Required. -->
+  <attributeGroup name="idl-type.att">
+    <attribute name="type" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attributeGroup>
+<!-- ............................................................... -->
+<!-- Common IDL element ............................................ -->
+  <element name="descr">
+    <zeroOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="descr">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- IDL definition elements ....................................... -->
+<!--    definitions: Top-level element for definitions. -->
+  <element name="definitions">
+    <oneOrMore>
+      <modelGroupRef name="idl-defn.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="definitions">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    group: Element used to group a set of definitions. -->
+  <element name="group">
+    <sequence>
+      <elementRef name="descr"/>
+      <zeroOrMore>
+        <modelGroupRef name="idl-grp.mix"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="group">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!--    interface: Definition of an interface. -->
+  <element name="interface">
+    <sequence>
+      <elementRef name="descr"/>
+      <zeroOrMore>
+        <modelGroupRef name="idl-intfc.mix"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="interface">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attribute name="inherits" use="optional">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+<!--    module: Definition of a module. -->
+  <element name="module">
+    <sequence>
+      <elementRef name="descr"/>
+      <zeroOrMore>
+        <modelGroupRef name="idl-defn.mix"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="module">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!--    reference: Reference to some other declaration. -->
+  <element name="reference">
+    <sequence/>
+  </element>
+  <attlist name="reference">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="declaration" use="required">
+      <basic name="IDREF"/>
+    </attribute>
+  </attlist>
+<!--    typedef: Definition of a named type. -->
+  <element name="typedef">
+    <sequence>
+      <elementRef name="descr"/>
+      <modelGroupRef name="idl-type.mix"/>
+    </sequence>
+  </element>
+  <attlist name="typedef">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attribute name="array.size" use="optional">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attlist>
+<!--    struct: Declaration of a struct type. -->
+  <element name="struct">
+    <sequence>
+      <elementRef name="descr"/>
+      <oneOrMore>
+        <elementRef name="component"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <attlist name="struct">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!--    component: Declaration of a structural member. -->
+  <element name="component">
+    <modelGroupRef name="idl-type.mix"/>
+  </element>
+  <attlist name="component">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!--    union: Declaration of a union type. -->
+  <element name="union">
+    <sequence>
+      <elementRef name="descr"/>
+      <oneOrMore>
+        <elementRef name="case"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <attlist name="union">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attribute name="switch.type" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+  <element name="case">
+    <sequence>
+      <elementRef name="descr"/>
+      <modelGroupRef name="idl-type.mix"/>
+    </sequence>
+  </element>
+  <attlist name="case">
+    <attributeGroupRef name="common.att"/>
+    <attribute name="labels" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+<!--    enum: Declaration of an enum type. -->
+  <element name="enum">
+    <sequence>
+      <elementRef name="descr"/>
+      <oneOrMore>
+        <elementRef name="enumerator"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <attlist name="enum">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+  <element name="enumerator">
+    <elementRef name="descr"/>
+  </element>
+  <attlist name="enumerator">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!--    sequence: Declaration of a sequence type (not named). -->
+  <element name="sequence">
+    <zeroOrMore>
+      <elementRef name="sequence"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="sequence">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-type.att"/>
+    <attribute name="size" use="optional">
+      <basic name="NMTOKEN"/>
+    </attribute>
+  </attlist>
+<!--    constant: Declaration of a named constant. -->
+  <element name="constant">
+    <elementRef name="descr"/>
+  </element>
+  <attlist name="constant">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attributeGroupRef name="idl-type.att"/>
+    <attribute name="value" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+<!--    exception: Declaration of an exception. -->
+  <element name="exception">
+    <sequence>
+      <elementRef name="descr"/>
+      <zeroOrMore>
+        <elementRef name="component"/>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <attlist name="exception">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+<!-- component (defined under struct, above)-->
+<!--    attribute: Declaration of an attribute (data member). -->
+  <element name="attribute">
+    <elementRef name="descr"/>
+  </element>
+  <attlist name="attribute">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attributeGroupRef name="idl-type.att"/>
+    <attribute name="readonly" use="optional" default="no">
+      <enumChoice>
+        <enum>yes</enum>
+        <enum>no</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+<!--    method: Declaration of a method. -->
+  <element name="method">
+    <sequence>
+      <elementRef name="descr"/>
+      <elementRef name="parameters"/>
+      <elementRef name="returns"/>
+      <elementRef name="raises"/>
+    </sequence>
+  </element>
+  <attlist name="method">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+  </attlist>
+  <element name="parameters">
+    <zeroOrMore>
+      <elementRef name="param"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="parameters">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="param">
+    <elementRef name="descr"/>
+  </element>
+  <attlist name="param">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-name.att"/>
+    <attributeGroupRef name="idl-type.att"/>
+    <attribute name="attr" use="optional" default="inout">
+      <enumChoice>
+        <enum>in</enum>
+        <enum>out</enum>
+        <enum>inout</enum>
+      </enumChoice>
+    </attribute>
+  </attlist>
+  <element name="returns">
+    <elementRef name="descr"/>
+  </element>
+  <attlist name="returns">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="idl-type.att"/>
+  </attlist>
+  <element name="raises">
+    <zeroOrMore>
+      <elementRef name="exception"/>
+    </zeroOrMore>
+  </element>
+<!-- exception (defined under constant, above)-->
+  <element name="typename">
+    <pcdata/>
+  </element>
+  <attlist name="typename">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Phrase-level elements ......................................... -->
+<!-- ............................................................... -->
+<!--
+#2000-03-07: maler: Added att and attval elements.
+-->
+<!--    att: Attribute name. -->
+  <element name="att">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="att">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    attval: Attribute value. -->
+  <element name="attval">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="attval">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    bibref: Reference to a bibliography list entry; should
+        generate, in square brackets, "key" on bibl. -->
+  <element name="bibref">
+    <sequence/>
+  </element>
+<!--    ref attribute:
+        A bibliography reference must link to the bibl element that
+        describes the resource. -->
+  <attlist name="bibref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="ref-req.att"/>
+  </attlist>
+  <element name="code">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="code">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-03-10: maler: Declared ednote and related elements.
+#1999-07-02: maler: Changed edtext content from #PCDATA to %p.pcd.mix;.
+-->
+<!--    ednote: Editorial note for communication among editors. -->
+  <element name="ednote">
+    <sequence>
+      <optional>
+        <elementRef name="name"/>
+      </optional>
+      <optional>
+        <elementRef name="date"/>
+      </optional>
+      <elementRef name="edtext"/>
+    </sequence>
+  </element>
+  <attlist name="ednote">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="date">
+    <pcdata/>
+  </element>
+  <attlist name="date">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="edtext">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="edtext">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Added el element.
+-->
+<!--    el: Element type name (GI). -->
+  <element name="el">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="el">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Expanded emph to %p.pcd.mix;.
+-->
+  <element name="emph">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="emph">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    footnote: Both footnote content and call to footnote. -->
+  <element name="footnote">
+    <oneOrMore>
+      <modelGroupRef name="obj.mix"/>
+    </oneOrMore>
+  </element>
+  <attlist name="footnote">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Added function and gave it content of
+#                   %tech.pcd.mix; instead of XPath's #PCDATA.
+-->
+  <element name="function">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="function">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+  <element name="kw">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="kw">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+<!--    loc: Generic link to a Web resource, similar to HTML's A. -->
+  <element name="loc">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        The purpose of a loc element is to function as a A-like
+        hypertext link to a resource.  (Ideally, the content of loc
+        will also mention the URI of the resource, so that readers of
+        the printed version will be able to locate the resource.) E.g.:
+
+<loc href="http://www.my.com/doc.htm">http://www.my.com/doc.htm</loc>
+        -->
+  <attlist name="loc">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href-req.att"/>
+    <attributeGroupRef name="user-replace.att"/>
+  </attlist>
+<!--    nt: Mention of a nonterminal in text, along with a link to
+        the production in the current document that defines it. -->
+  <element name="nt">
+    <pcdata/>
+  </element>
+<!--    def attribute:
+        The nonterminal must link to the production that defines
+        it. -->
+  <attlist name="nt">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="def-req.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Declared phrase.
+-->
+<!--    phrase: "Attribute hanger" for small bits of (e.g.) differenced
+        text in a paragraph or similar, when another element isn't handy.
+        Beware that its content model may allow more nested elements than
+        would normally be allowed in some contexts. -->
+  <element name="phrase">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="phrase">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1998-03-10: maler: Declared quote.
+-->
+<!--    quote: Scare quotes and other purely presentational quotes. -->
+  <element name="quote">
+    <zeroOrMore>
+      <modelGroupRef name="p.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="quote">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    specref: Reference to a div, olist item, prod, or issue
+        in the current document; should generate italic "[n.n],
+        Section Title" for div, "n" for numbered item, "[n]" for
+        production, or "Issue id" for issue. -->
+  <element name="specref">
+    <sequence/>
+  </element>
+<!--    ref attribute:
+        The purpose of a specref element is to link to a div, item
+        in an olist, or production in the current spec. -->
+  <attlist name="specref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="ref-req.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Added sub and sup.
+-->
+<!--    sub: Subscript. -->
+  <element name="sub">
+    <pcdata/>
+  </element>
+  <attlist name="sub">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    sup: Superscript. -->
+  <element name="sup">
+    <pcdata/>
+  </element>
+  <attlist name="sup">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    term: The term in text that is being defined in text. -->
+  <element name="term">
+    <pcdata/>
+  </element>
+  <attlist name="term">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--    termdef: Definition of a term in text. -->
+  <element name="termdef">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="termdef.pcd.mix"/>
+        <modelGroupRef name="termdef.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+<!--    ID attribute:
+        A term definition must have an ID so that it can be linked
+        to from termref elements. -->
+<!--    term attribute:
+        The canonical form of the term or phrase being defined must
+        appear in this attribute, even if the term or phrase also
+        appears in the element content in identical form (e.g., in
+        the term element). -->
+  <attlist name="termdef">
+    <attributeGroupRef name="common-idreq.att"/>
+    <attribute name="term" use="required">
+      <basic name="CDATA"/>
+    </attribute>
+  </attlist>
+<!--    termref: Mention of a term, along with a link to the
+        definition in the current document. -->
+  <element name="termref">
+    <pcdata/>
+  </element>
+<!--    ref attribute:
+        A term reference must link to the termdef element that
+        defines the term. -->
+  <attlist name="termref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="def-req.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+<!--    titleref: Citation of another document, which can also
+        link to that document if it is a Web resource. -->
+  <element name="titleref">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        A title reference can optionally function as a hypertext
+        link to the resource with this title.  E.g.:
+
+<loc href="http://www.my.com/doc.htm">http://www.my.com/doc.htm</loc>
+        -->
+  <attlist name="titleref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href.att"/>
+    <attributeGroupRef name="user-new.att"/>
+  </attlist>
+<!--
+#2000-03-07: maler: Added var.
+-->
+<!--    var: String standing for a variable value that the user
+        or system will supply.  For example: "For each node
+        <var>x</var> in this node-set..." -->
+  <element name="var">
+    <zeroOrMore>
+      <modelGroupRef name="tech.pcd.mix"/>
+    </zeroOrMore>
+  </element>
+  <attlist name="var">
+    <attributeGroupRef name="common.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+<!--    xnt: Mention of a nonterminal in text, along with a link to
+        the production in another document that defines it. -->
+  <element name="xnt">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        The nonterminal must hyperlink to a resource that serves
+        to define it (e.g., a production in a related XML
+        specification).  E.g.:
+
+<xnt href="http://www.w3.org/TR/spec.htm#prod3">Name</xnt>
+        -->
+  <attlist name="xnt">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href-req.att"/>
+    <attributeGroupRef name="user-new.att"/>
+  </attlist>
+<!--
+#1997-12-29: maler: Declared xspecref.
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+<!--    xspecref: Reference to a div, olist item, prod, or issue
+        in a related specification document; should generate
+        no special text. -->
+  <element name="xspecref">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        The spec reference must hyperlink to the resource to
+        cross-refer to (e.g., a section in a related XML
+        specification).  E.g.:
+
+<xspecref href="http://www.w3.org/TR/spec.htm#sec2">
+the section on constraints</xspecref>
+        -->
+  <attlist name="xspecref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href-req.att"/>
+    <attributeGroupRef name="user-new.att"/>
+  </attlist>
+<!--
+#1999-07-02: maler: Added show/actuate attributes and default values.
+-->
+<!--    termref: Mention of a term, along with a link to the
+        definition in a related document. -->
+  <element name="xtermref">
+    <pcdata/>
+  </element>
+<!--    href attribute:
+        The term reference must hyperlink to the resource that
+        serves to define the term (e.g., a term definition in
+        a related XML specification).  E.g.:
+
+<xtermref href="http://www.w3.org/TR/spec.htm#term5">
+entity
+</xtermref>
+        -->
+  <attlist name="xtermref">
+    <attributeGroupRef name="common.att"/>
+    <attributeGroupRef name="simple-xlink.att"/>
+    <attributeGroupRef name="href-req.att"/>
+    <attributeGroupRef name="user-new.att"/>
+  </attlist>
+<!-- ............................................................... -->
+<!-- Unused elements for ADEPT ..................................... -->
+<!-- ............................................................... -->
+<!--
+#1997-09-30: maler: Added unusued elements.
+#1997-10-14: maler: Fixed div to move nested div to the mixture.
+#1998-05-14: maler: Added key-term, htable, and htbody.
+#1998-11-30: maler: Added para, listitem, itemizedlist, and orderedlist.
+-->
+<!--    The following elements are purposely declared but never
+        referenced.  Declaring them allows them to be pasted from
+        an HTML document, an earlier version of an XMLspec document,
+        or a DocBook document into a document using this DTD in ADEPT.
+        The ATD Context Transformation mechanism will try to convert
+        them to the appropriate element for this DTD.  While this
+        conversion will not work for all fragments, it does allow many
+        cases to work reasonably well. -->
+  <element name="div">
+    <sequence>
+      <optional>
+        <elementRef name="head"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <modelGroupRef name="div.mix"/>
+          <elementRef name="ul"/>
+          <elementRef name="ol"/>
+          <elementRef name="h1"/>
+          <elementRef name="h2"/>
+          <elementRef name="h3"/>
+          <elementRef name="h4"/>
+          <elementRef name="h5"/>
+          <elementRef name="h6"/>
+          <elementRef name="div"/>
+        </choice>
+      </zeroOrMore>
+    </sequence>
+  </element>
+  <element name="h1">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="h2">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="h3">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="h4">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="h5">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="h6">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="head.pcd.mix"/>
+        <elementRef name="em"/>
+        <elementRef name="a"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="pre">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="eg.pcd.mix"/>
+        <elementRef name="em"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="ul">
+    <zeroOrMore>
+      <choice>
+        <elementRef name="item"/>
+        <elementRef name="li"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="ol">
+    <zeroOrMore>
+      <choice>
+        <elementRef name="item"/>
+        <elementRef name="li"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="li">
+    <zeroOrMore>
+      <choice>
+        <pcdata/>
+        <modelGroupRef name="obj.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="em">
+    <pcdata/>
+  </element>
+  <element name="a">
+    <pcdata/>
+  </element>
+  <element name="key-term">
+    <pcdata/>
+  </element>
+  <element name="htable">
+    <sequence>
+      <optional>
+        <elementRef name="caption"/>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <elementRef name="col"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <elementRef name="colgroup"/>
+        </zeroOrMore>
+      </choice>
+      <optional>
+        <elementRef name="thead"/>
+      </optional>
+      <optional>
+        <elementRef name="tfoot"/>
+      </optional>
+      <oneOrMore>
+        <elementRef name="tbody"/>
+      </oneOrMore>
+    </sequence>
+  </element>
+  <element name="htbody">
+    <oneOrMore>
+      <elementRef name="tr"/>
+    </oneOrMore>
+  </element>
+  <element name="statusp">
+    <zeroOrMore>
+      <choice>
+        <modelGroupRef name="p.pcd.mix"/>
+        <modelGroupRef name="p.mix"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+  <element name="itemizedlist">
+    <zeroOrMore>
+      <elementRef name="listitem"/>
+    </zeroOrMore>
+  </element>
+  <element name="orderedlist">
+    <zeroOrMore>
+      <elementRef name="listitem"/>
+    </zeroOrMore>
+  </element>
+  <element name="listitem">
+    <zeroOrMore>
+      <elementRef name="para"/>
+    </zeroOrMore>
+  </element>
+  <element name="para">
+    <pcdata/>
+  </element>
+<!-- ............................................................... -->
+<!-- Change history ................................................ -->
+<!-- ............................................................... -->
+<!--
+#1997-08-18: maler
+#- Did a major revision.
+#1997-09-10: maler
+#- Updated FPI.
+#- Removed namekey element and put key attribute on name element.
+#- Made statusp element and supporting entities.
+#- Added slist element with sitem+ content.
+#- Required head on scrap and added new bnf subelement.
+#- Added an xnt element and allowed it and nt in regular text and rhs.
+#- Removed the ntref element.
+#- Added back the com element to the content of rhs.
+#- Added a key attribute to bibl.
+#- Removed the ident element.
+#- Added a term element to be used inside termdef.
+#- Added an xtermref element parallel to termref.
+#- Beefed up DTD comments.
+#1997-09-12: maler
+#- Allowed term element in general text.
+#- Changed bibref to EMPTY.
+#- Added ref.class to termdef.pcd.mix.
+#1997-09-14: maler
+#- Changed main attribute of xtermref from def to href.
+#- Added termdef.class to label contents.
+#1997-09-30: maler
+#- Added character entity module and added new entities.
+#- Removed p from appearing directly in self; created %p.mix;.
+#- Added inform-div (non-normative division) element.
+#- Fixed xtermref comment to mention href, not ref.
+#- Extended orglist model to allow optional affiliation.
+#- Modified author to make affiliation optional.
+#- Added %speclist.class; and %note.class; to %obj.mix; and %p.mix;.
+#- Added %note.class; and %illus.class; to %termdef.pcd.mix;.
+#- Added unused HTML elements.
+#- Put empty system ID next to public ID in entity declarations.
+#1997-10-14: maler
+#- Fixed "unused" div content model to move nested div to mixture.
+#1997-10-16: maler
+#- Added SGML Open Exchange tables.
+#1997-11-28: maler
+#- Added support for prodgroup and its attributes.
+#- Added support for HTML tables.
+#- Added loc and bibref to content of com.
+#- Added loc to general p content models.
+#- Allowed p as alternative to statusp in status.
+#- Added non-null system IDs to external parameter entity declarations.
+#- (Modified the SGML Open table module to make it XML-compliant.)
+#- (Modified the character entity module.)
+#1997-12-29: maler
+#- Moved #PCDATA occurrences to come before GIs in content models.
+#- Removed use of the SGML Open table module.
+#- Added xspecref element.
+#- Ensured that all FPIs contain 4-digit year.
+#- (Modified the character entity module.)
+#1998-03-10: maler
+#- Merged the character entity and table modules into the main file.
+#- Added ldquo and rdquo entities.
+#- Added common attributes to prodgroup.
+#- Made the email element in header optional.
+#- Removed reference to the SGML Open table model.
+#- Added ednote element.
+#- Added quote element.
+#- Updated XLink usage to reflect 3 March 1998 WD.
+#- Added "local" entities to the class entities for customization.
+#- Parameterized several content models to allow for customization.
+#1998-03-23: maler
+#- Cleaned up some comments and removed some others.
+#- Added xml:space semi-common attribute to eg and bnf elements.
+#- Added show and embed attributes on all the uses of href.
+#- Added %common.att; to all HTML table elements.
+#- Added a real URI to the "typical invocation" comment.
+#1998-05-14: maler
+#- Fixed mdash, ldquo, and rdquo character entities.
+#- Switched to the full HTML 4.0 table model.
+#- Removed htable/htbody elements and replaced them with table/tbody.
+#- Added issue element to %note.class; and declared it.
+#- Allowed prevlocs and latestloc in either order.
+#- Added key-term, htable, htbody, and statusp as unused elements.
+#- Removed real statusp element in favor of plain p.
+#1998-05-21: maler
+#- Declared generic constraint and constraintnote elements.
+#- Added constraintnote to %note.class;.
+#- Added constraint to %eg.pcd.mix; and prod content model.
+#1998-08-22: maler
+#- Fixed %illus.class; to mention table instead of htable.
+#- Added definitions to %illus.class; for DOM model.
+#- Added DOM definitions element and its substructure.
+#- Updated XLink usage in %href.att; to use xlink:form and #IMPLIED.
+#- Added clarifying comments to href-using elements.
+#1998-11-30: maler
+#- Added new unused elements to support DocBook translation.
+#- Updated maler phone numbers.
+#1998-12-3: maler
+#- Fixed character entities with respect to escaping of ampersands.
+#- Added many more explanatory comments.
+#1999-07-02: maler
+#- Added %loc.class; to all PCD mixes that didn't already have it.
+#- Removed unused %loc.pcd.mix;.
+#- Made version in spec header optional.
+#- Added three new attributes to spec.
+#- Broadened content of edtext.
+#- Added optional copyright element to header.
+#- Reorganized XLink-related parameter entities; added xmlns:xlink.
+#- Changed edtext content from #PCDATA to %p.pcd.mix;.
+#- Added show/actuate atts and default values to all href elements.
+#- Changed versioning scheme from 8-digit dates to version numbers.
+#- Added w3c-doctype, other-doctype, status atts to spec element.
+#- Added prodrecap element inside scrap.
+#- Added headstyle attribute to scrap.
+#2000-03-07: maler
+#- Added proto element, its arg subelement, and the %argtypes; entity.
+#- Added function, var, sub, sup, phrase, el, att, attval elements.
+#- Expanded emph to %p.pcd.mix;.
+#- Allowed status and abstract to appear in the opposite order.
+#- Updated XLink usage to the latest WD, except for href and source.
+#- Removed the xml:attributes attribute from graphic.
+#- Added %local.graphic.att; to graphic.
+#- Added common diff attribute.
+#- Added div5 element.
+#- Broadened content models of publoc, prevlocs, and latestloc.
+#- Added head, source, resolution, and status attribute to issue.
+#- Added cr, issues, and dispcmts to w3c-doctype attribute on spec.
+#- Added example element.
+-->
+<!-- ............................................................... -->
+<!-- End of XML specification DTD .................................. -->
+<!-- ............................................................... -->
+</doctype>
