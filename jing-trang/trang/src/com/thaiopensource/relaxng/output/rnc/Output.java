@@ -19,8 +19,6 @@ import java.util.HashMap;
 /*
 Preserve namespace context for annotations.
 
-Make use of ##
-
 Use \x{} escapes for characters not in repertoire of selected encoding
 
 Make long literals pretty
@@ -694,21 +692,7 @@ class Output {
     }
 
     public Object visitComment(Comment c) {
-      String value = c.getValue();
-      int i = 0;
-      for (;;) {
-        if (i >= value.length() || value.charAt(i) == '\t')
-          pp.text("#");
-        else
-          pp.text("# ");
-        int j = value.indexOf('\n', i);
-        String tem = j < 0 ? value.substring(i) : value.substring(i, j);
-        encode(tem);
-        pp.hardNewline();
-        if (j < 0)
-          break;
-        i = j + 1;
-      }
+      comment("#", c.getValue());
       return null;
     }
 
@@ -746,16 +730,65 @@ class Output {
     }
     else if (!hasAnnotations(annotated))
       return false;
-    pp.startGroup();
     List before = (annotated.mayContainText()
                    ? annotated.getFollowingElementAnnotations()
                    : annotated.getChildElementAnnotations());
+    int i = 0;
+    int len = before.size();
+    for (; i < len; i++) {
+      int j = i;
+      if (i != 0) {
+        do {
+          if (!(before.get(j) instanceof Comment))
+            break;
+        } while (++j < len);
+        if (j >= len)
+          break;
+      }
+      String doc = documentationString((AnnotationChild)before.get(j));
+      if (doc == null)
+        break;
+      if (j == i)
+        pp.hardNewline();
+      else {
+        for (;;) {
+          ((Comment)before.get(i)).accept(annotationChildOutput);
+          if (++i == j)
+            break;
+          pp.hardNewline();
+        }
+      }
+      comment("##", doc);
+    }
+    if (i > 0)
+      before = before.subList(i, len);
+    pp.startGroup();
     if (!annotated.getAttributeAnnotations().isEmpty()
         || !before.isEmpty()) {
       annotationBody(annotated.getAttributeAnnotations(), before);
       pp.softNewline(" ");
     }
     return true;
+  }
+
+  private String documentationString(AnnotationChild child) {
+    if (!(child instanceof ElementAnnotation))
+     return null;
+    ElementAnnotation elem = (ElementAnnotation)child;
+    if (!elem.getLocalName().equals("documentation"))
+      return null;
+    if (!elem.getNamespaceUri().equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS))
+      return null;
+    if (!elem.getAttributes().isEmpty())
+      return null;
+    StringBuffer buf = new StringBuffer();
+    for (Iterator iter = elem.getChildren().iterator(); iter.hasNext();) {
+      Object obj = iter.next();
+      if (!(obj instanceof TextAnnotation))
+        return null;
+      buf.append(((TextAnnotation)obj).getValue());
+    }
+    return buf.toString();
   }
 
   private void endAnnotations(Annotated annotated) {
@@ -937,4 +970,19 @@ class Output {
     return nsb.getNonEmptyPrefix(ns);
   }
 
+  private void comment(String delim, String value) {
+    int i = 0;
+    for (;;) {
+      pp.text(delim);
+      if (i < value.length() && value.charAt(i) != '\t')
+        pp.text(" ");
+      int j = value.indexOf('\n', i);
+      String tem = j < 0 ? value.substring(i) : value.substring(i, j);
+      encode(tem);
+      pp.hardNewline();
+      if (j < 0)
+        break;
+      i = j + 1;
+    }
+  }
 }
