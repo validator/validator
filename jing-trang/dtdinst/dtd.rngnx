@@ -1,0 +1,69 @@
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = element doctype { decl* }
+
+decl = 
+  elementDecl 
+  | attlistDecl
+  | modelGroupDef
+  | attributeGroupDef
+  | enumGroupDef
+  | datatypeDef
+  | flagDef
+
+elementDecl = element element { qname, modelGroup }
+
+modelGroupDef = element modelGroup { name, modelGroup }
+
+datatypeDef = element datatype { name, datatype }
+
+flagDef = element flag { name, flag }
+
+datatype =
+  element basic { 
+    "CDATA" 
+    | "NMTOKEN" | "NMTOKENS"
+    | "ENTITY" | "ENTITIES"
+    | "ID"
+    | "IDREF" | "IDREFS"
+  }
+  | element enumChoice { enumGroup }
+  | element notation { enumGroup }
+  | element datatypeRef { name }
+
+enumGroup =
+  (element enum { xsd:NMTOKEN }
+   | element enumGroupRef { name } )*
+
+enumGroupDef = element enumGroup { name, enumGroup }
+
+flag =
+  element include { empty }
+  | element ignore { empty }
+  | element flagRef { name }
+
+attlistDecl = element attlist { qname, attributeGroup }
+
+attributeGroupDef = element attributeGroup { name, attributeGroup }
+
+attributeGroup =
+  (element attribute { name, use, defaultValue, datatype }
+   | element attributeGroupRef { name } )*
+
+modelGroup =
+  element modelGroupRef { name }
+  | element elementRef { name }
+  | element oneOrMore { modelGroup }
+  | element zeroOrMore { modelGroup }
+  | element optional { modelGroup }
+  | element pcdata { empty }
+  | element choice { (modelGroup, modelGroup+)? }
+  | element sequence { (modelGroup, modelGroup+)? }
+
+name = attribute name { xsd:NCName }
+
+qname = attribute name { xsd:Name }
+
+defaultValue = attribute default { text }
+
+use = attribute use { "optional" | "required" }
