@@ -12,13 +12,14 @@ start =
 
 finalStart = element constraints { inherited, constraints }
 
-constraints = (target|ref|context)+
+constraints = (key|ref|context)+
 
 context = element context { select?, inherited, constraints }
 
-target =
-  element key|map {
+key =
+  element key {
     attribute name { xsd:NCName }?, # names are scoped to the context
+    attribute allowDuplicates { xsd:boolean }?,
     select,
     inherited,
     element field {
