@@ -2,6 +2,9 @@ package com.thaiopensource.relaxng.util;
 
 import java.io.IOException;
 import java.io.File;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.io.BufferedWriter;
 import java.net.URL;
 
 import org.xml.sax.SAXException;
@@ -24,19 +27,20 @@ class TestDriver {
 
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
-    eh = new ErrorHandlerImpl(System.out);
+    eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
     engine = new ValidationEngine();
     engine.setXMLReaderCreator(Driver.createXMLReaderCreator());
     engine.setErrorHandler(eh);
     engine.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
     int result = 0;
-    for (int i = 0; i < args.length; i++) {
+    for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));
       if (n > result)
 	result = n;
     }
     System.err.println("Number of tests: " + nTests);
     System.err.println("Elapsed time: " + (System.currentTimeMillis() - startTime));
+    eh.close();
     return result;
   }
 
