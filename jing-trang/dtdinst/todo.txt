@@ -10,6 +10,8 @@ RELAX NG: preserve directory structure on output.
 
 RELAX NG: Don't create an output file that contains just comments.
 
+Figure out whether we should suffix the properties file with "_en".
+
 Add DtdParseException to om package.
 
 Maybe better to avoid empty sequences and empty choices in the object
