@@ -18,6 +18,8 @@ public class Schema extends Annotated {
   private Map attributeGroupMap;
   private Map simpleTypeMap;
   private List subSchemas;
+  private final List leadingComments = new Vector();
+  private final List trailingComments = new Vector();
 
   public Schema(SourceLocation location, Annotation annotation, String uri) {
     super(location, annotation);
@@ -99,6 +101,14 @@ public class Schema extends Annotated {
 
   public List getSubSchemas() {
     return subSchemas;
+  }
+
+  public List getLeadingComments() {
+    return leadingComments;
+  }
+
+  public List getTrailingComments() {
+    return trailingComments;
   }
 
   public boolean equals(Object obj) {
