@@ -345,6 +345,7 @@ class SchemaReaderImpl implements SchemaReader {
       SAXSource source = createValidatingSource(in, builder.toPropertyMap(), ueh1);
       source = createTransformingSource(source,
                                         SchematronProperty.PHASE.get(properties),
+                                        properties.contains(SchematronProperty.DIAGNOSE),
                                         in.getSystemId(),
                                         ueh2);
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
@@ -374,12 +375,15 @@ class SchemaReaderImpl implements SchemaReader {
     return new SAXSource(new ValidateStage(xr, validator, ceh), in);
   }
 
-  private SAXSource createTransformingSource(SAXSource in, String phase, String systemId, CountingErrorHandler ceh) throws SAXException {
+  private SAXSource createTransformingSource(SAXSource in, String phase, boolean diagnose,
+                                             String systemId, CountingErrorHandler ceh) throws SAXException {
     try {
       Transformer transformer = schematron.newTransformer();
       transformer.setErrorListener(new DraconianErrorListener());
       if (phase != null)
         transformer.setParameter("phase", phase);
+      if (diagnose)
+        transformer.setParameter("diagnose", Boolean.TRUE);
       return new SAXSource(new TransformStage(transformer, in, systemId, ceh, localizer),
                            new InputSource(systemId));
     }

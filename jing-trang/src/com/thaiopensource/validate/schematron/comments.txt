@@ -41,3 +41,8 @@ on SChematron elements.
 
 19. Whitespace handling in messages underspecified.
 
+20. icon attribute on key doesn't make sense to me
+
+21. keys in abstract rules
+
+22. diagnostics wrapper element seems unnecessary

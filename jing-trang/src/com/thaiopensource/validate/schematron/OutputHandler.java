@@ -51,11 +51,15 @@ class OutputHandler extends DefaultHandler {
     }
     else if (localName.equals("statement"))
       inMessage = true;
+    else if (localName.equals("diagnostic")) {
+      inMessage = true;
+      message.append("\n  ");
+    }
   }
 
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
-    if (localName.equals("statement"))
+    if (localName.equals("statement") || localName.equals("diagnostic"))
       inMessage = false;
     else if (localName.equals("failed-assertion")
              || localName.equals("report")) {

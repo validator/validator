@@ -7,12 +7,8 @@
 	xmlns:saxon="http://icl.com/saxon"
         xmlns:xj="http://xml.apache.org/xalan/java">
 
-<!--
-TODO:
-diagnostic
--->
-
 <xsl:param name="phase" select="'#DEFAULT'"/>
+<xsl:param name="diagnose" select="false()"/>
 
 <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
@@ -22,6 +18,10 @@ diagnostic
          match="/sch:schema/sch:phase[@id]"
          use="normalize-space(@id)"/>
 
+<xsl:key name="active"
+         match="/sch:schema/sch:phase[@id]/sch:active"
+         use="normalize-space(@pattern)"/>
+    
 <xsl:key name="rule"
          match="/sch:schema/sch:pattern/sch:rule[@id]"
          use="normalize-space(@id)"/>
@@ -31,7 +31,7 @@ diagnostic
          use="normalize-space(@id)"/>
 
 <xsl:key name="diagnostic"
-         match="/sch:schema/sch:diagnostic[@id]"
+         match="/sch:schema/sch:diagnostics/sch:diagnostic[@id]"
          use="normalize-space(@id)"/>
 
 <xsl:template match="sch:schema">
@@ -45,7 +45,7 @@ diagnostic
         <axsl:apply-templates select="/" mode="all"/>
       </result>
     </axsl:template>
-    <xsl:apply-templates select="sch:key" mode="key"/>
+    <xsl:apply-templates select="sch:key|sch:diagnostics/sch:diagnostic"/>
     <xsl:choose>
       <xsl:when test="normalize-space($phase)='#DEFAULT' and @defaultPhase">
         <xsl:call-template name="process-phase">
@@ -79,11 +79,10 @@ diagnostic
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:variable name="active-patterns" select="key('phase',$p)/sch:active/@id"/>
+      <xsl:variable name="active-patterns" select="key('phase',$p)/sch:active/@pattern"/>
       <xsl:call-template name="process-patterns">
         <xsl:with-param name="patterns" select="
-              sch:pattern[@id and $active-patterns[normalize-space(.)
-                                                   =normalize-space(current()/@id)]]"/>
+              sch:pattern[key('active',normalize-space(@id))[normalize-space(../@id)=$p]]"/>
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
@@ -112,7 +111,7 @@ diagnostic
 	    <axsl:call-template name="R{$pattern-index}.{position()}"/>
 	    <axsl:apply-templates select="*" mode="all"/>
 	  </axsl:template>
-          <xsl:apply-templates select="sch:key" mode="key"/>
+          <xsl:apply-templates select="sch:key"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <axsl:template name="A{normalize-space(@id)}">
@@ -153,13 +152,13 @@ diagnostic
 
 <xsl:template match="*" mode="assertion"/>
 
-<xsl:template match="sch:rule/sch:key" mode="key">
+<xsl:template match="sch:rule/sch:key">
   <axsl:key match="{../@context}" name="{@name}" use="{@path}">
     <xsl:call-template name="location"/>
   </axsl:key>
 </xsl:template>
 
-<xsl:template match="sch:schema/sch:key" mode="key">
+<xsl:template match="sch:schema/sch:key">
   <axsl:key match="{@match}" name="{@name}" use="{@path}">
     <xsl:call-template name="location"/>
   </axsl:key>
@@ -186,6 +185,34 @@ diagnostic
     <statement>
       <xsl:apply-templates/>
     </statement>
+  </xsl:if>
+  <xsl:if test="$diagnose and @diagnostics and normalize-space(@diagnostics)">
+    <xsl:call-template name="call-diagnostics">
+      <xsl:with-param name="list" select="concat(normalize-space(@diagnostics),' ')"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="call-diagnostics">
+  <xsl:param name="list"/>
+  <xsl:variable name="head" select="substring-before($list,' ')"/>
+  <xsl:variable name="tail" select="substring-after($list,' ')"/>
+  <axsl:call-template name="D{$head}"/>
+  <xsl:if test="$tail">
+    <xsl:call-template name="call-diagnostics">
+      <xsl:with-param name="list" select="substring-after($tail,' ')"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="sch:diagnostic">
+  <xsl:if test="$diagnose">
+    <axsl:template name="D{normalize-space(@id)}">
+      <diagnostic>
+	<xsl:copy-of select="@icon"/>
+	<xsl:apply-templates/>
+      </diagnostic>
+    </axsl:template>
   </xsl:if>
 </xsl:template>
 
@@ -326,6 +353,28 @@ diagnostic
     <xsl:with-param name="nodes" select=".."/>
     <xsl:with-param name="node-to-check" select="."/>
   </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="sch:assert|sch:report" mode="check">
+  <xsl:if test="@diagnostics and normalize-space(@diagnostics)">
+    <xsl:call-template name="check-diagnostics">
+      <xsl:with-param name="list" select="concat(normalize-space(@diagnostics),' ')"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="check-diagnostics">
+  <xsl:param name="list"/>
+  <xsl:variable name="head" select="substring-before($list,' ')"/>
+  <xsl:variable name="tail" select="substring-after($list,' ')"/>
+  <xsl:if test="not(key('diagnostic',$head))">
+    <err:error message="diagnostic_missing" arg="{$head}"/>
+  </xsl:if>
+  <xsl:if test="$tail">
+    <xsl:call-template name="check-diagnostics">
+      <xsl:with-param name="list" select="$tail"/>
+    </xsl:call-template>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="*" mode="check"/>

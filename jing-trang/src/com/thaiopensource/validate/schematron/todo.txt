@@ -1,7 +1,3 @@
-Implement diagnostics: checking, XSL, output, property
-
-Implement keys in XSL
-
 Try to get it working in Xalan
 
 Use system-id in LocationFilter
@@ -9,3 +5,5 @@ Use system-id in LocationFilter
 Normalize white-space in messsages
 
 dir elements should turn into appropriate Unicode
+
+Better message formatting
