@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctype>
   <param name="e1">value</param>
-  <param name="e2">'%e1;'</param>
+  <attributeDefault name="e2">
+    <default>value</default>
+  </attributeDefault>
   <element>
     <name>doc</name>
     <sequence/>
@@ -11,7 +13,7 @@
     <attribute>
       <name>a</name>
       <cdata/>
-      <default>value</default>
+      <attributeDefaultRef name="e2"/>
     </attribute>
   </attlist>
 </doctype>

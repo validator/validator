@@ -1295,7 +1295,9 @@ entities depending on the value of TEI.XML</comment>
       <comment>These parameter entities are used as keywords to express
 rules or constraints which cannot be fully expressed in SGML; their
 expansions show the nearest SGML equivalent.</comment>
-      <param name="INHERITED">#IMPLIED</param>
+      <attributeDefault name="INHERITED">
+        <implied/>
+      </attributeDefault>
       <datatype name="ISO-date">
         <cdata/>
       </datatype>
@@ -2324,7 +2326,7 @@ components specific to verse </comment>
             <attribute>
               <name>met</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>real</name>
@@ -3123,12 +3125,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>hand</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
           </attributeGroup>
           <comment> end of [DTCE]  19.</comment>
@@ -3556,12 +3558,12 @@ the global attributes.</comment>
         <attribute>
           <name>resp</name>
           <cdata/>
-          <implied/>
+          <attributeDefaultRef name="INHERITED"/>
         </attribute>
         <attribute>
           <name>type</name>
           <cdata/>
-          <implied/>
+          <attributeDefaultRef name="INHERITED"/>
         </attribute>
         <attribute>
           <name>inst</name>
@@ -3646,7 +3648,7 @@ string, as shown here.  </comment>
         <attribute>
           <name>lang</name>
           <tokenized name="IDREF"/>
-          <implied/>
+          <attributeDefaultRef name="INHERITED"/>
         </attribute>
         <attribute>
           <name>rend</name>
@@ -6237,7 +6239,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6275,7 +6277,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6315,7 +6317,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6348,7 +6350,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <cdata/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6446,12 +6448,12 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>hand</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>agent</name>
@@ -6489,7 +6491,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6499,7 +6501,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>hand</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>TEIform</name>
@@ -6532,7 +6534,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6542,7 +6544,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>hand</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>TEIform</name>
@@ -6570,7 +6572,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>resp</name>
             <cdata/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>cert</name>
@@ -6580,7 +6582,7 @@ are defined in file teicore2.dtd.</comment>
           <attribute>
             <name>hand</name>
             <tokenized name="IDREF"/>
-            <implied/>
+            <attributeDefaultRef name="INHERITED"/>
           </attribute>
           <attribute>
             <name>agent</name>
@@ -8980,7 +8982,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>who</name>
               <tokenized name="IDREFS"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>TEIform</name>
@@ -9033,7 +9035,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>who</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>iterated</name>
@@ -9071,7 +9073,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>who</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>iterated</name>
@@ -9109,7 +9111,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>who</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>iterated</name>
@@ -9146,7 +9148,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>who</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>type</name>
@@ -12292,12 +12294,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>unit</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>interval</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>since</name>
@@ -12370,12 +12372,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>result</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>desc</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>scope</name>
@@ -12458,7 +12460,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
                 <enum>excl</enum>
                 <enum>incl</enum>
               </tokenized>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>weights</name>
@@ -12471,7 +12473,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
                 <enum>perc</enum>
                 <enum>real</enum>
               </tokenized>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>TEIform</name>
@@ -13783,7 +13785,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>cert</name>
@@ -13793,7 +13795,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>hand</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>to</name>
@@ -13826,7 +13828,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>cert</name>
@@ -13836,7 +13838,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>hand</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>to</name>
@@ -13907,12 +13909,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>hand</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>agent</name>
@@ -13982,7 +13984,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <cdata/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>TEIform</name>
@@ -14030,7 +14032,7 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>TEIform</name>
@@ -14087,12 +14089,12 @@ Current versions are available from the Text Encoding Initiative.</comment>
             <attribute>
               <name>resp</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>hand</name>
               <tokenized name="IDREF"/>
-              <implied/>
+              <attributeDefaultRef name="INHERITED"/>
             </attribute>
             <attribute>
               <name>agent</name>

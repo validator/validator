@@ -94,6 +94,9 @@ class Decl {
     case Entity.SEMANTIC_NAME_SPEC:
       entity.nameSpec = Param.paramsToNameSpec(entity.parsed);
       return new NameSpecDef(name, entity.nameSpec);
+    case Entity.SEMANTIC_ATTRIBUTE_DEFAULT:
+      entity.attributeDefault = Param.paramsToAttributeDefault(entity.parsed);
+      return new AttributeDefaultDef(name, entity.attributeDefault);
     }
     if (entity.problem == Entity.NO_PROBLEM)
       throw new RuntimeException("unexplained problem for entity " + entity.name);

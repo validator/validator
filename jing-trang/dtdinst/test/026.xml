@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctype>
-  <param name="INHERITED">#IMPLIED</param>
+  <attributeDefault name="INHERITED">
+    <implied/>
+  </attributeDefault>
   <element>
     <name>doc</name>
     <sequence/>
@@ -10,7 +12,7 @@
     <attribute>
       <name>att</name>
       <cdata/>
-      <implied/>
+      <attributeDefaultRef name="INHERITED"/>
     </attribute>
   </attlist>
 </doctype>

@@ -27,4 +27,5 @@ public interface TopLevelVisitor {
   void externalIdRef(String name, ExternalId externalId, TopLevel[] contents)
     throws Exception;
   void paramDef(String name, String value) throws Exception;
+  void attributeDefaultDef(String name, AttributeDefault ad) throws Exception;
 }

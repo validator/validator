@@ -102,6 +102,13 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void attributeDefaultDef(String name, AttributeDefault attributeDefault)
+    throws Exception {
+    w.startElement("attributeDefault");
+    w.attribute("name", name);
+    attributeDefault.accept(this);
+    w.endElement();
+  }
 
   public void choice(ModelGroup[] members) throws Exception {
     w.startElement("choice");
@@ -358,6 +365,14 @@ public class SchemaWriter implements TopLevelVisitor,
 
   public void requiredValue() throws Exception {
     w.startElement("required");
+    w.endElement();
+  }
+
+  public void attributeDefaultRef(String name,
+				  AttributeDefault attributeDefault)
+    throws Exception {
+    w.startElement("attributeDefaultRef");
+    w.attribute("name", name);
     w.endElement();
   }
 }

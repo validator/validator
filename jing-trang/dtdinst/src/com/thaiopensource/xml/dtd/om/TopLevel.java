@@ -20,6 +20,7 @@ public abstract class TopLevel {
   public static final int EXTERNAL_ID_DEF = 17;
   public static final int EXTERNAL_ID_REF = 18;
   public static final int PARAM_DEF = 19;
+  public static final int ATTRIBUTE_DEFAULT_DEF = 20;
 
   public abstract int getType();
   public abstract void accept(TopLevelVisitor visitor) throws Exception;

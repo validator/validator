@@ -9,6 +9,7 @@ decl =
   | attributeGroupDef
   | enumGroupDef
   | datatypeDef
+  | attributeDefaultDef
   | flagDef
   | nameSpecDef
   | externalIdDef
@@ -29,6 +30,8 @@ elementDecl = element element { nameSpec, modelGroup }
 modelGroupDef = element modelGroup { name, modelGroup }
 
 datatypeDef = element datatype { name, datatype }
+
+attributeDefaultDef = element attributeDefault { name, attributeDefault }
 
 flagDef = element flag { name, flag }
 
@@ -94,6 +97,7 @@ attributeDefault =
   element implied { empty }
   | element required { empty }
   | element default|fixed { text }
+  | element attributeDefaultRef { name }
 
 modelGroup =
   element modelGroupRef { name }

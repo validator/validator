@@ -5,4 +5,6 @@ public interface AttributeDefaultVisitor {
   public void fixedValue(String value) throws Exception;
   public void impliedValue() throws Exception;
   public void requiredValue() throws Exception;
+  public void attributeDefaultRef(String name, AttributeDefault ad)
+    throws Exception;
 }

@@ -1,3 +1,5 @@
+Fix tei2rng.xsl to deal with attributeDefaultRef/Def.
+
 Overridden general entity declarations.
 
 Overridden external parameter entity declarations.
@@ -16,8 +18,6 @@ Try to parse overridden declarations.
 Should recognize above case as enum group.
 
 Warning for unused parameter entities.
-
-Add AttributeDefaultDef.
 
 String pasting.
 
@@ -60,4 +60,3 @@ rather than a TextDecl.
 
 In EncodingDetectInputStream should check that encoding specified in
 XML declaration is consistent with auto-detected encoding.
-

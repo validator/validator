@@ -74,23 +74,7 @@ class Param {
 	{
 	  NameSpec nameSpec = currentParamToNameSpec(ps);
 	  Datatype datatype = paramsToDatatype(ps);
-	  ps.advance();
-	  AttributeDefault ad;
-	  switch (ps.type) {
-	  case REQUIRED:
-	    ad = new RequiredValue();
-	    break;
-	  case FIXED:
-	    ps.advance();
-	    ad = new FixedValue(ps.value);
-	    break;
-	  case DEFAULT_ATTRIBUTE_VALUE:
-	    ad = new DefaultValue(ps.value);
-	    break;
-	  default:
-	    ad = new ImpliedValue();
-	    break;
-	  }
+	  AttributeDefault ad = paramsToAttributeDefault(ps);
 	  agm = new Attribute(nameSpec, datatype, ad);
 	}
       }
@@ -119,6 +103,29 @@ class Param {
       return new NotationDatatype(Particle.particlesToEnumGroup(ps.group.particles));
     case ATTRIBUTE_TYPE:
       return new BasicDatatype(ps.value);
+    }
+    throw new Error();
+  }
+
+  static AttributeDefault paramsToAttributeDefault(Vector v) {
+    return paramsToAttributeDefault(new ParamStream(v, true));
+  }
+
+  static AttributeDefault paramsToAttributeDefault(ParamStream ps) {
+    ps.advance();
+    switch (ps.type) {
+    case REFERENCE:
+      return new AttributeDefaultRef(ps.entity.name,
+				     ps.entity.attributeDefault);
+    case REQUIRED:
+      return new RequiredValue();
+    case FIXED:
+      ps.advance();
+      return new FixedValue(ps.value);
+    case DEFAULT_ATTRIBUTE_VALUE:
+      return new DefaultValue(ps.value);
+    case IMPLIED:
+      return new ImpliedValue();
     }
     throw new Error();
   }

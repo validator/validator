@@ -72,6 +72,7 @@ class Entity {
   static final int SEMANTIC_DATATYPE = 4;
   static final int SEMANTIC_FLAG = 5;
   static final int SEMANTIC_NAME_SPEC = 6;
+  static final int SEMANTIC_ATTRIBUTE_DEFAULT = 7;
 
   int semantic = SEMANTIC_NONE;
   ModelGroup modelGroup;
@@ -80,6 +81,7 @@ class Entity {
   Datatype datatype;
   Flag flag;
   NameSpec nameSpec;
+  AttributeDefault attributeDefault;
 
   Decl decl;
 
@@ -358,6 +360,8 @@ class Entity {
       semantic = SEMANTIC_MODEL_GROUP;
     else if (isNameSpec())
       semantic = SEMANTIC_NAME_SPEC;
+    else if (isAttributeDefault())
+      semantic = SEMANTIC_ATTRIBUTE_DEFAULT;
     else
       problem = UNKNOWN_SEMANTIC_PROBLEM;
   }
@@ -385,6 +389,16 @@ class Entity {
 		|| ps.type == Param.ATTRIBUTE_VALUE_GROUP
 		|| (ps.type == Param.ATTRIBUTE_TYPE_NOTATION
 		    && ps.advance()))
+	    && !ps.advance());
+  }
+
+  private boolean isAttributeDefault() {
+    ParamStream ps = new ParamStream(parsed);
+    return (ps.advance()
+	    && (ps.type == Param.DEFAULT_ATTRIBUTE_VALUE
+		|| ps.type == Param.IMPLIED
+		|| ps.type == Param.REQUIRED
+		|| (ps.type == Param.FIXED && ps.advance()))
 	    && !ps.advance());
   }
 
