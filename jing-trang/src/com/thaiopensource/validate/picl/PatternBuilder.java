@@ -40,7 +40,8 @@ class PatternBuilder {
   }
 
   void addDescendantsOrSelf() {
-    hadDescendantOrSelf = true;
+    if (attributeType == NO_ATTRIBUTE)
+      hadDescendantOrSelf = true;
   }
 
   private PathPattern wrapUpAlternative() {
