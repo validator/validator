@@ -121,6 +121,12 @@ Implement diagnostic
   </xsl:choose>
 </xsl:template>
 
+<xsl:template match="sch:value-of">
+  <axsl:value-of select="{@select}">
+    <xsl:call-template name="location"/>
+  </axsl:value-of>
+</xsl:template>
+
 <xsl:template match="*" mode="assertion"/>
 
 <xsl:variable name="saxon"
