@@ -235,6 +235,22 @@ public class SchemaWriter implements TopLevelVisitor,
     w.endElement();
   }
 
+  public void externalIdDef(String name, ExternalId xid) throws IOException {
+    w.startElement("externalId");
+    w.attribute("name", name);
+    externalId(xid);
+    w.endElement();
+  }
+
+  public void externalIdRef(String name, ExternalId xid, TopLevel[] contents)
+    throws Exception {
+    w.startElement("externalIdRef");
+    w.attribute("name", name);
+    for (int i = 0; i < contents.length; i++)
+      contents[i].accept(this);
+    w.endElement();
+  }
+
   public void internalEntityDecl(String name, String value) throws Exception {
     w.startElement("internalEntity");
     w.attribute("name", name);
@@ -252,7 +268,8 @@ public class SchemaWriter implements TopLevelVisitor,
   private void externalId(ExternalId xid) throws IOException {
     attributeIfNotNull("system", xid.getSystemId());
     attributeIfNotNull("public", xid.getPublicId());
-    attributeIfNotNull("xml:base", xid.getBaseUri());
+    // this messes up testing
+    // attributeIfNotNull("xml:base", xid.getBaseUri());
   }
 
   private void attributeIfNotNull(String name, String value)

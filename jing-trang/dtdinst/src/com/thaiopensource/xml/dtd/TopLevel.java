@@ -17,6 +17,8 @@ public abstract class TopLevel {
   public static final int EXTERNAL_ENTITY_DECL = 14;
   public static final int NAME_SPEC_DEF = 15;
   public static final int OVERRIDDEN_DEF = 16;
+  public static final int EXTERNAL_ID_DEF = 17;
+  public static final int EXTERNAL_ID_REF = 18;
 
   public abstract int getType();
   public abstract void accept(TopLevelVisitor visitor) throws Exception;

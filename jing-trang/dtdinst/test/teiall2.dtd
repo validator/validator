@@ -5,7 +5,6 @@
 <!ENTITY % TEI.spoken "INCLUDE">
 <!ENTITY % TEI.dictionaries "INCLUDE">
 <!ENTITY % TEI.terminology "INCLUDE">
-<!ENTITY % TEI.general "INCLUDE">
 <!ENTITY % TEI.mixed "INCLUDE">
 <!ENTITY % TEI.linking "INCLUDE">
 <!ENTITY % TEI.analysis "INCLUDE">
@@ -17,5 +16,5 @@
 <!ENTITY % TEI.nets "INCLUDE">
 <!ENTITY % TEI.figures "INCLUDE">
 <!ENTITY % TEI.corpus "INCLUDE">
-<!ENTITY % TEI.singleBase "INCLUDE">
-<!ENTITY % tei2 SYSTEM "tei2.dtd">%tei2;
+<!ENTITY % tei2.dtd SYSTEM "tei2.dtd">
+%tei2.dtd;

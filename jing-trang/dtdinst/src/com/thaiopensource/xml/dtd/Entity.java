@@ -423,5 +423,9 @@ class Entity {
     }
     return Particle.particlesToModelGroup(parsed);
   }
+
+  ExternalId getExternalId() {
+    return new ExternalId(systemId, publicId, baseUri);
+  }
 }
 

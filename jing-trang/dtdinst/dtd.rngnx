@@ -11,7 +11,9 @@ decl =
   | datatypeDef
   | flagDef
   | nameSpecDef
+  | externalIdDef
   | overriddenDef
+  | externalIdRef
   | includedSection
   | ignoredSection
   | internalEntityDecl
@@ -27,6 +29,8 @@ flagDef = element flag { name, flag }
 
 nameSpecDef = element nameSpec { name, nameSpec }
 
+externalIdDef = element externalId { name, externalId }
+
 overriddenDef = element overridden { name, text }
 
 includedSection = 
@@ -34,6 +38,8 @@ includedSection =
 
 ignoredSection = 
   element ignoredSection { attribute flag { xsd:NCName }?, text }
+
+externalIdRef = element externalIdRef { name, decl* }
 
 internalEntityDecl = element internalEntity { name, text }
 
@@ -87,6 +93,11 @@ modelGroup =
   | element pcdata { empty }
   | element choice { (modelGroup, modelGroup+)? }
   | element sequence { (modelGroup, modelGroup+)? }
+
+externalId =
+  attribute system { xsd:anyURI }?,
+  attribute public { text }?,
+  attribute xml:base { xsd:anyURI }?
 
 name = attribute name { xsd:NCName }
 

@@ -66,7 +66,7 @@ class DtdBuilder {
   }
 
   Vector createTopLevel() {
-    return Decl.declsToTopLevel(this, decls);
+    return Decl.declsToTopLevel(this, decls.elements());
   }
 
   void dump() {

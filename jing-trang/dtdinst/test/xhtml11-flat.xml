@@ -86,6 +86,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-inlstyle.module">
+    <externalId name="xhtml-inlstyle.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-inlstyle-1.mod" public="-//W3C//ELEMENTS XHTML Inline Style 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Inline Style Module  ........................................... -->
 <!-- file: xhtml-inlstyle-1.mod
@@ -122,11 +123,13 @@
   </includedSection>
 <!-- declare Document Model module instantiated in framework
 -->
+  <externalId name="xhtml-model.mod" system="xhtml11-model-1.mod" public="-//W3C//ENTITIES XHTML 1.1 Document Model 1.0//EN"/>
 <!-- Modular Framework Module (required) ......................... -->
   <flag name="xhtml-framework.module">
     <include/>
   </flag>
   <includedSection flag="xhtml-framework.module">
+    <externalId name="xhtml-framework.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-framework-1.mod" public="-//W3C//ENTITIES XHTML Modular Framework 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Modular Framework Module  ...................................... -->
 <!-- file: xhtml-framework-1.mod
@@ -171,6 +174,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-notations.module">
+      <externalId name="xhtml-notations.mod" system="xhtml-notations-1.mod" public="-//W3C//NOTATIONS XHTML Notations 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Notations Module  .............................................. -->
 <!-- file: xhtml-notations-1.mod
@@ -224,6 +228,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-datatypes.module">
+      <externalId name="xhtml-datatypes.mod" system="xhtml-datatypes-1.mod" public="-//W3C//ENTITIES XHTML Datatypes 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Datatypes Module  .............................................. -->
 <!-- file: xhtml-datatypes-1.mod
@@ -326,6 +331,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-qname.module">
+      <externalId name="xhtml-qname.mod" system="xhtml-qname-1.mod" public="-//W3C//ENTITIES XHTML Qualified Names 1.0//EN"/>
 <!-- ....................................................................... -->
 <!-- XHTML Qname Module  ................................................... -->
 <!-- file: xhtml-qname-1.mod
@@ -716,6 +722,7 @@
     </includedSection>
     <overridden name="xhtml-events.module">IGNORE</overridden>
     <includedSection flag="xhtml-events.module">
+      <externalId name="xhtml-events.mod" system="xhtml-events-1.mod" public="-//W3C//ENTITIES XHTML Intrinsic Events 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Intrinsic Events Module  ....................................... -->
 <!-- file: xhtml-events-1.mod
@@ -970,6 +977,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-attribs.module">
+      <externalId name="xhtml-attribs.mod" system="xhtml-attribs-1.mod" public="-//W3C//ENTITIES XHTML Common Attributes 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Common Attributes Module  ...................................... -->
 <!-- file: xhtml-attribs-1.mod
@@ -1511,6 +1519,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-charent.module">
+      <externalId name="xhtml-charent.mod" system="xhtml-charent-1.mod" public="-//W3C//ENTITIES XHTML Character Entities 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Character Entities Module  ......................................... -->
 <!-- file: xhtml-charent-1.mod
@@ -1532,6 +1541,7 @@
      This module declares the set of character entities for XHTML,
      including the Latin 1, Symbol and Special character collections.
 -->
+      <externalId name="xhtml-lat1" system="xhtml-lat1.ent" public="-//W3C//ENTITIES Latin 1 for XHTML//EN"/>
 <!-- Portions (C) International Organization for Standardization 1986
      Permission to copy in any form is granted for use with
      conforming SGML systems and applications as defined in
@@ -1823,6 +1833,7 @@
       <internalEntity name="yuml">&#x00FF;</internalEntity>
 <!-- latin small letter y with diaeresis,
                                   U+00FF ISOlat1 -->
+      <externalId name="xhtml-symbol" system="xhtml-symbol.ent" public="-//W3C//ENTITIES Symbols for XHTML//EN"/>
 <!-- Mathematical, Greek and Symbolic characters for HTML -->
 <!-- Character entity set. Typical invocation:
      <!ENTITY % HTMLsymbol PUBLIC
@@ -2176,6 +2187,7 @@
                                      U+2665 ISOpub -->
       <internalEntity name="diams">&#x2666;</internalEntity>
 <!-- black diamond suit, U+2666 ISOpub -->
+      <externalId name="xhtml-special" system="xhtml-special.ent" public="-//W3C//ENTITIES Special for XHTML//EN"/>
 <!-- Special characters for HTML -->
 <!-- Character entity set. Typical invocation:
      <!ENTITY % HTMLspecial PUBLIC
@@ -2300,6 +2312,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-text.module">
+    <externalId name="xhtml-text.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-text-1.mod" public="-//W3C//ELEMENTS XHTML Text 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Text Module  ................................................... -->
 <!-- file: xhtml-text-1.mod
@@ -2325,6 +2338,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-inlstruct.module">
+      <externalId name="xhtml-inlstruct.mod" system="xhtml-inlstruct-1.mod" public="-//W3C//ELEMENTS XHTML Inline Structural 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Inline Structural Module  ...................................... -->
 <!-- file: xhtml-inlstruct-1.mod
@@ -2409,6 +2423,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-inlphras.module">
+      <externalId name="xhtml-inlphras.mod" system="xhtml-inlphras-1.mod" public="-//W3C//ELEMENTS XHTML Inline Phrasal 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Inline Phrasal Module  ......................................... -->
 <!-- file: xhtml-inlphras-1.mod
@@ -2762,6 +2777,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-blkstruct.module">
+      <externalId name="xhtml-blkstruct.mod" system="xhtml-blkstruct-1.mod" public="-//W3C//ELEMENTS XHTML Block Structural 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Block Structural Module  ....................................... -->
 <!-- file: xhtml-blkstruct-1.mod
@@ -2849,6 +2865,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-blkphras.module">
+      <externalId name="xhtml-blkphras.mod" system="xhtml-blkphras-1.mod" public="-//W3C//ELEMENTS XHTML Block Phrasal 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Block Phrasal Module  .......................................... -->
 <!-- file: xhtml-blkphras-1.mod
@@ -3131,6 +3148,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-hypertext.module">
+    <externalId name="xhtml-hypertext.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-hypertext-1.mod" public="-//W3C//ELEMENTS XHTML Hypertext 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Hypertext Module  .............................................. -->
 <!-- file: xhtml-hypertext-1.mod
@@ -3233,6 +3251,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-list.module">
+    <externalId name="xhtml-list.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-list-1.mod" public="-//W3C//ELEMENTS XHTML Lists 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Lists Module  .................................................. -->
 <!-- file: xhtml-list-1.mod
@@ -3446,6 +3465,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-edit.module">
+    <externalId name="xhtml-edit.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-edit-1.mod" public="-//W3C//ELEMENTS XHTML Editing Elements 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Editing Elements Module  ....................................... -->
 <!-- file: xhtml-edit-1.mod
@@ -3556,6 +3576,7 @@
     <flagRef name="XHTML.bidi"/>
   </flag>
   <includedSection flag="xhtml-bdo.module">
+    <externalId name="xhtml-bdo.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-bdo-1.mod" public="-//W3C//ELEMENTS XHTML BIDI Override Element 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML BDO Element Module ............................................. -->
 <!-- file: xhtml-bdo-1.mod
@@ -3636,6 +3657,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-ruby.module">
+    <externalId name="xhtml-ruby.mod" system="http://www.w3.org/TR/ruby/xhtml-ruby-1.mod" public="-//W3C//ELEMENTS XHTML Ruby 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Ruby Module .................................................... -->
 <!-- file: xhtml-ruby-1.mod
@@ -3968,6 +3990,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-pres.module">
+    <externalId name="xhtml-pres.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-pres-1.mod" public="-//W3C//ELEMENTS XHTML Presentation 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Presentation Module ............................................ -->
 <!-- file: xhtml-pres-1.mod
@@ -3993,6 +4016,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-inlpres.module">
+      <externalId name="xhtml-inlpres.mod" system="xhtml-inlpres-1.mod" public="-//W3C//ELEMENTS XHTML Inline Presentation 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Inline Presentation Module  .................................... -->
 <!-- file: xhtml-inlpres-1.mod
@@ -4225,6 +4249,7 @@
       <include/>
     </flag>
     <includedSection flag="xhtml-blkpres.module">
+      <externalId name="xhtml-blkpres.mod" system="xhtml-blkpres-1.mod" public="-//W3C//ELEMENTS XHTML Block Presentation 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Block Presentation Module  ..................................... -->
 <!-- file: xhtml-blkpres-1.mod
@@ -4281,6 +4306,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-link.module">
+    <externalId name="xhtml-link.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-link-1.mod" public="-//W3C//ELEMENTS XHTML Link Element 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Link Element Module  ........................................... -->
 <!-- file: xhtml-link-1.mod
@@ -4381,6 +4407,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-meta.module">
+    <externalId name="xhtml-meta.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-meta-1.mod" public="-//W3C//ELEMENTS XHTML Metainformation 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Document Metainformation Module  ............................... -->
 <!-- file: xhtml-meta-1.mod
@@ -4457,6 +4484,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-base.module">
+    <externalId name="xhtml-base.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-base-1.mod" public="-//W3C//ELEMENTS XHTML Base Element 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Base Element Module  ........................................... -->
 <!-- file: xhtml-base-1.mod
@@ -4554,6 +4582,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-script.module">
+    <externalId name="xhtml-script.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-script-1.mod" public="-//W3C//ELEMENTS XHTML Scripting 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Document Scripting Module  ..................................... -->
 <!-- file: xhtml-script-1.mod
@@ -4666,6 +4695,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-style.module">
+    <externalId name="xhtml-style.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-style-1.mod" public="-//W3C//ELEMENTS XHTML Style Sheets 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Document Style Sheet Module  .................................... -->
 <!-- file: xhtml-style-1.mod
@@ -4740,6 +4770,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-image.module">
+    <externalId name="xhtml-image.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-image-1.mod" public="-//W3C//ELEMENTS XHTML Images 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Images Module  ................................................. -->
 <!-- file: xhtml-image-1.mod
@@ -4823,6 +4854,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-csismap.module">
+    <externalId name="xhtml-csismap.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-csismap-1.mod" public="-//W3C//ELEMENTS XHTML Client-side Image Maps 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Client-side Image Map Module  .................................. -->
 <!-- file: xhtml-csismap-1.mod
@@ -5027,6 +5059,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-ssismap.module">
+    <externalId name="xhtml-ssismap.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-ssismap-1.mod" public="-//W3C//ELEMENTS XHTML Server-side Image Maps 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Server-side Image Map Module  .................................. -->
 <!-- file: xhtml-ssismap-1.mod
@@ -5075,6 +5108,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-param.module">
+    <externalId name="xhtml-param.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-param-1.mod" public="-//W3C//ELEMENTS XHTML Param Element 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Param Element Module  ..................................... -->
 <!-- file: xhtml-param-1.mod
@@ -5156,6 +5190,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-object.module">
+    <externalId name="xhtml-object.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-object-1.mod" public="-//W3C//ELEMENTS XHTML Embedded Object 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Embedded Object Module  ........................................ -->
 <!-- file: xhtml-object-1.mod
@@ -5285,6 +5320,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-table.module">
+    <externalId name="xhtml-table.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-table-1.mod" public="-//W3C//ELEMENTS XHTML Tables 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Table Module  .................................................. -->
 <!-- file: xhtml-table-1.mod
@@ -5887,6 +5923,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-form.module">
+    <externalId name="xhtml-form.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-form-1.mod" public="-//W3C//ELEMENTS XHTML Forms 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Forms Module  .................................................. -->
 <!-- file: xhtml-form-1.mod
@@ -6537,6 +6574,7 @@
     <include/>
   </flag>
   <includedSection flag="xhtml-struct.module">
+    <externalId name="xhtml-struct.mod" system="http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-struct-1.mod" public="-//W3C//ELEMENTS XHTML Document Structure 1.0//EN"/>
 <!-- ...................................................................... -->
 <!-- XHTML Structure Module  .............................................. -->
 <!-- file: xhtml-struct-1.mod

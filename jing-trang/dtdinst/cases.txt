@@ -1,3 +1,6 @@
+Avoid overloading <notation>. (use <tokenized>/<cdata> instead of
+<basic>/<notation>/<enumChoice>)
+
 Interface to report warnings properly.
 
 Encoding detection
@@ -9,8 +12,6 @@ Create NotationDecl objects.
 external general entities
 
 maybe distinguish char entities in object model
-
-Include external param entities in object model.
 
 Try to parse ignored marked sections.
 
@@ -52,4 +53,4 @@ local.book.class
 Resolve NAME_SPEC, MODEL_GROUP ambiguity using heuristic based on
 naming convention or presence of element declarations.
 
-Name spec for general entities.
+Use nameSpec for general entities.

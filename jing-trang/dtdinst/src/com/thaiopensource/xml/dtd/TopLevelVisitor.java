@@ -19,4 +19,7 @@ public interface TopLevelVisitor {
   void notationDecl(String name, ExternalId externalId) throws Exception;
   void nameSpecDef(String name, NameSpec nameSpec) throws Exception;
   void overriddenDef(String name, String value) throws Exception;
+  void externalIdDef(String name, ExternalId externalId) throws Exception;
+  void externalIdRef(String name, ExternalId externalId, TopLevel[] contents)
+    throws Exception;
 }

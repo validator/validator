@@ -1,6 +1,7 @@
 package com.thaiopensource.xml.dtd;
 
 import java.util.Vector;
+import java.util.Enumeration;
 
 class Decl {
   static final int REFERENCE = 0; // entity
@@ -45,28 +46,6 @@ class Decl {
     return true;
   }
 
-  TopLevel createTopLevel(DtdBuilder db) {
-    switch (type) {
-    case COMMENT:
-      return new Comment(value);
-    case PROCESSING_INSTRUCTION:
-      return createProcessingInstruction();
-    case NOTATION:
-      return createNotationDecl();
-    case ELEMENT:
-      return createElementDecl();
-    case ATTLIST:
-      return createAttlistDecl();
-    case ENTITY:
-      return createEntityDecl(db);
-    case INCLUDE_SECTION:
-      return createIncludedSection(db);
-    case IGNORE_SECTION:
-      return createIgnoredSection();
-    }
-    return null;
-  }
-
   ElementDecl createElementDecl() {
     ParamStream ps = new ParamStream(params, true);
     NameSpec nameSpec = Param.paramsToNameSpec(ps);
@@ -91,6 +70,8 @@ class Decl {
       entity.decl = this;
     if (entity.decl != this)
       return createOverriddenDef(name, ps);
+    if (entity.text == null)
+      return new ExternalIdDef(name, entity.getExternalId());
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
       entity.modelGroup = entity.toModelGroup();
@@ -128,22 +109,70 @@ class Decl {
 
   IncludedSection createIncludedSection(DtdBuilder db) {
     Flag flag = Param.paramsToFlag(params);
-    Vector contents = declsToTopLevel(db, decls);
+    Vector contents = declsToTopLevel(db, decls.elements());
     TopLevel[] tem = new TopLevel[contents.size()];
     for (int i = 0; i < tem.length; i++)
       tem[i] = (TopLevel)contents.elementAt(i);
     return new IncludedSection(flag, tem);
   }
 
-  static Vector declsToTopLevel(DtdBuilder db, Vector decls) {
+  static Vector declsToTopLevel(DtdBuilder db, Enumeration decls) {
     Vector v = new Vector();
-    int n = decls.size();
-    for (int i = 0; i < n; i++) {
-      TopLevel t = ((Decl)decls.elementAt(i)).createTopLevel(db);
+    int level = 0;
+    while (decls.hasMoreElements()) {
+      TopLevel t = null;
+      Decl decl = (Decl)decls.nextElement();
+      switch (decl.type) {
+      case COMMENT:
+	t = new Comment(decl.value);
+	break;
+      case PROCESSING_INSTRUCTION:
+	t = decl.createProcessingInstruction();
+	break;
+      case NOTATION:
+	t = decl.createNotationDecl();
+	break;
+      case ELEMENT:
+	t = decl.createElementDecl();
+	break;
+      case ATTLIST:
+	t = decl.createAttlistDecl();
+	break;
+      case ENTITY:
+	t = decl.createEntityDecl(db);
+	break;
+      case INCLUDE_SECTION:
+	t = decl.createIncludedSection(db);
+	break;
+      case IGNORE_SECTION:
+	t = decl.createIgnoredSection();
+	break;
+      case REFERENCE:
+	if (decl.entity.text == null)
+	  t = decl.createExternalIdRef(db, decls);
+	else
+	  level++;
+	break;
+      case REFERENCE_END:
+	if (level == 0)
+	  return v;
+	--level;
+	break;
+      }
       if (t != null)
 	v.addElement(t);
     }
     return v;
+  }
+
+  ExternalIdRef createExternalIdRef(DtdBuilder db, Enumeration decls) {
+    Vector v = declsToTopLevel(db, decls);
+    TopLevel[] tem = new TopLevel[v.size()];
+    for (int i = 0; i < tem.length; i++)
+      tem[i] = (TopLevel)v.elementAt(i);
+    return new ExternalIdRef(entity.name,
+			     entity.getExternalId(),
+			     tem);
   }
 
   IgnoredSection createIgnoredSection() {
