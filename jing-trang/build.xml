@@ -102,7 +102,7 @@
     <fileset dir="." includes="copying.txt"/>
     <fileset dir="doc" includes="*.html"/>
     <fileset dir="convert" includes="from-relax.xsl,simplify.xsl"/>
-    <fileset dir="eg" includes="relaxng.rng,xslt.rng"/>
+    <fileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"/>
   </copy>
   <replace file="build/jing.html" token="@VERSION@" value="${version}"/>
   <unzip src="build/xhtml-rng.zip" dest="build"/>
