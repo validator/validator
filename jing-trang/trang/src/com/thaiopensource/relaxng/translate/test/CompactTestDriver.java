@@ -159,7 +159,7 @@ public class CompactTestDriver {
       SchemaCollection sc = inputFormat.load(UriOrFile.fileToUri(in), new String[0], null, eh);
       OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(), out, outExt, null, LINE_LENGTH, INDENT);
       od.setEncoding(OUTPUT_ENCODING);
-      of.output(sc, od, of instanceof XsdOutputFormat ? new String[] { "enable-abstract-elements" } : new String[0], null, eh);
+      of.output(sc, od, new String[0], null, eh);
       return true;
     }
     catch (SAXException e) {

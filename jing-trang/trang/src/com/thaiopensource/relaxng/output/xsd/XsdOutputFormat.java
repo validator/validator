@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 
 public class XsdOutputFormat implements OutputFormat {
-  static private final boolean DEFAULT_ENABLE_ABSTRACT_ELEMENT = false;
+  static private final boolean DEFAULT_ENABLE_ABSTRACT_ELEMENT = true;
   static private final String[] processContents = { "skip", "lax", "strict" };
   public void output(SchemaCollection sc, OutputDirectory od, String[] params, String inputFormat, ErrorHandler eh)
           throws SAXException, IOException, OutputFailedException, InvalidParamsException {
@@ -27,10 +27,10 @@ public class XsdOutputFormat implements OutputFormat {
     if ("dtd".equals(inputFormat))
       outputOptions.anyProcessContents = "strict";
     ParamProcessor pp = new OutputDirectoryParamProcessor(od);
-    pp.declare("enable-abstract-elements",
+    pp.declare("disable-abstract-elements",
                new AbstractParam() {
                  public void set(boolean value) {
-                   guide.setDefaultGroupEnableAbstractElements(value);
+                   guide.setDefaultGroupEnableAbstractElements(!value);
                  }
                });
     pp.declare("any-process-contents",

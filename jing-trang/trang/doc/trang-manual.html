@@ -412,10 +412,10 @@ Schema <a href="http://www.w3.org/TR/xmlschema-1/"
 <p>It supports the following parameters:</p>
 
 <dl>
-<dt><code>-o enable-abstract-elements</code></dt>
+<dt><code>-o disable-abstract-elements</code></dt>
 
-<dd>Enables the use of abstract elements and subsitution groups in the
-generated XML Schema.  This can also be controlled using an <a
+<dd>Disables the use of abstract elements and subsitution groups in
+the generated XML Schema.  This can also be controlled using an <a
 name="#enable-abstract-elements">annotation attribute</a>.</dd>
 
 <dt><code>-o any-process-contents=strict</code>|<code>lax</code>|<code>skip</code></dt>
@@ -480,8 +480,8 @@ on a <code>grammar</code>, <code>div</code> or <code>include</code>
 element to enable or disable the use of abstract elements for all
 descendant <code>define</code> elements. In the absence of any
 inherited <code>tx:enableAbstractElements</code> attribute, the use of
-abstract elements is disabled unless the <code>-o
-enable-abstract-elements</code> option was specified.</p>
+abstract elements is enabled unless the <code>-o
+disable-abstract-elements</code> option was specified.</p>
 
 <p>It can happen that the same element name occurs in a choice in more
 than one <code>define</code> element; at most one of these
