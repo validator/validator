@@ -28,10 +28,10 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   private PrefixMapping prefixMapping = null;
   private final Hashtable validatorHandlerCache = new Hashtable();
   private final Localizer localizer = new Localizer(ValidatorHandlerImpl.class);
-  private Hashset noResultActions = new Hashset();
+  private final Hashset noResultActions = new Hashset();
   private final Hashtable attributeNamespaceIndexSets = new Hashtable();
   private final Vector activeHandlersAttributeIndexSets = new Vector();
-  private Hashset attributeSchemas = new Hashset();
+  private final Hashset attributeSchemas = new Hashset();
   private boolean attributeNamespaceRejected;
   private Attributes filteredAttributes;
   private final Mode startMode;

@@ -77,11 +77,25 @@ class ContextMap {
     return true;
   }
 
+  public int hashCode() {
+    int hc = 0;
+    if (rootValue != null)
+      hc ^= rootValue.hashCode();
+    if (otherValue != null)
+      hc ^= otherValue.hashCode();
+    for (Enumeration e = nameTable.keys(); e.hasMoreElements();) {
+      Object key = e.nextElement();
+      hc ^= key.hashCode();
+      hc ^= nameTable.get(key).hashCode();
+    }
+    return hc;
+  }
+
   static private class Enumerator implements Enumeration {
     private Object rootValue;
     private Object otherValue;
     private Enumeration subMapValues;
-    private Enumeration subMaps;
+    private final Enumeration subMaps;
 
     private Enumerator(ContextMap map) {
       rootValue = map.rootValue;

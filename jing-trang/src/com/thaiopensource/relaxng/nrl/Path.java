@@ -34,7 +34,7 @@ class Path {
   }
 
   static class ParseException extends Exception {
-    private String messageKey;
+    private final String messageKey;
 
     ParseException(String messageKey) {
       super(messageKey);
@@ -129,7 +129,7 @@ class Path {
     return paths;
   }
 
-  static String makeName(String str, int start, int end) throws ParseException {
+  private static String makeName(String str, int start, int end) throws ParseException {
     String name = str.substring(start, end);
     if (!Naming.isNcname(name))
       throw new ParseException("invalid_name");

@@ -32,6 +32,13 @@ class ModeUsage {
     return this.mode == other.mode && this.currentMode == other.currentMode && Equal.equal(this.modeMap, other.modeMap);
   }
 
+  public int hashCode() {
+    int hc = mode.hashCode() ^ currentMode.hashCode();
+    if (modeMap != null)
+      hc ^= modeMap.hashCode();
+    return hc;
+  }
+
   private Mode resolve(Mode mode) {
     return mode == Mode.CURRENT ? currentMode : mode;
   }

@@ -14,4 +14,8 @@ abstract class Action {
    public boolean equals(Object obj) {
      return obj != null && obj.getClass() == getClass() && ((Action)obj).modeUsage.equals(modeUsage);
    }
+
+  public int hashCode() {
+    return getClass().hashCode() ^ modeUsage.hashCode();
+  }
 }

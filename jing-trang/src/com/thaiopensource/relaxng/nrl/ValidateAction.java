@@ -22,4 +22,8 @@ class ValidateAction extends NoResultAction {
   public boolean equals(Object obj) {
     return super.equals(obj) && schema.equals(((ValidateAction)obj).schema);
   }
+
+  public int hashCode() {
+    return super.hashCode() ^ schema.hashCode();
+  }
 }
