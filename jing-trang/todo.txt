@@ -1,7 +1,3 @@
-Document support for ID/IDREF.
-
-Describe Jing command-line options.
-
 Finish description of error recovery.
 
 Exclude JARV stuff when building jing.exe.

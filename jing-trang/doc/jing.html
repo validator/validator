@@ -15,7 +15,10 @@ permission.</p>
 
 <p>This version of Jing implements the final <a
 href="http://www.oasis-open.org/committees/relax-ng/spec-20011203.html">RELAX
-NG 1.0 Specification</a>.</p>
+NG 1.0 Specification</a>.  It also implements parts of <a
+href="http://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html"
+>RELAX NG DTD Compatibility</a>, specifically checking of
+ID/IDREF/IDREFS.</p>
 
 <p>The implementation is available for download as a <a
 href="jing.jar">JAR</a> file and as a <a href="jing.exe">Win32
@@ -47,6 +50,22 @@ you must replace <code>c:\lib</code> by the path to the directory
 where you have put the various JAR files. The command will be
 slightly different on non-Windows machines.  Consult your Java
 documentation.</p>
+
+<p>Jing understands a couple of command-line options:</p>
+
+<dl>
+
+<dt><code>-i</code></dt>
+
+<dd>Disables checking of ID/IDREF/IDREFS. By default,
+Jing enforces the constraints imposed by RELAX NG DTD Compatibility
+with respect to ID/IDREF/IDREFS.</dd>
+
+<dt><code>-t</code></dt>
+<dd>Print the time used by Jing for loading the schema and
+for validation.</dd>
+
+</dl>
 
 <p>Jing uses a vendor-independent Java interface for RELAX NG datatype
 libraries, developed by James Clark and KAWAGUCHI Kohsuke and hosted
