@@ -1,4 +1,6 @@
-Command-line option parser.
+RELAX NG: Don't create an output file that contains just comments.
+
+Option for properties file to set properties
 
 Option to set start elements.
 
@@ -9,8 +11,6 @@ Make UriEntityManager respect charset parameter.
 Make UriEntityManager get the right base URI after HTTP redirection.
 
 RELAX NG: preserve directory structure on output.
-
-RELAX NG: Don't create an output file that contains just comments.
 
 Figure out whether we should suffix the properties file with "_en".
 

@@ -6,6 +6,8 @@ import java.io.File;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.util.Localizer;
+import com.thaiopensource.xml.out.XmlWriter;
+import com.thaiopensource.util.OptionParser;
 
 public class Driver {
 
@@ -17,10 +19,10 @@ public class Driver {
     public void message(ErrorMessage message) {
       switch (message.getSeverity()) {
       case ErrorMessage.WARNING:
-	errorCount++;
 	error(message.getMessage());
 	break;
       case ErrorMessage.ERROR:
+	errorCount++;
 	warning(message.getMessage());
 	break;
       }
@@ -39,26 +41,69 @@ public class Driver {
   }
 
   public static boolean doMain(String args[]) throws IOException {
-    if (args.length != 2) {
-      error(localizer().message("MISSING_ARGUMENT"));
-      print(localizer().message("USAGE"));
+    OptionParser opts = new OptionParser("r:", args);
+    File dir = null;
+    try {
+      while (opts.moveToNextOption()) {
+	switch (opts.getOptionChar()) {
+	case 'r':
+	  if (dir != null) {
+	    error(localizer().message("DUPLICATE_OPTION", "r"));
+	    return false;
+	  }
+	  dir = new File(opts.getOptionArg());
+	  if (!dir.isDirectory()) {
+	    error(localizer().message("NOT_DIRECTORY", args[1]));
+	    return false;
+	  }
+	  break;
+	}
+      }
+    }
+    catch (OptionParser.InvalidOptionException e) {
+      error(localizer().message("INVALID_OPTION", opts.getOptionCharString()));
+      usage();
       return false;
     }
-    File dir = new File(args[1]);
-    if (!dir.isDirectory()) {
-      error(localizer().message("NOT_DIRECTORY", args[1]));
+    catch (OptionParser.MissingArgumentException e) {
+      error(localizer().message("OPTION_MISSING_ARGUMENT",
+                                opts.getOptionCharString()));
+      usage();
+      return false;
+    }
+    args = opts.getRemainingArgs();
+    if (args.length == 0) {
+      error(localizer().message("MISSING_ARGUMENT"));
+      usage();
+      return false;
+    }
+    if (args.length > 1) {
+      error(localizer().message("TOO_MANY_ARGUMENTS"));
+      usage();
       return false;
     }
     String uri = UriEntityManager.commandLineArgToUri(args[0]);
     Dtd dtd = new DtdParserImpl().parse(uri, new UriEntityManager());
-    NameMapper mapper = new ExtensionMapper(".dtd", ".rng");
-    DirectoryOutputCollection out
-      = new DirectoryOutputCollection(dtd.getUri(), dir, mapper);
-    RelaxNgWriter w = new RelaxNgWriter(out);
-    ErrorMessageHandlerImpl emh = new ErrorMessageHandlerImpl();
-    w.setErrorMessageHandler(emh);
-    w.writeDtd(dtd);
-    return emh.errorCount == 0;
+    if (dir == null) {
+      XmlWriter w = new XmlOutputStreamWriter(System.out, dtd.getEncoding());
+      new SchemaWriter(w).writeDtd(dtd);
+      w.close();
+      return true;
+    }
+    else {
+      NameMapper mapper = new ExtensionMapper(".dtd", ".rng");
+      DirectoryOutputCollection out
+	= new DirectoryOutputCollection(dtd.getUri(), dir, mapper);
+      RelaxNgWriter w = new RelaxNgWriter(out);
+      ErrorMessageHandlerImpl emh = new ErrorMessageHandlerImpl();
+      w.setErrorMessageHandler(emh);
+      w.writeDtd(dtd);
+      return emh.errorCount == 0;
+    }
+  }
+
+  private static void usage() {
+    print(localizer().message("USAGE"));
   }
 
   private static Localizer localizer() {
