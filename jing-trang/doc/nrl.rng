@@ -96,4 +96,10 @@
   </element>
 </define>
 
+<define name="Inline.class" combine="choice">
+  <element name="href">
+    <text/>
+  </element>
+</define>
+
 </grammar>
