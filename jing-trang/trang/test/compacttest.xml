@@ -99,7 +99,7 @@ anyAttribute = attribute * { text }
 <xml>
 <correct>
 <!-- RELAX NG syntax expressed in compact syntax. -->
-<grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <ref name="pattern"/>
   </start>
