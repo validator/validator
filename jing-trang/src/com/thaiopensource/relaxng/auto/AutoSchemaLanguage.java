@@ -29,9 +29,24 @@ public class AutoSchemaLanguage implements SchemaLanguage {
     SchemaReceiver sr = new AutoSchemaReceiver(xrc, eh, options, dlf, srf);
     XMLReader xr = xrc.createXMLReader();
     SchemaFuture sf = sr.installHandlers(xr);
+    // XXX we should wrap the input source so that we don't have to read it twice
     try {
-      xr.parse(in);
-      return sf.getSchema();
+      ReparseException reparser;
+      try {
+        xr.parse(in);
+        return sf.getSchema();
+      }
+      catch (ReparseException e) {
+        reparser = e;
+      }
+      for (;;) {
+        try {
+          return reparser.reparse(in);
+        }
+        catch (ReparseException e) {
+          reparser = e;
+        }
+      }
     }
     catch (SAXException e) {
       // Work around broken SAX parsers that catch and wrap runtime exceptions thrown by handlers
