@@ -10,8 +10,10 @@ decl =
   | enumGroupDef
   | datatypeDef
   | flagDef
-  | includeSection
-  | ignoreSection
+  | includedSection
+  | ignoredSection
+  | internalEntityDecl
+  | processingInstruction
 
 elementDecl = element element { qname, modelGroup }
 
@@ -21,19 +23,26 @@ datatypeDef = element datatype { name, datatype }
 
 flagDef = element flag { name, flag }
 
-includeSection = 
-  element includeSection { attribute flag { xsd:NCName }?, decl* }
+includedSection = 
+  element includedSection { attribute flag { xsd:NCName }?, decl* }
 
-ignoreSection = 
-  element ignoreSection { attribute flag { xsd:NCName }?, text }
+ignoredSection = 
+  element ignoredSection { attribute flag { xsd:NCName }?, text }
+
+internalEntityDecl = element internalEntity { name, text }
+
+processingInstruction =
+  element processingInstruction { attribute target { xsd:NCName }, text }
 
 datatype =
   element basic { 
-    "CDATA" 
-    | "NMTOKEN" | "NMTOKENS"
-    | "ENTITY" | "ENTITIES"
-    | "ID"
-    | "IDREF" | "IDREFS"
+    attribute name {
+      "CDATA" 
+      | "NMTOKEN" | "NMTOKENS"
+      | "ENTITY" | "ENTITIES"
+      | "ID"
+      | "IDREF" | "IDREFS"
+    }
   }
   | element enumChoice { enumGroup }
   | element notation { enumGroup }
@@ -55,7 +64,7 @@ attlistDecl = element attlist { qname, attributeGroup }
 attributeGroupDef = element attributeGroup { name, attributeGroup }
 
 attributeGroup =
-  (element attribute { name, use, defaultValue, datatype }
+  (element attribute { qname, use, defaultValue, datatype }
    | element attributeGroupRef { name } )*
 
 modelGroup =
@@ -72,6 +81,6 @@ name = attribute name { xsd:NCName }
 
 qname = attribute name { xsd:Name }
 
-defaultValue = attribute default { text }
+defaultValue = attribute default { text }?
 
 use = attribute use { "optional" | "required" }
