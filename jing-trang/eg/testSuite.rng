@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.7 2001-09-20 09:24:19 jjc Exp $ -->
+<!-- $Id: testSuite.rng,v 1.8 2001-09-21 07:17:36 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
@@ -26,22 +26,22 @@
     <element name="testCase">
       <ref name="header"/>
       
+      <ref name="resources"/>
+
+      <ref name="dtd"/>
+
       <choice>
        
         <!-- Incorrect schema -->
-        <group>
-          <element name="incorrect">
-            <ref name="anyElement"/>
-          </element>
-          <ref name="resources"/>
-        </group>
+        <element name="incorrect">
+          <ref name="anyElement"/>
+        </element>
          
         <!-- Correct schema and test cases -->
         <group>
           <element name="correct">
             <externalRef href="relaxng.rng"/>
           </element>
-          <ref name="resources"/>
           <zeroOrMore>
             <choice>
               <!-- Valid test cases -->
@@ -55,7 +55,9 @@
             </choice>
           </zeroOrMore>
         </group>
+
       </choice>
+
     </element>
   </define>
 
@@ -82,11 +84,33 @@
   <define name="header">
     <zeroOrMore>
       <choice>
+        <element name="title">
+          <text/>
+        </element>
 	<element name="documentation">
 	  <text/>
 	</element>
+	<element name="author">
+	  <text/>
+	</element>
+        <!-- Email address for correspondence about test cases. -->
+	<element name="email">
+	  <text/>
+	</element>
+        <!-- Section of the specification being tested. -->
         <element name="section">
           <text/>
+        </element>
+        <element name="requires">
+          <attribute name="datatypeLibrary"/>
+        </element>
+        <element>
+          <anyName>
+            <except>
+              <nsName/>
+            </except>
+          </anyName>
+          <ref name="any"/>
         </element>
       </choice>
     </zeroOrMore>
@@ -106,6 +130,28 @@
             <ref name="pathSegment"/>
           </attribute>
           <ref name="resources"/>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="dtd">
+    <zeroOrMore>
+      <choice>
+        <element name="unparsedEntity">
+          <optional>
+            <attribute name="public"/>
+          </optional>
+          <attribute name="system"/>
+          <attribute name="notation"/>
+        </element>
+        <element name="notation">
+          <oneOrMore>
+            <choice>
+              <attribute name="public"/>
+	      <attribute name="system"/>
+            </choice>
+          </oneOrMore>
         </element>
       </choice>
     </zeroOrMore>
