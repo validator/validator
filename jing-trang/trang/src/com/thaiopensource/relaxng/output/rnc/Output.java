@@ -56,9 +56,9 @@ import java.util.HashMap;
 /*
 Avoid top-level grammar element
 
-Annotations
+Comments (top-level most important)
 
-Comments
+Annotations
 
 Use \x{} escapes for characters not in repertoire of selected encoding
 
