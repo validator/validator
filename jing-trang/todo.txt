@@ -1,5 +1,3 @@
-Maybe need to redesign reset() so that it can be used to cleanup the thread.
-
 Add DTD validator
 
 Add build.xml for jing.
