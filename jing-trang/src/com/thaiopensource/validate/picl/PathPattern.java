@@ -49,7 +49,7 @@ abstract class PathPattern extends Pattern {
 
   private boolean matchStep(Path path, int pathIndex, int patternIndex) {
     patternIndex *= 2;
-    return (matchName(path.getNamespace(pathIndex), names[patternIndex])
+    return (matchName(path.getNamespaceUri(pathIndex), names[patternIndex])
             && matchName(path.getLocalName(pathIndex), names[patternIndex + 1]));
   }
 

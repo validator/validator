@@ -273,11 +273,11 @@ class PatternParser {
       "attribute::baz"
     };
     NamespaceContext nsc = new NamespaceContext() {
-      String getNamespaceUri(String prefix) {
+      public String getNamespaceUri(String prefix) {
         return "http://" + prefix;
       }
 
-      String defaultPrefix() {
+      public String defaultPrefix() {
         return "";
       }
     };

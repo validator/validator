@@ -1,6 +1,16 @@
 default namespace = "http://www.thaiopensource.com/validate/picl"
 
-start = element constraints { inherited, constraints }
+start =
+  element constraints {
+    element constraint {
+      attribute key { text },
+      attribute ref { text }?
+    }*
+  }
+
+# Planned eventually to be this.
+
+finalStart = element constraints { inherited, constraints }
 
 constraints = (key|ref|context|union)+
 
