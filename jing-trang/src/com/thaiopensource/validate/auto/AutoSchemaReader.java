@@ -73,6 +73,9 @@ public class AutoSchemaReader implements SchemaReader {
         rewindable.willNotRewind();
         return e.reparse(in2);
       }
+      finally {
+        rewindable.willNotRewind();
+      }
     }
     catch (SAXException e) {
       // Work around broken SAX parsers that catch and wrap runtime exceptions thrown by handlers
