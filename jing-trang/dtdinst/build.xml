@@ -52,7 +52,7 @@
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
   <copy todir="build">
-    <fileset dir="." includes="index.html,copying.txt"/>
+    <fileset dir="." includes="index.html,copying.txt,dtdinst2rng.xsl"/>
   </copy>
   <copy file="dtdinst.rngnx" tofile="build/dtdinst.rngnx.txt"/>
   <copy file="teixml.dtd" tofile="build/teixml.dtd.txt"/>
