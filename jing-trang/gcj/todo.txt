@@ -1,5 +1,4 @@
-Correct RPM packager
 Sign RPM file
 Detect with -lpthread is needed
 Instead of removing unneeded sources, omit them from compile list.
-Include trang-manual.
+Include some examples and additional documentation in the dist.
