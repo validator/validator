@@ -1,0 +1,11 @@
+Option to map comments into annotations (or maybe should be separate program).
+
+Generate definition for any in one place.
+
+Output overridden definitions.
+
+Try to preserve marked sections.
+
+Annotation for included sections (d:condition="flagName")
+
+Sort undefined elements.
