@@ -1,0 +1,6 @@
+<doctype>
+  <processingInstruction target="target">foo</processingInstruction>
+  <processingInstruction target="target">foo </processingInstruction>
+  <processingInstruction target="target"></processingInstruction>
+  <processingInstruction target="target"></processingInstruction>
+</doctype>
