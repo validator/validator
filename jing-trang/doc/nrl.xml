@@ -597,7 +597,7 @@ So instead we provide a RELAX NG schema (in compact syntax) that does
 not allow extensibility, and provide an NRL schema to make it
 extensible.</p>
 
-<p>The following NRL schema describes the extensibility:</p>
+<p>Thus, NRL is described by the following NRL schema:</p>
 
 <xml>
 <rules xmlns="http://www.thaiopensource.com/validate/nrl" startMode="root">
@@ -620,8 +620,7 @@ extensible.</p>
 </rules>
 </xml>
 
-<p>The following RELAX NG compact syntax schema describes the syntax
-without the extensibility.</p>
+<p>where <code>nrl.rnc</code> is as follows:</p>
 
 <pre>
 default namespace = "http://www.thaiopensource.com/validate/nrl"
