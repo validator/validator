@@ -1,3 +1,7 @@
+Option not to generate define for ATTLIST; instead put inline.
+
+Generate definition for any in one place.
+
 Bug from open office with duplicate attributes.
 
 Support OASIS catalogs.
