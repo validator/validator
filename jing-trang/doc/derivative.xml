@@ -7,6 +7,7 @@
 <title>An algorithm for RELAX NG validation</title>
 <style>
 .haskell { margin-left: 20pt }
+.haskell-info { font-size: smaller; margin-left: 20pt }
 </style>
 
 </head>
@@ -14,7 +15,7 @@
 <body>
 <h1>An algorithm for RELAX NG validation</h1>
 <h3>James Clark (jjc@thaiopensource.com)</h3>
-<h3>2002-02-12</h3>
+<h3>2002-02-13</h3>
 
 <div>
 <p>This document describes an algorithm for validating an XML document
@@ -158,7 +159,7 @@ contains (Name ns1 ln1) (QName ns2 ln2) = (ns1 == ns2) &amp;&amp; (ln1 == ln2)
 contains (NameClassChoice nc1 nc2) n = (contains nc1 n) || (contains nc2 n)
 </haskell>
 
-<p class="haskell">In Haskell, <code>_</code> is an anonymous variable
+<p class="haskell-info">In Haskell, <code>_</code> is an anonymous variable
 that matches any argument.</p>
 
 <p><code>nullable</code> tests whether a pattern matches the empty
@@ -334,6 +335,8 @@ listDeriv :: Context -> Pattern -> [String] -> Pattern
 listDeriv _ p [] = p
 listDeriv cx p (h:t) = listDeriv cx (textDeriv cx p h) t
 </haskell>
+
+<p class="haskell-info">In Haskell, <code>[]</code> refers to the empty list.</p>
 
 <p>When constructing <code>Choice</code>, <code>Group</code>,
 <code>Interleave</code> and <code>After</code> patterns while
@@ -514,7 +517,8 @@ attDeriv _ _ _ = NotAllowed
 </haskell>
 
 <p><code>valueMatch</code> is used for matching attribute values.  It
-has to implement the RELAX NG rules on whitespace.</p>
+has to implement the RELAX NG rules on whitespace: see (weak match 2)
+in the RELAX NG spec.</p>
 
 <haskell name="valueMatch">
 valueMatch :: Context -> Pattern -> String -> Bool
@@ -561,7 +565,8 @@ childrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
 </haskell>
 
 <p>The case where the list of children is empty is treated as if there
-were a text node whose value were the empty string.</p>
+were a text node whose value were the empty string. See rule
+(weak match 3) in the RELAX NG spec.</p>
 
 <haskell>
 childrenDeriv cx p [] = childrenDeriv cx p [(TextNode "")]
