@@ -531,77 +531,121 @@
 </testCase>
 </testSuite>
 <testSuite>
-<documentation>Checking ns and datatypeLibrary attributes</documentation>
+<documentation>Checking of ns attribute</documentation>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo_bar:xyzzy">
-  <empty/>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foobar:xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="">
   <empty/>
 </element>
 </correct>
 <valid>
-<foo xmlns="foobar:xyzzy"/>
+<foo/>
 </valid>
 </testCase>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
+<documentation>No checking of ns attribute is performed</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http:ok">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="DAV:">
   <empty/>
 </element>
 </correct>
 <valid>
-<foo xmlns="http:ok"/>
+<foo xmlns="DAV:"/>
 </valid>
 </testCase>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo:">
-  <empty/>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%">
-  <empty/>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%xx">
-  <empty/>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must conform to RFC 2396</documentation>
+<documentation>No checking of ns attribute is performed</documentation>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.com/%Aa">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy">
+  <empty/>
+</element>
+</correct>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>No checking of ns attribute is performed</documentation>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="bad_scheme://">
+  <empty/>
+</element>
+</correct>
+</testCase>
+</testSuite>
+<testSuite>
+<documentation>Checking of datatypeLibrary attribute</documentation>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="foo_bar:xyzzy">
+  <empty/>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="foobar:xyzzy">
   <empty/>
 </element>
 </correct>
 <valid>
-<foo xmlns="http://www.example.com/%Aa"/>
+<foo/>
+</valid>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http:ok">
+  <empty/>
+</element>
+</correct>
+<valid>
+<foo/>
+</valid>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="foo:">
+  <empty/>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.example.com/%">
+  <empty/>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<incorrect>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.example.com/%xx">
+  <empty/>
+</element>
+</incorrect>
+</testCase>
+<testCase>
+<section>3</section>
+<documentation>Value of datatypeLibrary attribute must conform to RFC 2396</documentation>
+<correct>
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.example.com/%Aa">
+  <empty/>
+</element>
+</correct>
+<valid>
+<foo/>
 </valid>
 </testCase>
 <testCase>
@@ -615,36 +659,27 @@
 </testCase>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must not be relative</documentation>
+<documentation>Value of datatypeLibrary attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="xyzzy#foo:bar">
   <empty/>
 </element>
 </incorrect>
 </testCase>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must not be relative</documentation>
+<documentation>Value of datatypeLibrary attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy#foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="xyzzy?foo:bar">
   <empty/>
 </element>
 </incorrect>
 </testCase>
 <testCase>
 <section>3</section>
-<documentation>Value of ns attribute must not be relative</documentation>
+<documentation>Value of datatypeLibrary attribute must not be relative</documentation>
 <incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy?foo:bar">
-  <empty/>
-</element>
-</incorrect>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must not be relative</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="xyzzy/foo:bar">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="xyzzy/foo:bar">
   <empty/>
 </element>
 </incorrect>
@@ -652,18 +687,7 @@
 <testCase>
 <section>3</section>
 <correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="foo:bar">
-  <empty/>
-</element>
-</correct>
-<valid>
-<foo xmlns="foo:bar"/>
-</valid>
-</testCase>
-<testCase>
-<section>3</section>
-<correct>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" ns="">
+<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="foo:bar">
   <empty/>
 </element>
 </correct>
@@ -692,16 +716,6 @@
 <valid>
 <foo>x</foo>
 </valid>
-</testCase>
-<testCase>
-<section>3</section>
-<documentation>Value of ns attribute must not be relative. Requirement
-applies at the syntax level.</documentation>
-<incorrect>
-<element name="foo" xmlns="http://relaxng.org/ns/structure/1.0">
-  <empty ns="xyzzy"/>
-</element>
-</incorrect>
 </testCase>
 <testCase>
 <section>3</section>

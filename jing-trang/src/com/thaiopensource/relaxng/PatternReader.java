@@ -149,12 +149,8 @@ public class PatternReader implements ValidationContext {
 	  String name = atts.getLocalName(i);
 	  if (name.equals("name"))
 	    setName(atts.getValue(i).trim());
-	  else if (name.equals("ns")) {
+	  else if (name.equals("ns"))
 	    ns = atts.getValue(i);
-	    checkUri(ns);
-	    if (!ns.equals("") && !Uri.isAbsolute(ns))
-	      error("relative_ns");
-	  }
 	  else if (name.equals("datatypeLibrary")) {
 	    datatypeLibrary = atts.getValue(i);
 	    checkUri(datatypeLibrary);
