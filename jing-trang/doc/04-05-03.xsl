@@ -1,6 +1,9 @@
 <!-- XSLT stylesheet to convert nrl.xml into gcapaper format. -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+<xsl:output doctype-public="-//GCA//DTD GCAPAP-X DTD 20021024 Vers 6.2//EN"
+	    doctype-system="gcapaper.dtd"/>
+
 <xsl:variable name="indent" select="'  '"/>
 
 <xsl:template match="html">
