@@ -292,7 +292,7 @@ class Transformer extends SchemaTransformer {
 
   private static int chooseUseIndex(SingleAttributeUse[] uses) {
     for (int i = 0; i < uses.length; i++)
-      if (uses[i].getType() == null && uses[i].getDefaultValue() == null)
+      if (uses[i] != null && uses[i].getType() == null && uses[i].getDefaultValue() == null)
         return i;
     int firstIndex = -1;
     for (int i = 0; i < uses.length; i++) {
