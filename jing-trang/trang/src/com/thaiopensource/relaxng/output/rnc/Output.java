@@ -13,6 +13,8 @@ import java.util.*;
 /*
 Use \x{} escapes for characters not in repertoire of selected encoding
 
+Combine adjacent text annotations.
+
 Make long literals pretty
 */
 class Output {
