@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.8 2001-09-21 07:17:36 jjc Exp $ -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9" ns="">
+<!-- $Id: testSuite.rng,v 1.9 2001-10-23 05:53:15 jjc Exp $ -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
     prefix/URI bindings

@@ -1,4 +1,4 @@
-Support URI version number of 1.0.
+Allow version number of 0.9 with a warning.
 
 Distinguish error for unknown datatype library and unknown datatype.
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: relaxCoreDatatypes.rng,v 1.1 2001-06-11 08:00:45 jjc Exp $ -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+<!-- $Id: relaxCoreDatatypes.rng,v 1.2 2001-10-23 05:58:01 jjc Exp $ -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
          ns="http://www.xml.gr.jp/xmlns/relaxCore"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
    <define name="minBound.label">

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!-- RELAX NG for RELAX NG -->
-<!-- $Id: relaxng.rng,v 1.27 2001-08-03 00:58:46 jjc Exp $ -->
+<!-- $Id: relaxng.rng,v 1.28 2001-10-23 05:53:26 jjc Exp $ -->
 <grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-         ns="http://relaxng.org/ns/structure/0.9"
-         xmlns="http://relaxng.org/ns/structure/0.9">
+         ns="http://relaxng.org/ns/structure/1.0"
+         xmlns="http://relaxng.org/ns/structure/1.0">
   <start>
     <ref name="pattern"/>
   </start>

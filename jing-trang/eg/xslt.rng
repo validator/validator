@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.6 2001-09-11 11:09:40 jjc Exp $ -->
+<!-- $Id: xslt.rng,v 1.7 2001-10-23 06:00:46 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result
      elements, which is overly restrictive. -->
-<grammar xmlns="http://relaxng.org/ns/structure/0.9"
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
          ns="http://www.w3.org/1999/XSL/Transform"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
    <start>
