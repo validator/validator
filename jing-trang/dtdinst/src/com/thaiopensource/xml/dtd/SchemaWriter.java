@@ -51,9 +51,7 @@ public class SchemaWriter implements TopLevelVisitor,
   }
 
   public void comment(String value) throws Exception {
-    w.startElement("comment");
-    w.characters(value);
-    w.endElement();
+    w.comment(value);
   }
 
   public void ignoredSection(String value) throws Exception {
