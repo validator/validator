@@ -2,6 +2,7 @@ package com.thaiopensource.xml.dtd.app;
 
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.UriOrFile;
+import com.thaiopensource.util.Version;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.out.XmlWriter;
@@ -46,7 +47,7 @@ public class Driver {
   }
 
   private static void usage() {
-    print(localizer.message("USAGE", getVersion()));
+    print(localizer.message("USAGE", Version.getVersion(Driver.class)));
   }
 
   private static void error(String str) {
@@ -61,20 +62,4 @@ public class Driver {
     System.err.println(str);
   }
 
-  private static String getVersion() {
-    InputStream in = Driver.class.getResourceAsStream("resources/Version.properties");
-    if (in != null) {
-      Properties props = new Properties();
-      try {
-	props.load(in);
-	String version = props.getProperty("version");
-	if (version != null)
-	  return version;
-      }
-      catch (IOException e) { }
-    }
-    throw new MissingResourceException("no version property",
-				       Driver.class.getName(),
-				       "version");
-  }
 }

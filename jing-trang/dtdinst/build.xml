@@ -17,7 +17,8 @@
          includes="com/thaiopensource/xml/**,
                    com/thaiopensource/util/UriOrFile.java,
                    com/thaiopensource/util/Localizer.java,
-                   com/thaiopensource/util/Utf16.java"
+                   com/thaiopensource/util/Version.java,
+                   com/thaiopensource/util/Utf16.java,"
          excludes="com/thaiopensource/xml/util/Naming.java,
                    com/thaiopensource/xml/util/WellKnownNamespaces.java"
   />
