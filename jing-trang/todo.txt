@@ -2,8 +2,6 @@ Maybe need to redesign reset() so that it can be used to cleanup the thread.
 
 Add DTD validator
 
-Versions should not have dashes.
-
 Add build.xml for jing.
 
 Provide a validate method on Validator so that we can avoid messing

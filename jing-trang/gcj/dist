@@ -65,10 +65,10 @@ rm -fr ${build_dir}
 test -f ${build_dir} || mkdir -p ${build_dir}
 
 . ${jing_version_properties}
-jing_version=`echo $version | tr -d -`
+jing_version=$version
 
 . ${trang_version_properties}
-trang_version=`echo $version | tr -d -`
+trang_version=$version
 
 jing_dir=${build_dir}/jing-${jing_version}
 trang_dir=${build_dir}/trang-${trang_version}
