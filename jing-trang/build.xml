@@ -224,7 +224,7 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
-<target name="regex-dist">
+<target name="regex-dist" depends="init">
   <ant antfile="regex-build.xml" target="dist">
     <property name="classes.dir" value="build/regex-classes"/>
     <property name="apidoc.dir" value="build/regex-apidoc"/>
