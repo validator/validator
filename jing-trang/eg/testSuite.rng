@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: testSuite.rng,v 1.10 2002-04-30 07:00:05 jjc Exp $ -->
+<!-- $Id: testSuite.rng,v 1.11 2003-01-25 04:30:49 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" ns="">
   <!--
     Target namespace is intentionally set to "" so as not to interfere with
@@ -38,10 +38,7 @@
          
         <!-- Correct schema and test cases -->
         <group>
-          <element name="correct">
-            <ref name="dtd"/>
-            <externalRef href="relaxng.rng"/>
-          </element>
+          <ref name="correct"/>
           <zeroOrMore>
             <choice>
               <!-- Valid test cases -->
@@ -60,6 +57,13 @@
 
       </choice>
 
+    </element>
+  </define>
+
+  <define name="correct">
+    <element name="correct">
+      <ref name="dtd"/>
+      <externalRef href="relaxng.rng"/>
     </element>
   </define>
 
