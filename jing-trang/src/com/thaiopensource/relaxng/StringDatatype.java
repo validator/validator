@@ -11,4 +11,12 @@ class StringDatatype implements Datatype {
   public Object createValue(String str, DatatypeContext context) {
     return str;
   }
+
+  public boolean isContextDependent() {
+    return false;
+  }
+
+  public int getIdType() {
+    return ID_TYPE_NULL;
+  }
 }

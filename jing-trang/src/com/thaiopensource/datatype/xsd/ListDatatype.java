@@ -91,4 +91,15 @@ class ListDatatype extends DatatypeBase implements Measure {
   public int getLength(Object obj) {
     return ((List)obj).getLength();
   }
+
+  public boolean isContextDependent() {
+    return itemType.isContextDependent();
+  }
+
+  public int getIdType() {
+    if (itemType.getIdType() == ID_TYPE_IDREF)
+      return ID_TYPE_IDREFS;
+    else
+      return ID_TYPE_NULL;
+  }
 }

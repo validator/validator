@@ -69,9 +69,10 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("NMTOKEN", nmtokenDatatype);
     typeTable.put("NMTOKENS", list(nmtokenDatatype));
 
-    typeTable.put("ID", ncNameType);
-    typeTable.put("IDREF", ncNameType);
-    typeTable.put("IDREFS", list(ncNameType));
+    typeTable.put("ID", new IdDatatype());
+    DatatypeBase idrefType = new IdrefDatatype();
+    typeTable.put("IDREF", idrefType);
+    typeTable.put("IDREFS", list(idrefType));
 
     typeTable.put("NOTATION", new QNameDatatype());
 

@@ -65,4 +65,8 @@ class QNameDatatype extends DatatypeBase {
     int i = str.indexOf(':');
     return i < 0 || dc.getNamespaceURI(str.substring(0, i)) != null;
   }
+
+  public boolean isContextDependent() {
+    return true;
+  }
 }

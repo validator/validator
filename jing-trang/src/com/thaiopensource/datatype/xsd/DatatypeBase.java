@@ -102,4 +102,13 @@ abstract class DatatypeBase implements Datatype {
   DatatypeBase getPrimitive() {
     return this;
   }
+
+  public boolean isContextDependent() {
+    return false;
+  }
+
+  public int getIdType() {
+    return ID_TYPE_NULL;
+  }
+
 }

@@ -11,4 +11,12 @@ class TokenDatatype implements Datatype {
   public Object createValue(String str, DatatypeContext context) {
     return StringNormalizer.normalize(str);
   }
+
+  public boolean isContextDependent() {
+    return false;
+  }
+
+  public int getIdType() {
+    return ID_TYPE_NULL;
+  }
 }
