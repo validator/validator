@@ -1,5 +1,7 @@
 package com.thaiopensource.relaxng.edit;
 
+import java.util.Iterator;
+
 public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentVisitor,
         AnnotationChildVisitor, AttributeAnnotationVisitor {
   public final Object visitElement(ElementPattern p) {
@@ -228,6 +230,8 @@ public class NullVisitor implements PatternVisitor, NameClassVisitor, ComponentV
     Pattern e = p.getExcept();
     if (e != null)
       e.accept(this);
+    for (Iterator iter = p.getParams().iterator(); iter.hasNext();)
+      nullVisitAnnotated((Param)iter.next());
   }
 
   public final Object visitMixed(MixedPattern p) {
