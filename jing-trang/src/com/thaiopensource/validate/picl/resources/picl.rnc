@@ -44,7 +44,7 @@ refBody =
 
 
 select = attribute select { path }
-convert = attribute convert { "detag" | "split" }
+convert = attribute convert { "detag" | "split" | "localFragmentId" }
 
 dflt =
   attribute default { "null" | "skip" }
