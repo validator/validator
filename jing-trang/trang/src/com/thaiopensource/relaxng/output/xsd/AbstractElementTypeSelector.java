@@ -127,8 +127,6 @@ class AbstractElementTypeSelector {
       String tem = ((SimpleTypeRef)st).getName();
       if (tem.equals(base))
         return true;
-      if (!complexTypeSelector.isComplexType(tem))
-        return false;
       st = schema.getSimpleType(tem).getSimpleType();
     }
     if (!(st instanceof SimpleTypeRestriction))
