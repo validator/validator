@@ -103,7 +103,7 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
       SchemaImpl.Mode mode = getMode();
       SchemaImpl.ElementAction elementAction = mode.getElementAction(uri);
       if (elementAction == null) {
-        if (laxDepth == 0 && mode.isStrict())
+        if (laxDepth == 0 && mode.isStrictElements())
           error("element_undeclared_namespace", uri);
         laxDepth++;
       }

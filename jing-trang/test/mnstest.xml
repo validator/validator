@@ -93,7 +93,6 @@
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
   <lax/>
-  <laxAttributes/>
 </rules>
 </correct>
 <valid>
@@ -119,7 +118,6 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng"/>
-  <strict/>
 </rules>
 </correct>
 <valid>
@@ -140,7 +138,6 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="http://www.example.com" schema="a.rng"/>
-  <strict/>
 </rules>
 </correct>
 <invalid>
@@ -168,7 +165,6 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
 <lax/>
-<laxAttributes/>
 </rules>
 </correct>
 <valid>
@@ -290,7 +286,6 @@
   <validate ns="http://www.example.com/a" schema="a.rng">
     <cover ns="http://www.example.com/b"/>
   </validate>
-  <strict/>
 </rules>
 </correct>
 <valid>
@@ -396,7 +391,6 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="http://example.com" schema="a.rng" useMode="a" prune="true"/>
-  <strict inModes="#default"/>
   <lax inModes="a"/>
 </rules>
 </correct>
@@ -438,7 +432,6 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate inModes="#default a" ns="http://example.com" schema="a.rng" useMode="a"/>
-  <strict inModes="#default"/>
   <lax inModes="a"/>
 </rules>
 </correct>
@@ -476,15 +469,7 @@
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict/>
-  <strict/>
-</rules>
-</incorrect>
-</testCase>
-<testCase>
-<incorrect>
-<rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict/>
+  <lax/>
   <lax/>
 </rules>
 </incorrect>
@@ -492,15 +477,15 @@
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict inModes="a b"/>
-  <strict inModes="b c"/>
+  <lax inModes="a b"/>
+  <lax inModes="b c"/>
 </rules>
 </incorrect>
 </testCase>
 <testCase>
 <incorrect>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
-  <strict inModes="a b a"/>
+  <lax inModes="a b a"/>
 </rules>
 </incorrect>
 </testCase>
@@ -587,7 +572,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
-  <laxAttributes/>
+  <lax allow="attributes"/>
 </rules>
 </correct>
 <valid>
@@ -608,7 +593,7 @@
 <correct>
 <rules xmlns="http://www.thaiopensource.com/ns/mns">
   <validate ns="" schema="a.rng" prune="true"/>
-  <lax/>
+  <lax allow="elements"/>
 </rules>
 </correct>
 <invalid>
@@ -1425,14 +1410,11 @@
   <validate ns="http://www.w3.org/1999/xhtml"
             schema="xhtml.rng"
             inModes="xhtml"
-            useMode="nothing"
             prune="true">
     <context useMode="rdf">
       <element name="head"/>
     </context>
   </validate>
-  <strict inModes="nothing xhtml"/>
-  <strictAttributes inModes="nothing"/>
   <lax inModes="anything"/>
 </rules>
 </correct>
@@ -1585,7 +1567,6 @@
     </context>
   </validate>
   <lax inModes="anythingGoes"/>
-  <strict/>
 </rules>
 </correct>
 <valid>
@@ -1636,7 +1617,6 @@
     </context>
   </validate>
   <lax inModes="anythingGoes"/>
-  <strict/>
 </rules>
 </correct>
 <invalid>

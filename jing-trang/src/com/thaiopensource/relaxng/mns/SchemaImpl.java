@@ -32,7 +32,7 @@ class SchemaImpl implements Schema {
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private static final String DEFAULT_MODE_NAME = "#default";
-  private static final boolean STRICT_DEFAULT = true;
+  private static final boolean STRICT_ELEMENTS_DEFAULT = true;
   private static final boolean STRICT_ATTRIBUTES_DEFAULT = true;
 
   static private final class WrappedIOException extends RuntimeException {
@@ -86,15 +86,14 @@ class SchemaImpl implements Schema {
   static class Mode {
     private Locator whereDefined;
     private boolean defined = false;
-    private boolean strict = STRICT_DEFAULT;
+    private boolean strictElements = STRICT_ELEMENTS_DEFAULT;
     private boolean strictAttributes = STRICT_ATTRIBUTES_DEFAULT;
     private boolean strictDefined = false;
-    private boolean strictAttributesDefined = false;
     private final Hashtable elementMap = new Hashtable();
     private final Hashtable attributesMap = new Hashtable();
 
-    boolean isStrict() {
-      return strict;
+    boolean isStrictElements() {
+      return strictElements;
     }
 
     boolean isStrictAttributes() {
@@ -178,13 +177,10 @@ class SchemaImpl implements Schema {
         parseRoot(attributes);
       else if (localName.equals("element"))
         parseElement(attributes);
-      else {
-        boolean isAttribute = localName.endsWith("Attributes");
-        if (localName.startsWith("strict") || localName.startsWith("lax"))
-          parseProcess(localName.startsWith("strict"), isAttribute, attributes);
-        else
-          parseValidate(isAttribute, attributes);
-      }
+      else if (localName.equals("lax"))
+        parseLax(attributes);
+      else
+        parseValidate(localName.equals("validateAttributes"), attributes);
     }
 
     public void endElement(String namespaceURI, String localName,
@@ -216,25 +212,24 @@ class SchemaImpl implements Schema {
       currentElementAction.covered.add(ns);
     }
 
-    private void parseProcess(boolean strict, boolean isAttribute, Attributes attributes) throws SAXException {
+    private void parseLax(Attributes attributes) throws SAXException {
       String[] modeNames = getInModes(attributes);
       SchemaImpl.Mode[] modes = getModes(modeNames);
+      String allow = attributes.getValue("", "allow");
+      boolean strictElements, strictAttributes;
+      if (allow == null)
+        strictElements = strictAttributes = false;
+      else {
+        strictElements = allow.indexOf("elements") < 0;
+        strictAttributes = allow.indexOf("attributes") < 0;
+      }
       for (int i = 0; i < modes.length; i++) {
-        if (isAttribute) {
-          if (modes[i].strictAttributesDefined)
-            error("strict_attributes_multiply_defined", modeNames[i]);
-          else {
-            modes[i].strictAttributes = strict;
-            modes[i].strictAttributesDefined = true;
-          }
-        }
+        if (modes[i].strictDefined)
+          error("lax_multiply_defined", modeNames[i]);
         else {
-          if (modes[i].strictDefined)
-            error("strict_multiply_defined", modeNames[i]);
-          else {
-            modes[i].strict = strict;
-            modes[i].strictDefined = true;
-          }
+          modes[i].strictElements = strictElements;
+          modes[i].strictAttributes = strictAttributes;
+          modes[i].strictDefined = true;
         }
       }
     }

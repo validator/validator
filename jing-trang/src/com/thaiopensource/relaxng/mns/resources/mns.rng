@@ -11,7 +11,7 @@
         <zeroOrMore>
           <choice>
             <ref name="validate"/>
-            <ref name="process"/>
+            <ref name="lax"/>
           </choice>
         </zeroOrMore>
         <ref name="foreign"/>
@@ -46,19 +46,15 @@
         </interleave>
       </element>
       <element name="validateAttributes">
-        <interleave>
-          <ref name="validateModel"/>
-          <ref name="foreign"/>
-        </interleave>
+        <ref name="validateModel"/>
+        <ref name="foreign"/>
       </element>
     </choice>
   </define>
   <define name="cover">
     <element name="cover">
-      <interleave>
-        <ref name="nsAtt"/>
-        <ref name="foreign"/>
-      </interleave>
+      <ref name="nsAtt"/>
+      <ref name="foreign"/>
     </element>
   </define>
   <define name="context">
@@ -107,20 +103,31 @@
       </interleave>
     </element>
   </define>
-  <define name="process">
-    <element>
-      <choice>
-        <name>lax</name>
-        <name>strict</name>
-        <name>laxAttributes</name>
-        <name>strictAttributes</name>
-      </choice>
-      <interleave>
-        <optional>
-          <ref name="inModesAtt"/>
-        </optional>
-        <ref name="foreign"/>
-      </interleave>
+  <define name="lax">
+    <element name="lax">
+      <optional>
+        <attribute name="allow">
+          <list>
+            <choice>
+              <group>
+                <value>elements</value>
+                <value>attributes</value>
+              </group>
+              <group>
+                <value>attributes</value>
+                <value>elements</value>
+              </group>
+              <value>elements</value>
+              <value>attributes</value>
+              <empty/>
+            </choice>
+          </list>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="inModesAtt"/>
+      </optional>
+      <ref name="foreign"/>
     </element>
   </define>
   <define name="validateModel">
