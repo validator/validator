@@ -13,4 +13,13 @@ class EmptySequencePattern extends Pattern {
   void accept(PatternVisitor visitor) {
     visitor.visitEmptySequence();
   }
+  void checkRestrictions(int context, DuplicateAttributeDetector dad)
+    throws RestrictionViolationException {
+    switch (context) {
+    case DATA_EXCEPT_CONTEXT:
+      throw new RestrictionViolationException("data_except_contains_empty");
+    case START_CONTEXT:
+      throw new RestrictionViolationException("start_contains_empty");
+    }
+  }
 }

@@ -5049,6 +5049,22 @@ z
 </incorrect>
 </testCase>
 <testCase>
+<section>7.1.4</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<start>
+  <element name="foo">
+    <data type="string">
+      <except>
+        <empty/>
+      </except>
+    </data>
+  </element>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
 <section>7.1.5</section>
 <incorrect>
 <grammar xmlns="http://relaxng.org/ns/structure/0.9">
@@ -5258,6 +5274,31 @@ z
     <element name="foo">
       <empty/>
     </element>
+  </choice>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>7.1.5</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<start>
+  <empty/>
+</start>
+</grammar>
+</incorrect>
+</testCase>
+<testCase>
+<section>7.1.5</section>
+<incorrect>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+<start>
+  <choice>
+    <element name="foo">
+      <empty/>
+    </element>
+    <empty/>
   </choice>
 </start>
 </grammar>
