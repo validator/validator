@@ -29,3 +29,11 @@ Maybe introduce a variant of the element pattern that has a mapping
 from names to content models.
 
 Better error message for wrong namespace URI.
+
+Option to be verbose.
+
+Update Version.properties.
+
+Document that no messages mean success.
+
+Document using -jar option.
