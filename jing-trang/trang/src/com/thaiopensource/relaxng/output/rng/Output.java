@@ -420,6 +420,9 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     leadingAnnotations(c);
     xw.startElement("include");
     xw.attribute("href", od.reference(sourceUri, c.getHref()));
+    if (c.getNs() != NameClass.INHERIT_NS
+        && !c.getNs().equals(prefixMap.get("")))
+      xw.attribute("ns", c.getNs());
     finishContainer(c, c);
     return null;
   }
