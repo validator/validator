@@ -354,7 +354,11 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
         return new DataPatternBuilderImpl(dl.createDatatypeBuilder(type));
       }
       catch (DatatypeException e) {
-        error("unrecognized_datatype", datatypeLibrary, type, (Locator)loc);
+	String detail = e.getMessage();
+	if (detail != null)
+	  error("unsupported_datatype_detail", datatypeLibrary, type, detail, (Locator)loc);
+	else
+	  error("unrecognized_datatype", datatypeLibrary, type, (Locator)loc);
       }
     }
     return new DummyDataPatternBuilder();
@@ -823,6 +827,9 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     error(new SAXParseException(localizer.message(key, arg1, arg2), loc));
   }
 
+  private void error(String key, String arg1, String arg2, String arg3, Locator loc) throws BuildException {
+    error(new SAXParseException(localizer.message(key, new Object[]{arg1, arg2, arg3}), loc));
+  }
   private void noteError() {
     if (!hadError && parent != null)
       parent.noteError();
