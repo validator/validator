@@ -55,8 +55,6 @@ references to the element are via that parameter entity.
 
 Use nameSpec for general entities.
 
-Support EBCDIC in EncodingDetectInputStream.
-
 EncodingDetectInputStream should support entities that need an XmlDecl
 rather than a TextDecl.
 
