@@ -45,8 +45,7 @@ class InterleavePattern extends BinaryPattern {
 	alpha.addAlphabet(a2);
       }
     }
-    if (context != LIST_CONTEXT
-	&& !contentTypeGroupable(p1.getContentType(), p2.getContentType()))
+    if (!contentTypeGroupable(p1.getContentType(), p2.getContentType()))
       throw new RestrictionViolationException("interleave_string");
     if (p1.getContentType() == MIXED_CONTENT_TYPE
 	&& p2.getContentType() == MIXED_CONTENT_TYPE)
