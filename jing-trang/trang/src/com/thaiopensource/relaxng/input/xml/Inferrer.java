@@ -49,7 +49,7 @@ import java.util.Vector;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Inferrer {
+class Inferrer {
   private final Schema schema;
   private final Set multiplyReferencedElementNames = new HashSet();
   private final GrammarPattern grammar;
@@ -206,7 +206,7 @@ public class Inferrer {
     }
   }
 
-  public static SchemaCollection infer(String[] args, ErrorHandler eh) throws SAXException, IOException {
+  static SchemaCollection infer(String[] args, ErrorHandler eh) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
     XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
     XMLReader xr = xrc.createXMLReader();
