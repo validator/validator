@@ -1,3 +1,5 @@
+We can get (x | (y | z)) if (y|z) was a name class.  Simplify into x|y|z.
+
 Check for duplicate attributes.
 
 Check for violations of RELAX NG interleave restriction.
@@ -43,12 +45,52 @@ Interleave
 - Optimize nested choices in expanding <interleave>.
 - Optimize eg x* & (a, b, c) into x*, (a, x*), (b, x*), (c, x*)
 
-For a <value type="NOTATION"/>, map to NOTATION and generate an appropriate xs:notation declaration
-based on annotations.
+For a <value type="NOTATION"/>, map to NOTATION and generate an
+appropriate xs:notation declaration based on annotations.
 
 Deal with xsi attributes.
 
-Make use of element substitution groups; may affect which elements are global.
+Make use of element substitution groups; may affect which elements are
+global.  A group that consists of a choice of global elements is
+eligible to made a substitution group; the choice may also contain
+references to groups that are themselves eligible to be substitution
+groups. The choice should not have any annotations. If the name of the
+group is the same as the name of one of the elements in the choice,
+then the group disappears and that element becomes the head; in this
+case, the use of a substitution group should probably be prevented if
+the define has an annotation.  If the name of the group is not the
+same as one of the elements of the choice, then we generate an
+abstract element with the same name of the group. What if the name of
+the group clashes with an existing non-abstract global element?  We
+should probably try to avoid this situation when choosing which
+element particles are to become global elements.  If we cannot, we
+could either forgo the use of a substitution group, or modify the name
+by adding a prefix or suffix.  The possibility of using a substitution
+group should be able to influence whether we choose to use a global
+element for a particular element particle.
+
+A define whose pattern is equivalent to notAllowed should be preserved
+in the intermediate form, since it may correspond to the abstract head
+of a subsitution group (probably need an annotation to control this).
+
+Better support for combine="choice".  If element substitution groups
+are supported, then combine="choice" can be supported much better.
+Intermediate form needs support for combine="choice".  If a
+combine="choice" turns out to be substition group, then there's no
+problem.  Otherwise we can distinguish three cases:
+
+- same file: choose one to be the main definition; for the others two
+strategies: (a) move into the main (b) modify the name and add
+reference to it to the main definition
+
+- same file, different target namespace: preserve separate
+definitions; either generate new definition in different namespace to
+combine them or choose on of the target namespaces to be the main one
+
+- same file, same target namespace: files are related by include; try
+to use redefine; can combine two definitions from include parent and
+include descendant, not two definitions from two include children; in
+this case, rename defines in childen and add define to parent.
 
 Deal with comments
 
