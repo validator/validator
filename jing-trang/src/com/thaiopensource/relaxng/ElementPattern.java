@@ -60,7 +60,6 @@ class ElementPattern extends Pattern {
   void checkRestrictions(int context, DuplicateAttributeDetector dad) throws RestrictionViolationException {
     if (checkedRestrictions)
       return;
-    checkedRestrictions = true;
     switch (context) {
     case DATA_EXCEPT_CONTEXT:
       throw new RestrictionViolationException("data_except_contains_element");
@@ -69,10 +68,12 @@ class ElementPattern extends Pattern {
     case ATTRIBUTE_CONTEXT:
       throw new RestrictionViolationException("attribute_contains_element");
     }
+    checkedRestrictions = true;
     try {
       p.checkRestrictions(ELEMENT_CONTEXT, new DuplicateAttributeDetector());
     }
     catch (RestrictionViolationException e) {
+      checkedRestrictions = false;
       e.maybeSetLocator(loc);
       throw e;
     }
