@@ -81,9 +81,6 @@ class Driver {
     }
     catch (SAXException e) {
       hadError = true;
-      Exception tunnelled = e.getException();
-      if (tunnelled != null && tunnelled instanceof RuntimeException)
-        throw (RuntimeException)tunnelled;
       eh.printException(e);
     }
     catch (IOException e) {
