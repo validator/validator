@@ -128,7 +128,7 @@ class AtomParser {
 	  p = new Param(action == PrologParser.ACTION_GROUP_OPEN
 			? Param.MODEL_GROUP
 			: Param.ATTRIBUTE_VALUE_GROUP);
-	  p.group = parseGroup(action == PrologParser.ACTION_GROUP_OPEN);
+	  p.group = parseGroup();
 	  break;
 	case Tokenizer.TOK_LITERAL:
 	  switch (action) {
@@ -207,10 +207,10 @@ class AtomParser {
     return false;
   }
 
-  private Particle parseGroup(boolean isModelGroup) {
+  private Particle parseGroup() {
     Particle g = new Particle(Particle.GROUP);
     g.particles = new Vector();
-    new AtomParser(as, pp, g).parseParticles(isModelGroup);
+    new AtomParser(as, pp, g).parseParticles();
     int n = g.particles.size();
     int flags = 0;
     for (int i = 0; i < n; i++) {
@@ -237,7 +237,7 @@ class AtomParser {
     return g;
   }
 
-  private void parseParticles(boolean isModelGroup) {
+  private void parseParticles() {
     while (as.advance()) {
       Particle p = null;
       if (as.entity != null) {
@@ -245,7 +245,7 @@ class AtomParser {
 	p.entity = as.entity;
 	v.addElement(p);
 	int start = v.size();
-	new AtomParser(new AtomStream(as.entity.atoms), pp, group).parseParticles(isModelGroup);
+	new AtomParser(new AtomStream(as.entity.atoms), pp, group).parseParticles();
 	p.entity.setParsed(Entity.PARTICLE_LEVEL, v, start, v.size());
 	p = new Particle(Particle.REFERENCE_END);
       } 
@@ -281,7 +281,7 @@ class AtomParser {
 	  p.occur = '+';
 	  break;
 	case Tokenizer.TOK_OPEN_PAREN:
-	  p = parseGroup(isModelGroup);
+	  p = parseGroup();
 	  break;
 	case Tokenizer.TOK_CLOSE_PAREN:
 	  return;
