@@ -2819,6 +2819,56 @@ applies at the syntax level.</documentation>
 </grammar>
 </incorrect>
 </testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <grammar>
+      <start>
+        <ref name="foo"/>
+      </start>
+      <define name="foo">
+        <element name="innerFoo">
+           <parentRef name="foo"/>
+        </element>
+      </define>
+    </grammar>
+  </start>
+  <define name="foo">
+    <element name="outerFoo">
+      <empty/>
+    </element>
+  </define>
+</grammar>
+</correct>
+<valid><innerFoo><outerFoo/></innerFoo></valid>
+<invalid><outerFoo/></invalid>
+</testCase>
+<testCase>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <ref name="foo"/>
+  </start>
+  <define name="foo">
+    <element name="outerFoo">
+      <grammar>
+	<start>
+	  <ref name="foo"/>
+	</start>
+	<define name="foo">
+	  <element name="innerFoo">
+	     <empty/>
+	  </element>
+	</define>
+      </grammar>
+    </element>
+  </define>
+</grammar>
+</correct>
+<valid><outerFoo><innerFoo/></outerFoo></valid>
+<invalid><innerFoo/></invalid>
+</testCase>
 </testSuite>
 <testSuite>
 <section>4.18</section>
