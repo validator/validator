@@ -15,3 +15,5 @@ Support DTD compatibility use of ID/IDREF/IDREFS.
 Support DTD compatibility use of default values.
 
 Avoid slow error recovery with large schemas (eg DocBook).
+
+Integrate the non-XML syntax.
