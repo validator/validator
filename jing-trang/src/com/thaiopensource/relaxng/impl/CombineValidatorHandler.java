@@ -75,8 +75,8 @@ public class CombineValidatorHandler implements ValidatorHandler {
     vh2.reset();
   }
 
-  public boolean isValid() {
-    return vh1.isValid() && vh2.isValid();
+  public boolean isValidSoFar() {
+    return vh1.isValidSoFar() && vh2.isValidSoFar();
   }
 
   public boolean isComplete() {

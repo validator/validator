@@ -111,7 +111,7 @@ public class ValidationEngine {
     }
     xr.setContentHandler(vh);
     xr.parse(in);
-    return vh.isValid();
+    return vh.isValidSoFar();
   }
 
   /**

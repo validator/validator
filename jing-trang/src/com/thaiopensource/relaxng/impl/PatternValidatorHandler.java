@@ -229,7 +229,7 @@ class PatternValidatorHandler implements ValidatorHandler {
     prefixMapping = new PrefixMapping("xml", PatternReader.xmlURI, null);
   }
 
-  public boolean isValid() {
+  public boolean isValidSoFar() {
     return !hadError;
   }
 

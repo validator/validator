@@ -22,7 +22,7 @@ public interface ValidatorHandler extends ContentHandler {
    *
    * @return <code>true</code> if the content is valid; <code>false</code> otherwise.
    */
-  boolean isValid();
+  boolean isValidSoFar();
 
   /**
    * Reports whether the complete document has been received, that is, whether
@@ -35,7 +35,7 @@ public interface ValidatorHandler extends ContentHandler {
 
   /**
    * Prepares to receive the content of another document.  Immediately after <code>reset</code> is called
-   * <code>isValid</code> will return <code>true</code> and <code>isComplete</code> will return false.
+   * <code>isValidSoFar</code> will return <code>true</code> and <code>isComplete</code> will return false.
    * The current <code>ErrorHandler</code> is not affected.
    */
   void reset();

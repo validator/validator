@@ -39,7 +39,7 @@ public class IdSoundnessChecker implements ValidatorHandler {
     complete = false;
   }
 
-  public boolean isValid() {
+  public boolean isValidSoFar() {
     return !hadError;
   }
 
