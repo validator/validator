@@ -90,7 +90,7 @@ class Decl {
     if (entity.decl == null)
       entity.decl = this;
     if (entity.decl != this)
-      return null;
+      return createOverriddenDef(name, ps);
     switch (entity.semantic) {
     case Entity.SEMANTIC_MODEL_GROUP:
       entity.modelGroup = entity.toModelGroup();
@@ -176,5 +176,12 @@ class Decl {
   
   NotationDecl createNotationDecl() {
     return null;
+  }
+
+  OverriddenDef createOverriddenDef(String name, ParamStream ps) {
+    ps.advance();
+    if (ps.type != Param.LITERAL)
+      return null;
+    return new OverriddenDef(name, ps.value);
   }
 }
