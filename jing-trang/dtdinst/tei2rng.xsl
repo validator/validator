@@ -3,6 +3,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
+  xmlns:t="http://www.thaiopensource.com/ns/annotations"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/0.9"
   xmlns="http://relaxng.org/ns/structure/0.9">
 
@@ -40,31 +41,21 @@
   </define>
 </xsl:template>
 
-<xsl:template match="attribute">
-  <xsl:variable name="name">
-    <xsl:apply-templates select="*[1]"/>
-  </xsl:variable>
-  <xsl:choose>
-    <xsl:when test="required">
-      <attribute name="{$name}">
-        <xsl:call-template name="default-value"/>
-        <xsl:apply-templates select="*[2]"/>
-      </attribute>
-    </xsl:when>
-    <xsl:otherwise>
-      <optional>
-	<xsl:for-each select="ancestor::attributeGroup">
-	  <xsl:if test="key('override',@name)">
-	    <xsl:call-template name="condition"/>
-	  </xsl:if>
-	</xsl:for-each>
-        <attribute name="{$name}">
-          <xsl:call-template name="default-value"/>
-          <xsl:apply-templates select="*[2]"/>
-        </attribute>
-      </optional>
-    </xsl:otherwise>
-  </xsl:choose>
+<xsl:template match="default|fixed|implied" mode="required">
+  <xsl:param name="content"/>
+  <optional>
+    <xsl:for-each select="ancestor::attributeGroup">
+      <xsl:if test="key('override',@name)">
+	<xsl:call-template name="condition"/>
+      </xsl:if>
+    </xsl:for-each>
+    <xsl:copy-of select="$content"/>
+  </optional>
+</xsl:template>
+
+<xsl:template match="attributeDefaultRef[@name='INHERITED']"
+              mode="default-value">
+  <xsl:attribute name="t:inherited">true</xsl:attribute>
 </xsl:template>
 
 <xsl:template match="flag">

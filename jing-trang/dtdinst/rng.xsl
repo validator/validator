@@ -11,7 +11,7 @@
 <xsl:strip-space elements="*"/>
 
 <xsl:key name="param"
-         match="flag|nameSpec|modelGroup|attributeGroup|externalId|datatype|param"
+         match="flag|nameSpec|modelGroup|attributeGroup|externalId|datatype|param|attributeDefault"
          use="@name"/>
 
 <xsl:template match="comment">
@@ -83,30 +83,45 @@
   <xsl:variable name="name">
     <xsl:apply-templates select="*[1]"/>
   </xsl:variable>
-  <xsl:choose>
-    <xsl:when test="required">
+  <xsl:apply-templates mode="required" select="*[3]">
+    <xsl:with-param name="content">
       <attribute name="{$name}">
-        <xsl:call-template name="default-value"/>
-        <xsl:apply-templates select="*[2]"/>
+	<xsl:apply-templates mode="default-value" select="*[3]"/>
+	<xsl:apply-templates select="*[2]"/>
       </attribute>
-    </xsl:when>
-    <xsl:otherwise>
-      <optional>
-        <attribute name="{$name}">
-          <xsl:call-template name="default-value"/>
-          <xsl:apply-templates select="*[2]"/>
-        </attribute>
-      </optional>
-    </xsl:otherwise>
-  </xsl:choose>
+    </xsl:with-param>
+  </xsl:apply-templates>
 </xsl:template>
 
-<xsl:template name="default-value">
-  <xsl:if test="default|fixed">
-    <xsl:attribute name="a:defaultValue">
-      <xsl:value-of select="default|fixed"/>
-    </xsl:attribute>
-  </xsl:if>
+<xsl:template match="default|fixed|implied" mode="required">
+  <xsl:param name="content"/>
+  <optional>
+    <xsl:copy-of select="$content"/>
+  </optional>
+</xsl:template>
+
+<xsl:template match="required" mode="required">
+  <xsl:param name="content"/>
+  <xsl:copy-of select="$content"/>
+</xsl:template>
+
+<xsl:template match="attributeDefaultRef" mode="required">
+  <xsl:param name="content"/>
+  <xsl:apply-templates mode="required" select="key('param',@name)/*">
+    <xsl:with-param name="content" select="$content"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="default|fixed" mode="default-value">
+  <xsl:attribute name="a:defaultValue">
+    <xsl:value-of select="."/>
+  </xsl:attribute>
+</xsl:template>
+
+<xsl:template match="implied|required" mode="default-value"/>
+
+<xsl:template match="attributeDefaultRef" mode="default-value">
+  <xsl:apply-templates mode="default-value" select="key('param',@name)/*"/>
 </xsl:template>
 
 <xsl:template match="attlist">
