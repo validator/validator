@@ -5,11 +5,20 @@
 <body>
 <h1>Datatypes supported by Jing</h1>
 
-<p>Jing supports W3C <a href="http://www.w3.org/TR/xmlschema-2/">XML
-Schema Part 2</a> as its datatyping language.  The version of XML
-Schema supported is the <a
-href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/" >02 May
-2001 Recommendation</a>.</p>
+<p>Jing uses a vendor-independent Java interface for RELAX NG datatype
+libraries has been developed by James Clark and KAWAGUCHI Kohsuke and
+hosted at SourceForge in the <a
+href="http://sourceforge.net/projects/relaxng">relaxng</a> project.
+Jing can use an datatype library that implements this interface.  For
+more information on creating your own datatype libraries, including a
+sample, download <a
+href="datatype-sample.zip">datatype-sample.zip</a>.</p>
+
+<p>Jing contains a built-in partial implementation of the W3C <a
+href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2</a>
+Recommendation. Jing follows the <a
+href="http://www.oasis-open.org/committees/relax-ng/xsd.html">Guidelines
+for using W3C XML Schema Datatypes with RELAX NG</a>.</p>
 
 <p>The following datatypes are implemented:</p>
 
@@ -49,49 +58,29 @@ href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/" >02 May
 <p>Other datatypes are recognized but validated like
 <code>string</code>.</p>
 
-<p><code>ID</code>, <code>IDREF</code> and <code>IDREFS</code> will
-not have the effect that you probably expect.  They are equivalent to
-NCName or a list of NCNames.  No additional checking is performed.
-This is in conformance with XML Schema Part 2.  Used the
-<code>key</code> and <code>keyRef</code> attributes of
-<code>data</code>.</p>
-
-<p><code>NOTATION</code> also will not have the effect that you
-probably expect.  From the RELAX NG perspective, it is equivalent to
-<code>QName</code>.</p>
-
-<p>Any facet can be used as a parameter with the exception of
-<code>enumeration</code> (use the <code>value</code> element instead)
-and <code>whiteSpace</code>.</p>
-
 <p>The implementation of the <code>pattern</code> facet requires an
 implementation of regular expressions as defined in <a
 href="http://www.w3.org/TR/xmlschema-2/#regexs">XML Schema Part
-2</a>. The name of the class implementing the interface
-<code>com.thaiopensource.datatype.xsd.RegexEngine</code> must be
-specified as the value of the
-<code>com.thaiopensource.relaxng.util.RegexEngine</code> system property.
-If no such class is available, then any pattern will be assumed to
-match any string.</p>
-
-<p>The class
-<code>com.thaiopensource.relaxng.util.XercesRegexEngine</code> implements
-<code>com.thaiopensource.datatype.xsd.RegexEngine</code> using the
-package <code>org.apache.xerces.utils.regex</code> which is included
-in the <a href="http://xml.apache.org/xerces-j/index.html">Xerces XML
-Parser</a>.  To use this, an option of</p>
-
-<pre>-Dcom.thaiopensource.relaxng.util.RegexEngine=com.thaiopensource.relaxng.util.XercesRegexEngine</pre>
-
-<p>would be added to the invocation of the <code>java</code>
-command. This requires at least version 1.3.1 of Xerces-J.</p>
+2</a>. The implementation must implement the the interface
+<code>com.thaiopensource.datatype.xsd.RegexEngine</code>.  Jing finds
+an implementation of this interface using the service provider
+technique: a JAR file containing an implementation of this interface
+must contain a file
+<code>META-INF/services/com.thaiopensource.datatype.xsd.RegexEngine</code>
+that contains the name of class that implements the interface.  Jing
+contains a provider of this interface implemented using the package
+<code>org.apache.xerces.utils.regex</code> which is included in the <a
+href="http://xml.apache.org/xerces-j/index.html">Xerces XML
+Parser</a>.  Jing will automatically use this if that package is
+available on your CLASSPATH.  This requires at least version 1.3.1 of
+Xerces-J.</p>
 
 <p>Alternatively, you can use IBM's Regex for Java package, available
 from <a href="http://www.alphaworks.ibm.com">Alphaworks</a>. You can
 create a <code>RegexEngine</code> that uses this simply by changing
 <code>org.apache.xerces.utils</code> to <code>com.ibm</code> in
-<code>com/thaiopensource/relaxng/util/XercesRegexEngine.java</code>.  The
-sample implementation does not include such a class because the
+<code>com/thaiopensource/datatype/xsd/regex/xerces/RegexEngineImpl.java</code>.
+The sample implementation does not include such a class because the
 license for Regex for Java is currently rather restrictive.</p>
 
 </body>
