@@ -487,7 +487,7 @@ class SchemaParser implements ParsedPatternFuture {
       if (nChildPatterns == 0)
         super.endForeignChild(ea);
       else
-        childPatterns[nChildPatterns] = schemaBuilder.annotateAfter(childPatterns[nChildPatterns - 1], ea);
+        childPatterns[nChildPatterns - 1] = schemaBuilder.annotateAfter(childPatterns[nChildPatterns - 1], ea);
     }
 
     void end() throws SAXException {
