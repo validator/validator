@@ -1,0 +1,111 @@
+# RELAX NG syntax expressed in RELAX NG compact syntax, but generalized
+# so as to stay within the expressive power of W3C XML Schema.
+
+default namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace local = ""
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = pattern
+
+patternNotChoice =
+  element element {
+    nameQName?,
+    commonAttributes,
+    foreignElement*,
+    nameClassOrPattern,
+    foreignElement*,
+    (patternAfterNameClass, foreignElement*)*
+  }
+  | element attribute {
+      nameQName?,
+      commonAttributes,
+      foreignElement*,
+      (nameClassOrPattern, foreignElement*, (patternAfterNameClass, foreignElement*)?)?
+    }
+  | element group|interleave|optional
+            |zeroOrMore|oneOrMore|list|mixed { oneOrMorePatternsType }
+  | element ref|parentRef { nameNCName, common }
+  | element empty|notAllowed|text { common }
+  | element data {
+      type,
+      commonAttributes,
+      foreignElement*,
+      (param, foreignElement*)*,
+      (exceptPattern, foreignElement*)?
+    }
+  | element value { commonAttributes, type?, xsd:string }
+  | element externalRef { href, common }
+  | element grammar { grammarType }
+
+oneOrMorePatternsType = commonAttributes, foreignElement*, (pattern, foreignElement*)+
+
+grammarType = commonAttributes, foreignElement*, (grammarContent, foreignElement*)*
+
+pattern =
+  patternNotChoice
+  | element choice { oneOrMorePatternsType }
+
+patternAfterNameClass =  patternNotChoice | choice
+
+nameClassOrPattern = nameClassNotChoice | patternNotChoice | choice
+
+choice =
+  element choice {
+    commonAttributes,
+    foreignElement*,
+    (nameClassOrPattern, foreignElement*)+
+  }
+
+param = element param { commonAttributes, nameNCName, xsd:string }
+
+exceptPattern = element except { oneOrMorePatternsType }
+
+grammarContent = 
+  definition
+  | element div { grammarType }
+  | element include { href, includeType }
+
+includeContent =
+  definition
+  | element div { includeType }
+
+includeType = commonAttributes, foreignElement*, (includeContent, foreignElement*)*
+
+definition =
+  element start { combine?, oneOrMorePatternsType }
+  | element define { nameNCName, combine?, oneOrMorePatternsType }
+
+combine = attribute combine { "choice" | "interleave" }
+
+nameClassNotChoice = 
+  element name { commonAttributes, xsd:QName }
+  | element anyName|nsName {
+      commonAttributes,
+      foreignElement*,
+      (exceptNameClass, foreignElement*)?
+    }
+
+nameClass =
+  nameClassNotChoice
+  | element choice { oneOrMoreNameClassType }
+
+exceptNameClass = element except { oneOrMoreNameClassType }
+
+oneOrMoreNameClassType = commonAttributes, foreignElement*, (nameClass, foreignElement*)+
+
+nameQName = attribute name { xsd:QName }
+nameNCName = attribute name { xsd:NCName }
+href = attribute href { xsd:anyURI }
+type = attribute type { xsd:NCName }
+
+common = commonAttributes, foreignElement*
+
+commonAttributes = 
+  attribute ns { xsd:string }?,
+  attribute datatypeLibrary { xsd:anyURI }?,
+  foreignAttributes
+
+foreignElement = element * - rng:* { anyAttributes, (text | anyElement)* }
+foreignAttributes = attribute * - (rng:*|local:*) { text }*
+anyElement = element * { anyAttributes, (text | anyElement)* }
+anyAttributes = attribute * { text }*
