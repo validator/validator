@@ -57,7 +57,7 @@
     <Commit>
       <option name="NON_RECURSIVE" value="false" />
       <option name="REVISION_TAG" value="" />
-      <option name="LOG_MESSAGE" value="Add -i option to inline ATTLIST decls" />
+      <option name="LOG_MESSAGE" value="" />
       <option name="ADDITIONAL_OPTIONS" value="" />
     </Commit>
     <Diff>
@@ -250,30 +250,30 @@
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/Dtd.java" column="8" line="5" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/TopLevelVisitor.java" column="17" line="4" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/resources/Messages.properties" column="55" line="11" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="13" line="12" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/EnumGroup.java" column="13" line="2" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Atom.java" column="6" line="2" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Param.java" column="6" line="7" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/ParamStream.java" column="6" line="4" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Parser.java" column="6" line="11" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/PrologSyntaxException.java" column="13" line="6" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="118" line="94" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="35" line="94" />
+      <file_info url="file://$PROJECT_DIR$/build.xml" column="23" line="22" />
       <file_info url="file://$PROJECT_DIR$/index.html" column="34" line="83" />
-      <file_info url="file://$PROJECT_DIR$/build.xml" column="19" line="32" />
+      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="36" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="21" line="359" />
     </recent_files>
     <open_files>
       <file_info url="file://$PROJECT_DIR$/index.html" column="34" line="83" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/om/EnumGroup.java" column="13" line="2" />
-      <file_info url="file://$PROJECT_DIR$/build.xml" column="19" line="32" />
-      <active_file url="file://$PROJECT_DIR$/build.xml" />
+      <file_info url="file://$PROJECT_DIR$/build.xml" column="23" line="22" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Atom.java" column="6" line="2" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Param.java" column="6" line="7" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/ParamStream.java" column="6" line="4" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/Parser.java" column="6" line="11" />
       <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/parse/PrologSyntaxException.java" column="13" line="6" />
-      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="118" line="94" />
-      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="0" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/Driver.java" column="35" line="94" />
+      <file_info url="file://$PROJECT_DIR$/todo.txt" column="0" line="36" />
+      <file_info url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" column="21" line="359" />
+      <active_file url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app/RelaxNgWriter.java" />
     </open_files>
   </component>
   <component class="com.intellij.ide.hierarchy.HierarchyBrowserManager">
@@ -287,7 +287,10 @@
     <navigator id="ProjectNavigator" flattenPackages="false" showMembers="false">
       <expanded_node type="directory" url="file://$PROJECT_DIR$" />
     </navigator>
-    <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false" />
+    <navigator id="SourcepathNavigator" flattenPackages="true" showMembers="false">
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src" />
+      <expanded_node type="directory" url="file://$PROJECT_DIR$/src/com/thaiopensource/xml/dtd/app" />
+    </navigator>
   </component>
   <component class="com.intellij.ide.structureView.StructureViewFactory">
     <option name="SORT_MODE" value="0" />

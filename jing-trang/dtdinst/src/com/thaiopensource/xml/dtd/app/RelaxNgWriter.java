@@ -344,7 +344,9 @@ public class RelaxNgWriter {
     }
 
     public void any() throws IOException {
+      w.startElement("zeroOrMore");
       ref(anyName);
+      w.endElement();
     }
 
     public void attribute(NameSpec nameSpec,
