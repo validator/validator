@@ -1,7 +1,5 @@
 #!/bin/sh
 
-## fixup usage error messages
-
 set -e
 jing_main=com.thaiopensource.relaxng.util.Driver
 trang_main=com.thaiopensource.relaxng.translate.Driver
@@ -111,12 +109,14 @@ prefix = @prefix@
 exec_prefix = @exec_prefix@
 
 bindir = @bindir@
-GCJ = @GCJ@
-GCJ_FLAGS = -g -O
+GCJ=@GCJ@
+GCJFLAGS=@GCJFLAGS@
+LDFLAGS=@LDFLAGS@
 
 PROG=${prog}
 MAIN=${main}
-LDFLAGS = 
+LIBS=
+
 
 EOF
 echo SOURCES=\\ >>Makefile.in
@@ -132,13 +132,13 @@ find src/* -type d -not -name '*.java' -not -name '*.jj' | sed -e 's;^src/;  ;' 
 cat <<\EOF >>Makefile.in
 
 $(PROG): $(PROG).o $(RESOURCES)
-	$(GCJ) $(GCJ_FLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES)
+	$(GCJ) $(GCJFLAGS) $(LDFLAGS) --main=$(MAIN) -o $@ $(PROG).o $(RESOURCES) $(LIBS)
 
 $(PROG).o: $(SOURCES)
-	$(GCJ) $(GCJ_FLAGS) -c -o $@ $(SOURCES)
+	$(GCJ) $(GCJFLAGS) -c -o $@ $(SOURCES)
 
 .resource.o:
-	$(GCJ) $(GCJ_FLAGS) -c -o $@ --resource=`echo $@ | sed -e 's/.o$$//'` $<
+	$(GCJ) $(GCJFLAGS) -c -o $@ --resource=`echo $@ | sed -e 's/.o$$//'` $<
 
 $(RESOURCES): dirstamp
 
@@ -156,10 +156,17 @@ EOF
 
 find src -type f -not -name '*.java' -not -name '*.jj' -exec mv "{}" "{}.resource" ";"
 
-cat <<EOF >configure.ac
-AC_INIT(${prog}, ${prog_version})
-AC_CHECK_PROG(GCJ, gcj, gcj)
-AC_CONFIG_FILES(Makefile)
+echo "AC_INIT(${prog}, ${prog_version})" >configure.ac
+cat <<\EOF >>configure.ac
+AC_ARG_VAR([GCJ], [Java compiler command])
+AC_ARG_VAR([GCJFLAGS], [Java compiler flags])
+AC_ARG_VAR([LDFLAGS], [linker flags])
+if test -z "$GCJ"; then
+  AC_CHECK_TOOL(GCJ, gcj)
+fi
+test "${GCJFLAGS+set}" = set || GCJFLAGS="-g -O2"
+test -z "$GCJ" && AC_MSG_ERROR([GCJ not found in \$PATH])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 EOF
 
