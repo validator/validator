@@ -23,10 +23,8 @@
         <root type="simple" url="jar://$PROJECT_DIR$/lib/ant.jar!/" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/regex.jar!/" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/regex2.jar!/" />
-        <root type="simple" url="jar://$PROJECT_DIR$/lib/crimson.jar!/" />
         <root type="simple" url="jar://$PROJECT_DIR$/lib/isorelax.jar!/" />
         <root type="simple" url="file://$PROJECT_DIR$/src" />
-        <root type="simple" url="jar://$PROJECT_DIR$/lib/saxon.jar!/" />
         <root type="simple" url="file://$PROJECT_DIR$/trang/src" />
         <root type="simple" url="file://$PROJECT_DIR$/dtdinst/src" />
       </root>
@@ -72,14 +70,19 @@
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/build.xml">
       <useEmacsModeOutput value="true" />
-      <useCustomJdk value="false" />
+      <useCustomJdk value="true" />
       <treeView value="true" />
+      <customJdkName value="java version &quot;1.4.1_01&quot;" />
       <useJavaw value="false" />
       <verbose value="true" />
-      <includeProjectClasspath value="false" />
-      <includeParser value="true" />
+      <includeProjectClasspath value="true" />
+      <includeParser value="false" />
       <maximumHeapSize value="128" />
       <viewClosedWhenNoErrors value="false" />
+      <additionalClassPath>
+        <entry path="file://$PROJECT_DIR$/lib/crimson.jar" />
+        <entry path="file://$PROJECT_DIR$/lib/saxon.jar" />
+      </additionalClassPath>
       <targetFilters>
         <filter targetName="all" isVisible="true" />
         <filter targetName="init" isVisible="false" />
@@ -97,6 +100,9 @@
         <filter targetName="split" isVisible="false" />
         <filter targetName="check-split" isVisible="false" />
         <filter targetName="test" isVisible="true" />
+        <filter targetName="mns-split" isVisible="false" />
+        <filter targetName="check-mns-split" isVisible="false" />
+        <filter targetName="mns-test" isVisible="true" />
         <filter targetName="xsd-test" isVisible="true" />
         <filter targetName="check-xsd-split" isVisible="false" />
         <filter targetName="xsd-split" isVisible="false" />
