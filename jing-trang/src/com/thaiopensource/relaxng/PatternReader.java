@@ -21,6 +21,8 @@ import org.xml.sax.helpers.LocatorImpl;
 import com.thaiopensource.datatype.Datatype;
 import com.thaiopensource.datatype.DatatypeContext;
 import com.thaiopensource.datatype.DatatypeFactory;
+import com.thaiopensource.datatype.DatatypeBuilder;
+import com.thaiopensource.datatype.InvalidParamException;
 
 public class PatternReader implements DatatypeContext {
 
@@ -39,8 +41,10 @@ public class PatternReader implements DatatypeContext {
   Hashtable patternTable;
   Hashtable nameClassTable;
   final OpenIncludes openIncludes;
-  Datatype stringDatatype = new StringDatatype();
-  Datatype tokenDatatype = new TokenDatatype();
+  DatatypeBuilder stringDatatypeBuilder
+    = new BuiltinDatatypeBuilder(new StringDatatype());
+  DatatypeBuilder tokenDatatypeBuilder
+    = new BuiltinDatatypeBuilder(new TokenDatatype());
 
   static class PrefixMapping {
     final String prefix;
@@ -453,11 +457,12 @@ public class PatternReader implements DatatypeContext {
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
-      Datatype dt;
+      DatatypeBuilder dtb;
       if (type == null)
-	dt = tokenDatatype;
+	dtb = tokenDatatypeBuilder;
       else
-	dt = getDatatype(datatypeLibrary, type);
+	dtb = getDatatypeBuilder(datatypeLibrary, type);
+      Datatype dt = dtb.finish();
       Object value = dt.createValue(buf.toString(), PatternReader.this);
       if (value == null) {
 	error("invalid_value", buf.toString());
@@ -468,13 +473,21 @@ public class PatternReader implements DatatypeContext {
 
   }
 
-  class DataState extends EmptyContentState {
+  class DataState extends State {
     String type;
     String key;
     String keyRef;
+    DatatypeBuilder dtb;
 
     State create() {
       return new DataState();
+    }
+
+    State createChildState(String localName) throws SAXException {
+      if (localName.equals("param"))
+	return new ParamState(dtb);
+      error("expected_param", localName);
+      return null;
     }
 
     void setOtherAttribute(String name, String value) throws SAXException {
@@ -489,20 +502,62 @@ public class PatternReader implements DatatypeContext {
     }
 
     void endAttributes() throws SAXException {
-      if (type == null)
+      if (type == null) {
 	error("missing_type_attribute");
+	dtb = stringDatatypeBuilder;
+      }
+      else
+	dtb = getDatatypeBuilder(datatypeLibrary, type);
     }
 
-    Pattern makePattern() throws SAXException {
-      Datatype dt;
-      if (type == null)
-	dt = stringDatatype;
-      else
-	dt = getDatatype(datatypeLibrary, type);
+    void end() {
       Locator loc = null;
       if (locator != null)
 	loc = new LocatorImpl(locator);
-      return patternBuilder.makeDatatype(dt, key, keyRef, loc);
+      parent.endChild(patternBuilder.makeDatatype(dtb.finish(), key, keyRef, loc));
+    }
+  }
+
+  class ParamState extends State {
+    private StringBuffer buf = new StringBuffer();
+    private DatatypeBuilder dtb;
+    private String name;
+
+    ParamState(DatatypeBuilder dtb) {
+      this.dtb = dtb;
+    }
+
+    State create() {
+      return new ParamState(null);
+    }
+
+    void setName(String name) {
+      this.name = name;
+    }
+
+    void endAttributes() throws SAXException {
+      if (name == null)
+	error("missing_name_attribute");
+    }
+
+    State createChildState(String localName) throws SAXException {
+      error("expected_empty", localName);
+      return null;
+    }
+
+    public void characters(char[] ch, int start, int len) {
+      buf.append(ch, start, len);
+    }
+    
+    void end() throws SAXException {
+      if (name == null)
+	return;
+      try {
+	dtb.addParam(name, buf.toString(), PatternReader.this);
+      }
+      catch (InvalidParamException e) {
+	error("invalid_param", e.getMessage());
+      }
     }
   }
 
@@ -1285,21 +1340,22 @@ public class PatternReader implements DatatypeContext {
     return s.equals(relaxngURI);
   }
 
-  Datatype getDatatype(String datatypeLibrary, String type) throws SAXException {
+  DatatypeBuilder getDatatypeBuilder(String datatypeLibrary, String type) throws SAXException {
     if ("".equals(datatypeLibrary)) {
       if (type.equals("string"))
-	return stringDatatype;
+	return stringDatatypeBuilder;
       if (type.equals("token"))
-	return tokenDatatype;
+	return tokenDatatypeBuilder;
       error("unrecognized_builtin_datatype", type);
     }
     else {
-      Datatype dt = datatypeFactory.createDatatype(datatypeLibrary,
-						   type);
-      if (dt != null)
-	return dt;
+      DatatypeBuilder dtb
+	= datatypeFactory.createDatatypeBuilder(datatypeLibrary,
+						type);
+      if (dtb != null)
+	return dtb;
       error("unrecognized_datatype", datatypeLibrary, type);
     }
-    return stringDatatype;
+    return stringDatatypeBuilder;
   }
 }

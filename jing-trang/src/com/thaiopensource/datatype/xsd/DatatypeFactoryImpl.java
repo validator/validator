@@ -7,6 +7,7 @@ import org.xml.sax.XMLReader;
 import com.thaiopensource.datatype.DatatypeFactory;
 import com.thaiopensource.datatype.Datatype;
 import com.thaiopensource.datatype.DatatypeContext;
+import com.thaiopensource.datatype.DatatypeBuilder;
 
 public class DatatypeFactoryImpl implements DatatypeFactory {
   static private final String xsdns = "http://www.w3.org/2001/XMLSchema-datatypes";
@@ -94,14 +95,13 @@ public class DatatypeFactoryImpl implements DatatypeFactory {
     typeTable.put("gMonth", new StringDatatype());
   }
 
-  public Datatype createDatatype(String namespaceURI, String localName) {
-    if (xsdns.equals(namespaceURI))
-      return createXsdDatatype(localName);
+  public DatatypeBuilder createDatatypeBuilder(String namespaceURI, String localName) {
+    if (xsdns.equals(namespaceURI)) {
+      DatatypeBase base = (DatatypeBase)typeTable.get(localName);
+      if (base != null)
+	return new DatatypeBuilderImpl(this, base);
+    }
     return null;
-  }
-
-  DatatypeBase createXsdDatatype(String localName) {
-    return (DatatypeBase)typeTable.get(localName);
   }
 
   RegexEngine getRegexEngine() {
