@@ -27,9 +27,26 @@ attributes; ANY; start based on unreferenced element.
 
 SAXEntityManager (support Norm's entity manager)
 
-Error for duplicate ELEMENT declarations.
+Write test case for conditional section/pe nesting.
 
-Check other DTD VCs
+Check for duplicate ELEMENT declarations.
+
+Check that no default value for ID.
+
+Check that at most one ID per element type.
+
+Check at most one NOTATION attribute per element.
+
+Check that members of NOTATION enumeration are declared as NOTATION
+attributes.
+
+Check that EMPTY elements don't have a NOTATION attribute.
+
+Check that attribute defaults are legal.
+
+Check that notation name of unparsed external entity is declared.
+
+Check no duplicate element names in mixed content model.
 
 Methods on DTD giving random access to various kinds of declaration.
 
