@@ -178,10 +178,10 @@
   </define>
   <define name="builtinModeName">
     <choice>
-      <value>#pass</value>
+      <value>#attach</value>
       <value>#allow</value>
       <value>#reject</value>
-      <value>#delve</value>
+      <value>#ignore</value>
     </choice>
   </define>
   <define name="schemaType">
