@@ -3441,6 +3441,22 @@ applies at the syntax level.</documentation>
 </testCase>
 <testCase>
 <section>4.19</section>
+<correct>
+<grammar xmlns="http://relaxng.org/ns/structure/0.9">
+  <start>
+    <element name="foo">
+      <empty/>
+    </element>
+  </start>
+  <define name="bar">
+    <ref name="bar"/>
+  </define>
+</grammar>
+</correct>
+<valid><foo/></valid>
+</testCase>
+<testCase>
+<section>4.19</section>
 <section>4.20</section>
 <documentation>Tests that recursion detection happens before
 normalization of notAllowed.</documentation>
