@@ -505,15 +505,7 @@ public class BasicOutput {
         globalElementsDefined.add(name);
         xw.startElement(xs("element"));
         xw.attribute("name", name.getLocalName());
-        outputSubstitutionGroup(name);
-        ComplexType type = p.getComplexType();
-        if (type instanceof ComplexTypeNotAllowedContent)
-          // XXX Do we need outputAnnotation here?
-          xw.attribute("abstract", "true");
-        else {
-          complexTypeOutput.parent = p;
-          type.accept(complexTypeOutput);
-        }
+        outputComplexType(name, p.getComplexType(), p);
         xw.endElement();
       }
       return p.getComplexType().accept(this);
@@ -614,8 +606,8 @@ public class BasicOutput {
         outputComplexTypeComplexContent(ct, def.getName(), anno);
       }
       else if (!nsm.isGroupDefinitionOmitted(def)
-               && !tryElementChoiceSameType(def)
-               && !tryAbstractElement(def)) {
+               && !tryAbstractElement(def)
+               && !tryElementChoiceSameType(def)) {
         xw.startElement(xs("group"));
         xw.attribute("name", def.getName());
         outputAnnotation(def);
@@ -633,8 +625,7 @@ public class BasicOutput {
       xw.startElement(xs("element"));
       xw.attribute("name", name.getLocalName());
       xw.attribute("abstract", "true");
-      outputSubstitutionGroup(name);
-      outputAnnotation(def);
+      outputComplexType(name, complexTypeSelector.getAbstractElementComplexType(name, nsm), def);
       xw.endElement();
       return true;
     }
@@ -671,30 +662,28 @@ public class BasicOutput {
       else {
         ComplexTypeSimpleContentExtension t = complexTypeSelector.transformSimpleContent((ComplexTypeSimpleContent)type);
         if (t.getAttributeUses().equals(AttributeGroup.EMPTY)
-            && (t.getBase() != null || t.getSimpleType().accept(simpleTypeNamer) != null))
+                && (t.getBase() != null || t.getSimpleType().accept(simpleTypeNamer) != null))
           return false;
         outputComplexTypeSimpleContent(t, def.getName(), null);
       }
-      if (!tryAbstractElement(def)) {
-        xw.startElement(xs("group"));
-        xw.attribute("name", def.getName());
-        outputAnnotation(def);
-        xw.startElement(xs("choice"));
-        for (iter = children.iterator(); iter.hasNext();) {
-          Element element = (Element)iter.next();
-          xw.startElement(xs("element"));
-          if (nsm.isGlobal(element))
-            xw.attribute("ref", qualifyName(element.getName()));
-          else {
-            xw.attribute("name", element.getName().getLocalName());
-            xw.attribute("type", def.getName());
-            outputAnnotation(element);
-          }
-          xw.endElement();
+      xw.startElement(xs("group"));
+      xw.attribute("name", def.getName());
+      outputAnnotation(def);
+      xw.startElement(xs("choice"));
+      for (iter = children.iterator(); iter.hasNext();) {
+        Element element = (Element)iter.next();
+        xw.startElement(xs("element"));
+        if (nsm.isGlobal(element))
+          xw.attribute("ref", qualifyName(element.getName()));
+        else {
+          xw.attribute("name", element.getName().getLocalName());
+          xw.attribute("type", def.getName());
+          outputAnnotation(element);
         }
         xw.endElement();
-        xw.endElement();
       }
+      xw.endElement();
+      xw.endElement();
       for (iter = children.iterator(); iter.hasNext();) {
         Element element = (Element)iter.next();
         if (nsm.isGlobal(element) && !globalElementsDefined.contains(element.getName())) {
@@ -702,7 +691,6 @@ public class BasicOutput {
           xw.startElement(xs("element"));
           xw.attribute("name", element.getName().getLocalName());
           xw.attribute("type", def.getName());
-          outputSubstitutionGroup(element.getName());
           outputAnnotation(element);
           xw.endElement();
         }
@@ -1017,10 +1005,25 @@ public class BasicOutput {
     xw.endElement();
   }
 
-  private void outputSubstitutionGroup(Name elementName) {
+  private void outputComplexType(Name elementName, ComplexType ct, Annotated parent) {
     Name substitutionGroup = nsm.getSubstitutionGroup(elementName);
-    if (substitutionGroup != null)
+    if (substitutionGroup != null) {
       xw.attribute("substitutionGroup", qualifyName(substitutionGroup));
+      if (ct != null && ct.equals(complexTypeSelector.getAbstractElementComplexType(substitutionGroup, nsm)))
+        ct = null;
+    }
+    if (ct != null) {
+      if (ct instanceof ComplexTypeNotAllowedContent) {
+        xw.attribute("abstract", "true");
+        outputAnnotation(parent);
+      }
+      else {
+        complexTypeOutput.parent = parent;
+        ct.accept(complexTypeOutput);
+      }
+    }
+    else
+      outputAnnotation(parent);
   }
 
   void outputAnnotation(Annotated annotated) {

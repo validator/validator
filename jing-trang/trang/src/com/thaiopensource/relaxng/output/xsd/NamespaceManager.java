@@ -30,6 +30,7 @@ public class NamespaceManager {
   private final Map attributeNameMap = new HashMap();
   private final Map substitutionGroupMap = new HashMap();
   private final Map groupDefinitionAbstractElementMap = new HashMap();
+  private final Map abstractElementSubstitutionGroupMemberMap = new HashMap();
 
   static class SourceUri {
     String targetNamespace;
@@ -381,6 +382,13 @@ public class NamespaceManager {
     return element.equals(lookupElementName(element.getName()).globalType);
   }
 
+  Element getGlobalElement(Name name) {
+    NameInfo info = (NameInfo)elementNameMap.get(name);
+    if (info == null)
+      return null;
+    return (Element)info.globalType;
+  }
+
   boolean isGlobal(Attribute attribute) {
     return attribute.equals(lookupAttributeName(attribute.getName()).globalType);
   }
@@ -456,6 +464,7 @@ public class NamespaceManager {
     while (addAbstractElements(guide, groups, elementNameToGroupName))
       ;
     cleanSubstitutionGroupMap(elementNameToGroupName);
+    cleanAbstractElementSubstitutionGroupMemberMap(elementNameToGroupName);
   }
 
   private boolean addAbstractElements(Guide guide, List groups, Map elementNameToGroupName) {
@@ -494,6 +503,7 @@ public class NamespaceManager {
       substitutionGroupMap.put(member, elementName);
     }
     newAbstractElements.add(elementName);
+    abstractElementSubstitutionGroupMemberMap.put(elementName, members);
   }
 
   private void cleanSubstitutionGroupMap(Map elementNameToGroupName) {
@@ -501,6 +511,13 @@ public class NamespaceManager {
       Map.Entry entry = (Map.Entry)iter.next();
       Name head = (Name)entry.getValue();
       if (groupDefinitionAbstractElementMap.get(elementNameToGroupName.get(head)) == null)
+        iter.remove();
+    }
+  }
+
+  private void cleanAbstractElementSubstitutionGroupMemberMap(Map elementNameToGroupName) {
+    for (Iterator iter = abstractElementSubstitutionGroupMemberMap.keySet().iterator(); iter.hasNext();) {
+      if (groupDefinitionAbstractElementMap.get(elementNameToGroupName.get(iter.next())) == null)
         iter.remove();
     }
   }
@@ -558,6 +575,10 @@ public class NamespaceManager {
 
   Name getGroupDefinitionAbstractElementName(GroupDefinition def) {
     return (Name)groupDefinitionAbstractElementMap.get(def.getName());
+  }
+
+  List getAbstractElementSubstitutionGroupMembers(Name name) {
+    return (List)abstractElementSubstitutionGroupMemberMap.get(name);
   }
 
   private Name getGroupDefinitionSingleElementName(GroupDefinition def) {

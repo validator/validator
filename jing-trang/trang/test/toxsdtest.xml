@@ -336,15 +336,12 @@ bar = element bar { empty }
 </compact>
 <xsd>
 <correct>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified">
-<xs:element name="root" abstract="true"/>
-<xs:element name="foo" substitutionGroup="root">
-  <xs:complexType/>
-</xs:element>
-<xs:element name="bar" substitutionGroup="root">
-  <xs:complexType/>
-</xs:element>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="root" abstract="true">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="foo" substitutionGroup="root"/>
+  <xs:element name="bar" substitutionGroup="root"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -826,11 +823,12 @@ root = element foo|bar|baz { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:complexType name="root"/>
-  <xs:element name="root" abstract="true"/>
-  <xs:element name="foo" type="root" substitutionGroup="root"/>
-  <xs:element name="bar" type="root" substitutionGroup="root"/>
-  <xs:element name="baz" type="root" substitutionGroup="root"/>
+  <xs:element name="root" abstract="true">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="foo" substitutionGroup="root"/>
+  <xs:element name="bar" substitutionGroup="root"/>
+  <xs:element name="baz" substitutionGroup="root"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2293,10 +2291,11 @@ inline |= element code { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:complexType name="inline" mixed="true"/>
-  <xs:element name="inline" abstract="true"/>
-  <xs:element name="em" type="inline" substitutionGroup="inline"/>
-  <xs:element name="code" type="inline" substitutionGroup="inline"/>
+  <xs:element name="inline" abstract="true">
+    <xs:complexType mixed="true"/>
+  </xs:element>
+  <xs:element name="em" substitutionGroup="inline"/>
+  <xs:element name="code" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2311,10 +2310,11 @@ inline = element em { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:complexType name="inline" mixed="true"/>
-  <xs:element name="inline" abstract="true"/>
-  <xs:element name="code" type="inline" substitutionGroup="inline"/>
-  <xs:element name="em" type="inline" substitutionGroup="inline"/>
+  <xs:element name="inline" abstract="true">
+    <xs:complexType mixed="true"/>
+  </xs:element>
+  <xs:element name="code" substitutionGroup="inline"/>
+  <xs:element name="em" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2330,11 +2330,12 @@ inline |= element b { text }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:complexType name="inline" mixed="true"/>
-  <xs:element name="inline" abstract="true"/>
-  <xs:element name="code" type="inline" substitutionGroup="inline"/>
-  <xs:element name="em" type="inline" substitutionGroup="inline"/>
-  <xs:element name="b" type="inline" substitutionGroup="inline"/>
+  <xs:element name="inline" abstract="true">
+    <xs:complexType mixed="true"/>
+  </xs:element>
+  <xs:element name="code" substitutionGroup="inline"/>
+  <xs:element name="em" substitutionGroup="inline"/>
+  <xs:element name="b" substitutionGroup="inline"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -2661,26 +2662,26 @@ head =		element head {
       <xs:attributeGroup ref="all"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="horiz.other" abstract="true" substitutionGroup="horiz"/>
-  <xs:element name="abbr" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="acronym" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="cite" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="code" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="dfn" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="em" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="img" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="kbd" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="q" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="samp" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="span" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="strong" substitutionGroup="horiz.other" type="horiz.model"/>
-  <xs:element name="var" substitutionGroup="horiz.other" type="horiz.model"/>
+  <xs:element name="horiz.other" abstract="true" substitutionGroup="horiz" type="horiz.model"/>
+  <xs:element name="abbr" substitutionGroup="horiz.other"/>
+  <xs:element name="acronym" substitutionGroup="horiz.other"/>
+  <xs:element name="cite" substitutionGroup="horiz.other"/>
+  <xs:element name="code" substitutionGroup="horiz.other"/>
+  <xs:element name="dfn" substitutionGroup="horiz.other"/>
+  <xs:element name="em" substitutionGroup="horiz.other"/>
+  <xs:element name="img" substitutionGroup="horiz.other"/>
+  <xs:element name="kbd" substitutionGroup="horiz.other"/>
+  <xs:element name="q" substitutionGroup="horiz.other"/>
+  <xs:element name="samp" substitutionGroup="horiz.other"/>
+  <xs:element name="span" substitutionGroup="horiz.other"/>
+  <xs:element name="strong" substitutionGroup="horiz.other"/>
+  <xs:element name="var" substitutionGroup="horiz.other"/>
   <!-- Vertical formatting elements -->
   <xs:element name="vert" abstract="true"/>
-  <xs:element name="header" abstract="true" substitutionGroup="vert"/>
-  <xs:element name="h1" substitutionGroup="header" type="horiz.model"/>
-  <xs:element name="h2" substitutionGroup="header" type="horiz.model"/>
-  <xs:element name="h3" substitutionGroup="header" type="horiz.model"/>
+  <xs:element name="header" abstract="true" substitutionGroup="vert" type="horiz.model"/>
+  <xs:element name="h1" substitutionGroup="header"/>
+  <xs:element name="h2" substitutionGroup="header"/>
+  <xs:element name="h3" substitutionGroup="header"/>
   <xs:element name="List" abstract="true" substitutionGroup="vert"/>
   <xs:element name="dl" substitutionGroup="List">
     <xs:complexType>
@@ -2752,31 +2753,32 @@ head =		element head {
       <xs:attributeGroup ref="aligns"/>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="tabledata">
-    <xs:complexContent>
-      <xs:extension base="vert.model">
-        <xs:attributeGroup ref="aligns"/>
-        <xs:attribute name="abbr"/>
-        <xs:attribute name="axis"/>
-        <xs:attribute name="colspan" type="xs:nonNegativeInteger"/>
-        <xs:attribute name="headers" type="xs:IDREFS"/>
-        <xs:attribute name="rowspan" type="xs:nonNegativeInteger"/>
-        <xs:attribute name="scope">
-          <xs:simpleType>
-            <xs:restriction base="xs:token">
-              <xs:enumeration value="row"/>
-              <xs:enumeration value="col"/>
-              <xs:enumeration value="rowgroup"/>
-              <xs:enumeration value="colgroup"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="tabledata" abstract="true"/>
-  <xs:element name="th" type="tabledata" substitutionGroup="tabledata"/>
-  <xs:element name="td" type="tabledata" substitutionGroup="tabledata"/>
+  <xs:element name="tabledata" abstract="true">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="vert.model">
+          <xs:attributeGroup ref="aligns"/>
+          <xs:attribute name="abbr"/>
+          <xs:attribute name="axis"/>
+          <xs:attribute name="colspan" type="xs:nonNegativeInteger"/>
+          <xs:attribute name="headers" type="xs:IDREFS"/>
+          <xs:attribute name="rowspan" type="xs:nonNegativeInteger"/>
+          <xs:attribute name="scope">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="row"/>
+                <xs:enumeration value="col"/>
+                <xs:enumeration value="rowgroup"/>
+                <xs:enumeration value="colgroup"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="th" substitutionGroup="tabledata"/>
+  <xs:element name="td" substitutionGroup="tabledata"/>
   <xs:element name="vert.other" abstract="true" substitutionGroup="vert"/>
   <xs:element name="address" substitutionGroup="vert.other" type="horiz.model"/>
   <xs:element name="blockquote" substitutionGroup="vert.other">
@@ -3238,14 +3240,14 @@ x = element foo|bar { empty }
 <xsd>
 <correct>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:complexType name="x"/>
   <xs:element name="x" abstract="true">
     <xs:annotation>
       <xs:documentation>An x.</xs:documentation>
     </xs:annotation>
+    <xs:complexType/>
   </xs:element>
-  <xs:element name="foo" type="x" substitutionGroup="x"/>
-  <xs:element name="bar" type="x" substitutionGroup="x"/>
+  <xs:element name="foo" substitutionGroup="x"/>
+  <xs:element name="bar" substitutionGroup="x"/>
 </xs:schema>
 </correct>
 </xsd>
@@ -3416,6 +3418,129 @@ element foo {
     <xs:complexType>
       <xs:attribute ref="xml:lang" default="en"/>
     </xs:complexType>
+  </xs:element>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+value = element large { xsd:long }
+        | element medium { xsd:int }
+        | element small { xsd:short }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="value" abstract="true" type="xs:long"/>
+  <xs:element name="large" substitutionGroup="value"/>
+  <xs:element name="medium" substitutionGroup="value" type="xs:int"/>
+  <xs:element name="small" substitutionGroup="value" type="xs:short"/>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+value = element large { xsd:double }
+        | element medium { xsd:int }
+        | element small { xsd:short }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="value" abstract="true"/>
+  <xs:element name="large" substitutionGroup="value" type="xs:double"/>
+  <xs:element name="medium" substitutionGroup="value" type="xs:int"/>
+  <xs:element name="small" substitutionGroup="value" type="xs:short"/>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+c = element x { t, attribute att { text } } | element y { t }
+t = xsd:int
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="c" abstract="true" type="t"/>
+  <xs:element name="x" substitutionGroup="c">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="t">
+          <xs:attribute name="att" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="y" substitutionGroup="c"/>
+  <xs:simpleType name="t">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+c = element x { xsd:int, attribute att { text } } | element y { xsd:int }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="c" abstract="true" type="xs:int"/>
+  <xs:element name="x" substitutionGroup="c">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:int">
+          <xs:attribute name="att" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="y" substitutionGroup="c"/>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
+<testCase>
+<compact>
+<correct>
+c = element x { t, attribute att { text } } | element y { t }
+t = element z { empty }*
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="c" abstract="true" type="t"/>
+  <xs:element name="x" substitutionGroup="c">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="t">
+          <xs:attribute name="att" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="y" substitutionGroup="c"/>
+  <xs:complexType name="t">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="z"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="z">
+    <xs:complexType/>
   </xs:element>
 </xs:schema>
 </correct>
