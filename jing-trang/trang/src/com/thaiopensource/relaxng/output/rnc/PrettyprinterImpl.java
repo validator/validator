@@ -19,26 +19,31 @@ public class PrettyprinterImpl implements Prettyprinter {
   private final int IMPOSSIBLE = Integer.MAX_VALUE;
   private final int UNKNOWN = -1;
 
-  private int widthMax = 60;
+  private int widthMax = 40;
 
   abstract class OutputItem {
-    abstract int unbrokenWidth();
+    abstract int getUnbrokenWidth();
+    abstract int getPreBreakWidth();
     abstract void output(boolean broken);
   }
 
   class GroupItem extends OutputItem {
     private final List members = new Vector();
-    private int width = UNKNOWN;
+    private int unbrokenWidth = UNKNOWN;
+    private int preBreakWidth = UNKNOWN;
 
     void output(boolean broken) {
-      outputItems(members, broken && unbrokenWidth() > widthMax - outputPos);
+      if (broken)
+        outputBroken(members);
+      else
+        outputUnbroken(members);
     }
 
-    int unbrokenWidth() {
-      if (width == UNKNOWN) {
+    int getUnbrokenWidth() {
+      if (unbrokenWidth == UNKNOWN) {
         int w = 0;
         for (Iterator iter = members.iterator(); iter.hasNext() && w != IMPOSSIBLE;) {
-          int n = ((OutputItem)iter.next()).unbrokenWidth();
+          int n = ((OutputItem)iter.next()).getUnbrokenWidth();
           if (n == IMPOSSIBLE)
             w = IMPOSSIBLE;
           else if (n > Integer.MAX_VALUE - w)
@@ -46,9 +51,24 @@ public class PrettyprinterImpl implements Prettyprinter {
           else
             w += n;
         }
-        width = w;
+        unbrokenWidth = w;
       }
-      return width;
+      return unbrokenWidth;
+    }
+
+    int getPreBreakWidth() {
+      if (preBreakWidth == UNKNOWN) {
+        int w = 0;
+        for (Iterator iter = members.iterator(); iter.hasNext();) {
+          OutputItem item = (OutputItem)iter.next();
+          int n = item.getPreBreakWidth();
+          if (n != IMPOSSIBLE)
+            return preBreakWidth = w + n;
+          w += item.getUnbrokenWidth();
+        }
+        return IMPOSSIBLE;
+      }
+      return preBreakWidth;
     }
   }
 
@@ -58,8 +78,12 @@ public class PrettyprinterImpl implements Prettyprinter {
       this.str = str;
     }
 
-    int unbrokenWidth() {
+    int getUnbrokenWidth() {
       return str.length();
+    }
+
+    int getPreBreakWidth() {
+      return IMPOSSIBLE;
     }
 
     void output(boolean broken) {
@@ -80,6 +104,10 @@ public class PrettyprinterImpl implements Prettyprinter {
       else
         super.output(broken);
     }
+
+    int getPreBreakWidth() {
+      return 0;
+    }
   }
 
   class HardNewlineItem extends OutputItem {
@@ -89,8 +117,12 @@ public class PrettyprinterImpl implements Prettyprinter {
       this.indent = indent;
     }
 
-    int unbrokenWidth() {
+    int getUnbrokenWidth() {
       return IMPOSSIBLE;
+    }
+
+    int getPreBreakWidth() {
+      return 0;
     }
 
     void output(boolean broken) {
@@ -152,9 +184,31 @@ public class PrettyprinterImpl implements Prettyprinter {
   }
 
 
-  private void outputItems(List list, boolean broken) {
+  private void outputBroken(List list) {
+    for (int i = 0, len = list.size(); i < len; i++) {
+      OutputItem oi = (OutputItem)list.get(i);
+      if (oi instanceof GroupItem
+          && canBreakWithin(list, i + 1, widthMax - outputPos - oi.getUnbrokenWidth()))
+        oi.output(false);
+      else
+        oi.output(true);
+    }
+  }
+
+  private boolean canBreakWithin(List list, int i, int avail) {
+    for (int len = list.size(); avail >= 0 && i < len; i++) {
+      OutputItem oi = (OutputItem)list.get(i);
+      int n = oi.getPreBreakWidth();
+      if (n <= avail)
+        return true;
+      avail -= oi.getUnbrokenWidth();
+    }
+    return false;
+  }
+
+  private void outputUnbroken(List list) {
     for (Iterator iter = list.iterator(); iter.hasNext();)
-      ((OutputItem)iter.next()).output(broken);
+      ((OutputItem)iter.next()).output(false);
   }
 
   private void write(String str) {
@@ -180,7 +234,7 @@ public class PrettyprinterImpl implements Prettyprinter {
   }
 
   public void close() {
-    outputItems(outputList, true);
+    outputBroken(outputList);
     try {
       w.close();
     }
