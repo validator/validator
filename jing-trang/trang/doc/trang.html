@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1>Trang</h1>
-<h2>Translator for RELAX NG Schemas</h2>
+<h2>Multi-format schema converter based on RELAX NG</h2>
 
 <p>Copyright &#169; 2002, 2003 Thai Open Source Software Center Ltd</p>
 
@@ -13,42 +13,44 @@ permission.</p>
 
 <h3>Version @VERSION@</h3>
 
-<p>Trang is constructed around a RELAX NG object model designed to
-support schema conversion.  Trang can support additional input and
-output formats simply by adding modules that convert these formats
-from and to this object model.</p>
-
-<p>Trang translates schemas written in <a
-href="http://relaxng.org">RELAX NG</a> into different formats. In
-particular, it can</p>
+<p>Trang converts between different schema languages for XML. It
+supports the following languages:</p>
 
 <ul>
-
-<li>translate a RELAX NG schema in the compact syntax into the XML syntax</li>
-
-<li>translate a RELAX NG schema in the XML syntax into the compact syntax</li>
-
-<li>translate a RELAX NG schema in either the XML or compact syntax
-into a DTD</li>
-
-<li>translate a RELAX NG schema in either the XML or compact syntax
-into a W3C XML Schema</li>
-
+<li>RELAX NG (XML syntax)</li>
+<li>RELAX NG compact syntax</li>
+<li>XML 1.0 DTDs</li>
+<li>W3C XML Schema</li>
 </ul>
+
+<p>A schema written in any of the supported schema languages can be
+converted into any of the other supported schema languages, except
+that W3C XML Schema is supported for output only, not for input.</p>
+
+<p>Trang is constructed around an RELAX NG object model designed to
+support schema conversion.  For each schema language supported for
+input, there is an input module that can convert from the schema
+language into this internal object model.  Similarly, for each schema
+language supported for output, there is an output module that can
+convert from the internal object model in the schema language.</p>
 
 <p>Trang aims to produce human-understandable schemas; it tries for a
 translation that preserves all aspects of the input schema that may be
 significant to a human reader, including the definitions, the way the
 schema is divided into files, annotations and comments.</p>
 
-<h2>Getting Trang</h2>
+<p>Trang has a command-line user interface.  It has no graphical user
+interface.</p>
+
+<h2>Downloads</h2>
 
 <p>The implementation is available for download as</p>
 
 <ul>
-<li>a <a href="trang-bin.zip">JAR</a> file</li>
+<li>a <a href="trang-bin.zip">binary</a> ready for use with a Java
+runtime environment</li>
 
-<li><a href="trang-src.zip">source code</a> (this depends on the
+<li><a href="trang-src.zip">Java source code</a> (this requires the
 source code for <a href="jing-src.zip">Jing</a> and <a
 href="dtdinst/dtdinst-src.zip">DTDinst</a>)</li>
 
@@ -64,6 +66,12 @@ available in the <a href="convert-to-xsd-talk.html">slides</a> for a
 talk given a XML 2002.</p>
 
 <h2>Related software</h2>
+
+<p>Trang's DTD input module uses <a href="dtdinst/">DTDinst</a>.  The
+Trang binary already includes the necessary parts of DTDinst, so there
+is no need to download DTDinst just in order to use Trang.  DTDinst is
+also available as an independent program that outputs an XML
+representation of an XML DTD.</p>
 
 <p>The <a
 href="http://www.sun.com/software/xml/developers/relaxngconverter/">Sun

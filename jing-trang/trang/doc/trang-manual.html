@@ -315,22 +315,29 @@ referenced are allowed as document elements.</dd>
 
 <h2><a name="output-modules">Output modules</a></h2>
 
-<p>All output modules accept the following parameter:</p>
+<p>All output modules accept the following parameters:</p>
 
 <dl>
 
 <dt><code>-o encoding=<var>name</var></code></dt>
 
-<dd>Use an encoding of <var>name</var> for the output files.</dd>
+<dd>Use an encoding of <code><var>name</var></code> for the output
+files.</dd>
+<!-- describe default -->
+
+<dt><code>-o indent=<var>n</var></code></dt>
+
+<dd>Indent by <code><var>n</var></code> spaces for each indentation
+level.</dd>
 
 </dl>
 
 <h3><a name="rng-output">RELAX NG (XML syntax) output module</a></h3>
 
 <p>This output module outputs RELAX NG schemas in XML syntax as
-defined by the <a
-href="http://www.oasis-open.org/committees/relax-ng/spec.html">RELAX
-NG 1.0 Committee Specification</a>.</p>
+defined by the RELAX NG 1.0 <a
+href="http://www.oasis-open.org/committees/relax-ng/spec.html">Committee
+Specification</a>.</p>
 
 <h3><a name="rnc-output">RELAX NG Compact Syntax output module</a></h3>
 
@@ -402,6 +409,32 @@ unrestricted use of the features of RELAX NG.</li>
 Schema <a href="http://www.w3.org/TR/xmlschema-1/"
 >Recommendation</a>.</p>
 
+<p>It supports the following parameters:</p>
+
+<dl>
+<dt><code>-o enable-abstract-elements</code></dt>
+
+<dd>Enables the use of abstract elements and subsitution groups in the
+generated XML Schema.  This can also be controlled using an <a
+name="#enable-abstract-elements">annotation attribute</a>.</dd>
+
+<dt><code>-o any-process-contents=strict</code>|<code>lax</code>|<code>skip</code></dt>
+
+<dd>Specifies the value for the <code>processContents</code> attribute
+of <code>any</code> elements.  The default is <code>skip</code>
+(corresponding to RELAX NG semantics) unless the input format is
+<code>dtd</code>, in which case the default is <code>strict</code>
+(corresponding to DTD semantics).</dd>
+
+<dt><code>-o any-attribute-process-contents=strict</code>|<code>lax</code>|<code>skip</code></dt>
+
+<dd>Specifies the value for the <code>processContents</code> attribute
+of <code>anyAttribute</code> elements.  The default is
+<code>skip</code> (corresponding to RELAX NG semantics).</dd>
+
+</dl>
+
+
 <p>It has the following limitations:</p>
 
 <ul>
@@ -427,16 +460,19 @@ of</p>
 
 <pre>xmlns:tx="http://www.thaiopensource.com/ns/relaxng/xsd"</pre>
 
-<p>Currently, only one annotation is supported, an attribute
-<code>tx:enableAbstractElements</code>.  The value of this must be
-<code>true</code> or <code>false</code>.  It applies to RELAX NG
-<code>define</code> elements.  Trang will try to translate a
-<code>define</code> that contains a choice of element patterns into an
-abstract element declaration, which will be used as the head of a
-substitution group whose members are the elements in the choice.  If
-<code>tx:enableAbstractElements="false"</code> is specified, then
-Trang will not do this (which means the <code>define</code> will
-typically be translated into a group definition).</p>
+<p><a name="enable-abstract-elements"/>Currently, only one annotation
+is supported, an attribute <code>tx:enableAbstractElements</code>.
+The value of this must be <code>true</code> or <code>false</code>.  It
+applies to RELAX NG <code>define</code> elements.  Trang has the
+ability to translate a <code>define</code> that contains a choice of
+element patterns into an abstract element declaration, which will be
+used as the head of a substitution group whose members are the
+elements in the choice.  Whether it does this is determined by the
+value of the <code>tx:enableAbstractElements</code> annotation
+attribute.  If the value is <code>true</code>, it will attempt to use
+an abstract element element.  If the value is <code>false</code>, it
+will not, which means the <code>define</code> will typically be
+translated into a group definition.</p>
 
 <p>The <code>tx:enableAbstractElements</code> attribute is inherited
 in a similar way to the <code>ns</code> attribute: it can be specified
@@ -444,7 +480,8 @@ on a <code>grammar</code>, <code>div</code> or <code>include</code>
 element to enable or disable the use of abstract elements for all
 descendant <code>define</code> elements. In the absence of any
 inherited <code>tx:enableAbstractElements</code> attribute, the use of
-abstract elements in enabled.</p>
+abstract elements is disabled unless the <code>-o
+enable-abstract-elements</code> option was specified.</p>
 
 <p>It can happen that the same element name occurs in a choice in more
 than one <code>define</code> element; at most one of these

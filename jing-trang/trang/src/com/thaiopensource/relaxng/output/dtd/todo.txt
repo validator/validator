@@ -23,3 +23,4 @@ Approximate wildcards intelligently
 Handle interleave of zero or more element class with model group
 Turn elements with content <value type="string"></value> into EMPTY.
 Deal with characters outside repertoire of character encoding.
+Investigate using compact syntax pretty-printer for formatting content models.
