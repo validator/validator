@@ -67,22 +67,22 @@ class AbstractElementTypeSelector {
   private ComplexType commonBaseType(ComplexType ct1, ComplexType ct2) {
     if (ct1.equals(ct2))
       return ct1;
-    if (hasBaseType(ct1, ct2))
+    if (isValidlyDerived(ct1, ct2))
       return ct2;
-    if (hasBaseType(ct2, ct1))
+    if (isValidlyDerived(ct2, ct1))
       return ct1;
     return null;
   }
 
-  private boolean hasBaseType(ComplexType ct1, ComplexType ct2) {
+  private boolean isValidlyDerived(ComplexType ct1, ComplexType ct2) {
     if (ct1 instanceof ComplexTypeComplexContent && ct2 instanceof ComplexTypeComplexContent)
-      return hasBaseTypeComplexContent((ComplexTypeComplexContent)ct1, (ComplexTypeComplexContent)ct2);
+      return isComplexContentValidlyDerived((ComplexTypeComplexContent)ct1, (ComplexTypeComplexContent)ct2);
     if (ct1 instanceof ComplexTypeSimpleContent && ct2 instanceof ComplexTypeSimpleContent)
-      return hasBaseTypeSimpleContent((ComplexTypeSimpleContent)ct1, (ComplexTypeSimpleContent)ct2);
+      return isSimpleContentValidlyDerived((ComplexTypeSimpleContent)ct1, (ComplexTypeSimpleContent)ct2);
     return false;
   }
 
-  private boolean hasBaseTypeComplexContent(ComplexTypeComplexContent ct1, ComplexTypeComplexContent ct2) {
+  private boolean isComplexContentValidlyDerived(ComplexTypeComplexContent ct1, ComplexTypeComplexContent ct2) {
     ComplexTypeComplexContentExtension ex = complexTypeSelector.transformComplexContent(ct2);
     String base = ex.getBase();
     if (base == null || ex.getParticle() != null || !ex.getAttributeUses().equals(AttributeGroup.EMPTY) || ex.isMixed())
@@ -101,42 +101,50 @@ class AbstractElementTypeSelector {
     return false;
   }
 
-  private boolean hasBaseTypeSimpleContent(ComplexTypeSimpleContent ct1, ComplexTypeSimpleContent ct2) {
+  private boolean isSimpleContentValidlyDerived(ComplexTypeSimpleContent ct1, ComplexTypeSimpleContent ct2) {
     ComplexTypeSimpleContentExtension ex = complexTypeSelector.transformSimpleContent(ct2);
     if (!ex.getAttributeUses().equals(AttributeGroup.EMPTY))
       return false;
     String base = ex.getBase();
-    String builtinBase = null;
-    if (base == null) {
-      if (ex.getSimpleType() instanceof SimpleTypeRestriction) {
-        SimpleTypeRestriction restriction = (SimpleTypeRestriction)ex.getSimpleType();
-        if (restriction.getFacets().size() > 0
-                || restriction.getAnnotation() != null)
-          return false;
-        builtinBase = restriction.getName();
-      }
-      else if (ex.getSimpleType() instanceof SimpleTypeRef)
-        base = ((SimpleTypeRef)ex.getSimpleType()).getName();
-      else
+    if (base == null)
+      return isSimpleTypeValidlyDerived(ct1.getSimpleType(), ex.getSimpleType());
+    else
+      return isSimpleTypeValidlyDerivedFromName(ct1.getSimpleType(), base);
+  }
+
+  private boolean isSimpleTypeValidlyDerived(SimpleType st1, SimpleType st2) {
+    if (st2 instanceof SimpleTypeRef)
+      return isSimpleTypeValidlyDerivedFromName(st1, ((SimpleTypeRef)st2).getName());
+    if (st2 instanceof SimpleTypeRestriction) {
+      SimpleTypeRestriction restriction = (SimpleTypeRestriction)st2;
+      if (restriction.getFacets().size() > 0 || restriction.getAnnotation() != null)
         return false;
+      return isSimpleTypeValidlyDerivedFromBuiltin(st1, restriction.getName());
     }
-    SimpleType st = ct1.getSimpleType();
-    for (;;) {
-      if (!(st instanceof SimpleTypeRef))
-        break;
+    return false;
+  }
+
+  private boolean isSimpleTypeValidlyDerivedFromName(SimpleType st, String typeName) {
+    while (st instanceof SimpleTypeRef) {
       String tem = ((SimpleTypeRef)st).getName();
-      if (tem.equals(base))
+      if (tem.equals(typeName))
         return true;
       st = schema.getSimpleType(tem).getSimpleType();
     }
+    return false;
+  }
+
+  private boolean isSimpleTypeValidlyDerivedFromBuiltin(SimpleType st, String builtinTypeName) {
+    while (st instanceof SimpleTypeRef)
+      st = schema.getSimpleType(((SimpleTypeRef)st).getName()).getSimpleType();
     if (!(st instanceof SimpleTypeRestriction))
       return false;
-    String builtinType = ((SimpleTypeRestriction)st).getName();
+    String tem = ((SimpleTypeRestriction)st).getName();
     do {
-      if (builtinType.equals(builtinBase))
+      if (tem.equals(builtinTypeName))
         return true;
-      builtinType = BuiltinSimpleTypeHierarchy.getParentType(builtinType);
-    } while (builtinType != null);
+      tem = BuiltinSimpleTypeHierarchy.getParentType(tem);
+    } while (tem != null);
     return false;
   }
 
