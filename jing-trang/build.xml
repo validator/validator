@@ -366,6 +366,17 @@ Main-Class: com/thaiopensource/relaxng/util/Driver
   </ant>
 </target>
 
+<target name="infer-jar" depends="jar,trang-jar" description="Build infer.jar" >
+  <ant dir="infer" target="jar">
+    <property name="build.dir" value="../build/infer"/>
+    <property name="dist.dir" value="../build"/>
+    <property name="jing.classes" value="../build/classes"/>
+    <property name="trang.classes" value="../build/trang/classes"/>
+    <property file="infer/src/com/thaiopensource/relaxng/infer/resources/Version.properties"/>
+  </ant>
+</target>
+
+
 <target name="dist" depends="jar,exegen,validate,test,xsd-test,regex-test,javadoc,datatype-sample,doc,trang-dist,regex-dist,dtdinst-dist,mns-test"
   description="Build a .tar.gz containing the complete relaxng website" >
   <zip zipfile="build/jing-src.zip">
