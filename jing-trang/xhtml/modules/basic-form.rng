@@ -5,7 +5,11 @@
 <define name="form">
   <element name="form">
     <ref name="form.attlist"/>
-    <ref name="Block.model"/>
+    <!-- Don't use Block.model, because this gets redefined by the
+	 legacy module. -->
+    <oneOrMore>
+      <ref name="Block.class"/>
+    </oneOrMore>
   </element>
 </define>
 
