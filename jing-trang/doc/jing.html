@@ -29,9 +29,10 @@ to a directory in your path and run the command</p>
 
 <pre>jing <var>file</var>.rng <var>file</var>.xml</pre>
 
-<p>This will report errors if <code><var>file</var>.xml</code> does
-not match <code><var>file</var>.rng</code>.  You can specify multiple
-XML files to be validated in a single command.</p>
+<p>If <code><var>file</var>.rng</code> is a correct schema and
+<code><var>file</var>.rng</code> is valid with respect to
+<code><var>file</var>.rng</code>, then Jing will generate no output.
+Otherwise, it will generate one or more error messages.</p>
 
 <p>To use Jing packaged as a JAR file, you must have an implementation
 of the <a href="http://java.sun.com/xml/">Java API for XML Processing
@@ -45,11 +46,16 @@ for example, on Windows, the command:</p>
 <pre>c:\jdk1.3\bin\java -cp c:\lib\jing.jar;c:\lib\jaxp.jar;c:\lib\crimson.jar com.thaiopensource.relaxng.util.Driver doc.rng doc.xml</pre>
 
 <p>would validate the XML document contained in <code>doc.xml</code>
-against the RELAX NG schema contained in <code>doc.rng</code>.Obviously,
+against the RELAX NG schema contained in <code>doc.rng</code>. Obviously,
 you must replace <code>c:\lib</code> by the path to the directory
 where you have put the various JAR files. The command will be
 slightly different on non-Windows machines.  Consult your Java
 documentation.</p>
+
+<p>Alternatively, if you have JAXP installed as a Java extension, you
+can simply use:</p>
+
+<pre>c:\jdk1.3\bin\java -jar jing.jar doc.rng doc.xml</pre>
 
 <p>Jing understands a couple of command-line options:</p>
 
