@@ -21,7 +21,7 @@
   <mkdir dir="build/test"/>
   <java classname="com.thaiopensource.xml.dtd.test.Driver" >
     <arg value="test"/>
-    <arg value="build/test"/> 
+    <arg value="build/test"/>
     <classpath>
       <pathelement location="build/dtdinst.jar"/>
     </classpath>
@@ -29,10 +29,11 @@
 </target>
 
 <target name="translate-schema" depends="init">
-  <java classname="com.thaiopensource.relaxng.nonxml.Driver"
-        classpath="../relaxng/nonxml/build/rngnx.jar"
-        output="build/dtdinst.rng">
-    <arg value="dtdinst.rngnx"/>
+  <java classname="com.thaiopensource.relaxng.output.Driver"
+        fork="true"
+        classpath="../jing/build/trang.jar;../jing/build/jing.jar;../jing/lib/crimson.jar">
+    <arg value="dtdinst.rnc"/>
+    <arg value="dtdinst.rng"/>
   </java>
 </target>
 
@@ -45,7 +46,7 @@
   <copy todir="build/example">
     <fileset dir="example" includes="*.ent,*.xml"/>
   </copy>
-</target>  
+</target>
 
 <target name="dist" depends="jar,example,translate-schema">
   <zip zipfile="build/dtdinst-src.zip">
@@ -54,14 +55,14 @@
   <copy todir="build">
     <fileset dir="." includes="index.html,copying.txt,dtdinst2rng.xsl"/>
   </copy>
-  <copy file="dtdinst.rngnx" tofile="build/dtdinst.rngnx.txt"/>
+  <copy file="dtdinst.rnc" tofile="build/dtdinst.rnc.txt"/>
   <copy file="teixml.dtd" tofile="build/teixml.dtd.txt"/>
   <replace file="build/index.html"
            token="@VERSION@"
            value="${version}"/>
   <tar tarfile="build/dtdinst.tar"
        basedir="build"
-       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,dtdinst2rng.xsl,teixml.dtd.txt,example/*"/>
+       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rnc.txt,dtdinst.rng,dtdinst2rng.xsl,teixml.dtd.txt,example/*"/>
   <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
 </target>
 
