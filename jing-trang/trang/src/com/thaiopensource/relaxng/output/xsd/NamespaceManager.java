@@ -6,18 +6,15 @@ import com.thaiopensource.relaxng.output.xsd.basic.Schema;
 import com.thaiopensource.relaxng.output.xsd.basic.Particle;
 import com.thaiopensource.relaxng.output.xsd.basic.SchemaWalker;
 import com.thaiopensource.relaxng.output.xsd.basic.GroupDefinition;
-import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroupDefinition;
 import com.thaiopensource.relaxng.output.xsd.basic.Structure;
 import com.thaiopensource.relaxng.output.xsd.basic.Include;
 import com.thaiopensource.relaxng.output.xsd.basic.Definition;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardAttribute;
-import com.thaiopensource.relaxng.output.xsd.basic.SchemaVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.ParticleChoice;
 import com.thaiopensource.relaxng.output.xsd.basic.GroupRef;
 import com.thaiopensource.relaxng.output.common.Name;
-import com.thaiopensource.relaxng.output.OutputDirectory;
 
 import java.util.List;
 import java.util.Vector;
@@ -33,8 +30,6 @@ public class NamespaceManager {
   private final Map attributeNameMap = new HashMap();
   private final Map substitutionGroupMap = new HashMap();
   private final Map groupDefinitionAbstractElementMap = new HashMap();
-
-  private static final String ANON = "anon";
 
   static class SourceUri {
     String targetNamespace;
@@ -198,7 +193,6 @@ public class NamespaceManager {
 
     public Object visitElement(Element element) {
       Name name = element.getName();
-      String ns = name.getNamespaceUri();
       if (!name.getNamespaceUri().equals("") || absentTargetNamespace) {
         NameInfo info = lookupElementName(name);
         int occur = nested ? NameInfo.OCCUR_NESTED : NameInfo.OCCUR_TOP;

@@ -48,7 +48,6 @@ import com.thaiopensource.relaxng.output.xsd.basic.Annotated;
 import com.thaiopensource.relaxng.output.xsd.basic.Annotation;
 import com.thaiopensource.relaxng.output.xsd.basic.Comment;
 import com.thaiopensource.relaxng.output.OutputDirectory;
-import com.thaiopensource.relaxng.edit.SourceLocation;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import java.util.Iterator;
