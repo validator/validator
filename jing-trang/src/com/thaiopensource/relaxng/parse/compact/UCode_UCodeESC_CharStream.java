@@ -207,6 +207,8 @@ public final class UCode_UCodeESC_CharStream {
     bufcolumn[bufpos] = column;
   }
 
+  private final char NEWLINE_MARKER = '\u0000';
+
   public final char readChar() throws EOFException {
     if (inBuf > 0) {
       --inBuf;
@@ -216,14 +218,40 @@ public final class UCode_UCodeESC_CharStream {
     char c;
     try {
       c = ReadChar();
-      if (c == '\r') {
-        c = '\n';
+      switch (c) {
+      case '\r':
+        c = NEWLINE_MARKER;
         try {
           if (PeekChar() == '\n')
             ReadChar();
         }
         catch (EOFException e) {
         }
+        break;
+      case '\n':
+        c = NEWLINE_MARKER;
+        break;
+      case '\t':
+        break;
+      default:
+        if (c >= 0x20) {
+          if (Utf16.isSurrogate(c)) {
+            if (Utf16.isSurrogate2(c))
+              throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 1);
+            try {
+              if (!Utf16.isSurrogate2(PeekChar()))
+                throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 2);
+            }
+            catch (EOFException e) {
+              throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 1);
+            }
+          }
+          break;
+        }
+        // fall through
+      case '\uFFFE':
+      case '\uFFFF':
+        throw new EscapeSyntaxException("illegal_char_code", line, column + 1);
       }
     }
     catch (EOFException e) {
@@ -294,8 +322,19 @@ public final class UCode_UCodeESC_CharStream {
       column++; // for the '}'
       if (scalarValue <= 0xFFFF) {
         c = (char)scalarValue;
-        if (Utf16.isSurrogate(c))
-          throw new EscapeSyntaxException("illegal_char_code", line, column);
+        switch (c) {
+        case '\n':
+        case '\r':
+        case '\t':
+          break;
+        default:
+          if (c >= 0x20 && !Utf16.isSurrogate(c))
+            break;
+          // fall through
+        case '\uFFFE':
+        case '\uFFFF':
+          throw new EscapeSyntaxException("illegal_char_code_ref", line, column);
+        }
         buffer[bufpos] = c;
         return c;
       }

@@ -1723,8 +1723,8 @@ element foo { "&#x0e00;" }
 <testCase>
 <compact>
 <correct>
-element foo { "z
-" }
+element foo { """z
+""" }
 </correct>
 </compact>
 <xml>
@@ -2106,6 +2106,21 @@ start = element foo { empty }
 <value xmlns="http://relaxng.org/ns/structure/1.0">"'x''""y</value>
 </correct>
 </xml>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element foo { "x
+y" }
+]]></incorrect>
+</compact>
+</testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[
+element \x{D}foo { empty }
+]]></incorrect>
+</compact>
 </testCase>
 <!--
 <testCase>

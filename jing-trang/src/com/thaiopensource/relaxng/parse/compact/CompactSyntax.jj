@@ -183,8 +183,10 @@ public class CompactSyntax implements Context {
   }
 
   private static String unquote(String s) {
-    if (s.length() >= 6 && s.charAt(0) == s.charAt(1))
+    if (s.length() >= 6 && s.charAt(0) == s.charAt(1)) {
+      s = s.replace('\u0000', '\n');
       return s.substring(3, s.length() - 3);
+    }
     else
       return s.substring(1, s.length() - 1);
   }
@@ -1476,35 +1478,37 @@ Token Keyword() :
 
 <*>
 SKIP: {
-  < WS: ([ " ", "\n", "\r", "\t" ])+ > : DEFAULT
+  < #NEWLINE : [ "\u0000", "\n" ] >
+  | < #NOT_NEWLINE : ~[ "\u0000", "\n" ] >
+  | < WS: ([ "\u0000", " ", "\n", "\t" ])+ > : DEFAULT
 }
 
 TOKEN :
 {
-  < DOCUMENTATION: "##" (~["\n"])* > : AFTER_DOCUMENTATION
+  < DOCUMENTATION: "##" (<NOT_NEWLINE>)* > : AFTER_DOCUMENTATION
 }
 
 <AFTER_DOCUMENTATION>
 TOKEN :
 {
-  < DOCUMENTATION_CONTINUE: "\n" ([" ", "\t"])* <DOCUMENTATION> >
+  < DOCUMENTATION_CONTINUE: <NEWLINE> ([" ", "\t"])* <DOCUMENTATION> >
 }
 
 SPECIAL_TOKEN:
 {
-  < SINGLE_LINE_COMMENT: "#" (~["\n"])* > : AFTER_SINGLE_LINE_COMMENT
+  < SINGLE_LINE_COMMENT: "#" (<NOT_NEWLINE>)* > : AFTER_SINGLE_LINE_COMMENT
 }
 
 <AFTER_SINGLE_LINE_COMMENT>
 TOKEN :
 {
-  < DOCUMENTATION_AFTER_SINGLE_LINE_COMMENT: "\n" ([" ", "\t"])* <DOCUMENTATION> > : AFTER_DOCUMENTATION
+  < DOCUMENTATION_AFTER_SINGLE_LINE_COMMENT: <NEWLINE> ([" ", "\t"])* <DOCUMENTATION> > : AFTER_DOCUMENTATION
 }
 
 <AFTER_SINGLE_LINE_COMMENT>
 SPECIAL_TOKEN :
 {
-  < SINGLE_LINE_COMMENT_CONTINUE: "\n" ([" ", "\t"])* <SINGLE_LINE_COMMENT> >
+  < SINGLE_LINE_COMMENT_CONTINUE: <NEWLINE> ([" ", "\t"])* <SINGLE_LINE_COMMENT> >
 }
 
 TOKEN :
@@ -1849,17 +1853,6 @@ TOKEN :
   | < #NMSTART : (<LETTER> | "_") >
   | < #NMCHAR : (<LETTER> | <COMBINING_CHAR> | <EXTENDER> | <DIGIT> | "." | "-" | "_") >
   | < #NCNAME: <NMSTART> (<NMCHAR>)* >
-  | < #HIGH_SURROGATE: [ "\ud800" - "\udbff" ]>
-  | < #LOW_SURROGATE: [ "\udc00" - "\udfff" ]>
-  | < #SURROGATE_PAIR: <HIGH_SURROGATE> <LOW_SURROGATE> >
-  | < #CHAR:  ["\t", "\n", "\r", "\u0020" - "\ud7ff", "\ue000" - "\ufffd"]
-              | <SURROGATE_PAIR> >
-  | < #CHAR_NOT_QUOT:  ["\t", "\n", "\r", "\u0020" - "\u0021",
-                        "\u0023" - "\ud7ff", "\ue000" - "\ufffd"]
-                       | <SURROGATE_PAIR> >
-  | < #CHAR_NOT_APOS:  ["\t", "\n", "\r", "\u0020" - "\u0026",
-                        "\u0028" - "\ud7ff", "\ue000" - "\ufffd"]
-                       | <SURROGATE_PAIR> >
 }
 
 TOKEN :
@@ -1868,14 +1861,14 @@ TOKEN :
   | < ESCAPED_IDENTIFIER: "\\" <NCNAME> >
   | < PREFIX_STAR: <NCNAME> ":*" >
   | < PREFIXED_NAME: <NCNAME> ":" <NCNAME> >
-  | < LITERAL : ("\"" (<CHAR_NOT_QUOT>)* "\"")
-                | ("'" (<CHAR_NOT_APOS>)* "'")
-                | ("\"\"\"" (<CHAR_NOT_QUOT>
-                             | ("\"" <CHAR_NOT_QUOT>)
-                             | ("\"\"" <CHAR_NOT_QUOT>))* "\"\"\"")
-                | ("'''" (<CHAR_NOT_APOS>
-                             | ("'" <CHAR_NOT_APOS>)
-                             | ("''" <CHAR_NOT_APOS>))* "'''") >
+  | < LITERAL : ("\"" (~["\u0000", "\""])* "\"")
+                | ("'" (~["\u0000", "'"])* "'")
+                | ("\"\"\"" (~["\""]
+                             | ("\"" ~["\""])
+                             | ("\"\"" ~["\""]))* "\"\"\"")
+                | ("'''" (~["'"]
+                             | ("'" ~["'"])
+                             | ("''" ~["'"]))* "'''") >
   | < FANNOTATE : ">>" >
 }
 
@@ -1883,5 +1876,5 @@ TOKEN :
 <*>
 TOKEN :
 {
-  < ILLEGAL_CHAR : [ "\u0000" - "\u0008", "\u000b", "\u000c", "\u000e" - "\uffff" ] >
+  < ILLEGAL_CHAR : [ "\u0000" - "\u0008", "\u000b" - "\uffff" ] >
 }
