@@ -18,11 +18,8 @@ public class ContentModelInferrer {
    */
   private final Map nameMap = new HashMap();
 
-  private static class Node {
+  private static class SingleNode {
     final Set followingNodes = new HashSet();
-  }
-
-  private static class SingleNode extends Node {
     final Name name;
     final int index;
     boolean multi = false;
@@ -31,8 +28,6 @@ public class ContentModelInferrer {
       this.name = name;
       this.index = index;
     }
-
-
   }
 
   private static class ParticleNode {
