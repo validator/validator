@@ -181,10 +181,13 @@ main=${jing_main}
 prog_version=${jing_version}
 prog_src_dir=${jing_src_dir}
 setup_prog
+cp -a ${top_dir}/copying.txt .
+
 cd ${top_dir}
 prog=trang
 main=${trang_main}
 prog_version=${trang_version}
 prog_src_dir=${trang_src_dir}
 setup_prog
-sed -e "s/@VERSION@/${trang_version}/g" ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
+sed -e "s/@VERSION@/${trang_version}/g" -e ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
+cp -a ${top_dir}/trang/copying.txt .
