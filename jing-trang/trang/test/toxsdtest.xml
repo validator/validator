@@ -3685,6 +3685,28 @@ element foo { list { xsd:int* } }
 </correct>
 </xsd>
 </testCase>
+<testCase>
+<compact>
+<correct>
+c = element x { xsd:int { maxInclusive = "72" } } | element y { xsd:int }
+</correct>
+</compact>
+<xsd>
+<correct>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="c" abstract="true" type="xs:int"/>
+  <xs:element name="x" substitutionGroup="c">
+    <xs:simpleType>
+      <xs:restriction base="xs:int">
+        <xs:maxInclusive value="72"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="y" substitutionGroup="c"/>
+</xs:schema>
+</correct>
+</xsd>
+</testCase>
 <!--
 <testCase>
 <compact>
