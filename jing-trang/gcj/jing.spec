@@ -8,6 +8,8 @@ License: BSD
 Group: Applications/Text
 BuildRoot: %{_tmppath}/%{name}-root
 
+BuildRequires: gcc-java >= 3.2-7
+
 %description
 A validator for RELAX NG.
 
