@@ -72,10 +72,23 @@ public class XmlWriter {
   }
 
   public void characters(String str) throws IOException {
-   if (state == IN_START_TAG)
+    if (state == IN_START_TAG)
       writer.write('>');
     state = AFTER_DATA;
     outputData(str);
+  }
+
+  public void comment(String str) throws IOException {
+    if (state == IN_START_TAG) {
+      writer.write('>');
+      state = OTHER;
+      writer.write(newline);
+    }
+    writer.write("<!--");
+    writer.write(str);
+    writer.write("-->");
+    if (state != AFTER_DATA)
+      writer.write(newline);
   }
 
   private void outputData(String str) throws IOException {
