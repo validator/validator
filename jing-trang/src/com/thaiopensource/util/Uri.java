@@ -2,11 +2,72 @@ package com.thaiopensource.util;
 
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.io.UnsupportedEncodingException;
 
 public class Uri {
+  private static String utf8 = "UTF-8";
 
   public static boolean isValid(String s) {
     return isValidPercent(s) && isValidFragment(s) && isValidScheme(s);
+  }
+
+  private static final String HEX_DIGITS = "0123456789abcdef";
+
+  public static String escapeDisallowedChars(String s) {
+    StringBuffer buf = null;
+    int len = s.length();
+    int done = 0;
+    for (;;) {
+      int i = done;
+      for (;;) {
+	if (i == len) {
+	  if (done == 0)
+	    return s;
+	  break;
+	}
+	if (isExcluded(s.charAt(i)))
+	  break;
+	i++;
+      }
+      if (buf == null)
+	buf = new StringBuffer();
+      if (i > done) {
+	buf.append(s.substring(done, i));
+	done = i;
+      }
+      if (i == len)
+	break;
+      for (i++; i < len && isExcluded(s.charAt(i)); i++)
+	;
+      String tem = s.substring(done, i);
+      byte[] bytes;
+      try {
+	bytes = tem.getBytes(utf8);
+      }
+      catch (UnsupportedEncodingException e) {
+	utf8 = "UTF8";
+	try {
+	  bytes = tem.getBytes(utf8);
+	}
+	catch (UnsupportedEncodingException e2) {
+	  // Give up
+	  return s;
+	}
+      }
+      for (int j = 0; j < bytes.length; j++) {
+	buf.append('%');
+	buf.append(HEX_DIGITS.charAt((bytes[j] & 0xFF) >> 4));
+	buf.append(HEX_DIGITS.charAt(bytes[j] & 0xF));
+      }
+      done = i;
+    }
+    return buf.toString();
+  }
+
+  private static String excluded = "<>\"{}|\\^`";
+
+  private static boolean isExcluded(char c) {
+    return c <= 0x20 || c >= 0x7F || excluded.indexOf(c) >= 0;
   }
 
   private static boolean isAlpha(char c) {

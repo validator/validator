@@ -162,6 +162,7 @@ public class PatternReader implements ValidationContext {
 	      error("relative_datatype_library");
 	    if (Uri.hasFragmentId(datatypeLibrary))
 	      error("fragment_identifier_datatype_library");
+	    datatypeLibrary = Uri.escapeDisallowedChars(datatypeLibrary);
 	  }
 	  else
 	    setOtherAttribute(name, atts.getValue(i));
@@ -1430,6 +1431,7 @@ public class PatternReader implements ValidationContext {
     throws IOException, SAXException {
     if (Uri.hasFragmentId(systemId))
       error("href_fragment_id");
+    systemId = Uri.escapeDisallowedChars(systemId);
     systemId = Uri.resolve(xmlBaseHandler.getBaseUri(), systemId);
     EntityResolver er = xr.getEntityResolver();
     if (er != null) {

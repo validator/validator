@@ -33,7 +33,7 @@ class XmlBaseHandler {
     Entry entry = new Entry();
     entry.parent = stack;
     stack = entry;
-    entry.attValue = value;
+    entry.attValue = Uri.escapeDisallowedChars(value);
     entry.systemId = getSystemId();
     entry.depth = depth;
   }
