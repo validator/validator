@@ -35,10 +35,6 @@ public class StreamingPrettyprinter implements Prettyprinter {
      */
     Segment next;
     /**
-     * The characters in the segment including the characters from the terminating soft newline
-     */
-    StringBuffer buf = new StringBuffer();
-    /**
      * Number of characters to discard at the end of the segment if we break immediately after
      * the segment
      */
@@ -52,8 +48,31 @@ public class StreamingPrettyprinter implements Prettyprinter {
      */
     int indent;
     final int serial;
+    private static final int ALLOC_SPARE = 5;
+    private static final int ALLOC_INIT = 10;
+    /**
+     * The characters in the segment including the characters from the terminating soft newline
+     */
+    char[] chars = new char[ALLOC_INIT];
+    /**
+     * The number of characters in chars
+     */
+    int length = 0;
     Segment(int serial) {
       this.serial = serial;
+    }
+
+    void append(String str) {
+      if (str.length() > chars.length - length) {
+        int newSize = chars.length * 2;
+        if (newSize - length < str.length())
+          newSize = chars.length + str.length() + ALLOC_SPARE;
+        char[] newChars = new char[newSize];
+        System.arraycopy(chars, 0, newChars, 0, length);
+        chars = newChars;
+      }
+      str.getChars(0, str.length(), chars, length);
+      length += str.length();
     }
   }
 
@@ -117,7 +136,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
   }
 
   public void text(String str) {
-    tail.buf.append(str);
+    tail.append(str);
     totalWidth += str.length();
     tryFlush(false);
   }
@@ -125,7 +144,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
   public void softNewline(String noBreak) {
     if (head == tail || noBreakGroup == null)
       lastPossibleBreak = tail;
-    tail.buf.append(noBreak);
+    tail.append(noBreak);
     tail.preBreakDiscardCount = noBreak.length();
     tail.group = currentGroup;
     if (noBreakGroup == null)
@@ -171,9 +190,9 @@ public class StreamingPrettyprinter implements Prettyprinter {
       Segment s = head;
       head = lastPossibleBreak.next;
       lastPossibleBreak.next = null;
-      lastPossibleBreak.buf.setLength(lastPossibleBreak.buf.length() - lastPossibleBreak.preBreakDiscardCount);
+      lastPossibleBreak.length -= lastPossibleBreak.preBreakDiscardCount;
       for (; s != null; s = s.next)
-        write(s.buf.toString());
+        write(s.chars, 0, s.length);
       writeNewline(lastPossibleBreak.indent);
       availWidth = maxWidth - lastPossibleBreak.indent;
       lastPossibleBreak.group.setBroken();
@@ -191,14 +210,14 @@ public class StreamingPrettyprinter implements Prettyprinter {
           && nbg.closeSegmentSerial != -1
           && s.serial >= nbg.closeSegmentSerial)
         nbg = null;
-      totalWidth += s.buf.length();
+      totalWidth += s.length;
       if (lastPossibleBreak == null
           || (!lastPossibleBreak.group.broken && nbg == null))
         lastPossibleBreak = s;
       if (nbg == null)
         nbg = s.group;
     }
-    totalWidth += tail.buf.length();
+    totalWidth += tail.length;
     if (nbg != null && nbg.closeSegmentSerial == -1)
       noBreakGroup = nbg;
     else
@@ -206,7 +225,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
   }
 
   public void close() {
-    if (tail.buf.length() != 0) {
+    if (tail.length != 0) {
       // Don't want spaces after final newline
       currentIndent = 0;
       hardNewline();
@@ -229,9 +248,9 @@ public class StreamingPrettyprinter implements Prettyprinter {
     }
   }
 
-  private void write(String str) {
+  private void write(char[] chars, int off, int len) {
     try {
-      w.write(str);
+      w.write(chars, off, len);
     }
     catch (IOException e) {
       throw new WrappedException(e);
