@@ -2,10 +2,10 @@ Fix usage messages
 Detect with -l-org-xml-sax is needed
 Detect with -lpthread is needed
 Write man pages
-Make sure we are complying with Apache license
 Remove unnecessary stuff from trang.
 In jing, clean needs to clean tests
 Add make install target
 Try to use built in SAX parser
 Run test suite with trang
 Add note about RH8.0 lossage
+http://gcc.gnu.org/ml/java/2003-02/msg00016.html

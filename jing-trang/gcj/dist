@@ -174,14 +174,33 @@ autoconf
 
 rm -fr autom4te*
 
+cat >copying.txt <<EOF
+Except as otherwise stated, the following license applies to this software.
+
+EOF
+sed -e 's/^/  /' ${copying} >>copying.txt
+cat >>copying.txt <<EOF
+
+The XML parser used is Crimson, to which the following license applies.
+
+EOF
+sed -e 's/^/  /' ${top_dir}/gcj/crimson.copying.txt >>copying.txt
+
+cat >>copying.txt <<EOF
+
+The W3C XML Schema regular expression implementation is from Xerces,
+to which the following license applies.
+
+EOF
+sed -e 's/^/  /' ${top_dir}/gcj/xerces.copying.txt >>copying.txt
 }
 
 prog=jing
 main=${jing_main}
 prog_version=${jing_version}
 prog_src_dir=${jing_src_dir}
+copying=${top_dir}/copying.txt
 setup_prog
-cp -a ${top_dir}/copying.txt .
 
 cat <<\EOF >>Makefile.in
 
@@ -223,6 +242,6 @@ prog=trang
 main=${trang_main}
 prog_version=${trang_version}
 prog_src_dir=${trang_src_dir}
+copying=${top_dir}/trang/copying.txt
 setup_prog
 sed -e "s/@VERSION@/${trang_version}/g" ${top_dir}/trang/doc/trang-manual.html >trang-manual.html
-cp -a ${top_dir}/trang/copying.txt .
