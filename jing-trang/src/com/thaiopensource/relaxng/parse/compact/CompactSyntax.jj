@@ -27,6 +27,8 @@ import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.Location;
 import com.thaiopensource.relaxng.parse.Context;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
+
 import com.thaiopensource.util.Localizer;
 
 import org.xml.sax.ErrorHandler;
@@ -42,12 +44,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class CompactSyntax implements Context {
-
-  private static final String xmlUri = "http://www.w3.org/XML/1998/namespace";
-  private static final String xmlnsUri = "http://www.w3.org/2000/xmlns";
-  private static final String compatibilityUri = "http://relaxng.org/ns/compatibility/annotations/1.0";
-  private static final String xsdUri = "http://www.w3.org/2001/XMLSchema-datatypes";
-
   private static final int IN_ELEMENT = 0;
   private static final int IN_ATTRIBUTE = 1;
   private static final int IN_ANY_NAME = 2;
@@ -466,9 +462,9 @@ void Preamble() :
 {
   (NamespaceDecl() | DatatypesDecl())*
   {
-    namespaceTable.put("xml", xmlUri);
+    namespaceTable.put("xml", WellKnownNamespaces.XML);
     if (datatypesTable.get("xsd") == null)
-      datatypesTable.put("xsd", xsdUri);
+      datatypesTable.put("xsd", WellKnownNamespaces.XML_SCHEMA_DATATYPES);
   }
 }
 
@@ -492,13 +488,13 @@ void NamespaceDecl() :
       if (prefix.getString().equals("xmlns"))
         error("xmlns_prefix", prefix.getToken());
       else if (prefix.getString().equals("xml")) {
-        if (!namespaceName.equals(xmlUri))
+        if (!namespaceName.equals(WellKnownNamespaces.XML))
           error("xml_prefix_bad_uri", prefix.getToken());
       }
-      else if (namespaceName.equals(xmlUri))
+      else if (namespaceName.equals(WellKnownNamespaces.XML))
         error("xml_uri_bad_prefix", prefix.getToken());
       else {
-        if (namespaceName.equals(compatibilityUri))
+        if (namespaceName.equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS))
           compatibilityPrefix = prefix.getString();
         namespaceTable.put(prefix.getString(), namespaceName);
       }
@@ -1218,7 +1214,7 @@ ParsedElementAnnotation Documentation() :
 {
   (t = <DOCUMENTATION> | t = <DOCUMENTATION_AFTER_SINGLE_LINE_COMMENT>)
   {
-    eab = sb.makeElementAnnotationBuilder(compatibilityUri,
+    eab = sb.makeElementAnnotationBuilder(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS,
                                           "documentation",
                                           getCompatibilityPrefix(),
                                           makeLocation(t),
@@ -1283,7 +1279,7 @@ void PrefixedAnnotationAttribute(Annotations a, boolean allowUnqualified) :
              && qn.length() - colon - 1 == 5
              && qn.regionMatches(colon + 1, "xmlns", 0, 5))
       error("xmlns_annotation_attribute", t);
-    else if (ns.equals(xmlnsUri))
+    else if (ns.equals(WellKnownNamespaces.XMLNS))
       error("xmlns_annotation_attribute_uri", t);
     else {
       if (ns.length() == 0)
