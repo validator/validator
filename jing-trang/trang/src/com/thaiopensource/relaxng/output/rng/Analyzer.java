@@ -44,7 +44,7 @@ class Analyzer extends AbstractVisitor {
     return null;
   }
 
-  void visitAnnotationAttributes(List list) {
+  private void visitAnnotationAttributes(List list) {
     for (int i = 0, len = list.size(); i < len; i++) {
       AttributeAnnotation att = (AttributeAnnotation)list.get(i);
       if (att.getNamespaceUri().length() != 0)
@@ -52,7 +52,7 @@ class Analyzer extends AbstractVisitor {
     }
   }
 
-  void visitAnnotationChildren(List list) {
+  private void visitAnnotationChildren(List list) {
     for (int i = 0, len = list.size(); i < len; i++) {
       AnnotationChild ac = (AnnotationChild)list.get(i);
       if (ac instanceof ElementAnnotation) {
@@ -89,7 +89,7 @@ class Analyzer extends AbstractVisitor {
     return visitContainer(p);
   }
 
-  public Object visitContainer(Container c) {
+  private Object visitContainer(Container c) {
     List list = c.getComponents();
     for (int i = 0, len = list.size(); i < len; i++)
       ((Component)list.get(i)).accept(this);
