@@ -97,3 +97,6 @@ With combine attributes, maybe insert <ref> to preserve file structure.
 Deal with repeated inclusions of same file, by expanding.
 
 Add an annotation on elements to convey <start> info.
+
+Handle the case where the head of a substitution group should be a non-abstract element
+(remember to deal with type derivation restriction).
