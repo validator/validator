@@ -13,8 +13,6 @@ model.
 
 RELAX NG: overridden attributes.
 
-RELAX NG: default values
-
 RELAX NG: use FIXED values to construct datatype
 
 RELAX NG: processing instructions
@@ -74,3 +72,7 @@ XML declaration is consistent with auto-detected encoding.
 Add a MINIMIZATION_SEMANTIC to deal with TEI RR/RO.
 
 Cleanup handling of newline normalization.
+
+Line-wrapping for long attribute lists in XmlWriter.
+
+Use system-dependent line-endings on output in XmlWriter.
