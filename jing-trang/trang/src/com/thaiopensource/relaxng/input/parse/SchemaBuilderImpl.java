@@ -1,6 +1,5 @@
 package com.thaiopensource.relaxng.input.parse;
 
-import com.thaiopensource.relaxng.IncorrectSchemaException;
 import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
@@ -670,18 +669,15 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   static SchemaCollection parse(Parseable parseable, String uri, ErrorHandler eh, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming)
-          throws IncorrectSchemaException, IOException, SAXException {
+          throws IllegalSchemaException, IOException, SAXException {
     try {
       SchemaCollection sc = new SchemaCollection();
       SchemaBuilderImpl sb = new SchemaBuilderImpl(parseable, eh, sc.getSchemaDocumentMap(), dlf, commentsNeedTrimming);
       sc.setMainUri(uri);
       sb.parse(parseable, uri);
       if (sb.hadError)
-        throw new IncorrectSchemaException();
+        throw new IllegalSchemaException();
       return sc;
-    }
-    catch (IllegalSchemaException e) {
-      throw new IncorrectSchemaException();
     }
     catch (BuildException e) {
       Throwable t = e.getCause();
@@ -689,8 +685,6 @@ class SchemaBuilderImpl implements SchemaBuilder {
         throw (IOException)t;
       if (t instanceof RuntimeException)
         throw (RuntimeException)t;
-      if (t instanceof IllegalSchemaException)
-        throw new IncorrectSchemaException();
       if (t instanceof SAXException)
         throw (SAXException)t;
       if (t instanceof Exception)

@@ -4,11 +4,10 @@ import com.thaiopensource.relaxng.input.InputFormat;
 import com.thaiopensource.relaxng.input.InputFailedException;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.parse.Parseable;
-import com.thaiopensource.relaxng.IncorrectSchemaException;
+import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.translate.util.ParamProcessor;
 import com.thaiopensource.relaxng.translate.util.EncodingParam;
-import com.thaiopensource.relaxng.translate.util.Param;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -41,7 +40,7 @@ public abstract class ParseInputFormat implements InputFormat {
                                      new DatatypeLibraryLoader(),
                                      commentsNeedTrimming);
     }
-    catch (IncorrectSchemaException e) {
+    catch (IllegalSchemaException e) {
       throw new InputFailedException();
     }
   }
