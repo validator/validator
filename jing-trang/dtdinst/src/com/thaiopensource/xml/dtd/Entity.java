@@ -67,6 +67,8 @@ class Entity {
   Vector parsed;
 
   void setParsed(int level, Vector v, int start, int end) {
+    if (referenceLevel < 0)
+      return;
     if (level == referenceLevel) {
       if (!sliceEqual(parsed, v, start, end)) {
 	// XXX give a warning
@@ -74,17 +76,35 @@ class Entity {
 	referenceLevel = INCONSISTENT_LEVEL;
 	System.err.println("Warning: entity used inconsistently: " + name);
       }
+      return;
     }
-    else if (referenceLevel == NO_LEVEL) {
+    if (referenceLevel == NO_LEVEL) {
       parsed = new Vector();
       appendSlice(parsed, v, start, end);
       referenceLevel = level;
+      return;
     }
-    else if (referenceLevel > 0) {
-      System.err.println("Warning: entity used inconsistently: " + name);
-      parsed = null;
-      referenceLevel = INCONSISTENT_LEVEL;
+    if (parsed.size() == 1 && end - start == 1) {
+      if (level == PARAM_LEVEL && referenceLevel == PARTICLE_LEVEL) {
+	if (paramParticleConsistent((Param)v.elementAt(start),
+				    (Particle)parsed.elementAt(0)))
+	  return;
+      }
+      else if (level == PARTICLE_LEVEL && referenceLevel == PARAM_LEVEL) {
+	if (paramParticleConsistent((Param)parsed.elementAt(0),
+				    (Particle)v.elementAt(start)))
+	  return;
+      }
     }
+    System.err.println("Warning: entity used inconsistently: " + name);
+    parsed = null;
+    referenceLevel = INCONSISTENT_LEVEL;
+  }
+
+  static boolean paramParticleConsistent(Param param, Particle particle) {
+    if (param.type == Param.MODEL_GROUP && param.group.equals(particle))
+      return true;
+    return false;
   }
 
   int textIndexToAtomIndex(int ti) {
