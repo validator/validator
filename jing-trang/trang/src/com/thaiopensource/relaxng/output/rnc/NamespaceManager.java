@@ -179,10 +179,12 @@ class NamespaceManager {
       Binding binding = (Binding)iter.next();
       if (prefixMap.get(binding.prefix) == null) {
         Boolean defaultOK = (Boolean)requiredNamespaces.get(binding.namespaceUri);
-        if (defaultOK != null && (binding.prefix.length() > 0 || defaultOK.booleanValue())) {
+        boolean satisfiesRequirement = defaultOK != null && (binding.prefix.length() > 0 || defaultOK.booleanValue());
+        if (((BindingUsage)bindingUsageMap.get(binding)).required || satisfiesRequirement) {
           prefixMap.put(binding.prefix, binding.namespaceUri);
           iter.remove();
-          requiredNamespaces.remove(binding.namespaceUri);
+          if (satisfiesRequirement)
+            requiredNamespaces.remove(binding.namespaceUri);
           if (binding.prefix.length() > 0)
             nsMap.put(binding.namespaceUri, binding.prefix);
         }
