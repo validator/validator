@@ -14,8 +14,6 @@ Don't unexpand empty entities that might be pasted.
 
 overridden param entity declarations
 
-Unparsed ignored sections in the object model.
-
 Include external param entities in object model.
 
 Try to parse ignored marked sections.
