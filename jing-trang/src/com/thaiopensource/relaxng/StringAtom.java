@@ -13,7 +13,11 @@ class StringAtom extends Atom {
     this.str = str;
     this.vc = vc;
   }
- 
+
+  boolean isEmpty() {
+    return str.length() == 0;
+  }
+
   boolean matchesString() {
     return true;
   }
