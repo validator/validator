@@ -2,7 +2,6 @@ Fix usage messages
 Detect with -l-org-xml-sax is needed
 Detect with -lpthread is needed
 Write man pages
-Remove unnecessary stuff from trang.
 In jing, clean needs to clean tests
 Add make install target
 Run test suite with trang

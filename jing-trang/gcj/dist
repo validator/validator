@@ -29,6 +29,24 @@ com/thaiopensource/relaxng/jarv
 com/thaiopensource/relaxng/util/JingTask.java
 META-INF/services/org.iso_relax.verifier.VerifierFactoryLoader
 "
+jing_unwanted_in_trang="
+com/thaiopensource/relaxng/impl
+com/thaiopensource/relaxng/mns
+com/thaiopensource/relaxng/auto
+com/thaiopensource/relaxng/AbstractSchema.java
+com/thaiopensource/relaxng/CompactSchemaLanguage.java
+com/thaiopensource/relaxng/IncorrectSchemaException.java
+com/thaiopensource/relaxng/SAXSchemaLanguage.java
+com/thaiopensource/relaxng/SchemaFactory.java
+com/thaiopensource/relaxng/Schema.java
+com/thaiopensource/relaxng/SchemaLanguage.java
+com/thaiopensource/relaxng/SchemaOptions.java
+com/thaiopensource/relaxng/ValidatorHandler.java
+com/thaiopensource/relaxng/util/Driver.java
+com/thaiopensource/relaxng/util/ExegenDriver.java
+com/thaiopensource/relaxng/util/TestDriver.java
+com/thaiopensource/relaxng/util/ValidationEngine.java
+"
 
 if [ -f ../${a_jing_file} ]; then
     cd ..
@@ -95,8 +113,11 @@ cd dtdinst
 find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
 cd ../trang
 find src -name '*.java' -or -name '*.properties' | cpio --quiet -p -d ../${trang_src_dir}
-cd ..
+cd ../${trang_src_dir}/src
 
+rm -fr ${jing_unwanted_in_trang}
+
+cd ${top_dir}
 
 setup_prog() {
 
