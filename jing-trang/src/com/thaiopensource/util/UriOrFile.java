@@ -60,4 +60,21 @@ public class UriOrFile {
       path = '/' + path;
     return new URL("file", "", path).toString();
   }
+
+  public static String uriToUriOrFile(String uri) {
+    if (!uri.startsWith("file:"))
+      return uri;
+    uri = uri.substring(5);
+    int nSlashes = 0;
+    while (nSlashes < uri.length() && uri.charAt(nSlashes) == '/')
+      nSlashes++;
+    File f = new File(uri.substring(nSlashes).replace('/', File.separatorChar));
+    if (f.isAbsolute())
+      return f.toString();
+    return uri.replace('/', File.separatorChar);
+  }
+
+  static public void main(String[] args) {
+    System.err.println(uriToUriOrFile(args[0]));
+  }
 }

@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
+import com.thaiopensource.util.UriOrFile;
 
 public class ErrorHandlerImpl implements ErrorHandler {
   private final PrintWriter err;
@@ -86,6 +87,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
     n = e.getColumnNumber();
     Integer columnNumber = n >= 0 ? new Integer(n) : null;
     if (systemId != null) {
+      systemId = UriOrFile.uriToUriOrFile(systemId);
       if (lineNumber != null) {
 	if (columnNumber != null)
 	  return format("locator_system_id_line_number_column_number",
