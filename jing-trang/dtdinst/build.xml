@@ -28,19 +28,29 @@
   </java>
 </target>
 
-<target name="dist" depends="jar">
+<target name="translate-schema" depends="init">
+  <java classname="com.thaiopensource.relaxng.nonxml.Driver"
+        classpath="../relaxng/nonxml/build/rngnx.jar"
+        output="build/dtdinst.rng">
+    <arg value="dtdinst.rngnx"/>
+  </java>
+</target>
+
+<target name="dist" depends="jar,translate-schema">
   <zip zipfile="build/dtdinst-src.zip">
     <fileset dir="src" includes="**/*.java,**/*.properties"/>
   </zip>
   <copy todir="build">
     <fileset dir="." includes="index.html,copying.txt"/>
   </copy>
+  <copy file="dtdinst.rngnx" tofile="build/dtdinst.rngnx.txt"/>
+  <copy file="teixml.dtd" tofile="build/teixml.dtd.txt"/>
   <replace file="build/index.html"
            token="@VERSION@"
            value="${version}"/>
   <tar tarfile="build/dtdinst.tar"
        basedir="build"
-       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt"/>
+       includes="dtdinst-src.zip,dtdinst.jar,index.html,copying.txt,dtdinst.rngnx.txt,dtdinst.rng,teixml.dtd.txt"/>
   <gzip zipfile="build/dtdinst.tar.gz" src="build/dtdinst.tar"/>
 </target>
 
