@@ -49,7 +49,7 @@ class AtomParser {
 	d = new Decl(Decl.REFERENCE_END);
       }
       else {
-	int action = doAction();
+	doAction();
 	switch (as.tokenType) {
 	case Tokenizer.TOK_COMMENT:
 	  d = new Decl(Decl.COMMENT);
