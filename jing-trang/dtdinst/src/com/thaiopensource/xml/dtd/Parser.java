@@ -7,7 +7,8 @@ import java.util.Vector;
 import java.util.Enumeration;
 
 /*
-TODOD Need to ensure newline normalization is done properly.
+TODO  Need to ensure newline normalization is done properly.
+Don't unexpand entities that are not properly nested.
 */
 
 public class Parser extends Token {
