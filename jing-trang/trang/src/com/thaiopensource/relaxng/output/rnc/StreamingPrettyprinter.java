@@ -14,20 +14,17 @@ public class StreamingPrettyprinter implements Prettyprinter {
      * or -1 if the segment is not yet closed.
      */
     int closeSegmentSerial = -1;
-    final int level;
-    boolean broken = false;
-    Group unbrokenParent;
+    boolean broken;
+    final Group parent;
     Group(Group parent) {
-      this.level = parent == null ? 0 : parent.level + 1;
-      if (parent != null && !parent.broken)
-        unbrokenParent = parent;
+      this.parent = parent;
+      broken = (parent == null);
     }
 
     void setBroken() {
-      broken = true;
-      if (unbrokenParent != null) {
-        unbrokenParent.setBroken();
-        unbrokenParent = null;
+      if (!broken) {
+        broken = true;
+        parent.setBroken();
       }
     }
   }
@@ -63,8 +60,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
   private Segment head;
   private Segment tail;
   private int nextSegmentSerial = 0;
-  private Group currentGroup = null;
-  private Stack groupStack = new Stack();
+  private Group currentGroup = new Group(null);
   private int currentIndent = 0;
   private Stack indentStack = new Stack();
   /**
@@ -101,8 +97,6 @@ public class StreamingPrettyprinter implements Prettyprinter {
   }
 
   public void startGroup() {
-    if (currentGroup != null)
-      groupStack.push(currentGroup);
     currentGroup = new Group(currentGroup);
   }
 
@@ -110,10 +104,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
     if (noBreakGroup == currentGroup)
       noBreakGroup = null;
     currentGroup.closeSegmentSerial = tail.serial;
-    if (groupStack.isEmpty())
-      currentGroup = null;
-    else
-      currentGroup = (Group)groupStack.pop();
+    currentGroup = currentGroup.parent;
   }
 
   public void startNest(String indent) {
@@ -136,11 +127,9 @@ public class StreamingPrettyprinter implements Prettyprinter {
       lastPossibleBreak = tail;
     tail.buf.append(noBreak);
     tail.preBreakDiscardCount = noBreak.length();
-    if (currentGroup != null) {
-      tail.group = currentGroup;
-      if (noBreakGroup == null)
-        noBreakGroup = currentGroup;
-    }
+    tail.group = currentGroup;
+    if (noBreakGroup == null)
+      noBreakGroup = currentGroup;
     tail.indent = currentIndent;
     totalWidth += tail.preBreakDiscardCount;
     Segment tem = makeSegment();
@@ -153,11 +142,9 @@ public class StreamingPrettyprinter implements Prettyprinter {
     if (head == tail || noBreakGroup == null)
       lastPossibleBreak = tail;
     tail.preBreakDiscardCount = 0;
-    if (currentGroup != null) {
-      tail.group = currentGroup;
-      if (noBreakGroup == null)
-        noBreakGroup = currentGroup;
-    }
+    tail.group = currentGroup;
+    if (noBreakGroup == null)
+      noBreakGroup = currentGroup;
     tail.indent = currentIndent;
     Segment tem = makeSegment();
     tail.next = tem;
@@ -172,7 +159,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
       return false;
     if (totalWidth > availWidth)
       return false;
-    if (lastPossibleBreak.group != null && lastPossibleBreak.group.broken)
+    if (lastPossibleBreak.group.broken)
       return false;
     return true;
   }
@@ -189,8 +176,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
         write(s.buf.toString());
       writeNewline(lastPossibleBreak.indent);
       availWidth = maxWidth - lastPossibleBreak.indent;
-      if (lastPossibleBreak.group != null)
-        lastPossibleBreak.group.setBroken();
+      lastPossibleBreak.group.setBroken();
       update();
     }
   }
@@ -207,8 +193,7 @@ public class StreamingPrettyprinter implements Prettyprinter {
         nbg = null;
       totalWidth += s.buf.length();
       if (lastPossibleBreak == null
-          || (nbg == null
-              && (lastPossibleBreak.group == null || !lastPossibleBreak.group.broken)))
+          || (!lastPossibleBreak.group.broken && nbg == null))
         lastPossibleBreak = s;
       if (nbg == null)
         nbg = s.group;
