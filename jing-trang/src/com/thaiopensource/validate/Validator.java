@@ -71,9 +71,10 @@ public interface Validator {
 
    /**
     * Cleans up after validating a document.  After completing validation
-    * of a document, <code>reset</code> must be called. This may create new
-    * ContentHandler and DTDHandler objects or may simply reinitialize
-    * the state of the existing objects.
+    * of a document, <code>reset</code> must be called. After calling
+    * reset(), another document may be validated.  Calling this method
+    * may create new ContentHandler and DTDHandler objects or may simply
+    * reinitialize the state of the existing objects.
     */
    void reset();
 }
