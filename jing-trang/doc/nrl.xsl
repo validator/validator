@@ -68,6 +68,8 @@ code { font-family: sans-serif }
 
 <xsl:template match="abstract"/>
 
+<xsl:template match="div[@class='titlepage']"/>
+
 <xsl:template match="*">
   <xsl:copy>
     <xsl:copy-of select="@*"/>
