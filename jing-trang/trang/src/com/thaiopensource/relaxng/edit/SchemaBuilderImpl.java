@@ -441,6 +441,13 @@ public class SchemaBuilderImpl implements SchemaBuilder {
       }
     }
 
+    public void annotation(ParsedElementAnnotation ea) {
+      List params = p.getParams();
+      ((ElementAnnotationBuilderImpl)ea).addTo(params.isEmpty()
+                                               ? p.getChildElementAnnotations()
+                                               : ((Param)params.get(params.size() - 1)).getFollowingElementAnnotations());
+    }
+
     public ParsedPattern makePattern(Location loc, Annotations anno)
             throws BuildException {
       if (dtb != null) {

@@ -233,6 +233,10 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
             throws BuildException {
     }
 
+    public void annotation(ParsedElementAnnotation ea)
+            throws BuildException {
+    }
+
     public ParsedPattern makePattern(Location loc, Annotations anno)
             throws BuildException {
       return pb.makeError();
@@ -306,6 +310,10 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
 	else
 	  error("invalid_param", (Locator)loc);
       }
+    }
+
+    public void annotation(ParsedElementAnnotation ea)
+            throws BuildException {
     }
 
     String displayParam(String value, int pos) {
