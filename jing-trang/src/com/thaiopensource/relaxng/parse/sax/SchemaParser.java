@@ -1055,10 +1055,6 @@ class SchemaParser {
       return new ParentRefState();
     }
 
-    void endAttributes() throws SAXException {
-      super.endAttributes();
-    }
-
     ParsedPattern makePattern() {
       return scope.makeParentRef(name, startLocation, annotations);
     }
