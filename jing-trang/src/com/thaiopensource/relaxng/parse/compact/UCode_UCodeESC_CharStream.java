@@ -238,13 +238,18 @@ public final class UCode_UCodeESC_CharStream {
           if (Utf16.isSurrogate(c)) {
             if (Utf16.isSurrogate2(c))
               throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 1);
+            if (++bufpos == available)
+              AdjustBuffSize();
+            buffer[bufpos] = c;
+            // UpdateLineColumn(c);
             try {
-              if (!Utf16.isSurrogate2(PeekChar()))
-                throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 2);
+              c = ReadChar();
             }
             catch (EOFException e) {
               throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 1);
             }
+            if (!Utf16.isSurrogate2(c))
+              throw new EscapeSyntaxException("illegal_surrogate_pair", line, column + 2);
           }
           break;
         }
