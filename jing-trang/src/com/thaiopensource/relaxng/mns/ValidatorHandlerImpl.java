@@ -100,9 +100,10 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
     if (namespaceCovered(uri))
       subtrees.context.push(new Name(uri, localName));
     else {
-      SchemaImpl.ElementAction elementAction = getMode().getElementAction(uri);
+      SchemaImpl.Mode mode = getMode();
+      SchemaImpl.ElementAction elementAction = mode.getElementAction(uri);
       if (elementAction == null) {
-        if (laxDepth == 0 && currentMode.isStrict())
+        if (laxDepth == 0 && mode.isStrict())
           error("element_undeclared_namespace", uri);
         laxDepth++;
       }
@@ -153,9 +154,10 @@ class ValidatorHandlerImpl extends DefaultHandler implements ValidatorHandler {
   }
 
   private void validateAttributes(String ns, Attributes attributes) throws SAXException {
-    Schema attributesSchema = getMode().getAttributesSchema(ns);
+    SchemaImpl.Mode mode = getMode();
+    Schema attributesSchema = mode.getAttributesSchema(ns);
     if (attributesSchema == null) {
-      if (currentMode.isStrictAttributes())
+      if (mode.isStrictAttributes())
         error("attributes_undeclared_namespace", ns);
       return;
     }
