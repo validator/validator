@@ -1,7 +1,14 @@
+Fix bug with empty implicit grammars in compact syntax.
+
 Allow jing to use OASIS catalogs.
 
 See whether there's a DTDinst bug with a parameter entity containing a
 single percent token.
+
+Deal with complaints by XSV about trang's handling of Rahtz's example
+(mixed derived from non-mixed).
+
+Handling float/double/Name in trang DTD output module.
 
 Allow jing to read from stdin.
 
