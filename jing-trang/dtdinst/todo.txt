@@ -1,6 +1,8 @@
-RELAX NG generated for ANY lacks repetition.
+RELAX NG: option to map comments into annotations (or maybe should be separate program)
 
-Generate definition for any in one place.
+RELAX NG: fix bug with ANY lacking repetition.
+
+RELAX NG: generate definition for any in one place.
 
 Support OASIS catalogs.
 
