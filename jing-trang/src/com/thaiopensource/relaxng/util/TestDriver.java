@@ -1,18 +1,13 @@
 package com.thaiopensource.relaxng.util;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-import java.io.BufferedWriter;
-import java.net.URL;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.InputSource;
-import org.xml.sax.ErrorHandler;
-
-import com.thaiopensource.relaxng.XMLReaderCreator;
 import com.thaiopensource.util.OptionParser;
+import org.xml.sax.SAXException;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 class TestDriver {
   static public void main(String[] args) throws IOException {
@@ -26,13 +21,16 @@ class TestDriver {
   public int doMain(String[] args) throws IOException {
     long startTime = System.currentTimeMillis();
     eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[0]))));
-    boolean checkId = false;
-    OptionParser op = new OptionParser("i", args);
+    int flags = 0;
+    OptionParser op = new OptionParser("im", args);
     try {
       while (op.moveToNextOption()) {
         switch (op.getOptionChar()) {
         case 'i':
-          checkId = true;
+          flags |= ValidationEngine.CHECK_ID_IDREF;
+          break;
+        case 'm':
+          flags |= ValidationEngine.MNS;
           break;
         }
       }
@@ -48,7 +46,7 @@ class TestDriver {
       return 2;
     }
     args = op.getRemainingArgs();
-    engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, checkId);
+    engine = new ValidationEngine(new Jaxp11XMLReaderCreator(), eh, flags);
     int result = 0;
     for (int i = 1; i < args.length; i++) {
       int n = runTestSuite(new File(args[i]));
