@@ -924,7 +924,7 @@ type Context = (Uri, [(Prefix, Uri)])
 
 data Node = ElementNode QName Context [Node]
 	  | TextNode String
-	  | HoleNode
+	  | SlotNode
 
 type AttributeSection = [(QName, String)]
 
