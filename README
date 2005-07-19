@@ -1,0 +1,57 @@
+syntax.whatwg.org directory plan
+
+This document lays out the plan for present and future syntax definitions,
+given as a URI hierarchy. All files for a given syntax definition are in
+one directory. This means a lot of duplication of things like the entity
+definitions, but it will help with revision-tracking and packaging.
+
+The general plan is as follows:
+  - the first-level directory specifies the format
+  - the second-level directory gives the language/combination
+    (language version increments are reflected at this level;
+     not sure yet exactly how)
+  - the third level gives revisions in the format
+       - pre1, pre2, pre3 etc. for pre-release versions
+       - v0, v1, v2, v3 etc. for original release/bugfix versions
+       - the latest version is directly in the second-level directory
+  - each directory must have a README detailing what it is
+    combination syntax files must state the equivalent versions of
+    all stand-alone components
+
+The maintainer of this system is fantasai <http://fantasai.inkedblade.net/contact>.
+
+syntax.whatwg.org/
+  |
+  |--relaxng/ - RelaxNG syntax definition and related files
+  |
+  |
+  |--sgml/ - SGML DTDs and related files
+  |    |
+  |    |--html5/ - HTML 5
+  |    |    |--category - category file
+  |    |    |--dtd - DTD
+  |    |    |--latin1 - Latin1 entities
+  |    |    |--special - Special entities
+  |    |    |--symbol - Symbol entities
+  |    |
+  |    |--html5core/ - HTML 4 updated to reflect errata and HTML 5 changes
+  |    |    |          Used as a basis for work leading up to HTML 5 complete
+  |    |    |--category - category file
+  |    |    |--dtd - DTD
+  |    |    |--latin1 - Latin1 entities
+  |    |    |--special - Special entities
+  |    |    |--symbol - Symbol entities
+  |    |
+  |    |--html5core+wf2/ - HTML 5 Core + Web Forms 2
+  |    |    |--category - category file
+  |    |    |--dtd - DTD
+  |    |    |--latin1 - Latin1 entities
+  |    |    |--special - Special entities
+  |    |    |--symbol - Symbol entities
+  |    |
+  |
+  |--xml/ - XML DTDs (generated from RelaxNG) and related files
+  |
+  |
+  |--xschema/ - XML Schema syntax definition (generated from RelaxNG)
+  |
