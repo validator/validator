@@ -1,0 +1,171 @@
+#######################################################################
+# RelaxNG Schema for HTML 5: Global Structure & Meta Data             #
+#######################################################################
+
+	default namespace = "http://www.w3.org/1999/xhtml"
+
+## Root Element: <html>
+
+	html.elem =
+		element html { html.inner & html.attrs }
+	html.attrs =
+		( common.attrs )
+	html.inner =
+		(	head.elem
+		,	body.elem
+		)
+
+## Meta Data Container: <head> #
+
+	head.elem =
+		element head { head.inner & head.attrs }
+	head.attrs =
+		(	common.attrs
+		&	head.attrs.profile?
+		)
+		head.attrs.profile =
+			attribute profile {
+				common.data.uris
+			}
+	head.inner =
+		(	meta.elem.encoding?
+		,	(	title.elem
+			&	base.elem?
+			&	head.inner.misc*
+			)
+		)
+		head.inner.misc =
+			(	meta.elem
+			|	link.elem
+			|	style.elem
+			|	script.elem
+			)
+
+## Content Container: <body> #
+
+	body.elem =
+		element body { body.inner & body.attrs }
+	body.attrs =
+		( common.attrs )
+	body.inner =
+		( common.inner.block )
+
+## Document Title: <title> #
+
+	title.elem =
+		element title { title.inner & title.attrs }
+	title.attrs =
+		( empty )
+	title.inner =
+		( text )
+
+## Inline Character Encoding Statement for HTML #
+
+	meta.elem.encoding = (HTMLonly &
+		element meta { empty & meta.attrs.encoding })
+	meta.attrs.encoding =
+		(	attribute http-equiv {
+				"Content-Type"
+			}
+		&
+			attribute content {
+				xsd:token {
+					pattern = "text/html; charset=[\x{21}-\x{7E}]{1,40}"
+					#                             printable ASCII
+				}
+			}
+		)
+
+## Base URI: <base>
+
+	base.elem = (HTMLonly &
+		element base { base.inner & base.attrs })
+	base.attrs =
+		(	common.attrs
+		&	base.attrs.href? )
+	base.attrs.href =
+		attribute href {
+			common.data.uri
+		}
+	base.inner =
+		( empty )
+
+## Global Relationships: <link>
+
+	link.elem =
+		element link { link.inner & link.attrs }
+	link.attrs =
+		(	common.attrs
+		&	link.attrs.href?
+		&	link.attrs.rel?
+		&	link.attrs.hreflang?
+		&	link.attrs.media?
+		&	link.attrs.type?
+		#	link.attrs.title included in common.attrs
+		)
+		link.attrs.href =
+			attribute href {
+				common.data.uri
+			}
+		link.attrs.rel =
+			attribute href {
+				common.data.tokens
+			}
+		link.attrs.hreflang =
+			attribute hreflang {
+				common.data.langcode
+			}
+		link.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
+		link.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	link.inner =
+		( empty )
+
+## Global Styles: <style>
+
+	style.elem =
+		element style { style.inner & style.attrs }
+	style.attrs =
+		(	common.attrs
+		&	style.attrs.type?
+		&	style.attrs.media?
+		#	style.attrs.title included in common.attrs
+		)
+		style.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+		style.attrs.media =
+			attribute type {
+				common.data.mediaquery
+			}
+	style.inner =
+		( common.inner.anything )
+
+script.elem = empty
+
+
+## Other Meta Data: <meta>
+
+	meta.elem =
+		element meta { meta.inner & meta.attrs }
+	meta.attrs =
+		(	common.attrs
+		&	meta.attrs.name?
+		&	meta.attrs.content?
+		)
+		meta.attrs.name =
+			attribute name {
+				string
+			}
+		meta.attrs.content =
+			attribute content {
+				string
+			}
+	meta.inner =
+		( empty )

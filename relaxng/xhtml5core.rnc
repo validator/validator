@@ -1,0 +1,24 @@
+#######################################################################
+# RelaxNG Schema for xHTML 5 Core                                     #
+#######################################################################
+
+  # (x)HTML 5 Core is, with a few minor and unimportant exceptions, #
+  # an intersection of WHATWG HTML 5 and W3C HTML 4                 #
+
+#######################################################################
+# Schema Framework & Parameters
+
+include "common.rng" {
+	# XHTML flavor #
+		XMLonly = empty
+		HTMLonly = notAllowed
+	# Scripting Allowed #
+		scriptable = empty
+}
+
+#######################################################################
+# Language Definitions
+
+include "meta.rng"
+#include "document.rng"
+#include "web-forms.rng"

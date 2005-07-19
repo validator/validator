@@ -1,0 +1,36 @@
+#######################################################################
+# RelaxNG Schema for HTML 5 Core                                      #
+#######################################################################
+
+  # (x)HTML 5 Core is, with a few minor and unimportant exceptions, #
+  # an intersection of WHATWG HTML 5 and W3C HTML 4                 #
+  
+  # HTML flavor RelaxNG schemas can only be used after the document #
+  # has been transformed to well-formed XHTML.                      #
+  #   - Insert closing slashes in all empty element tags            #
+  #   - Insert all optional start and end tags                      #
+  #   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
+  #   - Properly escape <script> and <style> CDATA                  #
+  #   - Parse and transform all HTML-only entities to numeric       #
+  #     character references                                        #
+  # Obviously, syntax-checking involving these features cannot be   #
+  # done by the RelaxNG schema and must be checked, along with the  #
+  # <!DOCTYPE> requirement, by some other application.              #
+
+#######################################################################
+# Schema Framework & Parameters
+
+include "common.rng" {
+	# XHTML flavor #
+		XMLonly = notAllowed
+		HTMLonly = empty
+	# Scripting Allowed #
+		scriptable = empty
+}
+
+#######################################################################
+# Language Definitions
+
+include "meta.rng"
+#include "document.rng"
+#include "web-forms.rng"

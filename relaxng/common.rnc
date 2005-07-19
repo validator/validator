@@ -1,0 +1,167 @@
+#######################################################################
+# RelaxNG Schema for HTML 5: Common Definitions                       #
+#######################################################################
+
+	default namespace = "http://www.w3.org/1999/xhtml"
+
+#######################################################################
+# Language Parameters                                                 #
+#######################################################################
+
+## Root Definition
+
+	start = html.elem
+
+## HTML vs. XHTML restrictions
+
+	XMLonly = empty
+	HTMLonly = notAllowed
+
+## Include Scripting
+
+	scriptable = empty
+
+#######################################################################
+# Wildcards                                                           #
+#######################################################################
+
+## Any attribute from any namespace
+
+	common.attr.anything =
+		attribute * { text }*
+
+## Any element from any namespace
+
+	common.elem.anything =
+		element * { common.inner.anything & common.attr.anything }
+
+## Any content from any namespace
+
+	common.inner.anything =
+		(	text
+		&	common.elem.anything*
+		)
+
+#######################################################################
+# Common Content Models                                               #
+#######################################################################
+
+## Strictly Inline Content
+
+	common.inner.inline =
+		( text )
+
+## Strictly Block Content
+
+	common.inner.block =
+		( empty )
+
+## Structured Inline Content
+
+	common.inner.structured-inline =
+		( empty )
+
+## Mixed Inline and Block Content
+
+	common.inner.mixed =
+		(	common.inner.inline
+		&	common.inner.block
+		)
+
+
+#######################################################################
+# Common Attributes                                                   #
+#######################################################################
+
+
+common.attrs =
+	(	common.attrs.basic
+	&	common.attrs.i18n
+	)
+
+common.attrs.basic =
+	(	common.attrs.id?
+	&	common.attrs.class?
+	&	common.attrs.title?
+	&	common.attrs.xmlbase?
+	)
+	common.attrs.id =
+		attribute id {
+			xsd:ID
+		}
+	common.attrs.class =
+		attribute class {
+			common.data.tokens
+		}
+	common.attrs.title =
+		attribute title {
+			text
+		}
+	common.attrs.xmlbase = (XMLonly &
+		attribute xml:base {
+			xsd:anyURI
+		})
+
+common.attrs.i18n =
+	(	common.attrs.dir?
+	&	common.attrs.language?
+	)
+	common.attrs.dir =
+		attribute dir {
+			"ltr" | "rtl"
+		}
+	common.attrs.language =
+		(	common.attrs.lang
+		|	common.attrs.xmllang
+		)
+	common.attrs.lang = (HTMLonly &
+		attribute lang {
+			common.data.langcode
+		})
+	common.attrs.xmllang = (XMLonly &
+		attribute xml:lang {
+			common.data.langcode
+		})
+
+#######################################################################
+# Common Datatypes                                                    #
+#######################################################################
+
+## Names and Tokens
+
+	common.data.tokens =
+		list { token* }
+
+## IDs and IDREFs
+
+	common.data.id =
+		xsd:ID
+
+	common.data.idref =
+		xsd:IDREF
+
+	common.data.idrefs =
+		xsd:IDREFS
+
+## IRIs
+
+	common.data.uri =
+		"" | xsd:anyURI
+
+	common.data.uris =
+		list { xsd:anyURI* }
+
+## MIME types
+
+	common.data.mimetype =
+		string #FIXME import regex later
+
+## Media Queries
+
+	common.data.mediaquery =
+		string #FIXME import regex later
+
+## Language Codes
+
+	common.data.langcode =
+		xsd:language
