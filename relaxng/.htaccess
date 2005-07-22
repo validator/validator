@@ -1,6 +1,6 @@
-AddDescription "RelaxNG Schema for HTML 5 Core (XML)" xhtml5core.rng
-AddDescription "RelaxNG Schema for HTML 5 Core (HTML)" html5core.rng
-AddDescription "RelaxNG Schema for HTML 5: Common Definitions" common.rng
-AddDescription "RelaxNG Schema for HTML 5: Global Structure & Meta Data" meta.rng
+AddDescription "RelaxNG Schema for HTML 5 Core (XML)" xhtml5core.rnc
+AddDescription "RelaxNG Schema for HTML 5 Core (HTML)" html5core.rnc
+AddDescription "RelaxNG Schema for HTML 5: Common Definitions" common.rnc
+AddDescription "RelaxNG Schema for HTML 5: Global Structure & Meta Data" meta.rnc
 AddDescription "Schema Testing Scripts and Instances" tests
 
