@@ -20,7 +20,7 @@
 #######################################################################
 # Schema Framework & Parameters
 
-include "common.rng" {
+include "common.rnc" {
 	# XHTML flavor #
 		XMLonly = notAllowed
 		HTMLonly = empty
@@ -31,6 +31,6 @@ include "common.rng" {
 #######################################################################
 # Language Definitions
 
-include "meta.rng"
-#include "document.rng"
-#include "web-forms.rng"
+include "meta.rnc"
+#include "document.rnc"
+#include "web-forms.rnc"
