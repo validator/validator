@@ -107,7 +107,7 @@
 				common.data.uri
 			}
 		link.attrs.rel =
-			attribute href {
+			attribute rel {
 				common.data.tokens
 			}
 		link.attrs.hreflang =
