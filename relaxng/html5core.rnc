@@ -39,5 +39,6 @@ include "meta.rnc"
 include "phrase.rnc" {
 	m.elem = empty
 }
+include "block.rnc"
 #include "document.rnc"
 #include "web-forms.rnc"
