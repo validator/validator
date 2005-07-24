@@ -1,6 +1,6 @@
 # #####################################################################
            default namespace = "http://www.w3.org/1999/xhtml"
-##  RelaxNG Schstronga for HTML 5: (Inline) Phrase Markup             #
+##  RelaxNG Schema for HTML 5: (Inline) Phrase Markup                 #
 # #####################################################################
 
 ## Contextual Hyperlink: <a>
@@ -42,8 +42,8 @@
 	a.inner.strict =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= a.elem
-	common.inner.strict-inline &= a.elem.strict
+	common.inner.struct-inline &= a.elem*
+	common.inner.strict-inline &= a.elem.strict*
 
 ## Emphatic Stress: <em>
 
@@ -66,10 +66,10 @@
 	em.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= em.elem
-	common.inner.struct-inline.static &= em.elem.static
-	common.inner.strict-inline &= em.elem.strict
-	common.inner.strict-inline.static &= em.elem.strict.static
+	common.inner.struct-inline &= em.elem*
+	common.inner.struct-inline.static &= em.elem.static*
+	common.inner.strict-inline &= em.elem.strict*
+	common.inner.strict-inline.static &= em.elem.strict.static*
 
 ## Strong Importance: <strong>
 
@@ -92,10 +92,10 @@
 	strong.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= strong.elem
-	common.inner.struct-inline.static &= strong.elem.static
-	common.inner.strict-inline &= strong.elem.strict
-	common.inner.strict-inline.static &= strong.elem.strict.static
+	common.inner.struct-inline &= strong.elem*
+	common.inner.struct-inline.static &= strong.elem.static*
+	common.inner.strict-inline &= strong.elem.strict*
+	common.inner.strict-inline.static &= strong.elem.strict.static*
 
 ## Small Print and Side Comments: <small>
 
@@ -118,10 +118,10 @@
 	small.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= small.elem
-	common.inner.struct-inline.static &= small.elem.static
-	common.inner.strict-inline &= small.elem.strict
-	common.inner.strict-inline.static &= small.elem.strict.static
+	common.inner.struct-inline &= small.elem*
+	common.inner.struct-inline.static &= small.elem.static*
+	common.inner.strict-inline &= small.elem.strict*
+	common.inner.strict-inline.static &= small.elem.strict.static*
 
 ## Marked (Highlighted) Text: <m>
 
@@ -144,10 +144,10 @@
 	m.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= m.elem
-	common.inner.struct-inline.static &= m.elem.static
-	common.inner.strict-inline &= m.elem.strict
-	common.inner.strict-inline.static &= m.elem.strict.static
+	common.inner.struct-inline &= m.elem*
+	common.inner.struct-inline.static &= m.elem.static*
+	common.inner.strict-inline &= m.elem.strict*
+	common.inner.strict-inline.static &= m.elem.strict.static*
 
 ## Abbreviation: <abbr>
 
@@ -164,10 +164,10 @@
 	abbr.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= abbr.elem
-	common.inner.struct-inline.static &= abbr.elem.static
-	common.inner.strict-inline &= abbr.elem
-	common.inner.strict-inline &= abbr.elem.static
+	common.inner.struct-inline &= abbr.elem*
+	common.inner.struct-inline.static &= abbr.elem.static*
+	common.inner.strict-inline &= abbr.elem*
+	common.inner.strict-inline &= abbr.elem.static*
 
 ## Defining Instance: <dfn>
 
@@ -184,10 +184,10 @@
 	dfn.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= dfn.elem
-	common.inner.struct-inline.static &= dfn.elem.static
-	common.inner.strict-inline &= dfn.elem
-	common.inner.strict-inline &= dfn.elem.static
+	common.inner.struct-inline &= dfn.elem*
+	common.inner.struct-inline.static &= dfn.elem.static*
+	common.inner.strict-inline &= dfn.elem*
+	common.inner.strict-inline &= dfn.elem.static*
 
 ## Instance of Term: <i>
 
@@ -202,10 +202,10 @@
 	i.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= i.elem
-	common.inner.struct-inline.static &= i.elem.static
-	common.inner.strict-inline &= i.elem
-	common.inner.strict-inline &= i.elem.static
+	common.inner.struct-inline &= i.elem*
+	common.inner.struct-inline.static &= i.elem.static*
+	common.inner.strict-inline &= i.elem*
+	common.inner.strict-inline &= i.elem.static*
 
 ## Code Fragment: <code>
 
@@ -220,10 +220,10 @@
 	code.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= code.elem
-	common.inner.struct-inline.static &= code.elem.static
-	common.inner.strict-inline &= code.elem
-	common.inner.strict-inline &= code.elem.static
+	common.inner.struct-inline &= code.elem*
+	common.inner.struct-inline.static &= code.elem.static*
+	common.inner.strict-inline &= code.elem*
+	common.inner.strict-inline &= code.elem.static*
 
 ## Variable or Placeholder: <var>
 
@@ -238,10 +238,10 @@
 	var.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= var.elem
-	common.inner.struct-inline.static &= var.elem.static
-	common.inner.strict-inline &= var.elem
-	common.inner.strict-inline &= var.elem.static
+	common.inner.struct-inline &= var.elem*
+	common.inner.struct-inline.static &= var.elem.static*
+	common.inner.strict-inline &= var.elem*
+	common.inner.strict-inline &= var.elem.static*
 
 ## (Sample) Output: <samp>
 
@@ -264,10 +264,10 @@
 	samp.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= samp.elem
-	common.inner.struct-inline.static &= samp.elem.static
-	common.inner.strict-inline &= samp.elem.strict
-	common.inner.strict-inline.static &= samp.elem.strict.static
+	common.inner.struct-inline &= samp.elem*
+	common.inner.struct-inline.static &= samp.elem.static*
+	common.inner.strict-inline &= samp.elem.strict*
+	common.inner.strict-inline.static &= samp.elem.strict.static*
 
 ## User Input: <kbd>
 
@@ -290,10 +290,10 @@
 	kbd.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= kbd.elem
-	common.inner.struct-inline.static &= kbd.elem.static
-	common.inner.strict-inline &= kbd.elem.strict
-	common.inner.strict-inline.static &= kbd.elem.strict.static
+	common.inner.struct-inline &= kbd.elem*
+	common.inner.struct-inline.static &= kbd.elem.static*
+	common.inner.strict-inline &= kbd.elem.strict*
+	common.inner.strict-inline.static &= kbd.elem.strict.static*
 
 ## Superscript: <sup>
 
@@ -316,10 +316,10 @@
 	sup.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= sup.elem
-	common.inner.struct-inline.static &= sup.elem.static
-	common.inner.strict-inline &= sup.elem.strict
-	common.inner.strict-inline.static &= sup.elem.strict.static
+	common.inner.struct-inline &= sup.elem*
+	common.inner.struct-inline.static &= sup.elem.static*
+	common.inner.strict-inline &= sup.elem.strict*
+	common.inner.strict-inline.static &= sup.elem.strict.static*
 
 ## Subscript: <sub>
 
@@ -342,10 +342,10 @@
 	sub.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= sub.elem
-	common.inner.struct-inline.static &= sub.elem.static
-	common.inner.strict-inline &= sub.elem.strict
-	common.inner.strict-inline.static &= sub.elem.strict.static
+	common.inner.struct-inline &= sub.elem*
+	common.inner.struct-inline.static &= sub.elem.static*
+	common.inner.strict-inline &= sub.elem.strict*
+	common.inner.strict-inline.static &= sub.elem.strict.static*
 
 ## Quotation: <q>
 
@@ -374,10 +374,10 @@
 	q.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= q.elem
-	common.inner.struct-inline.static &= q.elem.static
-	common.inner.strict-inline &= q.elem.strict
-	common.inner.strict-inline.static &= q.elem.strict.static
+	common.inner.struct-inline &= q.elem*
+	common.inner.struct-inline.static &= q.elem.static*
+	common.inner.strict-inline &= q.elem.strict*
+	common.inner.strict-inline.static &= q.elem.strict.static*
 
 ## Source Citation: <cite>
 
@@ -400,10 +400,10 @@
 	cite.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= cite.elem
-	common.inner.struct-inline.static &= cite.elem.static
-	common.inner.strict-inline &= cite.elem.strict
-	common.inner.strict-inline.static &= cite.elem.strict.static
+	common.inner.struct-inline &= cite.elem*
+	common.inner.struct-inline.static &= cite.elem.static*
+	common.inner.strict-inline &= cite.elem.strict*
+	common.inner.strict-inline.static &= cite.elem.strict.static*
 
 ## Generic Span: <span>
 
@@ -426,10 +426,10 @@
 	span.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= span.elem
-	common.inner.struct-inline.static &= span.elem.static
-	common.inner.strict-inline &= span.elem.strict
-	common.inner.strict-inline.static &= span.elem.strict.static
+	common.inner.struct-inline &= span.elem*
+	common.inner.struct-inline.static &= span.elem.static*
+	common.inner.strict-inline &= span.elem.strict*
+	common.inner.strict-inline.static &= span.elem.strict.static*
 
 ## Bidirectional Override: <bdo>
 
@@ -452,10 +452,10 @@
 	bdo.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= bdo.elem
-	common.inner.struct-inline.static &= bdo.elem.static
-	common.inner.strict-inline &= bdo.elem.strict
-	common.inner.strict-inline.static &= bdo.elem.strict.static
+	common.inner.struct-inline &= bdo.elem*
+	common.inner.struct-inline.static &= bdo.elem.static*
+	common.inner.strict-inline &= bdo.elem.strict*
+	common.inner.strict-inline.static &= bdo.elem.strict.static*
 
 ## Line Break: <br>
 
@@ -466,7 +466,7 @@
 	br.inner =
 		( common.inner.struct-inline )
 
-	common.inner.struct-inline &= br.elem
-	common.inner.struct-inline.static &= br.elem
-	common.inner.strict-inline &= br.elem
-	common.inner.strict-inline.static &= br.elem
+	common.inner.struct-inline &= br.elem*
+	common.inner.struct-inline.static &= br.elem*
+	common.inner.strict-inline &= br.elem*
+	common.inner.strict-inline.static &= br.elem*
