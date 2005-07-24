@@ -179,4 +179,4 @@ common.attrs.i18n =
 ## Language Codes
 
 	common.data.langcode =
-		xsd:language
+		xsd:language #FIXME import refined datatype later, XSD is way too coarse
