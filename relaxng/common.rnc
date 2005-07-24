@@ -1,12 +1,13 @@
-#######################################################################
-# RelaxNG Schema for HTML 5: Common Definitions                       #
-#######################################################################
+# #####################################################################
+           default namespace = "http://www.w3.org/1999/xhtml"
+##  RelaxNG Schema for HTML 5: Common Definitions                     #
+# #####################################################################
 
-	default namespace = "http://www.w3.org/1999/xhtml"
 
-#######################################################################
-# Language Parameters                                                 #
-#######################################################################
+
+# #####################################################################
+## Language Parameters                                                #
+# #####################################################################
 
 ## Root Definition
 
@@ -48,7 +49,10 @@
 
 ## Strictly Inline Content
 
-	common.inner.inline =
+	common.inner.strict-inline =
+		( text )
+
+	common.inner.strict-inline.static =
 		( text )
 
 ## Strictly Block Content
@@ -56,16 +60,27 @@
 	common.inner.block =
 		( empty )
 
+	common.inner.block.static =
+		( empty )
+
 ## Structured Inline Content
 
-	common.inner.structured-inline =
+	common.inner.struct-inline =
+		( empty )
+
+	common.inner.struct-inline.static =
 		( empty )
 
 ## Mixed Inline and Block Content
 
 	common.inner.mixed =
-		(	common.inner.inline
+		(	common.inner.strict-inline
 		&	common.inner.block
+		)
+
+	common.inner.mixed.static =
+		(	common.inner.strict-inline.static
+		&	common.inner.block.static
 		)
 
 

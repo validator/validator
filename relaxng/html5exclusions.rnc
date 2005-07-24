@@ -1,0 +1,53 @@
+# #####################################################################
+           default namespace = "http://www.w3.org/1999/xhtml"
+##  RelaxNG Schema for (x)HTML 5: Exclusions                          #
+# #####################################################################
+
+  ## This is a SEPARATE Relax NG Schema that only enforces exclusion
+  ## rules. To validate a document, you must first validate against
+  ## the appropriate full schema, then validate against these additional
+  ## restrictions.
+
+# #####################################################################
+## Schema Framework & Parameters
+
+	start = normal.elem.all-inclusive
+
+# #####################################################################
+##  Normal Element Patterns
+
+## Any attribute from any namespace
+
+	normal.attr.anything =
+		attribute * { text }*
+
+## Any element from any namespace except exceptional elements,
+## but allowing those elements as descendants
+
+	normal.elem.all =
+		element * - (dfn) {
+			normal.elem.all-inclusive
+		}
+
+## Any element from any namespace including exceptional elements
+
+	normal.elem.all-inclusive =
+		wildcard.elem.exclude-all | dfn.elem.exclude-self
+
+
+# #####################################################################
+##  Exclusion Element Patterns
+
+  # exclude all exceptional elements from the name classes;
+  # list them explicitly in content models instead
+
+normal.elem.exclude-dfn =
+	element * - (dfn) {
+		normal.elem.exclude-dfn
+	}
+
+dfn.elem.exclude-self =
+	element dfn {
+		(	normal.attr.anything
+		&	normal.elem.exclude-dfn
+		)

@@ -1,8 +1,7 @@
-#######################################################################
-# RelaxNG Schema for HTML 5: Global Structure & Meta Data             #
-#######################################################################
-
-	default namespace = "http://www.w3.org/1999/xhtml"
+# #####################################################################
+           default namespace = "http://www.w3.org/1999/xhtml"
+##  RelaxNG Schema for HTML 5: Global Structure & Meta Data           #
+# #####################################################################
 
 ## Root Element: <html>
 
@@ -15,7 +14,7 @@
 		,	body.elem
 		)
 
-## Meta Data Container: <head> #
+## Meta Data Container: <head>
 
 	head.elem =
 		element head { head.inner & head.attrs }
@@ -41,7 +40,7 @@
 			|	script.elem
 			)
 
-## Content Container: <body> #
+## Content Container: <body>
 
 	body.elem =
 		element body { body.inner & body.attrs }
@@ -50,7 +49,7 @@
 	body.inner =
 		( common.inner.block )
 
-## Document Title: <title> #
+## Document Title: <title>
 
 	title.elem =
 		element title { title.inner & title.attrs }
@@ -59,7 +58,7 @@
 	title.inner =
 		( text )
 
-## Inline Character Encoding Statement for HTML #
+## Inline Character Encoding Statement for HTML
 
 	meta.elem.encoding = (HTMLonly &
 		element meta { empty & meta.attrs.encoding })
@@ -126,7 +125,7 @@
 	link.inner =
 		( empty )
 
-## Global Styles: <style>
+## Global Style: <style>
 
 	style.elem =
 		element style { style.inner & style.attrs }

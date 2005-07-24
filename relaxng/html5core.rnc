@@ -1,24 +1,28 @@
-#######################################################################
-# RelaxNG Schema for HTML 5 Core                                      #
-#######################################################################
+# #####################################################################
+##  RelaxNG Schema for HTML 5 Core                                    #
+# #####################################################################
 
-  # (x)HTML 5 Core is, with a few minor and unimportant exceptions, #
-  # an intersection of WHATWG HTML 5 and W3C HTML 4                 #
+  ## (x)HTML 5 Core is an intersection of WHATWG HTML 5 and W3C      #
+  ## HTML 4 in that it does not include any new features not found   #
+  ## in HTML 4.                                                      #
+
+  ## To validate an HTML 5 document, you must first validate against #
+  ## this schema and then ALSO validate against exclusions.rnc       #
   
-  # HTML flavor RelaxNG schemas can only be used after the document #
-  # has been transformed to well-formed XHTML.                      #
-  #   - Insert closing slashes in all empty element tags            #
-  #   - Insert all optional start and end tags                      #
-  #   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
-  #   - Properly escape <script> and <style> CDATA                  #
-  #   - Parse and transform all HTML-only entities to numeric       #
-  #     character references                                        #
-  # Obviously, syntax-checking involving these features cannot be   #
-  # done by the RelaxNG schema and must be checked, along with the  #
-  # <!DOCTYPE> requirement, by some other application.              #
+  ## HTML flavor RelaxNG schemas can only be used after the document #
+  ## has been transformed to well-formed XHTML.                      #
+  ##   - Insert closing slashes in all empty element tags            #
+  ##   - Insert all optional start and end tags                      #
+  ##   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
+  ##   - Properly escape <script> and <style> CDATA                  #
+  ##   - Parse and transform all HTML-only entities to numeric       #
+  ##     character references                                        #
+  ## Obviously, syntax-checking involving these features cannot be   #
+  ## done by the RelaxNG schema and must be checked, along with the  #
+  ## <!DOCTYPE> requirement, by some other application.              #
 
-#######################################################################
-# Schema Framework & Parameters
+# #####################################################################
+## Schema Framework & Parameters
 
 include "common.rnc" {
 	# XHTML flavor #
@@ -28,9 +32,12 @@ include "common.rnc" {
 		scriptable = empty
 }
 
-#######################################################################
-# Language Definitions
+# #####################################################################
+## Language Definitions
 
 include "meta.rnc"
+include "phrase.rnc" {
+	m.elem = empty
+}
 #include "document.rnc"
 #include "web-forms.rnc"

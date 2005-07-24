@@ -1,0 +1,472 @@
+# #####################################################################
+           default namespace = "http://www.w3.org/1999/xhtml"
+##  RelaxNG Schstronga for HTML 5: (Inline) Phrase Markup             #
+# #####################################################################
+
+## Contextual Hyperlink: <a>
+
+	a.elem =
+		element a { a.inner & a.attrs }
+	a.elem.strict =
+		element a { a.inner.strict & a.attrs }
+	a.attrs =
+		(	common.attrs
+		&	a.attrs.href?
+		&	a.attrs.rel?
+		&	a.attrs.hreflang?
+		&	a.attrs.media?
+		&	a.attrs.type?
+		)
+		a.attrs.href =
+			attribute href {
+				common.data.uri
+			}
+		a.attrs.rel =
+			attribute href {
+				common.data.tokens
+			}
+		a.attrs.hreflang =
+			attribute hreflang {
+				common.data.langcode
+			}
+		a.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
+		a.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	a.inner =
+		( common.inner.struct-inline.static )
+	a.inner.strict =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= a.elem
+	common.inner.strict-inline &= a.elem.strict
+
+## Emphatic Stress: <em>
+
+	em.elem =
+		element em { em.inner & em.attrs }
+	em.elem.static =
+		element em { em.inner.static & em.attrs }
+	em.elem.strict =
+		element em { em.inner.strict & em.attrs }
+	em.elem.strict.static =
+		element em { em.inner.strict.static & em.attrs }
+	em.attrs =
+		( common.attrs )
+	em.inner =
+		( common.inner.struct-inline )
+	em.inner.static =
+		( common.inner.struct-inline.static )
+	em.inner.strict =
+		( common.inner.strict-inline )
+	em.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= em.elem
+	common.inner.struct-inline.static &= em.elem.static
+	common.inner.strict-inline &= em.elem.strict
+	common.inner.strict-inline.static &= em.elem.strict.static
+
+## Strong Importance: <strong>
+
+	strong.elem =
+		element strong { strong.inner & strong.attrs }
+	strong.elem.static =
+		element strong { strong.inner.static & strong.attrs }
+	strong.elem.strict =
+		element strong { strong.inner.strict & strong.attrs }
+	strong.elem.strict.static =
+		element strong { strong.inner.strict.static & strong.attrs }
+	strong.attrs =
+		( common.attrs )
+	strong.inner =
+		( common.inner.struct-inline )
+	strong.inner.static =
+		( common.inner.struct-inline.static )
+	strong.inner.strict =
+		( common.inner.strict-inline )
+	strong.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= strong.elem
+	common.inner.struct-inline.static &= strong.elem.static
+	common.inner.strict-inline &= strong.elem.strict
+	common.inner.strict-inline.static &= strong.elem.strict.static
+
+## Small Print and Side Comments: <small>
+
+	small.elem =
+		element small { small.inner & small.attrs }
+	small.elem.static =
+		element small { small.inner.static & small.attrs }
+	small.elem.strict =
+		element small { small.inner.strict & small.attrs }
+	small.elem.strict.static =
+		element small { small.inner.strict.static & small.attrs }
+	small.attrs =
+		( common.attrs )
+	small.inner =
+		( common.inner.struct-inline )
+	small.inner.static =
+		( common.inner.struct-inline.static )
+	small.inner.strict =
+		( common.inner.strict-inline )
+	small.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= small.elem
+	common.inner.struct-inline.static &= small.elem.static
+	common.inner.strict-inline &= small.elem.strict
+	common.inner.strict-inline.static &= small.elem.strict.static
+
+## Marked (Highlighted) Text: <m>
+
+	m.elem =
+		element m { m.inner & m.attrs }
+	m.elem.static =
+		element m { m.inner.static & m.attrs }
+	m.elem.strict =
+		element m { m.inner.strict & m.attrs }
+	m.elem.strict.static =
+		element m { m.inner.strict.static & m.attrs }
+	m.attrs =
+		( common.attrs )
+	m.inner =
+		( common.inner.struct-inline )
+	m.inner.static =
+		( common.inner.struct-inline.static )
+	m.inner.strict =
+		( common.inner.strict-inline )
+	m.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= m.elem
+	common.inner.struct-inline.static &= m.elem.static
+	common.inner.strict-inline &= m.elem.strict
+	common.inner.strict-inline.static &= m.elem.strict.static
+
+## Abbreviation: <abbr>
+
+	abbr.elem =
+		element abbr { abbr.inner & abbr.attrs }
+	abbr.elem.static =
+		element abbr { abbr.inner.static & abbr.attrs }
+	abbr.attrs =
+		(	common.attrs
+		#	abbr.attrs.title included in common.attrs
+		)
+	abbr.inner =
+		( common.inner.strict-inline )
+	abbr.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= abbr.elem
+	common.inner.struct-inline.static &= abbr.elem.static
+	common.inner.strict-inline &= abbr.elem
+	common.inner.strict-inline &= abbr.elem.static
+
+## Defining Instance: <dfn>
+
+	dfn.elem =
+		element dfn { dfn.inner & dfn.attrs }
+	dfn.elem.static =
+		element dfn { dfn.inner.static & dfn.attrs }
+	dfn.attrs =
+		(	common.attrs
+		#	dfn.attrs.title included in common.attrs
+		)
+	dfn.inner =
+		( common.inner.strict-inline )
+	dfn.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= dfn.elem
+	common.inner.struct-inline.static &= dfn.elem.static
+	common.inner.strict-inline &= dfn.elem
+	common.inner.strict-inline &= dfn.elem.static
+
+## Instance of Term: <i>
+
+	i.elem =
+		element i { i.inner & i.attrs }
+	i.elem.static =
+		element i { i.inner.static & i.attrs }
+	i.attrs =
+		( common.attrs )
+	i.inner =
+		( common.inner.strict-inline )
+	i.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= i.elem
+	common.inner.struct-inline.static &= i.elem.static
+	common.inner.strict-inline &= i.elem
+	common.inner.strict-inline &= i.elem.static
+
+## Code Fragment: <code>
+
+	code.elem =
+		element code { code.inner & code.attrs }
+	code.elem.static =
+		element code { code.inner.static & code.attrs }
+	code.attrs =
+		( common.attrs )
+	code.inner =
+		( common.inner.strict-inline )
+	code.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= code.elem
+	common.inner.struct-inline.static &= code.elem.static
+	common.inner.strict-inline &= code.elem
+	common.inner.strict-inline &= code.elem.static
+
+## Variable or Placeholder: <var>
+
+	var.elem =
+		element var { var.inner & var.attrs }
+	var.elem.static =
+		element var { var.inner.static & var.attrs }
+	var.attrs =
+		( common.attrs )
+	var.inner =
+		( common.inner.strict-inline )
+	var.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= var.elem
+	common.inner.struct-inline.static &= var.elem.static
+	common.inner.strict-inline &= var.elem
+	common.inner.strict-inline &= var.elem.static
+
+## (Sample) Output: <samp>
+
+	samp.elem =
+		element samp { samp.inner & samp.attrs }
+	samp.elem.static =
+		element samp { samp.inner.static & samp.attrs }
+	samp.elem.strict =
+		element samp { samp.inner.strict & samp.attrs }
+	samp.elem.strict.static =
+		element samp { samp.inner.strict.static & samp.attrs }
+	samp.attrs =
+		( common.attrs )
+	samp.inner =
+		( common.inner.struct-inline )
+	samp.inner.static =
+		( common.inner.struct-inline.static )
+	samp.inner.strict =
+		( common.inner.strict-inline )
+	samp.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= samp.elem
+	common.inner.struct-inline.static &= samp.elem.static
+	common.inner.strict-inline &= samp.elem.strict
+	common.inner.strict-inline.static &= samp.elem.strict.static
+
+## User Input: <kbd>
+
+	kbd.elem =
+		element kbd { kbd.inner & kbd.attrs }
+	kbd.elem.static =
+		element kbd { kbd.inner.static & kbd.attrs }
+	kbd.elem.strict =
+		element kbd { kbd.inner.strict & kbd.attrs }
+	kbd.elem.strict.static =
+		element kbd { kbd.inner.strict.static & kbd.attrs }
+	kbd.attrs =
+		( common.attrs )
+	kbd.inner =
+		( common.inner.struct-inline )
+	kbd.inner.static =
+		( common.inner.struct-inline.static )
+	kbd.inner.strict =
+		( common.inner.strict-inline )
+	kbd.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= kbd.elem
+	common.inner.struct-inline.static &= kbd.elem.static
+	common.inner.strict-inline &= kbd.elem.strict
+	common.inner.strict-inline.static &= kbd.elem.strict.static
+
+## Superscript: <sup>
+
+	sup.elem =
+		element sup { sup.inner & sup.attrs }
+	sup.elem.static =
+		element sup { sup.inner.static & sup.attrs }
+	sup.elem.strict =
+		element sup { sup.inner.strict & sup.attrs }
+	sup.elem.strict.static =
+		element sup { sup.inner.strict.static & sup.attrs }
+	sup.attrs =
+		( common.attrs )
+	sup.inner =
+		( common.inner.struct-inline )
+	sup.inner.static =
+		( common.inner.struct-inline.static )
+	sup.inner.strict =
+		( common.inner.strict-inline )
+	sup.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= sup.elem
+	common.inner.struct-inline.static &= sup.elem.static
+	common.inner.strict-inline &= sup.elem.strict
+	common.inner.strict-inline.static &= sup.elem.strict.static
+
+## Subscript: <sub>
+
+	sub.elem =
+		element sub { sub.inner & sub.attrs }
+	sub.elem.static =
+		element sub { sub.inner.static & sub.attrs }
+	sub.elem.strict =
+		element sub { sub.inner.strict & sub.attrs }
+	sub.elem.strict.static =
+		element sub { sub.inner.strict.static & sub.attrs }
+	sub.attrs =
+		( common.attrs )
+	sub.inner =
+		( common.inner.struct-inline )
+	sub.inner.static =
+		( common.inner.struct-inline.static )
+	sub.inner.strict =
+		( common.inner.strict-inline )
+	sub.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= sub.elem
+	common.inner.struct-inline.static &= sub.elem.static
+	common.inner.strict-inline &= sub.elem.strict
+	common.inner.strict-inline.static &= sub.elem.strict.static
+
+## Quotation: <q>
+
+	q.elem =
+		element q { q.inner & q.attrs }
+	q.elem.static =
+		element q { q.inner.static & q.attrs }
+	q.elem.strict =
+		element q { q.inner.strict & q.attrs }
+	q.elem.strict.static =
+		element q { q.inner.strict.static & q.attrs }
+	q.attrs =
+		(	common.attrs
+		&	q.attrs.cite
+		)
+		q.attrs.cite =
+			attribute cite {
+				common.data.uri
+			}
+	q.inner =
+		( common.inner.struct-inline )
+	q.inner.static =
+		( common.inner.struct-inline.static )
+	q.inner.strict =
+		( common.inner.strict-inline )
+	q.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= q.elem
+	common.inner.struct-inline.static &= q.elem.static
+	common.inner.strict-inline &= q.elem.strict
+	common.inner.strict-inline.static &= q.elem.strict.static
+
+## Source Citation: <cite>
+
+	cite.elem =
+		element cite { cite.inner & cite.attrs }
+	cite.elem.static =
+		element cite { cite.inner.static & cite.attrs }
+	cite.elem.strict =
+		element cite { cite.inner.strict & cite.attrs }
+	cite.elem.strict.static =
+		element cite { cite.inner.strict.static & cite.attrs }
+	cite.attrs =
+		( common.attrs )
+	cite.inner =
+		( common.inner.struct-inline )
+	cite.inner.static =
+		( common.inner.struct-inline.static )
+	cite.inner.strict =
+		( common.inner.strict-inline )
+	cite.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= cite.elem
+	common.inner.struct-inline.static &= cite.elem.static
+	common.inner.strict-inline &= cite.elem.strict
+	common.inner.strict-inline.static &= cite.elem.strict.static
+
+## Generic Span: <span>
+
+	span.elem =
+		element span { span.inner & span.attrs }
+	span.elem.static =
+		element span { span.inner.static & span.attrs }
+	span.elem.strict =
+		element span { span.inner.strict & span.attrs }
+	span.elem.strict.static =
+		element span { span.inner.strict.static & span.attrs }
+	span.attrs =
+		( common.attrs )
+	span.inner =
+		( common.inner.struct-inline )
+	span.inner.static =
+		( common.inner.struct-inline.static )
+	span.inner.strict =
+		( common.inner.strict-inline )
+	span.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= span.elem
+	common.inner.struct-inline.static &= span.elem.static
+	common.inner.strict-inline &= span.elem.strict
+	common.inner.strict-inline.static &= span.elem.strict.static
+
+## Bidirectional Override: <bdo>
+
+	bdo.elem =
+		element bdo { bdo.inner & bdo.attrs }
+	bdo.elem.static =
+		element bdo { bdo.inner.static & bdo.attrs }
+	bdo.elem.strict =
+		element bdo { bdo.inner.strict & bdo.attrs }
+	bdo.elem.strict.static =
+		element bdo { bdo.inner.strict.static & bdo.attrs }
+	bdo.attrs =
+		( common.attrs )
+	bdo.inner =
+		( common.inner.struct-inline )
+	bdo.inner.static =
+		( common.inner.struct-inline.static )
+	bdo.inner.strict =
+		( common.inner.strict-inline )
+	bdo.inner.strict.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= bdo.elem
+	common.inner.struct-inline.static &= bdo.elem.static
+	common.inner.strict-inline &= bdo.elem.strict
+	common.inner.strict-inline.static &= bdo.elem.strict.static
+
+## Line Break: <br>
+
+	br.elem =
+		element br { br.inner & br.attrs }
+	br.attrs =
+		( common.attrs )
+	br.inner =
+		( common.inner.struct-inline )
+
+	common.inner.struct-inline &= br.elem
+	common.inner.struct-inline.static &= br.elem
+	common.inner.strict-inline &= br.elem
+	common.inner.strict-inline.static &= br.elem
