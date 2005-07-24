@@ -1,0 +1,20 @@
+# #####################################################################
+           default namespace = "http://www.w3.org/1999/xhtml"
+##  RelaxNG Schema for HTML 5: (Basic) Block Markup                   #
+# #####################################################################
+
+## Paragraph: <p>
+
+	p.elem =
+		element p { p.inner & p.attrs }
+	p.elem.static =
+		element p { p.inner.static & p.attrs }
+	p.attrs =
+		( common.attrs )
+	p.inner =
+		( common.inner.struct-inline )
+	p.inner.static =
+		( common.inner.struct-inline.static )
+
+	common.inner.block &= p.elem*
+	common.inner.block.static &= p.elem.static*
