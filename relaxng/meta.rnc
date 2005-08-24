@@ -37,7 +37,6 @@
 			(	meta.elem
 			|	link.elem
 			|	style.elem
-			|	script.elem
 			)
 
 ## Content Container: <body>
@@ -145,9 +144,6 @@
 			}
 	style.inner =
 		( common.inner.anything )
-
-script.elem = empty
-
 
 ## Other Meta Data: <meta>
 

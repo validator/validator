@@ -2,9 +2,8 @@
 ##  RelaxNG Schema for HTML 5 Core                                    #
 # #####################################################################
 
-  ## (x)HTML 5 Core is an intersection of WHATWG HTML 5 and W3C      #
-  ## HTML 4 in that it does not include any new features not found   #
-  ## in HTML 4.                                                      #
+  # (x)HTML 5 Core is WHATWG HTML 5 without web forms and restricted #
+  # to only include markup features also found in W3C HTML 4.        #
 
   ## To validate an HTML 5 document, you must first validate against #
   ## this schema and then ALSO validate against exclusions.rnc       #

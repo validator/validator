@@ -167,7 +167,7 @@
 	common.inner.struct-inline &= abbr.elem*
 	common.inner.struct-inline.static &= abbr.elem.static*
 	common.inner.strict-inline &= abbr.elem*
-	common.inner.strict-inline &= abbr.elem.static*
+	common.inner.strict-inline.static &= abbr.elem.static*
 
 ## Defining Instance: <dfn>
 
@@ -187,7 +187,7 @@
 	common.inner.struct-inline &= dfn.elem*
 	common.inner.struct-inline.static &= dfn.elem.static*
 	common.inner.strict-inline &= dfn.elem*
-	common.inner.strict-inline &= dfn.elem.static*
+	common.inner.strict-inline.static &= dfn.elem.static*
 
 ## Instance of Term: <i>
 
@@ -205,7 +205,7 @@
 	common.inner.struct-inline &= i.elem*
 	common.inner.struct-inline.static &= i.elem.static*
 	common.inner.strict-inline &= i.elem*
-	common.inner.strict-inline &= i.elem.static*
+	common.inner.strict-inline.static &= i.elem.static*
 
 ## Code Fragment: <code>
 
@@ -213,17 +213,25 @@
 		element code { code.inner & code.attrs }
 	code.elem.static =
 		element code { code.inner.static & code.attrs }
+	code.elem.strict =
+		element code { code.inner.strict & code.attrs }
+	code.elem.strict.static =
+		element code { code.inner.strict.static & code.attrs }
 	code.attrs =
 		( common.attrs )
 	code.inner =
-		( common.inner.strict-inline )
+		( common.inner.struct-inline )
 	code.inner.static =
+		( common.inner.struct-inline.static )
+	code.inner.strict =
+		( common.inner.strict-inline )
+	code.inner.strict.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= code.elem*
 	common.inner.struct-inline.static &= code.elem.static*
-	common.inner.strict-inline &= code.elem*
-	common.inner.strict-inline &= code.elem.static*
+	common.inner.strict-inline &= code.elem.strict*
+	common.inner.strict-inline.static &= code.elem.strict.static*
 
 ## Variable or Placeholder: <var>
 
@@ -241,7 +249,7 @@
 	common.inner.struct-inline &= var.elem*
 	common.inner.struct-inline.static &= var.elem.static*
 	common.inner.strict-inline &= var.elem*
-	common.inner.strict-inline &= var.elem.static*
+	common.inner.strict-inline.static &= var.elem.static*
 
 ## (Sample) Output: <samp>
 
@@ -275,25 +283,17 @@
 		element kbd { kbd.inner & kbd.attrs }
 	kbd.elem.static =
 		element kbd { kbd.inner.static & kbd.attrs }
-	kbd.elem.strict =
-		element kbd { kbd.inner.strict & kbd.attrs }
-	kbd.elem.strict.static =
-		element kbd { kbd.inner.strict.static & kbd.attrs }
 	kbd.attrs =
 		( common.attrs )
 	kbd.inner =
-		( common.inner.struct-inline )
-	kbd.inner.static =
-		( common.inner.struct-inline.static )
-	kbd.inner.strict =
 		( common.inner.strict-inline )
-	kbd.inner.strict.static =
+	kbd.inner.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= kbd.elem*
 	common.inner.struct-inline.static &= kbd.elem.static*
-	common.inner.strict-inline &= kbd.elem.strict*
-	common.inner.strict-inline.static &= kbd.elem.strict.static*
+	common.inner.strict-inline &= kbd.elem*
+	common.inner.strict-inline.static &= kbd.elem.static*
 
 ## Superscript: <sup>
 
@@ -301,25 +301,17 @@
 		element sup { sup.inner & sup.attrs }
 	sup.elem.static =
 		element sup { sup.inner.static & sup.attrs }
-	sup.elem.strict =
-		element sup { sup.inner.strict & sup.attrs }
-	sup.elem.strict.static =
-		element sup { sup.inner.strict.static & sup.attrs }
 	sup.attrs =
 		( common.attrs )
 	sup.inner =
-		( common.inner.struct-inline )
-	sup.inner.static =
-		( common.inner.struct-inline.static )
-	sup.inner.strict =
 		( common.inner.strict-inline )
-	sup.inner.strict.static =
+	sup.inner.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= sup.elem*
 	common.inner.struct-inline.static &= sup.elem.static*
-	common.inner.strict-inline &= sup.elem.strict*
-	common.inner.strict-inline.static &= sup.elem.strict.static*
+	common.inner.strict-inline &= sup.elem*
+	common.inner.strict-inline.static &= sup.elem.static*
 
 ## Subscript: <sub>
 
@@ -327,25 +319,17 @@
 		element sub { sub.inner & sub.attrs }
 	sub.elem.static =
 		element sub { sub.inner.static & sub.attrs }
-	sub.elem.strict =
-		element sub { sub.inner.strict & sub.attrs }
-	sub.elem.strict.static =
-		element sub { sub.inner.strict.static & sub.attrs }
 	sub.attrs =
 		( common.attrs )
 	sub.inner =
-		( common.inner.struct-inline )
-	sub.inner.static =
-		( common.inner.struct-inline.static )
-	sub.inner.strict =
 		( common.inner.strict-inline )
-	sub.inner.strict.static =
+	sub.inner.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= sub.elem*
 	common.inner.struct-inline.static &= sub.elem.static*
-	common.inner.strict-inline &= sub.elem.strict*
-	common.inner.strict-inline.static &= sub.elem.strict.static*
+	common.inner.strict-inline &= sub.elem*
+	common.inner.strict-inline.static &= sub.elem.static*
 
 ## Quotation: <q>
 
@@ -359,7 +343,7 @@
 		element q { q.inner.strict.static & q.attrs }
 	q.attrs =
 		(	common.attrs
-		&	q.attrs.cite
+		&	q.attrs.cite?
 		)
 		q.attrs.cite =
 			attribute cite {
@@ -385,25 +369,17 @@
 		element cite { cite.inner & cite.attrs }
 	cite.elem.static =
 		element cite { cite.inner.static & cite.attrs }
-	cite.elem.strict =
-		element cite { cite.inner.strict & cite.attrs }
-	cite.elem.strict.static =
-		element cite { cite.inner.strict.static & cite.attrs }
 	cite.attrs =
 		( common.attrs )
 	cite.inner =
-		( common.inner.struct-inline )
-	cite.inner.static =
-		( common.inner.struct-inline.static )
-	cite.inner.strict =
 		( common.inner.strict-inline )
-	cite.inner.strict.static =
+	cite.inner.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= cite.elem*
 	common.inner.struct-inline.static &= cite.elem.static*
-	common.inner.strict-inline &= cite.elem.strict*
-	common.inner.strict-inline.static &= cite.elem.strict.static*
+	common.inner.strict-inline &= cite.elem*
+	common.inner.strict-inline.static &= cite.elem.static*
 
 ## Generic Span: <span>
 
@@ -437,25 +413,24 @@
 		element bdo { bdo.inner & bdo.attrs }
 	bdo.elem.static =
 		element bdo { bdo.inner.static & bdo.attrs }
-	bdo.elem.strict =
-		element bdo { bdo.inner.strict & bdo.attrs }
-	bdo.elem.strict.static =
-		element bdo { bdo.inner.strict.static & bdo.attrs }
 	bdo.attrs =
-		( common.attrs )
+		(	common.attrs.basic
+		& 	common.attrs.language?
+		&	bdo.attrs.dir # required
+		)
+		bdo.attrs.dir =
+			attribute dir {
+				"ltr" | "rtl"
+			}
 	bdo.inner =
-		( common.inner.struct-inline )
-	bdo.inner.static =
-		( common.inner.struct-inline.static )
-	bdo.inner.strict =
 		( common.inner.strict-inline )
-	bdo.inner.strict.static =
+	bdo.inner.static =
 		( common.inner.strict-inline.static )
 
 	common.inner.struct-inline &= bdo.elem*
 	common.inner.struct-inline.static &= bdo.elem.static*
-	common.inner.strict-inline &= bdo.elem.strict*
-	common.inner.strict-inline.static &= bdo.elem.strict.static*
+	common.inner.strict-inline &= bdo.elem*
+	common.inner.strict-inline.static &= bdo.elem.static*
 
 ## Line Break: <br>
 
@@ -464,7 +439,7 @@
 	br.attrs =
 		( common.attrs )
 	br.inner =
-		( common.inner.struct-inline )
+		( empty )
 
 	common.inner.struct-inline &= br.elem*
 	common.inner.struct-inline.static &= br.elem*

@@ -3,6 +3,9 @@
 ##  RelaxNG Schema for HTML 5: (Basic) Block Markup                   #
 # #####################################################################
 
+# #####################################################################
+## Paragraph-Level
+
 ## Paragraph: <p>
 
 	p.elem =
@@ -18,3 +21,244 @@
 
 	common.inner.block &= p.elem*
 	common.inner.block.static &= p.elem.static*
+
+## Hint Transition: <hr>
+
+	hr.elem =
+		element hr { hr.inner & hr.attrs }
+	hr.attrs =
+		( common.attrs )
+	hr.inner =
+		( empty )
+
+	common.inner.block &= hr.elem*
+	common.inner.block.static &= hr.elem*
+
+# #####################################################################
+## Variable Level Blocks
+
+## Preformatted Text: <pre>
+
+	pre.elem =
+		element pre { pre.inner & pre.attrs }
+	pre.elem.static =
+		element pre { pre.inner.static & pre.attrs }
+	pre.attrs =
+		( common.attrs )
+	pre.inner =
+		( common.inner.strict-inline )
+	pre.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.block &= pre.elem*
+	common.inner.block.static &= pre.elem.static*
+	common.inner.struct-inline &= pre.elem*
+	common.inner.struct-inline.static &= pre.elem.static*
+
+## Block Quotes: <blockquote>
+
+	blockquote.elem =
+		element blockquote { blockquote.inner & blockquote.attrs }
+	blockquote.elem.static =
+		element blockquote { blockquote.inner.static & blockquote.attrs }
+	blockquote.attrs =
+		(	common.attrs
+		&	blockquote.attrs.cite?
+		)
+		blockquote.attrs.cite =
+			attribute cite {
+				common.data.uri
+			}
+	blockquote.inner =
+		( common.inner.block )
+	blockquote.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= blockquote.elem*
+	common.inner.block.static &= blockquote.elem.static*
+	common.inner.struct-inline &= blockquote.elem*
+	common.inner.struct-inline.static &= blockquote.elem.static*
+
+# #####################################################################
+## Simple Lists
+
+## Unordered List: <ul>
+
+	ul.elem =
+		element ul { ul.inner & ul.attrs }
+	ul.elem.static =
+		element ul { ul.inner.static & ul.attrs }
+	ul.elem.inline =
+		element ul { ul.inner.inline & ul.attrs }
+	ul.elem.inline.static =
+		element ul { ul.inner.inline.static & ul.attrs }
+	ul.attrs =
+		( common.attrs )
+	ul.inner =
+		( li.elem* )
+	ul.inner.static =
+		( li.elem.static* )
+	ul.inner.inline =
+		( li.elem.inline* )
+	ul.inner.inline.static =
+		( li.elem.inline.static* )
+
+	common.inner.block &= ul.elem*
+	common.inner.block.static &= ul.elem.static*
+	common.inner.struct-inline &= ul.elem.inline*
+	common.inner.struct-inline.static &= ul.elem.inline.static*
+
+## Unordered List Item: <li>
+
+	li.elem =
+		element li { li.inner & li.attrs }
+	li.elem.static =
+		element li { li.inner.static & li.attrs }
+	li.elem.inline =
+		element li { li.inner.inline & li.attrs }
+	li.elem.inline.static =
+		element li { li.inner.inline.static & li.attrs }
+	li.attrs =
+		( common.attrs )
+	li.inner =
+		( common.inner.bimorphic* )
+	li.inner.static =
+		( common.inner.bimorphic.static* )
+	li.inner.inline =
+		( common.inner.struct-inline* )
+	li.inner.inline.static =
+		( common.inner.struct-inline.static* )
+
+## Ordered List: <ol>
+
+	ol.elem =
+		element ol { ol.inner & ol.attrs }
+	ol.elem.static =
+		element ol { ol.inner.static & ol.attrs }
+	ol.elem.inline =
+		element ol { ol.inner.inline & ol.attrs }
+	ol.elem.inline.static =
+		element ol { ol.inner.inline.static & ol.attrs }
+	ol.attrs =
+		(	common.attrs
+		&	ol.attrs.start
+		)
+		ol.attrs.start =
+			attribute start {
+				common.data.integer
+			}
+	ol.inner =
+		( oli.elem* )
+	ol.inner.static =
+		( oli.elem.static* )
+	ol.inner.inline =
+		( oli.elem.inline* )
+	ol.inner.inline.static =
+		( oli.elem.inline.static* )
+
+	common.inner.block &= ol.elem*
+	common.inner.block.static &= ol.elem.static*
+	common.inner.struct-inline &= ol.elem.inline*
+	common.inner.struct-inline.static &= ol.elem.inline.static*
+
+## Ordered List Item: <li>
+
+	oli.elem =
+		element li { oli.inner & oli.attrs }
+	oli.elem.static =
+		element li { oli.inner.static & oli.attrs }
+	oli.elem.inline =
+		element li { oli.inner.inline & oli.attrs }
+	oli.elem.inline.static =
+		element li { oli.inner.inline.static & oli.attrs }
+	oli.attrs =
+		(	common.attrs
+		&	oli.attrs.value
+		)
+		oli.attrs.value =
+			attribute value {
+				common.data.integer
+			}
+	oli.inner =
+		( common.inner.bimorphic* )
+	oli.inner.static =
+		( common.inner.bimorphic.static* )
+	oli.inner.inline =
+		( common.inner.struct-inline* )
+	oli.inner.inline.static =
+		( common.inner.struct-inline.static* )
+
+# #####################################################################
+## Definition Lists
+
+## Definition List: <dl>
+
+	dl.elem =
+		element dl { dl.inner & dl.attrs }
+	dl.elem.static =
+		element dl { dl.inner.static & dl.attrs }
+	dl.elem.inline =
+		element dl { dl.inner.inline & dl.attrs }
+	dl.elem.inline.static =
+		element dl { dl.inner.inline.static & dl.attrs }
+	dl.attrs =
+		( common.attrs )
+	dl.inner =
+		(	(	dt.elem+
+			,	dd.elem+
+			)*
+		)
+	dl.inner.static =
+		(	(	dt.elem.static+
+			,	dd.elem.static+
+			)*
+		)
+	dl.inner.inline =
+		(	(	dt.elem+
+			,	dd.elem.inline+
+			)*
+		)
+	dl.inner.inline.static =
+		(	(	dt.elem.static+
+			,	dd.elem.inline.static+
+			)*
+		)
+
+	common.inner.block &= dl.elem*
+	common.inner.block.static &= dl.elem.static*
+	common.inner.struct-inline &= dl.elem.inline*
+	common.inner.struct-inline.static &= dl.elem.inline.static*
+
+## Definition Term: <dt>
+
+	dt.elem =
+		element dt { dt.inner & dt.attrs }
+	dt.elem.static =
+		element dt { dt.inner.static & dt.attrs }
+	dt.attrs =
+		( common.attrs )
+	dt.inner =
+		( common.inner.strict-inline )
+	dt.inner.static =
+		( common.inner.strict-inline.static )
+
+## Definition Description: <dd>
+
+	dd.elem =
+		element dd { dd.inner & dd.attrs }
+	dd.elem.static =
+		element dd { dd.inner.static & dd.attrs }
+	dd.elem.inline =
+		element dd { dd.inner.inline & dd.attrs }
+	dd.elem.inline.static =
+		element dd { dd.inner.inline.static & dd.attrs }
+	dd.attrs =
+		( common.attrs )
+	dd.inner =
+		( common.inner.bimorphic* )
+	dd.inner.static =
+		( common.inner.bimorphic.static* )
+	dd.inner.inline =
+		( common.inner.struct-inline* )
+	dd.inner.inline.static =
+		( common.inner.struct-inline.static* )
