@@ -1,5 +1,5 @@
+default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
-           default namespace = "http://www.w3.org/1999/xhtml"
 ##  RelaxNG Schema for (x)HTML 5: Exclusions                          #
 # #####################################################################
 

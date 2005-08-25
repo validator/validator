@@ -1,3 +1,4 @@
+default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
 ##  RelaxNG Schema for xHTML 5 Core                                   #
 # #####################################################################
@@ -27,5 +28,7 @@ include "phrase.rnc" {
 	m.elem = empty
 }
 include "block.rnc"
+include "sectional.rnc"
+include "revision.rnc"
 #include "document.rng"
 #include "web-forms.rnc"

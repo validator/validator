@@ -39,5 +39,7 @@ include "phrase.rnc" {
 	m.elem = empty
 }
 include "block.rnc"
+include "sectional.rnc"
+include "revision.rnc"
 #include "document.rnc"
 #include "web-forms.rnc"

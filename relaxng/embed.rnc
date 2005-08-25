@@ -1,0 +1,47 @@
+# #####################################################################
+##  RelaxNG Schema for HTML 5: Embedded Content                       #
+# #####################################################################
+
+## Images: <img>
+
+	img.elem =
+		element ins { common.inner.strict-inline & img.attrs }
+	img.attrs =
+		(	common.attrs
+		&	img.attrs.src
+		&	img.attrs.alt
+		&	img.attrs.height
+		&	img.attrs.width
+		&	img.attrs.usemap
+		&	img.attrs.ismap
+		)
+		img.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+		img.attrs.alt =
+			attribute alt {
+				text
+			}
+		img.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		img.attrs.width =
+			attribute src {
+				common.data.integer.positive
+			}
+		img.attrs.usemap =
+			attribute usemap {
+				common.data.uri
+			}
+		img.attrs.ismap =
+			attribute src {
+				"ismap"
+			}
+	common.inner.strict-inline &= img.elem.strict-inline*
+	common.inner.strict-inline.static &= img.elem.strict-inline*
+
+## Generic Objects: <object>
+
+## Java Appelets: <appelet>

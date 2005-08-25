@@ -1,5 +1,4 @@
 # #####################################################################
-           default namespace = "http://www.w3.org/1999/xhtml"
 ##  RelaxNG Schema for HTML 5: Common Definitions                     #
 # #####################################################################
 
@@ -177,7 +176,19 @@ common.attrs.i18n =                   # check <bdo> definition too
 
 	common.data.integer =
 		xsd:integer {
-			pattern = "[^+].?"
+			pattern = "[^+].*"
+		}
+
+	common.data.integer.positive =
+		xsd:positiveInteger {
+			pattern = "\d+"
+		}
+
+## Temporal
+
+	common.data.datetime =
+		xsd:dateTime {
+			pattern = "\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(Z|(-|\+)\d\d:\d\d)"
 		}
 
 ## IRIs

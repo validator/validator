@@ -1,5 +1,4 @@
 # #####################################################################
-           default namespace = "http://www.w3.org/1999/xhtml"
 ##  RelaxNG Schema for HTML 5: Global Structure & Meta Data           #
 # #####################################################################
 
@@ -60,7 +59,7 @@
 ## Inline Character Encoding Statement for HTML
 
 	meta.elem.encoding = (HTMLonly &
-		element meta { empty & meta.attrs.encoding })
+		element meta { empty & meta.attrs.encoding & common.attrs })
 	meta.attrs.encoding =
 		(	attribute http-equiv {
 				"Content-Type"

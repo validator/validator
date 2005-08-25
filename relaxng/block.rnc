@@ -1,5 +1,4 @@
 # #####################################################################
-           default namespace = "http://www.w3.org/1999/xhtml"
 ##  RelaxNG Schema for HTML 5: (Basic) Block Markup                   #
 # #####################################################################
 
@@ -121,13 +120,13 @@
 	li.attrs =
 		( common.attrs )
 	li.inner =
-		( common.inner.bimorphic* )
+		( common.inner.bimorphic )
 	li.inner.static =
-		( common.inner.bimorphic.static* )
+		( common.inner.bimorphic.static )
 	li.inner.inline =
-		( common.inner.struct-inline* )
+		( common.inner.struct-inline )
 	li.inner.inline.static =
-		( common.inner.struct-inline.static* )
+		( common.inner.struct-inline.static )
 
 ## Ordered List: <ol>
 
@@ -141,7 +140,7 @@
 		element ol { ol.inner.inline.static & ol.attrs }
 	ol.attrs =
 		(	common.attrs
-		&	ol.attrs.start
+		&	ol.attrs.start?
 		)
 		ol.attrs.start =
 			attribute start {
@@ -173,20 +172,20 @@
 		element li { oli.inner.inline.static & oli.attrs }
 	oli.attrs =
 		(	common.attrs
-		&	oli.attrs.value
+		&	oli.attrs.value?
 		)
 		oli.attrs.value =
 			attribute value {
 				common.data.integer
 			}
 	oli.inner =
-		( common.inner.bimorphic* )
+		( common.inner.bimorphic )
 	oli.inner.static =
-		( common.inner.bimorphic.static* )
+		( common.inner.bimorphic.static )
 	oli.inner.inline =
-		( common.inner.struct-inline* )
+		( common.inner.struct-inline )
 	oli.inner.inline.static =
-		( common.inner.struct-inline.static* )
+		( common.inner.struct-inline.static )
 
 # #####################################################################
 ## Definition Lists
@@ -255,10 +254,29 @@
 	dd.attrs =
 		( common.attrs )
 	dd.inner =
-		( common.inner.bimorphic* )
+		( common.inner.bimorphic )
 	dd.inner.static =
-		( common.inner.bimorphic.static* )
+		( common.inner.bimorphic.static )
 	dd.inner.inline =
-		( common.inner.struct-inline* )
+		( common.inner.struct-inline )
 	dd.inner.inline.static =
-		( common.inner.struct-inline.static* )
+		( common.inner.struct-inline.static )
+
+# #####################################################################
+## Generic Container
+
+## Document Division: <div>
+
+	div.elem =
+		element div { div.inner & div.attrs }
+	div.elem.static =
+		element div { div.inner.static & div.attrs }
+	div.attrs =
+		( common.attrs )
+	div.inner =
+		( common.inner.block )
+	div.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= div.elem*
+	common.inner.block.static &= div.elem.static*
