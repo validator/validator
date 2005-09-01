@@ -10,7 +10,7 @@
 	h1.elem =
 		element h1 { h1.inner & h1.attrs }
 	h1.elem.static =
-		element h2 { h1.inner.static & h1.attrs }
+		element h1 { h1.inner.static & h1.attrs }
 	h1.attrs =
 		( common.attrs )
 	h1.inner =
