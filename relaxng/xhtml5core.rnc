@@ -30,5 +30,6 @@ include "phrase.rnc" {
 include "block.rnc"
 include "sectional.rnc"
 include "revision.rnc"
+include "embed.rnc"
 #include "document.rng"
 #include "web-forms.rnc"

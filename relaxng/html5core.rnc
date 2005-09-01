@@ -41,5 +41,6 @@ include "phrase.rnc" {
 include "block.rnc"
 include "sectional.rnc"
 include "revision.rnc"
+include "embed.rnc"
 #include "document.rnc"
 #include "web-forms.rnc"

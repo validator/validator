@@ -5,15 +5,15 @@
 ## Images: <img>
 
 	img.elem =
-		element ins { common.inner.strict-inline & img.attrs }
+		element img { img.inner & img.attrs }
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
 		&	img.attrs.alt
-		&	img.attrs.height
-		&	img.attrs.width
-		&	img.attrs.usemap
-		&	img.attrs.ismap
+		&	img.attrs.height?
+		&	img.attrs.width?
+		&	img.attrs.usemap?
+		&	img.attrs.ismap?
 		)
 		img.attrs.src =
 			attribute src {
@@ -28,7 +28,7 @@
 				common.data.integer.positive
 			}
 		img.attrs.width =
-			attribute src {
+			attribute width {
 				common.data.integer.positive
 			}
 		img.attrs.usemap =
@@ -36,12 +36,246 @@
 				common.data.uri
 			}
 		img.attrs.ismap =
-			attribute src {
+			attribute ismap {
 				"ismap"
 			}
-	common.inner.strict-inline &= img.elem.strict-inline*
-	common.inner.strict-inline.static &= img.elem.strict-inline*
+	img.inner =
+		empty
+
+	common.inner.strict-inline &= img.elem*
+	common.inner.strict-inline.static &= img.elem*
+	common.inner.struct-inline &= img.elem*
+	common.inner.struct-inline.static &= img.elem*
 
 ## Generic Objects: <object>
 
-## Java Appelets: <appelet>
+	obj.elem.strict-inline =
+		element obj { obj.inner.strict-inline & obj.attrs }
+	obj.elem.strict-inline.static =
+		element obj { obj.inner.strict-inline.static & obj.attrs }
+	obj.elem.struct-inline =
+		element obj { obj.inner.struct-inline & obj.attrs }
+	obj.elem.struct-inline.static =
+		element obj { obj.inner.struct-inline.static & obj.attrs }
+	obj.elem.block =
+		element obj { obj.inner.block & obj.attrs }
+	obj.elem.block.static =
+		element obj { obj.inner.block.static & obj.attrs }
+	obj.attrs =
+		(	common.attrs
+		&	obj.attrs.archive?
+		&	obj.attrs.classid?
+		&	obj.attrs.codebase?
+		&	obj.attrs.codetype?
+		&	obj.attrs.data?
+		&	obj.attrs.type?
+		&	obj.attrs.standby?
+		&	obj.attrs.name?
+		&	obj.attrs.height?
+		&	obj.attrs.width?
+		&	obj.attrs.usemap?
+		)
+		obj.attrs.archive =
+			attribute archive {
+				common.data.uris
+			}
+		obj.attrs.classid =
+			attribute classid {
+				common.data.uri
+			}
+		obj.attrs.codebase =
+			attribute codebase {
+				common.data.uri
+			}
+		obj.attrs.codetype =
+			attribute codetype {
+				common.data.mimetype
+			}
+		obj.attrs.data =
+			attribute data {
+				common.data.uri
+			}
+		obj.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+		obj.attrs.standby =
+			attribute standby {
+				text
+			}
+		obj.attrs.name =
+			attribute name {
+				string #FIXME refine
+			}
+		obj.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		obj.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
+		obj.attrs.usemap =
+			attribute usemap {
+				common.data.uri
+			}
+	obj.inner.strict-inline =
+		(	param.elem*
+		,	common.inner.strict-inline
+		)
+	obj.inner.strict-inline.static =
+		(	param.elem*
+		,	common.inner.strict-inline.static
+		)
+	obj.inner.struct-inline =
+		(	param.elem*
+		,	common.inner.struct-inline
+		)
+	obj.inner.struct-inline.static =
+		(	param.elem*
+		,	common.inner.struct-inline.static
+		)
+	obj.inner.block =
+		(	param.elem*
+		,	common.inner.block
+		)
+	obj.inner.block.static =
+		(	param.elem*
+		,	common.inner.block.static
+		)
+
+	common.inner.strict-inline &= obj.elem.strict-inline*
+	common.inner.strict-inline.static &= obj.elem.strict-inline.static*
+	common.inner.struct-inline &= obj.elem.struct-inline*
+	common.inner.struct-inline.static &= obj.elem.struct-inline.static*
+	common.inner.block &= obj.elem.block*
+	common.inner.block.static &= obj.elem.block.static*
+
+## Java Applets: <applet>
+
+	applet.elem.strict-inline =
+		element applet { applet.inner.strict-inline & applet.attrs }
+	applet.elem.strict-inline.static =
+		element applet { applet.inner.strict-inline.static & applet.attrs }
+	applet.elem.struct-inline =
+		element applet { applet.inner.struct-inline & applet.attrs }
+	applet.elem.struct-inline.static =
+		element applet { applet.inner.struct-inline.static & applet.attrs }
+	applet.elem.block =
+		element applet { applet.inner.block & applet.attrs }
+	applet.elem.block.static =
+		element applet { applet.inner.block.static & applet.attrs }
+	applet.attrs =
+		(	common.attrs
+		&	applet.attrs.archive?
+		&	applet.attrs.code
+		&	applet.attrs.codebase?
+		&	applet.attrs.name?
+		&	applet.attrs.height
+		&	applet.attrs.width
+		)
+		applet.attrs.archive =
+			attribute archive {
+				common.data.uri #FIXME *comma* separated URI list (*grumble*)
+			}
+		applet.attrs.code =
+			attribute code {
+				token
+			}
+		applet.attrs.codebase =
+			attribute codebase {
+				common.data.uri
+			}
+		applet.attrs.name =
+			attribute name {
+				string #FIXME refine
+			}
+		applet.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		applet.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
+	applet.inner.strict-inline =
+		(	param.elem*
+		,	common.inner.strict-inline
+		)
+	applet.inner.strict-inline.static =
+		(	param.elem*
+		,	common.inner.strict-inline.static
+		)
+	applet.inner.struct-inline =
+		(	param.elem*
+		,	common.inner.struct-inline
+		)
+	applet.inner.struct-inline.static =
+		(	param.elem*
+		,	common.inner.struct-inline.static
+		)
+	applet.inner.block =
+		(	param.elem*
+		,	common.inner.block
+		)
+	applet.inner.block.static =
+		(	param.elem*
+		,	common.inner.block.static
+		)
+
+	common.inner.strict-inline &= applet.elem.strict-inline*
+	common.inner.strict-inline.static &= applet.elem.strict-inline.static*
+	common.inner.struct-inline &= applet.elem.struct-inline*
+	common.inner.struct-inline.static &= applet.elem.struct-inline.static*
+	common.inner.block &= applet.elem.block*
+	common.inner.block.static &= applet.elem.block.static*
+
+## Initialization Parameters: <param>
+
+	param.elem =
+		element param { param.inner & param.attrs }
+	param.attrs =
+		(	common.attrs
+		&	param.attrs.name
+		&	param.attrs.value?
+		)
+		param.attrs.name =
+			attribute name {
+				string
+			}
+		param.attrs.value =
+			(	( param.attrs.valuetype.data?  & param.attrs.value.data?   )
+			|	( param.attrs.valuetype.object & param.attrs.value.object? )
+			|	( param.attrs.valuetype.ref    & param.attrs.value.ref?
+				                               & param.attrs.type?         )
+			)
+		param.attrs.valuetype.data =
+			attribute valuetype {
+				"data"
+			}
+		param.attrs.value.data =
+			attribute value {
+				string
+			}
+		param.attrs.valuetype.ref =
+			attribute valuetype {
+				"ref"
+			}
+		param.attrs.value.ref =
+			attribute value {
+				common.data.uri
+			}
+		param.attrs.valuetype.object =
+			attribute valuetype {
+				"object"
+			}
+		param.attrs.value.object =
+			attribute value {
+				common.data.idref
+			}
+		param.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	param.inner =
+		( empty )
