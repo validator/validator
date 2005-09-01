@@ -2,6 +2,9 @@
 ##  RelaxNG Schema for HTML 5: Embedded Content                       #
 # #####################################################################
 
+#######################################################################
+## Replaced Content
+
 ## Images: <img>
 
 	img.elem =
@@ -279,3 +282,105 @@
 			}
 	param.inner =
 		( empty )
+
+#######################################################################
+## Image Maps
+
+## Map Definition: <map>
+
+	map.elem =
+		element map { map.inner & map.attrs }
+	map.elem.static =
+		element map { map.inner.static & map.attrs }
+	map.attrs =
+		(	common.attrs
+		&	map.attrs.name
+		)
+		map.attrs.name =
+			attribute name {
+				string #FIXME refine
+			}
+	map.inner =
+		(	common.inner.block
+		&	area.elem+
+		)
+	map.inner.static =
+		(	common.inner.block.static
+		&	area.elem+
+		)
+
+	common.inner.block &= map.elem*
+	common.inner.block.static &= map.elem.static*
+
+## Map Area Definition: <area>
+
+	area.elem =
+		element area { area.inner & area.attrs }
+	area.attrs =
+		(	common.attrs
+		&	area.attrs.alt
+		&	area.attrs.shape
+		&	( area.attrs.href | area.attrs.nohref )?
+		)
+		area.attrs.alt =
+			attribute alt {
+				text
+			}
+		area.attrs.shape =
+			(	( area.attrs.shape.rect?  & area.attrs.coords.rect   )
+			|	( area.attrs.shape.circle & area.attrs.coords.circle )
+			|	( area.attrs.shape.poly   & area.attrs.coords.poly   )
+			|	( area.attrs.shape.default )
+			)
+		area.attrs.shape.rect =
+			attribute shape {
+				"rect"
+			}
+		area.attrs.coords.rect =
+			attribute coords {
+				xsd:token {
+					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*"
+                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/
+                    #           s    +-    d  % s , s    +-    d  % s , s    +-    d  % s , s    +-    d  % s
+				}
+			}
+		area.attrs.shape.circle =
+			attribute shape {
+				"circle"
+			}
+		area.attrs.coords.circle =
+			attribute coords {
+				xsd:token {
+					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*"
+                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/
+                    #           s    +-    d  % s , s    +-    d  % s , s    +-    d  % s 
+				}
+			}
+		area.attrs.shape.poly =
+			attribute shape {
+				"poly"
+			}
+		area.attrs.coords.poly =
+			attribute coords {
+				xsd:token {
+					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?(\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?){2,}\s*"
+                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/[\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/] {} \_/
+                    #           s    +-    d  % s , s    +-    d  %[ s , s    +-    d  % s , s    +-    d  %] {}  s
+				}
+			}
+		area.attrs.shape.default =
+			attribute shape {
+				"default"
+			}
+		area.attrs.href =
+			attribute href {
+				common.data.uri
+			}
+		area.attrs.nohref =
+			attribute nohref {
+				"nohref"
+			}
+	area.inner =
+		( empty )
+
+	a.attrs &= area.attrs.shape?
