@@ -414,6 +414,8 @@
 		element bdo { bdo.inner.static & bdo.attrs }
 	bdo.attrs =
 		(	common.attrs.basic
+		&	common.attrs.present
+		# List common.attrs.i18n explicitly
 		& 	common.attrs.language?
 		&	bdo.attrs.dir # required
 		)
