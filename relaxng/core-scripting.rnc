@@ -1,6 +1,61 @@
 # #####################################################################
-##  RelaxNG Schema for HTML 5: (Basic) Block Markup                   #
+##  RelaxNG Schema for HTML 5: Core Scripting                         #
 # #####################################################################
+
+# #####################################################################
+## Scripting Elements
+
+## Inline Scripts: <script>
+
+	script.elem.embedded =
+		element script { script.inner.embedded & script.attrs.embedded }
+	script.attrs.embedded =
+		(	common.attrs
+		&	script.attrs.type?
+		)
+	script.elem.imported =
+		element script { script.inner.imported & script.attrs.imported }
+	script.attrs.imported =
+		(	common.attrs
+		&	script.attrs.src
+		&	script.attrs.type?
+		)
+		script.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+		script.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	script.inner.embedded =
+		( common.inner.anything )
+	script.inner.imported =
+		( empty )
+
+## Fallback Unscripted Content: <noscript>
+
+	noscript.elem.strict-inline =
+		element noscript { common.inner.strict-inline & noscript.attrs }
+	noscript.elem.strict-inline.static =
+		element noscript { common.inner.strict-inline.static & noscript.attrs }
+	noscript.elem.struct-inline =
+		element noscript { common.inner.struct-inline & noscript.attrs }
+	noscript.elem.struct-inline.static =
+		element noscript { common.inner.struct-inline.static & noscript.attrs }
+	noscript.elem.block =
+		element noscript { common.inner.block & noscript.attrs }
+	noscript.elem.block.static =
+		element noscript { common.inner.block.static & noscript.attrs }
+	noscript.attrs =
+		( common.attrs )
+
+	common.inner.strict-inline &= noscript.elem.strict-inline*
+	common.inner.strict-inline.static &= noscript.elem.strict-inline.static*
+	common.inner.struct-inline &= noscript.elem.struct-inline*
+	common.inner.struct-inline.static &= noscript.elem.struct-inline.static*
+	common.inner.block &= noscript.elem.block*
+	common.inner.block.static &= noscript.elem.block.static*
 
 # #####################################################################
 ## Event Handler Attribute Definitions
@@ -8,6 +63,7 @@
 scripting.attr.common =
 	(	scripting.attr.mouse
 	&	scripting.attr.keyboard
+	&	scripting.attr.focus
 	)
 
 scripting.attr.mouse =
@@ -69,7 +125,6 @@ scripting.attr.loading =
 # #####################################################################
 ## Event Handler Attribute Assignments
 
-common.attr &= scripting.attr.common
-common.attr.tabindex &= scripting.attr.focus
+common.attrs &= scripting.attr.common
 
-body.attr   &= scripting.attr.loading
+body.attrs   &= scripting.attr.loading
