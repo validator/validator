@@ -1,0 +1,264 @@
+# #####################################################################
+##  RelaxNG Schema for HTML 5: Tables                                 #
+# #####################################################################
+
+# #####################################################################
+## Table Envelope
+
+## Table Datatypes
+
+	tables.data.multilen =
+		(	common.data.integer.positive
+		|	common.data.percent
+		|	xsd:token { pattern = "\d+\*" }
+		)
+
+## Table Alignment Attributes
+
+	tables.attrs.alignment =
+		(	tables.attrs.align?
+		&	tables.attrs.char?
+		&	tables.attrs.valign?
+		)
+		tables.attrs.align =
+			attribute align {
+				"left" | "center" | "right" | "justify" | "char"
+			}
+		tables.attrs.char =
+			attribute char {
+				xsd:string { pattren = "." }
+			}
+		tables.attrs.valign =
+			attribute valign {
+				"top" | "middle" | "bottom" | "basline"
+			}
+
+## Data Table: <table>
+
+	table.elem =
+		element table { table.inner & table.attrs }
+	td.elem.static =
+		element table { table.inner.static & table.attrs }
+	table.attrs =
+		(	common.attrs
+		&	table.attrs.summary
+		)
+		table.attrs.summary =
+			attribute summary {
+				text
+			}
+	table.inner =
+		(	caption.elem?
+		,	( colgroup.elem+ | col.elem+)?
+		,	thead.elem?
+		,	tfoot.elem?
+		,	( tbody.elem+ | tr.elem+)?
+		)
+	table.inner.static =
+		(	caption.elem.static?
+		,	( colgroup.elem+ | col.elem+)?
+		,	thead.elem.static?
+		,	tfoot.elem.static?
+		,	( tbody.elem.static+ | tr.elem.static+)?
+		)
+
+	common.inner.block &= table.elem*
+	common.inner.block.static &= table.elem.static*
+
+## Table Caption: <caption>
+
+	caption.elem =
+		element caption { caption.inner & caption.attrs }
+	caption.elem.static =
+		element caption { caption.inner.static & caption.attrs }
+	caption.attrs =
+		( common.attrs )
+	caption.inner =
+		( common.inner.strict-inline )
+	caption.inner.static =
+		( common.inner.strict-inline.static )
+
+# #####################################################################
+## Table Super Structure
+
+## Table Column Group: <colgroup>
+
+	colgroup.elem =
+		element colgroup { colgroup.inner & colgroup.attrs }
+	colgroup.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		&	colgroup.attrs.width?
+		)
+		colgroup.attrs.width =
+			attribute width {
+				tables.data.multilen
+			}
+		colgroup.attrs.span =
+			attribute span {
+				common.data.integer.positive
+			}
+	colgroup.inner =
+		(	col.elem+
+		|	colgroup.attrs.span?
+		)
+
+## Table Column: <col>
+
+	col.elem =
+		element col { col.inner & col.attrs }
+	col.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		&	col.attrs.width?
+		)
+		col.attrs.width =
+			attribute width {
+				tables.data.multilen
+			}
+		col.attrs.span =
+			attribute span {
+				common.data.integer.positive
+			}
+	col.inner =
+		( empty )
+
+## Table Header Row Group
+
+	thead.elem =
+		element thead { thead.inner & thead.attrs }
+	thead.elem.static =
+		element thead { thead.inner.static & thead.attrs }
+	thead.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		)
+	thead.inner =
+		( tr.elem+ )
+	thead.inner.static =
+		( tr.elem.static+ )
+
+## Table Footer Row Group
+
+	tfoot.elem =
+		element tfoot { tfoot.inner & tfoot.attrs }
+	tfoot.elem.static =
+		element tfoot { tfoot.inner.static & tfoot.attrs }
+	tfoot.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		)
+	tfoot.inner =
+		( tr.elem+ )
+	tfoot.inner.static =
+		( tr.elem.static+ )
+
+## Table Row Group
+
+	tbody.elem =
+		element tbody { tbody.inner & tbody.attrs }
+	tfoot.elem.static =
+		element tbody { tbody.inner.static & tbody.attrs }
+	tbody.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		)
+	tbody.inner =
+		( tr.elem* )
+	tbody.inner.static =
+		( tr.elem.static* )
+
+# #####################################################################
+## Cell Structure
+
+## Table Row
+
+	tr.elem =
+		element tr { tr.inner & tr.attrs }
+	tr.elem.static =
+		element tr { tr.inner.static & tr.attrs }
+	tr.attrs =
+		(	common.attrs
+		&	tables.attrs.alignment
+		)
+	tr.inner =
+		( ( td.elem | th.elem )+ )
+	tr.inner.static =
+		( ( td.elem.static | th.elem.static )+ )
+
+## Common Table Cell Attributes
+
+	tables.attrs.cell-structure =
+		(	tables.attrs.colspan?
+		&	tables.attrs.rowspan?
+		)
+		tables.attrs.colspan =
+			attribute colspan {
+				common.data.integer.non-negative
+			}
+		tables.attrs.rowspan =
+			attribute rowspan {
+				common.data.integer.non-negative
+			}
+
+	tables.attrs.access-headers =
+		(	tables.attrs.axis?
+		&	tables.attrs.headers?
+		)
+		tables.attrs.axis = # categorization (implicit headers)
+			attribute axis {
+				common.data.tokens.comma-separated
+			}
+		tables.attrs.headers =
+			attribute headers {
+				common.data.idrefs
+			}
+
+	tables.attrs.define-headers =
+		(	tables.attrs.scope?
+		&	tables.attrs.abbr?
+		)
+		tables.attrs.scope =
+			attribute scope {
+				"row" | "col" | "rowgroup" | "colgroup"
+			}
+		tables.attrs.abbr =
+			attribute abbr {
+				text
+			}
+
+## Table Data Cell: <td>
+
+	td.elem =
+		element td { td.inner & td.attrs }
+	td.elem.static =
+		element td { td.inner.static & td.attrs }
+	td.attrs =
+		(	common.attrs
+		&	tables.attrs.cell-structure
+		&	tables.attrs.access-headers
+		&	tables.attrs.define-headers
+		&	tables.attrs.alignment
+		)
+	td.inner =
+		( common.inner.bimorphic )
+	td.inner.static =
+		( common.inner.bimorphic.static )
+
+## Table Header Cells: <th>
+
+	th.elem =
+		element th { th.inner & th.attrs }
+	th.elem.static =
+		element th { th.inner.static & th.attrs }
+	th.attrs =
+		(	common.attrs
+		&	tables.attrs.cell-structure
+		&	tables.attrs.access-headers
+		&	tables.attrs.define-headers
+		&	tables.attrs.alignment
+		)
+	th.inner =
+		( common.inner.bimorphic )
+	th.inner.static =
+		( common.inner.bimorphic.static )
