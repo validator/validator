@@ -51,3 +51,8 @@ dfn.elem.exclude-self =
 		(	normal.attr.anything
 		&	normal.elem.exclude-dfn
 		)
+	}
+
+# FIXME this part was cut off -- hsivonen
+wildcard.elem.exclude-all = 
+	notAllowed

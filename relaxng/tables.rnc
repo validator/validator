@@ -26,11 +26,11 @@
 			}
 		tables.attrs.char =
 			attribute char {
-				xsd:string { pattren = "." }
+				xsd:string { pattern = "." }
 			}
 		tables.attrs.valign =
 			attribute valign {
-				"top" | "middle" | "bottom" | "basline"
+				"top" | "middle" | "bottom" | "baseline"
 			}
 
 ## Data Table: <table>

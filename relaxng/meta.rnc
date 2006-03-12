@@ -138,7 +138,7 @@
 				common.data.mimetype
 			}
 		style.attrs.media =
-			attribute type {
+			attribute media {
 				common.data.mediaquery
 			}
 	style.inner =
