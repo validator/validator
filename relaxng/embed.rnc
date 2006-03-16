@@ -53,17 +53,17 @@
 ## Generic Objects: <object>
 
 	obj.elem.strict-inline =
-		element obj { obj.inner.strict-inline & obj.attrs }
+		element object { obj.inner.strict-inline & obj.attrs }
 	obj.elem.strict-inline.static =
-		element obj { obj.inner.strict-inline.static & obj.attrs }
+		element object { obj.inner.strict-inline.static & obj.attrs }
 	obj.elem.struct-inline =
-		element obj { obj.inner.struct-inline & obj.attrs }
+		element object { obj.inner.struct-inline & obj.attrs }
 	obj.elem.struct-inline.static =
-		element obj { obj.inner.struct-inline.static & obj.attrs }
+		element object { obj.inner.struct-inline.static & obj.attrs }
 	obj.elem.block =
-		element obj { obj.inner.block & obj.attrs }
+		element object { obj.inner.block & obj.attrs }
 	obj.elem.block.static =
-		element obj { obj.inner.block.static & obj.attrs }
+		element object { obj.inner.block.static & obj.attrs }
 	obj.attrs =
 		(	common.attrs
 		&	obj.attrs.archive?
@@ -226,12 +226,14 @@
 		,	common.inner.block.static
 		)
 
-	common.inner.strict-inline &= applet.elem.strict-inline*
-	common.inner.strict-inline.static &= applet.elem.strict-inline.static*
-	common.inner.struct-inline &= applet.elem.struct-inline*
-	common.inner.struct-inline.static &= applet.elem.struct-inline.static*
-	common.inner.block &= applet.elem.block*
-	common.inner.block.static &= applet.elem.block.static*
+# REVISIT commented out as per
+# http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2005-November/005137.html
+#	common.inner.strict-inline &= applet.elem.strict-inline*
+#	common.inner.strict-inline.static &= applet.elem.strict-inline.static*
+#	common.inner.struct-inline &= applet.elem.struct-inline*
+#	common.inner.struct-inline.static &= applet.elem.struct-inline.static*
+#	common.inner.block &= applet.elem.block*
+#	common.inner.block.static &= applet.elem.block.static*
 
 ## Initialization Parameters: <param>
 
