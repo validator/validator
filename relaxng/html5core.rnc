@@ -1,5 +1,5 @@
 # #####################################################################
-##  RELAX NG Schema for HTML 5 Core                                    #
+##  RELAX NG Schema for HTML 5 Core                                   #
 # #####################################################################
 
   # (X)HTML 5 Core is WHATWG HTML 5 without web forms and restricted #
@@ -8,8 +8,8 @@
   ## To validate an HTML 5 document, you must first validate against #
   ## this schema and then ALSO validate against exclusions.rnc       #
   
-  ## HTML flavor RELAX NG schemas can only be used after the document #
-  ## has been transformed to well-formed XHTML.                      #
+  ## HTML flavor RELAX NG schemas can only be used after the         #
+  ## document has been transformed to well-formed XHTML.             #
   ##   - Insert closing slashes in all empty element tags            #
   ##   - Insert all optional start and end tags                      #
   ##   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
@@ -17,7 +17,7 @@
   ##   - Parse and transform all HTML-only entities to numeric       #
   ##     character references                                        #
   ## Obviously, syntax-checking involving these features cannot be   #
-  ## done by the RELAX NG schema and must be checked, along with the  #
+  ## done by the RELAX NG schema and must be checked, along with the #
   ## <!DOCTYPE> requirement, by some other application.              #
 
 # #####################################################################

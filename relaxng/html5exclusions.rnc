@@ -1,6 +1,6 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
-##  RELAX NG Schema for (X)HTML 5: Exclusions                          #
+##  RELAX NG Schema for (X)HTML 5: Exclusions                         #
 # #####################################################################
 
   ## This is a SEPARATE RELAX NG Schema that only enforces exclusion

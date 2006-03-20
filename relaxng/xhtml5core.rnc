@@ -1,6 +1,6 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
-##  RELAX NG Schema for XHTML 5 Core                                   #
+##  RELAX NG Schema for XHTML 5 Core                                  #
 # #####################################################################
 
   # (X)HTML 5 Core is WHATWG HTML 5 without web forms and restricted #
