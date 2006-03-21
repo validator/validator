@@ -9,7 +9,7 @@
   ## this schema and then ALSO validate against exclusions.rnc       #
   
   ## HTML flavor RELAX NG schemas can only be used after the         #
-  ## document has been transformed to well-formed XHTML.             #
+  ## document has been transformed to well-formed XML.               #
   ##   - Insert closing slashes in all empty element tags            #
   ##   - Insert all optional start and end tags                      #
   ##   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
@@ -27,8 +27,6 @@ include "common.rnc" {
 	# XHTML flavor #
 		XMLonly = notAllowed
 		HTMLonly = empty
-	# Scripting Allowed #
-		scriptable = empty
 }
 
 # #####################################################################

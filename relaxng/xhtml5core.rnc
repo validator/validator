@@ -16,24 +16,16 @@ include "common.rnc" {
 	# XHTML flavor #
 		XMLonly = empty
 		HTMLonly = notAllowed
-	# Scripting Allowed #
-		scriptable = empty
+	# HTML 4 compat #
+		v5only = notAllowed
 }
 
 # #####################################################################
 ## Language Definitions
 
 include "meta.rnc"
-include "phrase.rnc" {
-	m.elem = empty
-}
-include "block.rnc" {
-	p.inner =
-		( common.inner.strict-inline )
-	p.inner.static =
-		( common.inner.strict-inline.static )
-
-}
+include "phrase.rnc"
+include "block.rnc"
 include "sectional.rnc"
 include "revision.rnc"
 include "embed.rnc"

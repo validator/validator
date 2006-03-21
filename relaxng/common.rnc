@@ -4,7 +4,7 @@
 
 
 # #####################################################################
-##  Language Parameters                                               #
+##  Language Parameters - redefine in inclusion block as necessary    #
 # #####################################################################
 
 ## Root Definition
@@ -16,9 +16,19 @@
 	XMLonly = empty
 	HTMLonly = notAllowed
 
-## Include Scripting
+## HTML 4 Compatibility - set to notAllowed to disallow markup introduced in HTML 5
 
-	scriptable = empty
+	v5only = empty
+
+## HTML Compatibility Switches - set to notAllowed to disallow
+
+	## XML features that can't be roundtripped HTML <-> XHTML
+	#    (xml:base on elements other than <html>)
+	nonRoundtrippable = empty
+
+	## XML features that can't be serialized as HTML
+	#    (structured inline elements in <p>)
+	nonHTMLizable = empty
 
 # #####################################################################
 ##  Wildcards                                                         #

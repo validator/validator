@@ -14,10 +14,17 @@
 	p.attrs =
 		( common.attrs )
 	p.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	p.inner.static =
-		( common.inner.struct-inline.static )
-
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	common.inner.block &= p.elem*
 	common.inner.block.static &= p.elem.static*
 

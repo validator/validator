@@ -126,12 +126,16 @@
 
 	m.elem =
 		element m { m.inner & m.attrs }
+		& v5only
 	m.elem.static =
 		element m { m.inner.static & m.attrs }
+		& v5only
 	m.elem.strict =
 		element m { m.inner.strict & m.attrs }
+		& v5only
 	m.elem.strict.static =
 		element m { m.inner.strict.static & m.attrs }
+		& v5only
 	m.attrs =
 		( common.attrs )
 	m.inner =
