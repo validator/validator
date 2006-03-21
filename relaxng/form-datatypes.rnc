@@ -74,9 +74,12 @@ form.data.inputmodetoken =
 	)
 
 form.data.inputmode = 
-	list { (form.data.inputmodetoken | common.data.absoluteuri)+ }
+	list { (form.data.inputmodetoken | common.data.uri.absolute)+ }
 	# Just assuming at least one token is required. The spec does not say.
 	# XForms seems to allow IRIs when it talks about URIs.
 			
 form.data.pattern = 
 	string #FIXME should be ECMAScript regexp. Dig into Rhino
+	
+form.data.float.positive =
+	string #FIXME

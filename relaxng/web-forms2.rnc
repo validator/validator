@@ -115,3 +115,23 @@ input.attrs.pattern =
 	attribute pattern {
 		form.data.pattern
 	}
+
+input.attrs.step.float = 
+	attribute step {
+		form.data.float.positive
+	}
+
+input.attrs.step.integer = 
+	attribute step {
+		common.data.integer.positive 
+	}
+	
+input.attrs.replace = 
+	attribute replace {
+		string "document" | string "values"
+	}
+
+input.attrs.required = 
+	attribute required {
+		string "required"
+	}

@@ -91,6 +91,20 @@ input.attrs.name =
 		string #REVIST should this be restricted somehow? No & and = perhaps?
 	}
 
+input.attrs.readonly = 
+	attribute readonly {
+		string "readonly"
+	}
+
+input.attrs.src = 
+	attribute src {
+		common.data.uri
+	}
+
+# REVISIT tabindex goes in common.attrs in WA 1.0
+
+
+
 ## A free-form text field: <input type='text'>
 input.text.elem = 
 	element input { input.text.attrs }

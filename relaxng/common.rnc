@@ -209,8 +209,8 @@ common.attrs.present =
 	common.data.uris =
 		list { xsd:anyURI* }
 
-	common.data.absoluteuri =
-		string {
+	common.data.uri.absolute =
+		xsd:string {
 			pattern = ".*:.*" #FIXME
 		}
 
