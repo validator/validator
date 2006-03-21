@@ -4,3 +4,79 @@ form.data.accesskey =
 form.data.accept = 
 	string #FIXME
 	
+# See http://www.w3.org/TR/xforms/sliceE.html
+# http://www.w3.org/MarkUp/Forms/2002/XForms-Schema.xsd defines the datatype
+# of inputmode as xsd:string. Way to go!
+# Not bothering to check that Modifier Tokens follow only applicable 
+# Script Tokens. Chances are this whole thing is useless anyway.
+
+form.data.inputmodetoken = 
+	(	"arabic"
+	|	"armenian"
+	|	"bengali"
+	|	"bopomofo"
+	|	"braille"
+	|	"buhid"
+	|	"canadianAboriginal"
+	|	"cherokee"
+	|	"cyrillic"
+	|	"deseret"
+	|	"devanagari"
+	|	"ethiopic"
+	|	"georgian"
+	|	"greek"
+	|	"gothic"
+	|	"gujarati"
+	|	"gurmukhi"
+	|	"han"
+	|	"hangul"
+	|	"hanja"
+	|	"hanunoo"
+	|	"hebrew"
+	|	"hiragana"
+	|	"ipa"
+	|	"kanji"
+	|	"kannada"
+	|	"katakana"
+	|	"khmer"
+	|	"lao"
+	|	"latin"
+	|	"malayalam"
+	|	"math"
+	|	"mongolian"
+	|	"myanmar"
+	|	"ogham"
+	|	"oldItalic"
+	|	"oriya"
+	|	"runic"
+	|	"simplifiedHanzi"
+	|	"sinhala"
+	|	"syriac"
+	|	"tagalog"
+	|	"tagbanwa"
+	|	"tamil"
+	|	"telugu"
+	|	"thaana"
+	|	"thai"
+	|	"tibetan"
+	|	"traditionalHanzi"
+	|	"user"
+	|	"yi"
+	|	"lowerCase"
+	|	"upperCase"
+	|	"titleCase"
+	|	"startUpper"
+	|	"digits"
+	|	"symbols"
+	|	"predictOn"
+	|	"predictOff"
+#	|	"halfWidth" # deprecated
+	)
+
+form.data.inputmode = 
+	list { (form.data.inputmodetoken | common.data.absoluteuri)+ }
+	# Just assuming at least one token is required. The spec does not say.
+	# XForms seems to allow IRIs when it talks about URIs.
+			
+form.data.pattern = 
+	string #FIXME should be ECMAScript regexp. Dig into Rhino

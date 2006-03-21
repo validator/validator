@@ -89,10 +89,29 @@ input.attrs.autofocus =
 # REVISIT should this be case-insensitive in conforming XHTML documents?
 input.attrs.enctype = 
 	attribute enctype {
-		string "on" | string "off"
+		string "application/x-www-form-urlencoded" 
+		| string "multipart/form-data"
+		| string "application/x-www-form+xml"
+		| string "text/plain"
 	}
+
+input.attrs.form = 
+	attribute form {
+		common.data.idref
+	}
+	
+input.attrs.inputmode = 
+	attribute inputmode {
+		form.data.inputmode
+	}
+
 
 input.attrs.method = 
 	attribute method {
 		string "get" | string "post" | string "put" | string "delete"
+	}
+	
+input.attrs.pattern = 
+	attribute pattern {
+		form.data.pattern
 	}

@@ -209,6 +209,11 @@ common.attrs.present =
 	common.data.uris =
 		list { xsd:anyURI* }
 
+	common.data.absoluteuri =
+		string {
+			pattern = ".*:.*" #FIXME
+		}
+
 ## MIME types
 
 	common.data.mimetype =

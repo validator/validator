@@ -81,7 +81,15 @@ input.attrs.disabled =
 		string "disabled"
 	}
 
+input.attrs.maxlength = 
+	attribute maxlength {
+		common.data.integer.positive #REVIST should this be non-negative?
+	}
 
+input.attrs.name = 
+	attribute name {
+		string #REVIST should this be restricted somehow? No & and = perhaps?
+	}
 
 ## A free-form text field: <input type='text'>
 input.text.elem = 
