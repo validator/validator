@@ -1,0 +1,94 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Web Forms 1.0 markup                  #
+# #####################################################################
+
+# type discriminators
+
+input.attrs.type.text = 
+	attribute type {
+		string "text"
+	}
+
+input.attrs.type.password = 
+	attribute type {
+		string "password"
+	}
+
+input.attrs.type.checkbox = 
+	attribute type {
+		string "checkbax"
+	}
+
+input.attrs.type.radio = 
+	attribute type {
+		string "radio"
+	}
+
+input.attrs.type.button = 
+	attribute type {
+		string "button"
+	}
+
+input.attrs.type.submit = 
+	attribute type {
+		string "submit"
+	}
+
+input.attrs.type.reset = 
+	attribute type {
+		string "reset"
+	}
+
+input.attrs.type.file = 
+	attribute type {
+		string "file"
+	}
+
+input.attrs.type.hidden = 
+	attribute type {
+		string "hidden"
+	}
+
+input.attrs.type.image = 
+	attribute type {
+		string "image"
+	}
+
+# Other attributes
+
+input.attrs.accept = 
+	attribute accept {
+		form.data.accept
+	}
+
+input.attrs.accesskey = 
+	attribute accesskey {
+		form.data.accesskey
+	}
+
+input.attrs.alt = 
+	attribute alt {
+		string
+	}
+
+input.attrs.checked = 
+	attribute checked {
+		string "checked"
+	}
+
+input.attrs.disabled = 
+	attribute disabled {
+		string "disabled"
+	}
+
+
+
+## A free-form text field: <input type='text'>
+input.text.elem = 
+	element input { input.text.attrs }
+
+input.text.attrs = 
+	(	common.attrs
+	&	input.attrs.type.text?
+	&	input.attrs.accesskey?
+	)

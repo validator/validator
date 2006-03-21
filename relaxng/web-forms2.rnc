@@ -1,0 +1,98 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Web Forms 2.0 markup                  #
+# #####################################################################
+
+# type discriminators
+
+input.attrs.type.remove = 
+	attribute type {
+		string "remove"
+	}
+
+input.attrs.type.move-up = 
+	attribute type {
+		string "move-up"
+	}
+
+input.attrs.type.move-down = 
+	attribute type {
+		string "move-down"
+	}
+
+input.attrs.type.datetime = 
+	attribute type {
+		string "datetime"
+	}
+
+input.attrs.type.datetime-local = 
+	attribute type {
+		string "datetime-local"
+	}
+
+input.attrs.type.date = 
+	attribute type {
+		string "date"
+	}
+
+input.attrs.type.month = 
+	attribute type {
+		string "month"
+	}
+
+input.attrs.type.week = 
+	attribute type {
+		string "week"
+	}
+
+input.attrs.type.time = 
+	attribute type {
+		string "time"
+	}
+
+input.attrs.type.number = 
+	attribute type {
+		string "number"
+	}
+
+input.attrs.type.range = 
+	attribute type {
+		string "range"
+	}
+
+input.attrs.type.email = 
+	attribute type {
+		string "email"
+	}
+
+input.attrs.type.url = 
+	attribute type {
+		string "url"
+	}
+
+# Other attributes
+
+input.attrs.action = 
+	attribute action {
+		common.data.uri
+	}
+	
+input.attrs.autocomplete = 
+	attribute autocomplete {
+		string "on" | string "off"
+	}
+	
+input.attrs.autofocus = 
+	attribute autofocus {
+		string "autofocus"
+	}
+
+# REVISIT should this be case-insensitive in conforming XHTML documents?
+input.attrs.enctype = 
+	attribute enctype {
+		string "on" | string "off"
+	}
+
+input.attrs.method = 
+	attribute method {
+		string "get" | string "post" | string "put" | string "delete"
+	}
