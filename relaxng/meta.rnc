@@ -7,7 +7,15 @@
 	html.elem =
 		element html { html.inner & html.attrs }
 	html.attrs =
-		( common.attrs )
+		# This hack lets us restrict xml:base to <html> when nonRoundtrippable is empty
+		# credits to http://relaxng.org/pipermail/relaxng-user/2004-February/000384.html
+		grammar {
+			html.elem = parent html.elem
+			include "common.rnc" {
+				start = common.attrs
+				common.attrs.base = common.attrs.xmlbase
+			}
+		}
 	html.inner =
 		(	head.elem
 		,	body.elem
@@ -58,8 +66,9 @@
 
 ## Inline Character Encoding Statement for HTML
 
-	meta.elem.encoding = (HTMLonly &
-		element meta { empty & meta.attrs.encoding & common.attrs })
+	meta.elem.encoding =
+		element meta { empty & meta.attrs.encoding & common.attrs }
+		& HTMLonly
 	meta.attrs.encoding =
 		(	attribute http-equiv {
 				"Content-Type"
@@ -75,11 +84,13 @@
 
 ## Base URI: <base>
 
-	base.elem = (HTMLonly &
-		element base { base.inner & base.attrs })
+	base.elem =
+		element base { base.inner & base.attrs }
+		& HTMLonly
 	base.attrs =
 		(	common.attrs
-		&	base.attrs.href? )
+		&	base.attrs.href?
+		)
 	base.attrs.href =
 		attribute href {
 			common.data.uri

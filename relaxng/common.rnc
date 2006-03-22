@@ -17,17 +17,19 @@
 	HTMLonly = notAllowed
 
 ## HTML 4 Compatibility - set to notAllowed to disallow markup introduced in HTML 5
+#                         (This only affects mixed-version modules; wholly HTML5
+#                          modules should simply be left out of the inclusion list.)
 
 	v5only = empty
 
 ## HTML Compatibility Switches - set to notAllowed to disallow
 
 	## XML features that can't be roundtripped HTML <-> XHTML
-	#    (xml:base on elements other than <html>)
+	#  (xml:base on elements other than <html>)
 	nonRoundtrippable = empty
 
 	## XML features that can't be serialized as HTML
-	#    (structured inline elements in <p>)
+	#  (structured inline elements in <p>)
 	nonHTMLizable = empty
 
 # #####################################################################
@@ -119,7 +121,7 @@ common.attrs.basic =
 	(	common.attrs.id?
 	&	common.attrs.class?
 	&	common.attrs.title?
-	&	common.attrs.xmlbase?
+	&	common.attrs.base?
 	)
 	common.attrs.id =
 		attribute id {
@@ -133,10 +135,13 @@ common.attrs.basic =
 		attribute title {
 			text
 		}
-	common.attrs.xmlbase = (XMLonly &
+	common.attrs.base =
+		common.attrs.xmlbase
+		& nonRoundtrippable
+	common.attrs.xmlbase =
 		attribute xml:base {
 			xsd:anyURI
-		})
+		} & XMLonly
 
 common.attrs.i18n =
 	(	common.attrs.dir?
@@ -150,14 +155,14 @@ common.attrs.i18n =
 		(	common.attrs.lang
 		|	common.attrs.xmllang
 		)
-	common.attrs.lang = (HTMLonly &
+	common.attrs.lang =
 		attribute lang {
 			common.data.langcode
-		})
-	common.attrs.xmllang = (XMLonly &
+		} & HTMLonly
+	common.attrs.xmllang =
 		attribute xml:lang {
 			common.data.langcode
-		})
+		} & XMLonly
 
 common.attrs.present =
 	(	common.attrs.style?
