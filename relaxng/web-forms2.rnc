@@ -105,6 +105,10 @@ input.attrs.inputmode =
 		form.data.inputmode
 	}
 
+input.attrs.list = 
+	attribute list {
+		common.data.idref
+	}
 
 input.attrs.method = 
 	attribute method {
@@ -135,3 +139,102 @@ input.attrs.required =
 	attribute required {
 		string "required"
 	}
+
+input.attrs.target = 
+	attribute target {
+		string #REVISIT the spec does not appear to say what the datatype is
+	}
+	
+input.attrs.template = 
+	attribute template {
+		common.data.idref #REVISIT the spec does not explicitly say this
+	}
+
+
+## A free-form text field: <input type='text'>, extensions
+input.text.attrs &= input.attrs.autocomplete? 
+input.text.attrs &= input.attrs.autofocus? 
+input.text.attrs &= input.attrs.form? 
+input.text.attrs &= input.attrs.inputmode? 
+input.text.attrs &= input.attrs.list? 
+input.text.attrs &= input.attrs.pattern? 
+input.text.attrs &= input.attrs.required? 
+
+
+## A free-form text field for sensitive information: <input type='password'>,
+## extensions
+input.password.attrs &= input.attrs.autocomplete? 
+input.password.attrs &= input.attrs.autofocus? 
+input.password.attrs &= input.attrs.form? 
+input.password.attrs &= input.attrs.inputmode? 
+input.password.attrs &= input.attrs.pattern? 
+input.password.attrs &= input.attrs.required? 
+
+
+## A set of zero or more values from a predefined list: 
+## <input type='checkbox'>, extensions
+input.checkbox.attrs &= input.attrs.autofocus? 
+input.checkbox.attrs &= input.attrs.form? 
+input.checkbox.attrs &= input.attrs.required? 
+
+
+## An enumerated value.: <input type='radio'>, extensions
+input.radio.attrs &= input.attrs.autofocus? 
+input.radio.attrs &= input.attrs.form? 
+input.radio.attrs &= input.attrs.required? 
+
+
+## Scripting hook button: <input type='button'>, extensions
+input.button.attrs &= input.attrs.autofocus? 
+input.button.attrs &= input.attrs.form? 
+
+
+## An enumerated value that initiates form submission: <input type='submit'>,
+## extensions
+input.submit.attrs &= input.attrs.action? 
+input.submit.attrs &= input.attrs.autofocus? 
+input.submit.attrs &= input.attrs.enctype? 
+input.submit.attrs &= input.attrs.form? 
+input.submit.attrs &= input.attrs.method? 
+input.submit.attrs &= input.attrs.replace? 
+input.submit.attrs &= input.attrs.target? 
+
+
+## Resetting the form: <input type='reset'>, extensions
+input.reset.attrs &= input.attrs.autofocus? 
+input.reset.attrs &= input.attrs.form? 
+input.reset.attrs &= input.attrs.method? 
+
+
+## File upload: <input type='file'>, extensions
+input.file.attrs &= input.attrs.autofocus? 
+input.file.attrs &= input.attrs.form? 
+input.file.attrs &= input.attrs.min.file? 
+input.file.attrs &= input.attrs.max.file? 
+
+input.attrs.min.file =
+	attribute min {
+		form.data.integer.non-negative
+	}
+
+input.attrs.max.file =
+	attribute max {
+		common.data.integer.positive
+	}
+
+
+## Hidden string: <input type='hidden'>, extensions
+input.hidden.attrs &= input.attrs.form?
+
+
+## A coordinate that initiates form submission: <input type='image'>,
+## extensions
+input.image.attrs &= input.attrs.action? 
+input.image.attrs &= input.attrs.autofocus? 
+input.image.attrs &= input.attrs.enctype? 
+input.image.attrs &= input.attrs.form? 
+input.image.attrs &= input.attrs.method? 
+input.image.attrs &= input.attrs.replace? 
+input.image.attrs &= input.attrs.target? 
+
+

@@ -83,3 +83,6 @@ form.data.pattern =
 	
 form.data.float.positive =
 	string #FIXME
+
+form.data.integer.non-negative =
+	string #FIXME
