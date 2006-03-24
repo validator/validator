@@ -238,3 +238,294 @@ input.image.attrs &= input.attrs.replace?
 input.image.attrs &= input.attrs.target? 
 
 
+## Add a repetition template instance: <input type='add'>
+input.add.elem = 
+	element input { input.add.attrs }
+
+input.add.attrs = 
+	(	common.attrs
+	&	input.attrs.type.add
+	&	input.attrs.accesskey?
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.name? 
+	&	input.attrs.template? 
+	&	input.attrs.value.add? 
+	)
+	
+	input.attrs.value.add =
+		attribute value {
+			string			
+		}
+	
+input.elem |= input.add.elem
+
+
+## Remove this repetition template instance: <input type='remove'>
+input.remove.elem = 
+	element input { input.remove.attrs }
+
+input.remove.attrs = 
+	(	common.attrs
+	&	input.attrs.type.remove
+	&	input.attrs.accesskey?
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.name? 
+	&	input.attrs.value.remove? 
+	)
+	
+	input.attrs.value.remove =
+		attribute value {
+			string			
+		}
+	
+input.elem |= input.remove.elem
+
+
+## Move this repetition template instance up: <input type='move-up'>
+input.move-up.elem = 
+	element input { input.move-up.attrs }
+
+input.move-up.attrs = 
+	(	common.attrs
+	&	input.attrs.type.move-up
+	&	input.attrs.accesskey?
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.name? 
+	&	input.attrs.value.move-up? 
+	)
+	
+	input.attrs.value.move-up =
+		attribute value {
+			string			
+		}
+	
+input.elem |= input.move-up.elem
+
+
+## Move this repetition template instance down: <input type='move-down'>
+input.move-down.elem = 
+	element input { input.move-down.attrs }
+
+input.move-down.attrs = 
+	(	common.attrs
+	&	input.attrs.type.move-down
+	&	input.attrs.accesskey?
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.name? 
+	&	input.attrs.value.move-down? 
+	)
+	
+	input.attrs.value.move-down =
+		attribute value {
+			string			
+		}
+	
+input.elem |= input.move-down.elem
+
+
+## A date and time with the time zone set to UTC: <input type='datetime'>
+input.datetime.elem = 
+	element input { input.datetime.attrs }
+
+input.datetime.attrs = 
+	(	common.attrs
+	&	input.attrs.type.datetime
+	&	input.attrs.accesskey?
+	&	input.attrs.autocomplete? 
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.list? 
+	&	input.attrs.min.datetime? 
+	&	input.attrs.max.datetime? 
+	&	input.attrs.name? 
+	&	input.attrs.step.float? 
+	&	input.attrs.readonly? 
+	&	input.attrs.required? 
+	&	input.attrs.value.datetime? 
+	)
+	
+	input.attrs.value.datetime =
+		attribute value {
+			form.data.datetime
+		}
+	
+	input.attrs.min.datetime =
+		attribute min {
+			form.data.datetime
+		}
+
+	input.attrs.max.datetime =
+		attribute max {
+			form.data.datetime			
+		}
+	
+input.elem |= input.datetime.elem
+
+
+## A date and time with no time zone information: <input type='datetime-local'>
+input.datetime-local.elem = 
+	element input { input.datetime-local.attrs }
+
+input.datetime-local.attrs = 
+	(	common.attrs
+	&	input.attrs.type.datetime-local
+	&	input.attrs.accesskey?
+	&	input.attrs.autocomplete? 
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.list? 
+	&	input.attrs.min.datetime-local? 
+	&	input.attrs.max.datetime-local? 
+	&	input.attrs.name? 
+	&	input.attrs.step.float? 
+	&	input.attrs.readonly? 
+	&	input.attrs.required? 
+	&	input.attrs.value.datetime-local? 
+	)
+	
+	input.attrs.value.datetime-local =
+		attribute value {
+			form.data.datetime-local
+		}
+	
+	input.attrs.min.datetime-local =
+		attribute min {
+			form.data.datetime-local
+		}
+
+	input.attrs.max.datetime-local =
+		attribute max {
+			form.data.datetime-local			
+		}
+	
+input.elem |= input.datetime-local.elem
+
+
+## A date: <input type='date'>
+input.date.elem = 
+	element input { input.date.attrs }
+
+input.date.attrs = 
+	(	common.attrs
+	&	input.attrs.type.date
+	&	input.attrs.accesskey?
+	&	input.attrs.autocomplete? 
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.list? 
+	&	input.attrs.min.date? 
+	&	input.attrs.max.date? 
+	&	input.attrs.name? 
+	&	input.attrs.step.integer? 
+	&	input.attrs.readonly? 
+	&	input.attrs.required? 
+	&	input.attrs.value.date? 
+	)
+	
+	input.attrs.value.date =
+		attribute value {
+			form.data.date
+		}
+	
+	input.attrs.min.date =
+		attribute min {
+			form.data.date
+		}
+
+	input.attrs.max.date =
+		attribute max {
+			form.data.date			
+		}
+	
+input.elem |= input.date.elem
+
+
+## A year and a month: <input type='month'>
+input.month.elem = 
+	element input { input.month.attrs }
+
+input.month.attrs = 
+	(	common.attrs
+	&	input.attrs.type.month
+	&	input.attrs.accesskey?
+	&	input.attrs.autocomplete? 
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.list? 
+	&	input.attrs.min.month? 
+	&	input.attrs.max.month? 
+	&	input.attrs.name? 
+	&	input.attrs.step.integer? 
+	&	input.attrs.readonly? 
+	&	input.attrs.required? 
+	&	input.attrs.value.month? 
+	)
+	
+	input.attrs.value.month =
+		attribute value {
+			form.data.month
+		}
+	
+	input.attrs.min.month =
+		attribute min {
+			form.data.month
+		}
+
+	input.attrs.max.month =
+		attribute max {
+			form.data.month			
+		}
+	
+input.elem |= input.month.elem
+
+
+## A time without time zone information: <input type='time'>
+input.time.elem = 
+	element input { input.time.attrs }
+
+input.time.attrs = 
+	(	common.attrs
+	&	input.attrs.type.time
+	&	input.attrs.accesskey?
+	&	input.attrs.autocomplete? 
+	&	input.attrs.autofocus? 
+	&	input.attrs.disabled? 
+	&	input.attrs.form? 
+	&	input.attrs.list? 
+	&	input.attrs.min.time? 
+	&	input.attrs.max.time? 
+	&	input.attrs.name? 
+	&	input.attrs.step.float? 
+	&	input.attrs.readonly? 
+	&	input.attrs.required? 
+	&	input.attrs.value.time? 
+	)
+	
+	input.attrs.value.time =
+		attribute value {
+			form.data.time
+		}
+	
+	input.attrs.min.time =
+		attribute min {
+			form.data.time
+		}
+
+	input.attrs.max.time =
+		attribute max {
+			form.data.time			
+		}
+	
+input.elem |= input.time.elem
