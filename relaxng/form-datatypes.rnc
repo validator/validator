@@ -86,3 +86,21 @@ form.data.float.positive =
 
 form.data.integer.non-negative =
 	string #FIXME
+
+form.data.datetime =
+	string #FIXME
+
+form.data.datetime-local =
+	string #FIXME
+
+form.data.date =
+	string #FIXME
+
+form.data.month =
+	string #FIXME
+
+form.data.week =
+	string #FIXME
+
+form.data.time =
+	string #FIXME
