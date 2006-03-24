@@ -30,7 +30,7 @@
 	
 	input.attrs.form = 
 		attribute form {
-			common.data.idref
+			common.data.idrefs #REVISIT spec says space--not whitespace
 		}
 		
 	input.attrs.inputmode = 
@@ -55,12 +55,12 @@
 	
 	input.attrs.step.float = 
 		attribute step {
-			form.data.float.positive
+			string "any" | common.data.float.positive
 		}
 	
 	input.attrs.step.integer = 
 		attribute step {
-			common.data.integer.positive 
+			string "any" | common.data.integer.positive 
 		}
 		
 	input.attrs.replace = 
@@ -77,13 +77,9 @@
 		attribute target {
 			string #REVISIT the spec does not appear to say what the datatype is
 		}
-		
-	input.attrs.template = 
-		attribute template {
-			common.data.idref #REVISIT the spec does not explicitly say this
-		}
 	
-## A free-form text field: <input type='text'>, extensions
+## Text Field: <input type='text'>, Extensions
+
 	input.text.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
@@ -94,8 +90,8 @@
 		&	input.attrs.required? 
 		)
 
-## A free-form text field for sensitive information: <input type='password'>,
-## extensions
+## Password Field: <input type='password'>, Extensions
+
 	input.password.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
@@ -105,29 +101,31 @@
 		&	input.attrs.required? 
 		)
 
-## A set of zero or more values from a predefined list: 
-## <input type='checkbox'>, extensions
+## Checkbox <input type='checkbox'>, Extensions
+
 	input.checkbox.attrs &=
 		(	input.attrs.autofocus? 
 		&	input.attrs.form? 
 		&	input.attrs.required? 
 		)
 
-## An enumerated value.: <input type='radio'>, extensions
+## Radiobutton: <input type='radio'>, Extensions
+
 	input.radio.attrs &=
 		(	input.attrs.autofocus? 
 		&	input.attrs.form? 
 		&	input.attrs.required? 
 		)
 
-## Scripting hook button: <input type='button'>, extensions
+## Scripting Hook Button: <input type='button'>, Extensions
+
 	input.button.attrs &=
 		(	input.attrs.autofocus? 
 		&	input.attrs.form? 
 		)
 
-## An enumerated value that initiates form submission: <input type='submit'>,
-## extensions
+## Submit Button: <input type='submit'>, Extensions
+
 	input.submit.attrs &=
 		(	input.attrs.action? 
 		&	input.attrs.autofocus? 
@@ -138,39 +136,40 @@
 		&	input.attrs.target? 
 		)
 
-## Resetting the form: <input type='reset'>, extensions
+## Reset Button: <input type='reset'>, Extensions
+
 	input.reset.attrs &=
 		(	input.attrs.autofocus? 
 		&	input.attrs.form? 
 		&	input.attrs.method? 
 		)
 
-## File upload: <input type='file'>, extensions
+## File Upload: <input type='file'>, Extensions
+
 	input.file.attrs &=
 		(	input.attrs.autofocus? 
 		&	input.attrs.form? 
-		&	input.attrs.min.file? 
-		&	input.attrs.max.file? 
+		&	input.file.attrs.min? 
+		&	input.file.attrs.max? 
 		)
-
-		input.attrs.min.file =
+		input.file.attrs.min =
 			attribute min {
-				form.data.integer.non-negative
+				common.data.integer.non-negative
 			}
-	
-		input.attrs.max.file =
+		input.file.attrs.max =
 			attribute max {
 				common.data.integer.positive
 			}
 
 
-## Hidden string: <input type='hidden'>, extensions
+## Hidden String: <input type='hidden'>, Extensions
+
 	input.hidden.attrs &=
 		(	input.attrs.form?
 		)
 
-## A coordinate that initiates form submission: <input type='image'>,
-## extensions
+## Image Submit Button: <input type='image'>, Extensions
+
 	input.image.attrs &=
 		(	input.attrs.action? 
 		&	input.attrs.autofocus? 
@@ -181,339 +180,537 @@
 		&	input.attrs.target? 
 		)
 
-## Add a repetition template instance: <input type='add'>
-input.add.elem = 
-	element input { input.add.attrs }
+## Add Button: <input type='add'>
 
-input.add.attrs = 
-	(	common.attrs
-	&	input.attrs.type.add
-	&	input.attrs.accesskey?
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.name? 
-	&	input.attrs.template? 
-	&	input.attrs.value.add? 
-	)
-	
-	input.attrs.type.add = 
-		attribute type {
-			string "add"
-		}
-	
-	input.attrs.value.add =
-		attribute value {
-			string			
-		}
-	
-input.elem |= input.add.elem
+	input.add.elem = 
+		element input { input.add.attrs }	
+	input.add.attrs = 
+		(	common.attrs
+		&	input.add.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.name? 
+		&	input.add.attrs.template? 
+		&	input.add.attrs.value? 
+		)
+		input.add.attrs.type = 
+			attribute type {
+				string "add"
+			}
+		input.add.attrs.template = 
+			attribute template {
+				common.data.idref #REVISIT the spec does not explicitly say this
+			}
+		input.add.attrs.value =
+			attribute value {
+				string			
+			}
+		
+	input.elem |= input.add.elem
 
+## Remove Button: <input type='remove'>
 
-## Remove this repetition template instance: <input type='remove'>
-input.remove.elem = 
-	element input { input.remove.attrs }
+	input.remove.elem = 
+		element input { input.remove.attrs }
+	input.remove.attrs = 
+		(	common.attrs
+		&	input.remove.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.name? 
+		&	input.remove.attrs.value? 
+		)
+		input.remove.attrs.type = 
+			attribute type {
+				string "remove"
+			}	
+		input.remove.attrs.value =
+			attribute value {
+				string			
+			}
+		
+	input.elem |= input.remove.elem
+		
+## Move Up Button: <input type='move-up'>
 
-input.remove.attrs = 
-	(	common.attrs
-	&	input.attrs.type.remove
-	&	input.attrs.accesskey?
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.name? 
-	&	input.attrs.value.remove? 
-	)
-	
-	input.attrs.type.remove = 
-		attribute type {
-			string "remove"
-		}
-	
-	input.attrs.value.remove =
-		attribute value {
-			string			
-		}
-	
-input.elem |= input.remove.elem
+	input.move-up.elem = 
+		element input { input.move-up.attrs }
+	input.move-up.attrs = 
+		(	common.attrs
+		&	input.move.attrs.type-up
+		&	input.attrs.accesskey?
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.name? 
+		&	input.move.attrs.value-up? 
+		)
+		input.move.attrs.type-up = 
+			attribute type {
+				string "move-up"
+			}
+		input.move.attrs.value-up =
+			attribute value {
+				string			
+			}
+		
+	input.elem |= input.move-up.elem
 
+## Move Down Button: <input type='move-down'>
 
-## Move this repetition template instance up: <input type='move-up'>
-input.move-up.elem = 
-	element input { input.move-up.attrs }
+	input.move-down.elem = 
+		element input { input.move-down.attrs }
+	input.move-down.attrs = 
+		(	common.attrs
+		&	input.move.attrs.type-down
+		&	input.attrs.accesskey?
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.name? 
+		&	input.move.attrs.value-down? 
+		)
+		input.move.attrs.type-down = 
+			attribute type {
+				string "move-down"
+			}
+		input.move.attrs.value-down =
+			attribute value {
+				string			
+			}
+		
+	input.elem |= input.move-down.elem
+	
 
-input.move-up.attrs = 
-	(	common.attrs
-	&	input.attrs.type.move-up
-	&	input.attrs.accesskey?
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.name? 
-	&	input.attrs.value.move-up? 
-	)
-	
-	input.attrs.type.move-up = 
-		attribute type {
-			string "move-up"
-		}
-	
-	input.attrs.value.move-up =
-		attribute value {
-			string			
-		}
-	
-input.elem |= input.move-up.elem
+## Date and Time with Time Zone Set to UTC: <input type='datetime'>
 
+	input.datetime.elem = 
+		element input { input.datetime.attrs }	
+	input.datetime.attrs = 
+		(	common.attrs
+		&	input.datetime.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.datetime.attrs.min? 
+		&	input.datetime.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.float? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.datetime.attrs.value? 
+		)	
+		input.datetime.attrs.type = 
+			attribute type {
+				string "datetime"
+			}
+		input.datetime.attrs.min =
+			attribute min {
+				form.data.datetime
+			}
+		input.datetime.attrs.max =
+			attribute max {
+				form.data.datetime			
+			}	
+		input.datetime.attrs.value =
+			attribute value {
+				form.data.datetime
+			}
+		
+	input.elem |= input.datetime.elem
 
-## Move this repetition template instance down: <input type='move-down'>
-input.move-down.elem = 
-	element input { input.move-down.attrs }
+## Date and Time with No Time Zone Information: <input type='datetime-local'>
 
-input.move-down.attrs = 
-	(	common.attrs
-	&	input.attrs.type.move-down
-	&	input.attrs.accesskey?
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.name? 
-	&	input.attrs.value.move-down? 
-	)
-	
-	input.attrs.type.move-down = 
-		attribute type {
-			string "move-down"
-		}
-	
-	input.attrs.value.move-down =
-		attribute value {
-			string			
-		}
-	
-input.elem |= input.move-down.elem
+	input.datetime-local.elem = 
+		element input { input.datetime-local.attrs }
+	input.datetime-local.attrs = 
+		(	common.attrs
+		&	input.datetime-local.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.datetime-local.attrs.min? 
+		&	input.datetime-local.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.float? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.datetime-local.attrs.value? 
+		)	
+		input.datetime-local.attrs.type = 
+			attribute type {
+				string "datetime-local"
+			}
+		input.datetime-local.attrs.min =
+			attribute min {
+				form.data.datetime-local
+			}
+		input.datetime-local.attrs.max =
+			attribute max {
+				form.data.datetime-local			
+			}	
+		input.datetime-local.attrs.value =
+			attribute value {
+				form.data.datetime-local
+			}
+		
+	input.elem |= input.datetime-local.elem
 
+## Date: <input type='date'>
 
-## A date and time with the time zone set to UTC: <input type='datetime'>
-input.datetime.elem = 
-	element input { input.datetime.attrs }
+	input.date.elem = 
+		element input { input.date.attrs }
+	input.date.attrs = 
+		(	common.attrs
+		&	input.date.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.date.attrs.min? 
+		&	input.date.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.integer? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.date.attrs.value? 
+		)	
+		input.date.attrs.type = 
+			attribute type {
+				string "date"
+			}
+		input.date.attrs.min =
+			attribute min {
+				form.data.date
+			}
+		input.date.attrs.max =
+			attribute max {
+				form.data.date			
+			}	
+		input.date.attrs.value =
+			attribute value {
+				form.data.date
+			}
+		
+	input.elem |= input.date.elem
 
-input.datetime.attrs = 
-	(	common.attrs
-	&	input.attrs.type.datetime
-	&	input.attrs.accesskey?
-	&	input.attrs.autocomplete? 
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.list? 
-	&	input.attrs.min.datetime? 
-	&	input.attrs.max.datetime? 
-	&	input.attrs.name? 
-	&	input.attrs.step.float? 
-	&	input.attrs.readonly? 
-	&	input.attrs.required? 
-	&	input.attrs.value.datetime? 
-	)
-	
-	input.attrs.type.datetime = 
-		attribute type {
-			string "datetime"
-		}
-	
-	input.attrs.value.datetime =
-		attribute value {
-			form.data.datetime
-		}
-	
-	input.attrs.min.datetime =
-		attribute min {
-			form.data.datetime
-		}
+## Year and Month: <input type='month'>
 
-	input.attrs.max.datetime =
-		attribute max {
-			form.data.datetime			
-		}
-	
-input.elem |= input.datetime.elem
+	input.month.elem = 
+		element input { input.month.attrs }
+	input.month.attrs = 
+		(	common.attrs
+		&	input.month.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.month.attrs.min? 
+		&	input.month.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.integer? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.month.attrs.value? 
+		)	
+		input.month.attrs.type = 
+			attribute type {
+				string "month"
+			}
+		input.month.attrs.min =
+			attribute min {
+				form.data.month
+			}
+		input.month.attrs.max =
+			attribute max {
+				form.data.month			
+			}	
+		input.month.attrs.value =
+			attribute value {
+				form.data.month
+			}
+		
+	input.elem |= input.month.elem
 
+## Time without Time Zone Information: <input type='time'>
 
-## A date and time with no time zone information: <input type='datetime-local'>
-input.datetime-local.elem = 
-	element input { input.datetime-local.attrs }
+	input.time.elem = 
+		element input { input.time.attrs }
+	input.time.attrs = 
+		(	common.attrs
+		&	input.time.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.time.attrs.min? 
+		&	input.time.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.float? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.time.attrs.value? 
+		)	
+		input.time.attrs.type = 
+			attribute type {
+				string "time"
+			}
+		input.time.attrs.min =
+			attribute min {
+				form.data.time
+			}
+		input.time.attrs.max =
+			attribute max {
+				form.data.time			
+			}	
+		input.time.attrs.value =
+			attribute value {
+				form.data.time
+			}
+		
+	input.elem |= input.time.elem
 
-input.datetime-local.attrs = 
-	(	common.attrs
-	&	input.attrs.type.datetime-local
-	&	input.attrs.accesskey?
-	&	input.attrs.autocomplete? 
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.list? 
-	&	input.attrs.min.datetime-local? 
-	&	input.attrs.max.datetime-local? 
-	&	input.attrs.name? 
-	&	input.attrs.step.float? 
-	&	input.attrs.readonly? 
-	&	input.attrs.required? 
-	&	input.attrs.value.datetime-local? 
-	)
-	
-	input.attrs.type.datetime-local = 
-		attribute type {
-			string "datetime-local"
-		}
-	
-	input.attrs.value.datetime-local =
-		attribute value {
-			form.data.datetime-local
-		}
-	
-	input.attrs.min.datetime-local =
-		attribute min {
-			form.data.datetime-local
-		}
+## Year and Week: <input type='week'>
 
-	input.attrs.max.datetime-local =
-		attribute max {
-			form.data.datetime-local			
-		}
-	
-input.elem |= input.datetime-local.elem
+	input.week.elem = 
+		element input { input.week.attrs }
+	input.week.attrs = 
+		(	common.attrs
+		&	input.week.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.week.attrs.min? 
+		&	input.week.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.integer? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.week.attrs.value? 
+		)	
+		input.week.attrs.type = 
+			attribute type {
+				string "week"
+			}
+		input.week.attrs.min =
+			attribute min {
+				form.data.week
+			}
+		input.week.attrs.max =
+			attribute max {
+				form.data.week			
+			}	
+		input.week.attrs.value =
+			attribute value {
+				form.data.week
+			}
+		
+	input.elem |= input.week.elem
 
+## Number: <input type='number'>
 
-## A date: <input type='date'>
-input.date.elem = 
-	element input { input.date.attrs }
+	input.number.elem = 
+		element input { input.number.attrs }
+	input.number.attrs = 
+		(	common.attrs
+		&	input.number.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.number.attrs.min? 
+		&	input.number.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.float? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.number.attrs.value? 
+		)	
+		input.number.attrs.type = 
+			attribute type {
+				string "number"
+			}
+		input.number.attrs.min =
+			attribute min {
+				common.data.float
+			}
+		input.number.attrs.max =
+			attribute max {
+				common.data.float			
+			}	
+		input.number.attrs.value =
+			attribute value {
+				common.data.float
+			}
+		
+	input.elem |= input.number.elem
 
-input.date.attrs = 
-	(	common.attrs
-	&	input.attrs.type.date
-	&	input.attrs.accesskey?
-	&	input.attrs.autocomplete? 
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.list? 
-	&	input.attrs.min.date? 
-	&	input.attrs.max.date? 
-	&	input.attrs.name? 
-	&	input.attrs.step.integer? 
-	&	input.attrs.readonly? 
-	&	input.attrs.required? 
-	&	input.attrs.value.date? 
-	)
-	
-	input.attrs.type.date = 
-		attribute type {
-			string "date"
-		}
-	
-	input.attrs.value.date =
-		attribute value {
-			form.data.date
-		}
-	
-	input.attrs.min.date =
-		attribute min {
-			form.data.date
-		}
+## Imprecise Number: <input type='range'>
 
-	input.attrs.max.date =
-		attribute max {
-			form.data.date			
-		}
-	
-input.elem |= input.date.elem
+	input.range.elem = 
+		element input { input.range.attrs }
+	input.range.attrs = 
+		(	common.attrs
+		&	input.range.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.list? 
+		&	input.range.attrs.min? 
+		&	input.range.attrs.max? 
+		&	input.attrs.name? 
+		&	input.attrs.step.float? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.range.attrs.value? 
+		)	
+		input.range.attrs.type = 
+			attribute type {
+				string "range"
+			}
+		input.range.attrs.min =
+			attribute min {
+				common.data.float
+			}
+		input.range.attrs.max =
+			attribute max {
+				common.data.float			
+			}	
+		input.range.attrs.value =
+			attribute value {
+				common.data.float
+			}
+		
+	input.elem |= input.range.elem
 
+## Email Address: <input type='email'>
 
-## A year and a month: <input type='month'>
-input.month.elem = 
-	element input { input.month.attrs }
+	input.email.elem = 
+		element input { input.email.attrs }	
+	input.email.attrs = 
+		(	common.attrs
+		&	input.email.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.inputmode? 
+		&	input.attrs.list? 
+		&	input.attrs.maxlength? 
+		&	input.attrs.name? 
+		&	input.attrs.pattern? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.email.attrs.value? 
+		)	
+		input.email.attrs.type = 
+			attribute type {
+				string "email"
+			}
+		input.email.attrs.value =
+			attribute value {
+				form.data.email
+			}
+		
+	input.elem |= input.email.elem
 
-input.month.attrs = 
-	(	common.attrs
-	&	input.attrs.type.month
-	&	input.attrs.accesskey?
-	&	input.attrs.autocomplete? 
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.list? 
-	&	input.attrs.min.month? 
-	&	input.attrs.max.month? 
-	&	input.attrs.name? 
-	&	input.attrs.step.integer? 
-	&	input.attrs.readonly? 
-	&	input.attrs.required? 
-	&	input.attrs.value.month? 
-	)
-	
-	input.attrs.type.month = 
-		attribute type {
-			string "month"
-		}
-	
-	input.attrs.value.month =
-		attribute value {
-			form.data.month
-		}
-	
-	input.attrs.min.month =
-		attribute min {
-			form.data.month
-		}
+## IRI: <input type='url'>
 
-	input.attrs.max.month =
-		attribute max {
-			form.data.month			
-		}
-	
-input.elem |= input.month.elem
+	input.url.elem = 
+		element input { input.url.attrs }	
+	input.url.attrs = 
+		(	common.attrs
+		&	input.url.attrs.type
+		&	input.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	input.attrs.autofocus? 
+		&	input.attrs.disabled? 
+		&	input.attrs.form? 
+		&	input.attrs.inputmode? 
+		&	input.attrs.list? 
+		&	input.attrs.maxlength? 
+		&	input.attrs.name? 
+		&	input.attrs.pattern? 
+		&	input.attrs.readonly? 
+		&	input.attrs.required? 
+		&	input.url.attrs.value? 
+		)	
+		input.url.attrs.type = 
+			attribute type {
+				string "url"
+			}
+		input.url.attrs.value =
+			attribute value {
+				common.data.uri.absolute
+			}
+		
+	input.elem |= input.url.elem
 
+## Form Output: <output>
 
-## A time without time zone information: <input type='time'>
-input.time.elem = 
-	element input { input.time.attrs }
+	output.elem =
+		element output { output.inner & output.attrs }
+	output.elem.static =
+		element output { output.inner.static & output.attrs }
+	output.elem.strict =
+		element output { output.inner.strict & output.attrs }
+	output.elem.strict.static =
+		element output { output.inner.strict.static & output.attrs }
+	output.attrs =
+		(	common.attrs
+		&	output.attrs.name?
+		&	output.attrs.form?
+		&	output.attrs.for?
+		#FIXME figure out how onchange, onforminput and onformchange
+		#fit together with a scripting module.
+		)
+		output.attrs.name = 
+			attribute name {
+				string #REVISIT should this be restricted somehow? 
+				       #No & and = perhaps?
+			}
+		output.attrs.form = 
+			attribute form {
+				common.data.idrefs #REVISIT spec says space--not whitespace
+			}
+		output.attrs.for = 
+			attribute for {
+				common.data.idrefs #REVISIT spec says space--not whitespace
+			}
+	output.inner =
+		( common.inner.struct-inline )
+	output.inner.static =
+		( common.inner.struct-inline.static )
+	output.inner.strict =
+		( common.inner.strict-inline )
+	output.inner.strict.static =
+		( common.inner.strict-inline.static )
 
-input.time.attrs = 
-	(	common.attrs
-	&	input.attrs.type.time
-	&	input.attrs.accesskey?
-	&	input.attrs.autocomplete? 
-	&	input.attrs.autofocus? 
-	&	input.attrs.disabled? 
-	&	input.attrs.form? 
-	&	input.attrs.list? 
-	&	input.attrs.min.time? 
-	&	input.attrs.max.time? 
-	&	input.attrs.name? 
-	&	input.attrs.step.float? 
-	&	input.attrs.readonly? 
-	&	input.attrs.required? 
-	&	input.attrs.value.time? 
-	)
-	
-	input.attrs.type.time = 
-		attribute type {
-			string "time"
-		}
-	
-	input.attrs.value.time =
-		attribute value {
-			form.data.time
-		}
-	
-	input.attrs.min.time =
-		attribute min {
-			form.data.time
-		}
-
-	input.attrs.max.time =
-		attribute max {
-			form.data.time			
-		}
-	
-input.elem |= input.time.elem
+	common.inner.struct-inline &= output.elem*
+	common.inner.struct-inline.static &= output.elem.static*
+	common.inner.strict-inline &= output.elem.strict*
+	common.inner.strict-inline.static &= output.elem.strict.static*

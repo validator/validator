@@ -186,16 +186,19 @@ common.attrs.present =
 	common.data.tokens =
 		list { token* }
 
+	common.data.character = 
+		string #FIXME
+
 ## IDs and IDREFs
 
 	common.data.id =
-		xsd:ID
+		xsd:ID #FIXME too constrained
 
 	common.data.idref =
-		xsd:IDREF
+		xsd:IDREF #FIXME too constrained
 
 	common.data.idrefs =
-		xsd:IDREFS
+		xsd:IDREFS #FIXME too constrained
 
 ## Numerical
 
@@ -209,6 +212,17 @@ common.attrs.present =
 			pattern = "\d+"
 		}
 
+	common.data.integer.non-negative =
+		xsd:nonNegativeInteger {
+			pattern = "[^+].*"
+		}
+		
+	common.data.float =
+		string #FIXME
+
+	common.data.float.positive =
+		string #FIXME
+		
 ## Temporal
 
 	common.data.datetime =
@@ -219,20 +233,22 @@ common.attrs.present =
 ## IRIs
 
 	common.data.uri =
-		"" | xsd:anyURI
+		"" | xsd:anyURI #REVISIT may be too permissive
 
 	common.data.uris =
-		list { xsd:anyURI* }
+		list { xsd:anyURI* } #REVISIT may be too permissive
 
 	common.data.uri.absolute =
 		xsd:string {
-			pattern = ".*:.*" #FIXME
+			pattern = ".*:.*" #FIXME import Bjoern Hoerhmann's library?
 		}
 
 ## MIME types
 
 	common.data.mimetype =
 		string #FIXME import regex later
+
+	#FIXME need mimetype with and without params
 
 ## Media Queries
 

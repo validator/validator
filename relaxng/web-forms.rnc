@@ -3,20 +3,10 @@
 # #####################################################################
 
 # Shared attributes
-
-	input.attrs.accept = 
-		attribute accept {
-			form.data.accept
-		}
 	
 	input.attrs.accesskey = 
 		attribute accesskey {
-			form.data.accesskey
-		}
-	
-	input.attrs.alt = 
-		attribute alt {
-			string
+			common.data.character
 		}
 	
 	input.attrs.checked = 
@@ -44,196 +34,171 @@
 			string "readonly"
 		}
 	
-	input.attrs.src = 
-		attribute src {
-			common.data.uri
-		}
-	
 	# REVISIT tabindex goes in common.attrs in WA 1.0
 
 
-## A free-form text field: <input type='text'>
+## Text Field: <input type='text'>
 
 	input.text.elem = 
 		element input { input.text.attrs }
-	
 	input.text.attrs = 
 		(	common.attrs
-		&	input.attrs.type.text?
+		&	input.text.attrs.type?
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.maxlength? 
 		&	input.attrs.name? 
 		&	input.attrs.readonly? 
-		&	input.attrs.value.text? 
-		)
-		
-		input.attrs.type.text = 
+		&	input.text.attrs.value? 
+		)		
+		input.text.attrs.type = 
 			attribute type {
 				string "text"
 			}
-		
-		input.attrs.value.text =
+		input.text.attrs.value =
 			attribute value {
 				string #REVISIT "nominally" free of line breaks?
 			}
 		
 	input.elem = input.text.elem
 
-## A free-form text field for sensitive information: <input type='password'>
+## Password Field: <input type='password'>
 
 	input.password.elem = 
 		element input { input.password.attrs }
-	
 	input.password.attrs = 
 		(	common.attrs
-		&	input.attrs.type.password
+		&	input.password.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.maxlength? 
 		&	input.attrs.name? 
 		&	input.attrs.readonly? 
-		&	input.attrs.value.password? 
+		&	input.password.attrs.value? 
 		)
-		
-		input.attrs.type.password = 
+		input.password.attrs.type = 
 			attribute type {
 				string "password"
 			}
-		
-		input.attrs.value.password =
+		input.password.attrs.value =
 			attribute value {
 				string #REVISIT "nominally" free of line breaks?			
 			}
 		
 	input.elem |= input.password.elem
 		
-## A set of zero or more values from a predefined list: <input type='checkbox'>
+## Checkbox: <input type='checkbox'>
 
 	input.checkbox.elem = 
 		element input { input.checkbox.attrs }
-	
 	input.checkbox.attrs = 
 		(	common.attrs
-		&	input.attrs.type.checkbox
+		&	input.checkbox.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.checkbox? 
+		&	input.checkbox.attrs.value? 
 		)
-		
-		input.attrs.type.checkbox = 
+		input.checkbox.attrs.type = 
 			attribute type {
 				string "checkbox"
 			}
-		
-		input.attrs.value.checkbox =
+		input.checkbox.attrs.value =
 			attribute value {
 				string #REVISIT require non-empty value?
 			}
 		
 	input.elem |= input.checkbox.elem
 	
-## An enumerated value.: <input type='radio'>
+## Radiobutton: <input type='radio'>
 
 	input.radio.elem = 
 		element input { input.radio.attrs }
-	
 	input.radio.attrs = 
 		(	common.attrs
-		&	input.attrs.type.radio
+		&	input.radio.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.radio? 
+		&	input.radio.attrs.value? 
 		)
-		
-		input.attrs.type.radio = 
+		input.radio.attrs.type = 
 			attribute type {
 				string "radio"
 			}
-		
-		input.attrs.value.radio =
+		input.radio.attrs.value =
 			attribute value {
 				string #REVISIT require non-empty value?
 			}
 		
 	input.elem |= input.radio.elem
 	
-## Scripting hook button: <input type='button'>
+## Scripting Hook Button: <input type='button'>
 
 	input.button.elem = 
 		element input { input.button.attrs }
-	
 	input.button.attrs = 
 		(	common.attrs
-		&	input.attrs.type.button
+		&	input.button.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.button? 
+		&	input.button.attrs.value? 
 		)
-		
-		input.attrs.type.button = 
+		input.button.attrs.type = 
 			attribute type {
 				string "button"
 			}
-		
-		input.attrs.value.button =
+		input.button.attrs.value =
 			attribute value {
 				string #REVISIT require non-empty value?
 			}
 		
 	input.elem |= input.button.elem
-		
-## An enumerated value that initiates form submission: <input type='submit'>
+	#REVISIT should this be enabled by a scripting module only?
+	
+## Submit Button: <input type='submit'>
 
 	input.submit.elem = 
 		element input { input.submit.attrs }
-	
 	input.submit.attrs = 
 		(	common.attrs
-		&	input.attrs.type.submit
+		&	input.submit.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.submit? 
+		&	input.submit.attrs.value? 
 		)
-		
-		input.attrs.type.submit = 
+		input.submit.attrs.type = 
 			attribute type {
 				string "submit"
 			}
-		
-		input.attrs.value.submit =
+		input.submit.attrs.value =
 			attribute value {
 				string #REVISIT require non-empty value?
 			}
 		
 	input.elem |= input.submit.elem
 		
-## Resetting the form: <input type='reset'>
+## Reset Button: <input type='reset'>
 
 	input.reset.elem = 
 		element input { input.reset.attrs }
-	
 	input.reset.attrs = 
 		(	common.attrs
-		&	input.attrs.type.reset
+		&	input.reset.attrs.type
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.reset? 
+		&	input.reset.attrs.value? 
 		)
-		
-		input.attrs.type.reset = 
+		input.reset.attrs.type = 
 			attribute type {
 				string "reset"
 			}
-		
-		input.attrs.value.reset =
+		input.reset.attrs.value =
 			attribute value {
 				string #REVISIT require non-empty value?
 			}
@@ -241,71 +206,79 @@
 	input.elem |= input.reset.elem
 	# REVISIT does reset make sense outside a form?
 		
-## File upload: <input type='file'>
+## File Upload: <input type='file'>
 
 	input.file.elem = 
 		element input { input.file.attrs }
-	
 	input.file.attrs = 
 		(	common.attrs
-		&	input.attrs.type.file
-		&	input.attrs.accept?
+		&	input.file.attrs.type
+		&	input.file.attrs.accept?
 		&	input.attrs.accesskey?
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
 		)
-
-		input.attrs.type.file = 
+		input.file.attrs.type = 
 			attribute type {
 				string "file"
 			}
-		
+		input.file.attrs.accept = 
+			attribute accept {
+				form.data.mimetypelist
+			}
+
 	input.elem |= input.file.elem
 	
-## Hidden string: <input type='hidden'>
+## Hidden String: <input type='hidden'>
 
 	input.hidden.elem = 
 		element input { input.hidden.attrs }
-	
 	input.hidden.attrs = 
 		(	common.attrs
-		&	input.attrs.type.hidden
+		&	input.hidden.attrs.type
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.value.hidden? 
+		&	input.hidden.attrs.value? 
 		)
-		
-		input.attrs.type.hidden = 
+		input.hidden.attrs.type = 
 			attribute type {
 				string "hidden"
 			}
-		
-		input.attrs.value.hidden =
+		input.hidden.attrs.value =
 			attribute value {
 				string
 			}
 		
 	input.elem |= input.hidden.elem
 		
-## A coordinate that initiates form submission: <input type='image'>
+## Image Submit Button: <input type='image'>
 
 	input.image.elem = 
 		element input { input.image.attrs }
-	
 	input.image.attrs = 
 		(	common.attrs
-		&	input.attrs.type.image
+		&	input.image.attrs.type
 		&	input.attrs.accesskey?
-		&	input.attrs.alt? 
+		&	input.image.attrs.alt? 
 		&	input.attrs.disabled? 
 		&	input.attrs.name? 
-		&	input.attrs.src? 
-		)
-		
-		input.attrs.type.image = 
+		&	input.image.attrs.src? 
+		)	
+		input.image.attrs.type = 
 			attribute type {
 				string "image"
 			}
-		
+		input.image.attrs.alt = 
+			attribute alt {
+				string
+			}
+		input.image.attrs.src = 
+			attribute src {
+				common.data.uri
+			}
+	
 	input.elem |= input.image.elem
 	
+	common.inner.struct-inline &= input.elem*
+	common.inner.strict-inline &= input.elem*
+	# REVISIT should hidden also go to static?

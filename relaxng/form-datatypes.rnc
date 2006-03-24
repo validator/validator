@@ -1,106 +1,114 @@
-form.data.accesskey = 
-	string #FIXME
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Datatypes related to forms            #
+# #####################################################################
+
+## MIME types
+		
+	form.data.mimetypelist = 
+		string #FIXME should suit the accept attribute
+
+## XForms-style inputmode
+
+	# See http://www.w3.org/TR/xforms/sliceE.html
+	# http://www.w3.org/MarkUp/Forms/2002/XForms-Schema.xsd defines the datatype
+	# of inputmode as xsd:string. Way to go!
+	# Not bothering to check that Modifier Tokens follow only applicable 
+	# Script Tokens. Chances are this whole thing is useless anyway.
 	
-form.data.accept = 
-	string #FIXME
+	form.data.inputmodetoken = 
+		(	"arabic"
+		|	"armenian"
+		|	"bengali"
+		|	"bopomofo"
+		|	"braille"
+		|	"buhid"
+		|	"canadianAboriginal"
+		|	"cherokee"
+		|	"cyrillic"
+		|	"deseret"
+		|	"devanagari"
+		|	"ethiopic"
+		|	"georgian"
+		|	"greek"
+		|	"gothic"
+		|	"gujarati"
+		|	"gurmukhi"
+		|	"han"
+		|	"hangul"
+		|	"hanja"
+		|	"hanunoo"
+		|	"hebrew"
+		|	"hiragana"
+		|	"ipa"
+		|	"kanji"
+		|	"kannada"
+		|	"katakana"
+		|	"khmer"
+		|	"lao"
+		|	"latin"
+		|	"malayalam"
+		|	"math"
+		|	"mongolian"
+		|	"myanmar"
+		|	"ogham"
+		|	"oldItalic"
+		|	"oriya"
+		|	"runic"
+		|	"simplifiedHanzi"
+		|	"sinhala"
+		|	"syriac"
+		|	"tagalog"
+		|	"tagbanwa"
+		|	"tamil"
+		|	"telugu"
+		|	"thaana"
+		|	"thai"
+		|	"tibetan"
+		|	"traditionalHanzi"
+		|	"user"
+		|	"yi"
+		|	"lowerCase"
+		|	"upperCase"
+		|	"titleCase"
+		|	"startUpper"
+		|	"digits"
+		|	"symbols"
+		|	"predictOn"
+		|	"predictOff"
+	#	|	"halfWidth" # deprecated
+		)
 	
-# See http://www.w3.org/TR/xforms/sliceE.html
-# http://www.w3.org/MarkUp/Forms/2002/XForms-Schema.xsd defines the datatype
-# of inputmode as xsd:string. Way to go!
-# Not bothering to check that Modifier Tokens follow only applicable 
-# Script Tokens. Chances are this whole thing is useless anyway.
+	form.data.inputmode = 
+		list { (form.data.inputmodetoken | common.data.uri.absolute)+ }
+		# Just assuming at least one token is required. The spec does not say.
+		# XForms seems to allow IRIs when it talks about URIs.
 
-form.data.inputmodetoken = 
-	(	"arabic"
-	|	"armenian"
-	|	"bengali"
-	|	"bopomofo"
-	|	"braille"
-	|	"buhid"
-	|	"canadianAboriginal"
-	|	"cherokee"
-	|	"cyrillic"
-	|	"deseret"
-	|	"devanagari"
-	|	"ethiopic"
-	|	"georgian"
-	|	"greek"
-	|	"gothic"
-	|	"gujarati"
-	|	"gurmukhi"
-	|	"han"
-	|	"hangul"
-	|	"hanja"
-	|	"hanunoo"
-	|	"hebrew"
-	|	"hiragana"
-	|	"ipa"
-	|	"kanji"
-	|	"kannada"
-	|	"katakana"
-	|	"khmer"
-	|	"lao"
-	|	"latin"
-	|	"malayalam"
-	|	"math"
-	|	"mongolian"
-	|	"myanmar"
-	|	"ogham"
-	|	"oldItalic"
-	|	"oriya"
-	|	"runic"
-	|	"simplifiedHanzi"
-	|	"sinhala"
-	|	"syriac"
-	|	"tagalog"
-	|	"tagbanwa"
-	|	"tamil"
-	|	"telugu"
-	|	"thaana"
-	|	"thai"
-	|	"tibetan"
-	|	"traditionalHanzi"
-	|	"user"
-	|	"yi"
-	|	"lowerCase"
-	|	"upperCase"
-	|	"titleCase"
-	|	"startUpper"
-	|	"digits"
-	|	"symbols"
-	|	"predictOn"
-	|	"predictOff"
-#	|	"halfWidth" # deprecated
-	)
-
-form.data.inputmode = 
-	list { (form.data.inputmodetoken | common.data.uri.absolute)+ }
-	# Just assuming at least one token is required. The spec does not say.
-	# XForms seems to allow IRIs when it talks about URIs.
-			
-form.data.pattern = 
-	string #FIXME should be ECMAScript regexp. Dig into Rhino
+## ECMAScript Regular Expression
+		
+	form.data.pattern = 
+		string #FIXME should be ECMAScript regexp. Dig into Rhino
+		
+## Temporal
+		
+	form.data.datetime =
+		string #FIXME
 	
-form.data.float.positive =
-	string #FIXME
+	form.data.datetime-local =
+		string #FIXME
+	
+	form.data.date =
+		string #FIXME
+	
+	form.data.month =
+		string #FIXME
+	
+	form.data.week =
+		string #FIXME
+	
+	form.data.time =
+		string #FIXME
 
-form.data.integer.non-negative =
-	string #FIXME
+## Email
 
-form.data.datetime =
-	string #FIXME
-
-form.data.datetime-local =
-	string #FIXME
-
-form.data.date =
-	string #FIXME
-
-form.data.month =
-	string #FIXME
-
-form.data.week =
-	string #FIXME
-
-form.data.time =
-	string #FIXME
+	form.data.email =
+		string #FIXME
