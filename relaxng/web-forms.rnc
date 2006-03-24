@@ -2,59 +2,7 @@
 ##  RELAX NG Schema for HTML 5: Web Forms 1.0 markup                  #
 # #####################################################################
 
-# type discriminators
-
-input.attrs.type.text = 
-	attribute type {
-		string "text"
-	}
-
-input.attrs.type.password = 
-	attribute type {
-		string "password"
-	}
-
-input.attrs.type.checkbox = 
-	attribute type {
-		string "checkbax"
-	}
-
-input.attrs.type.radio = 
-	attribute type {
-		string "radio"
-	}
-
-input.attrs.type.button = 
-	attribute type {
-		string "button"
-	}
-
-input.attrs.type.submit = 
-	attribute type {
-		string "submit"
-	}
-
-input.attrs.type.reset = 
-	attribute type {
-		string "reset"
-	}
-
-input.attrs.type.file = 
-	attribute type {
-		string "file"
-	}
-
-input.attrs.type.hidden = 
-	attribute type {
-		string "hidden"
-	}
-
-input.attrs.type.image = 
-	attribute type {
-		string "image"
-	}
-
-# Other attributes
+# Shared attributes
 
 input.attrs.accept = 
 	attribute accept {
@@ -120,6 +68,11 @@ input.text.attrs =
 	&	input.attrs.value.text? 
 	)
 	
+	input.attrs.type.text = 
+		attribute type {
+			string "text"
+		}
+	
 	input.attrs.value.text =
 		attribute value {
 			string #REVISIT "nominally" free of line breaks?
@@ -141,6 +94,11 @@ input.password.attrs =
 	&	input.attrs.readonly? 
 	&	input.attrs.value.password? 
 	)
+	
+	input.attrs.type.password = 
+		attribute type {
+			string "password"
+		}
 	
 	input.attrs.value.password =
 		attribute value {
@@ -164,6 +122,11 @@ input.checkbox.attrs =
 	&	input.attrs.value.checkbox? 
 	)
 	
+	input.attrs.type.checkbox = 
+		attribute type {
+			string "checkbox"
+		}
+	
 	input.attrs.value.checkbox =
 		attribute value {
 			string #REVISIT require non-empty value?
@@ -186,6 +149,11 @@ input.radio.attrs =
 	&	input.attrs.value.radio? 
 	)
 	
+	input.attrs.type.radio = 
+		attribute type {
+			string "radio"
+		}
+	
 	input.attrs.value.radio =
 		attribute value {
 			string #REVISIT require non-empty value?
@@ -206,6 +174,11 @@ input.button.attrs =
 	&	input.attrs.name? 
 	&	input.attrs.value.button? 
 	)
+	
+	input.attrs.type.button = 
+		attribute type {
+			string "button"
+		}
 	
 	input.attrs.value.button =
 		attribute value {
@@ -228,6 +201,11 @@ input.submit.attrs =
 	&	input.attrs.value.submit? 
 	)
 	
+	input.attrs.type.submit = 
+		attribute type {
+			string "submit"
+		}
+	
 	input.attrs.value.submit =
 		attribute value {
 			string #REVISIT require non-empty value?
@@ -248,6 +226,11 @@ input.reset.attrs =
 	&	input.attrs.name? 
 	&	input.attrs.value.reset? 
 	)
+	
+	input.attrs.type.reset = 
+		attribute type {
+			string "reset"
+		}
 	
 	input.attrs.value.reset =
 		attribute value {
@@ -286,6 +269,11 @@ input.hidden.attrs =
 	&	input.attrs.value.hidden? 
 	)
 	
+	input.attrs.type.hidden = 
+		attribute type {
+			string "hidden"
+		}
+	
 	input.attrs.value.hidden =
 		attribute value {
 			string
@@ -307,6 +295,11 @@ input.image.attrs =
 	&	input.attrs.name? 
 	&	input.attrs.src? 
 	)
+	
+	input.attrs.type.image = 
+		attribute type {
+			string "image"
+		}
 	
 input.elem |= input.image.elem
 

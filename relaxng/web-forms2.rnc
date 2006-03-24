@@ -2,74 +2,7 @@
 ##  RELAX NG Schema for HTML 5: Web Forms 2.0 markup                  #
 # #####################################################################
 
-# type discriminators
-
-input.attrs.type.remove = 
-	attribute type {
-		string "remove"
-	}
-
-input.attrs.type.move-up = 
-	attribute type {
-		string "move-up"
-	}
-
-input.attrs.type.move-down = 
-	attribute type {
-		string "move-down"
-	}
-
-input.attrs.type.datetime = 
-	attribute type {
-		string "datetime"
-	}
-
-input.attrs.type.datetime-local = 
-	attribute type {
-		string "datetime-local"
-	}
-
-input.attrs.type.date = 
-	attribute type {
-		string "date"
-	}
-
-input.attrs.type.month = 
-	attribute type {
-		string "month"
-	}
-
-input.attrs.type.week = 
-	attribute type {
-		string "week"
-	}
-
-input.attrs.type.time = 
-	attribute type {
-		string "time"
-	}
-
-input.attrs.type.number = 
-	attribute type {
-		string "number"
-	}
-
-input.attrs.type.range = 
-	attribute type {
-		string "range"
-	}
-
-input.attrs.type.email = 
-	attribute type {
-		string "email"
-	}
-
-input.attrs.type.url = 
-	attribute type {
-		string "url"
-	}
-
-# Other attributes
+# Shared attributes
 
 input.attrs.action = 
 	attribute action {
@@ -254,6 +187,11 @@ input.add.attrs =
 	&	input.attrs.value.add? 
 	)
 	
+	input.attrs.type.add = 
+		attribute type {
+			string "add"
+		}
+	
 	input.attrs.value.add =
 		attribute value {
 			string			
@@ -276,6 +214,11 @@ input.remove.attrs =
 	&	input.attrs.name? 
 	&	input.attrs.value.remove? 
 	)
+	
+	input.attrs.type.remove = 
+		attribute type {
+			string "remove"
+		}
 	
 	input.attrs.value.remove =
 		attribute value {
@@ -300,6 +243,11 @@ input.move-up.attrs =
 	&	input.attrs.value.move-up? 
 	)
 	
+	input.attrs.type.move-up = 
+		attribute type {
+			string "move-up"
+		}
+	
 	input.attrs.value.move-up =
 		attribute value {
 			string			
@@ -322,6 +270,11 @@ input.move-down.attrs =
 	&	input.attrs.name? 
 	&	input.attrs.value.move-down? 
 	)
+	
+	input.attrs.type.move-down = 
+		attribute type {
+			string "move-down"
+		}
 	
 	input.attrs.value.move-down =
 		attribute value {
@@ -352,6 +305,11 @@ input.datetime.attrs =
 	&	input.attrs.required? 
 	&	input.attrs.value.datetime? 
 	)
+	
+	input.attrs.type.datetime = 
+		attribute type {
+			string "datetime"
+		}
 	
 	input.attrs.value.datetime =
 		attribute value {
@@ -393,6 +351,11 @@ input.datetime-local.attrs =
 	&	input.attrs.value.datetime-local? 
 	)
 	
+	input.attrs.type.datetime-local = 
+		attribute type {
+			string "datetime-local"
+		}
+	
 	input.attrs.value.datetime-local =
 		attribute value {
 			form.data.datetime-local
@@ -432,6 +395,11 @@ input.date.attrs =
 	&	input.attrs.required? 
 	&	input.attrs.value.date? 
 	)
+	
+	input.attrs.type.date = 
+		attribute type {
+			string "date"
+		}
 	
 	input.attrs.value.date =
 		attribute value {
@@ -473,6 +441,11 @@ input.month.attrs =
 	&	input.attrs.value.month? 
 	)
 	
+	input.attrs.type.month = 
+		attribute type {
+			string "month"
+		}
+	
 	input.attrs.value.month =
 		attribute value {
 			form.data.month
@@ -512,6 +485,11 @@ input.time.attrs =
 	&	input.attrs.required? 
 	&	input.attrs.value.time? 
 	)
+	
+	input.attrs.type.time = 
+		attribute type {
+			string "time"
+		}
 	
 	input.attrs.value.time =
 		attribute value {
