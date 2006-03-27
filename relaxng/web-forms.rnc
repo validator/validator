@@ -283,4 +283,3 @@
 	common.inner.strict-inline &= input.elem*
 	# REVISIT should hidden also go to static?
 
-## Text Area: <textarea>
