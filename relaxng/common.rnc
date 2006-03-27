@@ -248,7 +248,9 @@ common.attrs.present =
 	common.data.mimetype =
 		string #FIXME import regex later
 
-	#FIXME need mimetype with and without params
+	#REVISIT is this one needed?
+	common.data.mimetype.no-params =
+		string #FIXME import regex later
 
 ## Media Queries
 

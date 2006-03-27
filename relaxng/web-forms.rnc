@@ -2,40 +2,46 @@
 ##  RELAX NG Schema for HTML 5: Web Forms 1.0 markup                  #
 # #####################################################################
 
-# Shared attributes
-	
-	input.attrs.accesskey = 
+## Shared attributes for form controls
+
+	common-form.attrs =
+		(	common-form.attrs.name?
+		&	common-form.attrs.disabled?
+		)
+		
+	common-form.attrs.name = 
+		attribute name {
+			string #REVISIT should this be restricted somehow? No & and = perhaps?
+		}
+
+	common-form.attrs.disabled = 
+		attribute disabled {
+			string "disabled"
+		}
+
+	common-form.attrs.accesskey = 
 		attribute accesskey {
 			common.data.character
 		}
+
+	common-form.attrs.readonly = 
+		attribute readonly {
+			string "readonly"
+		}
+
+	common-form.attrs.maxlength = 
+		attribute maxlength {
+			common.data.integer.positive #REVISIT should this be non-negative?
+		}
+	
+	# REVISIT tabindex goes in common.attrs
+
+## Shared attributes for <input>
 	
 	input.attrs.checked = 
 		attribute checked {
 			string "checked"
 		}
-	
-	input.attrs.disabled = 
-		attribute disabled {
-			string "disabled"
-		}
-	
-	input.attrs.maxlength = 
-		attribute maxlength {
-			common.data.integer.positive #REVISIT should this be non-negative?
-		}
-	
-	input.attrs.name = 
-		attribute name {
-			string #REVISIT should this be restricted somehow? No & and = perhaps?
-		}
-	
-	input.attrs.readonly = 
-		attribute readonly {
-			string "readonly"
-		}
-	
-	# REVISIT tabindex goes in common.attrs in WA 1.0
-
 
 ## Text Field: <input type='text'>
 
@@ -43,12 +49,11 @@
 		element input { input.text.attrs }
 	input.text.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.text.attrs.type?
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.maxlength? 
-		&	input.attrs.name? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.maxlength? 
+		&	common-form.attrs.readonly? 
 		&	input.text.attrs.value? 
 		)		
 		input.text.attrs.type = 
@@ -68,12 +73,11 @@
 		element input { input.password.attrs }
 	input.password.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.password.attrs.type
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.maxlength? 
-		&	input.attrs.name? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.maxlength? 
+		&	common-form.attrs.readonly? 
 		&	input.password.attrs.value? 
 		)
 		input.password.attrs.type = 
@@ -93,11 +97,10 @@
 		element input { input.checkbox.attrs }
 	input.checkbox.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.checkbox.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.checked? 
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
 		&	input.checkbox.attrs.value? 
 		)
 		input.checkbox.attrs.type = 
@@ -117,11 +120,10 @@
 		element input { input.radio.attrs }
 	input.radio.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.radio.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.checked? 
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
 		&	input.radio.attrs.value? 
 		)
 		input.radio.attrs.type = 
@@ -141,10 +143,9 @@
 		element input { input.button.attrs }
 	input.button.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.button.attrs.type
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
+		&	common-form.attrs.accesskey?
 		&	input.button.attrs.value? 
 		)
 		input.button.attrs.type = 
@@ -165,10 +166,9 @@
 		element input { input.submit.attrs }
 	input.submit.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.submit.attrs.type
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
+		&	common-form.attrs.accesskey?
 		&	input.submit.attrs.value? 
 		)
 		input.submit.attrs.type = 
@@ -188,10 +188,9 @@
 		element input { input.reset.attrs }
 	input.reset.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.reset.attrs.type
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
+		&	common-form.attrs.accesskey?
 		&	input.reset.attrs.value? 
 		)
 		input.reset.attrs.type = 
@@ -212,11 +211,10 @@
 		element input { input.file.attrs }
 	input.file.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
-		&	input.attrs.accesskey?
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
+		&	common-form.attrs.accesskey?
 		)
 		input.file.attrs.type = 
 			attribute type {
@@ -235,9 +233,8 @@
 		element input { input.hidden.attrs }
 	input.hidden.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.hidden.attrs.type
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
 		&	input.hidden.attrs.value? 
 		)
 		input.hidden.attrs.type = 
@@ -257,11 +254,10 @@
 		element input { input.image.attrs }
 	input.image.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.image.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.image.attrs.alt? 
-		&	input.attrs.disabled? 
-		&	input.attrs.name? 
 		&	input.image.attrs.src? 
 		)	
 		input.image.attrs.type = 
@@ -282,4 +278,37 @@
 	common.inner.struct-inline &= input.elem*
 	common.inner.strict-inline &= input.elem*
 	# REVISIT should hidden also go to static?
+
+## Text Area: <textarea>
+
+	textarea.elem =
+		element textarea { textarea.inner & textarea.attrs }
+	textarea.attrs =
+		(	common.attrs
+		&	common-form.attrs
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.readonly?
+		&	textarea.attrs.rows-and-cols-wf1
+		#FIXME onfocus, onblur, onselect,onchange
+		)
+		# This is ugly. Is this necessary?
+		textarea.attrs.rows-and-cols-wf1 = 
+			textarea.attrs.rows-and-cols-wf1.inner	
+		textarea.attrs.rows-and-cols-wf1.inner =
+			(	textarea.attrs.cols
+			&	textarea.attrs.rows
+			)
+		textarea.attrs.cols = 
+			attribute cols {
+				common.data.integer.positive
+			}
+		textarea.attrs.rows = 
+			attribute rows {
+				common.data.integer.positive
+			}
+	textarea.inner =
+		( text )
+
+	common.inner.struct-inline &= textarea.elem*
+	common.inner.strict-inline &= textarea.elem*
 

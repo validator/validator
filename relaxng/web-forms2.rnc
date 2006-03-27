@@ -2,7 +2,18 @@
 ##  RELAX NG Schema for HTML 5: Web Forms 2.0 markup                  #
 # #####################################################################
 
-# Shared attributes
+## Shared attributes for form controls
+
+	common-form.attrs &=
+		(	common-form.attrs.form?
+		)
+
+	common-form.attrs.form = 
+		attribute form {
+			common.data.idrefs #REVISIT spec says space--not whitespace
+		}
+
+## Shared attributes for <input>
 
 	input.attrs.action = 
 		attribute action {
@@ -28,11 +39,6 @@
 			| string "text/plain"
 		}
 	
-	input.attrs.form = 
-		attribute form {
-			common.data.idrefs #REVISIT spec says space--not whitespace
-		}
-		
 	input.attrs.inputmode = 
 		attribute inputmode {
 			form.data.inputmode
@@ -83,7 +89,6 @@
 	input.text.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	input.attrs.pattern? 
@@ -95,7 +100,6 @@
 	input.password.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.attrs.inputmode? 
 		&	input.attrs.pattern? 
 		&	input.attrs.required? 
@@ -105,7 +109,6 @@
 
 	input.checkbox.attrs &=
 		(	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.attrs.required? 
 		)
 
@@ -113,7 +116,6 @@
 
 	input.radio.attrs &=
 		(	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.attrs.required? 
 		)
 
@@ -121,7 +123,6 @@
 
 	input.button.attrs &=
 		(	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		)
 
 ## Submit Button: <input type='submit'>, Extensions
@@ -130,7 +131,6 @@
 		(	input.attrs.action? 
 		&	input.attrs.autofocus? 
 		&	input.attrs.enctype? 
-		&	input.attrs.form? 
 		&	input.attrs.method? 
 		&	input.attrs.replace? 
 		&	input.attrs.target? 
@@ -140,7 +140,6 @@
 
 	input.reset.attrs &=
 		(	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.attrs.method? 
 		)
 
@@ -148,7 +147,6 @@
 
 	input.file.attrs &=
 		(	input.attrs.autofocus? 
-		&	input.attrs.form? 
 		&	input.file.attrs.min? 
 		&	input.file.attrs.max? 
 		)
@@ -161,20 +159,12 @@
 				common.data.integer.positive
 			}
 
-
-## Hidden String: <input type='hidden'>, Extensions
-
-	input.hidden.attrs &=
-		(	input.attrs.form?
-		)
-
 ## Image Submit Button: <input type='image'>, Extensions
 
 	input.image.attrs &=
 		(	input.attrs.action? 
 		&	input.attrs.autofocus? 
 		&	input.attrs.enctype? 
-		&	input.attrs.form? 
 		&	input.attrs.method? 
 		&	input.attrs.replace? 
 		&	input.attrs.target? 
@@ -186,12 +176,10 @@
 		element input { input.add.attrs }	
 	input.add.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.add.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
-		&	input.attrs.name? 
 		&	input.add.attrs.template? 
 		&	input.add.attrs.value? 
 		)
@@ -216,12 +204,10 @@
 		element input { input.remove.attrs }
 	input.remove.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.remove.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
-		&	input.attrs.name? 
 		&	input.remove.attrs.value? 
 		)
 		input.remove.attrs.type = 
@@ -241,12 +227,10 @@
 		element input { input.move-up.attrs }
 	input.move-up.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.move.attrs.type-up
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
-		&	input.attrs.name? 
 		&	input.move.attrs.value-up? 
 		)
 		input.move.attrs.type-up = 
@@ -266,12 +250,10 @@
 		element input { input.move-down.attrs }
 	input.move-down.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.move.attrs.type-down
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
-		&	input.attrs.name? 
 		&	input.move.attrs.value-down? 
 		)
 		input.move.attrs.type-down = 
@@ -292,18 +274,16 @@
 		element input { input.datetime.attrs }	
 	input.datetime.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.datetime.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.datetime.attrs.min? 
 		&	input.datetime.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.float? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.datetime.attrs.value? 
 		)	
@@ -332,18 +312,16 @@
 		element input { input.datetime-local.attrs }
 	input.datetime-local.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.datetime-local.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.datetime-local.attrs.min? 
 		&	input.datetime-local.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.float? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.datetime-local.attrs.value? 
 		)	
@@ -372,18 +350,16 @@
 		element input { input.date.attrs }
 	input.date.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.date.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.date.attrs.min? 
 		&	input.date.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.integer? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.date.attrs.value? 
 		)	
@@ -412,18 +388,16 @@
 		element input { input.month.attrs }
 	input.month.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.month.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.month.attrs.min? 
 		&	input.month.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.integer? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.month.attrs.value? 
 		)	
@@ -452,18 +426,16 @@
 		element input { input.time.attrs }
 	input.time.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.time.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.time.attrs.min? 
 		&	input.time.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.float? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.time.attrs.value? 
 		)	
@@ -492,18 +464,16 @@
 		element input { input.week.attrs }
 	input.week.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.week.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.week.attrs.min? 
 		&	input.week.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.integer? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.week.attrs.value? 
 		)	
@@ -532,18 +502,16 @@
 		element input { input.number.attrs }
 	input.number.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.number.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.number.attrs.min? 
 		&	input.number.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.float? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.number.attrs.value? 
 		)	
@@ -572,18 +540,16 @@
 		element input { input.range.attrs }
 	input.range.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.range.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.list? 
 		&	input.range.attrs.min? 
 		&	input.range.attrs.max? 
-		&	input.attrs.name? 
 		&	input.attrs.step.float? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.range.attrs.value? 
 		)	
@@ -612,18 +578,16 @@
 		element input { input.email.attrs }	
 	input.email.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.email.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.inputmode? 
 		&	input.attrs.list? 
-		&	input.attrs.maxlength? 
-		&	input.attrs.name? 
+		&	common-form.attrs.maxlength? 
 		&	input.attrs.pattern? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.email.attrs.value? 
 		)	
@@ -644,18 +608,16 @@
 		element input { input.url.attrs }	
 	input.url.attrs = 
 		(	common.attrs
+		&	common-form.attrs
 		&	input.url.attrs.type
-		&	input.attrs.accesskey?
+		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.disabled? 
-		&	input.attrs.form? 
 		&	input.attrs.inputmode? 
 		&	input.attrs.list? 
-		&	input.attrs.maxlength? 
-		&	input.attrs.name? 
+		&	common-form.attrs.maxlength? 
 		&	input.attrs.pattern? 
-		&	input.attrs.readonly? 
+		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.url.attrs.value? 
 		)	
@@ -682,21 +644,11 @@
 		element output { output.inner.strict.static & output.attrs }
 	output.attrs =
 		(	common.attrs
-		&	output.attrs.name?
-		&	output.attrs.form?
+		&	common-form.attrs
 		&	output.attrs.for?
 		#FIXME figure out how onchange, onforminput and onformchange
 		#fit together with a scripting module.
 		)
-		output.attrs.name = 
-			attribute name {
-				string #REVISIT should this be restricted somehow? 
-				       #No & and = perhaps?
-			}
-		output.attrs.form = 
-			attribute form {
-				common.data.idrefs #REVISIT spec says space--not whitespace
-			}
 		output.attrs.for = 
 			attribute for {
 				common.data.idrefs #REVISIT spec says space--not whitespace
@@ -714,3 +666,34 @@
 	common.inner.struct-inline.static &= output.elem.static*
 	common.inner.strict-inline &= output.elem.strict*
 	common.inner.strict-inline.static &= output.elem.strict.static*
+
+## Text Area: <textarea>, extensions
+
+	textarea.attrs.rows-and-cols-wf1.inner &=
+		notAllowed
+	textarea.attrs.rows-and-cols-wf1 |= 
+		empty
+	textarea.attrs &=
+		(	common-form.attrs.maxlength?
+		&	textarea.attrs.accept?
+		&	textarea.attrs.rows?
+		&	(	(	textarea.attrs.wrap.hard 
+				&	textarea.attrs.cols
+				)
+			|	(	textarea.attrs.wrap.soft?
+				&	textarea.attrs.cols?
+				)
+			)
+		)
+		textarea.attrs.accept =
+			attribute accept {
+				common.data.mimetype
+			}
+		textarea.attrs.wrap.hard =
+			attribute wrap {
+				string "hard"
+			}
+		textarea.attrs.wrap.soft =
+			attribute wrap {
+				string "soft"
+			}
