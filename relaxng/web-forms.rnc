@@ -312,3 +312,4 @@
 	common.inner.struct-inline &= textarea.elem*
 	common.inner.strict-inline &= textarea.elem*
 
+# testing diffs
