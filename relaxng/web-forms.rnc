@@ -291,7 +291,7 @@
 		&	textarea.attrs.rows-and-cols-wf1
 		#FIXME onfocus, onblur, onselect,onchange
 		)
-		# This is ugly. Is this necessary?
+		# This is ugly. 
 		textarea.attrs.rows-and-cols-wf1 = 
 			textarea.attrs.rows-and-cols-wf1.inner	
 		textarea.attrs.rows-and-cols-wf1.inner =
@@ -312,4 +312,122 @@
 	common.inner.struct-inline &= textarea.elem*
 	common.inner.strict-inline &= textarea.elem*
 
-# testing diffs
+# Due to limitations with interleave, handling single/multiple selection
+# enforcement in RELAX NG seems to be possible but really awkward.
+# Tried it. Leaving it to Schematron.
+
+## Select menu option (selected): <option selected>
+
+	option.elem =
+		element option { option.inner & option.attrs }
+	option.attrs =
+		(	common.attrs
+		&	common-form.attrs.disabled?
+		&	option.attrs.selected?
+		&	option.attrs.label?
+		&	option.attrs.value?
+		)
+		option.attrs.selected =
+			attribute selected {
+				string "selected"
+			}
+		option.attrs.label =
+			attribute label {
+				string
+			}		
+		option.attrs.value =
+			attribute value {
+				string
+			}		
+	option.inner =
+		( text )
+
+## Option group: <optgroup>
+
+	optgroup.elem =
+		element optgroup { optgroup.inner & optgroup.attrs }
+	optgroup.attrs = 
+		( optgroup.attrs.label )
+		optgroup.attrs.label =
+			attribute label {
+				string
+			}
+	optgroup.inner =
+		( option.elem+ )
+
+## Selection Menu: <select>
+
+	select.elem =
+		element select { select.inner & select.attrs }	
+	select.attrs =
+		(	common.attrs
+		&	common-form.attrs
+		&	select.attrs.size?
+		&	select.attrs.multiple?
+		# FIXME onfocus, onblur, onchange
+		)
+		select.attrs.size =
+			attribute size {
+				common.data.integer.positive
+			}
+		select.attrs.multiple =
+			attribute multiple {
+				string "multiple"
+			}
+	select.inner =
+		(	(	optgroup.elem
+			|	option.elem
+			)+
+		)
+
+	common.inner.struct-inline &= select.elem*
+	common.inner.strict-inline &= select.elem*
+
+## Form: <form>
+
+	form.elem =
+		element form { form.inner & form.attrs }
+	form.elem.static =
+		element form { form.inner.static & form.attrs }
+	form.attrs =
+		(	common.attrs
+		&	form.attrs.action 
+		&	form.attrs.method?
+		&	form.attrs.enctype?
+		&	common-form.attrs.name?
+		# FIXME onsubmit, onreset
+		)
+		form.attrs.action =
+			attribute action {
+				common.data.uri
+			}
+		form.attrs.method =
+			attribute method {
+				form.attrs.method.data
+			}
+			form.attrs.method.data = 
+				( string "get" | "post" )
+		form.attrs.enctype =
+			attribute enctype {
+				form.attrs.enctype.data
+			}
+			form.attrs.enctype.data = 
+				(	string "application/x-www-form-urlencoded" 
+				|	string "multipart/form-data"
+				)
+		form.attrs.accept =
+			attribute accept {
+				form.data.mimetypelist #Using more precise WF2 data type
+			}
+		form.attrs.accept-charset =
+			attribute accept-charset {
+				form.data.mimetypelist #Using more precise WF2 data type
+			}	
+	form.inner =
+		( common.inner.block )
+	form.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= form.elem*
+	common.inner.block.static &= form.elem.static*
+

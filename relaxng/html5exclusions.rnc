@@ -56,3 +56,5 @@ dfn.elem.exclude-self =
 # FIXME this part was cut off -- hsivonen
 wildcard.elem.exclude-all = 
 	notAllowed
+
+#FIXME no nested forms in HTML-serializable docs

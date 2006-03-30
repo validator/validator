@@ -5,12 +5,16 @@
 ## Shared attributes for form controls
 
 	common-form.attrs &=
-		(	common-form.attrs.form?
-		)
+		( common-form.attrs.form? )
 
 	common-form.attrs.form = 
 		attribute form {
 			common.data.idrefs #REVISIT spec says space--not whitespace
+		}
+
+	common-form.attrs.inputmode = 
+		attribute inputmode {
+			form.data.inputmode
 		}
 
 ## Shared attributes for <input>
@@ -33,17 +37,13 @@
 	# REVISIT should this be case-insensitive in conforming XHTML documents?
 	input.attrs.enctype = 
 		attribute enctype {
-			string "application/x-www-form-urlencoded" 
-			| string "multipart/form-data"
-			| string "application/x-www-form+xml"
-			| string "text/plain"
+			(	string "application/x-www-form-urlencoded" 
+			|	string "multipart/form-data"
+			|	string "application/x-www-form+xml"
+			|	string "text/plain"
+			)
 		}
-	
-	input.attrs.inputmode = 
-		attribute inputmode {
-			form.data.inputmode
-		}
-	
+		
 	input.attrs.list = 
 		attribute list {
 			common.data.idref
@@ -89,7 +89,7 @@
 	input.text.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.inputmode? 
+		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	input.attrs.pattern? 
 		&	input.attrs.required? 
@@ -100,7 +100,7 @@
 	input.password.attrs &=
 		(	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.inputmode? 
+		&	common-form.attrs.inputmode? 
 		&	input.attrs.pattern? 
 		&	input.attrs.required? 
 		)
@@ -583,7 +583,7 @@
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.inputmode? 
+		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	common-form.attrs.maxlength? 
 		&	input.attrs.pattern? 
@@ -613,7 +613,7 @@
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	input.attrs.autofocus? 
-		&	input.attrs.inputmode? 
+		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	common-form.attrs.maxlength? 
 		&	input.attrs.pattern? 
@@ -676,6 +676,7 @@
 	textarea.attrs &=
 		(	common-form.attrs.maxlength?
 		&	textarea.attrs.accept?
+		&	common-form.attrs.inputmode?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols
@@ -697,3 +698,33 @@
 			attribute wrap {
 				string "soft"
 			}
+			
+## Option group: <optgroup>, extensions
+	optgroup.inner |= 
+		(	option.elem*
+		&	optgroup.elem*
+		)
+
+## Selection Menu: <select>, extensions
+	select.attrs &=
+		( common-form.attrs.accesskey? )
+	select.inner |= empty
+
+## Form: <form>, extensions
+	form.attrs.method.data |= 
+		( string "put" | "delete" )
+	form.attrs.enctype.data |= 
+		( string "application/x-www-form+xml" | string "text/plain" )
+	form.attrs &= 
+		( form.attrs.replace )
+		form.attrs.replace = 
+			attribute replace {
+				string "document" | string "values"
+			}
+	
+	form.elem.empty =
+		element form { form.inner.empty & form.attrs }
+	form.inner.empty =
+		( empty )
+
+	#FIXME allow empty forms in head but only in XHTML
