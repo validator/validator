@@ -342,7 +342,7 @@
 	option.inner =
 		( text )
 
-## Option group: <optgroup>
+## Option Group: <optgroup>
 
 	optgroup.elem =
 		element optgroup { optgroup.inner & optgroup.attrs }
@@ -353,7 +353,7 @@
 				string
 			}
 	optgroup.inner =
-		( option.elem+ )
+		( option.elem* )
 
 ## Selection Menu: <select>
 
@@ -375,13 +375,81 @@
 				string "multiple"
 			}
 	select.inner =
-		(	(	optgroup.elem
-			|	option.elem
-			)+
+		(	optgroup.elem*
+		&	option.elem*
 		)
 
 	common.inner.struct-inline &= select.elem*
 	common.inner.strict-inline &= select.elem*
+	
+## Shared Definitions for Complex Button
+	
+	button.attrs.value =
+		attribute value {
+			string
+		}
+	button.inner = 
+		(	(	common.inner.strict-inline.static  # cannot use interleave here
+			|	common.inner.block.static          # should we move * out of
+			)*	                                   # element classes?
+		) #REVISIT expecting this to change into bimorphic
+	
+## Complex Submit Button: <button type='submit'>
+
+	button.submit.elem =
+		element button { button.inner & button.submit.attrs }	
+	button.submit.attrs =
+		(	common.attrs
+		&	common-form.attrs
+		&	common-form.attrs.accesskey?
+		&	button.submit.attrs.type?
+		&	button.attrs.value?
+		)
+		button.submit.attrs.type =
+			attribute type {
+				string "submit"
+			}
+
+	button.elem = button.submit.elem
+	
+## Complex Reset Button: <button type='reset'>
+
+	button.reset.elem =
+		element button { button.inner & button.reset.attrs }	
+	button.reset.attrs =
+		(	common.attrs
+		&	common-form.attrs
+		&	common-form.attrs.accesskey?
+		&	button.reset.attrs.type
+		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		)
+		button.reset.attrs.type =
+			attribute type {
+				string "reset"
+			}
+
+	button.elem |= button.reset.elem
+	
+## Complex Push Button: <button type='button'>
+
+	button.button.elem =
+		element button { button.inner & button.button.attrs }	
+	button.button.attrs =
+		(	common.attrs
+		&	common-form.attrs
+		&	common-form.attrs.accesskey?
+		&	button.button.attrs.type
+		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		)
+		button.button.attrs.type =
+			attribute type {
+				string "button"
+			}
+
+	button.elem |= button.button.elem
+
+	common.inner.struct-inline &= button.elem*
+	common.inner.strict-inline &= button.elem*
 
 ## Form: <form>
 
@@ -391,11 +459,10 @@
 		element form { form.inner.static & form.attrs }
 	form.attrs =
 		(	common.attrs
-		&	form.attrs.action 
+		&	form.attrs.action #REVISIT Make this optional?
 		&	form.attrs.method?
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
-		# FIXME onsubmit, onreset
 		)
 		form.attrs.action =
 			attribute action {
@@ -421,7 +488,7 @@
 			}
 		form.attrs.accept-charset =
 			attribute accept-charset {
-				form.data.mimetypelist #Using more precise WF2 data type
+				form.data.charsetlist
 			}	
 	form.inner =
 		( common.inner.block )

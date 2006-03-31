@@ -17,23 +17,48 @@
 			form.data.inputmode
 		}
 
-## Shared attributes for <input>
+	common-form.attrs.method = 
+		attribute method {
+			string "get" | string "post" | string "put" | string "delete"
+		}
+		
+	common-form.attrs.autofocus = 
+		attribute autofocus {
+			string "autofocus"
+		}
+	
+	common-form.attrs.pattern = 
+		attribute pattern {
+			form.data.pattern
+		}
+		
+	common-form.attrs.replace = 
+		attribute replace {
+			string "document" | string "values"
+		}
 
-	input.attrs.action = 
+	common-form.attrs.action = 
 		attribute action {
 			common.data.uri
 		}
+	
+	common-form.attrs.target = 
+		attribute target {
+			string #REVISIT the spec does not appear to say what the datatype is
+		}
+
+	common-form.attrs.template = 
+		attribute template {
+			common.data.idref #REVISIT the spec does not explicitly say this
+		}
+
+## Shared attributes for <input>
 		
 	input.attrs.autocomplete = 
 		attribute autocomplete {
 			string "on" | string "off"
 		}
-		
-	input.attrs.autofocus = 
-		attribute autofocus {
-			string "autofocus"
-		}
-	
+			
 	# REVISIT should this be case-insensitive in conforming XHTML documents?
 	input.attrs.enctype = 
 		attribute enctype {
@@ -49,16 +74,6 @@
 			common.data.idref
 		}
 	
-	input.attrs.method = 
-		attribute method {
-			string "get" | string "post" | string "put" | string "delete"
-		}
-		
-	input.attrs.pattern = 
-		attribute pattern {
-			form.data.pattern
-		}
-	
 	input.attrs.step.float = 
 		attribute step {
 			string "any" | common.data.float.positive
@@ -68,30 +83,20 @@
 		attribute step {
 			string "any" | common.data.integer.positive 
 		}
-		
-	input.attrs.replace = 
-		attribute replace {
-			string "document" | string "values"
-		}
 	
 	input.attrs.required = 
 		attribute required {
 			string "required"
 		}
 	
-	input.attrs.target = 
-		attribute target {
-			string #REVISIT the spec does not appear to say what the datatype is
-		}
-	
 ## Text Field: <input type='text'>, Extensions
 
 	input.text.attrs &=
 		(	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
-		&	input.attrs.pattern? 
+		&	common-form.attrs.pattern? 
 		&	input.attrs.required? 
 		)
 
@@ -99,54 +104,51 @@
 
 	input.password.attrs &=
 		(	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	common-form.attrs.inputmode? 
-		&	input.attrs.pattern? 
+		&	common-form.attrs.pattern? 
 		&	input.attrs.required? 
 		)
 
 ## Checkbox <input type='checkbox'>, Extensions
 
 	input.checkbox.attrs &=
-		(	input.attrs.autofocus? 
+		(	common-form.attrs.autofocus? 
 		&	input.attrs.required? 
 		)
 
 ## Radiobutton: <input type='radio'>, Extensions
 
 	input.radio.attrs &=
-		(	input.attrs.autofocus? 
+		(	common-form.attrs.autofocus? 
 		&	input.attrs.required? 
 		)
 
 ## Scripting Hook Button: <input type='button'>, Extensions
 
 	input.button.attrs &=
-		(	input.attrs.autofocus? 
-		)
+		( common-form.attrs.autofocus? )
 
 ## Submit Button: <input type='submit'>, Extensions
 
 	input.submit.attrs &=
-		(	input.attrs.action? 
-		&	input.attrs.autofocus? 
+		(	common-form.attrs.action? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.enctype? 
-		&	input.attrs.method? 
-		&	input.attrs.replace? 
-		&	input.attrs.target? 
+		&	common-form.attrs.method? 
+		&	common-form.attrs.replace? 
+		&	common-form.attrs.target? 
 		)
 
 ## Reset Button: <input type='reset'>, Extensions
 
 	input.reset.attrs &=
-		(	input.attrs.autofocus? 
-		&	input.attrs.method? 
-		)
+		( common-form.attrs.autofocus? )
 
 ## File Upload: <input type='file'>, Extensions
 
 	input.file.attrs &=
-		(	input.attrs.autofocus? 
+		(	common-form.attrs.autofocus? 
 		&	input.file.attrs.min? 
 		&	input.file.attrs.max? 
 		)
@@ -162,12 +164,12 @@
 ## Image Submit Button: <input type='image'>, Extensions
 
 	input.image.attrs &=
-		(	input.attrs.action? 
-		&	input.attrs.autofocus? 
+		(	common-form.attrs.action? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.enctype? 
-		&	input.attrs.method? 
-		&	input.attrs.replace? 
-		&	input.attrs.target? 
+		&	common-form.attrs.method? 
+		&	common-form.attrs.replace? 
+		&	common-form.attrs.target? 
 		)
 
 ## Add Button: <input type='add'>
@@ -179,17 +181,13 @@
 		&	common-form.attrs
 		&	input.add.attrs.type
 		&	common-form.attrs.accesskey?
-		&	input.attrs.autofocus? 
-		&	input.add.attrs.template? 
+		&	common-form.attrs.autofocus? 
+		&	common-form.attrs.template? 
 		&	input.add.attrs.value? 
 		)
 		input.add.attrs.type = 
 			attribute type {
 				string "add"
-			}
-		input.add.attrs.template = 
-			attribute template {
-				common.data.idref #REVISIT the spec does not explicitly say this
 			}
 		input.add.attrs.value =
 			attribute value {
@@ -207,7 +205,7 @@
 		&	common-form.attrs
 		&	input.remove.attrs.type
 		&	common-form.attrs.accesskey?
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.remove.attrs.value? 
 		)
 		input.remove.attrs.type = 
@@ -228,16 +226,16 @@
 	input.move-up.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	input.move.attrs.type-up
+		&	input.move-up.attrs.type
 		&	common-form.attrs.accesskey?
-		&	input.attrs.autofocus? 
-		&	input.move.attrs.value-up? 
+		&	common-form.attrs.autofocus? 
+		&	input.move-up.attrs.value? 
 		)
-		input.move.attrs.type-up = 
+		input.move-up.attrs.type = 
 			attribute type {
 				string "move-up"
 			}
-		input.move.attrs.value-up =
+		input.move-up.attrs.value =
 			attribute value {
 				string			
 			}
@@ -251,16 +249,16 @@
 	input.move-down.attrs = 
 		(	common.attrs
 		&	common-form.attrs
-		&	input.move.attrs.type-down
+		&	input.move-down.attrs.type
 		&	common-form.attrs.accesskey?
-		&	input.attrs.autofocus? 
-		&	input.move.attrs.value-down? 
+		&	common-form.attrs.autofocus? 
+		&	input.move-down.attrs.value? 
 		)
-		input.move.attrs.type-down = 
+		input.move-down.attrs.type = 
 			attribute type {
 				string "move-down"
 			}
-		input.move.attrs.value-down =
+		input.move-down.attrs.value =
 			attribute value {
 				string			
 			}
@@ -278,7 +276,7 @@
 		&	input.datetime.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.datetime.attrs.min? 
 		&	input.datetime.attrs.max? 
@@ -316,7 +314,7 @@
 		&	input.datetime-local.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.datetime-local.attrs.min? 
 		&	input.datetime-local.attrs.max? 
@@ -354,7 +352,7 @@
 		&	input.date.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.date.attrs.min? 
 		&	input.date.attrs.max? 
@@ -392,7 +390,7 @@
 		&	input.month.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.month.attrs.min? 
 		&	input.month.attrs.max? 
@@ -430,7 +428,7 @@
 		&	input.time.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.time.attrs.min? 
 		&	input.time.attrs.max? 
@@ -468,7 +466,7 @@
 		&	input.week.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.week.attrs.min? 
 		&	input.week.attrs.max? 
@@ -506,7 +504,7 @@
 		&	input.number.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.number.attrs.min? 
 		&	input.number.attrs.max? 
@@ -544,7 +542,7 @@
 		&	input.range.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.range.attrs.min? 
 		&	input.range.attrs.max? 
@@ -582,11 +580,11 @@
 		&	input.email.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	common-form.attrs.maxlength? 
-		&	input.attrs.pattern? 
+		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.email.attrs.value? 
@@ -612,11 +610,11 @@
 		&	input.url.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
-		&	input.attrs.autofocus? 
+		&	common-form.attrs.autofocus? 
 		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	common-form.attrs.maxlength? 
-		&	input.attrs.pattern? 
+		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
 		&	input.attrs.required? 
 		&	input.url.attrs.value? 
@@ -675,8 +673,9 @@
 		empty
 	textarea.attrs &=
 		(	common-form.attrs.maxlength?
-		&	textarea.attrs.accept?
+		&	common-form.attrs.pattern? 
 		&	common-form.attrs.inputmode?
+		&	textarea.attrs.accept?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols
@@ -699,28 +698,119 @@
 				string "soft"
 			}
 			
-## Option group: <optgroup>, extensions
-	optgroup.inner |= 
-		(	option.elem*
-		&	optgroup.elem*
-		)
+## Option Group: <optgroup>, extensions
+	optgroup.inner &= 
+		( optgroup.elem* )
 
 ## Selection Menu: <select>, extensions
 	select.attrs &=
 		( common-form.attrs.accesskey? )
-	select.inner |= empty
 
+## Complex Submit Button: <button type='submit'>, extensions
+
+	button.submit.attrs &=
+		(	common-form.attrs.action? 
+		&	common-form.attrs.autofocus? 
+		&	input.attrs.enctype? 
+		&	common-form.attrs.method? 
+		&	common-form.attrs.replace? 
+		&	common-form.attrs.target? 
+		)
+	
+## Complex Reset Button: <button type='reset'>, extensions
+
+	button.reset.attrs &=
+		( common-form.attrs.autofocus? )
+	
+## Complex Push Button: <button type='button'>, extensions
+
+	button.button.attrs &=
+		( common-form.attrs.autofocus? )
+
+## Complex Add Button: <button type='add'>
+
+	button.add.elem = 
+		element button { button.inner & button.add.attrs }	
+	button.add.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	button.add.attrs.type
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.autofocus? 
+		&	common-form.attrs.template? 
+		&	button.attrs.value? 
+		)
+		button.add.attrs.type = 
+			attribute type {
+				string "add"
+			}
+		
+	button.elem |= button.add.elem
+
+## Remove Button: <button type='remove'>
+
+	button.remove.elem = 
+		element button { button.inner & button.remove.attrs }
+	button.remove.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	button.remove.attrs.type
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.autofocus? 
+		&	button.attrs.value? 
+		)
+		button.remove.attrs.type = 
+			attribute type {
+				string "remove"
+			}	
+		
+	button.elem |= button.remove.elem
+		
+## Move Up Button: <button type='move-up'>
+
+	button.move-up.elem = 
+		element button { button.inner & button.move-up.attrs }
+	button.move-up.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	button.move-up.attrs.type
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.autofocus? 
+		&	button.attrs.value? 
+		)
+		button.move-up.attrs.type = 
+			attribute type {
+				string "move-up"
+			}
+		
+	button.elem |= button.move-up.elem
+
+## Move Down Button: <button type='move-down'>
+
+	button.move-down.elem = 
+		element button { button.inner & button.move-down.attrs }
+	button.move-down.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	button.move-down.attrs.type
+		&	common-form.attrs.accesskey?
+		&	common-form.attrs.autofocus? 
+		&	button.attrs.value? 
+		)
+		button.move-down.attrs.type = 
+			attribute type {
+				string "move-down"
+			}
+		
+	button.elem |= button.move-down.elem
+	
 ## Form: <form>, extensions
 	form.attrs.method.data |= 
 		( string "put" | "delete" )
 	form.attrs.enctype.data |= 
 		( string "application/x-www-form+xml" | string "text/plain" )
 	form.attrs &= 
-		( form.attrs.replace )
-		form.attrs.replace = 
-			attribute replace {
-				string "document" | string "values"
-			}
+		( common-form.attrs.replace? )
 	
 	form.elem.empty =
 		element form { form.inner.empty & form.attrs }
