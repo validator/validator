@@ -389,8 +389,8 @@
 			string
 		}
 	button.inner = 
-		(	common.inner.mixed
-		) #REVISIT expecting this to change into bimorphic
+		( common.inner.strict-bimorphic.static )
+		#REVISIT expecting this to change into bimorphic.static
 	
 ## Complex Submit Button: <button type='submit'>
 
@@ -523,11 +523,11 @@
 		)	
 	fieldset.inner =
 		(	legend.elem? #REVISIT should this be required?
-		,	common.inner.mixed
+		,	common.inner.strict-bimorphic
 		) #REVISIT expecting this to change into bimorphic
 	fieldset.inner.static =
 		(	legend.elem? #REVISIT should this be required?
-		,	common.inner.mixed.static
+		,	common.inner.strict-bimorphic.static
 		) #REVISIT expecting this to change into bimorphic
 
 	#REVISIT is fieldset interactive?

@@ -92,16 +92,16 @@
 		|	common.inner.block.static
 		)
 
-## Mixed Inline and Block Content
+## Strict Inline OR Block Content
 
-	#REVISIT these don't allow struct-inline
+	#REVISIT remove if wf1 doesn't really need these
 
-	common.inner.mixed =
+	common.inner.strict-bimorphic =
 		(	common.inner.strict-inline
 		|	common.inner.block
 		)*
 
-	common.inner.mixed.static =
+	common.inner.strict-bimorphic.static =
 		(	common.inner.strict-inline.static
 		|	common.inner.block.static
 		)*
