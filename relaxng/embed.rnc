@@ -52,107 +52,107 @@
 
 ## Generic Objects: <object>
 
-	obj.elem.strict-inline =
-		element object { obj.inner.strict-inline & obj.attrs }
-	obj.elem.strict-inline.static =
-		element object { obj.inner.strict-inline.static & obj.attrs }
-	obj.elem.struct-inline =
-		element object { obj.inner.struct-inline & obj.attrs }
-	obj.elem.struct-inline.static =
-		element object { obj.inner.struct-inline.static & obj.attrs }
-	obj.elem.block =
-		element object { obj.inner.block & obj.attrs }
-	obj.elem.block.static =
-		element object { obj.inner.block.static & obj.attrs }
-	obj.attrs =
+	object.elem.strict-inline =
+		element object { object.inner.strict-inline & object.attrs }
+	object.elem.strict-inline.static =
+		element object { object.inner.strict-inline.static & object.attrs }
+	object.elem.struct-inline =
+		element object { object.inner.struct-inline & object.attrs }
+	object.elem.struct-inline.static =
+		element object { object.inner.struct-inline.static & object.attrs }
+	object.elem.block =
+		element object { object.inner.block & object.attrs }
+	object.elem.block.static =
+		element object { object.inner.block.static & object.attrs }
+	object.attrs =
 		(	common.attrs
-		&	obj.attrs.archive?
-		&	obj.attrs.classid?
-		&	obj.attrs.codebase?
-		&	obj.attrs.codetype?
-		&	obj.attrs.data?
-		&	obj.attrs.type?
-		&	obj.attrs.standby?
-		&	obj.attrs.name?
-		&	obj.attrs.height?
-		&	obj.attrs.width?
-		&	obj.attrs.usemap?
+		&	object.attrs.archive?
+		&	object.attrs.classid?
+		&	object.attrs.codebase?
+		&	object.attrs.codetype?
+		&	object.attrs.data?
+		&	object.attrs.type?
+		&	object.attrs.standby?
+		&	object.attrs.name?
+		&	object.attrs.height?
+		&	object.attrs.width?
+		&	object.attrs.usemap?
 		)
-		obj.attrs.archive =
+		object.attrs.archive =
 			attribute archive {
 				common.data.uris
 			}
-		obj.attrs.classid =
+		object.attrs.classid =
 			attribute classid {
 				common.data.uri
 			}
-		obj.attrs.codebase =
+		object.attrs.codebase =
 			attribute codebase {
 				common.data.uri
 			}
-		obj.attrs.codetype =
+		object.attrs.codetype =
 			attribute codetype {
 				common.data.mimetype
 			}
-		obj.attrs.data =
+		object.attrs.data =
 			attribute data {
 				common.data.uri
 			}
-		obj.attrs.type =
+		object.attrs.type =
 			attribute type {
 				common.data.mimetype
 			}
-		obj.attrs.standby =
+		object.attrs.standby =
 			attribute standby {
 				text
 			}
-		obj.attrs.name =
+		object.attrs.name =
 			attribute name {
 				string #FIXME refine
 			}
-		obj.attrs.height =
+		object.attrs.height =
 			attribute height {
 				common.data.integer.positive
 			}
-		obj.attrs.width =
+		object.attrs.width =
 			attribute width {
 				common.data.integer.positive
 			}
-		obj.attrs.usemap =
+		object.attrs.usemap =
 			attribute usemap {
 				common.data.uri
 			}
-	obj.inner.strict-inline =
+	object.inner.strict-inline =
 		(	param.elem*
 		,	common.inner.strict-inline
 		)
-	obj.inner.strict-inline.static =
+	object.inner.strict-inline.static =
 		(	param.elem*
 		,	common.inner.strict-inline.static
 		)
-	obj.inner.struct-inline =
+	object.inner.struct-inline =
 		(	param.elem*
 		,	common.inner.struct-inline
 		)
-	obj.inner.struct-inline.static =
+	object.inner.struct-inline.static =
 		(	param.elem*
 		,	common.inner.struct-inline.static
 		)
-	obj.inner.block =
+	object.inner.block =
 		(	param.elem*
 		,	common.inner.block
 		)
-	obj.inner.block.static =
+	object.inner.block.static =
 		(	param.elem*
 		,	common.inner.block.static
 		)
 
-	common.inner.strict-inline &= obj.elem.strict-inline*
-	common.inner.strict-inline.static &= obj.elem.strict-inline.static*
-	common.inner.struct-inline &= obj.elem.struct-inline*
-	common.inner.struct-inline.static &= obj.elem.struct-inline.static*
-	common.inner.block &= obj.elem.block*
-	common.inner.block.static &= obj.elem.block.static*
+	common.inner.strict-inline &= object.elem.strict-inline*
+	common.inner.strict-inline.static &= object.elem.strict-inline.static*
+	common.inner.struct-inline &= object.elem.struct-inline*
+	common.inner.struct-inline.static &= object.elem.struct-inline.static*
+	common.inner.block &= object.elem.block*
+	common.inner.block.static &= object.elem.block.static*
 
 ## Java Applets: <applet>
 
