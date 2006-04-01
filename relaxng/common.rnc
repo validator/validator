@@ -94,15 +94,17 @@
 
 ## Mixed Inline and Block Content
 
+	#REVISIT these don't allow struct-inline
+
 	common.inner.mixed =
 		(	common.inner.strict-inline
-		&	common.inner.block
-		)
+		|	common.inner.block
+		)*
 
 	common.inner.mixed.static =
 		(	common.inner.strict-inline.static
-		&	common.inner.block.static
-		)
+		|	common.inner.block.static
+		)*
 
 
 # #####################################################################
@@ -118,15 +120,21 @@ common.attrs =
 	)
 
 common.attrs.basic =
-	(	common.attrs.id?
+	(	(	common.attrs.id
+		|	common.attrs.xml-id
+		)? # REVISIT assuming only either one is allowed
 	&	common.attrs.class?
 	&	common.attrs.title?
 	&	common.attrs.base?
 	)
 	common.attrs.id =
 		attribute id {
-			xsd:ID
+			xsd:ID #REVISIT too restrictive?
 		}
+	common.attrs.xml-id =
+		attribute xml:id {
+			xsd:ID #REVISIT can HTML5 loosen xml:id?
+		} & XMLonly
 	common.attrs.class =
 		attribute class {
 			common.data.tokens

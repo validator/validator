@@ -32,6 +32,21 @@
 		( common.inner.anything )
 	script.inner.imported =
 		( empty )
+		
+	script.elem = 
+		(	script.elem.embedded
+		|	script.elem.imported
+		)
+		
+	head.inner.misc |=
+		( script.elem )
+
+	common.inner.strict-inline &= script.elem*
+	common.inner.strict-inline.static &= script.elem*
+	common.inner.struct-inline &= script.elem*
+	common.inner.struct-inline.static &= script.elem*
+	common.inner.block &= script.elem*
+	common.inner.block.static &= script.elem*
 
 ## Fallback Unscripted Content: <noscript>
 

@@ -9,7 +9,7 @@
 
 	common-form.attrs.form = 
 		attribute form {
-			common.data.idrefs #REVISIT spec says space--not whitespace
+			"" | common.data.idrefs #REVISIT spec says space--not whitespace
 		}
 
 	common-form.attrs.inputmode = 
@@ -50,6 +50,11 @@
 	common-form.attrs.template = 
 		attribute template {
 			common.data.idref #REVISIT the spec does not explicitly say this
+		}
+
+	common-form.attrs.data = 
+		attribute data {
+			common.data.uri
 		}
 
 ## Shared attributes for <input>
@@ -704,7 +709,37 @@
 
 ## Selection Menu: <select>, extensions
 	select.attrs &=
-		( common-form.attrs.accesskey? )
+		(	common-form.attrs.accesskey?
+		&	common-form.attrs.data?
+		)
+
+## List of Prefill Data: <datalist>
+
+	#REVISIT should the options in datalist be non-selectable?
+
+	datalist.elem.strict-inline =
+		element datalist { option.elem* & common.inner.strict-inline & datalist.attrs }
+	datalist.elem.strict-inline.static =
+		element datalist { option.elem* & common.inner.strict-inline.static & datalist.attrs }
+	datalist.elem.struct-inline =
+		element datalist { option.elem* & common.inner.struct-inline & datalist.attrs }
+	datalist.elem.struct-inline.static =
+		element datalist { option.elem* & common.inner.struct-inline.static & datalist.attrs }
+	datalist.elem.block =
+		element datalist { option.elem* & common.inner.block & datalist.attrs }
+	datalist.elem.block.static =
+		element datalist { option.elem* & common.inner.block.static & datalist.attrs }
+	datalist.attrs =
+		(	common.attrs
+		&	common-form.attrs.data?
+		)
+
+	common.inner.strict-inline &= datalist.elem.strict-inline*
+	common.inner.strict-inline.static &= datalist.elem.strict-inline.static*
+	common.inner.struct-inline &= datalist.elem.struct-inline*
+	common.inner.struct-inline.static &= datalist.elem.struct-inline.static*
+	common.inner.block &= datalist.elem.block*
+	common.inner.block.static &= datalist.elem.block.static*
 
 ## Complex Submit Button: <button type='submit'>, extensions
 
@@ -747,7 +782,7 @@
 		
 	button.elem |= button.add.elem
 
-## Remove Button: <button type='remove'>
+## Complex Remove Button: <button type='remove'>
 
 	button.remove.elem = 
 		element button { button.inner & button.remove.attrs }
@@ -766,7 +801,7 @@
 		
 	button.elem |= button.remove.elem
 		
-## Move Up Button: <button type='move-up'>
+## Complex Move Up Button: <button type='move-up'>
 
 	button.move-up.elem = 
 		element button { button.inner & button.move-up.attrs }
@@ -785,7 +820,7 @@
 		
 	button.elem |= button.move-up.elem
 
-## Move Down Button: <button type='move-down'>
+## Complex Move Down Button: <button type='move-down'>
 
 	button.move-down.elem = 
 		element button { button.inner & button.move-down.attrs }
@@ -810,7 +845,9 @@
 	form.attrs.enctype.data |= 
 		( string "application/x-www-form+xml" | string "text/plain" )
 	form.attrs &= 
-		( common-form.attrs.replace? )
+		(	common-form.attrs.replace?
+		&	common-form.attrs.data?
+		)
 	
 	form.elem.empty =
 		element form { form.inner.empty & form.attrs }
@@ -818,3 +855,11 @@
 		( empty )
 
 	#FIXME allow empty forms in head but only in XHTML
+	
+	
+## Fieldset: <fieldset>
+
+	fieldset.attrs &=
+		(	common-form.attrs.disabled?
+		&	common-form.attrs.form?
+		)

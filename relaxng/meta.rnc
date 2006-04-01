@@ -35,16 +35,18 @@
 			}
 	head.inner =
 		(	meta.elem.encoding?
-		,	(	title.elem
+		,	head.inner.normal
+		)
+		head.inner.normal =
+			(	title.elem
 			&	base.elem?
 			&	head.inner.misc*
 			)
-		)
-		head.inner.misc =
-			(	meta.elem
-			|	link.elem
-			|	style.elem
-			)
+			head.inner.misc =
+				(	meta.elem
+				|	link.elem
+				|	style.elem
+				)
 
 ## Content Container: <body>
 
