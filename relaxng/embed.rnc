@@ -276,7 +276,8 @@
 			}
 		param.attrs.value.object =
 			attribute value {
-				common.data.idref
+				#common.data.idref
+				string #FIXME
 			}
 		param.attrs.type =
 			attribute type {

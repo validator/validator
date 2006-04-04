@@ -9,7 +9,8 @@
 
 	common-form.attrs.form = 
 		attribute form {
-			"" | common.data.idrefs #REVISIT spec says space--not whitespace
+			#"" | common.data.idrefs #REVISIT spec says space--not whitespace
+			string #FIXME
 		}
 
 	common-form.attrs.inputmode = 

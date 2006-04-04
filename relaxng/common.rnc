@@ -39,7 +39,8 @@
 ## Any attribute from any namespace
 
 	common.attr.anything =
-		attribute * { text }*
+#		attribute * { text }*
+		attribute foo { text }*
 
 ## Any element from any namespace
 
