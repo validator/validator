@@ -515,8 +515,6 @@
 
 	fieldset.elem =
 		element fieldset { fieldset.inner & fieldset.attrs }
-	fieldset.elem.static =
-		element fieldset { fieldset.inner.static & fieldset.attrs }
 	fieldset.attrs =
 		(	common.attrs
 		&	common-form.attrs.accesskey?
@@ -525,12 +523,34 @@
 		(	legend.elem? #REVISIT should this be required?
 		,	common.inner.strict-bimorphic
 		) #REVISIT expecting this to change into bimorphic
-	fieldset.inner.static =
-		(	legend.elem? #REVISIT should this be required?
-		,	common.inner.strict-bimorphic.static
-		) #REVISIT expecting this to change into bimorphic
 
-	#REVISIT is fieldset interactive?
+	#REVISIT only allowing in interactive context for now
+	# http://listserver.dreamhost.com/pipermail/whatwg-whatwg.org/2006-April/006181.html
 
 	common.inner.block &= fieldset.elem*
-	common.inner.block.static &= fieldset.elem.static*
+	
+## Label: <label>
+
+	label.elem =
+		element label { label.inner & label.attrs }
+	label.elem.static =
+		element label { label.inner.static & label.attrs }
+	label.attrs =
+		(	common.attrs
+		&	common-form.attrs.accesskey?
+		&	label.attrs.for?
+		)
+		label.attrs.for =
+			attribute for {
+				common.data.idref
+			}
+	label.inner =
+		( common.inner.strict-inline ) #REVISIT making obvious guess
+	label.inner.static =
+		( common.inner.strict-inline.static ) #REVISIT making obvious guess
+
+	common.inner.struct-inline &= label.elem*
+	common.inner.struct-inline.static &= label.elem.static*
+	common.inner.strict-inline &= label.elem*
+	common.inner.strict-inline.static &= label.elem.static*
+

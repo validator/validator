@@ -155,6 +155,7 @@
 
 	input.file.attrs &=
 		(	common-form.attrs.autofocus? 
+		&	input.attrs.required? 
 		&	input.file.attrs.min? 
 		&	input.file.attrs.max? 
 		)

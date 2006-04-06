@@ -10,7 +10,7 @@
 	tables.data.multilen =
 		(	common.data.integer.positive
 		|	common.data.percent
-		|	xsd:token { pattern = "\d+\*" }
+		|	xsd:token { pattern = "[0-9]+\*" } #REVISIT should this one be string? 
 		)
 
 ## Table Alignment Attributes
@@ -37,11 +37,11 @@
 
 	table.elem =
 		element table { table.inner & table.attrs }
-	td.elem.static =
+	table.elem.static =
 		element table { table.inner.static & table.attrs }
 	table.attrs =
 		(	common.attrs
-		&	table.attrs.summary
+		&	table.attrs.summary?
 		)
 		table.attrs.summary =
 			attribute summary {
@@ -52,8 +52,8 @@
 		,	( colgroup.elem+ | col.elem+)?
 		,	thead.elem?
 		,	tfoot.elem?
-		,	( tbody.elem+ | tr.elem+)?
-		)
+		,	( tbody.elem+ | tr.elem+)? #REVISIT require tbody if thead or tfoot?
+		) 
 	table.inner.static =
 		(	caption.elem.static?
 		,	( colgroup.elem+ | col.elem+)?
@@ -157,7 +157,7 @@
 
 	tbody.elem =
 		element tbody { tbody.inner & tbody.attrs }
-	tfoot.elem.static =
+	tbody.elem.static =
 		element tbody { tbody.inner.static & tbody.attrs }
 	tbody.attrs =
 		(	common.attrs
