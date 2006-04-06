@@ -866,3 +866,46 @@
 		(	common-form.attrs.disabled?
 		&	common-form.attrs.form?
 		)
+
+## Attributes for the repetition model
+
+	repetition.attrs.repeat.template =
+		attribute repeat {
+			string "template"
+		}
+
+	repetition.attrs.repeat.integer =
+		attribute repeat {
+			common.data.integer
+		}
+	
+	repetition.attrs.repeat-template =
+		attribute repeat-template {
+			common.data.idref
+		}
+
+	repetition.attrs.repeat-min =
+		attribute repeat-min {
+			common.data.integer.positive #REVISIT so the spec says
+		}
+
+	repetition.attrs.repeat-max =
+		attribute repeat-max {
+			common.data.integer.positive
+		}
+
+	repetition.attrs.repeat-start =
+		attribute repeat-start {
+			common.data.integer.non-negative
+		}
+
+	common.attrs &=
+		(	(	repetition.attrs.repeat.template
+			&	repetition.attrs.repeat-min?
+			&	repetition.attrs.repeat-max?
+			&	repetition.attrs.repeat-start?
+			)
+		|	(	repetition.attrs.repeat.integer
+			&	repetition.attrs.repeat-template?
+			)
+		)?

@@ -92,7 +92,7 @@
 		)
 		colgroup.attrs.width =
 			attribute width {
-				tables.data.multilen
+				tables.data.multilen #REVISIT find out if fractional % work
 			}
 		colgroup.attrs.span =
 			attribute span {
