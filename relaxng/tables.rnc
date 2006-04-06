@@ -50,9 +50,9 @@
 	table.inner =
 		(	caption.elem?
 		,	( colgroup.elem+ | col.elem+)?
-		,	thead.elem?
-		,	tfoot.elem?
-		,	( tbody.elem+ | tr.elem+)? #REVISIT require tbody if thead or tfoot?
+		,	(	( thead.elem?, tfoot.elem?, tbody.elem+ )
+			|	( tr.elem+ )
+			)
 		) 
 	table.inner.static =
 		(	caption.elem.static?

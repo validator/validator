@@ -649,7 +649,8 @@
 		element output { output.inner.strict.static & output.attrs }
 	output.attrs =
 		(	common.attrs
-		&	common-form.attrs
+		&	common-form.attrs.name?
+		&	common-form.attrs.disabled?
 		&	output.attrs.for?
 		#FIXME figure out how onchange, onforminput and onformchange
 		#fit together with a scripting module.

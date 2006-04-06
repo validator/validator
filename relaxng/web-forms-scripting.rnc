@@ -9,7 +9,10 @@
 
 	input.text.attrs &=
 		(	scripting.attr.form.select?
-		&	scripting.attr.form.change?
+		)
+
+	common-form.attrs &=
+		(	scripting.attr.form.change?
 		)
 
 	form.attrs &=
