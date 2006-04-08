@@ -37,7 +37,11 @@
 				common.data.mimetype
 			}
 	a.inner =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	a.inner.strict =
 		( common.inner.strict-inline.static )
 
@@ -57,9 +61,17 @@
 	em.attrs =
 		( common.attrs )
 	em.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	em.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	em.inner.strict =
 		( common.inner.strict-inline )
 	em.inner.strict.static =
@@ -83,9 +95,17 @@
 	strong.attrs =
 		( common.attrs )
 	strong.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	strong.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	strong.inner.strict =
 		( common.inner.strict-inline )
 	strong.inner.strict.static =
@@ -109,9 +129,17 @@
 	small.attrs =
 		( common.attrs )
 	small.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	small.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	small.inner.strict =
 		( common.inner.strict-inline )
 	small.inner.strict.static =
@@ -138,7 +166,7 @@
 		& v5only
 	m.attrs =
 		( common.attrs )
-	m.inner =
+	m.inner = #REVISIT check HTML-compatibility
 		( common.inner.struct-inline )
 	m.inner.static =
 		( common.inner.struct-inline.static )
@@ -223,9 +251,17 @@
 	code.attrs =
 		( common.attrs )
 	code.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	code.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	code.inner.strict =
 		( common.inner.strict-inline )
 	code.inner.strict.static =
@@ -267,9 +303,17 @@
 	samp.attrs =
 		( common.attrs )
 	samp.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	samp.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	samp.inner.strict =
 		( common.inner.strict-inline )
 	samp.inner.strict.static =
@@ -353,9 +397,17 @@
 				common.data.uri
 			}
 	q.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	q.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	q.inner.strict =
 		( common.inner.strict-inline )
 	q.inner.strict.static =
@@ -397,9 +449,17 @@
 	span.attrs =
 		( common.attrs )
 	span.inner =
-		( common.inner.struct-inline )
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	span.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	span.inner.strict =
 		( common.inner.strict-inline )
 	span.inner.strict.static =

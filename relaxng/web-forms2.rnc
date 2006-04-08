@@ -566,7 +566,7 @@
 				common.data.idrefs #REVISIT spec says space--not whitespace
 			}
 	output.inner =
-		( common.inner.struct-inline )
+		( common.inner.struct-inline ) #REVIST check HTML-compatibility
 	output.inner.static =
 		( common.inner.struct-inline.static )
 	output.inner.strict =
@@ -630,7 +630,7 @@
 		element datalist { option.elem* & common.inner.strict-inline & datalist.attrs }
 	datalist.elem.strict-inline.static =
 		element datalist { option.elem* & common.inner.strict-inline.static & datalist.attrs }
-	datalist.elem.struct-inline =
+	datalist.elem.struct-inline = #REVISIT check HTML-compatibility
 		element datalist { option.elem* & common.inner.struct-inline & datalist.attrs }
 	datalist.elem.struct-inline.static =
 		element datalist { option.elem* & common.inner.struct-inline.static & datalist.attrs }

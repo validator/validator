@@ -112,7 +112,7 @@
 		element address { address.inner.static & address.attrs }
 	address.attrs =
 		( common.attrs )
-	address.inner =
+	address.inner = #REVISIT check HTML-compatibility
 		( common.inner.struct-inline )
 	address.inner.static =
 		( common.inner.struct-inline.static )
