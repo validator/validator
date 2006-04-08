@@ -247,6 +247,9 @@
 			}
 		
 	input.elem |= input.hidden.elem
+	
+	common.inner.block &= input.hidden.elem*
+	#REVISIT static too?
 		
 ## Image Submit Button: <input type='image'>
 
