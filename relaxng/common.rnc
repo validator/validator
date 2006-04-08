@@ -158,7 +158,7 @@ common.attrs.i18n =
 	)
 	common.attrs.dir =
 		attribute dir {
-			"ltr" | "rtl"
+			string "ltr" | string "rtl"
 		}
 	common.attrs.language =
 		(	common.attrs.lang

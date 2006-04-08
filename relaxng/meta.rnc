@@ -71,7 +71,7 @@
 		& HTMLonly
 	meta.attrs.encoding =
 		(	attribute http-equiv {
-				"Content-Type"
+				string "Content-Type"
 			}
 		&
 			attribute content {

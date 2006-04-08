@@ -22,7 +22,12 @@
 		)
 		tables.attrs.align =
 			attribute align {
-				"left" | "center" | "right" | "justify" | "char"
+				(	string "left" 
+				|	string "center"
+				|	string "right"
+				|	string "justify"
+				|	string "char"
+				)
 			}
 		tables.attrs.char =
 			attribute char {
@@ -30,7 +35,11 @@
 			}
 		tables.attrs.valign =
 			attribute valign {
-				"top" | "middle" | "bottom" | "baseline"
+				(	string "top"
+				|	string "middle"
+				|	string "bottom"
+				|	string "baseline"
+				)
 			}
 
 ## Data Table: <table>
@@ -220,7 +229,11 @@
 		)
 		tables.attrs.scope =
 			attribute scope {
-				"row" | "col" | "rowgroup" | "colgroup"
+				(	string "row"
+				|	string "col"
+				|	string "rowgroup"
+				|	string "colgroup"
+				)
 			}
 		tables.attrs.abbr =
 			attribute abbr {

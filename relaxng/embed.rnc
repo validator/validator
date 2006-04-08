@@ -40,7 +40,7 @@
 			}
 		img.attrs.ismap =
 			attribute ismap {
-				"ismap"
+				string "ismap"
 			}
 	img.inner =
 		empty
@@ -256,7 +256,7 @@
 			)
 		param.attrs.valuetype.data =
 			attribute valuetype {
-				"data"
+				string "data"
 			}
 		param.attrs.value.data =
 			attribute value {
@@ -264,7 +264,7 @@
 			}
 		param.attrs.valuetype.ref =
 			attribute valuetype {
-				"ref"
+				string "ref"
 			}
 		param.attrs.value.ref =
 			attribute value {
@@ -272,7 +272,7 @@
 			}
 		param.attrs.valuetype.object =
 			attribute valuetype {
-				"object"
+				string "object"
 			}
 		param.attrs.value.object =
 			attribute value {
@@ -331,7 +331,7 @@
 			}
 		iframe.attrs.scrolling =
 			attribute scrolling {
-				"yes" | "no" | "auto"
+				string "yes" | string "no" | string "auto"
 			}
 	iframe.inner.strict-inline =
 		( common.inner.strict-inline )
@@ -404,7 +404,7 @@
 			)
 		area.attrs.shape.rect =
 			attribute shape {
-				"rect"
+				string "rect"
 			}
 		area.attrs.coords.rect =
 			attribute coords {
@@ -416,7 +416,7 @@
 			}
 		area.attrs.shape.circle =
 			attribute shape {
-				"circle"
+				string "circle"
 			}
 		area.attrs.coords.circle =
 			attribute coords {
@@ -428,7 +428,7 @@
 			}
 		area.attrs.shape.poly =
 			attribute shape {
-				"poly"
+				string "poly"
 			}
 		area.attrs.coords.poly =
 			attribute coords {
@@ -440,7 +440,7 @@
 			}
 		area.attrs.shape.default =
 			attribute shape {
-				"default"
+				string "default"
 			}
 		area.attrs.href =
 			attribute href {
@@ -448,7 +448,7 @@
 			}
 		area.attrs.nohref =
 			attribute nohref {
-				"nohref"
+				string "nohref"
 			}
 	area.inner =
 		( empty )

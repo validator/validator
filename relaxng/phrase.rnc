@@ -425,7 +425,7 @@
 		)
 		bdo.attrs.dir =
 			attribute dir {
-				"ltr" | "rtl"
+				string "ltr" | string "rtl"
 			}
 	bdo.inner =
 		( common.inner.strict-inline )
