@@ -27,12 +27,29 @@ import org.mozilla.javascript.regexp.RegExpImpl;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
 
+/**
+ * This datatype shall accept the strings that are allowed as the value of the Web Forms 2.0 
+ * <a href="http://whatwg.org/specs/web-forms/current-work/#pattern"><code>pattern</code></a> 
+ * attribute.
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Pattern extends AbstractDatatype {
 
-    public Pattern() {
+    /**
+     * Package-private constructor
+     */
+    Pattern() {
         super();
     }
 
+    /**
+     * Checks that the value compiles as a JavaScript regular expression.
+     * @param literal the value
+     * @param context ignored
+     * @throws DatatypeException if the value isn't valid
+     * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
     public void checkValid(String literal, ValidationContext context)
             throws DatatypeException {
         // TODO find out what kind of thread concurrency guarantees are made

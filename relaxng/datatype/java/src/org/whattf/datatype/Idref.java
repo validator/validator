@@ -24,14 +24,26 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.Datatype;
 
+/**
+ * This datatype shall accept any string that consists of one or more characters 
+ * and does not contain any whitespace characters.
+ * <p>The ID-type of this datatype is IDREF.
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Idref extends Id {
 
-    public Idref() {
+    /**
+     * Package-private constructor
+     */
+    Idref() {
         super();
     }
 
     /**
-     * @see org.whattf.datatype.Id#getIdType()
+     * Returns <code>Datatype.ID_TYPE_IDREF</code>.
+     * @return <code>Datatype.ID_TYPE_IDREF</code>
+     * @see org.relaxng.datatype.Datatype#getIdType()
      */
     public int getIdType() {
         return Datatype.ID_TYPE_IDREF;

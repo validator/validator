@@ -28,12 +28,34 @@ import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.relaxng.datatype.ValidationContext;
 import org.relaxng.datatype.helpers.StreamingValidatorImpl;
 
+/**
+ * Common superclass for HTML5 datatypes. Implements all methods of the 
+ * <code>Datatype</code> interface except <code>checkValid</code>.
+ * 
+ * @version $Id$
+ * @author hsivonen
+ */
 public abstract class AbstractDatatype implements Datatype {
 
-    public AbstractDatatype() {
+    /**
+     * Mask for ASCII case folding.
+     */
+    private static final int CASE_MASK = (1 << 5);
+
+    /**
+     * Package-private constructor
+     */
+    AbstractDatatype() {
         super();
     }
 
+    /**
+     * Calls <code>checkValid</code>
+     * @param literal the value
+     * @param context the validation context (ignored by subclasses)
+     * @return <code>true</code> if valid and <code>false</code> if not
+     * @see org.relaxng.datatype.Datatype#isValid(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
     public boolean isValid(String literal, ValidationContext context) {
         try {
             checkValid(literal, context);
@@ -43,31 +65,96 @@ public abstract class AbstractDatatype implements Datatype {
         return true;
     }
 
+    /**
+     * Merely returns a <code>StreamingValidatorImpl</code>.
+     * @param context the validation context (ignored by subclasses)
+     * @return An unoptimized <code>DatatypeStreamingValidator</code>
+     * @see org.relaxng.datatype.Datatype#createStreamingValidator(org.relaxng.datatype.ValidationContext)
+     */
     public DatatypeStreamingValidator createStreamingValidator(
             ValidationContext context) {
         return new StreamingValidatorImpl(this, context);
     }
 
-    public Object createValue(String literal, ValidationContext context) {
+    /**
+     * Implements strict string equality semantics by returning <code>literal</code> 
+     * itself.
+     * @param literal the value (get returned)
+     * @param context ignored
+     * @return the <code>literal</code> that was passed in
+     * @see org.relaxng.datatype.Datatype#createValue(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
+    public final Object createValue(String literal, ValidationContext context) {
         return literal;
     }
 
-    public boolean sameValue(Object value1, Object value2) {
+    /**
+     * Implements strict stirng equality semantics by performing a standard 
+     * <code>equals</code> check on the arguments.
+     * @param value1 an object returned by <code>createValue</code>
+     * @param value2 another object returned by <code>createValue</code>
+     * @return <code>true</code> if the values are equal, <code>false</code> otherwise
+     * @see org.relaxng.datatype.Datatype#sameValue(java.lang.Object, java.lang.Object)
+     */
+    public final boolean sameValue(Object value1, Object value2) {
         if (value1 == null) {
             return (value2 == null);
         }
         return value1.equals(value2);
     }
 
-    public int valueHashCode(Object value) {
+    /**
+     * Implements strict stirng equality semantics by returning the 
+     * <code>java.lang.Object</code>-level <code>hashCode</code> of 
+     * the object.
+     * @param value an object returned by <code>createValue</code>
+     * @return the hash code
+     * @see org.relaxng.datatype.Datatype#valueHashCode(java.lang.Object)
+     */
+    public final int valueHashCode(Object value) {
         return value.hashCode();
     }
 
+    /**
+     * Always returns <code>Datatype.ID_TYPE_NULL</code>. (Overridden by subclasses 
+     * that have a different ID-type.)
+     * @return <code>Datatype.ID_TYPE_NULL</code>
+     * @see org.relaxng.datatype.Datatype#getIdType()
+     */
     public int getIdType() {
         return Datatype.ID_TYPE_NULL;
     }
 
-    public boolean isContextDependent() {
+    /**
+     * Always returns <code>false</code>
+     * @return <code>false</code>
+     * @see org.relaxng.datatype.Datatype#isContextDependent()
+     */
+    public final boolean isContextDependent() {
         return false;
+    }
+
+    /**
+     * Checks if a UTF-16 code unit represents a whitespace character (U+0020, 
+     * U+0009, U+000D or U+000A).
+     * @param c the code unit
+     * @return <code>true</code> if whitespace, <code>false</code> otherwise
+     */
+    protected final boolean isWhitespace(char c) {
+        return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+    }
+
+    /**
+     * If the argument is an upper case ASCII letter, returns the letter in 
+     * lower case. Otherwise returns the argument.
+     * @param c a UTF-16 code unit
+     * @return upper case ASCII lower cased
+     */
+    protected final char toAsciiLowerCase(char c) {
+        if (c >= 'A' && c <= 'Z') {
+            return (char) (c | CASE_MASK);
+        } else {
+           return c;
+        }
     }
 }

@@ -28,17 +28,35 @@ import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.helpers.ParameterlessDatatypeBuilder;
 
+/**
+ * Factory for HTML5 datatypes.
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Html5DatatypeLibrary implements DatatypeLibrary {
     
     public Html5DatatypeLibrary() {
         super();
     }
 
+    /**
+     * Returns a <code>DatatypeBuilder</code> for a named datatype. This method is 
+     * unnecessary for direct access. Just use <code>createDatatype</code>.
+     * @param baseTypeLocalName the local name
+     * @return a <code>ParameterlessDatatypeBuilder</code> for the local name
+     * @see org.relaxng.datatype.DatatypeLibrary#createDatatypeBuilder(java.lang.String)
+     */
     public DatatypeBuilder createDatatypeBuilder(String baseTypeLocalName)
             throws DatatypeException {
         return new ParameterlessDatatypeBuilder(createDatatype(baseTypeLocalName));
     }
 
+    /**
+     * The factory method for the datatype of this library.
+     * @param typeLocalName the local name
+     * @return a <code>Datatype</code> instance for the local name
+     * @see org.relaxng.datatype.DatatypeLibrary#createDatatype(java.lang.String)
+     */
     public Datatype createDatatype(String typeLocalName)
             throws DatatypeException {
         if ("ID".equals(typeLocalName)) {

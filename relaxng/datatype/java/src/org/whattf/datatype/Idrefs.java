@@ -26,16 +26,33 @@ import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
 
+/**
+ * This datatype shall accept any string that consists of one or more characters and 
+ * contains at least one character that is not a whitespace character.
+ * <p>The ID-type of this datatype is IDREFS.
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Idrefs extends AbstractDatatype {
 
-    public Idrefs() {
+    /**
+     * Package-private constructor
+     */
+    Idrefs() {
         super();
     }
 
+    /**
+     * Checks that the value is a proper list of HTML5 ids.
+     * @param literal the value
+     * @param context ignored
+     * @throws DatatypeException if the value isn't valid
+     * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
     public void checkValid(String literal, ValidationContext context) throws DatatypeException {
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
-            if (!(c == ' ' || c == '\t' || c == '\n' || c == '\r')) {
+            if (!isWhitespace(c)) {
                 return;
             }
         }
@@ -43,7 +60,9 @@ public class Idrefs extends AbstractDatatype {
     }   
     
     /**
-     * @see org.whattf.datatype.Id#getIdType()
+     * Returns <code>Datatype.ID_TYPE_IDREFS</code>.
+     * @return <code>Datatype.ID_TYPE_IDREFS</code>
+     * @see org.relaxng.datatype.Datatype#getIdType()
      */
     public int getIdType() {
         return Datatype.ID_TYPE_IDREFS;

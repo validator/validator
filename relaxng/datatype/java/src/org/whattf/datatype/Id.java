@@ -26,12 +26,29 @@ import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
 
+/**
+ * This datatype shall accept any string that consists of one or more characters 
+ * and does not contain any whitespace characters.
+ * <p>The ID-type of this datatype is ID.
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Id extends AbstractDatatype {
 
-    public Id() {
+    /**
+     * Package-private constructor
+     */
+    Id() {
         super();
     }
 
+    /**
+     * Checks that the value is a proper HTML5 id.
+     * @param literal the value
+     * @param context ignored
+     * @throws DatatypeException if the value isn't valid
+     * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
     public void checkValid(String literal, ValidationContext context)
             throws DatatypeException {
         int len = literal.length();
@@ -40,12 +57,17 @@ public class Id extends AbstractDatatype {
         }
         for (int i = 0; i < len; i++) {
             char c = literal.charAt(i);
-            if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
+            if (isWhitespace(c)) {
                 throw new DatatypeException(i, "An ID must not contain whitespace.");
             }
         }
     }
 
+    /**
+     * Returns <code>Datatype.ID_TYPE_ID</code>.
+     * @return <code>Datatype.ID_TYPE_ID</code>
+     * @see org.relaxng.datatype.Datatype#getIdType()
+     */
     public int getIdType() {
         return Datatype.ID_TYPE_ID;
     }

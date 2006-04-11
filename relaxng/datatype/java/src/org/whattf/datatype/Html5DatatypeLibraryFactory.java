@@ -25,15 +25,34 @@ package org.whattf.datatype;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 
+/**
+ * The factory for datatype library autodiscovery.
+ * 
+ * @version $Id$
+ * @author hsivonen
+ */
 public class Html5DatatypeLibraryFactory implements
         DatatypeLibraryFactory {
 
+    /**
+     * The library namespace URI.
+     */
     private static final String NAMESPACE = "http://whattf.org/datatype-draft";
 
+    /**
+     * The constructor.
+     */
     public Html5DatatypeLibraryFactory() {
         super();
     }
 
+    /**
+     * Returns a <code>Html5DatatypeLibrary</code> on the library namespace and <code>null</code>
+     * otherwise.
+     * @param namespaceURI a namespace URI
+     * @return a <code>DatatypeLibrary</code> or <code>null</code>
+     * @see org.relaxng.datatype.DatatypeLibraryFactory#createDatatypeLibrary(java.lang.String)
+     */
     public DatatypeLibrary createDatatypeLibrary(String namespaceURI) {
         if (NAMESPACE.equals(namespaceURI)) {
             return new Html5DatatypeLibrary();
