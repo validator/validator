@@ -58,3 +58,5 @@ wildcard.elem.exclude-all =
 	notAllowed
 
 #FIXME no nested forms in HTML-serializable docs
+
+#FIXME no nested labels

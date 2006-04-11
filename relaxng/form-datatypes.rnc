@@ -103,26 +103,26 @@
 	
 	form.data.inputmode = 
 		list {
-				(	(	form.data.inputmodetoken.bicameral
-					,	(	(	form.data.inputmodetoken.modifier.case-digit-symbol?
-							,	form.data.inputmodetoken.modifier.prediction?
-							)
-						|	(	form.data.inputmodetoken.modifier.prediction?
-							,	form.data.inputmodetoken.modifier.case-digit-symbol?
-							)
+			(	(	form.data.inputmodetoken.bicameral
+				,	(	(	form.data.inputmodetoken.modifier.case-digit-symbol?
+						,	form.data.inputmodetoken.modifier.prediction?
+						)
+					|	(	form.data.inputmodetoken.modifier.prediction?
+						,	form.data.inputmodetoken.modifier.case-digit-symbol?
 						)
 					)
-				|	(	form.data.inputmodetoken.unicameral
-					,	(	(	form.data.inputmodetoken.modifier.digit-symbol?
-							,	form.data.inputmodetoken.modifier.prediction?
-							)
-						|	(	form.data.inputmodetoken.modifier.prediction?
-							,	form.data.inputmodetoken.modifier.digit-symbol?
-							)
+				)
+			|	(	form.data.inputmodetoken.unicameral
+				,	(	(	form.data.inputmodetoken.modifier.digit-symbol?
+						,	form.data.inputmodetoken.modifier.prediction?
+						)
+					|	(	form.data.inputmodetoken.modifier.prediction?
+						,	form.data.inputmodetoken.modifier.digit-symbol?
 						)
 					)
-				)+
-			}
+				)
+			)+
+		}
 		# Just assuming at least one token is required. The spec does not say.
 
 ## ECMAScript Regular Expression
