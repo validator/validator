@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Common Definitions                    #
 # #####################################################################
@@ -130,11 +132,11 @@ common.attrs.basic =
 	)
 	common.attrs.id =
 		attribute id {
-			xsd:ID #REVISIT too restrictive?
+			common.data.id
 		}
 	common.attrs.xml-id =
 		attribute xml:id {
-			xsd:ID #REVISIT can HTML5 loosen xml:id?
+			xsd:ID
 		} & XMLonly
 	common.attrs.class =
 		attribute class {
@@ -206,13 +208,13 @@ common.attrs.present =
 ## IDs and IDREFs
 
 	common.data.id =
-		xsd:ID #FIXME too constrained
+		w:ID
 
 	common.data.idref =
-		xsd:IDREF #FIXME too constrained
+		w:IDREF
 
 	common.data.idrefs =
-		xsd:IDREFS #FIXME too constrained
+		w:IDREFS
 
 ## Numerical
 

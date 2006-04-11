@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Datatypes related to forms            #
 # #####################################################################
@@ -128,7 +130,7 @@
 ## ECMAScript Regular Expression
 		
 	form.data.pattern = 
-		string #FIXME should be ECMAScript regexp. Dig into Rhino
+		w:pattern
 		
 ## Temporal
 		
