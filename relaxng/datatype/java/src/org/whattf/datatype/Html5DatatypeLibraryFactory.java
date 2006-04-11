@@ -25,12 +25,12 @@ package org.whattf.datatype;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 
-public class Html5IdDatatypeLibraryFactory implements
+public class Html5DatatypeLibraryFactory implements
         DatatypeLibraryFactory {
 
     private static final String NAMESPACE = "http://whattf.org/datatype-draft";
 
-    public Html5IdDatatypeLibraryFactory() {
+    public Html5DatatypeLibraryFactory() {
         super();
     }
 
