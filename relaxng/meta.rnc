@@ -162,7 +162,7 @@
 	meta.attrs =
 		(	common.attrs
 		&	meta.attrs.name? #REVISIT require this?
-		&	meta.attrs.content? #REVIST require even this?
+		&	meta.attrs.content? #REVISIT require even this?
 		)
 		meta.attrs.name =
 			attribute name {

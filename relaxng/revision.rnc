@@ -27,6 +27,14 @@
 		element ins { common.inner.block & ins.attrs }
 	ins.elem.block.static =
 		element ins { common.inner.block.static & ins.attrs }
+	ins.elem.block.header =
+		element ins { common.inner.block.header & ins.attrs }
+	ins.elem.block.header.static =
+		element ins { common.inner.block.header.static & ins.attrs }
+	ins.elem.block.footer =
+		element ins { common.inner.block.footer & ins.attrs }
+	ins.elem.block.footer.static =
+		element ins { common.inner.block.footer.static & ins.attrs }
 	ins.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
@@ -39,6 +47,10 @@
 	common.inner.struct-inline.static &= ins.elem.struct-inline.static*
 	common.inner.block &= ins.elem.block*
 	common.inner.block.static &= ins.elem.block.static*
+	common.inner.block.header &= ins.elem.block.header*
+	common.inner.block.header.static &= ins.elem.block.header.static*
+	common.inner.block.footer &= ins.elem.block.footer*
+	common.inner.block.footer.static &= ins.elem.block.footer.static*
 
 ## Deletions: <del>
 
@@ -54,6 +66,14 @@
 		element del { common.inner.block & del.attrs }
 	del.elem.block.static =
 		element del { common.inner.block.static & del.attrs }
+	del.elem.block.header =
+		element del { common.inner.block.header & del.attrs }
+	del.elem.block.header.static =
+		element del { common.inner.block.header.static & del.attrs }
+	del.elem.block.footer =
+		element del { common.inner.block.footer & del.attrs }
+	del.elem.block.footer.static =
+		element del { common.inner.block.footer.static & del.attrs }
 	del.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
@@ -66,3 +86,12 @@
 	common.inner.struct-inline.static &= del.elem.struct-inline.static*
 	common.inner.block &= del.elem.block*
 	common.inner.block.static &= del.elem.block.static*
+	common.inner.block.header &= del.elem.block.header*
+	common.inner.block.header.static &= del.elem.block.header.static*
+	common.inner.block.footer &= del.elem.block.footer*
+	common.inner.block.footer.static &= del.elem.block.footer.static*
+
+#FIXME need special case for del in bimorphic. Refactor * positioning in
+#common content models so that they become common element classes
+
+

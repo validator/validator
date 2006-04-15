@@ -11,3 +11,89 @@
 			attribute contextmenu {
 				common.data.idref
 			}
+
+## Scalar Gauge: <meter>
+
+	meter.elem =
+		element meter { meter.inner & meter.attrs }
+	meter.elem.static =
+		element meter { meter.inner.static & meter.attrs }
+	meter.attrs =
+		(	common.attrs
+		&	meter.attrs.value?
+		&	meter.attrs.min?
+		&	meter.attrs.low?
+		&	meter.attrs.high?
+		&	meter.attrs.max?
+		&	meter.attrs.optimum?
+		)
+		meter.attrs.value =
+			attribute value {
+				common.data.float
+			}
+		meter.attrs.min =
+			attribute min {
+				common.data.float
+			}
+		meter.attrs.low =
+			attribute low {
+				common.data.float
+			}
+		meter.attrs.high =
+			attribute high {
+				common.data.float
+			}
+		meter.attrs.max =
+			attribute max {
+				common.data.float
+			}
+		meter.attrs.optimum =
+			attribute optimum {
+				common.data.float
+			}
+	meter.inner =
+		( common.inner.strict-inline ) #Cannot enforce textContent format here
+	meter.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= meter.elem*
+	common.inner.struct-inline.static &= meter.elem.static*
+	common.inner.strict-inline &= meter.elem*
+	common.inner.strict-inline.static &= meter.elem.static*
+
+## Progess Indicator: <progress>
+
+	progress.elem =
+		element progress { progress.inner & progress.attrs }
+	progress.elem.static =
+		element progress { progress.inner.static & progress.attrs }
+	progress.attrs =
+		(	common.attrs
+		&	progress.attrs.value?
+		&	progress.attrs.max?
+		)
+		progress.attrs.value =
+			attribute value {
+				common.data.float.non-negative #REVISIT
+			}
+		progress.attrs.max =
+			attribute max {
+				common.data.float.positive #REVISIT
+			}
+	progress.inner =
+		( common.inner.strict-inline ) #Cannot enforce textContent format here
+	progress.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= progress.elem*
+	common.inner.struct-inline.static &= progress.elem.static*
+	common.inner.strict-inline &= progress.elem*
+	common.inner.strict-inline.static &= progress.elem.static*
+
+#REVISIT tabbox?
+
+#REVISIT switch?
+
+#REVISIT calendar
+
+#REVISIT card

@@ -281,6 +281,9 @@ common.attrs.present =
 
 	common.data.float.positive =
 		string #FIXME
+
+	common.data.float.non-negative =
+		string #FIXME
 		
 ## Temporal
 
