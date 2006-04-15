@@ -27,6 +27,10 @@
 		)
 	common.inner.block &= p.elem*
 	common.inner.block.static &= p.elem.static*
+	common.inner.block.header &= p.elem*
+	common.inner.block.header.static &= p.elem.static*
+	common.inner.block.footer &= p.elem*
+	common.inner.block.footer.static &= p.elem.static*
 
 ## Hint Transition: <hr>
 
@@ -39,9 +43,11 @@
 
 	common.inner.block &= hr.elem*
 	common.inner.block.static &= hr.elem*
+	common.inner.block.header &= hr.elem*
+	common.inner.block.footer &= hr.elem*
 
 # #####################################################################
-## Variable Level Blocks
+## Preformatting Blocks
 
 ## Preformatted Text: <pre>
 
@@ -58,32 +64,12 @@
 
 	common.inner.block &= pre.elem*
 	common.inner.block.static &= pre.elem.static*
+	common.inner.block.header &= pre.elem*
+	common.inner.block.header.static &= pre.elem.static*
+	common.inner.block.footer &= pre.elem*
+	common.inner.block.footer.static &= pre.elem.static*
 	common.inner.struct-inline &= pre.elem*
 	common.inner.struct-inline.static &= pre.elem.static*
-
-## Block Quotes: <blockquote>
-
-	blockquote.elem =
-		element blockquote { blockquote.inner & blockquote.attrs }
-	blockquote.elem.static =
-		element blockquote { blockquote.inner.static & blockquote.attrs }
-	blockquote.attrs =
-		(	common.attrs
-		&	blockquote.attrs.cite?
-		)
-		blockquote.attrs.cite =
-			attribute cite {
-				common.data.uri
-			}
-	blockquote.inner =
-		( common.inner.block )
-	blockquote.inner.static =
-		( common.inner.block.static )
-
-	common.inner.block &= blockquote.elem*
-	common.inner.block.static &= blockquote.elem.static*
-	common.inner.struct-inline &= blockquote.elem*
-	common.inner.struct-inline.static &= blockquote.elem.static*
 
 # #####################################################################
 ## Simple Lists
@@ -94,6 +80,14 @@
 		element ul { ul.inner & ul.attrs }
 	ul.elem.static =
 		element ul { ul.inner.static & ul.attrs }
+	ul.elem.header =
+		element ul { ul.inner.header & ul.attrs }
+	ul.elem.header.static =
+		element ul { ul.inner.header.static & ul.attrs }
+	ul.elem.footer =
+		element ul { ul.inner.footer & ul.attrs }
+	ul.elem.footer.static =
+		element ul { ul.inner.footer.static & ul.attrs }
 	ul.elem.inline =
 		element ul { ul.inner.inline & ul.attrs }
 	ul.elem.inline.static =
@@ -104,6 +98,14 @@
 		( li.elem* )
 	ul.inner.static =
 		( li.elem.static* )
+	ul.inner.header =
+		( li.elem.header* )
+	ul.inner.header.static =
+		( li.elem.header.static* )
+	ul.inner.footer =
+		( li.elem.footer* )
+	ul.inner.footer.static =
+		( li.elem.footer.static* )
 	ul.inner.inline =
 		( li.elem.inline* )
 	ul.inner.inline.static =
@@ -111,6 +113,10 @@
 
 	common.inner.block &= ul.elem*
 	common.inner.block.static &= ul.elem.static*
+	common.inner.block.header &= ul.elem.header*
+	common.inner.block.header.static &= ul.elem.header.static*
+	common.inner.block.footer &= ul.elem.footer*
+	common.inner.block.footer.static &= ul.elem.footer.static*
 	common.inner.struct-inline &= ul.elem.inline*
 	common.inner.struct-inline.static &= ul.elem.inline.static*
 
@@ -120,6 +126,14 @@
 		element li { li.inner & li.attrs }
 	li.elem.static =
 		element li { li.inner.static & li.attrs }
+	li.elem.header =
+		element li { li.inner.header & li.attrs }
+	li.elem.header.static =
+		element li { li.inner.header.static & li.attrs }
+	li.elem.footer =
+		element li { li.inner.footer & li.attrs }
+	li.elem.footer.static =
+		element li { li.inner.footer.static & li.attrs }
 	li.elem.inline =
 		element li { li.inner.inline & li.attrs }
 	li.elem.inline.static =
@@ -130,6 +144,14 @@
 		( common.inner.bimorphic )
 	li.inner.static =
 		( common.inner.bimorphic.static )
+	li.inner.header =
+		( common.inner.bimorphic.header )
+	li.inner.header.static =
+		( common.inner.bimorphic.header.static )
+	li.inner.footer =
+		( common.inner.bimorphic.footer )
+	li.inner.footer.static =
+		( common.inner.bimorphic.footer.static )
 	li.inner.inline =
 		( common.inner.struct-inline )
 	li.inner.inline.static =
@@ -141,6 +163,14 @@
 		element ol { ol.inner & ol.attrs }
 	ol.elem.static =
 		element ol { ol.inner.static & ol.attrs }
+	ol.elem.header =
+		element ol { ol.inner.header & ol.attrs }
+	ol.elem.header.static =
+		element ol { ol.inner.header.static & ol.attrs }
+	ol.elem.footer =
+		element ol { ol.inner.footer & ol.attrs }
+	ol.elem.footer.static =
+		element ol { ol.inner.footer.static & ol.attrs }
 	ol.elem.inline =
 		element ol { ol.inner.inline & ol.attrs }
 	ol.elem.inline.static =
@@ -157,6 +187,14 @@
 		( oli.elem* )
 	ol.inner.static =
 		( oli.elem.static* )
+	ol.inner.header =
+		( oli.elem.header* )
+	ol.inner.header.static =
+		( oli.elem.header.static* )
+	ol.inner.footer =
+		( oli.elem.footer* )
+	ol.inner.footer.static =
+		( oli.elem.footer.static* )
 	ol.inner.inline =
 		( oli.elem.inline* )
 	ol.inner.inline.static =
@@ -164,6 +202,10 @@
 
 	common.inner.block &= ol.elem*
 	common.inner.block.static &= ol.elem.static*
+	common.inner.block.header &= ol.elem.header*
+	common.inner.block.header.static &= ol.elem.header.static*
+	common.inner.block.footer &= ol.elem.footer*
+	common.inner.block.footer.static &= ol.elem.footer.static*
 	common.inner.struct-inline &= ol.elem.inline*
 	common.inner.struct-inline.static &= ol.elem.inline.static*
 
@@ -173,6 +215,14 @@
 		element li { oli.inner & oli.attrs }
 	oli.elem.static =
 		element li { oli.inner.static & oli.attrs }
+	oli.elem.header =
+		element li { oli.inner.header & oli.attrs }
+	oli.elem.header.static =
+		element li { oli.inner.header.static & oli.attrs }
+	oli.elem.footer =
+		element li { oli.inner.footer & oli.attrs }
+	oli.elem.footer.static =
+		element li { oli.inner.footer.static & oli.attrs }
 	oli.elem.inline =
 		element li { oli.inner.inline & oli.attrs }
 	oli.elem.inline.static =
@@ -189,6 +239,14 @@
 		( common.inner.bimorphic )
 	oli.inner.static =
 		( common.inner.bimorphic.static )
+	oli.inner.header =
+		( common.inner.bimorphic.header )
+	oli.inner.header.static =
+		( common.inner.bimorphic.header.static )
+	oli.inner.footer =
+		( common.inner.bimorphic.footer )
+	oli.inner.footer.static =
+		( common.inner.bimorphic.footer.static )
 	oli.inner.inline =
 		( common.inner.struct-inline )
 	oli.inner.inline.static =
@@ -203,6 +261,14 @@
 		element dl { dl.inner & dl.attrs }
 	dl.elem.static =
 		element dl { dl.inner.static & dl.attrs }
+	dl.elem.header =
+		element dl { dl.inner.header & dl.attrs }
+	dl.elem.header.static =
+		element dl { dl.inner.header.static & dl.attrs }
+	dl.elem.footer =
+		element dl { dl.inner.footer & dl.attrs }
+	dl.elem.footer.static =
+		element dl { dl.inner.footer.static & dl.attrs }
 	dl.elem.inline =
 		element dl { dl.inner.inline & dl.attrs }
 	dl.elem.inline.static =
@@ -219,6 +285,26 @@
 			,	dd.elem.static+
 			)*
 		)
+	dl.inner.header =
+		(	(	dt.elem+
+			,	dd.elem.header+
+			)*
+		)
+	dl.inner.header.static =
+		(	(	dt.elem.static+
+			,	dd.elem.header.static+
+			)*
+		)
+	dl.inner.footer =
+		(	(	dt.elem+
+			,	dd.elem.footer+
+			)*
+		)
+	dl.inner.footer.static =
+		(	(	dt.elem.static+
+			,	dd.elem.footer.static+
+			)*
+		)
 	dl.inner.inline =
 		(	(	dt.elem+
 			,	dd.elem.inline+
@@ -232,6 +318,10 @@
 
 	common.inner.block &= dl.elem*
 	common.inner.block.static &= dl.elem.static*
+	common.inner.block.header &= dl.elem*
+	common.inner.block.header.static &= dl.elem.static*
+	common.inner.block.footer &= dl.elem*
+	common.inner.block.footer.static &= dl.elem.static*
 	common.inner.struct-inline &= dl.elem.inline*
 	common.inner.struct-inline.static &= dl.elem.inline.static*
 
@@ -254,6 +344,14 @@
 		element dd { dd.inner & dd.attrs }
 	dd.elem.static =
 		element dd { dd.inner.static & dd.attrs }
+	dd.elem.header =
+		element dd { dd.inner.header & dd.attrs }
+	dd.elem.header.static =
+		element dd { dd.inner.header.static & dd.attrs }
+	dd.elem.footer =
+		element dd { dd.inner.footer & dd.attrs }
+	dd.elem.footer.static =
+		element dd { dd.inner.footer.static & dd.attrs }
 	dd.elem.inline =
 		element dd { dd.inner.inline & dd.attrs }
 	dd.elem.inline.static =
@@ -264,6 +362,14 @@
 		( common.inner.bimorphic )
 	dd.inner.static =
 		( common.inner.bimorphic.static )
+	dd.inner.header =
+		( common.inner.bimorphic.header )
+	dd.inner.header.static =
+		( common.inner.bimorphic.header.static )
+	dd.inner.footer =
+		( common.inner.bimorphic.footer )
+	dd.inner.footer.static =
+		( common.inner.bimorphic.footer.static )
 	dd.inner.inline =
 		( common.inner.struct-inline )
 	dd.inner.inline.static =

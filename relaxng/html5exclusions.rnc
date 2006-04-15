@@ -60,3 +60,7 @@ wildcard.elem.exclude-all =
 #FIXME no nested forms in HTML-serializable docs
 
 #FIXME no nested labels
+
+#FIXME no blockquote inside header or footer (could be in struct-inline absent exclusion)
+
+#FIXME exactly one hn in header

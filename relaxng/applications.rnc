@@ -1,0 +1,13 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Web Application Features              #
+# #####################################################################
+
+## Context Menu
+
+	common.attrs &=
+		(	common.attrs.contextmenu
+		)
+		common.attrs.contextmenu =
+			attribute contextmenu {
+				common.data.idref
+			}

@@ -43,8 +43,8 @@ public class Language extends AbstractDatatype {
             "cel-gaulish", "de-1901", "de-1996", "de-at-1901", "de-at-1996",
             "de-ch-1901", "de-ch-1996", "de-de-1901", "de-de-1996", "en-boont",
             "en-gb-oed", "en-scouse", "es-419", "i-ami", "i-bnn", "i-default", // inappropriate
-                                                                                // for
-                                                                                // HTML5?
+            // for
+            // HTML5?
             "i-enochian", "i-hak", // deprecated
             "i-klingon", // deprecated
             "i-lux", // deprecated
@@ -99,19 +99,22 @@ public class Language extends AbstractDatatype {
         }
         if ((len == 2 || len == 3) && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw new DatatypeException("Bad ISO language part in language tag");
+                throw new DatatypeException(
+                        "Bad ISO language part in language tag");
             }
             i++;
             subtag = subtags[i];
             len = subtag.length();
             if (len == 3) {
-                throw new DatatypeException("Found reserved language extension subtag.");
+                throw new DatatypeException(
+                        "Found reserved language extension subtag.");
             }
         } else if (len == 4 && isLowerCaseAlpha(subtag)) {
             throw new DatatypeException("Found reserved language tag.");
         } else if (len == 5 && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw new DatatypeException("Bad IANA language part in language tag");
+                throw new DatatypeException(
+                        "Bad IANA language part in language tag");
             }
             i++;
             subtag = subtags[i];
@@ -129,10 +132,11 @@ public class Language extends AbstractDatatype {
             subtag = subtags[i];
             len = subtag.length();
         }
-        if ((len == 3 && isDigit(subtag)) || (len == 2 && isLowerCaseAlpha(subtag))) {
+        if ((len == 3 && isDigit(subtag))
+                || (len == 2 && isLowerCaseAlpha(subtag))) {
             if (!isRegion(subtag)) {
                 throw new DatatypeException("Bad region subtag");
-            }            
+            }
             i++;
             subtag = subtags[i];
             len = subtag.length();
@@ -145,14 +149,14 @@ public class Language extends AbstractDatatype {
             // cutting corners here a bit
             if (len == 1) {
                 throw new DatatypeException("Unknown extension.");
-            } else  {
+            } else {
                 if (!isVariant(subtag)) {
                     throw new DatatypeException("Bad variant subtag");
-                }                            
+                }
             }
             i++;
             subtag = subtags[i];
-            len = subtag.length();            
+            len = subtag.length();
         }
     }
 
@@ -176,7 +180,8 @@ public class Language extends AbstractDatatype {
         return false;
     }
 
-    private void checkPrivateUse(int i, String[] subtags) throws DatatypeException {
+    private void checkPrivateUse(int i, String[] subtags)
+            throws DatatypeException {
         int len = subtags.length;
         i++;
         if (i == len) {
@@ -188,12 +193,11 @@ public class Language extends AbstractDatatype {
                 throw new DatatypeException("Zero-length private use subtag.");
             }
             if (subtag.length() > 8) {
-                throw new DatatypeException("Private use subtag too long.");                
+                throw new DatatypeException("Private use subtag too long.");
             }
-            for (int j = 0; j < subtag.length(); j++) {
-                if (!isLowerCaseAlphaNumeric(subtag.charAt(j))) {
-                    throw new DatatypeException("Bad character in private use subtag.");                    
-                }
+            if (!isLowerCaseAlphaNumeric(subtag)) {
+                throw new DatatypeException(
+                        "Bad character in private use subtag.");
             }
             i++;
         }
@@ -201,6 +205,15 @@ public class Language extends AbstractDatatype {
 
     private final boolean isLowerCaseAlphaNumeric(char c) {
         return isLowerCaseAlpha(c) || isDigit(c);
+    }
+
+    private final boolean isLowerCaseAlphaNumeric(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!isLowerCaseAlphaNumeric(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -219,7 +232,7 @@ public class Language extends AbstractDatatype {
         }
         return true;
     }
-    
+
     /**
      * @param c
      * @return
@@ -236,7 +249,7 @@ public class Language extends AbstractDatatype {
         }
         return true;
     }
-    
+
     private boolean isGrandfathered(String literal) {
         return Arrays.binarySearch(GRANDFATHERED, literal) > -1;
     }

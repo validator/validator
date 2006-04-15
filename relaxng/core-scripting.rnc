@@ -18,12 +18,22 @@
 	script.attrs.imported =
 		(	common.attrs
 		&	script.attrs.src
+		&	script.attrs.defer?
+		&	script.attrs.async?
 		&	script.attrs.type?
 		)
 		script.attrs.src =
 			attribute src {
 				common.data.uri
 			}
+		script.attrs.defer =
+			attribute defer {
+				string "defer"
+			}
+		script.attrs.async =
+			attribute async {
+				string "async"
+			} & v5only
 		script.attrs.type =
 			attribute type {
 				common.data.mimetype

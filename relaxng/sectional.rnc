@@ -20,6 +20,8 @@
 
 	common.inner.block &= h1.elem*
 	common.inner.block.static &= h1.elem.static*
+	common.inner.block.header &= h1.elem*
+	common.inner.block.header.static &= h1.elem.static*
 
 ## Heading (Rank 2): <h2>
 
@@ -36,6 +38,8 @@
 
 	common.inner.block &= h2.elem*
 	common.inner.block.static &= h2.elem.static*
+	common.inner.block.header &= h2.elem*
+	common.inner.block.header.static &= h2.elem.static*
 
 ## Heading (Rank 3): <h3>
 
@@ -52,6 +56,8 @@
 
 	common.inner.block &= h3.elem*
 	common.inner.block.static &= h3.elem.static*
+	common.inner.block.header &= h3.elem*
+	common.inner.block.header.static &= h3.elem.static*
 
 ## Heading (Rank 4): <h4>
 
@@ -68,6 +74,8 @@
 
 	common.inner.block &= h4.elem*
 	common.inner.block.static &= h4.elem.static*
+	common.inner.block.header &= h4.elem*
+	common.inner.block.header.static &= h4.elem.static*
 
 ## Heading (Rank 5): <h5>
 
@@ -84,6 +92,8 @@
 
 	common.inner.block &= h5.elem*
 	common.inner.block.static &= h5.elem.static*
+	common.inner.block.header &= h5.elem*
+	common.inner.block.header.static &= h5.elem.static*
 
 ## Heading (Rank 6): <h6>
 
@@ -100,6 +110,8 @@
 
 	common.inner.block &= h6.elem*
 	common.inner.block.static &= h6.elem.static*
+	common.inner.block.header &= h6.elem*
+	common.inner.block.header.static &= h6.elem.static*
 
 # #####################################################################
 ## Section Meta
@@ -119,3 +131,30 @@
 
 	common.inner.block &= address.elem*
 	common.inner.block.static &= address.elem.static*
+
+# #####################################################################
+## Quotations	
+
+## Block Quotes: <blockquote>
+
+	blockquote.elem =
+		element blockquote { blockquote.inner & blockquote.attrs }
+	blockquote.elem.static =
+		element blockquote { blockquote.inner.static & blockquote.attrs }
+	blockquote.attrs =
+		(	common.attrs
+		&	blockquote.attrs.cite?
+		)
+		blockquote.attrs.cite =
+			attribute cite {
+				common.data.uri
+			}
+	blockquote.inner =
+		( common.inner.block )
+	blockquote.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= blockquote.elem*
+	common.inner.block.static &= blockquote.elem.static*
+	common.inner.struct-inline &= blockquote.elem*
+	common.inner.struct-inline.static &= blockquote.elem.static*

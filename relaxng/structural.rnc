@@ -1,0 +1,100 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Sectioning Markup Added in HTML5      #
+# #####################################################################
+
+## Section: <section>
+
+	section.elem =
+		element section { section.inner & section.attrs }
+	section.elem.static =
+		element section { section.inner.static & section.attrs }
+	section.attrs =
+		( common.attrs )
+	section.inner =
+		( common.inner.block )
+	section.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= section.elem*
+	common.inner.block.static &= section.elem.static*
+
+## Navigational Links: <nav>
+
+	nav.elem =
+		element nav { nav.inner & nav.attrs }
+	nav.elem.static =
+		element nav { nav.inner.static & nav.attrs }
+	nav.attrs =
+		( common.attrs )
+	nav.inner =
+		( common.inner.block )
+	nav.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= nav.elem*
+	common.inner.block.static &= nav.elem.static*
+
+## Article: <article>
+
+	article.elem =
+		element article { article.inner & article.attrs }
+	article.elem.static =
+		element article { article.inner.static & article.attrs }
+	article.attrs =
+		( common.attrs )
+	article.inner =
+		( common.inner.block )
+	article.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= article.elem*
+	common.inner.block.static &= article.elem.static*
+
+## Tangential Aside: <aside>
+
+	aside.elem =
+		element aside { aside.inner & aside.attrs }
+	aside.elem.static =
+		element aside { aside.inner.static & aside.attrs }
+	aside.attrs =
+		( common.attrs )
+	aside.inner =
+		( common.inner.block )
+	aside.inner.static =
+		( common.inner.block.static )
+
+	common.inner.block &= aside.elem*
+	common.inner.block.static &= aside.elem.static*
+
+## Header: <header>
+
+	header.elem =
+		element header { header.inner & header.attrs }
+	header.elem.static =
+		element header { header.inner.static & header.attrs }
+	header.attrs =
+		( common.attrs )
+	header.inner =
+		( common.inner.block.header )
+	header.inner.static =
+		( common.inner.block.header.static )
+
+	common.inner.block &= header.elem*
+	common.inner.block.static &= header.elem.static*
+
+## Footer: <footer>
+
+	footer.elem =
+		element footer { footer.inner & footer.attrs }
+	footer.elem.static =
+		element footer { footer.inner.static & footer.attrs }
+	footer.attrs =
+		( common.attrs )
+	footer.inner =
+		( common.inner.block.footer )
+	footer.inner.static =
+		( common.inner.block.footer.static )
+
+	common.inner.block &= footer.elem*
+	common.inner.block.static &= footer.elem.static*
+

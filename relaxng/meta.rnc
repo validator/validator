@@ -31,7 +31,7 @@
 		)
 		head.attrs.profile =
 			attribute profile {
-				common.data.uris
+				common.data.uris #REVISIT should these be absolute (zero or more)
 			}
 	head.inner =
 		(	meta.elem.encoding?
@@ -161,8 +161,8 @@
 		element meta { meta.inner & meta.attrs }
 	meta.attrs =
 		(	common.attrs
-		&	meta.attrs.name?
-		&	meta.attrs.content?
+		&	meta.attrs.name? #REVISIT require this?
+		&	meta.attrs.content? #REVIST require even this?
 		)
 		meta.attrs.name =
 			attribute name {
