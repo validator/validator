@@ -2,11 +2,12 @@
 ##  RELAX NG Schema for HTML 5: Web Application Features              #
 # #####################################################################
 
-## Context Menu and Editable Content
+## Additions to Common Attributes
 
 	common.attrs.other &=
 		(	common.attrs.contextmenu?
 		&	common.attrs.contenteditable?
+		&	common.attrs.draggable?
 		)
 		common.attrs.contextmenu =
 			attribute contextmenu {
@@ -15,6 +16,10 @@
 		common.attrs.contenteditable =
 			attribute contenteditable {
 				string "true" | string "false"
+			}
+		common.attrs.draggable =
+			attribute draggable {
+				string "true" | string "false" #REVISIT guessing here
 			}
 
 ## Scalar Gauge: <meter>
@@ -270,11 +275,11 @@
 				string "autosubmit"
 			}
 	menu.inner =
-		(	li.inner.inline*
+		(	li.elem.inline*
 		|	common.inner.struct-inline
 		)
 	menu.inner.static =
-		(	li.inner.inline.static*
+		(	li.elem.inline.static*
 		|	common.inner.struct-inline.static
 		)
 	
