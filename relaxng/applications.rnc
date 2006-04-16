@@ -94,6 +94,76 @@
 
 #REVISIT switch?
 
-#REVISIT calendar
+## hCalendar: <calendar>
 
-#REVISIT card
+	calendar.elem =
+		element calendar { calendar.inner & calendar.attrs }
+	calendar.elem.header =
+		element calendar { calendar.inner.header & calendar.attrs }
+	calendar.elem.footer =
+		element calendar { calendar.inner.footer & calendar.attrs }
+	calendar.attrs =
+		( common.attrs )
+	calendar.inner =
+		( common.inner.block )
+	calendar.inner.header =
+		( common.inner.block.header )
+	calendar.inner.footer =
+		( common.inner.block.footer )
+	
+	common.inner.block &= calendar.elem*
+	common.inner.block.header &= calendar.elem.header*
+	common.inner.block.footer &= calendar.elem.footer*
+
+## hCard: <card>
+
+	card.elem =
+		element card { card.inner & card.attrs }
+	card.elem.header =
+		element card { card.inner.header & card.attrs }
+	card.elem.footer =
+		element card { card.inner.footer & card.attrs }
+	card.attrs =
+		( common.attrs )
+	card.inner =
+		( common.inner.block )
+	card.inner.header =
+		( common.inner.block.header )
+	card.inner.footer =
+		( common.inner.block.footer )
+	
+	common.inner.block &= card.elem*
+	common.inner.block.header &= card.elem.header*
+	common.inner.block.footer &= card.elem.footer*
+
+## Datagrid: <datagrid>
+
+	datagrid.elem =
+		element datagrid { datagrid.inner & datagrid.attrs }
+	datagrid.elem.header =
+		element datagrid { datagrid.inner.header & datagrid.attrs }
+	datagrid.elem.footer =
+		element datagrid { datagrid.inner.footer & datagrid.attrs }
+	datagrid.attrs =
+		(	common.attrs
+		&	datagrid.attrs.multiple?
+		&	datagrid.attrs.disabled?
+		)
+		datagrid.attrs.multiple =
+			attribute multiple {
+				string "multiple"
+			}
+		datagrid.attrs.disabled =
+			attribute disabled {
+				string "disabled"
+			}
+	datagrid.inner =
+		( common.inner.block )
+	datagrid.inner.header =
+		( common.inner.block.header )
+	datagrid.inner.footer =
+		( common.inner.block.footer )
+	
+	common.inner.block &= datagrid.elem*
+	common.inner.block.header &= datagrid.elem.header*
+	common.inner.block.footer &= datagrid.elem.footer*

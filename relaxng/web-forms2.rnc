@@ -686,7 +686,8 @@
 	form.inner.empty =
 		( empty )
 
-	#FIXME allow empty forms in head but only in XHTML
+	head.inner.misc |=
+		( form.elem.empty & nonHTMLizable )
 	
 ## Fieldset: <fieldset>
 
