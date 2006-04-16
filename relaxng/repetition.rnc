@@ -34,7 +34,7 @@
 			common.data.integer.non-negative
 		}
 
-	common.attrs &=
+	common.attrs.basic &=
 		(	(	repetition.attrs.repeat.template
 			&	repetition.attrs.repeat-min?
 			&	repetition.attrs.repeat-max?

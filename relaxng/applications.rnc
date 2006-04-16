@@ -4,7 +4,7 @@
 
 ## Context Menu
 
-	common.attrs &=
+	common.attrs.basic &=
 		(	common.attrs.contextmenu
 		)
 		common.attrs.contextmenu =

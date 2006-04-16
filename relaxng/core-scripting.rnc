@@ -154,6 +154,6 @@
 # #####################################################################
 ## Event Handler Attribute Assignments
 
-	common.attrs &= scripting.attr.common
+	common.attrs.basic &= scripting.attr.common
 	
 	body.attrs   &= scripting.attr.loading
