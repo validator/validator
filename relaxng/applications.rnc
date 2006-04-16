@@ -167,3 +167,117 @@
 	common.inner.block &= datagrid.elem*
 	common.inner.block.header &= datagrid.elem.header*
 	common.inner.block.footer &= datagrid.elem.footer*
+
+## Command: <command>
+
+	command.elem =
+		element command { command.inner & command.attrs }
+	command.attrs =
+		(	common.attrs
+		&	(	command.attrs.type.command
+			|	(	command.attrs.type.radio
+				&	command.attrs.radiogroup #REVISIT taking liberties here
+				&	command.attrs.checked?
+				)
+			|	(	command.attrs.type.checkbox
+				&	command.attrs.checked?
+				)
+			)?
+		&	command.attrs.label?
+		&	command.attrs.icon?
+		&	command.attrs.hidden?
+		&	command.attrs.disabled?
+		&	command.attrs.default?
+		)
+		command.attrs.type.command =
+			attribute type {
+				string "command"
+			}
+		command.attrs.type.radio =
+			attribute type {
+				string "radio"
+			}
+		command.attrs.type.checkbox =
+			attribute type {
+				string "checkbox"
+			}
+		command.attrs.label =
+			attribute label {
+				string
+			}
+		command.attrs.icon =
+			attribute icon {
+				common.data.uri
+			}
+		command.attrs.hidden =
+			attribute hidden {
+				string "hidden"
+			}
+		command.attrs.disabled =
+			attribute disabled {
+				string "disabled"
+			}
+		command.attrs.checked =
+			attribute checked {
+				string "checked"
+			}
+		command.attrs.radiogroup =
+			attribute radiogroup {
+				string #REVISIT need special format here?
+			}
+		command.attrs.default =
+			attribute default {
+				string "default"
+			}
+	command.inner =
+		( empty )
+	
+	head.inner.misc |=
+		( command.elem & nonHTMLizable )
+	
+	common.inner.strict-inline &= command.elem*
+	common.inner.strict-inline.static &= command.elem*
+	common.inner.struct-inline &= command.elem*
+	common.inner.struct-inline.static &= command.elem*
+
+## Menu: <menu>
+
+	menu.elem =
+		element menu { menu.inner & menu.attrs }
+	menu.elem.static =
+		element menu { menu.inner.static & menu.attrs }
+	menu.attrs =
+		(	common.attrs
+		&	menu.attrs.type?
+		&	menu.attrs.label?
+		&	menu.attrs.autosubmit?
+		)
+		menu.attrs.type =
+			attribute type {
+				string "toolbar" | string "popup"
+			}
+		menu.attrs.label =
+			attribute label {
+				string
+			}
+		menu.attrs.autosubmit =
+			attribute autosubmit {
+				string "autosubmit"
+			}
+	menu.inner =
+		(	li.inner.inline*
+		|	common.inner.struct-inline
+		)
+	menu.inner.static =
+		(	li.inner.inline.static*
+		|	common.inner.struct-inline.static
+		)
+	
+	common.inner.block &= menu.elem*
+	common.inner.block.static &= menu.elem.static*
+	common.inner.block.header &= menu.elem*
+	common.inner.block.header.static &= menu.elem.static*
+	common.inner.block.footer &= menu.elem*
+	common.inner.block.footer.static &= menu.elem.static*
+	common.inner.struct-inline &= menu.elem*
+	common.inner.struct-inline.static &= menu.elem.static*
