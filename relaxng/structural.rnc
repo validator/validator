@@ -6,10 +6,22 @@
 
 	section.elem =
 		element section { section.inner & section.attrs }
+	section.active.elem =
+		element section { section.inner & section.active.attrs }
 	section.elem.static =
 		element section { section.inner.static & section.attrs }
+	section.active.elem.static =
+		element section { section.inner.static & section.active.attrs }
 	section.attrs =
 		( common.attrs )
+	section.active.attrs =
+		(	common.attrs
+		&	section.active.attrs.active
+		)
+		section.active.attrs.active =
+			attribute active {
+				string "active"
+			}
 	section.inner =
 		( common.inner.block )
 	section.inner.static =
