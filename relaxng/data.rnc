@@ -1,0 +1,121 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Static Data Markup                    #
+# #####################################################################
+
+## Time: <t>
+
+	t.elem =
+		element t { t.inner & t.attrs }
+		& v5only
+	t.elem.static =
+		element t { t.inner.static & t.attrs }
+		& v5only
+	t.attrs =
+		(	common.attrs
+		&	t.attrs.datetime? #REVISIT check optionality
+		)
+		t.attrs.datetime =
+			attribute datetime {
+				common.data.datetime #REVISIT check format
+			}
+	t.inner =
+		( common.inner.strict-inline )
+	t.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= t.elem*
+	common.inner.struct-inline.static &= t.elem.static*
+	common.inner.strict-inline &= t.elem*
+	common.inner.strict-inline.static &= t.elem.static*
+
+## hCalendar: <calendar>
+
+	calendar.elem =
+		element calendar { calendar.inner & calendar.attrs }
+	calendar.elem.header =
+		element calendar { calendar.inner.header & calendar.attrs }
+	calendar.elem.footer =
+		element calendar { calendar.inner.footer & calendar.attrs }
+	calendar.attrs =
+		( common.attrs )
+	calendar.inner =
+		( common.inner.block )
+	calendar.inner.header =
+		( common.inner.block.header )
+	calendar.inner.footer =
+		( common.inner.block.footer )
+	
+	common.inner.block &= calendar.elem*
+	common.inner.block.header &= calendar.elem.header*
+	common.inner.block.footer &= calendar.elem.footer*
+
+## hCard: <card>
+
+	card.elem =
+		element card { card.inner & card.attrs }
+	card.elem.header =
+		element card { card.inner.header & card.attrs }
+	card.elem.footer =
+		element card { card.inner.footer & card.attrs }
+	card.attrs =
+		( common.attrs )
+	card.inner =
+		( common.inner.block )
+	card.inner.header =
+		( common.inner.block.header )
+	card.inner.footer =
+		( common.inner.block.footer )
+	
+	common.inner.block &= card.elem*
+	common.inner.block.header &= card.elem.header*
+	common.inner.block.footer &= card.elem.footer*
+
+## Scalar Gauge: <meter>
+
+	meter.elem =
+		element meter { meter.inner & meter.attrs }
+	meter.elem.static =
+		element meter { meter.inner.static & meter.attrs }
+	meter.attrs =
+		(	common.attrs
+		&	meter.attrs.value?
+		&	meter.attrs.min?
+		&	meter.attrs.low?
+		&	meter.attrs.high?
+		&	meter.attrs.max?
+		&	meter.attrs.optimum?
+		)
+		meter.attrs.value =
+			attribute value {
+				common.data.float
+			}
+		meter.attrs.min =
+			attribute min {
+				common.data.float
+			}
+		meter.attrs.low =
+			attribute low {
+				common.data.float
+			}
+		meter.attrs.high =
+			attribute high {
+				common.data.float
+			}
+		meter.attrs.max =
+			attribute max {
+				common.data.float
+			}
+		meter.attrs.optimum =
+			attribute optimum {
+				common.data.float
+			}
+	meter.inner =
+		( common.inner.strict-inline ) #Cannot enforce textContent format here
+	meter.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= meter.elem*
+	common.inner.struct-inline.static &= meter.elem.static*
+	common.inner.strict-inline &= meter.elem*
+	common.inner.strict-inline.static &= meter.elem.static*
+
