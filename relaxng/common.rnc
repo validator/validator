@@ -158,6 +158,7 @@ common.attrs =
 	(	common.attrs.basic
 	&	common.attrs.i18n
 	&	common.attrs.present
+	&	common.attrs.other
 	)
 
 common.attrs.basic =
@@ -225,6 +226,9 @@ common.attrs.present =
 		attribute tabindex {
 			common.data.integer
 		}
+
+common.attrs.other =
+	empty
 
 # #####################################################################
 ##  Common Datatypes                                                  #

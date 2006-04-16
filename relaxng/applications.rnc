@@ -2,14 +2,19 @@
 ##  RELAX NG Schema for HTML 5: Web Application Features              #
 # #####################################################################
 
-## Context Menu
+## Context Menu and Editable Content
 
-	common.attrs.basic &=
-		(	common.attrs.contextmenu
+	common.attrs.other &=
+		(	common.attrs.contextmenu?
+		&	common.attrs.contenteditable?
 		)
 		common.attrs.contextmenu =
 			attribute contextmenu {
 				common.data.idref
+			}
+		common.attrs.contenteditable =
+			attribute contenteditable {
+				string "true" | string "false"
 			}
 
 ## Scalar Gauge: <meter>
