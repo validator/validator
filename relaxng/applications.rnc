@@ -9,18 +9,27 @@
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
 		)
-		common.attrs.contextmenu =
-			attribute contextmenu {
-				common.data.idref
-			}
-		common.attrs.contenteditable =
-			attribute contenteditable {
-				string "true" | string "false"
-			}
-		common.attrs.draggable =
-			attribute draggable {
-				string "true" | string "false" #REVISIT guessing here
-			}
+
+## Context Menu: contextmenu
+
+	common.attrs.contextmenu =
+		attribute contextmenu {
+			common.data.idref
+		}
+
+## Editable Content: contenteditable
+
+	common.attrs.contenteditable =
+		attribute contenteditable {
+			string "true" | string "false"
+		}
+
+## Draggable Element: draggable
+
+	common.attrs.draggable =
+		attribute draggable {
+			string "true" | string "false" #REVISIT guessing here
+		}
 
 ## Progess Indicator: <progress>
 
