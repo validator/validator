@@ -250,7 +250,7 @@
 			}
 		param.attrs.value =
 			(	( param.attrs.valuetype.data?  & param.attrs.value.data?   )
-			|	( param.attrs.valuetype.object & param.attrs.value.object? )
+#			|	( param.attrs.valuetype.object & param.attrs.value.object? )
 			|	( param.attrs.valuetype.ref    & param.attrs.value.ref?
 				                               & param.attrs.type?         )
 			)
@@ -270,15 +270,16 @@
 			attribute value {
 				common.data.uri
 			}
-		param.attrs.valuetype.object =
-			attribute valuetype {
-				string "object"
-			}
-		param.attrs.value.object =
-			attribute value {
-				#common.data.idref
-				string #FIXME
-			}
+#REVISIT will HTML5 abolish declared objects?
+#		param.attrs.valuetype.object =
+#			attribute valuetype {
+#				string "object"
+#			}
+#		param.attrs.value.object =
+#			attribute value {
+#				#common.data.idref
+#				string #FIXME
+#			}
 		param.attrs.type =
 			attribute type {
 				common.data.mimetype
