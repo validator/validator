@@ -135,19 +135,19 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Temporal
 		
 	form.data.datetime =
-		string #FIXME
+		w:datetime
 	
 	form.data.datetime-local =
-		string #FIXME
+		w:datetime-local
 	
 	form.data.date =
-		string #FIXME
+		w:date
 	
 	form.data.month =
-		string #FIXME
+		w:month
 	
 	form.data.week =
-		string #FIXME
+		w:week
 	
 	form.data.time =
 		string #FIXME

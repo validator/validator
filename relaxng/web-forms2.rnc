@@ -50,7 +50,7 @@
 
 	common-form.attrs.template = 
 		attribute template {
-			common.data.idref #REVISIT the spec does not explicitly say this
+			common.data.idref
 		}
 
 	common-form.attrs.data = 
