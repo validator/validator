@@ -79,6 +79,12 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return new Month();
         } else if ("week".equals(typeLocalName)) {
             return new Week();
+        } else if ("time".equals(typeLocalName)) {
+            return new Time();
+        } else if ("iri".equals(typeLocalName)) {
+            return new Iri();
+        } else if ("iri-ref".equals(typeLocalName)) {
+            return new IriRef();
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

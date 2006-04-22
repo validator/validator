@@ -80,7 +80,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
     }
 
-    private void checkHour(String hour) throws DatatypeException {
+    protected final void checkHour(String hour) throws DatatypeException {
         checkHour(Integer.parseInt(hour));
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         }
     }
 
-    private void checkMinute(String minute) throws DatatypeException {
+    protected final void checkMinute(String minute) throws DatatypeException {
         checkMinute(Integer.parseInt(minute));
     }
 
@@ -100,7 +100,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         }
     }
 
-    private void checkSecond(String second) throws DatatypeException {
+    protected final void checkSecond(String second) throws DatatypeException {
         checkSecond(Integer.parseInt(second));
     }
 
@@ -128,7 +128,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         
     protected abstract Pattern getPattern();
 
-    public final void checkValid(String literal, ValidationContext context)
+    public void checkValid(String literal, ValidationContext context)
             throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
