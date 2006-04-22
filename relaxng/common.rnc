@@ -297,15 +297,13 @@ common.attrs.other =
 ## IRIs
 
 	common.data.uri =
-		"" | xsd:anyURI #REVISIT may be too permissive
+		string "" | w:iri-ref
 
 	common.data.uris =
-		list { xsd:anyURI* } #REVISIT may be too permissive
+		list { w:iri-ref* }
 
 	common.data.uri.absolute =
-		xsd:string {
-			pattern = ".*:.*" #FIXME import Bjoern Hoerhmann's library?
-		}
+		w:iri
 
 ## MIME types
 
