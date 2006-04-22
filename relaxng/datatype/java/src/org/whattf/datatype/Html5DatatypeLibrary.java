@@ -52,7 +52,7 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
     }
 
     /**
-     * The factory method for the datatype of this library.
+     * The factory method for the datatypes of this library.
      * @param typeLocalName the local name
      * @return a <code>Datatype</code> instance for the local name
      * @see org.relaxng.datatype.DatatypeLibrary#createDatatype(java.lang.String)
@@ -67,6 +67,18 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return new Idrefs();
         } else if ("pattern".equals(typeLocalName)) {
             return new Pattern();
+        } else if ("datetime".equals(typeLocalName)) {
+            return new Datetime();
+        } else if ("datetime-local".equals(typeLocalName)) {
+            return new DatetimeLocal();
+        } else if ("datetime-tz".equals(typeLocalName)) {
+            return new DatetimeTz();
+        } else if ("date".equals(typeLocalName)) {
+            return new Date();
+        } else if ("month".equals(typeLocalName)) {
+            return new Month();
+        } else if ("week".equals(typeLocalName)) {
+            return new Week();
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

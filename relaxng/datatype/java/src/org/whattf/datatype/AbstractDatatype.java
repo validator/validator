@@ -35,7 +35,7 @@ import org.relaxng.datatype.helpers.StreamingValidatorImpl;
  * @version $Id$
  * @author hsivonen
  */
-public abstract class AbstractDatatype implements Datatype {
+abstract class AbstractDatatype implements Datatype {
 
     /**
      * Mask for ASCII case folding.
