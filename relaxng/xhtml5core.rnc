@@ -7,7 +7,7 @@ default namespace = "http://www.w3.org/1999/xhtml"
   # to only include markup features also found in W3C HTML 4.        #
 
   # To validate an HTML 5 document, you must first validate against #
-  # this schema and then ALSO validate against exclusions.rnc       #
+  # this schema and then ALSO validate against assertions.sch       #
 
 # #####################################################################
 ## Schema Framework & Parameters

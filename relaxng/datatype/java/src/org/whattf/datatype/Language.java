@@ -22,10 +22,13 @@
 
 package org.whattf.datatype;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
+import org.whattf.datatype.data.LanguageData;
 
 /**
  * 
@@ -34,6 +37,34 @@ import org.relaxng.datatype.ValidationContext;
  */
 public class Language extends AbstractDatatype {
 
+    private static final Pattern HYPHEN = Pattern.compile("-");
+    
+    private static String[] languages = null;
+    
+    private static String[] scripts = null;
+    
+    private static String[] regions = null;
+    
+    private static String[] variants = null;
+    
+    private static int[] suppressedScriptByLanguage = null;
+    
+    private static String[][] prefixesByVariant = null;
+    
+    static {
+        try {
+            LanguageData data = new LanguageData();
+            languages = data.getLanguages();
+            scripts = data.getScripts();
+            regions = data.getRegions();
+            variants = data.getScripts();
+            suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
+            prefixesByVariant = data.getPrefixesByVariant();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     /**
      * List extracted from http://www.iana.org/assignments/language-tags on
      * 2006-04-13. List dated 2005-09-09.
@@ -89,7 +120,7 @@ public class Language extends AbstractDatatype {
             throw new DatatypeException(
                     "Language tag must not end with HYPHEN-MINUS.");
         }
-        String[] subtags = literal.split("-");
+        String[] subtags = HYPHEN.split(literal);
         int i = 0;
         String subtag = subtags[i];
         int len = subtag.length();

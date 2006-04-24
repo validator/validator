@@ -199,4 +199,58 @@ public class LanguageData {
             return main.compareTo(((StringPair)arg0).main);
         }
     }
+
+    /**
+     * Returns the languages.
+     * 
+     * @return the languages
+     */
+    public String[] getLanguages() {
+        return languages;
+    }
+
+    /**
+     * Returns the prefixesByVariant.
+     * 
+     * @return the prefixesByVariant
+     */
+    public String[][] getPrefixesByVariant() {
+        return prefixesByVariant;
+    }
+
+    /**
+     * Returns the regions.
+     * 
+     * @return the regions
+     */
+    public String[] getRegions() {
+        return regions;
+    }
+
+    /**
+     * Returns the scripts.
+     * 
+     * @return the scripts
+     */
+    public String[] getScripts() {
+        return scripts;
+    }
+
+    /**
+     * Returns the suppressedScriptByLanguage.
+     * 
+     * @return the suppressedScriptByLanguage
+     */
+    public int[] getSuppressedScriptByLanguage() {
+        return suppressedScriptByLanguage;
+    }
+
+    /**
+     * Returns the variants.
+     * 
+     * @return the variants
+     */
+    public String[] getVariants() {
+        return variants;
+    }
 }

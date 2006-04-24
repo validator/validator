@@ -1,11 +1,9 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
-##  RELAX NG Schema for XHTML 5 Core plus Web Forms 2.0               #
+##  RELAX NG Schema for XHTML 5                                       #
 # #####################################################################
 
-  # (X)HTML 5 Core plus Web Forms 2.0 is WHATWG HTML 5 with Web      #
-  # Forms 2.0 but otherwise restricted to only include markup        #
-  # features also found in W3C HTML 4.                               #
+  # XHTML 5 is WHATWG XHTML 5                                        #
 
   # To validate an HTML 5 document, you must first validate against #
   # this schema and then ALSO validate against assertions.sch       #
@@ -18,7 +16,11 @@ include "common.rnc" {
 		XMLonly = empty
 		HTMLonly = notAllowed
 	# HTML 4 compat #
-		v5only = notAllowed
+		v5only = empty
+	# HTML-serializability #
+		nonHTMLizable = notAllowed
+	# HTML-roundtrippability #
+		nonRoundtrippable = notAllowed
 }
 
 # #####################################################################
@@ -28,6 +30,7 @@ include "meta.rnc"
 include "phrase.rnc"
 include "block.rnc"
 include "sectional.rnc"
+include "structural.rnc"
 include "revision.rnc"
 include "embed.rnc"
 include "core-scripting.rnc"
@@ -39,3 +42,5 @@ include "web-forms2.rnc"
 include "repetition.rnc"
 include "web-forms-scripting.rnc"
 include "web-forms2-scripting.rnc"
+include "applications.rnc"
+include "data.rnc"
