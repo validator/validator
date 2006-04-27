@@ -115,7 +115,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     private void checkTzd(int hours, int minutes) throws DatatypeException {
-        if (hours == 12 && minutes == 0) {
+        if (minutes == 0 && (hours == 12 || hours == -12)) {
             return;
         }
         if (hours < -11 || hours > 11) {
