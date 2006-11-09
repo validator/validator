@@ -203,7 +203,7 @@
 		)
 		tables.attrs.colspan =
 			attribute colspan {
-				common.data.integer.non-negative
+				common.data.integer.positive
 			}
 		tables.attrs.rowspan =
 			attribute rowspan {
@@ -211,8 +211,8 @@
 			}
 
 	tables.attrs.access-headers =
-		(	tables.attrs.axis?
-		&	tables.attrs.headers?
+		(	tables.attrs.headers?
+#		&	tables.attrs.axis? #REVISIT should this be dropped?
 		)
 		tables.attrs.axis = # categorization (implicit headers)
 			attribute axis {
@@ -250,7 +250,7 @@
 		(	common.attrs
 		&	tables.attrs.cell-structure
 		&	tables.attrs.access-headers
-		&	tables.attrs.define-headers
+#		&	tables.attrs.define-headers #REVISIT commented out per Hixie's mail
 		&	tables.attrs.alignment
 		)
 	td.inner =
@@ -267,7 +267,7 @@
 	th.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
-		&	tables.attrs.access-headers
+#		&	tables.attrs.access-headers #REVISIT commented out per Hixie's mail
 		&	tables.attrs.define-headers
 		&	tables.attrs.alignment
 		)

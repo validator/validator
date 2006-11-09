@@ -1,3 +1,4 @@
+namespace local = ""
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Embedded Content                      #
 # #####################################################################
@@ -49,6 +50,46 @@
 	common.inner.strict-inline.static &= img.elem*
 	common.inner.struct-inline &= img.elem*
 	common.inner.struct-inline.static &= img.elem*
+
+## Plug-ins: <embed>
+
+	embed.elem =
+		element embed { embed.inner & embed.attrs }
+	embed.attrs =
+		(	embed.attrs.src
+		&	embed.attrs.type?
+		&	embed.attrs.height?
+		&	embed.attrs.width?
+		&	embed.attrs.other*
+		)
+		embed.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+		embed.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+		embed.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		embed.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
+		embed.attrs.other = # REVISIT common.attrs
+			attribute local:* - ( src | type | height | width ) {
+				string
+			}
+	embed.inner =
+		empty
+
+	common.inner.strict-inline &= embed.elem*
+	common.inner.strict-inline.static &= embed.elem*
+	common.inner.struct-inline &= embed.elem*
+	common.inner.struct-inline.static &= embed.elem*
+
 
 ## Generic Objects: <object>
 
