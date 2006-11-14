@@ -59,17 +59,27 @@
 	table.inner =
 		(	caption.elem?
 		,	( colgroup.elem+ | col.elem+)?
-		,	(	( thead.elem?, tfoot.elem?, tbody.elem+ )
-			|	( tr.elem+ )
+		,	thead.elem?
+		,   (	(	tfoot.elem
+				,	( tbody.elem+ | tr.elem+ )
+				)
+			|	(	( tbody.elem+ | tr.elem+ )
+				,	tfoot.elem?
+				)
 			)
 		) 
 	table.inner.static =
 		(	caption.elem.static?
 		,	( colgroup.elem+ | col.elem+)?
 		,	thead.elem.static?
-		,	tfoot.elem.static?
-		,	( tbody.elem.static+ | tr.elem.static+)?
-		)
+		,   (	(	tfoot.elem.static
+				,	( tbody.elem.static+ | tr.elem.static+ )
+				)
+			|	(	( tbody.elem.static+ | tr.elem.static+ )
+				,	tfoot.elem.static?
+				)
+			)
+		) 
 
 	common.inner.block &= table.elem*
 	common.inner.block.static &= table.elem.static*
