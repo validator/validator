@@ -24,7 +24,6 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * This datatype shall accept any string that consists of one or more characters and 
@@ -33,12 +32,17 @@ import org.relaxng.datatype.ValidationContext;
  * @version $Id$
  * @author hsivonen
  */
-public class Idrefs extends AbstractDatatype {
+public final class Idrefs extends AbstractDatatype {
 
+    /**
+     * The singleton instance.
+     */
+    public static final Idrefs THE_INSTANCE = new Idrefs();
+    
     /**
      * Package-private constructor
      */
-    Idrefs() {
+    private Idrefs() {
         super();
     }
 

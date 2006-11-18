@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * 
@@ -34,7 +33,12 @@ import org.relaxng.datatype.ValidationContext;
  * @version $Id$
  * @author hsivonen
  */
-public class Time extends AbstractDatetime {
+public final class Time extends AbstractDatetime {
+
+    /**
+     * The singleton instance.
+     */
+    public static final Time THE_INSTANCE = new Time();
 
     /**
      * The rexexp for this datatype.
@@ -42,9 +46,9 @@ public class Time extends AbstractDatetime {
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]+)?)?$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    Time() {
+    private Time() {
         super();
     }
 

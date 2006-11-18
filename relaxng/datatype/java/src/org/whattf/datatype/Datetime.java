@@ -36,14 +36,19 @@ import java.util.regex.Pattern;
 public final class Datetime extends AbstractDatetime {
     
     /**
+     * The singleton instance.
+     */
+    public static final Datetime THE_INSTANCE = new Datetime();
+    
+    /**
      * The rexexp for this datatype.
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]+)?)?Z$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    Datetime() {
+    private Datetime() {
         super();
     }
     

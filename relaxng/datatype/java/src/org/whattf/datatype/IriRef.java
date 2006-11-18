@@ -25,7 +25,6 @@ package org.whattf.datatype;
 import java.net.MalformedURLException;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
@@ -33,7 +32,12 @@ import com.hp.hpl.jena.iri.IRIFactory;
 
 public class IriRef extends AbstractDatatype {
 
-    public IriRef() {
+    /**
+     * The singleton instance.
+     */
+    public static final IriRef THE_INSTANCE = new IriRef();
+
+    protected IriRef() {
         super();
     }
 

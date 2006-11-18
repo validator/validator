@@ -62,29 +62,29 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
         if ("ID".equals(typeLocalName)) {
             return new Id();
         } else if ("IDREF".equals(typeLocalName)) {
-            return new Idref();
+            return Idref.THE_INSTANCE;
         } else if ("IDREFS".equals(typeLocalName)) {
-            return new Idrefs();
+            return Idrefs.THE_INSTANCE;
         } else if ("pattern".equals(typeLocalName)) {
-            return new Pattern();
+            return Pattern.THE_INSTANCE;
         } else if ("datetime".equals(typeLocalName)) {
-            return new Datetime();
+            return Datetime.THE_INSTANCE;
         } else if ("datetime-local".equals(typeLocalName)) {
-            return new DatetimeLocal();
+            return DatetimeLocal.THE_INSTANCE;
         } else if ("datetime-tz".equals(typeLocalName)) {
-            return new DatetimeTz();
+            return DatetimeTz.THE_INSTANCE;
         } else if ("date".equals(typeLocalName)) {
-            return new Date();
+            return Date.THE_INSTANCE;
         } else if ("month".equals(typeLocalName)) {
-            return new Month();
+            return Month.THE_INSTANCE;
         } else if ("week".equals(typeLocalName)) {
-            return new Week();
+            return Week.THE_INSTANCE;
         } else if ("time".equals(typeLocalName)) {
-            return new Time();
+            return Time.THE_INSTANCE;
         } else if ("iri".equals(typeLocalName)) {
-            return new Iri();
+            return Iri.THE_INSTANCE;
         } else if ("iri-ref".equals(typeLocalName)) {
-            return new IriRef();
+            return IriRef.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

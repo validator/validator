@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * 
@@ -34,7 +33,12 @@ import org.relaxng.datatype.ValidationContext;
  * @version $Id$
  * @author hsivonen
  */
-public class Month extends AbstractDatatype {
+public final class Month extends AbstractDatatype {
+
+    /**
+     * The singleton instance.
+     */
+    public static final Month THE_INSTANCE = new Month();
 
     /**
      * The rexexp for this datatype.
@@ -42,9 +46,9 @@ public class Month extends AbstractDatatype {
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    Month() {
+    private Month() {
         super();
     }
 

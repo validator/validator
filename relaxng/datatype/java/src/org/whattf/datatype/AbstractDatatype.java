@@ -26,7 +26,6 @@ import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.relaxng.datatype.ValidationContext;
-import org.relaxng.datatype.helpers.StreamingValidatorImpl;
 
 /**
  * Common superclass for HTML5 datatypes. Implements all methods of the 
@@ -58,7 +57,7 @@ abstract class AbstractDatatype implements Datatype {
      */
     public final boolean isValid(String literal, ValidationContext context) {
         try {
-            checkValid(literal, context);
+            checkValid(literal);
         } catch (DatatypeException e) {
             return false;
         }
@@ -75,14 +74,14 @@ abstract class AbstractDatatype implements Datatype {
     public abstract void checkValid(CharSequence literal) throws DatatypeException;
     
     /**
-     * Merely returns a <code>StreamingValidatorImpl</code>.
+     * Merely returns a <code>DatatypeStreamingValidatorImpl</code>.
      * @param context the validation context (ignored by subclasses)
      * @return An unoptimized <code>DatatypeStreamingValidator</code>
      * @see org.relaxng.datatype.Datatype#createStreamingValidator(org.relaxng.datatype.ValidationContext)
      */
     public DatatypeStreamingValidator createStreamingValidator(
             ValidationContext context) {
-        return new StreamingValidatorImpl(this, context);
+        return new DatatypeStreamingValidatorImpl(this);
     }
 
     /**

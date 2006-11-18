@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.GregorianCalendar;
@@ -43,17 +42,22 @@ import com.ibm.icu.util.TimeZone;
  * @version $Id$
  * @author hsivonen
  */
-public class Week extends AbstractDatatype {
+public final class Week extends AbstractDatatype {
 
+    /**
+     * The singleton instance.
+     */
+    public static final Week THE_INSTANCE = new Week();
+    
     /**
      * The rexexp for this datatype.
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-W([0-9]{2})$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    Week() {
+    private Week() {
         super();
     }
 

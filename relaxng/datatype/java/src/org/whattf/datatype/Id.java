@@ -24,7 +24,6 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * This datatype shall accept any string that consists of one or more characters 
@@ -36,9 +35,14 @@ import org.relaxng.datatype.ValidationContext;
 public class Id extends AbstractDatatype {
 
     /**
+     * The singleton instance.
+     */
+    public static final Id THE_INSTANCE = new Id();
+
+    /**
      * Package-private constructor
      */
-    Id() {
+    protected Id() {
         super();
     }
 

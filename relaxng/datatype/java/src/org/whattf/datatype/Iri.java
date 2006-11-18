@@ -23,9 +23,14 @@
 package org.whattf.datatype;
 
 
-public class Iri extends IriRef {
+public final class Iri extends IriRef {
 
-    public Iri() {
+    /**
+     * The singleton instance.
+     */
+    public static final Iri THE_INSTANCE = new Iri();
+    
+    private Iri() {
         super();
     }
 

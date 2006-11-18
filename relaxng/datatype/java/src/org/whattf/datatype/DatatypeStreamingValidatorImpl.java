@@ -22,35 +22,37 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.DatatypeStreamingValidator;
 
-/**
- * This datatype shall accept any string that consists of one or more characters 
- * and does not contain any whitespace characters.
- * <p>The ID-type of this datatype is IDREF.
- * @version $Id$
- * @author hsivonen
- */
-public final class Idref extends Id {
+public final class DatatypeStreamingValidatorImpl implements
+        DatatypeStreamingValidator {
 
-    /**
-     * The singleton instance.
-     */
-    public static final Idref THE_INSTANCE = new Idref();
+    private final AbstractDatatype datatype;
     
-    /**
-     * Package-private constructor
-     */
-    private Idref() {
+    private final StringBuilder buffer;
+    
+    public DatatypeStreamingValidatorImpl(AbstractDatatype datatype) {
         super();
+        this.datatype = datatype;
+        this.buffer = new StringBuilder();
     }
 
-    /**
-     * Returns <code>Datatype.ID_TYPE_IDREF</code>.
-     * @return <code>Datatype.ID_TYPE_IDREF</code>
-     * @see org.relaxng.datatype.Datatype#getIdType()
-     */
-    public int getIdType() {
-        return Datatype.ID_TYPE_IDREF;
-    }   
+    public void addCharacters(char[] buf, int start, int len) {
+        buffer.append(buf, start, len);
+    }
+
+    public boolean isValid() {
+        try {
+            datatype.checkValid(buffer);
+        } catch (DatatypeException e) {
+            return false;
+        }
+        return true;
+   }
+
+    public void checkValid() throws DatatypeException {
+        datatype.checkValid(buffer);
+    }
+
 }

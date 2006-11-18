@@ -36,14 +36,19 @@ import java.util.regex.Pattern;
 public final class Date extends AbstractDatetime {
     
     /**
+     * The singleton instance.
+     */
+    public static final Date THE_INSTANCE = new Date();
+    
+    /**
      * The rexexp for this datatype.
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    Date() {
+    private Date() {
         super();
     }    
     

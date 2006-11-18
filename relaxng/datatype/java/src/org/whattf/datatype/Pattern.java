@@ -25,7 +25,6 @@ package org.whattf.datatype;
 import org.mozilla.javascript.EcmaError;
 import org.mozilla.javascript.regexp.RegExpImpl;
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * This datatype shall accept the strings that are allowed as the value of the Web Forms 2.0 
@@ -34,12 +33,17 @@ import org.relaxng.datatype.ValidationContext;
  * @version $Id$
  * @author hsivonen
  */
-public class Pattern extends AbstractDatatype {
+public final class Pattern extends AbstractDatatype {
+
+    /**
+     * The singleton instance.
+     */
+    public static final Pattern THE_INSTANCE = new Pattern();
 
     /**
      * Package-private constructor
      */
-    Pattern() {
+    private Pattern() {
         super();
     }
 

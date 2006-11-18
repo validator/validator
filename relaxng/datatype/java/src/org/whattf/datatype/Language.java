@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 import org.whattf.datatype.data.LanguageData;
 
 /**
@@ -35,8 +34,13 @@ import org.whattf.datatype.data.LanguageData;
  * @version $Id$
  * @author hsivonen
  */
-public class Language extends AbstractDatatype {
+public final class Language extends AbstractDatatype {
 
+    /**
+     * The singleton instance.
+     */
+    public static final Language THE_INSTANCE = new Language();
+    
     private static final Pattern HYPHEN = Pattern.compile("-");
     
     private static String[] languages = null;
@@ -98,7 +102,7 @@ public class Language extends AbstractDatatype {
     /**
      * Package-private constructor
      */
-    Language() {
+    private Language() {
         super();
     }
 

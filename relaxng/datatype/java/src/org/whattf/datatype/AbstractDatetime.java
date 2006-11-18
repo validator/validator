@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
 
 /**
  * Superclass for various datetime datatypes. 
@@ -42,7 +41,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
             31, 30, 31 };
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
     AbstractDatetime() {
         super();
@@ -150,7 +149,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
             }
         } else {
             throw new DatatypeException(
-                    "The literal did not satisfy the format for the datatype.");
+                    "The literal did not satisfy the date format.");
         }
     }
 

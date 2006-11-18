@@ -37,14 +37,19 @@ import java.util.regex.Pattern;
 public final class DatetimeLocal extends AbstractDatetime {
     
     /**
+     * The singleton instance.
+     */
+    public static final DatetimeLocal THE_INSTANCE = new DatetimeLocal();
+    
+    /**
      * The rexexp for this datatype.
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]+)?)?$");
 
     /**
-     * Package-private constructor.
+     * Constructor.
      */
-    DatetimeLocal() {
+    private DatetimeLocal() {
         super();
     }
     
