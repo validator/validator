@@ -48,7 +48,7 @@ public class Time extends AbstractDatetime {
         super();
     }
 
-    public void checkValid(String literal, ValidationContext context)
+    public void checkValid(CharSequence literal)
             throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {

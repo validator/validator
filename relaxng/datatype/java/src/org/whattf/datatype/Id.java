@@ -49,7 +49,7 @@ public class Id extends AbstractDatatype {
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
-    public void checkValid(String literal, ValidationContext context)
+    public void checkValid(CharSequence literal)
             throws DatatypeException {
         int len = literal.length();
         if (len == 0) {

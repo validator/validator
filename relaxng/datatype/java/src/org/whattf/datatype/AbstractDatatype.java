@@ -56,7 +56,7 @@ abstract class AbstractDatatype implements Datatype {
      * @return <code>true</code> if valid and <code>false</code> if not
      * @see org.relaxng.datatype.Datatype#isValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
-    public boolean isValid(String literal, ValidationContext context) {
+    public final boolean isValid(String literal, ValidationContext context) {
         try {
             checkValid(literal, context);
         } catch (DatatypeException e) {
@@ -65,6 +65,15 @@ abstract class AbstractDatatype implements Datatype {
         return true;
     }
 
+    /**
+     * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
+     */
+    public final void checkValid(String literal, ValidationContext context) throws DatatypeException {
+        checkValid(literal);
+    }
+
+    public abstract void checkValid(CharSequence literal) throws DatatypeException;
+    
     /**
      * Merely returns a <code>StreamingValidatorImpl</code>.
      * @param context the validation context (ignored by subclasses)

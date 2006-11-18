@@ -128,7 +128,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
         
     protected abstract Pattern getPattern();
 
-    public void checkValid(String literal, ValidationContext context)
+    public void checkValid(CharSequence literal)
             throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {

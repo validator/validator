@@ -102,8 +102,9 @@ public class Language extends AbstractDatatype {
         super();
     }
 
-    public void checkValid(String literal, ValidationContext context)
+    public void checkValid(CharSequence lit)
             throws DatatypeException {
+        String literal = lit.toString();
         if (literal.length() == 0) {
             throw new DatatypeException(
                     "The empty string is not a valid language tag.");

@@ -49,7 +49,7 @@ public class Idrefs extends AbstractDatatype {
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
-    public void checkValid(String literal, ValidationContext context) throws DatatypeException {
+    public void checkValid(CharSequence literal) throws DatatypeException {
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             if (!isWhitespace(c)) {

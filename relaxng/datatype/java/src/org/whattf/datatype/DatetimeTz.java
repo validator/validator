@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * This datatype shall accept strings that conform to the format specified for 
  * <a href='http://whatwg.org/specs/web-apps/current-work/#datetime'><code>datetime</code></a> 
  * attribute of the <code>ins</code> and <code>del</code> elements in Web Applications 1.0.
- * <p>If the time zone designator is not "<code>Z</code>"Ó, the absolute value of the time 
+ * <p>If the time zone designator is not "<code>Z</code>", the absolute value of the time 
  * zone designator must not exceed 12 hours.
  * <p>This datatype must not accept the empty string.
  * <p>Note that allowing a numeric time zone designator is not the only difference with 

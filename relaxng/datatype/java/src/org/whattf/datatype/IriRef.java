@@ -37,7 +37,7 @@ public class IriRef extends AbstractDatatype {
         super();
     }
 
-    public void checkValid(String literal, ValidationContext context)
+    public void checkValid(CharSequence literal)
             throws DatatypeException {
         // TODO Find out if it is safe to put this in a field
         IRIFactory fac = new IRIFactory();
@@ -56,7 +56,7 @@ public class IriRef extends AbstractDatatype {
         fac.setQueryCharacterRestrictions(false);
         IRI iri;
         try {
-            iri = fac.construct(literal);
+            iri = fac.construct(literal.toString());
         } catch (IRIException e) {
             throw new DatatypeException("Bad IRI: " + e.getMessage());
         }

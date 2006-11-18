@@ -96,7 +96,7 @@ public class Week extends AbstractDatatype {
         }
     }
 
-    public final void checkValid(String literal, ValidationContext context)
+    public final void checkValid(CharSequence literal)
             throws DatatypeException {
         Matcher m = THE_PATTERN.matcher(literal);
         if (m.matches()) {
