@@ -129,6 +129,8 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     public void checkValid(CharSequence literal)
             throws DatatypeException {
+        System.err.println("CHECKING DATE");
+        System.err.flush();
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
 //            int count = m.groupCount();

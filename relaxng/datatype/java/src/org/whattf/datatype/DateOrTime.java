@@ -30,8 +30,6 @@ public class DateOrTime extends AbstractDatetime {
      */
     public static final DateOrTime THE_INSTANCE = new DateOrTime();
 
-    public int i;
-    
     /**
      * The rexexp for this datatype.
      */
@@ -43,7 +41,6 @@ public class DateOrTime extends AbstractDatetime {
 
     @Override
     protected Pattern getPattern() {
-        i = (1 + 1);
         return THE_PATTERN;
     }
 
