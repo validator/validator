@@ -6,20 +6,18 @@
 
 	t.elem =
 		element t { t.inner & t.attrs }
-		& v5only
 	t.elem.static =
 		element t { t.inner.static & t.attrs }
-		& v5only
 	t.attrs =
 		(	common.attrs
-		&	t.attrs.datetime? #REVISIT check optionality
+		&	t.attrs.datetime?
 		)
 		t.attrs.datetime =
 			attribute datetime {
-				common.data.datetime #REVISIT check format
+				common.data.date-or-time #REVISIT check format
 			}
 	t.inner =
-		( common.inner.strict-inline )
+		( common.inner.strict-inline ) #Cannot enforce textContent format here
 	t.inner.static =
 		( common.inner.strict-inline.static )
 
@@ -27,48 +25,6 @@
 	common.inner.struct-inline.static &= t.elem.static*
 	common.inner.strict-inline &= t.elem*
 	common.inner.strict-inline.static &= t.elem.static*
-
-## hCalendar: <calendar>
-
-	calendar.elem =
-		element calendar { calendar.inner & calendar.attrs }
-	calendar.elem.header =
-		element calendar { calendar.inner.header & calendar.attrs }
-	calendar.elem.footer =
-		element calendar { calendar.inner.footer & calendar.attrs }
-	calendar.attrs =
-		( common.attrs )
-	calendar.inner =
-		( common.inner.block )
-	calendar.inner.header =
-		( common.inner.block.header )
-	calendar.inner.footer =
-		( common.inner.block.footer )
-	
-	common.inner.block &= calendar.elem*
-	common.inner.block.header &= calendar.elem.header*
-	common.inner.block.footer &= calendar.elem.footer*
-
-## hCard: <card>
-
-	card.elem =
-		element card { card.inner & card.attrs }
-	card.elem.header =
-		element card { card.inner.header & card.attrs }
-	card.elem.footer =
-		element card { card.inner.footer & card.attrs }
-	card.attrs =
-		( common.attrs )
-	card.inner =
-		( common.inner.block )
-	card.inner.header =
-		( common.inner.block.header )
-	card.inner.footer =
-		( common.inner.block.footer )
-	
-	common.inner.block &= card.elem*
-	common.inner.block.header &= card.elem.header*
-	common.inner.block.footer &= card.elem.footer*
 
 ## Scalar Gauge: <meter>
 
