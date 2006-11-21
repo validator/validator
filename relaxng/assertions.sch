@@ -19,7 +19,8 @@
 	<pattern name='dfn cannot nest'> <!-- FIXME port to RNG also -->
 		<rule context='h:dfn'>
 			<report test='ancestor::h:dfn'>
-				The dfn element cannot contain any nested dfn elements.
+				The &#x201C;dfn&#x201D; element cannot contain any nested 
+				&#x201C;dfn&#x201D; elements.
 			</report>
 		</rule>
 	</pattern>
@@ -27,7 +28,8 @@
 	<pattern name='label cannot nest'> <!-- FIXME port to RNG also -->
 		<rule context='h:label'>
 			<report test='ancestor::h:label'>
-				The label element cannot contain any nested label elements.
+				The &#x201C;label&#x201D; element cannot contain any nested 
+				&#x201C;label&#x201D; elements.
 			</report>
 		</rule>
 	</pattern>
@@ -35,12 +37,12 @@
 	<pattern name='blockquote not allowed in headers or footers'> <!-- FIXME port to RNG also -->
 		<rule context='h:blockquote'>
 			<report test='ancestor::h:header'>
-				The blockquote element cannot appear as a descendant of the 
-				header element.
+				The &#x201C;blockquote&#x201D; element cannot appear as a 
+				descendant of the &#x201C;header&#x201D; element.
 			</report>
 			<report test='ancestor::h:footer'>
-				The blockquote element cannot appear as a descendant of the 
-				footer element.
+				The &#x201C;blockquote&#x201D; element cannot appear as a 
+				descendant of the &#x201C;footer&#x201D; element.
 			</report>
 		</rule>
 	</pattern>
@@ -53,7 +55,8 @@
 			                  | descendant::h:h4 
 			                  | descendant::h:h5 
 			                  | descendant::h:h6) = 1'>
-				The header element must have exactly one h1&#x2013;h6 descendant.
+				The &#x201C;header&#x201D; element must have exactly one 
+				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
 			</assert>
 		</rule>
 	</pattern>
@@ -64,9 +67,9 @@
 
 	<pattern name='contextmenu must refer to a menu'>
 		<rule context='*[@contextmenu]'>
-			<assert test='/descendant::h:menu/@id = @contextmenu or 
-			              /descendant::h:menu/@xml:id = @contextmenu'>
-				The contextmenu attribute must refer to a menu element.
+			<assert test='id(@contextmenu)/self::h:menu'>
+				The &#x201C;contextmenu&#x201D; attribute must refer to a 
+				&#x201C;menu&#x201D; element.
 			</assert>
 		</rule>
 	</pattern>
@@ -74,71 +77,56 @@
 	<pattern name='repeat-template must refer to a repetition template'>
 		<rule context='*[@repeat-template]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='/descendant::h:*[@repeat="template"]/@id = @repeat-template or 
-			              /descendant::h:*[@repeat="template"]/@xml:id = @repeat-template'>
-				The repeat-template attribute must refer to a repetition template.
+			<assert test='id(@repeat-template)/self::h:*[@repeat="template"]'>
+				The &#x201C;repeat-template&#x201D; attribute must refer to a 
+				repetition template.
 			</assert>
 		</rule>
 	</pattern>
 
 	<pattern name='for on label must refer to a form control'>
 		<rule context='h:label[@for]'>
-			<assert test='/descendant::h:input/@id = @for or 
-			              /descendant::h:input/@xml:id = @for or
-			              /descendant::h:textarea/@id = @for or 
-			              /descendant::h:textarea/@xml:id = @for or
-			              /descendant::h:select/@id = @for or 
-			              /descendant::h:select/@xml:id = @for or
-			              /descendant::h:button/@id = @for or 
-			              /descendant::h:button/@xml:id = @for or
-			              /descendant::h:output/@id = @for or 
-			              /descendant::h:output/@xml:id = @for'>
-				The for attribute of the label element must refer to a form 
-				control.
+			<assert test='id(@for)/self::h:input or 
+			              id(@for)/self::h:textarea or 
+			              id(@for)/self::h:select or 
+			              id(@for)/self::h:button or 
+			              id(@for)/self::h:output'>
+				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
+				element must refer to a form control.
 			</assert>
 		</rule>
 	</pattern>
 
 	<pattern name='add button template must refer to a repetition template'>
 		<rule context='h:input[@template and @type="add"]'>
-			<assert test='/descendant::h:*[@repeat="template"]/@id = @template or 
-			              /descendant::h:*[@repeat="template"]/@xml:id = @template'>
-				The template attribute of an input element that is of type="add" 
-				must refer to a repetition template.
+			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
+			<assert test='id(@template)/self::h:*[@repeat="template"]'>
+				The &#x201C;template&#x201D; attribute of an 
+				&#x201C;input&#x201D; element that is of 
+				&#x201C;type="add"&#x201D; must refer to a repetition template.
 			</assert>
 		</rule>
 		<rule context='h:button[@template and @type="add"]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='/descendant::h:*[@repeat="template"]/@id = @template or 
-			              /descendant::h:*[@repeat="template"]/@xml:id = @template'>
-				The template attribute of an button element that is of 
-				type="add" must refer to a repetition template.
+			<assert test='id(@template)/self::h:*[@repeat="template"]'>
+				The &#x201C;template&#x201D; attribute of a 
+				&#x201C;button&#x201D; element that is of 
+				&#x201C;type="add"&#x201D; must refer to a repetition template.
 			</assert>
 		</rule>
 	</pattern>
 
 	<pattern name='list on input must refer to a select or a datalist'>
 		<rule context='h:input[@list]'>
-			<assert test='/descendant::h:datalist/@id = @list or 
-			              /descendant::h:datalist/@xml:id = @list or
-			              /descendant::h:select/@id = @list or 
-			              /descendant::h:select/@xml:id = @list'>
-				The list attribute of the input element must refer to a 
-				datalist element or to a select element.
+			<assert test='id(@list)/self::h:datalist or 
+			              id(@list)/self::h:select'>
+				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
+				element must refer to a &#x201C;datalist&#x201D; element or to 
+				a &#x201C;select&#x201D; element.
 			</assert>
 		</rule>
 	</pattern>
 		
-	<!-- FIXME check that they are in the same table -->
-	<!--<pattern name='headers must refer to th elements'>
-		<rule context='h:td[@headers]'>
-			<key name='id' path='@id'/>
-			<assert test='key("id", @headers)'>
-				headers must refer to th elements.
-			</assert>
-		</rule>
-	</pattern>-->
-
 	<!-- FIXME form attribute -->
 	
 	<!-- FIXME output for -->
@@ -148,8 +136,9 @@
 	<pattern name='Non-multiple select can have up to one selected option'>
 		<rule context='h:select[not(@multiple)]'>
 			<report test='count(descendant::h:option[@selected]) > 1'>
-				The select element cannot have more than one selected option 
-				unless the multiple attribute is specified.
+				The &#x201C;select&#x201D; element cannot have more than one 
+				selected &#x201C;option&#x201D; descendant unless the 
+				&#x201C;multiple&#x201D; attribute is specified.
 			</report>
 		</rule>
 	</pattern>
@@ -159,42 +148,48 @@
 		<rule context='h:input[@type=remove]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				An input element of type="remove" must have a repetition block 
+				An &#x201C;input&#x201D; element of 
+				&#x201C;type="remove"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
 		<rule context='h:button[@type=remove]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				A button element of type="remove" must have a repetition block 
+				A &#x201C;button&#x201D; element of 
+				&#x201C;type="remove"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
 		<rule context='h:input[@type=move-up]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				An input element of type="move-up" must have a repetition block 
+				An &#x201C;input&#x201D; element of 
+				&#x201C;type="move-up"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
 		<rule context='h:button[@type=move-up]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				A button element of type="move-up" must have a repetition block 
+				A &#x201C;button&#x201D; element of 
+				&#x201C;type="move-up"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
 		<rule context='h:input[@type=move-down]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				An input element of type="move-down" must have a repetition block 
+				An &#x201C;input&#x201D; element of 
+				&#x201C;type="move-down"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
 		<rule context='h:button[@type=move-down]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
-				A button element of type="move-down" must have a repetition block 
+				A &#x201C;button&#x201D; element of 
+				&#x201C;type="move-down"&#x201D; must have a repetition block 
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
@@ -205,7 +200,8 @@
 	<pattern name='Only one definition per term per document'>
 		<rule context='h:dfn'>
 			<report test='ancestor::h:dfn'>
-				The dfn element cannot contain any nested dfn elements.
+				The &#x201C;dfn&#x201D; element cannot contain any nested 
+				&#x201C;dfn&#x201D; elements.
 			</report>
 		</rule>
 	</pattern>
