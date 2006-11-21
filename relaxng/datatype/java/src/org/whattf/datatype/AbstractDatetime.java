@@ -110,14 +110,14 @@ abstract class AbstractDatetime extends AbstractDatatype {
     }
 
     private void checkTzd(String hours, String minutes) throws DatatypeException {
+        if (hours.charAt(0) == '+') {
+            hours = hours.substring(1);
+        }
         checkTzd(Integer.parseInt(hours), Integer.parseInt(minutes));
     }
 
     private void checkTzd(int hours, int minutes) throws DatatypeException {
-        if (minutes == 0 && (hours == 12 || hours == -12)) {
-            return;
-        }
-        if (hours < -11 || hours > 11) {
+        if (hours < -23 || hours > 23) {
             throw new DatatypeException("Time zone offset out of range.");
         }
         if (minutes > 59) {
@@ -131,21 +131,70 @@ abstract class AbstractDatetime extends AbstractDatatype {
             throws DatatypeException {
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
+//            int count = m.groupCount();
+//            checkDate(m.group(1), m.group(2), m.group(3));
+//            if (count > 3) {
+//                checkHour(m.group(4));
+//                checkMinute(m.group(5));
+//                String seconds = m.group(6);
+//                if (seconds != null) {
+//                    checkSecond(seconds);
+//                }
+//                if (count > 6) {
+//                    String tzdHours = m.group(7);
+//                    if (tzdHours != null) {
+//                        checkTzd(tzdHours, m.group(8));
+//                    }
+//                }
+//            }
             int count = m.groupCount();
-            checkDate(m.group(1), m.group(2), m.group(3));
-            if (count > 3) {
-                checkHour(m.group(4));
-                checkMinute(m.group(5));
-                String seconds = m.group(6);
-                if (seconds != null) {
-                    checkSecond(seconds);
-                }
-                if (count > 6) {
-                    String tzdHours = m.group(7);
-                    if (tzdHours != null) {
-                        checkTzd(tzdHours, m.group(8));
-                    }
-                }
+            String year = m.group(1);
+            String month = m.group(2);
+            String day = m.group(3);
+            if (year != null) {
+                checkDate(year, month, day);                
+            }
+            if (count == 3) {
+                return;
+            }
+            String hour = m.group(4);
+            String minute = m.group(5);
+            if (hour != null) {
+                checkHour(hour);
+                checkMinute(minute);
+            }
+            String seconds = m.group(6);
+            if (seconds != null) {
+                checkSecond(seconds);
+            }
+            if (count == 6) {
+                return;
+            }
+            String tzdHours = m.group(7);
+            String tzdMinutes = m.group(8);
+            if (tzdHours != null) {
+                checkTzd(tzdHours, tzdMinutes);
+            }
+            if (count == 8) {
+                return;
+            }
+            hour = m.group(9);
+            minute = m.group(10);
+            if (hour != null) {
+                checkHour(hour);
+                checkMinute(minute);
+            }
+            seconds = m.group(11);
+            if (seconds != null) {
+                checkSecond(seconds);
+            }
+            if (count == 11) {
+                return;
+            }
+            tzdHours = m.group(12);
+            tzdMinutes = m.group(13);
+            if (tzdHours != null) {
+                checkTzd(tzdHours, tzdMinutes);
             }
         } else {
             throw new DatatypeException(

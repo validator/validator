@@ -73,6 +73,10 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return DatetimeLocal.THE_INSTANCE;
         } else if ("datetime-tz".equals(typeLocalName)) {
             return DatetimeTz.THE_INSTANCE;
+        } else if ("date-or-time".equals(typeLocalName)) {
+            return DateOrTime.THE_INSTANCE;
+        } else if ("date-or-time-content".equals(typeLocalName)) {
+            return DateOrTimeContent.THE_INSTANCE;
         } else if ("date".equals(typeLocalName)) {
             return Date.THE_INSTANCE;
         } else if ("month".equals(typeLocalName)) {
@@ -85,6 +89,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Iri.THE_INSTANCE;
         } else if ("iri-ref".equals(typeLocalName)) {
             return IriRef.THE_INSTANCE;
+        } else if ("ratio".equals(typeLocalName)) {
+            return Ratio.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
