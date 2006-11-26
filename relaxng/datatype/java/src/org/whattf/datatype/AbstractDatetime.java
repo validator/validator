@@ -85,7 +85,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkHour(int hour) throws DatatypeException {
         if (hour > 23) {
-            throw new DatatypeException("Year cannot be greater than 23.");
+            throw new DatatypeException("Hour cannot be greater than 23.");
         }
     }
 
@@ -118,7 +118,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkTzd(int hours, int minutes) throws DatatypeException {
         if (hours < -23 || hours > 23) {
-            throw new DatatypeException("Time zone offset out of range.");
+            throw new DatatypeException("Hours out of range in time zone designator.");
         }
         if (minutes > 59) {
             throw new DatatypeException("Minutes out of range in time zone designator.");
@@ -129,8 +129,6 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     public void checkValid(CharSequence literal)
             throws DatatypeException {
-        System.err.println("CHECKING DATE");
-        System.err.flush();
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
 //            int count = m.groupCount();

@@ -29,7 +29,8 @@ import org.relaxng.datatype.ValidationContext;
 
 /**
  * Common superclass for HTML5 datatypes. Implements all methods of the 
- * <code>Datatype</code> interface except <code>checkValid</code>.
+ * <code>Datatype</code> interface and leaves a new <code>checkValid</code> for 
+ * subclasses to implement.
  * 
  * @version $Id$
  * @author hsivonen
@@ -42,14 +43,14 @@ abstract class AbstractDatatype implements Datatype {
     private static final int CASE_MASK = (1 << 5);
 
     /**
-     * Package-private constructor
+     * Constructor
      */
     AbstractDatatype() {
         super();
     }
 
     /**
-     * Calls <code>checkValid</code>
+     * Calls <code>checkValid(CharSequence literal)</code>.
      * @param literal the value
      * @param context the validation context (ignored by subclasses)
      * @return <code>true</code> if valid and <code>false</code> if not
@@ -65,6 +66,10 @@ abstract class AbstractDatatype implements Datatype {
     }
 
     /**
+     * Delegates to <code>checkValid(CharSequence literal)</code>.
+     * @param literal the value
+     * @param context the validation context (ignored by subclasses)
+     * @throws DatatypeException if the literal does not conform to the datatype definition
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
     public final void checkValid(String literal, ValidationContext context) throws DatatypeException {
