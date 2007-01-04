@@ -387,9 +387,9 @@
 	div.attrs =
 		( common.attrs )
 	div.inner =
-		( common.inner.bimorphic ) #REVISIT
+		( common.inner.block )
 	div.inner.static =
-		( common.inner.bimorphic.static )
+		( common.inner.block.static )
 
 	common.inner.block &= div.elem*
 	common.inner.block.static &= div.elem.static*
