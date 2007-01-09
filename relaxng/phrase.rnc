@@ -225,7 +225,7 @@
 	common.inner.strict-inline &= dfn.elem*
 	common.inner.strict-inline.static &= dfn.elem.static*
 
-## Instance of Term: <i>
+## Italic: <i>
 
 	i.elem =
 		element i { i.inner & i.attrs }
@@ -242,6 +242,24 @@
 	common.inner.struct-inline.static &= i.elem.static*
 	common.inner.strict-inline &= i.elem*
 	common.inner.strict-inline.static &= i.elem.static*
+
+## Bold: <b>
+
+	b.elem =
+		element b { b.inner & b.attrs }
+	b.elem.static =
+		element b { b.inner.static & b.attrs }
+	b.attrs =
+		( common.attrs )
+	b.inner =
+		( common.inner.strict-inline )
+	b.inner.static =
+		( common.inner.strict-inline.static )
+
+	common.inner.struct-inline &= b.elem*
+	common.inner.struct-inline.static &= b.elem.static*
+	common.inner.strict-inline &= b.elem*
+	common.inner.strict-inline.static &= b.elem.static*
 
 ## Code Fragment: <code>
 
