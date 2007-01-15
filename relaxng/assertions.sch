@@ -66,7 +66,7 @@
 	<!-- Assuming that ID uniqueness is already enforced. -->
 
 	<pattern name='contextmenu must refer to a menu'>
-		<rule context='*[@contextmenu]'>
+		<rule context='h:*[@contextmenu]'>
 			<assert test='id(@contextmenu)/self::h:menu'>
 				The &#x201C;contextmenu&#x201D; attribute must refer to a 
 				&#x201C;menu&#x201D; element.
@@ -75,7 +75,7 @@
 	</pattern>
 
 	<pattern name='repeat-template must refer to a repetition template'>
-		<rule context='*[@repeat-template]'>
+		<rule context='h:*[@repeat-template]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='id(@repeat-template)/self::h:*[@repeat="template"]'>
 				The &#x201C;repeat-template&#x201D; attribute must refer to a 
