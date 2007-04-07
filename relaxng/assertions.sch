@@ -133,7 +133,7 @@
 			                  | descendant::h:h4 
 			                  | descendant::h:h5 
 			                  | descendant::h:h6) >= 1'>
-				The &#x201C;header&#x201D; element must have exactly one 
+				The &#x201C;header&#x201D; element must have at least one 
 				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
 			</assert>
 		</rule>
