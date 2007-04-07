@@ -37,7 +37,7 @@ namespace local = ""
 			}
 		img.attrs.usemap =
 			attribute usemap {
-				common.data.uri
+				common.data.hashed-idref
 			}
 		img.attrs.ismap =
 			attribute ismap {
@@ -50,6 +50,8 @@ namespace local = ""
 	common.elem.strict-inline.static |= img.elem
 	common.elem.struct-inline |= img.elem
 	common.elem.struct-inline.static |= img.elem
+	common.elem.embedded |= img.elem
+	common.elem.embedded.static |= img.elem
 
 ## Plug-ins: <embed>
 
@@ -89,7 +91,8 @@ namespace local = ""
 	common.elem.strict-inline.static |= embed.elem
 	common.elem.struct-inline |= embed.elem
 	common.elem.struct-inline.static |= embed.elem
-
+	common.elem.embedded |= embed.elem
+	common.elem.embedded.static |= embed.elem
 
 ## Generic Objects: <object>
 
@@ -107,18 +110,25 @@ namespace local = ""
 		element object { object.inner.block.static & object.attrs }
 	object.attrs =
 		(	common.attrs
+		&	(	object.attrs.data
+			|	object.attrs.type
+			)
 		&	object.attrs.archive?
-		&	object.attrs.classid?
-		&	object.attrs.codebase?
-		&	object.attrs.codetype?
-		&	object.attrs.data?
-		&	object.attrs.type?
-		&	object.attrs.standby?
-		&	object.attrs.name?
+#		&	object.attrs.classid?
+#		&	object.attrs.codebase?
+#		&	object.attrs.codetype?
 		&	object.attrs.height?
 		&	object.attrs.width?
 		&	object.attrs.usemap?
 		)
+		object.attrs.data =
+			attribute data {
+				common.data.uri
+			}
+		object.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
 		object.attrs.archive =
 			attribute archive {
 				common.data.uris
@@ -134,22 +144,6 @@ namespace local = ""
 		object.attrs.codetype =
 			attribute codetype {
 				common.data.mimetype
-			}
-		object.attrs.data =
-			attribute data {
-				common.data.uri
-			}
-		object.attrs.type =
-			attribute type {
-				common.data.mimetype
-			}
-		object.attrs.standby =
-			attribute standby {
-				text
-			}
-		object.attrs.name =
-			attribute name {
-				string #FIXME refine
 			}
 		object.attrs.height =
 			attribute height {
@@ -181,19 +175,23 @@ namespace local = ""
 		)
 	object.inner.block =
 		(	param.elem*
-		,	common.inner.block
+		,	(	common.inner.block
+			|	object.elem.block
+			)
 		)
-	object.inner.block.static =
+	object.inner.block =
 		(	param.elem*
-		,	common.inner.block.static
+		,	(	common.inner.block.static
+			|	object.elem.block.static
+			)
 		)
 
 	common.elem.strict-inline |= object.elem.strict-inline
 	common.elem.strict-inline.static |= object.elem.strict-inline.static
 	common.elem.struct-inline |= object.elem.struct-inline
 	common.elem.struct-inline.static |= object.elem.struct-inline.static
-	common.elem.block |= object.elem.block
-	common.elem.block.static |= object.elem.block.static
+	common.elem.embedded |= object.elem.block
+	common.elem.embedded.static |= object.elem.block
 
 ## Java Applets: <applet>
 
@@ -273,8 +271,8 @@ namespace local = ""
 #	common.elem.strict-inline.static |= applet.elem.strict-inline.static
 #	common.elem.struct-inline |= applet.elem.struct-inline
 #	common.elem.struct-inline.static |= applet.elem.struct-inline.static
-#	common.elem.block |= applet.elem.block
-#	common.elem.block.static |= applet.elem.block.static
+#	common.elem.embedded |= applet.elem.block
+#	common.elem.embedded.static |= applet.elem.block
 
 ## Initialization Parameters: <param>
 
@@ -283,117 +281,50 @@ namespace local = ""
 	param.attrs =
 		(	common.attrs
 		&	param.attrs.name
-		&	param.attrs.value?
+		&	param.attrs.value
 		)
 		param.attrs.name =
 			attribute name {
 				string
 			}
 		param.attrs.value =
-			(	( param.attrs.valuetype.data?  & param.attrs.value.data?   )
-#			|	( param.attrs.valuetype.object & param.attrs.value.object? )
-			|	( param.attrs.valuetype.ref    & param.attrs.value.ref?
-				                               & param.attrs.type?         )
-			)
-		param.attrs.valuetype.data =
-			attribute valuetype {
-				string "data"
-			}
-		param.attrs.value.data =
 			attribute value {
 				string
-			}
-		param.attrs.valuetype.ref =
-			attribute valuetype {
-				string "ref"
-			}
-		param.attrs.value.ref =
-			attribute value {
-				common.data.uri
-			}
-#REVISIT will HTML5 abolish declared objects?
-#		param.attrs.valuetype.object =
-#			attribute valuetype {
-#				string "object"
-#			}
-#		param.attrs.value.object =
-#			attribute value {
-#				#common.data.idref
-#				string #FIXME
-#			}
-		param.attrs.type =
-			attribute type {
-				common.data.mimetype
 			}
 	param.inner =
 		( empty )
 
 ## Inline Frame: <iframe>
 
-	iframe.elem.strict-inline =
-		element iframe { iframe.inner.strict-inline & iframe.attrs }
-	iframe.elem.strict-inline.static =
-		element iframe { iframe.inner.strict-inline.static & iframe.attrs }
-	iframe.elem.struct-inline =
-		element iframe { iframe.inner.struct-inline & iframe.attrs }
-	iframe.elem.struct-inline.static =
-		element iframe { iframe.inner.struct-inline.static & iframe.attrs }
-	iframe.elem.block =
-		element iframe { iframe.inner.block & iframe.attrs }
-	iframe.elem.block.static =
-		element iframe { iframe.inner.block.static & iframe.attrs }
+	iframe.elem =
+		element iframe { iframe.inner & iframe.attrs }
 	iframe.attrs =
 		(	common.attrs
-		&	iframe.attrs.name?
 		&	iframe.attrs.src?
-		&	iframe.attrs.width?
-		&	iframe.attrs.height?
-		&	iframe.attrs.frameborder?
-		&	iframe.attrs.scrolling?
+#		&	iframe.attrs.width?
+#		&	iframe.attrs.height?
 		)
-		iframe.attrs.name =
-			attribute name {
-				string #FIXME refine
-			}
 		iframe.attrs.src =
 			attribute src {
 				common.data.uri
 			}
-		iframe.attrs.height =
-			attribute height {
-				common.data.integer.positive
-			}
-		iframe.attrs.width =
-			attribute width {
-				common.data.integer.positive
-			}
-		iframe.attrs.frameborder =
-			attribute frameborder {
-				"1" | "0"
-			}
-		iframe.attrs.scrolling =
-			attribute scrolling {
-				string "yes" | string "no" | string "auto"
-			}
-	iframe.inner.strict-inline =
-		( common.inner.strict-inline )
-	iframe.inner.strict-inline.static =
-		( common.inner.strict-inline.static )
-	iframe.inner.struct-inline =
-		( common.inner.struct-inline )
-	iframe.inner.struct-inline.static =
-		( common.inner.struct-inline.static )
-	iframe.inner.block =
-		( common.inner.block )
-	iframe.inner.block.static =
-		( common.inner.block.static )
+#		iframe.attrs.height =
+#			attribute height {
+#				common.data.integer.positive
+#			}
+#		iframe.attrs.width =
+#			attribute width {
+#				common.data.integer.positive
+#			}
+	iframe.inner =
+		( text )
 
-	common.elem.strict-inline |= iframe.elem.strict-inline
-	common.elem.strict-inline.static |= iframe.elem.strict-inline.static
-	common.elem.struct-inline |= iframe.elem.struct-inline
-	common.elem.struct-inline.static |= iframe.elem.struct-inline.static
-	common.elem.block |= iframe.elem.block
-	common.elem.block.static |= iframe.elem.block.static
+	common.elem.strict-inline |= iframe.elem
+	common.elem.strict-inline.static |= iframe.elem
+	common.elem.struct-inline |= iframe.elem
+	common.elem.struct-inline.static |= iframe.elem
+	common.elem.embedded |= iframe.elem
+	common.elem.embedded.static |= iframe.elem
 
 #######################################################################
 ## Image Maps

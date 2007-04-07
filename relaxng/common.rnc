@@ -61,17 +61,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 # #####################################################################
 
 	common.del.strict-inline =
-		( empty )
+		( notAllowed )
 	common.del.strict-inline.static =
-		( empty )
+		( notAllowed )
 	common.del.struct-inline =
-		( empty )
+		( notAllowed )
 	common.del.struct-inline.static =
-		( empty )
+		( notAllowed )
 	common.del.block =
-		( empty )
+		( notAllowed )
 	common.del.block.static =
-		( empty )
+		( notAllowed )
 
 # #####################################################################
 ##  Common Element Classes                                            #
@@ -80,26 +80,34 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Strictly Inline Elements
 
 	common.elem.strict-inline =
-		( empty )
+		( notAllowed )
 
 	common.elem.strict-inline.static =
-		( empty )
+		( notAllowed )
 
 ## Structured Inline Elements
 
 	common.elem.struct-inline =
-		( empty )
+		( notAllowed )
 
 	common.elem.struct-inline.static =
-		( empty )
+		( notAllowed )
 
 ## Block Elements
 
 	common.elem.block =
-		( empty )
+		( notAllowed )
 
 	common.elem.block.static =
-		( empty )
+		( notAllowed )
+
+## Embedded Content
+
+	common.elem.embedded =
+		( notAllowed )
+
+	common.elem.embedded.static =
+		( notAllowed )
 
 # #####################################################################
 ##  Common Content Models                                             #
@@ -291,6 +299,11 @@ common.attrs.other =
 	common.data.idrefs =
 		string #REVISIT
 
+	common.data.hashed-idref =
+		xsd:string {
+			pattern = "#.+"
+		}
+
 ## Numerical
 
 	common.data.integer =
@@ -335,6 +348,9 @@ common.attrs.other =
 
 	common.data.date-or-time =
 		w:date-or-time
+
+	common.data.timeoffset =
+		string #FIXME
 
 ## IRIs
 

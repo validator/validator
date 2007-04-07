@@ -1,0 +1,115 @@
+namespace local = ""
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Advanced Embedded Content             #
+# #####################################################################
+
+## Attributes Common to Media Elements
+
+	# src not included
+	media.attrs = 
+		(	media.attrs.start?
+		&	media.attrs.loopstart?
+		&	media.attrs.loopend?
+		&	media.attrs.loopcount?
+		&	media.attrs.controls?
+		)
+		media.attrs.start   =
+			attribute start   {
+				common.data.timeoffset
+			}
+		media.attrs.loopstart  =
+			attribute loopstart  {
+				common.data.timeoffset
+			}
+		media.attrs.loopend  =
+			attribute loopend  {
+				common.data.timeoffset
+			}
+		media.attrs.end  =
+			attribute end  {
+				common.data.timeoffset
+			}
+		media.attrs.loopcount  =
+			attribute loopcount  {
+				common.data.integer.positive
+			}
+		media.attrs.controls  =
+			attribute controls  {
+				string "controls"
+			}
+		
+## Source: <source>
+
+	source.elem =
+		element source { source.inner & source.attrs }
+	source.attrs =
+		(	common.attrs
+		&	source.attrs.src
+		&	source.attrs.type
+		)
+		source.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+		source.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	source.inner =
+		( empty )
+
+## Media Source
+
+	media.source = 
+		(	media.attrs.src
+		|	source.elem+
+		)
+
+	media.attrs.src =
+		attribute src {
+			common.data.uri
+		}
+
+## Video: <video>
+
+	video.elem.strict-inline =
+		element video { video.inner.strict-inline & video.attrs }
+	video.elem.strict-inline.static =
+		element video { video.inner.strict-inline.static & video.attrs }
+	video.elem.struct-inline =
+		element video { video.inner.struct-inline & video.attrs }
+	video.elem.struct-inline.static =
+		element video { video.inner.struct-inline.static & video.attrs }
+	video.elem.embedded =
+		element video { video.inner.embedded & video.attrs }
+	video.elem.embedded.static =
+		element video { video.inner.embedded.static & video.attrs }
+	video.attrs =
+		(	common.attrs
+		&	media.attrs
+		)
+	video.inner.strict-inline =
+		(	media.source
+		,	common.elem.strict-inline
+		)
+	video.inner.strict-inline.static =
+		(	media.source
+		,	common.elem.strict-inline.static
+		)
+	video.inner.struct-inline =
+		(	media.source
+		,	common.elem.struct-inline
+		)
+	video.inner.struct-inline.static =
+		(	media.source
+		,	common.elem.struct-inline.static
+		)
+	video.inner.embedded =
+		(	media.source
+		,	common.elem.embedded
+		)
+	video.inner.embedded.static =
+		(	media.source
+		,	common.elem.embedded.static
+		)
+
