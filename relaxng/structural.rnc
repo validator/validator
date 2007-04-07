@@ -91,9 +91,9 @@
 	header.attrs =
 		( common.attrs )
 	header.inner =
-		( common.inner.block.header )
+		( common.inner.block )
 	header.inner.static =
-		( common.inner.block.header.static )
+		( common.inner.block.static )
 
 	common.inner.block &= header.elem*
 	common.inner.block.static &= header.elem.static*
@@ -107,9 +107,9 @@
 	footer.attrs =
 		( common.attrs )
 	footer.inner =
-		( common.inner.block.footer )
+		( common.inner.block )
 	footer.inner.static =
-		( common.inner.block.footer.static )
+		( common.inner.block.static )
 
 	common.inner.block &= footer.elem*
 	common.inner.block.static &= footer.elem.static*

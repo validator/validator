@@ -57,10 +57,6 @@
 	common.inner.struct-inline.static &= script.elem*
 	common.inner.block &= script.elem*
 	common.inner.block.static &= script.elem*
-	common.inner.block.header &= script.elem*
-	common.inner.block.header.static &= script.elem*
-	common.inner.block.footer &= script.elem*
-	common.inner.block.footer.static &= script.elem*
 
 ## Fallback Unscripted Content: <noscript>
 

@@ -84,22 +84,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.inner.struct-inline.static =
 		( text )
 
-## Block Content Allowed in Headers
-
-	common.inner.block.header =
-		( empty )
-
-	common.inner.block.header.static =
-		( empty )
-
-## Block Content Allowed in Footers
-
-	common.inner.block.footer =
-		( empty )
-
-	common.inner.block.footer.static =
-		( empty )
-
 ## Inline OR Block Content
 	common.inner.bimorphic =
 		(	common.inner.struct-inline
@@ -109,28 +93,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.inner.bimorphic.static =
 		(	common.inner.struct-inline.static
 		|	common.inner.block.static
-		)
-
-## Inline OR Block Content Allowed in Headers
-	common.inner.bimorphic.header =
-		(	common.inner.struct-inline
-		|	common.inner.block.header
-		)
-
-	common.inner.bimorphic.header.static =
-		(	common.inner.struct-inline.static
-		|	common.inner.block.header.static
-		)
-
-## Inline OR Block Content Allowed in Footers
-	common.inner.bimorphic.footer =
-		(	common.inner.struct-inline
-		|	common.inner.block.footer
-		)
-
-	common.inner.bimorphic.footer.static =
-		(	common.inner.struct-inline.static
-		|	common.inner.block.footer.static
 		)
 
 ## Strict Inline OR Block Content

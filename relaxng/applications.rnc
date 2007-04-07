@@ -64,10 +64,6 @@
 
 	datagrid.elem =
 		element datagrid { datagrid.inner & datagrid.attrs }
-	datagrid.elem.header =
-		element datagrid { datagrid.inner.header & datagrid.attrs }
-	datagrid.elem.footer =
-		element datagrid { datagrid.inner.footer & datagrid.attrs }
 	datagrid.attrs =
 		(	common.attrs
 		&	datagrid.attrs.multiple?
@@ -83,14 +79,8 @@
 			}
 	datagrid.inner =
 		( common.inner.block )
-	datagrid.inner.header =
-		( common.inner.block.header )
-	datagrid.inner.footer =
-		( common.inner.block.footer )
 	
 	common.inner.block &= datagrid.elem*
-	common.inner.block.header &= datagrid.elem.header*
-	common.inner.block.footer &= datagrid.elem.footer*
 
 ## Command: <command>
 
@@ -199,10 +189,6 @@
 	
 	common.inner.block &= menu.elem*
 	common.inner.block.static &= menu.elem.static*
-	common.inner.block.header &= menu.elem*
-	common.inner.block.header.static &= menu.elem.static*
-	common.inner.block.footer &= menu.elem*
-	common.inner.block.footer.static &= menu.elem.static*
 	common.inner.struct-inline &= menu.elem*
 	common.inner.struct-inline.static &= menu.elem.static*
 	
@@ -212,14 +198,6 @@
 		element canvas { canvas.inner & canvas.attrs }
 	canvas.elem.static =
 		element canvas { canvas.inner.static & canvas.attrs }
-	canvas.elem.header =
-		element canvas { canvas.inner.header & canvas.attrs }
-	canvas.elem.header.static =
-		element canvas { canvas.inner.header.static & canvas.attrs }
-	canvas.elem.footer =
-		element canvas { canvas.inner.footer & canvas.attrs }
-	canvas.elem.footer.static =
-		element canvas { canvas.inner.footer.static & canvas.attrs }
 	canvas.attrs =
 		(	common.attrs
 		&	canvas.attrs.height?
@@ -237,18 +215,6 @@
 		( common.inner.block )
 	canvas.inner.static =
 		( common.inner.block.static )
-	canvas.inner.header =
-		( common.inner.block.header )
-	canvas.inner.header.static =
-		( common.inner.block.header.static )
-	canvas.inner.footer =
-		( common.inner.block.footer )
-	canvas.inner.footer.static =
-		( common.inner.block.footer.static )
 	
 	common.inner.block &= canvas.elem*
 	common.inner.block.static &= canvas.elem.static*
-	common.inner.block.header &= canvas.elem.header*
-	common.inner.block.header.static &= canvas.elem.header.static*
-	common.inner.block.footer &= canvas.elem.footer*
-	common.inner.block.footer.static &= canvas.elem.footer.static*

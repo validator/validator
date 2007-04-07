@@ -458,14 +458,6 @@
 		element form { form.inner & form.attrs }
 	form.elem.static =
 		element form { form.inner.static & form.attrs }
-	form.elem.header =
-		element form { form.inner.header & form.attrs }
-	form.elem.header.static =
-		element form { form.inner.header.static & form.attrs }
-	form.elem.footer =
-		element form { form.inner.footer & form.attrs }
-	form.elem.footer.static =
-		element form { form.inner.footer.static & form.attrs }
 	form.attrs =
 		(	common.attrs
 		&	form.attrs.action? #REVISIT Should this be required anyway?
@@ -503,21 +495,9 @@
 		( common.inner.block )
 	form.inner.static =
 		( common.inner.block.static )
-	form.inner.header =
-		( common.inner.block.header )
-	form.inner.header.static =
-		( common.inner.block.header.static )
-	form.inner.footer =
-		( common.inner.block.footer )
-	form.inner.footer.static =
-		( common.inner.block.footer.static )
 
 	common.inner.block &= form.elem*
 	common.inner.block.static &= form.elem.static*
-	common.inner.block.header &= form.elem.header*
-	common.inner.block.header.static &= form.elem.header.static*
-	common.inner.block.footer &= form.elem.footer*
-	common.inner.block.footer.static &= form.elem.footer.static*
 
 ## Fieldset Legend: <legend>
 

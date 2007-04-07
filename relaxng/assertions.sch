@@ -16,7 +16,7 @@
     
     <!-- FIXME no nested forms in HTML-compatible docs -->
     
-	<pattern name='dfn cannot nest'> <!-- FIXME port to RNG also -->
+	<pattern name='dfn cannot nest'>
 		<rule context='h:dfn'>
 			<report test='ancestor::h:dfn'>
 				The &#x201C;dfn&#x201D; element cannot contain any nested 
@@ -25,7 +25,7 @@
 		</rule>
 	</pattern>
 
-	<pattern name='label cannot nest'> <!-- FIXME port to RNG also -->
+	<pattern name='label cannot nest'>
 		<rule context='h:label'>
 			<report test='ancestor::h:label'>
 				The &#x201C;label&#x201D; element cannot contain any nested 
@@ -34,33 +34,111 @@
 		</rule>
 	</pattern>
 
-	<pattern name='blockquote not allowed in headers or footers'> <!-- FIXME port to RNG also -->
+	<pattern name='blockquote not allowed in headers or footers'>
 		<rule context='h:blockquote'>
 			<report test='ancestor::h:header'>
-				The &#x201C;blockquote&#x201D; element cannot appear as a 
+				The sectioning element &#x201C;blockquote&#x201D; cannot 
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The sectioning element &#x201C;blockquote&#x201D; cannot 
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='section not allowed in headers or footers'>
+		<rule context='h:section'>
+			<report test='ancestor::h:header'>
+				The sectioning element &#x201C;section&#x201D; cannot 
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The sectioning element &#x201C;section&#x201D; cannot 
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='nav not allowed in headers or footers'>
+		<rule context='h:nav'>
+			<report test='ancestor::h:header'>
+				The sectioning element &#x201C;nav&#x201D; cannot 
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The sectioning element &#x201C;nav&#x201D; cannot 
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='article not allowed in headers or footers'>
+		<rule context='h:article'>
+			<report test='ancestor::h:header'>
+				The sectioning element &#x201C;article&#x201D; cannot 
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The sectioning element &#x201C;article&#x201D; cannot 
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='aside not allowed in headers or footers'>
+		<rule context='h:aside'>
+			<report test='ancestor::h:header'>
+				The sectioning element &#x201C;aside&#x201D; cannot 
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The sectioning element &#x201C;aside&#x201D; cannot 
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='header not allowed in headers or footers'>
+		<rule context='h:header'>
+			<report test='ancestor::h:header'>
+				The &#x201C;header&#x201D; element cannot appear as a 
 				descendant of the &#x201C;header&#x201D; element.
 			</report>
 			<report test='ancestor::h:footer'>
-				The &#x201C;blockquote&#x201D; element cannot appear as a 
+				The &#x201C;header&#x201D; element cannot appear as a 
+				descendant of the &#x201C;footer&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='footer not allowed in headers or footers'>
+		<rule context='h:footer'>
+			<report test='ancestor::h:header'>
+				The &#x201C;footer&#x201D; element cannot appear as a 
+				descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The &#x201C;footer&#x201D; element cannot appear as a 
 				descendant of the &#x201C;footer&#x201D; element.
 			</report>
 		</rule>
 	</pattern>
 	
-	<pattern name='Exactly one heading in header'>
+	<pattern name='At least one heading in header'>
 		<rule context='h:header'>
 			<assert test='count(descendant::h:h1 
 			                  | descendant::h:h2 
 			                  | descendant::h:h3 
 			                  | descendant::h:h4 
 			                  | descendant::h:h5 
-			                  | descendant::h:h6) = 1'>
+			                  | descendant::h:h6) >= 1'>
 				The &#x201C;header&#x201D; element must have exactly one 
 				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
 			</assert>
 		</rule>
 	</pattern>
-
+	
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 	<!-- Assuming that ID uniqueness is already enforced. -->
@@ -206,6 +284,8 @@
 		</rule>
 	</pattern>
 
+	
+	
 	
 	<!-- for meter enforce
 minimum value ≤ actual value ≤ maximum value 
