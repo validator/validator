@@ -499,21 +499,6 @@
 	common.inner.block &= form.elem*
 	common.inner.block.static &= form.elem.static*
 
-## Fieldset Legend: <legend>
-
-	legend.elem =
-		element legend { legend.inner & legend.attrs }
-	legend.elem.static =
-		element legend { legend.inner.static & legend.attrs }
-	legend.attrs =
-		(	common.attrs
-		&	common-form.attrs.accesskey? #REVISIT is this staying in HTML5?
-		)	
-	legend.inner =
-		( common.inner.strict-inline ) #REVISIT making obvious guess
-	legend.inner.static =
-		( common.inner.strict-inline.static ) #REVISIT making obvious guess
-
 ## Fieldset: <fieldset>
 
 	fieldset.elem =
@@ -523,7 +508,7 @@
 		&	common-form.attrs.accesskey?
 		)	
 	fieldset.inner =
-		(	legend.elem? #REVISIT should this be required?
+		(	legend.elem.strict-inline? #REVISIT should this be required?
 		,	common.inner.strict-bimorphic
 		) #REVISIT expecting this to change into bimorphic
 

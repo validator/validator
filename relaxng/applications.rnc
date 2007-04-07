@@ -218,3 +218,40 @@
 	
 	common.inner.block &= canvas.elem*
 	common.inner.block.static &= canvas.elem.static*
+
+## Server-sent events: <event-source>
+
+	event-source.elem =
+		element event-source { event-source.inner & event-source.attrs }
+	event-source.attrs =
+		(	common.attrs
+		&	event-source.attrs.src?
+		)
+		event-source.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+	event-source.inner =
+		( empty )
+
+	head.inner.misc |=
+		( event-source.elem )
+	
+## Additional On-Demand Information: <details>
+
+	details.elem =
+		element details { details.inner & details.attrs }
+	details.attrs =
+		(	common.attrs
+		&	details.attrs.open?
+		)
+		details.attrs.open =
+			attribute open {
+				string "open"
+			}
+	details.inner =
+		(	legend.elem.strict-inline
+		,	common.inner.bimorphic.static 
+		)
+	
+	common.inner.block &= details.elem*

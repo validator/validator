@@ -246,7 +246,7 @@
 		( common.inner.struct-inline.static )
 
 # #####################################################################
-## Generic Container
+## Miscellaneous Elements
 
 ## Document Division: <div>
 
@@ -263,3 +263,26 @@
 
 	common.inner.block &= div.elem*
 	common.inner.block.static &= div.elem.static*
+
+## Eitle or Explanatory Caption: <legend>
+
+	legend.elem.strict-inline =
+		element legend { legend.inner.strict-inline & legend.attrs }
+	legend.elem.strict-inline.static =
+		element legend { legend.inner.strict-inline.static & legend.attrs }
+	legend.elem.struct-inline =
+		element legend { legend.inner.struct-inline & legend.attrs }
+	legend.elem.struct-inline.static =
+		element legend { legend.inner.struct-inline.static & legend.attrs }
+	legend.attrs =
+		(	common.attrs
+#		&	common-form.attrs.accesskey? #REVISIT is this staying in HTML5?
+		)	
+	legend.inner.strict-inline =
+		( common.inner.strict-inline )
+	legend.inner.strict-inline.static =
+		( common.inner.strict-inline.static )
+	legend.inner.struct-inline =
+		( common.inner.struct-inline )
+	legend.inner.struct-inline.static =
+		( common.inner.struct-inline.static )
