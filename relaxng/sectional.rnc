@@ -18,8 +18,8 @@
 	h1.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h1.elem*
-	common.inner.block.static &= h1.elem.static*
+	common.elem.block |= h1.elem
+	common.elem.block.static |= h1.elem.static
 
 ## Heading (Rank 2): <h2>
 
@@ -34,8 +34,8 @@
 	h2.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h2.elem*
-	common.inner.block.static &= h2.elem.static*
+	common.elem.block |= h2.elem
+	common.elem.block.static |= h2.elem.static
 
 ## Heading (Rank 3): <h3>
 
@@ -50,8 +50,8 @@
 	h3.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h3.elem*
-	common.inner.block.static &= h3.elem.static*
+	common.elem.block |= h3.elem
+	common.elem.block.static |= h3.elem.static
 
 ## Heading (Rank 4): <h4>
 
@@ -66,8 +66,8 @@
 	h4.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h4.elem*
-	common.inner.block.static &= h4.elem.static*
+	common.elem.block |= h4.elem
+	common.elem.block.static |= h4.elem.static
 
 ## Heading (Rank 5): <h5>
 
@@ -82,8 +82,8 @@
 	h5.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h5.elem*
-	common.inner.block.static &= h5.elem.static*
+	common.elem.block |= h5.elem
+	common.elem.block.static |= h5.elem.static
 
 ## Heading (Rank 6): <h6>
 
@@ -98,8 +98,8 @@
 	h6.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= h6.elem*
-	common.inner.block.static &= h6.elem.static*
+	common.elem.block |= h6.elem
+	common.elem.block.static |= h6.elem.static
 
 # #####################################################################
 ## Section Meta
