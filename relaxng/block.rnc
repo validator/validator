@@ -257,9 +257,13 @@
 	div.attrs =
 		( common.attrs )
 	div.inner =
-		( common.inner.bimorphic )
+		(	style.elem*
+		,	common.inner.bimorphic 
+		)
 	div.inner.static =
-		( common.inner.bimorphic.static )
+		(	style.elem*
+		,	common.inner.bimorphic.static
+		)
 
 	common.inner.block &= div.elem*
 	common.inner.block.static &= div.elem.static*

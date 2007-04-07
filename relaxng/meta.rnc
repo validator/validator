@@ -142,6 +142,7 @@
 		(	common.attrs
 		&	style.attrs.type?
 		&	style.attrs.media?
+		&	style.attrs.scoped?
 		#	style.attrs.title included in common.attrs
 		)
 		style.attrs.type =
@@ -151,6 +152,10 @@
 		style.attrs.media =
 			attribute media {
 				common.data.mediaquery
+			}
+		style.attrs.scoped =
+			attribute scoped {
+				string "scoped"
 			}
 	style.inner =
 		( common.inner.anything )

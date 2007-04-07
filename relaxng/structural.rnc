@@ -23,9 +23,13 @@
 				string "active"
 			}
 	section.inner =
-		( common.inner.block )
+		(	style.elem*
+		,	common.inner.block 
+		)
 	section.inner.static =
-		( common.inner.block.static )
+		(	style.elem*
+		,	common.inner.block.static 
+		)
 
 	common.inner.block &= section.elem*
 	common.inner.block.static &= section.elem.static*
@@ -75,9 +79,13 @@
 	aside.attrs =
 		( common.attrs )
 	aside.inner =
-		( common.inner.block )
+		(	style.elem*
+		,	common.inner.bimorphic 
+		)
 	aside.inner.static =
-		( common.inner.block.static )
+		(	style.elem*
+		,	common.inner.bimorphic.static
+		)
 
 	common.inner.block &= aside.elem*
 	common.inner.block.static &= aside.elem.static*
