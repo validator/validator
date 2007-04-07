@@ -7,17 +7,17 @@
 	scripting.attr.form.change =
 		attribute onchange { string }
 
-	input.text.attrs &=
-		(	scripting.attr.form.select?
-		)
+#	input.text.attrs &=
+#		(	scripting.attr.form.select?
+#		)
 
-	common-form.attrs &=
-		(	scripting.attr.form.change?
-		)
+#	common-form.attrs &=
+#		(	scripting.attr.form.change?
+#		)
 
 	form.attrs &=
-		(	scripting.attr.form.submit?
-		&	scripting.attr.form.reset?
+		(	scripting.attr.form.reset?
+#		&	scripting.attr.form.submit?
 		)
 		scripting.attr.form.submit =
 			attribute onsubmit { string }

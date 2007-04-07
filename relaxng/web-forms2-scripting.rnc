@@ -20,7 +20,7 @@
 		)
 
 	output.attrs &=
-		(	scripting.attr.form.change?
-		&	scripting.attr.form.formchange?
+		(	scripting.attr.form.formchange?
 		&	scripting.attr.form.forminput?
+#		&	scripting.attr.form.change?
 		)
