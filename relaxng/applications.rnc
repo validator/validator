@@ -60,35 +60,6 @@
 	common.inner.strict-inline &= progress.elem*
 	common.inner.strict-inline.static &= progress.elem.static*
 
-#REVISIT tabbox?
-
-#REVISIT switch?
-
-## Mutually Exclusive Sections: <switch>
-
-	switch.elem =
-		element switch { switch.inner & switch.attrs }
-	switch.elem.static =
-		element switch { switch.inner.static & switch.attrs }
-	switch.attrs =
-		( common.attrs )
-	switch.inner =
-		(	empty
-		|	(	section.elem*
-			,	section.active.elem
-			,	section.elem*
-			)
-		)
-	switch.inner.static =
-		(	empty
-		|	(	section.elem.static*
-			,	section.active.elem.static
-			,	section.elem.static*
-			)
-		)
-	common.inner.block &= switch.elem*
-	common.inner.block.static &= switch.elem.static*
-
 ## Datagrid: <datagrid>
 
 	datagrid.elem =
@@ -256,11 +227,11 @@
 		)
 		canvas.attrs.height =
 			attribute height {
-				common.data.integer.positive #REVISIT spec bans leading zeros
+				common.data.integer.non-negative
 			}
 		canvas.attrs.width =
 			attribute width {
-				common.data.integer.positive #REVISIT spec bans leading zeros
+				common.data.integer.non-negative
 			}
 	canvas.inner =
 		( common.inner.block )

@@ -55,10 +55,14 @@
 	article.attrs =
 		( common.attrs )
 	article.inner =
-		( common.inner.block )
+		(	style.elem*
+		,	common.inner.block 
+		)
 	article.inner.static =
-		( common.inner.block.static )
-
+		(	style.elem*
+		,	common.inner.block.static 
+		)
+		
 	common.inner.block &= article.elem*
 	common.inner.block.static &= article.elem.static*
 
