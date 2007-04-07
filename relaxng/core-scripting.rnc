@@ -62,16 +62,22 @@
 
 	noscript.elem.strict-inline =
 		element noscript { common.inner.strict-inline & noscript.attrs }
+		& HTMLonly
 	noscript.elem.strict-inline.static =
 		element noscript { common.inner.strict-inline.static & noscript.attrs }
+		& HTMLonly
 	noscript.elem.struct-inline =
 		element noscript { common.inner.struct-inline & noscript.attrs }
+		& HTMLonly
 	noscript.elem.struct-inline.static =
 		element noscript { common.inner.struct-inline.static & noscript.attrs }
+		& HTMLonly
 	noscript.elem.block =
 		element noscript { common.inner.block & noscript.attrs }
+		& HTMLonly
 	noscript.elem.block.static =
 		element noscript { common.inner.block.static & noscript.attrs }
+		& HTMLonly
 	noscript.attrs =
 		( common.attrs )
 
