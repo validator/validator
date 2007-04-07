@@ -33,12 +33,12 @@
 		&	edit.attrs.datetime?
 		)
 
-	common.inner.strict-inline &= ins.elem.strict-inline*
-	common.inner.strict-inline.static &= ins.elem.strict-inline.static*
-	common.inner.struct-inline &= ins.elem.struct-inline*
-	common.inner.struct-inline.static &= ins.elem.struct-inline.static*
-	common.inner.block &= ins.elem.block*
-	common.inner.block.static &= ins.elem.block.static*
+	common.elem.strict-inline |= ins.elem.strict-inline
+	common.elem.strict-inline.static |= ins.elem.strict-inline.static
+	common.elem.struct-inline |= ins.elem.struct-inline
+	common.elem.struct-inline.static |= ins.elem.struct-inline.static
+	common.elem.block |= ins.elem.block
+	common.elem.block.static |= ins.elem.block.static
 
 ## Deletions: <del>
 
@@ -60,12 +60,19 @@
 		&	edit.attrs.datetime?
 		)
 
-	common.inner.strict-inline &= del.elem.strict-inline*
-	common.inner.strict-inline.static &= del.elem.strict-inline.static*
-	common.inner.struct-inline &= del.elem.struct-inline*
-	common.inner.struct-inline.static &= del.elem.struct-inline.static*
-	common.inner.block &= del.elem.block*
-	common.inner.block.static &= del.elem.block.static*
+	common.elem.strict-inline |= del.elem.strict-inline
+	common.elem.strict-inline.static |= del.elem.strict-inline.static
+	common.elem.struct-inline |= del.elem.struct-inline
+	common.elem.struct-inline.static |= del.elem.struct-inline.static
+	common.elem.block |= del.elem.block
+	common.elem.block.static |= del.elem.block.static
+
+	common.del.struct-inline |= del.elem.struct-inline
+	common.del.struct-inline.static |= del.elem.struct-inline.static
+	common.del.strict-inline |= del.elem.strict-inline
+	common.del.strict-inline.static |= del.elem.strict-inline.static
+	common.del.block |= del.elem.block
+	common.del.block.static |= del.elem.block.static
 
 #FIXME need special case for del in bimorphic. Refactor * positioning in
 #common content models so that they become common element classes

@@ -46,10 +46,10 @@ namespace local = ""
 	img.inner =
 		empty
 
-	common.inner.strict-inline &= img.elem*
-	common.inner.strict-inline.static &= img.elem*
-	common.inner.struct-inline &= img.elem*
-	common.inner.struct-inline.static &= img.elem*
+	common.elem.strict-inline |= img.elem
+	common.elem.strict-inline.static |= img.elem
+	common.elem.struct-inline |= img.elem
+	common.elem.struct-inline.static |= img.elem
 
 ## Plug-ins: <embed>
 
@@ -85,10 +85,10 @@ namespace local = ""
 	embed.inner =
 		empty
 
-	common.inner.strict-inline &= embed.elem*
-	common.inner.strict-inline.static &= embed.elem*
-	common.inner.struct-inline &= embed.elem*
-	common.inner.struct-inline.static &= embed.elem*
+	common.elem.strict-inline |= embed.elem
+	common.elem.strict-inline.static |= embed.elem
+	common.elem.struct-inline |= embed.elem
+	common.elem.struct-inline.static |= embed.elem
 
 
 ## Generic Objects: <object>
@@ -188,12 +188,12 @@ namespace local = ""
 		,	common.inner.block.static
 		)
 
-	common.inner.strict-inline &= object.elem.strict-inline*
-	common.inner.strict-inline.static &= object.elem.strict-inline.static*
-	common.inner.struct-inline &= object.elem.struct-inline*
-	common.inner.struct-inline.static &= object.elem.struct-inline.static*
-	common.inner.block &= object.elem.block*
-	common.inner.block.static &= object.elem.block.static*
+	common.elem.strict-inline |= object.elem.strict-inline
+	common.elem.strict-inline.static |= object.elem.strict-inline.static
+	common.elem.struct-inline |= object.elem.struct-inline
+	common.elem.struct-inline.static |= object.elem.struct-inline.static
+	common.elem.block |= object.elem.block
+	common.elem.block.static |= object.elem.block.static
 
 ## Java Applets: <applet>
 
@@ -269,12 +269,12 @@ namespace local = ""
 
 # REVISIT commented out as per
 # http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2005-November/005137.html
-#	common.inner.strict-inline &= applet.elem.strict-inline*
-#	common.inner.strict-inline.static &= applet.elem.strict-inline.static*
-#	common.inner.struct-inline &= applet.elem.struct-inline*
-#	common.inner.struct-inline.static &= applet.elem.struct-inline.static*
-#	common.inner.block &= applet.elem.block*
-#	common.inner.block.static &= applet.elem.block.static*
+#	common.elem.strict-inline |= applet.elem.strict-inline
+#	common.elem.strict-inline.static |= applet.elem.strict-inline.static
+#	common.elem.struct-inline |= applet.elem.struct-inline
+#	common.elem.struct-inline.static |= applet.elem.struct-inline.static
+#	common.elem.block |= applet.elem.block
+#	common.elem.block.static |= applet.elem.block.static
 
 ## Initialization Parameters: <param>
 
@@ -388,12 +388,12 @@ namespace local = ""
 	iframe.inner.block.static =
 		( common.inner.block.static )
 
-	common.inner.strict-inline &= iframe.elem.strict-inline*
-	common.inner.strict-inline.static &= iframe.elem.strict-inline.static*
-	common.inner.struct-inline &= iframe.elem.struct-inline*
-	common.inner.struct-inline.static &= iframe.elem.struct-inline.static*
-	common.inner.block &= iframe.elem.block*
-	common.inner.block.static &= iframe.elem.block.static*
+	common.elem.strict-inline |= iframe.elem.strict-inline
+	common.elem.strict-inline.static |= iframe.elem.strict-inline.static
+	common.elem.struct-inline |= iframe.elem.struct-inline
+	common.elem.struct-inline.static |= iframe.elem.struct-inline.static
+	common.elem.block |= iframe.elem.block
+	common.elem.block.static |= iframe.elem.block.static
 
 #######################################################################
 ## Image Maps
@@ -421,8 +421,8 @@ namespace local = ""
 		&	area.elem+
 		)
 
-	common.inner.block &= map.elem*
-	common.inner.block.static &= map.elem.static*
+	common.elem.block |= map.elem
+	common.elem.block.static |= map.elem.static
 
 ## Map Area Definition: <area>
 

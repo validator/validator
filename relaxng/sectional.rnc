@@ -117,8 +117,8 @@
 	address.inner.static =
 		( common.inner.struct-inline.static )
 
-	common.inner.block &= address.elem*
-	common.inner.block.static &= address.elem.static*
+	common.elem.block |= address.elem
+	common.elem.block.static |= address.elem.static
 
 # #####################################################################
 ## Quotations	
@@ -142,7 +142,7 @@
 	blockquote.inner.static =
 		( common.inner.block.static )
 
-	common.inner.block &= blockquote.elem*
-	common.inner.block.static &= blockquote.elem.static*
-	common.inner.struct-inline &= blockquote.elem*
-	common.inner.struct-inline.static &= blockquote.elem.static*
+	common.elem.block |= blockquote.elem
+	common.elem.block.static |= blockquote.elem.static
+	common.elem.struct-inline |= blockquote.elem
+	common.elem.struct-inline.static |= blockquote.elem.static

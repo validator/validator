@@ -81,8 +81,8 @@
 			)
 		) 
 
-	common.inner.block &= table.elem*
-	common.inner.block.static &= table.elem.static*
+	common.elem.block |= table.elem
+	common.elem.block.static |= table.elem.static
 
 ## Table Caption: <caption>
 

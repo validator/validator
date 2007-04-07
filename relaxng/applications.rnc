@@ -55,10 +55,10 @@
 	progress.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= progress.elem*
-	common.inner.struct-inline.static &= progress.elem.static*
-	common.inner.strict-inline &= progress.elem*
-	common.inner.strict-inline.static &= progress.elem.static*
+	common.elem.struct-inline |= progress.elem
+	common.elem.struct-inline.static |= progress.elem.static
+	common.elem.strict-inline |= progress.elem
+	common.elem.strict-inline.static |= progress.elem.static
 
 ## Datagrid: <datagrid>
 
@@ -80,7 +80,7 @@
 	datagrid.inner =
 		( common.inner.block )
 	
-	common.inner.block &= datagrid.elem*
+	common.elem.block |= datagrid.elem
 
 ## Command: <command>
 
@@ -149,10 +149,10 @@
 	head.inner.misc |=
 		( command.elem & nonHTMLizable )
 	
-	common.inner.strict-inline &= command.elem*
-	common.inner.strict-inline.static &= command.elem*
-	common.inner.struct-inline &= command.elem*
-	common.inner.struct-inline.static &= command.elem*
+	common.elem.strict-inline |= command.elem
+	common.elem.strict-inline.static |= command.elem
+	common.elem.struct-inline |= command.elem
+	common.elem.struct-inline.static |= command.elem
 
 ## Menu: <menu>
 
@@ -187,10 +187,10 @@
 		|	common.inner.struct-inline.static
 		)
 	
-	common.inner.block &= menu.elem*
-	common.inner.block.static &= menu.elem.static*
-	common.inner.struct-inline &= menu.elem*
-	common.inner.struct-inline.static &= menu.elem.static*
+	common.elem.block |= menu.elem
+	common.elem.block.static |= menu.elem.static
+	common.elem.struct-inline |= menu.elem
+	common.elem.struct-inline.static |= menu.elem.static
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
@@ -216,8 +216,8 @@
 	canvas.inner.static =
 		( common.inner.block.static )
 	
-	common.inner.block &= canvas.elem*
-	common.inner.block.static &= canvas.elem.static*
+	common.elem.block |= canvas.elem
+	common.elem.block.static |= canvas.elem.static
 
 ## Server-sent events: <event-source>
 
@@ -254,4 +254,4 @@
 		,	common.inner.bimorphic.static 
 		)
 	
-	common.inner.block &= details.elem*
+	common.elem.block |= details.elem

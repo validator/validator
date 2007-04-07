@@ -574,10 +574,10 @@
 	output.inner.strict.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= output.elem*
-	common.inner.struct-inline.static &= output.elem.static*
-	common.inner.strict-inline &= output.elem.strict*
-	common.inner.strict-inline.static &= output.elem.strict.static*
+	common.elem.struct-inline |= output.elem
+	common.elem.struct-inline.static |= output.elem.static
+	common.elem.strict-inline |= output.elem.strict
+	common.elem.strict-inline.static |= output.elem.strict.static
 
 ## Text Area: <textarea>, extensions
 
@@ -643,12 +643,12 @@
 		&	common-form.attrs.data?
 		)
 
-	common.inner.strict-inline &= datalist.elem.strict-inline*
-	common.inner.strict-inline.static &= datalist.elem.strict-inline.static*
-	common.inner.struct-inline &= datalist.elem.struct-inline*
-	common.inner.struct-inline.static &= datalist.elem.struct-inline.static*
-	common.inner.block &= datalist.elem.block*
-	common.inner.block.static &= datalist.elem.block.static*
+	common.elem.strict-inline |= datalist.elem.strict-inline
+	common.elem.strict-inline.static |= datalist.elem.strict-inline.static
+	common.elem.struct-inline |= datalist.elem.struct-inline
+	common.elem.struct-inline.static |= datalist.elem.struct-inline.static
+	common.elem.block |= datalist.elem.block
+	common.elem.block.static |= datalist.elem.block.static
 
 ## Complex Submit Button: <button type='submit'>, extensions
 

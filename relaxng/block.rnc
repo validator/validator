@@ -25,8 +25,8 @@
 			&	nonRoundtrippable & nonHTMLizable
 			)
 		)
-	common.inner.block &= p.elem*
-	common.inner.block.static &= p.elem.static*
+	common.elem.block |= p.elem
+	common.elem.block.static |= p.elem.static
 
 ## Hint Transition: <hr>
 
@@ -37,8 +37,8 @@
 	hr.inner =
 		( empty )
 
-	common.inner.block &= hr.elem*
-	common.inner.block.static &= hr.elem*
+	common.elem.block |= hr.elem
+	common.elem.block.static |= hr.elem
 
 # #####################################################################
 ## Preformatting Blocks
@@ -56,10 +56,10 @@
 	pre.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.block &= pre.elem*
-	common.inner.block.static &= pre.elem.static*
-	common.inner.struct-inline &= pre.elem*
-	common.inner.struct-inline.static &= pre.elem.static*
+	common.elem.block |= pre.elem
+	common.elem.block.static |= pre.elem.static
+	common.elem.struct-inline |= pre.elem
+	common.elem.struct-inline.static |= pre.elem.static
 
 # #####################################################################
 ## Simple Lists
@@ -85,10 +85,10 @@
 	ul.inner.inline.static =
 		( li.elem.inline.static* )
 
-	common.inner.block &= ul.elem*
-	common.inner.block.static &= ul.elem.static*
-	common.inner.struct-inline &= ul.elem.inline*
-	common.inner.struct-inline.static &= ul.elem.inline.static*
+	common.elem.block |= ul.elem
+	common.elem.block.static |= ul.elem.static
+	common.elem.struct-inline |= ul.elem.inline
+	common.elem.struct-inline.static |= ul.elem.inline.static
 
 ## Unordered List Item: <li>
 
@@ -138,10 +138,10 @@
 	ol.inner.inline.static =
 		( oli.elem.inline.static* )
 
-	common.inner.block &= ol.elem*
-	common.inner.block.static &= ol.elem.static*
-	common.inner.struct-inline &= ol.elem.inline*
-	common.inner.struct-inline.static &= ol.elem.inline.static*
+	common.elem.block |= ol.elem
+	common.elem.block.static |= ol.elem.static
+	common.elem.struct-inline |= ol.elem.inline
+	common.elem.struct-inline.static |= ol.elem.inline.static
 
 ## Ordered List Item: <li>
 
@@ -206,10 +206,10 @@
 			)*
 		)
 
-	common.inner.block &= dl.elem*
-	common.inner.block.static &= dl.elem.static*
-	common.inner.struct-inline &= dl.elem.inline*
-	common.inner.struct-inline.static &= dl.elem.inline.static*
+	common.elem.block |= dl.elem
+	common.elem.block.static |= dl.elem.static
+	common.elem.struct-inline |= dl.elem.inline
+	common.elem.struct-inline.static |= dl.elem.inline.static
 
 ## Definition Term: <dt>
 
@@ -265,8 +265,8 @@
 		,	common.inner.bimorphic.static
 		)
 
-	common.inner.block &= div.elem*
-	common.inner.block.static &= div.elem.static*
+	common.elem.block |= div.elem
+	common.elem.block.static |= div.elem.static
 
 ## Eitle or Explanatory Caption: <legend>
 

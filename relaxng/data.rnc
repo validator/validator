@@ -21,10 +21,10 @@
 	time.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= time.elem*
-	common.inner.struct-inline.static &= time.elem.static*
-	common.inner.strict-inline &= time.elem*
-	common.inner.strict-inline.static &= time.elem.static*
+	common.elem.struct-inline |= time.elem
+	common.elem.struct-inline.static |= time.elem.static
+	common.elem.strict-inline |= time.elem
+	common.elem.strict-inline.static |= time.elem.static
 
 ## Scalar Gauge: <meter>
 
@@ -70,8 +70,8 @@
 	meter.inner.static =
 		( common.inner.strict-inline.static )
 
-	common.inner.struct-inline &= meter.elem*
-	common.inner.struct-inline.static &= meter.elem.static*
-	common.inner.strict-inline &= meter.elem*
-	common.inner.strict-inline.static &= meter.elem.static*
+	common.elem.struct-inline |= meter.elem
+	common.elem.struct-inline.static |= meter.elem.static
+	common.elem.strict-inline |= meter.elem
+	common.elem.strict-inline.static |= meter.elem.static
 

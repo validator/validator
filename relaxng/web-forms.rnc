@@ -248,7 +248,7 @@
 		
 	input.elem |= input.hidden.elem
 	
-	common.inner.block &= input.hidden.elem*
+	common.elem.block |= input.hidden.elem
 	#REVISIT static too?
 		
 ## Image Submit Button: <input type='image'>
@@ -278,8 +278,8 @@
 	
 	input.elem |= input.image.elem
 	
-	common.inner.struct-inline &= input.elem*
-	common.inner.strict-inline &= input.elem*
+	common.elem.struct-inline |= input.elem
+	common.elem.strict-inline |= input.elem
 	# REVISIT should hidden also go to static?
 
 ## Text Area: <textarea>
@@ -312,8 +312,8 @@
 	textarea.inner =
 		( text )
 
-	common.inner.struct-inline &= textarea.elem*
-	common.inner.strict-inline &= textarea.elem*
+	common.elem.struct-inline |= textarea.elem
+	common.elem.strict-inline |= textarea.elem
 
 # Due to limitations with interleave, handling single/multiple selection
 # enforcement in RELAX NG seems to be possible but really awkward.
@@ -382,8 +382,8 @@
 		&	option.elem*
 		)
 
-	common.inner.struct-inline &= select.elem*
-	common.inner.strict-inline &= select.elem*
+	common.elem.struct-inline |= select.elem
+	common.elem.strict-inline |= select.elem
 	
 ## Shared Definitions for Complex Button
 	
@@ -449,8 +449,8 @@
 
 	button.elem |= button.button.elem
 
-	common.inner.struct-inline &= button.elem*
-	common.inner.strict-inline &= button.elem*
+	common.elem.struct-inline |= button.elem
+	common.elem.strict-inline |= button.elem
 
 ## Form: <form>
 
@@ -496,8 +496,8 @@
 	form.inner.static =
 		( common.inner.block.static )
 
-	common.inner.block &= form.elem*
-	common.inner.block.static &= form.elem.static*
+	common.elem.block |= form.elem
+	common.elem.block.static |= form.elem.static
 
 ## Fieldset: <fieldset>
 
@@ -515,7 +515,7 @@
 	#REVISIT only allowing in interactive context for now
 	# http://listserver.dreamhost.com/pipermail/whatwg-whatwg.org/2006-April/006181.html
 
-	common.inner.block &= fieldset.elem*
+	common.elem.block |= fieldset.elem
 	
 ## Label: <label>
 
@@ -537,8 +537,8 @@
 	label.inner.static =
 		( common.inner.strict-inline.static ) #REVISIT making obvious guess
 
-	common.inner.struct-inline &= label.elem*
-	common.inner.struct-inline.static &= label.elem.static*
-	common.inner.strict-inline &= label.elem*
-	common.inner.strict-inline.static &= label.elem.static*
+	common.elem.struct-inline |= label.elem
+	common.elem.struct-inline.static |= label.elem.static
+	common.elem.strict-inline |= label.elem
+	common.elem.strict-inline.static |= label.elem.static
 

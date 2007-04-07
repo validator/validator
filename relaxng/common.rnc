@@ -57,58 +57,120 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 
 # #####################################################################
+##  Deletion Hooks                                                    #
+# #####################################################################
+
+	common.del.strict-inline =
+		( empty )
+	common.del.strict-inline.static =
+		( empty )
+	common.del.struct-inline =
+		( empty )
+	common.del.struct-inline.static =
+		( empty )
+	common.del.block =
+		( empty )
+	common.del.block.static =
+		( empty )
+
+# #####################################################################
+##  Common Element Classes                                            #
+# #####################################################################
+
+## Strictly Inline Elements
+
+	common.elem.strict-inline =
+		( empty )
+
+	common.elem.strict-inline.static =
+		( empty )
+
+## Structured Inline Elements
+
+	common.elem.struct-inline =
+		( empty )
+
+	common.elem.struct-inline.static =
+		( empty )
+
+## Block Elements
+
+	common.elem.block =
+		( empty )
+
+	common.elem.block.static =
+		( empty )
+
+# #####################################################################
 ##  Common Content Models                                             #
 # #####################################################################
 
 ## Strictly Inline Content
 
 	common.inner.strict-inline =
-		( text )
+		( text & common.elem.strict-inline* )
 
 	common.inner.strict-inline.static =
-		( text )
-
-## Strictly Block Content
-
-	common.inner.block =
-		( empty )
-
-	common.inner.block.static =
-		( empty )
+		( text & common.elem.strict-inline.static* )
 
 ## Structured Inline Content
 
 	common.inner.struct-inline =
-		( text )
+		( text & common.elem.struct-inline* )
 
 	common.inner.struct-inline.static =
-		( text )
+		( text & common.elem.struct-inline.static* )
+
+## Block Content
+
+	common.inner.block =
+		(common.elem.block* )
+
+	common.inner.block.static =
+		( common.elem.block.static* )
 
 ## Inline OR Block Content
+
 	common.inner.bimorphic =
-		(	common.inner.struct-inline
-		|	common.inner.block
+		(	(	common.inner.struct-inline
+			|	common.del.block
+			)*
+		|	(	common.inner.block
+			|	common.del.struct-inline
+			)*
 		)
 
 	common.inner.bimorphic.static =
-		(	common.inner.struct-inline.static
-		|	common.inner.block.static
+		(	(	common.inner.struct-inline.static
+			|	common.del.block.static
+			)*
+		|	(	common.inner.block.static
+			|	common.del.struct-inline.static
+			)*
 		)
 
 ## Strict Inline OR Block Content
 
 	#REVISIT remove if wf1 doesn't really need these
 
+
 	common.inner.strict-bimorphic =
-		(	common.inner.strict-inline
-		|	common.inner.block
-		)*
+		(	(	common.inner.strict-inline
+			|	common.del.block
+			)*
+		|	(	common.inner.block
+			|	common.del.strict-inline
+			)*
+		)
 
 	common.inner.strict-bimorphic.static =
-		(	common.inner.strict-inline.static
-		|	common.inner.block.static
-		)*
-
+		(	(	common.inner.strict-inline.static
+			|	common.del.block.static
+			)*
+		|	(	common.inner.block.static
+			|	common.del.strict-inline.static
+			)*
+		)
 
 # #####################################################################
 ##  Common Attributes                                                 #

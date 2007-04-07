@@ -31,8 +31,8 @@
 		,	common.inner.block.static 
 		)
 
-	common.inner.block &= section.elem*
-	common.inner.block.static &= section.elem.static*
+	common.elem.block |= section.elem
+	common.elem.block.static |= section.elem.static
 
 ## Navigational Links: <nav>
 
@@ -47,8 +47,8 @@
 	nav.inner.static =
 		( common.inner.block.static )
 
-	common.inner.block &= nav.elem*
-	common.inner.block.static &= nav.elem.static*
+	common.elem.block |= nav.elem
+	common.elem.block.static |= nav.elem.static
 
 ## Article: <article>
 
@@ -67,8 +67,8 @@
 		,	common.inner.block.static 
 		)
 		
-	common.inner.block &= article.elem*
-	common.inner.block.static &= article.elem.static*
+	common.elem.block |= article.elem
+	common.elem.block.static |= article.elem.static
 
 ## Tangential Aside: <aside>
 
@@ -87,8 +87,8 @@
 		,	common.inner.bimorphic.static
 		)
 
-	common.inner.block &= aside.elem*
-	common.inner.block.static &= aside.elem.static*
+	common.elem.block |= aside.elem
+	common.elem.block.static |= aside.elem.static
 
 ## Header: <header>
 
@@ -103,8 +103,8 @@
 	header.inner.static =
 		( common.inner.block.static )
 
-	common.inner.block &= header.elem*
-	common.inner.block.static &= header.elem.static*
+	common.elem.block |= header.elem
+	common.elem.block.static |= header.elem.static
 
 ## Footer: <footer>
 
@@ -119,6 +119,6 @@
 	footer.inner.static =
 		( common.inner.block.static )
 
-	common.inner.block &= footer.elem*
-	common.inner.block.static &= footer.elem.static*
+	common.elem.block |= footer.elem
+	common.elem.block.static |= footer.elem.static
 
