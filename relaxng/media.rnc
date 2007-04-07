@@ -113,3 +113,10 @@ namespace local = ""
 		,	common.elem.embedded.static
 		)
 
+	common.elem.strict-inline |= video.elem.strict-inline
+	common.elem.strict-inline.static |= video.elem.strict-inline.static
+	common.elem.struct-inline |= video.elem.struct-inline
+	common.elem.struct-inline.static |= video.elem.struct-inline.static
+	common.elem.embedded |= video.elem.embedded
+	common.elem.embedded.static |= video.elem.embedded.static
+

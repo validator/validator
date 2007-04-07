@@ -104,10 +104,10 @@ namespace local = ""
 		element object { object.inner.struct-inline & object.attrs }
 	object.elem.struct-inline.static =
 		element object { object.inner.struct-inline.static & object.attrs }
-	object.elem.block =
-		element object { object.inner.block & object.attrs }
-	object.elem.block.static =
-		element object { object.inner.block.static & object.attrs }
+	object.elem.embedded =
+		element object { object.inner.embedded & object.attrs }
+	object.elem.embedded.static =
+		element object { object.inner.embedded.static & object.attrs }
 	object.attrs =
 		(	common.attrs
 		&	(	object.attrs.data
@@ -173,16 +173,16 @@ namespace local = ""
 		(	param.elem*
 		,	common.inner.struct-inline.static
 		)
-	object.inner.block =
+	object.inner.embedded =
 		(	param.elem*
 		,	(	common.inner.block
-			|	object.elem.block
+			|	object.elem.embedded
 			)
 		)
-	object.inner.block =
+	object.inner.embedded.static =
 		(	param.elem*
 		,	(	common.inner.block.static
-			|	object.elem.block.static
+			|	object.elem.embedded.static
 			)
 		)
 
@@ -190,8 +190,8 @@ namespace local = ""
 	common.elem.strict-inline.static |= object.elem.strict-inline.static
 	common.elem.struct-inline |= object.elem.struct-inline
 	common.elem.struct-inline.static |= object.elem.struct-inline.static
-	common.elem.embedded |= object.elem.block
-	common.elem.embedded.static |= object.elem.block
+	common.elem.embedded |= object.elem.embedded
+	common.elem.embedded.static |= object.elem.embedded.static
 
 ## Java Applets: <applet>
 
