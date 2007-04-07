@@ -132,19 +132,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Inline OR Block Content
 
 	common.inner.bimorphic =
-		(	(	common.inner.struct-inline
-			|	common.del.block
-			)*
-		|	(	common.inner.block
+		(	(	text
+			&	(	common.elem.struct-inline
+				|	common.del.block
+				)*
+			)
+		|	(	common.elem.block
 			|	common.del.struct-inline
 			)*
 		)
 
 	common.inner.bimorphic.static =
-		(	(	common.inner.struct-inline.static
-			|	common.del.block.static
-			)*
-		|	(	common.inner.block.static
+		(	(	text
+			&	(	common.elem.struct-inline.static
+				|	common.del.block.static
+				)*
+			)
+		|	(	common.elem.block.static
 			|	common.del.struct-inline.static
 			)*
 		)
@@ -153,21 +157,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	#REVISIT remove if wf1 doesn't really need these
 
-
 	common.inner.strict-bimorphic =
-		(	(	common.inner.strict-inline
-			|	common.del.block
-			)*
-		|	(	common.inner.block
+		(	(	text
+			&	(	common.elem.strict-inline
+				|	common.del.block
+				)*
+			)
+		|	(	common.elem.block
 			|	common.del.strict-inline
 			)*
 		)
 
 	common.inner.strict-bimorphic.static =
-		(	(	common.inner.strict-inline.static
-			|	common.del.block.static
-			)*
-		|	(	common.inner.block.static
+		(	(	text
+			&	(	common.elem.strict-inline.static
+				|	common.del.block.static
+				)*
+			)
+		|	(	common.elem.block.static
 			|	common.del.strict-inline.static
 			)*
 		)

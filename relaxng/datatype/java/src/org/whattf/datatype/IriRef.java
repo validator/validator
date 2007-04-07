@@ -53,9 +53,9 @@ public class IriRef extends AbstractDatatype {
         fac.useSchemeSpecificRules("http", true);
         fac.useSchemeSpecificRules("https", true);
         fac.useSchemeSpecificRules("ftp", true);
-        fac.useSchemeSpecificRules("mailto", true);
+        fac.useSchemeSpecificRules("mailto", true); // XXX broken
         fac.useSchemeSpecificRules("file", true);
-        fac.useSchemeSpecificRules("data", true);
+        fac.useSchemeSpecificRules("data", true); // XXX broken
         // XXX javascript?
         fac.setQueryCharacterRestrictions(false);
         IRI iri;

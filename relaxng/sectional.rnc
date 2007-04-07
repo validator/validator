@@ -112,10 +112,10 @@
 		element address { address.inner.static & address.attrs }
 	address.attrs =
 		( common.attrs )
-	address.inner = #REVISIT check HTML-compatibility
-		( common.inner.struct-inline )
+	address.inner = 
+		( common.inner.strict-inline )
 	address.inner.static =
-		( common.inner.struct-inline.static )
+		( common.inner.strict-inline.static )
 
 	common.elem.block |= address.elem
 	common.elem.block.static |= address.elem.static
