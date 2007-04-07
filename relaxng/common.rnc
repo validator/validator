@@ -281,29 +281,31 @@ common.attrs.other =
 ## IDs and IDREFs
 
 	common.data.id =
-		w:ID
+		xsd:string {
+			pattern = ".+"
+		}
 
 	common.data.idref =
-		w:IDREF
+		string #REVISIT
 
 	common.data.idrefs =
-		w:IDREFS
+		string #REVISIT
 
 ## Numerical
 
 	common.data.integer =
-		xsd:integer {
-			pattern = "[^+].*"
+		xsd:string {
+			pattern = "-?[0-9]+"
 		}
 
 	common.data.integer.positive =
-		xsd:positiveInteger {
-			pattern = "\d+"
+		xsd:string {
+			pattern = "0*[1-9][0-9]*"
 		}
 
 	common.data.integer.non-negative =
-		xsd:nonNegativeInteger {
-			pattern = "[^+].*"
+		xsd:string {
+			pattern = "[0-9]+"
 		}
 		
 	common.data.percent =
@@ -312,13 +314,19 @@ common.attrs.other =
 		}
 		
 	common.data.float =
-		string #FIXME
+		xsd:string {
+			pattern = "-?((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+		}
 
 	common.data.float.positive =
-		string #FIXME
-
+		xsd:string {
+			pattern = "0*((\.0*[1-9][0-9]*)|([1-9][0-9]*(\.[0-9]*)?))"
+		}
+		
 	common.data.float.non-negative =
-		string #FIXME
+		xsd:string {
+			pattern = "((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+		}
 		
 ## Temporal
 

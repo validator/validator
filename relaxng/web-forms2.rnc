@@ -82,7 +82,7 @@
 	
 	input.attrs.step.float = 
 		attribute step {
-			string "any" | common.data.float.positive
+			string "any" | form.data.float.positive
 		}
 	
 	input.attrs.step.integer = 
@@ -432,15 +432,15 @@
 			}
 		input.number.attrs.min =
 			attribute min {
-				common.data.float
+				form.data.float
 			}
 		input.number.attrs.max =
 			attribute max {
-				common.data.float			
+				form.data.float			
 			}	
 		input.number.attrs.value =
 			attribute value {
-				common.data.float
+				form.data.float
 			}
 		
 	input.elem |= input.number.elem
@@ -470,15 +470,15 @@
 			}
 		input.range.attrs.min =
 			attribute min {
-				common.data.float
+				form.data.float
 			}
 		input.range.attrs.max =
 			attribute max {
-				common.data.float			
+				form.data.float			
 			}	
 		input.range.attrs.value =
 			attribute value {
-				common.data.float
+				form.data.float
 			}
 		
 	input.elem |= input.range.elem

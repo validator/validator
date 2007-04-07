@@ -4,6 +4,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##  RELAX NG Schema for HTML 5: Datatypes related to forms            #
 # #####################################################################
 
+## Floats
+
+	form.data.float =
+		xsd:string {
+			pattern = "-?[0-9]+(\.[0-9]+)?(e-?[0-9]+)?"
+		}
+
+	form.data.float.positive =
+		xsd:string {
+			pattern = "(0*[1-9][0-9]*(\.[0-9]+)?)|([0-9]+(\.0*[1-9][0-9]*)?)(e-?[0-9]+)?"
+		}
+
 ## MIME types
 		
 	form.data.mimetypelist = 
