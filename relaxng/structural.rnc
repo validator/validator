@@ -15,13 +15,7 @@
 	section.attrs =
 		( common.attrs )
 	section.active.attrs =
-		(	common.attrs
-		&	section.active.attrs.active
-		)
-		section.active.attrs.active =
-			attribute active {
-				string "active"
-			}
+		( common.attrs )
 	section.inner =
 		(	style.elem*
 		,	common.inner.block 
@@ -43,9 +37,9 @@
 	nav.attrs =
 		( common.attrs )
 	nav.inner =
-		( common.inner.block )
+		( common.inner.bimorphic )
 	nav.inner.static =
-		( common.inner.block.static )
+		( common.inner.bimorphic.static )
 
 	common.elem.block |= nav.elem
 	common.elem.block.static |= nav.elem.static
