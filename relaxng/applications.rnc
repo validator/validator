@@ -194,10 +194,14 @@
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
-	canvas.elem =
-		element canvas { canvas.inner & canvas.attrs }
-	canvas.elem.static =
-		element canvas { canvas.inner.static & canvas.attrs }
+	canvas.elem.strict-inline =
+		element canvas { canvas.inner.strict-inline & canvas.attrs }
+	canvas.elem.strict-inline.static =
+		element canvas { canvas.inner.strict-inline.static & canvas.attrs }
+	canvas.elem.struct-inline =
+		element canvas { canvas.inner.struct-inline & canvas.attrs }
+	canvas.elem.struct-inline.static =
+		element canvas { canvas.inner.struct-inline.static & canvas.attrs }
 	canvas.attrs =
 		(	common.attrs
 		&	canvas.attrs.height?
@@ -211,13 +215,21 @@
 			attribute width {
 				common.data.integer.non-negative
 			}
-	canvas.inner =
-		( common.inner.block )
-	canvas.inner.static =
-		( common.inner.block.static )
+	canvas.inner.strict-inline =
+		( common.inner.strict-inline )
+	canvas.inner.strict-inline.static =
+		( common.inner.strict-inline.static )
+	canvas.inner.struct-inline =
+		( common.inner.struct-inline )
+	canvas.inner.struct-inline.static =
+		( common.inner.struct-inline.static )
 	
-	common.elem.block |= canvas.elem
-	common.elem.block.static |= canvas.elem.static
+	common.elem.strict-inline |= canvas.elem.strict-inline
+	common.elem.strict-inline.static |= canvas.elem.strict-inline.static
+	common.elem.struct-inline |= canvas.elem.struct-inline
+	common.elem.struct-inline.static |= canvas.elem.struct-inline.static
+	common.elem.embedded |= canvas.elem.strict-inline
+	common.elem.embedded.static |= canvas.elem.strict-inline.static
 
 ## Server-sent events: <event-source>
 

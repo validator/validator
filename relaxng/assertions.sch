@@ -124,6 +124,8 @@
 			</report>
 		</rule>
 	</pattern>
+
+<!-- Required elements -->
 	
 	<pattern name='At least one heading in header'>
 		<rule context='h:header'>
@@ -138,6 +140,16 @@
 			</assert>
 		</rule>
 	</pattern>
+	
+	<pattern name='area must have a map ancestor'>
+		<rule context='h:area'>
+			<assert test='ancestor::h:map'>
+				The &#x201C;area&#x201D; element must have a 
+				&#x201C;map&#x201D; ancestor.
+			</assert>
+		</rule>
+	</pattern>
+
 	
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

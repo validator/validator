@@ -11,6 +11,7 @@
 	a.attrs =
 		(	common.attrs
 		&	a.attrs.href?
+		&	a.attrs.target?
 		&	a.attrs.rel?
 		&	a.attrs.hreflang?
 		&	a.attrs.media?
@@ -20,6 +21,10 @@
 		a.attrs.href =
 			attribute href {
 				common.data.uri
+			}
+		a.attrs.target =
+			attribute target {
+				common.data.browsingcontext
 			}
 		a.attrs.rel =
 			attribute rel {

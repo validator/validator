@@ -336,21 +336,11 @@ namespace local = ""
 	map.elem.static =
 		element map { map.inner.static & map.attrs }
 	map.attrs =
-		(	common.attrs
-		&	map.attrs.name
-		)
-		map.attrs.name =
-			attribute name {
-				string #FIXME refine
-			}
+		( common.attrs )
 	map.inner =
-		(	common.inner.block
-		&	area.elem+
-		)
+		( common.inner.block )
 	map.inner.static =
-		(	common.inner.block.static
-		&	area.elem+
-		)
+		( common.inner.block.static )
 
 	common.elem.block |= map.elem
 	common.elem.block.static |= map.elem.static
@@ -361,13 +351,47 @@ namespace local = ""
 		element area { area.inner & area.attrs }
 	area.attrs =
 		(	common.attrs
-		&	area.attrs.alt
-		&	area.attrs.shape
-		&	( area.attrs.href | area.attrs.nohref )?
+		&	area.attrs.alt?
+		&	area.attrs.href?
+		&	area.attrs.target?
+		&	area.attrs.ping?
+		&	area.attrs.rel?
+		&	area.attrs.media?
+		&	area.attrs.hreflang?
+		&	area.attrs.type?
+		&	area.attrs.shape?
 		)
 		area.attrs.alt =
 			attribute alt {
 				text
+			}
+		area.attrs.href =
+			attribute href {
+				common.data.uri
+			}
+		area.attrs.target =
+			attribute target {
+				common.data.browsingcontext
+			}
+		area.attrs.ping =
+			attribute ping {
+				common.data.uris
+			} & v5only
+		area.attrs.rel =
+			attribute rel {
+				common.data.tokens
+			}
+		area.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
+		area.attrs.hreflang =
+			attribute hreflang {
+				common.data.langcode
+			}
+		area.attrs.type =
+			attribute type {
+				common.data.mimetype
 			}
 		area.attrs.shape =
 			(	( area.attrs.shape.rect?  & area.attrs.coords.rect   )
@@ -382,9 +406,7 @@ namespace local = ""
 		area.attrs.coords.rect =
 			attribute coords {
 				xsd:token {
-					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*"
-                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/
-                    #           s    +-    d  % s , s    +-    d  % s , s    +-    d  % s , s    +-    d  % s
+					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
 				}
 			}
 		area.attrs.shape.circle =
@@ -394,9 +416,7 @@ namespace local = ""
 		area.attrs.coords.circle =
 			attribute coords {
 				xsd:token {
-					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?\s*"
-                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/\_/
-                    #           s    +-    d  % s , s    +-    d  % s , s    +-    d  % s 
+					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
 				}
 			}
 		area.attrs.shape.poly =
@@ -406,24 +426,17 @@ namespace local = ""
 		area.attrs.coords.poly =
 			attribute coords {
 				xsd:token {
-					pattern = "\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?(\s*,\s*(\-|\+)?\d+%?\s*,\s*(\-|\+)?\d+%?){2,}\s*"
-                    #          \_/\______/\_/\/\_/|\_/\______/\_/\/[\_/|\_/\______/\_/\/\_/|\_/\______/\_/\/] {} \_/
-                    #           s    +-    d  % s , s    +-    d  %[ s , s    +-    d  % s , s    +-    d  %] {}  s
+					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
 				}
 			}
 		area.attrs.shape.default =
 			attribute shape {
 				string "default"
 			}
-		area.attrs.href =
-			attribute href {
-				common.data.uri
-			}
-		area.attrs.nohref =
-			attribute nohref {
-				string "nohref"
-			}
 	area.inner =
 		( empty )
 
-	a.attrs &= area.attrs.shape?
+	common.elem.strict-inline |= area.elem
+	common.elem.strict-inline.static |= area.elem
+	common.elem.struct-inline |= area.elem
+	common.elem.struct-inline.static |= area.elem

@@ -120,3 +120,52 @@ namespace local = ""
 	common.elem.embedded |= video.elem.embedded
 	common.elem.embedded.static |= video.elem.embedded.static
 
+## Audio: <audio>
+
+	audio.elem.strict-inline =
+		element audio { audio.inner.strict-inline & audio.attrs }
+	audio.elem.strict-inline.static =
+		element audio { audio.inner.strict-inline.static & audio.attrs }
+	audio.elem.struct-inline =
+		element audio { audio.inner.struct-inline & audio.attrs }
+	audio.elem.struct-inline.static =
+		element audio { audio.inner.struct-inline.static & audio.attrs }
+	audio.elem.embedded =
+		element audio { audio.inner.embedded & audio.attrs }
+	audio.elem.embedded.static =
+		element audio { audio.inner.embedded.static & audio.attrs }
+	audio.attrs =
+		(	common.attrs
+		&	media.attrs
+		)
+	audio.inner.strict-inline =
+		(	media.source
+		,	common.elem.strict-inline
+		)
+	audio.inner.strict-inline.static =
+		(	media.source
+		,	common.elem.strict-inline.static
+		)
+	audio.inner.struct-inline =
+		(	media.source
+		,	common.elem.struct-inline
+		)
+	audio.inner.struct-inline.static =
+		(	media.source
+		,	common.elem.struct-inline.static
+		)
+	audio.inner.embedded =
+		(	media.source
+		,	common.elem.embedded
+		)
+	audio.inner.embedded.static =
+		(	media.source
+		,	common.elem.embedded.static
+		)
+
+	common.elem.strict-inline |= audio.elem.strict-inline
+	common.elem.strict-inline.static |= audio.elem.strict-inline.static
+	common.elem.struct-inline |= audio.elem.struct-inline
+	common.elem.struct-inline.static |= audio.elem.struct-inline.static
+	common.elem.embedded |= audio.elem.embedded
+	common.elem.embedded.static |= audio.elem.embedded.static
