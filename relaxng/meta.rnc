@@ -71,9 +71,9 @@
 		& HTMLonly
 	meta.encoding.attrs =
 		(	common.attrs
-		&	meta.attrs.encoding
+		&	meta.attrs.charset
 		)
-		meta.attrs.encoding =
+		meta.attrs.charset =
 			attribute charset {
 				string #FIXME need a datatype with IANA data here
 			}
