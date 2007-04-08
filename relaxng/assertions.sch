@@ -297,14 +297,7 @@
 
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	
-	<pattern name='Only one definition per term per document'>
-		<rule context='h:dfn'>
-			<report test='ancestor::h:dfn'>
-				The &#x201C;dfn&#x201D; element cannot contain any nested 
-				&#x201C;dfn&#x201D; elements.
-			</report>
-		</rule>
-	</pattern>
+	<!-- Only one definition per term per document' -->
 
 	
 	
