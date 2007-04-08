@@ -67,33 +67,35 @@
 ## Inline Character Encoding Statement for HTML
 
 	meta.elem.encoding =
-		element meta { empty & meta.attrs.encoding & common.attrs }
+		element meta { meta.encoding.inner & meta.encoding.attrs }
 		& HTMLonly
-	meta.attrs.encoding =
-		(	attribute http-equiv {
-				string "Content-Type"
-			}
-		&
-			attribute content {
-				xsd:token {
-					pattern = "text/html; charset=[\x{21}-\x{7E}]{1,40}"
-					#                             printable ASCII
-				}
-			}
+	meta.encoding.attrs =
+		(	common.attrs
+		&	meta.attrs.encoding
 		)
+		meta.attrs.encoding =
+			attribute charset {
+				string #FIXME need a datatype with IANA data here
+			}
+	meta.encoding.inner =
+		( empty )		
 
 ## Base URI: <base>
 
 	base.elem =
 		element base { base.inner & base.attrs }
-		& HTMLonly
 	base.attrs =
 		(	common.attrs
 		&	base.attrs.href?
+		&	base.attrs.target?
 		)
 	base.attrs.href =
 		attribute href {
 			common.data.uri
+		} & HTMLonly
+	base.attrs.target =
+		attribute target {
+			common.data.browsingcontext
 		}
 	base.inner =
 		( empty )
@@ -104,8 +106,8 @@
 		element link { link.inner & link.attrs }
 	link.attrs =
 		(	common.attrs
-		&	link.attrs.href?
-		&	link.attrs.rel?
+		&	link.attrs.href
+		&	link.attrs.rel
 		&	link.attrs.hreflang?
 		&	link.attrs.media?
 		&	link.attrs.type?
@@ -166,8 +168,10 @@
 		element meta { meta.inner & meta.attrs }
 	meta.attrs =
 		(	common.attrs
-		&	meta.attrs.name? #REVISIT require this?
-		&	meta.attrs.content? #REVISIT require even this?
+		&	(	meta.attrs.name
+			|	meta.attrs.http-equiv
+			)
+		&	meta.attrs.content
 		)
 		meta.attrs.name =
 			attribute name {
@@ -176,6 +180,10 @@
 		meta.attrs.content =
 			attribute content {
 				string
+			}
+		meta.attrs.http-equiv =
+			attribute http-equiv {
+				string "refresh" | string "default-style"
 			}
 	meta.inner =
 		( empty )
