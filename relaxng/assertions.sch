@@ -125,6 +125,16 @@
 		</rule>
 	</pattern>
 
+	<pattern name='headings not allowed in footers'>
+		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
+			<report test='ancestor::h:footer'>
+				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
+				cannot appear as descendants of the &#x201C;footer&#x201D; 
+				element.
+			</report>
+		</rule>
+	</pattern>
+
 <!-- Required elements -->
 	
 	<pattern name='At least one heading in header'>
