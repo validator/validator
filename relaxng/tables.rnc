@@ -49,16 +49,10 @@
 	table.elem.static =
 		element table { table.inner.static & table.attrs }
 	table.attrs =
-		(	common.attrs
-		&	table.attrs.summary?
-		)
-		table.attrs.summary =
-			attribute summary {
-				text
-			}
+		( common.attrs )
 	table.inner =
 		(	caption.elem?
-		,	( colgroup.elem+ | col.elem+)?
+		,	colgroup.elem*
 		,	thead.elem?
 		,	(	(	tfoot.elem
 				,	( tbody.elem+ | tr.elem+ )
@@ -70,7 +64,7 @@
 		) 
 	table.inner.static =
 		(	caption.elem.static?
-		,	( colgroup.elem+ | col.elem+)?
+		,	colgroup.elem*
 		,	thead.elem.static?
 		,	(	(	tfoot.elem.static
 				,	( tbody.elem.static+ | tr.elem.static+ )
@@ -106,19 +100,14 @@
 		element colgroup { colgroup.inner & colgroup.attrs }
 	colgroup.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
-		&	colgroup.attrs.width?
+#		&	tables.attrs.alignment
 		)
-		colgroup.attrs.width =
-			attribute width {
-				tables.data.multilen #REVISIT find out if fractional % work
-			}
 		colgroup.attrs.span =
 			attribute span {
 				common.data.integer.positive
 			}
 	colgroup.inner =
-		(	col.elem+
+		(	col.elem*
 		|	colgroup.attrs.span?
 		)
 
@@ -128,13 +117,8 @@
 		element col { col.inner & col.attrs }
 	col.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
-		&	col.attrs.width?
+#		&	tables.attrs.alignment
 		)
-		col.attrs.width =
-			attribute width {
-				tables.data.multilen
-			}
 		col.attrs.span =
 			attribute span {
 				common.data.integer.positive
@@ -150,7 +134,7 @@
 		element thead { thead.inner.static & thead.attrs }
 	thead.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
+#		&	tables.attrs.alignment
 		)
 	thead.inner =
 		( tr.elem+ )
@@ -165,7 +149,7 @@
 		element tfoot { tfoot.inner.static & tfoot.attrs }
 	tfoot.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
+#		&	tables.attrs.alignment
 		)
 	tfoot.inner =
 		( tr.elem+ )
@@ -180,12 +164,12 @@
 		element tbody { tbody.inner.static & tbody.attrs }
 	tbody.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
+#		&	tables.attrs.alignment
 		)
 	tbody.inner =
-		( tr.elem* )
+		( tr.elem+ )
 	tbody.inner.static =
-		( tr.elem.static* )
+		( tr.elem.static+ )
 
 # #####################################################################
 ## Cell Structure
@@ -198,7 +182,7 @@
 		element tr { tr.inner.static & tr.attrs }
 	tr.attrs =
 		(	common.attrs
-		&	tables.attrs.alignment
+#		&	tables.attrs.alignment
 		)
 	tr.inner =
 		( ( td.elem | th.elem )+ )
@@ -259,9 +243,9 @@
 	td.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
-		&	tables.attrs.access-headers
+#		&	tables.attrs.access-headers
 #		&	tables.attrs.define-headers #REVISIT commented out per Hixie's mail
-		&	tables.attrs.alignment
+#		&	tables.attrs.alignment
 		)
 	td.inner =
 		( common.inner.bimorphic )
@@ -278,8 +262,8 @@
 		(	common.attrs
 		&	tables.attrs.cell-structure
 #		&	tables.attrs.access-headers #REVISIT commented out per Hixie's mail
-		&	tables.attrs.define-headers
-		&	tables.attrs.alignment
+#		&	tables.attrs.define-headers
+#		&	tables.attrs.alignment
 		)
 	th.inner =
 		( common.inner.bimorphic )
