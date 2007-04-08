@@ -25,6 +25,15 @@
 		</rule>
 	</pattern>
 
+	<pattern name='noscript cannot nest'>
+		<rule context='h:noscript'>
+			<report test='ancestor::h:noscript'>
+				The &#x201C;noscript&#x201D; element cannot contain any nested 
+				&#x201C;noscript&#x201D; elements.
+			</report>
+		</rule>
+	</pattern>
+
 	<pattern name='label cannot nest'>
 		<rule context='h:label'>
 			<report test='ancestor::h:label'>
