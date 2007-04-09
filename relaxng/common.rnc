@@ -241,17 +241,21 @@ common.attrs.i18n =
 			string "ltr" | string "rtl"
 		}
 	common.attrs.language =
-		(	common.attrs.lang
-		|	common.attrs.xmllang
-		)
-	common.attrs.lang =
-		attribute lang {
-			common.data.langcode
-		} & HTMLonly
-	common.attrs.xmllang =
 		attribute xml:lang {
 			common.data.langcode
-		} & XMLonly
+		}
+#	common.attrs.language =
+#		(	common.attrs.lang
+#		|	common.attrs.xmllang
+#		)
+#	common.attrs.lang =
+#		attribute lang {
+#			common.data.langcode
+#		} & HTMLonly
+#	common.attrs.xmllang =
+#		attribute xml:lang {
+#			common.data.langcode
+#		} & XMLonly
 
 common.attrs.present =
 	(	common.attrs.style?
