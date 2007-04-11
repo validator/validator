@@ -35,8 +35,8 @@
 			}
 	head.inner =
 		(	meta.elem.encoding?
+		,	base.elem?
 		,	(	title.elem
-			&	base.elem?
 			&	head.inner.misc*
 			)
 		)
