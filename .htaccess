@@ -1,2 +1,4 @@
 IndexIgnore CVS README
 AddDefaultCharset UTF-8
+IndexOptions FancyIndexing DescriptionWidth=* FoldersFirst
+HeaderName README
