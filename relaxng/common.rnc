@@ -132,7 +132,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Block Content
 
 	common.inner.block =
-		(common.elem.block* )
+		( common.elem.block* )
 
 	common.inner.block.static =
 		( common.elem.block.static* )
