@@ -18,37 +18,17 @@ The maintainer of this system is fantasai <http://fantasai.inkedblade.net/contac
 
 syntax.whatwg.org/
   |
-  |--relaxng/ - RelaxNG syntax definition and related files
-  |
-  |
-  |--sgml/ - SGML DTDs and related files
+  |--relaxng/ - RELAX NG schema for (X)HTML5 with Schematron refinements
+  |    |         
   |    |
-  |    |--html5/ - HTML 5
-  |    |    |--category - category file
-  |    |    |--dtd - DTD
-  |    |    |--latin1 - Latin1 entities
-  |    |    |--special - Special entities
-  |    |    |--symbol - Symbol entities
+  |    |--datatype/ - The datatype library used in the RELAX NG schema
   |    |
-  |    |--html5core/ - HTML 4 updated to reflect errata and HTML 5 changes
-  |    |    |          Used as a basis for work leading up to HTML 5 complete
-  |    |    |--category - category file
-  |    |    |--dtd - DTD
-  |    |    |--latin1 - Latin1 entities
-  |    |    |--special - Special entities
-  |    |    |--symbol - Symbol entities
   |    |
-  |    |--html5core+wf2/ - HTML 5 Core + Web Forms 2
-  |    |    |--category - category file
-  |    |    |--dtd - DTD
-  |    |    |--latin1 - Latin1 entities
-  |    |    |--special - Special entities
-  |    |    |--symbol - Symbol entities
-  |    |
-  |
-  |--xml/ - XML DTDs (generated from RelaxNG) and related files
+  |    |--tests/ - Unit tests for the schema *and* the non-schema-based 
+  |                checker (for now)
   |
   |
-  |--xschema/ - XML Schema syntax definition (generated from RelaxNG)
+  |--non-schema/ - Non-schema-language-based checkers that complement the 
+                   RELAX NG schema
 
 .
