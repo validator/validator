@@ -1,4 +1,71 @@
-HS Aelfred2 is a fork of GNU Aelfred2 with a focus on character decoding-level 
-correctness.
+fi.iki.hsivonen.gnu library README
 
--- Henri Sivonen (hsivonen@iki.fi)
+2006-11-12 Henri Sivonen (hsivonen@iki.fi)
+
+This library is a modified version of the GNU JAXP library.
+This library requires the GNU JAXP library, which can be obtained 
+from http://www.gnu.org/software/classpathx/jaxp/
+
+The GNU JAXP library and, hence, this library are licensed under
+the "GPL with Library Exception" license. See the source file 
+boilerplate and the accompanying COPYING file for details.
+
+The following modifications have been performed by Henri Sivonen:
+
+ * All classes except gnu.xml.pipeline.DomConsumer were removed.
+
+ * The class gnu.xml.pipeline.DomConsumer was renamed to
+   fi.iki.hsivonen.gnu.xml.pipeline.DomConsumer in order to 
+   avoid conflicts with the original.
+   
+ * The import statements of the class 
+   fi.iki.hsivonen.gnu.xml.pipeline.DomConsumer were reorganized.
+   
+ * The behavior of the class 
+   fi.iki.hsivonen.gnu.xml.pipeline.DomConsumer was changed so 
+   that xmlns attributes are not added to the DOM tree.
+   
+ * The package gnu.xml.aelfred2 was pulled from CVS on 
+   2005-08-19.
+ 
+ * The package gnu.xml.aelfred2 was renamed into 
+   fi.iki.hsivonen.gnu.xml.aelfred2 and was remerged into 
+   this library.
+   
+ * The Aelfred2 parser was changed to properly skip the BOM 
+   when the encoding is UTF-8 and external encoding information 
+   is provided.
+   
+ * The Aelfred2 parser was changed to use Draconian character 
+   encoding decoders from Java 1.4.
+   
+ * Support for UTF-32 was disabled.
+ 
+ * The Aelfred2 parser was changed to emit warnings about 
+   encoding-related issues.
+   
+ * Disabled XML 1.1 support from Aelfred2.
+
+ * Made Aelfred2 refuse to change encoding upon internal 
+   encoding info, if the named encoding is not roughly 
+   an ASCII superset.
+   
+ * Added a check that the internal encoding name matches 
+   the EncName production.
+
+November 2006
+
+ * Made the Aelfred2 never make network connections on its own 
+   bypassing the EntityResolver.
+ 
+ * Removed support for the ContentHandler2 interface
+ 
+ * Removed unused variables.
+ 
+ * Removed internal character decoders to always use the JDK 
+   decoder framework.
+   
+ * Added Charmod checks
+ 
+ * Added Charmod Norm checks
+
