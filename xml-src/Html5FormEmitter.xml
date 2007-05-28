@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-omitRoot ?>
+<?SaxCompiler-package fi.iki.hsivonen.verifierservlet?>
+<?SaxCompiler-class Html5FormEmitter?>
+<?SaxCompiler-args fi.iki.hsivonen.verifierservlet.VerifierServletTransaction t?>
+<form xmlns="http://www.w3.org/1999/xhtml"
+	><fieldset
+		><legend>Conformance Checker Input</legend
+		><table
+			><tbody
+				><tr title="IRI (http or https) of the document to be checked"
+					><th 
+						><label for="doc">Document</label
+					></th
+					><td><?SaxCompiler-code t.emitDocField(); ?></td
+				></tr
+				><tr
+					><th></th
+					><td
+						><input name="submit" value="Check" type="submit" id="submit"></input
+					></td
+				></tr
+			></tbody
+		></table
+	></fieldset
+></form
+>

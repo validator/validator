@@ -1,0 +1,10 @@
+/* AUTOMATICALLY GENERATED ON Sat Dec 09 18:26:29 EET 2006*/
+/* DO NOT EDIT */
+
+grant {
+  permission java.io.FilePermission "/Users/hsivonen/Projects/workspace/VerifierServlet/-", "read";
+  permission java.util.PropertyPermission "fi.iki.hsivonen.verifierservlet.*", "read";
+  permission java.io.FilePermission "/Users/hsivonen/validator/-", "read";
+  permission java.lang.RuntimePermission "*";
+};
+

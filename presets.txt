@@ -1,0 +1,13 @@
+-1	http://docbook.org/ns/docbook	DocBook 5.0b9	http://docbook.org/xml/5.0b9/rng/docbook.rnc http://docbook.org/xml/5.0b9/sch/docbook.sch
+-1	http://relaxng.org/ns/structure/1.0	RELAX NG	http://thaiopensource.com/relaxng/relaxng.rng
+-1	http://www.w3.org/2000/svg	SVG 1.2 Tiny	http://www.w3.org/Graphics/SVG/1.2/rng/Tiny-1.2/Tiny-1.2.rng
+-1	-	XHTML Basic	http://hsivonen.iki.fi/xhtml-schema/xhtml-basic.rng http://hsivonen.iki.fi/xhtml-schema/xhtml-basic.sch http://hsivonen.iki.fi/checkers/all-html4/
+-1	-	XHTML 1.0 Frameset	http://hsivonen.iki.fi/xhtml-schema/xhtml-frameset.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch http://hsivonen.iki.fi/checkers/all-html4/
+2	http://www.w3.org/1999/xhtml	XHTML 1.0 Strict	http://hsivonen.iki.fi/xhtml-schema/xhtml-strict.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch http://hsivonen.iki.fi/checkers/all-html4/
+-1	-	XHTML 1.0 Strict with partial WCAG 1.0 checks	http://hsivonen.iki.fi/xhtml-schema/xhtml-strict.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch http://hsivonen.iki.fi/xhtml-schema/wcag.sch http://hsivonen.iki.fi/checkers/all-html4/
+-1	-	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0	http://hsivonen.iki.fi/xhtml-schema/xhtml-strict-mathml-svg.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch http://hsivonen.iki.fi/checkers/all-html4/
+1	-	XHTML 1.0 Transitional	http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch  http://hsivonen.iki.fi/checkers/all-html4/
+-1	-	XHTML 1.0 Transitional with partial WCAG 1.0 checks	http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng http://hsivonen.iki.fi/xhtml-schema/xhtml.sch http://hsivonen.iki.fi/xhtml-schema/wcag.sch http://hsivonen.iki.fi/checkers/all-html4/
+7	-	XHTML5 (prerelease schema)	http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc http://syntax.whattf.org/relaxng/assertions.sch http://hsivonen.iki.fi/checkers/all/
+3	-	HTML5 (prerelease schema)	http://syntax.whattf.org/relaxng/html5full.rnc http://syntax.whattf.org/relaxng/assertions.sch http://hsivonen.iki.fi/checkers/all/
+-1	http://www.w3.org/1999/XSL/Transform	XSLT 1.0	http://thaiopensource.com/relaxng/xslt.rng

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-omitRoot ?>
+<?SaxCompiler-package fi.iki.hsivonen.verifierservlet?>
+<?SaxCompiler-class FormEmitter?>
+<?SaxCompiler-args fi.iki.hsivonen.verifierservlet.VerifierServletTransaction t?>
+<form xmlns="http://www.w3.org/1999/xhtml"
+	><fieldset
+		><legend>Validator Input</legend
+		><table
+			><tbody
+				><tr title="IRI (http or https) of the document to be checked. (Leave blank to bookmark settings.)"
+					><th 
+						><label for="doc">Document</label
+					></th
+					><td><?SaxCompiler-code t.emitDocField(); ?></td
+				></tr
+				><tr title="Space-separated list of schema IRIs. (Leave blank to let the service guess.)"
+					><th
+						><label for="schema">Schemas</label
+					></th
+					><td><?SaxCompiler-code t.emitSchemaField(); ?></td
+				></tr
+				><tr title="Selecting a preset overrides the schema field above."
+					><th
+						><label for="preset">Preset</label
+					></th
+					><td
+						><select id='preset' name='preset' onchange="presetChanged()"
+							><option value=''>None</option
+							><?SaxCompiler-code t.emitPresetOptions(); 
+						?></select
+					></td
+				></tr
+				><tr title="The parser to use. This selection also affect the Accept HTTP request header that is sent. The HTML 4.01 parser options mean the HTML5 parser in a compatibility mode&#x2014;not an SGML parser."
+					><th
+						><label for="parser">Parser</label
+					></th
+					><td
+						><select id='parser' name='parser' onchange="parserChanged()"
+							><?SaxCompiler-code t.emitParserOptions(); 
+						?></select
+					></td
+				></tr
+				><tr title="Being lax about the HTTP Content-Type means treating text/plain as XML and ignoring the US-ASCII default of the text/* XML content types."
+					><th></th
+					><td
+						><label for='laxtype'><?SaxCompiler-code t.emitLaxTypeField(); 
+						?> Be lax about HTTP Content-Type</label
+					></td
+				></tr
+				><tr
+					><th></th
+					><td
+						><input name="submit" value="Validate" type="submit" id="submit"></input
+					></td
+				></tr
+			></tbody
+		></table
+	></fieldset
+></form
+>
