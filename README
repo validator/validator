@@ -69,3 +69,8 @@ November 2006
  
  * Added Charmod Norm checks
 
+May 2007
+
+ * Removed stuff other than the parser
+ 
+ * Tweaked protection against billion laughs attack
