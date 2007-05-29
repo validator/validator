@@ -41,7 +41,8 @@ def runJavac(sourceDir, classDir, classPath):
 def runJar(classDir, jarFile, sourceDir):
   classFiles = findFilesWithExtension(classDir, "class")
   metaDir = os.path.join(sourceDir, "META-INF")
-  classList = map(lambda x: "-C '" + classDir + "' " + x[len(classDir)+1:], 
+  classList = map(lambda x: 
+                    "-C '" + classDir + "' '" + x[len(classDir)+1:] + "'", 
                   classFiles)
   if os.path.exists(metaDir):
     # XXX get rid of CVS directories here
@@ -67,6 +68,13 @@ def buildModule(rootDir, jarName, classPath):
 def dependencyJarPaths():
   return findFilesWithExtension("dependencies", "jar")
 
+def buildUtil():
+  classPath = os.pathsep.join(dependencyJarPaths())
+  buildModule(
+    os.path.join(buildRoot, "util"), 
+    "io-xml-util", 
+    classPath)
+
 def buildDatatypeLibrary():
   classPath = os.pathsep.join(dependencyJarPaths())
   buildModule(
@@ -78,18 +86,60 @@ def buildNonSchema():
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["html5-datatypes"]))
   buildModule(
-    os.path.join(buildRoot, "non-schema", "java"), 
+    os.path.join(buildRoot, "syntax", "non-schema", "java"), 
     "non-schema", 
     classPath)
 
+def buildXmlParser():
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", "io-xml-util"]))
+  buildModule(
+    os.path.join(buildRoot, "xmlparser"), 
+    "hs-aelfred2", 
+    classPath)
+
+def buildHtmlParser():
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", "io-xml-util"]))
+  buildModule(
+    os.path.join(buildRoot, "htmlparser"), 
+    "htmlparser", 
+    classPath)
 
 def buildValidator():
-  pass
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", 
+                                                "io-xml-util",
+                                                "htmlparser",
+                                                "hs-aelfred2"]))
+  buildModule(
+    os.path.join(buildRoot, "validator"), 
+    "validator", 
+    classPath)
 
-def ensureValidator():
-  buildValidator()
-
-def run():
-  ensureValidator()
+def runValidator():
+  ensureDirExists(os.path.join(buildRoot, "logs"))
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", 
+                                                "io-xml-util",
+                                                "htmlparser",
+                                                "hs-aelfred2",
+                                                "html5-datatypes",
+                                                "validator"]))
+  runCmd(javaCmd
+    + ' -cp ' + classPath
+    + ' -Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties'
+    + ' -Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt'
+    + ' -Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/'
+    + ' -Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt'
+    + ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"'
+    + ' fi.iki.hsivonen.verifierservlet.Main')
   
+buildUtil()
 buildDatatypeLibrary()
+buildNonSchema()
+buildXmlParser()
+buildHtmlParser()
+buildValidator()
+
+runValidator()
