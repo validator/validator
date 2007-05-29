@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+import shutil
 
 javacCmd = 'javac'
 jarCmd = 'jar'
@@ -29,6 +30,9 @@ def findFilesWithExtension(directory, extension):
         rv.append(os.path.join(root, file))
   return rv
 
+def jarNamesToPaths(names):
+  return map(lambda x: os.path.join(buildRoot, "jars", x + ".jar"), names)
+
 def runJavac(sourceDir, classDir, classPath):
   sourceFiles = findFilesWithExtension(sourceDir, "java")
   runCmd("%s -classpath '%s' -sourcepath '%s' -d '%s' %s"\
@@ -57,6 +61,8 @@ def buildModule(rootDir, jarName, classPath):
   ensureDirExists(distDir)
   runJavac(sourceDir, classDir, classPath)
   runJar(classDir, jarFile, sourceDir)
+  ensureDirExists(os.path.join(buildRoot, "jars"))
+  shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
 
 def dependencyJarPaths():
   return findFilesWithExtension("dependencies", "jar")
@@ -69,10 +75,11 @@ def buildDatatypeLibrary():
     classPath)
 
 def buildNonSchema():
-  classPath = os.pathsep.join(dependencyJarPaths())
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["html5-datatypes"]))
   buildModule(
-    os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"), 
-    "html5-datatypes", 
+    os.path.join(buildRoot, "non-schema", "java"), 
+    "non-schema", 
     classPath)
 
 
