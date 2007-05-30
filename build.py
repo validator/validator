@@ -338,13 +338,13 @@ def printHelp():
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print ""
   print "Tasks:"
+  print "  checkout -- Checks out the source from CVS"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
   print "  dltests  -- Downloads the external test suite if missing"
-  print "  checkout -- Checks out the source from CVS"
   print "  build    -- Build the source"
   print "  test     -- Run tests"
   print "  run      -- Run the system"
-  print "  all      -- dldeps dltests checkout build test run"
+  print "  all      -- checkout dldeps dltests build test run"
 
 if __name__ == "__main__":
   argv = sys.argv[1:]
@@ -386,16 +386,16 @@ if __name__ == "__main__":
       elif arg == 'build':
         buildAll()
       elif arg == 'test':
-        downloadOperaSuite()
+        runTests()
       elif arg == 'run':
         runValidator()
       elif arg == 'all':
+        checkout()
         downloadDependencies()
         downloadLocalEntities()
         downloadOperaSuite()
-        checkout()
         buildAll()
-        downloadOperaSuite()
+        runTests()
         runValidator()
       else:
         print "Unknown option %s." % arg
