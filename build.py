@@ -3,14 +3,57 @@ import os
 import shutil
 import urllib
 import re
+import md5
+import zipfile
 from sgmllib import SGMLParser
 
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
+cvsCmd = 'cvs'
 
 buildRoot = '.'
+cvsRoot = ':pserver:html5-readonly@cvsdude.org:/cvs/stdx'
+
+dependencyPackages = [
+  ("http://mirror.eunet.fi/apache/jakarta/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
+  ("http://mirror.eunet.fi/apache/jakarta/commons/httpclient/binary/commons-httpclient-3.0.1.zip", "a0077efae9c1e0aaa6615f23e5cd3a78"),
+  ("http://mirror.eunet.fi/apache/jakarta/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
+  ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j_3_6_1.jar", "f5ffe0784a9e4c414f42d88e7f6ecefd"),
+  ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
+  ("http://belnet.dl.sourceforge.net/sourceforge/jena/Jena-2.5.2.zip", "cd9c74f58b7175e56e3512443c84fcf8"),
+  ("http://dist.codehaus.org/jetty/jetty-5.1.12.zip", "a61adc832be6baf2678935506743cfc3"),
+  ("http://hsivonen.iki.fi/code/xmlidfilter-0.9.zip", "689acccb60c964bce3eee3b04da45d5d"), # The official location is https and .tar.gz
+  ("http://mirror.eunet.fi/apache/logging/log4j/1.2.14/logging-log4j-1.2.14.zip", "6c4f8da1fed407798ea0ad7984fe60db"),
+  ("http://mirror.eunet.fi/apache/xml/xerces-j/Xerces-J-bin.2.9.0.zip", "a3aece3feb68be6d319072b85ad06023"),
+  ("http://belnet.dl.sourceforge.net/sourceforge/saxon/saxon6-5-5.zip", "e913002af9c6bbb4c4361ff41baac3af"),
+  ("http://ftp.mozilla.org/pub/mozilla.org/js/rhino1_6R5.zip", "c93b6d0bb8ba83c3760efeb30525728a"),
+  ("http://hsivonen.iki.fi/code/onvdl-hsivonen.zip", "b5cda2ed1488c7d702339a92b1bf480f"),
+]
+
+# Unfortunately, the packages contain old versions of certain libs, so 
+# can't just autodiscover all jars. Hence, an explicit list.
+dependencyJars = [
+  "commons-codec-1.3/commons-codec-1.3.jar",
+  "commons-httpclient-3.0.1/commons-httpclient-3.0.1.jar",
+  "commons-logging-1.1/commons-logging-1.1.jar",
+  "commons-logging-1.1/commons-logging-adapters-1.1.jar",
+  "commons-logging-1.1/commons-logging-api-1.1.jar",
+  "icu4j-charsets_3_6_1.jar",
+  "icu4j_3_6_1.jar",
+  "Jena-2.5.2/lib/iri.jar",
+  "jetty-5.1.12/lib/javax.servlet.jar",
+  "jetty-5.1.12/lib/org.mortbay.jetty.jar",
+  "logging-log4j-1.2.14/dist/lib/log4j-1.2.14.jar",
+  "onvdl-hsivonen/bin/isorelax.jar",
+  "onvdl-hsivonen/onvdl.jar",
+  "rhino1_6R5/js.jar",
+  "saxon.jar",
+  "xerces-2_9_0/xercesImpl.jar",
+  "xerces-2_9_0/xml-apis.jar",
+  "xmlidfilter-0.9/lib/xmlidfilter.jar",
+]
 
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
 leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
@@ -87,7 +130,9 @@ def buildModule(rootDir, jarName, classPath):
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
 
 def dependencyJarPaths():
-  return findFilesWithExtension("dependencies", "jar")
+  dependencyDir = os.path.join(buildRoot, "dependencies")
+  # XXX may need work for Windows portability
+  return map(lamdba x: os.path.join(dependencyDir, x), dependencyJars)
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths())
@@ -156,12 +201,17 @@ def runValidator():
     + ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"'
     + ' fi.iki.hsivonen.verifierservlet.Main')
 
-def fetchUrlTo(url, path):
+def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
-  # print url
+  print url
   f = urllib.urlopen(url)
   data = f.read()
   f.close()
+  if md5sum:
+    m = md5.new(data)
+    if md5sum != m.hexdigest():
+      print "Bad MD5 hash for %s." % url
+      exit(1)
   head, tail = os.path.split(path)
   if not os.path.exists(head):
     os.makedirs(head)
@@ -206,7 +256,34 @@ def downloadOperaSuite():
     os.makedirs(validDir)
     os.makedirs(invalidDir)
     spiderApacheDirectories("http://tc.labs.opera.com/html/", validDir)
- 
+
+def zipExtract(zipArch, targetDir):
+  z = zipfile.ZipFile(zipArch)
+  for name in z.namelist():
+    file = os.path.join(targetDir, name)
+    # is this portable to Windows?
+    if not name.endswith('/'):
+      head, tail = os.path.split(file)
+      ensureDirExists(head)
+      o = open(file, 'wb')
+      o.write(z.read(name))
+      o.flush()
+      o.close()
+
+def downloadDependency(url, md5sum):
+  dependencyDir = os.path.join(buildRoot, "dependencies")
+  ensureDirExists(dependencyDir)
+  path = os.path.join(dependencyDir, url[url.rfind("/") + 1:])
+  if not os.path.exists(path):
+    fetchUrlTo(url, path, md5sum)
+    if path.endswith(".zip"):
+      zipExtract(path, dependencyDir)
+
+def downloadDependencies():
+  for url, md5sum in dependencyPackages:
+    downloadDependency(url, md5sum)
+
+downloadDependencies()
 #downloadOperaSuite()
 #downloadLocalEntities()
 #buildUtil()
@@ -217,3 +294,48 @@ def downloadOperaSuite():
 #buildValidator()
 
 #runValidator()
+
+def printHelp():
+  print "Usage: python build/build.py [options] [tasks]"
+  print ""
+  print "Options:"
+  print "  --cvs=/usr/bin/cvs         -- Sets the path to the cvs binary"
+  print "  --java=/usr/bin/java       -- Sets the path to the java binary"
+  print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
+  print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
+  print "  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary"
+  print "  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools"
+  print "  --port=8888                -- Sets the server port number"
+  print "  --ajp=on                   -- Use AJP13 instead of HTTP"
+  print ""
+  print "Tasks:"
+  print "  dldeps -- Downloads missing dependency libraries"
+  print "  dltests -- Downloads the external test suite if missing"
+  print "  checkout -- Checks out the source from CVS"
+  print "  build -- Build the source"
+  print "  test -- Run tests"
+  print "  run -- Run the system"
+
+if __name__ == "__main__":
+  argv = sys.argv[1:]
+  if len(argv) == 0:
+    printHelp()
+  else:
+    for arg in argv:
+      if arg.startswith("--cvs="):
+        cvsCmd = arg[6:]
+      elif arg.startswith("--java="):
+        javaCmd = arg[7:]
+      elif arg.startswith("--jar="):
+        jarCmd = arg[6:]
+      elif arg.startswith("--javac="):
+        javacCmd = arg[8:]
+      elif arg.startswith("--javadoc="):
+        javadocCmd = arg[10:]
+      elif arg.startswith("--jdk-bin="):
+        jdkBinDir = arg[10:]
+        javaCmd = os.path.join(jdkBinDir, "java")
+        jarCmd = os.path.join(jdkBinDir, "jar")
+        javacCmd = os.path.join(jdkBinDir, "javac")
+        javadocCmd = os.path.join(jdkBinDir, "javadoc")
+      
