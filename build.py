@@ -211,12 +211,12 @@ def runValidator():
   args = [
     '-cp',
     classPath,
-    ' -Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties',
-    ' -Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt',
-    ' -Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/',
-    ' -Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt',
-    ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
-    ' fi.iki.hsivonen.verifierservlet.Main',
+    '-Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties',
+    '-Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt',
+    '-Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/',
+    '-Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt',
+    '-Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
+    'fi.iki.hsivonen.verifierservlet.Main',
   ]
   if useAjp:
     args.append('ajp')
