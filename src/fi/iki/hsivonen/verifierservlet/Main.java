@@ -46,7 +46,7 @@ public class Main {
             l.setPort(Integer.parseInt(args[1]));            
         } else {
             l = new SocketListener();
-            l.setPort(8888);
+            l.setPort(Integer.parseInt(args[0]));
         }
         s.addListener(l);
         HttpContext c = new HttpContext();
