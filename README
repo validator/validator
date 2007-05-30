@@ -74,3 +74,6 @@ May 2007
  * Removed stuff other than the parser
  
  * Tweaked protection against billion laughs attack
+ 
+ * Deleted the class XmlReader thereby removing the GNU JAXP 
+   dependency
