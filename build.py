@@ -15,6 +15,8 @@ cvsCmd = 'cvs'
 
 buildRoot = '.'
 cvsRoot = ':pserver:html5-readonly@cvsdude.org:/cvs/stdx'
+portNumber = '8888'
+useAjp = 0
 
 dependencyPackages = [
   ("http://mirror.eunet.fi/apache/jakarta/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -55,6 +57,15 @@ dependencyJars = [
   "xmlidfilter-0.9/lib/xmlidfilter.jar",
 ]
 
+moduleNames = [
+  "build",
+  "syntax",
+  "util",
+  "htmlparser",
+  "xmlparser",
+  "validator",
+]
+
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
 leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
 
@@ -76,6 +87,10 @@ class UrlExtractor(SGMLParser):
 def runCmd(cmd):
   print cmd
   os.system(cmd)
+
+def execCmd(cmd, args):
+  print "%s %s" % (cmd, " ".join(args))
+  os.execvp(cmd, [cmd,] + args)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -132,7 +147,7 @@ def buildModule(rootDir, jarName, classPath):
 def dependencyJarPaths():
   dependencyDir = os.path.join(buildRoot, "dependencies")
   # XXX may need work for Windows portability
-  return map(lamdba x: os.path.join(dependencyDir, x), dependencyJars)
+  return map(lambda x: os.path.join(dependencyDir, x), dependencyJars)
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths())
@@ -192,14 +207,20 @@ def runValidator():
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "validator"]))
-  runCmd(javaCmd
-    + ' -cp ' + classPath
-    + ' -Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties'
-    + ' -Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt'
-    + ' -Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/'
-    + ' -Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt'
-    + ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"'
-    + ' fi.iki.hsivonen.verifierservlet.Main')
+  args = [
+    '-cp',
+    classPath,
+    ' -Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties',
+    ' -Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt',
+    ' -Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/',
+    ' -Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt',
+    ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
+    ' fi.iki.hsivonen.verifierservlet.Main',
+  ]
+  if useAjp:
+    args.append('ajp')
+  args.append(portNumber)
+  execCmd(javaCmd, args)
 
 def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
@@ -283,17 +304,24 @@ def downloadDependencies():
   for url, md5sum in dependencyPackages:
     downloadDependency(url, md5sum)
 
-downloadDependencies()
-#downloadOperaSuite()
-#downloadLocalEntities()
-#buildUtil()
-#buildDatatypeLibrary()
-#buildNonSchema()
-#buildXmlParser()
-#buildHtmlParser()
-#buildValidator()
+def buildAll():
+  buildUtil()
+  buildDatatypeLibrary()
+  buildNonSchema()
+  buildXmlParser()
+  buildHtmlParser()
+  buildValidator()
 
-#runValidator()
+def checkout():
+  # XXX root dir
+  for mod in moduleNames:
+    if os.path.exists(mod):
+      runCmd("%s -d%s up %s" % (cvsCmd, cvsRoot, mod))
+    else:
+      runCmd("%s -d%s co %s" % (cvsCmd, cvsRoot, mod))
+
+def runTests():
+  pass
 
 def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
@@ -309,12 +337,13 @@ def printHelp():
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print ""
   print "Tasks:"
-  print "  dldeps -- Downloads missing dependency libraries"
-  print "  dltests -- Downloads the external test suite if missing"
+  print "  dldeps   -- Downloads missing dependency libraries and entities"
+  print "  dltests  -- Downloads the external test suite if missing"
   print "  checkout -- Checks out the source from CVS"
-  print "  build -- Build the source"
-  print "  test -- Run tests"
-  print "  run -- Run the system"
+  print "  build    -- Build the source"
+  print "  test     -- Run tests"
+  print "  run      -- Run the system"
+  print "  all      -- dldeps dltests checkout build test run"
 
 if __name__ == "__main__":
   argv = sys.argv[1:]
@@ -338,4 +367,34 @@ if __name__ == "__main__":
         jarCmd = os.path.join(jdkBinDir, "jar")
         javacCmd = os.path.join(jdkBinDir, "javac")
         javadocCmd = os.path.join(jdkBinDir, "javadoc")
-      
+      elif arg.startswith("--port="):
+        portNumber = arg[7:]
+      elif arg == '--ajp=on':
+        useAjp = 1
+      elif arg == '--ajp=off':
+        useAjp = 0
+      elif arg == '--help':
+        printHelp()
+      elif arg == 'dldeps':
+        downloadDependencies()
+        downloadLocalEntities()
+      elif arg == 'dltests':
+        downloadOperaSuite()
+      elif arg == 'checkout':
+        checkout()
+      elif arg == 'build':
+        buildAll()
+      elif arg == 'test':
+        downloadOperaSuite()
+      elif arg == 'run':
+        runValidator()
+      elif arg == 'all':
+        downloadDependencies()
+        downloadLocalEntities()
+        downloadOperaSuite()
+        checkout()
+        buildAll()
+        downloadOperaSuite()
+        runValidator()
+      else:
+        print "Unknown option %s." % arg
