@@ -1,6 +1,9 @@
 #!/usr/bin/python
 import os
 import shutil
+import urllib
+import re
+from sgmllib import SGMLParser
 
 javacCmd = 'javac'
 jarCmd = 'jar'
@@ -9,6 +12,24 @@ javadocCmd = 'javadoc'
 
 buildRoot = '.'
 
+directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
+leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
+
+class UrlExtractor(SGMLParser):
+  def __init__(self, baseUrl):
+    SGMLParser.__init__(self)
+    self.baseUrl = baseUrl
+    self.leaves = []
+    self.directories = []
+    
+  def start_a(self, attrs):
+    for name, value in attrs:
+      if name == "href":
+        if directoryPat.match(value):
+          self.directories.append(self.baseUrl + value)
+        if leafPat.match(value):
+          self.leaves.append(self.baseUrl + value)    
+    
 def runCmd(cmd):
   print cmd
   os.system(cmd)
@@ -134,12 +155,65 @@ def runValidator():
     + ' -Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt'
     + ' -Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"'
     + ' fi.iki.hsivonen.verifierservlet.Main')
-  
-buildUtil()
-buildDatatypeLibrary()
-buildNonSchema()
-buildXmlParser()
-buildHtmlParser()
-buildValidator()
 
-runValidator()
+def fetchUrlTo(url, path):
+  # I bet there's a way to do this with more efficient IO and less memory
+  # print url
+  f = urllib.urlopen(url)
+  data = f.read()
+  f.close()
+  head, tail = os.path.split(path)
+  if not os.path.exists(head):
+    os.makedirs(head)
+  f = open(path, "wb")
+  f.write(data)
+  f.close()
+
+def spiderApacheDirectories(baseUrl, baseDir):
+  f = urllib.urlopen(baseUrl)
+  parser = UrlExtractor(baseUrl)
+  parser.feed(f.read())
+  f.close()
+  parser.close()
+  for leaf in parser.leaves:
+    fetchUrlTo(leaf, os.path.join(baseDir, leaf[7:]))
+  for directory in parser.directories:
+    spiderApacheDirectories(directory, baseDir)
+
+def downloadLocalEntities():
+  ensureDirExists(os.path.join(buildRoot, "local-entities"))
+  if not os.path.exists(os.path.join(buildRoot, "local-entities", "syntax")):
+    # XXX not portable to Windows
+    os.symlink(os.path.join("..", "syntax"), 
+               os.path.join(buildRoot, "local-entities", "syntax"))
+  f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
+  try:
+    for line in f:
+      url, path = line.strip().split("\t")
+      if not path.startswith("syntax/"):
+        # XXX may not work on Windows
+        if not os.path.exists(os.path.join(buildRoot, "local-entities", path)):
+          fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
+  finally:
+    f.close()
+
+def downloadOperaSuite():
+  operaSuiteDir = os.path.join(buildRoot, "opera-tests")
+  validDir = os.path.join(operaSuiteDir, "valid")
+  invalidDir = os.path.join(operaSuiteDir, "invalid")
+  if not os.path.exists(operaSuiteDir):
+    os.makedirs(operaSuiteDir)
+    os.makedirs(validDir)
+    os.makedirs(invalidDir)
+    spiderApacheDirectories("http://tc.labs.opera.com/html/", validDir)
+ 
+#downloadOperaSuite()
+#downloadLocalEntities()
+#buildUtil()
+#buildDatatypeLibrary()
+#buildNonSchema()
+#buildXmlParser()
+#buildHtmlParser()
+#buildValidator()
+
+#runValidator()
