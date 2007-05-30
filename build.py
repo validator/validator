@@ -5,6 +5,7 @@ import urllib
 import re
 import md5
 import zipfile
+import sys
 from sgmllib import SGMLParser
 
 javacCmd = 'javac'
