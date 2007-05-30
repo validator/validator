@@ -37,7 +37,7 @@ import org.mortbay.jetty.servlet.ServletHandler;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        PropertyConfigurator.configure("log4j.properties");
+        PropertyConfigurator.configure(System.getProperty("fi.iki.hsivonen.verifierservlet.log4j-properties", "log4j.properties"));
         new VerifierServletTransaction(null, null);
         HttpServer s = new HttpServer();
         HttpListener l;
