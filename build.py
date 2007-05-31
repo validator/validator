@@ -93,7 +93,7 @@ def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
   if os.execvp(cmd, [cmd,] + args):
     print "Command failed."
-    exit 2
+    sys.exit(2)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -246,7 +246,7 @@ def fetchUrlTo(url, path, md5sum=None):
     m = md5.new(data)
     if md5sum != m.hexdigest():
       print "Bad MD5 hash for %s." % url
-      exit(1)
+      sys.exit(1)
   head, tail = os.path.split(path)
   if not os.path.exists(head):
     os.makedirs(head)
