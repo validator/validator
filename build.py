@@ -118,7 +118,7 @@ def jarNamesToPaths(names):
 
 def runJavac(sourceDir, classDir, classPath):
   sourceFiles = findFilesWithExtension(sourceDir, "java")
-  runCmd("%s -classpath '%s' -sourcepath '%s' -d '%s' %s"\
+  runCmd("'%s' -classpath '%s' -sourcepath '%s' -d '%s' %s"\
 		% (javacCmd, classPath, sourceDir, classDir, " ".join(sourceFiles)))
 
 def runJar(classDir, jarFile, sourceDir):
@@ -129,10 +129,10 @@ def runJar(classDir, jarFile, sourceDir):
                   classFiles)
   if os.path.exists(metaDir):
     # XXX get rid of CVS directories here
-    runCmd("%s cf '%s' -C '%s' META-INF %s" 
+    runCmd("'%s' cf '%s' -C '%s' META-INF %s" 
       % (jarCmd, jarFile, sourceDir, " ".join(classList)))
   else:  
-    runCmd("%s cf '%s' %s" 
+    runCmd("'%s' cf '%s' %s" 
       % (jarCmd, jarFile, " ".join(classList)))
 
 def buildModule(rootDir, jarName, classPath):
@@ -336,9 +336,9 @@ def checkout():
   # XXX root dir
   for mod in moduleNames:
     if os.path.exists(mod):
-      runCmd("%s -d%s up %s" % (cvsCmd, cvsRoot, mod))
+      runCmd("'%s' -d '%s' up %s" % (cvsCmd, cvsRoot, mod))
     else:
-      runCmd("%s -d%s co %s" % (cvsCmd, cvsRoot, mod))
+      runCmd("'%s' -d '%s' co %s" % (cvsCmd, cvsRoot, mod))
 
 def runTests():
   classPath = os.pathsep.join(dependencyJarPaths() 
@@ -348,7 +348,7 @@ def runTests():
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "test-harness"]))
-  runCmd("%s -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
+  runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
 def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
