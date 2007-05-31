@@ -44,12 +44,10 @@ public class Main {
         if (args.length > 0 && "ajp".equals(args[0])) {
             l = new AJP13Listener();
             int port = Integer.parseInt(args[1]);
-            System.out.println("Will listen to " + port + "using AJP13.");
             l.setPort(port);            
         } else {
             l = new SocketListener();
             int port = Integer.parseInt(args[0]);
-            System.out.println("Will listen to " + port + "using HTTP.");
             l.setPort(port);
         }
         s.addListener(l);
@@ -59,7 +57,6 @@ public class Main {
         sh.addServlet("/validator/*", "fi.iki.hsivonen.verifierservlet.VerifierServlet");
         c.addHandler(sh);
         s.addContext(c);
-        System.out.println("Will start server.");
         s.start();
     }
 }
