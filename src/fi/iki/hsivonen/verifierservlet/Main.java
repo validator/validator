@@ -55,6 +55,7 @@ public class Main {
         sh.addServlet("/validator/*", "fi.iki.hsivonen.verifierservlet.VerifierServlet");
         c.addHandler(sh);
         s.addContext(c);
+        System.out.println("Will start server.");
         s.start();
     }
 }
