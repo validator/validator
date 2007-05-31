@@ -43,10 +43,14 @@ public class Main {
         HttpListener l;
         if (args.length > 0 && "ajp".equals(args[0])) {
             l = new AJP13Listener();
-            l.setPort(Integer.parseInt(args[1]));            
+            int port = Integer.parseInt(args[1]);
+            System.out.println("Will listen to " + port + "using AJP13.");
+            l.setPort(port);            
         } else {
             l = new SocketListener();
-            l.setPort(Integer.parseInt(args[0]));
+            int port = Integer.parseInt(args[0]);
+            System.out.println("Will listen to " + port + "using HTTP.");
+            l.setPort(port);
         }
         s.addListener(l);
         HttpContext c = new HttpContext();
