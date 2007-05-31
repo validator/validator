@@ -336,7 +336,14 @@ def checkout():
       runCmd("%s -d%s co %s" % (cvsCmd, cvsRoot, mod))
 
 def runTests():
-  pass
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", 
+                                                "io-xml-util",
+                                                "htmlparser",
+                                                "hs-aelfred2",
+                                                "html5-datatypes",
+                                                "test-harness"]))
+  runCmd("%s -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
 def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
@@ -382,6 +389,8 @@ if __name__ == "__main__":
         jarCmd = os.path.join(jdkBinDir, "jar")
         javacCmd = os.path.join(jdkBinDir, "javac")
         javadocCmd = os.path.join(jdkBinDir, "javadoc")
+      elif arg.startswith("--cvsroot="):
+        cvsRoot = arg[10:]
       elif arg.startswith("--port="):
         portNumber = arg[7:]
       elif arg == '--ajp=on':
