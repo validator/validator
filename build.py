@@ -18,6 +18,7 @@ buildRoot = '.'
 cvsRoot = ':pserver:html5-readonly@cvsdude.org:/cvs/stdx'
 portNumber = '8888'
 useAjp = 0
+log4jProps = 'validator/log4j.properties'
 
 dependencyPackages = [
   ("http://mirror.eunet.fi/apache/jakarta/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -149,8 +150,12 @@ def buildModule(rootDir, jarName, classPath):
 
 def dependencyJarPaths():
   dependencyDir = os.path.join(buildRoot, "dependencies")
+  extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
-  return map(lambda x: os.path.join(dependencyDir, x), dependencyJars)
+  pathList = map(lambda x: os.path.join(dependencyDir, x), dependencyJars)
+  ensureDirExists(extrasDir)
+  pathList += findFilesWithExtension(extrasDir, "jar")
+  return pathList
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths())
@@ -224,7 +229,7 @@ def runValidator():
   args = [
     '-cp',
     classPath,
-    '-Dfi.iki.hsivonen.verifierservlet.log4j-properties=validator/log4j.properties',
+    '-Dfi.iki.hsivonen.verifierservlet.log4j-properties=' + log4jProps,
     '-Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt',
     '-Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/',
     '-Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt',
@@ -355,6 +360,7 @@ def printHelp():
   print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
   print "  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary"
   print "  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools"
+  print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print ""
@@ -393,6 +399,8 @@ if __name__ == "__main__":
         cvsRoot = arg[10:]
       elif arg.startswith("--port="):
         portNumber = arg[7:]
+      elif arg.startswith("--log4j="):
+        log4jProps = arg[8:]
       elif arg == '--ajp=on':
         useAjp = 1
       elif arg == '--ajp=off':
