@@ -91,7 +91,9 @@ def runCmd(cmd):
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
-  os.execvp(cmd, [cmd,] + args)
+  if os.execvp(cmd, [cmd,] + args):
+    print "Command failed."
+    exit 2
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -197,6 +199,17 @@ def buildValidator():
   buildModule(
     os.path.join(buildRoot, "validator"), 
     "validator", 
+    classPath)
+
+def buildTestHarness():
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["non-schema", 
+                                                "io-xml-util",
+                                                "htmlparser",
+                                                "hs-aelfred2"]))
+  buildModule(
+    os.path.join(buildRoot, "syntax", "relaxng", "tests", "jdriver"), 
+    "test-harness", 
     classPath)
 
 def runValidator():
@@ -311,6 +324,7 @@ def buildAll():
   buildNonSchema()
   buildXmlParser()
   buildHtmlParser()
+  buildTestHarness()
   buildValidator()
 
 def checkout():
