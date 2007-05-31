@@ -48,7 +48,7 @@ dependencyJars = [
   "icu4j_3_6_1.jar",
   "Jena-2.5.2/lib/iri.jar",
   "jetty-4.2.27/lib/javax.servlet.jar",
-  "jetty-4.2.27/lib/org.mortbay.jetty.jarr",
+  "jetty-4.2.27/lib/org.mortbay.jetty.jar",
   "logging-log4j-1.2.14/dist/lib/log4j-1.2.14.jar",
   "onvdl-hsivonen/bin/isorelax.jar",
   "onvdl-hsivonen/onvdl.jar",
