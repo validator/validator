@@ -22,6 +22,7 @@
 
 package fi.iki.hsivonen.verifierservlet;
 
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
@@ -29,9 +30,11 @@ import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
 public abstract class SaxEmittingErrorHandler extends AbstractErrorHandler {
 
     protected XhtmlSaxEmitter emitter;
+    protected ContentHandler contentHandler;
 
-    public SaxEmittingErrorHandler() {
-        super();
+    public SaxEmittingErrorHandler(ContentHandler contentHandler) {
+        this.emitter = new XhtmlSaxEmitter(contentHandler);
+        this.contentHandler = contentHandler;
     }
 
     protected void emitMessage(String message) throws SAXException {

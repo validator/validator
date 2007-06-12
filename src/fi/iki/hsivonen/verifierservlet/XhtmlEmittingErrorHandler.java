@@ -64,7 +64,7 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
      * @param contentHandler
      */
     public XhtmlEmittingErrorHandler(ContentHandler contentHandler) {
-        this.emitter = new XhtmlSaxEmitter(contentHandler);
+        super(contentHandler);
     }
 
     private void maybeOpenList() throws SAXException {
