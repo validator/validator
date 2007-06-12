@@ -25,15 +25,10 @@ package fi.iki.hsivonen.verifierservlet;
 import java.io.IOException;
 
 import org.xml.sax.ContentHandler;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.ibm.icu.text.Normalizer;
-
 import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
-import org.whattf.checker.NormalizationChecker;
-import fi.karppinen.xml.CharacterUtil;
 
 /**
  * @version $Id$
