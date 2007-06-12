@@ -28,8 +28,6 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
-
 /**
  * @version $Id$
  * @author hsivonen
