@@ -529,7 +529,7 @@ class VerifierServletTransaction implements DoctypeHandler {
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
         httpRes.setAllowRnc(true);
         entityResolver.setAllowRnc(true);
-        boolean stats = true;
+        boolean stats = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
         try {
             this.errorHandler.start(document);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
