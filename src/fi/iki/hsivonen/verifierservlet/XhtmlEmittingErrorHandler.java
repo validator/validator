@@ -34,7 +34,7 @@ import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
  * @version $Id$
  * @author hsivonen
  */
-public class XhtmlEmittingErrorHandler extends AbstractErrorHandler {
+public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
 
     private static final char[] INFO = "Info:".toCharArray();
 
@@ -58,8 +58,6 @@ public class XhtmlEmittingErrorHandler extends AbstractErrorHandler {
 
     private static final char[] IN_RESOURCE = " in resource ".toCharArray();
     
-    private XhtmlSaxEmitter emitter;
-
     private boolean listOpen = false;
 
     /**
@@ -76,36 +74,6 @@ public class XhtmlEmittingErrorHandler extends AbstractErrorHandler {
         }
     }
     
-    private void emitMessage(String message) throws SAXException {
-        int len = message.length();
-        int start = 0;
-        int startQuotes = 0;
-        for (int i = 0; i < len; i++) {
-            char c = message.charAt(i);
-            if (c == '\u201C') {
-                startQuotes++;
-                if (startQuotes == 1) {
-                    this.emitter.characters(scrub(message.substring(start, i)));
-                    start = i + 1;
-                    this.emitter.startElement("code");
-                }
-            } else if (c == '\u201D' && startQuotes > 0) {
-                startQuotes--;
-                if (startQuotes == 0) {
-                    this.emitter.characters(scrub(message.substring(start, i)));
-                    start = i + 1;
-                    this.emitter.endElement("code");                    
-                }
-            }
-        }
-        if (start < len) {
-            this.emitter.characters(scrub(message.substring(start, len)));            
-        }
-        if (startQuotes > 0) {
-            this.emitter.endElement("code");                                
-        }
-    }
-
     private void emitErrorLevel(char[] level) throws SAXException {
         this.emitter.startElement("strong");
         this.emitter.characters(level);
