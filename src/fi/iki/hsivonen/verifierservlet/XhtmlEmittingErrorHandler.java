@@ -228,11 +228,11 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
         }
         if (isErrors()) {
             emitter.startElementWithClass("p", "failure");
-            emitter.characters(successMessage);
+            emitter.characters(failureMessage);
             emitter.endElement("p");
         } else {
             emitter.startElementWithClass("p", "success");
-            emitter.characters(failureMessage);
+            emitter.characters(successMessage);
             emitter.endElement("p");
         }
     }
