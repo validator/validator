@@ -29,7 +29,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CodingErrorAction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -435,8 +439,16 @@ class VerifierServletTransaction implements DoctypeHandler {
                 errorHandler = new XhtmlEmittingErrorHandler(contentHandler);                
                 PageEmitter.emit(contentHandler, this);
             } else {
-                // TEXT
+                if (outputFormat == OutputFormat.TEXT) {
                 response.setContentType("text/plain; charset=utf-8");
+                    CharsetEncoder enc = Charset.forName("UTF-8").newEncoder();
+                    enc.onMalformedInput(CodingErrorAction.REPLACE);
+                    enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
+                    errorHandler = new TextEmittingErrorHandler(
+                            new OutputStreamWriter(out, enc));
+                } else {
+                    throw new RuntimeException("Unreachable.");
+                }
                 validate();
             }
         } catch (SAXException e) {
@@ -517,10 +529,9 @@ class VerifierServletTransaction implements DoctypeHandler {
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
         httpRes.setAllowRnc(true);
         entityResolver.setAllowRnc(true);
-        boolean isValid = false;
         boolean stats = true;
         try {
-            this.errorHandler.start();
+            this.errorHandler.start(document);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
             pmb.put(ValidateProperty.ERROR_HANDLER, errorHandler);
             pmb.put(ValidateProperty.ENTITY_RESOLVER, entityResolver);
@@ -546,7 +557,6 @@ class VerifierServletTransaction implements DoctypeHandler {
                 reader.setFeature("http://hsivonen.iki.fi/checkers/nfc/", true);
             }
             reader.parse(documentInput);
-            isValid = !errorHandler.isErrors();
         } catch (SAXException e) {
             log4j.debug("SAXException", e);
         } catch (IOException e) {

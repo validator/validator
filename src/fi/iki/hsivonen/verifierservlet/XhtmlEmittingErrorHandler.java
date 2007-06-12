@@ -39,7 +39,7 @@ import fi.karppinen.xml.CharacterUtil;
  * @version $Id$
  * @author hsivonen
  */
-public class XhtmlEmittingErrorHandler implements InfoErrorHandler {
+public class XhtmlEmittingErrorHandler extends AbstractErrorHandler {
 
     private static final char[] INFO = "Info:".toCharArray();
 
@@ -66,41 +66,6 @@ public class XhtmlEmittingErrorHandler implements InfoErrorHandler {
     private XhtmlSaxEmitter emitter;
 
     private boolean listOpen = false;
-
-    private int warnings = 0;
-
-    private int errors = 0;
-
-    private int fatalErrors = 0;
-
-    private static String scrub(String s) throws SAXException {
-        s = CharacterUtil.prudentlyScrubCharacterData(s);
-        if (NormalizationChecker.startsWithComposingChar(s)) {
-            s = " " + s;
-        }
-        return Normalizer.normalize(s, Normalizer.NFC, 0);
-    }
-
-    /**
-     * @return Returns the errors.
-     */
-    public int getErrors() {
-        return errors;
-    }
-
-    /**
-     * @return Returns the fatalErrors.
-     */
-    public int getFatalErrors() {
-        return fatalErrors;
-    }
-
-    /**
-     * @return Returns the warnings.
-     */
-    public int getWarnings() {
-        return warnings;
-    }
 
     /**
      * @param contentHandler
@@ -209,63 +174,34 @@ public class XhtmlEmittingErrorHandler implements InfoErrorHandler {
     }
 
     /**
-     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
+     * @param e
+     * @throws SAXException
      */
-    public void warning(SAXParseException e) throws SAXException {
-        this.warnings++;
+    protected void warningImpl(SAXParseException e) throws SAXException {
         this.emitError(WARNING, e);
     }
 
     /**
-     * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
+     * @param e
+     * @throws SAXException
      */
-    public void error(SAXParseException e) throws SAXException {
-        this.errors++;
+    protected void errorImpl(SAXParseException e) throws SAXException {
         this.emitError(ERROR, e);
     }
 
     /**
-     * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
+     * @param e
+     * @throws SAXException
      */
-    public void fatalError(SAXParseException e) throws SAXException {
-        this.fatalErrors++;
-        if (e.getException() instanceof IOException) {
-            this.emitError(IO_ERROR, e);
-        } else {
+    protected void fatalErrorImpl(SAXParseException e) throws SAXException {
             this.emitError(FATAL_ERROR, e);
-        }
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#end()
+     * @param str
+     * @throws SAXException
      */
-    public void end(String successMessage, String failureMessage) throws SAXException {
-        if (this.listOpen) {
-            this.emitter.endElement("ol");
-            this.listOpen = false;
-        }
-        if (isErrors()) {
-            emitter.startElementWithClass("p", "failure");
-            emitter.characters(successMessage);
-            emitter.endElement("p");
-        } else {
-            emitter.startElementWithClass("p", "success");
-            emitter.characters(failureMessage);
-            emitter.endElement("p");
-        }
-    }
-
-    /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#start()
-     */
-    public void start() throws SAXException {
-
-    }
-
-    /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#info(java.lang.String)
-     */
-    public void info(String str) throws SAXException {
+    protected void infoImpl(String str) throws SAXException {
         this.maybeOpenList();
         this.emitter.startElementWithClass("li", "info");
         this.emitter.startElement("p");
@@ -277,18 +213,18 @@ public class XhtmlEmittingErrorHandler implements InfoErrorHandler {
     }
     
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#ioError(java.io.IOException)
+     * @param e
+     * @throws SAXException
      */
-    public void ioError(IOException e) throws SAXException {
-        this.fatalErrors++;
+    protected void ioErrorImpl(IOException e) throws SAXException {
         this.emitError(IO_ERROR, e);
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#internalError(java.lang.Throwable, java.lang.String)
+     * @param message
+     * @throws SAXException
      */
-    public void internalError(Throwable e, String message) throws SAXException {
-        this.fatalErrors++;
+    protected void internalErrorImpl(String message) throws SAXException {
         this.maybeOpenList();
         this.emitter.startElementWithClass("li", "internalerror");
         this.emitter.startElement("p");
@@ -314,14 +250,30 @@ public class XhtmlEmittingErrorHandler implements InfoErrorHandler {
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#schemaError(java.lang.Exception)
+     * @param e
+     * @throws SAXException
      */
-    public void schemaError(Exception e) throws SAXException {
-        this.fatalErrors++;
+    protected void schemaErrorImpl(Exception e) throws SAXException {
         this.emitError(SCHEMA_ERROR, e);
     }
-    
-    public boolean isErrors() {
-        return !(errors == 0 && fatalErrors == 0);
+
+    /**
+     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#end()
+     */
+    public void end(String successMessage, String failureMessage) throws SAXException {
+        if (this.listOpen) {
+            this.emitter.endElement("ol");
+            this.listOpen = false;
+        }
+        if (isErrors()) {
+            emitter.startElementWithClass("p", "failure");
+            emitter.characters(successMessage);
+            emitter.endElement("p");
+        } else {
+            emitter.startElementWithClass("p", "success");
+            emitter.characters(failureMessage);
+            emitter.endElement("p");
+        }
     }
+
 }

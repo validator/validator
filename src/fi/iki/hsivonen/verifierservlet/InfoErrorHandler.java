@@ -9,7 +9,7 @@ public interface InfoErrorHandler extends ErrorHandler {
 
     public abstract void end(String successMessage, String failureMessage) throws SAXException;
 
-    public abstract void start() throws SAXException;
+    public abstract void start(String documentUri) throws SAXException;
 
     /**
      * @param e
