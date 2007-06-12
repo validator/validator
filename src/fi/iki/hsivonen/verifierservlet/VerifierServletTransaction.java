@@ -404,7 +404,7 @@ class VerifierServletTransaction implements DoctypeHandler {
             } else if ("text".equals(outFormat)) {
                 outputFormat = OutputFormat.TEXT;
             } else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unsupported output format.");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unsupported output format");
                 return;
             }
         }
@@ -416,8 +416,11 @@ class VerifierServletTransaction implements DoctypeHandler {
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-cache");
+        } else if (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML) {
+            response.setDateHeader("Last-Modified", lastModified);            
         } else {
-            response.setDateHeader("Last-Modified", lastModified);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "No input document");
+            return;
         }
 
         setup();
