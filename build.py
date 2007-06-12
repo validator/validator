@@ -77,6 +77,7 @@ dependencyJars = [
   "saxon.jar",
   "xerces-2_9_0/xercesImpl.jar",
   "xerces-2_9_0/xml-apis.jar",
+  "xerces-2_9_0/serializer.jar",
   "xmlidfilter-0.9/lib/xmlidfilter.jar",
 ]
 
