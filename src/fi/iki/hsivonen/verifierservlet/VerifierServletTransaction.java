@@ -25,6 +25,7 @@ package fi.iki.hsivonen.verifierservlet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -48,6 +50,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.java.dev.xmlidfilter.XMLIdFilter;
 
 import org.apache.log4j.Logger;
+import org.apache.xml.serializer.Method;
+import org.apache.xml.serializer.OutputPropertiesFactory;
+import org.apache.xml.serializer.Serializer;
+import org.apache.xml.serializer.SerializerFactory;
 import org.whattf.checker.DebugChecker;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.SignificantInlineChecker;
@@ -100,6 +106,18 @@ import fi.karppinen.xml.CharacterUtil;
  * @author hsivonen
  */
 class VerifierServletTransaction implements DoctypeHandler {
+    
+    private enum OutputFormat {
+        HTML,
+        XHTML,
+        TEXT,
+        XML,
+        JSON,
+        RELAXED,
+        SOAP,
+        UNICORN
+    }
+    
     private static final Logger log4j = Logger.getLogger(VerifierServletTransaction.class);
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
@@ -125,10 +143,6 @@ class VerifierServletTransaction implements DoctypeHandler {
     private static final char[] TWO_POINT_OH_BETA = "2.0 Beta".toCharArray();
 
     private static final char[] RESULTS_TITLE = "Validation results for ".toCharArray();
-
-    private static final char[] SUCCESS = "The document validates according to the specified schema(s).".toCharArray();
-
-    private static final char[] FAILURE = "There were errors.".toCharArray();
 
     private static final Map pathMap = new HashMap();
 
@@ -176,7 +190,7 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     protected XhtmlSaxEmitter emitter;
 
-    protected XhtmlEmittingErrorHandler errorHandler;
+    protected InfoErrorHandler errorHandler;
 
     private AttributesImpl attrs = new AttributesImpl();
 
@@ -213,6 +227,8 @@ class VerifierServletTransaction implements DoctypeHandler {
     private boolean checkNormalization = false;
 
     private boolean rootNamespaceSeen = false;
+
+    private OutputFormat outputFormat;
 
     static {
         try {
@@ -368,11 +384,26 @@ class VerifierServletTransaction implements DoctypeHandler {
     }
 
     void doGet() throws ServletException, IOException {
-        response.setContentType("text/html; charset=utf-8");
 
         this.out = response.getOutputStream();
 
         request.setCharacterEncoding("utf-8");
+        
+        String outFormat = request.getParameter("out");
+        if (outFormat == null) {
+            outputFormat = OutputFormat.HTML;
+        } else {
+            if ("html".equals(outFormat)) {
+                outputFormat = OutputFormat.HTML;                
+            } else if ("xhtml".equals(outFormat)) {
+                outputFormat = OutputFormat.XHTML;                                
+            } else if ("text".equals(outFormat)) {
+                outputFormat = OutputFormat.TEXT;
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unsupported output format.");
+                return;
+            }
+        }
 
         document = scrubUrl(request.getParameter("doc"));
 
@@ -385,14 +416,29 @@ class VerifierServletTransaction implements DoctypeHandler {
             response.setDateHeader("Last-Modified", lastModified);
         }
 
-        contentHandler = new HtmlSerializer(out, HtmlSerializer.DOCTYPE_HTML5,
-                false, "UTF-8");
-        emitter = new XhtmlSaxEmitter(contentHandler);
-
         setup();
 
         try {
-            PageEmitter.emit(contentHandler, this);
+            if (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML) {
+                if (outputFormat == OutputFormat.HTML) {
+                    response.setContentType("text/html; charset=utf-8");
+                    contentHandler = new HtmlSerializer(out, HtmlSerializer.DOCTYPE_HTML5,
+                            false, "UTF-8");                    
+                } else {
+                    response.setContentType("application/xhtml+xml");
+                    Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
+                    Serializer ser = SerializerFactory.getSerializer(props);
+                    ser.setOutputStream(out);
+                    contentHandler = ser.asContentHandler();
+                }
+                emitter = new XhtmlSaxEmitter(contentHandler);
+                errorHandler = new XhtmlEmittingErrorHandler(contentHandler);                
+                PageEmitter.emit(contentHandler, this);
+            } else {
+                // TEXT
+                response.setContentType("text/plain; charset=utf-8");
+                validate();
+            }
         } catch (SAXException e) {
             throw new ServletException(e);
         }
@@ -466,7 +512,6 @@ class VerifierServletTransaction implements DoctypeHandler {
         } catch (IOException e1) {
             throw new SAXException(e1);
         }
-        errorHandler = new XhtmlEmittingErrorHandler(contentHandler);
         httpRes = new PrudentHttpEntityResolver(2048 * 1024, laxType,
                 errorHandler);
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
@@ -522,20 +567,7 @@ class VerifierServletTransaction implements DoctypeHandler {
                     + " lax: " + laxType, e);
             errorHandler.internalError(e, "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } finally {
-            errorHandler.end();
-        }
-        if (isValid) {
-            attrs.clear();
-            attrs.addAttribute("class", "success");
-            emitter.startElement("p", attrs);
-            emitSuccess();
-            emitter.endElement("p");
-        } else {
-            attrs.clear();
-            attrs.addAttribute("class", "failure");
-            emitter.startElement("p", attrs);
-            emitFailure();
-            emitter.endElement("p");
+            errorHandler.end(successMessage(), failureMessage());
         }
         if (stats) {
             StatsEmitter.emit(contentHandler, this);
@@ -543,14 +575,15 @@ class VerifierServletTransaction implements DoctypeHandler {
     }
 
     /**
+     * @return 
      * @throws SAXException
      */
-    protected void emitSuccess() throws SAXException {
-        emitter.characters(SUCCESS);
+    protected String successMessage() throws SAXException {
+        return "The document validates according to the specified schema(s).";
     }
 
-    protected void emitFailure() throws SAXException {
-        emitter.characters(FAILURE);
+    protected String failureMessage() throws SAXException {
+       return "There were errors.";
     }
 
     /**

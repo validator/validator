@@ -26,13 +26,13 @@ public class Html5ConformanceCheckerTransaction extends
 
     private static final char[] RESULTS_TITLE = "(X)HTML5 conformance checking results for ".toCharArray();
 
-    private static final char[] SUCCESS_HTML = "The document conforms to the machine-checkable conformance requirements for HTML5 (subject to the utter previewness of this service).".toCharArray();
+    private static final String SUCCESS_HTML = "The document conforms to the machine-checkable conformance requirements for HTML5 (subject to the utter previewness of this service).";
 
-    private static final char[] SUCCESS_XHTML = "The document conforms to the machine-checkable conformance requirements for XHTML5 (subject to the utter previewness of this service).".toCharArray();
+    private static final String SUCCESS_XHTML = "The document conforms to the machine-checkable conformance requirements for XHTML5 (subject to the utter previewness of this service).";
 
-    private static final char[] FAILURE_HTML = "There were errors. (Tried in the text/html mode.)".toCharArray();
+    private static final String FAILURE_HTML = "There were errors. (Tried in the text/html mode.)";
 
-    private static final char[] FAILURE_XHTML = "There were errors. (Tried in the XHTML mode.)".toCharArray();
+    private static final String FAILURE_XHTML = "There were errors. (Tried in the XHTML mode.)";
 
     private boolean usingHtml = false;
     
@@ -42,13 +42,13 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#emitSuccess()
+     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#successMessage()
      */
-    protected void emitSuccess() throws SAXException {
+    protected String successMessage() throws SAXException {
         if (usingHtml) {
-            emitter.characters(SUCCESS_HTML);
+            return SUCCESS_HTML;
         } else {
-            emitter.characters(SUCCESS_XHTML);
+            return SUCCESS_XHTML;
         }
     }
 
@@ -115,13 +115,13 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#emitFailure()
+     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#failureMessage()
      */
-    protected void emitFailure() throws SAXException {
+    protected String failureMessage() throws SAXException {
         if (usingHtml) {
-            emitter.characters(FAILURE_HTML);
+            return FAILURE_HTML;
         } else {
-            emitter.characters(FAILURE_XHTML);
+            return FAILURE_XHTML;
         }
     }
 
