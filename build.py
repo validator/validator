@@ -33,10 +33,10 @@ javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
-cvsCmd = 'cvs'
+svnCmd = 'svn'
 
 buildRoot = '.'
-cvsRoot = ':pserver:html5-readonly@cvsdude.org:/cvs/stdx'
+svnRoot = 'http://svn.versiondude.net/whattf/'
 portNumber = '8888'
 useAjp = 0
 log4jProps = 'validator/log4j.properties'
@@ -357,10 +357,7 @@ def buildAll():
 def checkout():
   # XXX root dir
   for mod in moduleNames:
-    if os.path.exists(mod):
-      runCmd("'%s' -d '%s' up %s" % (cvsCmd, cvsRoot, mod))
-    else:
-      runCmd("'%s' -d '%s' co %s" % (cvsCmd, cvsRoot, mod))
+    runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + mod + '/trunk/', mod))
 
 def runTests():
   classPath = os.pathsep.join(dependencyJarPaths() 
@@ -376,7 +373,7 @@ def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
   print ""
   print "Options:"
-  print "  --cvs=/usr/bin/cvs         -- Sets the path to the cvs binary"
+  print "  --svn=/usr/bin/svn         -- Sets the path to the svn binary"
   print "  --java=/usr/bin/java       -- Sets the path to the java binary"
   print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
   print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
@@ -387,7 +384,7 @@ def printHelp():
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print ""
   print "Tasks:"
-  print "  checkout -- Checks out the source from CVS"
+  print "  checkout -- Checks out the source from SVN"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
   print "  dltests  -- Downloads the external test suite if missing"
   print "  build    -- Build the source"
@@ -401,8 +398,8 @@ if __name__ == "__main__":
     printHelp()
   else:
     for arg in argv:
-      if arg.startswith("--cvs="):
-        cvsCmd = arg[6:]
+      if arg.startswith("--svn="):
+        svnCmd = arg[6:]
       elif arg.startswith("--java="):
         javaCmd = arg[7:]
       elif arg.startswith("--jar="):
@@ -417,8 +414,8 @@ if __name__ == "__main__":
         jarCmd = os.path.join(jdkBinDir, "jar")
         javacCmd = os.path.join(jdkBinDir, "javac")
         javadocCmd = os.path.join(jdkBinDir, "javadoc")
-      elif arg.startswith("--cvsroot="):
-        cvsRoot = arg[10:]
+      elif arg.startswith("--svnRoot="):
+        svnRoot = arg[10:]
       elif arg.startswith("--port="):
         portNumber = arg[7:]
       elif arg.startswith("--log4j="):
