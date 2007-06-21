@@ -55,6 +55,8 @@ dependencyPackages = [
   ("http://belnet.dl.sourceforge.net/sourceforge/saxon/saxon6-5-5.zip", "e913002af9c6bbb4c4361ff41baac3af"),
   ("http://ftp.mozilla.org/pub/mozilla.org/js/rhino1_6R5.zip", "c93b6d0bb8ba83c3760efeb30525728a"),
   ("http://hsivonen.iki.fi/code/onvdl-hsivonen.zip", "b5cda2ed1488c7d702339a92b1bf480f"),
+  ("http://download.berlios.de/jsontools/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
+  ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -79,6 +81,8 @@ dependencyJars = [
   "xerces-2_9_0/xml-apis.jar",
   "xerces-2_9_0/serializer.jar",
   "xmlidfilter-0.9/lib/xmlidfilter.jar",
+  "jsontools-core-1.5.jar",
+  "antlr.jar",
 ]
 
 moduleNames = [
