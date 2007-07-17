@@ -177,9 +177,9 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     private long start = System.currentTimeMillis();
 
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
-    private HttpServletResponse response;
+    private final HttpServletResponse response;
 
     private IRIFactory iriFactory;
 
@@ -225,7 +225,7 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     protected PrudentHttpEntityResolver httpRes;
 
-    private Set loadedValidatorUrls = new HashSet();
+    private Set<String> loadedValidatorUrls = new HashSet<String>();
     
     private boolean checkNormalization = false;
 
@@ -243,10 +243,10 @@ class VerifierServletTransaction implements DoctypeHandler {
             BufferedReader r = new BufferedReader(new InputStreamReader(
                     new FileInputStream(presetFile), "UTF-8"));
             String line;
-            List doctypes = new LinkedList();
-            List namespaces = new LinkedList();
-            List labels = new LinkedList();
-            List urls = new LinkedList();
+            List<String> doctypes = new LinkedList<String>();
+            List<String> namespaces = new LinkedList<String>();
+            List<String> labels = new LinkedList<String>();
+            List<String> urls = new LinkedList<String>();
 
             log4j.debug("Starting to loop over config file lines.");
 
@@ -263,10 +263,10 @@ class VerifierServletTransaction implements DoctypeHandler {
 
             log4j.debug("Finished reading config.");
 
-            String[] presetDoctypesAsStrings = (String[]) doctypes.toArray(new String[0]);
-            presetNamespaces = (String[]) namespaces.toArray(new String[0]);
-            presetLabels = (String[]) labels.toArray(new String[0]);
-            presetUrls = (String[]) urls.toArray(new String[0]);
+            String[] presetDoctypesAsStrings = doctypes.toArray(new String[0]);
+            presetNamespaces = namespaces.toArray(new String[0]);
+            presetLabels = labels.toArray(new String[0]);
+            presetUrls = urls.toArray(new String[0]);
 
             log4j.debug("Converted config to arrays.");
 
@@ -322,7 +322,7 @@ class VerifierServletTransaction implements DoctypeHandler {
 
             log4j.debug("Parsing set up. Starting to read schemas.");
 
-            SortedMap schemaMap = new TreeMap();
+            SortedMap<String, Schema> schemaMap = new TreeMap<String, Schema>();
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
                 for (int j = 0; j < urls1.length; j++) {

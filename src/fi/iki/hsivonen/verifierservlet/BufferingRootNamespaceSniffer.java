@@ -37,7 +37,7 @@ public class BufferingRootNamespaceSniffer implements ContentHandler {
 
     private Locator locator = null;
     
-    private List namespaces = new LinkedList();
+    private List<String[]> namespaces = new LinkedList<String[]>();
     
     private VerifierServletTransaction vst;
     
@@ -52,8 +52,8 @@ public class BufferingRootNamespaceSniffer implements ContentHandler {
         if (locator != null) {
             ch.setDocumentLocator(locator);
         }
-        for (Iterator iter = namespaces.iterator(); iter.hasNext();) {
-            String[] element = (String[]) iter.next();
+        for (Iterator<String[]> iter = namespaces.iterator(); iter.hasNext();) {
+            String[] element = iter.next();
             ch.startPrefixMapping(element[0], element[1]);
         }
     }

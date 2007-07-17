@@ -54,7 +54,7 @@ public class Main {
         HttpContext c = new HttpContext();
         c.setContextPath("/");
         ServletHandler sh = new ServletHandler();
-        sh.addServlet("/validator/*", "fi.iki.hsivonen.verifierservlet.VerifierServlet");
+        sh.addServlet("/*", "fi.iki.hsivonen.verifierservlet.VerifierServlet");
         c.addHandler(sh);
         s.addContext(c);
         s.start();
