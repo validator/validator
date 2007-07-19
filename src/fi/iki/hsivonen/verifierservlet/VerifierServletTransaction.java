@@ -141,9 +141,9 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     protected static final int XHTML5_SCHEMA = 7;
 
-    private static final char[] SERVICE_TITLE = "Validation Service for RELAX NG ".toCharArray();
+    private static final char[] SERVICE_TITLE = "Validator.nu ".toCharArray();
 
-    private static final char[] TWO_POINT_OH_BETA = "2.0 Beta".toCharArray();
+    private static final char[] TWO_POINT_OH_BETA = "2.1 Gamma".toCharArray();
 
     private static final char[] RESULTS_TITLE = "Validation results for ".toCharArray();
 

@@ -12,7 +12,7 @@
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
 		><?SaxCompiler-code t.emitForm(); t.validate(); ?><hr></hr
 		><p
-			><a href="http://hsivonen.iki.fi/validator-about/">About this service</a
+			><a href="http://about.validator.nu/">About this service</a
 		></p
 	></body
 ></html>

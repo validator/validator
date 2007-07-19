@@ -40,7 +40,7 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "hr", "hr");
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "p", "p", __attrs__);
 __attrs__.clear();
-__attrs__.addAttribute("", "href", "href", "CDATA", "http://hsivonen.iki.fi/validator-about/");
+__attrs__.addAttribute("", "href", "href", "CDATA", "http://about.validator.nu/");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "a", "a", __attrs__);
 contentHandler.characters(__chars__, 0, 18);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "a", "a");
