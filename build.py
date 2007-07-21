@@ -144,7 +144,7 @@ def jarNamesToPaths(names):
 
 def runJavac(sourceDir, classDir, classPath):
   sourceFiles = findFilesWithExtension(sourceDir, "java")
-  runCmd("'%s' -classpath '%s' -sourcepath '%s' -d '%s' %s"\
+  runCmd("'%s' -Xlint:unchecked -classpath '%s' -sourcepath '%s' -d '%s' %s"\
 		% (javacCmd, classPath, sourceDir, classDir, " ".join(sourceFiles)))
 
 def runJar(classDir, jarFile, sourceDir):
@@ -255,12 +255,12 @@ def runValidator():
   args = [
     '-cp',
     classPath,
-    '-Dfi.iki.hsivonen.verifierservlet.log4j-properties=' + log4jProps,
-    '-Dfi.iki.hsivonen.verifierservlet.presetconfpath=validator/presets.txt',
-    '-Dfi.iki.hsivonen.verifierservlet.cachepathprefix=local-entities/',
-    '-Dfi.iki.hsivonen.verifierservlet.cacheconfpath=validator/entity-map.txt',
-    '-Dfi.iki.hsivonen.verifierservlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
-    'fi.iki.hsivonen.verifierservlet.Main',
+    '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
+    '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
+    '-Dnu.validator.servlet.cachepathprefix=local-entities/',
+    '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
+    '-Dnu.validator.servlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
+    'nu.validator.servlet.Main',
   ]
   if useAjp:
     args.append('ajp')
