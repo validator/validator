@@ -2,7 +2,7 @@
 <?SaxCompiler-omitRoot ?>
 <?SaxCompiler-package fi.iki.hsivonen.verifierservlet?>
 <?SaxCompiler-class StatsEmitter?>
-<?SaxCompiler-args fi.iki.hsivonen.verifierservlet.VerifierServletTransaction t?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <html xmlns="http://www.w3.org/1999/xhtml"><p class='stats' 
 	>Total execution time <?SaxCompiler-code t.emitTotalDuration(); ?> milliseconds.</p
 ></html>

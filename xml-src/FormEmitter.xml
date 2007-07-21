@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?SaxCompiler-omitRoot ?>
-<?SaxCompiler-package fi.iki.hsivonen.verifierservlet?>
+<?SaxCompiler-package nu.validator.servlet?>
 <?SaxCompiler-class FormEmitter?>
-<?SaxCompiler-args fi.iki.hsivonen.verifierservlet.VerifierServletTransaction t?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <form xmlns="http://www.w3.org/1999/xhtml"
 	><fieldset
 		><legend>Validator Input</legend

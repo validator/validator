@@ -1,4 +1,4 @@
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

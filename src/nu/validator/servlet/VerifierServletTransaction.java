@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -90,8 +90,6 @@ import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 
 import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
-import fi.iki.hsivonen.htmlparser.DoctypeHandler;
-import fi.iki.hsivonen.htmlparser.HtmlParser;
 import fi.iki.hsivonen.xml.AttributesImpl;
 import fi.iki.hsivonen.xml.HtmlSerializer;
 import fi.iki.hsivonen.xml.LocalCacheEntityResolver;
@@ -103,12 +101,15 @@ import fi.iki.hsivonen.xml.XhtmlIdFilter;
 import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
 import fi.karppinen.xml.CharacterUtil;
 
+import nu.validator.htmlparser.*;
+import nu.validator.htmlparser.sax.HtmlParser;
+
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
  *          hsivonen Exp $
  * @author hsivonen
  */
-class VerifierServletTransaction implements DoctypeHandler {
+class VerifierServletTransaction implements DocumentModeHandler {
     
     private enum OutputFormat {
         HTML,
@@ -125,19 +126,11 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
 
-    private static final int NO_EXTERNAL_ENTITIES = 4;
+    protected static final int HTML5_SCHEMA = 3;
 
-    private static final int EXTERNAL_ENTITIES_NO_VALIDATION = 5;
+    protected static final int XHTML1STRICT_SCHEMA = 2;
 
-    private static final int HTML_PARSER = DoctypeHandler.ANY_DOCTYPE;
-
-    private static final int HTML_PARSER_5 = DoctypeHandler.DOCTYPE_HTML5;
-
-    private static final int HTML_PARSER_4_STRICT = DoctypeHandler.DOCTYPE_HTML401_STRICT;
-
-    private static final int HTML_PARSER_4_TRANSITIONAL = DoctypeHandler.DOCTYPE_HTML401_TRANSITIONAL;
-
-    private static final int AUTOMATIC_PARSER = 6;
+    protected static final int XHTML1TRANSITIONAL_SCHEMA = 1;
 
     protected static final int XHTML5_SCHEMA = 7;
 
@@ -185,7 +178,7 @@ class VerifierServletTransaction implements DoctypeHandler {
 
     protected String document;
 
-    private int parser = AUTOMATIC_PARSER;
+    private ParserMode parser = ParserMode.AUTO;
 
     private boolean laxType = false;
 
@@ -237,7 +230,7 @@ class VerifierServletTransaction implements DoctypeHandler {
         try {
             log4j.debug("Starting static initializer.");
 
-            String presetPath = System.getProperty("fi.iki.hsivonen.verifierservlet.presetconfpath");
+            String presetPath = System.getProperty("nu.validator.servlet.presetconfpath");
             File presetFile = new File(presetPath);
             lastModified = presetFile.lastModified();
             BufferedReader r = new BufferedReader(new InputStreamReader(
@@ -288,11 +281,11 @@ class VerifierServletTransaction implements DoctypeHandler {
 
             log4j.debug("Parsed doctype numbers into ints.");
 
-            String prefix = System.getProperty("fi.iki.hsivonen.verifierservlet.cachepathprefix");
+            String prefix = System.getProperty("nu.validator.servlet.cachepathprefix");
 
             log4j.debug("The cache path prefix is: " + prefix);
 
-            String cacheConfPath = System.getProperty("fi.iki.hsivonen.verifierservlet.cacheconfpath");
+            String cacheConfPath = System.getProperty("nu.validator.servlet.cacheconfpath");
 
             log4j.debug("The cache config path is: " + cacheConfPath);
 
@@ -476,17 +469,17 @@ class VerifierServletTransaction implements DoctypeHandler {
         String parserStr = request.getParameter("parser");
 
         if ("html".equals(parserStr)) {
-            parser = HTML_PARSER;
+            parser = ParserMode.HTML_AUTO;
         } else if ("xmldtd".equals(parserStr)) {
-            parser = EXTERNAL_ENTITIES_NO_VALIDATION;
+            parser = ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION;
         } else if ("xml".equals(parserStr)) {
-            parser = NO_EXTERNAL_ENTITIES;
+            parser = ParserMode.XML_NO_EXTERNAL_ENTITIES;
         } else if ("html5".equals(parserStr)) {
-            parser = HTML_PARSER_5;
+            parser = ParserMode.HTML;
         } else if ("html4".equals(parserStr)) {
-            parser = HTML_PARSER_4_STRICT;
+            parser = ParserMode.HTML401_STRICT;
         } else if ("html4tr".equals(parserStr)) {
-            parser = HTML_PARSER_4_TRANSITIONAL;
+            parser = ParserMode.HTML401_TRANSITIONAL;
         } // else auto
 
         laxType = (request.getParameter("laxtype") != null);
@@ -619,10 +612,10 @@ class VerifierServletTransaction implements DoctypeHandler {
             IncorrectSchemaException, SAXNotRecognizedException,
             SAXNotSupportedException {
         switch (parser) {
-            case HTML_PARSER:
-            case HTML_PARSER_5:
-            case HTML_PARSER_4_STRICT:
-            case HTML_PARSER_4_TRANSITIONAL:
+            case HTML_AUTO:
+            case HTML:
+            case HTML401_STRICT:
+            case HTML401_TRANSITIONAL:
                 if (isHtmlUnsafePreset()) {
                     String message = "The chosen preset schema is not appropriate for HTML.";
                     SAXException se = new SAXException(message);
@@ -636,20 +629,41 @@ class VerifierServletTransaction implements DoctypeHandler {
                 documentInput = (TypedInputSource) entityResolver.resolveEntity(
                         null, document);
                 htmlParser = new HtmlParser();
-                htmlParser.setDoctypeMode(parser); // magic numbers!
-                htmlParser.setDoctypeHandler(this);
+                htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+                htmlParser.setMappingLangToXmlLang(true);
+                htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
+                DoctypeExpectation doctypeExpectation;
+                int schemaId;
+                switch (parser) {
+                    case HTML:
+                        doctypeExpectation = DoctypeExpectation.HTML;
+                        schemaId = HTML5_SCHEMA;
+                        break;                    
+                    case HTML401_STRICT:
+                        doctypeExpectation = DoctypeExpectation.HTML401_STRICT;
+                        schemaId = XHTML1STRICT_SCHEMA;
+                        break;                    
+                    case HTML401_TRANSITIONAL:
+                        doctypeExpectation = DoctypeExpectation.HTML401_TRANSITIONAL;
+                        schemaId = XHTML1TRANSITIONAL_SCHEMA;
+                        break;                    
+                    default:
+                        doctypeExpectation = DoctypeExpectation.AUTO;
+                        schemaId = 0;
+                        break;                    
+                }
+                htmlParser.setDoctypeExpectation(doctypeExpectation);
+                htmlParser.setDocumentModeHandler(this);
                 reader = htmlParser;
                 if (validator == null) {
-                    validator = validatorByDoctype(parser); // magic
-                    // numbers!
-                    // can still be null
+                    validator = validatorByDoctype(schemaId);
                 }
                 if (validator != null) {
                     reader.setContentHandler(validator.getContentHandler());
                 }
                 break;
-            case NO_EXTERNAL_ENTITIES:
-            case EXTERNAL_ENTITIES_NO_VALIDATION:
+            case XML_NO_EXTERNAL_ENTITIES:
+            case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
                 httpRes.setAllowGenericXml(true);
                 httpRes.setAllowHtml(false);
                 httpRes.setAcceptAllKnownXmlTypes(true);
@@ -674,8 +688,9 @@ class VerifierServletTransaction implements DoctypeHandler {
                     }
                     errorHandler.info("The Content-Type was \u201Ctext/html\u201D. Using the HTML parser.");
                     htmlParser = new HtmlParser();
-                    htmlParser.setDoctypeMode(DoctypeHandler.ANY_DOCTYPE);
-                    htmlParser.setDoctypeHandler(this);
+                    htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+                    htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
+                    htmlParser.setDocumentModeHandler(this);
                     reader = htmlParser;
                     if (validator != null) {
                         reader.setContentHandler(validator.getContentHandler());
@@ -690,13 +705,13 @@ class VerifierServletTransaction implements DoctypeHandler {
         }
     }
 
-    protected Validator validatorByDoctype(int doctype) throws SAXException,
+    protected Validator validatorByDoctype(int schemaId) throws SAXException,
             IOException, IncorrectSchemaException {
-        if (doctype == ANY_DOCTYPE) {
+        if (schemaId == 0) {
             return null;
         }
         for (int i = 0; i < presetDoctypes.length; i++) {
-            if (presetDoctypes[i] == doctype) {
+            if (presetDoctypes[i] == schemaId) {
                 return validatorByUrls(presetUrls[i]);
             }
         }
@@ -716,11 +731,11 @@ class VerifierServletTransaction implements DoctypeHandler {
         reader = new XhtmlIdFilter(new XMLIdFilter(reader));
         reader.setFeature(
                 "http://xml.org/sax/features/external-general-entities",
-                parser == EXTERNAL_ENTITIES_NO_VALIDATION);
+                parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION);
         reader.setFeature(
                 "http://xml.org/sax/features/external-parameter-entities",
-                parser == EXTERNAL_ENTITIES_NO_VALIDATION);
-        if (parser == EXTERNAL_ENTITIES_NO_VALIDATION) {
+                parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION);
+        if (parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION) {
             reader.setEntityResolver(entityResolver);
         } else {
             reader.setEntityResolver(new NullEntityResolver());
@@ -990,18 +1005,18 @@ class VerifierServletTransaction implements DoctypeHandler {
      */
     void emitParserOptions() throws SAXException {
         emitter.option("Automatically from Content-Type", "",
-                (parser == AUTOMATIC_PARSER));
+                (parser == ParserMode.AUTO));
         emitter.option("XML; don\u2019t load external entities", "xml",
-                (parser == NO_EXTERNAL_ENTITIES));
+                (parser == ParserMode.XML_NO_EXTERNAL_ENTITIES));
         emitter.option("XML; load external entities", "xmldtd",
-                (parser == EXTERNAL_ENTITIES_NO_VALIDATION));
+                (parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION));
         emitter.option("HTML; flavor from doctype", "html",
-                (parser == HTML_PARSER));
-        emitter.option("HTML5", "html5", (parser == HTML_PARSER_5));
+                (parser == ParserMode.HTML_AUTO));
+        emitter.option("HTML5", "html5", (parser == ParserMode.HTML));
         emitter.option("HTML 4.01 Strict", "html4",
-                (parser == HTML_PARSER_4_STRICT));
+                (parser == ParserMode.HTML401_STRICT));
         emitter.option("HTML 4.01 Transitional", "html4tr",
-                (parser == HTML_PARSER_4_TRANSITIONAL));
+                (parser == ParserMode.HTML401_TRANSITIONAL));
     }
 
     /**
@@ -1067,10 +1082,25 @@ class VerifierServletTransaction implements DoctypeHandler {
         }
     }
 
-    public void doctype(int doctype) throws SAXException {
+    public void documentMode(DocumentMode mode, String publicIdentifier, String systemIdentifier, boolean html4SpecificAdditionalErrorChecks) throws SAXException {
         if (validator == null) {
             try {
-                validator = validatorByDoctype(doctype);
+                if ("-//W3C//DTD XHTML 1.0 Transitional//EN".equals(publicIdentifier)) {
+                    errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
+                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);                    
+                } else if ("-//W3C//DTD XHTML 1.0 Strict//EN".equals(publicIdentifier)) {
+                    errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
+                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);                    
+                } else if ("-//W3C//DTD HTML 4.01 Transitional//EN".equals(publicIdentifier)) {
+                    errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? "" : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);                    
+                } else if ("-//W3C//DTD HTML 4.01//EN".equals(publicIdentifier)) {
+                    errorHandler.info("HTML 4.01 Strict doctype seen. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? "" : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);                    
+                } else {
+                    errorHandler.info("Using the schema for HTML5." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
+                    validator = validatorByDoctype(HTML5_SCHEMA);                    
+                }
             } catch (IOException ioe) {
                 // At this point the schema comes from memory.
                 throw new RuntimeException(ioe);
@@ -1078,43 +1108,14 @@ class VerifierServletTransaction implements DoctypeHandler {
                 // At this point the schema comes from memory.
                 throw new RuntimeException(e);
             }
-            switch (doctype) {
-                case DoctypeHandler.DOCTYPE_HTML5:
-                    errorHandler.info("HTML5 doctype seen. Running the HTML parser in the HTML5 mode and using the preset for "
-                            + schemaLabelFromDoctype(doctype) + ".");
-                    break;
-                case DoctypeHandler.DOCTYPE_HTML401_STRICT:
-                    errorHandler.info("HTML 4.01 Strict doctype seen. Running the HTML parser in the HTML 4.01 mode and using the preset for "
-                            + schemaLabelFromDoctype(doctype) + ".");
-                    break;
-                case DoctypeHandler.DOCTYPE_HTML401_TRANSITIONAL:
-                    errorHandler.info("HTML 4.01 Transitional doctype seen. Running the HTML parser in the HTML 4.01 mode and using the preset for "
-                            + schemaLabelFromDoctype(doctype) + ".");
-                    break;
-            }
-            htmlParser.setContentHandler(validator.getContentHandler());
-            htmlParser.refireStart();
+            ContentHandler ch = validator.getContentHandler();
+            ch.setDocumentLocator(htmlParser.getDocumentLocator());
+            ch.startDocument();
+            htmlParser.setContentHandler(ch);
         } else {
-            switch (doctype) {
-                case DoctypeHandler.DOCTYPE_HTML5:
-                    errorHandler.info("HTML5 doctype seen. Running the HTML parser in the HTML5 mode.");
-                    break;
-                case DoctypeHandler.DOCTYPE_HTML401_STRICT:
-                    errorHandler.info("HTML 4.01 Strict doctype seen. Running the HTML parser in the HTML 4.01 mode.");
-                    break;
-                case DoctypeHandler.DOCTYPE_HTML401_TRANSITIONAL:
-                    errorHandler.info("HTML 4.01 Transitional doctype seen. Running the HTML parser in the HTML 4.01 mode.");
-                    break;
+            if (html4SpecificAdditionalErrorChecks) {
+                    errorHandler.info("HTML4-specific tokenization errors are enabled.");
             }
         }
-    }
-
-    private String schemaLabelFromDoctype(int doctype) {
-        for (int i = 0; i < presetDoctypes.length; i++) {
-            if (doctype == presetDoctypes[i]) {
-                return presetLabels[i];
-            }
-        }
-        throw new RuntimeException("Bug: Bad magic number.");
     }
 }

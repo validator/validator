@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 
@@ -48,8 +48,8 @@ public class VerifierServlet extends HttpServlet {
     static {
         PrudentHttpEntityResolver.setParams(5000, 5000, 100);
         PrudentHttpEntityResolver.setUserAgent(System.getProperty(
-                "fi.iki.hsivonen.verifierservlet.version",
-                "VerifierServlet-RELAX-NG-Validator/2.x (http://hsivonen.iki.fi/validator/)"));
+                "nu.validator.servlet.version",
+                "VerifierServlet-RELAX-NG-Validator/2.x (http://validator.nu/)"));
     }
 
     /**

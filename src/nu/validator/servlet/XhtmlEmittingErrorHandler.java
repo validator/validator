@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 
@@ -219,7 +219,7 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#end()
+     * @see nu.validator.servlet.InfoErrorHandler#end()
      */
     public void end(String successMessage, String failureMessage) throws SAXException {
         if (this.listOpen) {

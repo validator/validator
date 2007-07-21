@@ -3,7 +3,7 @@
 
 grant {
   permission java.io.FilePermission "/Users/hsivonen/Projects/workspace/VerifierServlet/-", "read";
-  permission java.util.PropertyPermission "fi.iki.hsivonen.verifierservlet.*", "read";
+  permission java.util.PropertyPermission "nu.validator.servlet.*", "read";
   permission java.io.FilePermission "/Users/hsivonen/validator/-", "read";
   permission java.lang.RuntimePermission "*";
 };

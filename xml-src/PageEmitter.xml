@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<?SaxCompiler-package fi.iki.hsivonen.verifierservlet?>
+<?SaxCompiler-package nu.validator.servlet?>
 <?SaxCompiler-class PageEmitter?>
-<?SaxCompiler-args fi.iki.hsivonen.verifierservlet.VerifierServletTransaction t?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	><head
 		><link rel='stylesheet' href='http://hsivonen.iki.fi/style/validator.css'

@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 

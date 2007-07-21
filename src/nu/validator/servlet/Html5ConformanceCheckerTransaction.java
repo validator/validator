@@ -1,10 +1,14 @@
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nu.validator.htmlparser.DoctypeExpectation;
+import nu.validator.htmlparser.XmlViolationPolicy;
+import nu.validator.htmlparser.sax.HtmlParser;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -13,8 +17,6 @@ import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.validate.IncorrectSchemaException;
 
-import fi.iki.hsivonen.htmlparser.DoctypeHandler;
-import fi.iki.hsivonen.htmlparser.HtmlParser;
 import fi.iki.hsivonen.xml.TypedInputSource;
 
 public class Html5ConformanceCheckerTransaction extends
@@ -42,7 +44,7 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#successMessage()
+     * @see nu.validator.servlet.VerifierServletTransaction#successMessage()
      */
     protected String successMessage() throws SAXException {
         if (usingHtml) {
@@ -53,7 +55,7 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#loadDocAndSetupParser()
+     * @see nu.validator.servlet.VerifierServletTransaction#loadDocAndSetupParser()
      */
     protected void loadDocAndSetupParser() throws SAXException, IOException, IncorrectSchemaException, SAXNotRecognizedException, SAXNotSupportedException {
         httpRes.setAllowGenericXml(false);
@@ -64,11 +66,13 @@ public class Html5ConformanceCheckerTransaction extends
                 null, document);
         String type = documentInput.getType();
         if ("text/html".equals(type)) {
-            validator = validatorByDoctype(DoctypeHandler.DOCTYPE_HTML5);
+            validator = validatorByDoctype(HTML5_SCHEMA);
             usingHtml = true;
             htmlParser = new HtmlParser();
-            htmlParser.setDoctypeMode(DoctypeHandler.DOCTYPE_HTML5);
-            htmlParser.setDoctypeHandler(this);
+            htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+            htmlParser.setMappingLangToXmlLang(true);
+            htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
+            htmlParser.setDocumentModeHandler(this);
             htmlParser.setContentHandler(validator.getContentHandler());
             reader = htmlParser;
         } else {
@@ -84,14 +88,14 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#setupAndStartEmission()
+     * @see nu.validator.servlet.VerifierServletTransaction#setupAndStartEmission()
      */
     protected void setup() throws ServletException {
         // No-op
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#emitTitle()
+     * @see nu.validator.servlet.VerifierServletTransaction#emitTitle()
      */
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
@@ -108,14 +112,14 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#tryToSetupValidator()
+     * @see nu.validator.servlet.VerifierServletTransaction#tryToSetupValidator()
      */
     protected void tryToSetupValidator() throws SAXException, IOException, IncorrectSchemaException {
         // No-op
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#failureMessage()
+     * @see nu.validator.servlet.VerifierServletTransaction#failureMessage()
      */
     protected String failureMessage() throws SAXException {
         if (usingHtml) {
@@ -126,14 +130,14 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#emitFormContent()
+     * @see nu.validator.servlet.VerifierServletTransaction#emitFormContent()
      */
     protected void emitFormContent() throws SAXException {
         Html5FormEmitter.emit(contentHandler, this);
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.VerifierServletTransaction#doctype(int)
+     * @see nu.validator.servlet.VerifierServletTransaction#doctype(int)
      */
     public void doctype(int doctype) throws SAXException {
         // No-op

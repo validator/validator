@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -84,7 +84,7 @@ public class TextEmittingErrorHandler extends AbstractErrorHandler {
 
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.AbstractErrorHandler#end(java.lang.String, java.lang.String)
+     * @see nu.validator.servlet.AbstractErrorHandler#end(java.lang.String, java.lang.String)
      */
     @Override
     public void end(String successMessage, String failureMessage) throws SAXException {
@@ -99,7 +99,7 @@ public class TextEmittingErrorHandler extends AbstractErrorHandler {
 
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.AbstractErrorHandler#start(java.lang.String)
+     * @see nu.validator.servlet.AbstractErrorHandler#start(java.lang.String)
      */
     @Override
     public void start(String documentUri) throws SAXException {

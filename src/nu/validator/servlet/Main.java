@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.mortbay.http.HttpContext;
@@ -37,7 +37,7 @@ import org.mortbay.jetty.servlet.ServletHandler;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        PropertyConfigurator.configure(System.getProperty("fi.iki.hsivonen.verifierservlet.log4j-properties", "log4j.properties"));
+        PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         new VerifierServletTransaction(null, null);
         HttpServer s = new HttpServer();
         HttpListener l;
@@ -54,7 +54,7 @@ public class Main {
         HttpContext c = new HttpContext();
         c.setContextPath("/");
         ServletHandler sh = new ServletHandler();
-        sh.addServlet("/*", "fi.iki.hsivonen.verifierservlet.VerifierServlet");
+        sh.addServlet("/*", "nu.validator.servlet.VerifierServlet");
         c.addHandler(sh);
         s.addContext(c);
         s.start();

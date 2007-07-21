@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.verifierservlet;
+package nu.validator.servlet;
 
 import java.io.IOException;
 
@@ -107,14 +107,14 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#info(java.lang.String)
+     * @see nu.validator.servlet.InfoErrorHandler#info(java.lang.String)
      */
     public final void info(String str) throws SAXException {
         infoImpl(str);
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#ioError(java.io.IOException)
+     * @see nu.validator.servlet.InfoErrorHandler#ioError(java.io.IOException)
      */
     public final void ioError(IOException e) throws SAXException {
         this.fatalErrors++;
@@ -122,7 +122,7 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#internalError(java.lang.Throwable,
+     * @see nu.validator.servlet.InfoErrorHandler#internalError(java.lang.Throwable,
      *      java.lang.String)
      */
     public final void internalError(Throwable e, String message) throws SAXException {
@@ -131,7 +131,7 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
     }
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#schemaError(java.lang.Exception)
+     * @see nu.validator.servlet.InfoErrorHandler#schemaError(java.lang.Exception)
      */
     public final void schemaError(Exception e) throws SAXException {
         this.fatalErrors++;
@@ -186,14 +186,14 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
     protected abstract void schemaErrorImpl(Exception e) throws SAXException;
 
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#start()
+     * @see nu.validator.servlet.InfoErrorHandler#start()
      */
     public void start(String documentUri) throws SAXException {
 
     }
     
     /**
-     * @see fi.iki.hsivonen.verifierservlet.InfoErrorHandler#end()
+     * @see nu.validator.servlet.InfoErrorHandler#end()
      */
     public void end(String successMessage, String failureMessage)
             throws SAXException {
