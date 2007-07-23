@@ -1088,10 +1088,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (validator == null) {
             try {
                 if ("-//W3C//DTD XHTML 1.0 Transitional//EN".equals(publicIdentifier)) {
-                    errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
+                    errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
                     validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);                    
                 } else if ("-//W3C//DTD XHTML 1.0 Strict//EN".equals(publicIdentifier)) {
-                    errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
+                    errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
                     validator = validatorByDoctype(XHTML1STRICT_SCHEMA);                    
                 } else if ("-//W3C//DTD HTML 4.01 Transitional//EN".equals(publicIdentifier)) {
                     errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? "" : " HTML4-specific tokenization errors are not enabled."));
