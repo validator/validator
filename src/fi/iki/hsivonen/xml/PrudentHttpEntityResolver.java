@@ -163,7 +163,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if (!iri.isAbsolute()) {
                 SAXParseException spe = new SAXParseException(
                         "Not an absolute URI.", publicId, systemId, -1, -1,
-                        new IOException());
+                        new IOException("Not an absolute URI."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -171,9 +171,10 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
             String scheme = iri.getScheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
+                String msg = "Unsupported URI scheme: \u201C" + scheme + "\u201D.";
                 SAXParseException spe = new SAXParseException(
-                        "Unsupported URI scheme: " + scheme, publicId,
-                        systemId, -1, -1, new IOException());
+                        msg, publicId,
+                        systemId, -1, -1, new IOException(msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -183,7 +184,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
                 SAXParseException spe = new SAXParseException(
                         "Attempted to connect to localhost.", publicId,
-                        systemId, -1, -1, new IOException());
+                        systemId, -1, -1, new IOException("Attempted to connect to localhost."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -220,10 +221,12 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             m.addRequestHeader("Accept", buildAccept());
             log4j.info(systemId);
             client.executeMethod(m);
-            if (m.getStatusCode() != 200) {
+            int statusCode = m.getStatusCode();
+            if (statusCode != 200) {
+                String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: " + statusCode + ".";
                 SAXParseException spe = new SAXParseException(
-                        "HTTP resource not retrievable.", publicId,
-                        m.getURI().toString(), -1, -1, new IOException());
+                        msg, publicId,
+                        m.getURI().toString(), -1, -1, new IOException(msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -233,7 +236,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
                         "Resource size exceeds limit.", publicId,
-                        m.getURI().toString(), -1, -1, new IOException());
+                        m.getURI().toString(), -1, -1, new IOException("Resource size exceeds limit."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -271,10 +274,11 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                                             is.getSystemId(), -1, -1));
                                 }
                             } else {
+                                String msg = "Non-HTML Content-Type: \u201C" + type + "\u201D.";
                                 SAXParseException spe = new SAXParseException(
-                                        "Non-HTML Content-Type: " + type,
+                                        msg,
                                         publicId, m.getURI().toString(), -1,
-                                        -1, new IOException());
+                                        -1, new IOException(msg));
                                 if (errorHandler != null) {
                                     errorHandler.fatalError(spe);
                                 }
@@ -284,10 +288,11 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                     } 
                     if (!wasHtml && (isAllowGenericXml() || isAllowXhtml() || isAcceptAllKnownXmlTypes())) {
                         if (!xmlContentType(type, is)) {
+                            String msg = "Non-XML Content-Type: \u201C" + type + "\u201D.";
                             SAXParseException spe = new SAXParseException(
-                                    "Non-XML Content-Type: " + type, publicId,
+                                    msg, publicId,
                                     m.getURI().toString(), -1, -1,
-                                    new IOException());
+                                    new IOException(msg));
                             if (errorHandler != null) {
                                 errorHandler.fatalError(spe);
                             }
