@@ -503,7 +503,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict.rng")
                 || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict-wcag.rng")
                 || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng")
-                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional-wcag.rng") || schemaUrls.startsWith("http://syntax.whattf.org/relaxng/xhtml5full-html.rnc"));
+                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional-wcag.rng") || schemaUrls.startsWith("http://syntax.whattf.org/relaxng/html5full.rnc"));
 
     }
 
