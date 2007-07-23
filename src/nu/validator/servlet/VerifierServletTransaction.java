@@ -630,6 +630,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                         null, document);
                 htmlParser = new HtmlParser();
                 htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+                htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
                 htmlParser.setMappingLangToXmlLang(true);
                 htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
                 DoctypeExpectation doctypeExpectation;
@@ -689,6 +690,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     errorHandler.info("The Content-Type was \u201Ctext/html\u201D. Using the HTML parser.");
                     htmlParser = new HtmlParser();
                     htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+                    htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
                     htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
                     htmlParser.setDocumentModeHandler(this);
                     reader = htmlParser;

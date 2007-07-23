@@ -70,6 +70,7 @@ public class Html5ConformanceCheckerTransaction extends
             usingHtml = true;
             htmlParser = new HtmlParser();
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+            htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
             htmlParser.setMappingLangToXmlLang(true);
             htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
             htmlParser.setDocumentModeHandler(this);
