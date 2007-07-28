@@ -41,7 +41,7 @@ namespace local = ""
 			}
 		img.attrs.ismap =
 			attribute ismap {
-				string "ismap"
+				string "ismap" | string ""
 			}
 	img.inner =
 		empty

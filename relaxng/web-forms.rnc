@@ -16,7 +16,7 @@
 
 	common-form.attrs.disabled = 
 		attribute disabled {
-			string "disabled"
+			string "disabled" | string ""
 		}
 
 	common-form.attrs.accesskey = 
@@ -26,7 +26,7 @@
 
 	common-form.attrs.readonly = 
 		attribute readonly {
-			string "readonly"
+			string "readonly" | string ""
 		}
 
 	common-form.attrs.maxlength = 
@@ -40,7 +40,7 @@
 	
 	input.attrs.checked = 
 		attribute checked {
-			string "checked"
+			string "checked" | string ""
 		}
 
 ## Text Field: <input type='text'>
@@ -332,7 +332,7 @@
 		)
 		option.attrs.selected =
 			attribute selected {
-				string "selected"
+				string "selected" | string ""
 			}
 		option.attrs.label =
 			attribute label {
@@ -375,7 +375,7 @@
 			}
 		select.attrs.multiple =
 			attribute multiple {
-				string "multiple"
+				string "multiple" | string ""
 			}
 	select.inner =
 		(	optgroup.elem*

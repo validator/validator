@@ -34,7 +34,7 @@
 			}
 		media.attrs.controls  =
 			attribute controls  {
-				string "controls"
+				string "controls" | string ""
 			}
 		
 ## Source: <source>

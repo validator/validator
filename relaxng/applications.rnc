@@ -71,11 +71,11 @@
 		)
 		datagrid.attrs.multiple =
 			attribute multiple {
-				string "multiple"
+				string "multiple" | string ""
 			}
 		datagrid.attrs.disabled =
 			attribute disabled {
-				string "disabled"
+				string "disabled" | string ""
 			}
 	datagrid.inner =
 		( common.inner.block )
@@ -125,15 +125,15 @@
 			}
 		command.attrs.hidden =
 			attribute hidden {
-				string "hidden"
+				string "hidden" | string ""
 			}
 		command.attrs.disabled =
 			attribute disabled {
-				string "disabled"
+				string "disabled" | string ""
 			}
 		command.attrs.checked =
 			attribute checked {
-				string "checked"
+				string "checked" | string ""
 			}
 		command.attrs.radiogroup =
 			attribute radiogroup {
@@ -141,7 +141,7 @@
 			}
 		command.attrs.default =
 			attribute default {
-				string "default"
+				string "default" | string ""
 			}
 	command.inner =
 		( empty )
@@ -176,7 +176,7 @@
 			}
 		menu.attrs.autosubmit =
 			attribute autosubmit {
-				string "autosubmit"
+				string "autosubmit" | string ""
 			}
 	menu.inner =
 		(	li.elem.inline*
@@ -259,7 +259,7 @@
 		)
 		details.attrs.open =
 			attribute open {
-				string "open"
+				string "open" | string ""
 			}
 	details.inner =
 		(	legend.elem.strict-inline

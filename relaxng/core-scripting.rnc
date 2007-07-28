@@ -28,11 +28,11 @@
 			}
 		script.attrs.defer =
 			attribute defer {
-				string "defer"
+				string "defer" | string ""
 			}
 		script.attrs.async =
 			attribute async {
-				string "async"
+				string "async" | string ""
 			} & v5only
 		script.attrs.type =
 			attribute type {

@@ -25,7 +25,7 @@
 		
 	common-form.attrs.autofocus = 
 		attribute autofocus {
-			string "autofocus"
+			string "autofocus" | string ""
 		}
 	
 	common-form.attrs.pattern = 
@@ -92,7 +92,7 @@
 	
 	input.attrs.required = 
 		attribute required {
-			string "required"
+			string "required" | string ""
 		}
 	
 ## Text Field: <input type='text'>, Extensions

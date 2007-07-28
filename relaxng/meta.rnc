@@ -157,7 +157,7 @@
 			}
 		style.attrs.scoped =
 			attribute scoped {
-				string "scoped"
+				string "scoped" | string ""
 			}
 	style.inner =
 		( common.inner.anything )
