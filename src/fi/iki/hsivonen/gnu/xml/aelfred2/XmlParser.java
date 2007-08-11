@@ -70,11 +70,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import nu.validator.io.EncodingInfo;
+
 import org.whattf.checker.NormalizationChecker;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import fi.iki.hsivonen.io.EncodingInfo;
 
 // Organized imports -- 2005-08-20 hsivonen
 
