@@ -29,9 +29,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nu.validator.xml.PrudentHttpEntityResolver;
+
 import org.apache.log4j.Logger;
 
-import fi.iki.hsivonen.xml.PrudentHttpEntityResolver;
 
 /**
  * @version $Id$

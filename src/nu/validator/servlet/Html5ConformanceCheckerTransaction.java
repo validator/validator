@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import nu.validator.htmlparser.DoctypeExpectation;
 import nu.validator.htmlparser.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.xml.TypedInputSource;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -17,7 +18,6 @@ import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.validate.IncorrectSchemaException;
 
-import fi.iki.hsivonen.xml.TypedInputSource;
 
 public class Html5ConformanceCheckerTransaction extends
         VerifierServletTransaction {

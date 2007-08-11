@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import nu.validator.htmlparser.test.ListErrorHandler;
 import nu.validator.htmlparser.test.TreeDumpContentHandler;
+import nu.validator.xml.NullEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver;
+import nu.validator.xml.TypedInputSource;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -18,9 +21,6 @@ import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
 
 import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
-import fi.iki.hsivonen.xml.NullEntityResolver;
-import fi.iki.hsivonen.xml.PrudentHttpEntityResolver;
-import fi.iki.hsivonen.xml.TypedInputSource;
 
 public class ParseTreePrinter {
     

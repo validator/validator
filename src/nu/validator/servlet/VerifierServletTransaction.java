@@ -90,19 +90,19 @@ import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 
 import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
-import fi.iki.hsivonen.xml.AttributesImpl;
-import fi.iki.hsivonen.xml.HtmlSerializer;
-import fi.iki.hsivonen.xml.LocalCacheEntityResolver;
-import fi.iki.hsivonen.xml.NullEntityResolver;
-import fi.iki.hsivonen.xml.PrudentHttpEntityResolver;
-import fi.iki.hsivonen.xml.SystemErrErrorHandler;
-import fi.iki.hsivonen.xml.TypedInputSource;
-import fi.iki.hsivonen.xml.XhtmlIdFilter;
-import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
-import fi.karppinen.xml.CharacterUtil;
 
 import nu.validator.htmlparser.*;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.xml.AttributesImpl;
+import nu.validator.xml.CharacterUtil;
+import nu.validator.xml.HtmlSerializer;
+import nu.validator.xml.LocalCacheEntityResolver;
+import nu.validator.xml.NullEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver;
+import nu.validator.xml.SystemErrErrorHandler;
+import nu.validator.xml.TypedInputSource;
+import nu.validator.xml.XhtmlIdFilter;
+import nu.validator.xml.XhtmlSaxEmitter;
 
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48

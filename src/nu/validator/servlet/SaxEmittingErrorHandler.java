@@ -22,10 +22,11 @@
 
 package nu.validator.servlet;
 
+import nu.validator.xml.XhtmlSaxEmitter;
+
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import fi.iki.hsivonen.xml.XhtmlSaxEmitter;
 
 public abstract class SaxEmittingErrorHandler extends AbstractErrorHandler {
 

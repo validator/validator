@@ -24,13 +24,14 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 
+import nu.validator.xml.CharacterUtil;
+
 import org.whattf.checker.NormalizationChecker;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.ibm.icu.text.Normalizer;
 
-import fi.karppinen.xml.CharacterUtil;
 
 public abstract class AbstractErrorHandler implements InfoErrorHandler {
 
