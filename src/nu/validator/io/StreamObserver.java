@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003, 2004 Henri Sivonen
+ * Copyright (c) 2005 Henri Sivonen
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,30 +20,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
- *
- * @author  hsivonen
+ * @version $Id$
+ * @author hsivonen
  */
-public class NullEntityResolver implements EntityResolver {
+public interface StreamObserver {
+    public void closeCalled();
+
+    public void exceptionOccurred(Exception ex);
     
-    /** Creates a new instance of NullEntityResolver */
-    public NullEntityResolver() {
-    }
-    
-    public InputSource resolveEntity(String str, String str1) throws SAXException, IOException {
-        InputSource is = new InputSource(new ByteArrayInputStream(new byte[0]));
-        is.setPublicId(str);
-        is.setSystemId(str1);
-        return is;
-    }
-    
+    public void finalizerCalled();
 }

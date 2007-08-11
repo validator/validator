@@ -20,42 +20,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.io;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
+import java.io.IOException;
 
 /**
  * @version $Id$
  * @author hsivonen
  */
-public class SaxEmitter {
-    protected ContentHandler contentHandler;
+public class StreamBoundException extends IOException {
 
     /**
-     * @param contentHandler
+     * 
      */
-    public SaxEmitter(ContentHandler contentHandler) {
-        this.contentHandler = contentHandler;
-    }
-    public void startElement(String ns, String name, Attributes attrs) throws SAXException {
-        this.contentHandler.startElement(ns, name, name, attrs);
-    }
-    
-    public void startElement(String ns, String name) throws SAXException {
-        this.contentHandler.startElement(ns, name, name, EmptyAttributes.EMPTY_ATTRIBUTES);
-    }
-    
-    public void endElement(String ns, String name) throws SAXException {
-        this.contentHandler.endElement(ns, name, name);
-    }
+    private static final long serialVersionUID = -7734184588203817203L;
 
-    public void characters(String content) throws SAXException {
-        this.contentHandler.characters(content.toCharArray(), 0, content.length());
-    }
-
-    public void characters(char[] content) throws SAXException {
-        this.contentHandler.characters(content, 0, content.length);
-    }
 }

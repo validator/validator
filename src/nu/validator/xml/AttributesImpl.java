@@ -20,58 +20,43 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.io;
+package nu.validator.xml;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.nio.charset.CharacterCodingException;
+import org.xml.sax.Attributes;
 
 /**
  * @version $Id$
  * @author hsivonen
  */
-public class NonBufferingAsciiInputStreamReader extends Reader {
-    private InputStream stream;
-    
+public class AttributesImpl extends org.xml.sax.helpers.AttributesImpl {
+
     /**
-     * @param arg0
+     * 
      */
-    public NonBufferingAsciiInputStreamReader(InputStream stream) {
-        this.stream = stream;
-    }
-    
-    /**
-     * @throws java.io.IOException
-     */
-    public void close() throws IOException {
-        stream.close();
-    }
-    /**
-     * @see java.io.Reader#read()
-     */
-    public int read() throws IOException {
-        int rv = stream.read();
-        if (rv < 0x80) {
-            return rv;
-        } else {
-            throw new CharacterCodingException();
-        }
+    public AttributesImpl() {
+        super();
     }
 
     /**
-     * @see java.io.Reader#read(char[], int, int)
+     * @param atts
      */
-    public int read(char[] buf, int off, int len) throws IOException {
-        int val = read();
-        if(val == -1) {
-            return -1;
-        } else {
-            buf[off] = (char) val;
-            return 1;
-        }
+    public AttributesImpl(Attributes atts) {
+        super(atts);
     }
 
-    
-    
+    /**
+     * Adds an attribute that is not in a namespace. The infoset type 
+     * of the attribute will be ID if the <code>localName</code> is 
+     * "id" and CDATA otherwise.
+     * 
+     * @param localName the local name of the attribute
+     * @param value the value of the attribute
+     */
+    public void addAttribute(String localName, String value) {
+        if ("id".equals(localName)) {
+            super.addAttribute("", localName, localName, "ID", value);
+        } else {
+            super.addAttribute("", localName, localName, "CDATA", value);
+        }
+    }
 }

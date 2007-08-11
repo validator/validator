@@ -20,43 +20,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.xml;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * @version $Id$
  * @author hsivonen
  */
-public class AttributesImpl extends org.xml.sax.helpers.AttributesImpl {
+public class SaxEmitter {
+    protected ContentHandler contentHandler;
 
     /**
-     * 
+     * @param contentHandler
      */
-    public AttributesImpl() {
-        super();
+    public SaxEmitter(ContentHandler contentHandler) {
+        this.contentHandler = contentHandler;
+    }
+    public void startElement(String ns, String name, Attributes attrs) throws SAXException {
+        this.contentHandler.startElement(ns, name, name, attrs);
+    }
+    
+    public void startElement(String ns, String name) throws SAXException {
+        this.contentHandler.startElement(ns, name, name, EmptyAttributes.EMPTY_ATTRIBUTES);
+    }
+    
+    public void endElement(String ns, String name) throws SAXException {
+        this.contentHandler.endElement(ns, name, name);
     }
 
-    /**
-     * @param atts
-     */
-    public AttributesImpl(Attributes atts) {
-        super(atts);
+    public void characters(String content) throws SAXException {
+        this.contentHandler.characters(content.toCharArray(), 0, content.length());
     }
 
-    /**
-     * Adds an attribute that is not in a namespace. The infoset type 
-     * of the attribute will be ID if the <code>localName</code> is 
-     * "id" and CDATA otherwise.
-     * 
-     * @param localName the local name of the attribute
-     * @param value the value of the attribute
-     */
-    public void addAttribute(String localName, String value) {
-        if ("id".equals(localName)) {
-            super.addAttribute("", localName, localName, "ID", value);
-        } else {
-            super.addAttribute("", localName, localName, "CDATA", value);
-        }
+    public void characters(char[] content) throws SAXException {
+        this.contentHandler.characters(content, 0, content.length);
     }
 }

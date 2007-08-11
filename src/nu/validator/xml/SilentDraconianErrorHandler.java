@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2004 Henri Sivonen
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,19 +20,39 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.io;
+package nu.validator.xml;
 
-import java.io.IOException;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
+ * Throws the exception on errors and fatal errors. Ignores warnings.
+ * Does not print anything.
+ * 
  * @version $Id$
  * @author hsivonen
  */
-public class StreamBoundException extends IOException {
+public class SilentDraconianErrorHandler implements ErrorHandler {
 
     /**
-     * 
+     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
-    private static final long serialVersionUID = -7734184588203817203L;
+    public void warning(SAXParseException arg0) throws SAXException {
+    }
+
+    /**
+     * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
+     */
+    public void error(SAXParseException arg0) throws SAXException {
+        throw arg0;
+    }
+
+    /**
+     * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
+     */
+    public void fatalError(SAXParseException arg0) throws SAXException {
+        throw arg0;
+    }
 
 }

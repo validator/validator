@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.io;
+package nu.validator.io;
 
 import java.io.IOException;
 import java.io.OutputStream;

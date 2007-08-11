@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -337,7 +337,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
             is.setByteStream(new ObservableInputStream(stream,
                     new StreamObserver() {
-                        private final Logger log4j = Logger.getLogger("fi.iki.hsivonen.xml.PrudentEntityResolver.StreamObserver");
+                        private final Logger log4j = Logger.getLogger("nu.validator.xml.PrudentEntityResolver.StreamObserver");
 
                         private boolean released = false;
 

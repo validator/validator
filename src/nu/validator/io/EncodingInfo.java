@@ -1,4 +1,4 @@
-package fi.iki.hsivonen.io;
+package nu.validator.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

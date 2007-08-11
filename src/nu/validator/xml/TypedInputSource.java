@@ -1,4 +1,4 @@
-package fi.iki.hsivonen.xml;
+package nu.validator.xml;
 
 import java.io.InputStream;
 import java.io.Reader;

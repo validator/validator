@@ -1,4 +1,4 @@
-package fi.iki.hsivonen.xml;
+package nu.validator.xml;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

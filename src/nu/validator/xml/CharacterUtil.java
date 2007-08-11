@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 Henri Sivonen
+ * Copyright (c) 2005 Marko Karppinen & Co. LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,39 +20,28 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.xml;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Throws the exception on errors and fatal errors. Ignores warnings.
- * Does not print anything.
- * 
  * @version $Id$
  * @author hsivonen
  */
-public class SilentDraconianErrorHandler implements ErrorHandler {
+public class CharacterUtil {
 
-    /**
-     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
-     */
-    public void warning(SAXParseException arg0) throws SAXException {
+    private final static Pattern MINIMAL = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]");
+
+    // FIXME include UTF-16 representations of U+?FFFE and U+?FFFF.
+    private final static Pattern PRUDENT = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]|\\uFEFF|[\\x7F-\\x84]|[\\x86-\\x9F]|[\\uFDD0-\\uFDDF]");
+    
+    public static String scrubCharacterData(CharSequence data) {
+        Matcher m = MINIMAL.matcher(data);
+        return m.replaceAll("");
     }
-
-    /**
-     * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
-     */
-    public void error(SAXParseException arg0) throws SAXException {
-        throw arg0;
-    }
-
-    /**
-     * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
-     */
-    public void fatalError(SAXParseException arg0) throws SAXException {
-        throw arg0;
-    }
-
+    public static String prudentlyScrubCharacterData(CharSequence data) {
+        Matcher m = PRUDENT.matcher(data);
+        return m.replaceAll("");
+    }    
 }

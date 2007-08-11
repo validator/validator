@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005 Marko Karppinen & Co. LLC
+ * Copyright (c) 2005 Henri Sivonen
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,28 +20,58 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.iki.hsivonen.xml;
+package nu.validator.io;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.charset.CharacterCodingException;
 
 /**
  * @version $Id$
  * @author hsivonen
  */
-public class CharacterUtil {
-
-    private final static Pattern MINIMAL = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]");
-
-    // FIXME include UTF-16 representations of U+?FFFE and U+?FFFF.
-    private final static Pattern PRUDENT = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]|\\uFEFF|[\\x7F-\\x84]|[\\x86-\\x9F]|[\\uFDD0-\\uFDDF]");
+public class NonBufferingAsciiInputStreamReader extends Reader {
+    private InputStream stream;
     
-    public static String scrubCharacterData(CharSequence data) {
-        Matcher m = MINIMAL.matcher(data);
-        return m.replaceAll("");
+    /**
+     * @param arg0
+     */
+    public NonBufferingAsciiInputStreamReader(InputStream stream) {
+        this.stream = stream;
     }
-    public static String prudentlyScrubCharacterData(CharSequence data) {
-        Matcher m = PRUDENT.matcher(data);
-        return m.replaceAll("");
-    }    
+    
+    /**
+     * @throws java.io.IOException
+     */
+    public void close() throws IOException {
+        stream.close();
+    }
+    /**
+     * @see java.io.Reader#read()
+     */
+    public int read() throws IOException {
+        int rv = stream.read();
+        if (rv < 0x80) {
+            return rv;
+        } else {
+            throw new CharacterCodingException();
+        }
+    }
+
+    /**
+     * @see java.io.Reader#read(char[], int, int)
+     */
+    public int read(char[] buf, int off, int len) throws IOException {
+        int val = read();
+        if(val == -1) {
+            return -1;
+        } else {
+            buf[off] = (char) val;
+            return 1;
+        }
+    }
+
+    
+    
 }
