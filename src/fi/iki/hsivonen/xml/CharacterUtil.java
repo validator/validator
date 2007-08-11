@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package fi.karppinen.xml;
+package fi.iki.hsivonen.xml;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

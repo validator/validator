@@ -30,13 +30,14 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Arrays;
 
+import nu.validator.io.NcrEscapingWindows1252OutputStreamWriter;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import fi.iki.hsivonen.io.NcrEscapingWindows1252OutputStreamWriter;
 
 /**
  * Serializes a sequence of SAX events representing an XHTML 1.0 Strict document

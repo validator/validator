@@ -31,6 +31,10 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nu.validator.io.BoundednputStream;
+import nu.validator.io.ObservableInputStream;
+import nu.validator.io.StreamObserver;
+
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -49,9 +53,6 @@ import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
 
-import fi.iki.hsivonen.io.BoundednputStream;
-import fi.iki.hsivonen.io.ObservableInputStream;
-import fi.iki.hsivonen.io.StreamObserver;
 
 /**
  * @version $Id: PrudentHttpEntityResolver.java,v 1.1 2005/01/08 08:11:26
