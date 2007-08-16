@@ -92,6 +92,10 @@ import com.thaiopensource.validate.rng.RngProperty;
 import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
 
 import nu.validator.htmlparser.*;
+import nu.validator.htmlparser.common.DoctypeExpectation;
+import nu.validator.htmlparser.common.DocumentMode;
+import nu.validator.htmlparser.common.DocumentModeHandler;
+import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;

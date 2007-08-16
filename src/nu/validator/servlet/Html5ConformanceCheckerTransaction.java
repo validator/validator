@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nu.validator.htmlparser.DoctypeExpectation;
-import nu.validator.htmlparser.XmlViolationPolicy;
+import nu.validator.htmlparser.common.DoctypeExpectation;
+import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.xml.TypedInputSource;
 
