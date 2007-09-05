@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -63,8 +64,6 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
 
-    private static final Pattern CHARSET = Pattern.compile("^\\s*charset\\s*=\\s*(\\S+)\\s*$");
-
     private static final MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
 
     private static final HttpClient client = new HttpClient(manager);
@@ -90,6 +89,8 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     private boolean allowGenericXml = true;
 
     private final IRIFactory iriFactory;
+    
+    private final ContentTypeParser contentTypeParser;
 
     /**
      * Sets the timeouts of the HTTP client.
@@ -131,6 +132,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         this.iriFactory.useSpecificationXMLSystemID(true);
         this.iriFactory.useSchemeSpecificRules("http", true);
         this.iriFactory.useSchemeSpecificRules("https", true);
+        this.contentTypeParser = new ContentTypeParser(errorHandler, laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml, this.acceptAllKnownXmlTypes, this.allowGenericXml);
     }
 
     /**
@@ -243,93 +245,14 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-            TypedInputSource is = new TypedInputSource();
-            is.setPublicId(publicId);
-            is.setSystemId(m.getURI().toString());
+            TypedInputSource is;
             Header ct = m.getResponseHeader("Content-Type");
+            String contentType = null;
+            String baseUri = m.getURI().toString();
             if (ct != null) {
-                String val = ct.getValue();
-                String[] params = val.split(";");
-                String type = params[0].trim();
-                boolean wasRnc = false;
-                boolean wasHtml = false;
-                if (isAllowRnc()) {
-                    if (rncContentType(type, is)) {
-                        wasRnc = true;
-                        is.setType("application/relax-ng-compact-syntax");
-                    }
-                }
-                if (!wasRnc) {
-                    if (isAllowHtml()) {
-                        if ("text/html".equals(type)) {
-                            is.setType(type);
-                            wasHtml = true;
-                        } else if (isOnlyHtmlAllowed()) {
-                            if (laxContentType && "text/plain".equals(type)) {
-                                is.setType(type);
-                                wasHtml = true;
-                                if (errorHandler != null) {
-                                    errorHandler.warning(new SAXParseException(
-                                            "Being lax about non-HTML Content-Type: "
-                                                    + type, is.getPublicId(),
-                                            is.getSystemId(), -1, -1));
-                                }
-                            } else {
-                                String msg = "Non-HTML Content-Type: \u201C" + type + "\u201D.";
-                                SAXParseException spe = new SAXParseException(
-                                        msg,
-                                        publicId, m.getURI().toString(), -1,
-                                        -1, new IOException(msg));
-                                if (errorHandler != null) {
-                                    errorHandler.fatalError(spe);
-                                }
-                                throw spe;
-                            }
-                        }
-                    } 
-                    if (!wasHtml && (isAllowGenericXml() || isAllowXhtml() || isAcceptAllKnownXmlTypes())) {
-                        if (!xmlContentType(type, is)) {
-                            String msg = "Non-XML Content-Type: \u201C" + type + "\u201D.";
-                            SAXParseException spe = new SAXParseException(
-                                    msg, publicId,
-                                    m.getURI().toString(), -1, -1,
-                                    new IOException(msg));
-                            if (errorHandler != null) {
-                                errorHandler.fatalError(spe);
-                            }
-                            throw spe;
-                        } else {
-                            is.setType(type);
-                        }
-                    }
-                }
-                String charset = null;
-                for (int i = 1; i < params.length; i++) {
-                    Matcher matcher = CHARSET.matcher(params[i]);
-                    if (matcher.matches()) {
-                        charset = matcher.group(1);
-                        break;
-                    }
-                }
-                if (charset != null) {
-                    is.setEncoding(charset);
-                } else if (type.startsWith("text/") && !wasHtml) {
-                    if (laxContentType) {
-                        if (errorHandler != null) {
-                            errorHandler.warning(new SAXParseException(
-                                    "text/* type without a charset parameter seen. Would have defaulted to US-ASCII had the lax option not been chosen.",
-                                    is.getPublicId(), is.getSystemId(), -1, -1));
-                        }
-                    } else {
-                        is.setEncoding("US-ASCII");
-                        if (errorHandler != null) {
-                            errorHandler.warning(new SAXParseException(
-                                    "text/* type without a charset parameter seen. Defaulting to US-ASCII per section 3.1 of RFC 3023.",
-                                    is.getPublicId(), is.getSystemId(), -1, -1));
-                        }
-                    }
-                }
+                contentType = ct.getValue();
             }
+            is = contentTypeParser.buildTypedInputSource(baseUri, publicId, contentType);
             final GetMethod meth = m;
             InputStream stream = m.getResponseBodyAsStream();
             if (sizeLimit > -1) {
@@ -443,64 +366,6 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         }
     }
 
-    protected boolean xmlContentType(String type, InputSource is)
-            throws SAXException {
-        if ("application/xhtml-voice+xml".equals(type)) {
-            if (errorHandler != null) {
-                errorHandler.warning(new SAXParseException(
-                        "application/xhtml-voice+xml is an obsolete type.",
-                        is.getPublicId(), is.getSystemId(), -1, -1));
-            }
-        }
-        boolean typeOk = "application/xml".equals(type)
-                || "text/xml".equals(type) || type.endsWith("+xml")
-                || "application/xml-external-parsed-entity".equals(type)
-                || "text/xml-external-parsed-entity".equals(type)
-                || "application/xml-dtd".equals(type)
-                || "application/octet-stream".equals(type);
-        if (!typeOk && laxContentType) {
-            boolean laxOk = "text/plain".equals(type)
-                    || "text/html".equals(type) || "text/xsl".equals(type);
-            if (laxOk && errorHandler != null) {
-                errorHandler.warning(new SAXParseException(
-                        "Being lax about non-XML Content-Type: " + type,
-                        is.getPublicId(), is.getSystemId(), -1, -1));
-            }
-            return laxOk;
-        } else {
-            return typeOk;
-        }
-    }
-
-    protected boolean rncContentType(String type, InputSource is)
-            throws SAXException {
-        boolean typeOk = "application/relax-ng-compact-syntax".equals(type);
-        if (!typeOk) {
-            typeOk = "application/vnd.relax-ng.rnc".equals(type);
-            if (typeOk && errorHandler != null) {
-                errorHandler.warning(new SAXParseException(
-                        "application/vnd.relax-ng.rnc is an unregistered type. application/relax-ng-compact-syntax is the registered type.",
-                        is.getPublicId(), is.getSystemId(), -1, -1));
-            }
-        }
-        if (!typeOk) {
-            typeOk = "application/octet-stream".equals(type)
-                    && is.getSystemId().endsWith(".rnc");
-        }
-        if (!typeOk && laxContentType) {
-            boolean laxOk = "text/plain".equals(type)
-                    && is.getSystemId().endsWith(".rnc");
-            if (laxOk && errorHandler != null) {
-                errorHandler.warning(new SAXParseException(
-                        "Being lax about non-RNC Content-Type: " + type,
-                        is.getPublicId(), is.getSystemId(), -1, -1));
-            }
-            return laxOk;
-        } else {
-            return typeOk;
-        }
-    }
-
     /**
      * @return Returns the allowRnc.
      */
@@ -514,13 +379,15 @@ public class PrudentHttpEntityResolver implements EntityResolver {
      */
     public void setAllowRnc(boolean allowRnc) {
         this.allowRnc = allowRnc;
+        this.contentTypeParser.setAllowRnc(allowRnc);
     }
 
     /**
      * @param b
      */
-    public void setAllowHtml(boolean expectHtml) {
-        this.allowHtml = expectHtml;
+    public void setAllowHtml(boolean allowHtml) {
+        this.allowHtml = allowHtml;
+        this.contentTypeParser.setAllowHtml(allowHtml);
     }
 
     /**
@@ -540,6 +407,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
      */
     public void setAcceptAllKnownXmlTypes(boolean acceptAllKnownXmlTypes) {
         this.acceptAllKnownXmlTypes = acceptAllKnownXmlTypes;
+        this.contentTypeParser.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
     }
 
     /**
@@ -559,6 +427,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
      */
     public void setAllowGenericXml(boolean allowGenericXml) {
         this.allowGenericXml = allowGenericXml;
+        this.contentTypeParser.setAllowGenericXml(allowGenericXml);
     }
 
     /**
@@ -578,6 +447,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
      */
     public void setAllowXhtml(boolean allowXhtml) {
         this.allowXhtml = allowXhtml;
+        this.contentTypeParser.setAllowXhtml(allowXhtml);
     }
 
     private String buildAccept() {
