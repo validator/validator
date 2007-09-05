@@ -100,6 +100,7 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
      */
     private void emitErrorLocation(SAXParseException e) throws SAXException {
         int line = e.getLineNumber();
+        int col = e.getColumnNumber();
         String systemId = e.getSystemId();
         if (systemId == null) {
             return;
@@ -107,12 +108,24 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
         this.emitter.startElement("p");
         if (line > -1) {
             this.emitter.characters(LINE);
+            this.emitter.startElementWithClass("span", "line");
             this.emitter.characters("" + line);
-            this.emitter.characters(COLUMN);
-            this.emitter.characters("" + e.getColumnNumber());
-            this.emitter.characters(IN_RESOURCE);
+            this.emitter.endElement("span");
+            if (col > -1) {
+                this.emitter.characters(COLUMN);
+                this.emitter.startElementWithClass("span", "col");
+                this.emitter.characters("" + col);
+                this.emitter.endElement("span");
+            }
+            if (systemId != null) {
+                this.emitter.characters(IN_RESOURCE);
+            }
         }
-        this.emitter.characters(scrub(systemId));
+        if (systemId != null) {
+            this.emitter.startElementWithClass("span", "url");
+            this.emitter.characters(scrub(systemId));
+            this.emitter.endElement("span");
+        }
         this.emitter.endElement("p");
     }
 

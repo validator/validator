@@ -82,6 +82,9 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
     public final void warning(SAXParseException e) throws SAXException {
+        if (fatalErrors > 0) {
+            return;
+        }
         this.warnings++;
         warningImpl(e);
     }
@@ -90,6 +93,9 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
     public final void error(SAXParseException e) throws SAXException {
+        if (fatalErrors > 0) {
+            return;
+        }
         this.errors++;
         errorImpl(e);
     }
@@ -98,6 +104,9 @@ public abstract class AbstractErrorHandler implements InfoErrorHandler {
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
     public final void fatalError(SAXParseException e) throws SAXException {
+        if (fatalErrors > 0) {
+            return;
+        }
         this.fatalErrors++;
         Exception wrapped = e.getException();
         if (wrapped instanceof IOException) {
