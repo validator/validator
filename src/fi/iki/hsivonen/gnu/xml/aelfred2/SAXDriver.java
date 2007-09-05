@@ -615,7 +615,7 @@ final public class SAXDriver
         return;
       }
 
-    if ("http://hsivonen.iki.fi/checkers/nfc/".equals(featureId))
+    if ("http://xml.org/sax/features/unicode-normalization-checking".equals(featureId))
       {
         checkNormalization = value;
         return;
