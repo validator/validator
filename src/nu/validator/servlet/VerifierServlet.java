@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -53,11 +54,23 @@ public class VerifierServlet extends HttpServlet {
                 "VerifierServlet-RELAX-NG-Validator/2.x (http://validator.nu/)"));
     }
 
+    
+    
     /**
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
+     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doPost(request, response);
+    }
+
+
+
+    /**
+     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    protected void doGet(HttpServletRequest request,
+    protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         String serverName = request.getServerName();
@@ -66,7 +79,7 @@ public class VerifierServlet extends HttpServlet {
         if (serverName.endsWith("validator.nu")) {
             if ("validator.nu".equals(serverName)) {
                 if ("/".equals(pathInfo)) {
-                    new VerifierServletTransaction(request, response).doGet();
+                    new VerifierServletTransaction(request, response).service();
                 } else if ("/html5/".equals(pathInfo)) {
                     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
                     String queryString = request.getQueryString();
@@ -76,7 +89,7 @@ public class VerifierServlet extends HttpServlet {
                 }
             } else if ("html5.validator.nu".equals(serverName)) {
                 if ("/".equals(pathInfo)) {
-                    new Html5ConformanceCheckerTransaction(request, response).doGet();
+                    new Html5ConformanceCheckerTransaction(request, response).service();
                 } else {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 }
@@ -91,9 +104,9 @@ public class VerifierServlet extends HttpServlet {
             }
         } else {
             if ("/".equals(pathInfo)) {
-                new VerifierServletTransaction(request, response).doGet();
+                new VerifierServletTransaction(request, response).service();
             } else if ("/html5/".equals(pathInfo)) {
-                new Html5ConformanceCheckerTransaction(request, response).doGet();
+                new Html5ConformanceCheckerTransaction(request, response).service();
             } else if ("/parsetree/".equals(pathInfo)) {
                 new ParseTreePrinter(request, response).service();
             } else {

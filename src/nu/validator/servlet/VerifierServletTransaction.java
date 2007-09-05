@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -99,6 +100,7 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
+import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.HtmlSerializer;
 import nu.validator.xml.LocalCacheEntityResolver;
 import nu.validator.xml.NullEntityResolver;
@@ -114,18 +116,11 @@ import nu.validator.xml.XhtmlSaxEmitter;
  * @author hsivonen
  */
 class VerifierServletTransaction implements DocumentModeHandler {
-    
+
     private enum OutputFormat {
-        HTML,
-        XHTML,
-        TEXT,
-        XML,
-        JSON,
-        RELAXED,
-        SOAP,
-        UNICORN
+        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN
     }
-    
+
     private static final Logger log4j = Logger.getLogger(VerifierServletTransaction.class);
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
@@ -144,6 +139,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private static final char[] RESULTS_TITLE = "Validation results for ".toCharArray();
 
+    private static final char[] FOR = " for ".toCharArray();
+    
     private static final Map pathMap = new HashMap();
 
     private static int[] presetDoctypes;
@@ -163,14 +160,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "http://www.w3.org/1999/xhtml", "http://www.w3.org/1999/xhtml" };
 
     private static final String[] ALL_CHECKERS = {
-        "http://hsivonen.iki.fi/checkers/table/",
-        "http://hsivonen.iki.fi/checkers/nfc/",
-        "http://hsivonen.iki.fi/checkers/significant-inline/",
-        "http://hsivonen.iki.fi/checkers/text-content/"};
+            "http://hsivonen.iki.fi/checkers/table/",
+            "http://hsivonen.iki.fi/checkers/nfc/",
+            "http://hsivonen.iki.fi/checkers/significant-inline/",
+            "http://hsivonen.iki.fi/checkers/text-content/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
-        "http://hsivonen.iki.fi/checkers/table/",
-        "http://hsivonen.iki.fi/checkers/nfc/" };
+            "http://hsivonen.iki.fi/checkers/table/",
+            "http://hsivonen.iki.fi/checkers/nfc/" };
 
     private long start = System.currentTimeMillis();
 
@@ -180,7 +177,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private IRIFactory iriFactory;
 
-    protected String document;
+    protected String document = null;
 
     private ParserMode parser = ParserMode.AUTO;
 
@@ -222,13 +219,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     protected PrudentHttpEntityResolver httpRes;
 
+    protected ContentTypeParser contentTypeParser;
+
     private Set<String> loadedValidatorUrls = new HashSet<String>();
-    
+
     private boolean checkNormalization = false;
 
     private boolean rootNamespaceSeen = false;
 
     private OutputFormat outputFormat;
+
+    private String postContentType;
+
+    private boolean methodIsGet;
 
     static {
         try {
@@ -380,53 +383,75 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     protected boolean willValidate() {
-        return document != null;
+        if (methodIsGet) {
+            return document != null;
+        } else { // POST
+            return true;
+        }
     }
 
-    void doGet() throws ServletException, IOException {
-
+    void service() throws ServletException, IOException {
+        this.methodIsGet = "GET".equals(request.getMethod());
+        
         this.out = response.getOutputStream();
 
         request.setCharacterEncoding("utf-8");
+
+        if (!methodIsGet) {
+            postContentType = request.getContentType();
+            if (postContentType == null) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Content-Type missing");
+                return;
+            }
+        }
         
         String outFormat = request.getParameter("out");
         if (outFormat == null) {
             outputFormat = OutputFormat.HTML;
         } else {
             if ("html".equals(outFormat)) {
-                outputFormat = OutputFormat.HTML;                
+                outputFormat = OutputFormat.HTML;
             } else if ("xhtml".equals(outFormat)) {
-                outputFormat = OutputFormat.XHTML;                                
+                outputFormat = OutputFormat.XHTML;
             } else if ("text".equals(outFormat)) {
                 outputFormat = OutputFormat.TEXT;
             } else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unsupported output format");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Unsupported output format");
                 return;
             }
         }
 
-        document = scrubUrl(request.getParameter("doc"));
-
-        document = ("".equals(document)) ? null : document;
+        if (!methodIsGet) {
+            document = scrubUrl(request.getHeader("Content-Location"));
+        }
+        if (document == null) {
+            document = scrubUrl(request.getParameter("doc"));
+        }
         
+        document = ("".equals(document)) ? null : document;
+
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-cache");
-        } else if (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML) {
-            response.setDateHeader("Last-Modified", lastModified);            
+        } else if (outputFormat == OutputFormat.HTML
+                || outputFormat == OutputFormat.XHTML) {
+            response.setDateHeader("Last-Modified", lastModified);
         } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "No input document");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "No input document");
             return;
         }
 
         setup();
 
         try {
-            if (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML) {
+            if (outputFormat == OutputFormat.HTML
+                    || outputFormat == OutputFormat.XHTML) {
                 if (outputFormat == OutputFormat.HTML) {
                     response.setContentType("text/html; charset=utf-8");
-                    contentHandler = new HtmlSerializer(out, HtmlSerializer.DOCTYPE_HTML5,
-                            false, "UTF-8");                    
+                    contentHandler = new HtmlSerializer(out,
+                            HtmlSerializer.DOCTYPE_HTML5, false, "UTF-8");
                 } else {
                     response.setContentType("application/xhtml+xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
@@ -435,11 +460,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new XhtmlEmittingErrorHandler(contentHandler);                
+                errorHandler = new XhtmlEmittingErrorHandler(contentHandler);
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
-                response.setContentType("text/plain; charset=utf-8");
+                    response.setContentType("text/plain; charset=utf-8");
                     CharsetEncoder enc = Charset.forName("UTF-8").newEncoder();
                     enc.onMalformedInput(CodingErrorAction.REPLACE);
                     enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
@@ -525,9 +550,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
         httpRes = new PrudentHttpEntityResolver(2048 * 1024, laxType,
                 errorHandler);
+        contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
-        httpRes.setAllowRnc(true);
-        entityResolver.setAllowRnc(true);
+        setAllowRnc(true);
         boolean stats = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
         try {
             this.errorHandler.start(document);
@@ -542,8 +567,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             tryToSetupValidator();
 
-            httpRes.setAllowRnc(false);
-            entityResolver.setAllowRnc(false);
+            setAllowRnc(false);
 
             loadDocAndSetupParser();
 
@@ -553,7 +577,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 checkNormalization = true;
             }
             if (checkNormalization) {
-                reader.setFeature("http://hsivonen.iki.fi/checkers/nfc/", true);
+                reader.setFeature("http://xml.org/sax/features/unicode-normalization-checking", true);
             }
             reader.parse(documentInput);
         } catch (SAXException e) {
@@ -569,12 +593,16 @@ class VerifierServletTransaction implements DocumentModeHandler {
             stats = false;
             log4j.error("RuntimeException, doc: " + document + " schema: "
                     + schemaUrls + " lax: " + laxType, e);
-            errorHandler.internalError(e, "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
+            errorHandler.internalError(
+                    e,
+                    "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } catch (Error e) {
             stats = false;
             log4j.error("Error, doc: " + document + " schema: " + schemaUrls
                     + " lax: " + laxType, e);
-            errorHandler.internalError(e, "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
+            errorHandler.internalError(
+                    e,
+                    "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } finally {
             errorHandler.end(successMessage(), failureMessage());
         }
@@ -584,7 +612,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     /**
-     * @return 
+     * @return
      * @throws SAXException
      */
     protected String successMessage() throws SAXException {
@@ -592,7 +620,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     protected String failureMessage() throws SAXException {
-       return "There were errors.";
+        return "There were errors.";
     }
 
     /**
@@ -626,12 +654,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     errorHandler.schemaError(se);
                     throw se;
                 }
-                httpRes.setAllowGenericXml(false);
-                httpRes.setAllowHtml(true);
-                httpRes.setAcceptAllKnownXmlTypes(false);
-                httpRes.setAllowXhtml(false);
-                documentInput = (TypedInputSource) entityResolver.resolveEntity(
-                        null, document);
+                setAllowGenericXml(false);
+                setAllowHtml(true);
+                setAcceptAllKnownXmlTypes(false);
+                setAllowXhtml(false);
+                loadDocumentInput();
                 htmlParser = new HtmlParser();
                 htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
                 htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
@@ -643,19 +670,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     case HTML:
                         doctypeExpectation = DoctypeExpectation.HTML;
                         schemaId = HTML5_SCHEMA;
-                        break;                    
+                        break;
                     case HTML401_STRICT:
                         doctypeExpectation = DoctypeExpectation.HTML401_STRICT;
                         schemaId = XHTML1STRICT_SCHEMA;
-                        break;                    
+                        break;
                     case HTML401_TRANSITIONAL:
                         doctypeExpectation = DoctypeExpectation.HTML401_TRANSITIONAL;
                         schemaId = XHTML1TRANSITIONAL_SCHEMA;
-                        break;                    
+                        break;
                     default:
                         doctypeExpectation = DoctypeExpectation.AUTO;
                         schemaId = 0;
-                        break;                    
+                        break;
                 }
                 htmlParser.setDoctypeExpectation(doctypeExpectation);
                 htmlParser.setDocumentModeHandler(this);
@@ -669,21 +696,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 break;
             case XML_NO_EXTERNAL_ENTITIES:
             case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
-                httpRes.setAllowGenericXml(true);
-                httpRes.setAllowHtml(false);
-                httpRes.setAcceptAllKnownXmlTypes(true);
-                httpRes.setAllowXhtml(true);
-                documentInput = (TypedInputSource) entityResolver.resolveEntity(
-                        null, document);
+                setAllowGenericXml(true);
+                setAllowHtml(false);
+                setAcceptAllKnownXmlTypes(true);
+                setAllowXhtml(true);
+                loadDocumentInput();
                 reader = setupXmlParser();
                 break;
             default:
-                httpRes.setAllowGenericXml(true);
-                httpRes.setAllowHtml(true);
-                httpRes.setAcceptAllKnownXmlTypes(true);
-                httpRes.setAllowXhtml(true);
-                documentInput = (TypedInputSource) entityResolver.resolveEntity(
-                        null, document);
+                setAllowGenericXml(true);
+                setAllowHtml(true);
+                setAcceptAllKnownXmlTypes(true);
+                setAllowXhtml(true);
+                loadDocumentInput();
                 if ("text/html".equals(documentInput.getType())) {
                     if (isHtmlUnsafePreset()) {
                         String message = "The Content-Type was \u201Ctext/html\u201D, but the chosen preset schema is not appropriate for HTML.";
@@ -777,10 +802,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
                             ALL_CHECKERS[j]);
                 }
             } else if ("http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
-                    for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
-                        validator = combineValidatorByUrl(validator,
-                                ALL_CHECKERS_HTML4[j]);
-                    }
+                for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
+                    validator = combineValidatorByUrl(validator,
+                            ALL_CHECKERS_HTML4[j]);
+                }
             } else {
                 validator = combineValidatorByUrl(validator, url);
             }
@@ -832,8 +857,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             return new CheckerValidator(new SignificantInlineChecker(),
                     jingPropertyMap);
         } else if ("http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
-            return new CheckerValidator(new DebugChecker(),
-                    jingPropertyMap);
+            return new CheckerValidator(new DebugChecker(), jingPropertyMap);
         } else if ("http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
             return new CheckerValidator(new TextContentChecker(),
                     jingPropertyMap);
@@ -898,7 +922,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
-            emitter.characters(scrub(document));
+            if (document != null) {
+                emitter.characters(FOR);                
+                emitter.characters(scrub(document));                
+            }
         } else {
             emitter.characters(SERVICE_TITLE);
             if (markupAllowed) {
@@ -1088,24 +1115,36 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
     }
 
-    public void documentMode(DocumentMode mode, String publicIdentifier, String systemIdentifier, boolean html4SpecificAdditionalErrorChecks) throws SAXException {
+    public void documentMode(DocumentMode mode, String publicIdentifier,
+            String systemIdentifier, boolean html4SpecificAdditionalErrorChecks)
+            throws SAXException {
         if (validator == null) {
             try {
                 if ("-//W3C//DTD XHTML 1.0 Transitional//EN".equals(publicIdentifier)) {
-                    errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
-                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);                    
+                    errorHandler.info("XHTML 1.0 Transitional doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Transitional."
+                            + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
+                                    : ""));
+                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
                 } else if ("-//W3C//DTD XHTML 1.0 Strict//EN".equals(publicIdentifier)) {
-                    errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
-                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);                    
+                    errorHandler.info("XHTML 1.0 Strict doctype seen. Appendix C is not supported. Proceeding anyway for your convenience. The parser is still an HTML parser, so namespace processing is not performed and \u201Cxml:*\u201D attributes are not supported. Using the schema for XHTML 1.0 Strict."
+                            + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
+                                    : ""));
+                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                 } else if ("-//W3C//DTD HTML 4.01 Transitional//EN".equals(publicIdentifier)) {
-                    errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for XHTML 1.0 Transitional." + (html4SpecificAdditionalErrorChecks ? "" : " HTML4-specific tokenization errors are not enabled."));
-                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);                    
+                    errorHandler.info("HTML 4.01 Transitional doctype seen. Using the schema for XHTML 1.0 Transitional."
+                            + (html4SpecificAdditionalErrorChecks ? ""
+                                    : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
                 } else if ("-//W3C//DTD HTML 4.01//EN".equals(publicIdentifier)) {
-                    errorHandler.info("HTML 4.01 Strict doctype seen. Using the schema for XHTML 1.0 Strict." + (html4SpecificAdditionalErrorChecks ? "" : " HTML4-specific tokenization errors are not enabled."));
-                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);                    
+                    errorHandler.info("HTML 4.01 Strict doctype seen. Using the schema for XHTML 1.0 Strict."
+                            + (html4SpecificAdditionalErrorChecks ? ""
+                                    : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                 } else {
-                    errorHandler.info("Using the schema for HTML5." + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled." : ""));
-                    validator = validatorByDoctype(HTML5_SCHEMA);                    
+                    errorHandler.info("Using the schema for HTML5."
+                            + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
+                                    : ""));
+                    validator = validatorByDoctype(HTML5_SCHEMA);
                 }
             } catch (IOException ioe) {
                 // At this point the schema comes from memory.
@@ -1120,8 +1159,68 @@ class VerifierServletTransaction implements DocumentModeHandler {
             htmlParser.setContentHandler(ch);
         } else {
             if (html4SpecificAdditionalErrorChecks) {
-                    errorHandler.info("HTML4-specific tokenization errors are enabled.");
+                errorHandler.info("HTML4-specific tokenization errors are enabled.");
             }
+        }
+    }
+
+    /**
+     * @param acceptAllKnownXmlTypes
+     * @see nu.validator.xml.ContentTypeParser#setAcceptAllKnownXmlTypes(boolean)
+     */
+    protected void setAcceptAllKnownXmlTypes(boolean acceptAllKnownXmlTypes) {
+        contentTypeParser.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
+        httpRes.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
+    }
+
+    /**
+     * @param allowGenericXml
+     * @see nu.validator.xml.ContentTypeParser#setAllowGenericXml(boolean)
+     */
+    protected void setAllowGenericXml(boolean allowGenericXml) {
+        contentTypeParser.setAllowGenericXml(allowGenericXml);
+        httpRes.setAllowGenericXml(allowGenericXml);
+    }
+
+    /**
+     * @param allowHtml
+     * @see nu.validator.xml.ContentTypeParser#setAllowHtml(boolean)
+     */
+    protected void setAllowHtml(boolean allowHtml) {
+        contentTypeParser.setAllowHtml(allowHtml);
+        httpRes.setAllowHtml(allowHtml);
+    }
+
+    /**
+     * @param allowRnc
+     * @see nu.validator.xml.ContentTypeParser#setAllowRnc(boolean)
+     */
+    protected void setAllowRnc(boolean allowRnc) {
+        contentTypeParser.setAllowRnc(allowRnc);
+        httpRes.setAllowRnc(allowRnc);
+        entityResolver.setAllowRnc(allowRnc);
+    }
+
+    /**
+     * @param allowXhtml
+     * @see nu.validator.xml.ContentTypeParser#setAllowXhtml(boolean)
+     */
+    protected void setAllowXhtml(boolean allowXhtml) {
+        contentTypeParser.setAllowXhtml(allowXhtml);
+        httpRes.setAllowXhtml(allowXhtml);
+    }
+
+    /**
+     * @throws SAXException
+     * @throws IOException
+     */
+    protected void loadDocumentInput() throws SAXException, IOException {
+        if (methodIsGet) {
+            documentInput = (TypedInputSource) entityResolver.resolveEntity(
+                    null, document);
+        } else { // POST
+            documentInput = contentTypeParser.buildTypedInputSource(document, null, postContentType);
+            documentInput.setByteStream(request.getInputStream());
         }
     }
 }

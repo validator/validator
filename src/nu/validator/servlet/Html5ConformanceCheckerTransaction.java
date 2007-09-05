@@ -1,3 +1,26 @@
+/*
+ * Copyright (c) 2005, 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a 
+ * copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation 
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the 
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * DEALINGS IN THE SOFTWARE.
+ */
+
 package nu.validator.servlet;
 
 import java.io.IOException;
@@ -9,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
-import nu.validator.xml.TypedInputSource;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -26,8 +48,10 @@ public class Html5ConformanceCheckerTransaction extends
 
     private static final char[] TECHNOLOGY_PREVIEW = "Technology Preview".toCharArray();
 
-    private static final char[] RESULTS_TITLE = "(X)HTML5 conformance checking results for ".toCharArray();
+    private static final char[] RESULTS_TITLE = "(X)HTML5 conformance checking results".toCharArray();
 
+    private static final char[] FOR = " for ".toCharArray();
+    
     private static final String SUCCESS_HTML = "The document conforms to the machine-checkable conformance requirements for HTML5 (subject to the utter previewness of this service).";
 
     private static final String SUCCESS_XHTML = "The document conforms to the machine-checkable conformance requirements for XHTML5 (subject to the utter previewness of this service).";
@@ -58,12 +82,11 @@ public class Html5ConformanceCheckerTransaction extends
      * @see nu.validator.servlet.VerifierServletTransaction#loadDocAndSetupParser()
      */
     protected void loadDocAndSetupParser() throws SAXException, IOException, IncorrectSchemaException, SAXNotRecognizedException, SAXNotSupportedException {
-        httpRes.setAllowGenericXml(false);
-        httpRes.setAcceptAllKnownXmlTypes(false);
-        httpRes.setAllowHtml(true);
-        httpRes.setAllowXhtml(true);
-        documentInput = (TypedInputSource) entityResolver.resolveEntity(
-                null, document);
+        setAllowGenericXml(false);
+        setAcceptAllKnownXmlTypes(false);
+        setAllowHtml(true);
+        setAllowXhtml(true);
+        loadDocumentInput();
         String type = documentInput.getType();
         if ("text/html".equals(type)) {
             validator = validatorByDoctype(HTML5_SCHEMA);
@@ -101,7 +124,10 @@ public class Html5ConformanceCheckerTransaction extends
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
-            emitter.characters(scrub(document));
+            if (document != null) {
+                emitter.characters(FOR);                
+                emitter.characters(scrub(document));                
+            }
         } else {
             emitter.characters(SERVICE_TITLE);
             if (markupAllowed) {
