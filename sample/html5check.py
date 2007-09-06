@@ -107,7 +107,7 @@ response = None
 status = 302
 redirectCount = 0
 
-while (status == 302 or status == 301) and redirectCount < 10:
+while (status == 302 or status == 301 or status == 307) and redirectCount < 10:
   if redirectCount > 0:
     url = response.getheader('Location')
   parsed = urlparse.urlsplit(url)
