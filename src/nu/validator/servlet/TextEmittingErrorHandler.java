@@ -63,7 +63,7 @@ public class TextEmittingErrorHandler extends AbstractErrorHandler {
             w("\nLine: ");
             w("" + line);
             if (col > -1) {
-                w(", column: ");
+                w("\nColumn: ");
                 w("" + col);
             }
         }
