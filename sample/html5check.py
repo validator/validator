@@ -23,6 +23,21 @@
 import httplib
 import os
 import sys
+import re
+import urlparse
+import string
+
+#url = 'http://html5.validator.nu/?out=text'
+url = 'http://hsivonen.iki.fi/validator/html5/?out=text'
+
+extPat = re.compile(r'^.*\.([A-Za-z]+)$')
+extDict = {
+  "html" : "text/html",
+  "htm" : "text/html",
+  "xhtml" : "application/xhtml+xml",
+  "xht" : "application/xhtml+xml",
+  "xml" : "application/xml",
+}
 
 argv = sys.argv[1:]
 
@@ -61,13 +76,18 @@ if forceXml:
 elif forceHtml:
   contentType = 'text/html'
 elif fileName:
-  if fileName.endswith('.xhtml'):
-    contentType = 'application/xhtml+xml'
-  elif fileName.endswith('.html'):
-    contentType = 'text/html'
+  m = extPat.match(fileName)
+  if m:
+    ext = m.group(1)
+    ext = ext.translate(string.maketrans(string.ascii_uppercase, string.ascii_lowercase))    
+    if extDict.has_key(ext):
+      contentType = extDict[ext]
+    else:
+      sys.stderr.write('Unable to guess Content-Type from file name. Please force the type.\n')
+      sys.exit(3)
   else:
-    sys.stderr.write('Unable to guess Content-Type from file name. Please force the type.\n')
-    sys.exit(3)
+    sys.stderr.write('Could not extract a filename extension. Please force the type.\n')
+    sys.exit(6)    
 else:
   sys.stderr.write('Need to force HTML or XHTML when reading from stdin.\n')
   sys.exit(4)
@@ -82,22 +102,39 @@ else:
 
 data = inputHandle.read()
   
-connection = httplib.HTTPConnection('html5.validator.nu')
-connection.connect()
-connection.putrequest("POST", "/?out=text", skip_accept_encoding=1)
-connection.putheader("Content-Type", contentType)
-connection.putheader("Content-Length", len(data))
-connection.endheaders()
-connection.send(data)
+connection = None
+response = None
+status = 302
+redirectCount = 0
 
-response = connection.getresponse()
+while (status == 302 or status == 301) and redirectCount < 10:
+  if redirectCount > 0:
+    url = response.getheader('Location')
+  parsed = urlparse.urlsplit(url)
+  if parsed[0] != 'http':
+    sys.stderr.write('URI scheme %s not supported.\n' % parsed[0])
+    sys.exit(7)    
+  if redirectCount > 0:
+    connection.close() # previous connection
+    print 'Redirecting to %s' % url
+    print 'Please press enter to continue or type "stop" followed by enter to stop.'
+    if raw_input() != "":
+      sys.exit(0)
+  connection = httplib.HTTPConnection(parsed[1])
+  connection.connect()
+  connection.putrequest("POST", "%s?%s" % (parsed[2], parsed[3]), skip_accept_encoding=1)
+  connection.putheader("Content-Type", contentType)
+  connection.putheader("Content-Length", len(data))
+  connection.endheaders()
+  connection.send(data)
+  response = connection.getresponse()
+  status = response.status
+  redirectCount += 1
 
-#XXX handle redirects
-
-if response.status != 200:
-  sys.stderr.write('%s %s\n' % (response.status, response.reason))
+if status != 200:
+  sys.stderr.write('%s %s\n' % (status, response.reason))
   sys.exit(5)
 
-sys.stderr.write(response.read())
+sys.stdout.write(response.read())
 
 connection.close()
