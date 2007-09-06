@@ -57,6 +57,7 @@ dependencyPackages = [
   ("http://hsivonen.iki.fi/code/onvdl-hsivonen.zip", "b5cda2ed1488c7d702339a92b1bf480f"),
   ("http://download.berlios.de/jsontools/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
   ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
+  ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -83,6 +84,7 @@ dependencyJars = [
   "xmlidfilter-0.9/lib/xmlidfilter.jar",
   "jsontools-core-1.5.jar",
   "antlr.jar",
+  "xom-1.1.jar",
 ]
 
 moduleNames = [
