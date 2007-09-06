@@ -39,6 +39,10 @@ public abstract class SaxEmittingErrorHandler extends AbstractErrorHandler {
     }
 
     protected void emitMessage(String message) throws SAXException {
+        if (message == null) {
+            message = "";
+        }
+        message = scrub(message);
         int len = message.length();
         int start = 0;
         int startQuotes = 0;

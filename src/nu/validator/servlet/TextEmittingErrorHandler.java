@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 HOLDER
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -29,81 +29,173 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class TextEmittingErrorHandler extends AbstractErrorHandler {
-    
+
     private final Writer writer;
-    
+
     /**
      * @param writer
      */
     public TextEmittingErrorHandler(final Writer writer) {
         this.writer = writer;
     }
-    
 
     @Override
     protected void errorImpl(SAXParseException e) throws SAXException {
-        // TODO Auto-generated method stub
+        try {
+            String msg = e.getMessage();
+            if (msg == null) {
+                w("Error.");                
+            } else {
+                w("Error: ");
+                w(scrub(msg));
+            }
+            writeLocation(e);
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
+    }
 
+    private void writeLocation(SAXParseException e) throws IOException {
+        int line = e.getLineNumber();
+        int col = e.getColumnNumber();
+        if (line > -1) {
+            w("\nLine: ");
+            w("" + line);
+            if (col > -1) {
+                w(", column: ");
+                w("" + col);
+            }
+        }
     }
 
     @Override
     protected void fatalErrorImpl(SAXParseException e) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            String msg = e.getMessage();
+            if (msg == null) {
+                w("Fatal Error.");                
+            } else {
+                w("Fatal Error: ");
+                w(scrub(msg));
+            }
+            writeLocation(e);
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
     @Override
     protected void infoImpl(String str) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            w("Info: ");
+            w(scrub(str));
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
     @Override
     protected void internalErrorImpl(String message) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            w("Internal Error: ");
+            w(scrub(message));
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
     @Override
     protected void ioErrorImpl(IOException e) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            String msg = e.getMessage();
+            if (msg == null) {
+                w("IO Error.");                
+            } else {
+                w("IO Error: ");
+                w(scrub(msg));
+            }
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
     @Override
     protected void schemaErrorImpl(Exception e) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            String msg = e.getMessage();
+            if (msg == null) {
+                w("Schema Error.");                
+            } else {
+                w("Schema Error: ");
+                w(scrub(msg));
+            }
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
     @Override
     protected void warningImpl(SAXParseException e) throws SAXException {
-        // TODO Auto-generated method stub
-
+        try {
+            String msg = e.getMessage();
+            if (msg == null) {
+                w("Warning.");                
+            } else {
+                w("Warning: ");
+                w(scrub(msg));
+            }
+            writeLocation(e);
+            w("\n\n");       
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
-
 
     /**
      * @see nu.validator.servlet.AbstractErrorHandler#end(java.lang.String, java.lang.String)
      */
     @Override
-    public void end(String successMessage, String failureMessage) throws SAXException {
+    public void end(String successMessage, String failureMessage)
+            throws SAXException {
         // TODO Auto-generated method stub
         try {
+            if (isErrors()) {
+                w(scrub(failureMessage));
+            } else {
+                w(scrub(successMessage));
+            }
+            w("\n");
             writer.flush();
             writer.close();
-        } catch (IOException e) {
-            throw new SAXException(e);
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
         }
     }
-
 
     /**
      * @see nu.validator.servlet.AbstractErrorHandler#start(java.lang.String)
      */
     @Override
     public void start(String documentUri) throws SAXException {
-        // TODO Auto-generated method stub
+        try {
+            w("Results");
+            if (documentUri != null) {
+                w(" for ");
+                w(scrub(documentUri));
+            }
+            w("\n\n");
+        } catch (IOException ioe) {
+            throw new SAXException(ioe);
+        }
     }
 
+    private final void w(String str) throws IOException {
+        writer.write(str);
+    }
 }
