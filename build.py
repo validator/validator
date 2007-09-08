@@ -42,9 +42,9 @@ useAjp = 0
 log4jProps = 'validator/log4j.properties'
 
 dependencyPackages = [
-  ("http://mirror.eunet.fi/apache/jakarta/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
-  ("http://mirror.eunet.fi/apache/jakarta/commons/httpclient/binary/commons-httpclient-3.0.1.zip", "a0077efae9c1e0aaa6615f23e5cd3a78"),
-  ("http://mirror.eunet.fi/apache/jakarta/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
+  ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
+  ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/httpclient/binary/commons-httpclient-3.0.1.zip", "a0077efae9c1e0aaa6615f23e5cd3a78"),
+  ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j_3_6_1.jar", "f5ffe0784a9e4c414f42d88e7f6ecefd"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
   ("http://belnet.dl.sourceforge.net/sourceforge/jena/Jena-2.5.2.zip", "cd9c74f58b7175e56e3512443c84fcf8"),
