@@ -44,7 +44,8 @@ public class Main {
         if (args.length > 0 && "ajp".equals(args[0])) {
             l = new AJP13Listener();
             int port = Integer.parseInt(args[1]);
-            l.setPort(port);            
+            l.setPort(port);
+            l.setHost("127.0.0.1");
         } else {
             l = new SocketListener();
             int port = Integer.parseInt(args[0]);

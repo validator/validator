@@ -52,6 +52,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.java.dev.xmlidfilter.XMLIdFilter;
+import nu.validator.htmlparser.common.DoctypeExpectation;
+import nu.validator.htmlparser.common.DocumentMode;
+import nu.validator.htmlparser.common.DocumentModeHandler;
+import nu.validator.htmlparser.common.XmlViolationPolicy;
+import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.xml.AttributesImpl;
+import nu.validator.xml.CharacterUtil;
+import nu.validator.xml.ContentTypeParser;
+import nu.validator.xml.HtmlSerializer;
+import nu.validator.xml.LocalCacheEntityResolver;
+import nu.validator.xml.NullEntityResolver;
+import nu.validator.xml.PrudentHttpEntityResolver;
+import nu.validator.xml.SystemErrErrorHandler;
+import nu.validator.xml.TypedInputSource;
+import nu.validator.xml.XhtmlIdFilter;
+import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.apache.log4j.Logger;
 import org.apache.xml.serializer.Method;
@@ -92,24 +108,6 @@ import com.thaiopensource.validate.rng.RngProperty;
 
 import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
 
-import nu.validator.htmlparser.*;
-import nu.validator.htmlparser.common.DoctypeExpectation;
-import nu.validator.htmlparser.common.DocumentMode;
-import nu.validator.htmlparser.common.DocumentModeHandler;
-import nu.validator.htmlparser.common.XmlViolationPolicy;
-import nu.validator.htmlparser.sax.HtmlParser;
-import nu.validator.xml.AttributesImpl;
-import nu.validator.xml.CharacterUtil;
-import nu.validator.xml.ContentTypeParser;
-import nu.validator.xml.HtmlSerializer;
-import nu.validator.xml.LocalCacheEntityResolver;
-import nu.validator.xml.NullEntityResolver;
-import nu.validator.xml.PrudentHttpEntityResolver;
-import nu.validator.xml.SystemErrErrorHandler;
-import nu.validator.xml.TypedInputSource;
-import nu.validator.xml.XhtmlIdFilter;
-import nu.validator.xml.XhtmlSaxEmitter;
-
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
  *          hsivonen Exp $
@@ -118,7 +116,7 @@ import nu.validator.xml.XhtmlSaxEmitter;
 class VerifierServletTransaction implements DocumentModeHandler {
 
     private enum OutputFormat {
-        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN
+        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, EMACS
     }
 
     private static final Logger log4j = Logger.getLogger(VerifierServletTransaction.class);
