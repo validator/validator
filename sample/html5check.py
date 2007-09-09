@@ -27,8 +27,7 @@ import re
 import urlparse
 import string
 
-#url = 'http://html5.validator.nu/?out=text'
-url = 'http://hsivonen.iki.fi/validator/html5/?out=text'
+url = 'http://html5.validator.nu/?out=text'
 
 extPat = re.compile(r'^.*\.([A-Za-z]+)$')
 extDict = {
