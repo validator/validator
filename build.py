@@ -90,7 +90,7 @@ dependencyJars = [
   "antlr.jar",
   "xom-1.1.jar",
   "slf4j-1.4.3/slf4j-log4j12-1.4.3.jar",
-  "slf4j-1.4.3/slf4j-api-1.4.3.jar",
+#  "slf4j-1.4.3/slf4j-api-1.4.3.jar",
 ]
 
 moduleNames = [
