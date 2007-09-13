@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -59,5 +60,8 @@ public class Main {
         c.addHandler(sh);
         s.addContext(c);
         s.start();
+        
+        System.in.read(); // XXX do something smarter
+        s.stop(true);
     }
 }
