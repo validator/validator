@@ -43,12 +43,12 @@ log4jProps = 'validator/log4j.properties'
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
-  ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/httpclient/binary/commons-httpclient-3.0.1.zip", "a0077efae9c1e0aaa6615f23e5cd3a78"),
+  ("http://www.nic.funet.fi/pub/mirrors/apache.org/jakarta/httpcomponents/commons-httpclient-3.x/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j_3_6_1.jar", "f5ffe0784a9e4c414f42d88e7f6ecefd"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
   ("http://belnet.dl.sourceforge.net/sourceforge/jena/Jena-2.5.2.zip", "cd9c74f58b7175e56e3512443c84fcf8"),
-  ("http://dist.codehaus.org/jetty/jetty-4.2.x/jetty-4.2.27.zip", "a13841ec60141291f3c3328a706bd1cd"),
+  ("http://dist.codehaus.org/jetty/jetty-6.1.5/jetty-6.1.5.zip", "c05153e639810c0d28a602366c69a632"),
   ("http://hsivonen.iki.fi/code/xmlidfilter-0.9.zip", "689acccb60c964bce3eee3b04da45d5d"), # The official location is https and .tar.gz
   ("http://mirror.eunet.fi/apache/logging/log4j/1.2.14/logging-log4j-1.2.14.zip", "6c4f8da1fed407798ea0ad7984fe60db"),
   ("http://mirror.eunet.fi/apache/xml/xerces-j/Xerces-J-bin.2.9.0.zip", "a3aece3feb68be6d319072b85ad06023"),
@@ -58,21 +58,25 @@ dependencyPackages = [
   ("http://download.berlios.de/jsontools/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
   ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
+  ("http://www.slf4j.org/dist/slf4j-1.4.3.zip", "5671faa7d5aecbd06d62cf91f990f80a"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
 # can't just autodiscover all jars. Hence, an explicit list.
 dependencyJars = [
   "commons-codec-1.3/commons-codec-1.3.jar",
-  "commons-httpclient-3.0.1/commons-httpclient-3.0.1.jar",
+  "commons-httpclient-3.1/commons-httpclient-3.1.jar",
   "commons-logging-1.1/commons-logging-1.1.jar",
   "commons-logging-1.1/commons-logging-adapters-1.1.jar",
   "commons-logging-1.1/commons-logging-api-1.1.jar",
   "icu4j-charsets_3_6_1.jar",
   "icu4j_3_6_1.jar",
   "Jena-2.5.2/lib/iri.jar",
-  "jetty-4.2.27/lib/javax.servlet.jar",
-  "jetty-4.2.27/lib/org.mortbay.jetty.jar",
+  "jetty-6.1.5/lib/servlet-api-2.5-6.1.5.jar",
+  "jetty-6.1.5/lib/jetty-6.1.5.jar",
+  "jetty-6.1.5/lib/jetty-util-6.1.5.jar",
+  "jetty-6.1.5/lib/ext/jetty-ajp-6.1.5.jar",
+  "jetty-6.1.5/lib/ext/jetty-java5-threadpool-6.1.5.jar",
   "logging-log4j-1.2.14/dist/lib/log4j-1.2.14.jar",
   "onvdl-hsivonen/bin/isorelax.jar",
   "onvdl-hsivonen/onvdl.jar",
@@ -85,6 +89,8 @@ dependencyJars = [
   "jsontools-core-1.5.jar",
   "antlr.jar",
   "xom-1.1.jar",
+  "slf4j-1.4.3/slf4j-log4j12-1.4.3.jar",
+  "slf4j-1.4.3/slf4j-api-1.4.3.jar",
 ]
 
 moduleNames = [
