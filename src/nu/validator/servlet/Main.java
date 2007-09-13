@@ -24,12 +24,14 @@
 package nu.validator.servlet;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.mortbay.http.HttpContext;
-import org.mortbay.http.HttpListener;
-import org.mortbay.http.HttpServer;
-import org.mortbay.http.SocketListener;
-import org.mortbay.http.ajp.AJP13Listener;
+import org.mortbay.jetty.Connector;
+import org.mortbay.jetty.Server;
+import org.mortbay.jetty.ajp.Ajp13SocketConnector;
+import org.mortbay.jetty.bio.SocketConnector;
+import org.mortbay.jetty.handler.ContextHandler;
+import org.mortbay.jetty.servlet.Context;
 import org.mortbay.jetty.servlet.ServletHandler;
+import org.mortbay.jetty.servlet.ServletHolder;
 
 /**
  * @version $Id$
@@ -40,28 +42,26 @@ public class Main {
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         new VerifierServletTransaction(null, null);
-        HttpServer s = new HttpServer();
-        HttpListener l;
+        Server server = new Server();
+        Connector connector;
         if (args.length > 0 && "ajp".equals(args[0])) {
-            l = new AJP13Listener();
+            connector = new Ajp13SocketConnector();
             int port = Integer.parseInt(args[1]);
-            l.setPort(port);
-            l.setHost("127.0.0.1");
+            connector.setPort(port);
+            connector.setHost("127.0.0.1");
         } else {
-            l = new SocketListener();
+            connector = new SocketConnector();
             int port = Integer.parseInt(args[0]);
-            l.setPort(port);
+            connector.setPort(port);
         }
-        s.addListener(l);
-        HttpContext c = new HttpContext();
-        c.setContextPath("/");
-        ServletHandler sh = new ServletHandler();
-        sh.addServlet("/*", "nu.validator.servlet.VerifierServlet");
-        c.addHandler(sh);
-        s.addContext(c);
-        s.start();
+        server.addConnector(connector);
+
+        Context context = new Context(server, "/");
+        context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
+        
+        server.start();
         
         System.in.read(); // XXX do something smarter
-        s.stop(true);
+        server.stop();
     }
 }
