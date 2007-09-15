@@ -389,7 +389,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     void service() throws ServletException, IOException {
-        this.methodIsGet = "GET".equals(request.getMethod());
+        this.methodIsGet = "GET".equals(request.getMethod()) || "HEAD".equals(request.getMethod());
         
         this.out = response.getOutputStream();
 
