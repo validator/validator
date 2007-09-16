@@ -397,7 +397,7 @@ def printHelp():
   print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
-  print "  --heap=64                  -- Sets the heap size in MB
+  print "  --heap=64                  -- Sets the heap size in MB"
   print ""
   print "Tasks:"
   print "  checkout -- Checks out the source from SVN"
