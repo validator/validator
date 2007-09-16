@@ -28,7 +28,7 @@ package nu.validator.source;
  * @version $Id$
  * @author hsivonen
  */
-class SourceLocation implements Comparable<SourceLocation> {
+final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
 
     private final SourceCode owner;
     private int line;
@@ -42,6 +42,12 @@ class SourceLocation implements Comparable<SourceLocation> {
         this.owner = owner;
         this.line = line;
         this.column = column;
+        if (column < 0) {
+            throw new IllegalArgumentException("Column cannot be less than zero.");
+        }
+        if (line < -1) {
+            throw new IllegalArgumentException("Line cannot be less than -1.");            
+        }
     }
 
     public int compareTo(SourceLocation o) {
@@ -98,5 +104,48 @@ class SourceLocation implements Comparable<SourceLocation> {
     @Override
     public int hashCode() {
         return (line << 16) + column;
+    }
+    
+
+    /**
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new SourceLocation(owner, line, column);
+    }
+    
+    boolean increment() {
+        if (line == -1) {
+            column = 0;
+            line = 0;
+            return true;
+        }
+        SourceLine sourceLine = owner.getLine(line);
+        if (column == sourceLine.getBufferLength()) {
+            line++;
+            if (line == owner.getNumberOfLines()) {
+                line--;
+                column = sourceLine.getBufferLength();
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            column++;
+            return true;
+        }
+    }
+    
+    boolean decrement() {
+        if (line == -1) {
+            return false;
+        }
+        column--;
+        if (column == -1) {
+            line--;
+            column = 0;
+        }
+        return true;
     }
 }

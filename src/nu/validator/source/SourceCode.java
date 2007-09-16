@@ -150,4 +150,54 @@ public final class SourceCode implements CharacterHandler {
             return false;
         }
     }
+    
+    SourceLine getLine(int line) {
+        return lines.get(line);
+    }
+    
+    int getNumberOfLines() {
+        return lines.size();
+    }
+    
+    /**
+     * Emits content between from a location (inclusive) until a location (exclusive). 
+     * There is no way to point to line breaks. They are always emitted together with 
+     * the last character on a line.
+     * 
+     * @param from
+     * @param until
+     * @param handler
+     * @throws SAXException
+     */
+    void emitContent(SourceLocation from, SourceLocation until, SourceHandler handler) throws SAXException {
+        if (from.compareTo(until) >= 0) {
+            return;
+        }
+        int fromLine = from.getLine();
+        int untilLine = until.getLine();
+        SourceLine line = getLine(fromLine);
+        if (fromLine == untilLine) {
+            handler.characters(line.getBuffer(), line.getOffset() + from.getColumn(), until.getColumn() - from.getColumn());
+        } else {
+            // first line
+            int length = line.getBufferLength() - from.getColumn();
+            if (length > 0) {
+                handler.characters(line.getBuffer(), line.getOffset() + from.getColumn(), length);
+            }
+            handler.newLine();
+            // lines in between
+            int wholeLine = fromLine + 1;
+            while (wholeLine < untilLine) {
+                line = getLine(wholeLine);
+                handler.characters(line.getBuffer(), line.getOffset(), line.getBufferLength());
+                handler.newLine();
+            }
+            // last line
+            int untilCol = until.getColumn();
+            if (untilCol > 0) {
+                line = getLine(untilLine);
+                handler.characters(line.getBuffer(), line.getOffset(), untilCol);
+            }
+        }
+    }
 }

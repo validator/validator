@@ -975,6 +975,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("pattern", "(?:https?://.+)?");
         attrs.addAttribute(
                 "title",
+                // XXX drop last sentence for html5 facet
                 "The document field takes the absolute IRI (http or https only) of the document to be checked. (The document field can also be left blank in order to bookmark settings.)");
         if (document != null) {
             attrs.addAttribute("value", scrub(document));

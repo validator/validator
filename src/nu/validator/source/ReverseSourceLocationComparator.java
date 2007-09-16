@@ -24,7 +24,7 @@ package nu.validator.source;
 
 import java.util.Comparator;
 
-public class ReverseSourceLocationComparator implements Comparator<SourceLocation>{
+final class ReverseSourceLocationComparator implements Comparator<SourceLocation>{
 
     public int compare(SourceLocation o1, SourceLocation o2) {
         return - o1.compareTo(o2);

@@ -22,7 +22,7 @@
 
 package nu.validator.source;
 
-class SourceLine {
+final class SourceLine {
 
     private char[] buffer;
     
