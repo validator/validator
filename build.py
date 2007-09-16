@@ -40,6 +40,7 @@ svnRoot = 'http://svn.versiondude.net/whattf/'
 portNumber = '8888'
 useAjp = 0
 log4jProps = 'validator/log4j.properties'
+heapSize = '64'
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -261,13 +262,15 @@ def runValidator():
                                                 "html5-datatypes",
                                                 "validator"]))
   args = [
+    '-Xms%sm' % heapSize,
+    '-Xmx%sm' % heapSize,
     '-cp',
     classPath,
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
-    '-Dnu.validator.servlet.version="VerifierServlet-RELAX-NG-Validator/2.0b10 (http://hsivonen.iki.fi/validator/)"',
+    '-Dnu.validator.servlet.version="Validator.nu/2.0b (http://validator.nu/)"',
     'nu.validator.servlet.Main',
   ]
   if useAjp:
@@ -394,6 +397,7 @@ def printHelp():
   print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
+  print "  --heap=64                  -- Sets the heap size in MB
   print ""
   print "Tasks:"
   print "  checkout -- Checks out the source from SVN"
@@ -432,6 +436,8 @@ if __name__ == "__main__":
         portNumber = arg[7:]
       elif arg.startswith("--log4j="):
         log4jProps = arg[8:]
+      elif arg.startswith("--heap="):
+        heapSize = arg[7:]
       elif arg == '--ajp=on':
         useAjp = 1
       elif arg == '--ajp=off':
