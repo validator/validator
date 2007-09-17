@@ -23,22 +23,23 @@
 package nu.validator.source;
 
 /**
- * Source location with zero-based indexes. Cannot point to a line break.
+ * Immutable source location with zero-based indexes. 
+ * Cannot point to a line break.
  * 
  * @version $Id$
  * @author hsivonen
  */
-final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
+final class Location implements Comparable<Location>, Cloneable {
 
     private final SourceCode owner;
-    private int line;
-    private int column;
+    private final int line;
+    private final int column;
     
     /**
      * @param line
      * @param column
      */
-    SourceLocation(final SourceCode owner, final int line, final int column) {
+    Location(final SourceCode owner, final int line, final int column) {
         this.owner = owner;
         this.line = line;
         this.column = column;
@@ -50,7 +51,7 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
         }
     }
 
-    public int compareTo(SourceLocation o) {
+    public int compareTo(Location o) {
         if (this.line < o.line) {
             return -1;
         } else if (this.line > o.line) {
@@ -71,8 +72,8 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof SourceLocation) {
-            SourceLocation loc = (SourceLocation) obj;
+        if (obj instanceof Location) {
+            Location loc = (Location) obj;
             return this.line == loc.line && this.column == loc.column;
         } else {
             return false;
@@ -106,55 +107,45 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
         return (line << 16) + column;
     }
     
-
-    /**
-     * @see java.lang.Object#clone()
-     */
-    @Override
-    protected Object clone() {
-        return new SourceLocation(owner, line, column);
+    Location next() {
+        return step(1);
     }
     
-    boolean increment() {
-        if (line == owner.getNumberOfLines()) {
-            return false;
-        }
-        column++;
-        Line sourceLine = owner.getLine(line);
-        if (column == sourceLine.getBufferLength()) {
-            line++;
-            column = 0;
-        }
-        return true;
+    Location prev() {
+        return step(-1);
     }
     
-    boolean decrement() {
-        if (line == 0 && column == 0) {
-            return false;
-        }
-        column--;
-        if (column == -1) {
-            line--;
-            column = 0;
-        }
-        return true;
-    }
-    
-    boolean move(int offset) {
+    Location step(int offset) {
+        int newLine = line;
+        int newColumn = column;
         if (offset > 0) {
             for (int i = 0; i < offset; i++) {
-                if (!increment()) {
-                    return false;
+                if (newLine == owner.getNumberOfLines()) {
+                    break;
+                }
+                newColumn++;
+                Line sourceLine = owner.getLine(line);
+                if (newColumn == sourceLine.getBufferLength()) {
+                    newLine++;
+                    newColumn = 0;
                 }
             }
-        } else {
+            return new Location(owner, newLine, newColumn);
+        } if (offset < 0) {
             offset = -offset;
             for (int i = 0; i < offset; i++) {
-                if (!decrement()) {
-                    return false;
-                }                
+                if (newLine == 0 && newColumn == 0) {
+                    break;
+                }
+                newColumn--;
+                if (newColumn == -1) {
+                    newLine--;
+                    newColumn = 0;
+                }
             }            
+            return new Location(owner, newLine, newColumn);
+        } else {
+            return this;
         }
-        return true;
     }
 }

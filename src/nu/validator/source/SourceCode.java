@@ -34,15 +34,15 @@ import nu.validator.htmlparser.impl.CharacterHandler;
 
 public final class SourceCode implements CharacterHandler {
     
-    private static SourceLocation[] SOURCE_LOCATION_ARRAY_TYPE = new SourceLocation[0];
+    private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
     private int expectedLength;
     
-    private final SortedSet<SourceLocation> reverseSortedLocations = new TreeSet<SourceLocation>(new ReverseLocationComparator());
+    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(new ReverseLocationComparator());
     
-    private final SortedSet<SourceLocation> exactErrors = new TreeSet<SourceLocation>();
+    private final SortedSet<Location> exactErrors = new TreeSet<Location>();
     
-    private final SortedSet<SourceLocation> rangeEnds = new TreeSet<SourceLocation>();
+    private final SortedSet<Location> rangeEnds = new TreeSet<Location>();
 
     private final List<Line> lines = new ArrayList<Line>();
 
@@ -115,19 +115,17 @@ public final class SourceCode implements CharacterHandler {
     }
     
     void addLocatorLocation(int oneBasedLine, int oneBasedColumn) {
-        reverseSortedLocations.add(new SourceLocation(this, oneBasedLine - 1, oneBasedColumn - 1));
+        reverseSortedLocations.add(new Location(this, oneBasedLine - 1, oneBasedColumn - 1));
     }
     
     public void exactError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) throws SAXException {
         int zeroBasedLine = oneBasedLine - 1;
         int zeroBasedColumn = oneBasedColumn - 1;
-        SourceLocation location = new SourceLocation(this, zeroBasedLine, zeroBasedColumn);
-        exactErrors.add((SourceLocation) location.clone());
+        Location location = new Location(this, zeroBasedLine, zeroBasedColumn);
+        exactErrors.add(location);
         if (isWithinKnownSource(location)) {
-            SourceLocation start = (SourceLocation) location.clone();
-            start.move(-15);
-            SourceLocation end = (SourceLocation) location.clone();
-            end.move(6);
+            Location start = location.step(-15);
+            Location end = location.step(6);
             try {
                 extractHandler.start();
                 emitContent(start, location, extractHandler);
@@ -138,7 +136,7 @@ public final class SourceCode implements CharacterHandler {
                 if (location.getColumn() + 1 == line.getBufferLength()) {
                     extractHandler.newLine();
                 }
-                location.increment();
+                location = location.next();
                 emitContent(location, end, extractHandler);
             } finally {
                 extractHandler.end();
@@ -149,25 +147,22 @@ public final class SourceCode implements CharacterHandler {
     public void rangeEndError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) throws SAXException {
         int zeroBasedLine = oneBasedLine - 1;
         int zeroBasedColumn = oneBasedColumn - 1;
-        SourceLocation location = new SourceLocation(this, zeroBasedLine, zeroBasedColumn);
-        SourceLocation startRange = null;
-        for (SourceLocation loc : reverseSortedLocations) {
+        Location location = new Location(this, zeroBasedLine, zeroBasedColumn);
+        Location startRange = null;
+        for (Location loc : reverseSortedLocations) {
             if (loc.compareTo(location) < 0) {
                 startRange = loc;
                 break;
             }
         }
         if (startRange == null) {
-            startRange = new SourceLocation(this, 0, 0);
+            startRange = new Location(this, 0, 0);
         }
         reverseSortedLocations.add(location);
         rangeEnds.add(location);
-        SourceLocation endRange = (SourceLocation) location.clone();
-        endRange.increment();
-        SourceLocation start = (SourceLocation) startRange.clone();
-        start.move(-10);
-        SourceLocation end = (SourceLocation) endRange.clone();
-        end.move(6);
+        Location endRange = location.next();
+        Location start = startRange.step(-10);
+        Location end = endRange.step(6);
         try {
             extractHandler.start();
             emitContent(start, startRange, extractHandler);
@@ -192,7 +187,7 @@ public final class SourceCode implements CharacterHandler {
         }
     }
     
-    private boolean isWithinKnownSource(SourceLocation location) {
+    private boolean isWithinKnownSource(Location location) {
         if (location.getLine() >= lines.size()) {
             return false;
         }
@@ -212,7 +207,7 @@ public final class SourceCode implements CharacterHandler {
         return lines.size();
     }
     
-    void emitCharacter(SourceLocation location, SourceHandler handler) throws SAXException {
+    void emitCharacter(Location location, SourceHandler handler) throws SAXException {
         Line line = getLine(location.getLine());
         handler.characters(line.getBuffer(), line.getOffset() + location.getColumn(), 1);
     }
@@ -227,7 +222,7 @@ public final class SourceCode implements CharacterHandler {
      * @param handler
      * @throws SAXException
      */
-    void emitContent(SourceLocation from, SourceLocation until, SourceHandler handler) throws SAXException {
+    void emitContent(Location from, Location until, SourceHandler handler) throws SAXException {
         if (from.compareTo(until) >= 0) {
             return;
         }
@@ -260,7 +255,7 @@ public final class SourceCode implements CharacterHandler {
     }
     
     public void emitSource(SourceHandler handler) {
-        SourceLocation[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
+        Location[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
         
     }
 }

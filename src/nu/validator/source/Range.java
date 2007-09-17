@@ -22,12 +22,34 @@
 
 package nu.validator.source;
 
-import java.util.Comparator;
-
-final class ReverseLocationComparator implements Comparator<Location>{
-
-    public int compare(Location o1, Location o2) {
-        return - o1.compareTo(o2);
+public class Range {
+    private final Location start;
+    private final Location end;
+    
+    /**
+     * @param start
+     * @param end
+     */
+    Range(Location start, Location end) {
+        this.start = start;
+        this.end = end;
     }
 
+    /**
+     * Returns the end.
+     * 
+     * @return the end
+     */
+    Location getEnd() {
+        return end;
+    }
+
+    /**
+     * Returns the start.
+     * 
+     * @return the start
+     */
+    Location getStart() {
+        return start;
+    }
 }
