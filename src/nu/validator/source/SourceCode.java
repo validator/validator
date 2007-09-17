@@ -23,6 +23,7 @@
 package nu.validator.source;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -32,18 +33,20 @@ import org.xml.sax.SAXException;
 import nu.validator.htmlparser.impl.CharacterHandler;
 
 public final class SourceCode implements CharacterHandler {
+    
+    private static SourceLocation[] SOURCE_LOCATION_ARRAY_TYPE = new SourceLocation[0];
 
     private int expectedLength;
     
-    private final SortedSet<SourceLocation> reverseSortedLocations = new TreeSet<SourceLocation>(new ReverseSourceLocationComparator());
+    private final SortedSet<SourceLocation> reverseSortedLocations = new TreeSet<SourceLocation>(new ReverseLocationComparator());
     
     private final SortedSet<SourceLocation> exactErrors = new TreeSet<SourceLocation>();
     
     private final SortedSet<SourceLocation> rangeEnds = new TreeSet<SourceLocation>();
 
-    private final List<SourceLine> lines = new ArrayList<SourceLine>();
+    private final List<Line> lines = new ArrayList<Line>();
 
-    private SourceLine currentLine = null;
+    private Line currentLine = null;
 
     private boolean prevWasCr = false;
 
@@ -92,7 +95,7 @@ public final class SourceCode implements CharacterHandler {
            offset = currentLine.getOffset() + currentLine.getBufferLength();
            buffer = currentLine.getBuffer();
         }
-        currentLine = new SourceLine(buffer, offset);
+        currentLine = new Line(buffer, offset);
         lines.add(currentLine);
     }
 
@@ -131,7 +134,7 @@ public final class SourceCode implements CharacterHandler {
                 extractHandler.startCharHilite(oneBasedLine, oneBasedColumn);
                 emitCharacter(location, extractHandler);
                 extractHandler.endCharHilite();
-                SourceLine line = getLine(location.getLine());
+                Line line = getLine(location.getLine());
                 if (location.getColumn() + 1 == line.getBufferLength()) {
                     extractHandler.newLine();
                 }
@@ -179,7 +182,7 @@ public final class SourceCode implements CharacterHandler {
 
     public void lineError(int oneBasedLine, SourceHandler extractHandler) throws SAXException {
         if (oneBasedLine <= lines.size()) {
-            SourceLine line = lines.get(oneBasedLine - 1);
+            Line line = lines.get(oneBasedLine - 1);
             try {
                 extractHandler.start();
                 extractHandler.characters(line.getBuffer(), line.getOffset(), line.getBufferLength());
@@ -193,7 +196,7 @@ public final class SourceCode implements CharacterHandler {
         if (location.getLine() >= lines.size()) {
             return false;
         }
-        SourceLine line = lines.get(location.getLine());
+        Line line = lines.get(location.getLine());
         if (line.getBufferLength() > location.getColumn()) {
             return true;
         } else {
@@ -201,7 +204,7 @@ public final class SourceCode implements CharacterHandler {
         }
     }
     
-    SourceLine getLine(int line) {
+    Line getLine(int line) {
         return lines.get(line);
     }
     
@@ -210,7 +213,7 @@ public final class SourceCode implements CharacterHandler {
     }
     
     void emitCharacter(SourceLocation location, SourceHandler handler) throws SAXException {
-        SourceLine line = getLine(location.getLine());
+        Line line = getLine(location.getLine());
         handler.characters(line.getBuffer(), line.getOffset() + location.getColumn(), 1);
     }
     
@@ -230,7 +233,7 @@ public final class SourceCode implements CharacterHandler {
         }
         int fromLine = from.getLine();
         int untilLine = until.getLine();
-        SourceLine line = getLine(fromLine);
+        Line line = getLine(fromLine);
         if (fromLine == untilLine) {
             handler.characters(line.getBuffer(), line.getOffset() + from.getColumn(), until.getColumn() - from.getColumn());
         } else {
@@ -254,5 +257,10 @@ public final class SourceCode implements CharacterHandler {
                 handler.characters(line.getBuffer(), line.getOffset(), untilCol);
             }
         }
+    }
+    
+    public void emitSource(SourceHandler handler) {
+        SourceLocation[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
+        
     }
 }

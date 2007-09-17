@@ -22,7 +22,7 @@
 
 package nu.validator.source;
 
-final class SourceLine {
+final class Line {
 
     private char[] buffer;
     
@@ -34,7 +34,7 @@ final class SourceLine {
      * @param buffer
      * @param offset
      */
-    SourceLine(char[] buffer, int offset) {
+    Line(char[] buffer, int offset) {
         this.buffer = buffer;
         this.offset = offset;
     }

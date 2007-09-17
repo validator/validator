@@ -120,7 +120,7 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
             return false;
         }
         column++;
-        SourceLine sourceLine = owner.getLine(line);
+        Line sourceLine = owner.getLine(line);
         if (column == sourceLine.getBufferLength()) {
             line++;
             column = 0;
