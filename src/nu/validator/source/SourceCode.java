@@ -39,6 +39,8 @@ public final class SourceCode implements CharacterHandler {
     
     private final SortedSet<SourceLocation> exactErrors = new TreeSet<SourceLocation>();
     
+    private final SortedSet<SourceLocation> rangeEnds = new TreeSet<SourceLocation>();
+
     private final List<SourceLine> lines = new ArrayList<SourceLine>();
 
     private SourceLine currentLine = null;
@@ -113,18 +115,66 @@ public final class SourceCode implements CharacterHandler {
         reverseSortedLocations.add(new SourceLocation(this, oneBasedLine - 1, oneBasedColumn - 1));
     }
     
-    public void exactError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) {
+    public void exactError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) throws SAXException {
         int zeroBasedLine = oneBasedLine - 1;
         int zeroBasedColumn = oneBasedColumn - 1;
         SourceLocation location = new SourceLocation(this, zeroBasedLine, zeroBasedColumn);
-        exactErrors.add(location);
+        exactErrors.add((SourceLocation) location.clone());
         if (isWithinKnownSource(location)) {
-            
+            SourceLocation start = (SourceLocation) location.clone();
+            start.move(-15);
+            SourceLocation end = (SourceLocation) location.clone();
+            end.move(6);
+            try {
+                extractHandler.start();
+                emitContent(start, location, extractHandler);
+                extractHandler.startCharHilite(oneBasedLine, oneBasedColumn);
+                emitCharacter(location, extractHandler);
+                extractHandler.endCharHilite();
+                SourceLine line = getLine(location.getLine());
+                if (location.getColumn() + 1 == line.getBufferLength()) {
+                    extractHandler.newLine();
+                }
+                location.increment();
+                emitContent(location, end, extractHandler);
+            } finally {
+                extractHandler.end();
+            }
         }
     }
     
-    public void rangeEndError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) {
-        
+    public void rangeEndError(int oneBasedLine, int oneBasedColumn, SourceHandler extractHandler) throws SAXException {
+        int zeroBasedLine = oneBasedLine - 1;
+        int zeroBasedColumn = oneBasedColumn - 1;
+        SourceLocation location = new SourceLocation(this, zeroBasedLine, zeroBasedColumn);
+        SourceLocation startRange = null;
+        for (SourceLocation loc : reverseSortedLocations) {
+            if (loc.compareTo(location) < 0) {
+                startRange = loc;
+                break;
+            }
+        }
+        if (startRange == null) {
+            startRange = new SourceLocation(this, 0, 0);
+        }
+        reverseSortedLocations.add(location);
+        rangeEnds.add(location);
+        SourceLocation endRange = (SourceLocation) location.clone();
+        endRange.increment();
+        SourceLocation start = (SourceLocation) startRange.clone();
+        start.move(-10);
+        SourceLocation end = (SourceLocation) endRange.clone();
+        end.move(6);
+        try {
+            extractHandler.start();
+            emitContent(start, startRange, extractHandler);
+            extractHandler.startRange(oneBasedLine, oneBasedColumn);
+            emitContent(startRange, endRange, extractHandler);
+            extractHandler.endRange();
+            emitContent(endRange, end, extractHandler);
+        } finally {
+            extractHandler.end();
+        }
     }
 
     public void lineError(int oneBasedLine, SourceHandler extractHandler) throws SAXException {
@@ -157,6 +207,11 @@ public final class SourceCode implements CharacterHandler {
     
     int getNumberOfLines() {
         return lines.size();
+    }
+    
+    void emitCharacter(SourceLocation location, SourceHandler handler) throws SAXException {
+        SourceLine line = getLine(location.getLine());
+        handler.characters(line.getBuffer(), line.getOffset() + location.getColumn(), 1);
     }
     
     /**

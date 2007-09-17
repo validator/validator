@@ -23,7 +23,7 @@
 package nu.validator.source;
 
 /**
- * Source location with zero-based indexes.
+ * Source location with zero-based indexes. Cannot point to a line break.
  * 
  * @version $Id$
  * @author hsivonen
@@ -45,8 +45,8 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
         if (column < 0) {
             throw new IllegalArgumentException("Column cannot be less than zero.");
         }
-        if (line < -1) {
-            throw new IllegalArgumentException("Line cannot be less than -1.");            
+        if (line < 0) {
+            throw new IllegalArgumentException("Line cannot be less than zero.");            
         }
     }
 
@@ -111,40 +111,49 @@ final class SourceLocation implements Comparable<SourceLocation>, Cloneable {
      * @see java.lang.Object#clone()
      */
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    protected Object clone() {
         return new SourceLocation(owner, line, column);
     }
     
     boolean increment() {
-        if (line == -1) {
-            column = 0;
-            line = 0;
-            return true;
+        if (line == owner.getNumberOfLines()) {
+            return false;
         }
+        column++;
         SourceLine sourceLine = owner.getLine(line);
         if (column == sourceLine.getBufferLength()) {
             line++;
-            if (line == owner.getNumberOfLines()) {
-                line--;
-                column = sourceLine.getBufferLength();
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            column++;
-            return true;
+            column = 0;
         }
+        return true;
     }
     
     boolean decrement() {
-        if (line == -1) {
+        if (line == 0 && column == 0) {
             return false;
         }
         column--;
         if (column == -1) {
             line--;
             column = 0;
+        }
+        return true;
+    }
+    
+    boolean move(int offset) {
+        if (offset > 0) {
+            for (int i = 0; i < offset; i++) {
+                if (!increment()) {
+                    return false;
+                }
+            }
+        } else {
+            offset = -offset;
+            for (int i = 0; i < offset; i++) {
+                if (!decrement()) {
+                    return false;
+                }                
+            }            
         }
         return true;
     }

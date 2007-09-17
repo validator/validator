@@ -36,10 +36,10 @@ public interface SourceHandler {
     
     public void startRange(int oneBasedLine, int oneBasedColumn) throws SAXException;
 
-    public void endLine() throws SAXException;
+    public void endRange() throws SAXException;
     
     public void startCharHilite(int oneBasedLine, int oneBasedColumn) throws SAXException;
 
-    public void endCharHilite() throws SAXException;    
+    public void endCharHilite() throws SAXException;
 
 }
