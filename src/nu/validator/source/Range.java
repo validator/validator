@@ -25,14 +25,17 @@ package nu.validator.source;
 public class Range {
     private final Location start;
     private final Location end;
+    private final Location loc;
     
     /**
      * @param start
      * @param end
+     * @param loc 
      */
-    Range(Location start, Location end) {
+    Range(Location start, Location end, Location loc) {
         this.start = start;
         this.end = end;
+        this.loc = loc;
     }
 
     /**
@@ -51,5 +54,14 @@ public class Range {
      */
     Location getStart() {
         return start;
+    }
+
+    /**
+     * Returns the loc.
+     * 
+     * @return the loc
+     */
+    Location getLoc() {
+        return loc;
     }
 }
