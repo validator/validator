@@ -30,14 +30,19 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import nu.validator.htmlparser.impl.CharacterHandler;
+import nu.validator.xml.TypedInputSource;
 
 public final class SourceCode implements CharacterHandler {
 
     private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
+    private String uri;
+    
     private int expectedLength;
 
     private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(
@@ -52,7 +57,28 @@ public final class SourceCode implements CharacterHandler {
     private Line currentLine = null;
 
     private boolean prevWasCr = false;
+    
+    private final LocationRecorder locationRecorder;
+    
+    public SourceCode() {
+        this.locationRecorder = new LocationRecorder(this);
+    }
 
+    public void initialize(InputSource inputSource) {
+        this.uri = inputSource.getSystemId();
+        if (inputSource instanceof TypedInputSource) {
+            TypedInputSource typedInputSource = (TypedInputSource) inputSource;
+            int length = typedInputSource.getLength();
+            if (length == -1) {
+                expectedLength = 2048;
+            } else {
+                expectedLength = length;
+            }
+        } else {
+            expectedLength = 2048;
+        }
+    }
+    
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         int s = start;
@@ -351,4 +377,25 @@ public final class SourceCode implements CharacterHandler {
             handler.end();
         }
     }
+
+    /**
+     * Returns the uri.
+     * 
+     * @return the uri
+     */
+    String getUri() {
+        return uri;
+    }
+
+    /**
+     * Returns the locationRecorder. The returned object is guaranteed 
+     * to also implement <code>LexicalHandler</code>.
+     * 
+     * @return the locationRecorder
+     */
+    public ContentHandler getLocationRecorder() {
+        return locationRecorder;
+    }
+    
+    
 }
