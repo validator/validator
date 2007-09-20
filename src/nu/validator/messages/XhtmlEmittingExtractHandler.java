@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.servlet;
+package nu.validator.messages;
 
 import org.xml.sax.SAXException;
 

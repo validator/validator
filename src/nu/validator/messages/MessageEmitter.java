@@ -25,19 +25,36 @@ package nu.validator.messages;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
+import nu.validator.messages.types.MessageType;
 import nu.validator.source.SourceHandler;
 
 public abstract class MessageEmitter {
 
-    public abstract void startMessages() throws SAXException;
+    public void startMessages() throws SAXException {
+        
+    }
 
-    public abstract void endMessages() throws SAXException;
+    public void endMessages() throws SAXException {
+        
+    }
 
-    public abstract void startMessage() throws SAXException;
-
+    public abstract void startMessage(MessageType type, String systemId, int oneBasedFirstLine, int oneBasedFirstColumn, int oneBasedLastLine, int oneBasedLastColumn) throws SAXException;
+    
     public abstract void endMessage() throws SAXException;    
     
     public abstract void characters(char[] ch, int start, int length) throws SAXException;
+
+    public abstract void startCode() throws SAXException;
+
+    public abstract void endCode() throws SAXException;
+    
+    public void startLink() throws SAXException {
+        
+    }
+
+    public void endLink() throws SAXException {
+        
+    }
     
     public SourceHandler getExtractSourceHandler() {
         return null;

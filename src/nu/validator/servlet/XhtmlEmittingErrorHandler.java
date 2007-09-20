@@ -24,6 +24,7 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 
+import nu.validator.messages.XhtmlEmittingExtractHandler;
 import nu.validator.source.SourceCode;
 import nu.validator.source.SourceHandler;
 
