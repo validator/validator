@@ -57,6 +57,7 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.source.SourceCode;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
@@ -230,6 +231,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private String postContentType;
 
     private boolean methodIsGet;
+    
+    private SourceCode sourceCode = new SourceCode();
 
     static {
         try {
@@ -458,7 +461,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new XhtmlEmittingErrorHandler(contentHandler);
+                errorHandler = new XhtmlEmittingErrorHandler(contentHandler, sourceCode);
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
@@ -571,11 +574,16 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             reader.setErrorHandler(errorHandler);
             contentType = documentInput.getType();
+            sourceCode.initialize(documentInput);
             if (validator == null) {
                 checkNormalization = true;
             }
             if (checkNormalization) {
                 reader.setFeature("http://xml.org/sax/features/unicode-normalization-checking", true);
+            }
+            if (reader instanceof HtmlParser) {
+                HtmlParser hp = (HtmlParser) reader;
+                hp.addCharacterHandler(sourceCode);
             }
             reader.parse(documentInput);
         } catch (SAXException e) {

@@ -68,7 +68,7 @@ final class Line {
 
     void characters(char[] ch, int start, int length) {
         int newBufferLength = bufferLength + length;
-        if (newBufferLength > buffer.length) {
+        if (offset + newBufferLength > buffer.length) {
             char[] newBuf = new char[((newBufferLength >> 11) + 1) << 11];
             System.arraycopy(buffer, offset, newBuf, 0, bufferLength);
             buffer = newBuf;

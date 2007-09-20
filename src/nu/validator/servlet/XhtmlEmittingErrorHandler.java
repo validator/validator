@@ -24,6 +24,9 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 
+import nu.validator.source.SourceCode;
+import nu.validator.source.SourceHandler;
+
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -56,13 +59,16 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
 
     private static final char[] IN_RESOURCE = " in resource ".toCharArray();
     
+    private final SourceCode sourceCode; 
+    
     private boolean listOpen = false;
 
     /**
      * @param contentHandler
      */
-    public XhtmlEmittingErrorHandler(ContentHandler contentHandler) {
+    public XhtmlEmittingErrorHandler(ContentHandler contentHandler, SourceCode sourceCode) {
         super(contentHandler);
+        this.sourceCode = sourceCode;
     }
 
     private void maybeOpenList() throws SAXException {
@@ -127,6 +133,7 @@ public class XhtmlEmittingErrorHandler extends SaxEmittingErrorHandler {
             this.emitter.endElement("span");
         }
         this.emitter.endElement("p");
+        sourceCode.exactError(line, col, new XhtmlEmittingExtractHandler(emitter));
     }
 
     /**

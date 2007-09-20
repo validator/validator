@@ -150,6 +150,13 @@ public final class SourceCode implements CharacterHandler {
 
     public void exactError(int oneBasedLine, int oneBasedColumn,
             SourceHandler extractHandler) throws SAXException {
+        if (oneBasedColumn < 1 || oneBasedLine < 1) {
+            return;
+        }
+        if (oneBasedLine == 632) {
+            int i = 0;
+            i++;
+        }
         int zeroBasedLine = oneBasedLine - 1;
         int zeroBasedColumn = oneBasedColumn - 1;
         Location location = new Location(this, zeroBasedLine, zeroBasedColumn);
@@ -295,6 +302,7 @@ public final class SourceCode implements CharacterHandler {
                 handler.characters(line.getBuffer(), line.getOffset(),
                         line.getBufferLength());
                 handler.newLine();
+                wholeLine++;
             }
             // last line
             int untilCol = until.getColumn();
