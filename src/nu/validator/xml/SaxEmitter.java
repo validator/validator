@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -57,5 +58,9 @@ public class SaxEmitter {
 
     public void characters(char[] content) throws SAXException {
         this.contentHandler.characters(content, 0, content.length);
+    }
+
+    public void characters(char[] buffer, int offset, int length) throws SAXException {
+        this.contentHandler.characters(buffer, offset, length);
     }
 }
