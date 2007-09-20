@@ -63,7 +63,7 @@ public class XhtmlEmittingExtractHandler implements SourceHandler {
         }
     }
 
-    public void end() throws SAXException {
+    public void endSource() throws SAXException {
         emitter.endElement("code");
         emitter.endElement("pre");
     }
@@ -82,7 +82,7 @@ public class XhtmlEmittingExtractHandler implements SourceHandler {
         emitter.endElement("span");
     }
 
-    public void start() throws SAXException {
+    public void startSource() throws SAXException {
         emitter.startElement("pre");
         emitter.startElement("code");
     }

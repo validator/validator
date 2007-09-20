@@ -165,7 +165,7 @@ public final class SourceCode implements CharacterHandler {
             Location start = location.step(-15);
             Location end = location.step(6);
             try {
-                extractHandler.start();
+                extractHandler.startSource();
                 emitContent(start, location, extractHandler);
                 extractHandler.startCharHilite(oneBasedLine, oneBasedColumn);
                 emitCharacter(location, extractHandler);
@@ -174,7 +174,7 @@ public final class SourceCode implements CharacterHandler {
                 location = location.next();
                 emitContent(location, end, extractHandler);
             } finally {
-                extractHandler.end();
+                extractHandler.endSource();
             }
         }
     }
@@ -214,14 +214,14 @@ public final class SourceCode implements CharacterHandler {
         Location start = startRange.step(-10);
         Location end = endRange.step(6);
         try {
-            extractHandler.start();
+            extractHandler.startSource();
             emitContent(start, startRange, extractHandler);
             extractHandler.startRange(oneBasedLine, oneBasedColumn);
             emitContent(startRange, endRange, extractHandler);
             extractHandler.endRange();
             emitContent(endRange, end, extractHandler);
         } finally {
-            extractHandler.end();
+            extractHandler.endSource();
         }
     }
 
@@ -230,11 +230,11 @@ public final class SourceCode implements CharacterHandler {
         if (oneBasedLine <= lines.size()) {
             Line line = lines.get(oneBasedLine - 1);
             try {
-                extractHandler.start();
+                extractHandler.startSource();
                 extractHandler.characters(line.getBuffer(), line.getOffset(),
                         line.getBufferLength());
             } finally {
-                extractHandler.end();
+                extractHandler.endSource();
             }
         }
     }
@@ -327,7 +327,7 @@ public final class SourceCode implements CharacterHandler {
             ranges.add(new Range(start, end, loc));
         }
         try {
-            handler.start();
+            handler.startSource();
             Iterator<Range> rangeIter = ranges.iterator();
             Iterator<Location> exactIter = exactErrors.iterator();
             Location previousLocation = new Location(this, 0, 0);
@@ -382,7 +382,7 @@ public final class SourceCode implements CharacterHandler {
             emitContent(previousLocation, new Location(this, lines.size(), 0),
                     handler);
         } finally {
-            handler.end();
+            handler.endSource();
         }
     }
 

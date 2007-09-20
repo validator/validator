@@ -140,7 +140,7 @@ final class Location implements Comparable<Location>, Cloneable {
                 newColumn--;
                 if (newColumn == -1) {
                     newLine--;
-                    newColumn = 0;
+                    newColumn = owner.getLine(newLine).getBufferLength(); // Aargh. this is borked!
                 }
             }            
             return new Location(owner, newLine, newColumn);
