@@ -472,7 +472,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     enc.onMalformedInput(CodingErrorAction.REPLACE);
                     enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
 //                    errorHandler = new TextEmittingErrorHandler(
-                            new OutputStreamWriter(out, enc));
+//                            new OutputStreamWriter(out, enc));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }
