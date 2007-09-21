@@ -29,7 +29,7 @@ package nu.validator.source;
  * @version $Id$
  * @author hsivonen
  */
-final class Location implements Comparable<Location>, Cloneable {
+public final class Location implements Comparable<Location>, Cloneable {
 
     private final SourceCode owner;
     private final int line;
@@ -85,7 +85,7 @@ final class Location implements Comparable<Location>, Cloneable {
      * 
      * @return the column
      */
-    int getColumn() {
+    public int getColumn() {
         return column;
     }
 
@@ -94,7 +94,7 @@ final class Location implements Comparable<Location>, Cloneable {
      * 
      * @return the line
      */
-    int getLine() {
+    public int getLine() {
         return line;
     }
 

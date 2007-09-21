@@ -50,7 +50,7 @@ public final class SourceCode implements CharacterHandler {
 
     private final SortedSet<Location> exactErrors = new TreeSet<Location>();
 
-    private final SortedSet<Location> rangeEnds = new TreeSet<Location>();
+    private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
 
     private final List<Line> lines = new ArrayList<Line>();
 
@@ -148,35 +148,21 @@ public final class SourceCode implements CharacterHandler {
                 oneBasedColumn - 1));
     }
 
-    public void exactError(int oneBasedLine, int oneBasedColumn,
-            SourceHandler extractHandler) throws SAXException {
-        if (oneBasedColumn < 1 || oneBasedLine < 1) {
-            return;
-        }
-        if (oneBasedLine == 632) {
-            int i = 0;
-            i++;
-        }
-        int zeroBasedLine = oneBasedLine - 1;
-        int zeroBasedColumn = oneBasedColumn - 1;
-        Location location = new Location(this, zeroBasedLine, zeroBasedColumn);
+    public void exactError(Location location, SourceHandler extractHandler)
+            throws SAXException {
         exactErrors.add(location);
-        if (isWithinKnownSource(location)) {
-            Location start = location.step(-15);
-            Location end = location.step(6);
-            try {
-                extractHandler.startSource();
-                emitContent(start, location, extractHandler);
-                extractHandler.startCharHilite(oneBasedLine, oneBasedColumn);
-                emitCharacter(location, extractHandler);
-                extractHandler.endCharHilite();
-                newLineIfAtEndOfLine(location, extractHandler);
-                location = location.next();
-                emitContent(location, end, extractHandler);
-            } finally {
-                extractHandler.endSource();
-            }
-        }
+        Location start = location.step(-15);
+        Location end = location.step(6);
+        extractHandler.startSource();
+        emitContent(start, location, extractHandler);
+        extractHandler.startCharHilite(location.getLine() + 1,
+                location.getColumn() + 1);
+        emitCharacter(location, extractHandler);
+        extractHandler.endCharHilite();
+        newLineIfAtEndOfLine(location, extractHandler);
+        location = location.next();
+        emitContent(location, end, extractHandler);
+        extractHandler.endSource();
     }
 
     /**
@@ -191,14 +177,30 @@ public final class SourceCode implements CharacterHandler {
         }
     }
 
-    public void rangeEndError(int oneBasedLine, int oneBasedColumn,
+    public void rangeEndError(Location startRange, Location rangeLast,
             SourceHandler extractHandler) throws SAXException {
-        int zeroBasedLine = oneBasedLine - 1;
-        int zeroBasedColumn = oneBasedColumn - 1;
-        Location location = new Location(this, zeroBasedLine, zeroBasedColumn);
+        reverseSortedLocations.add(rangeLast);
+        rangeLasts.add(rangeLast);
+        Location endRange = rangeLast.next();
+        Location start = startRange.step(-10);
+        Location end = endRange.step(6);
+            extractHandler.startSource();
+            emitContent(start, startRange, extractHandler);
+            extractHandler.startRange(rangeLast.getLine() + 1, rangeLast.getColumn() + 1);
+            emitContent(startRange, endRange, extractHandler);
+            extractHandler.endRange();
+            emitContent(endRange, end, extractHandler);
+            extractHandler.endSource();
+    }
+
+    /**
+     * @param rangeLast
+     * @return
+     */
+    public Location rangeStartForRangeLast(Location rangeLast) {
         Location startRange = null;
         for (Location loc : reverseSortedLocations) {
-            if (loc.compareTo(location) < 0) {
+            if (loc.compareTo(rangeLast) < 0) {
                 startRange = loc;
                 break;
             }
@@ -208,38 +210,19 @@ public final class SourceCode implements CharacterHandler {
         } else {
             startRange = startRange.next();
         }
-        reverseSortedLocations.add(location);
-        rangeEnds.add(location);
-        Location endRange = location.next();
-        Location start = startRange.step(-10);
-        Location end = endRange.step(6);
-        try {
-            extractHandler.startSource();
-            emitContent(start, startRange, extractHandler);
-            extractHandler.startRange(oneBasedLine, oneBasedColumn);
-            emitContent(startRange, endRange, extractHandler);
-            extractHandler.endRange();
-            emitContent(endRange, end, extractHandler);
-        } finally {
-            extractHandler.endSource();
-        }
+        return startRange;
     }
 
     public void lineError(int oneBasedLine, SourceHandler extractHandler)
             throws SAXException {
-        if (oneBasedLine <= lines.size()) {
-            Line line = lines.get(oneBasedLine - 1);
-            try {
-                extractHandler.startSource();
-                extractHandler.characters(line.getBuffer(), line.getOffset(),
-                        line.getBufferLength());
-            } finally {
-                extractHandler.endSource();
-            }
-        }
+        Line line = lines.get(oneBasedLine - 1);
+        extractHandler.startSource();
+        extractHandler.characters(line.getBuffer(), line.getOffset(),
+                line.getBufferLength());
+        extractHandler.endSource();
     }
 
-    private boolean isWithinKnownSource(Location location) {
+    public boolean isWithinKnownSource(Location location) {
         if (location.getLine() >= lines.size()) {
             return false;
         }
@@ -251,6 +234,10 @@ public final class SourceCode implements CharacterHandler {
         }
     }
 
+    public boolean isWithinKnownSource(int oneBasedLine) {
+        return !(oneBasedLine > lines.size());
+    }
+    
     Line getLine(int line) {
         return lines.get(line);
     }
@@ -317,7 +304,7 @@ public final class SourceCode implements CharacterHandler {
         List<Range> ranges = new LinkedList<Range>();
         Location[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
         int i = locations.length - 1;
-        for (Location loc : rangeEnds) {
+        for (Location loc : rangeLasts) {
             while (i >= 0 && locations[i].compareTo(loc) >= 0) {
                 i--;
             }
@@ -391,7 +378,7 @@ public final class SourceCode implements CharacterHandler {
      * 
      * @return the uri
      */
-    String getUri() {
+    public String getUri() {
         return uri;
     }
 
@@ -405,5 +392,7 @@ public final class SourceCode implements CharacterHandler {
         return locationRecorder;
     }
     
-    
+    public Location newLocatorLocation(int oneBasedLine, int oneBasedColumn) {
+        return new Location(this, oneBasedLine - 1, oneBasedColumn - 1);
+    }
 }
