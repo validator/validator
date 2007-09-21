@@ -35,7 +35,7 @@ import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
-public class WiretapXMLReaderWrapper {
+public class WiretapXMLReaderWrapper implements XMLReader {
 
     private final XMLReader wrappedReader;
 
