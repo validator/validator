@@ -70,6 +70,7 @@ import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
+import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlIdFilter;
 import nu.validator.xml.XhtmlSaxEmitter;
 
@@ -93,6 +94,7 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.ext.LexicalHandler;
 
 import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
@@ -189,7 +191,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     protected XhtmlSaxEmitter emitter;
 
-    protected InfoErrorHandler errorHandler;
+    protected MessageEmitterAdapter errorHandler;
 
     private AttributesImpl attrs = new AttributesImpl();
 
@@ -571,7 +573,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             loadDocAndSetupParser();
 
-            reader.setErrorHandler(errorHandler);
+            reader.setErrorHandler(errorHandler.getExactErrorHandler());
+            // XXX set xml:id filter separately
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
             if (validator == null) {
@@ -584,6 +587,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 HtmlParser hp = (HtmlParser) reader;
                 hp.addCharacterHandler(sourceCode);
             }
+            WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(reader);
+            ContentHandler recorder = sourceCode.getLocationRecorder();
+            wiretap.setWiretapContentHander(recorder);
+            wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
+            reader = wiretap;
             reader.parse(documentInput);
         } catch (SAXException e) {
             log4j.debug("SAXException", e);

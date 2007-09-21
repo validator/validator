@@ -28,7 +28,7 @@ import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
 
-public class XhtmlEmittingExtractHandler implements SourceHandler {
+public class XhtmlExtractHandler implements SourceHandler {
 
     private static final char[] NEWLINE_SUBSTITUTE = { '\u21A9' };
 
@@ -46,7 +46,7 @@ public class XhtmlEmittingExtractHandler implements SourceHandler {
     /**
      * @param emitter
      */
-    public XhtmlEmittingExtractHandler(final XhtmlSaxEmitter emitter) {
+    public XhtmlExtractHandler(final XhtmlSaxEmitter emitter) {
         this.emitter = emitter;
     }
 

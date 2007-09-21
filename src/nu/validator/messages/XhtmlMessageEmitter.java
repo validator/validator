@@ -24,6 +24,7 @@
 package nu.validator.messages;
 
 import nu.validator.messages.types.MessageType;
+import nu.validator.source.SourceHandler;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.xml.sax.ContentHandler;
@@ -59,6 +60,8 @@ public class XhtmlMessageEmitter extends MessageEmitter {
 
     private final XhtmlMessageTextHandler messageTextHandler;
     
+    private final XhtmlExtractHandler extractHandler;
+    
     private boolean textEmitted;
 
     private String systemId;
@@ -81,6 +84,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         this.contentHandler = contentHandler;
         this.emitter = new XhtmlSaxEmitter(contentHandler);
         this.messageTextHandler = new XhtmlMessageTextHandler(emitter);
+        this.extractHandler = new XhtmlExtractHandler(emitter);
     }
 
     private void maybeOpenList() throws SAXException {
@@ -246,6 +250,27 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         this.emitter.characters(COLON_SPACE);
         this.emitter.startElement("span");
         return messageTextHandler;
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#endSource()
+     */
+    @Override
+    public void endSource() throws SAXException {
+        emitter.endElement("code");
+        emitter.endElement("pre");
+    }
+
+    /**
+     * @throws SAXException 
+     * @see nu.validator.messages.MessageEmitter#startSource()
+     */
+    @Override
+    public SourceHandler startSource() throws SAXException {
+        maybeCloseTextPara();
+        emitter.startElement("pre");
+        emitter.startElement("code");
+        return extractHandler;
     }
 
 }

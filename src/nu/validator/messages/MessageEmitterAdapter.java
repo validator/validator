@@ -55,6 +55,9 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
     private final ExactErrorHandler exactErrorHandler;
     
     protected static String scrub(String s) throws SAXException {
+        if (s == null) {
+            return null;
+        }
         s = CharacterUtil.prudentlyScrubCharacterData(s);
         if (NormalizationChecker.startsWithComposingChar(s)) {
             s = " " + s;

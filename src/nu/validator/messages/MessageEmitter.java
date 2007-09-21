@@ -53,7 +53,7 @@ public abstract class MessageEmitter {
         
     }
 
-    public SourceHandler startSource() {
+    public SourceHandler startSource() throws SAXException {
                 return null;
     }
     
@@ -61,7 +61,7 @@ public abstract class MessageEmitter {
         
     }    
     
-    public ContentHandler startElaboration() {
+    public ContentHandler startElaboration() throws SAXException {
         return null;
     }
 
