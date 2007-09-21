@@ -22,8 +22,18 @@
 
 package nu.validator.xml;
 
+import java.io.IOException;
+
 import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.ext.LexicalHandler;
 
 public class WiretapXMLReaderWrapper {
 
@@ -32,14 +42,221 @@ public class WiretapXMLReaderWrapper {
     private ContentHandler contentHandler;
 
     private ContentHandler wiretapContentHander;
-    
+
+    private LexicalHandler lexicalHandler;
+
+    private LexicalHandler wiretapLexicalHandler;
+
     /**
      * @param wrappedReader
      */
     public WiretapXMLReaderWrapper(final XMLReader wrappedReader) {
         this.wrappedReader = wrappedReader;
+        contentHandler = wrappedReader.getContentHandler();
+        try {
+            lexicalHandler = (LexicalHandler) wrappedReader.getProperty("http://xml.org/sax/properties/lexical-handler");
+        } catch (SAXNotRecognizedException e) {
+        } catch (SAXNotSupportedException e) {
+        }
     }
-    
-    
-    
+
+    /**
+     * Sets the wiretapContentHander.
+     * 
+     * @param wiretapContentHander
+     *            the wiretapContentHander to set
+     */
+    public void setWiretapContentHander(ContentHandler wiretapContentHander) {
+        this.wiretapContentHander = wiretapContentHander;
+        updateWiretap();
+    }
+
+    /**
+     * Sets the wiretapLexicalHandler.
+     * 
+     * @param wiretapLexicalHandler
+     *            the wiretapLexicalHandler to set
+     */
+    public void setWiretapLexicalHandler(LexicalHandler wiretapLexicalHandler) {
+        this.wiretapLexicalHandler = wiretapLexicalHandler;
+        updateWiretap();
+    }
+
+    /**
+     * @return
+     * @see org.xml.sax.XMLReader#getContentHandler()
+     */
+    public ContentHandler getContentHandler() {
+        return contentHandler;
+    }
+
+    /**
+     * @return
+     * @see org.xml.sax.XMLReader#getDTDHandler()
+     */
+    public DTDHandler getDTDHandler() {
+        return wrappedReader.getDTDHandler();
+    }
+
+    /**
+     * @return
+     * @see org.xml.sax.XMLReader#getEntityResolver()
+     */
+    public EntityResolver getEntityResolver() {
+        return wrappedReader.getEntityResolver();
+    }
+
+    /**
+     * @return
+     * @see org.xml.sax.XMLReader#getErrorHandler()
+     */
+    public ErrorHandler getErrorHandler() {
+        return wrappedReader.getErrorHandler();
+    }
+
+    /**
+     * @param arg0
+     * @return
+     * @throws SAXNotRecognizedException
+     * @throws SAXNotSupportedException
+     * @see org.xml.sax.XMLReader#getFeature(java.lang.String)
+     */
+    public boolean getFeature(String arg0) throws SAXNotRecognizedException,
+            SAXNotSupportedException {
+        return wrappedReader.getFeature(arg0);
+    }
+
+    /**
+     * @param name
+     * @return
+     * @throws SAXNotRecognizedException
+     * @throws SAXNotSupportedException
+     * @see org.xml.sax.XMLReader#getProperty(java.lang.String)
+     */
+    public Object getProperty(String name) throws SAXNotRecognizedException,
+            SAXNotSupportedException {
+        if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
+            return lexicalHandler;
+        } else {
+            return wrappedReader.getProperty(name);
+        }
+    }
+
+    /**
+     * @param arg0
+     * @throws IOException
+     * @throws SAXException
+     * @see org.xml.sax.XMLReader#parse(org.xml.sax.InputSource)
+     */
+    public void parse(InputSource arg0) throws IOException, SAXException {
+        wrappedReader.parse(arg0);
+    }
+
+    /**
+     * @param arg0
+     * @throws IOException
+     * @throws SAXException
+     * @see org.xml.sax.XMLReader#parse(java.lang.String)
+     */
+    public void parse(String arg0) throws IOException, SAXException {
+        wrappedReader.parse(arg0);
+    }
+
+    /**
+     * @param arg0
+     * @see org.xml.sax.XMLReader#setContentHandler(org.xml.sax.ContentHandler)
+     */
+    public void setContentHandler(ContentHandler contentHandler) {
+        this.contentHandler = contentHandler;
+        updateWiretap();
+    }
+
+    /**
+     * @param arg0
+     * @see org.xml.sax.XMLReader#setDTDHandler(org.xml.sax.DTDHandler)
+     */
+    public void setDTDHandler(DTDHandler arg0) {
+        wrappedReader.setDTDHandler(arg0);
+    }
+
+    /**
+     * @param arg0
+     * @see org.xml.sax.XMLReader#setEntityResolver(org.xml.sax.EntityResolver)
+     */
+    public void setEntityResolver(EntityResolver arg0) {
+        wrappedReader.setEntityResolver(arg0);
+    }
+
+    /**
+     * @param arg0
+     * @see org.xml.sax.XMLReader#setErrorHandler(org.xml.sax.ErrorHandler)
+     */
+    public void setErrorHandler(ErrorHandler arg0) {
+        wrappedReader.setErrorHandler(arg0);
+    }
+
+    /**
+     * @param arg0
+     * @param arg1
+     * @throws SAXNotRecognizedException
+     * @throws SAXNotSupportedException
+     * @see org.xml.sax.XMLReader#setFeature(java.lang.String, boolean)
+     */
+    public void setFeature(String arg0, boolean arg1)
+            throws SAXNotRecognizedException, SAXNotSupportedException {
+        wrappedReader.setFeature(arg0, arg1);
+    }
+
+    /**
+     * @param name
+     * @param value
+     * @throws SAXNotRecognizedException
+     * @throws SAXNotSupportedException
+     * @see org.xml.sax.XMLReader#setProperty(java.lang.String,
+     *      java.lang.Object)
+     */
+    public void setProperty(String name, Object value)
+            throws SAXNotRecognizedException, SAXNotSupportedException {
+        if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
+            lexicalHandler = (LexicalHandler) value;
+            updateWiretap();
+        } else {
+            wrappedReader.setProperty(name, value);
+        }
+    }
+
+    private void updateWiretap() {
+        if (contentHandler != null) {
+            if (wiretapContentHander != null) {
+                wrappedReader.setContentHandler(new CombineContentHandler(
+                        contentHandler, wiretapContentHander));
+            } else {
+                wrappedReader.setContentHandler(contentHandler);
+            }
+        } else {
+            wrappedReader.setContentHandler(wiretapContentHander);
+        }
+
+        try {
+            if (lexicalHandler != null) {
+                if (wiretapLexicalHandler != null) {
+                    wrappedReader.setProperty(
+                            "http://xml.org/sax/properties/lexical-handler",
+                            new CombineLexicalHandler(lexicalHandler,
+                                    wiretapLexicalHandler));
+                } else {
+                    wrappedReader.setProperty(
+                            "http://xml.org/sax/properties/lexical-handler",
+                            lexicalHandler);
+                }
+            } else {
+                wrappedReader.setProperty(
+                        "http://xml.org/sax/properties/lexical-handler",
+                        wiretapLexicalHandler);
+            }
+        } catch (SAXNotRecognizedException e) {
+        } catch (SAXNotSupportedException e) {
+        }
+    }
+
 }
