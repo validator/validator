@@ -58,6 +58,7 @@ import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.messages.MessageEmitterAdapter;
+import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.source.SourceCode;
 import nu.validator.xml.AttributesImpl;
@@ -468,11 +469,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    CharsetEncoder enc = Charset.forName("UTF-8").newEncoder();
-                    enc.onMalformedInput(CodingErrorAction.REPLACE);
-                    enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
-//                    errorHandler = new TextEmittingErrorHandler(
-//                            new OutputStreamWriter(out, enc));
+                    errorHandler = new MessageEmitterAdapter(sourceCode, new TextMessageEmitter(out));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }
