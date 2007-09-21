@@ -22,6 +22,7 @@
 
 package nu.validator.messages;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -30,10 +31,46 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 
 import nu.validator.messages.types.MessageType;
+import nu.validator.xml.XhtmlSaxEmitter;
 
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 public class TextMessageEmitter extends MessageEmitter {
+
+    private static final char[] COLON_SPACE = { ':', ' ' };
+
+    private static final char[] PERIOD = { '.' };
+
+    private static final char[] ON_LINE = "On line ".toCharArray();
+
+    private static final char[] AT_LINE = "At line ".toCharArray();
+
+    private static final char[] FROM_LINE = "From line ".toCharArray();
+
+    private static final char[] TO_LINE = "; to line ".toCharArray();
+
+    private static final char[] COLUMN = ", column ".toCharArray();
+
+    private static final char[] IN_RESOURCE = " in resource ".toCharArray();
+
+    private final Writer writer;
+
+    private final TextMessageTextHandler messageTextHandler;
+
+    private String systemId;
+
+    private int oneBasedFirstLine;
+
+    private int oneBasedFirstColumn;
+
+    private int oneBasedLastLine;
+
+    private int oneBasedLastColumn;
+
+    private boolean exact;
+
+    private boolean textEmitted;
 
     private static Writer newOutputStreamWriter(OutputStream out) {
         CharsetEncoder enc = Charset.forName("UTF-8").newEncoder();
@@ -41,15 +78,74 @@ public class TextMessageEmitter extends MessageEmitter {
         enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
         return new OutputStreamWriter(out, enc);
     }
-    
+
     public TextMessageEmitter(OutputStream out) {
-        
+        this.writer = newOutputStreamWriter(out);
+        this.messageTextHandler = new TextMessageTextHandler(writer);
     }
 
-    @Override
-    public void endMessage() throws SAXException {
-        // TODO Auto-generated method stub
+    private void emitErrorLevel(char[] level) throws IOException {
+        writer.write(level, 0, level.length);
+    }
 
+    private void maybeEmitLocation() throws IOException {
+        if (oneBasedLastLine == -1 && systemId == null) {
+            return;
+        }
+        if (oneBasedLastLine == -1) {
+            emitSystemId();
+        } else if (oneBasedLastColumn == -1) {
+            emitLineLocation();
+        } else if (oneBasedFirstLine == -1
+                || (oneBasedFirstLine == oneBasedLastLine && oneBasedFirstColumn == oneBasedLastColumn)) {
+            emitSingleLocation();
+        } else {
+            emitRangeLocation();
+        }
+        writer.write('\n');
+    }
+
+    /**
+     * @throws SAXException
+     */
+    private void maybeEmitInResource() throws IOException {
+        if (systemId != null) {
+            this.writer.write(IN_RESOURCE);
+            emitSystemId();
+        }
+    }
+
+    /**
+     * @throws SAXException
+     */
+    private void emitSystemId() throws IOException {
+        this.writer.write(systemId);
+    }
+
+    private void emitRangeLocation() throws IOException {
+        this.writer.write(FROM_LINE);
+        this.writer.write(Integer.toString(oneBasedFirstLine));
+        this.writer.write(COLUMN);
+        this.writer.write(Integer.toString(oneBasedFirstColumn));
+        this.writer.write(TO_LINE);
+        this.writer.write(Integer.toString(oneBasedLastLine));
+        this.writer.write(COLUMN);
+        this.writer.write(Integer.toString(oneBasedLastColumn));
+        maybeEmitInResource();
+    }
+
+    private void emitSingleLocation() throws IOException {
+        this.writer.write(AT_LINE);
+        this.writer.write(Integer.toString(oneBasedLastLine));
+        this.writer.write(COLUMN);
+        this.writer.write(Integer.toString(oneBasedLastColumn));
+        maybeEmitInResource();
+    }
+
+    private void emitLineLocation() throws IOException {
+        this.writer.write(ON_LINE);
+        this.writer.write(Integer.toString(oneBasedLastLine));
+        maybeEmitInResource();
     }
 
     @Override
@@ -57,8 +153,77 @@ public class TextMessageEmitter extends MessageEmitter {
             int oneBasedFirstLine, int oneBasedFirstColumn,
             int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
             throws SAXException {
-        // TODO Auto-generated method stub
+        this.systemId = systemId;
+        this.oneBasedFirstLine = oneBasedFirstLine;
+        this.oneBasedFirstColumn = oneBasedFirstColumn;
+        this.oneBasedLastLine = oneBasedLastLine;
+        this.oneBasedLastColumn = oneBasedLastColumn;
+        this.exact = exact;
+        try {
+            emitErrorLevel(type.getPresentationName());
+        } catch (IOException e) {
+            throw new SAXException(e.getLocalizedMessage(), e);
+        }
+        this.textEmitted = false;
+    }
 
+    /**
+     * @see nu.validator.messages.MessageEmitter#endMessages()
+     */
+    @Override
+    public void endMessages() throws SAXException {
+        // try {
+        // } catch (IOException e) {
+        // throw new SAXException(e.getLocalizedMessage(), e);
+        // }
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#endText()
+     */
+    @Override
+    public void endText() throws SAXException {
+        try {
+            this.writer.write('\n');
+            this.textEmitted = true;
+        } catch (IOException e) {
+            throw new SAXException(e.getLocalizedMessage(), e);
+        }
+
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
+     */
+    @Override
+    public void startMessages(String documentUri) throws SAXException {
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startText()
+     */
+    @Override
+    public MessageTextHandler startText() throws SAXException {
+        try {
+            this.writer.write(COLON_SPACE);
+            return messageTextHandler;
+        } catch (IOException e) {
+            throw new SAXException(e.getLocalizedMessage(), e);
+        }
+    }
+
+    @Override
+    public void endMessage() throws SAXException {
+        try {
+            if (!textEmitted) {
+                writer.write(PERIOD);
+                writer.write('\n');
+            }
+            maybeEmitLocation();
+            writer.write('\n');
+        } catch (IOException e) {
+            throw new SAXException(e.getLocalizedMessage(), e);
+        }
     }
 
 }

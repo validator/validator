@@ -23,17 +23,11 @@
 
 package nu.validator.messages;
 
-import java.io.IOException;
-
-import nu.validator.messages.XhtmlEmittingExtractHandler;
 import nu.validator.messages.types.MessageType;
-import nu.validator.source.SourceCode;
-import nu.validator.source.SourceHandler;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @version $Id: XhtmlMessageEmitter.java 54 2007-09-20 15:37:38Z hsivonen $
@@ -42,8 +36,6 @@ import org.xml.sax.SAXParseException;
 public class XhtmlMessageEmitter extends MessageEmitter {
 
     private static final char[] COLON_SPACE = { ':', ' ' };
-
-    private static final char[] SPACE = { ' ' };
 
     private static final char[] PERIOD = { '.' };
 
@@ -65,6 +57,8 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     
     private final XhtmlSaxEmitter emitter;
 
+    private final XhtmlMessageTextHandler messageTextHandler;
+    
     private boolean textEmitted;
 
     private String systemId;
@@ -86,6 +80,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         super();
         this.contentHandler = contentHandler;
         this.emitter = new XhtmlSaxEmitter(contentHandler);
+        this.messageTextHandler = new XhtmlMessageTextHandler(emitter);
     }
 
     private void maybeOpenList() throws SAXException {
@@ -250,7 +245,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     public MessageTextHandler startText() throws SAXException {
         this.emitter.characters(COLON_SPACE);
         this.emitter.startElement("span");
-        return null;
+        return messageTextHandler;
     }
 
 }
