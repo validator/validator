@@ -20,46 +20,20 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.messages.types;
+package nu.validator.messages;
 
-public abstract class MessageType {
-    
-    public static final MessageType ERROR = new Error();
-    
-    public static final MessageType FATAL = new Fatal();
-    
-    public static final MessageType INFO = new Info();
-    
-    public static final MessageType INTERNAL = new Internal();
+import org.xml.sax.SAXException;
 
-    public static final MessageType IO = new Io();
-    
-    public static final MessageType NON_DOCUMENT = new NonDocumentError();
-    
-    public static final MessageType SCHEMA = new Schema();
-    
-    public static final MessageType WARNING = new Warning();
-    
-    private final String flatType;
+public interface MessageTextHandler {
 
-    public MessageType() {
-        this.flatType = getSuperType() + (getSubType() == null ? "" : " " + getSubType());
-    }
-    
-    public abstract char[] getPresentationName();
-    
-    public abstract String getSuperType();
-    
-    public String getSubType() {
-        return null;
-    }
+    public void characters(char[] ch, int start, int length) throws SAXException;
 
-    /**
-     * Returns the flatType.
-     * 
-     * @return the flatType
-     */
-    public String getFlatType() {
-        return flatType;
-    }
+    public void startCode() throws SAXException;
+
+    public void endCode() throws SAXException;
+    
+    public void startLink(String href, String title) throws SAXException;
+    
+    public void endLink() throws SAXException;
+    
 }

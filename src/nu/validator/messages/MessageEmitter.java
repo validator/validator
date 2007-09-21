@@ -30,7 +30,10 @@ import nu.validator.source.SourceHandler;
 
 public abstract class MessageEmitter {
 
-    public void startMessages() throws SAXException {
+    public MessageEmitter() {
+    }
+
+    public void startMessages(String documentUri) throws SAXException {
         
     }
 
@@ -38,30 +41,32 @@ public abstract class MessageEmitter {
         
     }
 
-    public abstract void startMessage(MessageType type, String systemId, int oneBasedFirstLine, int oneBasedFirstColumn, int oneBasedLastLine, int oneBasedLastColumn) throws SAXException;
+    public abstract void startMessage(MessageType type, String systemId, int oneBasedFirstLine, int oneBasedFirstColumn, int oneBasedLastLine, int oneBasedLastColumn, boolean exact) throws SAXException;
     
     public abstract void endMessage() throws SAXException;    
     
-    public abstract void characters(char[] ch, int start, int length) throws SAXException;
-
-    public abstract void startCode() throws SAXException;
-
-    public abstract void endCode() throws SAXException;
+    public MessageTextHandler startText() throws SAXException {
+        return null;        
+    }
     
-    public void startLink() throws SAXException {
+    public void endText() throws SAXException {
         
     }
 
-    public void endLink() throws SAXException {
+    public SourceHandler startSource() {
+                return null;
+    }
+    
+    public void endSource() throws SAXException {
         
-    }
+    }    
     
-    public SourceHandler getExtractSourceHandler() {
+    public ContentHandler startElaboration() {
         return null;
     }
-    
-    public ContentHandler getElaborationContentHandler() {
-        return null;
-    }
+
+    public void endElaboration() throws SAXException {
+        
+    }    
     
 }
