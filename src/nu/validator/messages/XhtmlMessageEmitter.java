@@ -258,7 +258,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     @Override
     public void endSource() throws SAXException {
         emitter.endElement("code");
-        emitter.endElement("pre");
+        emitter.endElement("p");
     }
 
     /**
@@ -268,7 +268,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     @Override
     public SourceHandler startSource() throws SAXException {
         maybeCloseTextPara();
-        emitter.startElement("pre");
+        emitter.startElement("p");
         emitter.startElement("code");
         return extractHandler;
     }

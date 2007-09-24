@@ -231,7 +231,8 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
     private void messageWithRange(MessageType type, String message, int oneBasedLine, int oneBasedColumn) throws SAXException {
         Location rangeLast = sourceCode.newLocatorLocation(oneBasedLine, oneBasedColumn);
         if (!sourceCode.isWithinKnownSource(rangeLast)) {
-            throw new RuntimeException("Bug. Range end not within known source!");
+            messageWithoutExtract(type, message, null, oneBasedLine, oneBasedColumn);
+            return;
         }
         Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
         emitter.startMessage(type, null, rangeStart.getLine() + 1, rangeStart.getColumn() + 1, oneBasedLine, oneBasedColumn, false);

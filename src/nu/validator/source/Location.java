@@ -39,16 +39,22 @@ public final class Location implements Comparable<Location>, Cloneable {
      * @param line
      * @param column
      */
-    Location(final SourceCode owner, final int line, final int column) {
+    Location(final SourceCode owner, int line, int column) {
         this.owner = owner;
+        if (line < 0) {
+            line = 0;
+            column = 0;
+        } else if (column < 0) {
+            line--;
+            if (line < 0) {
+                line = 0;
+                column = 0;                
+            } else {
+                column = owner.getLine(line).getBufferLength();
+            }
+        }
         this.line = line;
         this.column = column;
-        if (column < 0) {
-            throw new IllegalArgumentException("Column cannot be less than zero.");
-        }
-        if (line < 0) {
-            throw new IllegalArgumentException("Line cannot be less than zero.");            
-        }
     }
 
     public int compareTo(Location o) {
@@ -124,8 +130,8 @@ public final class Location implements Comparable<Location>, Cloneable {
                     break;
                 }
                 newColumn++;
-                Line sourceLine = owner.getLine(line);
-                if (newColumn == sourceLine.getBufferLength()) {
+                Line sourceLine = owner.getLine(newLine);
+                if (newColumn > sourceLine.getBufferLength()) {
                     newLine++;
                     newColumn = 0;
                 }
@@ -140,7 +146,7 @@ public final class Location implements Comparable<Location>, Cloneable {
                 newColumn--;
                 if (newColumn == -1) {
                     newLine--;
-                    newColumn = owner.getLine(newLine).getBufferLength(); // Aargh. this is borked!
+                    newColumn = owner.getLine(newLine).getBufferLength();
                 }
             }            
             return new Location(owner, newLine, newColumn);

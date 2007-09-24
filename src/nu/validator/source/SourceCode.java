@@ -23,21 +23,22 @@
 package nu.validator.source;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import nu.validator.htmlparser.impl.CharacterHandler;
+import nu.validator.xml.TypedInputSource;
+
+import org.apache.log4j.Logger;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import nu.validator.htmlparser.impl.CharacterHandler;
-import nu.validator.xml.TypedInputSource;
-
 public final class SourceCode implements CharacterHandler {
+    private static final Logger log4j = Logger.getLogger(SourceCode.class);
 
     private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
@@ -144,6 +145,7 @@ public final class SourceCode implements CharacterHandler {
     }
 
     void addLocatorLocation(int oneBasedLine, int oneBasedColumn) {
+        log4j.debug(oneBasedLine + ", " + oneBasedColumn);
         reverseSortedLocations.add(new Location(this, oneBasedLine - 1,
                 oneBasedColumn - 1));
     }
@@ -159,22 +161,9 @@ public final class SourceCode implements CharacterHandler {
                 location.getColumn() + 1);
         emitCharacter(location, extractHandler);
         extractHandler.endCharHilite();
-        newLineIfAtEndOfLine(location, extractHandler);
         location = location.next();
         emitContent(location, end, extractHandler);
         extractHandler.endSource();
-    }
-
-    /**
-     * @param location
-     * @param handler
-     * @throws SAXException
-     */
-    private void newLineIfAtEndOfLine(Location location, SourceHandler handler) throws SAXException {
-        Line line = getLine(location.getLine());
-        if (location.getColumn() + 1 == line.getBufferLength()) {
-            handler.newLine();
-        }
     }
 
     public void rangeEndError(Location startRange, Location rangeLast,
@@ -184,13 +173,14 @@ public final class SourceCode implements CharacterHandler {
         Location endRange = rangeLast.next();
         Location start = startRange.step(-10);
         Location end = endRange.step(6);
-            extractHandler.startSource();
-            emitContent(start, startRange, extractHandler);
-            extractHandler.startRange(rangeLast.getLine() + 1, rangeLast.getColumn() + 1);
-            emitContent(startRange, endRange, extractHandler);
-            extractHandler.endRange();
-            emitContent(endRange, end, extractHandler);
-            extractHandler.endSource();
+        extractHandler.startSource();
+        emitContent(start, startRange, extractHandler);
+        extractHandler.startRange(rangeLast.getLine() + 1,
+                rangeLast.getColumn() + 1);
+        emitContent(startRange, endRange, extractHandler);
+        extractHandler.endRange();
+        emitContent(endRange, end, extractHandler);
+        extractHandler.endSource();
     }
 
     /**
@@ -198,19 +188,12 @@ public final class SourceCode implements CharacterHandler {
      * @return
      */
     public Location rangeStartForRangeLast(Location rangeLast) {
-        Location startRange = null;
         for (Location loc : reverseSortedLocations) {
             if (loc.compareTo(rangeLast) < 0) {
-                startRange = loc;
-                break;
+                return loc.next();
             }
         }
-        if (startRange == null) {
-            startRange = new Location(this, 0, 0);
-        } else {
-            startRange = startRange.next();
-        }
-        return startRange;
+        return new Location(this, 0, 0);
     }
 
     public void lineError(int oneBasedLine, SourceHandler extractHandler)
@@ -227,7 +210,7 @@ public final class SourceCode implements CharacterHandler {
             return false;
         }
         Line line = lines.get(location.getLine());
-        if (line.getBufferLength() > location.getColumn()) {
+        if (line.getBufferLength() >= location.getColumn()) {
             return true;
         } else {
             return false;
@@ -249,14 +232,18 @@ public final class SourceCode implements CharacterHandler {
     void emitCharacter(Location location, SourceHandler handler)
             throws SAXException {
         Line line = getLine(location.getLine());
-        handler.characters(line.getBuffer(), line.getOffset()
-                + location.getColumn(), 1);
+        int col = location.getColumn();
+        if (col == line.getBufferLength()) {
+            handler.newLine();
+        } else {
+            handler.characters(line.getBuffer(), line.getOffset()
+                + col, 1);
+        }
     }
 
     /**
      * Emits content between from a location (inclusive) until a location
-     * (exclusive). There is no way to point to line breaks. They are always
-     * emitted together with the last character on a line.
+     * (exclusive).
      * 
      * @param from
      * @param until
@@ -272,8 +259,14 @@ public final class SourceCode implements CharacterHandler {
         int untilLine = until.getLine();
         Line line = getLine(fromLine);
         if (fromLine == untilLine) {
-            handler.characters(line.getBuffer(), line.getOffset()
+            if (line.getBufferLength() < until.getColumn()) {
+                handler.characters(line.getBuffer(), line.getOffset()
+                        + from.getColumn(), line.getBufferLength() - from.getColumn());
+                handler.newLine();
+            } else {
+                handler.characters(line.getBuffer(), line.getOffset()
                     + from.getColumn(), until.getColumn() - from.getColumn());
+            }
         } else {
             // first line
             int length = line.getBufferLength() - from.getColumn();
@@ -295,7 +288,12 @@ public final class SourceCode implements CharacterHandler {
             int untilCol = until.getColumn();
             if (untilCol > 0) {
                 line = getLine(untilLine);
-                handler.characters(line.getBuffer(), line.getOffset(), untilCol);
+                if (line.getBufferLength() < untilCol) {
+                    handler.characters(line.getBuffer(), line.getOffset(), untilCol);
+                } else {
+                    handler.characters(line.getBuffer(), line.getOffset(), line.getBufferLength());
+                    handler.newLine();
+                }
             }
         }
     }
@@ -337,7 +335,6 @@ public final class SourceCode implements CharacterHandler {
                     handler.startCharHilite(exact.getLine() + 1, exact.getColumn() + 1);
                     emitCharacter(exact, handler);
                     handler.endCharHilite();
-                    newLineIfAtEndOfLine(exact, handler);
                     previousLocation = exact.next();
 
                     if (exactIter.hasNext()) {
