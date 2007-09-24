@@ -43,7 +43,7 @@ public final class SourceCode implements CharacterHandler {
     private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
     private String uri;
-    
+
     private int expectedLength;
 
     private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(
@@ -58,9 +58,9 @@ public final class SourceCode implements CharacterHandler {
     private Line currentLine = null;
 
     private boolean prevWasCr = false;
-    
+
     private final LocationRecorder locationRecorder;
-    
+
     public SourceCode() {
         this.locationRecorder = new LocationRecorder(this);
     }
@@ -79,7 +79,7 @@ public final class SourceCode implements CharacterHandler {
             expectedLength = 2048;
         }
     }
-    
+
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         int s = start;
@@ -166,18 +166,18 @@ public final class SourceCode implements CharacterHandler {
         extractHandler.endSource();
     }
 
-    public void rangeEndError(Location startRange, Location rangeLast,
+    public void rangeEndError(Location rangeStart, Location rangeLast,
             SourceHandler extractHandler) throws SAXException {
         reverseSortedLocations.add(rangeLast);
         rangeLasts.add(rangeLast);
         Location endRange = rangeLast.next();
-        Location start = startRange.step(-10);
+        Location start = rangeStart.step(-10);
         Location end = endRange.step(6);
         extractHandler.startSource();
-        emitContent(start, startRange, extractHandler);
+        emitContent(start, rangeStart, extractHandler);
         extractHandler.startRange(rangeLast.getLine() + 1,
                 rangeLast.getColumn() + 1);
-        emitContent(startRange, endRange, extractHandler);
+        emitContent(rangeStart, endRange, extractHandler);
         extractHandler.endRange();
         emitContent(endRange, end, extractHandler);
         extractHandler.endSource();
@@ -220,7 +220,7 @@ public final class SourceCode implements CharacterHandler {
     public boolean isWithinKnownSource(int oneBasedLine) {
         return !(oneBasedLine > lines.size());
     }
-    
+
     Line getLine(int line) {
         return lines.get(line);
     }
@@ -236,8 +236,7 @@ public final class SourceCode implements CharacterHandler {
         if (col == line.getBufferLength()) {
             handler.newLine();
         } else {
-            handler.characters(line.getBuffer(), line.getOffset()
-                + col, 1);
+            handler.characters(line.getBuffer(), line.getOffset() + col, 1);
         }
     }
 
@@ -259,14 +258,8 @@ public final class SourceCode implements CharacterHandler {
         int untilLine = until.getLine();
         Line line = getLine(fromLine);
         if (fromLine == untilLine) {
-            if (line.getBufferLength() < until.getColumn()) {
-                handler.characters(line.getBuffer(), line.getOffset()
-                        + from.getColumn(), line.getBufferLength() - from.getColumn());
-                handler.newLine();
-            } else {
-                handler.characters(line.getBuffer(), line.getOffset()
+            handler.characters(line.getBuffer(), line.getOffset()
                     + from.getColumn(), until.getColumn() - from.getColumn());
-            }
         } else {
             // first line
             int length = line.getBufferLength() - from.getColumn();
@@ -288,12 +281,7 @@ public final class SourceCode implements CharacterHandler {
             int untilCol = until.getColumn();
             if (untilCol > 0) {
                 line = getLine(untilLine);
-                if (line.getBufferLength() < untilCol) {
-                    handler.characters(line.getBuffer(), line.getOffset(), untilCol);
-                } else {
-                    handler.characters(line.getBuffer(), line.getOffset(), line.getBufferLength());
-                    handler.newLine();
-                }
+                handler.characters(line.getBuffer(), line.getOffset(), untilCol);
             }
         }
     }
@@ -330,9 +318,13 @@ public final class SourceCode implements CharacterHandler {
                 rangeLoc = r.getLoc();
             }
             while (exact != null || rangeEnd != null) {
-                if (exact != null && (rangeStart == null || exact.compareTo(rangeStart) < 0) && (rangeEnd == null || exact.compareTo(rangeEnd) < 0)) { // exact first?
+                if (exact != null
+                        && (rangeStart == null || exact.compareTo(rangeStart) < 0)
+                        && (rangeEnd == null || exact.compareTo(rangeEnd) < 0)) { // exact
+                                                                                    // first?
                     emitContent(previousLocation, exact, handler);
-                    handler.startCharHilite(exact.getLine() + 1, exact.getColumn() + 1);
+                    handler.startCharHilite(exact.getLine() + 1,
+                            exact.getColumn() + 1);
                     emitCharacter(exact, handler);
                     handler.endCharHilite();
                     previousLocation = exact.next();
@@ -344,7 +336,8 @@ public final class SourceCode implements CharacterHandler {
                     }
                 } else if (rangeStart != null) { // range start first?
                     emitContent(previousLocation, rangeStart, handler);
-                    handler.startRange(rangeLoc.getLine() + 1, rangeLoc.getColumn() + 1);
+                    handler.startRange(rangeLoc.getLine() + 1,
+                            rangeLoc.getColumn() + 1);
                     previousLocation = rangeStart;
                     rangeStart = null;
                 } else { // range end first?
@@ -380,15 +373,15 @@ public final class SourceCode implements CharacterHandler {
     }
 
     /**
-     * Returns the locationRecorder. The returned object is guaranteed 
-     * to also implement <code>LexicalHandler</code>.
+     * Returns the locationRecorder. The returned object is guaranteed to also
+     * implement <code>LexicalHandler</code>.
      * 
      * @return the locationRecorder
      */
     public ContentHandler getLocationRecorder() {
         return locationRecorder;
     }
-    
+
     public Location newLocatorLocation(int oneBasedLine, int oneBasedColumn) {
         return new Location(this, oneBasedLine - 1, oneBasedColumn - 1);
     }
