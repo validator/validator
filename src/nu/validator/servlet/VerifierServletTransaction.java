@@ -1170,7 +1170,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             ContentHandler ch = validator.getContentHandler();
             ch.setDocumentLocator(htmlParser.getDocumentLocator());
             ch.startDocument();
-            htmlParser.setContentHandler(ch);
+            reader.setContentHandler(ch);
         } else {
             if (html4SpecificAdditionalErrorChecks) {
                 errorHandler.info("HTML4-specific tokenization errors are enabled.");
