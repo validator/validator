@@ -295,11 +295,10 @@ public final class SourceCode implements CharacterHandler {
         Location[] locations = reverseSortedLocations.toArray(SOURCE_LOCATION_ARRAY_TYPE);
         int i = locations.length - 1;
         for (Location loc : rangeLasts) {
-            while (i >= 0 && locations[i].compareTo(loc) >= 0) {
+            while (i >= 0 && locations[i].compareTo(loc) < 0) {
                 i--;
             }
-            Location start = i >= 0 ? locations[i].next() : new Location(this,
-                    0, 0);
+            Location start = locations[i + 1].next();
             Location end = loc.next();
             ranges.add(new Range(start, end, loc));
         }

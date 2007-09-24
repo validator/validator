@@ -65,8 +65,16 @@ public abstract class MessageEmitter {
         return null;
     }
 
-    public void endElaboration() throws SAXException {
-        
+    public void endElaboration() throws SAXException {    
+
     }    
     
+    public SourceHandler startFullSource() throws SAXException {
+        return null;
+    }
+
+    public void endFullSource() throws SAXException {
+
+}    
+
 }

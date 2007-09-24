@@ -154,4 +154,12 @@ public final class Location implements Comparable<Location>, Cloneable {
             return this;
         }
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return line + ", " + column;
+    }
 }

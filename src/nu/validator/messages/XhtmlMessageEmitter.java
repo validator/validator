@@ -41,7 +41,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private static final char[] PERIOD = { '.' };
 
     private static final char[] ON_LINE = "On line ".toCharArray();
-    
+
     private static final char[] AT_LINE = "At line ".toCharArray();
 
     private static final char[] FROM_LINE = "From line ".toCharArray();
@@ -51,17 +51,17 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private static final char[] COLUMN = ", column ".toCharArray();
 
     private static final char[] IN_RESOURCE = " in resource ".toCharArray();
-        
+
     private boolean listOpen = false;
 
     private final ContentHandler contentHandler;
-    
+
     private final XhtmlSaxEmitter emitter;
 
     private final XhtmlMessageTextHandler messageTextHandler;
-    
+
     private final XhtmlExtractHandler extractHandler;
-    
+
     private boolean textEmitted;
 
     private String systemId;
@@ -75,7 +75,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private int oneBasedLastColumn;
 
     private boolean exact;
-    
+
     /**
      * @param contentHandler
      */
@@ -93,13 +93,13 @@ public class XhtmlMessageEmitter extends MessageEmitter {
             this.listOpen = true;
         }
     }
-    
+
     private void emitErrorLevel(char[] level) throws SAXException {
         this.emitter.startElement("strong");
         this.emitter.characters(level);
         this.emitter.endElement("strong");
     }
-    
+
     @Override
     public void endMessage() throws SAXException {
         maybeCloseTextPara();
@@ -120,10 +120,11 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         }
         this.emitter.startElementWithClass("p", "location");
         if (oneBasedLastLine == -1) {
-            emitSystemId();            
+            emitSystemId();
         } else if (oneBasedLastColumn == -1) {
             emitLineLocation();
-        } else if (oneBasedFirstLine == -1 || (oneBasedFirstLine == oneBasedLastLine && oneBasedFirstColumn == oneBasedLastColumn)) {
+        } else if (oneBasedFirstLine == -1
+                || (oneBasedFirstLine == oneBasedLastLine && oneBasedFirstColumn == oneBasedLastColumn)) {
             emitSingleLocation();
         } else {
             emitRangeLocation();
@@ -191,14 +192,17 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     }
 
     @Override
-    public void startMessage(MessageType type, String systemId, int oneBasedFirstLine, int oneBasedFirstColumn, int oneBasedLastLine, int oneBasedLastColumn, boolean exact) throws SAXException {
+    public void startMessage(MessageType type, String systemId,
+            int oneBasedFirstLine, int oneBasedFirstColumn,
+            int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
+            throws SAXException {
         this.systemId = systemId;
         this.oneBasedFirstLine = oneBasedFirstLine;
         this.oneBasedFirstColumn = oneBasedFirstColumn;
         this.oneBasedLastLine = oneBasedLastLine;
         this.oneBasedLastColumn = oneBasedLastColumn;
         this.exact = exact;
-        
+
         this.maybeOpenList();
         this.emitter.startElementWithClass("li", type.getFlatType());
         this.emitter.startElement("p");
@@ -271,6 +275,22 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         emitter.startElement("p");
         emitter.startElement("code");
         return extractHandler;
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#endFullSource()
+     */
+    @Override
+    public void endFullSource() throws SAXException {
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startFullSource()
+     */
+    @Override
+    public SourceHandler startFullSource() throws SAXException {
+        maybeCloseList();
+        return new XhtmlSourceHandler(emitter);
     }
 
 }

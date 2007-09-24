@@ -204,6 +204,11 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
     public void end(String successMessage, String failureMessage)
             throws SAXException {
         // XXX figure out API here
+        SourceHandler sourceHandler = emitter.startFullSource();
+        if (sourceHandler != null) {
+            sourceCode.emitSource(sourceHandler);
+        }
+        emitter.endFullSource();
         emitter.endMessages();
     }
 
