@@ -267,15 +267,19 @@ public final class SourceCode implements CharacterHandler {
                 handler.characters(line.getBuffer(), line.getOffset()
                         + from.getColumn(), length);
             }
-            handler.newLine();
+            if (fromLine + 1 != lines.size()) {
+                handler.newLine();
+            }
             // lines in between
             int wholeLine = fromLine + 1;
             while (wholeLine < untilLine) {
                 line = getLine(wholeLine);
                 handler.characters(line.getBuffer(), line.getOffset(),
                         line.getBufferLength());
-                handler.newLine();
                 wholeLine++;
+                if (wholeLine != lines.size()) {
+                    handler.newLine();
+                }
             }
             // last line
             int untilCol = until.getColumn();
