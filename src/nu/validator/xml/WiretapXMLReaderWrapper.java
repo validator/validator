@@ -229,7 +229,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
         if (contentHandler != null) {
             if (wiretapContentHander != null) {
                 wrappedReader.setContentHandler(new CombineContentHandler(
-                        contentHandler, wiretapContentHander));
+                        wiretapContentHander, contentHandler));
             } else {
                 wrappedReader.setContentHandler(contentHandler);
             }
@@ -242,8 +242,8 @@ public class WiretapXMLReaderWrapper implements XMLReader {
                 if (wiretapLexicalHandler != null) {
                     wrappedReader.setProperty(
                             "http://xml.org/sax/properties/lexical-handler",
-                            new CombineLexicalHandler(lexicalHandler,
-                                    wiretapLexicalHandler));
+                            new CombineLexicalHandler(wiretapLexicalHandler,
+                                    lexicalHandler));
                 } else {
                     wrappedReader.setProperty(
                             "http://xml.org/sax/properties/lexical-handler",
