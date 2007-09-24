@@ -64,8 +64,6 @@ public class XhtmlExtractHandler implements SourceHandler {
     }
 
     public void endSource() throws SAXException {
-        emitter.endElement("code");
-        emitter.endElement("pre");
     }
 
     public void endCharHilite() throws SAXException {
@@ -83,8 +81,6 @@ public class XhtmlExtractHandler implements SourceHandler {
     }
 
     public void startSource() throws SAXException {
-        emitter.startElement("pre");
-        emitter.startElement("code");
     }
 
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)
