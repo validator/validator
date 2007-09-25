@@ -58,6 +58,11 @@
 			common.data.uri
 		}
 
+	common-form.attrs.required = 
+		attribute required {
+			string "required" | string ""
+		}
+
 ## Shared attributes for <input>
 		
 	input.attrs.autocomplete = 
@@ -89,12 +94,7 @@
 		attribute step {
 			string "any" | common.data.integer.positive 
 		}
-	
-	input.attrs.required = 
-		attribute required {
-			string "required" | string ""
-		}
-	
+		
 ## Text Field: <input type='text'>, Extensions
 
 	input.text.attrs &=
@@ -103,7 +103,7 @@
 		&	common-form.attrs.inputmode? 
 		&	input.attrs.list? 
 		&	common-form.attrs.pattern? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		)
 
 ## Password Field: <input type='password'>, Extensions
@@ -113,21 +113,21 @@
 		&	common-form.attrs.autofocus? 
 		&	common-form.attrs.inputmode? 
 		&	common-form.attrs.pattern? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		)
 
 ## Checkbox <input type='checkbox'>, Extensions
 
 	input.checkbox.attrs &=
 		(	common-form.attrs.autofocus? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		)
 
 ## Radiobutton: <input type='radio'>, Extensions
 
 	input.radio.attrs &=
 		(	common-form.attrs.autofocus? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		)
 
 ## Scripting Hook Button: <input type='button'>, Extensions
@@ -155,7 +155,7 @@
 
 	input.file.attrs &=
 		(	common-form.attrs.autofocus? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.file.attrs.min? 
 		&	input.file.attrs.max? 
 		)
@@ -195,7 +195,7 @@
 		&	input.datetime.attrs.max? 
 		&	input.attrs.step.float? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.datetime.attrs.value? 
 		)	
 		input.datetime.attrs.type = 
@@ -233,7 +233,7 @@
 		&	input.datetime-local.attrs.max? 
 		&	input.attrs.step.float? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.datetime-local.attrs.value? 
 		)	
 		input.datetime-local.attrs.type = 
@@ -271,7 +271,7 @@
 		&	input.date.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.date.attrs.value? 
 		)	
 		input.date.attrs.type = 
@@ -309,7 +309,7 @@
 		&	input.month.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.month.attrs.value? 
 		)	
 		input.month.attrs.type = 
@@ -347,7 +347,7 @@
 		&	input.time.attrs.max? 
 		&	input.attrs.step.float? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.time.attrs.value? 
 		)	
 		input.time.attrs.type = 
@@ -385,7 +385,7 @@
 		&	input.week.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.week.attrs.value? 
 		)	
 		input.week.attrs.type = 
@@ -423,7 +423,7 @@
 		&	input.number.attrs.max? 
 		&	input.attrs.step.float? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.number.attrs.value? 
 		)	
 		input.number.attrs.type = 
@@ -461,7 +461,7 @@
 		&	input.range.attrs.max? 
 		&	input.attrs.step.float? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.range.attrs.value? 
 		)	
 		input.range.attrs.type = 
@@ -499,7 +499,7 @@
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.email.attrs.value? 
 		)	
 		input.email.attrs.type = 
@@ -529,7 +529,7 @@
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
-		&	input.attrs.required? 
+		&	common-form.attrs.required? 
 		&	input.url.attrs.value? 
 		)	
 		input.url.attrs.type = 
@@ -538,7 +538,7 @@
 			}
 		input.url.attrs.value =
 			attribute value {
-				common.data.uri.absolute
+				string "" | common.data.uri.absolute
 			}
 		
 	input.elem |= input.url.elem
@@ -589,6 +589,7 @@
 		(	common-form.attrs.maxlength?
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.inputmode?
+		&	common-form.attrs.required? 
 		&	textarea.attrs.accept?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
