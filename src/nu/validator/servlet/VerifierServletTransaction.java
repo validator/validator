@@ -586,6 +586,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             if (reader instanceof HtmlParser) {
                 HtmlParser hp = (HtmlParser) reader;
                 hp.addCharacterHandler(sourceCode);
+                hp.setMappingLangToXmlLang(true);
             }
             WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(reader);
             ContentHandler recorder = sourceCode.getLocationRecorder();
