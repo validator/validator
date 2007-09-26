@@ -60,6 +60,7 @@ import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XhtmlMessageEmitter;
+import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.source.SourceCode;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
@@ -421,6 +422,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 outputFormat = OutputFormat.XHTML;
             } else if ("text".equals(outFormat)) {
                 outputFormat = OutputFormat.TEXT;
+            } else if ("xml".equals(outFormat)) {
+                outputFormat = OutputFormat.XML;
             } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Unsupported output format");
@@ -472,6 +475,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode, new TextMessageEmitter(out));
+                } else if (outputFormat == OutputFormat.XML) {
+                    response.setContentType("application/xml");
+                    Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
+                    Serializer ser = SerializerFactory.getSerializer(props);
+                    ser.setOutputStream(out);
+                    errorHandler = new MessageEmitterAdapter(sourceCode, new XmlMessageEmitter(ser.asContentHandler()));                    
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }

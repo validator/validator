@@ -25,8 +25,11 @@ package nu.validator.messages;
 import org.xml.sax.SAXException;
 
 import nu.validator.source.SourceHandler;
+import nu.validator.xml.AttributesImpl;
 
 public class XmlSourceHandler implements SourceHandler {
+
+    private final AttributesImpl attrs = new AttributesImpl();
 
     private static final char[] NEWLINE = {'\n'};
     
@@ -48,6 +51,7 @@ public class XmlSourceHandler implements SourceHandler {
     }
 
     public void endSource() throws SAXException {
+        emitter.endElement("source");
     }
 
     public void newLine() throws SAXException {
@@ -62,7 +66,16 @@ public class XmlSourceHandler implements SourceHandler {
             throws SAXException {
     }
 
-    public void startSource() throws SAXException {
+    public void startSource(String type, String encoding) throws SAXException {
+        attrs.clear();
+        if (type != null) {
+            attrs.addAttribute("type", type);
+        }
+        if (encoding != null) {
+            attrs.addAttribute("encoding", encoding);
+        }
+        emitter.startElement("source", attrs);
     }
+
 
 }

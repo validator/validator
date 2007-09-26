@@ -146,7 +146,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         emitter.startElement("b", attrs);
     }
 
-    public void startSource() throws SAXException {
+    public void startSource(String type, String encoding) throws SAXException {
         listOpen = false;
         lineOpen = false;
         rangeOpen = null;

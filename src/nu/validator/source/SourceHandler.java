@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 
 public interface SourceHandler {
 
-    public void startSource() throws SAXException;
+    public void startSource(String type, String encoding) throws SAXException;
     
     public void endSource() throws SAXException;
     

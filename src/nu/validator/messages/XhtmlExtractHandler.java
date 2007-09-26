@@ -80,7 +80,7 @@ public class XhtmlExtractHandler implements SourceHandler {
         emitter.endElement("span");
     }
 
-    public void startSource() throws SAXException {
+    public void startSource(String type, String encoding) throws SAXException {
     }
 
     public void startCharHilite(int oneBasedLine, int oneBasedColumn)

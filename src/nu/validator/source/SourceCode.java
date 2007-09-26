@@ -43,6 +43,10 @@ public final class SourceCode implements CharacterHandler {
     private static Location[] SOURCE_LOCATION_ARRAY_TYPE = new Location[0];
 
     private String uri;
+    
+    private String type;
+    
+    private String encoding;
 
     private int expectedLength;
 
@@ -67,6 +71,7 @@ public final class SourceCode implements CharacterHandler {
 
     public void initialize(InputSource inputSource) {
         this.uri = inputSource.getSystemId();
+        this.encoding = inputSource.getEncoding();
         if (inputSource instanceof TypedInputSource) {
             TypedInputSource typedInputSource = (TypedInputSource) inputSource;
             int length = typedInputSource.getLength();
@@ -75,8 +80,10 @@ public final class SourceCode implements CharacterHandler {
             } else {
                 expectedLength = length;
             }
+            this.type = typedInputSource.getType();
         } else {
             expectedLength = 2048;
+            this.type = null;
         }
     }
 
@@ -155,7 +162,7 @@ public final class SourceCode implements CharacterHandler {
         exactErrors.add(location);
         Location start = location.step(-15);
         Location end = location.step(6);
-        extractHandler.startSource();
+        extractHandler.startSource(type, encoding);
         emitContent(start, location, extractHandler);
         extractHandler.startCharHilite(location.getLine() + 1,
                 location.getColumn() + 1);
@@ -173,7 +180,7 @@ public final class SourceCode implements CharacterHandler {
         Location endRange = rangeLast.next();
         Location start = rangeStart.step(-10);
         Location end = endRange.step(6);
-        extractHandler.startSource();
+        extractHandler.startSource(type, encoding);
         emitContent(start, rangeStart, extractHandler);
         extractHandler.startRange(rangeLast.getLine() + 1,
                 rangeLast.getColumn() + 1);
@@ -199,7 +206,7 @@ public final class SourceCode implements CharacterHandler {
     public void lineError(int oneBasedLine, SourceHandler extractHandler)
             throws SAXException {
         Line line = lines.get(oneBasedLine - 1);
-        extractHandler.startSource();
+        extractHandler.startSource(type, encoding);
         extractHandler.characters(line.getBuffer(), line.getOffset(),
                 line.getBufferLength());
         extractHandler.endSource();
@@ -303,7 +310,7 @@ public final class SourceCode implements CharacterHandler {
             ranges.add(new Range(start, end, loc));
         }
         try {
-            handler.startSource();
+            handler.startSource(type, encoding);
             Iterator<Range> rangeIter = ranges.iterator();
             Iterator<Location> exactIter = exactErrors.iterator();
             Location previousLocation = new Location(this, 0, 0);

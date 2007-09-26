@@ -42,8 +42,6 @@ public class XmlMessageEmitter extends MessageEmitter {
 
     private final XmlExtractHandler extractHandler;
     
-    private String documentUri;
-    
     private String openMessage;
     
     /**
@@ -98,8 +96,6 @@ public class XmlMessageEmitter extends MessageEmitter {
      */
     @Override
     public void endFullSource() throws SAXException {
-        // TODO Auto-generated method stub
-        super.endFullSource();
     }
 
     /**
@@ -134,8 +130,7 @@ public class XmlMessageEmitter extends MessageEmitter {
      */
     @Override
     public SourceHandler startFullSource() throws SAXException {
-        // TODO Auto-generated method stub
-        return super.startFullSource();
+        return new XmlSourceHandler(emitter);
     }
 
     /**
@@ -143,11 +138,14 @@ public class XmlMessageEmitter extends MessageEmitter {
      */
     @Override
     public void startMessages(String documentUri) throws SAXException {
-        this.documentUri = documentUri;
         contentHandler.startDocument();
         contentHandler.startPrefixMapping("", XmlSaxEmitter.NAMESPACE);
         contentHandler.startPrefixMapping("h", XhtmlSaxEmitter.XHTML_NS);
-        emitter.startElement("messages");
+        attrs.clear();
+        if (documentUri != null) {
+            attrs.addAttribute("url", documentUri);
+        }
+        emitter.startElement("messages", attrs);
         openMessage = null;
     }
 

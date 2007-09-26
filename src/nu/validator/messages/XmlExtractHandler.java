@@ -66,7 +66,7 @@ public class XmlExtractHandler implements SourceHandler {
         emitter.startElement("m");
     }
 
-    public void startSource() throws SAXException {
+    public void startSource(String type, String encoding) throws SAXException {
     }
 
 }
