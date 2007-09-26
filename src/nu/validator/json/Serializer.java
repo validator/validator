@@ -57,6 +57,7 @@ public class Serializer implements JsonHandler {
     
     public Serializer(OutputStream out) {
         this.writer = newOutputStreamWriter(out);
+        push(State.INITIAL);
     }
 
     private void push(State state) {
@@ -111,6 +112,7 @@ public class Serializer implements JsonHandler {
                 if (s < i) {
                     writer.write(ch, s, i - s);
                 }
+                s = i + 1;
                 writer.write('\\');
                 switch (c) {
                     case '\"':
