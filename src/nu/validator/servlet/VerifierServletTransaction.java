@@ -29,11 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
-import java.nio.charset.CodingErrorAction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -45,6 +41,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -131,6 +128,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
 
+    private static final Pattern JS_IDENTIFIER = Pattern.compile("[\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$][\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}]*");
+
+    private static final String[] JS_RESERVED_WORDS = { "abstract", "boolean",
+            "break", "byte", "case", "catch", "char", "class", "const",
+            "continue", "debugger", "default", "delete", "do", "double",
+            "else", "enum", "export", "extends", "final", "finally", "float",
+            "for", "function", "goto", "if", "implements", "import", "in",
+            "instanceof", "int", "interface", "long", "native", "new",
+            "package", "private", "protected", "public", "return", "short",
+            "static", "super", "switch", "synchronized", "this", "throw",
+            "throws", "transient", "try", "typeof", "var", "void", "volatile",
+            "while", "with" };
+
     protected static final int HTML5_SCHEMA = 3;
 
     protected static final int XHTML1STRICT_SCHEMA = 2;
@@ -146,7 +156,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private static final char[] RESULTS_TITLE = "Validation results for ".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
-    
+
     private static final Map pathMap = new HashMap();
 
     private static int[] presetDoctypes;
@@ -238,7 +248,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private String postContentType;
 
     private boolean methodIsGet;
-    
+
     private SourceCode sourceCode = new SourceCode();
 
     static {
@@ -399,8 +409,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     void service() throws ServletException, IOException {
-        this.methodIsGet = "GET".equals(request.getMethod()) || "HEAD".equals(request.getMethod());
-        
+        this.methodIsGet = "GET".equals(request.getMethod())
+                || "HEAD".equals(request.getMethod());
+
         this.out = response.getOutputStream();
 
         request.setCharacterEncoding("utf-8");
@@ -408,11 +419,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (!methodIsGet) {
             postContentType = request.getContentType();
             if (postContentType == null) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Content-Type missing");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Content-Type missing");
                 return;
             }
         }
-        
+
         String outFormat = request.getParameter("out");
         if (outFormat == null) {
             outputFormat = OutputFormat.HTML;
@@ -440,8 +452,27 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (document == null) {
             document = scrubUrl(request.getParameter("doc"));
         }
-        
+
         document = ("".equals(document)) ? null : document;
+
+        String callback = null;
+        if (outputFormat == OutputFormat.JSON) {
+            callback = request.getParameter("callback");
+            if (callback != null) {
+                Matcher m = JS_IDENTIFIER.matcher(callback);
+                if (m.matches()) {
+                    if (Arrays.binarySearch(JS_RESERVED_WORDS, callback) >= 0) {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                                "Callback is a reserved word.");
+                        return;
+                    }
+                } else {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                            "Callback is not a valid ECMA 262 IdentifierName.");
+                    return;
+                }
+            }
+        }
 
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
@@ -472,21 +503,31 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode, new XhtmlMessageEmitter(contentHandler));
+                errorHandler = new MessageEmitterAdapter(sourceCode,
+                        new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode, new TextMessageEmitter(out));
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            new TextMessageEmitter(out));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    errorHandler = new MessageEmitterAdapter(sourceCode, new XmlMessageEmitter(ser.asContentHandler()));                    
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            new XmlMessageEmitter(ser.asContentHandler()));
                 } else if (outputFormat == OutputFormat.JSON) {
-                    response.setContentType("application/json");
-                    errorHandler = new MessageEmitterAdapter(sourceCode, new JsonMessageEmitter(new nu.validator.json.Serializer(out), null));                                                          
+                    if (callback == null) {
+                        response.setContentType("application/json");
+                    } else {
+                        response.setContentType("application/javascript");
+                     }
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            new JsonMessageEmitter(
+                                    new nu.validator.json.Serializer(out),
+                                    callback));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }
@@ -596,14 +637,17 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 checkNormalization = true;
             }
             if (checkNormalization) {
-                reader.setFeature("http://xml.org/sax/features/unicode-normalization-checking", true);
+                reader.setFeature(
+                        "http://xml.org/sax/features/unicode-normalization-checking",
+                        true);
             }
             if (reader instanceof HtmlParser) {
                 HtmlParser hp = (HtmlParser) reader;
                 hp.addCharacterHandler(sourceCode);
                 hp.setMappingLangToXmlLang(true);
             }
-            WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(reader);
+            WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(
+                    reader);
             ContentHandler recorder = sourceCode.getLocationRecorder();
             wiretap.setWiretapContentHander(recorder);
             wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
@@ -952,8 +996,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
             if (document != null) {
-                emitter.characters(FOR);                
-                emitter.characters(scrub(document));                
+                emitter.characters(FOR);
+                emitter.characters(scrub(document));
             }
         } else {
             emitter.characters(SERVICE_TITLE);
@@ -1249,7 +1293,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
             documentInput = (TypedInputSource) entityResolver.resolveEntity(
                     null, document);
         } else { // POST
-            documentInput = contentTypeParser.buildTypedInputSource(document, null, postContentType);
+            documentInput = contentTypeParser.buildTypedInputSource(document,
+                    null, postContentType);
             documentInput.setByteStream(request.getInputStream());
         }
     }
