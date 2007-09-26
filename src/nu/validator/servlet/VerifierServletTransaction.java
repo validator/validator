@@ -57,6 +57,7 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XhtmlMessageEmitter;
@@ -424,6 +425,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 outputFormat = OutputFormat.TEXT;
             } else if ("xml".equals(outFormat)) {
                 outputFormat = OutputFormat.XML;
+            } else if ("json".equals(outFormat)) {
+                outputFormat = OutputFormat.JSON;
             } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Unsupported output format");
@@ -481,6 +484,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
                     errorHandler = new MessageEmitterAdapter(sourceCode, new XmlMessageEmitter(ser.asContentHandler()));                    
+                } else if (outputFormat == OutputFormat.JSON) {
+                    response.setContentType("application/json");
+                    errorHandler = new MessageEmitterAdapter(sourceCode, new JsonMessageEmitter(new nu.validator.json.Serializer(out), null));                                                          
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }

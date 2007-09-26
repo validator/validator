@@ -97,8 +97,6 @@ public class JsonMessageEmitter extends MessageEmitter {
      */
     @Override
     public void endFullSource() throws SAXException {
-        // TODO Auto-generated method stub
-        super.endFullSource();
     }
 
     /**
@@ -146,8 +144,8 @@ public class JsonMessageEmitter extends MessageEmitter {
     @Override
     public SourceHandler startFullSource() throws SAXException {
         maybeCloseArray();
-        // TODO Auto-generated method stub
-        return super.startFullSource();
+        handler.key("source");
+        return new JsonSourceHandler(handler);
     }
 
     /**
