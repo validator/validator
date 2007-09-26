@@ -23,7 +23,12 @@
 package nu.validator.json;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +46,18 @@ public class Serializer implements JsonHandler {
 
     private boolean first = false;
 
-    private Writer writer;
+    private final Writer writer;
+
+    private static Writer newOutputStreamWriter(OutputStream out) {
+        CharsetEncoder enc = Charset.forName("UTF-8").newEncoder();
+        enc.onMalformedInput(CodingErrorAction.REPLACE);
+        enc.onUnmappableCharacter(CodingErrorAction.REPLACE);
+        return new OutputStreamWriter(out, enc);
+    }
+    
+    public Serializer(OutputStream out) {
+        this.writer = newOutputStreamWriter(out);
+    }
 
     private void push(State state) {
         stack.add(state);
