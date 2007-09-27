@@ -26,6 +26,8 @@ import sys
 import re
 import urlparse
 import string
+import gzip
+import StringIO
 
 url = 'http://html5.validator.nu/?out=text'
 
@@ -122,6 +124,7 @@ while (status == 302 or status == 301 or status == 307) and redirectCount < 10:
   connection = httplib.HTTPConnection(parsed[1])
   connection.connect()
   connection.putrequest("POST", "%s?%s" % (parsed[2], parsed[3]), skip_accept_encoding=1)
+  connection.putheader("Accept-Encoding", 'gzip')
   connection.putheader("Content-Type", contentType)
   connection.putheader("Content-Length", len(data))
   connection.endheaders()
@@ -134,6 +137,8 @@ if status != 200:
   sys.stderr.write('%s %s\n' % (status, response.reason))
   sys.exit(5)
 
+if response.getheader('Content-Encoding', 'identity').lower() == 'gzip':
+  response = gzip.GzipFile(fileobj=StringIO.StringIO(response.read()))
 sys.stdout.write(response.read())
 
 connection.close()
