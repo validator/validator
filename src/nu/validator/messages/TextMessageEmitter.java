@@ -172,10 +172,12 @@ public class TextMessageEmitter extends MessageEmitter {
      */
     @Override
     public void endMessages() throws SAXException {
-        // try {
-        // } catch (IOException e) {
-        // throw new SAXException(e.getLocalizedMessage(), e);
-        // }
+         try {
+             writer.flush();
+             writer.close();
+         } catch (IOException e) {
+         throw new SAXException(e.getLocalizedMessage(), e);
+         }
     }
 
     /**

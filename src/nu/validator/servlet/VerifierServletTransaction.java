@@ -251,6 +251,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private SourceCode sourceCode = new SourceCode();
 
+    private boolean showSource;
+
     static {
         try {
             log4j.debug("Starting static initializer.");
@@ -488,6 +490,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
         setup();
 
+        showSource = (request.getParameter("showsource") != null);
+        
         try {
             if (outputFormat == OutputFormat.HTML
                     || outputFormat == OutputFormat.XHTML) {
