@@ -25,13 +25,16 @@ package nu.validator.servlet;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.mortbay.jetty.Connector;
+import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.ajp.Ajp13SocketConnector;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.handler.ContextHandler;
 import org.mortbay.jetty.servlet.Context;
+import org.mortbay.jetty.servlet.FilterHolder;
 import org.mortbay.jetty.servlet.ServletHandler;
 import org.mortbay.jetty.servlet.ServletHolder;
+import org.mortbay.servlet.GzipFilter;
 
 /**
  * @version $Id$
@@ -58,7 +61,7 @@ public class Main {
 
         Context context = new Context(server, "/");
         context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
-        
+        context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
         server.start();
         
         System.in.read(); // XXX do something smarter
