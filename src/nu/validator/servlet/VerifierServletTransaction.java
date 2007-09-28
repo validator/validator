@@ -834,8 +834,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
      */
     protected XMLReader setupXmlParser() throws SAXNotRecognizedException,
             SAXNotSupportedException {
-        XMLReader reader;
-        reader = new SAXDriver();
+        SAXDriver sd = new SAXDriver();
+        sd.setCharacterHandler(sourceCode);
+        XMLReader reader = sd;
         reader = new XhtmlIdFilter(new XMLIdFilter(reader));
         reader.setFeature(
                 "http://xml.org/sax/features/external-general-entities",
