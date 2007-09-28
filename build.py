@@ -270,7 +270,7 @@ def runValidator():
     '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
-    '-Dnu.validator.servlet.version="Validator.nu/2.0b (http://validator.nu/)"',
+    '-Dnu.validator.servlet.version="Validator.nu/2.1gamma (http://validator.nu/)"',
     'nu.validator.servlet.Main',
   ]
   if useAjp:
@@ -364,8 +364,8 @@ def buildAll():
   buildUtil()
   buildDatatypeLibrary()
   buildNonSchema()
-  buildXmlParser()
   buildHtmlParser()
+  buildXmlParser()
   buildTestHarness()
   buildValidator()
 
