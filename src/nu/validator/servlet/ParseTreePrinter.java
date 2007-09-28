@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.test.ListErrorHandler;
 import nu.validator.htmlparser.test.TreeDumpContentHandler;
 import nu.validator.xml.NullEntityResolver;
@@ -20,7 +21,6 @@ import org.xml.sax.XMLReader;
 import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
 
-import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
 
 public class ParseTreePrinter {
     

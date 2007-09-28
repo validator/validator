@@ -48,6 +48,13 @@
 						?> Be lax about HTTP Content-Type</label
 					></td
 				></tr
+				><tr title="Display the markup source of the input document."
+					><th></th
+					><td
+						><label for='showsource'><?SaxCompiler-code t.emitShowSourceField(); 
+						?> Show Source</label
+					></td
+				></tr
 				><tr
 					><th></th
 					><td

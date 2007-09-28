@@ -54,6 +54,8 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
     
     private final ExactErrorHandler exactErrorHandler;
     
+    private final boolean showSource;
+    
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
             return null;
@@ -65,11 +67,12 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
         return Normalizer.normalize(s, Normalizer.NFC, 0);
     }
 
-    public MessageEmitterAdapter(SourceCode sourceCode, MessageEmitter messageEmitter) {
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
         this.emitter = messageEmitter;
         this.exactErrorHandler = new ExactErrorHandler(this);
+        this.showSource = showSource;
     }
 
     /**
@@ -204,11 +207,13 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
     public void end(String successMessage, String failureMessage)
             throws SAXException {
         // XXX figure out API here
-        SourceHandler sourceHandler = emitter.startFullSource();
-        if (sourceHandler != null) {
-            sourceCode.emitSource(sourceHandler);
+        if (showSource) {
+            SourceHandler sourceHandler = emitter.startFullSource();
+            if (sourceHandler != null) {
+                sourceCode.emitSource(sourceHandler);
+            }
+            emitter.endFullSource();
         }
-        emitter.endFullSource();
         emitter.endMessages();
     }
 

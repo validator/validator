@@ -22,6 +22,8 @@
 
 package nu.validator.servlet;
 
+import nu.validator.gnu.xml.aelfred2.SAXDriver;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -29,7 +31,6 @@ import org.xml.sax.XMLReader;
 
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 
-import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
 
 /**
  * @version $Id$

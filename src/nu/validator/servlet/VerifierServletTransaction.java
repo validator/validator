@@ -49,6 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.java.dev.xmlidfilter.XMLIdFilter;
+import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
@@ -111,7 +112,6 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 
-import fi.iki.hsivonen.gnu.xml.aelfred2.SAXDriver;
 
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
@@ -507,20 +507,20 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode,
+                errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                         new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new TextMessageEmitter(out));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new XmlMessageEmitter(ser.asContentHandler()));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
@@ -528,7 +528,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     } else {
                         response.setContentType("application/javascript");
                      }
-                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
@@ -1138,6 +1138,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
         emitter.checkbox("laxtype", "yes", laxType);
     }
 
+    /**
+     * @throws SAXException
+     * 
+     */
+    void emitShowSourceField() throws SAXException {
+        emitter.checkbox("showsource", "yes", showSource);
+    }
+    
     void rootNamespace(String namespace, Locator locator) throws SAXException {
         if (validator == null) {
             int index = -1;
