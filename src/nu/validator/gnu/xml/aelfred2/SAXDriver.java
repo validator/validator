@@ -51,7 +51,7 @@ Portions derived from code which carried the following notice:
   YOUR OWN RISK.
 */
 
-package fi.iki.hsivonen.gnu.xml.aelfred2;
+package nu.validator.gnu.xml.aelfred2;
 
 import java.io.IOException;
 import java.io.InputStream;

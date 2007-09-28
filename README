@@ -77,3 +77,9 @@ May 2007
  
  * Deleted the class XmlReader thereby removing the GNU JAXP 
    dependency
+   
+September 2007
+
+ * Changed the name of the normalization feature.
+ 
+ * Changed the package name.
