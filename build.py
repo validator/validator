@@ -216,7 +216,7 @@ def buildNonSchema():
 
 def buildXmlParser():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", "io-xml-util"]))
+                              + jarNamesToPaths(["htmlparser", "io-xml-util"]))
   buildModule(
     os.path.join(buildRoot, "xmlparser"), 
     "hs-aelfred2", 
@@ -224,7 +224,7 @@ def buildXmlParser():
 
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", "io-xml-util"]))
+                              + jarNamesToPaths(["io-xml-util"]))
   buildModule(
     os.path.join(buildRoot, "htmlparser"), 
     "htmlparser", 
