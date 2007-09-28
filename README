@@ -83,3 +83,10 @@ September 2007
  * Changed the name of the normalization feature.
  
  * Changed the package name.
+
+ * Fixed indent
+
+ * Support CharacterHandler
+ 
+ * Count line break as being on the line it terminates
+ 
