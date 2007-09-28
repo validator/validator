@@ -30,8 +30,15 @@ import nu.validator.xml.XhtmlSaxEmitter;
 
 public class XhtmlSourceHandler implements SourceHandler {
 
-    private static final char[] SPACE = {'\u00A0'};
+    private static final char[] NEWLINE_SUBSTITUTE = {'\u21A9'};
 
+    private static final AttributesImpl LINE_BREAK_ATTRS = new AttributesImpl();
+
+    static {
+        LINE_BREAK_ATTRS.addAttribute("class", "lf");
+        LINE_BREAK_ATTRS.addAttribute("title", "Line break");
+    }
+    
     private final AttributesImpl attrs = new AttributesImpl();
     
     private final XhtmlSaxEmitter emitter;
@@ -119,7 +126,9 @@ public class XhtmlSourceHandler implements SourceHandler {
             emitter.endElement("b");
         }
         emitter.endElement("code");
-        emitter.characters(SPACE);
+        emitter.startElement("code", LINE_BREAK_ATTRS);
+        emitter.characters(NEWLINE_SUBSTITUTE);
+        emitter.endElement("code");
         emitter.endElement("li");
         lineOpen = false;
     }
