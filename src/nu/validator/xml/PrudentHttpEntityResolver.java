@@ -42,6 +42,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.log4j.Logger;
 import org.xml.sax.EntityResolver;
@@ -111,6 +112,9 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 maxRequests);
         hcmp.setMaxTotalConnections(maxRequests * 2);
         PrudentHttpEntityResolver.maxRequests = maxRequests;
+        HttpClientParams hcp = client.getParams();
+        hcp.setBooleanParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
+        hcp.setIntParameter(HttpClientParams.MAX_REDIRECTS, 20); // Gecko default 
     }
 
     public static void setUserAgent(String ua) {
