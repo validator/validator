@@ -152,7 +152,7 @@ public class JsonMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
      */
     @Override
-    public void startMessages(String documentUri) throws SAXException {
+    public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
         handler.startDocument(callback);
         handler.startObject();
         if (documentUri != null) {

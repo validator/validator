@@ -22,6 +22,8 @@
 
 package nu.validator.messages;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.source.SourceHandler;
@@ -75,6 +77,10 @@ public class XmlSourceHandler implements SourceHandler {
             attrs.addAttribute("encoding", encoding);
         }
         emitter.startElement("source", attrs);
+    }
+
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
+        
     }
 
 

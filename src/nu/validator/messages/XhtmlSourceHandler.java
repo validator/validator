@@ -22,6 +22,8 @@
 
 package nu.validator.messages;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.source.SourceHandler;
@@ -54,6 +56,8 @@ public class XhtmlSourceHandler implements SourceHandler {
     private int lineNumber;
     
     private boolean lineHadCharacters;
+
+    private SortedSet<Integer> oneBasedLineErrors;
     
     /**
      * @param emitter
@@ -69,6 +73,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         emitter.characters(ch, start, length);
     }
 
+    @SuppressWarnings("boxing")
     private void maybeOpen() throws SAXException {
         assert !(lineOpen && !listOpen);
         if (!listOpen) {
@@ -79,6 +84,9 @@ public class XhtmlSourceHandler implements SourceHandler {
             lineNumber++;
             attrs.clear();
             attrs.addAttribute("id", "l" + lineNumber);
+            if (oneBasedLineErrors != null && oneBasedLineErrors.contains(lineNumber)) {
+                attrs.addAttribute("class", "b");
+            }
             emitter.startElement("li", attrs);
             emitter.startElement("code");
             lineOpen = true;
@@ -161,6 +169,11 @@ public class XhtmlSourceHandler implements SourceHandler {
         rangeOpen = null;
         charOpen = false;
         lineNumber = 0;
+        oneBasedLineErrors = null;
+    }
+
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
+        this.oneBasedLineErrors = oneBasedLineErrors;
     }
 
 }

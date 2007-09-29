@@ -22,11 +22,15 @@
 
 package nu.validator.source;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 public interface SourceHandler {
 
     public void startSource(String type, String encoding) throws SAXException;
+    
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException;
     
     public void endSource() throws SAXException;
     

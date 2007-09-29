@@ -137,7 +137,7 @@ public class XmlMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
      */
     @Override
-    public void startMessages(String documentUri) throws SAXException {
+    public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
         contentHandler.startDocument();
         contentHandler.startPrefixMapping("", XmlSaxEmitter.NAMESPACE);
         contentHandler.startPrefixMapping("h", XhtmlSaxEmitter.XHTML_NS);

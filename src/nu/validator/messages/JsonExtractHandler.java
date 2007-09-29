@@ -22,6 +22,8 @@
 
 package nu.validator.messages;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.json.JsonHandler;
@@ -125,6 +127,10 @@ public class JsonExtractHandler implements SourceHandler {
      */
     public int getHiliteStart() {
         return hiliteStart;
+    }
+
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
+        
     }
 
 }

@@ -22,6 +22,8 @@
 
 package nu.validator.messages;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.source.SourceHandler;
@@ -91,6 +93,10 @@ public class XhtmlExtractHandler implements SourceHandler {
     public void startRange(int oneBasedLine, int oneBasedColumn)
             throws SAXException {
         emitter.startElement("b");
+    }
+
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
+        
     }
 
 }

@@ -56,6 +56,8 @@ public final class SourceCode implements CharacterHandler {
     private final SortedSet<Location> exactErrors = new TreeSet<Location>();
 
     private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
+    
+    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<Integer>();
 
     private final List<Line> lines = new ArrayList<Line>();
 
@@ -203,8 +205,10 @@ public final class SourceCode implements CharacterHandler {
         return new Location(this, 0, 0);
     }
 
+    @SuppressWarnings("boxing")
     public void lineError(int oneBasedLine, SourceHandler extractHandler)
             throws SAXException {
+        oneBasedLineErrors.add(oneBasedLine);
         Line line = lines.get(oneBasedLine - 1);
         extractHandler.startSource(type, encoding);
         extractHandler.characters(line.getBuffer(), line.getOffset(),
@@ -311,6 +315,7 @@ public final class SourceCode implements CharacterHandler {
         }
         try {
             handler.startSource(type, encoding);
+            handler.setLineErrors(oneBasedLineErrors);
             Iterator<Range> rangeIter = ranges.iterator();
             Iterator<Location> exactIter = exactErrors.iterator();
             Location previousLocation = new Location(this, 0, 0);

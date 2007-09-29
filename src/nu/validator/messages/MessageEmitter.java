@@ -33,7 +33,7 @@ public abstract class MessageEmitter {
     public MessageEmitter() {
     }
 
-    public void startMessages(String documentUri) throws SAXException {
+    public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
         
     }
 

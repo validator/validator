@@ -22,6 +22,8 @@
 
 package nu.validator.messages;
 
+import java.util.SortedSet;
+
 import org.xml.sax.SAXException;
 
 import nu.validator.json.JsonHandler;
@@ -78,4 +80,9 @@ public class JsonSourceHandler implements SourceHandler {
         handler.key("code");
         handler.startString();
     }
+    
+    public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException {
+        
+    }
+
 }

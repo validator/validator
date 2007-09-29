@@ -25,6 +25,7 @@ package nu.validator.messages;
 
 import nu.validator.messages.types.MessageType;
 import nu.validator.source.SourceHandler;
+import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.xml.sax.ContentHandler;
@@ -52,6 +53,8 @@ public class XhtmlMessageEmitter extends MessageEmitter {
 
     private static final char[] IN_RESOURCE = " in resource ".toCharArray();
 
+    private final AttributesImpl attrs = new AttributesImpl();
+    
     private boolean listOpen = false;
 
     private final ContentHandler contentHandler;
@@ -75,6 +78,8 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private int oneBasedLastColumn;
 
     private boolean exact;
+
+    private boolean willShowSource;
 
     /**
      * @param contentHandler
@@ -152,6 +157,11 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     }
 
     private void emitRangeLocation() throws SAXException {
+        if (willShowSource && systemId == null) {
+            attrs.clear();
+            attrs.addAttribute("href", "#l" + oneBasedLastLine + "c" + oneBasedLastColumn);
+            emitter.startElement("a", attrs);
+        }
         this.emitter.characters(FROM_LINE);
         this.emitter.startElementWithClass("span", "first-line");
         this.emitter.characters(Integer.toString(oneBasedFirstLine));
@@ -169,9 +179,17 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         this.emitter.characters(Integer.toString(oneBasedLastColumn));
         this.emitter.endElement("span");
         maybeEmitInResource();
+        if (willShowSource && systemId == null) {
+            emitter.endElement("a");
+        }
     }
 
     private void emitSingleLocation() throws SAXException {
+        if (willShowSource && systemId == null) {
+            attrs.clear();
+            attrs.addAttribute("href", "#cl" + oneBasedLastLine + "c" + oneBasedLastColumn);
+            emitter.startElement("a", attrs);
+        }
         this.emitter.characters(AT_LINE);
         this.emitter.startElementWithClass("span", "last-line");
         this.emitter.characters(Integer.toString(oneBasedLastLine));
@@ -181,20 +199,37 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         this.emitter.characters(Integer.toString(oneBasedLastColumn));
         this.emitter.endElement("span");
         maybeEmitInResource();
+        if (willShowSource && systemId == null) {
+            emitter.endElement("a");
+        }
     }
 
     private void emitLineLocation() throws SAXException {
+        if (willShowSource && systemId == null) {
+            attrs.clear();
+            attrs.addAttribute("href", "#l" + oneBasedLastLine);
+            emitter.startElement("a", attrs);
+        }
         this.emitter.characters(ON_LINE);
         this.emitter.startElementWithClass("span", "last-line");
         this.emitter.characters(Integer.toString(oneBasedLastLine));
         this.emitter.endElement("span");
         maybeEmitInResource();
+        if (willShowSource && systemId == null) {
+            emitter.endElement("a");
+        }
     }
 
     @Override
-    public void startMessage(MessageType type, String systemId,
-            int oneBasedFirstLine, int oneBasedFirstColumn,
-            int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
+    public void startMessage(MessageType type, @SuppressWarnings("hiding")
+    String systemId,
+            @SuppressWarnings("hiding")
+            int oneBasedFirstLine, @SuppressWarnings("hiding")
+            int oneBasedFirstColumn,
+            @SuppressWarnings("hiding")
+            int oneBasedLastLine, @SuppressWarnings("hiding")
+            int oneBasedLastColumn, @SuppressWarnings("hiding")
+            boolean exact)
             throws SAXException {
         this.systemId = systemId;
         this.oneBasedFirstLine = oneBasedFirstLine;
@@ -243,7 +278,9 @@ public class XhtmlMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
      */
     @Override
-    public void startMessages(String documentUri) throws SAXException {
+    public void startMessages(String documentUri, @SuppressWarnings("hiding")
+    boolean willShowSource) throws SAXException {
+        this.willShowSource = willShowSource;
     }
 
     /**

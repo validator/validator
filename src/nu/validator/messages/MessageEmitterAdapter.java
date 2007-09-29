@@ -198,7 +198,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#start()
      */
     public void start(String documentUri) throws SAXException {
-        emitter.startMessages(scrub(documentUri));
+        emitter.startMessages(scrub(documentUri), showSource);
     }
     
     /**
