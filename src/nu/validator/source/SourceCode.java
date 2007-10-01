@@ -174,6 +174,10 @@ public final class SourceCode implements CharacterHandler {
         emitContent(location, end, extractHandler);
         extractHandler.endSource();
     }
+    
+    public void rememberExactError(Location location) {
+        exactErrors.add(location);        
+    }
 
     public void rangeEndError(Location rangeStart, Location rangeLast,
             SourceHandler extractHandler) throws SAXException {

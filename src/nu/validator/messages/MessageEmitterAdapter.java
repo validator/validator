@@ -266,6 +266,8 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
                 sourceCode.exactError(location, sourceHandler);
             }
             emitter.endSource();
+        } else {
+            sourceCode.rememberExactError(location);
         }
         // XXX elaboration
         emitter.endMessage();
