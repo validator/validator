@@ -737,11 +737,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 setAcceptAllKnownXmlTypes(false);
                 setAllowXhtml(false);
                 loadDocumentInput();
-                htmlParser = new HtmlParser();
-                htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
-                htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
-                htmlParser.setMappingLangToXmlLang(true);
-                htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
+                newHtmlParser();
                 DoctypeExpectation doctypeExpectation;
                 int schemaId;
                 switch (parser) {
@@ -795,9 +791,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                         throw se;
                     }
                     errorHandler.info("The Content-Type was \u201Ctext/html\u201D. Using the HTML parser.");
-                    htmlParser = new HtmlParser();
-                    htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
-                    htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
+                    newHtmlParser();
                     htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
                     htmlParser.setDocumentModeHandler(this);
                     reader = htmlParser;
@@ -812,6 +806,17 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 }
                 break;
         }
+    }
+
+    /**
+     * 
+     */
+    protected void newHtmlParser() {
+        htmlParser = new HtmlParser();
+        htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+        htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
+        htmlParser.setMappingLangToXmlLang(true);
+        htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
     }
 
     protected Validator validatorByDoctype(int schemaId) throws SAXException,

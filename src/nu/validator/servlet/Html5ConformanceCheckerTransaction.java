@@ -91,10 +91,7 @@ public class Html5ConformanceCheckerTransaction extends
         if ("text/html".equals(type)) {
             validator = validatorByDoctype(HTML5_SCHEMA);
             usingHtml = true;
-            htmlParser = new HtmlParser();
-            htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
-            htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
-            htmlParser.setMappingLangToXmlLang(true);
+            newHtmlParser();
             htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
             htmlParser.setDocumentModeHandler(this);
             htmlParser.setContentHandler(validator.getContentHandler());
