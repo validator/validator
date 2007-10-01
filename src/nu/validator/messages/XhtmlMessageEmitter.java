@@ -330,4 +330,20 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         return new XhtmlSourceHandler(emitter);
     }
 
+    /**
+     * @see nu.validator.messages.MessageEmitter#endResult()
+     */
+    @Override
+    public void endResult() throws SAXException {
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startResult()
+     */
+    @Override
+    public ResultHandler startResult() throws SAXException {
+        maybeCloseList();
+        return new XhtmlResultHandler(emitter);
+    }
+
 }

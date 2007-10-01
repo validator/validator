@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,38 +20,46 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.servlet;
+package nu.validator.messages;
 
-import java.io.IOException;
+import nu.validator.xml.XhtmlSaxEmitter;
 
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
-public interface InfoErrorHandler extends ErrorHandler {
+public class XhtmlResultHandler implements ResultHandler {
 
-    public abstract void end(String successMessage, String failureMessage) throws SAXException;
-
-    public abstract void start(String documentUri) throws SAXException;
-
+    private final XhtmlSaxEmitter emitter;
+    
+    
+    
     /**
-     * @param e
+     * @param emitter
      */
-    public abstract void info(String str) throws SAXException;
+    public XhtmlResultHandler(final XhtmlSaxEmitter emitter) {
+        this.emitter = emitter;
+    }
 
-    /**
-     * @param e
-     */
-    public abstract void ioError(IOException e) throws SAXException;
+    public void characters(char[] ch, int start, int length)
+            throws SAXException {
+        emitter.characters(ch, start, length);
+    }
 
-    /**
-     * @param e
-     * @throws SAXException
-     */
-    public abstract void internalError(Throwable e, String message)
-            throws SAXException;
+    public void endResult() throws SAXException {
+        emitter.endElement("p");
+    }
 
-    /**
-     * @param e
-     */
-    public abstract void schemaError(Exception e) throws SAXException;
+    public void startResult(Result result) throws SAXException {
+        switch(result) {
+            case SUCCESS:
+                emitter.startElementWithClass("p", "success");
+                break;
+            case FAILURE:
+                emitter.startElementWithClass("p", "failure");
+                break;
+            case INDETERMINATE:
+                emitter.startElementWithClass("p", "indeterminate");
+                break;                
+        }
+    }
+
 }

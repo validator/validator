@@ -33,48 +33,59 @@ public abstract class MessageEmitter {
     public MessageEmitter() {
     }
 
-    public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
-        
+    public void startMessages(String documentUri, boolean willShowSource)
+            throws SAXException {
+
     }
 
     public void endMessages() throws SAXException {
-        
+
     }
 
-    public abstract void startMessage(MessageType type, String systemId, int oneBasedFirstLine, int oneBasedFirstColumn, int oneBasedLastLine, int oneBasedLastColumn, boolean exact) throws SAXException;
-    
-    public abstract void endMessage() throws SAXException;    
-    
+    public abstract void startMessage(MessageType type, String systemId,
+            int oneBasedFirstLine, int oneBasedFirstColumn,
+            int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
+            throws SAXException;
+
+    public abstract void endMessage() throws SAXException;
+
     public MessageTextHandler startText() throws SAXException {
-        return null;        
+        return null;
     }
-    
+
     public void endText() throws SAXException {
-        
+
     }
 
     public SourceHandler startSource() throws SAXException {
-                return null;
+        return null;
     }
-    
+
     public void endSource() throws SAXException {
-        
-    }    
-    
+
+    }
+
     public ContentHandler startElaboration() throws SAXException {
         return null;
     }
 
-    public void endElaboration() throws SAXException {    
+    public void endElaboration() throws SAXException {
 
-    }    
-    
+    }
+
     public SourceHandler startFullSource() throws SAXException {
         return null;
     }
 
     public void endFullSource() throws SAXException {
 
-}    
+    }
 
+    public ResultHandler startResult() throws SAXException {
+        return null;        
+    }
+    
+    public void endResult() throws SAXException {
+        
+    }
 }

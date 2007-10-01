@@ -228,4 +228,12 @@ public class TextMessageEmitter extends MessageEmitter {
         }
     }
 
+    /**
+     * @see nu.validator.messages.MessageEmitter#startResult()
+     */
+    @Override
+    public ResultHandler startResult() throws SAXException {
+        return new TextResultHandler(writer);
+    }
+
 }

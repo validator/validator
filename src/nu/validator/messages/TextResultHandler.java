@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -20,38 +20,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.servlet;
+package nu.validator.messages;
 
 import java.io.IOException;
+import java.io.Writer;
 
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
-public interface InfoErrorHandler extends ErrorHandler {
+public class TextResultHandler implements ResultHandler {
 
-    public abstract void end(String successMessage, String failureMessage) throws SAXException;
-
-    public abstract void start(String documentUri) throws SAXException;
-
+    private final Writer writer;
+    
     /**
-     * @param e
+     * @param writer
      */
-    public abstract void info(String str) throws SAXException;
+    public TextResultHandler(final Writer writer) {
+        this.writer = writer;
+    }
 
-    /**
-     * @param e
-     */
-    public abstract void ioError(IOException e) throws SAXException;
+    public void characters(char[] ch, int start, int length)
+            throws SAXException {
+        try {
+            writer.write(ch, start, length);
+        } catch (IOException e) {
+            throw new SAXException(e.getMessage(), e);
+        }
+    }
 
-    /**
-     * @param e
-     * @throws SAXException
-     */
-    public abstract void internalError(Throwable e, String message)
-            throws SAXException;
+    public void endResult() throws SAXException {
+        try {
+            writer.write('\n');
+        } catch (IOException e) {
+            throw new SAXException(e.getMessage(), e);
+        }
+    }
 
-    /**
-     * @param e
-     */
-    public abstract void schemaError(Exception e) throws SAXException;
+    public void startResult(Result result) throws SAXException {
+    }
+
 }

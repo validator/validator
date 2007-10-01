@@ -41,6 +41,8 @@ import com.ibm.icu.text.Normalizer;
 
 
 public final class MessageEmitterAdapter implements InfoErrorHandler {
+    
+    private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
 
     private int warnings = 0;
 
@@ -48,6 +50,8 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
 
     private int fatalErrors = 0;
 
+    private int nonDocumentErrors = 0;
+    
     private final SourceCode sourceCode;
     
     private final MessageEmitter emitter;
@@ -96,7 +100,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
         return warnings;
     }
 
-    public boolean isErrors() {
+    private boolean isErrors() {
         return !(errors == 0 && fatalErrors == 0);
     }
 
@@ -112,7 +116,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @throws SAXException
      */
     private void warning(SAXParseException e, boolean exact) throws SAXException {
-        if (fatalErrors > 0) {
+        if (fatalErrors > 0 || nonDocumentErrors > 0) {
             return;
         }
         this.warnings++;
@@ -131,7 +135,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @throws SAXException
      */
     private void error(SAXParseException e, boolean exact) throws SAXException {
-        if (fatalErrors > 0) {
+        if (fatalErrors > 0 || nonDocumentErrors > 0) {
             return;
         }
         this.errors++;
@@ -150,7 +154,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @throws SAXException
      */
     private void fatalError(SAXParseException e, boolean exact) throws SAXException {
-        if (fatalErrors > 0) {
+        if (fatalErrors > 0 || nonDocumentErrors > 0) {
             return;
         }
         this.fatalErrors++;
@@ -173,7 +177,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#ioError(java.io.IOException)
      */
     public void ioError(IOException e) throws SAXException {
-        this.fatalErrors++;
+        this.nonDocumentErrors++;
         message(MessageType.IO, e.getMessage(), null, -1, -1 , false);
     }
 
@@ -182,7 +186,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      *      java.lang.String)
      */
     public void internalError(Throwable e, String message) throws SAXException {
-        this.fatalErrors++;
+        this.nonDocumentErrors++;
         message(MessageType.INTERNAL, message, null, -1, -1 , false);
     }
 
@@ -190,7 +194,7 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#schemaError(java.lang.Exception)
      */
     public void schemaError(Exception e) throws SAXException {
-        this.fatalErrors++;
+        this.nonDocumentErrors++;
         message(MessageType.SCHEMA, e.getMessage(), null, -1, -1 , false);
     }
 
@@ -206,7 +210,24 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
      */
     public void end(String successMessage, String failureMessage)
             throws SAXException {
-        // XXX figure out API here
+        ResultHandler resultHandler = emitter.startResult();
+        if (resultHandler != null) {
+            if (isIndeterminate()) {
+                resultHandler.startResult(Result.INDETERMINATE);
+                resultHandler.characters(INDETERMINATE_MESSAGE, 0, INDETERMINATE_MESSAGE.length);
+                resultHandler.endResult();
+            } else if (isErrors()) {
+                resultHandler.startResult(Result.FAILURE);
+                resultHandler.characters(failureMessage.toCharArray(), 0, failureMessage.length());
+                resultHandler.endResult();                
+            } else {
+                resultHandler.startResult(Result.SUCCESS);
+                resultHandler.characters(successMessage.toCharArray(), 0, successMessage.length());
+                resultHandler.endResult();                                
+            }
+        }
+        emitter.endResult();
+        
         if (showSource) {
             SourceHandler sourceHandler = emitter.startFullSource();
             if (sourceHandler != null) {
@@ -215,6 +236,10 @@ public final class MessageEmitterAdapter implements InfoErrorHandler {
             emitter.endFullSource();
         }
         emitter.endMessages();
+    }
+
+    private boolean isIndeterminate() {
+        return nonDocumentErrors > 0;
     }
 
     private void messageFromSAXParseException(MessageType type, SAXParseException spe, boolean exact) throws SAXException {
