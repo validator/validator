@@ -23,6 +23,7 @@
 
 package nu.validator.servlet;
 
+
 import org.apache.log4j.PropertyConfigurator;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Handler;
@@ -62,6 +63,7 @@ public class Main {
         Context context = new Context(server, "/");
         context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
         context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
+        context.addFilter(new FilterHolder(new MultipartFormDataFilter()), "/*", Handler.REQUEST);
         server.start();
         
         System.in.read(); // XXX do something smarter

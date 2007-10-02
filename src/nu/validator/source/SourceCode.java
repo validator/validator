@@ -23,6 +23,7 @@
 package nu.validator.source;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,8 +51,7 @@ public final class SourceCode implements CharacterHandler {
 
     private int expectedLength;
 
-    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(
-            new ReverseLocationComparator());
+    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(Collections.reverseOrder());
 
     private final SortedSet<Location> exactErrors = new TreeSet<Location>();
 
@@ -176,6 +176,9 @@ public final class SourceCode implements CharacterHandler {
     }
     
     public void rememberExactError(Location location) {
+        if (location.getColumn() < 0 || location.getLine() < 0) {
+            return;
+        }
         exactErrors.add(location);        
     }
 
@@ -313,7 +316,12 @@ public final class SourceCode implements CharacterHandler {
             while (i >= 0 && locations[i].compareTo(loc) < 0) {
                 i--;
             }
-            Location start = locations[i + 1].next();
+            Location start;
+            if (i == locations.length - 1) {
+                start = loc.next();
+            } else {
+                start = locations[i + 1].next();                
+            }
             Location end = loc.next();
             ranges.add(new Range(start, end, loc));
         }

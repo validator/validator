@@ -602,6 +602,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     /**
      * @throws SAXException
      */
+    @SuppressWarnings("deprecation")
     void validate() throws SAXException {
         if (!willValidate()) {
             return;
@@ -647,9 +648,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
                         true);
             }
             if (reader instanceof HtmlParser) {
-                HtmlParser hp = (HtmlParser) reader;
-                hp.addCharacterHandler(sourceCode);
-                hp.setMappingLangToXmlLang(true);
+                htmlParser.addCharacterHandler(sourceCode);
+                htmlParser.setMappingLangToXmlLang(true);
+                htmlParser.setTreeBuilderErrorHandlerOverride(errorHandler);
             }
             WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(
                     reader);
@@ -1022,7 +1023,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     void emitForm() throws SAXException {
         attrs.clear();
-        attrs.addAttribute("method", "get");
+//        attrs.addAttribute("method", "get");
+        attrs.addAttribute("method", "post");
+        attrs.addAttribute("enctype", "multipart/form-data");
         attrs.addAttribute("action", request.getRequestURL().toString());
         attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
