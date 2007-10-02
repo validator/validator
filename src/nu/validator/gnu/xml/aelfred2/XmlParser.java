@@ -3770,14 +3770,22 @@ final class XmlParser {
      * Return the current line number.
      */
     public int getLineNumber() {
-        return line;
+        if (line > 0) {
+            return line;            
+        } else {
+            return -1;
+        }
     }
 
     /**
      * Return the current column number.
      */
     public int getColumnNumber() {
-        return column;
+        if (column > 0) {
+            return column;
+        } else {
+            return -1;
+        }
     }
 
     // ////////////////////////////////////////////////////////////////////
