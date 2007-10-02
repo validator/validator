@@ -60,6 +60,7 @@ dependencyPackages = [
   ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("http://www.slf4j.org/dist/slf4j-1.4.3.zip", "5671faa7d5aecbd06d62cf91f990f80a"),
+  ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/fileupload/binaries/commons-fileupload-1.2-bin.zip", "6fbe6112ebb87a9087da8ca1f8d8fd6a"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
