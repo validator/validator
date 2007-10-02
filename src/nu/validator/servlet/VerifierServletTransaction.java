@@ -1023,9 +1023,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     void emitForm() throws SAXException {
         attrs.clear();
-//        attrs.addAttribute("method", "get");
-        attrs.addAttribute("method", "post");
-        attrs.addAttribute("enctype", "multipart/form-data");
+        attrs.addAttribute("method", "get");
+//        attrs.addAttribute("method", "post");
+//        attrs.addAttribute("enctype", "multipart/form-data");
         attrs.addAttribute("action", request.getRequestURL().toString());
         attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
