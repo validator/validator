@@ -1236,6 +1236,16 @@ class VerifierServletTransaction implements DocumentModeHandler {
                             + (html4SpecificAdditionalErrorChecks ? ""
                                     : " HTML4-specific tokenization errors are not enabled."));
                     validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
+                } else if ("-//W3C//DTD HTML 4.0 Transitional//EN".equals(publicIdentifier)) {
+                    errorHandler.info("Legacy HTML 4.0 Transitional doctype seen.  Please consider using HTML 4.01 Transitional instead. Proceeding anyway for your convenience with the schema for XHTML 1.0 Transitional."
+                            + (html4SpecificAdditionalErrorChecks ? ""
+                                    : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1TRANSITIONAL_SCHEMA);
+                } else if ("-//W3C//DTD HTML 4.0//EN".equals(publicIdentifier)) {
+                    errorHandler.info("Legacy HTML 4.0 Strict doctype seen. Please consider using HTML 4.01 instead. Proceeding anyway for your convenience with the schema for XHTML 1.0 Strict."
+                            + (html4SpecificAdditionalErrorChecks ? ""
+                                    : " HTML4-specific tokenization errors are not enabled."));
+                    validator = validatorByDoctype(XHTML1STRICT_SCHEMA);
                 } else {
                     errorHandler.info("Using the schema for HTML5."
                             + (html4SpecificAdditionalErrorChecks ? " HTML4-specific tokenization errors are enabled."
