@@ -425,6 +425,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Content-Type missing");
                 return;
+            } else if (postContentType.trim().toLowerCase().startsWith("application/x-www-form-urlencoded")) {
+                response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
+                "application/x-www-form-urlencoded not supported. Please use multipart/form-data.");
+                return;                
             }
         }
 
@@ -477,17 +481,24 @@ class VerifierServletTransaction implements DocumentModeHandler {
             }
         }
 
+        String methodCheck = request.getHeader("Method-Check");
+        
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-cache");
-        } else if (outputFormat == OutputFormat.HTML
-                || outputFormat == OutputFormat.XHTML) {
-            response.setDateHeader("Last-Modified", lastModified);
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                    "No input document");
+        } else if (methodCheck != null) {
+            // XXX revisit if anne changes the access-control stuff to use OPTIONS
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            response.setHeader("Allow", "POST");
             return;
-        }
+        } else if (outputFormat == OutputFormat.HTML
+                    || outputFormat == OutputFormat.XHTML) {
+                response.setDateHeader("Last-Modified", lastModified);
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "No input document");
+                return;
+            }
 
         setup();
 

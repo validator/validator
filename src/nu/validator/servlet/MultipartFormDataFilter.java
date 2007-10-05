@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
@@ -169,7 +170,9 @@ public class MultipartFormDataFilter implements Filter {
             }
             chain.doFilter(new RequestWrapper(request, params, contentType, utf8, fileStream), response);
             } catch (FileUploadException e) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+                response.sendError(415, e.getMessage());
+            } catch (CharacterCodingException e) {
+                response.sendError(415, e.getMessage());                
             } catch (IOException e) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());                
             }
