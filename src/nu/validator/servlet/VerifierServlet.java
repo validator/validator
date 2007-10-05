@@ -114,15 +114,4 @@ public class VerifierServlet extends HttpServlet {
             }
         }
     }
-
-
-
-    /**
-     * @see javax.servlet.http.HttpServlet#doOptions(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
-    @Override
-    protected void doOptions(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
-        System.out.println("OPTIONS");
-        super.doOptions(arg0, arg1);
-    }
 }
