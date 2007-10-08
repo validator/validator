@@ -372,12 +372,15 @@ final class Table {
         }
         switch (state) {
             case IN_COLGROUP:
-                int right = columnCount + Math.abs(pendingColGroupSpan);
-                Locator locator = new LocatorImpl(owner.getDocumentLocator());
-                ColumnRange colRange = new ColumnRange("colgroup", locator,
-                        columnCount, right);
-                appendColumnRange(colRange);
-                columnCount = right;
+                if (pendingColGroupSpan != 0) {
+                    int right = columnCount + Math.abs(pendingColGroupSpan);
+                    Locator locator = new LocatorImpl(
+                            owner.getDocumentLocator());
+                    ColumnRange colRange = new ColumnRange("colgroup", locator,
+                            columnCount, right);
+                    appendColumnRange(colRange);
+                    columnCount = right;
+                }
                 realColumnCount = columnCount;
                 state = State.IN_TABLE_COLS_SEEN;
                 break;

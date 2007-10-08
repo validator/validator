@@ -68,6 +68,7 @@ final class ColumnRange {
      */
     public ColumnRange(String element, Locator locator, int left, int right) {
         super();
+        assert right > left;
         this.element = element;
         this.locator = locator;
         this.left = left;

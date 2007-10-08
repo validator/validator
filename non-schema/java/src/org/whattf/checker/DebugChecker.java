@@ -57,7 +57,6 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void endDocument() throws SAXException {
-        warn("EndDocument.");
     }
 
     /**
@@ -97,7 +96,6 @@ public final class DebugChecker extends Checker {
      */
     @Override
     public void startDocument() throws SAXException {
-        warn("StartDocument.");
     }
 
     /**
