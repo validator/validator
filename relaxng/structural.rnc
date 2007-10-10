@@ -1,5 +1,5 @@
 # #####################################################################
-##  RELAX NG Schema for HTML 5: Sectioning Markup Added in HTML5      #
+##  RELAX NG Schema for HTML 5: Block Markup Added in HTML5           #
 # #####################################################################
 
 ## Section: <section>
@@ -116,3 +116,24 @@
 	common.elem.block |= footer.elem
 	common.elem.block.static |= footer.elem.static
 
+## Dialog: <dialog>
+
+	dialog.elem =
+		element dialog { dialog.inner & dialog.attrs }
+	dialog.elem.static =
+		element dialog { dialog.inner.static & dialog.attrs }
+	dialog.attrs =
+		( common.attrs )
+	dialog.inner =
+		(	(	dt.elem
+			,	dd.elem
+			)*
+		)
+	dialog.inner.static =
+		(	(	dt.elem.static
+			,	dd.elem.static
+			)*
+		)
+
+	common.elem.block |= dialog.elem
+	common.elem.block.static |= dialog.elem.static
