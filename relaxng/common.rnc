@@ -77,6 +77,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##  Common Element Classes                                            #
 # #####################################################################
 
+## Metadata Elements
+
+	common.elem.metadata =
+		( notAllowed )
+
 ## Strictly Inline Elements
 
 	common.elem.strict-inline =
@@ -112,6 +117,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 # #####################################################################
 ##  Common Content Models                                             #
 # #####################################################################
+
+## Metadata Content
+
+	common.inner.metadata =
+		( common.elem.metadata* )
 
 ## Strictly Inline Content
 
@@ -300,7 +310,7 @@ common.attrs.other =
 
 	common.data.id =
 		xsd:string {
-			pattern = ".+"
+			pattern = "\S+"
 		}
 
 	common.data.idref =

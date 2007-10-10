@@ -27,25 +27,20 @@
 		element head { head.inner & head.attrs }
 	head.attrs =
 		(	common.attrs
-		&	head.attrs.profile?
+#		&	head.attrs.profile?
 		)
-		head.attrs.profile =
-			attribute profile {
-				common.data.uris #REVISIT should these be absolute (zero or more)
-			}
+#		head.attrs.profile =
+#			attribute profile {
+#				common.data.uris #REVISIT should these be absolute (zero or more)
+#			}
 	head.inner =
 		(	meta.elem.encoding?
 		,	base.elem?
 		,	(	title.elem
-			&	head.inner.misc*
+			&	common.inner.metadata
 			)
 		)
-		head.inner.misc =
-			(	meta.elem
-			|	link.elem
-			|	style.elem
-			)
-
+		
 ## Content Container: <body>
 
 	body.elem =
@@ -64,22 +59,6 @@
 	title.inner =
 		( text )
 
-## Inline Character Encoding Statement for HTML
-
-	meta.elem.encoding =
-		element meta { meta.encoding.inner & meta.encoding.attrs }
-		& HTMLonly
-	meta.encoding.attrs =
-		(	common.attrs
-		&	meta.attrs.charset
-		)
-		meta.attrs.charset =
-			attribute charset {
-				string #FIXME need a datatype with IANA data here
-			}
-	meta.encoding.inner =
-		( empty )		
-
 ## Base URI: <base>
 
 	base.elem =
@@ -92,7 +71,7 @@
 	base.attrs.href =
 		attribute href {
 			common.data.uri
-		} & HTMLonly
+		}
 	base.attrs.target =
 		attribute target {
 			common.data.browsingcontext
@@ -135,6 +114,8 @@
 			}
 	link.inner =
 		( empty )
+		
+	common.elem.metadata |= link.elem
 
 ## Global Style: <style>
 
@@ -161,29 +142,69 @@
 			}
 	style.inner =
 		( common.inner.anything )
+		
+	common.elem.metadata |= style.elem
 
-## Other Meta Data: <meta>
+## Name-Value Meta Data: <meta name>
 
-	meta.elem =
-		element meta { meta.inner & meta.attrs }
-	meta.attrs =
+	meta.elem.name =
+		element meta { meta.name.inner & meta.name.attrs }
+	meta.name.attrs =
 		(	common.attrs
-		&	(	meta.attrs.name
-			|	meta.attrs.http-equiv
-			)
-		&	meta.attrs.content
+		&	meta.name.attrs.name
+		&	meta.name.attrs.content
 		)
-		meta.attrs.name =
+		meta.name.attrs.name =
 			attribute name {
 				string
 			}
-		meta.attrs.content =
+		meta.name.attrs.content =
 			attribute content {
 				string
 			}
-		meta.attrs.http-equiv =
+	meta.name.inner =
+		( empty )
+		
+	common.elem.metadata |= meta.elem.name
+
+## Pragma Directives: <meta http-equiv>
+
+	meta.elem.http-equiv =
+		element meta { meta.http-equiv.inner & meta.http-equiv.attrs }
+	meta.http-equiv.attrs =
+		(	common.attrs
+		&	meta.http-equiv.attrs.http-equiv
+		&	meta.http-equiv.attrs.content
+		)
+		meta.http-equiv.attrs.http-equiv =
 			attribute http-equiv {
 				string "refresh" | string "default-style"
 			}
-	meta.inner =
+		meta.http-equiv.attrs.content =
+			attribute content {
+				string
+			}
+	meta.http-equiv.inner =
 		( empty )
+		
+	common.elem.metadata |= meta.elem.http-equiv # not quite right per spec
+	                                             # if the definition is 
+	                                             # reused in another language
+
+
+## Inline Character Encoding Statement for HTML: <meta charset>
+
+	meta.elem.encoding =
+		element meta { meta.encoding.inner & meta.encoding.attrs }
+		& HTMLonly
+	meta.encoding.attrs =
+		(	common.attrs
+		&	meta.attrs.charset
+		)
+		meta.attrs.charset =
+			attribute charset {
+				string #FIXME need a datatype with IANA data here
+			}
+	meta.encoding.inner =
+		( empty )		
+

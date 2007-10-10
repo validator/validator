@@ -8,6 +8,7 @@
 		(	common.attrs.contextmenu?
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
+		&	common.attrs.irrelevant?
 		)
 
 ## Context Menu: contextmenu
@@ -29,6 +30,13 @@
 	common.attrs.draggable =
 		attribute draggable {
 			string "true" | string "false" #REVISIT guessing here
+		}
+
+## Irrelevant Element: irrelevant
+
+	common.attrs.irrelevant =
+		attribute irrelevant {
+			string "irrelevant" | string ""
 		}
 
 ## Progess Indicator: <progress>
@@ -78,7 +86,10 @@
 				string "disabled" | string ""
 			}
 	datagrid.inner =
-		( common.inner.block )
+		(	common.inner.block # table case left to schematron 
+		|	select.elem
+		|	datalist.elem.block.static
+		)
 	
 	common.elem.block |= datagrid.elem
 
@@ -168,7 +179,7 @@
 		)
 		menu.attrs.type =
 			attribute type {
-				string "toolbar" | string "popup"
+				string "toolbar" | string "context"
 			}
 		menu.attrs.label =
 			attribute label {
@@ -246,8 +257,13 @@
 	event-source.inner =
 		( empty )
 
-	head.inner.misc |=
-		( event-source.elem )
+	head.inner.misc |= ( event-source.elem & nonHTMLizable )
+	common.elem.strict-inline |= event-source.elem
+	common.elem.strict-inline.static |= event-source.elem
+	common.elem.struct-inline |= event-source.elem
+	common.elem.struct-inline.static |= event-source.elem
+	common.elem.block |= event-source.elem
+	common.elem.block.static |= event-source.elem
 	
 ## Additional On-Demand Information: <details>
 

@@ -60,6 +60,14 @@
 
 ## Fallback Unscripted Content: <noscript>
 
+	noscript.elem.head =
+		element noscript { noscript.inner.head & noscript.attrs }
+		& HTMLonly
+		noscript.inner.head = 
+			(	link.elem
+			|	meta.elem.http-equiv
+			|	style.elem
+			)*
 	noscript.elem.strict-inline =
 		element noscript { common.inner.strict-inline & noscript.attrs }
 		& HTMLonly
@@ -81,6 +89,7 @@
 	noscript.attrs =
 		( common.attrs )
 
+	head.inner.misc |= noscript.elem.head
 	common.elem.strict-inline |= noscript.elem.strict-inline
 	common.elem.strict-inline.static |= noscript.elem.strict-inline.static
 	common.elem.struct-inline |= noscript.elem.struct-inline

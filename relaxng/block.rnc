@@ -268,7 +268,7 @@
 	common.elem.block |= div.elem
 	common.elem.block.static |= div.elem.static
 
-## Eitle or Explanatory Caption: <legend>
+## Title or Explanatory Caption: <legend>
 
 	legend.elem.strict-inline =
 		element legend { legend.inner.strict-inline & legend.attrs }
