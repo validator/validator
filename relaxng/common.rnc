@@ -239,7 +239,7 @@ common.attrs.basic =
 		& nonRoundtrippable
 	common.attrs.xmlbase =
 		attribute xml:base {
-			xsd:anyURI
+			common.data.uri
 		} & XMLonly
 
 common.attrs.i18n =
