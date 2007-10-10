@@ -125,7 +125,6 @@
 		(	common.attrs
 		&	style.attrs.type?
 		&	style.attrs.media?
-		&	style.attrs.scoped?
 		#	style.attrs.title included in common.attrs
 		)
 		style.attrs.type =
@@ -136,14 +135,26 @@
 			attribute media {
 				common.data.mediaquery
 			}
-		style.attrs.scoped =
-			attribute scoped {
-				string "scoped" | string ""
-			}
 	style.inner =
 		( common.inner.anything )
 		
 	common.elem.metadata |= style.elem
+
+## Scoped Style: <style scoped>
+
+	style.elem.scoped =
+		element style { style.inner & style.scoped.attrs }
+	style.scoped.attrs =
+		(	common.attrs
+		&	style.attrs.type?
+		&	style.attrs.media?
+		&	style.attrs.scoped
+		#	style.attrs.title included in common.attrs
+		)
+		style.attrs.scoped =
+			attribute scoped {
+				string "scoped" | string ""
+			}
 
 ## Name-Value Meta Data: <meta name>
 
@@ -173,14 +184,27 @@
 		element meta { meta.http-equiv.inner & meta.http-equiv.attrs }
 	meta.http-equiv.attrs =
 		(	common.attrs
-		&	meta.http-equiv.attrs.http-equiv
-		&	meta.http-equiv.attrs.content
+		&	(	(	meta.http-equiv.attrs.http-equiv.refresh
+				&	meta.http-equiv.attrs.content.refresh
+				)
+			|	(	meta.http-equiv.attrs.http-equiv.default-style
+				&	meta.http-equiv.attrs.content.default-style
+				)
+			)
 		)
-		meta.http-equiv.attrs.http-equiv =
+		meta.http-equiv.attrs.http-equiv.refresh =
 			attribute http-equiv {
-				string "refresh" | string "default-style"
+				string "refresh"
 			}
-		meta.http-equiv.attrs.content =
+		meta.http-equiv.attrs.http-equiv.default-style =
+			attribute http-equiv {
+				string "default-style"
+			}
+		meta.http-equiv.attrs.content.refresh =
+			attribute content { 
+				string # XXX datatype
+			}
+		meta.http-equiv.attrs.content.default-style =
 			attribute content {
 				string
 			}

@@ -257,11 +257,11 @@
 	div.attrs =
 		( common.attrs )
 	div.inner =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.bimorphic 
 		)
 	div.inner.static =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.bimorphic.static
 		)
 

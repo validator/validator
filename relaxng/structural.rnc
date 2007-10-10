@@ -17,11 +17,11 @@
 	section.active.attrs =
 		( common.attrs )
 	section.inner =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.block 
 		)
 	section.inner.static =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.block.static 
 		)
 
@@ -57,7 +57,7 @@
 		,	common.inner.block 
 		)
 	article.inner.static =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.block.static 
 		)
 		
@@ -77,7 +77,7 @@
 		,	common.inner.bimorphic 
 		)
 	aside.inner.static =
-		(	style.elem*
+		(	style.elem.scoped*
 		,	common.inner.bimorphic.static
 		)
 
