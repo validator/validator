@@ -390,7 +390,7 @@ namespace local = ""
 	map.elem.static =
 		element map { map.inner.static & map.attrs }
 	map.attrs =
-		( common.attrs )
+		( common.attrs ) # REVISIT make id required in Schematron
 	map.inner =
 		( common.inner.block )
 	map.inner.static =
@@ -405,8 +405,9 @@ namespace local = ""
 		element area { area.inner & area.attrs }
 	area.attrs =
 		(	common.attrs
-		&	area.attrs.alt?
-		&	area.attrs.href?
+		&	(	area.attrs.alt
+			&	area.attrs.href
+			)?
 		&	area.attrs.target?
 		&	area.attrs.ping?
 		&	area.attrs.rel?

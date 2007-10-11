@@ -7,11 +7,11 @@
 
 ## Table Datatypes
 
-	tables.data.multilen =
-		(	common.data.integer.positive
-		|	common.data.percent
-		|	xsd:token { pattern = "[0-9]+\*" } #REVISIT should this one be string? 
-		)
+#	tables.data.multilen =
+#		(	common.data.integer.positive
+#		|	common.data.percent
+#		|	xsd:token { pattern = "[0-9]+\*" } #REVISIT should this one be string? 
+#		)
 
 ## Table Alignment Attributes
 

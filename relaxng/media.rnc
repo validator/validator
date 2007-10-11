@@ -6,12 +6,17 @@
 
 	# src not included
 	media.attrs = 
-		(	media.attrs.start?
+		(	media.attrs.autoplay?
+		&	media.attrs.start?
 		&	media.attrs.loopstart?
 		&	media.attrs.loopend?
 		&	media.attrs.loopcount?
 		&	media.attrs.controls?
 		)
+		media.attrs.autoplay   =
+			attribute autoplay   {
+				string "autoplay" | string ""
+			}
 		media.attrs.start   =
 			attribute start   {
 				common.data.timeoffset
@@ -41,10 +46,23 @@
 
 	source.elem =
 		element source { source.inner & source.attrs }
+	source.elem.last =
+		element source { source.inner & source.last.attrs }
 	source.attrs =
 		(	common.attrs
 		&	source.attrs.src
-		&	source.attrs.type
+		&	(	(	source.attrs.type
+				&	source.attrs.media?
+				)
+			|	(	source.attrs.media
+				)
+			)
+		)
+	source.last.attrs =
+		(	common.attrs
+		&	source.attrs.src
+		&	source.attrs.type?
+		&	source.attrs.media?
 		)
 		source.attrs.src =
 			attribute src {
@@ -54,6 +72,10 @@
 			attribute type {
 				common.data.mimetype
 			}
+		source.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
 	source.inner =
 		( empty )
 
@@ -61,7 +83,9 @@
 
 	media.source = 
 		(	media.attrs.src
-		|	source.elem+
+		|	(	source.elem*
+			,	source.elem.last
+			)
 		)
 
 	media.attrs.src =
