@@ -48,9 +48,7 @@
 		|	script.elem.imported
 		)
 		
-	head.inner.misc |=
-		( script.elem )
-
+	common.elem.metadata |= script.elem
 	common.elem.strict-inline |= script.elem
 	common.elem.strict-inline.static |= script.elem
 	common.elem.struct-inline |= script.elem
@@ -89,7 +87,7 @@
 	noscript.attrs =
 		( common.attrs )
 
-	head.inner.misc |= noscript.elem.head
+	common.elem.metadata |= noscript.elem.head
 	common.elem.strict-inline |= noscript.elem.strict-inline
 	common.elem.strict-inline.static |= noscript.elem.strict-inline.static
 	common.elem.struct-inline |= noscript.elem.struct-inline
