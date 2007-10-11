@@ -687,7 +687,7 @@
 	form.inner.empty =
 		( empty )
 
-	head.inner.misc |=
+	common.elem.metadata |=
 		( form.elem.empty & nonHTMLizable )
 	
 ## Fieldset: <fieldset>

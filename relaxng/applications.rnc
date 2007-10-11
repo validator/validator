@@ -157,7 +157,7 @@
 	command.inner =
 		( empty )
 	
-	head.inner.misc |=
+	common.elem.metadata |=
 		( command.elem & nonHTMLizable )
 	
 	common.elem.strict-inline |= command.elem
@@ -257,7 +257,7 @@
 	event-source.inner =
 		( empty )
 
-	head.inner.misc |= ( event-source.elem & nonHTMLizable )
+	common.elem.metadata |= ( event-source.elem & nonHTMLizable )
 	common.elem.strict-inline |= event-source.elem
 	common.elem.strict-inline.static |= event-source.elem
 	common.elem.struct-inline |= event-source.elem
