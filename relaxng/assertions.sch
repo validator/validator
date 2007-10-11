@@ -144,7 +144,7 @@
 		</rule>
 	</pattern>
 
-<!-- Required elements -->
+<!-- Misc requirements -->
 	
 	<pattern name='At least one heading in header'>
 		<rule context='h:header'>
@@ -169,6 +169,16 @@
 		</rule>
 	</pattern>
 
+	<pattern name='ismap requires a ancestor'>
+		<rule context='h:img[@ismap]'>
+			<assert test='ancestor::h:a[@href]'>
+				The &#x201C;img&#x201D; element with the 
+				&#x201C;ismap&#x201D; attribute set must have an 
+				&#x201C;a&#x201D; ancestor with the &#x201C;href&#x201D; 
+				attribute.
+			</assert>
+		</rule>
+	</pattern>
 	
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
