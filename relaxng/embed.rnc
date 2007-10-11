@@ -209,7 +209,7 @@ namespace local = ""
 			}
 		object.attrs.usemap =
 			attribute usemap {
-				common.data.uri
+				common.data.hashed-idref
 			}
 	object.inner.strict-inline =
 		(	param.elem*
