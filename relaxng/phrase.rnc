@@ -176,10 +176,18 @@
 		& v5only
 	m.attrs =
 		( common.attrs )
-	m.inner = #REVISIT check HTML-compatibility
-		( common.inner.struct-inline )
+	m.inner =
+		(	common.inner.strict-inline
+		|	(	common.inner.struct-inline
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	m.inner.static =
-		( common.inner.struct-inline.static )
+		(	common.inner.strict-inline.static
+		|	(	common.inner.struct-inline.static
+			&	nonRoundtrippable & nonHTMLizable
+			)
+		)
 	m.inner.strict =
 		( common.inner.strict-inline )
 	m.inner.strict.static =
