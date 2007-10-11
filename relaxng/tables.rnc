@@ -77,6 +77,8 @@
 
 	common.elem.block |= table.elem
 	common.elem.block.static |= table.elem.static
+	common.elem.struct-inline |= table.elem
+	common.elem.struct-inline.static |= table.elem.static
 
 ## Table Caption: <caption>
 
@@ -261,6 +263,7 @@
 	th.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
+		&	tables.attrs.scope?
 #		&	tables.attrs.access-headers #REVISIT commented out per Hixie's mail
 #		&	tables.attrs.define-headers
 #		&	tables.attrs.alignment
