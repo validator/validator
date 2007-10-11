@@ -13,7 +13,7 @@ namespace local = ""
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
-		&	img.attrs.alt
+		&	img.attrs.alt?
 		&	img.attrs.height?
 		&	img.attrs.width?
 		&	img.attrs.usemap?
@@ -58,7 +58,8 @@ namespace local = ""
 	embed.elem =
 		element embed { embed.inner & embed.attrs }
 	embed.attrs =
-		(	embed.attrs.src
+		(	common.attrs
+		&	embed.attrs.src
 		&	embed.attrs.type?
 		&	embed.attrs.height?
 		&	embed.attrs.width?
@@ -81,7 +82,60 @@ namespace local = ""
 				common.data.integer.positive
 			}
 		embed.attrs.other = # REVISIT common.attrs
-			attribute local:* - ( src | type | height | width ) {
+			attribute local:* - ( src 
+			                    | type 
+			                    | height 
+			                    | width 
+			                    | id 
+			                    | class
+			                    | title 
+			                    | dir 
+			                    | lang 
+			                    | style 
+			                    | tabindex 
+			                    | repeat-min 
+			                    | repeat-max 
+			                    | repeat-start 
+			                    | repeat 
+			                    | repeat-template 
+			                    | contextmenu 
+			                    | contenteditable 
+			                    | draggable 
+			                    | irrelevant
+			                    | onabort
+			                    | onbeforeunload
+			                    | onblur
+			                    | onchange
+			                    | onclick
+			                    | oncontextmenu
+			                    | ondblclick
+			                    | ondrag
+			                    | ondragend
+			                    | ondragenter
+			                    | ondragleave
+			                    | ondragover
+			                    | ondragstart
+			                    | ondrop
+			                    | onerror
+			                    | onfocus
+			                    | onkeydown
+			                    | onkeypress
+			                    | onkeyup
+			                    | onload
+			                    | onmessage
+			                    | onmousedown
+			                    | onmousemove
+			                    | onmouseout
+			                    | onmouseover
+			                    | onmouseup
+			                    | onmousewheel
+			                    | onresize
+			                    | onscroll
+			                    | onselect
+			                    | onsubmit
+			                    | onunload
+			                    ) 
+			{
 				string
 			}
 	embed.inner =
