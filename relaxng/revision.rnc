@@ -73,8 +73,3 @@
 	common.del.strict-inline.static |= del.elem.strict-inline.static
 	common.del.block |= del.elem.block
 	common.del.block.static |= del.elem.block.static
-
-#FIXME need special case for del in bimorphic. Refactor * positioning in
-#common content models so that they become common element classes
-
-

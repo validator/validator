@@ -518,6 +518,7 @@
 		# List common.attrs.i18n explicitly
 		& 	common.attrs.language?
 		&	bdo.attrs.dir # required
+		&	common.attrs.other
 		)
 		bdo.attrs.dir =
 			attribute dir {
