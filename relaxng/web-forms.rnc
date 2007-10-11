@@ -249,7 +249,6 @@
 	input.elem |= input.hidden.elem
 	
 	common.elem.block |= input.hidden.elem
-	#REVISIT static too?
 		
 ## Image Submit Button: <input type='image'>
 
@@ -280,7 +279,6 @@
 	
 	common.elem.struct-inline |= input.elem
 	common.elem.strict-inline |= input.elem
-	# REVISIT should hidden also go to static?
 
 ## Text Area: <textarea>
 
@@ -392,8 +390,8 @@
 			string
 		}
 	button.inner = 
-		( common.inner.strict-bimorphic.static )
-		#REVISIT expecting this to change into bimorphic.static
+		( common.inner.strict-bimorphic )
+		#REVISIT expecting this to change into bimorphic
 	
 ## Complex Submit Button: <button type='submit'>
 
@@ -456,8 +454,6 @@
 
 	form.elem =
 		element form { form.inner & form.attrs }
-	form.elem.static =
-		element form { form.inner.static & form.attrs }
 	form.attrs =
 		(	common.attrs
 		&	form.attrs.action? #REVISIT Should this be required anyway?
@@ -493,11 +489,8 @@
 			}	
 	form.inner =
 		( common.inner.block )
-	form.inner.static =
-		( common.inner.block.static )
 
 	common.elem.block |= form.elem
-	common.elem.block.static |= form.elem.static
 
 ## Fieldset: <fieldset>
 
@@ -521,8 +514,6 @@
 
 	label.elem =
 		element label { label.inner & label.attrs }
-	label.elem.static =
-		element label { label.inner.static & label.attrs }
 	label.attrs =
 		(	common.attrs
 		&	common-form.attrs.accesskey?
@@ -534,11 +525,7 @@
 			}
 	label.inner =
 		( common.inner.strict-inline ) #REVISIT making obvious guess
-	label.inner.static =
-		( common.inner.strict-inline.static ) #REVISIT making obvious guess
 
 	common.elem.struct-inline |= label.elem
-	common.elem.struct-inline.static |= label.elem.static
 	common.elem.strict-inline |= label.elem
-	common.elem.strict-inline.static |= label.elem.static
 

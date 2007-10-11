@@ -144,6 +144,127 @@
 		</rule>
 	</pattern>
 
+<!-- Interactive element exclusions -->
+
+	<pattern name='a cannot have interactive ancestors'>
+		<rule context='h:a'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;a&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;a&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;a&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='datagrid cannot have interactive ancestors'>
+		<rule context='h:datagrid'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;datagrid&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;datagrid&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;datagrid&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='details cannot have interactive ancestors'>
+		<rule context='h:details'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;details&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;details&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;details&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='button cannot have interactive ancestors'>
+		<rule context='h:button'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;button&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;button&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;button&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='textarea cannot have interactive ancestors'>
+		<rule context='h:textarea'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;textarea&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;textarea&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;textarea&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='select cannot have interactive ancestors'>
+		<rule context='h:select'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;select&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;select&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;select&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='non-hidden input cannot have interactive ancestors'>
+		<rule context='h:input[@type!="hidden"]'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;input&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;input&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:details'>
+				The interactive element &#x201C;input&#x201D; cannot 
+				appear as a descendant of the &#x201C;details&#x201D; element.
+			</report>
+		</rule>
+	</pattern>
+
 <!-- Misc requirements -->
 	
 	<pattern name='At least one heading in header'>

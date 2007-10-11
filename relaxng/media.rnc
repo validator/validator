@@ -97,16 +97,10 @@
 
 	video.elem.strict-inline =
 		element video { video.inner.strict-inline & video.attrs }
-	video.elem.strict-inline.static =
-		element video { video.inner.strict-inline.static & video.attrs }
 	video.elem.struct-inline =
 		element video { video.inner.struct-inline & video.attrs }
-	video.elem.struct-inline.static =
-		element video { video.inner.struct-inline.static & video.attrs }
 	video.elem.embedded =
 		element video { video.inner.embedded & video.attrs }
-	video.elem.embedded.static =
-		element video { video.inner.embedded.static & video.attrs }
 	video.attrs =
 		(	common.attrs
 		&	media.attrs
@@ -115,48 +109,27 @@
 		(	media.source
 		,	common.elem.strict-inline
 		)
-	video.inner.strict-inline.static =
-		(	media.source
-		,	common.elem.strict-inline.static
-		)
 	video.inner.struct-inline =
 		(	media.source
 		,	common.elem.struct-inline
-		)
-	video.inner.struct-inline.static =
-		(	media.source
-		,	common.elem.struct-inline.static
 		)
 	video.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
-	video.inner.embedded.static =
-		(	media.source
-		,	common.elem.embedded.static
-		)
 
 	common.elem.strict-inline |= video.elem.strict-inline
-	common.elem.strict-inline.static |= video.elem.strict-inline.static
 	common.elem.struct-inline |= video.elem.struct-inline
-	common.elem.struct-inline.static |= video.elem.struct-inline.static
 	common.elem.embedded |= video.elem.embedded
-	common.elem.embedded.static |= video.elem.embedded.static
 
 ## Audio: <audio>
 
 	audio.elem.strict-inline =
 		element audio { audio.inner.strict-inline & audio.attrs }
-	audio.elem.strict-inline.static =
-		element audio { audio.inner.strict-inline.static & audio.attrs }
 	audio.elem.struct-inline =
 		element audio { audio.inner.struct-inline & audio.attrs }
-	audio.elem.struct-inline.static =
-		element audio { audio.inner.struct-inline.static & audio.attrs }
 	audio.elem.embedded =
 		element audio { audio.inner.embedded & audio.attrs }
-	audio.elem.embedded.static =
-		element audio { audio.inner.embedded.static & audio.attrs }
 	audio.attrs =
 		(	common.attrs
 		&	media.attrs
@@ -165,46 +138,26 @@
 		(	media.source
 		,	common.elem.strict-inline
 		)
-	audio.inner.strict-inline.static =
-		(	media.source
-		,	common.elem.strict-inline.static
-		)
 	audio.inner.struct-inline =
 		(	media.source
 		,	common.elem.struct-inline
-		)
-	audio.inner.struct-inline.static =
-		(	media.source
-		,	common.elem.struct-inline.static
 		)
 	audio.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
-	audio.inner.embedded.static =
-		(	media.source
-		,	common.elem.embedded.static
-		)
 
 	common.elem.strict-inline |= audio.elem.strict-inline
-	common.elem.strict-inline.static |= audio.elem.strict-inline.static
 	common.elem.struct-inline |= audio.elem.struct-inline
-	common.elem.struct-inline.static |= audio.elem.struct-inline.static
 	common.elem.embedded |= audio.elem.embedded
-	common.elem.embedded.static |= audio.elem.embedded.static
 
 ## Captioned Embedded Content: <figure>
 
 	figure.elem =
 		element figure { figure.inner & figure.attrs }
-	figure.elem.static =
-		element figure { figure.inner.static & figure.attrs }
 	figure.attrs =
 		( common.attrs )
 	figure.inner =
 		( common.elem.embedded & legend.elem.struct-inline )
-	figure.inner.static =
-		( common.elem.embedded.static & legend.elem.struct-inline.static )
 
 	common.elem.block |= figure.elem
-	common.elem.block.static |= figure.elem.static

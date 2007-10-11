@@ -43,8 +43,6 @@
 
 	progress.elem =
 		element progress { progress.inner & progress.attrs }
-	progress.elem.static =
-		element progress { progress.inner.static & progress.attrs }
 	progress.attrs =
 		(	common.attrs
 		&	progress.attrs.value?
@@ -60,13 +58,9 @@
 			}
 	progress.inner =
 		( common.inner.strict-inline ) #Cannot enforce textContent format here
-	progress.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.struct-inline |= progress.elem
-	common.elem.struct-inline.static |= progress.elem.static
 	common.elem.strict-inline |= progress.elem
-	common.elem.strict-inline.static |= progress.elem.static
 
 ## Datagrid: <datagrid>
 
@@ -88,7 +82,7 @@
 	datagrid.inner =
 		(	common.inner.block # table case left to schematron 
 		|	select.elem
-		|	datalist.elem.block.static
+		|	datalist.elem.block
 		)
 	
 	common.elem.block |= datagrid.elem
@@ -159,18 +153,13 @@
 	
 	common.elem.metadata |=
 		( command.elem & nonHTMLizable )
-	
 	common.elem.strict-inline |= command.elem
-	common.elem.strict-inline.static |= command.elem
 	common.elem.struct-inline |= command.elem
-	common.elem.struct-inline.static |= command.elem
 
 ## Menu: <menu>
 
 	menu.elem =
 		element menu { menu.inner & menu.attrs }
-	menu.elem.static =
-		element menu { menu.inner.static & menu.attrs }
 	menu.attrs =
 		(	common.attrs
 		&	menu.attrs.type?
@@ -193,26 +182,16 @@
 		(	li.elem.inline*
 		|	common.inner.struct-inline
 		)
-	menu.inner.static =
-		(	li.elem.inline.static*
-		|	common.inner.struct-inline.static
-		)
 	
 	common.elem.block |= menu.elem
-	common.elem.block.static |= menu.elem.static
 	common.elem.struct-inline |= menu.elem
-	common.elem.struct-inline.static |= menu.elem.static
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
 	canvas.elem.strict-inline =
 		element canvas { canvas.inner.strict-inline & canvas.attrs }
-	canvas.elem.strict-inline.static =
-		element canvas { canvas.inner.strict-inline.static & canvas.attrs }
 	canvas.elem.struct-inline =
 		element canvas { canvas.inner.struct-inline & canvas.attrs }
-	canvas.elem.struct-inline.static =
-		element canvas { canvas.inner.struct-inline.static & canvas.attrs }
 	canvas.attrs =
 		(	common.attrs
 		&	canvas.attrs.height?
@@ -228,19 +207,12 @@
 			}
 	canvas.inner.strict-inline =
 		( common.inner.strict-inline )
-	canvas.inner.strict-inline.static =
-		( common.inner.strict-inline.static )
 	canvas.inner.struct-inline =
 		( common.inner.struct-inline )
-	canvas.inner.struct-inline.static =
-		( common.inner.struct-inline.static )
 	
 	common.elem.strict-inline |= canvas.elem.strict-inline
-	common.elem.strict-inline.static |= canvas.elem.strict-inline.static
 	common.elem.struct-inline |= canvas.elem.struct-inline
-	common.elem.struct-inline.static |= canvas.elem.struct-inline.static
 	common.elem.embedded |= canvas.elem.strict-inline
-	common.elem.embedded.static |= canvas.elem.strict-inline.static
 
 ## Server-sent events: <event-source>
 
@@ -259,11 +231,8 @@
 
 	common.elem.metadata |= ( event-source.elem & nonHTMLizable )
 	common.elem.strict-inline |= event-source.elem
-	common.elem.strict-inline.static |= event-source.elem
 	common.elem.struct-inline |= event-source.elem
-	common.elem.struct-inline.static |= event-source.elem
 	common.elem.block |= event-source.elem
-	common.elem.block.static |= event-source.elem
 	
 ## Additional On-Demand Information: <details>
 
@@ -279,7 +248,7 @@
 			}
 	details.inner =
 		(	legend.elem.strict-inline
-		,	common.inner.bimorphic.static 
+		,	common.inner.bimorphic 
 		)
 	
 	common.elem.block |= details.elem

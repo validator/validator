@@ -17,16 +17,10 @@
 
 	ins.elem.strict-inline =
 		element ins { common.inner.strict-inline & ins.attrs }
-	ins.elem.strict-inline.static =
-		element ins { common.inner.strict-inline.static & ins.attrs }
 	ins.elem.struct-inline =
 		element ins { common.inner.struct-inline & ins.attrs }
-	ins.elem.struct-inline.static =
-		element ins { common.inner.struct-inline.static & ins.attrs }
 	ins.elem.block =
 		element ins { common.inner.block & ins.attrs }
-	ins.elem.block.static =
-		element ins { common.inner.block.static & ins.attrs }
 	ins.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
@@ -34,26 +28,17 @@
 		)
 
 	common.elem.strict-inline |= ins.elem.strict-inline
-	common.elem.strict-inline.static |= ins.elem.strict-inline.static
 	common.elem.struct-inline |= ins.elem.struct-inline
-	common.elem.struct-inline.static |= ins.elem.struct-inline.static
 	common.elem.block |= ins.elem.block
-	common.elem.block.static |= ins.elem.block.static
 
 ## Deletions: <del>
 
 	del.elem.strict-inline =
 		element del { common.inner.strict-inline & del.attrs }
-	del.elem.strict-inline.static =
-		element del { common.inner.strict-inline.static & del.attrs }
 	del.elem.struct-inline =
 		element del { common.inner.struct-inline & del.attrs }
-	del.elem.struct-inline.static =
-		element del { common.inner.struct-inline.static & del.attrs }
 	del.elem.block =
 		element del { common.inner.block & del.attrs }
-	del.elem.block.static =
-		element del { common.inner.block.static & del.attrs }
 	del.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
@@ -61,15 +46,9 @@
 		)
 
 	common.elem.strict-inline |= del.elem.strict-inline
-	common.elem.strict-inline.static |= del.elem.strict-inline.static
 	common.elem.struct-inline |= del.elem.struct-inline
-	common.elem.struct-inline.static |= del.elem.struct-inline.static
 	common.elem.block |= del.elem.block
-	common.elem.block.static |= del.elem.block.static
 
 	common.del.struct-inline |= del.elem.struct-inline
-	common.del.struct-inline.static |= del.elem.struct-inline.static
 	common.del.strict-inline |= del.elem.strict-inline
-	common.del.strict-inline.static |= del.elem.strict-inline.static
 	common.del.block |= del.elem.block
-	common.del.block.static |= del.elem.block.static

@@ -9,8 +9,6 @@
 
 	p.elem =
 		element p { p.inner & p.attrs }
-	p.elem.static =
-		element p { p.inner.static & p.attrs }
 	p.attrs =
 		( common.attrs )
 	p.inner =
@@ -19,14 +17,8 @@
 			&	nonRoundtrippable & nonHTMLizable
 			)
 		)
-	p.inner.static =
-		(	common.inner.strict-inline.static
-		|	(	common.inner.struct-inline.static
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
+
 	common.elem.block |= p.elem
-	common.elem.block.static |= p.elem.static
 
 ## Hint Transition: <hr>
 
@@ -38,7 +30,6 @@
 		( empty )
 
 	common.elem.block |= hr.elem
-	common.elem.block.static |= hr.elem
 
 # #####################################################################
 ## Preformatting Blocks
@@ -47,19 +38,13 @@
 
 	pre.elem =
 		element pre { pre.inner & pre.attrs }
-	pre.elem.static =
-		element pre { pre.inner.static & pre.attrs }
 	pre.attrs =
 		( common.attrs )
 	pre.inner =
 		( common.inner.strict-inline )
-	pre.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= pre.elem
-	common.elem.block.static |= pre.elem.static
 	common.elem.struct-inline |= pre.elem
-	common.elem.struct-inline.static |= pre.elem.static
 
 # #####################################################################
 ## Simple Lists
@@ -68,59 +53,37 @@
 
 	ul.elem =
 		element ul { ul.inner & ul.attrs }
-	ul.elem.static =
-		element ul { ul.inner.static & ul.attrs }
 	ul.elem.inline =
 		element ul { ul.inner.inline & ul.attrs }
-	ul.elem.inline.static =
-		element ul { ul.inner.inline.static & ul.attrs }
 	ul.attrs =
 		( common.attrs )
 	ul.inner =
 		( li.elem* )
-	ul.inner.static =
-		( li.elem.static* )
 	ul.inner.inline =
 		( li.elem.inline* )
-	ul.inner.inline.static =
-		( li.elem.inline.static* )
 
 	common.elem.block |= ul.elem
-	common.elem.block.static |= ul.elem.static
 	common.elem.struct-inline |= ul.elem.inline
-	common.elem.struct-inline.static |= ul.elem.inline.static
 
 ## Unordered List Item: <li>
 
 	li.elem =
 		element li { li.inner & li.attrs }
-	li.elem.static =
-		element li { li.inner.static & li.attrs }
 	li.elem.inline =
 		element li { li.inner.inline & li.attrs }
-	li.elem.inline.static =
-		element li { li.inner.inline.static & li.attrs }
 	li.attrs =
 		( common.attrs )
 	li.inner =
 		( common.inner.bimorphic )
-	li.inner.static =
-		( common.inner.bimorphic.static )
 	li.inner.inline =
 		( common.inner.struct-inline )
-	li.inner.inline.static =
-		( common.inner.struct-inline.static )
 
 ## Ordered List: <ol>
 
 	ol.elem =
 		element ol { ol.inner & ol.attrs }
-	ol.elem.static =
-		element ol { ol.inner.static & ol.attrs }
 	ol.elem.inline =
 		element ol { ol.inner.inline & ol.attrs }
-	ol.elem.inline.static =
-		element ol { ol.inner.inline.static & ol.attrs }
 	ol.attrs =
 		(	common.attrs
 		&	ol.attrs.start?
@@ -131,28 +94,18 @@
 			}
 	ol.inner =
 		( oli.elem* )
-	ol.inner.static =
-		( oli.elem.static* )
 	ol.inner.inline =
 		( oli.elem.inline* )
-	ol.inner.inline.static =
-		( oli.elem.inline.static* )
 
 	common.elem.block |= ol.elem
-	common.elem.block.static |= ol.elem.static
 	common.elem.struct-inline |= ol.elem.inline
-	common.elem.struct-inline.static |= ol.elem.inline.static
 
 ## Ordered List Item: <li>
 
 	oli.elem =
 		element li { oli.inner & oli.attrs }
-	oli.elem.static =
-		element li { oli.inner.static & oli.attrs }
 	oli.elem.inline =
 		element li { oli.inner.inline & oli.attrs }
-	oli.elem.inline.static =
-		element li { oli.inner.inline.static & oli.attrs }
 	oli.attrs =
 		(	common.attrs
 		&	oli.attrs.value?
@@ -163,12 +116,8 @@
 			}
 	oli.inner =
 		( common.inner.bimorphic )
-	oli.inner.static =
-		( common.inner.bimorphic.static )
 	oli.inner.inline =
 		( common.inner.struct-inline )
-	oli.inner.inline.static =
-		( common.inner.struct-inline.static )
 
 # #####################################################################
 ## Definition Lists
@@ -177,12 +126,8 @@
 
 	dl.elem =
 		element dl { dl.inner & dl.attrs }
-	dl.elem.static =
-		element dl { dl.inner.static & dl.attrs }
 	dl.elem.inline =
 		element dl { dl.inner.inline & dl.attrs }
-	dl.elem.inline.static =
-		element dl { dl.inner.inline.static & dl.attrs }
 	dl.attrs =
 		( common.attrs )
 	dl.inner =
@@ -190,60 +135,36 @@
 			,	dd.elem+
 			)*
 		)
-	dl.inner.static =
-		(	(	dt.elem.static+
-			,	dd.elem.static+
-			)*
-		)
 	dl.inner.inline =
 		(	(	dt.elem+
 			,	dd.elem.inline+
 			)*
 		)
-	dl.inner.inline.static =
-		(	(	dt.elem.static+
-			,	dd.elem.inline.static+
-			)*
-		)
 
 	common.elem.block |= dl.elem
-	common.elem.block.static |= dl.elem.static
 	common.elem.struct-inline |= dl.elem.inline
-	common.elem.struct-inline.static |= dl.elem.inline.static
 
 ## Definition Term: <dt>
 
 	dt.elem =
 		element dt { dt.inner & dt.attrs }
-	dt.elem.static =
-		element dt { dt.inner.static & dt.attrs }
 	dt.attrs =
 		( common.attrs )
 	dt.inner =
 		( common.inner.strict-inline )
-	dt.inner.static =
-		( common.inner.strict-inline.static )
 
 ## Definition Description: <dd>
 
 	dd.elem =
 		element dd { dd.inner & dd.attrs }
-	dd.elem.static =
-		element dd { dd.inner.static & dd.attrs }
 	dd.elem.inline =
 		element dd { dd.inner.inline & dd.attrs }
-	dd.elem.inline.static =
-		element dd { dd.inner.inline.static & dd.attrs }
 	dd.attrs =
 		( common.attrs )
 	dd.inner =
 		( common.inner.bimorphic )
-	dd.inner.static =
-		( common.inner.bimorphic.static )
 	dd.inner.inline =
 		( common.inner.struct-inline )
-	dd.inner.inline.static =
-		( common.inner.struct-inline.static )
 
 # #####################################################################
 ## Miscellaneous Elements
@@ -252,41 +173,26 @@
 
 	div.elem =
 		element div { div.inner & div.attrs }
-	div.elem.static =
-		element div { div.inner.static & div.attrs }
 	div.attrs =
 		( common.attrs )
 	div.inner =
 		(	style.elem.scoped*
 		,	common.inner.bimorphic 
 		)
-	div.inner.static =
-		(	style.elem.scoped*
-		,	common.inner.bimorphic.static
-		)
 
 	common.elem.block |= div.elem
-	common.elem.block.static |= div.elem.static
 
 ## Title or Explanatory Caption: <legend>
 
 	legend.elem.strict-inline =
 		element legend { legend.inner.strict-inline & legend.attrs }
-	legend.elem.strict-inline.static =
-		element legend { legend.inner.strict-inline.static & legend.attrs }
 	legend.elem.struct-inline =
 		element legend { legend.inner.struct-inline & legend.attrs }
-	legend.elem.struct-inline.static =
-		element legend { legend.inner.struct-inline.static & legend.attrs }
 	legend.attrs =
 		(	common.attrs
 #		&	common-form.attrs.accesskey? #REVISIT is this staying in HTML5?
 		)	
 	legend.inner.strict-inline =
 		( common.inner.strict-inline )
-	legend.inner.strict-inline.static =
-		( common.inner.strict-inline.static )
 	legend.inner.struct-inline =
 		( common.inner.struct-inline )
-	legend.inner.struct-inline.static =
-		( common.inner.struct-inline.static )

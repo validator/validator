@@ -547,12 +547,8 @@
 
 	output.elem =
 		element output { output.inner & output.attrs }
-	output.elem.static =
-		element output { output.inner.static & output.attrs }
 	output.elem.strict =
 		element output { output.inner.strict & output.attrs }
-	output.elem.strict.static =
-		element output { output.inner.strict.static & output.attrs }
 	output.attrs =
 		(	common.attrs
 		&	common-form.attrs.name?
@@ -567,17 +563,11 @@
 			}
 	output.inner =
 		( common.inner.struct-inline ) #REVIST check HTML-compatibility
-	output.inner.static =
-		( common.inner.struct-inline.static )
 	output.inner.strict =
 		( common.inner.strict-inline )
-	output.inner.strict.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.struct-inline |= output.elem
-	common.elem.struct-inline.static |= output.elem.static
 	common.elem.strict-inline |= output.elem.strict
-	common.elem.strict-inline.static |= output.elem.strict.static
 
 ## Text Area: <textarea>, extensions
 
@@ -629,27 +619,18 @@
 
 	datalist.elem.strict-inline =
 		element datalist { option.elem* & common.inner.strict-inline & datalist.attrs }
-	datalist.elem.strict-inline.static =
-		element datalist { option.elem* & common.inner.strict-inline.static & datalist.attrs }
 	datalist.elem.struct-inline = #REVISIT check HTML-compatibility
 		element datalist { option.elem* & common.inner.struct-inline & datalist.attrs }
-	datalist.elem.struct-inline.static =
-		element datalist { option.elem* & common.inner.struct-inline.static & datalist.attrs }
 	datalist.elem.block =
 		element datalist { option.elem* & common.inner.block & datalist.attrs }
-	datalist.elem.block.static =
-		element datalist { option.elem* & common.inner.block.static & datalist.attrs }
 	datalist.attrs =
 		(	common.attrs
 		&	common-form.attrs.data?
 		)
 
 	common.elem.strict-inline |= datalist.elem.strict-inline
-	common.elem.strict-inline.static |= datalist.elem.strict-inline.static
 	common.elem.struct-inline |= datalist.elem.struct-inline
-	common.elem.struct-inline.static |= datalist.elem.struct-inline.static
 	common.elem.block |= datalist.elem.block
-	common.elem.block.static |= datalist.elem.block.static
 
 ## Complex Submit Button: <button type='submit'>, extensions
 

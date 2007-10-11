@@ -62,15 +62,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.del.strict-inline =
 		( notAllowed )
-	common.del.strict-inline.static =
-		( notAllowed )
 	common.del.struct-inline =
 		( notAllowed )
-	common.del.struct-inline.static =
-		( notAllowed )
 	common.del.block =
-		( notAllowed )
-	common.del.block.static =
 		( notAllowed )
 
 # #####################################################################
@@ -87,15 +81,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.strict-inline =
 		( notAllowed )
 
-	common.elem.strict-inline.static =
-		( notAllowed )
-
 ## Structured Inline Elements
 
 	common.elem.struct-inline =
-		( notAllowed )
-
-	common.elem.struct-inline.static =
 		( notAllowed )
 
 ## Block Elements
@@ -103,15 +91,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.block =
 		( notAllowed )
 
-	common.elem.block.static =
-		( notAllowed )
-
 ## Embedded Content
 
 	common.elem.embedded =
-		( notAllowed )
-
-	common.elem.embedded.static =
 		( notAllowed )
 
 # #####################################################################
@@ -128,24 +110,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.inner.strict-inline =
 		( text & common.elem.strict-inline* )
 
-	common.inner.strict-inline.static =
-		( text & common.elem.strict-inline.static* )
-
 ## Structured Inline Content
 
 	common.inner.struct-inline =
 		( text & common.elem.struct-inline* )
 
-	common.inner.struct-inline.static =
-		( text & common.elem.struct-inline.static* )
-
 ## Block Content
 
 	common.inner.block =
 		( common.elem.block* )
-
-	common.inner.block.static =
-		( common.elem.block.static* )
 
 ## Inline OR Block Content
 
@@ -157,17 +130,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		|	(	common.elem.block
 			|	common.del.struct-inline
-			)*
-		)
-
-	common.inner.bimorphic.static =
-		(	(	text
-			&	(	common.elem.struct-inline.static
-				|	common.del.block.static
-				)*
-			)
-		|	(	common.elem.block.static
-			|	common.del.struct-inline.static
 			)*
 		)
 
@@ -183,17 +145,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		|	(	common.elem.block
 			|	common.del.strict-inline
-			)*
-		)
-
-	common.inner.strict-bimorphic.static =
-		(	(	text
-			&	(	common.elem.strict-inline.static
-				|	common.del.block.static
-				)*
-			)
-		|	(	common.elem.block.static
-			|	common.del.strict-inline.static
 			)*
 		)
 

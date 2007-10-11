@@ -50,11 +50,8 @@
 		
 	common.elem.metadata |= script.elem
 	common.elem.strict-inline |= script.elem
-	common.elem.strict-inline.static |= script.elem
 	common.elem.struct-inline |= script.elem
-	common.elem.struct-inline.static |= script.elem
 	common.elem.block |= script.elem
-	common.elem.block.static |= script.elem
 
 ## Fallback Unscripted Content: <noscript>
 
@@ -69,31 +66,19 @@
 	noscript.elem.strict-inline =
 		element noscript { common.inner.strict-inline & noscript.attrs }
 		& HTMLonly
-	noscript.elem.strict-inline.static =
-		element noscript { common.inner.strict-inline.static & noscript.attrs }
-		& HTMLonly
 	noscript.elem.struct-inline =
 		element noscript { common.inner.struct-inline & noscript.attrs }
 		& HTMLonly
-	noscript.elem.struct-inline.static =
-		element noscript { common.inner.struct-inline.static & noscript.attrs }
-		& HTMLonly
 	noscript.elem.block =
 		element noscript { common.inner.block & noscript.attrs }
-		& HTMLonly
-	noscript.elem.block.static =
-		element noscript { common.inner.block.static & noscript.attrs }
 		& HTMLonly
 	noscript.attrs =
 		( common.attrs )
 
 	common.elem.metadata |= noscript.elem.head
 	common.elem.strict-inline |= noscript.elem.strict-inline
-	common.elem.strict-inline.static |= noscript.elem.strict-inline.static
 	common.elem.struct-inline |= noscript.elem.struct-inline
-	common.elem.struct-inline.static |= noscript.elem.struct-inline.static
 	common.elem.block |= noscript.elem.block
-	common.elem.block.static |= noscript.elem.block.static
 
 # #####################################################################
 ## Event Handler Attribute Definitions

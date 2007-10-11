@@ -47,11 +47,8 @@ namespace local = ""
 		empty
 
 	common.elem.strict-inline |= img.elem
-	common.elem.strict-inline.static |= img.elem
 	common.elem.struct-inline |= img.elem
-	common.elem.struct-inline.static |= img.elem
 	common.elem.embedded |= img.elem
-	common.elem.embedded.static |= img.elem
 
 ## Plug-ins: <embed>
 
@@ -142,26 +139,17 @@ namespace local = ""
 		empty
 
 	common.elem.strict-inline |= embed.elem
-	common.elem.strict-inline.static |= embed.elem
 	common.elem.struct-inline |= embed.elem
-	common.elem.struct-inline.static |= embed.elem
 	common.elem.embedded |= embed.elem
-	common.elem.embedded.static |= embed.elem
 
 ## Generic Objects: <object>
 
 	object.elem.strict-inline =
 		element object { object.inner.strict-inline & object.attrs }
-	object.elem.strict-inline.static =
-		element object { object.inner.strict-inline.static & object.attrs }
 	object.elem.struct-inline =
 		element object { object.inner.struct-inline & object.attrs }
-	object.elem.struct-inline.static =
-		element object { object.inner.struct-inline.static & object.attrs }
 	object.elem.embedded =
 		element object { object.inner.embedded & object.attrs }
-	object.elem.embedded.static =
-		element object { object.inner.embedded.static & object.attrs }
 	object.attrs =
 		(	common.attrs
 		&	(	object.attrs.data
@@ -215,17 +203,9 @@ namespace local = ""
 		(	param.elem*
 		,	common.inner.strict-inline
 		)
-	object.inner.strict-inline.static =
-		(	param.elem*
-		,	common.inner.strict-inline.static
-		)
 	object.inner.struct-inline =
 		(	param.elem*
 		,	common.inner.struct-inline
-		)
-	object.inner.struct-inline.static =
-		(	param.elem*
-		,	common.inner.struct-inline.static
 		)
 	object.inner.embedded =
 		(	param.elem*
@@ -233,34 +213,19 @@ namespace local = ""
 			|	object.elem.embedded
 			)
 		)
-	object.inner.embedded.static =
-		(	param.elem*
-		,	(	common.inner.block.static
-			|	object.elem.embedded.static
-			)
-		)
 
 	common.elem.strict-inline |= object.elem.strict-inline
-	common.elem.strict-inline.static |= object.elem.strict-inline.static
 	common.elem.struct-inline |= object.elem.struct-inline
-	common.elem.struct-inline.static |= object.elem.struct-inline.static
 	common.elem.embedded |= object.elem.embedded
-	common.elem.embedded.static |= object.elem.embedded.static
 
 ## Java Applets: <applet>
 
 	applet.elem.strict-inline =
 		element applet { applet.inner.strict-inline & applet.attrs }
-	applet.elem.strict-inline.static =
-		element applet { applet.inner.strict-inline.static & applet.attrs }
 	applet.elem.struct-inline =
 		element applet { applet.inner.struct-inline & applet.attrs }
-	applet.elem.struct-inline.static =
-		element applet { applet.inner.struct-inline.static & applet.attrs }
 	applet.elem.block =
 		element applet { applet.inner.block & applet.attrs }
-	applet.elem.block.static =
-		element applet { applet.inner.block.static & applet.attrs }
 	applet.attrs =
 		(	common.attrs
 		&	applet.attrs.archive?
@@ -298,35 +263,20 @@ namespace local = ""
 		(	param.elem*
 		,	common.inner.strict-inline
 		)
-	applet.inner.strict-inline.static =
-		(	param.elem*
-		,	common.inner.strict-inline.static
-		)
 	applet.inner.struct-inline =
 		(	param.elem*
 		,	common.inner.struct-inline
-		)
-	applet.inner.struct-inline.static =
-		(	param.elem*
-		,	common.inner.struct-inline.static
 		)
 	applet.inner.block =
 		(	param.elem*
 		,	common.inner.block
 		)
-	applet.inner.block.static =
-		(	param.elem*
-		,	common.inner.block.static
-		)
 
 # REVISIT commented out as per
 # http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2005-November/005137.html
 #	common.elem.strict-inline |= applet.elem.strict-inline
-#	common.elem.strict-inline.static |= applet.elem.strict-inline.static
 #	common.elem.struct-inline |= applet.elem.struct-inline
-#	common.elem.struct-inline.static |= applet.elem.struct-inline.static
 #	common.elem.embedded |= applet.elem.block
-#	common.elem.embedded.static |= applet.elem.block
 
 ## Initialization Parameters: <param>
 
@@ -374,11 +324,8 @@ namespace local = ""
 		( text )
 
 	common.elem.strict-inline |= iframe.elem
-	common.elem.strict-inline.static |= iframe.elem
 	common.elem.struct-inline |= iframe.elem
-	common.elem.struct-inline.static |= iframe.elem
 	common.elem.embedded |= iframe.elem
-	common.elem.embedded.static |= iframe.elem
 
 #######################################################################
 ## Image Maps
@@ -387,17 +334,12 @@ namespace local = ""
 
 	map.elem =
 		element map { map.inner & map.attrs }
-	map.elem.static =
-		element map { map.inner.static & map.attrs }
 	map.attrs =
 		( common.attrs ) # REVISIT make id required in Schematron
 	map.inner =
 		( common.inner.block )
-	map.inner.static =
-		( common.inner.block.static )
 
 	common.elem.block |= map.elem
-	common.elem.block.static |= map.elem.static
 
 ## Map Area Definition: <area>
 
@@ -492,6 +434,4 @@ namespace local = ""
 		( empty )
 
 	common.elem.strict-inline |= area.elem
-	common.elem.strict-inline.static |= area.elem
 	common.elem.struct-inline |= area.elem
-	common.elem.struct-inline.static |= area.elem

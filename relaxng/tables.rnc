@@ -46,8 +46,6 @@
 
 	table.elem =
 		element table { table.inner & table.attrs }
-	table.elem.static =
-		element table { table.inner.static & table.attrs }
 	table.attrs =
 		( common.attrs )
 	table.inner =
@@ -62,36 +60,18 @@
 				)
 			)
 		) 
-	table.inner.static =
-		(	caption.elem.static?
-		,	colgroup.elem*
-		,	thead.elem.static?
-		,	(	(	tfoot.elem.static
-				,	( tbody.elem.static* | tr.elem.static+ )
-				)
-			|	(	( tbody.elem.static* | tr.elem.static+ )
-				,	tfoot.elem.static?
-				)
-			)
-		) 
 
 	common.elem.block |= table.elem
-	common.elem.block.static |= table.elem.static
 	common.elem.struct-inline |= table.elem
-	common.elem.struct-inline.static |= table.elem.static
 
 ## Table Caption: <caption>
 
 	caption.elem =
 		element caption { caption.inner & caption.attrs }
-	caption.elem.static =
-		element caption { caption.inner.static & caption.attrs }
 	caption.attrs =
 		( common.attrs )
 	caption.inner =
 		( common.inner.strict-inline )
-	caption.inner.static =
-		( common.inner.strict-inline.static )
 
 # #####################################################################
 ## Table Super Structure
@@ -132,46 +112,34 @@
 
 	thead.elem =
 		element thead { thead.inner & thead.attrs }
-	thead.elem.static =
-		element thead { thead.inner.static & thead.attrs }
 	thead.attrs =
 		(	common.attrs
 #		&	tables.attrs.alignment
 		)
 	thead.inner =
 		( tr.elem+ )
-	thead.inner.static =
-		( tr.elem.static+ )
 
 ## Table Footer Row Group
 
 	tfoot.elem =
 		element tfoot { tfoot.inner & tfoot.attrs }
-	tfoot.elem.static =
-		element tfoot { tfoot.inner.static & tfoot.attrs }
 	tfoot.attrs =
 		(	common.attrs
 #		&	tables.attrs.alignment
 		)
 	tfoot.inner =
 		( tr.elem+ )
-	tfoot.inner.static =
-		( tr.elem.static+ )
 
 ## Table Row Group
 
 	tbody.elem =
 		element tbody { tbody.inner & tbody.attrs }
-	tbody.elem.static =
-		element tbody { tbody.inner.static & tbody.attrs }
 	tbody.attrs =
 		(	common.attrs
 #		&	tables.attrs.alignment
 		)
 	tbody.inner =
 		( tr.elem+ )
-	tbody.inner.static =
-		( tr.elem.static+ )
 
 # #####################################################################
 ## Cell Structure
@@ -180,16 +148,12 @@
 
 	tr.elem =
 		element tr { tr.inner & tr.attrs }
-	tr.elem.static =
-		element tr { tr.inner.static & tr.attrs }
 	tr.attrs =
 		(	common.attrs
 #		&	tables.attrs.alignment
 		)
 	tr.inner =
 		( ( td.elem | th.elem )+ )
-	tr.inner.static =
-		( ( td.elem.static | th.elem.static )+ )
 
 ## Common Table Cell Attributes
 
@@ -240,8 +204,6 @@
 
 	td.elem =
 		element td { td.inner & td.attrs }
-	td.elem.static =
-		element td { td.inner.static & td.attrs }
 	td.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
@@ -251,15 +213,11 @@
 		)
 	td.inner =
 		( common.inner.bimorphic )
-	td.inner.static =
-		( common.inner.bimorphic.static )
 
 ## Table Header Cells: <th>
 
 	th.elem =
 		element th { th.inner & th.attrs }
-	th.elem.static =
-		element th { th.inner.static & th.attrs }
 	th.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
@@ -270,5 +228,3 @@
 		)
 	th.inner =
 		( common.inner.bimorphic )
-	th.inner.static =
-		( common.inner.bimorphic.static )

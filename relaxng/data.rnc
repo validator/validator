@@ -6,8 +6,6 @@
 
 	time.elem =
 		element time { time.inner & time.attrs }
-	time.elem.static =
-		element time { time.inner.static & time.attrs }
 	time.attrs =
 		(	common.attrs
 		&	time.attrs.datetime?
@@ -18,20 +16,14 @@
 			}
 	time.inner =
 		( common.inner.strict-inline ) #Cannot enforce textContent format here
-	time.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.struct-inline |= time.elem
-	common.elem.struct-inline.static |= time.elem.static
 	common.elem.strict-inline |= time.elem
-	common.elem.strict-inline.static |= time.elem.static
 
 ## Scalar Gauge: <meter>
 
 	meter.elem =
 		element meter { meter.inner & meter.attrs }
-	meter.elem.static =
-		element meter { meter.inner.static & meter.attrs }
 	meter.attrs =
 		(	common.attrs
 		&	meter.attrs.value?
@@ -67,11 +59,6 @@
 			}
 	meter.inner =
 		( common.inner.strict-inline ) #Cannot enforce textContent format here
-	meter.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.struct-inline |= meter.elem
-	common.elem.struct-inline.static |= meter.elem.static
 	common.elem.strict-inline |= meter.elem
-	common.elem.strict-inline.static |= meter.elem.static
-

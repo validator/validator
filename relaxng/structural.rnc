@@ -6,122 +6,78 @@
 
 	section.elem =
 		element section { section.inner & section.attrs }
-	section.active.elem =
-		element section { section.inner & section.active.attrs }
-	section.elem.static =
-		element section { section.inner.static & section.attrs }
-	section.active.elem.static =
-		element section { section.inner.static & section.active.attrs }
 	section.attrs =
-		( common.attrs )
-	section.active.attrs =
 		( common.attrs )
 	section.inner =
 		(	style.elem.scoped*
 		,	common.inner.block 
 		)
-	section.inner.static =
-		(	style.elem.scoped*
-		,	common.inner.block.static 
-		)
 
 	common.elem.block |= section.elem
-	common.elem.block.static |= section.elem.static
 
 ## Navigational Links: <nav>
 
 	nav.elem =
 		element nav { nav.inner & nav.attrs }
-	nav.elem.static =
-		element nav { nav.inner.static & nav.attrs }
 	nav.attrs =
 		( common.attrs )
 	nav.inner =
 		( common.inner.bimorphic )
-	nav.inner.static =
-		( common.inner.bimorphic.static )
 
 	common.elem.block |= nav.elem
-	common.elem.block.static |= nav.elem.static
 
 ## Article: <article>
 
 	article.elem =
 		element article { article.inner & article.attrs }
-	article.elem.static =
-		element article { article.inner.static & article.attrs }
 	article.attrs =
 		( common.attrs )
 	article.inner =
 		(	style.elem*
 		,	common.inner.block 
 		)
-	article.inner.static =
-		(	style.elem.scoped*
-		,	common.inner.block.static 
-		)
 		
 	common.elem.block |= article.elem
-	common.elem.block.static |= article.elem.static
 
 ## Tangential Aside: <aside>
 
 	aside.elem =
 		element aside { aside.inner & aside.attrs }
-	aside.elem.static =
-		element aside { aside.inner.static & aside.attrs }
 	aside.attrs =
 		( common.attrs )
 	aside.inner =
 		(	style.elem*
 		,	common.inner.bimorphic 
 		)
-	aside.inner.static =
-		(	style.elem.scoped*
-		,	common.inner.bimorphic.static
-		)
 
 	common.elem.block |= aside.elem
-	common.elem.block.static |= aside.elem.static
 
 ## Header: <header>
 
 	header.elem =
 		element header { header.inner & header.attrs }
-	header.elem.static =
-		element header { header.inner.static & header.attrs }
 	header.attrs =
 		( common.attrs )
 	header.inner =
 		( common.inner.block )
-	header.inner.static =
-		( common.inner.block.static )
 
 	common.elem.block |= header.elem
-	common.elem.block.static |= header.elem.static
 
 ## Footer: <footer>
 
 	footer.elem =
 		element footer { footer.inner & footer.attrs }
-	footer.elem.static =
-		element footer { footer.inner.static & footer.attrs }
 	footer.attrs =
 		( common.attrs )
 	footer.inner =
 		( common.inner.block )
-	footer.inner.static =
-		( common.inner.block.static )
 
 	common.elem.block |= footer.elem
-	common.elem.block.static |= footer.elem.static
 
 ## Dialog: <dialog>
 
 	dialog.elem =
 		element dialog { dialog.inner & dialog.attrs }
-	dialog.elem.static =
-		element dialog { dialog.inner.static & dialog.attrs }
 	dialog.attrs =
 		( common.attrs )
 	dialog.inner =
@@ -129,11 +85,5 @@
 			,	dd.elem
 			)*
 		)
-	dialog.inner.static =
-		(	(	dt.elem.static
-			,	dd.elem.static
-			)*
-		)
 
 	common.elem.block |= dialog.elem
-	common.elem.block.static |= dialog.elem.static

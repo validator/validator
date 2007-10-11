@@ -9,97 +9,67 @@
 
 	h1.elem =
 		element h1 { h1.inner & h1.attrs }
-	h1.elem.static =
-		element h1 { h1.inner.static & h1.attrs }
 	h1.attrs =
 		( common.attrs )
 	h1.inner =
 		( common.inner.strict-inline )
-	h1.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h1.elem
-	common.elem.block.static |= h1.elem.static
 
 ## Heading (Rank 2): <h2>
 
 	h2.elem =
 		element h2 { h2.inner & h2.attrs }
-	h2.elem.static =
-		element h2 { h2.inner.static & h2.attrs }
 	h2.attrs =
 		( common.attrs )
 	h2.inner =
 		( common.inner.strict-inline )
-	h2.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h2.elem
-	common.elem.block.static |= h2.elem.static
 
 ## Heading (Rank 3): <h3>
 
 	h3.elem =
 		element h3 { h3.inner & h3.attrs }
-	h3.elem.static =
-		element h3 { h3.inner.static & h3.attrs }
 	h3.attrs =
 		( common.attrs )
 	h3.inner =
 		( common.inner.strict-inline )
-	h3.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h3.elem
-	common.elem.block.static |= h3.elem.static
 
 ## Heading (Rank 4): <h4>
 
 	h4.elem =
 		element h4 { h4.inner & h4.attrs }
-	h4.elem.static =
-		element h4 { h4.inner.static & h4.attrs }
 	h4.attrs =
 		( common.attrs )
 	h4.inner =
 		( common.inner.strict-inline )
-	h4.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h4.elem
-	common.elem.block.static |= h4.elem.static
 
 ## Heading (Rank 5): <h5>
 
 	h5.elem =
 		element h5 { h5.inner & h5.attrs }
-	h5.elem.static =
-		element h5 { h5.inner.static & h5.attrs }
 	h5.attrs =
 		( common.attrs )
 	h5.inner =
 		( common.inner.strict-inline )
-	h5.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h5.elem
-	common.elem.block.static |= h5.elem.static
 
 ## Heading (Rank 6): <h6>
 
 	h6.elem =
 		element h6 { h6.inner & h6.attrs }
-	h6.elem.static =
-		element h6 { h6.inner.static & h6.attrs }
 	h6.attrs =
 		( common.attrs )
 	h6.inner =
 		( common.inner.strict-inline )
-	h6.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= h6.elem
-	common.elem.block.static |= h6.elem.static
 
 # #####################################################################
 ## Section Meta
@@ -108,17 +78,12 @@
 
 	address.elem =
 		element address { address.inner & address.attrs }
-	address.elem.static =
-		element address { address.inner.static & address.attrs }
 	address.attrs =
 		( common.attrs )
 	address.inner = 
 		( common.inner.strict-inline )
-	address.inner.static =
-		( common.inner.strict-inline.static )
 
 	common.elem.block |= address.elem
-	common.elem.block.static |= address.elem.static
 
 # #####################################################################
 ## Quotations	
@@ -127,8 +92,6 @@
 
 	blockquote.elem =
 		element blockquote { blockquote.inner & blockquote.attrs }
-	blockquote.elem.static =
-		element blockquote { blockquote.inner.static & blockquote.attrs }
 	blockquote.attrs =
 		(	common.attrs
 		&	blockquote.attrs.cite?
@@ -139,10 +102,6 @@
 			}
 	blockquote.inner =
 		( common.inner.block )
-	blockquote.inner.static =
-		( common.inner.block.static )
 
 	common.elem.block |= blockquote.elem
-	common.elem.block.static |= blockquote.elem.static
 	common.elem.struct-inline |= blockquote.elem
-	common.elem.struct-inline.static |= blockquote.elem.static
