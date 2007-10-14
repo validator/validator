@@ -66,6 +66,7 @@ import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.HtmlSerializer;
+import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
@@ -230,6 +231,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     protected HtmlParser htmlParser = null;
 
+    protected SAXDriver xmlParser = null;
+    
     protected XMLReader reader;
 
     protected TypedInputSource documentInput;
@@ -646,7 +649,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             loadDocAndSetupParser();
 
-            reader.setErrorHandler(errorHandler.getExactErrorHandler());
+            reader.setErrorHandler(errorHandler);
             // XXX set xml:id filter separately
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
@@ -658,17 +661,22 @@ class VerifierServletTransaction implements DocumentModeHandler {
                         "http://xml.org/sax/features/unicode-normalization-checking",
                         true);
             }
-            if (reader instanceof HtmlParser) {
-                htmlParser.addCharacterHandler(sourceCode);
-                htmlParser.setMappingLangToXmlLang(true);
-                htmlParser.setTreeBuilderErrorHandlerOverride(errorHandler);
-            }
             WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(
                     reader);
             ContentHandler recorder = sourceCode.getLocationRecorder();
             wiretap.setWiretapContentHander(recorder);
             wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
             reader = wiretap;
+            if (htmlParser != null) {
+                htmlParser.addCharacterHandler(sourceCode);
+                htmlParser.setMappingLangToXmlLang(true);
+                htmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
+                htmlParser.setTreeBuilderErrorHandlerOverride(errorHandler);
+            } else if (xmlParser != null) {
+                xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
+            } else {
+                throw new RuntimeException("Bug. Unreachable.");
+            }
             reader.parse(documentInput);
         } catch (SAXException e) {
             log4j.debug("SAXException", e);
@@ -787,7 +795,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 setAcceptAllKnownXmlTypes(true);
                 setAllowXhtml(true);
                 loadDocumentInput();
-                reader = setupXmlParser();
+                setupXmlParser();
                 break;
             default:
                 setAllowGenericXml(true);
@@ -814,7 +822,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     errorHandler.info("The Content-Type was \u201C"
                             + documentInput.getType()
                             + "\u201D. Using the XML parser (not resolving external entities).");
-                    reader = setupXmlParser();
+                    setupXmlParser();
                 }
                 break;
         }
@@ -850,12 +858,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
      * @throws SAXNotRecognizedException
      * @throws SAXNotSupportedException
      */
-    protected XMLReader setupXmlParser() throws SAXNotRecognizedException,
+    protected void setupXmlParser() throws SAXNotRecognizedException,
             SAXNotSupportedException {
-        SAXDriver sd = new SAXDriver();
-        sd.setCharacterHandler(sourceCode);
-        XMLReader reader = sd;
-        reader = new XhtmlIdFilter(new XMLIdFilter(reader));
+        xmlParser = new SAXDriver();
+        xmlParser.setCharacterHandler(sourceCode);
+        reader = new IdFilter(xmlParser);
+        reader.setFeature(
+                "http://xml.org/sax/features/string-interning",
+                true);
         reader.setFeature(
                 "http://xml.org/sax/features/external-general-entities",
                 parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION);
@@ -876,7 +886,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     validator.getContentHandler()));
             reader.setDTDHandler(validator.getDTDHandler());
         }
-        return reader;
     }
 
     /**

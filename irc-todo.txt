@@ -1,0 +1,44 @@
+# # [02:06] <Philip`> "Fatal Error: Last error required non-streamable recovery." doesn't sound like a very user-friendly message - I think it'd make more sense if it said something like "Fatal Error: Cannot recover after last error - any further errors will be ignored"
+
+
+# # [01:55] <zcorpan> hsivonen: also for imageshack: "Error: First occurrence of id mist." (message #6) -- shouldn't that be Info instead of Error?
+
+# # [01:44] <zcorpan> hsivonen: your html5 schema doesn't seem to allow noscript in head
+
+case fold in HTML 4 mode
+
+http://simon.html5.org/temp/validator.nu/Validator.nu.htm
+
+---
+
+ID uniqueness
+
+language codes
+
+ASCII-insensitive string
+
+hashed id reference
+
+svg integration
+
+ban siblings of table as the first child of datagrid
+
+link types
+
+media query
+
+media type with params
+
+name=dns content check
+
+refresh datatype
+
+address content model
+
+xml:space
+
+ismap (but only if one of the ancestor elements is an a  element)
+
+id required on map
+
+dir on bdo to schematron

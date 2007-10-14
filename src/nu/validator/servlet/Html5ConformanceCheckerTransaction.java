@@ -98,7 +98,7 @@ public class Html5ConformanceCheckerTransaction extends
             reader = htmlParser;
         } else {
             validator = validatorByDoctype(XHTML5_SCHEMA);
-            reader = setupXmlParser();
+            setupXmlParser();
             if (!("application/xhtml+xml".equals(type) || "application/xml".equals(type))) {
                 String message = "The preferred Content-Type for XHTML5 is application/xhtml+xml. The Content-Type was " + type + ".";
                 SAXParseException spe = new SAXParseException(message, null, documentInput.getSystemId(), -1, -1);

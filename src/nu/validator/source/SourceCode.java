@@ -139,9 +139,10 @@ public final class SourceCode implements CharacterHandler {
     }
 
     public void end() throws SAXException {
-        if (currentLine.getBufferLength() == 0) {
+        if (currentLine != null && currentLine.getBufferLength() == 0) {
             // Theoretical impurity with line separators vs. terminators
             lines.remove(lines.size() - 1);
+            currentLine = null;
         }
     }
 

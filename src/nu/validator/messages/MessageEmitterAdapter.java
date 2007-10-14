@@ -26,7 +26,6 @@ package nu.validator.messages;
 import java.io.IOException;
 
 import nu.validator.messages.types.MessageType;
-import nu.validator.servlet.InfoErrorHandler;
 import nu.validator.source.Location;
 import nu.validator.source.SourceCode;
 import nu.validator.source.SourceHandler;
@@ -40,7 +39,7 @@ import org.xml.sax.SAXParseException;
 import com.ibm.icu.text.Normalizer;
 
 
-public final class MessageEmitterAdapter implements InfoErrorHandler {
+public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
 
