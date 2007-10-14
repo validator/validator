@@ -313,7 +313,10 @@ final class Table {
             int len = attributes.getLength();
             for (int i = 0; i < len; i++) {
                 if ("ID".equals(attributes.getType(i))) {
-                    headerIds.add(attributes.getValue(i));
+                    String val = attributes.getValue(i);
+                    if (!"".equals(val)) {
+                        headerIds.add(val);
+                    }
                 }
             }
         }
