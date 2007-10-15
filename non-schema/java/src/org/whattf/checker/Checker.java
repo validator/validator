@@ -69,6 +69,32 @@ public abstract class Checker implements ContentHandler {
     }
 
     /**
+     * Emit a warning with specified locator.
+     * 
+     * @param message the warning message
+     * @throws SAXException if something goes wrong
+     */
+    public void warn(String message, Locator overrideLocator) throws SAXException {
+        if (errorHandler != null) {
+            SAXParseException spe = new SAXParseException(message, overrideLocator);
+            errorHandler.warning(spe);
+        }
+    }
+    
+    /**
+     * Emit an error with specified locator.
+     * 
+     * @param message the error message
+     * @throws SAXException if something goes wrong
+     */
+    public void err(String message, Locator overrideLocator) throws SAXException {
+        if (errorHandler != null) {
+            SAXParseException spe = new SAXParseException(message, overrideLocator);
+            errorHandler.error(spe);
+        }
+    }
+    
+    /**
      * Emit an error. The locator is used.
      * 
      * @param message the error message
