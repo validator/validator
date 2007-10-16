@@ -50,15 +50,13 @@ public class UsemapChecker extends Checker {
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == uri) {
             if ("map" == localName) {
-                int len = atts.getLength();
-                for (int i = 0; i < len; i++) {
-                    String type = atts.getType(i);
-                    if ("ID" == type) {
-                        String value = atts.getValue(i);
-                        if (!"".equals(value)) {
-                            mapIds.add(value);
-                        }
-                    }
+                String id = atts.getValue("", "id");
+                if (id != null && !"".equals(id)) {
+                    mapIds.add(id);
+                }
+                String name = atts.getValue("", "id");
+                if (name != null && !"".equals(name)) {
+                    mapIds.add(name);
                 }
             } else if ("img" == localName || "object" == localName) {
                 String usemap = atts.getValue("", "usemap");
@@ -84,7 +82,7 @@ public class UsemapChecker extends Checker {
     public void endDocument() throws SAXException {
         for (Map.Entry<String, Locator> entry : usemapLocationsById.entrySet()) {
             if (!mapIds.contains(entry.getKey())) {
-                err("The hashed ID reference in attribute \u201Cusemap\u201D referred to \u201C" + entry.getKey() + "\u201D, but there is no \u201Cmap\u201D element with that ID.", entry.getValue());
+                err("The hashed ID reference in attribute \u201Cusemap\u201D referred to \u201C" + entry.getKey() + "\u201D, but there is no \u201Cmap\u201D element with that \u201Cid\u201D or \u201Cname\u201D.", entry.getValue());
             }
         }
         usemapLocationsById.clear();
