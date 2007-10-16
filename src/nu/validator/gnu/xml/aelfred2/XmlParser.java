@@ -4848,6 +4848,8 @@ final class XmlParser {
             characterHandler = handler.characterHandler;
             handler.characterHandler = null;
             characterHandler.start();
+        } else {
+            characterHandler = null;
         }
     }
 
