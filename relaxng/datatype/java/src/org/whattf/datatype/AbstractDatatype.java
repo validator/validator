@@ -173,8 +173,12 @@ abstract class AbstractDatatype implements Datatype {
     }
     
     protected final String toAsciiLowerCase(String str) {
+        int len = str.length();
+        if (len == 0) {
+            return "";
+        }
         char[] buf = str.toCharArray();
-        for (int i = 0; i < buf.length; i++) {
+        for (int i = 0; i < len; i++) {
             buf[i] = toAsciiLowerCase(buf[i]);
         }
         return new String(buf);
