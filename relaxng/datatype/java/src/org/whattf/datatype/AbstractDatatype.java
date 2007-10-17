@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -97,12 +98,12 @@ abstract class AbstractDatatype implements Datatype {
      * @return the <code>literal</code> that was passed in
      * @see org.relaxng.datatype.Datatype#createValue(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
-    public final Object createValue(String literal, ValidationContext context) {
+    public Object createValue(String literal, ValidationContext context) {
         return literal;
     }
 
     /**
-     * Implements strict stirng equality semantics by performing a standard 
+     * Implements strict string equality semantics by performing a standard 
      * <code>equals</code> check on the arguments.
      * @param value1 an object returned by <code>createValue</code>
      * @param value2 another object returned by <code>createValue</code>
