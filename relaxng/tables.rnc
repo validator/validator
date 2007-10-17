@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Tables                                #
 # #####################################################################
@@ -22,11 +24,11 @@
 		)
 		tables.attrs.align =
 			attribute align {
-				(	string "left" 
-				|	string "center"
-				|	string "right"
-				|	string "justify"
-				|	string "char"
+				(	w:string "left" 
+				|	w:string "center"
+				|	w:string "right"
+				|	w:string "justify"
+				|	w:string "char"
 				)
 			}
 		tables.attrs.char =
@@ -35,10 +37,10 @@
 			}
 		tables.attrs.valign =
 			attribute valign {
-				(	string "top"
-				|	string "middle"
-				|	string "bottom"
-				|	string "baseline"
+				(	w:string "top"
+				|	w:string "middle"
+				|	w:string "bottom"
+				|	w:string "baseline"
 				)
 			}
 
@@ -189,10 +191,10 @@
 		)
 		tables.attrs.scope =
 			attribute scope {
-				(	string "row"
-				|	string "col"
-				|	string "rowgroup"
-				|	string "colgroup"
+				(	w:string "row"
+				|	w:string "col"
+				|	w:string "rowgroup"
+				|	w:string "colgroup"
 				)
 			}
 		tables.attrs.abbr =

@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Web Forms 2.0 markup                  #
 # #####################################################################
@@ -20,12 +22,12 @@
 
 	common-form.attrs.method = 
 		attribute method {
-			string "get" | string "post" | string "put" | string "delete"
+			w:string "get" | w:string "post" | w:string "put" | w:string "delete"
 		}
 		
 	common-form.attrs.autofocus = 
 		attribute autofocus {
-			string "autofocus" | string ""
+			w:string "autofocus" | w:string ""
 		}
 	
 	common-form.attrs.pattern = 
@@ -35,7 +37,7 @@
 		
 	common-form.attrs.replace = 
 		attribute replace {
-			string "document" | string "values"
+			w:string "document" | w:string "values"
 		}
 
 	common-form.attrs.action = 
@@ -60,23 +62,23 @@
 
 	common-form.attrs.required = 
 		attribute required {
-			string "required" | string ""
+			w:string "required" | w:string ""
 		}
 
 ## Shared attributes for <input>
 		
 	input.attrs.autocomplete = 
 		attribute autocomplete {
-			string "on" | string "off"
+			w:string "on" | w:string "off"
 		}
 			
 	# REVISIT should this be case-insensitive in conforming XHTML documents?
 	input.attrs.enctype = 
 		attribute enctype {
-			(	string "application/x-www-form-urlencoded" 
-			|	string "multipart/form-data"
-			|	string "application/x-www-form+xml"
-			|	string "text/plain"
+			(	w:string "application/x-www-form-urlencoded" 
+			|	w:string "multipart/form-data"
+			|	w:string "application/x-www-form+xml"
+			|	w:string "text/plain"
 			)
 		}
 		
@@ -87,12 +89,12 @@
 	
 	input.attrs.step.float = 
 		attribute step {
-			string "any" | form.data.float.positive
+			w:string "any" | form.data.float.positive
 		}
 	
 	input.attrs.step.integer = 
 		attribute step {
-			string "any" | common.data.integer.positive 
+			w:string "any" | common.data.integer.positive 
 		}
 		
 ## Text Field: <input type='text'>, Extensions
@@ -200,7 +202,7 @@
 		)	
 		input.datetime.attrs.type = 
 			attribute type {
-				string "datetime"
+				w:string "datetime"
 			}
 		input.datetime.attrs.min =
 			attribute min {
@@ -238,7 +240,7 @@
 		)	
 		input.datetime-local.attrs.type = 
 			attribute type {
-				string "datetime-local"
+				w:string "datetime-local"
 			}
 		input.datetime-local.attrs.min =
 			attribute min {
@@ -276,7 +278,7 @@
 		)	
 		input.date.attrs.type = 
 			attribute type {
-				string "date"
+				w:string "date"
 			}
 		input.date.attrs.min =
 			attribute min {
@@ -314,7 +316,7 @@
 		)	
 		input.month.attrs.type = 
 			attribute type {
-				string "month"
+				w:string "month"
 			}
 		input.month.attrs.min =
 			attribute min {
@@ -352,7 +354,7 @@
 		)	
 		input.time.attrs.type = 
 			attribute type {
-				string "time"
+				w:string "time"
 			}
 		input.time.attrs.min =
 			attribute min {
@@ -390,7 +392,7 @@
 		)	
 		input.week.attrs.type = 
 			attribute type {
-				string "week"
+				w:string "week"
 			}
 		input.week.attrs.min =
 			attribute min {
@@ -428,7 +430,7 @@
 		)	
 		input.number.attrs.type = 
 			attribute type {
-				string "number"
+				w:string "number"
 			}
 		input.number.attrs.min =
 			attribute min {
@@ -466,7 +468,7 @@
 		)	
 		input.range.attrs.type = 
 			attribute type {
-				string "range"
+				w:string "range"
 			}
 		input.range.attrs.min =
 			attribute min {
@@ -504,7 +506,7 @@
 		)	
 		input.email.attrs.type = 
 			attribute type {
-				string "email"
+				w:string "email"
 			}
 		input.email.attrs.value =
 			attribute value {
@@ -534,11 +536,11 @@
 		)	
 		input.url.attrs.type = 
 			attribute type {
-				string "url"
+				w:string "url"
 			}
 		input.url.attrs.value =
 			attribute value {
-				string "" | common.data.uri.absolute
+				w:string "" | common.data.uri.absolute
 			}
 		
 	input.elem |= input.url.elem
@@ -596,11 +598,11 @@
 			}
 		textarea.attrs.wrap.hard =
 			attribute wrap {
-				string "hard"
+				w:string "hard"
 			}
 		textarea.attrs.wrap.soft =
 			attribute wrap {
-				string "soft"
+				w:string "soft"
 			}
 			
 ## Option Group: <optgroup>, extensions
@@ -655,9 +657,9 @@
 
 ## Form: <form>, extensions
 	form.attrs.method.data |= 
-		( string "put" | "delete" )
+		( w:string "put" | "delete" )
 	form.attrs.enctype.data |= 
-		( string "application/x-www-form+xml" | string "text/plain" )
+		( w:string "application/x-www-form+xml" | w:string "text/plain" )
 	form.attrs &= 
 		(	common-form.attrs.replace?
 		&	common-form.attrs.data?

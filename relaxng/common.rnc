@@ -199,7 +199,7 @@ common.attrs.i18n =
 	)
 	common.attrs.dir =
 		attribute dir {
-			string "ltr" | string "rtl"
+			w:string "ltr" | w:string "rtl"
 		}
 	common.attrs.language =
 		attribute xml:lang {
@@ -326,7 +326,7 @@ common.attrs.other =
 ## IRIs
 
 	common.data.uri =
-		string "" | w:iri-ref
+		w:string "" | w:iri-ref
 
 	common.data.uris =
 		list { w:iri-ref* }

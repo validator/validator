@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: (Inline) Phrase Markup                #
 # #####################################################################
@@ -352,7 +354,7 @@
 		)
 		bdo.attrs.dir =
 			attribute dir {
-				string "ltr" | string "rtl"
+				w:string "ltr" | w:string "rtl"
 			}
 	bdo.inner =
 		( common.inner.strict-inline )

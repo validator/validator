@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Global Structure & Meta Data          #
 # #####################################################################
@@ -153,7 +155,7 @@
 		)
 		style.attrs.scoped =
 			attribute scoped {
-				string "scoped" | string ""
+				w:string "scoped" | w:string ""
 			}
 
 ## Name-Value Meta Data: <meta name>
@@ -194,11 +196,11 @@
 		)
 		meta.http-equiv.attrs.http-equiv.refresh =
 			attribute http-equiv {
-				string "refresh"
+				w:string "refresh"
 			}
 		meta.http-equiv.attrs.http-equiv.default-style =
 			attribute http-equiv {
-				string "default-style"
+				w:string "default-style"
 			}
 		meta.http-equiv.attrs.content.refresh =
 			attribute content { 

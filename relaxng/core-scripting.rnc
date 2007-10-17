@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Core Scripting                        #
 # #####################################################################
@@ -28,11 +30,11 @@
 			}
 		script.attrs.defer =
 			attribute defer {
-				string "defer" | string ""
+				w:string "defer" | w:string ""
 			}
 		script.attrs.async =
 			attribute async {
-				string "async" | string ""
+				w:string "async" | w:string ""
 			} & v5only
 		script.attrs.type =
 			attribute type {

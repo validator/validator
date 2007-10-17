@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Web Forms 2.0 Repetition Model        #
 # #####################################################################
@@ -6,7 +8,7 @@
 
 	repetition.attrs.repeat.template =
 		attribute repeat {
-			string "template"
+			w:string "template"
 		}
 
 	repetition.attrs.repeat.integer =
@@ -60,7 +62,7 @@
 		)
 		input.add.attrs.type = 
 			attribute type {
-				string "add"
+				w:string "add"
 			}
 		input.add.attrs.value =
 			attribute value {
@@ -83,7 +85,7 @@
 		)
 		input.remove.attrs.type = 
 			attribute type {
-				string "remove"
+				w:string "remove"
 			}	
 		input.remove.attrs.value =
 			attribute value {
@@ -106,7 +108,7 @@
 		)
 		input.move-up.attrs.type = 
 			attribute type {
-				string "move-up"
+				w:string "move-up"
 			}
 		input.move-up.attrs.value =
 			attribute value {
@@ -129,7 +131,7 @@
 		)
 		input.move-down.attrs.type = 
 			attribute type {
-				string "move-down"
+				w:string "move-down"
 			}
 		input.move-down.attrs.value =
 			attribute value {
@@ -153,7 +155,7 @@
 		)
 		button.add.attrs.type = 
 			attribute type {
-				string "add"
+				w:string "add"
 			}
 		
 	button.elem |= button.add.elem
@@ -172,7 +174,7 @@
 		)
 		button.remove.attrs.type = 
 			attribute type {
-				string "remove"
+				w:string "remove"
 			}	
 		
 	button.elem |= button.remove.elem
@@ -191,7 +193,7 @@
 		)
 		button.move-up.attrs.type = 
 			attribute type {
-				string "move-up"
+				w:string "move-up"
 			}
 		
 	button.elem |= button.move-up.elem
@@ -210,7 +212,7 @@
 		)
 		button.move-down.attrs.type = 
 			attribute type {
-				string "move-down"
+				w:string "move-down"
 			}
 		
 	button.elem |= button.move-down.elem

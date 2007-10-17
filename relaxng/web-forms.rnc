@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Web Forms 1.0 markup                  #
 # #####################################################################
@@ -16,7 +18,7 @@
 
 	common-form.attrs.disabled = 
 		attribute disabled {
-			string "disabled" | string ""
+			w:string "disabled" | w:string ""
 		}
 
 	common-form.attrs.accesskey = 
@@ -26,7 +28,7 @@
 
 	common-form.attrs.readonly = 
 		attribute readonly {
-			string "readonly" | string ""
+			w:string "readonly" | w:string ""
 		}
 
 	common-form.attrs.maxlength = 
@@ -40,7 +42,7 @@
 	
 	input.attrs.checked = 
 		attribute checked {
-			string "checked" | string ""
+			w:string "checked" | w:string ""
 		}
 
 ## Text Field: <input type='text'>
@@ -58,7 +60,7 @@
 		)		
 		input.text.attrs.type = 
 			attribute type {
-				string "text"
+				w:string "text"
 			}
 		input.text.attrs.value =
 			attribute value {
@@ -82,7 +84,7 @@
 		)
 		input.password.attrs.type = 
 			attribute type {
-				string "password"
+				w:string "password"
 			}
 		input.password.attrs.value =
 			attribute value {
@@ -105,7 +107,7 @@
 		)
 		input.checkbox.attrs.type = 
 			attribute type {
-				string "checkbox"
+				w:string "checkbox"
 			}
 		input.checkbox.attrs.value =
 			attribute value {
@@ -128,7 +130,7 @@
 		)
 		input.radio.attrs.type = 
 			attribute type {
-				string "radio"
+				w:string "radio"
 			}
 		input.radio.attrs.value =
 			attribute value {
@@ -150,7 +152,7 @@
 		)
 		input.button.attrs.type = 
 			attribute type {
-				string "button"
+				w:string "button"
 			}
 		input.button.attrs.value =
 			attribute value {
@@ -173,7 +175,7 @@
 		)
 		input.submit.attrs.type = 
 			attribute type {
-				string "submit"
+				w:string "submit"
 			}
 		input.submit.attrs.value =
 			attribute value {
@@ -195,7 +197,7 @@
 		)
 		input.reset.attrs.type = 
 			attribute type {
-				string "reset"
+				w:string "reset"
 			}
 		input.reset.attrs.value =
 			attribute value {
@@ -218,7 +220,7 @@
 		)
 		input.file.attrs.type = 
 			attribute type {
-				string "file"
+				w:string "file"
 			}
 		input.file.attrs.accept = 
 			attribute accept {
@@ -239,7 +241,7 @@
 		)
 		input.hidden.attrs.type = 
 			attribute type {
-				string "hidden"
+				w:string "hidden"
 			}
 		input.hidden.attrs.value =
 			attribute value {
@@ -264,7 +266,7 @@
 		)	
 		input.image.attrs.type = 
 			attribute type {
-				string "image"
+				w:string "image"
 			}
 		input.image.attrs.alt = 
 			attribute alt {
@@ -330,7 +332,7 @@
 		)
 		option.attrs.selected =
 			attribute selected {
-				string "selected" | string ""
+				w:string "selected" | w:string ""
 			}
 		option.attrs.label =
 			attribute label {
@@ -373,7 +375,7 @@
 			}
 		select.attrs.multiple =
 			attribute multiple {
-				string "multiple" | string ""
+				w:string "multiple" | w:string ""
 			}
 	select.inner =
 		(	optgroup.elem*
@@ -406,7 +408,7 @@
 		)
 		button.submit.attrs.type =
 			attribute type {
-				string "submit"
+				w:string "submit"
 			}
 
 	button.elem = button.submit.elem
@@ -424,7 +426,7 @@
 		)
 		button.reset.attrs.type =
 			attribute type {
-				string "reset"
+				w:string "reset"
 			}
 
 	button.elem |= button.reset.elem
@@ -442,7 +444,7 @@
 		)
 		button.button.attrs.type =
 			attribute type {
-				string "button"
+				w:string "button"
 			}
 
 	button.elem |= button.button.elem
@@ -470,14 +472,14 @@
 				form.attrs.method.data
 			}
 			form.attrs.method.data = 
-				( string "get" | "post" )
+				( w:string "get" | "post" )
 		form.attrs.enctype =
 			attribute enctype {
 				form.attrs.enctype.data
 			}
 			form.attrs.enctype.data = 
-				(	string "application/x-www-form-urlencoded" 
-				|	string "multipart/form-data"
+				(	w:string "application/x-www-form-urlencoded" 
+				|	w:string "multipart/form-data"
 				)
 		form.attrs.accept =
 			attribute accept {

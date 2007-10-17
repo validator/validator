@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Advanced Embedded Content             #
 # #####################################################################
@@ -15,7 +17,7 @@
 		)
 		media.attrs.autoplay   =
 			attribute autoplay   {
-				string "autoplay" | string ""
+				w:string "autoplay" | w:string ""
 			}
 		media.attrs.start   =
 			attribute start   {
@@ -39,7 +41,7 @@
 			}
 		media.attrs.controls  =
 			attribute controls  {
-				string "controls" | string ""
+				w:string "controls" | w:string ""
 			}
 		
 ## Source: <source>

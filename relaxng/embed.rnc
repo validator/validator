@@ -1,4 +1,6 @@
+datatypes w = "http://whattf.org/datatype-draft"
 namespace local = ""
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Embedded Content                      #
 # #####################################################################
@@ -41,7 +43,7 @@ namespace local = ""
 			}
 		img.attrs.ismap =
 			attribute ismap {
-				string "ismap" | string ""
+				w:string "ismap" | w:string ""
 			}
 	img.inner =
 		empty
@@ -398,7 +400,7 @@ namespace local = ""
 			)
 		area.attrs.shape.rect =
 			attribute shape {
-				string "rect"
+				w:string "rect"
 			}
 		area.attrs.coords.rect =
 			attribute coords {
@@ -408,7 +410,7 @@ namespace local = ""
 			}
 		area.attrs.shape.circle =
 			attribute shape {
-				string "circle"
+				w:string "circle"
 			}
 		area.attrs.coords.circle =
 			attribute coords {
@@ -418,7 +420,7 @@ namespace local = ""
 			}
 		area.attrs.shape.poly =
 			attribute shape {
-				string "poly"
+				w:string "poly"
 			}
 		area.attrs.coords.poly =
 			attribute coords {
@@ -428,7 +430,7 @@ namespace local = ""
 			}
 		area.attrs.shape.default =
 			attribute shape {
-				string "default"
+				w:string "default"
 			}
 	area.inner =
 		( empty )

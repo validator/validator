@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Web Application Features              #
 # #####################################################################
@@ -22,21 +24,21 @@
 
 	common.attrs.contenteditable =
 		attribute contenteditable {
-			string "true" | string "false"
+			w:string "true" | w:string "false"
 		}
 
 ## Draggable Element: draggable
 
 	common.attrs.draggable =
 		attribute draggable {
-			string "true" | string "false" #REVISIT guessing here
+			w:string "true" | w:string "false" #REVISIT guessing here
 		}
 
 ## Irrelevant Element: irrelevant
 
 	common.attrs.irrelevant =
 		attribute irrelevant {
-			string "irrelevant" | string ""
+			w:string "irrelevant" | w:string ""
 		}
 
 ## Progess Indicator: <progress>
@@ -73,11 +75,11 @@
 		)
 		datagrid.attrs.multiple =
 			attribute multiple {
-				string "multiple" | string ""
+				w:string "multiple" | w:string ""
 			}
 		datagrid.attrs.disabled =
 			attribute disabled {
-				string "disabled" | string ""
+				w:string "disabled" | w:string ""
 			}
 	datagrid.inner =
 		(	common.inner.block # table case left to schematron 
@@ -110,15 +112,15 @@
 		)
 		command.attrs.type.command =
 			attribute type {
-				string "command"
+				w:string "command"
 			}
 		command.attrs.type.radio =
 			attribute type {
-				string "radio"
+				w:string "radio"
 			}
 		command.attrs.type.checkbox =
 			attribute type {
-				string "checkbox"
+				w:string "checkbox"
 			}
 		command.attrs.label =
 			attribute label {
@@ -130,15 +132,15 @@
 			}
 		command.attrs.hidden =
 			attribute hidden {
-				string "hidden" | string ""
+				w:string "hidden" | w:string ""
 			}
 		command.attrs.disabled =
 			attribute disabled {
-				string "disabled" | string ""
+				w:string "disabled" | w:string ""
 			}
 		command.attrs.checked =
 			attribute checked {
-				string "checked" | string ""
+				w:string "checked" | w:string ""
 			}
 		command.attrs.radiogroup =
 			attribute radiogroup {
@@ -146,7 +148,7 @@
 			}
 		command.attrs.default =
 			attribute default {
-				string "default" | string ""
+				w:string "default" | w:string ""
 			}
 	command.inner =
 		( empty )
@@ -168,7 +170,7 @@
 		)
 		menu.attrs.type =
 			attribute type {
-				string "toolbar" | string "context"
+				w:string "toolbar" | w:string "context"
 			}
 		menu.attrs.label =
 			attribute label {
@@ -176,7 +178,7 @@
 			}
 		menu.attrs.autosubmit =
 			attribute autosubmit {
-				string "autosubmit" | string ""
+				w:string "autosubmit" | w:string ""
 			}
 	menu.inner =
 		(	li.elem.inline*
@@ -244,7 +246,7 @@
 		)
 		details.attrs.open =
 			attribute open {
-				string "open" | string ""
+				w:string "open" | w:string ""
 			}
 	details.inner =
 		(	legend.elem.strict-inline
