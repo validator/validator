@@ -66,7 +66,7 @@ public final class Language extends AbstractDatatype {
             languages = data.getLanguages();
             scripts = data.getScripts();
             regions = data.getRegions();
-            variants = data.getScripts();
+            variants = data.getVariants();
             grandfathered = data.getGrandfathered();
             deprecated = data.getDeprecated();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
