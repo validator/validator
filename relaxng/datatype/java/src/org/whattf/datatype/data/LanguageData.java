@@ -25,6 +25,8 @@ package org.whattf.datatype.data;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,6 +92,8 @@ public class LanguageData {
     
     public LanguageData() throws IOException {
         super();
+        URL url = new URL("http://www.iana.org/assignments/language-subtag-registry");
+        in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
         consumeRegistry();
         prepareArrays();
     }
@@ -98,6 +102,7 @@ public class LanguageData {
         while(consumeRecord()) {
           // spin
         }
+        in.close();
     }
     
     private void prepareArrays() throws IOException {
