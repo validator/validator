@@ -109,6 +109,7 @@ public class LanguageData {
         scripts = scriptSet.toArray(EMPTY_STRING_ARRAY);
         regions = regionSet.toArray(EMPTY_STRING_ARRAY);
         grandfathered = grandfatheredSet.toArray(EMPTY_STRING_ARRAY);
+        deprecated = deprecatedSet.toArray(EMPTY_STRING_ARRAY);
         
         int i = 0;
         languages = new String[languageSet.size()];
