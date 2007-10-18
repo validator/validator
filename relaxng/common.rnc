@@ -351,4 +351,4 @@ common.attrs.other =
 ## Language Codes
 
 	common.data.langcode =
-		xsd:language #FIXME import refined datatype later, XSD is way too coarse
+		w:string "" | w:language
