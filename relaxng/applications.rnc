@@ -34,7 +34,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			w:string "true" | w:string "false" #REVISIT guessing here
 		}
 
-## Irrelevant Element: irrelevant
+## Irrelevant Attribute: irrelevant
 
 	common.attrs.irrelevant =
 		attribute irrelevant {
