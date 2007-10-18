@@ -139,6 +139,9 @@ public final class Language extends AbstractDatatype {
                 "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
             }
             i++;
+            if (i == subtags.length) {
+                return;
+            }
             subtag = subtags[i];
             len = subtag.length();
             if (len == 3) {
@@ -157,6 +160,9 @@ public final class Language extends AbstractDatatype {
                 "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
             }
             i++;
+            if (i == subtags.length) {
+                return;
+            }
             subtag = subtags[i];
             len = subtag.length();
         }
@@ -179,6 +185,9 @@ public final class Language extends AbstractDatatype {
                 throw new DatatypeException("Language tag should omit the default script for the language.");                
             }
             i++;
+            if (i == subtags.length) {
+                return;
+            }
             subtag = subtags[i];
             len = subtag.length();
         }
@@ -195,13 +204,16 @@ public final class Language extends AbstractDatatype {
                 "The region subtag \u201C" + subtag + "\u201D is deprecated.");                
             }
             i++;
+            if (i == subtags.length) {
+                return;
+            }
             subtag = subtags[i];
             len = subtag.length();
         }
         
         // Variant
         
-        while (i < subtags.length) {
+        for (;;) {
             if ("x".equals(subtag)) {
                 checkPrivateUse(i, subtags);
                 return;
@@ -222,6 +234,9 @@ public final class Language extends AbstractDatatype {
                 }
             }
             i++;
+            if (i == subtags.length) {
+                return;
+            }
             subtag = subtags[i];
             len = subtag.length();
         }
