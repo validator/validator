@@ -51,9 +51,13 @@ public final class Language extends AbstractDatatype {
     
     private static String[] variants = null;
     
+    private static String[] grandfathered = null;
+    
+    private static String[] deprecated = null;
+
     private static int[] suppressedScriptByLanguage = null;
     
-    private static String[][] prefixesByVariant = null;
+    private static String[][][] prefixesByVariant = null;
     
     static {
         try {
@@ -62,42 +66,14 @@ public final class Language extends AbstractDatatype {
             scripts = data.getScripts();
             regions = data.getRegions();
             variants = data.getScripts();
+            grandfathered = data.getGrandfathered();
+            deprecated = data.getDeprecated();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
             prefixesByVariant = data.getPrefixesByVariant();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    
-    /**
-     * List extracted from http://www.iana.org/assignments/language-tags on
-     * 2006-04-13. List dated 2005-09-09.
-     */
-    private static final String[] GRANDFATHERED = { "art-lojban", // deprecated
-            "az-arab", "az-cyrl", "az-latn", "be-latn", "bs-cyrl", "bs-latn",
-            "cel-gaulish", "de-1901", "de-1996", "de-at-1901", "de-at-1996",
-            "de-ch-1901", "de-ch-1996", "de-de-1901", "de-de-1996", "en-boont",
-            "en-gb-oed", "en-scouse", "es-419", "i-ami", "i-bnn", "i-default", // inappropriate
-            // for
-            // HTML5?
-            "i-enochian", "i-hak", // deprecated
-            "i-klingon", // deprecated
-            "i-lux", // deprecated
-            "i-mingo", "i-navajo", // deprecated
-            "i-pwn", "i-tao", "i-tay", "i-tsu", "iu-cans", "iu-latn",
-            "mn-cyrl", "mn-mong", "no-bok", // deprecated
-            "no-nyn", // deprecated
-            "sgn-be-fr", "sgn-be-nl", "sgn-br", "sgn-ch-de", "sgn-co",
-            "sgn-de", "sgn-dk", "sgn-es", "sgn-fr", "sgn-gb", "sgn-gr",
-            "sgn-ie", "sgn-it", "sgn-jp", "sgn-mx", "sgn-ni", "sgn-nl",
-            "sgn-no", "sgn-pt", "sgn-se", "sgn-us", "sgn-za", "sl-nedis",
-            "sl-rozaj", "sr-cyrl", "sr-latn", "tg-arab", "tg-cyrl", "uz-cyrl",
-            "uz-latn", "yi-latn", "zh-cmn", "zh-cmn-hans", "zh-cmn-hant",
-            "zh-gan", "zh-guoyu", // deprecated
-            "zh-hakka", "zh-hans", "zh-hans-cn", "zh-hans-hk", "zh-hans-mo",
-            "zh-hans-sg", "zh-hans-tw", "zh-hant", "zh-hant-cn", "zh-hant-hk",
-            "zh-hant-mo", "zh-hant-sg", "zh-hant-tw", "zh-min", "zh-min-nan",
-            "zh-wuu", "zh-xiang", "zh-yue" };
 
     /**
      * Package-private constructor
@@ -115,6 +91,10 @@ public final class Language extends AbstractDatatype {
         }
         literal = toAsciiLowerCase(literal);
         if (isGrandfathered(literal)) {
+            if (isDeprecated(literal)) {
+                throw new DatatypeException(
+                "The grandfathered language tag \u201C" + literal + "\u201D is deprecated.");                
+            }
             return;
         }
         if (literal.startsWith("-")) {
@@ -125,7 +105,22 @@ public final class Language extends AbstractDatatype {
             throw new DatatypeException(
                     "Language tag must not end with HYPHEN-MINUS.");
         }
+        
         String[] subtags = HYPHEN.split(literal);
+        
+        for (int j = 0; j < subtags.length; j++) {
+            int len = subtags[j].length();
+            if (len == 0) {
+                throw new DatatypeException(
+                "Zero-length subtag.");                                
+            } else if (len > 8) {
+                throw new DatatypeException(
+                "Subtags must next exceed 8 characters in length.");                                                
+            }
+        }
+        
+        // Language
+        
         int i = 0;
         String subtag = subtags[i];
         int len = subtag.length();
@@ -137,6 +132,10 @@ public final class Language extends AbstractDatatype {
             if (!isLanguage(subtag)) {
                 throw new DatatypeException(
                         "Bad ISO language part in language tag");
+            }
+            if (isDeprecated(subtag)) {
+                throw new DatatypeException(
+                "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
             }
             i++;
             subtag = subtags[i];
@@ -152,10 +151,17 @@ public final class Language extends AbstractDatatype {
                 throw new DatatypeException(
                         "Bad IANA language part in language tag");
             }
+            if (isDeprecated(subtag)) {
+                throw new DatatypeException(
+                "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
+            }
             i++;
             subtag = subtags[i];
             len = subtag.length();
         }
+        
+        // Script?
+        
         if ("x".equals(subtag)) {
             checkPrivateUse(i, subtags);
             return;
@@ -164,30 +170,54 @@ public final class Language extends AbstractDatatype {
             if (!isScript(subtag)) {
                 throw new DatatypeException("Bad script subtag");
             }
+            if (isDeprecated(subtag)) {
+                throw new DatatypeException(
+                "The script subtag \u201C" + subtag + "\u201D is deprecated.");                
+            }
+            if (shouldSuppressScript(subtags[0], subtag)) {
+                throw new DatatypeException("Language tag should omit the default script for the language.");                
+            }
             i++;
             subtag = subtags[i];
             len = subtag.length();
         }
+        
+        // Region
+        
         if ((len == 3 && isDigit(subtag))
                 || (len == 2 && isLowerCaseAlpha(subtag))) {
             if (!isRegion(subtag)) {
                 throw new DatatypeException("Bad region subtag");
             }
+            if (isDeprecated(subtag)) {
+                throw new DatatypeException(
+                "The region subtag \u201C" + subtag + "\u201D is deprecated.");                
+            }
             i++;
             subtag = subtags[i];
             len = subtag.length();
         }
+        
+        // Variant
+        
         while (i < subtags.length) {
             if ("x".equals(subtag)) {
                 checkPrivateUse(i, subtags);
                 return;
             }
-            // cutting corners here a bit
+            // cutting corners here a bit since there are no extensions at this time
             if (len == 1) {
                 throw new DatatypeException("Unknown extension.");
             } else {
                 if (!isVariant(subtag)) {
                     throw new DatatypeException("Bad variant subtag");
+                }
+                if (isDeprecated(subtag)) {
+                    throw new DatatypeException(
+                    "The variant subtag \u201C" + subtag + "\u201D is deprecated.");                
+                }
+                if (!hasGoodPrefix(subtags, i)) {
+                    throw new DatatypeException("Variant lacks required prefix.");                    
                 }
             }
             i++;
@@ -196,24 +226,73 @@ public final class Language extends AbstractDatatype {
         }
     }
 
-    private boolean isVariant(String subtag) {
-        // TODO Auto-generated method stub
+    private boolean hasGoodPrefix(String[] subtags, int i) {
+        String variant = subtags[i];
+        int index = Arrays.binarySearch(variants, variant);
+        assert index >= 0;
+        String[][] prefixes = prefixesByVariant[index];
+        if (prefixes.length == 0) {
+            return true;
+        }
+        for (int j = 0; j < prefixes.length; j++) {
+            String[] prefix = prefixes[j];
+            if (prefixMatches(prefix, subtags, i)) {
+                return true;
+            }
+        }
         return false;
+    }
+
+    private boolean prefixMatches(String[] prefix, String[] subtags, int limit) {
+        for (int i = 0; i < prefix.length; i++) {
+            String prefixComponent = prefix[i];
+            if (!subtagsContainPrefixComponent(prefixComponent, subtags, limit)) {
+                return false;   
+            }
+        }
+        return true;
+    }
+
+    private boolean subtagsContainPrefixComponent(String prefixComponent, String[] subtags, int limit) {
+        for (int i = 0; i < limit; i++) {
+            String subtag = subtags[i];
+            if (subtag.equals(prefixComponent)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean shouldSuppressScript(String language, String script) {
+        int langIndex = Arrays.binarySearch(languages, language);
+        assert langIndex > -1;
+        int scriptIndex = suppressedScriptByLanguage[langIndex];
+        if (scriptIndex < 0) {
+            return false;
+        } else {
+            return scripts[scriptIndex].equals(script);
+        }
+    }
+
+    private boolean isVariant(String subtag) {
+        return (Arrays.binarySearch(variants, subtag) > -1);
     }
 
     private boolean isRegion(String subtag) {
-        // TODO Auto-generated method stub
-        return false;
+        return (Arrays.binarySearch(regions, subtag) > -1) || "aa".equals(subtag)
+                || ("qm".compareTo(subtag) <= 0 && "qz".compareTo(subtag) >= 0)
+                || ("xa".compareTo(subtag) <= 0 && "xz".compareTo(subtag) >= 0)
+                || "zz".equals(subtag);
     }
 
     private boolean isScript(String subtag) {
-        // TODO Auto-generated method stub
-        return false;
+        return (Arrays.binarySearch(scripts, subtag) > -1)
+                || ("qaaa".compareTo(subtag) <= 0 && "qabx".compareTo(subtag) >= 0);
     }
 
-    private boolean isLanguage(String language) {
-        // TODO Auto-generated method stub
-        return false;
+    private boolean isLanguage(String subtag) {
+        return (Arrays.binarySearch(languages, subtag) > -1)
+                || ("qaa".compareTo(subtag) <= 0 && "qtz".compareTo(subtag) >= 0);
     }
 
     private void checkPrivateUse(int i, String[] subtags)
@@ -225,12 +304,6 @@ public final class Language extends AbstractDatatype {
         }
         while (i < len) {
             String subtag = subtags[i];
-            if (subtag.length() < 1) {
-                throw new DatatypeException("Zero-length private use subtag.");
-            }
-            if (subtag.length() > 8) {
-                throw new DatatypeException("Private use subtag too long.");
-            }
             if (!isLowerCaseAlphaNumeric(subtag)) {
                 throw new DatatypeException(
                         "Bad character in private use subtag.");
@@ -287,7 +360,10 @@ public final class Language extends AbstractDatatype {
     }
 
     private boolean isGrandfathered(String literal) {
-        return Arrays.binarySearch(GRANDFATHERED, literal) > -1;
+        return Arrays.binarySearch(grandfathered, literal) > -1;
     }
-
+    
+    private boolean isDeprecated(String subtag) {
+        return Arrays.binarySearch(deprecated, subtag) > -1;
+    }
 }
