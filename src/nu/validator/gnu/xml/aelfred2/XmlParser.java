@@ -4441,6 +4441,7 @@ final class XmlParser {
         input.prev = prev;
         input.normalizationChecker = normalizationChecker;
         input.characterHandler = characterHandler;
+        characterHandler = null;
 
         // Push it onto the stack.
         inputStack.addLast(input);
