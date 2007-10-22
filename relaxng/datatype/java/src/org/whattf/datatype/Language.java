@@ -132,7 +132,7 @@ public final class Language extends AbstractDatatype {
         if ((len == 2 || len == 3) && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
                 throw new DatatypeException(
-                        "Bad ISO language part in language tag");
+                        "Bad ISO language part in language tag.");
             }
             if (isDeprecated(subtag)) {
                 throw new DatatypeException(
@@ -153,7 +153,7 @@ public final class Language extends AbstractDatatype {
         } else if (len == 5 && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
                 throw new DatatypeException(
-                        "Bad IANA language part in language tag");
+                        "Bad IANA language part in language tag.");
             }
             if (isDeprecated(subtag)) {
                 throw new DatatypeException(
@@ -175,7 +175,7 @@ public final class Language extends AbstractDatatype {
         }
         if (subtag.length() == 4) {
             if (!isScript(subtag)) {
-                throw new DatatypeException("Bad script subtag");
+                throw new DatatypeException("Bad script subtag.");
             }
             if (isDeprecated(subtag)) {
                 throw new DatatypeException(
@@ -197,7 +197,7 @@ public final class Language extends AbstractDatatype {
         if ((len == 3 && isDigit(subtag))
                 || (len == 2 && isLowerCaseAlpha(subtag))) {
             if (!isRegion(subtag)) {
-                throw new DatatypeException("Bad region subtag");
+                throw new DatatypeException("Bad region subtag.");
             }
             if (isDeprecated(subtag)) {
                 throw new DatatypeException(
@@ -223,7 +223,7 @@ public final class Language extends AbstractDatatype {
                 throw new DatatypeException("Unknown extension.");
             } else {
                 if (!isVariant(subtag)) {
-                    throw new DatatypeException("Bad variant subtag");
+                    throw new DatatypeException("Bad variant subtag.");
                 }
                 if (isDeprecated(subtag)) {
                     throw new DatatypeException(
