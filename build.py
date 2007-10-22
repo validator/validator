@@ -50,17 +50,18 @@ dependencyPackages = [
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
   ("http://belnet.dl.sourceforge.net/sourceforge/jena/Jena-2.5.2.zip", "cd9c74f58b7175e56e3512443c84fcf8"),
   ("http://dist.codehaus.org/jetty/jetty-6.1.5/jetty-6.1.5.zip", "c05153e639810c0d28a602366c69a632"),
-  ("http://hsivonen.iki.fi/code/xmlidfilter-0.9.zip", "689acccb60c964bce3eee3b04da45d5d"), # The official location is https and .tar.gz
   ("http://mirror.eunet.fi/apache/logging/log4j/1.2.14/logging-log4j-1.2.14.zip", "6c4f8da1fed407798ea0ad7984fe60db"),
   ("http://mirror.eunet.fi/apache/xml/xerces-j/Xerces-J-bin.2.9.0.zip", "a3aece3feb68be6d319072b85ad06023"),
-  ("http://belnet.dl.sourceforge.net/sourceforge/saxon/saxon6-5-5.zip", "e913002af9c6bbb4c4361ff41baac3af"),
   ("http://ftp.mozilla.org/pub/mozilla.org/js/rhino1_6R5.zip", "c93b6d0bb8ba83c3760efeb30525728a"),
-  ("http://hsivonen.iki.fi/code/onvdl-hsivonen.zip", "b5cda2ed1488c7d702339a92b1bf480f"),
   ("http://download.berlios.de/jsontools/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
   ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("http://www.slf4j.org/dist/slf4j-1.4.3.zip", "5671faa7d5aecbd06d62cf91f990f80a"),
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/fileupload/binaries/commons-fileupload-1.2-bin.zip", "6fbe6112ebb87a9087da8ca1f8d8fd6a"),
+  ("http://mirror.eunet.fi/apache/xml/xalan-j/xalan-j_2_7_0-bin.zip", "ec42adbc83eb0d1354f73a600e274afe"),
+  ("http://mirror.eunet.fi/apache/ant/binaries/apache-ant-1.7.0-bin.zip" , "ac30ce5b07b0018d65203fbc680968f5"),
+  ("http://surfnet.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip" , "10381903828d30e36252910679fcbab6"),
+  ("http://ovh.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -80,20 +81,21 @@ dependencyJars = [
   "jetty-6.1.5/lib/ext/jetty-ajp-6.1.5.jar",
   "jetty-6.1.5/lib/ext/jetty-java5-threadpool-6.1.5.jar",
   "logging-log4j-1.2.14/dist/lib/log4j-1.2.14.jar",
-  "onvdl-hsivonen/bin/isorelax.jar",
-  "onvdl-hsivonen/onvdl.jar",
   "rhino1_6R5/js.jar",
-  "saxon.jar",
   "xerces-2_9_0/xercesImpl.jar",
   "xerces-2_9_0/xml-apis.jar",
   "xerces-2_9_0/serializer.jar",
-  "xmlidfilter-0.9/lib/xmlidfilter.jar",
   "jsontools-core-1.5.jar",
   "antlr.jar",
   "xom-1.1.jar",
   "slf4j-1.4.3/slf4j-log4j12-1.4.3.jar",
  # "slf4j-1.4.3/slf4j-api-1.4.3.jar",
   "commons-fileupload-1.2/lib/commons-fileupload-1.2.jar",
+  "xalan-j_2_7_0/xalan.jar",
+  "junit-4.4.jar",
+  "isorelax.jar",
+  "apache-ant-1.7.0/lib/ant.jar",
+  "apache-ant-1.7.0/lib/ant-launcher.jar",
 ]
 
 moduleNames = [
@@ -102,6 +104,7 @@ moduleNames = [
   "util",
   "htmlparser",
   "xmlparser",
+  "onvdl",
   "validator",
 ]
 
@@ -137,6 +140,10 @@ def removeIfExists(filePath):
   if os.path.exists(filePath):
     os.unlink(filePath)
 
+def removeIfDirExists(dirPath):
+  if os.path.exists(dirPath):
+    shutil.rmtree(dirPath)
+
 def ensureDirExists(dirPath):
   if not os.path.exists(dirPath):
     os.makedirs(dirPath)
@@ -150,6 +157,16 @@ def findFilesWithExtension(directory, extension):
         rv.append(os.path.join(root, file))
   return rv
 
+def findFiles(directory):
+  rv = []
+  for root, dirs, files in os.walk(directory):
+    for file in files:
+      candidate = os.path.join(root, file)
+      if candidate.find("/.svn") == -1:
+        rv.append(candidate)
+  return rv
+
+
 def jarNamesToPaths(names):
   return map(lambda x: os.path.join(buildRoot, "jars", x + ".jar"), names)
 
@@ -158,19 +175,22 @@ def runJavac(sourceDir, classDir, classPath):
   runCmd("'%s' -Xlint:unchecked -classpath '%s' -sourcepath '%s' -d '%s' %s"\
 		% (javacCmd, classPath, sourceDir, classDir, " ".join(sourceFiles)))
 
+def copyFiles(sourceDir, classDir):
+  files = findFiles(sourceDir)
+  for f in files:
+    destFile = os.path.join(classDir, f[len(sourceDir)+1:])
+    head, tail = os.path.split(destFile)
+    if not os.path.exists(head):
+      os.makedirs(head)
+    shutil.copyfile(f, destFile)
+
 def runJar(classDir, jarFile, sourceDir):
-  classFiles = findFilesWithExtension(classDir, "class")
-  metaDir = os.path.join(sourceDir, "META-INF")
+  classFiles = findFiles(classDir)
   classList = map(lambda x: 
                     "-C '" + classDir + "' '" + x[len(classDir)+1:] + "'", 
                   classFiles)
-  if os.path.exists(metaDir):
-    # XXX get rid of CVS directories here
-    runCmd("'%s' cf '%s' -C '%s' META-INF %s" 
-      % (jarCmd, jarFile, sourceDir, " ".join(classList)))
-  else:  
-    runCmd("'%s' cf '%s' %s" 
-      % (jarCmd, jarFile, " ".join(classList)))
+  runCmd("'%s' cf '%s' %s" 
+    % (jarCmd, jarFile, " ".join(classList)))
 
 def buildModule(rootDir, jarName, classPath):
   sourceDir = os.path.join(rootDir, "src")
@@ -178,9 +198,11 @@ def buildModule(rootDir, jarName, classPath):
   distDir = os.path.join(rootDir, "dist")
   jarFile = os.path.join(distDir, jarName + ".jar")
   removeIfExists(jarFile)
+  removeIfDirExists(classDir)
   ensureDirExists(classDir)
   ensureDirExists(distDir)
   runJavac(sourceDir, classDir, classPath)
+  copyFiles(sourceDir, classDir)
   runJar(classDir, jarFile, sourceDir)
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
@@ -202,7 +224,8 @@ def buildUtil():
     classPath)
 
 def buildDatatypeLibrary():
-  classPath = os.pathsep.join(dependencyJarPaths())
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"), 
     "html5-datatypes", 
@@ -210,7 +233,8 @@ def buildDatatypeLibrary():
 
 def buildNonSchema():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["html5-datatypes"]))
+                              + jarNamesToPaths(["html5-datatypes",
+                                                "onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "syntax", "non-schema", "java"), 
     "non-schema", 
@@ -232,12 +256,21 @@ def buildHtmlParser():
     "htmlparser", 
     classPath)
 
+def buildOnvdl():
+  classPath = os.pathsep.join(dependencyJarPaths())
+  buildModule(
+    os.path.join(buildRoot, "onvdl"), 
+    "onvdl-whattf", 
+    classPath)
+
+
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2"]))
+                                                "hs-aelfred2",
+                                                "onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "validator"), 
     "validator", 
@@ -248,7 +281,8 @@ def buildTestHarness():
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2"]))
+                                                "hs-aelfred2",
+                                                "onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "syntax", "relaxng", "tests", "jdriver"), 
     "test-harness", 
@@ -262,7 +296,8 @@ def runValidator():
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
-                                                "validator"]))
+                                                "validator",
+                                                "onvdl-whattf"]))
   args = [
     '-Xms%sm' % heapSize,
     '-Xmx%sm' % heapSize,
@@ -272,7 +307,7 @@ def runValidator():
     '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
-    '-Dnu.validator.servlet.version="Validator.nu/2.1gamma (http://validator.nu/)"',
+    '-Dnu.validator.servlet.version="Validator.nu/2.2gamma (http://validator.nu/)"',
     'nu.validator.servlet.Main',
   ]
   if useAjp:
@@ -327,6 +362,7 @@ def downloadLocalEntities():
     f.close()
 
 def downloadOperaSuite():
+  return
   operaSuiteDir = os.path.join(buildRoot, "opera-tests")
   validDir = os.path.join(operaSuiteDir, "valid")
   invalidDir = os.path.join(operaSuiteDir, "invalid")
@@ -363,6 +399,7 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
+  buildOnvdl()
   buildUtil()
   buildDatatypeLibrary()
   buildNonSchema()
@@ -383,7 +420,8 @@ def runTests():
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
-                                                "test-harness"]))
+                                                "test-harness",
+                                                "onvdl-whattf"]))
   runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
 def printHelp():
