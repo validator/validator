@@ -48,10 +48,10 @@ public class BufferingRootNamespaceSniffer implements ContentHandler {
 
     public void setContentHandler(ContentHandler contentHandler) throws SAXException {
         this.ch = contentHandler;
-        ch.startDocument();
         if (locator != null) {
             ch.setDocumentLocator(locator);
         }
+        ch.startDocument();
         for (Iterator<String[]> iter = namespaces.iterator(); iter.hasNext();) {
             String[] element = iter.next();
             ch.startPrefixMapping(element[0], element[1]);
