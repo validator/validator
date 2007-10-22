@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
@@ -49,7 +48,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.java.dev.xmlidfilter.XMLIdFilter;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
@@ -73,7 +71,6 @@ import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
-import nu.validator.xml.XhtmlIdFilter;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.apache.log4j.Logger;
