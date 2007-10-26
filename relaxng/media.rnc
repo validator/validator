@@ -106,7 +106,22 @@ datatypes w = "http://whattf.org/datatype-draft"
 	video.attrs =
 		(	common.attrs
 		&	media.attrs
+		&	video.attrs.poster?
+		&	video.attrs.height?
+		&	video.attrs.width?
 		)
+		video.attrs.poster =
+			attribute poster {
+				common.data.uri
+			}
+		video.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		video.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
 	video.inner.strict-inline =
 		(	media.source
 		,	common.elem.strict-inline
