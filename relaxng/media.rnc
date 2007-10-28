@@ -12,7 +12,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	media.attrs.start?
 		&	media.attrs.loopstart?
 		&	media.attrs.loopend?
-		&	media.attrs.loopcount?
+		&	media.attrs.playcount?
 		&	media.attrs.controls?
 		)
 		media.attrs.autoplay   =
@@ -35,8 +35,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute end  {
 				common.data.timeoffset
 			}
-		media.attrs.loopcount  =
-			attribute loopcount  {
+		media.attrs.playcount  =
+			attribute playcount  {
 				common.data.integer.positive
 			}
 		media.attrs.controls  =
