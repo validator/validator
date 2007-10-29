@@ -11,8 +11,6 @@ http://simon.html5.org/temp/validator.nu/Validator.nu.htm
 
 ---
 
-ID uniqueness
-
 language codes
 
 ASCII-insensitive string

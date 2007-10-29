@@ -60,6 +60,9 @@ import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.source.SourceCode;
+import nu.validator.spec.EmptySpec;
+import nu.validator.spec.Spec;
+import nu.validator.spec.html5.Html5SpecBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
@@ -88,6 +91,7 @@ import org.whattf.checker.table.TableChecker;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -159,6 +163,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private static final Map pathMap = new HashMap();
 
+    private static Spec html5spec;
+    
     private static int[] presetDoctypes;
 
     private static String[] presetLabels;
@@ -369,6 +375,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 i++;
             }
 
+            log4j.debug("Reading spec.");
+
+            html5spec = Html5SpecBuilder.parseSpec(new InputSource("http://www.whatwg.org/specs/web-apps/current-work/"));
+
+            log4j.debug("Spec read.");
+            
             log4j.debug("Initialization complete.");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -521,20 +533,20 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
                         new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
                             new TextMessageEmitter(out));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
                             new XmlMessageEmitter(ser.asContentHandler()));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
@@ -542,7 +554,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     } else {
                         response.setContentType("application/javascript");
                      }
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
@@ -553,6 +565,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
             }
         } catch (SAXException e) {
             throw new ServletException(e);
+        }
+    }
+
+    private Spec getSpec() {
+        if (schemaUrls.contains("http://syntax.whattf.org/relaxng/html5full.rnc") || schemaUrls.contains("http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc")) {
+            return html5spec;
+        } else {
+            return EmptySpec.THE_INSTANCE;
         }
     }
 

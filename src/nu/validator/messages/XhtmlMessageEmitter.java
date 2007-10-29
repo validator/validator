@@ -346,4 +346,19 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         return new XhtmlResultHandler(emitter);
     }
 
+    /**
+     * @see nu.validator.messages.MessageEmitter#endElaboration()
+     */
+    @Override
+    public void endElaboration() throws SAXException {
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startElaboration()
+     */
+    @Override
+    public ContentHandler startElaboration() throws SAXException {
+        return contentHandler;
+    }
+
 }
