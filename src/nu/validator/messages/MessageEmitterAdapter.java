@@ -41,6 +41,7 @@ import nu.validator.saxtree.TreeParser;
 import nu.validator.source.Location;
 import nu.validator.source.SourceCode;
 import nu.validator.source.SourceHandler;
+import nu.validator.spec.EmptySpec;
 import nu.validator.spec.Spec;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
@@ -90,7 +91,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final boolean showSource;
 
-    private final Spec spec;
+    private Spec spec = EmptySpec.THE_INSTANCE;
 
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
@@ -103,14 +104,13 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         return Normalizer.normalize(s, Normalizer.NFC, 0);
     }
 
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, Spec spec,
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
             MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
         this.emitter = messageEmitter;
         this.exactErrorHandler = new ExactErrorHandler(this);
         this.showSource = showSource;
-        this.spec = spec;
     }
 
     /**
@@ -641,5 +641,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     public ErrorHandler getExactErrorHandler() {
         return exactErrorHandler;
+    }
+
+    /**
+     * Sets the spec.
+     * 
+     * @param spec the spec to set
+     */
+    public void setSpec(Spec spec) {
+        this.spec = spec;
     }
 }

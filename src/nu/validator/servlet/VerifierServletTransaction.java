@@ -533,20 +533,20 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     contentHandler = ser.asContentHandler();
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
+                errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                         new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new TextMessageEmitter(out));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new XmlMessageEmitter(ser.asContentHandler()));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
@@ -554,7 +554,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     } else {
                         response.setContentType("application/javascript");
                      }
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource, getSpec(),
+                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
@@ -565,14 +565,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
             }
         } catch (SAXException e) {
             throw new ServletException(e);
-        }
-    }
-
-    private Spec getSpec() {
-        if (schemaUrls.contains("http://syntax.whattf.org/relaxng/html5full.rnc") || schemaUrls.contains("http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc")) {
-            return html5spec;
-        } else {
-            return EmptySpec.THE_INSTANCE;
         }
     }
 
@@ -987,6 +979,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     jingPropertyMap);
         } else if ("http://n.validator.nu/checkers/usemap/".equals(url)) {
             return new CheckerValidator(new UsemapChecker(), jingPropertyMap);
+        }
+        if (url.equals("http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc") || url.equals("http://syntax.whattf.org/relaxng/html5full.rnc")) {
+            errorHandler.setSpec(html5spec);
         }
         Schema sch = schemaByUrl(url);
         Validator validator = sch.createValidator(jingPropertyMap);
