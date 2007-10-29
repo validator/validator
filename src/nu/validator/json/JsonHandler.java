@@ -171,7 +171,7 @@ public interface JsonHandler {
     /**
      * Reports a <i>boolean</i>.
      * 
-     * @param number the boolean
+     * @param bool the boolean
      * @throws SAXException if bad things happen
      */
     public void bool(boolean bool) throws SAXException;    
