@@ -24,9 +24,13 @@
 package nu.validator.messages;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import nu.validator.messages.types.MessageType;
 import nu.validator.relaxng.exceptions.AbstractValidationException;
+import nu.validator.relaxng.exceptions.BadAttributeValueException;
 import nu.validator.relaxng.exceptions.ImpossibleAttributeIgnoredException;
 import nu.validator.relaxng.exceptions.OnlyTextNotAllowedException;
 import nu.validator.relaxng.exceptions.OutOfContextElementException;
@@ -48,6 +52,8 @@ import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.EmptyAttributes;
 import nu.validator.xml.XhtmlSaxEmitter;
 
+import org.apache.log4j.Logger;
+import org.relaxng.datatype.DatatypeException;
 import org.whattf.checker.NormalizationChecker;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -59,6 +65,31 @@ import com.thaiopensource.xml.util.Name;
 
 public final class MessageEmitterAdapter implements ErrorHandler {
 
+    private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
+    
+    private final static Map<String, char[]> WELL_KNOWN_NAMESPACES = new HashMap<String, char[]>();
+    
+    static {
+        WELL_KNOWN_NAMESPACES.put("", "unnamespaced".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xhtml", "XHTML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2000/svg", "SVG".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1998/Math/MathML", "MathML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2005/Atom", "Atom".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xlink", "XLink".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://docbook.org/ns/docbook", "DocBook".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://relaxng.org/ns/structure/1.0", "RELAX NG".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/XML/1998/namespace", "XML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/XSL/Transform", "XSLT".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/ns/xbl", "XBL".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "XUL".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "RDF".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://purl.org/dc/elements/1.1/", "Dublin Core".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2001/XMLSchema-instance", "XML Schema Instance".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2002/06/xhtml2/", "XHTML2".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.ascc.net/xml/schematron", "Schematron".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron", "ISO Schematron".toCharArray());
+    }
+    
     private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
 
     private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_BEFORE = "Element-specific attributes for element ".toCharArray();
@@ -72,8 +103,54 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final static char[] CONTEXT_BEFORE = "Contexts in which element ".toCharArray();
     
     private final static char[] CONTEXT_AFTER = " may be used:".toCharArray();
+
+    private final static char[] BAD_VALUE = "Bad value ".toCharArray();
+    
+    private final static char[] FOR = " for ".toCharArray();
+
+    private final static char[] ATTRIBUTE = "attribute ".toCharArray();
+
+    private final static char[] FROM_NAMESPACE = " from namespace ".toCharArray();
+    
+    private final static char[] SPACE = " ".toCharArray();
+    
+    private final static char[] ON = " on ".toCharArray();
+
+    private final static char[] ELEMENT = "element ".toCharArray();
+    
+    private final static char[] PERIOD = ".".toCharArray();
+
+    private final static char[] COLON = ":".toCharArray();
+
+    private final static char[] NOT_ALLOWED_ON = " not allowed on ".toCharArray();
+    
+    private final static char[] AT_THIS_POINT = " at this point.".toCharArray();
+
+    private final static char[] ONLY_TEXT = " is not allowed to have content that consists solely of text.".toCharArray();
+    
+    private final static char[] NOT_ALLOWED = " not allowed".toCharArray();
+
+    private final static char[] AS_CHILD_OF = " as child of ".toCharArray();
+    
+    private final static char[] IN_THIS_CONTEXT_SUPPRESSING = " in this context. (Suppressing further error errors from this subtree.)".toCharArray();
+    
+    private final static char[] REQUIRED_ATTRIBUTES_MISSING = "Required attributes missing on ".toCharArray();
+
+    private final static char[] REQUIRED_ELEMENTS_MISSING = "Required elements missing.".toCharArray();
+    
+    private final static char[] REQUIRED_CHILDREN_MISSING_FROM = "Required children missing from ".toCharArray();
+    
+    private final static char[] BAD_CHARACTER_CONTENT = "Bad character content ".toCharArray();
+
+    private final static char[] IN_THIS_CONTEXT = " in this context.".toCharArray();
+    
+    private final static char[] TEXT_NOT_ALLOWED_IN = "Text not allowed in ".toCharArray();
+    
+    private final static char[] UNKNOWN = "Unknown ".toCharArray();
     
     private final AttributesImpl attributesImpl = new AttributesImpl();
+    
+    private final char[] oneChar = {'\u0000'};
 
     private int warnings = 0;
 
@@ -92,6 +169,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final boolean showSource;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
+    
+    private boolean html = false;
 
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
@@ -291,6 +370,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
+        log4j.info(new StringBuilder().append(systemId).append('\t').append(message.getMessage()));
         String uri = sourceCode.getUri();
         if (oneBasedLine > -1
                 && (uri == systemId || (uri != null && uri.equals(systemId)))) {
@@ -385,18 +465,194 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @throws SAXException
      */
     private void messageText(Exception message) throws SAXException {
-        String msg = message.getMessage();
-        if (msg != null) {
-            MessageTextHandler messageTextHandler = emitter.startText();
-            if (messageTextHandler != null) {
-                emitStringWithQurlyQuotes(msg, messageTextHandler);
+        if (message instanceof AbstractValidationException) {
+            AbstractValidationException ave = (AbstractValidationException) message;
+            rngMessageText(ave);
+        } else {
+            String msg = message.getMessage();
+            if (msg != null) {
+                MessageTextHandler messageTextHandler = emitter.startText();
+                if (messageTextHandler != null) {
+                    emitStringWithQurlyQuotes(messageTextHandler, msg);
+                }
+                emitter.endText();
             }
-            emitter.endText();
         }
     }
 
-    private void emitStringWithQurlyQuotes(String message,
-            MessageTextHandler messageTextHandler) throws SAXException {
+    @SuppressWarnings("unchecked")
+    private void rngMessageText(AbstractValidationException e)
+            throws SAXException {
+        MessageTextHandler messageTextHandler = emitter.startText();
+        if (messageTextHandler != null) {
+            if (e instanceof BadAttributeValueException) {
+                BadAttributeValueException ex = (BadAttributeValueException) e;
+                messageTextString(messageTextHandler, BAD_VALUE, false);
+                codeString(messageTextHandler, ex.getAttributeValue());
+                messageTextString(messageTextHandler, FOR, false);
+                attribute(messageTextHandler, ex.getAttributeName(), ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, ON, false);
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                emitDatatypeErrors(messageTextHandler, ex.getExceptions());
+            } else if (e instanceof ImpossibleAttributeIgnoredException) {
+                ImpossibleAttributeIgnoredException ex = (ImpossibleAttributeIgnoredException) e;
+                attribute(messageTextHandler, ex.getAttributeName(), ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, NOT_ALLOWED_ON, false);
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, AT_THIS_POINT, false);                
+            } else if (e instanceof OnlyTextNotAllowedException) {
+                OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, ONLY_TEXT, false);                                
+            } else if (e instanceof OutOfContextElementException) {
+                OutOfContextElementException ex = (OutOfContextElementException) e;
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, NOT_ALLOWED, false);                                
+                if (ex.getParent() != null) {
+                    messageTextString(messageTextHandler, AS_CHILD_OF, false);                                
+                    element(messageTextHandler, ex.getParent(), false);                    
+                }
+                messageTextString(messageTextHandler, IN_THIS_CONTEXT_SUPPRESSING, false);                                                
+            } else if (e instanceof RequiredAttributesMissingException) {
+                RequiredAttributesMissingException ex = (RequiredAttributesMissingException) e;
+                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING, false);                                                                
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, PERIOD, false);                                                                                
+            } else if (e instanceof RequiredElementsMissingException) {
+                RequiredElementsMissingException ex = (RequiredElementsMissingException) e;
+                if (ex.getParent() == null) {
+                    messageTextString(messageTextHandler, REQUIRED_ELEMENTS_MISSING, false);                                                                                                    
+                } else {
+                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);                                                                                                    
+                    element(messageTextHandler, ex.getParent(), false);
+                    messageTextString(messageTextHandler, PERIOD, false);                    
+                }
+            } else if (e instanceof StringNotAllowedException) {
+                StringNotAllowedException ex = (StringNotAllowedException) e;
+                messageTextString(messageTextHandler, BAD_CHARACTER_CONTENT, false);     
+                codeString(messageTextHandler, ex.getValue());
+                messageTextString(messageTextHandler, FOR, false);                     
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                emitDatatypeErrors(messageTextHandler, ex.getExceptions());
+            } else if (e instanceof TextNotAllowedException) {
+                TextNotAllowedException ex = (TextNotAllowedException) e;
+                messageTextString(messageTextHandler, TEXT_NOT_ALLOWED_IN, false);     
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, IN_THIS_CONTEXT, false);                     
+            } else if (e instanceof UnfinishedElementException) {
+                UnfinishedElementException ex = (UnfinishedElementException) e;
+                messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);                                                                                                    
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, PERIOD, false);                                    
+            } else if (e instanceof UnknownElementException) {
+                UnknownElementException ex = (UnknownElementException) e;
+                messageTextString(messageTextHandler, UNKNOWN, false);                                                
+                element(messageTextHandler, ex.getCurrentElement(), false);
+                messageTextString(messageTextHandler, NOT_ALLOWED, false);                                
+                if (ex.getParent() != null) {
+                    messageTextString(messageTextHandler, AS_CHILD_OF, false);                                
+                    element(messageTextHandler, ex.getParent(), false);                    
+                }
+                messageTextString(messageTextHandler, PERIOD, false);                                                    
+            }
+        }
+        emitter.endText();
+    }
+
+    /**
+     * @param messageTextHandler
+     * @param datatypeErrors
+     * @throws SAXException
+     */
+    private void emitDatatypeErrors(MessageTextHandler messageTextHandler, Map<String, DatatypeException> datatypeErrors) throws SAXException {
+        if (datatypeErrors.isEmpty()) {
+            messageTextString(messageTextHandler, PERIOD, false);                    
+        } else {
+            messageTextString(messageTextHandler, COLON, false);                    
+            for (String err : datatypeErrors.keySet()) {
+                messageTextString(messageTextHandler, SPACE, false);
+                emitStringWithQurlyQuotes(messageTextHandler, err);
+            }
+        }
+    }
+
+    private void element(MessageTextHandler messageTextHandler, Name element, boolean atSentenceStart) throws SAXException {
+        if (html) {
+            messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
+            linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));
+        } else {
+            String ns = element.getNamespaceUri();
+            char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
+            if (humanReadable == null) {
+                messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
+                linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));
+                messageTextString(messageTextHandler, FROM_NAMESPACE, false);
+                codeString(messageTextHandler, ns);
+            } else {
+                messageTextString(messageTextHandler, humanReadable, atSentenceStart);
+                messageTextString(messageTextHandler, SPACE, false);
+                messageTextString(messageTextHandler, ELEMENT, false);
+                linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));                
+            }
+        }
+    }
+
+    private void linkedCodeString(MessageTextHandler messageTextHandler, String str, String url) throws SAXException {
+        if (url != null) {
+            messageTextHandler.startLink(url, null);
+        }
+        codeString(messageTextHandler, str);
+        if (url != null) {
+            messageTextHandler.endLink();
+        }
+
+    }
+
+    private void attribute(MessageTextHandler messageTextHandler, Name attributeName, Name elementName, boolean atSentenceStart) throws SAXException {
+        String ns = attributeName.getNamespaceUri();
+        if (html || "".equals(ns)) {
+            messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
+            codeString(messageTextHandler, attributeName.getLocalName());
+        } else if ("http://www.w3.org/XML/1998/namespace".equals(ns)) {
+            messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
+            codeString(messageTextHandler, "xml:" + attributeName.getLocalName());            
+        } else {
+            char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
+            if (humanReadable == null) {
+                log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
+                codeString(messageTextHandler, attributeName.getLocalName());
+                messageTextString(messageTextHandler, FROM_NAMESPACE, false);
+                codeString(messageTextHandler, ns);                
+            } else {
+                messageTextString(messageTextHandler, humanReadable, atSentenceStart);
+                messageTextString(messageTextHandler, SPACE, false);
+                messageTextString(messageTextHandler, ATTRIBUTE, false);
+                codeString(messageTextHandler, attributeName.getLocalName());
+            }
+        }
+    }
+
+    private void codeString(MessageTextHandler messageTextHandler, String str) throws SAXException {
+        messageTextHandler.startCode();
+        messageTextHandler.characters(str.toCharArray(), 0, str.length());
+        messageTextHandler.endCode();
+    }
+
+    private void messageTextString(MessageTextHandler messageTextHandler, char[] ch, boolean capitalize) throws SAXException {
+        if (capitalize && ch[0] >= 'a' && ch[0] <= 'z') {
+            oneChar[0] = (char) (ch[0] - 0x20);
+            messageTextHandler.characters(oneChar, 0, 1);
+            if (ch.length > 1) {
+                messageTextHandler.characters(ch, 1, ch.length - 1);                
+            }
+        } else {
+            messageTextHandler.characters(ch, 0, ch.length);
+        }
+    }
+
+    private void emitStringWithQurlyQuotes(MessageTextHandler messageTextHandler,
+            String message) throws SAXException {
         if (message == null) {
             message = "";
         }
@@ -577,38 +833,6 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    // if (e instanceof ImpossibleAttributeIgnoredException) {
-    // ImpossibleAttributeIgnoredException ex =
-    // (ImpossibleAttributeIgnoredException) e;
-    //      
-    // } else if (e instanceof OnlyTextNotAllowedException) {
-    // OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
-    //        
-    // } else if (e instanceof OutOfContextElementException) {
-    // OutOfContextElementException ex = (OutOfContextElementException) e;
-    //        
-    // } else if (e instanceof RequiredAttributesMissingException) {
-    // RequiredAttributesMissingException ex =
-    // (RequiredAttributesMissingException) e;
-    //        
-    // } else if (e instanceof RequiredElementsMissingException) {
-    // RequiredElementsMissingException ex = (RequiredElementsMissingException)
-    // e;
-    //        
-    // } else if (e instanceof StringNotAllowedException) {
-    // StringNotAllowedException ex = (StringNotAllowedException) e;
-    //        
-    // } else if (e instanceof TextNotAllowedException) {
-    // TextNotAllowedException ex = (TextNotAllowedException) e;
-    //        
-    // } else if (e instanceof UnfinishedElementException) {
-    // UnfinishedElementException ex = (UnfinishedElementException) e;
-    //        
-    // } else if (e instanceof UnknownElementException) {
-    // UnknownElementException ex = (UnknownElementException) e;
-    //        
-    // }
-
     private final class ExactErrorHandler implements ErrorHandler {
 
         private final MessageEmitterAdapter owner;
@@ -650,5 +874,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     public void setSpec(Spec spec) {
         this.spec = spec;
+    }
+
+    /**
+     * Sets the html.
+     * 
+     * @param html the html to set
+     */
+    public void setHtml(boolean html) {
+        this.html = html;
     }
 }

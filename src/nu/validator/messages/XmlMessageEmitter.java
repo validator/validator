@@ -167,4 +167,21 @@ public class XmlMessageEmitter extends MessageEmitter {
         return messageTextHandler;
     }
 
+    /**
+     * @see nu.validator.messages.MessageEmitter#endElaboration()
+     */
+    @Override
+    public void endElaboration() throws SAXException {
+        emitter.endElement("elaboration");
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startElaboration()
+     */
+    @Override
+    public ContentHandler startElaboration() throws SAXException {
+        emitter.startElement("elaboration");
+        return contentHandler;
+    }
+
 }

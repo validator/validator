@@ -683,6 +683,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 htmlParser.setMappingLangToXmlLang(true);
                 htmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
                 htmlParser.setTreeBuilderErrorHandlerOverride(errorHandler);
+                errorHandler.setHtml(true);
             } else if (xmlParser != null) {
                 xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
             } else {
