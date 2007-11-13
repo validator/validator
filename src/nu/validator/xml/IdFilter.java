@@ -72,11 +72,6 @@ public class IdFilter extends XMLFilterImpl {
      */
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-        if ("http://www.xml-cml.org/schema" == uri) {
-            super.startElement(uri, localName, qName, atts);            
-            return;
-        }
-        
         Attributes2 atts2 = (Attributes2) atts;
         int idIndex = -1;
         int xmlIdIndex = -1;
@@ -87,7 +82,7 @@ public class IdFilter extends XMLFilterImpl {
             String ns = atts2.getURI(i);
             String local = atts2.getLocalName(i);
             String type = atts2.getType(i);
-            if ("id" == local && "" == ns) {
+            if ("id" == local && "" == ns && "http://www.xml-cml.org/schema" != uri) {
                 idIndex = i;
                 checkId("id", atts2.getValue(i));
                 if ("ID" != type) {
