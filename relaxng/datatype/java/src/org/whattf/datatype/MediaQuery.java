@@ -552,8 +552,24 @@ public class MediaQuery extends AbstractDatatype {
                                         + c + "\u201D instead.");                        
                     }
                 case WS_BEFORE_CLOSE_PAREN:
-                    
+                    if (isWhitespace(c)) {
+                        continue;
+                    } else if (c == ')') {
+                        state = State.AFTER_CLOSE_PAREN;
+                        continue;
+                    } else {
+                        throw new DatatypeException(
+                                "Bad media query: Expected whitespace or \u201C)\u201D but saw \u201C"
+                                        + c + "\u201D instead.");                        
+                    }
             }
+        }
+        switch (state) {
+            case AFTER_CLOSE_PAREN:
+            case WS_BEFORE_AND:
+                return;
+            default:
+                throw new DatatypeException("Bad media query .");
         }
     }
 
