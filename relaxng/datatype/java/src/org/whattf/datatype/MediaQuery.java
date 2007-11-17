@@ -568,6 +568,15 @@ public class MediaQuery extends AbstractDatatype {
             case AFTER_CLOSE_PAREN:
             case WS_BEFORE_AND:
                 return;
+            case IN_MEDIA_TYPE:
+                String kw = sb.toString();
+                sb.setLength(0);
+                if (isMediaType(kw)) {
+                    return;
+                } else {
+                    throw new DatatypeException(
+                            "Bad media query: Expected a CSS media type but the query ended.");
+                }
             default:
                 throw new DatatypeException("Bad media query .");
         }
