@@ -337,11 +337,7 @@ common.attrs.other =
 ## MIME types
 
 	common.data.mimetype =
-		string #FIXME import regex later
-
-	#REVISIT is this one needed?
-	common.data.mimetype.no-params =
-		string #FIXME import regex later
+		w:mime-type
 
 ## Media Queries
 

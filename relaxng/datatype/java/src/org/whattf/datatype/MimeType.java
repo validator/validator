@@ -26,6 +26,11 @@ import org.relaxng.datatype.DatatypeException;
 
 public class MimeType extends AbstractDatatype {
 
+    /**
+     * The singleton instance.
+     */
+    public static final MimeType THE_INSTANCE = new MimeType();
+    
     private enum State {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
@@ -174,33 +179,33 @@ public class MimeType extends AbstractDatatype {
                                         + c + "\u201D instead.");
                     }
             }
-            switch (state) {
-                case IN_SUBTYPE:
-                case IN_UNQUOTED_STRING:
-                case CLOSE_QUOTE_SEEN:
-                    return;
-                case AT_START:
-                    throw new DatatypeException(
-                            "Bad MIME type: Expected a MIME type but saw the empty string.");
-                case IN_SUPERTYPE:
-                case AT_SUBTYPE_START:
-                    throw new DatatypeException(
-                            "Bad MIME type: Subtype missing.");
-                case EQUALS_SEEN:
-                case IN_PARAM_NAME:
-                    throw new DatatypeException(
-                            "Bad MIME type: Parameter value missing.");
-                case IN_QUOTED_PAIR:
-                case IN_QUOTED_STRING:
-                    throw new DatatypeException(
-                            "Bad MIME type: Unfinished quoted string.");
-                case SEMICOLON_SEEN:
-                    throw new DatatypeException(
-                            "Bad MIME type: Semicolon seen but there was no parameter following it.");
-                case WS_BEFORE_SEMICOLON:
-                    throw new DatatypeException(
-                            "Bad MIME type: Extraneous trailing whitespace.");
-            }
+        }
+        switch (state) {
+            case IN_SUBTYPE:
+            case IN_UNQUOTED_STRING:
+            case CLOSE_QUOTE_SEEN:
+                return;
+            case AT_START:
+                throw new DatatypeException(
+                        "Bad MIME type: Expected a MIME type but saw the empty string.");
+            case IN_SUPERTYPE:
+            case AT_SUBTYPE_START:
+                throw new DatatypeException(
+                        "Bad MIME type: Subtype missing.");
+            case EQUALS_SEEN:
+            case IN_PARAM_NAME:
+                throw new DatatypeException(
+                        "Bad MIME type: Parameter value missing.");
+            case IN_QUOTED_PAIR:
+            case IN_QUOTED_STRING:
+                throw new DatatypeException(
+                        "Bad MIME type: Unfinished quoted string.");
+            case SEMICOLON_SEEN:
+                throw new DatatypeException(
+                        "Bad MIME type: Semicolon seen but there was no parameter following it.");
+            case WS_BEFORE_SEMICOLON:
+                throw new DatatypeException(
+                        "Bad MIME type: Extraneous trailing whitespace.");
         }
     }
 
