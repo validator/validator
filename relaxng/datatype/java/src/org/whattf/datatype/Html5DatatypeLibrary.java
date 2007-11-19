@@ -96,6 +96,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return AsciiCaseInsensitiveString.THE_INSTANCE;
         } else if ("language".equals(typeLocalName)) {
             return Language.THE_INSTANCE;
+        } else if ("media-query".equals(typeLocalName)) {
+            return MediaQuery.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

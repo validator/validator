@@ -32,6 +32,11 @@ import org.relaxng.datatype.DatatypeException;
 
 public class MediaQuery extends AbstractDatatype {
 
+    /**
+     * The singleton instance.
+     */
+    public static final MediaQuery THE_INSTANCE = new MediaQuery();
+
     private enum State {
         INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_STRING, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN
     }
@@ -322,6 +327,13 @@ public class MediaQuery extends AbstractDatatype {
                                 } else if ('-' == c || '+' == c) {
                                     state = State.IN_VALUE_BEFORE_DIGITS;
                                     continue;
+                                } else if ('.' == c && valueExpectation == ValueType.LENGTH) {
+                                    state = State.IN_VALUE_DIGITS_AFTER_DOT;
+                                    continue;                                    
+                                } else if (valueExpectation == ValueType.LENGTH) {
+                                    throw new DatatypeException(
+                                            "Bad media query: Expected a digit, a dot or a sign but saw \u201C"
+                                                    + c + "\u201D instead.");                                    
                                 } else {
                                     throw new DatatypeException(
                                             "Bad media query: Expected a digit or a sign but saw \u201C"
@@ -437,6 +449,10 @@ public class MediaQuery extends AbstractDatatype {
                                     valueExpectation = ValueType.INTEGER;
                                     state = State.RATIO_SECOND_INTEGER_START;
                                     continue;
+                                } else {
+                                    throw new DatatypeException(
+                                            "Bad media query: Expected a digit or \u201C/\u201D but saw \u201C"
+                                                    + c + "\u201D instead.");
                                 }
                             default:
                                 throw new RuntimeException("Impossible state.");
