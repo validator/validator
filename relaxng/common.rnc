@@ -346,7 +346,7 @@ common.attrs.other =
 ## Media Queries
 
 	common.data.mediaquery =
-		string #FIXME import regex later
+		w:media-query
 
 ## Language Codes
 
