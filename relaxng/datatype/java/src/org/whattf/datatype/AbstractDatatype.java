@@ -183,4 +183,30 @@ abstract class AbstractDatatype implements Datatype {
         }
         return new String(buf);
     }
+    
+    protected DatatypeException newDatatypeException(String message) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), message);
+    }
+
+    protected DatatypeException newDatatypeException(String head, String literal, String tail) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), head, literal, tail);
+    }
+
+    protected DatatypeException newDatatypeException(String head, char literal, String tail) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), head, String.valueOf(literal), tail);
+    }
+    
+    protected DatatypeException newDatatypeException(int position, String message) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), message);
+    }
+
+    protected DatatypeException newDatatypeException(int position, String head, String literal, String tail) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), head, literal, tail);
+    }
+
+    protected DatatypeException newDatatypeException(int position, String head, char literal, String tail) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), head, String.valueOf(literal), tail);
+    }    
+    
+    protected abstract String getName();
 }

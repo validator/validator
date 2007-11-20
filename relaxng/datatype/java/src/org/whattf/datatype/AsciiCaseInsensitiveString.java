@@ -50,4 +50,9 @@ public class AsciiCaseInsensitiveString extends AbstractDatatype {
     public Object createValue(String literal, ValidationContext context) {
         return toAsciiLowerCase(literal);
     }
+
+    @Override
+    protected String getName() {
+        return "ASCII-case-insensitive string";
+    }
 }

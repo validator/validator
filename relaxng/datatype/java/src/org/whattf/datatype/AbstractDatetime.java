@@ -56,20 +56,20 @@ abstract class AbstractDatetime extends AbstractDatatype {
     private void checkDate(int year, int month, int day)
             throws DatatypeException {
         if (year < 1) {
-            throw new DatatypeException("Year cannot be less than 1.");
+            throw newDatatypeException("Year cannot be less than 1.");
         }
         if (month < 1) {
-            throw new DatatypeException("Month cannot be less than 1.");
+            throw newDatatypeException("Month cannot be less than 1.");
         }
         if (month > 12) {
-            throw new DatatypeException("Month cannot be greater than 12.");
+            throw newDatatypeException("Month cannot be greater than 12.");
         }
         if (day < 1) {
-            throw new DatatypeException("Day cannot be less than 1.");
+            throw newDatatypeException("Day cannot be less than 1.");
         }
         if (day > DAYS_IN_MONTHS[month - 1]) {
             if (!(day == 29 && month == 2 && isLeapYear(year))) {
-                throw new DatatypeException("Day out of range.");
+                throw newDatatypeException("Day out of range.");
             }
         }
 
@@ -85,7 +85,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkHour(int hour) throws DatatypeException {
         if (hour > 23) {
-            throw new DatatypeException("Hour cannot be greater than 23.");
+            throw newDatatypeException("Hour cannot be greater than 23.");
         }
     }
 
@@ -95,7 +95,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkMinute(int minute) throws DatatypeException {
         if (minute > 59) {
-            throw new DatatypeException("Minute cannot be greater than 59.");
+            throw newDatatypeException("Minute cannot be greater than 59.");
         }
     }
 
@@ -105,7 +105,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkSecond(int second) throws DatatypeException {
         if (second > 59) {
-            throw new DatatypeException("Second cannot be greater than 59.");
+            throw newDatatypeException("Second cannot be greater than 59.");
         }
     }
 
@@ -118,10 +118,10 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkTzd(int hours, int minutes) throws DatatypeException {
         if (hours < -23 || hours > 23) {
-            throw new DatatypeException("Hours out of range in time zone designator.");
+            throw newDatatypeException("Hours out of range in time zone designator.");
         }
         if (minutes > 59) {
-            throw new DatatypeException("Minutes out of range in time zone designator.");
+            throw newDatatypeException("Minutes out of range in time zone designator.");
         }
     }
         
@@ -197,7 +197,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
                 checkTzd(tzdHours, tzdMinutes);
             }
         } else {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "The literal did not satisfy the date format.");
         }
     }

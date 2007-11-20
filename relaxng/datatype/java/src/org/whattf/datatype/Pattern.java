@@ -62,7 +62,12 @@ public final class Pattern extends AbstractDatatype {
         try {
             rei.compileRegExp(null, anchoredRegex, "");
         } catch (EcmaError ee) {
-            throw new DatatypeException("Bad pattern: " + ee.getErrorMessage());
+            throw newDatatypeException(ee.getErrorMessage());
         }
+    }
+
+    @Override
+    protected String getName() {
+        return "pattern";
     }
 }

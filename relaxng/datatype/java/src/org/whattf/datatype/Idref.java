@@ -53,4 +53,9 @@ public final class Idref extends Id {
     public int getIdType() {
         return Datatype.ID_TYPE_IDREF;
     }   
+    
+    @Override
+    protected String getName() {
+        return "id reference";
+    }
 }

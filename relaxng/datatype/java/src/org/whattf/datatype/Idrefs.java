@@ -60,7 +60,7 @@ public final class Idrefs extends AbstractDatatype {
                 return;
             }
         }
-        throw new DatatypeException("An IDREFS value must contain at least one non-whitespace character.");
+        throw newDatatypeException("An IDREFS value must contain at least one non-whitespace character.");
     }   
     
     /**
@@ -70,5 +70,10 @@ public final class Idrefs extends AbstractDatatype {
      */
     public int getIdType() {
         return Datatype.ID_TYPE_IDREFS;
+    }
+
+    @Override
+    protected String getName() {
+        return "id references";
     }
 }

@@ -152,9 +152,9 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_MEDIA_TYPE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected \u201C(\u201D or letter at start of a media query part but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(
+                                "Expected \u201C(\u201D or letter at start of a media query part but saw ",
+                                         c, " instead.");
                     }
                 case IN_ONLY_OR_NOT:
                     if ('a' <= c && 'z' >= c) {
@@ -167,13 +167,13 @@ public class MediaQuery extends AbstractDatatype {
                             state = State.WS_BEFORE_MEDIA_TYPE;
                             continue;
                         } else {
-                            throw new DatatypeException(
-                                    "Bad media query: Expected \u201Conly\u201D or \u201Cnot\u201D but saw \u201C"
+                            throw newDatatypeException( 
+                                    "Expected \u201Conly\u201D or \u201Cnot\u201D but saw \u201C"
                                             + kw + "\u201D instead.");
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case WS_BEFORE_MEDIA_TYPE:
@@ -184,8 +184,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_MEDIA_TYPE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case IN_MEDIA_TYPE:
@@ -199,13 +199,13 @@ public class MediaQuery extends AbstractDatatype {
                             state = State.WS_BEFORE_AND;
                             continue;
                         } else {
-                            throw new DatatypeException(
-                                    "Bad media query: Expected a CSS media type but saw \u201C"
+                            throw newDatatypeException( 
+                                    "Expected a CSS media type but saw \u201C"
                                             + kw + "\u201D instead.");
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter, hyphen or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter, hyphen or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case WS_BEFORE_AND:
@@ -216,8 +216,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_AND;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case IN_AND:
@@ -231,13 +231,13 @@ public class MediaQuery extends AbstractDatatype {
                             state = State.WS_BEFORE_EXPRESSION;
                             continue;
                         } else {
-                            throw new DatatypeException(
-                                    "Bad media query: Expected \u201Cand\u201D but saw \u201C"
+                            throw newDatatypeException( 
+                                    "Expected \u201Cand\u201D but saw \u201C"
                                             + kw + "\u201D instead.");
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case WS_BEFORE_EXPRESSION:
@@ -247,8 +247,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.OPEN_PAREN_SEEN;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected \u201C(\u201D or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected \u201C(\u201D or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case OPEN_PAREN_SEEN:
@@ -259,8 +259,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_MEDIA_FEATURE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter at start of a media feature part but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter at start of a media feature part but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case IN_MEDIA_FEATURE:
@@ -280,13 +280,13 @@ public class MediaQuery extends AbstractDatatype {
                                 continue;
                             }
                         } else {
-                            throw new DatatypeException(
-                                    "Bad media query: Expected a CSS media feature but saw \u201C"
+                            throw newDatatypeException( 
+                                    "Expected a CSS media feature but saw \u201C"
                                             + kw + "\u201D instead.");
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter, hyphen, colon or whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter, hyphen, colon or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case WS_BEFORE_COLON:
@@ -296,8 +296,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.WS_BEFORE_VALUE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected whitespace or colon but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected whitespace or colon but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case WS_BEFORE_VALUE:
@@ -312,8 +312,8 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.IN_VALUE_STRING;
                                     continue;
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a letter but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a letter but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             default:
@@ -331,12 +331,12 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.IN_VALUE_DIGITS_AFTER_DOT;
                                     continue;                                    
                                 } else if (valueExpectation == ValueType.LENGTH) {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a digit, a dot or a sign but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a digit, a dot or a sign but saw \u201C"
                                                     + c + "\u201D instead.");                                    
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a digit or a sign but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a digit or a sign but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                         }
@@ -349,8 +349,8 @@ public class MediaQuery extends AbstractDatatype {
                         String kw = sb.toString();
                         sb.setLength(0);
                         if (!("progressive".equals(kw) || "interlace".equals(kw))) {
-                            throw new DatatypeException(
-                                    "Bad media query: Expected \u201Cprogressive\u201D or \u201Cinterlace\u201C as the scan mode value but saw \u201C"
+                            throw newDatatypeException( 
+                                    "Expected \u201Cprogressive\u201D or \u201Cinterlace\u201C as the scan mode value but saw \u201C"
                                             + kw + "\u201D instead.");
 
                         }
@@ -362,8 +362,8 @@ public class MediaQuery extends AbstractDatatype {
                             continue;
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter, whitespace or \u201C)\u201D but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter, whitespace or \u201C)\u201D but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case IN_VALUE_BEFORE_DIGITS:
@@ -382,14 +382,14 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.IN_VALUE_DIGITS_AFTER_DOT;
                                     continue;
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a dot or a digit but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a dot or a digit but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             case INTEGER:
                             case RATIO:
-                                throw new DatatypeException(
-                                        "Bad media query: Expected a digit but saw \u201C"
+                                throw newDatatypeException( 
+                                        "Expected a digit but saw \u201C"
                                                 + c + "\u201D instead.");
                             default:
                                 throw new RuntimeException("Impossible state.");
@@ -415,9 +415,9 @@ public class MediaQuery extends AbstractDatatype {
                                 } else if (isWhitespace(c) || c == ')') {
                                     if (!zero) {
                                         if (valueExpectation == ValueType.LENGTH) {
-                                            throw new DatatypeException("Bad media query: Non-zero lengths require a unit.");
+                                            throw newDatatypeException( "Non-zero lengths require a unit.");
                                         } else {
-                                            throw new DatatypeException("Bad media query: Non-zero resolutions require a unit.");
+                                            throw newDatatypeException( "Non-zero resolutions require a unit.");
                                         }
                                     }
                                     if (c == ')') {
@@ -428,8 +428,8 @@ public class MediaQuery extends AbstractDatatype {
                                         continue;
                                     }
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a letter, a dot or a digit but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a letter, a dot or a digit but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             case INTEGER:
@@ -440,8 +440,8 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.WS_BEFORE_CLOSE_PAREN;
                                     continue;
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a digit, whitespace or \u201C)\u201D but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a digit, whitespace or \u201C)\u201D but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             case RATIO:
@@ -450,8 +450,8 @@ public class MediaQuery extends AbstractDatatype {
                                     state = State.RATIO_SECOND_INTEGER_START;
                                     continue;
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a digit or \u201C/\u201D but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a digit or \u201C/\u201D but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             default:
@@ -467,8 +467,8 @@ public class MediaQuery extends AbstractDatatype {
                         zero = false;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a digit but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a digit but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case IN_VALUE_DIGITS_AFTER_DOT_TRAIL:
@@ -488,9 +488,9 @@ public class MediaQuery extends AbstractDatatype {
                                 } else if (isWhitespace(c) || c == ')') {
                                     if (!zero) {
                                         if (valueExpectation == ValueType.LENGTH) {
-                                            throw new DatatypeException("Bad media query: Non-zero lengths require a unit.");
+                                            throw newDatatypeException( "Non-zero lengths require a unit.");
                                         } else {
-                                            throw new DatatypeException("Bad media query: Non-zero resolutions require a unit.");
+                                            throw newDatatypeException( "Non-zero resolutions require a unit.");
                                         }
                                     }
                                     if (c == ')') {
@@ -501,8 +501,8 @@ public class MediaQuery extends AbstractDatatype {
                                         continue;
                                     }
                                 } else {
-                                    throw new DatatypeException(
-                                            "Bad media query: Expected a letter, a digit, whitespace or \u201C)\u201D but saw \u201C"
+                                    throw newDatatypeException( 
+                                            "Expected a letter, a digit, whitespace or \u201C)\u201D but saw \u201C"
                                                     + c + "\u201D instead.");
                                 }
                             default:
@@ -518,14 +518,14 @@ public class MediaQuery extends AbstractDatatype {
                         sb.setLength(0);
                         if (valueExpectation == ValueType.LENGTH) {
                             if (!isLengthUnit(kw)) {
-                                throw new DatatypeException(
-                                        "Bad media query: Expected a length unit but saw \u201C"
+                                throw newDatatypeException( 
+                                        "Expected a length unit but saw \u201C"
                                                 + c + "\u201D instead.");         
                             }
                         } else {
                             if (!("dpi".equals(kw) || "dpcm".equals(kw))) {
-                                throw new DatatypeException(
-                                        "Bad media query: Expected a resolution unit but saw \u201C"
+                                throw newDatatypeException( 
+                                        "Expected a resolution unit but saw \u201C"
                                                 + c + "\u201D instead.");                                         
                             }
                         }
@@ -537,8 +537,8 @@ public class MediaQuery extends AbstractDatatype {
                             continue;
                         }
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a letter, a dot or a digit but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a letter, a dot or a digit but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case RATIO_SECOND_INTEGER_START:
@@ -554,8 +554,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.IN_VALUE_BEFORE_DIGITS;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected a digit or a sign but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected a digit or a sign but saw \u201C"
                                         + c + "\u201D instead.");
                     }
                 case AFTER_CLOSE_PAREN:
@@ -563,8 +563,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.WS_BEFORE_AND;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected whitespace but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected whitespace but saw \u201C"
                                         + c + "\u201D instead.");                        
                     }
                 case WS_BEFORE_CLOSE_PAREN:
@@ -574,8 +574,8 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.AFTER_CLOSE_PAREN;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad media query: Expected whitespace or \u201C)\u201D but saw \u201C"
+                        throw newDatatypeException( 
+                                "Expected whitespace or \u201C)\u201D but saw \u201C"
                                         + c + "\u201D instead.");                        
                     }
             }
@@ -590,12 +590,13 @@ public class MediaQuery extends AbstractDatatype {
                 if (isMediaType(kw)) {
                     return;
                 } else {
-                    throw new DatatypeException(
-                            "Bad media query: Expected a CSS media type but the query ended.");
+                    throw newDatatypeException( 
+                            "Expected a CSS media type but the query ended.");
                 }
             default:
-                throw new DatatypeException("Bad media query .");
-        }
+                throw newDatatypeException( 
+                        "Media query ended prematurely.");
+            }
     }
 
     private ValueType valueExpectationFor(String feature) {
@@ -608,6 +609,11 @@ public class MediaQuery extends AbstractDatatype {
     
     private boolean isLengthUnit(String unit) {
         return LENGTH_UNITS.contains(unit);
+    }
+
+    @Override
+    protected String getName() {
+        return "media query";
     }
 
 }

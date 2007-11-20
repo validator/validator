@@ -37,4 +37,9 @@ public final class Iri extends IriRef {
     protected boolean isAbsolute() {
         return true;
     }
+
+    @Override
+    protected String getName() {
+        return "absolute IRI";
+    }
 }

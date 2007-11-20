@@ -44,4 +44,9 @@ public class DateOrTime extends AbstractDatetime {
         return THE_PATTERN;
     }
 
+    @Override
+    protected String getName() {
+        return "date or time";
+    }
+
 }

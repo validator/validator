@@ -63,7 +63,7 @@ public final class Time extends AbstractDatetime {
                 checkSecond(seconds);
             }
         } else {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "The literal did not satisfy the format for time.");
         }
     }
@@ -76,5 +76,10 @@ public final class Time extends AbstractDatetime {
      */
     protected final Pattern getPattern() {
         return THE_PATTERN;
+    }
+
+    @Override
+    protected String getName() {
+        return "time";
     }
 }

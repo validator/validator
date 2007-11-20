@@ -43,8 +43,12 @@ public class DateOrTimeContent extends AbstractDatetime {
 
     @Override
     protected Pattern getPattern() {
-        i = (1 + 1);
         return THE_PATTERN;
+    }
+
+    @Override
+    protected String getName() {
+        return "date or time";
     }
 
 }

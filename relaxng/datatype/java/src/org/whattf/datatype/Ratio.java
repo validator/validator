@@ -45,19 +45,19 @@ public final class Ratio extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         int len = literal.length();
         if (len == 0) {
-            throw new DatatypeException("Empty literal.");
+            throw newDatatypeException("Empty literal.");
         }
         int pos = 0;
         pos = findANumber(literal, pos);
         pos = skipZs(literal, pos);
         if (pos == len) {
-            throw new DatatypeException("Premature end of literal\u2014neither a denominator nor a second number was found.");
+            throw newDatatypeException("Premature end of literal\u2014neither a denominator nor a second number was found.");
         }
         if (isDenominator(literal.charAt(pos))) {
             while (pos < len) {
                 char c = literal.charAt(pos);
                 if (c >= '0' && c <= '9') {
-                    throw new DatatypeException("Found digits after denominator.");
+                    throw newDatatypeException("Found digits after denominator.");
                 }
                 pos++;
             }
@@ -69,12 +69,12 @@ public final class Ratio extends AbstractDatatype {
                 return;
             }
             if (isDenominator(literal.charAt(pos))) {
-                throw new DatatypeException("Found a denominator after the second number.");
+                throw newDatatypeException("Found a denominator after the second number.");
             }
             while (pos < len) {
                 char c = literal.charAt(pos);
                 if (c >= '0' && c <= '9') {
-                    throw new DatatypeException("Found digits after the second number.");
+                    throw newDatatypeException("Found digits after the second number.");
                 }
                 pos++;
             }
@@ -106,7 +106,7 @@ public final class Ratio extends AbstractDatatype {
             if (!UCharacter.isHighSurrogate(c)) {
                 if (UCharacter.isLowSurrogate(c)) {
                     if (!UCharacter.isHighSurrogate(prev)) {
-                        throw new DatatypeException("Bad UTF-16!");
+                        throw newDatatypeException("Bad UTF-16!");
                     }
                     if (!ZS.contains(UCharacter.getCodePoint(prev, c))) {
                         return pos;
@@ -133,7 +133,7 @@ public final class Ratio extends AbstractDatatype {
             char c = literal.charAt(pos);
             if (c == '.') {
                 if (pointSeen) {
-                    throw new DatatypeException(
+                    throw newDatatypeException(
                             "More than one decimal point in a number.");
                 }
                 pointSeen = true;
@@ -145,7 +145,7 @@ public final class Ratio extends AbstractDatatype {
             } else {
                 if (collectingNumber) {
                     if (lastWasPoint) {
-                        throw new DatatypeException(
+                        throw newDatatypeException(
                                 "A decimal point was not followed by a digit.");
                     }
                     return pos;
@@ -154,14 +154,19 @@ public final class Ratio extends AbstractDatatype {
             pos++;
         }
         if (!collectingNumber) {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "Expected a number but did not find one.");
         }
         if (lastWasPoint) {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "A decimal point was not followed by a digit.");
         }
         return pos;
+    }
+
+    @Override
+    protected String getName() {
+        return "ratio";
     }
 
 }

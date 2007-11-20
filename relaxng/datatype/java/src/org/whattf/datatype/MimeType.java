@@ -50,9 +50,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.IN_SUPERTYPE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a token character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a token character but saw ",
+                                        c, " instead.");
                     }
                 case IN_SUPERTYPE:
                     if (isTokenChar(c)) {
@@ -61,18 +61,18 @@ public class MimeType extends AbstractDatatype {
                         state = State.AT_SUBTYPE_START;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a token character or \u201C/\u201D but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a token character or \u201C/\u201D but saw ",
+                                        c, " instead.");
                     }
                 case AT_SUBTYPE_START:
                     if (isTokenChar(c)) {
                         state = State.IN_SUBTYPE;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a token character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a token character but saw ",
+                                        c, " instead.");
                     }
                 case IN_SUBTYPE:
                     if (isTokenChar(c)) {
@@ -84,9 +84,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a token character, whitespace or a semicolon but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a token character, whitespace or a semicolon but saw ",
+                                        c, " instead.");
                     }
                 case WS_BEFORE_SEMICOLON:
                     if (isWhitespace(c)) {
@@ -95,9 +95,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.SEMICOLON_SEEN;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected whitespace or a semicolon but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected whitespace or a semicolon but saw ",
+                                        c, " instead.");
                     }
                 case SEMICOLON_SEEN:
                     if (isWhitespace(c)) {
@@ -106,9 +106,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.IN_PARAM_NAME;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected whitespace or a token character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected whitespace or a token character but saw ",
+                                        c, " instead.");
                     }
                 case IN_PARAM_NAME:
                     if (isTokenChar(c)) {
@@ -125,9 +125,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.IN_UNQUOTED_STRING;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a double quote or a token character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a double quote or a token character but saw ",
+                                        c, " instead.");
                     }
                 case IN_QUOTED_STRING:
                     if (c == '\\') {
@@ -139,18 +139,18 @@ public class MimeType extends AbstractDatatype {
                     } else if (isQDTextChar(c)) {
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a non-control ASCII character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a non-control ASCII character but saw ",
+                                        c, " instead.");
                     }
                 case IN_QUOTED_PAIR:
                     if (c <= 127) {
                         state = State.IN_QUOTED_STRING;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected an ASCII character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected an ASCII character but saw ",
+                                        c, " instead.");
                     }
                 case CLOSE_QUOTE_SEEN:
                     if (c == ';') {
@@ -160,9 +160,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected an ASCII character but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected an ASCII character but saw ",
+                                        c, " instead.");
                     }
                 case IN_UNQUOTED_STRING:
                     if (isTokenChar(c)) {
@@ -174,9 +174,9 @@ public class MimeType extends AbstractDatatype {
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
-                        throw new DatatypeException(
-                                "Bad MIME type: Expected a token character, whitespace or a semicolon but saw \u201C"
-                                        + c + "\u201D instead.");
+                        throw newDatatypeException(i, 
+                                "Expected a token character, whitespace or a semicolon but saw ",
+                                        c, " instead.");
                     }
             }
         }
@@ -186,26 +186,26 @@ public class MimeType extends AbstractDatatype {
             case CLOSE_QUOTE_SEEN:
                 return;
             case AT_START:
-                throw new DatatypeException(
-                        "Bad MIME type: Expected a MIME type but saw the empty string.");
+                throw newDatatypeException( 
+                        "Expected a MIME type but saw the empty string.");
             case IN_SUPERTYPE:
             case AT_SUBTYPE_START:
-                throw new DatatypeException(
-                        "Bad MIME type: Subtype missing.");
+                throw newDatatypeException(literal.length() - 1, 
+                        "Subtype missing.");
             case EQUALS_SEEN:
             case IN_PARAM_NAME:
-                throw new DatatypeException(
-                        "Bad MIME type: Parameter value missing.");
+                throw newDatatypeException(literal.length() - 1, 
+                        "Parameter value missing.");
             case IN_QUOTED_PAIR:
             case IN_QUOTED_STRING:
-                throw new DatatypeException(
-                        "Bad MIME type: Unfinished quoted string.");
+                throw newDatatypeException(literal.length() - 1, 
+                        "Unfinished quoted string.");
             case SEMICOLON_SEEN:
-                throw new DatatypeException(
-                        "Bad MIME type: Semicolon seen but there was no parameter following it.");
+                throw newDatatypeException(literal.length() - 1, 
+                        "Semicolon seen but there was no parameter following it.");
             case WS_BEFORE_SEMICOLON:
-                throw new DatatypeException(
-                        "Bad MIME type: Extraneous trailing whitespace.");
+                throw newDatatypeException(literal.length() - 1, 
+                        "Extraneous trailing whitespace.");
         }
     }
 
@@ -220,6 +220,11 @@ public class MimeType extends AbstractDatatype {
                         || c == ',' || c == ';' || c == ':' || c == '\\'
                         || c == '\"' || c == '/' || c == '[' || c == ']'
                         || c == '?' || c == '=' || c == '{' || c == '}');
+    }
+
+    @Override
+    protected String getName() {
+        return "MIME type";
     }
 
 }

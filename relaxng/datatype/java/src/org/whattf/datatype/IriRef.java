@@ -62,21 +62,26 @@ public class IriRef extends AbstractDatatype {
         try {
             iri = fac.construct(literal.toString());
         } catch (IRIException e) {
-            throw new DatatypeException("Bad IRI: " + e.getMessage());
+            throw newDatatypeException(e.getMessage());
         }
         if (isAbsolute()) {
             if (!iri.isAbsolute()) {
-                throw new DatatypeException("Not an absolute IRI.");
+                throw newDatatypeException("Not an absolute IRI.");
             }
         }
         try {
             iri.toASCIIString();
         } catch (MalformedURLException e) {
-            throw new DatatypeException("Bad IRI: " + e.getMessage());
+            throw newDatatypeException(e.getMessage());
         }
     }
 
     protected boolean isAbsolute() {
         return false;
+    }
+
+    @Override
+    protected String getName() {
+        return "IRI reference";
     }
 }

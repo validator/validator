@@ -87,23 +87,23 @@ public final class Language extends AbstractDatatype {
             throws DatatypeException {
         String literal = lit.toString();
         if (literal.length() == 0) {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "The empty string is not a valid language tag.");
         }
         literal = toAsciiLowerCase(literal);
         if (isGrandfathered(literal)) {
             if (isDeprecated(literal)) {
-                throw new DatatypeException(
-                "The grandfathered language tag \u201C" + literal + "\u201D is deprecated.");                
+                throw newDatatypeException(
+                "The grandfathered language tag ", literal, " is deprecated.");                
             }
             return;
         }
         if (literal.startsWith("-")) {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "Language tag must not start with HYPHEN-MINUS.");
         }
         if (literal.endsWith("-")) {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "Language tag must not end with HYPHEN-MINUS.");
         }
         
@@ -112,10 +112,10 @@ public final class Language extends AbstractDatatype {
         for (int j = 0; j < subtags.length; j++) {
             int len = subtags[j].length();
             if (len == 0) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                 "Zero-length subtag.");                                
             } else if (len > 8) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                 "Subtags must next exceed 8 characters in length.");                                                
             }
         }
@@ -131,12 +131,12 @@ public final class Language extends AbstractDatatype {
         }
         if ((len == 2 || len == 3) && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                         "Bad ISO language part in language tag.");
             }
             if (isDeprecated(subtag)) {
-                throw new DatatypeException(
-                "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
+                throw newDatatypeException(
+                "The language subtag ", subtag, " is deprecated.");                
             }
             i++;
             if (i == subtags.length) {
@@ -145,19 +145,19 @@ public final class Language extends AbstractDatatype {
             subtag = subtags[i];
             len = subtag.length();
             if (len == 3) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                         "Found reserved language extension subtag.");
             }
         } else if (len == 4 && isLowerCaseAlpha(subtag)) {
-            throw new DatatypeException("Found reserved language tag.");
+            throw newDatatypeException("Found reserved language tag.");
         } else if (len == 5 && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                         "Bad IANA language part in language tag.");
             }
             if (isDeprecated(subtag)) {
-                throw new DatatypeException(
-                "The language subtag \u201C" + subtag + "\u201D is deprecated.");                
+                throw newDatatypeException(
+                "The language subtag ", subtag, " is deprecated.");                
             }
             i++;
             if (i == subtags.length) {
@@ -175,14 +175,14 @@ public final class Language extends AbstractDatatype {
         }
         if (subtag.length() == 4) {
             if (!isScript(subtag)) {
-                throw new DatatypeException("Bad script subtag.");
+                throw newDatatypeException("Bad script subtag.");
             }
             if (isDeprecated(subtag)) {
-                throw new DatatypeException(
-                "The script subtag \u201C" + subtag + "\u201D is deprecated.");                
+                throw newDatatypeException(
+                "The script subtag ", subtag, " is deprecated.");                
             }
             if (shouldSuppressScript(subtags[0], subtag)) {
-                throw new DatatypeException("Language tag should omit the default script for the language.");                
+                throw newDatatypeException("Language tag should omit the default script for the language.");                
             }
             i++;
             if (i == subtags.length) {
@@ -197,11 +197,11 @@ public final class Language extends AbstractDatatype {
         if ((len == 3 && isDigit(subtag))
                 || (len == 2 && isLowerCaseAlpha(subtag))) {
             if (!isRegion(subtag)) {
-                throw new DatatypeException("Bad region subtag.");
+                throw newDatatypeException("Bad region subtag.");
             }
             if (isDeprecated(subtag)) {
-                throw new DatatypeException(
-                "The region subtag \u201C" + subtag + "\u201D is deprecated.");                
+                throw newDatatypeException(
+                "The region subtag ", subtag, " is deprecated.");                
             }
             i++;
             if (i == subtags.length) {
@@ -220,17 +220,17 @@ public final class Language extends AbstractDatatype {
             }
             // cutting corners here a bit since there are no extensions at this time
             if (len == 1) {
-                throw new DatatypeException("Unknown extension.");
+                throw newDatatypeException("Unknown extension.");
             } else {
                 if (!isVariant(subtag)) {
-                    throw new DatatypeException("Bad variant subtag.");
+                    throw newDatatypeException("Bad variant subtag.");
                 }
                 if (isDeprecated(subtag)) {
-                    throw new DatatypeException(
-                    "The variant subtag \u201C" + subtag + "\u201D is deprecated.");                
+                    throw newDatatypeException(
+                    "The variant subtag ", subtag, " is deprecated.");                
                 }
                 if (!hasGoodPrefix(subtags, i)) {
-                    throw new DatatypeException("Variant lacks required prefix.");                    
+                    throw newDatatypeException("Variant lacks required prefix.");                    
                 }
             }
             i++;
@@ -316,12 +316,12 @@ public final class Language extends AbstractDatatype {
         int len = subtags.length;
         i++;
         if (i == len) {
-            throw new DatatypeException("No subtags in private use sequence.");
+            throw newDatatypeException("No subtags in private use sequence.");
         }
         while (i < len) {
             String subtag = subtags[i];
             if (!isLowerCaseAlphaNumeric(subtag)) {
-                throw new DatatypeException(
+                throw newDatatypeException(
                         "Bad character in private use subtag.");
             }
             i++;
@@ -381,5 +381,10 @@ public final class Language extends AbstractDatatype {
     
     private boolean isDeprecated(String subtag) {
         return Arrays.binarySearch(deprecated, subtag) > -1;
+    }
+
+    @Override
+    protected String getName() {
+        return "language tag";
     }
 }

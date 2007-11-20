@@ -61,4 +61,9 @@ public final class Date extends AbstractDatetime {
     protected final Pattern getPattern() {
         return THE_PATTERN;
     }
+
+    @Override
+    protected String getName() {
+        return "date";
+    }
 }

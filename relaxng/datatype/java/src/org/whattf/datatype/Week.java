@@ -69,10 +69,10 @@ public final class Week extends AbstractDatatype {
     private void checkWeek(int year, int week)
             throws DatatypeException {
         if (year < 1) {
-            throw new DatatypeException("Year cannot be less than 1.");
+            throw newDatatypeException("Year cannot be less than 1.");
         }
         if (week < 1) {
-            throw new DatatypeException("Week cannot be less than 1.");
+            throw newDatatypeException("Week cannot be less than 1.");
         }
         if (week == 53) {
             // TODO still in doubt about the concurrency contract
@@ -93,10 +93,10 @@ public final class Week extends AbstractDatatype {
             gc.setMinimalDaysInFirstWeek(4); // ISO week rule
             gc.set(year, 6, 1);
             if (gc.getActualMaximum(Calendar.WEEK_OF_YEAR) != 53) {
-                throw new DatatypeException("Week out of range.");               
+                throw newDatatypeException("Week out of range.");               
             }
         } else if (week > 53) {
-            throw new DatatypeException("Week out of range.");            
+            throw newDatatypeException("Week out of range.");            
         }
     }
 
@@ -106,9 +106,14 @@ public final class Week extends AbstractDatatype {
         if (m.matches()) {
             checkWeek(m.group(1), m.group(2));
         } else {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "The literal did not satisfy the format for week.");
         }
+    }
+
+    @Override
+    protected String getName() {
+        return "week";
     }
 
 }

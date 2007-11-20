@@ -60,13 +60,13 @@ public final class Month extends AbstractDatatype {
     private void checkMonth(int year, int month)
             throws DatatypeException {
         if (year < 1) {
-            throw new DatatypeException("Year cannot be less than 1.");
+            throw newDatatypeException("Year cannot be less than 1.");
         }
         if (month < 1) {
-            throw new DatatypeException("Month cannot be less than 1.");
+            throw newDatatypeException("Month cannot be less than 1.");
         }
         if (month > 12) {
-            throw new DatatypeException("Month cannot be greater than 12.");
+            throw newDatatypeException("Month cannot be greater than 12.");
         }
     }
 
@@ -76,9 +76,14 @@ public final class Month extends AbstractDatatype {
         if (m.matches()) {
             checkMonth(m.group(1), m.group(2));
         } else {
-            throw new DatatypeException(
+            throw newDatatypeException(
                     "The literal did not satisfy the format for month.");
         }
+    }
+
+    @Override
+    protected String getName() {
+        return "month";
     }
 
 }

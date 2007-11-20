@@ -57,12 +57,12 @@ public class Id extends AbstractDatatype {
             throws DatatypeException {
         int len = literal.length();
         if (len == 0) {
-            throw new DatatypeException("An ID must not be the empty string.");
+            throw newDatatypeException("An ID must not be the empty string.");
         }
         for (int i = 0; i < len; i++) {
             char c = literal.charAt(i);
             if (isWhitespace(c)) {
-                throw new DatatypeException(i, "An ID must not contain whitespace.");
+                throw newDatatypeException(i, "An ID must not contain whitespace.");
             }
         }
     }
@@ -74,5 +74,10 @@ public class Id extends AbstractDatatype {
      */
     public int getIdType() {
         return Datatype.ID_TYPE_ID;
+    }
+
+    @Override
+    protected String getName() {
+        return "id";
     }
 }
