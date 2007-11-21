@@ -796,9 +796,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             ContentHandler ch = emitter.startElaboration();
             if (ch != null) {
                 TreeParser treeParser = new TreeParser(ch, null);
+                XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
+                xhtmlSaxEmitter.startElement("dl");                
                 for (DocumentFragment fragment : fragments) {
                     treeParser.parse(fragment);
                 }
+                xhtmlSaxEmitter.endElement("dl");
             }
             emitter.endElaboration();
             
