@@ -270,6 +270,7 @@ def buildValidator():
                                                 "io-xml-util",
                                                 "htmlparser",
                                                 "hs-aelfred2",
+                                                "html5-datatypes",
                                                 "onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "validator"), 
