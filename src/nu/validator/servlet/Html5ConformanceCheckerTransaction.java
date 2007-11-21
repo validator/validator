@@ -30,8 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nu.validator.htmlparser.common.DoctypeExpectation;
-import nu.validator.htmlparser.common.XmlViolationPolicy;
-import nu.validator.htmlparser.sax.HtmlParser;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;

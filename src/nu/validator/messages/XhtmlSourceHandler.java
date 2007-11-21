@@ -24,11 +24,11 @@ package nu.validator.messages;
 
 import java.util.SortedSet;
 
-import org.xml.sax.SAXException;
-
 import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
+
+import org.xml.sax.SAXException;
 
 public class XhtmlSourceHandler implements SourceHandler {
 

@@ -24,9 +24,9 @@ package nu.validator.messages;
 
 import java.util.SortedSet;
 
-import org.xml.sax.SAXException;
-
 import nu.validator.source.SourceHandler;
+
+import org.xml.sax.SAXException;
 
 public class XmlExtractHandler implements SourceHandler {
 

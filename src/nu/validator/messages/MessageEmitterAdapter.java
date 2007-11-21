@@ -26,8 +26,6 @@ package nu.validator.messages;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,7 +51,6 @@ import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5AttributeDatatypeBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
-import nu.validator.xml.EmptyAttributes;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.apache.log4j.Logger;
@@ -67,7 +64,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.ibm.icu.text.Normalizer;
-import com.sun.medialib.mlib.mediaLibException;
 import com.thaiopensource.xml.util.Name;
 
 public final class MessageEmitterAdapter implements ErrorHandler {

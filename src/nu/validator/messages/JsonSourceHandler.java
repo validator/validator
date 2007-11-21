@@ -24,10 +24,10 @@ package nu.validator.messages;
 
 import java.util.SortedSet;
 
-import org.xml.sax.SAXException;
-
 import nu.validator.json.JsonHandler;
 import nu.validator.source.SourceHandler;
+
+import org.xml.sax.SAXException;
 
 public class JsonSourceHandler implements SourceHandler {
 

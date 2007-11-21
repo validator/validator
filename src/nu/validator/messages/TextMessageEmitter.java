@@ -31,9 +31,7 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 
 import nu.validator.messages.types.MessageType;
-import nu.validator.xml.XhtmlSaxEmitter;
 
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 public class TextMessageEmitter extends MessageEmitter {

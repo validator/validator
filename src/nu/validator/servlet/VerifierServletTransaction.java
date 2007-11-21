@@ -60,7 +60,6 @@ import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.source.SourceCode;
-import nu.validator.spec.EmptySpec;
 import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5SpecBuilder;
 import nu.validator.xml.AttributesImpl;

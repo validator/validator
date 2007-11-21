@@ -26,7 +26,6 @@ import nu.validator.json.JsonHandler;
 import nu.validator.messages.types.MessageType;
 import nu.validator.source.SourceHandler;
 
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 public class JsonMessageEmitter extends MessageEmitter {

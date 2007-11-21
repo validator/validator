@@ -30,7 +30,6 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.saxtree.DocumentFragment;
 import nu.validator.saxtree.TreeBuilder;
-import nu.validator.spec.Spec;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.EmptyAttributes;
 

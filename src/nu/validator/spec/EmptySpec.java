@@ -22,8 +22,6 @@
 
 package nu.validator.spec;
 
-import java.util.Map;
-
 import nu.validator.saxtree.DocumentFragment;
 
 import com.thaiopensource.xml.util.Name;

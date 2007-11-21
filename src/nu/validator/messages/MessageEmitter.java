@@ -22,11 +22,11 @@
 
 package nu.validator.messages;
 
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
-
 import nu.validator.messages.types.MessageType;
 import nu.validator.source.SourceHandler;
+
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 public abstract class MessageEmitter {
 
