@@ -100,6 +100,22 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return MediaQuery.THE_INSTANCE;
         } else if ("mime-type".equals(typeLocalName)) {
             return MimeType.THE_INSTANCE;
+        } else if ("browsing-context".equals(typeLocalName)) {
+            return BrowsingContext.THE_INSTANCE;
+        } else if ("hashed-id-ref".equals(typeLocalName)) {
+            return HashedIdRef.THE_INSTANCE;
+        } else if ("integer".equals(typeLocalName)) {
+            return Int.THE_INSTANCE;
+        } else if ("integer-non-negative".equals(typeLocalName)) {
+            return IntNonNegative.THE_INSTANCE;
+        } else if ("integer-positive".equals(typeLocalName)) {
+            return IntPositive.THE_INSTANCE;
+        } else if ("float".equals(typeLocalName)) {
+            return FloatingPoint.THE_INSTANCE;
+        } else if ("float-non-negative".equals(typeLocalName)) {
+            return FloatingPointNonNegative.THE_INSTANCE;
+        } else if ("float-positive".equals(typeLocalName)) {
+            return FloatingPointPositive.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

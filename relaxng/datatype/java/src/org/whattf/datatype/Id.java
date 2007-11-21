@@ -67,15 +67,6 @@ public class Id extends AbstractDatatype {
         }
     }
 
-    /**
-     * Returns <code>Datatype.ID_TYPE_ID</code>.
-     * @return <code>Datatype.ID_TYPE_ID</code>
-     * @see org.relaxng.datatype.Datatype#getIdType()
-     */
-    public int getIdType() {
-        return Datatype.ID_TYPE_ID;
-    }
-
     @Override
     public String getName() {
         return "id";

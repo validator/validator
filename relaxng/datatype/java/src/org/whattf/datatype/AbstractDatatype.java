@@ -130,12 +130,11 @@ public abstract class AbstractDatatype implements Datatype {
     }
 
     /**
-     * Always returns <code>Datatype.ID_TYPE_NULL</code>. (Overridden by subclasses 
-     * that have a different ID-type.)
+     * Always returns <code>Datatype.ID_TYPE_NULL</code>.
      * @return <code>Datatype.ID_TYPE_NULL</code>
      * @see org.relaxng.datatype.Datatype#getIdType()
      */
-    public int getIdType() {
+    public final int getIdType() {
         return Datatype.ID_TYPE_NULL;
     }
 
@@ -156,6 +155,10 @@ public abstract class AbstractDatatype implements Datatype {
      */
     protected final boolean isWhitespace(char c) {
         return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+    }
+    
+    protected final boolean isAsciiDigit(char c) {
+        return c >= '0' && c <= '9';
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,31 +22,38 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
 
-/**
- * This datatype shall accept any string that consists of one or more characters 
- * and does not contain any whitespace characters.
- * <p>The ID-type of this datatype is IDREF.
- * @version $Id$
- * @author hsivonen
- */
-public final class Idref extends Id {
+public class IntPositive extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final Idref THE_INSTANCE = new Idref();
-    
-    /**
-     * Package-private constructor
-     */
-    private Idref() {
-        super();
-    } 
+    public static final IntPositive THE_INSTANCE = new IntPositive();
     
     @Override
-    public String getName() {
-        return "id reference";
+    public void checkValid(CharSequence literal) throws DatatypeException {
+        if (literal.length() == 0) {
+            throw newDatatypeException("The empty string is not a valid positive integer.");
+        }
+        boolean zero = true;
+        for (int i = 0; i < literal.length(); i++) {
+            char c = literal.charAt(i);
+            if (!isAsciiDigit(c)) {
+                throw newDatatypeException(i, "Expected a digit but saw ", c, " instead.");                            
+            }
+            if (c != '0') {
+                zero = false;
+            }
+        }
+        if (zero) {
+            throw newDatatypeException("Zero is not a positive integer.");                                        
+        }
     }
+
+    @Override
+    public String getName() {
+        return "positive integer";
+    }
+
 }

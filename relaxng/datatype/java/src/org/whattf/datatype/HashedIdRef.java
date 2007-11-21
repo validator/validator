@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,31 +22,28 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
 
-/**
- * This datatype shall accept any string that consists of one or more characters 
- * and does not contain any whitespace characters.
- * <p>The ID-type of this datatype is IDREF.
- * @version $Id$
- * @author hsivonen
- */
-public final class Idref extends Id {
+public class HashedIdRef extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final Idref THE_INSTANCE = new Idref();
-    
-    /**
-     * Package-private constructor
-     */
-    private Idref() {
-        super();
-    } 
-    
+    public static final HashedIdRef THE_INSTANCE = new HashedIdRef();
+
+    @Override
+    public void checkValid(CharSequence literal) throws DatatypeException {
+        if (literal.length() == 0) {
+            throw newDatatypeException("The empty string is not a valid hashed ID reference.");
+        } else if (literal.charAt(0) != '#') {
+            throw newDatatypeException("A hashed ID reference must start with \u201C#\u201D.");            
+        }
+        // Other cases 
+    }
+
     @Override
     public String getName() {
-        return "id reference";
+        return "hashed ID reference";
     }
+
 }

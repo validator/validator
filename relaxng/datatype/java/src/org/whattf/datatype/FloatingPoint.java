@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2007 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,49 +22,42 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 
-/**
- * This datatype shall accept any string that consists of one or more characters and 
- * contains at least one character that is not a whitespace character.
- * <p>The ID-type of this datatype is IDREFS.
- * @version $Id$
- * @author hsivonen
- */
-public final class Idrefs extends AbstractDatatype {
+public class FloatingPoint extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final Idrefs THE_INSTANCE = new Idrefs();
+    public static final FloatingPoint THE_INSTANCE = new FloatingPoint();
     
-    /**
-     * Package-private constructor
-     */
-    private Idrefs() {
-        super();
-    }
-
-    /**
-     * Checks that the value is a proper list of HTML5 ids.
-     * @param literal the value
-     * @param context ignored
-     * @throws DatatypeException if the value isn't valid
-     * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
-     */
+    @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        for (int i = 0; i < literal.length(); i++) {
-            char c = literal.charAt(i);
-            if (!isWhitespace(c)) {
-                return;
+        if (literal.length() == 0) {
+            throw newDatatypeException("The empty string is not a valid floating point number.");
+        }
+        char c = literal.charAt(0);
+        if (!(c == '-' || c == '.' || isAsciiDigit(c))) {
+            throw newDatatypeException(0, "Expected a minus sign, a dot or a digit but saw ", c, " instead.");            
+        }
+        boolean dotSeen = (c == '.');
+        for (int i = 1; i < literal.length(); i++) {
+            c = literal.charAt(i);
+            if (!dotSeen && (c == '.')) {
+                dotSeen = true;
+            } else if (!isAsciiDigit(c)) {
+                if (dotSeen) {
+                    throw newDatatypeException(i, "Expected a digit but saw ", c, " instead.");                           
+                } else {
+                    throw newDatatypeException(i, "Expected a digit or a dot but saw ", c, " instead.");                                               
+                }
             }
         }
-        throw newDatatypeException("An IDREFS value must contain at least one non-whitespace character.");
-    }   
+    }
 
     @Override
     public String getName() {
-        return "id references";
+        return "floating point number";
     }
+
 }
