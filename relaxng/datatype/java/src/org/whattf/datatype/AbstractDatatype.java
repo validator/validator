@@ -36,7 +36,7 @@ import org.relaxng.datatype.ValidationContext;
  * @version $Id$
  * @author hsivonen
  */
-abstract class AbstractDatatype implements Datatype {
+public abstract class AbstractDatatype implements Datatype {
 
     /**
      * Mask for ASCII case folding.
@@ -208,5 +208,5 @@ abstract class AbstractDatatype implements Datatype {
         return new Html5DatatypeException(position, this.getClass(), this.getName(), head, String.valueOf(literal), tail);
     }    
     
-    protected abstract String getName();
+    public abstract String getName();
 }

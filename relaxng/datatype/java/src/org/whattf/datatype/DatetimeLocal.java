@@ -64,7 +64,7 @@ public final class DatetimeLocal extends AbstractDatetime {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "local datetime";
     }
 }

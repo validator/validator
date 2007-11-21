@@ -73,7 +73,7 @@ public final class Idrefs extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "id references";
     }
 }

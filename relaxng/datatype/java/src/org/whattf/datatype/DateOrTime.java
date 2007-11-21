@@ -45,7 +45,7 @@ public class DateOrTime extends AbstractDatetime {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "date or time";
     }
 

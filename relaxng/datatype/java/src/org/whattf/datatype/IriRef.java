@@ -81,7 +81,7 @@ public class IriRef extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "IRI reference";
     }
 }

@@ -112,7 +112,7 @@ public final class Week extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "week";
     }
 

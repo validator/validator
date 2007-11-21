@@ -39,7 +39,7 @@ public final class Iri extends IriRef {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "absolute IRI";
     }
 }

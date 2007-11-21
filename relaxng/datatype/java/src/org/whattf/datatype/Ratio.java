@@ -165,7 +165,7 @@ public final class Ratio extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "ratio";
     }
 

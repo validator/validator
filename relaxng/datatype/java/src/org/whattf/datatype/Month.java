@@ -82,7 +82,7 @@ public final class Month extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "month";
     }
 

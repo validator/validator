@@ -52,7 +52,7 @@ public class AsciiCaseInsensitiveString extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "ASCII-case-insensitive string";
     }
 }

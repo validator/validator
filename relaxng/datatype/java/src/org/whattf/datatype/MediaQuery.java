@@ -612,7 +612,7 @@ public class MediaQuery extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "media query";
     }
 

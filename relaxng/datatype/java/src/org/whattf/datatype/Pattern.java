@@ -67,7 +67,7 @@ public final class Pattern extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "pattern";
     }
 }

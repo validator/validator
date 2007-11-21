@@ -384,7 +384,7 @@ public final class Language extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "language tag";
     }
 }

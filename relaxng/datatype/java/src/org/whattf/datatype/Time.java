@@ -79,7 +79,7 @@ public final class Time extends AbstractDatetime {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "time";
     }
 }

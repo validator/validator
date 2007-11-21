@@ -55,7 +55,7 @@ public final class Idref extends Id {
     }   
     
     @Override
-    protected String getName() {
+    public String getName() {
         return "id reference";
     }
 }

@@ -68,7 +68,7 @@ public final class DatetimeTz extends AbstractDatetime {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "datetime with timezone";
     }
 }

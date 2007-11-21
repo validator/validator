@@ -63,7 +63,7 @@ public final class Date extends AbstractDatetime {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "date";
     }
 }

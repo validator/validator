@@ -223,7 +223,7 @@ public class MimeType extends AbstractDatatype {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "MIME type";
     }
 
