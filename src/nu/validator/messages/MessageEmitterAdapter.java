@@ -25,6 +25,9 @@ package nu.validator.messages;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +50,7 @@ import nu.validator.source.SourceCode;
 import nu.validator.source.SourceHandler;
 import nu.validator.spec.EmptySpec;
 import nu.validator.spec.Spec;
+import nu.validator.spec.html5.Html5AttributeDatatypeBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.EmptyAttributes;
@@ -55,12 +59,15 @@ import nu.validator.xml.XhtmlSaxEmitter;
 import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
 import org.whattf.checker.NormalizationChecker;
+import org.whattf.datatype.Html5DatatypeException;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.ibm.icu.text.Normalizer;
+import com.sun.medialib.mlib.mediaLibException;
 import com.thaiopensource.xml.util.Name;
 
 public final class MessageEmitterAdapter implements ErrorHandler {
@@ -88,6 +95,19 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2002/06/xhtml2/", "XHTML2".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.ascc.net/xml/schematron", "Schematron".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron", "ISO Schematron".toCharArray());
+    }
+    
+    private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
+    
+    static {
+        InputSource in = new InputSource("http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions");
+        try {
+            HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions(in));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
@@ -569,9 +589,26 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             messageTextString(messageTextHandler, PERIOD, false);                    
         } else {
             messageTextString(messageTextHandler, COLON, false);                    
-            for (String err : datatypeErrors.keySet()) {
+            for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
                 messageTextString(messageTextHandler, SPACE, false);
-                emitStringWithQurlyQuotes(messageTextHandler, err);
+                DatatypeException ex = entry.getValue();
+                if (ex instanceof Html5DatatypeException) {
+                    Html5DatatypeException ex5 = (Html5DatatypeException) ex;
+                    String[] segments = ex5.getSegments();
+                    for (int i = 0; i < segments.length; i++) {
+                        String segment = segments[i];
+                        if (i % 2 == 0) {
+                            emitStringWithQurlyQuotes(messageTextHandler, segment);                            
+                        } else {
+                            String scrubbed = scrub(segment);
+                            messageTextHandler.startCode();
+                            messageTextHandler.characters(scrubbed.toCharArray(), 0, scrubbed.length());
+                            messageTextHandler.endCode();
+                        }
+                    }
+                } else {
+                    emitStringWithQurlyQuotes(messageTextHandler, ex.getMessage());
+                }
             }
         }
     }
@@ -689,6 +726,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void elaboration(Exception e) throws SAXException {
         if (!(e instanceof AbstractValidationException)) {
             return;
@@ -731,6 +769,39 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             UnknownElementException ex = (UnknownElementException) e;
             Name elt = ex.getParent();
             elaborateContentModel(elt);
+        } else if (e instanceof BadAttributeValueException) {
+            BadAttributeValueException ex = (BadAttributeValueException) e;
+            Map<String, DatatypeException> map = ex.getExceptions();
+            elaborateDatatypes(map);
+        } else if (e instanceof StringNotAllowedException) {
+            StringNotAllowedException ex = (StringNotAllowedException) e;
+            Map<String, DatatypeException> map = ex.getExceptions();
+            elaborateDatatypes(map);
+        }
+    }
+
+    private void elaborateDatatypes(Map<String, DatatypeException> map) throws SAXException {
+        Set<DocumentFragment> fragments = new HashSet<DocumentFragment>();
+        for (Map.Entry<String, DatatypeException> entry : map.entrySet()) {
+            DatatypeException ex = entry.getValue();
+            if (ex instanceof Html5DatatypeException) {
+                Html5DatatypeException ex5 = (Html5DatatypeException) ex;
+                DocumentFragment fragment = HTML5_DATATYPE_ADVICE.get(ex5.getDatatypeClass());
+                if (fragment != null) { 
+                    fragments.add(fragment);
+                }
+            }
+        }
+        if (!fragments.isEmpty()) {
+            ContentHandler ch = emitter.startElaboration();
+            if (ch != null) {
+                TreeParser treeParser = new TreeParser(ch, null);
+                for (DocumentFragment fragment : fragments) {
+                    treeParser.parse(fragment);
+                }
+            }
+            emitter.endElaboration();
+            
         }
     }
 
@@ -754,19 +825,24 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    private void elaborateContentModelandContext(Name parent, Name child) throws SAXException {
+    private void elaborateContentModelandContext(Name parent, Name child)
+            throws SAXException {
         DocumentFragment contentModelDds = spec.contentModelDescription(parent);
         DocumentFragment contextDds = spec.contentModelDescription(child);
-        if (contentModelDds != null && contextDds != null) {
+        if (contentModelDds != null || contextDds != null) {
             ContentHandler ch = emitter.startElaboration();
             if (ch != null) {
                 TreeParser treeParser = new TreeParser(ch, null);
                 XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
                 xhtmlSaxEmitter.startElement("dl");
-                emitContextDt(xhtmlSaxEmitter, child);
-                treeParser.parse(contextDds);
-                emitContentModelDt(xhtmlSaxEmitter, parent);
-                treeParser.parse(contentModelDds);
+                if (contextDds != null) {
+                    emitContextDt(xhtmlSaxEmitter, child);
+                    treeParser.parse(contextDds);
+                }
+                if (contentModelDds != null) {
+                    emitContentModelDt(xhtmlSaxEmitter, parent);
+                    treeParser.parse(contentModelDds);
+                }
                 xhtmlSaxEmitter.endElement("dl");
             }
             emitter.endElaboration();
