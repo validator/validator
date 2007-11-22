@@ -36,7 +36,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			common.data.integer.non-negative
 		}
 
-	common.attrs.other &=
+	common.attrs.repetition &=
 		(	(	repetition.attrs.repeat.template
 			&	repetition.attrs.repeat-min?
 			&	repetition.attrs.repeat-max?

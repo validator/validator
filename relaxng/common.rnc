@@ -158,6 +158,9 @@ common.attrs =
 	(	common.attrs.basic
 	&	common.attrs.i18n
 	&	common.attrs.present
+	&	common.attrs.interact
+	&	common.attrs.repetition
+	&	common.attrs.scripting
 	&	common.attrs.other
 	)
 
@@ -230,6 +233,15 @@ common.attrs.present =
 		attribute tabindex {
 			common.data.integer
 		}
+
+common.attrs.interact =
+	empty
+
+common.attrs.repetition =
+	empty
+
+common.attrs.scripting =
+	empty
 
 common.attrs.other =
 	empty

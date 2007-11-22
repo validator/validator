@@ -85,7 +85,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 # #####################################################################
 ## Event Handler Attribute Definitions
 
-	scripting.attr.common =
+	common.attrs.scripting &=
 		(	scripting.attr.onabort?
 		&	scripting.attr.onbeforeunload?
 		&	scripting.attr.onblur?
@@ -248,8 +248,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 
 # #####################################################################
-## Event Handler Attribute Assignments
+# Event Handler Attribute Assignments
 
-	common.attrs.other &= scripting.attr.common
-	
 #	body.attrs   &= scripting.attr.loading

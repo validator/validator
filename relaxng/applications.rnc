@@ -6,7 +6,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Additions to Common Attributes
 
-	common.attrs.other &=
+	common.attrs.interact &=
 		(	common.attrs.contextmenu?
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
