@@ -31,6 +31,13 @@ public class BrowsingContext extends AbstractDatatype {
      */
     public static final BrowsingContext THE_INSTANCE = new BrowsingContext();
 
+    /**
+     * 
+     */
+    private BrowsingContext() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

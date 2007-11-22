@@ -31,6 +31,13 @@ public class IntPositive extends AbstractDatatype {
      */
     public static final IntPositive THE_INSTANCE = new IntPositive();
     
+    /**
+     * 
+     */
+    private IntPositive() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

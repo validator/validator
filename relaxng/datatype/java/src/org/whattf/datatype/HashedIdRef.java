@@ -31,6 +31,13 @@ public class HashedIdRef extends AbstractDatatype {
      */
     public static final HashedIdRef THE_INSTANCE = new HashedIdRef();
 
+    /**
+     * 
+     */
+    private HashedIdRef() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

@@ -31,6 +31,13 @@ public class FloatingPoint extends AbstractDatatype {
      */
     public static final FloatingPoint THE_INSTANCE = new FloatingPoint();
     
+    /**
+     * 
+     */
+    private FloatingPoint() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

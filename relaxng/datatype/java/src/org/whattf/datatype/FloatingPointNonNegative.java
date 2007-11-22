@@ -31,6 +31,13 @@ public class FloatingPointNonNegative extends AbstractDatatype {
      */
     public static final FloatingPointNonNegative THE_INSTANCE = new FloatingPointNonNegative();
     
+    /**
+     * 
+     */
+    private FloatingPointNonNegative() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

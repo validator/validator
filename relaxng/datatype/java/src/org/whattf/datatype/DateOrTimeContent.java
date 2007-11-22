@@ -37,7 +37,7 @@ public class DateOrTimeContent extends AbstractDatetime {
      */
     private static final Pattern THE_PATTERN = Pattern.compile("^\\p{Zs}*(?:(?:([0-9]{4,})-([0-9]{2})-([0-9]{2})(?:\\p{Zs}*(?:T|\\p{Zs})\\p{Zs}*([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]+)?)?\\p{Zs}*(?:Z|(?:([+-][0-9]{2}):([0-9]{2})))?)?)|(?:([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]+)?)?\\p{Zs}*(?:Z|(?:([+-][0-9]{2}):([0-9]{2})))?))\\p{Zs}*$");
 
-    protected DateOrTimeContent() {
+    private DateOrTimeContent() {
         super();
     }
 

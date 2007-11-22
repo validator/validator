@@ -31,6 +31,13 @@ public class Int extends AbstractDatatype {
      */
     public static final Int THE_INSTANCE = new Int();
     
+    /**
+     * 
+     */
+    private Int() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

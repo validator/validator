@@ -31,6 +31,13 @@ public class IntNonNegative extends AbstractDatatype {
      */
     public static final IntNonNegative THE_INSTANCE = new IntNonNegative();
     
+    /**
+     * 
+     */
+    private IntNonNegative() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {

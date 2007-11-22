@@ -115,7 +115,7 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("grid", ValueType.INTEGER);
     }
 
-    public MediaQuery() {
+    private MediaQuery() {
         super();
     }
 

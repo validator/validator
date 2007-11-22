@@ -36,6 +36,13 @@ public class FloatingPointExponentPositive extends AbstractDatatype {
         
     }
     
+    /**
+     * 
+     */
+    private FloatingPointExponentPositive() {
+        super();
+    }
+
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         State state = State.AT_START;

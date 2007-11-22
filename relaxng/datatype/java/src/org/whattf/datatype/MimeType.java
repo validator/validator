@@ -35,7 +35,7 @@ public class MimeType extends AbstractDatatype {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
 
-    public MimeType() {
+    private MimeType() {
         super();
     }
 
