@@ -155,7 +155,7 @@ namespace local = ""
 	object.attrs =
 		(	common.attrs
 		&	(	(	object.attrs.data
-				|	object.attrs.type?
+				&	object.attrs.type?
 				)
 			|	object.attrs.type
 			)
