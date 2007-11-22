@@ -154,7 +154,9 @@ namespace local = ""
 		element object { object.inner.embedded & object.attrs }
 	object.attrs =
 		(	common.attrs
-		&	(	object.attrs.data
+		&	(	(	object.attrs.data
+				|	object.attrs.type?
+				)
 			|	object.attrs.type
 			)
 		&	object.attrs.archive?

@@ -175,7 +175,7 @@ common.attrs.basic =
 		}
 	common.attrs.xml-id =
 		attribute xml:id {
-			xsd:ID
+			xsd:NCName
 		} & XMLonly
 	common.attrs.class =
 		attribute class {
@@ -252,65 +252,74 @@ common.attrs.other =
 		string #FIXME
 		
 	common.data.browsingcontext =
-		xsd:string {
-			pattern = "()|([^_].*)|(_[bB][lL][aA][nN][kK])|(_[sS][eE][lL][fF])|(_[pP][aA][rR][eE][nN][tT])|(_[tT][oO][pP])"
-		}
+		w:browsing-context
+#		xsd:string {
+#			pattern = "()|([^_].*)|(_[bB][lL][aA][nN][kK])|(_[sS][eE][lL][fF])|(_[pP][aA][rR][eE][nN][tT])|(_[tT][oO][pP])"
+#		}
 		
 
 ## IDs and IDREFs
 
 	common.data.id =
-		xsd:string {
-			pattern = "\S+"
-		}
+		w:ID
+#		xsd:string {
+#			pattern = "\S+"
+#		}
 
 	common.data.idref =
-		string #REVISIT
-
+		w:IDREF
+		
 	common.data.idrefs =
-		string #REVISIT
+		w:IDREFS
 
 	common.data.hashed-idref =
-		xsd:string {
-			pattern = "#.+"
-		}
+		w:hashed-id-ref	
+#		xsd:string {
+#			pattern = "#.+"
+#		}
 
 ## Numerical
 
 	common.data.integer =
-		xsd:string {
-			pattern = "-?[0-9]+"
-		}
+		w:integer
+#		xsd:string {
+#			pattern = "-?[0-9]+"
+#		}
 
 	common.data.integer.positive =
-		xsd:string {
-			pattern = "0*[1-9][0-9]*"
-		}
+		w:integer-positive
+#		xsd:string {
+#			pattern = "0*[1-9][0-9]*"
+#		}
 
 	common.data.integer.non-negative =
-		xsd:string {
-			pattern = "[0-9]+"
-		}
+		w:integer-non-negative
+#		xsd:string {
+#			pattern = "[0-9]+"
+#		}
 		
-	common.data.percent =
-		xsd:string {
-			pattern = "(100)|([1-9]?[0-9](\.[0-9]+)?)%"
-		}
+#	common.data.percent =
+#		xsd:string {
+#			pattern = "(100)|([1-9]?[0-9](\.[0-9]+)?)%"
+#		}
 		
 	common.data.float =
-		xsd:string {
-			pattern = "-?((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
-		}
+		w:float
+#		xsd:string {
+#			pattern = "-?((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+#		}
 
 	common.data.float.positive =
-		xsd:string {
-			pattern = "0*((\.0*[1-9][0-9]*)|([1-9][0-9]*(\.[0-9]*)?))"
-		}
+		w:float-positive
+#		xsd:string {
+#			pattern = "0*((\.0*[1-9][0-9]*)|([1-9][0-9]*(\.[0-9]*)?))"
+#		}
 		
 	common.data.float.non-negative =
-		xsd:string {
-			pattern = "((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
-		}
+		w:float-non-negative
+#		xsd:string {
+#			pattern = "((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+#		}
 		
 ## Temporal
 
