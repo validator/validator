@@ -22,13 +22,23 @@
 
 package org.whattf.datatype;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
+import org.whattf.io.Utf8PercentDecodingReader;
 
 import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
+import com.hp.hpl.jena.iri.Violation;
 
 public class IriRef extends AbstractDatatype {
 
@@ -37,6 +47,8 @@ public class IriRef extends AbstractDatatype {
      */
     public static final IriRef THE_INSTANCE = new IriRef();
 
+    private static final Pattern JAVASCRIPT = Pattern.compile("^[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:.*$");
+    
     protected IriRef() {
         super();
     }
@@ -57,11 +69,40 @@ public class IriRef extends AbstractDatatype {
         fac.useSchemeSpecificRules("file", true);
         fac.useSchemeSpecificRules("data", true); // XXX broken
         // XXX javascript?
-        fac.setQueryCharacterRestrictions(false);
+        //fac.setQueryCharacterRestrictions(false);
         IRI iri;
         try {
-            iri = fac.construct(literal.toString());
+            Matcher m = JAVASCRIPT.matcher(literal);
+            if (m.matches()) {
+                StringBuilder sb = new StringBuilder(2 + literal.length());
+                sb.append("x-").append(literal);
+                String xStr = sb.toString();
+                iri = fac.construct(xStr);
+                Reader reader = new BufferedReader(
+                        new Utf8PercentDecodingReader(new StringReader(
+                                xStr.substring(13))));
+                reader.mark(1);
+                int c = reader.read();
+                if (c != 0xFEFF) {
+                    reader.reset();
+                }
+                try {
+                    Context context = Context.enter();
+                    context.setOptimizationLevel(0);
+                    context.setLanguageVersion(Context.VERSION_1_6);
+                    context.compileReader(reader, null, 1, null);
+                } finally {
+                    Context.exit();
+                }
+            } else {
+                iri = fac.construct(literal.toString());
+            }
         } catch (IRIException e) {
+            Violation v = e.getViolation();
+            throw newDatatypeException(v.codeName() + " in " + v.component() + ".");
+        } catch (IOException e) {
+            throw newDatatypeException(e.getMessage());            
+        } catch (RhinoException e) {
             throw newDatatypeException(e.getMessage());
         }
         if (isAbsolute()) {
