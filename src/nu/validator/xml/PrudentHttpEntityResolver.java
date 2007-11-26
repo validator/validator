@@ -26,11 +26,10 @@ package nu.validator.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import nu.validator.io.BoundednputStream;
 import nu.validator.io.ObservableInputStream;
@@ -54,7 +53,6 @@ import org.xml.sax.SAXParseException;
 import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
-
 
 /**
  * @version $Id: PrudentHttpEntityResolver.java,v 1.1 2005/01/08 08:11:26
@@ -90,7 +88,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     private boolean allowGenericXml = true;
 
     private final IRIFactory iriFactory;
-    
+
     private final ContentTypeParser contentTypeParser;
 
     /**
@@ -114,7 +112,8 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         PrudentHttpEntityResolver.maxRequests = maxRequests;
         HttpClientParams hcp = client.getParams();
         hcp.setBooleanParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
-        hcp.setIntParameter(HttpClientParams.MAX_REDIRECTS, 20); // Gecko default 
+        hcp.setIntParameter(HttpClientParams.MAX_REDIRECTS, 20); // Gecko
+                                                                    // default
     }
 
     public static void setUserAgent(String ua) {
@@ -136,7 +135,9 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         this.iriFactory.useSpecificationXMLSystemID(true);
         this.iriFactory.useSchemeSpecificRules("http", true);
         this.iriFactory.useSchemeSpecificRules("https", true);
-        this.contentTypeParser = new ContentTypeParser(errorHandler, laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml, this.acceptAllKnownXmlTypes, this.allowGenericXml);
+        this.contentTypeParser = new ContentTypeParser(errorHandler,
+                laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
+                this.acceptAllKnownXmlTypes, this.allowGenericXml);
     }
 
     /**
@@ -178,20 +179,10 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
             String scheme = iri.getScheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
-                String msg = "Unsupported URI scheme: \u201C" + scheme + "\u201D.";
-                SAXParseException spe = new SAXParseException(
-                        msg, publicId,
+                String msg = "Unsupported URI scheme: \u201C" + scheme
+                        + "\u201D.";
+                SAXParseException spe = new SAXParseException(msg, publicId,
                         systemId, -1, -1, new IOException(msg));
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
-            }
-            String host = iri.getHost();
-            if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
-                SAXParseException spe = new SAXParseException(
-                        "Attempted to connect to localhost.", publicId,
-                        systemId, -1, -1, new IOException("Attempted to connect to localhost."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -203,6 +194,18 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
                         publicId, systemId, -1, -1, ioe);
+                if (errorHandler != null) {
+                    errorHandler.fatalError(spe);
+                }
+                throw spe;
+            }
+            String host = new URL(systemId).getHost(); // Jena IRI getHost is
+                                                        // b0rked
+            if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
+                SAXParseException spe = new SAXParseException(
+                        "Attempted to connect to localhost.", publicId,
+                        systemId, -1, -1, new IOException(
+                                "Attempted to connect to localhost."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -230,9 +233,9 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             client.executeMethod(m);
             int statusCode = m.getStatusCode();
             if (statusCode != 200) {
-                String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: " + statusCode + ".";
-                SAXParseException spe = new SAXParseException(
-                        msg, publicId,
+                String msg = "HTTP resource not retrievable. The HTTP status from the remote server was: "
+                        + statusCode + ".";
+                SAXParseException spe = new SAXParseException(msg, publicId,
                         m.getURI().toString(), -1, -1, new IOException(msg));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
@@ -243,7 +246,8 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
                         "Resource size exceeds limit.", publicId,
-                        m.getURI().toString(), -1, -1, new IOException("Resource size exceeds limit."));
+                        m.getURI().toString(), -1, -1, new IOException(
+                                "Resource size exceeds limit."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -256,7 +260,8 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if (ct != null) {
                 contentType = ct.getValue();
             }
-            is = contentTypeParser.buildTypedInputSource(baseUri, publicId, contentType);
+            is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
+                    contentType);
             final GetMethod meth = m;
             InputStream stream = m.getResponseBodyAsStream();
             if (sizeLimit > -1) {
@@ -468,7 +473,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         }
         if (isAcceptAllKnownXmlTypes()) {
             types.add("application/xhtml+xml");
-//            types.add("application/atom+xml");
+            // types.add("application/atom+xml");
             types.add("image/svg+xml");
             types.add("application/docbook+xml");
             types.add("application/xml; q=0.5");
