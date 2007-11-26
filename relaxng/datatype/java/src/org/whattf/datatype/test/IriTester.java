@@ -34,7 +34,7 @@ public class IriTester {
      */
     public static void main(String[] args) throws DatatypeException {
         Datatype dt = (new Html5DatatypeLibrary()).createDatatype("iri");
-        dt.checkValid("javascript:alert(1+", null);
+        dt.checkValid("DaTa:,\u00e4", null);
     }
 
 }

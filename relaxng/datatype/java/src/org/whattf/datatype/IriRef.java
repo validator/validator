@@ -49,6 +49,8 @@ public class IriRef extends AbstractDatatype {
 
     private static final Pattern JAVASCRIPT = Pattern.compile("^[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:.*$");
     
+    private static final Pattern DATA = Pattern.compile("^[dD][aA][tT][aA]:.*$");
+    
     protected IriRef() {
         super();
     }
@@ -111,7 +113,11 @@ public class IriRef extends AbstractDatatype {
             }
         }
         try {
-            iri.toASCIIString();
+            String ascii = iri.toASCIIString();
+            Matcher m = DATA.matcher(ascii);
+            if (m.matches()) {
+                
+            }
         } catch (MalformedURLException e) {
             throw newDatatypeException(e.getMessage());
         }
