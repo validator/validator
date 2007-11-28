@@ -25,6 +25,7 @@ package org.whattf.datatype;
 import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
+import org.whattf.datatype.AbstractDatatype.CharSequenceWithOffset;
 
 public class Polyline extends AbstractInt {
 
@@ -43,25 +44,20 @@ public class Polyline extends AbstractInt {
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         List<CharSequenceWithOffset> list = splitOnComma(literal);
-        if (list.size() != 4) {
-            throw newDatatypeException("A rectangle must have four comma-separated integers.");
+        if (list.size() < 6) {
+            throw newDatatypeException("A polyline must have at least six comma-separated integers.");
+        }
+        if (list.size() % 2 != 0) {
+            throw newDatatypeException("A polyline must have an even number of comma-separated integers.");
         }
         for (CharSequenceWithOffset item : list) {
             checkInt(item.getSequence(), item.getOffset());
-        }
-        if (Integer.parseInt(list.get(0).getSequence().toString()) >= 
-            Integer.parseInt(list.get(2).getSequence().toString())) {
-            throw newDatatypeException("The first integer must be less than the third.");
-        }
-        if (Integer.parseInt(list.get(1).getSequence().toString()) >= 
-            Integer.parseInt(list.get(3).getSequence().toString())) {
-            throw newDatatypeException("The second integer must be less than the fourth.");
         }
     }
 
     @Override
     public String getName() {
-        return "rectangle";
+        return "polyline";
     }
 
 }
