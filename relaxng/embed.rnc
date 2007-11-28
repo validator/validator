@@ -406,9 +406,10 @@ namespace local = ""
 			}
 		area.attrs.coords.rect =
 			attribute coords {
-				xsd:token {
-					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
-				}
+				w:rectangle
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
+#				}
 			}
 		area.attrs.shape.circle =
 			attribute shape {
@@ -416,9 +417,10 @@ namespace local = ""
 			}
 		area.attrs.coords.circle =
 			attribute coords {
-				xsd:token {
-					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
-				}
+				w:circle
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
+#				}
 			}
 		area.attrs.shape.poly =
 			attribute shape {
@@ -426,9 +428,10 @@ namespace local = ""
 			}
 		area.attrs.coords.poly =
 			attribute coords {
-				xsd:token {
-					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
-				}
+				w:polyline
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
+#				}
 			}
 		area.attrs.shape.default =
 			attribute shape {
