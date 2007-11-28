@@ -22,30 +22,41 @@
 
 package org.whattf.datatype;
 
+import java.util.List;
+
 import org.relaxng.datatype.DatatypeException;
 
-public class IntPositive extends AbstractInt {
+public class Circle extends AbstractInt {
 
     /**
      * The singleton instance.
      */
-    public static final IntPositive THE_INSTANCE = new IntPositive();
+    public static final Circle THE_INSTANCE = new Circle();
     
     /**
      * 
      */
-    private IntPositive() {
+    private Circle() {
         super();
     }
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        checkIntPositive(literal, 0);
+        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        if (list.size() != 3) {
+            throw newDatatypeException("A circle must have three comma-separated integers.");
+        }
+        CharSequenceWithOffset withOffset = list.get(0);
+        checkInt(withOffset.getSequence(), withOffset.getOffset());
+        withOffset = list.get(1);
+        checkInt(withOffset.getSequence(), withOffset.getOffset());
+        withOffset = list.get(2);
+        checkIntNonNegative(withOffset.getSequence(), withOffset.getOffset());
     }
 
     @Override
     public String getName() {
-        return "positive integer";
+        return "circle";
     }
 
 }

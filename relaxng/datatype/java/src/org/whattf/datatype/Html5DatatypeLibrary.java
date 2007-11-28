@@ -122,6 +122,12 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return FloatingPointExponentPositive.THE_INSTANCE;
         } else if ("mime-type-list".equals(typeLocalName)) {
             return MimeTypeList.THE_INSTANCE;
+        } else if ("circle".equals(typeLocalName)) {
+            return Circle.THE_INSTANCE;
+        } else if ("rectangle".equals(typeLocalName)) {
+            return Rectangle.THE_INSTANCE;
+        } else if ("polyline".equals(typeLocalName)) {
+            return Polyline.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

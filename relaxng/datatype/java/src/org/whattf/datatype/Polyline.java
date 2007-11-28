@@ -22,30 +22,46 @@
 
 package org.whattf.datatype;
 
+import java.util.List;
+
 import org.relaxng.datatype.DatatypeException;
 
-public class IntPositive extends AbstractInt {
+public class Polyline extends AbstractInt {
 
     /**
      * The singleton instance.
      */
-    public static final IntPositive THE_INSTANCE = new IntPositive();
+    public static final Polyline THE_INSTANCE = new Polyline();
     
     /**
      * 
      */
-    private IntPositive() {
+    private Polyline() {
         super();
     }
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        checkIntPositive(literal, 0);
+        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        if (list.size() != 4) {
+            throw newDatatypeException("A rectangle must have four comma-separated integers.");
+        }
+        for (CharSequenceWithOffset item : list) {
+            checkInt(item.getSequence(), item.getOffset());
+        }
+        if (Integer.parseInt(list.get(0).getSequence().toString()) >= 
+            Integer.parseInt(list.get(2).getSequence().toString())) {
+            throw newDatatypeException("The first integer must be less than the third.");
+        }
+        if (Integer.parseInt(list.get(1).getSequence().toString()) >= 
+            Integer.parseInt(list.get(3).getSequence().toString())) {
+            throw newDatatypeException("The second integer must be less than the fourth.");
+        }
     }
 
     @Override
     public String getName() {
-        return "positive integer";
+        return "rectangle";
     }
 
 }

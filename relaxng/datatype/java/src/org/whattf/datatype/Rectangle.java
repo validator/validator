@@ -22,30 +22,41 @@
 
 package org.whattf.datatype;
 
+import java.util.List;
+
 import org.relaxng.datatype.DatatypeException;
 
-public class IntPositive extends AbstractInt {
+public class Rectangle extends AbstractInt {
 
     /**
      * The singleton instance.
      */
-    public static final IntPositive THE_INSTANCE = new IntPositive();
+    public static final Rectangle THE_INSTANCE = new Rectangle();
     
     /**
      * 
      */
-    private IntPositive() {
+    private Rectangle() {
         super();
     }
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        checkIntPositive(literal, 0);
+        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        if (list.size() < 6) {
+            throw newDatatypeException("A polyline must have at least six comma-separated integers.");
+        }
+        if (list.size() % 2 != 0) {
+            throw newDatatypeException("A polyline must have an even number of comma-separated integers.");
+        }
+        for (CharSequenceWithOffset item : list) {
+            checkInt(item.getSequence(), item.getOffset());
+        }
     }
 
     @Override
     public String getName() {
-        return "positive integer";
+        return "polyline";
     }
 
 }

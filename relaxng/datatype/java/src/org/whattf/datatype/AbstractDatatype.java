@@ -23,6 +23,9 @@
 
 package org.whattf.datatype;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
@@ -175,14 +178,14 @@ public abstract class AbstractDatatype implements Datatype {
         }
     }
     
-    protected final String toAsciiLowerCase(String str) {
+    protected final String toAsciiLowerCase(CharSequence str) {
         int len = str.length();
         if (len == 0) {
             return "";
         }
-        char[] buf = str.toCharArray();
+        char[] buf = new char[len];
         for (int i = 0; i < len; i++) {
-            buf[i] = toAsciiLowerCase(buf[i]);
+            buf[i] = toAsciiLowerCase(str.charAt(i));
         }
         return new String(buf);
     }
@@ -212,4 +215,47 @@ public abstract class AbstractDatatype implements Datatype {
     }    
     
     public abstract String getName();
+    
+    protected List<CharSequenceWithOffset> splitOnComma(CharSequence sequence) {
+        List<CharSequenceWithOffset> rv = new ArrayList<CharSequenceWithOffset>();
+        int offset = 0;
+        for (int i = 0; i < sequence.length(); i++) {
+            char c = sequence.charAt(i);
+            if (c == ',') {
+                rv.add(new CharSequenceWithOffset(sequence.subSequence(offset, i), offset));
+                offset = i + 1;
+            }
+        }
+        rv.add(new CharSequenceWithOffset(sequence.subSequence(offset, sequence.length()), offset));
+        return rv;
+    }
+    
+    protected class CharSequenceWithOffset {
+        private final CharSequence sequence;
+        private final int offset;
+        /**
+         * @param sequence
+         * @param offset
+         */
+        public CharSequenceWithOffset(final CharSequence sequence, final int offset) {
+            this.sequence = sequence;
+            this.offset = offset;
+        }
+        /**
+         * Returns the offset.
+         * 
+         * @return the offset
+         */
+        public int getOffset() {
+            return offset;
+        }
+        /**
+         * Returns the sequence.
+         * 
+         * @return the sequence
+         */
+        public CharSequence getSequence() {
+            return sequence;
+        }
+    }
 }

@@ -24,7 +24,7 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Int extends AbstractDatatype {
+public class Int extends AbstractInt {
 
     /**
      * The singleton instance.
@@ -40,19 +40,7 @@ public class Int extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        if (literal.length() == 0) {
-            throw newDatatypeException("The empty string is not a valid integer.");
-        }
-        char c = literal.charAt(0);
-        if (!(c == '-' || isAsciiDigit(c))) {
-            throw newDatatypeException(0, "Expected a minus sign or a digit but saw ", c, " instead.");            
-        }
-        for (int i = 1; i < literal.length(); i++) {
-            c = literal.charAt(i);
-            if (!isAsciiDigit(c)) {
-                throw newDatatypeException(i, "Expected a digit but saw ", c, " instead.");                            
-            }
-        }
+        checkInt(literal, 0);
     }
 
     @Override
