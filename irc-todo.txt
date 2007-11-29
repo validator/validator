@@ -11,21 +11,11 @@ http://simon.html5.org/temp/validator.nu/Validator.nu.htm
 
 ---
 
-language codes
-
-ASCII-insensitive string
-
-hashed id reference
-
 svg integration
 
 ban siblings of table as the first child of datagrid
 
 link types
-
-media query
-
-media type with params
 
 name=dns content check
 
@@ -40,3 +30,28 @@ ismap (but only if one of the ancestor elements is an a  element)
 id required on map
 
 dir on bdo to schematron
+
+; as param separator in URIs
+
+"Authors must not specify an encoding other than UTF-8 or US-ASCII in the accept-charset 
+attribute when the method used is get and the action indicates an HTTP resource."
+
+< zcorpan> hsivonen: feature request: it would be useful to be able to 
+                 group errors by message (perhaps so by default even), because 
+                 often there are lots of errors of the same type and you 
+                 usually fix them with a search-and-replace
+
+IPv6
+
+< hendry> be good if you could link into CSS validators and things like 
+                jslint.com too
+
+< hendry> hsivonen: i think it is useful to know how big your Web page 
+                is. And to ensure that something sensible like gzip compression 
+                on the server is being utilised
+
+< hendry> hsivonen: could you use the WHATWG favicon on validator? I have 
+                so many tabs open nowadays. If things don't have a favicon I'm 
+                lost :)
+
+
