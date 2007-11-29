@@ -827,7 +827,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void elaborateContentModelandContext(Name parent, Name child)
             throws SAXException {
         DocumentFragment contentModelDds = spec.contentModelDescription(parent);
-        DocumentFragment contextDds = spec.contentModelDescription(child);
+        DocumentFragment contextDds = spec.contextDescription(child);
         if (contentModelDds != null || contextDds != null) {
             ContentHandler ch = emitter.startElaboration();
             if (ch != null) {

@@ -63,18 +63,18 @@ public class MultipartFormDataFilter implements Filter {
 
     private static Pattern EXTENSION = Pattern.compile("^.*\\.(.+)$");
     
-    private static Map<String, String> extensionToType = new HashMap<String, String>();
+    private final static Map<String, String> EXTENSION_TO_TYPE = new HashMap<String, String>();
     
     static {
-        extensionToType.put("html", "text/html");
-        extensionToType.put("htm", "text/html");
-        extensionToType.put("xhtml", "application/xhtml+xml");
-        extensionToType.put("xht", "application/xhtml+xml");
-        extensionToType.put("atom", "application/atom+xml");
-        extensionToType.put("rng", "application/xml");
-        extensionToType.put("xsl", "application/xml");
-        extensionToType.put("xml", "application/xml");
-        extensionToType.put("dbk", "application/xml");
+        EXTENSION_TO_TYPE.put("html", "text/html");
+        EXTENSION_TO_TYPE.put("htm", "text/html");
+        EXTENSION_TO_TYPE.put("xhtml", "application/xhtml+xml");
+        EXTENSION_TO_TYPE.put("xht", "application/xhtml+xml");
+        EXTENSION_TO_TYPE.put("atom", "application/atom+xml");
+        EXTENSION_TO_TYPE.put("rng", "application/xml");
+        EXTENSION_TO_TYPE.put("xsl", "application/xml");
+        EXTENSION_TO_TYPE.put("xml", "application/xml");
+        EXTENSION_TO_TYPE.put("dbk", "application/xml");
     }
     
     private static String utf8ByteStreamToString(InputStream stream) throws IOException {
@@ -153,7 +153,7 @@ public class MultipartFormDataFilter implements Filter {
                         putParam(params,  fileItemStream.getFieldName(), fileName); 
                         Matcher m = EXTENSION.matcher(fileName);
                         if (m.matches()) {
-                            contentType = extensionToType.get(m.group(1));
+                            contentType = EXTENSION_TO_TYPE.get(m.group(1));
                         }
                     }
                     if (contentType == null) {
