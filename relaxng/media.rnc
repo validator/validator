@@ -124,11 +124,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	video.inner.strict-inline =
 		(	media.source
-		,	common.elem.strict-inline
+		,	common.inner.strict-inline
 		)
 	video.inner.struct-inline =
 		(	media.source
-		,	common.elem.struct-inline
+		,	common.inner.struct-inline
 		)
 	video.inner.embedded =
 		(	media.source
@@ -153,11 +153,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	audio.inner.strict-inline =
 		(	media.source
-		,	common.elem.strict-inline
+		,	common.inner.strict-inline
 		)
 	audio.inner.struct-inline =
 		(	media.source
-		,	common.elem.struct-inline
+		,	common.inner.struct-inline
 		)
 	audio.inner.embedded =
 		(	media.source
