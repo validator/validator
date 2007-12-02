@@ -37,6 +37,9 @@ public class DataUri {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
     
+    private String type;
+    private String charset;
+    
     /**
      * @throws IOException 
      * 
@@ -49,7 +52,8 @@ public class DataUri {
         InputStream is = new PercentDecodingReaderInputStream(new StringReader(uri));
         is.skip(5);
         
-        int i = 0; // silence compilar 
+        boolean collectingCharsetValue = false;
+        int i = 0; // silence compiler 
         State state = State.AT_START;
         for (;;) {
             int b = is.read();
@@ -60,9 +64,11 @@ public class DataUri {
                 throw new MalformedURLException("Non-ASCII character in MIME type part of the data URI.");                
             }
             char c = (char) b;
+            StringBuilder sb = new StringBuilder();
             switch (state) {
                 case AT_START:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         state = State.IN_SUPERTYPE;
                         continue;
                     } else {
@@ -72,8 +78,10 @@ public class DataUri {
                     }
                 case IN_SUPERTYPE:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         continue;
                     } else if (c == '/') {
+                        sb.append(c);
                         state = State.AT_SUBTYPE_START;
                         continue;
                     } else {
@@ -83,6 +91,7 @@ public class DataUri {
                     }
                 case AT_SUBTYPE_START:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         state = State.IN_SUBTYPE;
                         continue;
                     } else {
@@ -92,11 +101,16 @@ public class DataUri {
                     }
                 case IN_SUBTYPE:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         continue;
                     } else if (c == ';') {
+                        type = sb.toString();
+                        sb.setLength(0);
                         state = State.SEMICOLON_SEEN;
                         continue;
                     } else if (isWhitespace(c)) {
+                        type = sb.toString();
+                        sb.setLength(0);
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
@@ -119,6 +133,7 @@ public class DataUri {
                     if (isWhitespace(c)) {
                         continue;
                     } else if (isTokenChar(c)) {
+                        sb.append(c);
                         state = State.IN_PARAM_NAME;
                         continue;
                     } else {
@@ -128,8 +143,12 @@ public class DataUri {
                     }
                 case IN_PARAM_NAME:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         continue;
                     } else if (c == '=') {
+                        String name = sb.toString();
+                        sb.setLength(0);
+                        collectingCharsetValue = "charset".equals(name);                        
                         state = State.EQUALS_SEEN;
                         continue;
                     }
@@ -138,6 +157,7 @@ public class DataUri {
                         state = State.IN_QUOTED_STRING;
                         continue;
                     } else if (isTokenChar(c)) {
+                        sb.append(c);
                         state = State.IN_UNQUOTED_STRING;
                         continue;
                     } else {
@@ -150,9 +170,14 @@ public class DataUri {
                         state = State.IN_QUOTED_PAIR;
                         continue;
                     } else if (c == '\"') {
+                        if (collectingCharsetValue) {
+                            charset = sb.toString();
+                        }
+                        sb.setLength(0);
                         state = State.CLOSE_QUOTE_SEEN;
                         continue;
                     } else if (isQDTextChar(c)) {
+                        sb.append(c);
                         continue;
                     } else {
                         throw newDatatypeException(i, 
@@ -161,6 +186,7 @@ public class DataUri {
                     }
                 case IN_QUOTED_PAIR:
                     if (c <= 127) {
+                        sb.append(c);
                         state = State.IN_QUOTED_STRING;
                         continue;
                     } else {
@@ -182,11 +208,20 @@ public class DataUri {
                     }
                 case IN_UNQUOTED_STRING:
                     if (isTokenChar(c)) {
+                        sb.append(c);
                         continue;
                     } else if (c == ';') {
+                        if (collectingCharsetValue) {
+                            charset = sb.toString();
+                        }
+                        sb.setLength(0);
                         state = State.SEMICOLON_SEEN;
                         continue;
                     } else if (isWhitespace(c)) {
+                        if (collectingCharsetValue) {
+                            charset = sb.toString();
+                        }
+                        sb.setLength(0);
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
