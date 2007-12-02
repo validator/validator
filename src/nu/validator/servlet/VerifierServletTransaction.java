@@ -82,7 +82,6 @@ import org.apache.xml.serializer.Serializer;
 import org.apache.xml.serializer.SerializerFactory;
 import org.whattf.checker.DebugChecker;
 import org.whattf.checker.NormalizationChecker;
-import org.whattf.checker.SignificantInlineChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.jing.CheckerValidator;
@@ -968,9 +967,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
         } else if ("http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
             this.checkNormalization = true;
             return new CheckerValidator(new NormalizationChecker(),
-                    jingPropertyMap);
-        } else if ("http://hsivonen.iki.fi/checkers/significant-inline/".equals(url)) {
-            return new CheckerValidator(new SignificantInlineChecker(),
                     jingPropertyMap);
         } else if ("http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
             return new CheckerValidator(new DebugChecker(), jingPropertyMap);
