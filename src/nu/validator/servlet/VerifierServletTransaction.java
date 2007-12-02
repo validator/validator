@@ -182,7 +182,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private static final String[] ALL_CHECKERS = {
             "http://hsivonen.iki.fi/checkers/table/",
             "http://hsivonen.iki.fi/checkers/nfc/",
-            "http://hsivonen.iki.fi/checkers/significant-inline/",
             "http://hsivonen.iki.fi/checkers/text-content/",
             "http://n.validator.nu/checkers/usemap/"};
 
