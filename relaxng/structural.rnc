@@ -70,7 +70,7 @@
 	footer.attrs =
 		( common.attrs )
 	footer.inner =
-		( common.inner.block )
+		( common.inner.bimorphic )
 
 	common.elem.block |= footer.elem
 
