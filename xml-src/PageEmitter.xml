@@ -4,15 +4,13 @@
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	><head
-		><link rel='stylesheet' href='http://hsivonen.iki.fi/style/validator.css'
-		/><script type='text/javascript' src='http://hsivonen.iki.fi/script/validator.js'
-		/><title><?SaxCompiler-code t.emitTitle(false); ?></title
+		><?SaxCompiler-code t.emitIncludes(); ?><title
+		><?SaxCompiler-code t.emitTitle(false); ?></title
 	></head
 	><body onload='boot()'
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
 		><?SaxCompiler-code t.emitForm(); t.validate(); ?><hr></hr
 		><p
-			><a href="http://about.validator.nu/">About this service</a
-		></p
+			><?SaxCompiler-code t.emitAbout(); ?></p
 	></body
 ></html>
