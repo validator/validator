@@ -159,6 +159,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private static final char[] FOR = " for ".toCharArray();
 
+    private static final char[] ABOUT_THIS_SERVICE = "About this service".toCharArray();
+
     private static final Map pathMap = new HashMap();
 
     private static Spec html5spec;
@@ -222,6 +224,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private static String[] preloadedSchemaUrls;
 
     private static Schema[] preloadedSchemas;
+    
+    private final static String ABOUT_PAGE = System.getProperty("nu.validator.servlet.about-page", "http://about.validator.nu/");
+
+    private final static String STYLE_SHEET = System.getProperty("nu.validator.servlet.style-sheet", "http://about.validator.nu/style.css");
+
+    private final static String SCRIPT = System.getProperty("nu.validator.servlet.script", "http://about.validator.nu/script.js");
 
     private String schemaUrls = null;
 
@@ -374,7 +382,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             log4j.debug("Reading spec.");
 
-            html5spec = Html5SpecBuilder.parseSpec(new InputSource("http://www.whatwg.org/specs/web-apps/current-work/"));
+            html5spec = Html5SpecBuilder.parseSpec();
 
             log4j.debug("Spec read.");
             
@@ -1360,5 +1368,25 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     null, postContentType);
             documentInput.setByteStream(request.getInputStream());
         }
+    }
+
+    public void emitIncludes() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("src", SCRIPT);
+        emitter.startElement("script", attrs);
+        emitter.endElement("script");        
+        attrs.clear();
+        attrs.addAttribute("href", STYLE_SHEET);
+        attrs.addAttribute("rel", "stylesheet");
+        emitter.startElement("link", attrs);
+        emitter.endElement("link");        
+    }
+
+    public void emitAbout() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("href", ABOUT_PAGE);
+        emitter.startElement("a", attrs);
+        emitter.characters(ABOUT_THIS_SERVICE);
+        emitter.endElement("a");
     }
 }

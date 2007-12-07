@@ -74,7 +74,7 @@ public class Html5AttributeDatatypeBuilder implements ContentHandler {
     }
     
     public static void main(String[] args) throws IOException, SAXException {
-        parseSyntaxDescriptions(new InputSource("http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"));
+        parseSyntaxDescriptions(new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions")));
     }
     
     private Html5AttributeDatatypeBuilder() {

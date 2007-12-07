@@ -48,7 +48,9 @@ public class Html5SpecBuilder implements ContentHandler {
 
     private static final String NS = "http://www.w3.org/1999/xhtml";
     
-    private static final String SPEC_URI = "http://www.whatwg.org/specs/web-apps/current-work/";
+    private static final String SPEC_LINK_URI = System.getProperty("nu.validator.spec.html5-link", "http://www.whatwg.org/specs/web-apps/current-work/");
+    
+    private static final String SPEC_LOAD_URI = System.getProperty("nu.validator.spec.html5-load", SPEC_LINK_URI);
     
     private static final Pattern ELEMENT = Pattern.compile("^.*element\\s*$");
     
@@ -94,16 +96,16 @@ public class Html5SpecBuilder implements ContentHandler {
 
     private Map<Name, DocumentFragment> attributesByElement = new HashMap<Name, DocumentFragment>();
     
-    public static Spec parseSpec(InputSource in) throws IOException, SAXException {
+    public static Spec parseSpec() throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5SpecBuilder handler = new Html5SpecBuilder();
         parser.setContentHandler(handler);
-        parser.parse(in);
+        parser.parse(new InputSource(SPEC_LOAD_URI));
         return handler.buildSpec();
     }
     
     public static void main(String[] args) throws IOException, SAXException {
-        parseSpec(new InputSource("http://www.whatwg.org/specs/web-apps/current-work/"));
+        parseSpec();
     }
     
     private Spec buildSpec() {
@@ -182,7 +184,7 @@ public class Html5SpecBuilder implements ContentHandler {
                                     "Malformed spec: no element id.");
                         }
                         currentName = new Name(NS, ln);
-                        urisByElement.put(currentName, SPEC_URI + "#" + currentId);
+                        urisByElement.put(currentName, SPEC_LOAD_URI + "#" + currentId);
                         state = State.AWAITING_ELEMENT_DL;
                     } else {
                         currentId = null;
@@ -333,7 +335,7 @@ public class Html5SpecBuilder implements ContentHandler {
                     String href = null;
                     if ("a" == localName && NS == uri && (href = atts.getValue("", "href")) != null) {
                         if (href.startsWith("#")) {
-                            href = SPEC_URI + href;
+                            href = SPEC_LINK_URI + href;
                         }
                         AttributesImpl attributesImpl = new AttributesImpl();
                         attributesImpl.addAttribute("href", href);
