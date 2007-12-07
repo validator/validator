@@ -41,6 +41,13 @@ portNumber = '8888'
 useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '64'
+html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
+html5specLoad = None
+ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
+aboutPage = 'http://about.validator.nu/'
+microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
+stylesheet = None
+script = None
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -309,8 +316,16 @@ def runValidator():
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
     '-Dnu.validator.servlet.version="Validator.nu/2.2gamma (http://validator.nu/)"',
+    '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
+    '-Dnu.validator.servlet.about-page=' + aboutPage,
+    '-Dnu.validator.servlet.style-sheet=' + stylesheet,
+    '-Dnu.validator.servlet.script=' + script,
+    '-Dnu.validator.spec.microsyntax-descriptions=' + microsyntax,
+    '-Dnu.validator.spec.html5-load=' + html5specLoad,
+    '-Dnu.validator.spec.html5-link=' + html5specLink,
     'nu.validator.servlet.Main',
   ]
+  
   if useAjp:
     args.append('ajp')
   args.append(portNumber)
@@ -439,6 +454,24 @@ def printHelp():
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print "  --heap=64                  -- Sets the heap size in MB"
+  print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
+  print "                                Sets the link URL of the HTML5 spec"
+  print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
+  print "                                Sets the load URL of the HTML5 spec"
+  print "                                By default the same as --html5link="
+  print "  --iana-lang=http://www.iana.org/assignments/language-subtag-registry"
+  print "                                Sets the URL for language tag registry"
+  print "  --about=http://about.validator.nu/"
+  print "                                Sets the URL for the about page"
+  print "  --stylesheet=http://about.validator.nu/style.css"
+  print "                                Sets the URL for the style sheet"
+  print "                                Defaults to --about= plus style.css"
+  print "  --script=http://about.validator.nu/script.js"
+  print "                                Sets the URL for the style sheet"
+  print "                                Defaults to --about= plus script.js"
+  print "  --microsyntax=http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"
+  print "                                Sets the URL for microformat"
+  print "                                descriptions"
   print ""
   print "Tasks:"
   print "  checkout -- Checks out the source from SVN"
@@ -449,62 +482,88 @@ def printHelp():
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
 
-if __name__ == "__main__":
-  argv = sys.argv[1:]
-  if len(argv) == 0:
-    printHelp()
-  else:
-    for arg in argv:
-      if arg.startswith("--svn="):
-        svnCmd = arg[6:]
-      elif arg.startswith("--java="):
-        javaCmd = arg[7:]
-      elif arg.startswith("--jar="):
-        jarCmd = arg[6:]
-      elif arg.startswith("--javac="):
-        javacCmd = arg[8:]
-      elif arg.startswith("--javadoc="):
-        javadocCmd = arg[10:]
-      elif arg.startswith("--jdk-bin="):
-        jdkBinDir = arg[10:]
-        javaCmd = os.path.join(jdkBinDir, "java")
-        jarCmd = os.path.join(jdkBinDir, "jar")
-        javacCmd = os.path.join(jdkBinDir, "javac")
-        javadocCmd = os.path.join(jdkBinDir, "javadoc")
-      elif arg.startswith("--svnRoot="):
-        svnRoot = arg[10:]
-      elif arg.startswith("--port="):
-        portNumber = arg[7:]
-      elif arg.startswith("--log4j="):
-        log4jProps = arg[8:]
-      elif arg.startswith("--heap="):
-        heapSize = arg[7:]
-      elif arg == '--ajp=on':
-        useAjp = 1
-      elif arg == '--ajp=off':
-        useAjp = 0
-      elif arg == '--help':
-        printHelp()
-      elif arg == 'dldeps':
-        downloadDependencies()
-        downloadLocalEntities()
-      elif arg == 'dltests':
-        downloadOperaSuite()
-      elif arg == 'checkout':
-        checkout()
-      elif arg == 'build':
-        buildAll()
-      elif arg == 'test':
-        runTests()
-      elif arg == 'run':
-        runValidator()
-      elif arg == 'all':
-        checkout()
-        downloadDependencies()
-        downloadLocalEntities()
-        downloadOperaSuite()
-        buildAll()
-        runTests()
-        runValidator()
-      else:
-        print "Unknown option %s." % arg
+argv = sys.argv[1:]
+if len(argv) == 0:
+  printHelp()
+else:
+  for arg in argv:
+    if arg.startswith("--svn="):
+      svnCmd = arg[6:]
+    elif arg.startswith("--java="):
+      javaCmd = arg[7:]
+    elif arg.startswith("--jar="):
+      jarCmd = arg[6:]
+    elif arg.startswith("--javac="):
+      javacCmd = arg[8:]
+    elif arg.startswith("--javadoc="):
+      javadocCmd = arg[10:]
+    elif arg.startswith("--jdk-bin="):
+      jdkBinDir = arg[10:]
+      javaCmd = os.path.join(jdkBinDir, "java")
+      jarCmd = os.path.join(jdkBinDir, "jar")
+      javacCmd = os.path.join(jdkBinDir, "javac")
+      javadocCmd = os.path.join(jdkBinDir, "javadoc")
+    elif arg.startswith("--svnRoot="):
+      svnRoot = arg[10:]
+    elif arg.startswith("--port="):
+      portNumber = arg[7:]
+    elif arg.startswith("--log4j="):
+      log4jProps = arg[8:]
+    elif arg.startswith("--heap="):
+      heapSize = arg[7:]
+    elif arg.startswith("--html5link="):
+      html5specLink = arg[12:]
+    elif arg.startswith("--html5load="):
+      html5specLoad = arg[12:]
+    elif arg.startswith("--iana-lang="):
+      ianaLang = arg[12:]
+    elif arg.startswith("--about="):
+      aboutPage = arg[8:]
+    elif arg.startswith("--microsyntax="):
+      microsyntax = arg[13:]
+    elif arg.startswith("--stylesheet="):
+      stylesheet = arg[14:]
+    elif arg.startswith("--script="):
+      script = arg[9:]
+    elif arg == '--ajp=on':
+      useAjp = 1
+    elif arg == '--ajp=off':
+      useAjp = 0
+    elif arg == '--help':
+      printHelp()
+    elif arg == 'dldeps':
+      downloadDependencies()
+      downloadLocalEntities()
+    elif arg == 'dltests':
+      downloadOperaSuite()
+    elif arg == 'checkout':
+      checkout()
+    elif arg == 'build':
+      buildAll()
+    elif arg == 'test':
+      runTests()
+    elif arg == 'run':
+      if not html5specLoad:
+        html5specLoad = html5specLink
+      if not stylesheet:
+        stylesheet = aboutPage + 'style.css'
+      if not script:
+        script = aboutPage + 'script.js'
+      runValidator()
+    elif arg == 'all':
+      checkout()
+      downloadDependencies()
+      downloadLocalEntities()
+      downloadOperaSuite()
+      buildAll()
+      runTests()
+      if not html5specLoad:
+        html5specLoad = html5specLink
+      if not stylesheet:
+        stylesheet = aboutPage + 'style.css'
+      if not script:
+        script = aboutPage + 'script.js'
+      runValidator()
+    else:
+      print "Unknown option %s." % arg
+
