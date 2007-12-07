@@ -148,7 +148,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final static char[] AS_CHILD_OF = " as child of ".toCharArray();
     
-    private final static char[] IN_THIS_CONTEXT_SUPPRESSING = " in this context. (Suppressing further error errors from this subtree.)".toCharArray();
+    private final static char[] IN_THIS_CONTEXT_SUPPRESSING = " in this context. (Suppressing further errors from this subtree.)".toCharArray();
     
     private final static char[] REQUIRED_ATTRIBUTES_MISSING = "Required attributes missing on ".toCharArray();
 
