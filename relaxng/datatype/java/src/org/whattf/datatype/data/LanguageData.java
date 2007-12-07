@@ -92,7 +92,7 @@ public class LanguageData {
     
     public LanguageData() throws IOException {
         super();
-        URL url = new URL("http://www.iana.org/assignments/language-subtag-registry");
+        URL url = new URL(System.getProperty("org.whattf.datatype.lang-registry", "http://www.iana.org/assignments/language-subtag-registry"));
         in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
         consumeRegistry();
         prepareArrays();

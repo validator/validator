@@ -47,22 +47,43 @@ public class IriRef extends AbstractDatatype {
      */
     public static final IriRef THE_INSTANCE = new IriRef();
 
-    private static final Pattern JAVASCRIPT = Pattern.compile("^[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:.*$");
-    
-    private static final Pattern DATA = Pattern.compile("^[dD][aA][tT][aA]:.*$");
-    
     protected IriRef() {
         super();
     }
 
-    public void checkValid(CharSequence literal)
-            throws DatatypeException {
+    private final CharSequencePair splitScheme(CharSequence iri) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iri.length(); i++) {
+            char c = toAsciiLowerCase(iri.charAt(i));
+            if (i == 0) {
+                if ('a' <= c && 'z' >= c) {
+                    sb.append(c);
+                } else {
+                    return null;
+                }
+            } else {
+                if (('a' <= c && 'z' >= c) || ('0' <= c && '9' >= c)
+                        || c == '+' || c == '.') {
+                    sb.append(c);
+                    continue;
+                } else if (c == ':') {
+                    return new CharSequencePair(sb, iri.subSequence(i + 1,
+                            iri.length()));
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void checkValid(CharSequence literal) throws DatatypeException {
         // TODO Find out if it is safe to put this in a field
         IRIFactory fac = new IRIFactory();
         fac.shouldViolation(true, false);
         fac.securityViolation(true, false);
         fac.dnsViolation(true, false);
-        fac.mintingViolation(false, false); // XXX do we want these?
+        fac.mintingViolation(false, false);
         fac.useSpecificationIRI(true);
         fac.useSchemeSpecificRules("http", true);
         fac.useSchemeSpecificRules("https", true);
@@ -71,56 +92,90 @@ public class IriRef extends AbstractDatatype {
         fac.useSchemeSpecificRules("file", true);
         fac.useSchemeSpecificRules("data", true); // XXX broken
         // XXX javascript?
-        //fac.setQueryCharacterRestrictions(false);
+        // fac.setQueryCharacterRestrictions(false);
         IRI iri;
+        boolean data = false;
         try {
-            Matcher m = JAVASCRIPT.matcher(literal);
-            if (m.matches()) {
-                StringBuilder sb = new StringBuilder(2 + literal.length());
-                sb.append("x-").append(literal);
-                String xStr = sb.toString();
-                iri = fac.construct(xStr);
-                Reader reader = new BufferedReader(
-                        new Utf8PercentDecodingReader(new StringReader(
-                                xStr.substring(13))));
-                reader.mark(1);
-                int c = reader.read();
-                if (c != 0xFEFF) {
-                    reader.reset();
-                }
-                try {
-                    Context context = Context.enter();
-                    context.setOptimizationLevel(0);
-                    context.setLanguageVersion(Context.VERSION_1_6);
-                    context.compileReader(reader, null, 1, null);
-                } finally {
-                    Context.exit();
-                }
-            } else {
+            CharSequencePair pair = splitScheme(literal);
+            if (pair == null) {
+                // no scheme or scheme is private
                 iri = fac.construct(literal.toString());
+            } else {
+                CharSequence scheme = pair.getHead();
+                CharSequence tail = pair.getTail();
+                if (isWellKnown(scheme)) {
+                    iri = fac.construct(literal.toString());
+                } else if ("javascript".contentEquals(scheme)) {
+                    // StringBuilder sb = new StringBuilder(2 +
+                    // literal.length());
+                    // sb.append("x-").append(literal);
+                    // iri = fac.construct(sb.toString());
+                    iri = null; // Don't bother user with generic IRI syntax
+                    Reader reader = new BufferedReader(
+                            new Utf8PercentDecodingReader(new StringReader(
+                                    tail.toString()))); // XXX
+                                                        // CharSequenceReader
+                    reader.mark(1);
+                    int c = reader.read();
+                    if (c != 0xFEFF) {
+                        reader.reset();
+                    }
+                    try {
+                        Context context = Context.enter();
+                        context.setOptimizationLevel(0);
+                        context.setLanguageVersion(Context.VERSION_1_6);
+                        context.compileReader(reader, null, 1, null);
+                    } finally {
+                        Context.exit();
+                    }
+                } else if ("data".contentEquals(scheme)) {
+                    data = true;
+                    iri = fac.construct(literal.toString());
+                } else if (isHttpAlias(scheme)) {
+                    StringBuilder sb = new StringBuilder(5 + tail.length());
+                    sb.append("http:").append(tail);
+                    iri = fac.construct(sb.toString());
+                } else {
+                    StringBuilder sb = new StringBuilder(2 + literal.length());
+                    sb.append("x-").append(literal);
+                    iri = fac.construct(sb.toString());
+                }
             }
         } catch (IRIException e) {
             Violation v = e.getViolation();
-            throw newDatatypeException(v.codeName() + " in " + v.component() + ".");
+            throw newDatatypeException(v.codeName() + " in " + v.component()
+                    + ".");
         } catch (IOException e) {
-            throw newDatatypeException(e.getMessage());            
+            throw newDatatypeException(e.getMessage());
         } catch (RhinoException e) {
             throw newDatatypeException(e.getMessage());
         }
         if (isAbsolute()) {
-            if (!iri.isAbsolute()) {
+            if (iri != null && !iri.isAbsolute()) {
                 throw newDatatypeException("Not an absolute IRI.");
             }
         }
         try {
-            String ascii = iri.toASCIIString();
-            Matcher m = DATA.matcher(ascii);
-            if (m.matches()) {
-                
+            if (iri != null) {
+                String ascii = iri.toASCIIString();
+                if (data) {
+                    // XXX
+                }
             }
         } catch (MalformedURLException e) {
             throw newDatatypeException(e.getMessage());
         }
+    }
+
+    private final boolean isHttpAlias(CharSequence scheme) {
+        return "feed".contentEquals(scheme) || "webcal".contentEquals(scheme);
+    }
+
+    private final boolean isWellKnown(CharSequence scheme) {
+        return "http".contentEquals(scheme) || "https".contentEquals(scheme)
+                || "ftp".contentEquals(scheme)
+                || "mailto".contentEquals(scheme)
+                || "file".contentEquals(scheme);
     }
 
     protected boolean isAbsolute() {
@@ -130,5 +185,38 @@ public class IriRef extends AbstractDatatype {
     @Override
     public String getName() {
         return "IRI reference";
+    }
+
+    private class CharSequencePair {
+        private final CharSequence head;
+
+        private final CharSequence tail;
+
+        /**
+         * @param head
+         * @param tail
+         */
+        public CharSequencePair(final CharSequence head, final CharSequence tail) {
+            this.head = head;
+            this.tail = tail;
+        }
+
+        /**
+         * Returns the head.
+         * 
+         * @return the head
+         */
+        public CharSequence getHead() {
+            return head;
+        }
+
+        /**
+         * Returns the tail.
+         * 
+         * @return the tail
+         */
+        public CharSequence getTail() {
+            return tail;
+        }
     }
 }
