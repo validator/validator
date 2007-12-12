@@ -47,7 +47,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	common-form.attrs.target = 
 		attribute target {
-			string #REVISIT the spec does not appear to say what the datatype is
+			common.data.browsingcontext
 		}
 
 	common-form.attrs.template = 
@@ -663,6 +663,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	form.attrs &= 
 		(	common-form.attrs.replace?
 		&	common-form.attrs.data?
+		&	common-form.attrs.target?
 		)
 	
 	form.elem.empty =
