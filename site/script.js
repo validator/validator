@@ -24,6 +24,7 @@
 function boot(){
     schemaChanged()
     addValueAttrs()
+	installButton()
 }
 
 function schemaChanged(){
@@ -179,11 +180,23 @@ function addValueAttrs(){
     }
 }
 
+function installButton() {
+	if (!document.getElementsByTagName("ol")) {
+		return
+	}
+	var submit = document.getElementById('submit')
+	var button = createHtmlElement('input')
+	button.type = 'button'
+	button.value = 'Collapse All'
+	button.onclick = collapseAll
+	submit.parentNode.appendChild(button)
+}
+
 function annotate(li){
     var p = document.createElement('p');
     var button = document.createElement('input');
     button.type = 'button';
-    button.value = '1 more occurance';
+    button.value = '1 more occurrence';
     button.onclick = function(){
         expand(this);
     };
@@ -210,7 +223,7 @@ function collapse(msg){
     var message;
     var annotated = false;
     var firstOccurance;
-    var occurances = 0;
+    var occurrences = 0;
     var items = document.getElementsByTagName("ol")[0].childNodes;
     var len = items.length;
     for (var i = 0; i < len; ++i) {
@@ -224,16 +237,16 @@ function collapse(msg){
                 annotated = true;
             }
             else {
-                if (occurances == 1) {
+                if (occurrences == 1) {
                     annotate(firstOccurance);
                 }
                 else {
-                    firstOccurance.getElementsByTagName('input')[0].value = occurances + ' more occurances';
+                    firstOccurance.getElementsByTagName('input')[0].value = occurrences + ' more occurrences';
                 }
                 items[i].setAttribute('irrelevant', 'irrelevant');
                 items[i].className += ' irrelevant';
             }
-            occurances++;
+            occurrences++;
         }
     }
 }
