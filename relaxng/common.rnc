@@ -41,8 +41,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Any attribute from any namespace
 
 	common.attr.anything =
-#		attribute * { text }*
-		attribute foo { text }*
+		attribute * { text }*
 
 ## Any element from any namespace
 
