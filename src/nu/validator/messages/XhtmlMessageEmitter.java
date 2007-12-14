@@ -309,7 +309,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     @Override
     public SourceHandler startSource() throws SAXException {
         maybeCloseTextPara();
-        emitter.startElement("p");
+        emitter.startElementWithClass("p", "extract");
         emitter.startElement("code");
         return extractHandler;
     }
