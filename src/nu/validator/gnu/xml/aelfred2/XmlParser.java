@@ -3353,8 +3353,6 @@ final class XmlParser {
         if (requiredSize < currentSize) {
             return array;
         } else {
-            System.err.println(requiredSize);
-            System.err.flush();
             Object newArray = null;
             int newSize = currentSize * 2;
 
