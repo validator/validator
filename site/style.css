@@ -109,6 +109,18 @@ li {
 	padding: 0.5em;
 }
 
+li ol {
+  padding-right: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+li li {
+  padding-right: 0;
+  padding-bottom: 0.2em;
+  padding-top: 0.2em;
+}
+
 .info {
 	color: black;
 	background-color: #CCFFFF;
@@ -188,6 +200,10 @@ dl {
 dd {
 	margin-left: 1.5em;
 	padding-left: 0;
+}
+
+*[irrelevent], .irrelevant {
+  display: none;
 }
 
 @media all and (max-width: 24em) {

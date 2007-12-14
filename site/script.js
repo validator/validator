@@ -21,10 +21,15 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+
+var hasDuplicateMessages = false
+var currentOl = null
+var ungroupedOl = null
+var groupedOl = null
+
 function boot(){
     schemaChanged()
-    addValueAttrs()
-	installButton()
+	initGrouping()
 }
 
 function schemaChanged(){
@@ -169,131 +174,101 @@ function formSubmission(){
 }
 
 function createHtmlElement(tagName){
-    return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName);
+    return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName)
 }
 
-function addValueAttrs(){
-    var items = document.getElementsByTagName("ol")[0].childNodes;
-    var len = items.length;
-    for (var i = 0; i < len; ++i) {
-        items[i].value = 1 + i;
-    }
+function installGroupingToggle() {
+	var para = createHtmlElement('p')
+	var button = createHtmlElement('input')
+	para.appendChild(button)
+	button.type = 'button'
+	button.value = 'Group Messages'
+	if (hasDuplicateMessages) {
+		button.onclick = function(){
+			if (currentOl == ungroupedOl) {
+				currentOl.parentNode.replaceChild(groupedOl, currentOl)
+				currentOl = groupedOl
+				this.value = 'Ungroup Messages'
+			} else {
+				currentOl.parentNode.replaceChild(ungroupedOl, currentOl)
+				currentOl = ungroupedOl
+				this.value = 'Group Messages'				
+			}
+		}
+	} else {
+		button.disabled = true
+	}
+	currentOl.parentNode.insertBefore(para, currentOl)
 }
 
-function installButton() {
-	if (!document.getElementsByTagName("ol")) {
+function initGrouping() {
+	if (!document.body) {
 		return
 	}
-	var submit = document.getElementById('submit')
-	var button = createHtmlElement('input')
-	button.type = 'button'
-	button.value = 'Collapse All'
-	button.onclick = collapseAll
-	submit.parentNode.appendChild(button)
+	var n = document.body.firstChild
+	while (n) {
+		if (n instanceof HTMLOListElement) {
+			currentOl = n
+			break
+		}
+		n = n.nextSibling
+	}
+	if (!currentOl) {
+		return
+	}
+	ungroupedOl = currentOl
+	groupedOl = buildGrouped(ungroupedOl)
+	installGroupingToggle()
 }
 
-function annotate(li){
-    var p = document.createElement('p');
-    var button = document.createElement('input');
-    button.type = 'button';
-    button.value = '1 more occurrence';
-    button.onclick = function(){
-        expand(this);
-    };
-    p.appendChild(button);
-    li.appendChild(p);
+function buildGrouped(ol) {
+	var locListByMsg = {}
+	var rv = createHtmlElement('ol')
+	var li = ol.firstChild
+	var i = 1
+	while (li) {
+		var msgPara = li.firstChild
+		var locExtract = createHtmlElement('li')
+		locExtract.value = i
+		var loc = msgPara.nextSibling
+		var elaboration = null
+		if (loc && loc.className && loc.className == 'location') {
+			locExtract.appendChild(loc.cloneNode(true))
+			var extract = loc.nextSibling
+			if (extract && extract.className && extract.className == 'extract') {
+				locExtract.appendChild(extract.cloneNode(true))
+				elaboration = extract.nextSibling
+			} else {
+				elaboration = extract
+			}
+		} else {
+			elaboration = loc
+			var noLoc = createHtmlElement('p')
+			noLoc.appendChild(document.createTextNode("(No location)"))
+			locExtract.appendChild(noLoc)
+		}
+		var locList = null
+		var msgText = msgPara.innerHTML
+		locList = locListByMsg[msgText]
+		if (locList) {
+			hasDuplicateMessages = true
+		} else {
+			locList = createHtmlElement('ol')
+			locListByMsg[msgText] = locList
+			var msgItem = createHtmlElement('li')
+			msgItem.className = li.className
+			msgItem.appendChild(msgPara.cloneNode(true))
+			if (elaboration) {
+				msgItem.appendChild(elaboration.cloneNode(true))
+			}
+			msgItem.appendChild(locList)
+			rv.appendChild(msgItem)
+		}
+		locList.appendChild(locExtract)
+		
+		li = li.nextSibling
+		i++
+	}
+	
+	return rv
 }
-
-function collapseAll(){
-    var items = document.getElementsByTagName("ol")[0].childNodes;
-    var len = items.length;
-    for (var i = 0; i < len; ++i) {
-        if (items[i].getAttribute('irrelevant') == 'irrelevant') {
-            continue;
-        }
-        else {
-            collapse(getMessage(items[i]));
-        }
-    }
-    document.getElementById("expand-collapse").onclick = expandAll;
-    document.getElementById("expand-collapse").value = "Expand messages";
-}
-
-function collapse(msg){
-    var message;
-    var annotated = false;
-    var firstOccurance;
-    var occurrences = 0;
-    var items = document.getElementsByTagName("ol")[0].childNodes;
-    var len = items.length;
-    for (var i = 0; i < len; ++i) {
-        if (items[i].getElementsByTagName('input')[0] || items[i].getAttribute('irrelevant') == 'irrelevant') {
-            continue;
-        }
-        message = getMessage(items[i]);
-        if (message == msg) {
-            if (!annotated) {
-                firstOccurance = items[i];
-                annotated = true;
-            }
-            else {
-                if (occurrences == 1) {
-                    annotate(firstOccurance);
-                }
-                else {
-                    firstOccurance.getElementsByTagName('input')[0].value = occurrences + ' more occurrences';
-                }
-                items[i].setAttribute('irrelevant', 'irrelevant');
-                items[i].className += ' irrelevant';
-            }
-            occurrences++;
-        }
-    }
-}
-
-function expandAll(){
-    var items = document.getElementsByTagName("ol")[0].childNodes;
-    var len = items.length;
-    for (var i = 0; i < len; ++i) {
-        if (items[i].getAttribute('irrelevant') == 'irrelevant') {
-            items[i].removeAttribute('irrelevant');
-            items[i].className = items[i].className.replace(' irrelevant', '');
-        }
-        else 
-            if (items[i].getElementsByTagName('input')[0]) {
-                items[i].removeChild(items[i].lastChild);
-            }
-    }
-    if (!document.getElementsByTagName("ol")[0].getElementsByTagName("input")[0]) {
-        document.getElementById("expand-collapse").onclick = collapseAll;
-        document.getElementById("expand-collapse").value = "Collapse messages";
-    }
-}
-
-function expand(button){
-    var p = button.parentNode;
-    var li = p.parentNode;
-    var message = getMessage(li);
-    var items = document.getElementsByTagName("ol")[0].childNodes;
-    var len = items.length;
-    for (var i = 0; i < len; ++i) {
-        if (li != items[i] && message == getMessage(items[i])) {
-            items[i].removeAttribute('irrelevant');
-            items[i].className = items[i].className.replace(' irrelevant', '');
-        }
-    }
-    li.removeChild(p);
-    if (!document.getElementsByTagName("ol")[0].getElementsByTagName("input")[0]) {
-        document.getElementById("expand-collapse").onclick = collapseAll;
-        document.getElementById("expand-collapse").value = "Collapse messages";
-    }
-}
-
-function getMessage(li){
-    /*@cc_on
-     return li.getElementsByTagName("span")[0].innerText;
-     @*/
-    return li.getElementsByTagName("span")[0].textContent;
-}
-
-
