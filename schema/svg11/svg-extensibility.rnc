@@ -9,7 +9,7 @@ a:documentation [
     "    This is SVG, a language for describing two-dimensional graphics in XML.\x{a}" ~
     "    Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.\x{a}" ~
     "\x{a}" ~
-    "    $Id: svg-extensibility.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $\x{a}" ~
+    "    $Id$\x{a}" ~
     "\x{a}"
 ]
 a:documentation [

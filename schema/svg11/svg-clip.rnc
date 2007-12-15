@@ -9,7 +9,7 @@ namespace ns1 = "http://www.w3.org/2000/svg"
 ##     This is SVG, a language for describing two-dimensional graphics in XML.
 ##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
 ## 
-##     $Id: svg-clip.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##     $Id$
 ##   
 
 ## 

@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # Definition of Common Datatypes for MathML 2.0
 
 # 
@@ -7,11 +9,11 @@
 # Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
 #
 
-mml.id.datatype = xsd:ID
-mml.idref.datatype = xsd:IDREF
+mml.id.datatype = w:xml-name
+mml.idref.datatype = w:xml-name
 mml.number.datatype = xsd:integer
 mml.positiveinteger.datatype = xsd:positiveInteger
-mml.uri.datatype = xsd:anyURI
+mml.uri.datatype = w:iri-ref
 mml.nonnegativefloat.datatype = xsd:float { minInclusive = "0" }
 mml.length.datatype =
     xsd:normalizedString {

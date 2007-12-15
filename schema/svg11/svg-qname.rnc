@@ -9,7 +9,7 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 # 
 # This is SVG, a language for describing two-dimensional graphics in XML.
 # Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
-# Revision: $Id: svg-qname.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+# Revision: $Id$
 # 
 # This DTD module is identified by the PUBLIC and SYSTEM identifiers:
 # 
