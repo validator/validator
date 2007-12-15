@@ -207,7 +207,7 @@ function initGrouping() {
 	}
 	var n = document.body.firstChild
 	while (n) {
-		if (n instanceof HTMLOListElement) {
+		if (n.start) {
 			currentOl = n
 			break
 		}
