@@ -1,0 +1,77 @@
+# Events Module
+
+# This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
+# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# All changes are marked with relevant comments.
+# The following license refers just to those changes.
+
+# Copyright (c) 2005 Petr Nalevka
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+a.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onfocus { Script.datatype }?
+area.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onfocus { Script.datatype }?
+form.attlist &=
+    attribute onreset { Script.datatype }?,
+    attribute onsubmit { Script.datatype }?
+body.attlist &=
+    attribute onload { Script.datatype }?,
+    attribute onunload { Script.datatype }?
+label.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onfocus { Script.datatype }?
+input.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onchange { Script.datatype }?,
+    attribute onfocus { Script.datatype }?,
+    attribute onselect { Script.datatype }?
+select.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onchange { Script.datatype }?,
+    attribute onfocus { Script.datatype }?
+textarea.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onchange { Script.datatype }?,
+    attribute onfocus { Script.datatype }?,
+    attribute onselect { Script.datatype }?
+button.attlist &=
+    attribute onblur { Script.datatype }?,
+    attribute onfocus { Script.datatype }?
+Events.attrib =
+    attribute onclick { Script.datatype }?,
+    attribute ondblclick { Script.datatype }?,
+    attribute onmousedown { Script.datatype }?,
+    attribute onmouseup { Script.datatype }?,
+    attribute onmouseover { Script.datatype }?,
+    attribute onmousemove { Script.datatype }?,
+    attribute onmouseout { Script.datatype }?,
+    attribute onkeypress { Script.datatype }?,
+    attribute onkeydown { Script.datatype }?,
+    attribute onkeyup { Script.datatype }?
+Common.attrib &= Events.attrib
+CommonIdRequired.attrib &= Events.attrib

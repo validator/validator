@@ -1,0 +1,146 @@
+# Simplified Forms Module
+
+# This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
+# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# All changes are marked with relevant comments.
+# The following license refers just to those changes.
+
+# Copyright (c) 2005 Petr Nalevka
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+default namespace = "http://www.w3.org/1999/xhtml"
+namespace sch = "http://www.ascc.net/xml/schematron"
+
+sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+form =
+    [
+        # added - bugfix - forms cannot contain nested forms at any level
+        
+        sch:pattern [
+            name = "nested.form"
+            "\x{a}" ~
+            "        "
+            sch:rule [
+                context = "html:form"
+                "\x{a}" ~
+                "            "
+                sch:report [
+                    test = "descendant::html:form"
+                    "\x{a}" ~
+                    "                 form element cannot have any nested form elements\x{a}" ~
+                    "            "
+                ]
+                "\x{a}" ~
+                "        "
+            ]
+            "\x{a}" ~
+            "    "
+        ]
+    ]
+    element form {
+        form.attlist,
+        # Don't use Block.model, because this gets redefined by the
+        # legacy module.
+        Block.class+
+    }
+form.attlist =
+    Common.attrib,
+    attribute action { URI.datatype },
+    attribute method { "get" | "post" }?,
+    attribute enctype { ContentType.datatype }?
+label = element label { label.attlist, Inline.model }
+label.attlist =
+    Common.attrib,
+    attribute for { IDREF.datatype }?,
+    attribute accesskey { Character.datatype }?
+[
+    # added - radio buttons and checkboxes need to have some value specified
+    
+    sch:pattern [
+        name = "input.radio.checkbox.value"
+        "\x{a}" ~
+        "          "
+        sch:rule [
+            context = "html:input"
+            "\x{a}" ~
+            "              "
+            sch:report [
+                test =
+                    "((@type = 'radio' or @type = 'checkbox') and (not(@value) or string-length(@value) = 0))"
+                "\x{a}" ~
+                "                   Radio buttons and checkboxes need to have some value specified.\x{a}" ~
+                "              "
+            ]
+            "\x{a}" ~
+            "          "
+        ]
+        "\x{a}" ~
+        "      "
+    ]
+]
+input = element input { input.attlist, empty }
+input.attlist =
+    Common.attrib,
+    attribute type { InputType.class }?,
+    attribute name { text }?,
+    attribute value { text }?,
+    attribute checked { "checked" }?,
+    attribute size { text }?,
+    attribute maxlength { Number.datatype }?,
+    attribute src { URI.datatype }?,
+    attribute accesskey { Character.datatype }?
+InputType.class =
+    "text"
+    | "password"
+    | "checkbox"
+    | "radio"
+    | "submit"
+    | "reset"
+    | "hidden"
+select = element select { select.attlist, option+ }
+select.attlist =
+    Common.attrib,
+    attribute name { text }?,
+    attribute size { Number.datatype }?,
+    attribute multiple { "multiple" }?
+option =
+    element option {
+        Common.attrib,
+        attribute selected { "selected" }?,
+        attribute value { text }?,
+        text
+    }
+textarea = element textarea { textarea.attlist }
+textarea.attlist =
+    Common.attrib,
+    attribute name { text }?,
+    attribute rows { Number.datatype },
+    attribute cols { Number.datatype },
+    attribute accesskey { Character.datatype }?,
+    text
+Form.class = form
+Formctrl.class = input | label | select | textarea
+Block.class |= Form.class
+Inline.class |= Formctrl.class

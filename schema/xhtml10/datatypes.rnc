@@ -1,0 +1,108 @@
+# Datatypes Module
+
+# This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
+# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# All changes are marked with relevant comments.
+# The following license refers just to those changes.
+
+# Copyright (c) 2005 Petr Nalevka
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Length defined for cellpadding/cellspacing
+
+# nn for pixels or nn% for percentage length
+Length.datatype =
+    # modified - pattern: nn for pixels or nn% for percentage length
+    xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)" }
+# space-separated list of link types
+LinkTypes.datatype = NMTOKENS.datatype
+# single or comma-separated list of media descriptors
+MediaDesc.datatype =
+    # modified - check just single or comma-separated
+    xsd:string { pattern = "[^,]+(,\s*[^,]+)*" }
+# pixel, percentage, or relative
+MultiLength.datatype =
+    # modified - pattern: pixel, percentage, or relative
+    xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*" }
+# added - bugfix - comma-separated list of MultiLength
+MultiLengths.datatype =
+    xsd:string {
+        # <param name="pattern">[-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*</param>
+        pattern =
+            "([\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*)(( )*,( )*[\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*)*"
+    }
+# one or more digits (NUMBER)
+Number.datatype =
+    # modified - just to one or more digits
+    xsd:nonNegativeInteger { pattern = "[0-9]+" }
+# added - integer between 0 and 32767
+tabindexNumber.datatype =
+    xsd:nonNegativeInteger {
+        pattern = "[0-9]+"
+        minInclusive = "0"
+        maxInclusive = "32767"
+    }
+# integer representing length in pixels
+Pixels.datatype =
+    # modified - negative lenght has no meaning
+    xsd:nonNegativeInteger { pattern = "[0-9]|[1-9][0-9]+" }
+# script expression
+Script.datatype = text
+# textual content
+Text.datatype = text
+# Imported Datatypes ................................
+
+# a single character from [ISO10646]
+Character.datatype =
+    # modified - restriction to lenght 1
+    xsd:string { length = "1" }
+# a character encoding, as per [RFC2045]
+Charset.datatype = text
+# a space separated list of character encodings, as per [RFC2045]
+Charsets.datatype = text
+# media type, as per [RFC2045]
+ContentType.datatype = text
+# comma-separated list of media types, as per [RFC2045]
+ContentTypes.datatype = text
+# date and time information. ISO date format
+Datetime.datatype =
+    # modified - use dateTime XML schema datatype
+    xsd:dateTime
+# formal public identifier, as per [ISO8879]
+FPI.datatype = text
+# a language code, as per [RFC1766]
+LanguageCode.datatype = xsd:language
+# a Uniform Resource Identifier, see [URI]
+URI.datatype = xsd:anyURI
+# a space-separated list of Uniform Resource Identifiers, see [URI]
+URIs.datatype = list { xsd:anyURI+ }
+NMTOKEN.datatype = xsd:NMTOKEN
+NMTOKENS.datatype = xsd:NMTOKENS
+ID.datatype = xsd:ID
+IDREF.datatype = xsd:IDREF
+IDREFS.datatype = xsd:IDREFS
+# added - bugfix - just the reserved names may start without an alphabethic character
+Target.datatype =
+    xsd:string { pattern = "_(blank|self|parent|top)|[A-Za-z].*" }

@@ -1,0 +1,138 @@
+# Name Identification Module
+
+# This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
+# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# All changes are marked with relevant comments.
+# The following license refers just to those changes.
+
+# Copyright (c) 2005 Petr Nalevka
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+namespace sch = "http://www.ascc.net/xml/schematron"
+
+sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+# added - for elements with both attributes attributes specified,
+# name and id attribute needs to have the same value.
+
+# HTML 4.01 spec.
+# ...
+#    It is permissible to use both attributes to specify an
+#    element's unique identifier for the following elements: A, APPLET,
+#    FORM, FRAME, IFRAME, IMG, and MAP. When both attributes are used on a
+#    single element, their values must be identical.
+# ...
+
+sch:pattern [
+    name = "id.name.attr"
+    "\x{a}" ~
+    "    "
+    sch:rule [
+        context =
+            "html:a | html:applet | html:form | html:frame | html:iframe | html:img | html:map"
+        "\x{a}" ~
+        "        "
+        sch:report [
+            test =
+                "string-length(@id) > 0 and string-length(@name) > 0 and @id != @name"
+            "\x{a}" ~
+            "             Id and name attribute (if present both) needs to have to same value for element "
+            sch:name [ ]
+            "\x{a}" ~
+            '             ("'
+            sch:value-of [ select = "string(@id)" ]
+            '" != "'
+            sch:value-of [ select = "string(@name)" ]
+            '").\x{a}' ~
+            "        "
+        ]
+        "\x{a}" ~
+        "    "
+    ]
+    "\x{a}"
+]
+#   HTML 4.01 spec.
+#   ...
+#      The id and name attributes share the same name space. This means that
+#      they cannot both define an anchor with the same name in the same
+#      document.
+# ILLEGAL EXAMPLE:
+# <H1 id="a1">
+# ...pages and pages...
+# <A name="a1"></A>
+#   ...
+
+sch:pattern [
+    name = "id.name.attr"
+    "\x{a}" ~
+    "      "
+    sch:rule [
+        context = "html:*"
+        "\x{a}" ~
+        "        "
+        sch:report [
+            test =
+                "string-length(@id) > 0 and preceding::html:*[self::html:a | self::html:applet | self::html:form | self::html:frame | self::html:iframe | self::html:img | self::html:map]/@name = @id"
+            "\x{a}" ~
+            "            The id and name attributes share the same name space. The id attribute\x{a}" ~
+            '            (with value "'
+            sch:value-of [ select = "string(@id)" ]
+            '")\x{a}' ~
+            "            of element "
+            sch:name [ ]
+            " collides with the a name attribute of some preceding\x{a}" ~
+            "            element.\x{a}" ~
+            "        "
+        ]
+        "\x{a}" ~
+        "        "
+        sch:report [
+            test =
+                "string-length(@id) > 0 and following::html:*[self::html:a | self::html:applet | self::html:form | self::html:frame | self::html:iframe | self::html:img | self::html:map]/@name = @id"
+            "\x{a}" ~
+            "            The id and name attributes share the same name space. This means that\x{a}" ~
+            "            they cannot both define an anchor with the same name in the same\x{a}" ~
+            '            document. The id attribute (with value "'
+            sch:value-of [ select = "string(@id)" ]
+            '")\x{a}' ~
+            "            of element "
+            sch:name [ ]
+            " collides with the a name attribute of some following\x{a}" ~
+            "            element.\x{a}" ~
+            "        "
+        ]
+        "\x{a}" ~
+        "      "
+    ]
+    "\x{a}" ~
+    "  "
+]
+a.attlist &= nametok.attlist
+applet.attlist &= name.attlist
+frame.attrib &= name.attlist
+iframe.attlist &= name.attlist
+map.attlist &= nametok.attlist
+name.attlist = attribute name { text }?
+# added - bugfix - some of the name atrributes has to be NMToken datatype
+nametok.attlist = attribute name { NMTOKEN.datatype }?

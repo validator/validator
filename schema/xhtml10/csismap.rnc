@@ -1,0 +1,132 @@
+# Client-side Image Map Module
+
+# This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
+# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# All changes are marked with relevant comments.
+# The following license refers just to those changes.
+
+# Copyright (c) 2005 Petr Nalevka
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+default namespace = "http://www.w3.org/1999/xhtml"
+namespace sch = "http://www.ascc.net/xml/schematron"
+
+sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+area = element area { area.attlist, empty }
+area.attlist =
+    Common.attrib,
+    attribute href { URI.datatype }?,
+    shape.attrib?,
+    attribute nohref { "nohref" }?,
+    attribute alt { Text.datatype },
+    attribute tabindex { tabindexNumber.datatype }?,
+    attribute accesskey { Character.datatype }?
+map =
+    element map {
+        map.attlist,
+        (# This does not use Block.mix
+         # because loose.dtd doesn't use %Flow;
+         Block.class+
+         | area+)
+    }
+map.attlist = CommonIdRequired.attrib
+a.attlist &= shape.attrib?
+img.attlist &= usemap.attlist
+object.attlist &= usemap.attlist
+usemap.attlist = attribute usemap { IDREF.datatype }?
+shape.attrib =
+    (attribute coords {
+         # rect is default
+         coords.rect.datatype
+     }
+     | attribute shape { "default" }
+     | (attribute shape { "poly" },
+        attribute coords { coords.datatype })
+     | (attribute shape { "rect" },
+        attribute coords { coords.rect.datatype }?)
+     | (attribute shape { "circle" },
+        attribute coords { coords.circle.datatype }))?
+# possible shape coordinates
+coords.datatype =
+    xsd:string {
+        # multiple comma separated Lenghts (pixels or percentages)
+        pattern =
+            "( )*([\-+]?(\d+|\d+(\.\d+)?%))(( )*,( )*[\-+]?(\d+|\d+(\.\d+)?%))*( )*"
+    }
+coords.circle.datatype =
+    xsd:string {
+        # 3 comma separated Lenghts (pixels or percentages)
+        pattern =
+            "( )*([\-+]?(\d+|\d+(\.\d+)?%)( )*,( )*){2}([\-+]?(\d+|\d+(\.\d+)?%))( )*"
+    }
+coords.rect.datatype =
+    xsd:string {
+        # 4 comma separated Lenghts (pixels or percentages)
+        pattern =
+            "( )*([\-+]?(\d+|\d+(\.\d+)?%)( )*,( )*){3}([\-+]?(\d+|\d+(\.\d+)?%))( )*"
+    }
+Inline.class |= map
+# added - for elements with both attributes attributes specified,
+# name and id attribute needs to have the same value.
+# 
+# correct examples:
+#  shape=polygon  coords=10,10,10,10,10,10,10,10
+#  shape=rect     coords=10,10,10,10
+#  shape=circle   coords=10,10,10
+# 
+#  Schematron is not used Relax NG has a better way to describe this - look below
+#  Anyway this Schematron pattern allows just numbers in the coords not Lenghts datatype
+# 
+# 
+#   <sch:pattern name="area.shape.coords">
+#       <sch:rule context="html:area">
+# 
+#         <sch:report test="@shape = 'poly'
+#         and (string(number(substring-before(@coords,','))) = 'NaN'
+#         or string(number(substring-before(substring-after(@coords,','),','))) = 'NaN'
+#         or string(number(substring-before(substring-after(substring-after(@coords,','),','),','))) = 'NaN'
+#         or string(number(substring-before(substring-after(substring-after(substring-after(@coords,','),','),','),','))) = 'NaN'
+#         or string(number(substring-before(substring-after(substring-after(substring-after(substring-after(@coords,','),','),','),','),','))) = 'NaN'
+#         or string(number(substring-before(substring-after(substring-after(substring-after(substring-after(substring-after(@coords,','),','),','),','),','),','))) = 'NaN'
+#         )">
+#              If areas shape is set to polygon there should be any number of coordinates but at least three.
+#         </sch:report>
+#         <sch:report test="@shape = 'rect' and @coords
+#         and (string(number(substring-before(@coords,','))) = 'NaN'
+#         or string(number(substring-before(substring-after(@coords,','),','))) = 'NaN'
+#         or string(number(substring-before(substring-after(substring-after(@coords,','),','),','))) = 'NaN'
+#         or string(number(substring-after(substring-after(substring-after(@coords,','),','),','))) = 'NaN'
+#         )">
+#              If areas shape is set to rect there should be exactly 4 comma-separated coordinates.
+#         </sch:report>
+#         <sch:report test="@shape = 'circle'
+#         and (string(number(substring-before(@coords,','))) = 'NaN'
+#         or string(number(substring-before(substring-after(@coords,','),','))) = 'NaN'
+#         or string(number(substring-after(substring-after(@coords,','),','))) = 'NaN'
+#         )">
+#              If areas shape is set to circle there should be exactly 3 comma-separated coordinates.
+#         </sch:report>
+#       </sch:rule>
+#   </sch:pattern>
