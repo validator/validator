@@ -1,0 +1,135 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+
+## 
+##     SVG 1.1 Datatypes Module
+##     file: svg-datatypes.mod
+## 
+##     This is SVG, a language for describing two-dimensional graphics in XML.
+##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+## 
+##     $Id: svg-datatypes.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##   
+
+## 
+##     Datatypes
+## 
+##     This module declares common data types for properties and attributes.
+##   
+
+## 
+##     feature specification
+##   
+[ xml:lang = "en" ]
+grammar {
+    Boolean.datatype = "false" | "true"
+    
+    ## 
+    ##       'clip-rule' or 'fill-rule' property/attribute value
+    ##     
+    ClipFillRule.datatype = "nonzero" | "evenodd" | "inherit"
+    
+    ## 
+    ##       media type, as per [RFC2045]
+    ##     
+    ContentType.datatype = xsd:string
+    
+    ## 
+    ##       a <coordinate>
+    ##     
+    Coordinate.datatype = xsd:string
+    
+    ## 
+    ##       a list of <coordinate>s
+    ##     
+    Coordinates.datatype = xsd:string
+    
+    ## 
+    ##       a <color> value
+    ##     
+    Color.datatype = xsd:string
+    
+    ## 
+    ##       a <integer>
+    ##     
+    Integer.datatype = xsd:string
+    
+    ## 
+    ##       a language code, as per [RFC3066]
+    ##     
+    LanguageCode.datatype = xsd:language
+    
+    ## 
+    ##       comma-separated list of language codes, as per [RFC3066]
+    ##     
+    LanguageCodes.datatype = xsd:string
+    
+    ## 
+    ##       a <ength>
+    ##     
+    Length.datatype = xsd:string
+    
+    ## 
+    ##       a list of <length>s
+    ##     
+    Lengths.datatype = xsd:string
+    
+    ## 
+    ##       a <number>
+    ##     
+    Number.datatype = xsd:string
+    
+    ## 
+    ##       a list of <number>s
+    ##     
+    Numbers.datatype = xsd:string
+    
+    ## 
+    ##       opacity value (e.g., <number>)
+    ##     
+    OpacityValue.datatype = xsd:string
+    
+    ## 
+    ##       a path data specification
+    ##     
+    PathData.datatype = xsd:string
+    
+    ## 
+    ##       'preserveAspectRatio' attribute specification
+    ##     
+    PreserveAspectRatioSpec.datatype =
+        xsd:string {
+            pattern =
+                "\s*(none|xMinYMin|xMidYMin|xMaxYMin|xMinYMid|xMidYMid|xMaxYMid|xMinYMax|xMidYMax|xMaxYMax)\s+(meet|slice)?\s*"
+        }
+    
+    ## 
+    ##       script expression
+    ##     
+    Script.datatype = xsd:string
+    
+    ## 
+    ##       An SVG color value (RGB plus optional ICC)
+    ##     
+    SVGColor.datatype = xsd:string
+    
+    ## 
+    ##       arbitrary text string
+    ##     
+    Text.datatype = xsd:string
+    
+    ## 
+    ##       list of transforms
+    ##     
+    TransformList.datatype = xsd:string
+    
+    ## 
+    ##       a Uniform Resource Identifier, see [URI]
+    ##     
+    URI.datatype = xsd:anyURI
+    
+    ## 
+    ##       'viewBox' attribute specification
+    ##     
+    ViewBoxSpec.datatype = xsd:string
+}

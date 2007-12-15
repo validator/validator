@@ -1,0 +1,33 @@
+# Content elements: quantifiers
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.cquantifier =
+    mml.lowlimit.qname
+    | mml.uplimit.qname
+    | mml.bvar.qname
+    | mml.degree.qname
+    | mml.logbase.qname
+    | mml.momentabout.qname
+    | mml.domainofapplication.qname
+mml.lowlimit.qname =
+    element lowlimit { mml.ContentExpression, mml.Common.attrib }
+mml.uplimit.qname =
+    element uplimit { mml.ContentExpression, mml.Common.attrib }
+mml.bvar.qname =
+    element bvar { mml.ContentExpression, mml.Common.attrib }
+mml.degree.qname =
+    element degree { mml.ContentExpression, mml.Common.attrib }
+mml.logbase.qname =
+    element logbase { mml.ContentExpression, mml.Common.attrib }
+mml.momentabout.qname =
+    element momentabout { mml.ContentExpression, mml.Common.attrib }
+mml.domainofapplication.qname =
+    element domainofapplication {
+        mml.ContentExpression, mml.Common.attrib
+    }

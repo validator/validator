@@ -1,0 +1,16 @@
+# Content elements: specials
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.cspecial = mml.apply.qname | mml.reln.qname | mml.lambda.qname
+mml.apply.qname =
+    element apply { mml.ContentExpression, mml.Common.attrib }
+mml.reln.qname =
+    element reln { mml.ContentExpression, mml.Common.attrib }
+mml.lambda.qname =
+    element lambda { mml.ContentExpression, mml.Common.attrib }

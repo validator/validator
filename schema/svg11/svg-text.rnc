@@ -1,0 +1,282 @@
+default namespace = "http://www.w3.org/2000/svg"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+
+## 
+##     SVG 1.1 Text Module
+##     file: svg-text.rng
+## 
+##     This is SVG, a language for describing two-dimensional graphics in XML.
+##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+## 
+##     $Id: svg-text.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##   
+
+## 
+##     Text
+## 
+##         text, tspan, tref, textPath, altGlyph, altGlyphDef, altGlyphItem,
+##         glyphRef
+## 
+##     This module declares markup to provide support for alternate glyph.
+##   
+[ xml:lang = "en" ]
+grammar {
+    include "svg-basic-text.rnc"
+    a:documentation [ "\x{a}" ~ "    Datatypes\x{a}" ~ "  " ]
+    BaselineShiftValue.datatype = xsd:string
+    FontSizeAdjustValue.datatype = xsd:string
+    GlyphOrientationHorizontalValue.datatype = xsd:string
+    GlyphOrientationVerticalValue.datatype = xsd:string
+    KerningValue.datatype = xsd:string
+    SpacingValue.datatype = xsd:string
+    TextDecorationValue.datatype = xsd:string
+    a:documentation [ "\x{a}" ~ "    SVG.Text.attrib\x{a}" ~ "  " ]
+    SVG.Text.extra.attrib = empty
+    SVG.Text.attrib &=
+        attribute writing-mode {
+            "lr-tb" | "rl-tb" | "tb-rl" | "lr" | "rl" | "tb" | "inherit"
+        }?,
+        SVG.Text.extra.attrib
+    a:documentation [
+        "\x{a}" ~
+        "    SVG.TextContent.attrib\x{a}" ~
+        "  "
+    ]
+    SVG.TextContent.extra.attrib = empty
+    SVG.TextContent.attrib &=
+        attribute alignment-baseline {
+            "auto"
+            | "baseline"
+            | "before-edge"
+            | "text-before-edge"
+            | "middle"
+            | "central"
+            | "after-edge"
+            | "text-after-edge"
+            | "ideographic"
+            | "alphabetic"
+            | "hanging"
+            | "mathematical"
+            | "inherit"
+        }?,
+        attribute baseline-shift { BaselineShiftValue.datatype }?,
+        attribute direction { "ltr" | "rtl" | "inherit" }?,
+        attribute dominant-baseline {
+            "auto"
+            | "use-script"
+            | "no-change"
+            | "reset-size"
+            | "ideographic"
+            | "alphabetic"
+            | "hanging"
+            | "mathematical"
+            | "central"
+            | "middle"
+            | "text-after-edge"
+            | "text-before-edge"
+            | "inherit"
+        }?,
+        attribute glyph-orientation-horizontal {
+            GlyphOrientationHorizontalValue.datatype
+        }?,
+        attribute glyph-orientation-vertical {
+            GlyphOrientationVerticalValue.datatype
+        }?,
+        attribute kerning { KerningValue.datatype }?,
+        attribute letter-spacing { SpacingValue.datatype }?,
+        attribute text-anchor {
+            "start" | "middle" | "end" | "inherit"
+        }?,
+        attribute text-decoration { TextDecorationValue.datatype }?,
+        attribute unicode-bidi {
+            "normal" | "embed" | "bidi-override" | "inherit"
+        }?,
+        attribute word-spacing { SpacingValue.datatype }?,
+        SVG.TextContent.extra.attrib
+    SVG.Font.attrib &=
+        attribute font-size-adjust { FontSizeAdjustValue.datatype }?,
+        attribute font-stretch {
+            "normal"
+            | "wider"
+            | "narrower"
+            | "ultra-condensed"
+            | "extra-condensed"
+            | "condensed"
+            | "semi-condensed"
+            | "semi-expanded"
+            | "expanded"
+            | "extra-expanded"
+            | "ultra-expanded"
+            | "inherit"
+        }?,
+        attribute font-variant { "normal" | "small-caps" | "inherit" }?
+    
+    ## 
+    ##       extend SVG.Text.class
+    ##     
+    SVG.Text.class |= altGlyphDef
+    
+    ## 
+    ##       extend SVG.TextContent.class
+    ##     
+    SVG.TextContent.class |= tspan | tref | textPath
+    a:documentation [ "\x{a}" ~ "    text: Text Element\x{a}" ~ "  " ]
+    SVG.text.class |= SVG.TextContent.class
+    attlist.text &=
+        SVG.Text.attrib,
+        SVG.TextContent.attrib,
+        attribute dx { Lengths.datatype }?,
+        attribute dy { Lengths.datatype }?,
+        attribute textLength { Length.datatype }?,
+        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+    a:documentation [
+        "\x{a}" ~
+        "    tspan: Text Span Element\x{a}" ~
+        "  "
+    ]
+    SVG.tspan.content =
+        (text
+         | tspan
+         | tref
+         | altGlyph
+         | animate
+         | set
+         | animateColor
+         | SVG.Description.class
+         | SVG.Hyperlink.class)*
+    tspan = element tspan { attlist.tspan, SVG.tspan.content }
+    attlist.tspan &=
+        SVG.Core.attrib,
+        SVG.Conditional.attrib,
+        SVG.Style.attrib,
+        SVG.TextContent.attrib,
+        SVG.Font.attrib,
+        SVG.Paint.attrib,
+        SVG.Color.attrib,
+        SVG.Opacity.attrib,
+        SVG.Graphics.attrib,
+        SVG.Clip.attrib,
+        SVG.Mask.attrib,
+        SVG.Filter.attrib,
+        SVG.GraphicalEvents.attrib,
+        SVG.Cursor.attrib,
+        SVG.External.attrib,
+        attribute x { Coordinates.datatype }?,
+        attribute y { Coordinates.datatype }?,
+        attribute dx { Lengths.datatype }?,
+        attribute dy { Lengths.datatype }?,
+        attribute rotate { Numbers.datatype }?,
+        attribute textLength { Length.datatype }?,
+        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+    a:documentation [
+        "\x{a}" ~
+        "    tref: Text Reference Element\x{a}" ~
+        "  "
+    ]
+    SVG.tref.content =
+        (animate | set | animateColor | SVG.Description.class)*
+    tref = element tref { attlist.tref, SVG.tref.content }
+    attlist.tref &=
+        SVG.Core.attrib,
+        SVG.Conditional.attrib,
+        SVG.Style.attrib,
+        SVG.TextContent.attrib,
+        SVG.Font.attrib,
+        SVG.Paint.attrib,
+        SVG.Color.attrib,
+        SVG.Opacity.attrib,
+        SVG.Graphics.attrib,
+        SVG.Clip.attrib,
+        SVG.Mask.attrib,
+        SVG.Filter.attrib,
+        SVG.GraphicalEvents.attrib,
+        SVG.Cursor.attrib,
+        SVG.XLinkRequired.attrib,
+        SVG.External.attrib,
+        attribute x { Coordinates.datatype }?,
+        attribute y { Coordinates.datatype }?,
+        attribute dx { Lengths.datatype }?,
+        attribute dy { Lengths.datatype }?,
+        attribute rotate { Numbers.datatype }?,
+        attribute textLength { Length.datatype }?,
+        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+    a:documentation [
+        "\x{a}" ~
+        "    textPath: Text Path Element\x{a}" ~
+        "  "
+    ]
+    SVG.textPath.content =
+        (text
+         | tspan
+         | tref
+         | altGlyph
+         | animate
+         | set
+         | animateColor
+         | SVG.Description.class
+         | SVG.Hyperlink.class)*
+    textPath =
+        element textPath { attlist.textPath, SVG.textPath.content }
+    attlist.textPath &=
+        SVG.Core.attrib,
+        SVG.Conditional.attrib,
+        SVG.Style.attrib,
+        SVG.TextContent.attrib,
+        SVG.Font.attrib,
+        SVG.Paint.attrib,
+        SVG.Color.attrib,
+        SVG.Opacity.attrib,
+        SVG.Graphics.attrib,
+        SVG.Clip.attrib,
+        SVG.Mask.attrib,
+        SVG.Filter.attrib,
+        SVG.GraphicalEvents.attrib,
+        SVG.Cursor.attrib,
+        SVG.XLinkRequired.attrib,
+        SVG.External.attrib,
+        attribute startOffset { Length.datatype }?,
+        attribute textLength { Length.datatype }?,
+        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?,
+        attribute method { "align" | "stretch" }?,
+        attribute spacing { "auto" | "exact" }?
+    a:documentation [
+        "\x{a}" ~
+        "    altGlyph: Alternate Glyph Element\x{a}" ~
+        "  "
+    ]
+    attlist.altGlyph &=
+        SVG.TextContent.attrib,
+        attribute x { Coordinates.datatype }?,
+        attribute y { Coordinates.datatype }?,
+        attribute dx { Lengths.datatype }?,
+        attribute dy { Lengths.datatype }?,
+        attribute rotate { Numbers.datatype }?
+    a:documentation [
+        "\x{a}" ~
+        "    altGlyphDef: Alternate Glyph Definition Element\x{a}" ~
+        "  "
+    ]
+    SVG.altGlyphDef.content |= altGlyphItem+
+    a:documentation [
+        "\x{a}" ~
+        "    altGlyphItem: Alternate Glyph Item Element\x{a}" ~
+        "  "
+    ]
+    SVG.altGlyphItem.content = glyphRef+
+    altGlyphItem =
+        element altGlyphItem {
+            attlist.altGlyphItem, SVG.altGlyphItem.content
+        }
+    attlist.altGlyphItem &= SVG.Core.attrib
+    a:documentation [
+        "\x{a}" ~
+        "    glyphRef: Glyph Reference Element\x{a}" ~
+        "  "
+    ]
+    attlist.glyphRef &=
+        attribute x { Number.datatype }?,
+        attribute y { Number.datatype }?,
+        attribute dx { Number.datatype }?,
+        attribute dy { Number.datatype }?
+}

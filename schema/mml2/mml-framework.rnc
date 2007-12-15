@@ -1,0 +1,24 @@
+# MathML2 Framework
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+mml.ContentExpression = (mml.Content | mml.PresInCont)*
+mml.PresExpression = (mml.Presentation | mml.ContInPres)*
+mml.MathExpression = (mml.PresInCont | mml.ContInPres)*
+# PCDATA or MathML character elements
+mml.MathMLCharacters = mml.mglyph.qname | text
+# Common Attributes
+mml.Common.attrib &=
+    attribute xlink:href { mml.uri.datatype }?,
+    attribute class { text }?,
+    attribute style { text }?,
+    attribute id { mml.id.datatype }?,
+    attribute xref { mml.idref.datatype }?,
+    attribute other { text }?

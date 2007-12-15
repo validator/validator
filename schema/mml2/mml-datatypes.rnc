@@ -1,0 +1,163 @@
+# Definition of Common Datatypes for MathML 2.0
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.id.datatype = xsd:ID
+mml.idref.datatype = xsd:IDREF
+mml.number.datatype = xsd:integer
+mml.positiveinteger.datatype = xsd:positiveInteger
+mml.uri.datatype = xsd:anyURI
+mml.nonnegativefloat.datatype = xsd:float { minInclusive = "0" }
+mml.length.datatype =
+    xsd:normalizedString {
+        pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+    }
+mml.color.datatype =
+    xsd:normalizedString { pattern = "#[0-9A-Fa-f]{6}" }
+    | xsd:normalizedString { pattern = "#[0-9A-Fa-f]{3}" }
+    | "transparent"
+# Annotation datatypes
+mml.Annotation.datatype =
+    text
+    # It depends on the encoding format
+    
+mml.Annotation-xml.datatype =
+    mixed {
+        element * {
+            attribute * { text }*,
+            mml.Annotation-xml.datatype
+        }*
+    }
+# Space datatype
+mml.namedspace.datatype =
+    # <ref name="mml.length.datatype"/> forbidden pattern list//ref
+    xsd:normalizedString {
+        pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+    }
+    | "veryverythinmathspace"
+    | "verythinmathspace"
+    | "thinmathspace"
+    | "mediummathspace"
+    | "thickmathspace"
+    | "verythickmathspace"
+    | "veryverythickmathspace"
+# datatypes for making matrix
+mml.align.datatype =
+    list {
+        # (top | bottom | center | baseline | axis) [ rownumber ]
+        ("top" | "bottom" | "center" | "baseline" | "axis"),
+        # <ref name="mml.positiveinteger.datatype"/> forbidden pattern list//ref
+        xsd:positiveInteger?
+    }
+mml.rowalign.datatype =
+    list {
+        # (top | bottom | center | baseline | axis) +
+        ("top" | "bottom" | "center" | "baseline" | "axis")+
+    }
+mml.columnalign.datatype =
+    list {
+        # (left | center | right) +
+        ("left" | "center" | "right")+
+    }
+mml.columnwidth.datatype =
+    list {
+        # ( auto | number h-unit | namedspace | fit ) +
+        ("auto"
+         | # <ref name="mml.length.datatype"/> forbidden pattern list//ref
+           xsd:normalizedString {
+               pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+           }
+         | # <ref name="mml.namedspace.datatype"/> forbidden pattern list//ref
+           (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+            xsd:normalizedString {
+                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+            }
+            | "veryverythinmathspace"
+            | "verythinmathspace"
+            | "thinmathspace"
+            | "mediummathspace"
+            | "thickmathspace"
+            | "verythickmathspace"
+            | "veryverythickmathspace")
+         | "fit")+
+    }
+mml.groupalign.datatype =
+    text
+    # group-alignment-list-list
+    
+mml.alignmentscope.datatype =
+    list {
+        # (true | false) +
+        ("true" | "false")+
+    }
+mml.rowspacing.datatype =
+    list {
+        # ( number v-unit ) +
+        # <ref name="mml.length.datatype"/> forbidden pattern list//ref
+        xsd:normalizedString {
+            pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+        }+
+    }
+mml.columnspacing.datatype =
+    list {
+        # ( number h-unit | namedspace ) +
+        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+         xsd:normalizedString {
+             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+         },
+         (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+          xsd:normalizedString {
+              pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+          }
+          | "veryverythinmathspace"
+          | "verythinmathspace"
+          | "thinmathspace"
+          | "mediummathspace"
+          | "thickmathspace"
+          | "verythickmathspace"
+          | "veryverythickmathspace"))+
+    }
+mml.lines.datatype =
+    list {
+        # (none | solid | dashed) +
+        ("none" | "solid" | "dashed")+
+    }
+mml.framespacing.datatype =
+    list {
+        # (number h-unit | namedspace) (number v-unit | namedspace)
+        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+         xsd:normalizedString {
+             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+         }
+         | (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+            xsd:normalizedString {
+                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+            }
+            | "veryverythinmathspace"
+            | "verythinmathspace"
+            | "thinmathspace"
+            | "mediummathspace"
+            | "thickmathspace"
+            | "verythickmathspace"
+            | "veryverythickmathspace")),
+        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+         xsd:normalizedString {
+             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+         }
+         | (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
+            xsd:normalizedString {
+                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+            }
+            | "veryverythinmathspace"
+            | "verythinmathspace"
+            | "thinmathspace"
+            | "mediummathspace"
+            | "thickmathspace"
+            | "verythickmathspace"
+            | "veryverythickmathspace"))
+    }

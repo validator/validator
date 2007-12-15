@@ -1,0 +1,33 @@
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+namespace ns1 = "http://www.w3.org/1998/Math/MathML"
+
+include "mml-content-all.rnc" inherit = ns1
+include "mml-content-attrib.rnc" inherit = ns1
+include "mml-content-construct.rnc" inherit = ns1
+include "mml-content-leaf.rnc" inherit = ns1
+include "mml-content-operators.rnc" inherit = ns1
+include "mml-content-others.rnc" inherit = ns1
+include "mml-content-quantifiers.rnc" inherit = ns1
+include "mml-content-relations.rnc" inherit = ns1
+include "mml-content-semantics.rnc" inherit = ns1
+include "mml-content-specials.rnc" inherit = ns1
+include "mml-content-symbols.rnc" inherit = ns1
+include "mml-datatypes.rnc" inherit = ns1
+include "mml-framework.rnc" inherit = ns1
+include "mml-math.rnc" inherit = ns1
+include "mml-pres-action.rnc" inherit = ns1
+include "mml-pres-all.rnc" inherit = ns1
+include "mml-pres-attrib.rnc" inherit = ns1
+include "mml-pres-content.rnc" inherit = ns1
+include "mml-pres-empty.rnc" inherit = ns1
+include "mml-pres-layout-empty.rnc" inherit = ns1
+include "mml-pres-layout.rnc" inherit = ns1
+include "mml-pres-scripts-empty.rnc" inherit = ns1
+include "mml-pres-scripts.rnc" inherit = ns1
+include "mml-pres-tables.rnc" inherit = ns1

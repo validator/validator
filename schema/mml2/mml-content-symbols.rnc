@@ -1,0 +1,49 @@
+# Content elements: symbols
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.c0ary =
+    mml.integers.qname
+    | mml.reals.qname
+    | mml.rationals.qname
+    | mml.naturalnumbers.qname
+    | mml.complexes.qname
+    | mml.primes.qname
+    | mml.exponentiale.qname
+    | mml.imaginaryi.qname
+    | mml.notanumber.qname
+    | mml.true.qname
+    | mml.false.qname
+    | mml.emptyset.qname
+    | mml.eulergamma.qname
+    | mml.infinity.qname
+mml.integers.qname =
+    element integers { empty, mml.operators.common.attrib }
+mml.reals.qname = element reals { empty, mml.operators.common.attrib }
+mml.rationals.qname =
+    element rationals { empty, mml.operators.common.attrib }
+mml.naturalnumbers.qname =
+    element naturalnumbers { empty, mml.operators.common.attrib }
+mml.complexes.qname =
+    element complexes { empty, mml.operators.common.attrib }
+mml.primes.qname = element primes { empty, mml.operators.common.attrib }
+mml.exponentiale.qname =
+    element exponentiale { empty, mml.operators.common.attrib }
+mml.imaginaryi.qname =
+    element imaginaryi { empty, mml.operators.common.attrib }
+mml.notanumber.qname =
+    element notanumber { empty, mml.operators.common.attrib }
+mml.true.qname = element true { empty, mml.operators.common.attrib }
+mml.false.qname = element false { empty, mml.operators.common.attrib }
+mml.emptyset.qname =
+    element emptyset { empty, mml.operators.common.attrib }
+mml.pi.qname = element pi { empty, mml.operators.common.attrib }
+mml.eulergamma.qname =
+    element eulergamma { empty, mml.operators.common.attrib }
+mml.infinity.qname =
+    element infinity { empty, mml.operators.common.attrib }

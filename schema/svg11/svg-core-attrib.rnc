@@ -1,0 +1,35 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+
+## 
+##     SVG 1.1 Core Attribute Module
+##     file: svg-core-attrib.rng
+## 
+##     This is SVG, a language for describing two-dimensional graphics in XML.
+##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+## 
+##     $Id: svg-core-attrib.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##   
+
+## 
+##     Core Attribute
+## 
+##         id, xml:base, xml:lang, xml:space
+## 
+##     This module defines the core set of attributes that can be present on
+##     any element.
+##   
+[ xml:lang = "en" ]
+grammar {
+    SVG.id.attrib = attribute id { xsd:ID }?
+    SVG.base.attrib = attribute xml:base { URI.datatype }?
+    SVG.lang.attrib = attribute xml:lang { LanguageCode.datatype }?
+    SVG.space.attrib = attribute xml:space { "default" | "preserve" }?
+    SVG.Core.extra.attrib = empty
+    SVG.Core.attrib =
+        SVG.id.attrib,
+        SVG.base.attrib,
+        SVG.lang.attrib,
+        SVG.space.attrib,
+        SVG.Core.extra.attrib
+}

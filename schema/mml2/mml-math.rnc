@@ -1,0 +1,40 @@
+# Browser interface definition  ...............................
+
+# Root Element (math)
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+start |= mml.math.qname
+# Attributes for top-level element "math"
+mml.att-macros = attribute macros { text }?
+mml.att-mode = attribute mode { text }?
+mml.att-display = attribute display { text }?
+mml.att-topinfo &=
+    mml.Common.attrib, mml.att-macros, mml.att-mode, mml.att-display
+# Attributes for browser interface element
+mml.att-baseline = attribute baseline { text }?
+mml.att-overflow =
+    attribute overflow { "scroll" | "elide" | "truncate" | "scale" }?
+mml.att-altimg = attribute altimg { mml.uri.datatype }?
+mml.att-alttext = attribute alttext { text }?
+mml.att-browif &=
+    mml.att-type,
+    mml.att-name,
+    mml.att-height,
+    mml.att-width,
+    mml.att-baseline,
+    mml.att-overflow,
+    mml.att-altimg,
+    mml.att-alttext
+# .............................................................
+
+# The top-level element "math" contains MathML encoded
+# mathematics. The "math" element has the browser info
+# attributes if it is also the browser interface element.
+mml.math.qname =
+    element math { mml.MathExpression, mml.att-topinfo, mml.att-browif }

@@ -1,0 +1,89 @@
+# Presentation: general layout
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.pgenschema =
+    mml.mrow.qname
+    | mml.mfrac.qname
+    | mml.msqrt.qname
+    | mml.mroot.qname
+    | mml.menclose.qname
+    | mml.mstyle.qname
+    | mml.merror.qname
+    | mml.mpadded.qname
+    | mml.mphantom.qname
+    | mml.mfenced.qname
+mml.mrow.qname = element mrow { mml.PresExpression, mml.Common.attrib }
+mml.mfrac.qname =
+    element mfrac {
+        mml.PresExpression,
+        mml.Common.attrib,
+        mml.att-bevelled,
+        mml.att-linethickness
+    }
+mml.msqrt.qname =
+    element msqrt { mml.PresExpression, mml.Common.attrib }
+mml.menclose.qname =
+    element menclose {
+        mml.PresExpression,
+        mml.Common.attrib,
+        attribute notation { "longdiv" | "actuarial" | "radical" }?
+    }
+mml.mroot.qname =
+    element mroot { mml.PresExpression, mml.Common.attrib }
+mml.mstyle.qname =
+    element mstyle {
+        mml.PresExpression,
+        mml.Common.attrib,
+        mml.att-fontinfo,
+        mml.att-opinfo,
+        mml.att-lquote,
+        mml.att-rquote,
+        mml.att-linethickness,
+        mml.att-scriptlevel,
+        mml.att-scriptsizemultiplier,
+        mml.att-scriptminsize,
+        mml.att-background,
+        mml.att-veryverythinmathspace,
+        mml.att-verythinmathspace,
+        mml.att-thinmathspace,
+        mml.att-mediummathspace,
+        mml.att-thickmathspace,
+        mml.att-verythickmathspace,
+        mml.att-veryverythickmathspace,
+        mml.att-open,
+        mml.att-close,
+        mml.att-separators,
+        mml.att-subscriptshift,
+        mml.att-superscriptshift,
+        mml.att-accentunder,
+        mml.att-tableinfo,
+        mml.att-rowspan,
+        mml.att-columnspan,
+        mml.att-edge,
+        mml.att-actiontype
+    }
+mml.merror.qname =
+    element merror { mml.PresExpression, mml.Common.attrib }
+mml.mpadded.qname =
+    element mpadded {
+        mml.PresExpression,
+        mml.Common.attrib,
+        mml.att-sizeinfo,
+        mml.att-lspace
+    }
+mml.mphantom.qname =
+    element mphantom { mml.PresExpression, mml.Common.attrib }
+mml.mfenced.qname =
+    element mfenced {
+        mml.PresExpression,
+        mml.Common.attrib,
+        mml.att-open,
+        mml.att-close,
+        mml.att-separators
+    }

@@ -1,0 +1,35 @@
+# Content elements: leaf nodes
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.ctoken = mml.csymbol.qname | mml.ci.qname | mml.cn.qname
+mml.ci.qname =
+    element ci {
+        (mml.MathMLCharacters | mml.PresInCont)*,
+        mml.Common.attrib,
+        mml.att-type,
+        mml.att-definition,
+        mml.att-encoding
+    }
+mml.csymbol.qname =
+    element csymbol {
+        (mml.MathMLCharacters | mml.PresInCont)*,
+        mml.Common.attrib,
+        mml.att-type,
+        mml.att-definition,
+        mml.att-encoding
+    }
+mml.cn.qname =
+    element cn {
+        (mml.MathMLCharacters | mml.PresInCont | mml.sep.qname)*,
+        mml.Common.attrib,
+        mml.att-type,
+        mml.att-base,
+        mml.att-definition,
+        mml.att-encoding
+    }

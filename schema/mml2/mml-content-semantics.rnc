@@ -1,0 +1,28 @@
+# Content elements: semantic mapping
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.csemantics =
+    mml.semantics.qname
+    | mml.annotation.qname
+    | mml.annotation-xml.qname
+mml.semantics.qname =
+    element semantics {
+        mml.ContentExpression,
+        mml.Common.attrib,
+        mml.att-definition,
+        mml.att-encoding
+    }
+mml.annotation.qname =
+    element annotation {
+        mml.Annotation.datatype, mml.Common.attrib, mml.att-encoding
+    }
+mml.annotation-xml.qname =
+    element annotation-xml {
+        mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding
+    }

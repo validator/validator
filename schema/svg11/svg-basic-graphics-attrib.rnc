@@ -1,0 +1,51 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+
+## 
+##     SVG 1.1 Basic Graphics Attribute Module
+##     file: svg-basic-graphics-attrib.rng
+## 
+##     This is SVG, a language for describing two-dimensional graphics in XML.
+##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+## 
+##     $Id: svg-basic-graphics-attrib.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##   
+
+## 
+##     Basic Graphics Attribute
+## 
+##         display, visibility
+## 
+##     This module defines the Graphics attribute set.
+##   
+[ xml:lang = "en" ]
+grammar {
+    SVG.display.attrib =
+        attribute display {
+            "inline"
+            | "block"
+            | "list-item"
+            | "run-in"
+            | "compact"
+            | "marker"
+            | "table"
+            | "inline-table"
+            | "table-row-group"
+            | "table-header-group"
+            | "table-footer-group"
+            | "table-row"
+            | "table-column-group"
+            | "table-column"
+            | "table-cell"
+            | "table-caption"
+            | "none"
+            | "inherit"
+        }?
+    SVG.visibility.attrib =
+        attribute visibility { "visible" | "hidden" | "inherit" }?
+    SVG.Graphics.extra.attrib = empty
+    SVG.Graphics.attrib &=
+        SVG.display.attrib,
+        SVG.visibility.attrib,
+        SVG.Graphics.extra.attrib
+}

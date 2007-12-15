@@ -1,0 +1,14 @@
+# Empty presentation
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.petoken = mml.mspace.qname
+mml.mspace.qname =
+    element mspace {
+        empty, mml.Common.attrib, mml.att-sizeinfo, mml.att-linebreak
+    }

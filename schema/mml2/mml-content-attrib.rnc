@@ -1,0 +1,34 @@
+# Content element set  ........................................
+
+# Attribute definitions
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.att-base = attribute base { mml.number.datatype }?
+mml.att-closure =
+    attribute closure {
+        "open" | "closed" | "open-closed" | "closed-open"
+    }?
+mml.att-definition = attribute definitionURL { mml.uri.datatype }?
+mml.att-encoding = attribute encoding { text }?
+mml.att-nargs = attribute nargs { "nary" | mml.number.datatype }?
+mml.att-occurrence =
+    attribute occurrence { "prefix" | "infix" | "function-model" }?
+mml.att-order = attribute order { "lexicographic" | "numeric" }?
+mml.att-scope = attribute scope { "local" | "global" }?
+mml.att-type =
+    attribute type {
+        "e-notation"
+        | "integer"
+        | "rational"
+        | "real"
+        | "float"
+        | "complex-polar"
+        | "complex-cartesian"
+        | "constant"
+    }?

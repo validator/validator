@@ -1,0 +1,17 @@
+# Empty presentation layout
+
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+mml.peschema = mml.maligngroup.qname | mml.malignmark.qname
+mml.malignmark.qname = element malignmark { empty, mml.att-edge }
+mml.maligngroup.qname =
+    element maligngroup { empty, mml.Common.attrib, mml.att-groupalign }
+mml.mglyph.qname =
+    element mglyph {
+        empty, mml.att-alt, mml.att-fontfamily, mml.att-index
+    }

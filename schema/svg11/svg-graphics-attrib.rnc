@@ -1,0 +1,64 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ns1 = "http://www.w3.org/2000/svg"
+
+
+## 
+##     SVG 1.1 Graphics Attribute Module
+##     file: svg-graphics-attrib.rng
+## 
+##     This is SVG, a language for describing two-dimensional graphics in XML.
+##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+## 
+##     $Id: svg-graphics-attrib.rng,v 1.1 2005/10/26 15:09:05 kosek Exp $
+##   
+
+## 
+##     Graphics Attribute
+## 
+##         display, image-rendering, pointer-events, shape-rendering,
+##         text-rendering, visibility
+## 
+##     This module defines the Graphics attribute set.
+##   
+[ xml:lang = "en" ]
+grammar {
+    include "svg-basic-graphics-attrib.rnc" inherit = ns1
+    SVG.image-rendering.attrib =
+        attribute image-rendering {
+            "auto" | "optimizeSpeed" | "optimizeQuality" | "inherit"
+        }?
+    SVG.pointer-events.attrib =
+        attribute pointer-events {
+            "visiblePainted"
+            | "visibleFill"
+            | "visibleStroke"
+            | "visible"
+            | "painted"
+            | "fill"
+            | "stroke"
+            | "all"
+            | "none"
+            | "inherit"
+        }?
+    SVG.shape-rendering.attrib =
+        attribute shape-rendering {
+            "auto"
+            | "optimizeSpeed"
+            | "crispEdges"
+            | "geometricPrecision"
+            | "inherit"
+        }?
+    SVG.text-rendering.attrib =
+        attribute text-rendering {
+            "auto"
+            | "optimizeSpeed"
+            | "optimizeLegibility"
+            | "geometricPrecision"
+            | "inherit"
+        }?
+    SVG.Graphics.attrib &=
+        SVG.image-rendering.attrib,
+        SVG.pointer-events.attrib,
+        SVG.shape-rendering.attrib,
+        SVG.text-rendering.attrib
+}
