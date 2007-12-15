@@ -2536,18 +2536,14 @@ final class XmlParser {
             int length = i - readBufferPos;
 
             if (length != 0) {
-                int saveLine = line;
-                int saveColumn = column;
-                line = linePrev;
-                column = columnPrev;
+                // current and prev location are now the same due to rollback 
+                // above
                 if (pureWhite) {
                     handler.ignorableWhitespace(readBuffer, readBufferPos,
                             length);
                 } else {
                     handler.charData(readBuffer, readBufferPos, length);
                 }
-                line = saveLine;
-                column = saveColumn;
                 readBufferPos = i;
             }
 
@@ -3920,9 +3916,7 @@ final class XmlParser {
      */
     private void rollbackLocation() {
         assert (column != columnPrev) || (line != linePrev); 
-        if (column == 1) {
-            nextCharOnNewLine = true;
-        }
+        nextCharOnNewLine = (column == 1);
         line = linePrev;
         column = columnPrev;
     }
