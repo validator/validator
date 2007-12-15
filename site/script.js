@@ -180,9 +180,9 @@ function createHtmlElement(tagName){
 function installGroupingToggle() {
 	var para = createHtmlElement('p')
 	var button = createHtmlElement('input')
-	para.appendChild(button)
 	button.type = 'button'
 	button.value = 'Group Messages'
+	para.appendChild(button)
 	if (hasDuplicateMessages) {
 		button.onclick = function(){
 			if (currentOl == ungroupedOl) {
@@ -202,12 +202,11 @@ function installGroupingToggle() {
 }
 
 function initGrouping() {
-	if (!document.body) {
-		return
-	}
-	var n = document.body.firstChild
+	var n = document.documentElement.lastChild.firstChild
 	while (n) {
-		if (n.start) {
+		// The line below protects IE users from a crash
+		if (n instanceof HTMLOListElement) { // deliberately IE-incompatible
+//		if (n.start) { // cross-browser compatible
 			currentOl = n
 			break
 		}
