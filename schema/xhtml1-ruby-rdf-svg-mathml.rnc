@@ -1,0 +1,28 @@
+namespace svg = "http://www.w3.org/2000/svg"
+namespace math = "http://www.w3.org/1998/Math/MathML"
+namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+include "xhtml10/xhtml-strict.rnc"
+include "svg11/svg11-inc.rnc"
+include "inkscape/inkscape.rnc"
+include "mml2/mathml2-inc.rnc"
+include "rdf/rdf.rnc"
+include "xhtml10/ruby.rnc"
+
+SVG.Core.extra.attrib &= inkscape.attrs
+SVG.defs.content &= sodipodi.namedview.elem*
+SVG.g.content &= sodipodi.namedview.elem*
+
+head.content &= rdf.elem*
+SVG.metadata.content |= rdf.elem
+
+Inline.class |= svg
+
+Inline.class |= mml.math.qname
+
+SVG.foreignObject.content |=
+	(	mml.math.qname
+	|	html
+	|	body
+	|	Block.mix*
+	)

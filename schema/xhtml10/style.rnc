@@ -6,6 +6,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
+# Copyright (c) 2007 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -32,11 +33,12 @@
 
 default namespace = "http://www.w3.org/1999/xhtml"
 
-style = element style { style.attlist, text }
+# disambiguate from SVG -- hsivonen
+style.xhtml = element style { style.attlist, text }
 style.attlist =
     title.attrib,
     I18n.attrib,
-    attribute type { ContentType.datatype },
-    attribute media { MediaDesc.datatype }?,
+    attribute type { content-type.datatype },
+    attribute media { media-desc.datatype }?,
     attribute xml:space { "preserve" }?
-head.content &= style*
+head.content &= style.xhtml*

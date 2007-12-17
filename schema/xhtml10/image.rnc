@@ -61,9 +61,9 @@ sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 img = element img { img.attlist, empty }
 img.attlist =
     Common.attrib,
-    attribute src { URI.datatype },
-    attribute alt { Text.datatype },
-    attribute longdesc { URI.datatype }?,
-    attribute height { Length.datatype }?,
-    attribute width { Length.datatype }?
+    attribute src { uri.datatype },
+    attribute alt { text.datatype },
+    attribute longdesc { uri.datatype }?,
+    attribute height { length.datatype }?,
+    attribute width { length.datatype }?
 Inline.class |= img

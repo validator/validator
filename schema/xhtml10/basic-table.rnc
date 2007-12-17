@@ -35,7 +35,7 @@ default namespace = "http://www.w3.org/1999/xhtml"
 table = element table { table.attlist, caption?, tr+ }
 table.attlist =
     Common.attrib,
-    attribute summary { Text.datatype }?
+    attribute summary { text.datatype }?
 caption = element caption { caption.attlist, Inline.model }
 caption.attlist = Common.attrib
 tr = element tr { tr.attlist, (th | td)+ }
@@ -46,12 +46,12 @@ td = element td { td.attlist, Flow.model }
 td.attlist = Cell.attrib
 Cell.attrib =
     Common.attrib,
-    attribute abbr { Text.datatype }?,
+    attribute abbr { text.datatype }?,
     attribute axis { text }?,
-    attribute headers { IDREFS.datatype }?,
+    attribute headers { idrefs.datatype }?,
     scope.attrib,
-    attribute rowspan { Number.datatype }?,
-    attribute colspan { Number.datatype }?,
+    attribute rowspan { number.datatype }?,
+    attribute colspan { number.datatype }?,
     CellHAlign.attrib,
     CellVAlign.attrib
 CellHAlign.attrib = attribute align { "left" | "center" | "right" }?

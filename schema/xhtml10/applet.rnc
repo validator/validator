@@ -41,11 +41,11 @@ applet =
     }
 applet.attlist =
     Core.attrib,
-    attribute alt { Text.datatype },
+    attribute alt { text.datatype },
     attribute archive { text }?,
     attribute code { text }?,
-    attribute codebase { URI.datatype }?,
+    attribute codebase { uri.datatype }?,
     attribute object { text }?,
-    attribute height { Length.datatype },
-    attribute width { Length.datatype }
+    attribute height { length.datatype },
+    attribute width { length.datatype }
 Inline.class |= applet

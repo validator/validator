@@ -35,8 +35,8 @@ default namespace = "http://www.w3.org/1999/xhtml"
 meta = element meta { meta.attlist, empty }
 meta.attlist =
     I18n.attrib,
-    attribute http-equiv { NMTOKEN.datatype }?,
-    attribute name { NMTOKEN.datatype }?,
+    attribute http-equiv { nmtoken.datatype }?,
+    attribute name { nmtoken.datatype }?,
     # modified - bugfix - content is required
     attribute content { text },
     attribute scheme { text }?

@@ -67,14 +67,14 @@ form =
     }
 form.attlist =
     Common.attrib,
-    attribute action { URI.datatype },
+    attribute action { uri.datatype },
     attribute method { "get" | "post" }?,
-    attribute enctype { ContentType.datatype }?
+    attribute enctype { content-type.datatype }?
 label = element label { label.attlist, Inline.model }
 label.attlist =
     Common.attrib,
-    attribute for { IDREF.datatype }?,
-    attribute accesskey { Character.datatype }?
+    attribute for { idref.datatype }?,
+    attribute accesskey { character.datatype }?
 [
     # added - radio buttons and checkboxes need to have some value specified
     
@@ -108,9 +108,9 @@ input.attlist =
     attribute value { text }?,
     attribute checked { "checked" }?,
     attribute size { text }?,
-    attribute maxlength { Number.datatype }?,
-    attribute src { URI.datatype }?,
-    attribute accesskey { Character.datatype }?
+    attribute maxlength { number.datatype }?,
+    attribute src { uri.datatype }?,
+    attribute accesskey { character.datatype }?
 InputType.class =
     "text"
     | "password"
@@ -123,7 +123,7 @@ select = element select { select.attlist, option+ }
 select.attlist =
     Common.attrib,
     attribute name { text }?,
-    attribute size { Number.datatype }?,
+    attribute size { number.datatype }?,
     attribute multiple { "multiple" }?
 option =
     element option {
@@ -136,9 +136,9 @@ textarea = element textarea { textarea.attlist }
 textarea.attlist =
     Common.attrib,
     attribute name { text }?,
-    attribute rows { Number.datatype },
-    attribute cols { Number.datatype },
-    attribute accesskey { Character.datatype }?,
+    attribute rows { number.datatype },
+    attribute cols { number.datatype },
+    attribute accesskey { character.datatype }?,
     text
 Form.class = form
 Formctrl.class = input | label | select | textarea

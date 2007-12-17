@@ -55,7 +55,7 @@ kbd.attlist = Common.attrib
 q = element q { q.attlist, Inline.model }
 q.attlist =
     Common.attrib,
-    attribute cite { URI.datatype }?
+    attribute cite { uri.datatype }?
 samp = element samp { samp.attlist, Inline.model }
 samp.attlist = Common.attrib
 strong = element strong { strong.attlist, Inline.model }
@@ -71,7 +71,7 @@ address.attlist = Common.attrib
 blockquote = element blockquote { blockquote.attlist, Block.model }
 blockquote.attlist =
     Common.attrib,
-    attribute cite { URI.datatype }?
+    attribute cite { uri.datatype }?
 pre =
     element pre {
         pre.attlist

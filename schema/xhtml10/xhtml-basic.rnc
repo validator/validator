@@ -46,4 +46,3 @@ include "object.rnc" inherit = ns1
 include "meta.rnc" inherit = ns1
 include "link.rnc" inherit = ns1
 include "base.rnc" inherit = ns1
-include "namespace.rnc" inherit = ns1

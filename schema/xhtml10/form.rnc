@@ -66,14 +66,14 @@ include "basic-form.rnc" {
     select = element select { select.attlist, (option | optgroup)+ }
 }
 form.attlist &=
-    attribute accept-charset { Charsets.datatype }?,
-    attribute accept { ContentTypes.datatype }?
+    attribute accept-charset { charsets.datatype }?,
+    attribute accept { content-types.datatype }?
 input.attlist &=
     attribute disabled { "disabled" }?,
     attribute readonly { "readonly" }?,
     attribute alt { text }?,
-    attribute tabindex { tabindexNumber.datatype }?,
-    attribute accept { ContentTypes.datatype }?
+    attribute tabindex { tabindexnumber.datatype }?,
+    attribute accept { content-types.datatype }?
 InputType.class |=
     "image"
     | "button"
@@ -81,19 +81,19 @@ InputType.class |=
       "file"
 select.attlist &=
     attribute disabled { "disabled" }?,
-    attribute tabindex { tabindexNumber.datatype }?
+    attribute tabindex { tabindexnumber.datatype }?
 option.attlist &=
     attribute disabled { "disabled" }?,
-    attribute label { Text.datatype }?
+    attribute label { text.datatype }?
 optgroup = element optgroup { optgroup.attlist, option+ }
 optgroup.attlist =
     Common.attrib,
     attribute disabled { "disabled" }?,
-    attribute label { Text.datatype }
+    attribute label { text.datatype }
 textarea.attlist &=
     attribute disabled { "disabled" }?,
     attribute readonly { "readonly" }?,
-    attribute tabindex { tabindexNumber.datatype }?
+    attribute tabindex { tabindexnumber.datatype }?
 fieldset = element fieldset { fieldset.attlist, legend?, Flow.model* }
 fieldset.attlist = Common.attrib
 button =
@@ -130,11 +130,11 @@ button.attlist =
     attribute value { text }?,
     attribute type { "button" | "submit" | "reset" }?,
     attribute disabled { "disabled" }?,
-    attribute tabindex { tabindexNumber.datatype }?,
-    attribute accesskey { Character.datatype }?
+    attribute tabindex { tabindexnumber.datatype }?,
+    attribute accesskey { character.datatype }?
 legend = element legend { legend.attlist, Inline.model }
 legend.attlist =
     Common.attrib,
-    attribute accesskey { Character.datatype }?
+    attribute accesskey { character.datatype }?
 Form.class |= fieldset
 Formctrl.class |= button

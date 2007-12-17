@@ -6,6 +6,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
+# Copyright (c) 2007 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -32,16 +33,17 @@
 
 default namespace = "http://www.w3.org/1999/xhtml"
 
-script = element script { script.attlist, text }
+# disambiguate from SVG -- hsivonen
+script.xhtml = element script { script.attlist, text }
 script.attlist =
-    attribute charset { Charset.datatype }?,
-    attribute type { ContentType.datatype },
-    attribute src { URI.datatype }?,
+    attribute charset { charset.datatype }?,
+    attribute type { content-type.datatype },
+    attribute src { uri.datatype }?,
     attribute defer { "defer" }?,
     attribute xml:space { "preserve" }?
 noscript = element noscript { noscript.attlist, Block.model }
 noscript.attlist = Common.attrib
-head.content &= script*
-Script.class = noscript | script
+head.content &= script.xhtml*
+Script.class = noscript | script.xhtml
 Inline.class |= Script.class
 Block.class |= Script.class

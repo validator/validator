@@ -35,12 +35,12 @@ default namespace = "http://www.w3.org/1999/xhtml"
 iframe = element iframe { iframe.attlist, Flow.model }
 iframe.attlist =
     Core.attrib,
-    attribute longdesc { URI.datatype }?,
-    attribute src { URI.datatype }?,
+    attribute longdesc { uri.datatype }?,
+    attribute src { uri.datatype }?,
     attribute frameborder { "1" | "0" }?,
-    attribute width { Length.datatype }?,
-    attribute height { Length.datatype }?,
-    attribute marginwidth { Pixels.datatype }?,
-    attribute marginheight { Pixels.datatype }?,
+    attribute width { length.datatype }?,
+    attribute height { length.datatype }?,
+    attribute marginwidth { pixels.datatype }?,
+    attribute marginheight { pixels.datatype }?,
     attribute scrolling { "yes" | "no" | "auto" }?
 Inline.class |= iframe

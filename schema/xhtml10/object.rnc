@@ -42,20 +42,20 @@ object =
 object.attlist =
     Common.attrib,
     attribute declare { "declare" }?,
-    attribute classid { URI.datatype }?,
-    attribute codebase { URI.datatype }?,
-    attribute data { URI.datatype }?,
-    attribute type { ContentType.datatype }?,
-    attribute codetype { ContentType.datatype }?,
-    attribute archive { URIs.datatype }?,
-    attribute standby { Text.datatype }?,
-    attribute height { Length.datatype }?,
-    attribute width { Length.datatype }?,
+    attribute classid { uri.datatype }?,
+    attribute codebase { uri.datatype }?,
+    attribute data { uri.datatype }?,
+    attribute type { content-type.datatype }?,
+    attribute codetype { content-type.datatype }?,
+    attribute archive { uris.datatype }?,
+    attribute standby { text.datatype }?,
+    attribute height { length.datatype }?,
+    attribute width { length.datatype }?,
     attribute name {
         # added - bugfix - needs to be NMToken datatype as any other name attrib
-        NMTOKEN.datatype
+        nmtoken.datatype
     }?,
-    attribute tabindex { tabindexNumber.datatype }?
+    attribute tabindex { tabindexnumber.datatype }?
 Inline.class |= object
 # added - bugfix - object is allowed in head
 head.content &= object*

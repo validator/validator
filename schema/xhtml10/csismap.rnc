@@ -37,12 +37,12 @@ sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 area = element area { area.attlist, empty }
 area.attlist =
     Common.attrib,
-    attribute href { URI.datatype }?,
+    attribute href { uri.datatype }?,
     shape.attrib?,
     attribute nohref { "nohref" }?,
-    attribute alt { Text.datatype },
-    attribute tabindex { tabindexNumber.datatype }?,
-    attribute accesskey { Character.datatype }?
+    attribute alt { text.datatype },
+    attribute tabindex { tabindexnumber.datatype }?,
+    attribute accesskey { character.datatype }?
 map =
     element map {
         map.attlist,
@@ -55,7 +55,7 @@ map.attlist = CommonIdRequired.attrib
 a.attlist &= shape.attrib?
 img.attlist &= usemap.attlist
 object.attlist &= usemap.attlist
-usemap.attlist = attribute usemap { IDREF.datatype }?
+usemap.attlist = attribute usemap { idref.datatype }?
 shape.attrib =
     (attribute coords {
          # rect is default

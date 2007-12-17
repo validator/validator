@@ -47,7 +47,7 @@ rb.attlist = Common.attrib
 rt = element rt { rt.attlist, Inline.model }
 rt.attlist =
     Common.attrib,
-    attribute rt { Number.datatype }?
+    attribute rt { number.datatype }?
 rp = element rp { rp.attlist, text }
 rp.attlist = Common.attrib
 Inline.class |= ruby

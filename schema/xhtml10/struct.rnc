@@ -6,6 +6,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
+# Copyright (c) 2007 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -35,14 +36,15 @@ namespace sch = "http://www.ascc.net/xml/schematron"
 
 sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 start = html
-title = element title { title.attlist, text }
+# disambiguate from SVG -- hsivonen
+title.xhtml = element title { title.attlist, text }
 title.attlist = I18n.attrib
 head = element head { head.attlist, head.content }
 head.attlist = xml.base.attrib, I18n.attrib, profile.attlist
-head.content = title
-profile.attlist = attribute profile { URI.datatype }?
+head.content = title.xhtml
+profile.attlist = attribute profile { uri.datatype }?
 body = element body { body.attlist, Block.model }
 body.attlist = Common.attrib
 html = element html { html.attlist, head, body }
 html.attlist = XHTML.version.attrib, I18n.attrib, id.attrib
-XHTML.version.attrib = attribute version { FPI.datatype }?
+XHTML.version.attrib = attribute version { fpi.datatype }?

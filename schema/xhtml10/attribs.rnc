@@ -33,16 +33,16 @@
 namespace ns1 = "http://www.w3.org/1999/xhtml"
 namespace none = ""
 
-id.attrib = attribute id { ID.datatype }?
+id.attrib = attribute id { id.datatype }?
 # for xinclude compatibility
 xml.base.attrib = attribute xml:base { text }?
 # icnore other namespaces than http://www.w3.org/1999/xhtml
 other.namespace.attrib = attribute * - (ns1:* | none:*) { text }*
 class.attrib =
     attribute class {
-        list { NMTOKENS.datatype+ }
+        list { nmtokens.datatype+ }
     }?
-title.attrib = attribute title { Text.datatype }?
+title.attrib = attribute title { text.datatype }?
 Core.attrib =
     id.attrib,
     # for xinclude compatibility
@@ -51,13 +51,13 @@ Core.attrib =
     class.attrib,
     title.attrib
 lang.attrib =
-    attribute xml:lang { LanguageCode.datatype }?,
+    attribute xml:lang { language-code.datatype }?,
     # added - bugfix - can be used according to spec for backwardcopatibility reasons
-    attribute lang { LanguageCode.datatype }?
+    attribute lang { language-code.datatype }?
 I18n.attrib = lang.attrib
 Common.attrib = Core.attrib, I18n.attrib
 CommonIdRequired.attrib =
-    attribute id { ID.datatype },
+    attribute id { id.datatype },
     class.attrib,
     title.attrib,
     I18n.attrib

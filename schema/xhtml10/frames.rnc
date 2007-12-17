@@ -42,16 +42,16 @@ frameset =
     }
 frameset.attlist =
     Core.attrib,
-    attribute cols { MultiLengths.datatype }?,
-    attribute rows { MultiLengths.datatype }?
+    attribute cols { multi-lengths.datatype }?,
+    attribute rows { multi-lengths.datatype }?
 frame = element frame { frame.attlist, empty }
 frame.attlist =
     Core.attrib,
-    attribute longdesc { URI.datatype }?,
-    attribute src { URI.datatype }?,
+    attribute longdesc { uri.datatype }?,
+    attribute src { uri.datatype }?,
     attribute frameborder { "1" | "0" }?,
-    attribute marginwidth { Pixels.datatype }?,
-    attribute marginheight { Pixels.datatype }?,
+    attribute marginwidth { pixels.datatype }?,
+    attribute marginheight { pixels.datatype }?,
     attribute noresize { "noresize" }?,
     attribute scrolling { "yes" | "no" | "auto" }?
 # commented out - frameset cannot contain body

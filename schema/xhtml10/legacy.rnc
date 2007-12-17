@@ -38,7 +38,7 @@ sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 # <define name="lang.attrib" combine="interleave">
 #   <optional>
 #     <attribute name="lang">
-#       <ref name="LanguageCode.datatype"/>
+#       <ref name="language-code.datatype"/>
 #     </attribute>
 #   </optional>
 # </define>
@@ -78,13 +78,13 @@ isindex = element isindex { isindex.attlist, empty }
 isindex.attlist =
     Core.attrib,
     I18n.attrib,
-    attribute prompt { Text.datatype }?
+    attribute prompt { text.datatype }?
 applet.attlist &=
     attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
-    attribute hspace { Pixels.datatype }?,
-    attribute vspace { Pixels.datatype }?
+    attribute hspace { pixels.datatype }?,
+    attribute vspace { pixels.datatype }?
 body.attlist &=
-    attribute background { URI.datatype }?,
+    attribute background { uri.datatype }?,
     attribute bgcolor { Color.datatype }?,
     attribute text { Color.datatype }?,
     attribute link { Color.datatype }?,
@@ -99,14 +99,14 @@ Heading.attrib &= align.attrib
 hr.attlist &=
     attribute align { "left" | "center" | "right" }?,
     attribute noshade { "noshade" }?,
-    attribute size { Pixels.datatype }?,
+    attribute size { pixels.datatype }?,
     # bugfix - not Pixels but Lenght datatype
-    attribute width { Length.datatype }?
+    attribute width { length.datatype }?
 img.attlist &=
     attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
-    attribute border { Pixels.datatype }?,
-    attribute hspace { Pixels.datatype }?,
-    attribute vspace { Pixels.datatype }?
+    attribute border { pixels.datatype }?,
+    attribute hspace { pixels.datatype }?,
+    attribute vspace { pixels.datatype }?
 # modified - bugfix - input has the img align model not the text align
 input.attlist &= imgalign.attrib
 legend.attlist &=
@@ -124,12 +124,12 @@ li.attlist &=
         | ("disc" | "square" | "circle")
     }?,
     # added - value is a sequece of digits
-    attribute value { Number.datatype }?
+    attribute value { number.datatype }?
 object.attlist &=
     attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
-    attribute border { Pixels.datatype }?,
-    attribute hspace { Pixels.datatype }?,
-    attribute vspace { Pixels.datatype }?
+    attribute border { pixels.datatype }?,
+    attribute hspace { pixels.datatype }?,
+    attribute vspace { pixels.datatype }?
 ol.attlist &=
     attribute type {
         # added - bugfix  - possible values are (1|a|A|i|I)
@@ -141,10 +141,10 @@ ol.attlist &=
     }?,
     attribute compact { "compact" }?,
     # added - needs to be a sequece of digits
-    attribute start { Number.datatype }?
+    attribute start { number.datatype }?
 p.attlist &= align.attrib
-pre.attlist &= attribute width { Length.datatype }?
-script.attlist &= attribute language { ContentType.datatype }?
+pre.attlist &= attribute width { length.datatype }?
+script.attlist &= attribute language { content-type.datatype }?
 table.attlist &=
     talign.attrib,
     attribute bgcolor { Color.datatype }?
@@ -154,11 +154,11 @@ Cell.attrib &=
     attribute bgcolor { Color.datatype }?,
     attribute width {
         # bugfix - modified - from Pixels to Length
-        Length.datatype
+        length.datatype
     }?,
     attribute height {
         # bugfix - modified - from Pixels to Length
-        Length.datatype
+        length.datatype
     }?
 ul.attlist &=
     attribute type {

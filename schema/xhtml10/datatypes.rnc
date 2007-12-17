@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # Datatypes Module
 
 # This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
@@ -6,6 +8,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
+# Copyright (c) 2007 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -33,76 +36,76 @@
 # Length defined for cellpadding/cellspacing
 
 # nn for pixels or nn% for percentage length
-Length.datatype =
+length.datatype =
     # modified - pattern: nn for pixels or nn% for percentage length
     xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)" }
 # space-separated list of link types
-LinkTypes.datatype = NMTOKENS.datatype
+link-types.datatype = nmtokens.datatype
 # single or comma-separated list of media descriptors
-MediaDesc.datatype =
-    # modified - check just single or comma-separated
-    xsd:string { pattern = "[^,]+(,\s*[^,]+)*" }
+media-desc.datatype =
+    # Use HTML5 datatype -- hsivonen
+    w:media-query
 # pixel, percentage, or relative
-MultiLength.datatype =
+multilength.datatype =
     # modified - pattern: pixel, percentage, or relative
     xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*" }
 # added - bugfix - comma-separated list of MultiLength
-MultiLengths.datatype =
+multi-lengths.datatype =
     xsd:string {
         # <param name="pattern">[-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*</param>
         pattern =
             "([\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*)(( )*,( )*[\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*)*"
     }
 # one or more digits (NUMBER)
-Number.datatype =
-    # modified - just to one or more digits
-    xsd:nonNegativeInteger { pattern = "[0-9]+" }
+number.datatype =
+    # Use HTML5 datatype -- hsivonen
+    w:integer-non-negative
 # added - integer between 0 and 32767
-tabindexNumber.datatype =
+tabindexnumber.datatype =
     xsd:nonNegativeInteger {
         pattern = "[0-9]+"
         minInclusive = "0"
         maxInclusive = "32767"
     }
 # integer representing length in pixels
-Pixels.datatype =
-    # modified - negative lenght has no meaning
-    xsd:nonNegativeInteger { pattern = "[0-9]|[1-9][0-9]+" }
+pixels.datatype =
+    # Use HTML5 datatype -- hsivonen
+    w:integer-non-negative
 # script expression
-Script.datatype = text
+script.datatype = text
 # textual content
-Text.datatype = text
+text.datatype = text
 # Imported Datatypes ................................
 
 # a single character from [ISO10646]
-Character.datatype =
+character.datatype =
     # modified - restriction to lenght 1
     xsd:string { length = "1" }
 # a character encoding, as per [RFC2045]
-Charset.datatype = text
+charset.datatype = text
 # a space separated list of character encodings, as per [RFC2045]
-Charsets.datatype = text
+charsets.datatype = text
 # media type, as per [RFC2045]
-ContentType.datatype = text
+content-type.datatype = w:mime-type # Use HTML5 datatype -- hsivonen
 # comma-separated list of media types, as per [RFC2045]
-ContentTypes.datatype = text
+content-types.datatype = text
 # date and time information. ISO date format
-Datetime.datatype =
-    # modified - use dateTime XML schema datatype
-    xsd:dateTime
+datetime.datatype =
+    # Use HTML5 datatype -- hsivonen
+    w:datetime-tz
 # formal public identifier, as per [ISO8879]
-FPI.datatype = text
+fpi.datatype = text
 # a language code, as per [RFC1766]
-LanguageCode.datatype = xsd:language
+language-code.datatype = w:string "" | w:language # Use HTML5 datatype -- hsivonen
 # a Uniform Resource Identifier, see [URI]
-URI.datatype = xsd:anyURI
+uri.datatype = w:string "" | w:iri-ref # Use HTML5 datatype -- hsivonen
 # a space-separated list of Uniform Resource Identifiers, see [URI]
-URIs.datatype = list { xsd:anyURI+ }
-NMTOKEN.datatype = xsd:NMTOKEN
-NMTOKENS.datatype = xsd:NMTOKENS
-ID.datatype = xsd:ID
-IDREF.datatype = xsd:IDREF
-IDREFS.datatype = xsd:IDREFS
+uris.datatype = list { w:iri-ref+ } # Use HTML5 datatype -- hsivonen
+nmtoken.datatype = xsd:NMTOKEN
+nmtokens.datatype = xsd:NMTOKENS
+id.datatype = w:xml-name # Use HTML5 datatype -- hsivonen
+idref.datatype = w:xml-name # Use HTML5 datatype -- hsivonen
+idrefs.datatype = list { w:xml-name+ } # Use HTML5 datatype -- hsivonen
 # added - bugfix - just the reserved names may start without an alphabethic character
-Target.datatype =
+target.datatype =
     xsd:string { pattern = "_(blank|self|parent|top)|[A-Za-z].*" }

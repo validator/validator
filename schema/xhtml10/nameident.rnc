@@ -135,4 +135,4 @@ iframe.attlist &= name.attlist
 map.attlist &= nametok.attlist
 name.attlist = attribute name { text }?
 # added - bugfix - some of the name atrributes has to be NMToken datatype
-nametok.attlist = attribute name { NMTOKEN.datatype }?
+nametok.attlist = attribute name { nmtoken.datatype }?

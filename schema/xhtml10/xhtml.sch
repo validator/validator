@@ -2,6 +2,7 @@
 <!-- Mechanically extracted from RNG files which had this license: -->
 <!--
 Copyright (c) 2005 Petr Nalevka
+Copyright (c) 2007 Mozilla Foundation
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,7 +29,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
 <!-- Use of value-of removed from from reports by Henri Sivonen. -->
-<!-- Exclusions ported to Schematron by Henri Sivonen. -->
+<!-- Exclusions and for IDREF ported to Schematron by Henri Sivonen. -->
 
 <sch:schema xmlns:sch="http://www.ascc.net/xml/schematron" 
 xmlns="http://www.ascc.net/xml/schematron" 
@@ -234,6 +235,24 @@ xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <!-- end exclusions -->
    
    
+   <!-- IDREF -->
+
+ 	<pattern name='for on label must refer to a form control'>
+		<rule context='html:label[@for]'>
+			<assert test='id(@for)/self::html:input or 
+			              id(@for)/self::html:textarea or 
+			              id(@for)/self::html:select or 
+			              id(@for)/self::html:button or 
+			              id(@for)/self::html:output'>
+				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
+				element must refer to a form control.
+			</assert>
+		</rule>
+	</pattern>
+   
+   <!-- end IDREF -->
+   
+   
    <sch:pattern xmlns="http://relaxng.org/ns/structure/1.0" name="pre.content">
         
       <sch:rule context="html:pre">
@@ -387,5 +406,6 @@ xmlns:rng="http://relaxng.org/ns/structure/1.0">
       </sch:rule>
       
    </sch:pattern>
+
    <sch:diagnostics/>
 </sch:schema>

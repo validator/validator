@@ -46,7 +46,7 @@ include "image.rnc"
 include "ssismap.rnc"
 include "base.rnc" {
     # added - bugfix - overwrites base.attlist because in trasitional href attribute is not required
-    base.attlist = attribute href { URI.datatype }?
+    base.attlist = attribute href { uri.datatype }?
 }
 include "link.rnc"
 include "meta.rnc"
@@ -69,4 +69,3 @@ include "target.rnc"
 include "iframe.rnc"
 include "nameident.rnc"
 include "legacy.rnc"
-include "namespace.rnc"

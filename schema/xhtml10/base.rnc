@@ -33,5 +33,5 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 
 base = element base { base.attlist, empty }
-base.attlist = attribute href { URI.datatype }
+base.attlist = attribute href { uri.datatype }
 head.content &= base?

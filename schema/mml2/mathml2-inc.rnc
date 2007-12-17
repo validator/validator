@@ -1,0 +1,33 @@
+# 
+# RELAX NG Schema on MathML 2.0
+# 
+# See COPYING for the status of this software.
+# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+#
+
+namespace math = "http://www.w3.org/1998/Math/MathML"
+
+include "mml-content-all.rnc" inherit = math
+include "mml-content-attrib.rnc" inherit = math
+include "mml-content-construct.rnc" inherit = math
+include "mml-content-leaf.rnc" inherit = math
+include "mml-content-operators.rnc" inherit = math
+include "mml-content-others.rnc" inherit = math
+include "mml-content-quantifiers.rnc" inherit = math
+include "mml-content-relations.rnc" inherit = math
+include "mml-content-semantics.rnc" inherit = math
+include "mml-content-specials.rnc" inherit = math
+include "mml-content-symbols.rnc" inherit = math
+include "mml-datatypes.rnc" inherit = math
+include "mml-framework.rnc" inherit = math
+include "mml-math.rnc" inherit = math
+include "mml-pres-action.rnc" inherit = math
+include "mml-pres-all.rnc" inherit = math
+include "mml-pres-attrib.rnc" inherit = math
+include "mml-pres-content.rnc" inherit = math
+include "mml-pres-empty.rnc" inherit = math
+include "mml-pres-layout-empty.rnc" inherit = math
+include "mml-pres-layout.rnc" inherit = math
+include "mml-pres-scripts-empty.rnc" inherit = math
+include "mml-pres-scripts.rnc" inherit = math
+include "mml-pres-tables.rnc" inherit = math

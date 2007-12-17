@@ -35,11 +35,11 @@ default namespace = "http://www.w3.org/1999/xhtml"
 link = element link { link.attlist, empty }
 link.attlist =
     Common.attrib,
-    attribute charset { Charset.datatype }?,
-    attribute href { URI.datatype }?,
-    attribute hreflang { LanguageCode.datatype }?,
-    attribute type { ContentType.datatype }?,
-    attribute rel { LinkTypes.datatype }?,
-    attribute rev { LinkTypes.datatype }?,
-    attribute media { MediaDesc.datatype }?
+    attribute charset { charset.datatype }?,
+    attribute href { uri.datatype }?,
+    attribute hreflang { language-code.datatype }?,
+    attribute type { content-type.datatype }?,
+    attribute rel { link-types.datatype }?,
+    attribute rev { link-types.datatype }?,
+    attribute media { media-desc.datatype }?
 head.content &= link*

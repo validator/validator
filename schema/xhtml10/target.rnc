@@ -38,4 +38,4 @@ link.attlist &= target.attrib
 form.attlist &= target.attrib
 target.attrib =
     # modified - bugfix - target has to be NMToken datatype
-    attribute target { Target.datatype }?
+    attribute target { target.datatype }?

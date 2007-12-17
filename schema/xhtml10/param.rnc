@@ -39,4 +39,4 @@ param.attlist =
     attribute name { text }?,
     attribute value { text }?,
     attribute valuetype { "data" | "ref" | "object" }?,
-    attribute type { ContentType.datatype }?
+    attribute type { content-type.datatype }?
