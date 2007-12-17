@@ -1,13 +1,14 @@
 default namespace = "http://www.w3.org/2000/svg"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
-
 ## 
 ##     SVG 1.1 Basic Structure Module
 ##     file: svg-basic-structure.rng
 ## 
 ##     This is SVG, a language for describing two-dimensional graphics in XML.
 ##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
+##
+##     Modifications Copyright 2007 Mozilla Foundation
 ## 
 ##     $Id$
 ##   
@@ -22,11 +23,8 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 [ xml:lang = "en" ]
 grammar {
     
-    ## 
-    ##       The root element is "svg".
-    ##     
-    start = svg
-    
+    # removed start = -- hsivonen
+
     ## 
     ##       Include core set of modules
     ##     
@@ -278,7 +276,7 @@ grammar {
         "    metadata: Metadata Element\x{a}" ~
         "  "
     ]
-    SVG.metadata.content = text
+    SVG.metadata.content = empty # bugfix -- hsivonen
     metadata =
         element metadata { attlist.metadata, SVG.metadata.content }
     attlist.metadata &= SVG.Core.attrib

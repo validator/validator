@@ -1,5 +1,5 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-namespace ns1 = "http://www.w3.org/2000/svg"
+namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 
@@ -14,6 +14,8 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 ##        (Massachusetts Institute of Technology, Institut National de
 ##         Recherche en Informatique et en Automatique, Keio University).
 ##         All Rights Reserved.
+##
+##     Modifications Copyright 2007 Mozilla Foundation
 ## 
 ##     Permission to use, copy, modify and distribute this RELAX NG schema
 ##     for SVG and its accompanying documentation for any purpose and without
@@ -42,142 +44,13 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 grammar {
     
     ## 
-    ##       Viewport Attribute Module
+    ##       Includes
     ##     
-    include "svg-viewport-attrib.rnc" inherit = ns1
-    
+    include "svg11-basic-inc.rnc" inherit = svg
+
+    # Moved start = here -- hsivonen
     ## 
-    ##       Paint Attribute Module
+    ##       The root element is "svg".
     ##     
-    include "svg-paint-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Opacity Attribute Module
-    ##     
-    include "svg-opacity-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Graphics Attribute Module
-    ##     
-    include "svg-graphics-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Document Events Attribute Module
-    ##     
-    include "svg-docevents-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Graphical Element Events Attribute Module
-    ##     
-    include "svg-graphevents-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Animation Events Attribute Module
-    ##     
-    include "svg-animevents-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       XLink Attribute Module
-    ##     
-    include "svg-xlink-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       External Resources Attribute Module
-    ##     
-    include "svg-extresources-attrib.rnc" inherit = ns1
-    
-    ## 
-    ##       Structure Module (required)
-    ##     
-    include "svg-structure.rnc" inherit = ns1
-    
-    ## 
-    ##       Conditional Processing Module
-    ##     
-    include "svg-conditional.rnc" inherit = ns1
-    
-    ## 
-    ##       Image Module
-    ##     
-    include "svg-image.rnc" inherit = ns1
-    
-    ## 
-    ##       Style Module
-    ##     
-    include "svg-style.rnc" inherit = ns1
-    
-    ## 
-    ##       Shape Module
-    ##     
-    include "svg-shape.rnc" inherit = ns1
-    
-    ## 
-    ##       Text Module
-    ##     
-    include "svg-text.rnc" inherit = ns1
-    
-    ## 
-    ##       Color Profile Module
-    ##     
-    include "svg-profile.rnc" inherit = ns1
-    
-    ## 
-    ##       Gradient Module
-    ##     
-    include "svg-gradient.rnc" inherit = ns1
-    
-    ## 
-    ##       Pattern Module
-    ##     
-    include "svg-pattern.rnc" inherit = ns1
-    
-    ## 
-    ##       Basic Clip Module
-    ##     
-    include "svg-basic-clip.rnc" inherit = ns1
-    
-    ## 
-    ##       Mask Module
-    ##     
-    include "svg-mask.rnc" inherit = ns1
-    
-    ## 
-    ##       Basic Filter Module
-    ##     
-    include "svg-basic-filter.rnc" inherit = ns1
-    
-    ## 
-    ##       Cursor Module
-    ##     
-    include "svg-cursor.rnc" inherit = ns1
-    
-    ## 
-    ##       Hyperlinking Module
-    ##     
-    include "svg-hyperlink.rnc" inherit = ns1
-    
-    ## 
-    ##       View Module
-    ##     
-    include "svg-view.rnc" inherit = ns1
-    
-    ## 
-    ##       Scripting Module
-    ##     
-    include "svg-script.rnc" inherit = ns1
-    
-    ## 
-    ##       Animation Module
-    ##     
-    include "svg-animation.rnc" inherit = ns1
-    
-    ## 
-    ##       Font Module
-    ##     
-    include "svg-font.rnc" inherit = ns1
-    
-    ## 
-    ##       Extensibility Module
-    ##     
-    include "svg-extensibility.rnc" inherit = ns1
+    start = svg
 }

@@ -1,5 +1,5 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-namespace ns1 = "http://www.w3.org/2000/svg"
+namespace svg = "http://www.w3.org/2000/svg"
 
 
 ## 
@@ -21,7 +21,7 @@ namespace ns1 = "http://www.w3.org/2000/svg"
 ##   
 [ xml:lang = "en" ]
 grammar {
-    include "svg-basic-clip.rnc" inherit = ns1
+    include "svg-basic-clip.rnc" inherit = svg
     
     ## 
     ##       extend content model of clipPath

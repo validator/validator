@@ -9,7 +9,7 @@
 # Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
 #
 
-start |= mml.math.qname
+# removed start -- hsivonen
 # Attributes for top-level element "math"
 mml.att-macros = attribute macros { text }?
 mml.att-mode = attribute mode { text }?

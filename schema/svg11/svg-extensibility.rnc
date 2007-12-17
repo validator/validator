@@ -1,5 +1,5 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-default namespace ns1 = "http://www.w3.org/2000/svg"
+default namespace svg = "http://www.w3.org/2000/svg"
 
 a:documentation [
     "\x{a}" ~
@@ -30,10 +30,7 @@ a:documentation [
     "  "
 ]
 SVG.foreignObject.content =
-    (text
-     | svg
-       # ref name="foreignElement"/
-       )*
+    notAllowed # bugfix -- hsivonen
 foreignObject =
     element foreignObject {
         attlist.foreignObject, SVG.foreignObject.content
@@ -55,8 +52,8 @@ attlist.foreignObject &=
 ##       any element in foreign namespace
 ##     
 foreignElement =
-    element * - ns1:* {
-        (attribute * - ns1:* { text }
+    element * - svg:* {
+        (attribute * - svg:* { text }
          | text
          | foreignElement)*
     }
