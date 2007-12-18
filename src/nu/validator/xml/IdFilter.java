@@ -164,7 +164,7 @@ public class IdFilter extends XMLFilterImpl {
             ids.put(value, new LocatorImpl(locator));
         } else {
             super.error(new SAXParseException("Attribute \u201C" + name + "\u201D declares a duplicate ID value \u201C" + value + "\u201D.", locator));
-            super.warning(new SAXParseException("The first occurrance of the ID value \u201C" + value + "\u201D was here.", first));
+            super.warning(new SAXParseException("The first occurrence of the ID value \u201C" + value + "\u201D was here.", first));
         }
     }
 
