@@ -8,10 +8,6 @@ include "inkscape/inkscape.rnc"
 include "mml2/mathml2-inc.rnc"
 include "rdf/rdf.rnc"
 
-SVG.Core.extra.attrib &= inkscape.attrs
-SVG.defs.content &= sodipodi.namedview.elem*
-SVG.g.content &= sodipodi.namedview.elem*
-
 head.content &= rdf.elem*
 SVG.metadata.content |= rdf.elem
 

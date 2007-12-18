@@ -40,5 +40,5 @@ style.attlist =
     I18n.attrib,
     attribute type { content-type.datatype },
     attribute media { media-desc.datatype }?,
-    attribute xml:space { "preserve" }?
+    attribute xml:space { string "preserve" }?
 head.content &= style.xhtml*

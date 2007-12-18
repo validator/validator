@@ -32,7 +32,7 @@ mml.menclose.qname =
     element menclose {
         mml.PresExpression,
         mml.Common.attrib,
-        attribute notation { "longdiv" | "actuarial" | "radical" }?
+        attribute notation { string "longdiv" | string "actuarial" | string "radical" }?
     }
 mml.mroot.qname =
     element mroot { mml.PresExpression, mml.Common.attrib }

@@ -25,36 +25,36 @@ grammar {
     include "svg-basic-graphics-attrib.rnc" inherit = svg
     SVG.image-rendering.attrib =
         attribute image-rendering {
-            "auto" | "optimizeSpeed" | "optimizeQuality" | "inherit"
+            string "auto" | string "optimizeSpeed" | string "optimizeQuality" | string "inherit"
         }?
     SVG.pointer-events.attrib =
         attribute pointer-events {
-            "visiblePainted"
-            | "visibleFill"
-            | "visibleStroke"
-            | "visible"
-            | "painted"
-            | "fill"
-            | "stroke"
-            | "all"
-            | "none"
-            | "inherit"
+            string "visiblePainted"
+            | string "visibleFill"
+            | string "visibleStroke"
+            | string "visible"
+            | string "painted"
+            | string "fill"
+            | string "stroke"
+            | string "all"
+            | string "none"
+            | string "inherit"
         }?
     SVG.shape-rendering.attrib =
         attribute shape-rendering {
-            "auto"
-            | "optimizeSpeed"
-            | "crispEdges"
-            | "geometricPrecision"
-            | "inherit"
+            string "auto"
+            | string "optimizeSpeed"
+            | string "crispEdges"
+            | string "geometricPrecision"
+            | string "inherit"
         }?
     SVG.text-rendering.attrib =
         attribute text-rendering {
-            "auto"
-            | "optimizeSpeed"
-            | "optimizeLegibility"
-            | "geometricPrecision"
-            | "inherit"
+            string "auto"
+            | string "optimizeSpeed"
+            | string "optimizeLegibility"
+            | string "geometricPrecision"
+            | string "inherit"
         }?
     SVG.Graphics.attrib &=
         SVG.image-rendering.attrib,

@@ -42,7 +42,7 @@ grammar {
     SVG.FilterColor.extra.attrib = empty
     SVG.FilterColor.attrib &=
         attribute color-interpolation-filters {
-            "auto" | "sRGB" | "linearRGB" | "inherit"
+            string "auto" | string "sRGB" | string "linearRGB" | string "inherit"
         }?,
         SVG.FilterColor.extra.attrib
     a:documentation [ "\x{a}" ~ "    SVG.Filter.class\x{a}" ~ "  " ]
@@ -110,10 +110,10 @@ grammar {
         attribute height { Length.datatype }?,
         attribute filterRes { NumberOptionalNumber.datatype }?,
         attribute filterUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?,
         attribute primitiveUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?
     a:documentation [
         "\x{a}" ~
@@ -129,7 +129,7 @@ grammar {
         attribute in2 { text },
         [ a:defaultValue = "normal" ]
         attribute mode {
-            "normal" | "multiply" | "screen" | "darken" | "lighten"
+            string "normal" | string "multiply" | string "screen" | string "darken" | string "lighten"
         }?
     a:documentation [
         "\x{a}" ~
@@ -147,7 +147,7 @@ grammar {
         SVG.FilterPrimitiveWithIn.attrib,
         [ a:defaultValue = "matrix" ]
         attribute type {
-            "matrix" | "saturate" | "hueRotate" | "luminanceToAlpha"
+            string "matrix" | string "saturate" | string "hueRotate" | string "luminanceToAlpha"
         }?,
         attribute values { text }?
     a:documentation [
@@ -182,7 +182,7 @@ grammar {
         attribute in2 { text },
         [ a:defaultValue = "over" ]
         attribute operator {
-            "over" | "in" | "out" | "atop" | "xor" | "arithmetic"
+            string "over" | string "in" | string "out" | string "atop" | string "xor" | string "arithmetic"
         }?,
         attribute k1 { Number.datatype }?,
         attribute k2 { Number.datatype }?,
@@ -295,7 +295,7 @@ grammar {
     attlist.feFuncR &=
         SVG.Core.attrib,
         attribute type {
-            "identity" | "table" | "discrete" | "linear" | "gamma"
+            string "identity" | string "table" | string "discrete" | string "linear" | string "gamma"
         },
         attribute tableValues { text }?,
         attribute slope { Number.datatype }?,
@@ -313,7 +313,7 @@ grammar {
     attlist.feFuncG &=
         SVG.Core.attrib,
         attribute type {
-            "identity" | "table" | "discrete" | "linear" | "gamma"
+            string "identity" | string "table" | string "discrete" | string "linear" | string "gamma"
         },
         attribute tableValues { text }?,
         attribute slope { Number.datatype }?,
@@ -331,7 +331,7 @@ grammar {
     attlist.feFuncB &=
         SVG.Core.attrib,
         attribute type {
-            "identity" | "table" | "discrete" | "linear" | "gamma"
+            string "identity" | string "table" | string "discrete" | string "linear" | string "gamma"
         },
         attribute tableValues { text }?,
         attribute slope { Number.datatype }?,
@@ -349,7 +349,7 @@ grammar {
     attlist.feFuncA &=
         SVG.Core.attrib,
         attribute type {
-            "identity" | "table" | "discrete" | "linear" | "gamma"
+            string "identity" | string "table" | string "discrete" | string "linear" | string "gamma"
         },
         attribute tableValues { text }?,
         attribute slope { Number.datatype }?,

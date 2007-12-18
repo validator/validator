@@ -66,10 +66,10 @@ grammar {
         attribute width { Length.datatype }?,
         attribute height { Length.datatype }?,
         attribute patternUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?,
         attribute patternContentUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?,
         attribute patternTransform { TransformList.datatype }?,
         attribute viewBox { ViewBoxSpec.datatype }?,

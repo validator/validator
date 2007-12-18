@@ -49,11 +49,11 @@ frame.attlist =
     Core.attrib,
     attribute longdesc { uri.datatype }?,
     attribute src { uri.datatype }?,
-    attribute frameborder { "1" | "0" }?,
+    attribute frameborder { string "1" | string "0" }?,
     attribute marginwidth { pixels.datatype }?,
     attribute marginheight { pixels.datatype }?,
-    attribute noresize { "noresize" }?,
-    attribute scrolling { "yes" | "no" | "auto" }?
+    attribute noresize { string "noresize" }?,
+    attribute scrolling { string "yes" | string "no" | string "auto" }?
 # commented out - frameset cannot contain body
 
 # moved from legacy module

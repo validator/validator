@@ -54,7 +54,7 @@ Cell.attrib =
     attribute colspan { number.datatype }?,
     CellHAlign.attrib,
     CellVAlign.attrib
-CellHAlign.attrib = attribute align { "left" | "center" | "right" }?
-CellVAlign.attrib = attribute valign { "top" | "middle" | "bottom" }?
-scope.attrib = attribute scope { "row" | "col" }?
+CellHAlign.attrib = attribute align { string "left" | string "center" | string "right" }?
+CellVAlign.attrib = attribute valign { string "top" | string "middle" | string "bottom" }?
+scope.attrib = attribute scope { string "row" | string "col" }?
 Block.class |= table

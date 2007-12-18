@@ -22,27 +22,27 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 grammar {
     SVG.display.attrib =
         attribute display {
-            "inline"
-            | "block"
-            | "list-item"
-            | "run-in"
-            | "compact"
-            | "marker"
-            | "table"
-            | "inline-table"
-            | "table-row-group"
-            | "table-header-group"
-            | "table-footer-group"
-            | "table-row"
-            | "table-column-group"
-            | "table-column"
-            | "table-cell"
-            | "table-caption"
-            | "none"
-            | "inherit"
+            string "inline"
+            | string "block"
+            | string "list-item"
+            | string "run-in"
+            | string "compact"
+            | string "marker"
+            | string "table"
+            | string "inline-table"
+            | string "table-row-group"
+            | string "table-header-group"
+            | string "table-footer-group"
+            | string "table-row"
+            | string "table-column-group"
+            | string "table-column"
+            | string "table-cell"
+            | string "table-caption"
+            | string "none"
+            | string "inherit"
         }?
     SVG.visibility.attrib =
-        attribute visibility { "visible" | "hidden" | "inherit" }?
+        attribute visibility { string "visible" | string "hidden" | string "inherit" }?
     SVG.Graphics.extra.attrib = empty
     SVG.Graphics.attrib &=
         SVG.display.attrib,

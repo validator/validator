@@ -68,11 +68,11 @@ u.attlist = Common.attrib
 dir = element dir { dir.attlist, li.noblock+ }
 dir.attlist =
     Common.attrib,
-    attribute compact { "compact" }?
+    attribute compact { string "compact" }?
 menu = element menu { menu.attlist, li.noblock+ }
 menu.attlist =
     Common.attrib,
-    attribute compact { "compact" }?
+    attribute compact { string "compact" }?
 li.noblock = element li { li.attlist, Inline.model }
 isindex = element isindex { isindex.attlist, empty }
 isindex.attlist =
@@ -80,7 +80,7 @@ isindex.attlist =
     I18n.attrib,
     attribute prompt { text.datatype }?
 applet.attlist &=
-    attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
+    attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?,
     attribute hspace { pixels.datatype }?,
     attribute vspace { pixels.datatype }?
 body.attlist &=
@@ -90,56 +90,56 @@ body.attlist &=
     attribute link { Color.datatype }?,
     attribute vlink { Color.datatype }?,
     attribute alink { Color.datatype }?
-br.attlist &= attribute clear { "left" | "all" | "right" | "none" }?
+br.attlist &= attribute clear { string "left" | string "all" | string "right" | string "none" }?
 caption.attlist &= calign.attrib
 div.attlist &= align.attrib
 # Not in the CR, but surely an edu.petrnalevka.relaxed.error.
-dl.attlist &= attribute compact { "compact" }?
+dl.attlist &= attribute compact { string "compact" }?
 Heading.attrib &= align.attrib
 hr.attlist &=
-    attribute align { "left" | "center" | "right" }?,
-    attribute noshade { "noshade" }?,
+    attribute align { string "left" | string "center" | string "right" }?,
+    attribute noshade { string "noshade" }?,
     attribute size { pixels.datatype }?,
     # bugfix - not Pixels but Lenght datatype
     attribute width { length.datatype }?
 img.attlist &=
-    attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
+    attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?,
     attribute border { pixels.datatype }?,
     attribute hspace { pixels.datatype }?,
     attribute vspace { pixels.datatype }?
 # modified - bugfix - input has the img align model not the text align
 input.attlist &= imgalign.attrib
 legend.attlist &=
-    attribute align { "top" | "bottom" | "left" | "right" }?
+    attribute align { string "top" | string "bottom" | string "left" | string "right" }?
 li.attlist &=
     attribute type {
         (# added - bugfix  - possible values are (1|a|A|i|I) | (desc|square|circle)
          
          # todo implement |
-         "1"
-         | "a"
-         | "A"
-         | "i"
-         | "I")
-        | ("disc" | "square" | "circle")
+         string "1"
+         | string "a"
+         | string "A"
+         | string "i"
+         | string "I")
+        | (string "disc" | string "square" | string "circle")
     }?,
     # added - value is a sequece of digits
     attribute value { number.datatype }?
 object.attlist &=
-    attribute align { "top" | "middle" | "bottom" | "left" | "right" }?,
+    attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?,
     attribute border { pixels.datatype }?,
     attribute hspace { pixels.datatype }?,
     attribute vspace { pixels.datatype }?
 ol.attlist &=
     attribute type {
         # added - bugfix  - possible values are (1|a|A|i|I)
-        "1"
-        | "a"
-        | "A"
-        | "i"
-        | "I"
+        string "1"
+        | string "a"
+        | string "A"
+        | string "i"
+        | string "I"
     }?,
-    attribute compact { "compact" }?,
+    attribute compact { string "compact" }?,
     # added - needs to be a sequece of digits
     attribute start { number.datatype }?
 p.attlist &= align.attrib
@@ -150,7 +150,7 @@ table.attlist &=
     attribute bgcolor { Color.datatype }?
 tr.attlist &= attribute bgcolor { Color.datatype }?
 Cell.attrib &=
-    attribute nowrap { "nowrap" }?,
+    attribute nowrap { string "nowrap" }?,
     attribute bgcolor { Color.datatype }?,
     attribute width {
         # bugfix - modified - from Pixels to Length
@@ -163,26 +163,26 @@ Cell.attrib &=
 ul.attlist &=
     attribute type {
         # added - bugfix  - possible values are (disc|square|circle)
-        "disc"
-        | "square"
-        | "circle"
+        string "disc"
+        | string "square"
+        | string "circle"
     }?,
-    attribute compact { "compact" }?
+    attribute compact { string "compact" }?
 align.attrib =
     attribute align {
         # modified - bugfix  - possible values are (left|center|right|justify)
-        "left"
-        | "center"
-        | "right"
-        | "justify"
+        string "left"
+        | string "center"
+        | string "right"
+        | string "justify"
     }?
 # added
-talign.attrib = attribute align { "left" | "center" | "right" }?
+talign.attrib = attribute align { string "left" | string "center" | string "right" }?
 # added
-calign.attrib = attribute align { "top" | "left" | "bottom" | "right" }?
+calign.attrib = attribute align { string "top" | string "left" | string "bottom" | string "right" }?
 # added
 imgalign.attrib =
-    attribute align { "top" | "middle" | "bottom" | "left" | "right" }?
+    attribute align { string "top" | string "middle" | string "bottom" | string "left" | string "right" }?
 # modified - pattern for color names has been added
 
 # can contain widely known color names (e.g. Red, Blue...) or a color patter #R(00-FF)G(00-FF)B(00-FF) example: #13F4B2

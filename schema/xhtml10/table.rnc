@@ -47,14 +47,14 @@ include "basic-table.rnc" {
     td = element td { td.attlist, Flow.model }
     CellHAlign.attrib =
         attribute align {
-            "left" | "center" | "right" | "justify" | "char"
+            string "left" | string "center" | string "right" | string "justify" | string "char"
         }?,
         attribute char { character.datatype }?,
         attribute charoff { length.datatype }?
     CellVAlign.attrib =
-        attribute valign { "top" | "middle" | "bottom" | "baseline" }?
+        attribute valign { string "top" | string "middle" | string "bottom" | string "baseline" }?
     scope.attrib =
-        attribute scope { "row" | "col" | "rowgroup" | "colgroup" }?
+        attribute scope { string "row" | string "col" | string "rowgroup" | string "colgroup" }?
 }
 table.attlist &=
     attribute width { length.datatype }?,
@@ -85,15 +85,15 @@ tfoot = element tfoot { tfoot.attlist, tr+ }
 tfoot.attlist = Common.attrib, CellHAlign.attrib, CellVAlign.attrib
 frame.attrib =
     attribute frame {
-        "void"
-        | "above"
-        | "below"
-        | "hsides"
-        | "lhs"
-        | "rhs"
-        | "vsides"
-        | "box"
-        | "border"
+        string "void"
+        | string "above"
+        | string "below"
+        | string "hsides"
+        | string "lhs"
+        | string "rhs"
+        | string "vsides"
+        | string "box"
+        | string "border"
     }?
 rules.attrib =
-    attribute rules { "none" | "groups" | "rows" | "cols" | "all" }?
+    attribute rules { string "none" | string "groups" | string "rows" | string "cols" | string "all" }?

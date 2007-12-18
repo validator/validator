@@ -60,10 +60,10 @@ grammar {
         attribute x2 { Coordinate.datatype }?,
         attribute y2 { Coordinate.datatype }?,
         attribute gradientUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?,
         attribute gradientTransform { TransformList.datatype }?,
-        attribute spreadMethod { "pad" | "reflect" | "repeat" }?
+        attribute spreadMethod { string "pad" | string "reflect" | string "repeat" }?
     a:documentation [
         "\x{a}" ~
         "    radialGradient: Radial Gradient Element\x{a}" ~
@@ -89,10 +89,10 @@ grammar {
         attribute fx { Coordinate.datatype }?,
         attribute fy { Coordinate.datatype }?,
         attribute gradientUnits {
-            "userSpaceOnUse" | "objectBoundingBox"
+            string "userSpaceOnUse" | string "objectBoundingBox"
         }?,
         attribute gradientTransform { TransformList.datatype }?,
-        attribute spreadMethod { "pad" | "reflect" | "repeat" }?
+        attribute spreadMethod { string "pad" | string "reflect" | string "repeat" }?
     a:documentation [ "\x{a}" ~ "    stop: Stop Element\x{a}" ~ "  " ]
     SVG.stop.content = (animate | set | animateColor)*
     stop = element stop { attlist.stop, SVG.stop.content }

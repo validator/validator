@@ -37,10 +37,10 @@ iframe.attlist =
     Core.attrib,
     attribute longdesc { uri.datatype }?,
     attribute src { uri.datatype }?,
-    attribute frameborder { "1" | "0" }?,
+    attribute frameborder { string "1" | string "0" }?,
     attribute width { length.datatype }?,
     attribute height { length.datatype }?,
     attribute marginwidth { pixels.datatype }?,
     attribute marginheight { pixels.datatype }?,
-    attribute scrolling { "yes" | "no" | "auto" }?
+    attribute scrolling { string "yes" | string "no" | string "auto" }?
 Inline.class |= iframe

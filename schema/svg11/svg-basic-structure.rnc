@@ -185,9 +185,9 @@ grammar {
             PreserveAspectRatioSpec.datatype
         }?,
         [ a:defaultValue = "magnify" ]
-        attribute zoomAndPan { "disable" | "magnify" }?,
+        attribute zoomAndPan { string "disable" | string "magnify" }?,
         [ a:defaultValue = "1.1" ]
-        attribute version { xsd:string "1.1" }?,
+        attribute version { string "1.0" | string "1.1" | string "1.2" }?, # Allow 1.0 and 1.2 -- hsivonen
         attribute baseProfile { Text.datatype }?,
         [ a:defaultValue = "text/ecmascript" ]
         attribute contentScriptType { ContentType.datatype }?,

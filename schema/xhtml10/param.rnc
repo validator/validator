@@ -38,5 +38,5 @@ param.attlist =
     id.attrib,
     attribute name { text }?,
     attribute value { text }?,
-    attribute valuetype { "data" | "ref" | "object" }?,
+    attribute valuetype { string "data" | string "ref" | string "object" }?,
     attribute type { content-type.datatype }?

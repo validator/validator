@@ -49,10 +49,10 @@ grammar {
         attribute name { text },
         [ a:defaultValue = "auto" ]
         attribute rendering-intent {
-            "auto"
-            | "perceptual"
-            | "relative-colorimetric"
-            | "saturation"
-            | "absolute-colorimetric"
+            string "auto"
+            | string "perceptual"
+            | string "relative-colorimetric"
+            | string "saturation"
+            | string "absolute-colorimetric"
         }?
 }

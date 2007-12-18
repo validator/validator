@@ -46,7 +46,7 @@ grammar {
     style = element style { attlist.style, SVG.style.content }
     attlist.style &=
         [ a:defaultValue = "preserve" ]
-        attribute xml:space { "preserve" }?,
+        attribute xml:space { string "preserve" }?,
         SVG.id.attrib,
         SVG.base.attrib,
         SVG.lang.attrib,

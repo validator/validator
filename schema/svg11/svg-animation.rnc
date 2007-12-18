@@ -59,11 +59,11 @@ grammar {
         attribute min { text }?,
         attribute max { text }?,
         [ a:defaultValue = "always" ]
-        attribute restart { "always" | "never" | "whenNotActive" }?,
+        attribute restart { string "always" | string "never" | string "whenNotActive" }?,
         attribute repeatCount { text }?,
         attribute repeatDur { text }?,
         [ a:defaultValue = "remove" ]
-        attribute fill { "remove" | "freeze" }?,
+        attribute fill { string "remove" | string "freeze" }?,
         SVG.AnimationTiming.extra.attrib
     a:documentation [
         "\x{a}" ~
@@ -74,7 +74,7 @@ grammar {
     SVG.AnimationValue.attrib =
         [ a:defaultValue = "linear" ]
         attribute calcMode {
-            "discrete" | "linear" | "paced" | "spline"
+            string "discrete" | string "linear" | string "paced" | string "spline"
         }?,
         attribute values { text }?,
         attribute keyTimes { text }?,
@@ -91,9 +91,9 @@ grammar {
     SVG.AnimationAddtion.extra.attrib = empty
     SVG.AnimationAddtion.attrib =
         [ a:defaultValue = "replace" ]
-        attribute additive { "replace" | "sum" }?,
+        attribute additive { string "replace" | string "sum" }?,
         [ a:defaultValue = "none" ]
-        attribute accumulate { "none" | "sum" }?,
+        attribute accumulate { string "none" | string "sum" }?,
         SVG.AnimationAddtion.extra.attrib
     a:documentation [
         "\x{a}" ~
@@ -144,7 +144,7 @@ grammar {
         SVG.AnimationAddtion.attrib,
         [ a:defaultValue = "paced" ]
         attribute calcMode {
-            "discrete" | "linear" | "paced" | "spline"
+            string "discrete" | string "linear" | string "paced" | string "spline"
         }?,
         attribute values { text }?,
         attribute keyTimes { text }?,
@@ -198,7 +198,7 @@ grammar {
         SVG.AnimationAddtion.attrib,
         [ a:defaultValue = "translate" ]
         attribute type {
-            "translate" | "scale" | "rotate" | "skewX" | "skewY"
+            string "translate" | string "scale" | string "rotate" | string "skewX" | string "skewY"
         }?
     a:documentation [
         "\x{a}" ~

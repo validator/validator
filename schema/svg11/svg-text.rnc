@@ -35,7 +35,7 @@ grammar {
     SVG.Text.extra.attrib = empty
     SVG.Text.attrib &=
         attribute writing-mode {
-            "lr-tb" | "rl-tb" | "tb-rl" | "lr" | "rl" | "tb" | "inherit"
+            string "lr-tb" | string "rl-tb" | string "tb-rl" | string "lr" | string "rl" | string "tb" | "inherit"
         }?,
         SVG.Text.extra.attrib
     a:documentation [
@@ -46,36 +46,36 @@ grammar {
     SVG.TextContent.extra.attrib = empty
     SVG.TextContent.attrib &=
         attribute alignment-baseline {
-            "auto"
-            | "baseline"
-            | "before-edge"
-            | "text-before-edge"
-            | "middle"
-            | "central"
-            | "after-edge"
-            | "text-after-edge"
-            | "ideographic"
-            | "alphabetic"
-            | "hanging"
-            | "mathematical"
-            | "inherit"
+            string "auto"
+            | string "baseline"
+            | string "before-edge"
+            | string "text-before-edge"
+            | string "middle"
+            | string "central"
+            | string "after-edge"
+            | string "text-after-edge"
+            | string "ideographic"
+            | string "alphabetic"
+            | string "hanging"
+            | string "mathematical"
+            | string "inherit"
         }?,
         attribute baseline-shift { BaselineShiftValue.datatype }?,
-        attribute direction { "ltr" | "rtl" | "inherit" }?,
+        attribute direction { string "ltr" | string "rtl" | string "inherit" }?,
         attribute dominant-baseline {
-            "auto"
-            | "use-script"
-            | "no-change"
-            | "reset-size"
-            | "ideographic"
-            | "alphabetic"
-            | "hanging"
-            | "mathematical"
-            | "central"
-            | "middle"
-            | "text-after-edge"
-            | "text-before-edge"
-            | "inherit"
+            string "auto"
+            | string "use-script"
+            | string "no-change"
+            | string "reset-size"
+            | string "ideographic"
+            | string "alphabetic"
+            | string "hanging"
+            | string "mathematical"
+            | string "central"
+            | string "middle"
+            | string "text-after-edge"
+            | string "text-before-edge"
+            | string "inherit"
         }?,
         attribute glyph-orientation-horizontal {
             GlyphOrientationHorizontalValue.datatype
@@ -86,31 +86,31 @@ grammar {
         attribute kerning { KerningValue.datatype }?,
         attribute letter-spacing { SpacingValue.datatype }?,
         attribute text-anchor {
-            "start" | "middle" | "end" | "inherit"
+            string "start" | string "middle" | string "end" | string "inherit"
         }?,
         attribute text-decoration { TextDecorationValue.datatype }?,
         attribute unicode-bidi {
-            "normal" | "embed" | "bidi-override" | "inherit"
+            string "normal" | string "embed" | string "bidi-override" | string "inherit"
         }?,
         attribute word-spacing { SpacingValue.datatype }?,
         SVG.TextContent.extra.attrib
     SVG.Font.attrib &=
         attribute font-size-adjust { FontSizeAdjustValue.datatype }?,
         attribute font-stretch {
-            "normal"
-            | "wider"
-            | "narrower"
-            | "ultra-condensed"
-            | "extra-condensed"
-            | "condensed"
-            | "semi-condensed"
-            | "semi-expanded"
-            | "expanded"
-            | "extra-expanded"
-            | "ultra-expanded"
-            | "inherit"
+            string "normal"
+            | string "wider"
+            | string "narrower"
+            | string "ultra-condensed"
+            | string "extra-condensed"
+            | string "condensed"
+            | string "semi-condensed"
+            | string "semi-expanded"
+            | string "expanded"
+            | string "extra-expanded"
+            | string "ultra-expanded"
+            | string "inherit"
         }?,
-        attribute font-variant { "normal" | "small-caps" | "inherit" }?
+        attribute font-variant { string "normal" | string "small-caps" | string "inherit" }?
     
     ## 
     ##       extend SVG.Text.class
@@ -129,7 +129,7 @@ grammar {
         attribute dx { Lengths.datatype }?,
         attribute dy { Lengths.datatype }?,
         attribute textLength { Length.datatype }?,
-        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+        attribute lengthAdjust { string "spacing" | string "spacingAndGlyphs" }?
     a:documentation [
         "\x{a}" ~
         "    tspan: Text Span Element\x{a}" ~
@@ -168,7 +168,7 @@ grammar {
         attribute dy { Lengths.datatype }?,
         attribute rotate { Numbers.datatype }?,
         attribute textLength { Length.datatype }?,
-        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+        attribute lengthAdjust { string "spacing" | string "spacingAndGlyphs" }?
     a:documentation [
         "\x{a}" ~
         "    tref: Text Reference Element\x{a}" ~
@@ -200,7 +200,7 @@ grammar {
         attribute dy { Lengths.datatype }?,
         attribute rotate { Numbers.datatype }?,
         attribute textLength { Length.datatype }?,
-        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?
+        attribute lengthAdjust { string "spacing" | string "spacingAndGlyphs" }?
     a:documentation [
         "\x{a}" ~
         "    textPath: Text Path Element\x{a}" ~
@@ -237,9 +237,9 @@ grammar {
         SVG.External.attrib,
         attribute startOffset { Length.datatype }?,
         attribute textLength { Length.datatype }?,
-        attribute lengthAdjust { "spacing" | "spacingAndGlyphs" }?,
-        attribute method { "align" | "stretch" }?,
-        attribute spacing { "auto" | "exact" }?
+        attribute lengthAdjust { string "spacing" | string "spacingAndGlyphs" }?,
+        attribute method { string "align" | string "stretch" }?,
+        attribute spacing { string "auto" | string "exact" }?
     a:documentation [
         "\x{a}" ~
         "    altGlyph: Alternate Glyph Element\x{a}" ~

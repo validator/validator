@@ -58,7 +58,7 @@ grammar {
         attribute targetX { Integer.datatype }?,
         attribute targetY { Integer.datatype }?,
         [ a:defaultValue = "duplicate" ]
-        attribute edgeMode { "duplicate" | "wrap" | "none" }?,
+        attribute edgeMode { string "duplicate" | string "wrap" | string "none" }?,
         attribute kernelUnitLength { NumberOptionalNumber.datatype }?,
         attribute preserveAlpha { Boolean.datatype }?
     a:documentation [
@@ -100,9 +100,9 @@ grammar {
         attribute in2 { text },
         attribute scale { Number.datatype }?,
         [ a:defaultValue = "A" ]
-        attribute xChannelSelector { "R" | "G" | "B" | "A" }?,
+        attribute xChannelSelector { string "R" | string "G" | string "B" | string "A" }?,
         [ a:defaultValue = "A" ]
-        attribute yChannelSelector { "R" | "G" | "B" | "A" }?
+        attribute yChannelSelector { string "R" | string "G" | string "B" | string "A" }?
     a:documentation [
         "\x{a}" ~
         "    feMorphology: Filter Effect Morphology Element\x{a}" ~
@@ -118,7 +118,7 @@ grammar {
         SVG.FilterColor.attrib,
         SVG.FilterPrimitiveWithIn.attrib,
         [ a:defaultValue = "erode" ]
-        attribute operator { "erode" | "dilate" }?,
+        attribute operator { string "erode" | string "dilate" }?,
         attribute radius { NumberOptionalNumber.datatype }?
     a:documentation [
         "\x{a}" ~
@@ -161,9 +161,9 @@ grammar {
         attribute numOctaves { Integer.datatype }?,
         attribute seed { Number.datatype }?,
         [ a:defaultValue = "noStitch" ]
-        attribute stitchTiles { "stitch" | "noStitch" }?,
+        attribute stitchTiles { string "stitch" | string "noStitch" }?,
         [ a:defaultValue = "turbulence" ]
-        attribute type { "fractalNoise" | "turbulence" }?
+        attribute type { string "fractalNoise" | string "turbulence" }?
     a:documentation [
         "\x{a}" ~
         "    feDistantLight: Filter Effect Distant Light Element\x{a}" ~

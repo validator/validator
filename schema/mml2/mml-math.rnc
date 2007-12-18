@@ -19,7 +19,7 @@ mml.att-topinfo &=
 # Attributes for browser interface element
 mml.att-baseline = attribute baseline { text }?
 mml.att-overflow =
-    attribute overflow { "scroll" | "elide" | "truncate" | "scale" }?
+    attribute overflow { string "scroll" | string "elide" | string "truncate" | string "scale" }?
 mml.att-altimg = attribute altimg { mml.uri.datatype }?
 mml.att-alttext = attribute alttext { text }?
 mml.att-browif &=

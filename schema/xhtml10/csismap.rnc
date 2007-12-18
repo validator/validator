@@ -39,7 +39,7 @@ area.attlist =
     Common.attrib,
     attribute href { uri.datatype }?,
     shape.attrib?,
-    attribute nohref { "nohref" }?,
+    attribute nohref { string "nohref" }?,
     attribute alt { text.datatype },
     attribute tabindex { tabindexnumber.datatype }?,
     attribute accesskey { character.datatype }?
@@ -61,12 +61,12 @@ shape.attrib =
          # rect is default
          coords.rect.datatype
      }
-     | attribute shape { "default" }
-     | (attribute shape { "poly" },
+     | attribute shape { string "default" }
+     | (attribute shape { string "poly" },
         attribute coords { coords.datatype })
-     | (attribute shape { "rect" },
+     | (attribute shape { string "rect" },
         attribute coords { coords.rect.datatype }?)
-     | (attribute shape { "circle" },
+     | (attribute shape { string "circle" },
         attribute coords { coords.circle.datatype }))?
 # possible shape coordinates
 coords.datatype =

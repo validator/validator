@@ -69,30 +69,30 @@ form.attlist &=
     attribute accept-charset { charsets.datatype }?,
     attribute accept { content-types.datatype }?
 input.attlist &=
-    attribute disabled { "disabled" }?,
-    attribute readonly { "readonly" }?,
+    attribute disabled { string "disabled" }?,
+    attribute readonly { string "readonly" }?,
     attribute alt { text }?,
     attribute tabindex { tabindexnumber.datatype }?,
     attribute accept { content-types.datatype }?
 InputType.class |=
-    "image"
-    | "button"
+    string "image"
+    | string "button"
     | # bugfix - added
-      "file"
+      string "file"
 select.attlist &=
-    attribute disabled { "disabled" }?,
+    attribute disabled { string "disabled" }?,
     attribute tabindex { tabindexnumber.datatype }?
 option.attlist &=
-    attribute disabled { "disabled" }?,
+    attribute disabled { string "disabled" }?,
     attribute label { text.datatype }?
 optgroup = element optgroup { optgroup.attlist, option+ }
 optgroup.attlist =
     Common.attrib,
-    attribute disabled { "disabled" }?,
+    attribute disabled { string "disabled" }?,
     attribute label { text.datatype }
 textarea.attlist &=
-    attribute disabled { "disabled" }?,
-    attribute readonly { "readonly" }?,
+    attribute disabled { string "disabled" }?,
+    attribute readonly { string "readonly" }?,
     attribute tabindex { tabindexnumber.datatype }?
 fieldset = element fieldset { fieldset.attlist, legend?, Flow.model* }
 fieldset.attlist = Common.attrib
@@ -128,8 +128,8 @@ button.attlist =
     Common.attrib,
     attribute name { text }?,
     attribute value { text }?,
-    attribute type { "button" | "submit" | "reset" }?,
-    attribute disabled { "disabled" }?,
+    attribute type { string "button" | string "submit" | string "reset" }?,
+    attribute disabled { string "disabled" }?,
     attribute tabindex { tabindexnumber.datatype }?,
     attribute accesskey { character.datatype }?
 legend = element legend { legend.attlist, Inline.model }

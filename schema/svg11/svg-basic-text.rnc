@@ -33,23 +33,23 @@ grammar {
         attribute font-family { FontFamilyValue.datatype }?,
         attribute font-size { FontSizeValue.datatype }?,
         attribute font-style {
-            "normal" | "italic" | "oblique" | "inherit"
+            string "normal" | string "italic" | string "oblique" | string "inherit"
         }?,
         attribute font-weight {
-            "normal"
-            | "bold"
-            | "bolder"
-            | "lighter"
-            | "100"
-            | "200"
-            | "300"
-            | "400"
-            | "500"
-            | "600"
-            | "700"
-            | "800"
-            | "900"
-            | "inherit"
+            string "normal"
+            | string "bold"
+            | string "bolder"
+            | string "lighter"
+            | string "100"
+            | string "200"
+            | string "300"
+            | string "400"
+            | string "500"
+            | string "600"
+            | string "700"
+            | string "800"
+            | string "900"
+            | string "inherit"
         }?,
         SVG.Font.extra.attrib
     a:documentation [ "\x{a}" ~ "    SVG.Text.class\x{a}" ~ "  " ]

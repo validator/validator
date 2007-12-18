@@ -13,31 +13,31 @@ namespace ns1 = "http://www.w3.org/1999/xlink"
 
 # fonts
 mml.att-fontsize = attribute fontsize { mml.length.datatype }?
-mml.att-fontweight = attribute fontweight { "normal" | "bold" }?
-mml.att-fontstyle = attribute fontstyle { "normal" | "italic" }?
+mml.att-fontweight = attribute fontweight { string "normal" | string "bold" }?
+mml.att-fontstyle = attribute fontstyle { string "normal" | string "italic" }?
 mml.att-fontfamily = attribute fontfamily { text }?
 mml.att-color = attribute color { mml.color.datatype }?
 # MathML2 typographically-distinguished symbol attributes
 mml.att-mathvariant =
     attribute mathvariant {
-        "normal"
-        | "bold"
-        | "italic"
-        | "bold-italic"
-        | "double-struck"
-        | "bold-fraktur"
-        | "script"
-        | "bold-script"
-        | "fraktur"
-        | "sans-serif"
-        | "bold-sans-serif"
-        | "sans-serif-italic"
-        | "sans-serif-bold-italic"
-        | "monospace"
+        string "normal"
+        | string "bold"
+        | string "italic"
+        | string "bold-italic"
+        | string "double-struck"
+        | string "bold-fraktur"
+        | string "script"
+        | string "bold-script"
+        | string "fraktur"
+        | string "sans-serif"
+        | string "bold-sans-serif"
+        | string "sans-serif-italic"
+        | string "sans-serif-bold-italic"
+        | string "monospace"
     }?
 mml.att-mathsize =
     attribute mathsize {
-        "small" | "normal" | "big" | mml.length.datatype
+        string "small" | string "normal" | string "big" | mml.length.datatype
     }?
 mml.att-mathcolor = attribute mathcolor { mml.color.datatype }?
 mml.att-mathbackground =
@@ -52,19 +52,19 @@ mml.att-fontinfo &=
     mml.att-mathsize,
     mml.att-mathcolor,
     mml.att-mathbackground
-mml.att-form = attribute form { "prefix" | "infix" | "postfix" }?
-mml.att-fence = attribute fence { "true" | "false" }?
-mml.att-separator = attribute separator { "true" | "false" }?
+mml.att-form = attribute form { string "prefix" | string "infix" | string "postfix" }?
+mml.att-fence = attribute fence { string "true" | string "false" }?
+mml.att-separator = attribute separator { string "true" | string "false" }?
 mml.att-lspace = attribute lspace { mml.namedspace.datatype }?
 mml.att-rspace = attribute rspace { mml.namedspace.datatype }?
-mml.att-stretchy = attribute stretchy { "true" | "false" }?
-mml.att-symmetric = attribute symmetric { "true" | "false" }?
+mml.att-stretchy = attribute stretchy { string "true" | string "false" }?
+mml.att-symmetric = attribute symmetric { string "true" | string "false" }?
 mml.att-maxsize =
-    attribute maxsize { mml.namedspace.datatype | "infinity" }?
+    attribute maxsize { mml.namedspace.datatype | string "infinity" }?
 mml.att-minsize = attribute minsize { mml.namedspace.datatype }?
-mml.att-largeop = attribute largeop { "true" | "false" }?
-mml.att-movablelimits = attribute movablelimits { "true" | "false" }?
-mml.att-accent = attribute accent { "true" | "false" }?
+mml.att-largeop = attribute largeop { string "true" | string "false" }?
+mml.att-movablelimits = attribute movablelimits { string "true" | string "false" }?
+mml.att-accent = attribute accent { string "true" | string "false" }?
 mml.att-opinfo &=
     mml.att-form,
     mml.att-fence,
@@ -83,22 +83,22 @@ mml.att-height = attribute height { mml.length.datatype }?
 mml.att-depth = attribute depth { mml.length.datatype }?
 mml.att-linebreak =
     attribute linebreak {
-        "auto"
-        | "newline"
-        | "indentingnewline"
-        | "nobreak"
-        | "goodbreak"
-        | "badbreak"
+        string "auto"
+        | string "newline"
+        | string "indentingnewline"
+        | string "nobreak"
+        | string "goodbreak"
+        | string "badbreak"
     }?
 mml.att-sizeinfo &= mml.att-width, mml.att-height, mml.att-depth
 mml.att-lquote = attribute lquote { text }?
 mml.att-rquote = attribute rquote { text }?
 mml.att-linethickness =
     attribute linethickness {
-        mml.length.datatype | "thin" | "medium" | "thick"
+        mml.length.datatype | string "thin" | string "medium" | string "thick"
     }?
 mml.att-scriptlevel = attribute scriptlevel { mml.number.datatype }?
-mml.att-displaystyle = attribute displaystyle { "true" | "false" }?
+mml.att-displaystyle = attribute displaystyle { string "true" | string "false" }?
 mml.att-scriptsizemultiplier =
     attribute scriptsizemultiplier { mml.nonnegativefloat.datatype }?
 mml.att-scriptminsize = attribute scriptminsize { mml.length.datatype }?
@@ -123,7 +123,7 @@ mml.att-subscriptshift =
     attribute subscriptshift { mml.length.datatype }?
 mml.att-superscriptshift =
     attribute superscriptshift { mml.length.datatype }?
-mml.att-accentunder = attribute accentunder { "true" | "false" }?
+mml.att-accentunder = attribute accentunder { string "true" | string "false" }?
 mml.att-align = attribute align { mml.align.datatype }?
 mml.att-rowalign = attribute rowalign { mml.rowalign.datatype }?
 mml.att-columnalign =
@@ -138,11 +138,11 @@ mml.att-columnspacing =
     attribute columnspacing { mml.columnspacing.datatype }?
 mml.att-rowlines = attribute rowlines { mml.lines.datatype }?
 mml.att-columnlines = attribute columnlines { mml.lines.datatype }?
-mml.att-frame = attribute frame { "none" | "solid" | "dashed" }?
+mml.att-frame = attribute frame { string "none" | string "solid" | string "dashed" }?
 mml.att-framespacing =
     attribute framespacing { mml.framespacing.datatype }?
-mml.att-equalrows = attribute equalrows { "true" | "false" }?
-mml.att-equalcolumns = attribute equalcolumns { "true" | "false" }?
+mml.att-equalrows = attribute equalrows { string "true" | string "false" }?
+mml.att-equalcolumns = attribute equalcolumns { string "true" | string "false" }?
 mml.att-tableinfo &=
     mml.att-align,
     mml.att-rowalign,
@@ -161,23 +161,23 @@ mml.att-tableinfo &=
     mml.att-displaystyle
 mml.att-rowspan =
     attribute rowspan {
-        "top" | "bottom" | "center" | "baseline" | "axis "
+        string "top" | string "bottom" | string "center" | string "baseline" | string "axis "
     }?
 mml.att-columnspan = attribute columnspan { mml.columnalign.datatype }?
-mml.att-edge = attribute edge { "left" | "right" }?
+mml.att-edge = attribute edge { string "left" | string "right" }?
 # actiontypes
 mml.att-actiontype =
-    ((attribute actiontype { "toggle" },
+    ((attribute actiontype { string "toggle" },
       attribute selection { mml.positiveinteger.datatype })
-     | attribute actiontype { "statusline" }
-     | attribute actiontype { "tooltip" }
-     | (attribute actiontype { "highlight" },
+     | attribute actiontype { string "statusline" }
+     | attribute actiontype { string "tooltip" }
+     | (attribute actiontype { string "highlight" },
         attribute * - (inherit:* | local:* | ns1:*) {
             mml.color.datatype
         }*)
-     | (attribute actiontype { "menu" },
+     | (attribute actiontype { string "menu" },
         attribute selection { mml.positiveinteger.datatype }))?
 mml.att-name = attribute name { text }?
 mml.att-alt = attribute alt { text }?
 mml.att-index = attribute index { mml.number.datatype }?
-mml.att-bevelled = attribute bevelled { "true" | "false" }?
+mml.att-bevelled = attribute bevelled { string "true" | string "false" }?

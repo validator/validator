@@ -70,7 +70,7 @@ grammar {
         SVG.External.attrib,
         attribute refX { Coordinate.datatype }?,
         attribute refY { Coordinate.datatype }?,
-        attribute markerUnits { "strokeWidth" | "userSpaceOnUse" }?,
+        attribute markerUnits { string "strokeWidth" | string "userSpaceOnUse" }?,
         attribute markerWidth { Length.datatype }?,
         attribute markerHeight { Length.datatype }?,
         attribute orient { text }?,

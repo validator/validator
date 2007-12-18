@@ -103,7 +103,7 @@ pre =
     }
 pre.attlist =
     Common.attrib,
-    attribute xml:space { "preserve" }?
+    attribute xml:space { string "preserve" }?
 h1 = element h1 { Heading.attrib, Heading.content }
 h2 = element h2 { Heading.attrib, Heading.content }
 h3 = element h3 { Heading.attrib, Heading.content }
