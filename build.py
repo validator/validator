@@ -65,7 +65,7 @@ dependencyPackages = [
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("http://www.slf4j.org/dist/slf4j-1.4.3.zip", "5671faa7d5aecbd06d62cf91f990f80a"),
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/fileupload/binaries/commons-fileupload-1.2-bin.zip", "6fbe6112ebb87a9087da8ca1f8d8fd6a"),
-  ("http://mirror.eunet.fi/apache/xml/xalan-j/xalan-j_2_7_0-bin.zip", "ec42adbc83eb0d1354f73a600e274afe"),
+  ("http://mirror.eunet.fi/apache/xml/xalan-j/xalan-j_2_7_1-bin.zip", "99d049717c9d37a930450e630d8a6531"),
   ("http://mirror.eunet.fi/apache/ant/binaries/apache-ant-1.7.0-bin.zip" , "ac30ce5b07b0018d65203fbc680968f5"),
   ("http://surfnet.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip" , "10381903828d30e36252910679fcbab6"),
   ("http://ovh.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
@@ -98,7 +98,7 @@ dependencyJars = [
   "slf4j-1.4.3/slf4j-log4j12-1.4.3.jar",
  # "slf4j-1.4.3/slf4j-api-1.4.3.jar",
   "commons-fileupload-1.2/lib/commons-fileupload-1.2.jar",
-  "xalan-j_2_7_0/xalan.jar",
+  "xalan-j_2_7_1/xalan.jar",
   "junit-4.4.jar",
   "isorelax.jar",
   "apache-ant-1.7.0/lib/ant.jar",
@@ -309,6 +309,7 @@ def runValidator():
   args = [
     '-Xms%sm' % heapSize,
     '-Xmx%sm' % heapSize,
+    '-XX:ThreadStackSize=2048',
     '-cp',
     classPath,
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
@@ -366,11 +367,19 @@ def downloadLocalEntities():
     # XXX not portable to Windows
     os.symlink(os.path.join("..", "syntax"), 
                os.path.join(buildRoot, "local-entities", "syntax"))
+  if not os.path.exists(os.path.join(buildRoot, "local-entities", "schema")):
+    # XXX not portable to Windows
+    os.symlink(os.path.join("..", "validator", "schema"), 
+               os.path.join(buildRoot, "local-entities", "schema"))
+  if not os.path.exists(os.path.join(buildRoot, "validator", "schema", "html5")):
+    # XXX not portable to Windows
+    os.symlink(os.path.join("..", "..", "syntax", "relaxng"), 
+               os.path.join(buildRoot, "validator", "schema", "html5"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
       url, path = line.strip().split("\t")
-      if not path.startswith("syntax/"):
+      if not (path.startswith("syntax/") or path.startswith("schema/")):
         # XXX may not work on Windows
         if not os.path.exists(os.path.join(buildRoot, "local-entities", path)):
           fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
