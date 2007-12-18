@@ -1,7 +1,8 @@
 # Script Module
 
 # This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
-# (see http://www.thaiopensource.com/relaxng/xhtml/)
+# (see http://www.thaiopensource.com/relaxng/xhtml/ and
+# the accompanying jing-copying.html file)
 # All changes are marked with relevant comments.
 # The following license refers just to those changes.
 

@@ -5,6 +5,7 @@
 # 
 # See COPYING for the status of this software.
 # Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+# Modified by Henri Sivonen <hsivonen@iki.fi>
 #
 
 mml.cgenrel2ary = mml.neq.qname | mml.factorof.qname

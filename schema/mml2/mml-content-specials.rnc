@@ -5,6 +5,7 @@
 # 
 # See COPYING for the status of this software.
 # Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
+# Modified by Henri Sivonen <hsivonen@iki.fi>
 #
 
 mml.cspecial = mml.apply.qname | mml.reln.qname | mml.lambda.qname

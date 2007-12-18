@@ -2,6 +2,7 @@
 <!-- Mechanically extracted from RNG files which had this license: -->
 <!--
 Copyright (c) 2005 Petr Nalevka
+Copyright (c) 2007 Mozilla Foundation
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

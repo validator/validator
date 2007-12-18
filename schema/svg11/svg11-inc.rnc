@@ -27,6 +27,7 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 ##     It is provided "as is" without expressed or implied warranty.
 ## 
 ##         Author: Masayasu Ishikawa (mimasa@w3.org)
+##         Modified by: Henri Sivonen (hsivonen@iki.fi)
 ##         $Id: svg11.rnc 121 2007-12-15 18:35:39Z hsivonen $
 ## 
 ##     This is the driver file for version 1.1 of the SVG RELAX NG schema.
