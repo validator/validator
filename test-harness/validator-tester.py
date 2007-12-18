@@ -182,5 +182,14 @@ class ValidatorTester:
     else:
       print "%s Expected %s but saw %s." % (uri, str(expectedErrs[0]), str(actualErrs[0]))
 
+  def dumpReference(self, uri):
+    pass
+    
+  def dumpUri(self, uri):
+    pass
+    
+  def addToDatabase(self, uri):
+    pass
+
 vt = ValidatorTester('db.json')
 vt.dump()
