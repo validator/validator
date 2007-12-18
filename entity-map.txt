@@ -466,3 +466,5 @@ http://s.validator.nu/xhtml10/xhtml-transitional.rnc	schema/xhtml10/xhtml-transi
 http://s.validator.nu/xhtml10/xhtml.sch	schema/xhtml10/xhtml.sch
 http://s.validator.nu/inkscape/inkscape.rnc	schema/inkscape/inkscape.rnc
 http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc	schema/xhtml5-rdf-svg-mathml.rnc
+http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc	schema/xhtml1-rdf-svg-mathml.rnc
+http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc

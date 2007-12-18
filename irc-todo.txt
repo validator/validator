@@ -54,4 +54,23 @@ IPv6
                 so many tabs open nowadays. If things don't have a favicon I'm 
                 lost :)
 
+23:31 < zcorpan_lap> hsivonen: it would be useful to be able to suggest and/or 
+                     override encoding
+23:32 < hsivonen> zcorpan_lap: on file upload?
+23:32 < hsivonen> zcorpan_lap: or in general_
+23:32 < hsivonen> ?
+23:32 < zcorpan_lap> at least file upload
 
+23:35  * zcorpan_lap tried to enter http://validator.nu/?showsource=yes in 
+          opera:config but it didn't have the desired effect :(
+
+14:39 < Philip> hsivonen: Why does 
+http://validator.nu/?doc=http%3A%2F%2Fphilip.html5.org%2F404&schema=http%3A%2F%2Fwww.web3d.org%2Fspecifications%2Fx3d-3.1.xsd&parser=xml&laxtype=yes&showsource=yes say an HTML page validates according to the XML schema?
+
+Document datatype changes
+
+string instead of token
+
+SVG 1.0 and 1.2
+
+inkscape
