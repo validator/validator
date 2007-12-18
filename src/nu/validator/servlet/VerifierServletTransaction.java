@@ -182,14 +182,15 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "http://www.w3.org/1999/xhtml", "http://www.w3.org/1999/xhtml" };
 
     private static final String[] ALL_CHECKERS = {
-            "http://hsivonen.iki.fi/checkers/table/",
-            "http://hsivonen.iki.fi/checkers/nfc/",
-            "http://hsivonen.iki.fi/checkers/text-content/",
-            "http://n.validator.nu/checkers/usemap/"};
+            "http://c.validator.nu/table/",
+            "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/text-content/",
+            "http://c.validator.nu/usemap/"};
 
     private static final String[] ALL_CHECKERS_HTML4 = {
-            "http://hsivonen.iki.fi/checkers/table/",
-            "http://hsivonen.iki.fi/checkers/nfc/" };
+            "http://c.validator.nu/table/",
+            "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/usemap/"};
 
     private long start = System.currentTimeMillis();
 
@@ -398,9 +399,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     private static boolean isCheckerUrl(String url) {
-        if ("http://hsivonen.iki.fi/checkers/all/".equals(url)) {
+        if ("http://c.validator.nu/all/".equals(url) || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
             return true;
-        } else if ("http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+        } else if ("http://c.validator.nu/all-html4/".equals(url) || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
@@ -918,12 +919,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
             String url = schemas[i];
-            if ("http://hsivonen.iki.fi/checkers/all/".equals(url)) {
+            if ("http://c.validator.nu/all/".equals(url) || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS.length; j++) {
                     validator = combineValidatorByUrl(validator,
                             ALL_CHECKERS[j]);
                 }
-            } else if ("http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+            } else if ("http://c.validator.nu/all-html4/".equals(url) || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
                     validator = combineValidatorByUrl(validator,
                             ALL_CHECKERS_HTML4[j]);
@@ -969,21 +970,21 @@ class VerifierServletTransaction implements DocumentModeHandler {
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://hsivonen.iki.fi/checkers/table/".equals(url)) {
+        if ("http://c.validator.nu/table/".equals(url) || "http://hsivonen.iki.fi/checkers/table/".equals(url)) {
             return new CheckerValidator(new TableChecker(), jingPropertyMap);
-        } else if ("http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
+        } else if ("http://c.validator.nu/nfc/".equals(url) || "http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
             this.checkNormalization = true;
             return new CheckerValidator(new NormalizationChecker(),
                     jingPropertyMap);
-        } else if ("http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
+        } else if ("http://c.validator.nu/debug/".equals(url) || "http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
             return new CheckerValidator(new DebugChecker(), jingPropertyMap);
-        } else if ("http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
+        } else if ("http://c.validator.nu/text-content/".equals(url) || "http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
             return new CheckerValidator(new TextContentChecker(),
                     jingPropertyMap);
-        } else if ("http://n.validator.nu/checkers/usemap/".equals(url)) {
+        } else if ("http://c.validator.nu/usemap/".equals(url) || "http://n.validator.nu/checkers/usemap/".equals(url)) {
             return new CheckerValidator(new UsemapChecker(), jingPropertyMap);
         }
-        if (url.equals("http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc") || url.equals("http://syntax.whattf.org/relaxng/html5full.rnc")) {
+        if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url) || "http://s.validator.nu/html5/html5full.rnc".equals(url) || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = schemaByUrl(url);

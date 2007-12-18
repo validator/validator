@@ -91,6 +91,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2002/06/xhtml2/", "XHTML2".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.ascc.net/xml/schematron", "Schematron".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron", "ISO Schematron".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.inkscape.org/namespaces/inkscape", "Inkscape".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd", "Sodipodi".toCharArray());
     }
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
