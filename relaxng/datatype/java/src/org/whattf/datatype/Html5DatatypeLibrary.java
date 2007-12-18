@@ -128,6 +128,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Rectangle.THE_INSTANCE;
         } else if ("polyline".equals(typeLocalName)) {
             return Polyline.THE_INSTANCE;
+        } else if ("xml-name".equals(typeLocalName)) {
+            return XmlName.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
