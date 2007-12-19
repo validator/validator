@@ -24,3 +24,11 @@ SVG.foreignObject.content |=
 	|	body.elem
 	|	common.inner.block
 	)
+	
+mml.Annotation-xml.datatype.svg |= svg
+
+mml.Annotation-xml.datatype.xhtml |=
+	(	html.elem
+	|	common.elem.block
+	|	common.elem.struct-inline
+	)

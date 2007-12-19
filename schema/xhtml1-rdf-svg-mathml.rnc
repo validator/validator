@@ -21,3 +21,11 @@ SVG.foreignObject.content |=
 	|	body
 	|	Block.mix*
 	)
+	
+mml.Annotation-xml.datatype.svg |= svg
+
+mml.Annotation-xml.datatype.xhtml |=
+	(	html
+	|	Block.class
+	|	Inline.class
+	)

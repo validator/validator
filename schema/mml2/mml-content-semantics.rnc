@@ -8,6 +8,8 @@
 # Modified by Henri Sivonen <hsivonen@iki.fi>
 #
 
+namespace om = "http://www.openmath.org/OpenMath"
+
 mml.csemantics =
     mml.semantics.qname
     | mml.annotation.qname
@@ -24,6 +26,52 @@ mml.annotation.qname =
         mml.Annotation.datatype, mml.Common.attrib, mml.att-encoding
     }
 mml.annotation-xml.qname =
-    element annotation-xml {
-        mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding
-    }
+    ( mml.annotation-xml.xhtml
+    | mml.annotation-xml.svg
+    | mml.annotation-xml.mathml
+    | mml.annotation-xml.openmath
+    )
+    mml.annotation-xml.xhtml =
+        element annotation-xml {
+            mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding.xhtml?
+        }
+        mml.Annotation-xml.datatype.xhtml = 
+          notAllowed
+        mml.att-encoding.xhtml =
+          attribute encoding {
+            string "application/xhtml+xml"
+          }
+    mml.annotation-xml.svg =
+        element annotation-xml {
+            mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding.svg?
+        }
+        mml.Annotation-xml.datatype.svg = 
+          notAllowed
+        mml.att-encoding.svg =
+          attribute encoding {
+            string "SVG1.1"
+          }
+    mml.annotation-xml.mathml =
+        element annotation-xml {
+            mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding.mathml?
+        }
+        mml.Annotation-xml.datatype.mathml = 
+          mml.math.qname
+        mml.att-encoding.mathml =
+          attribute encoding {
+            string "MathML-Presentation" | string "MathML-Content"
+          }
+    mml.annotation-xml.openmath =
+        element annotation-xml {
+            mml.Annotation-xml.datatype, mml.Common.attrib, mml.att-encoding.openmath?
+        }
+        mml.Annotation-xml.datatype.openmath = 
+          mml.openmath.any.elem
+        mml.att-encoding.openmath =
+          attribute encoding {
+            string "OpenMath"
+          }
+        mml.openmath.any.elem =
+          element om:* {
+            attribute * { text }*, mml.Annotation-xml.datatype
+          }
