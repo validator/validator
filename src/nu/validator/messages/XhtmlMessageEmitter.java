@@ -187,7 +187,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private void emitSingleLocation() throws SAXException {
         if (willShowSource && systemId == null) {
             attrs.clear();
-            attrs.addAttribute("href", "#l" + oneBasedLastLine + "c" + oneBasedLastColumn);
+            attrs.addAttribute("href", "#cl" + oneBasedLastLine + "c" + oneBasedLastColumn);
             emitter.startElement("a", attrs);
         }
         this.emitter.characters(AT_LINE);
