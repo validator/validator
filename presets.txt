@@ -7,8 +7,9 @@
 -1	-	XHTML 1.0 Strict with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
 -1	-	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0	http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 -1	http://www.w3.org/1999/xhtml	XHTML 1.0 Strict, Ruby, SVG 1.1 plus MathML 2.0	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
-1	-	XHTML 1.0 Transitional	http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Transitional with partial WCAG 1.0 checks	http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng http://s.validator.nu/xhtml10/xhtml.sch http://hsivonen.iki.fi/xhtml-schema/wcag.sch http://c.validator.nu/all-html4/
-7	-	XHTML5 (prerelease schema)	http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc http://syntax.whattf.org/relaxng/assertions.sch http://c.validator.nu/all/
-3	-	HTML5 (prerelease schema)	http://syntax.whattf.org/relaxng/html5full.rnc http://syntax.whattf.org/relaxng/assertions.sch http://c.validator.nu/all/
+1	-	XHTML 1.0 Transitional	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Transitional with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
+3	-	HTML5 (experimental)	http://s.validator.nu/html5/html5full.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+-1	-	XHTML5 (experimental)	http://s.validator.nu/html5/xhtml5full-xhtml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+7	-	XHTML5, SVG 1.1 plus MathML 2.0 (experimental)	http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 -1	http://www.w3.org/1999/XSL/Transform	XSLT 1.0	http://thaiopensource.com/relaxng/xslt.rng
