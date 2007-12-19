@@ -669,7 +669,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             loadDocAndSetupParser();
 
-            reader.setErrorHandler(errorHandler);
+            reader.setErrorHandler(errorHandler); 
             // XXX set xml:id filter separately
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
@@ -695,6 +695,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 errorHandler.setHtml(true);
             } else if (xmlParser != null) {
                 xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
+                xmlParser.lockErrorHandler();
             } else {
                 throw new RuntimeException("Bug. Unreachable.");
             }
