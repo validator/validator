@@ -199,18 +199,18 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-            String host = new URL(systemId).getHost(); // Jena IRI getHost is
-                                                        // b0rked
-            if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
-                SAXParseException spe = new SAXParseException(
-                        "Attempted to connect to localhost.", publicId,
-                        systemId, -1, -1, new IOException(
-                                "Attempted to connect to localhost."));
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
-            }
+//            String host = new URL(systemId).getHost(); // Jena IRI getHost is
+//                                                        // b0rked
+//            if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
+//                SAXParseException spe = new SAXParseException(
+//                        "Attempted to connect to localhost.", publicId,
+//                        systemId, -1, -1, new IOException(
+//                                "Attempted to connect to localhost."));
+//                if (errorHandler != null) {
+//                    errorHandler.fatalError(spe);
+//                }
+//                throw spe;
+//            }
             try {
                 m = new GetMethod(systemId);
             } catch (IllegalArgumentException e) {
