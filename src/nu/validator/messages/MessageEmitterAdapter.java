@@ -83,7 +83,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://relaxng.org/ns/structure/1.0", "RELAX NG".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.w3.org/XML/1998/namespace", "XML".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/XSL/Transform", "XSLT".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/ns/xbl", "XBL".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/ns/xbl", "XBL2".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "XUL".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "RDF".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://purl.org/dc/elements/1.1/", "Dublin Core".toCharArray());
@@ -93,12 +93,13 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron", "ISO Schematron".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.inkscape.org/namespaces/inkscape", "Inkscape".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd", "Sodipodi".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.openmath.org/OpenMath", "OpenMath".toCharArray());  
     }
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
     
     static {
-        InputSource in = new InputSource("http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions");
+        InputSource in = new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"));
         try {
             HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions(in));
         } catch (IOException e) {
