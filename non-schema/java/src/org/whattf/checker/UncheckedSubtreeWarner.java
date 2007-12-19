@@ -29,7 +29,7 @@ public class UncheckedSubtreeWarner extends Checker {
 
     private boolean alreadyWarnedAboutRdf;
 
-    private boolean alreadyWarnedAboutAnnotationXml;
+    private boolean alreadyWarnedAboutOpenMath;
 
     private boolean alreadyWarnedAboutInkscape;
     
@@ -37,7 +37,7 @@ public class UncheckedSubtreeWarner extends Checker {
 
     public UncheckedSubtreeWarner() {
         alreadyWarnedAboutRdf = false;
-        alreadyWarnedAboutAnnotationXml = false;
+        alreadyWarnedAboutOpenMath = false;
         alreadyWarnedAboutInkscape = false;
         alreadyWarnedAboutSvgVersion = false;
     }
@@ -48,7 +48,7 @@ public class UncheckedSubtreeWarner extends Checker {
     @Override
     public void startDocument() throws SAXException {
         alreadyWarnedAboutRdf = false;
-        alreadyWarnedAboutAnnotationXml = false;
+        alreadyWarnedAboutOpenMath = false;
         alreadyWarnedAboutInkscape = false;
         alreadyWarnedAboutSvgVersion = false;
     }
@@ -65,11 +65,10 @@ public class UncheckedSubtreeWarner extends Checker {
             warn("This validator does not validate RDF. RDF subtrees go unchecked.");
             alreadyWarnedAboutRdf = true;
         }
-        if (!alreadyWarnedAboutAnnotationXml
-                && "http://www.w3.org/1998/Math/MathML" == uri
-                && "annotation-xml" == localName) {
-            warn("This validator does not validate \u201Cannotation-xml\u201D contents. \u201Cannotation-xml\u201D subtrees go unchecked.");
-            alreadyWarnedAboutAnnotationXml = true;
+        if (!alreadyWarnedAboutOpenMath
+                && "http://www.openmath.org/OpenMath" == uri) {
+            warn("This validator does not validate OpenMath. OpenMath subtrees go unchecked.");
+            alreadyWarnedAboutOpenMath = true;
         }
         if (!alreadyWarnedAboutInkscape
                 && (("http://www.w3.org/2000/svg" == uri && attrsContainInkscape(atts))
