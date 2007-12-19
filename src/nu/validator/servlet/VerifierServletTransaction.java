@@ -83,6 +83,7 @@ import org.apache.xml.serializer.SerializerFactory;
 import org.whattf.checker.DebugChecker;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
+import org.whattf.checker.UncheckedSubtreeWarner;
 import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.jing.CheckerValidator;
 import org.whattf.checker.table.TableChecker;
@@ -185,11 +186,13 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "http://c.validator.nu/table/",
             "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
+            "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/"};
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/",
             "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/"};
 
     private long start = System.currentTimeMillis();
@@ -622,11 +625,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (!preset) {
             return false;
         }
-        return !(schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-basic.rng")
-                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict.rng")
-                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict-wcag.rng")
-                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng")
-                || schemaUrls.startsWith("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional-wcag.rng") || schemaUrls.startsWith("http://syntax.whattf.org/relaxng/html5full.rnc"));
+        return !(schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-basic.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-strict.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") 
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") 
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc"));
 
     }
 
@@ -983,6 +986,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     jingPropertyMap);
         } else if ("http://c.validator.nu/usemap/".equals(url) || "http://n.validator.nu/checkers/usemap/".equals(url)) {
             return new CheckerValidator(new UsemapChecker(), jingPropertyMap);
+        } else if ("http://c.validator.nu/unchecked/".equals(url)) {
+            return new CheckerValidator(new UncheckedSubtreeWarner(), jingPropertyMap);
         }
         if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url) || "http://s.validator.nu/html5/html5full.rnc".equals(url) || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
