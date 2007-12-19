@@ -46,7 +46,7 @@ public class Html5ConformanceCheckerTransaction extends
 
     private static final char[] TECHNOLOGY_PREVIEW = "(Highly Experimental)".toCharArray();
 
-    private static final char[] RESULTS_TITLE = "(X)HTML5 conformance checking results".toCharArray();
+    private static final char[] RESULTS_TITLE = "(X)HTML5 validation results".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
     
