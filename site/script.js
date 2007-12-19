@@ -103,12 +103,11 @@ function isHtmlParserValue(parser){
 
 function isHtmlCompatiblePreset(preset){
     return (preset == "" ||
-    preset.indexOf("http://hsivonen.iki.fi/xhtml-schema/xhtml-basic.rng") == 0 ||
-    preset.indexOf("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict.rng") == 0 ||
-    preset.indexOf("http://hsivonen.iki.fi/xhtml-schema/xhtml-strict-wcag.rng") == 0 ||
-    preset.indexOf("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional.rng") == 0 ||
-    preset.indexOf("http://hsivonen.iki.fi/xhtml-schema/xhtml-transitional-wcag.rng") == 0 ||
-    preset.indexOf("http://syntax.whattf.org/relaxng/html5full.rnc") == 0)
+    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-basic.rnc") == 0 ||
+    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
+    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
+    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
+    preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0)
 }
 
 function parserChanged(){
