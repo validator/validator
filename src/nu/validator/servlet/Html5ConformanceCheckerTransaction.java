@@ -42,17 +42,17 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 public class Html5ConformanceCheckerTransaction extends
         VerifierServletTransaction {
 
-    private static final char[] SERVICE_TITLE = "(X)HTML5 Conformance Checking Service ".toCharArray();
+    private static final char[] SERVICE_TITLE = "(X)HTML5 Validator ".toCharArray();
 
-    private static final char[] TECHNOLOGY_PREVIEW = "Technology Preview".toCharArray();
+    private static final char[] TECHNOLOGY_PREVIEW = "(Highly Experimental)".toCharArray();
 
     private static final char[] RESULTS_TITLE = "(X)HTML5 conformance checking results".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
     
-    private static final String SUCCESS_HTML = "The document conforms to the machine-checkable conformance requirements for HTML5 (subject to the utter previewness of this service).";
+    private static final String SUCCESS_HTML = "The document is valid HTML5 (subject to the utter previewness of this service).";
 
-    private static final String SUCCESS_XHTML = "The document conforms to the machine-checkable conformance requirements for XHTML5 (subject to the utter previewness of this service).";
+    private static final String SUCCESS_XHTML = "The document is valid XHTML5 + SVG 1.1 + MathML 2.0 (subject to the utter previewness of this service).";
 
     private static final String FAILURE_HTML = "There were errors. (Tried in the text/html mode.)";
 
