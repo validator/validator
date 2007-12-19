@@ -230,6 +230,8 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
     private NamespaceSupport prefixStack;
 
     boolean checkNormalization = false;
+    
+    private boolean errorHandlerLocked = false;
 
     CharacterHandler characterHandler = null;
     
@@ -356,6 +358,10 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
         contentHandler = handler;
     }
 
+    public void lockErrorHandler() {
+        errorHandlerLocked = true;
+    }
+    
     /**
      * <b>SAX1, SAX2</b>: Set the error handler for this parser.
      * 
@@ -363,6 +369,9 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
      *            The object to receive error events.
      */
     public void setErrorHandler(ErrorHandler handler) {
+        if (errorHandlerLocked) {
+            return;
+        }
         if (handler == null) {
             handler = base;
         }
