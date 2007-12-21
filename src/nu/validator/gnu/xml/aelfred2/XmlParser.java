@@ -2499,6 +2499,7 @@ final class XmlParser {
                         // pureWhite unmodified
                         // CLEAN end of text sequence
                         state = 1;
+                        rollbackLocation();
                         break loop;
                     case ']':
                         // that's not a whitespace char, and
@@ -2509,9 +2510,11 @@ final class XmlParser {
                                     && readBuffer[i + 2] == '>') {
                                 // ERROR end of text sequence
                                 state = 2;
+                                rollbackLocation();
                                 break loop;
                             }
                         } else {
+                            throw new RuntimeException("Unimplemented end of buffer in CDATA section.");
                             // FIXME missing two end-of-buffer cases
                         }
                         break;
@@ -2531,19 +2534,22 @@ final class XmlParser {
                         pureWhite = false;
                 }
             }
-            rollbackLocation();
             // report characters/whitspace
             int length = i - readBufferPos;
 
             if (length != 0) {
-                // current and prev location are now the same due to rollback 
-                // above
+                int saveLine = line;
+                int saveColumn = column;
+                line = linePrev;
+                column = columnPrev;
                 if (pureWhite) {
                     handler.ignorableWhitespace(readBuffer, readBufferPos,
                             length);
                 } else {
                     handler.charData(readBuffer, readBufferPos, length);
                 }
+                line = saveLine;
+                column = saveColumn;
                 readBufferPos = i;
             }
 
