@@ -250,14 +250,6 @@ final class XmlParser {
     // literal is a public ID value
     private final static int LIT_PUBID = 256;
 
-    //
-    // Flags affecting PE handling in DTDs (if expandPE is true).
-    // PEs expand with space padding, except inside literals.
-    //
-    private final static int CONTEXT_NORMAL = 0;
-
-    private final static int CONTEXT_LITERAL = 1;
-
     // Emit warnings for relative URIs with no base URI.
     static boolean uriWarnings;
     static {
@@ -284,17 +276,20 @@ final class XmlParser {
     private int line; // current line number
 
     private int linePrev; // the line of the previous character -- hsivonen
-                            // 2007-09-28
+
+    // 2007-09-28
 
     private int column; // current column number
 
     private int columnPrev; // the column of the previous character -- hsivonen
-                            // 2007-09-28
+
+    // 2007-09-28
 
     private boolean nextCharOnNewLine; // indicates whether the next character
-                                        // is on the next line -- hsivonen
-                                        // 2007-09-28
-    
+
+    // is on the next line -- hsivonen
+    // 2007-09-28
+
     private int sourceType; // type of input source
 
     private LinkedList<Input> inputStack; // stack of input soruces
@@ -302,8 +297,6 @@ final class XmlParser {
     private String characterEncoding; // current character encoding
 
     private int currentByteCount; // bytes read from current source
-
-    private InputSource scratch; // temporary
 
     //
     // Buffers for decoded but unparsed character input.
@@ -414,13 +407,6 @@ final class XmlParser {
     private int tagAttributePos;
 
     //
-    // Utility flag: have we noticed a CR while reading the last
-    // data chunk? If so, we will have to go back and normalise
-    // CR or CR/LF line ends.
-    //
-    private boolean sawCR;
-
-    //
     // Utility flag: are we in CDATA? If so, whitespace isn't ignorable.
     // 
     private boolean inCDATA;
@@ -439,7 +425,7 @@ final class XmlParser {
     //
 
     private NormalizationChecker normalizationChecker;
-    
+
     private CharacterHandler characterHandler;
 
     // ////////////////////////////////////////////////////////////////////
@@ -524,7 +510,7 @@ final class XmlParser {
             parseDocument();
         } catch (EOFException e) {
             // empty input
-            fatal("empty document, with no root element.");
+            fatal("Empty document, with no root element.");
         } finally {
             if (reader != null) {
                 try {
@@ -765,16 +751,16 @@ final class XmlParser {
         int len = version.length();
         for (int i = 0; i < len; i++) {
             char c = version.charAt(i);
-            if ('0' <= c && c <= '9') {
+            if (('0' <= c) && (c <= '9')) {
                 continue;
             }
-            if (c == '_' || c == '.' || c == ':' || c == '-') {
+            if ((c == '_') || (c == '.') || (c == ':') || (c == '-')) {
                 continue;
             }
-            if ('a' <= c && c <= 'z') {
+            if (('a' <= c) && (c <= 'z')) {
                 continue;
             }
-            if ('A' <= c && c <= 'Z') {
+            if (('A' <= c) && (c <= 'Z')) {
                 continue;
             }
             fatal("illegal character in version", version, "1.0");
@@ -819,8 +805,8 @@ final class XmlParser {
                 fatal("XML 1.1 not supported."); // 2006-04-24 hsivonen
             } else {
                 fatal("illegal XML version", version, "1.0"); // removed 1.1
-                                                                // -- 2006-04-24
-                                                                // hsivonen
+                // -- 2006-04-24
+                // hsivonen
             }
         } else {
             xmlVersion = XML_10;
@@ -848,7 +834,7 @@ final class XmlParser {
         } else {
             if (encoding == null) {
                 draconianInputStreamReader("UTF-8", is, false); // 2006-04-24
-                                                                // hsivonen
+                // hsivonen
             }
             warnAboutLackOfEncodingDecl(encoding);
         }
@@ -880,13 +866,13 @@ final class XmlParser {
             fatal("The empty string does not a legal encoding name.");
         }
         char c = encodingName.charAt(0);
-        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+        if (!(((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')))) {
             fatal("The encoding name must start with an ASCII letter.");
         }
         for (int i = 1; i < encodingName.length(); i++) {
             c = encodingName.charAt(i);
-            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-                    || (c >= '0' && c <= '9') || (c == '.') || (c == '_') || (c == '-'))) {
+            if (!(((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z'))
+                    || ((c >= '0') && (c <= '9')) || (c == '.') || (c == '_') || (c == '-'))) {
                 fatal("Illegal character in encoding name: U+"
                         + Integer.toHexString(c) + ".");
             }
@@ -925,9 +911,9 @@ final class XmlParser {
                     fatal("XML 1.1 not supported."); // 2006-04-24 hsivonen
                 } else {
                     fatal("illegal XML version", version, "1.0"); // removed
-                                                                    // 1.1 --
-                                                                    // 2006-04-24
-                                                                    // hsivonen
+                    // 1.1 --
+                    // 2006-04-24
+                    // hsivonen
                 }
             }
             requireWhitespace();
@@ -1051,8 +1037,8 @@ final class XmlParser {
      * Parse a document type declaration.
      * 
      * <pre>
-     *  [28] doctypedecl ::= '&lt;!DOCTYPE' S Name (S ExternalID)? S?
-     *     ('[' (markupdecl | PEReference | S)* ']' S?)? '&gt;'
+     *   [28] doctypedecl ::= '&lt;!DOCTYPE' S Name (S ExternalID)? S?
+     *      ('[' (markupdecl | PEReference | S)* ']' S?)? '&gt;'
      * </pre>
      * 
      * <p>
@@ -1103,7 +1089,7 @@ final class XmlParser {
         } else {
             subset = null;
         }
-        if (ids.systemId != null || subset != null) {
+        if ((ids.systemId != null) || (subset != null)) {
             pushString(null, ">");
 
             // NOTE: [dtd] is so we say what SAX2 expects,
@@ -1148,10 +1134,10 @@ final class XmlParser {
      * Parse a markup declaration in the internal or external DTD subset.
      * 
      * <pre>
-     *  [29] markupdecl ::= elementdecl | Attlistdecl | EntityDecl
-     *     | NotationDecl | PI | Comment
-     *  [30] extSubsetDecl ::= (markupdecl | conditionalSect
-     *     | PEReference | S) *
+     *   [29] markupdecl ::= elementdecl | Attlistdecl | EntityDecl
+     *      | NotationDecl | PI | Comment
+     *   [30] extSubsetDecl ::= (markupdecl | conditionalSect
+     *      | PEReference | S) *
      * </pre>
      * 
      * <p>
@@ -1213,9 +1199,9 @@ final class XmlParser {
      * Parse an element, with its tags.
      * 
      * <pre>
-     *  [39] element ::= EmptyElementTag | STag content ETag
-     *  [40] STag ::= '&lt;' Name (S Attribute)* S? '&gt;'
-     *  [44] EmptyElementTag ::= '&lt;' Name (S Attribute)* S? '/&gt;'
+     *   [39] element ::= EmptyElementTag | STag content ETag
+     *   [40] STag ::= '&lt;' Name (S Attribute)* S? '&gt;'
+     *   [44] EmptyElementTag ::= '&lt;' Name (S Attribute)* S? '/&gt;'
      * </pre>
      * 
      * <p>
@@ -1289,7 +1275,7 @@ final class XmlParser {
         // After this loop, "c" is the closing delimiter.
         boolean white = tryWhitespace();
         c = readCh();
-        while (c != '/' && c != '>') {
+        while ((c != '/') && (c != '>')) {
             unread(c);
             if (!white) {
                 fatal("need whitespace between attributes");
@@ -1345,7 +1331,7 @@ final class XmlParser {
      * Parse an attribute assignment.
      * 
      * <pre>
-     *  [41] Attribute ::= Name Eq AttValue
+     *   [41] Attribute ::= Name Eq AttValue
      * </pre>
      * 
      * @param name
@@ -1368,13 +1354,13 @@ final class XmlParser {
         // Read the value, normalizing whitespace
         // unless it is CDATA.
         if (handler.stringInterning) {
-            if (type == "CDATA" || type == null) {
+            if ((type == "CDATA") || (type == null)) {
                 value = readLiteral(flags);
             } else {
                 value = readLiteral(flags | LIT_NORMALIZE);
             }
         } else {
-            if (type.equals("CDATA") || type == null) {
+            if ((type == null) || type.equals("CDATA")) {
                 value = readLiteral(flags);
             } else {
                 value = readLiteral(flags | LIT_NORMALIZE);
@@ -1407,7 +1393,7 @@ final class XmlParser {
      * Parse an equals sign surrounded by optional whitespace.
      * 
      * <pre>
-     *  [25] Eq ::= S? '=' S?
+     *   [25] Eq ::= S? '=' S?
      * </pre>
      */
     private void parseEq() throws SAXException, IOException {
@@ -1420,7 +1406,7 @@ final class XmlParser {
      * Parse an end tag.
      * 
      * <pre>
-     *  [42] ETag ::= '&lt;/' Name S? '&gt;'
+     *   [42] ETag ::= '&lt;/' Name S? '&gt;'
      * </pre>
      * 
      * <p>
@@ -1439,9 +1425,9 @@ final class XmlParser {
      * Parse the content of an element.
      * 
      * <pre>
-     *  [43] content ::= (element | CharData | Reference
-     *     | CDSect | PI | Comment)*
-     *  [67] Reference ::= EntityRef | CharRef
+     *   [43] content ::= (element | CharData | Reference
+     *      | CDSect | PI | Comment)*
+     *   [67] Reference ::= EntityRef | CharRef
      * </pre>
      * 
      * <p>
@@ -1520,7 +1506,7 @@ final class XmlParser {
      * Parse an element type declaration.
      * 
      * <pre>
-     *  [45] elementdecl ::= '&lt;!ELEMENT' S Name S contentspec S? '&gt;'
+     *   [45] elementdecl ::= '&lt;!ELEMENT' S Name S contentspec S? '&gt;'
      * </pre>
      * 
      * <p>
@@ -1545,7 +1531,7 @@ final class XmlParser {
      * Content specification.
      * 
      * <pre>
-     *  [46] contentspec ::= 'EMPTY' | 'ANY' | Mixed | elements
+     *   [46] contentspec ::= 'EMPTY' | 'ANY' | Mixed | elements
      * </pre>
      */
     private void parseContentspec(String name) throws Exception {
@@ -1590,9 +1576,9 @@ final class XmlParser {
      * Parse an element-content model.
      * 
      * <pre>
-     *  [47] elements ::= (choice | seq) ('?' | '*' | '+')?
-     *  [49] choice ::= '(' S? cp (S? '|' S? cp)+ S? ')'
-     *  [50] seq ::= '(' S? cp (S? ',' S? cp)* S? ')'
+     *   [47] elements ::= (choice | seq) ('?' | '*' | '+')?
+     *   [49] choice ::= '(' S? cp (S? '|' S? cp)+ S? ')'
+     *   [50] seq ::= '(' S? cp (S? ',' S? cp)* S? ')'
      * </pre>
      * 
      * <p>
@@ -1681,7 +1667,7 @@ final class XmlParser {
      * Parse a content particle.
      * 
      * <pre>
-     *  [48] cp ::= (Name | choice | seq) ('?' | '*' | '+')?
+     *   [48] cp ::= (Name | choice | seq) ('?' | '*' | '+')?
      * </pre>
      */
     private void parseCp() throws Exception {
@@ -1708,8 +1694,8 @@ final class XmlParser {
      * Parse mixed content.
      * 
      * <pre>
-     *  [51] Mixed ::= '(' S? ( '#PCDATA' (S? '|' S? Name)*) S? ')*'
-     *         | '(' S? ('#PCDATA') S? ')'
+     *   [51] Mixed ::= '(' S? ( '#PCDATA' (S? '|' S? Name)*) S? ')*'
+     *          | '(' S? ('#PCDATA') S? ')'
      * </pre>
      * 
      * @param saved
@@ -1752,7 +1738,7 @@ final class XmlParser {
      * Parse an attribute list declaration.
      * 
      * <pre>
-     *  [52] AttlistDecl ::= '&lt;!ATTLIST' S Name AttDef* S? '&gt;'
+     *   [52] AttlistDecl ::= '&lt;!ATTLIST' S Name AttDef* S? '&gt;'
      * </pre>
      * 
      * <p>
@@ -1777,7 +1763,7 @@ final class XmlParser {
      * Parse a single attribute definition.
      * 
      * <pre>
-     *  [53] AttDef ::= S Name S AttType S DefaultDecl
+     *   [53] AttDef ::= S Name S AttType S DefaultDecl
      * </pre>
      */
     private void parseAttDef(String elementName) throws Exception {
@@ -1794,7 +1780,7 @@ final class XmlParser {
 
         // Get the string of enumerated values if necessary.
         if (handler.stringInterning) {
-            if ("ENUMERATION" == type || "NOTATION" == type) {
+            if (("ENUMERATION" == type) || ("NOTATION" == type)) {
                 enumer = dataBufferToString();
             }
         } else {
@@ -1812,11 +1798,11 @@ final class XmlParser {
      * Parse the attribute type.
      * 
      * <pre>
-     *  [54] AttType ::= StringType | TokenizedType | EnumeratedType
-     *  [55] StringType ::= 'CDATA'
-     *  [56] TokenizedType ::= 'ID' | 'IDREF' | 'IDREFS' | 'ENTITY'
-     *     | 'ENTITIES' | 'NMTOKEN' | 'NMTOKENS'
-     *  [57] EnumeratedType ::= NotationType | Enumeration
+     *   [54] AttType ::= StringType | TokenizedType | EnumeratedType
+     *   [55] StringType ::= 'CDATA'
+     *   [56] TokenizedType ::= 'ID' | 'IDREF' | 'IDREFS' | 'ENTITY'
+     *      | 'ENTITIES' | 'NMTOKEN' | 'NMTOKENS'
+     *   [57] EnumeratedType ::= NotationType | Enumeration
      * </pre>
      */
     private String readAttType() throws Exception {
@@ -1829,10 +1815,10 @@ final class XmlParser {
                 if ("NOTATION" == typeString) {
                     parseNotationType();
                     return typeString;
-                } else if ("CDATA" == typeString || "ID" == typeString
-                        || "IDREF" == typeString || "IDREFS" == typeString
-                        || "ENTITY" == typeString || "ENTITIES" == typeString
-                        || "NMTOKEN" == typeString || "NMTOKENS" == typeString) {
+                } else if (("CDATA" == typeString) || ("ID" == typeString)
+                        || ("IDREF" == typeString) || ("IDREFS" == typeString)
+                        || ("ENTITY" == typeString) || ("ENTITIES" == typeString)
+                        || ("NMTOKEN" == typeString) || ("NMTOKENS" == typeString)) {
                     return typeString;
                 }
             } else {
@@ -1859,7 +1845,7 @@ final class XmlParser {
      * Parse an enumeration.
      * 
      * <pre>
-     *  [59] Enumeration ::= '(' S? Nmtoken (S? '|' S? Nmtoken)* S? ')'
+     *   [59] Enumeration ::= '(' S? Nmtoken (S? '|' S? Nmtoken)* S? ')'
      * </pre>
      * 
      * <p>
@@ -1887,8 +1873,8 @@ final class XmlParser {
      * Parse a notation type for an attribute.
      * 
      * <pre>
-     *  [58] NotationType ::= 'NOTATION' S '(' S? NameNtoks
-     *     (S? '|' S? name)* S? ')'
+     *   [58] NotationType ::= 'NOTATION' S '(' S? NameNtoks
+     *      (S? '|' S? name)* S? ')'
      * </pre>
      * 
      * <p>
@@ -1905,8 +1891,8 @@ final class XmlParser {
      * Parse the default value for an attribute.
      * 
      * <pre>
-     *  [60] DefaultDecl ::= '#REQUIRED' | '#IMPLIED'
-     *     | (('#FIXED' S)? AttValue)
+     *   [60] DefaultDecl ::= '#REQUIRED' | '#IMPLIED'
+     *      | (('#FIXED' S)? AttValue)
      * </pre>
      */
     private void parseDefault(String elementName, String name, String type,
@@ -1978,14 +1964,14 @@ final class XmlParser {
      * Parse a conditional section.
      * 
      * <pre>
-     *  [61] conditionalSect ::= includeSect || ignoreSect
-     *  [62] includeSect ::= '&lt;![' S? 'INCLUDE' S? '['
-     *     extSubsetDecl ']]&gt;'
-     *  [63] ignoreSect ::= '&lt;![' S? 'IGNORE' S? '['
-     *     ignoreSectContents* ']]&gt;'
-     *  [64] ignoreSectContents ::= Ignore
-     *     ('&lt;![' ignoreSectContents* ']]&gt;' Ignore )*
-     *  [65] Ignore ::= Char* - (Char* ( '&lt;![' | ']]&gt;') Char* )
+     *   [61] conditionalSect ::= includeSect || ignoreSect
+     *   [62] includeSect ::= '&lt;![' S? 'INCLUDE' S? '['
+     *      extSubsetDecl ']]&gt;'
+     *   [63] ignoreSect ::= '&lt;![' S? 'IGNORE' S? '['
+     *      ignoreSectContents* ']]&gt;'
+     *   [64] ignoreSectContents ::= Ignore
+     *      ('&lt;![' ignoreSectContents* ']]&gt;' Ignore )*
+     *   [65] Ignore ::= Char* - (Char* ( '&lt;![' | ']]&gt;') Char* )
      * </pre>
      * 
      * <p>
@@ -2021,6 +2007,7 @@ final class XmlParser {
                         if (tryRead("![")) {
                             nest++;
                         }
+                        break;
                     case ']':
                         if (tryRead("]>")) {
                             nest--;
@@ -2041,7 +2028,7 @@ final class XmlParser {
      * Try to read a character reference without consuming data from buffer.
      * 
      * <pre>
-     *  [66] CharRef ::= '&amp;#' [0-9]+ ';' | '&amp;#x' [0-9a-fA-F]+ ';'
+     *   [66] CharRef ::= '&amp;#' [0-9]+ ';' | '&amp;#x' [0-9a-fA-F]+ ';'
      * </pre>
      * 
      * <p>
@@ -2086,13 +2073,13 @@ final class XmlParser {
         }
 
         // check for character refs being legal XML
-        if ((value < 0x0020 && !(value == '\n' || value == '\t' || value == '\r'))
-                || (value >= 0xD800 && value <= 0xDFFF)
-                || value == 0xFFFE
-                || value == 0xFFFF || value > 0x0010ffff) {
+        if (((value < 0x0020) && !((value == '\n') || (value == '\t') || (value == '\r')))
+                || ((value >= 0xD800) && (value <= 0xDFFF))
+                || (value == 0xFFFE)
+                || (value == 0xFFFF) || (value > 0x0010ffff)) {
             fatal("illegal XML character reference U+"
                     + Integer.toHexString(value));
-        } else if (value >= 0x007F && value <= 0x009F) // 2006-11-13 hsivonen
+        } else if ((value >= 0x007F) && (value <= 0x009F)) // 2006-11-13 hsivonen
         {
             handler.warn("Character reference expands to a control character: U+00"
                     + Integer.toHexString(value) + ".");
@@ -2114,7 +2101,7 @@ final class XmlParser {
      * Read and interpret a character reference.
      * 
      * <pre>
-     *  [66] CharRef ::= '&amp;#' [0-9]+ ';' | '&amp;#x' [0-9a-fA-F]+ ';'
+     *   [66] CharRef ::= '&amp;#' [0-9]+ ';' | '&amp;#x' [0-9a-fA-F]+ ';'
      * </pre>
      * 
      * <p>
@@ -2159,13 +2146,13 @@ final class XmlParser {
         }
 
         // check for character refs being legal XML
-        if ((value < 0x0020 && !(value == '\n' || value == '\t' || value == '\r'))
-                || (value >= 0xD800 && value <= 0xDFFF)
-                || value == 0xFFFE
-                || value == 0xFFFF || value > 0x0010ffff) {
+        if (((value < 0x0020) && !((value == '\n') || (value == '\t') || (value == '\r')))
+                || ((value >= 0xD800) && (value <= 0xDFFF))
+                || (value == 0xFFFE)
+                || (value == 0xFFFF) || (value > 0x0010ffff)) {
             fatal("illegal XML character reference U+"
                     + Integer.toHexString(value));
-        } else if (value >= 0x007F && value <= 0x009F) // 2006-11-13 hsivonen
+        } else if ((value >= 0x007F) && (value <= 0x009F)) // 2006-11-13 hsivonen
         {
             handler.warn("Character reference expands to a control character: U+00"
                     + Integer.toHexString(value) + ".");
@@ -2198,7 +2185,7 @@ final class XmlParser {
      * Parse and expand an entity reference.
      * 
      * <pre>
-     *  [68] EntityRef ::= '&amp;' Name ';'
+     *   [68] EntityRef ::= '&amp;' Name ';'
      * </pre>
      * 
      * <p>
@@ -2301,7 +2288,7 @@ final class XmlParser {
      * Parse and expand a parameter entity reference.
      * 
      * <pre>
-     *  [69] PEReference ::= '%' Name ';'
+     *   [69] PEReference ::= '%' Name ';'
      * </pre>
      * 
      * <p>
@@ -2344,14 +2331,14 @@ final class XmlParser {
      * Parse an entity declaration.
      * 
      * <pre>
-     *  [70] EntityDecl ::= GEDecl | PEDecl
-     *  [71] GEDecl ::= '&lt;!ENTITY' S Name S EntityDef S? '&gt;'
-     *  [72] PEDecl ::= '&lt;!ENTITY' S '%' S Name S PEDef S? '&gt;'
-     *  [73] EntityDef ::= EntityValue | (ExternalID NDataDecl?)
-     *  [74] PEDef ::= EntityValue | ExternalID
-     *  [75] ExternalID ::= 'SYSTEM' S SystemLiteral
-     *        | 'PUBLIC' S PubidLiteral S SystemLiteral
-     *  [76] NDataDecl ::= S 'NDATA' S Name
+     *   [70] EntityDecl ::= GEDecl | PEDecl
+     *   [71] GEDecl ::= '&lt;!ENTITY' S Name S EntityDef S? '&gt;'
+     *   [72] PEDecl ::= '&lt;!ENTITY' S '%' S Name S PEDef S? '&gt;'
+     *   [73] EntityDef ::= EntityValue | (ExternalID NDataDecl?)
+     *   [74] PEDef ::= EntityValue | ExternalID
+     *   [75] ExternalID ::= 'SYSTEM' S SystemLiteral
+     *         | 'PUBLIC' S PubidLiteral S SystemLiteral
+     *   [76] NDataDecl ::= S 'NDATA' S Name
      * </pre>
      * 
      * <p>
@@ -2385,7 +2372,7 @@ final class XmlParser {
         requireWhitespace();
         char c = readCh();
         unread(c);
-        if (c == '"' || c == '\'') {
+        if ((c == '"') || (c == '\'')) {
             // Internal entity ... replacement text has expanded refs
             // to characters and PEs, but not to general entities
             String value = readLiteral(flags);
@@ -2427,9 +2414,9 @@ final class XmlParser {
      * Parse a notation declaration.
      * 
      * <pre>
-     *  [82] NotationDecl ::= '&lt;!NOTATION' S Name S
-     *     (ExternalID | PublicID) S? '&gt;'
-     *  [83] PublicID ::= 'PUBLIC' S PubidLiteral
+     *   [82] NotationDecl ::= '&lt;!NOTATION' S Name S
+     *      (ExternalID | PublicID) S? '&gt;'
+     *   [83] PublicID ::= 'PUBLIC' S PubidLiteral
      * </pre>
      * 
      * <P>
@@ -2461,7 +2448,7 @@ final class XmlParser {
      * Parse character data.
      * 
      * <pre>
-     *  [14] CharData ::= [&circ;&lt;&amp;]* - ([&circ;&lt;&amp;]* ']]&gt;' [&circ;&lt;&amp;]*)
+     *   [14] CharData ::= [&circ;&lt;&amp;]* - ([&circ;&lt;&amp;]* ']]&gt;' [&circ;&lt;&amp;]*)
      * </pre>
      */
     private void parseCharData() throws Exception {
@@ -2506,26 +2493,27 @@ final class XmlParser {
                         // can not terminate pure whitespace either
                         pureWhite = false;
                         if ((i + 2) < readBufferLength) {
-                            if (readBuffer[i + 1] == ']'
-                                    && readBuffer[i + 2] == '>') {
+                            if ((readBuffer[i + 1] == ']')
+                                    && (readBuffer[i + 2] == '>')) {
                                 // ERROR end of text sequence
                                 state = 2;
                                 rollbackLocation();
                                 break loop;
                             }
                         } else {
-                            throw new RuntimeException("Unimplemented end of buffer in CDATA section.");
+                            throw new RuntimeException(
+                                    "Unimplemented end of buffer in CDATA section.");
                             // FIXME missing two end-of-buffer cases
                         }
                         break;
                     default:
-                        if ((c < 0x0020 || c > 0xFFFD)
+                        if (((c < 0x0020) || (c > 0xFFFD))
                                 || ((c >= 0x007f) && (c <= 0x009f)
-                                        && (c != 0x0085) && xmlVersion == XML_11)) {
+                                        && (c != 0x0085) && (xmlVersion == XML_11))) {
                             fatal("illegal XML character U+"
                                     + Integer.toHexString(c));
-                        } else if (c >= '\u007F' && c <= '\u009F') // 2006-04-25
-                                                                    // hsivonen
+                        } else if ((c >= '\u007F') && (c <= '\u009F')) // 2006-04-25
+                        // hsivonen
                         {
                             handler.warn("Saw a control character: U+00"
                                     + Integer.toHexString(c) + ".");
@@ -2606,7 +2594,7 @@ final class XmlParser {
      * Skip whitespace characters.
      * 
      * <pre>
-     *  [3] S ::= (#x20 | #x9 | #xd | #xa)+
+     *   [3] S ::= (#x20 | #x9 | #xd | #xa)+
      * </pre>
      */
     private void skipWhitespace() throws SAXException, IOException {
@@ -2650,8 +2638,8 @@ final class XmlParser {
      * Read a name or (when parsing an enumeration) name token.
      * 
      * <pre>
-     *  [5] Name ::= (Letter | '_' | ':') (NameChar)*
-     *  [7] Nmtoken ::= (NameChar)+
+     *   [5] Name ::= (Letter | '_' | ':') (NameChar)*
+     *   [7] Nmtoken ::= (NameChar)+
      * </pre>
      */
     private String readNmtoken(boolean isName) throws SAXException, IOException {
@@ -2700,39 +2688,39 @@ final class XmlParser {
                         // Combining U+309B
                         // these switches are kind of ugly but at least we won't
                         // have to go over the whole lits for each char
-                        if (isName && i == readBufferPos) {
+                        if (isName && (i == readBufferPos)) {
                             char c2 = (char) (c & 0x00f0);
                             switch (c & 0xff00) {
                                 // starting with 01
                                 case 0x0100:
                                     switch (c2) {
                                         case 0x0030:
-                                            if (c == 0x0132 || c == 0x0133
-                                                    || c == 0x013f) {
+                                            if ((c == 0x0132) || (c == 0x0133)
+                                                    || (c == 0x013f)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x0040:
-                                            if (c == 0x0140 || c == 0x0149) {
+                                            if ((c == 0x0140) || (c == 0x0149)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x00c0:
-                                            if (c == 0x01c4 || c == 0x01cc) {
+                                            if ((c == 0x01c4) || (c == 0x01cc)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x00f0:
-                                            if (c == 0x01f1 || c == 0x01f3) {
+                                            if ((c == 0x01f1) || (c == 0x01f3)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x00b0:
-                                            if (c == 0x01f1 || c == 0x01f3) {
+                                            if ((c == 0x01f1) || (c == 0x01f3)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
@@ -2749,63 +2737,63 @@ final class XmlParser {
                                 case 0x1100:
                                     switch (c2) {
                                         case 0x0000:
-                                            if (c == 0x1104 || c == 0x1108
-                                                    || c == 0x110a
-                                                    || c == 0x110d) {
+                                            if ((c == 0x1104) || (c == 0x1108)
+                                                    || (c == 0x110a)
+                                                    || (c == 0x110d)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x0030:
-                                            if (c == 0x113b || c == 0x113f) {
+                                            if ((c == 0x113b) || (c == 0x113f)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x0040:
-                                            if (c == 0x1141 || c == 0x114d
-                                                    || c == 0x114f) {
+                                            if ((c == 0x1141) || (c == 0x114d)
+                                                    || (c == 0x114f)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x0050:
-                                            if (c == 0x1151 || c == 0x1156) {
+                                            if ((c == 0x1151) || (c == 0x1156)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x0060:
-                                            if (c == 0x1162 || c == 0x1164
-                                                    || c == 0x1166
-                                                    || c == 0x116b
-                                                    || c == 0x116f) {
+                                            if ((c == 0x1162) || (c == 0x1164)
+                                                    || (c == 0x1166)
+                                                    || (c == 0x116b)
+                                                    || (c == 0x116f)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         case 0x00b0:
-                                            if (c == 0x11b6 || c == 0x11b9
-                                                    || c == 0x11bb
-                                                    || c == 0x116f) {
+                                            if ((c == 0x11b6) || (c == 0x11b9)
+                                                    || (c == 0x11bb)
+                                                    || (c == 0x116f)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                             break;
                                         default:
-                                            if (c == 0x1174 || c == 0x119f
-                                                    || c == 0x11ac
-                                                    || c == 0x11c3
-                                                    || c == 0x11f1) {
+                                            if ((c == 0x1174) || (c == 0x119f)
+                                                    || (c == 0x11ac)
+                                                    || (c == 0x11c3)
+                                                    || (c == 0x11f1)) {
                                                 fatal("Not a name start character, U+"
                                                         + Integer.toHexString(c));
                                             }
                                     }
                                     break;
                                 default:
-                                    if (c == 0x0e46 || c == 0x1011
-                                            || c == 0x212f || c == 0x0587
-                                            || c == 0x0230) {
+                                    if ((c == 0x0e46) || (c == 0x1011)
+                                            || (c == 0x212f) || (c == 0x0587)
+                                            || (c == 0x0230)) {
                                         fatal("Not a name start character, U+"
                                                 + Integer.toHexString(c));
                                     }
@@ -2813,14 +2801,14 @@ final class XmlParser {
                         }
                         // punt on exact tests from Appendix A; approximate
                         // them using the Unicode ID start/part rules
-                        if (i == readBufferPos && isName) {
+                        if ((i == readBufferPos) && isName) {
                             if (!Character.isUnicodeIdentifierStart(c)
-                                    && c != ':' && c != '_') {
+                                    && (c != ':') && (c != '_')) {
                                 fatal("Not a name start character, U+"
                                         + Integer.toHexString(c));
                             }
                         } else if (!Character.isUnicodeIdentifierPart(c)
-                                && c != '-' && c != ':' && c != '_' && c != '.'
+                                && (c != '-') && (c != ':') && (c != '_') && (c != '.')
                                 && !isExtender(c)) {
                             fatal("Not a name character, U+"
                                     + Integer.toHexString(c));
@@ -2862,7 +2850,7 @@ final class XmlParser {
                     // punt on exact tests from Appendix A, but approximate them
                     if (isName
                             && !Character.isUnicodeIdentifierStart(nameBuffer[0])
-                            && ":_".indexOf(nameBuffer[0]) == -1) {
+                            && (":_".indexOf(nameBuffer[0]) == -1)) {
                         fatal("Not a name start character, U+"
                                 + Integer.toHexString(nameBuffer[0]));
                     }
@@ -2872,9 +2860,9 @@ final class XmlParser {
                 default:
                     // punt on exact tests from Appendix A, but approximate them
 
-                    if ((nameBufferPos != 0 || !isName)
+                    if (((nameBufferPos != 0) || !isName)
                             && !Character.isUnicodeIdentifierPart(c)
-                            && ":-_.".indexOf(c) == -1 && !isExtender(c)) {
+                            && (":-_.".indexOf(c) == -1) && !isExtender(c)) {
                         fatal("Not a name character, U+"
                                 + Integer.toHexString(c));
                     }
@@ -2889,10 +2877,10 @@ final class XmlParser {
 
     private static boolean isExtender(char c) {
         // [88] Extender ::= ...
-        return c == 0x00b7 || c == 0x02d0 || c == 0x02d1 || c == 0x0387
-                || c == 0x0640 || c == 0x0e46 || c == 0x0ec6 || c == 0x3005
-                || (c >= 0x3031 && c <= 0x3035) || (c >= 0x309d && c <= 0x309e)
-                || (c >= 0x30fc && c <= 0x30fe);
+        return (c == 0x00b7) || (c == 0x02d0) || (c == 0x02d1) || (c == 0x0387)
+                || (c == 0x0640) || (c == 0x0e46) || (c == 0x0ec6) || (c == 0x3005)
+                || ((c >= 0x3031) && (c <= 0x3035)) || ((c >= 0x309d) && (c <= 0x309e))
+                || ((c >= 0x30fc) && (c <= 0x30fe));
     }
 
     /**
@@ -2900,10 +2888,10 @@ final class XmlParser {
      * not embedded!) this is used to parse:
      * 
      * <pre>
-     *   [9] EntityValue ::= ... ([&circ;%&amp;] | PEReference | Reference)* ...
-     *   [10] AttValue ::= ... ([&circ;&lt;&amp;] | Reference)* ...
-     *   [11] SystemLiteral ::= ... (URLchar - &quot;'&quot;)* ...
-     *   [12] PubidLiteral ::= ... (PubidChar - &quot;'&quot;)* ...
+     *    [9] EntityValue ::= ... ([&circ;%&amp;] | PEReference | Reference)* ...
+     *    [10] AttValue ::= ... ([&circ;&lt;&amp;] | Reference)* ...
+     *    [11] SystemLiteral ::= ... (URLchar - &quot;'&quot;)* ...
+     *    [12] PubidLiteral ::= ... (PubidChar - &quot;'&quot;)* ...
      * </pre>
      * 
      * as well as the quoted strings in XML and text declarations (for version,
@@ -2917,7 +2905,7 @@ final class XmlParser {
 
         // Find the first delimiter.
         delim = readCh();
-        if (delim != '"' && delim != '\'') {
+        if ((delim != '"') && (delim != '\'')) {
             fatal("expected '\"' or \"'\"", delim, null);
             return null;
         }
@@ -2935,7 +2923,7 @@ final class XmlParser {
         // Read the literal.
         try {
             c = readCh();
-            loop: while (!(c == delim && readBuffer == ourBuf)) {
+            loop: while (!((c == delim) && (readBuffer == ourBuf))) {
                 switch (c) {
                     // attributes and public ids are normalized
                     // in almost the same ways
@@ -3045,7 +3033,7 @@ final class XmlParser {
                 skipWhitespace();
                 c = readCh();
                 unread(c);
-                if (c == '"' || c == '\'') {
+                if ((c == '"') || (c == '\'')) {
                     ids.systemId = readLiteral(flags);
                 }
             } else {
@@ -3055,10 +3043,10 @@ final class XmlParser {
 
             for (int i = 0; i < ids.publicId.length(); i++) {
                 c = ids.publicId.charAt(i);
-                if (c >= 'a' && c <= 'z') {
+                if ((c >= 'a') && (c <= 'z')) {
                     continue;
                 }
-                if (c >= 'A' && c <= 'Z') {
+                if ((c >= 'A') && (c <= 'Z')) {
                     continue;
                 }
                 if (" \r\n0123456789-' ()+,./:=?;!*#@$_%".indexOf(c) != -1) {
@@ -3078,7 +3066,7 @@ final class XmlParser {
                 handler.verror("SYSTEM id has a URI fragment: " + ids.systemId);
             }
             ids.baseUri = handler.getSystemId();
-            if (ids.baseUri == null && uriWarnings) {
+            if ((ids.baseUri == null) && uriWarnings) {
                 handler.warn("No base URI; hope URI is absolute: "
                         + ids.systemId);
             }
@@ -3091,7 +3079,7 @@ final class XmlParser {
      * Test if a character is whitespace.
      * 
      * <pre>
-     *  [3] S ::= (#x20 | #x9 | #xd | #xa)+
+     *   [3] S ::= (#x20 | #x9 | #xd | #xa)+
      * </pre>
      * 
      * @param c
@@ -3102,7 +3090,7 @@ final class XmlParser {
         if (c > 0x20) {
             return false;
         }
-        if (c == 0x20 || c == 0x0a || c == 0x09 || c == 0x0d) {
+        if ((c == 0x20) || (c == 0x0a) || (c == 0x09) || (c == 0x0d)) {
             return true;
         }
         return false; // illegal ...
@@ -3151,12 +3139,12 @@ final class XmlParser {
         int end = dataBufferPos;
 
         // Skip spaces at the start.
-        while (j < end && dataBuffer[j] == ' ') {
+        while ((j < end) && (dataBuffer[j] == ' ')) {
             j++;
         }
 
         // Skip whitespace at the end.
-        while (end > j && dataBuffer[end - 1] == ' ') {
+        while ((end > j) && (dataBuffer[end - 1] == ' ')) {
             end--;
         }
 
@@ -3168,7 +3156,7 @@ final class XmlParser {
             // Normalise all other spaces to
             // a single space.
             if (c == ' ') {
-                while (j < end && dataBuffer[j++] == ' ') {
+                while ((j < end) && (dataBuffer[j++] == ' ')) {
                     continue;
                 }
                 dataBuffer[i++] = ' ';
@@ -3200,7 +3188,7 @@ final class XmlParser {
         int saveColumn = column;
         line = linePrev;
         column = columnPrev;
-        if (currentElementContent == CONTENT_ELEMENTS && dataBufferPos > 0
+        if ((currentElementContent == CONTENT_ELEMENTS) && (dataBufferPos > 0)
                 && !inCDATA) {
             // We can't just trust the buffer to be whitespace, there
             // are (error) cases when it isn't
@@ -3241,7 +3229,7 @@ final class XmlParser {
             ch = delim.toCharArray();
         }
 
-        if (USE_CHEATS && length <= (readBufferLength - readBufferPos)) {
+        if (USE_CHEATS && (length <= (readBufferLength - readBufferPos))) {
             int offset = readBufferPos;
 
             for (int i = 0; i < length; i++, offset++) {
@@ -3562,7 +3550,7 @@ final class XmlParser {
     }
 
     /*
-     *  // FIXME: Leaving this in, until W3C finally resolves the confusion //
+     * // FIXME: Leaving this in, until W3C finally resolves the confusion //
      * between parts of the XML 2nd REC about when entity declararations // are
      * guaranteed to be known. Current code matches what section 5.1 //
      * (conformance) describes, but some readings of the self-contradicting //
@@ -3712,8 +3700,8 @@ final class XmlParser {
             entityInfo.put(eName, entity);
         }
         if (handler.stringInterning) {
-            if ("lt" == eName || "gt" == eName || "quot" == eName
-                    || "apos" == eName || "amp" == eName) {
+            if (("lt" == eName) || ("gt" == eName) || ("quot" == eName)
+                    || ("apos" == eName) || ("amp" == eName)) {
                 return;
             }
         } else {
@@ -3771,7 +3759,7 @@ final class XmlParser {
      */
     public int getLineNumber() {
         if (line > 0) {
-            return line;            
+            return line;
         } else {
             return -1;
         }
@@ -3865,10 +3853,10 @@ final class XmlParser {
         } else {
             if (c == '<') {
                 /* the most common return to parseContent () ... NOP */
-            } else if (((c < 0x0020 && (c != '\t') && (c != '\r')) || c > 0xFFFD)
-                    || ((c >= 0x007f) && (c <= 0x009f) && (c != 0x0085) && xmlVersion == XML_11)) {
+            } else if ((((c < 0x0020) && (c != '\t') && (c != '\r')) || (c > 0xFFFD))
+                    || ((c >= 0x007f) && (c <= 0x009f) && (c != 0x0085) && (xmlVersion == XML_11))) {
                 fatal("illegal XML character U+" + Integer.toHexString(c));
-            } else if (c >= '\u007F' && c <= '\u009F') // 2006-04-25 hsivonen
+            } else if ((c >= '\u007F') && (c <= '\u009F')) // 2006-04-25 hsivonen
             {
                 handler.warn("Saw a control character: U+00"
                         + Integer.toHexString(c) + ".");
@@ -3881,7 +3869,7 @@ final class XmlParser {
             // do so ... 1/14/2000 errata identify those contexts. There
             // are also spots in the internal subset where PE refs are fatal
             // errors, hence yet another flag.
-            else if (c == '%' && expandPE) {
+            else if ((c == '%') && expandPE) {
                 if (peIsError) {
                     fatal("PE reference within decl in internal subset.");
                 }
@@ -3921,7 +3909,7 @@ final class XmlParser {
      * 
      */
     private void rollbackLocation() {
-        assert (column != columnPrev) || (line != linePrev); 
+        assert (column != columnPrev) || (line != linePrev);
         nextCharOnNewLine = (column == 1);
         line = linePrev;
         column = columnPrev;
@@ -4083,7 +4071,7 @@ final class XmlParser {
             detectEncoding();
             // Read any XML or text declaration.
             String enc = tryEncodingDecl(null);
-            if (enc == null && "UTF-32" == characterEncoding) {
+            if ((enc == null) && ("UTF-32" == characterEncoding)) {
                 fatal("UTF-32 was sniffed from the BOM, but there was no matching encoding declaration. The omission of explicit encoding declaration is only allowed with UTF-8 and UTF-16.");
             }
         }
@@ -4134,7 +4122,7 @@ final class XmlParser {
      */
     private void warnAboutLackOfEncodingDecl(String encoding)
             throws SAXException {
-        if (!(encoding == null || "".equals(encoding)
+        if (!((encoding == null) || "".equals(encoding)
                 || "UTF-8".equalsIgnoreCase(encoding) || "UTF-16".equalsIgnoreCase(encoding))) {
             handler.warn("External encoding information specified a non-UTF-8/non-UTF-16 encoding ("
                     + encoding
@@ -4186,12 +4174,12 @@ final class XmlParser {
                 (byte) 0x3c, (byte) 0x00)) {
             // 0x00 0x00 0x3c 0x00: UCS-4, unusual (2143)
             fatal("Unsupported 32-bit encoding. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2006-02-03
-                                                                                                                    // hsivonen
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x00, (byte) 0x3c,
                 (byte) 0x00, (byte) 0x00)) {
             // 0x00 0x3c 0x00 0x00: UCS-4, unusual (3421)
             fatal("Unsupported 32-bit encoding. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2006-02-03
-                                                                                                                    // hsivonen
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x00, (byte) 0x00,
                 (byte) 0xfe, (byte) 0xff)) {
             // 00 00 fe ff UCS_4_1234 (with BOM)
@@ -4231,15 +4219,15 @@ final class XmlParser {
             // UTF-16BE (otherwise, malformed UTF-16)
             // 0x00 0x3c 0x00 0x3f: UCS-2, big-endian, no byte-order mark
             fatal("no byte-order mark for UTF-16 entity"); // s/UCS-2/UTF-16/
-                                                            // -- 2006-02-03
-                                                            // hsivonen
+            // -- 2006-02-03
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x3c, (byte) 0x00,
                 (byte) 0x3f, (byte) 0x00)) {
             // UTF-16LE (otherwise, malformed UTF-16)
             // 0x3c 0x00 0x3f 0x00: UCS-2, little-endian, no byte-order mark
             fatal("no byte-order mark for UTF-16 entity"); // s/UCS-2/UTF-16/
-                                                            // -- 2006-02-03
-                                                            // hsivonen
+            // -- 2006-02-03
+            // hsivonen
         }
         //
         // THIRD: EBCDIC
@@ -4258,8 +4246,8 @@ final class XmlParser {
             // 0x3c 0x3f 0x78 0x6d: UTF-8 or other 8-bit markup (read ENCODING)
             characterEncoding = null;
             prefetchASCIIEncodingDecl();
-        } else if (signature[0] == (byte) 0xef && signature[1] == (byte) 0xbb
-                && signature[2] == (byte) 0xbf) {
+        } else if ((signature[0] == (byte) 0xef) && (signature[1] == (byte) 0xbb)
+                && (signature[2] == (byte) 0xbf)) {
             // 0xef 0xbb 0xbf: UTF-8 BOM (not part of document text)
             // this un-needed notion slipped into XML 2nd ed through a
             // "non-normative" erratum; now required by MSFT and UDDI,
@@ -4295,7 +4283,7 @@ final class XmlParser {
      */
     private static boolean tryEncoding(byte[] sig, byte b1, byte b2, byte b3,
             byte b4) {
-        return (sig[0] == b1 && sig[1] == b2 && sig[2] == b3 && sig[3] == b4);
+        return ((sig[0] == b1) && (sig[1] == b2) && (sig[2] == b3) && (sig[3] == b4));
     }
 
     /**
@@ -4354,7 +4342,7 @@ final class XmlParser {
             throws SAXException {
         // Push the existing status
         pushInput(ename);
-        if (ename != null && doReport) {
+        if ((ename != null) && doReport) {
             dataBufferFlush();
             handler.startInternalEntity(ename);
         }
@@ -4406,7 +4394,7 @@ final class XmlParser {
             Iterator<String> entities = entityStack.iterator();
             while (entities.hasNext()) {
                 String e = entities.next();
-                if (e != null && e == ename) {
+                if ((e != null) && (e == ename)) {
                     fatal("recursive reference to entity", ename, null);
                 }
             }
@@ -4464,7 +4452,7 @@ final class XmlParser {
     private void popInput() throws SAXException, IOException {
         String ename = entityStack.removeLast();
 
-        if (ename != null && doReport) {
+        if ((ename != null) && doReport) {
             dataBufferFlush();
         }
         switch (sourceType) {
@@ -4473,7 +4461,7 @@ final class XmlParser {
                 reader.close();
                 break;
             case INPUT_INTERNAL:
-                if (ename != null && doReport) {
+                if ((ename != null) && doReport) {
                     handler.endInternalEntity(ename);
                 }
                 break;
@@ -4573,7 +4561,7 @@ final class XmlParser {
         int saveLinePrev = linePrev;
         int saveColumnPrev = columnPrev;
         boolean saveNextCharOnNewLine = nextCharOnNewLine;
-        
+
         for (int i = 0; i < ch.length; i++) {
             c = readCh();
             if (c != ch[i]) {
@@ -4665,8 +4653,10 @@ final class XmlParser {
 
     /**
      * Read a chunk of data from an external input source.
-     * <p>This is simply a front-end that fills the rawReadBuffer
-     * with bytes, then calls the appropriate encoding handler.
+     * <p>
+     * This is simply a front-end that fills the rawReadBuffer with bytes, then
+     * calls the appropriate encoding handler.
+     * 
      * @see #characterEncoding
      * @see #rawReadBuffer
      * @see #readBuffer
@@ -4684,10 +4674,8 @@ final class XmlParser {
             readBuffer[0] = (char) readBufferOverflow;
             readBufferOverflow = -1;
             readBufferPos = 1;
-            sawCR = true;
         } else {
             readBufferPos = 0;
-            sawCR = false;
         }
 
         try {
@@ -4699,10 +4687,10 @@ final class XmlParser {
                     + characterEncoding + ".");
             return; // never happens
         }
-        if (characterHandler != null && count > 0) {
+        if ((characterHandler != null) && (count > 0)) {
             characterHandler.characters(readBuffer, readBufferPos, count);
         }
-        if (normalizationChecker != null && count > 0) {
+        if ((normalizationChecker != null) && (count > 0)) {
             normalizationChecker.characters(readBuffer, readBufferPos, count);
         }
         if (count < 0) {
@@ -4713,13 +4701,14 @@ final class XmlParser {
         if (readBufferLength > 0) {
             filterCR(count >= 0);
         }
-        sawCR = false;
     }
 
     /**
-     * Filter carriage returns in the read buffer.
-     * CRLF becomes LF; CR becomes LF.
-     * @param moreData true iff more data might come from the same source
+     * Filter carriage returns in the read buffer. CRLF becomes LF; CR becomes
+     * LF.
+     * 
+     * @param moreData
+     *            true iff more data might come from the same source
      * @see #readDataChunk
      * @see #readBuffer
      * @see #readBufferOverflow
@@ -4766,30 +4755,31 @@ final class XmlParser {
     // copied from fi.iki.hsivonen.htmlparser
 
     private boolean isPrivateUse(char c) {
-        return c >= '\uE000' && c <= '\uF8FF';
+        return (c >= '\uE000') && (c <= '\uF8FF');
     }
 
     private boolean isPrivateUse(int c) {
-        return (c >= 0xE000 && c <= 0xF8FF) || (c >= 0xF0000 && c <= 0xFFFFD)
-                || (c >= 0x100000 && c <= 0x10FFFD);
+        return ((c >= 0xE000) && (c <= 0xF8FF)) || ((c >= 0xF0000) && (c <= 0xFFFFD))
+                || ((c >= 0x100000) && (c <= 0x10FFFD));
     }
 
     private boolean isAstralPrivateUse(int c) {
-        return (c >= 0xF0000 && c <= 0xFFFFD)
-                || (c >= 0x100000 && c <= 0x10FFFD);
+        return ((c >= 0xF0000) && (c <= 0xFFFFD))
+                || ((c >= 0x100000) && (c <= 0x10FFFD));
     }
 
     private boolean isNonCharacter(int c) {
         return (c & 0xFFFE) == 0xFFFE;
     }
 
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
     // Local Variables.
-    //////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////
 
     /**
      * Re-initialize the variables for each parse.
-     * @throws SAXException 
+     * 
+     * @throws SAXException
      */
     private void initializeVariables() throws SAXException {
         prev = '\u0000';
