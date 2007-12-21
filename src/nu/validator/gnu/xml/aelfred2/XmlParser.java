@@ -2095,7 +2095,7 @@ final class XmlParser {
         } else if (value >= 0x007F && value <= 0x009F) // 2006-11-13 hsivonen
         {
             handler.warn("Character reference expands to a control character: U+00"
-                    + Integer.toHexString(c) + ".");
+                    + Integer.toHexString(value) + ".");
         }
         if (isPrivateUse(value)) {
             warnAboutPrivateUseChar();
@@ -2168,7 +2168,7 @@ final class XmlParser {
         } else if (value >= 0x007F && value <= 0x009F) // 2006-11-13 hsivonen
         {
             handler.warn("Character reference expands to a control character: U+00"
-                    + Integer.toHexString(c) + ".");
+                    + Integer.toHexString(value) + ".");
         }
         if (isPrivateUse(value)) {
             warnAboutPrivateUseChar();
