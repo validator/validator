@@ -26,6 +26,7 @@ import java.util.SortedSet;
 
 import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
+import nu.validator.xml.CharacterUtil;
 
 import org.xml.sax.SAXException;
 
@@ -71,10 +72,10 @@ public class XmlSourceHandler implements SourceHandler {
     public void startSource(String type, String encoding) throws SAXException {
         attrs.clear();
         if (type != null) {
-            attrs.addAttribute("type", type);
+            attrs.addAttribute("type", CharacterUtil.prudentlyScrubCharacterData(type));
         }
         if (encoding != null) {
-            attrs.addAttribute("encoding", encoding);
+            attrs.addAttribute("encoding", CharacterUtil.prudentlyScrubCharacterData(encoding));
         }
         emitter.startElement("source", attrs);
     }

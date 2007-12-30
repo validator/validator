@@ -25,6 +25,7 @@ package nu.validator.messages;
 import nu.validator.messages.types.MessageType;
 import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
+import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.xml.sax.ContentHandler;
@@ -70,7 +71,7 @@ public class XmlMessageEmitter extends MessageEmitter {
         openMessage = type.getSuperType();
         attrs.clear();
         if (systemId != null) {
-            attrs.addAttribute("url", systemId);
+            attrs.addAttribute("url", CharacterUtil.prudentlyScrubCharacterData(systemId));
         }
         if (oneBasedLastLine != -1) {
             attrs.addAttribute("last-line", Integer.toString(oneBasedLastLine));
@@ -143,7 +144,7 @@ public class XmlMessageEmitter extends MessageEmitter {
         contentHandler.startPrefixMapping("h", XhtmlSaxEmitter.XHTML_NS);
         attrs.clear();
         if (documentUri != null) {
-            attrs.addAttribute("url", documentUri);
+            attrs.addAttribute("url", CharacterUtil.prudentlyScrubCharacterData(documentUri));
         }
         emitter.startElement("messages", attrs);
         openMessage = null;

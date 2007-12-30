@@ -65,6 +65,7 @@ import nu.validator.spec.html5.Html5SpecBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
+import nu.validator.xml.ForbiddenCharacterFilter;
 import nu.validator.xml.HtmlSerializer;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
@@ -539,7 +540,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    contentHandler = ser.asContentHandler();
+                    contentHandler = new ForbiddenCharacterFilter(ser.asContentHandler());
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
                 errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
@@ -556,7 +557,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
                     errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                            new XmlMessageEmitter(ser.asContentHandler()));
+                            new XmlMessageEmitter(new ForbiddenCharacterFilter(ser.asContentHandler())));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
                         response.setContentType("application/json");
