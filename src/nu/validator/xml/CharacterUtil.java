@@ -34,7 +34,7 @@ public class CharacterUtil {
     private final static Pattern MINIMAL = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]");
 
     // FIXME include UTF-16 representations of U+?FFFE and U+?FFFF.
-    private final static Pattern PRUDENT = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]|\\uFEFF|[\\x7F-\\x84]|[\\x86-\\x9F]|[\\uFDD0-\\uFDDF]");
+    private final static Pattern PRUDENT = Pattern.compile("[^\\x09\\x0A\\x0D\\u0020-\\uFFFD]|\\uFEFF|[\\x7F-\\x9F]|[\\uFDD0-\\uFDDF]");
     
     public static String scrubCharacterData(CharSequence data) {
         Matcher m = MINIMAL.matcher(data);
