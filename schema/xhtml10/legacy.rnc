@@ -146,7 +146,7 @@ ol.attlist &=
     attribute start { number.datatype }?
 p.attlist &= align.attrib
 pre.attlist &= attribute width { length.datatype }?
-script.attlist &= attribute language { content-type.datatype }?
+script.attlist &= attribute language { string }? # Not MIME -- hsivonen
 table.attlist &=
     talign.attrib,
     attribute bgcolor { Color.datatype }?
