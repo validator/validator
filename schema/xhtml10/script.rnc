@@ -7,7 +7,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -45,6 +45,6 @@ script.attlist =
 noscript = element noscript { noscript.attlist, Block.model }
 noscript.attlist = Common.attrib
 head.content &= script.xhtml*
-Script.class = noscript | script.xhtml
-Inline.class |= Script.class
-Block.class |= Script.class
+# noscript is not inline -- hsivonen
+Inline.class |= script.xhtml
+Block.class |= (noscript | script.xhtml)
