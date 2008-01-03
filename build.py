@@ -42,7 +42,7 @@ useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '64'
 html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
-html5specLoad = None
+html5specLoad = 'http://about.validator.nu/spec.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
 aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
@@ -51,7 +51,7 @@ script = None
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
-  ("http://www.nic.funet.fi/pub/mirrors/apache.org/jakarta/httpcomponents/commons-httpclient-3.x/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
+  ("http://mirror.eunet.fi/apache/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j_3_6_1.jar", "f5ffe0784a9e4c414f42d88e7f6ecefd"),
   ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
