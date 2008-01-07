@@ -12,6 +12,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.draggable?
 		&	common.attrs.irrelevant?
 		)
+		
+	common.attrs.other &= common.attrs.interact
 
 ## Context Menu: contextmenu
 

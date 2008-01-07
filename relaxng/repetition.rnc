@@ -46,6 +46,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 			&	repetition.attrs.repeat-template?
 			)
 		)?
+		
+	common.attrs.other &= common.attrs.repetition
 
 ## Add Button: <input type='add'>
 

@@ -119,6 +119,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onsubmit?
 		&	scripting.attr.onunload?
 		)
+		
+	common.attrs.other &= common.attrs.scripting
 
 	scripting.attr.onabort =
 		attribute onabort { string }

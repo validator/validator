@@ -157,9 +157,6 @@ common.attrs =
 	(	common.attrs.basic
 	&	common.attrs.i18n
 	&	common.attrs.present
-	&	common.attrs.interact
-	&	common.attrs.repetition
-	&	common.attrs.scripting
 	&	common.attrs.other
 	)
 
@@ -232,15 +229,7 @@ common.attrs.present =
 		attribute tabindex {
 			common.data.integer
 		}
-
-common.attrs.interact =
-	empty
-
-common.attrs.repetition =
-	empty
-
-common.attrs.scripting =
-	empty
+		# REVISIT move style to a module and bundle tabindex with ARIA
 
 common.attrs.other =
 	empty
