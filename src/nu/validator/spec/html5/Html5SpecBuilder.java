@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -54,6 +54,8 @@ public class Html5SpecBuilder implements ContentHandler {
     
     private static final Pattern ELEMENT = Pattern.compile("^.*element\\s*$");
     
+    private static final Pattern CATEGORIES = Pattern.compile("^\\s*Categories\\s*");
+    
     private static final Pattern CONTEXT = Pattern.compile("^\\s*Contexts\\s+in\\s+which\\s+this\\s+element\\s+may\\s+be\\s+used:\\s*");
 
     private static final Pattern CONTENT_MODEL = Pattern.compile("^\\s*Content\\s+model:\\s*$");
@@ -66,6 +68,8 @@ public class Html5SpecBuilder implements ContentHandler {
         IN_CODE_IN_H4,
         AWAITING_ELEMENT_DL,
         IN_ELEMENT_DL_START,
+        IN_CATEGORIES_DT,
+        CAPTURING_CATEGORIES_DDS,
         IN_CONTEXT_DT,
         CAPTURING_CONTEXT_DDS,
         IN_CONTENT_MODEL_DT,
@@ -89,6 +93,8 @@ public class Html5SpecBuilder implements ContentHandler {
     private Name currentName;
 
     private Map<Name, String> urisByElement = new HashMap<Name, String>();
+
+    private Map<Name, DocumentFragment> categoriesByElement = new HashMap<Name, DocumentFragment>();
 
     private Map<Name, DocumentFragment> contextsByElement = new HashMap<Name, DocumentFragment>();
 
@@ -133,11 +139,13 @@ public class Html5SpecBuilder implements ContentHandler {
                 break;
             case IN_ELEMENT_DL_START:
                 break;
+            case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
             case IN_ATTRIBUTES_DT:
                 referenceText.append(ch, start, length);
                 break;
+            case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
@@ -155,9 +163,11 @@ public class Html5SpecBuilder implements ContentHandler {
             case IN_CODE_IN_H4:
             case AWAITING_ELEMENT_DL:
             case IN_ELEMENT_DL_START:
+            case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
             case IN_ATTRIBUTES_DT:
+            case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
@@ -203,6 +213,19 @@ public class Html5SpecBuilder implements ContentHandler {
             case IN_ELEMENT_DL_START:
                 throw new SAXException(
                         "Malformed spec: no children in element dl.");
+            case IN_CATEGORIES_DT:
+                if ("dt" == localName && NS == uri) {
+                    Matcher m = CATEGORIES.matcher(referenceText);
+                    if (m.matches()) {
+                        state = State.CAPTURING_CATEGORIES_DDS;
+                        captureDepth = 0;
+                        fragmentBuilder = new TreeBuilder(true, true);
+                    } else {
+                        throw new SAXException(
+                        "Malformed spec: Expected dt to be categories dt but it was not.");                        
+                    }
+                }
+                break;
             case IN_CONTEXT_DT:
                 if ("dt" == localName && NS == uri) {
                     Matcher m = CONTEXT.matcher(referenceText);
@@ -242,6 +265,7 @@ public class Html5SpecBuilder implements ContentHandler {
                     }
                 }
                 break;
+            case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
@@ -302,17 +326,19 @@ public class Html5SpecBuilder implements ContentHandler {
             case IN_ELEMENT_DL_START:
                 if ("dt" == localName && NS == uri) {
                     referenceText.setLength(0);
-                    state = State.IN_CONTEXT_DT;
+                    state = State.IN_CATEGORIES_DT;
                 } else {
                     throw new SAXException(
                     "Malformed spec: Expected dt in dl.");                    
                 } 
                 break;
+            case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
             case IN_ATTRIBUTES_DT:
                 throw new SAXException(
-                        "Malformed spec: Not expecting children in dts.");                    
+                        "Malformed spec: Not expecting children in dts.");
+            case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
@@ -320,7 +346,10 @@ public class Html5SpecBuilder implements ContentHandler {
                     DocumentFragment fragment = (DocumentFragment) fragmentBuilder.getRoot();
                     fragmentBuilder = null;
                     referenceText.setLength(0);
-                    if (state == State.CAPTURING_CONTEXT_DDS) {
+                    if (state == State.CAPTURING_CATEGORIES_DDS) {
+                        categoriesByElement.put(currentName, fragment);
+                        state = State.IN_CONTEXT_DT;
+                    } else if (state == State.CAPTURING_CONTEXT_DDS) {
                         contextsByElement.put(currentName, fragment);
                         state = State.IN_CONTENT_MODEL_DT;
                     } else if (state == State.CAPTURING_CONTENT_MODEL_DDS) {
