@@ -271,6 +271,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private SourceCode sourceCode = new SourceCode();
 
     private boolean showSource;
+    
+    private String charsetOverride = null;
 
     static {
         try {
@@ -516,17 +518,25 @@ class VerifierServletTransaction implements DocumentModeHandler {
             response.setHeader("Allow", "POST");
             return;
         } else if (outputFormat == OutputFormat.HTML
-                    || outputFormat == OutputFormat.XHTML) {
-                response.setDateHeader("Last-Modified", lastModified);
-            } else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "No input document");
-                return;
-            }
+                || outputFormat == OutputFormat.XHTML) {
+            response.setDateHeader("Last-Modified", lastModified);
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "No input document");
+            return;
+        }
 
         setup();
 
         showSource = (request.getParameter("showsource") != null);
+        
+        String charset = request.getParameter("charset");
+        if (charset != null) {
+            charset = charset.trim();
+            if (!"".equals(charset)) {
+                charsetOverride = charset;
+            }
+        }
         
         try {
             if (outputFormat == OutputFormat.HTML
@@ -699,6 +709,15 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 xmlParser.lockErrorHandler();
             } else {
                 throw new RuntimeException("Bug. Unreachable.");
+            }
+            if (charsetOverride != null) {
+                String charset = documentInput.getEncoding();
+                if (charset == null) {
+                    errorHandler.warning(new SAXParseException("Overriding document character encoding from none to \u201C" + charsetOverride + "\u201D.", null));
+                } else {
+                    errorHandler.warning(new SAXParseException("Overriding document character encoding from \u201C" + charset + "\u201D to \u201C" + charsetOverride + "\u201D.", null));                    
+                }
+                documentInput.setEncoding(charsetOverride);
             }
             reader.parse(documentInput);
         } catch (SAXException e) {
