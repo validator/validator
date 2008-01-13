@@ -3,11 +3,8 @@ default namespace = "http://www.w3.org/1999/xhtml"
 ##  RELAX NG Schema for (X)HTML 5: Exclusions                         #
 # #####################################################################
 
-  ## This is a SEPARATE RELAX NG Schema that only enforces exclusion
-  ## rules. To validate a document, you must first validate against
-  ## the appropriate full schema, then validate against these additional
-  ## restrictions.
-
+  ## This file is unmaintained. Please use assertions.sch instead.
+  
 # #####################################################################
 ## Schema Framework & Parameters
 
@@ -61,6 +58,6 @@ wildcard.elem.exclude-all =
 
 #FIXME no nested labels
 
-#FIXME no blockquote inside header or footer (could be in struct-inline absent exclusion)
+#FIXME no blockquote inside header or footer
 
 #FIXME exactly one hn in header

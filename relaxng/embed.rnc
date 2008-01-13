@@ -48,8 +48,6 @@ namespace local = ""
 	img.inner =
 		empty
 
-	common.elem.strict-inline |= img.elem
-	common.elem.struct-inline |= img.elem
 	common.elem.embedded |= img.elem
 
 ## Plug-ins: <embed>
@@ -133,6 +131,9 @@ namespace local = ""
 			                    | onselect
 			                    | onsubmit
 			                    | onunload
+			                    | role
+			                    | aria-checked
+			                    | aria-valuenow	
 			                    ) 
 			{
 				string
@@ -140,16 +141,12 @@ namespace local = ""
 	embed.inner =
 		empty
 
-	common.elem.strict-inline |= embed.elem
-	common.elem.struct-inline |= embed.elem
 	common.elem.embedded |= embed.elem
 
 ## Generic Objects: <object>
 
-	object.elem.strict-inline =
-		element object { object.inner.strict-inline & object.attrs }
-	object.elem.struct-inline =
-		element object { object.inner.struct-inline & object.attrs }
+	object.elem.prose =
+		element object { object.inner.prose & object.attrs }
 	object.elem.embedded =
 		element object { object.inner.embedded & object.attrs }
 	object.attrs =
@@ -203,33 +200,26 @@ namespace local = ""
 			attribute usemap {
 				common.data.hashed-idref
 			}
-	object.inner.strict-inline =
+	object.inner.prose =
 		(	param.elem*
-		,	common.inner.strict-inline
-		)
-	object.inner.struct-inline =
-		(	param.elem*
-		,	common.inner.struct-inline
+		,	common.inner.prose
 		)
 	object.inner.embedded =
 		(	param.elem*
-		,	(	common.inner.block
+		,	(	common.inner.prose
 			|	object.elem.embedded
 			)
 		)
 
-	common.elem.strict-inline |= object.elem.strict-inline
-	common.elem.struct-inline |= object.elem.struct-inline
+	common.elem.prose |= object.elem.prose
 	common.elem.embedded |= object.elem.embedded
 
 ## Java Applets: <applet>
 
-	applet.elem.strict-inline =
-		element applet { applet.inner.strict-inline & applet.attrs }
-	applet.elem.struct-inline =
-		element applet { applet.inner.struct-inline & applet.attrs }
-	applet.elem.block =
-		element applet { applet.inner.block & applet.attrs }
+	applet.elem.prose =
+		element applet { applet.inner.prose & applet.attrs }
+	applet.elem.embedded =
+		element applet { applet.inner.embedded & applet.attrs }
 	applet.attrs =
 		(	common.attrs
 		&	applet.attrs.archive?
@@ -263,24 +253,19 @@ namespace local = ""
 			attribute width {
 				common.data.integer.positive
 			}
-	applet.inner.strict-inline =
+	applet.inner.prose =
 		(	param.elem*
-		,	common.inner.strict-inline
+		,	common.inner.prose
 		)
-	applet.inner.struct-inline =
+	applet.inner.embedded =
 		(	param.elem*
-		,	common.inner.struct-inline
-		)
-	applet.inner.block =
-		(	param.elem*
-		,	common.inner.block
+		,	common.inner.phrase
 		)
 
 # REVISIT commented out as per
 # http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2005-November/005137.html
-#	common.elem.strict-inline |= applet.elem.strict-inline
-#	common.elem.struct-inline |= applet.elem.struct-inline
-#	common.elem.embedded |= applet.elem.block
+#	common.elem.prose |= applet.elem.prose
+#	common.elem.embedded |= applet.elem.embedded
 
 ## Initialization Parameters: <param>
 
@@ -327,8 +312,6 @@ namespace local = ""
 	iframe.inner =
 		( text )
 
-	common.elem.strict-inline |= iframe.elem
-	common.elem.struct-inline |= iframe.elem
 	common.elem.embedded |= iframe.elem
 
 #######################################################################
@@ -341,9 +324,9 @@ namespace local = ""
 	map.attrs =
 		( common.attrs ) # REVISIT make id required in Schematron
 	map.inner =
-		( common.inner.block )
+		( common.inner.prose )
 
-	common.elem.block |= map.elem
+	common.elem.prose |= map.elem
 
 ## Map Area Definition: <area>
 
@@ -440,5 +423,4 @@ namespace local = ""
 	area.inner =
 		( empty )
 
-	common.elem.strict-inline |= area.elem
-	common.elem.struct-inline |= area.elem
+	common.elem.phrase |= area.elem

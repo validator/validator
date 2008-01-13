@@ -1,15 +1,13 @@
 datatypes w = "http://whattf.org/datatype-draft"
 
 # #####################################################################
-##  RELAX NG Schema for HTML 5: (Inline) Phrase Markup                #
+##  RELAX NG Schema for HTML 5: Phrase Markup                         #
 # #####################################################################
 
 ## Contextual Hyperlink: <a>
 
 	a.elem =
 		element a { a.inner & a.attrs }
-	a.elem.strict =
-		element a { a.inner.strict & a.attrs }
 	a.attrs =
 		(	common.attrs
 		&	a.attrs.href?
@@ -49,98 +47,54 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.uris
 			} & v5only
 	a.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	a.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= a.elem
-	common.elem.strict-inline |= a.elem.strict
+	common.elem.phrase |= a.elem
 
 ## Emphatic Stress: <em>
 
 	em.elem =
 		element em { em.inner & em.attrs }
-	em.elem.strict =
-		element em { em.inner.strict & em.attrs }
 	em.attrs =
 		( common.attrs )
 	em.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	em.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= em.elem
-	common.elem.strict-inline |= em.elem.strict
+	common.elem.phrase |= em.elem
 
 ## Strong Importance: <strong>
 
 	strong.elem =
 		element strong { strong.inner & strong.attrs }
-	strong.elem.strict =
-		element strong { strong.inner.strict & strong.attrs }
 	strong.attrs =
 		( common.attrs )
 	strong.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	strong.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= strong.elem
-	common.elem.strict-inline |= strong.elem.strict
+	common.elem.phrase |= strong.elem
 
 ## Small Print and Side Comments: <small>
 
 	small.elem =
 		element small { small.inner & small.attrs }
-	small.elem.strict =
-		element small { small.inner.strict & small.attrs }
 	small.attrs =
 		( common.attrs )
 	small.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	small.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= small.elem
-	common.elem.strict-inline |= small.elem.strict
+	common.elem.phrase |= small.elem
 
 ## Marked (Highlighted) Text: <m>
 
 	m.elem =
 		element m { m.inner & m.attrs }
 		& v5only
-	m.elem.strict =
-		element m { m.inner.strict & m.attrs }
-		& v5only
 	m.attrs =
 		( common.attrs )
 	m.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	m.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= m.elem
-	common.elem.strict-inline |= m.elem.strict
+	common.elem.phrase |= m.elem
 
 ## Abbreviation: <abbr>
 
@@ -151,10 +105,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		#	abbr.attrs.title included in common.attrs
 		)
 	abbr.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= abbr.elem
-	common.elem.strict-inline |= abbr.elem
+	common.elem.phrase |= abbr.elem
 
 ## Defining Instance: <dfn>
 
@@ -165,10 +118,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		#	dfn.attrs.title included in common.attrs
 		)
 	dfn.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= dfn.elem
-	common.elem.strict-inline |= dfn.elem
+	common.elem.phrase |= dfn.elem
 
 ## Italic: <i>
 
@@ -177,10 +129,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	i.attrs =
 		( common.attrs )
 	i.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= i.elem
-	common.elem.strict-inline |= i.elem
+	common.elem.phrase |= i.elem
 
 ## Bold: <b>
 
@@ -189,10 +140,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	b.attrs =
 		( common.attrs )
 	b.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= b.elem
-	common.elem.strict-inline |= b.elem
+	common.elem.phrase |= b.elem
 
 ## Code Fragment: <code>
 
@@ -203,16 +153,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 	code.attrs =
 		( common.attrs )
 	code.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
+		( common.inner.phrase )
 	code.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= code.elem
-	common.elem.strict-inline |= code.elem.strict
+	common.elem.phrase |= code.elem.strict
 
 ## Variable or Placeholder: <var>
 
@@ -221,30 +166,20 @@ datatypes w = "http://whattf.org/datatype-draft"
 	var.attrs =
 		( common.attrs )
 	var.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= var.elem
-	common.elem.strict-inline |= var.elem
+	common.elem.phrase |= var.elem
 
 ## (Sample) Output: <samp>
 
 	samp.elem =
 		element samp { samp.inner & samp.attrs }
-	samp.elem.strict =
-		element samp { samp.inner.strict & samp.attrs }
 	samp.attrs =
 		( common.attrs )
 	samp.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	samp.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= samp.elem
-	common.elem.strict-inline |= samp.elem.strict
+	common.elem.phrase |= samp.elem
 
 ## User Input: <kbd>
 
@@ -253,10 +188,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	kbd.attrs =
 		( common.attrs )
 	kbd.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= kbd.elem
-	common.elem.strict-inline |= kbd.elem
+	common.elem.phrase |= kbd.elem
 
 ## Superscript: <sup>
 
@@ -265,10 +199,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	sup.attrs =
 		( common.attrs )
 	sup.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= sup.elem
-	common.elem.strict-inline |= sup.elem
+	common.elem.phrase |= sup.elem
 
 ## Subscript: <sub>
 
@@ -277,17 +210,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 	sub.attrs =
 		( common.attrs )
 	sub.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= sub.elem
-	common.elem.strict-inline |= sub.elem
+	common.elem.phrase |= sub.elem
 
 ## Quotation: <q>
 
 	q.elem =
 		element q { q.inner & q.attrs }
-	q.elem.strict =
-		element q { q.inner.strict & q.attrs }
 	q.attrs =
 		(	common.attrs
 		&	q.attrs.cite?
@@ -297,16 +227,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.uri
 			}
 	q.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	q.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= q.elem
-	common.elem.strict-inline |= q.elem.strict
+	common.elem.phrase |= q.elem
 
 ## Source Citation: <cite>
 
@@ -315,30 +238,20 @@ datatypes w = "http://whattf.org/datatype-draft"
 	cite.attrs =
 		( common.attrs )
 	cite.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= cite.elem
-	common.elem.strict-inline |= cite.elem
+	common.elem.phrase |= cite.elem
 
 ## Generic Span: <span>
 
 	span.elem =
 		element span { span.inner & span.attrs }
-	span.elem.strict =
-		element span { span.inner.strict & span.attrs }
 	span.attrs =
 		( common.attrs )
 	span.inner =
-		(	common.inner.strict-inline
-		|	(	common.inner.struct-inline
-			&	nonRoundtrippable & nonHTMLizable
-			)
-		)
-	span.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase ) # REVISIT allow ol and ul?
 
-	common.elem.struct-inline |= span.elem
-	common.elem.strict-inline |= span.elem.strict
+	common.elem.phrase |= span.elem
 
 ## Bidirectional Override: <bdo>
 
@@ -357,10 +270,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "ltr" | w:string "rtl"
 			}
 	bdo.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= bdo.elem
-	common.elem.strict-inline |= bdo.elem
+	common.elem.phrase |= bdo.elem
 
 ## Line Break: <br>
 
@@ -371,5 +283,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 	br.inner =
 		( empty )
 
-	common.elem.struct-inline |= br.elem
-	common.elem.strict-inline |= br.elem
+	common.elem.phrase |= br.elem

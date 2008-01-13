@@ -249,8 +249,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		
 	input.elem |= input.hidden.elem
-	
-	common.elem.block |= input.hidden.elem
 		
 ## Image Submit Button: <input type='image'>
 
@@ -279,8 +277,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	input.elem |= input.image.elem
 	
-	common.elem.struct-inline |= input.elem
-	common.elem.strict-inline |= input.elem
+	common.elem.phrase |= input.elem
 
 ## Text Area: <textarea>
 
@@ -312,8 +309,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	textarea.inner =
 		( text )
 
-	common.elem.struct-inline |= textarea.elem
-	common.elem.strict-inline |= textarea.elem
+	common.elem.phrase |= textarea.elem
 
 # Due to limitations with interleave, handling single/multiple selection
 # enforcement in RELAX NG seems to be possible but really awkward.
@@ -382,8 +378,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	option.elem*
 		)
 
-	common.elem.struct-inline |= select.elem
-	common.elem.strict-inline |= select.elem
+	common.elem.phrase |= select.elem
 	
 ## Shared Definitions for Complex Button
 	
@@ -392,8 +387,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	button.inner = 
-		( common.inner.strict-bimorphic )
-		#REVISIT expecting this to change into bimorphic
+		( common.inner.prose )
 	
 ## Complex Submit Button: <button type='submit'>
 
@@ -449,8 +443,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	button.elem |= button.button.elem
 
-	common.elem.struct-inline |= button.elem
-	common.elem.strict-inline |= button.elem
+	common.elem.phrase |= button.elem
 
 ## Form: <form>
 
@@ -490,9 +483,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				form.data.charsetlist
 			}	
 	form.inner =
-		( common.inner.block )
+		( common.inner.prose )
 
-	common.elem.block |= form.elem
+	common.elem.prose |= form.elem
 
 ## Fieldset: <fieldset>
 
@@ -503,14 +496,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		)	
 	fieldset.inner =
-		(	legend.elem.strict-inline? #REVISIT should this be required?
-		,	common.inner.strict-bimorphic
-		) #REVISIT expecting this to change into bimorphic
+		(	legend.elem? #REVISIT should this be required?
+		,	common.inner.prose
+		)
 
-	#REVISIT only allowing in interactive context for now
-	# http://listserver.dreamhost.com/pipermail/whatwg-whatwg.org/2006-April/006181.html
-
-	common.elem.block |= fieldset.elem
+	common.elem.prose |= fieldset.elem
 	
 ## Label: <label>
 
@@ -526,8 +516,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.idref
 			}
 	label.inner =
-		( common.inner.strict-inline ) #REVISIT making obvious guess
+		( common.inner.phrase ) #REVISIT making obvious guess
 
-	common.elem.struct-inline |= label.elem
-	common.elem.strict-inline |= label.elem
+	common.elem.phrase |= label.elem
 

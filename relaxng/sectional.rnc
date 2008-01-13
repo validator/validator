@@ -12,9 +12,9 @@
 	h1.attrs =
 		( common.attrs )
 	h1.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h1.elem
+	common.elem.prose |= h1.elem
 
 ## Heading (Rank 2): <h2>
 
@@ -23,9 +23,9 @@
 	h2.attrs =
 		( common.attrs )
 	h2.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h2.elem
+	common.elem.prose |= h2.elem
 
 ## Heading (Rank 3): <h3>
 
@@ -34,9 +34,9 @@
 	h3.attrs =
 		( common.attrs )
 	h3.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h3.elem
+	common.elem.prose |= h3.elem
 
 ## Heading (Rank 4): <h4>
 
@@ -45,9 +45,9 @@
 	h4.attrs =
 		( common.attrs )
 	h4.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h4.elem
+	common.elem.prose |= h4.elem
 
 ## Heading (Rank 5): <h5>
 
@@ -56,9 +56,9 @@
 	h5.attrs =
 		( common.attrs )
 	h5.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h5.elem
+	common.elem.prose |= h5.elem
 
 ## Heading (Rank 6): <h6>
 
@@ -67,9 +67,9 @@
 	h6.attrs =
 		( common.attrs )
 	h6.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.block |= h6.elem
+	common.elem.prose |= h6.elem
 
 # #####################################################################
 ## Section Meta
@@ -81,9 +81,9 @@
 	address.attrs =
 		( common.attrs )
 	address.inner = 
-		( common.inner.strict-inline )
+		( common.inner.prose )
 
-	common.elem.block |= address.elem
+	common.elem.prose |= address.elem
 
 # #####################################################################
 ## Quotations	
@@ -101,7 +101,6 @@
 				common.data.uri
 			}
 	blockquote.inner =
-		( common.inner.block )
+		( common.inner.prose )
 
-	common.elem.block |= blockquote.elem
-	common.elem.struct-inline |= blockquote.elem
+	common.elem.prose |= blockquote.elem

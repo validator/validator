@@ -15,40 +15,30 @@
 
 ## Inserts: <ins>
 
-	ins.elem.strict-inline =
-		element ins { common.inner.strict-inline & ins.attrs }
-	ins.elem.struct-inline =
-		element ins { common.inner.struct-inline & ins.attrs }
-	ins.elem.block =
-		element ins { common.inner.block & ins.attrs }
+	ins.elem.phrase =
+		element ins { common.inner.phrase & ins.attrs }
+	ins.elem.prose =
+		element ins { common.inner.prose & ins.attrs }
 	ins.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
 
-	common.elem.strict-inline |= ins.elem.strict-inline
-	common.elem.struct-inline |= ins.elem.struct-inline
-	common.elem.block |= ins.elem.block
+	common.elem.phrase |= ins.elem.phrase
+	common.elem.prose |= ins.elem.prose
 
 ## Deletions: <del>
 
-	del.elem.strict-inline =
-		element del { common.inner.strict-inline & del.attrs }
-	del.elem.struct-inline =
-		element del { common.inner.struct-inline & del.attrs }
-	del.elem.block =
-		element del { common.inner.block & del.attrs }
+	del.elem.phrase =
+		element del { common.inner.phrase & del.attrs }
+	del.elem.prose =
+		element del { common.inner.prose & del.attrs }
 	del.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
 
-	common.elem.strict-inline |= del.elem.strict-inline
-	common.elem.struct-inline |= del.elem.struct-inline
-	common.elem.block |= del.elem.block
-
-	common.del.struct-inline |= del.elem.struct-inline
-	common.del.strict-inline |= del.elem.strict-inline
-	common.del.block |= del.elem.block
+	common.elem.phrase |= del.elem.phrase
+	common.elem.prose |= del.elem.prose

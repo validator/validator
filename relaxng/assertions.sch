@@ -43,7 +43,16 @@
 		</rule>
 	</pattern>
 
-	<pattern name='blockquote not allowed in headers or footers'>
+	<pattern name='address cannot nest'>
+		<rule context='h:address'>
+			<report test='ancestor::h:address'>
+				The &#x201C;address&#x201D; element cannot contain any nested 
+				&#x201C;address&#x201D; elements.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='blockquote not allowed in headers, footers or address'>
 		<rule context='h:blockquote'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;blockquote&#x201D; cannot 
@@ -53,10 +62,14 @@
 				The sectioning element &#x201C;blockquote&#x201D; cannot 
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The sectioning element &#x201C;blockquote&#x201D; cannot 
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='section not allowed in headers or footers'>
+	<pattern name='section not allowed in headers, footers or address'>
 		<rule context='h:section'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;section&#x201D; cannot 
@@ -66,10 +79,14 @@
 				The sectioning element &#x201C;section&#x201D; cannot 
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The sectioning element &#x201C;section&#x201D; cannot 
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='nav not allowed in headers or footers'>
+	<pattern name='nav not allowed in headers, footers or address'>
 		<rule context='h:nav'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;nav&#x201D; cannot 
@@ -79,10 +96,14 @@
 				The sectioning element &#x201C;nav&#x201D; cannot 
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The sectioning element &#x201C;nov&#x201D; cannot 
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='article not allowed in headers or footers'>
+	<pattern name='article not allowed in headers, footers or address'>
 		<rule context='h:article'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;article&#x201D; cannot 
@@ -92,10 +113,14 @@
 				The sectioning element &#x201C;article&#x201D; cannot 
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The sectioning element &#x201C;article&#x201D; cannot 
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='aside not allowed in headers or footers'>
+	<pattern name='aside not allowed in headers, footers or address'>
 		<rule context='h:aside'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;aside&#x201D; cannot 
@@ -105,10 +130,14 @@
 				The sectioning element &#x201C;aside&#x201D; cannot 
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The sectioning element &#x201C;aside&#x201D; cannot 
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='header not allowed in headers or footers'>
+	<pattern name='header not allowed in headers, footers or address'>
 		<rule context='h:header'>
 			<report test='ancestor::h:header'>
 				The &#x201C;header&#x201D; element cannot appear as a 
@@ -118,10 +147,14 @@
 				The &#x201C;header&#x201D; element cannot appear as a 
 				descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The &#x201C;header&#x201D; element cannot appear as a 
+				descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='footer not allowed in headers or footers'>
+	<pattern name='footer not allowed in headers, footers or address'>
 		<rule context='h:footer'>
 			<report test='ancestor::h:header'>
 				The &#x201C;footer&#x201D; element cannot appear as a 
@@ -131,14 +164,23 @@
 				The &#x201C;footer&#x201D; element cannot appear as a 
 				descendant of the &#x201C;footer&#x201D; element.
 			</report>
+			<report test='ancestor::h:address'>
+				The &#x201C;footer&#x201D; element cannot appear as a 
+				descendant of the &#x201C;address&#x201D; element.
+			</report>
 		</rule>
 	</pattern>
 
-	<pattern name='headings not allowed in footers'>
+	<pattern name='headings not allowed in footers or address'>
 		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
 			<report test='ancestor::h:footer'>
 				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
 				cannot appear as descendants of the &#x201C;footer&#x201D; 
+				element.
+			</report>
+			<report test='ancestor::h:address'>
+				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
+				cannot appear as descendants of the &#x201C;address&#x201D; 
 				element.
 			</report>
 		</rule>
@@ -264,6 +306,8 @@
 			</report>
 		</rule>
 	</pattern>
+
+	<!-- REVISIT fieldset http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2006-April/006181.html -->
 
 <!-- Misc requirements -->
 	

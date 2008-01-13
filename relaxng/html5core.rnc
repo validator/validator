@@ -32,6 +32,8 @@ include "common.rnc" {
 # #####################################################################
 ## Language Definitions
 
+start = html.elem
+
 include "meta.rnc"
 include "phrase.rnc" {
 	m.elem = empty

@@ -549,8 +549,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	output.elem =
 		element output { output.inner & output.attrs }
-	output.elem.strict =
-		element output { output.inner.strict & output.attrs }
 	output.attrs =
 		(	common.attrs
 		&	common-form.attrs.name?
@@ -564,12 +562,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.idrefs #REVISIT spec says space--not whitespace
 			}
 	output.inner =
-		( common.inner.struct-inline ) #REVIST check HTML-compatibility
-	output.inner.strict =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
-	common.elem.struct-inline |= output.elem
-	common.elem.strict-inline |= output.elem.strict
+	common.elem.phrase |= output.elem
 
 ## Text Area: <textarea>, extensions
 
@@ -619,20 +614,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	#REVISIT should the options in datalist be non-selectable?
 
-	datalist.elem.strict-inline =
-		element datalist { option.elem* & common.inner.strict-inline & datalist.attrs }
-	datalist.elem.struct-inline = #REVISIT check HTML-compatibility
-		element datalist { option.elem* & common.inner.struct-inline & datalist.attrs }
-	datalist.elem.block =
-		element datalist { option.elem* & common.inner.block & datalist.attrs }
+	datalist.elem.phrase=
+		element datalist { option.elem* & common.inner.phrase & datalist.attrs }
+	datalist.elem.prose =
+		element datalist { option.elem* & common.inner.prose & datalist.attrs }
 	datalist.attrs =
 		(	common.attrs
 		&	common-form.attrs.data?
 		)
 
-	common.elem.strict-inline |= datalist.elem.strict-inline
-	common.elem.struct-inline |= datalist.elem.struct-inline
-	common.elem.block |= datalist.elem.block
+	common.elem.phrase |= datalist.elem.phrase
+	common.elem.prose |= datalist.elem.prose
 
 ## Complex Submit Button: <button type='submit'>, extensions
 

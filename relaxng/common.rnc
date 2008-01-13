@@ -9,10 +9,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##  Language Parameters - redefine in inclusion block as necessary    #
 # #####################################################################
 
-## Root Definition
-
-	start = html.elem
-
 ## HTML vs. XHTML restrictions
 
 	XMLonly = empty
@@ -31,7 +27,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	nonRoundtrippable = empty
 
 	## XML features that can't be serialized as HTML
-	#  (structured inline elements in <p>)
 	nonHTMLizable = empty
 
 # #####################################################################
@@ -56,17 +51,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 
 # #####################################################################
-##  Deletion Hooks                                                    #
-# #####################################################################
-
-	common.del.strict-inline =
-		( notAllowed )
-	common.del.struct-inline =
-		( notAllowed )
-	common.del.block =
-		( notAllowed )
-
-# #####################################################################
 ##  Common Element Classes                                            #
 # #####################################################################
 
@@ -75,25 +59,21 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.metadata =
 		( notAllowed )
 
-## Strictly Inline Elements
-
-	common.elem.strict-inline =
-		( notAllowed )
-
-## Structured Inline Elements
-
-	common.elem.struct-inline =
-		( notAllowed )
-
-## Block Elements
-
-	common.elem.block =
-		( notAllowed )
-
 ## Embedded Content
 
 	common.elem.embedded =
 		( notAllowed )
+
+## Phrase Elements
+
+	common.elem.phrase =
+		( common.elem.embedded )
+
+## Prose Elements
+
+	common.elem.prose =
+		( common.elem.phrase )
+
 
 # #####################################################################
 ##  Common Content Models                                             #
@@ -104,48 +84,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.inner.metadata =
 		( common.elem.metadata* )
 
-## Strictly Inline Content
+## Phrase Content
 
-	common.inner.strict-inline =
-		( text & common.elem.strict-inline* )
+	common.inner.phrase =
+		( text & common.elem.phrase* )
 
-## Structured Inline Content
+## Prose Content
 
-	common.inner.struct-inline =
-		( text & common.elem.struct-inline* )
-
-## Block Content
-
-	common.inner.block =
-		( common.elem.block* )
-
-## Inline OR Block Content
-
-	common.inner.bimorphic =
-		(	(	text
-			&	(	common.elem.struct-inline
-				|	common.del.block
-				)*
-			)
-		|	(	common.elem.block
-			|	common.del.struct-inline
-			)*
-		)
-
-## Strict Inline OR Block Content
-
-	#REVISIT remove if wf1 doesn't really need these
-
-	common.inner.strict-bimorphic =
-		(	(	text
-			&	(	common.elem.strict-inline
-				|	common.del.block
-				)*
-			)
-		|	(	common.elem.block
-			|	common.del.strict-inline
-			)*
-		)
+	common.inner.prose =
+		( text & common.elem.prose* ) # REVISIT <style scoped>
 
 # #####################################################################
 ##  Common Attributes                                                 #
@@ -167,6 +114,7 @@ common.attrs.basic =
 	&	common.attrs.class?
 	&	common.attrs.title?
 	&	common.attrs.base?
+	&	common.attrs.space?
 	)
 	common.attrs.id =
 		attribute id {
@@ -190,6 +138,12 @@ common.attrs.basic =
 	common.attrs.xmlbase =
 		attribute xml:base {
 			common.data.uri
+		} & XMLonly
+	common.attrs.space =
+		common.attrs.xmlspace
+	common.attrs.xmlspace =
+		attribute xml:space {
+			string "preserve" # REVISIT this is not allowed per spec
 		} & XMLonly
 
 common.attrs.i18n =

@@ -9,15 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	html.elem =
 		element html { html.inner & html.attrs }
 	html.attrs =
-		# This hack lets us restrict xml:base to <html> when nonRoundtrippable is empty
-		# credits to http://relaxng.org/pipermail/relaxng-user/2004-February/000384.html
-		grammar {
-			html.elem = parent html.elem
-			include "common.rnc" {
-				start = common.attrs
-				common.attrs.base = common.attrs.xmlbase
-			}
-		}
+		( common.attrs )
 	html.inner =
 		(	head.elem
 		,	body.elem
@@ -37,8 +29,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 #			}
 	head.inner =
 		(	meta.elem.encoding?
-		,	base.elem?
 		,	(	title.elem
+			&	base.elem? # REVISIT need a non-schema checker on Schematron
 			&	common.inner.metadata
 			)
 		)
@@ -50,7 +42,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	body.attrs =
 		( common.attrs )
 	body.inner =
-		( common.inner.block )
+		( common.inner.prose )
 
 ## Document Title: <title>
 
@@ -100,7 +92,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		link.attrs.rel =
 			attribute rel {
-				common.data.tokens
+				common.data.tokens # REVISIT non-schema checker needed
 			}
 		link.attrs.hreflang =
 			attribute hreflang {
@@ -204,7 +196,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		meta.http-equiv.attrs.content.refresh =
 			attribute content { 
-				string # XXX datatype
+				string # FIXME datatype
 			}
 		meta.http-equiv.attrs.content.default-style =
 			attribute content {

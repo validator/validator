@@ -63,8 +63,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		) 
 
-	common.elem.block |= table.elem
-	common.elem.struct-inline |= table.elem
+	common.elem.prose |= table.elem
 
 ## Table Caption: <caption>
 
@@ -73,7 +72,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	caption.attrs =
 		( common.attrs )
 	caption.inner =
-		( common.inner.strict-inline )
+		( common.inner.phrase )
 
 # #####################################################################
 ## Table Super Structure
@@ -214,7 +213,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		&	tables.attrs.alignment
 		)
 	td.inner =
-		( common.inner.bimorphic )
+		( common.inner.prose )
 
 ## Table Header Cells: <th>
 
@@ -229,4 +228,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		&	tables.attrs.alignment
 		)
 	th.inner =
-		( common.inner.bimorphic )
+		( common.inner.prose )

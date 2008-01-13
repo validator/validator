@@ -97,10 +97,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Video: <video>
 
-	video.elem.strict-inline =
-		element video { video.inner.strict-inline & video.attrs }
-	video.elem.struct-inline =
-		element video { video.inner.struct-inline & video.attrs }
+	video.elem.prose =
+		element video { video.inner.prose & video.attrs }
 	video.elem.embedded =
 		element video { video.inner.embedded & video.attrs }
 	video.attrs =
@@ -122,59 +120,49 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute width {
 				common.data.integer.positive
 			}
-	video.inner.strict-inline =
+	video.inner.prose =
 		(	media.source
-		,	common.inner.strict-inline
-		)
-	video.inner.struct-inline =
-		(	media.source
-		,	common.inner.struct-inline
+		,	common.inner.prose
 		)
 	video.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
 
-	common.elem.strict-inline |= video.elem.strict-inline
-	common.elem.struct-inline |= video.elem.struct-inline
+	common.elem.prose |= video.elem.prose
 	common.elem.embedded |= video.elem.embedded
 
 ## Audio: <audio>
 
-	audio.elem.strict-inline =
-		element audio { audio.inner.strict-inline & audio.attrs }
-	audio.elem.struct-inline =
-		element audio { audio.inner.struct-inline & audio.attrs }
+	audio.elem.prose =
+		element audio { audio.inner.prose & audio.attrs }
 	audio.elem.embedded =
 		element audio { audio.inner.embedded & audio.attrs }
 	audio.attrs =
 		(	common.attrs
 		&	media.attrs
 		)
-	audio.inner.strict-inline =
+	audio.inner.prose =
 		(	media.source
-		,	common.inner.strict-inline
-		)
-	audio.inner.struct-inline =
-		(	media.source
-		,	common.inner.struct-inline
+		,	common.inner.prose
 		)
 	audio.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
 
-	common.elem.strict-inline |= audio.elem.strict-inline
-	common.elem.struct-inline |= audio.elem.struct-inline
+	common.elem.prose |= audio.elem.prose
 	common.elem.embedded |= audio.elem.embedded
 
-## Captioned Embedded Content: <figure>
+## Captioned Content: <figure>
 
 	figure.elem =
 		element figure { figure.inner & figure.attrs }
 	figure.attrs =
 		( common.attrs )
 	figure.inner =
-		( common.elem.embedded & legend.elem.struct-inline )
+		(	( legend.elem, common.elem.prose )
+		|	( common.elem.prose, legend.elem )
+		)
 
-	common.elem.block |= figure.elem
+	common.elem.prose |= figure.elem

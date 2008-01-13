@@ -10,10 +10,10 @@
 		( common.attrs )
 	section.inner =
 		(	style.elem.scoped*
-		,	common.inner.block 
+		,	common.inner.prose 
 		)
 
-	common.elem.block |= section.elem
+	common.elem.prose |= section.elem
 
 ## Navigational Links: <nav>
 
@@ -22,9 +22,9 @@
 	nav.attrs =
 		( common.attrs )
 	nav.inner =
-		( common.inner.bimorphic )
+		( common.inner.prose )
 
-	common.elem.block |= nav.elem
+	common.elem.prose |= nav.elem
 
 ## Article: <article>
 
@@ -34,10 +34,10 @@
 		( common.attrs )
 	article.inner =
 		(	style.elem*
-		,	common.inner.block 
+		,	common.inner.prose 
 		)
 		
-	common.elem.block |= article.elem
+	common.elem.prose |= article.elem
 
 ## Tangential Aside: <aside>
 
@@ -47,10 +47,10 @@
 		( common.attrs )
 	aside.inner =
 		(	style.elem*
-		,	common.inner.bimorphic 
+		,	common.inner.prose 
 		)
 
-	common.elem.block |= aside.elem
+	common.elem.prose |= aside.elem
 
 ## Header: <header>
 
@@ -59,9 +59,9 @@
 	header.attrs =
 		( common.attrs )
 	header.inner =
-		( common.inner.block )
+		( common.inner.prose )
 
-	common.elem.block |= header.elem
+	common.elem.prose |= header.elem
 
 ## Footer: <footer>
 
@@ -70,9 +70,9 @@
 	footer.attrs =
 		( common.attrs )
 	footer.inner =
-		( common.inner.bimorphic )
+		( common.inner.prose )
 
-	common.elem.block |= footer.elem
+	common.elem.prose |= footer.elem
 
 ## Dialog: <dialog>
 
@@ -86,4 +86,4 @@
 			)*
 		)
 
-	common.elem.block |= dialog.elem
+	common.elem.prose |= dialog.elem
