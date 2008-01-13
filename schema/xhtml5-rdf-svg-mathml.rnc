@@ -11,24 +11,20 @@ include "rdf/rdf.rnc"
 common.elem.metadata |= rdf.elem
 SVG.metadata.content |= rdf.elem
 
-common.elem.strict-inline |= svg
-common.elem.struct-inline |= svg
 common.elem.emdedded |= svg
 
-common.elem.strict-inline |= mml.math.qname
-common.elem.struct-inline |= mml.math.qname
+common.elem.phrase |= mml.math.qname
 
 SVG.foreignObject.content |=
 	(	mml.math.qname
 	|	html.elem
 	|	body.elem
-	|	common.inner.block
+	|	common.inner.prose
 	)
 	
 mml.Annotation-xml.datatype.svg |= svg
 
 mml.Annotation-xml.datatype.xhtml |=
 	(	html.elem
-	|	common.elem.block
-	|	common.elem.struct-inline
+	|	common.elem.prose
 	)
