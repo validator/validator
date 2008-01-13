@@ -74,3 +74,7 @@ string instead of token
 SVG 1.0 and 1.2
 
 inkscape
+
+[21:56] <zcorpan> hsivonen: consider it a feature request to validate xml-stylesheet PIs :) (i'll spec down conf requirements for it in my draft, though it already defines what is a parse error...)  
+
+18:08 < zcorpan> hsivonen: <h1><noscript><p>... still validates for me
