@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -190,6 +190,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private Spec spec = EmptySpec.THE_INSTANCE;
     
     private boolean html = false;
+
+    private boolean loggingOk = false;
 
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
@@ -389,7 +391,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
-        if (systemId != null && systemId.startsWith("http:") && type == MessageType.ERROR && spec != EmptySpec.THE_INSTANCE) {
+        if (loggingOk && systemId != null && (systemId.startsWith("http:") || systemId.startsWith("https:")) && (type == MessageType.ERROR || type == MessageType.FATAL)) {
             log4j.info(new StringBuilder().append(systemId).append('\t').append(message.getMessage()));
         }
         String uri = sourceCode.getUri();
@@ -963,5 +965,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     public void setHtml(boolean html) {
         this.html = html;
+    }
+
+    public void setLoggingOk(boolean ok) {
+        this.loggingOk = ok;
     }
 }

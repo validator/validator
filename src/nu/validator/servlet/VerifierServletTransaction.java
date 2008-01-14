@@ -1482,6 +1482,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (methodIsGet) {
             documentInput = (TypedInputSource) entityResolver.resolveEntity(
                     null, document);
+            errorHandler.setLoggingOk(true);
         } else { // POST
             documentInput = contentTypeParser.buildTypedInputSource(document,
                     null, postContentType);
