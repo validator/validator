@@ -71,6 +71,17 @@ public class XhtmlSaxEmitter extends SaxEmitter {
         characters(label);
         endElement("option");
     }
+
+    public void option(char[] label, String value, boolean selected) throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("value", value);
+        if(selected) {
+            attrs.addAttribute("selected", "selected");            
+        }
+        startElement("option", attrs);
+        characters(label);
+        endElement("option");
+    }
     
     public void checkbox(String name, String value, boolean checked) throws SAXException {
         attrs.clear();
