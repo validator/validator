@@ -123,6 +123,10 @@ function parserChanged(){
                         }
                     }
                 }
+				var nsfilter = document.getElementById("nsfilter")
+				if (nsfilter) {
+					nsfilter.disabled = true
+				}
             }
             else {
                 var select = document.getElementById("preset")
@@ -133,6 +137,10 @@ function parserChanged(){
                         }
                     }
                 }
+				var nsfilter = document.getElementById("nsfilter")
+				if (nsfilter) {
+					nsfilter.disabled = false
+				}
             }
         }
     }
