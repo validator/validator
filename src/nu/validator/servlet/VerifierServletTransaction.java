@@ -69,6 +69,7 @@ import nu.validator.xml.ForbiddenCharacterFilter;
 import nu.validator.xml.HtmlSerializer;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
+import nu.validator.xml.NamespaceDroppingFilter;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.SystemErrErrorHandler;
@@ -273,6 +274,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private boolean showSource;
     
     private String charsetOverride = null;
+    
+    private Set<String> filteredNamespaces = new HashSet<String>();
 
     static {
         try {
@@ -535,6 +538,17 @@ class VerifierServletTransaction implements DocumentModeHandler {
             charset = charset.trim();
             if (!"".equals(charset)) {
                 charsetOverride = charset;
+            }
+        }
+        
+        String nsfilter = request.getParameter("nsfilter");
+        if (nsfilter != null) {
+            String[] nsfilterArr = SPACE.split(nsfilter);
+            for (int i = 0; i < nsfilterArr.length; i++) {
+                String ns = nsfilterArr[i];
+                if (ns.length() > 0) {
+                    filteredNamespaces.add(ns);
+                }
             }
         }
         
@@ -905,6 +919,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
         xmlParser = new SAXDriver();
         xmlParser.setCharacterHandler(sourceCode);
         reader = new IdFilter(xmlParser);
+        if (!filteredNamespaces.isEmpty()) {
+            reader = new NamespaceDroppingFilter(reader, filteredNamespaces);
+        }
         reader.setFeature(
                 "http://xml.org/sax/features/string-interning",
                 true);
