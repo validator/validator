@@ -6,6 +6,9 @@ public static void emit(org.xml.sax.ContentHandler contentHandler, nu.validator.
 org.xml.sax.helpers.AttributesImpl __attrs__ = new org.xml.sax.helpers.AttributesImpl();
 contentHandler.startPrefixMapping("", "http://www.w3.org/1999/xhtml");
 __attrs__.clear();
+__attrs__.addAttribute("", "title", "title", "CDATA", "Space-separated list of namespace URIs.");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
+__attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs__);
 __attrs__.clear();
 __attrs__.addAttribute("", "for", "for", "CDATA", "nsfilter");
@@ -17,6 +20,7 @@ __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs__);
 t.emitNsfilterField(); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
 contentHandler.endPrefixMapping("");
 }
 private static final char[] __chars__ = { 'N', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', ' ', 'F', 'i', 'l', 't', 'e', 'r' };

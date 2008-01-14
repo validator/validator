@@ -9,7 +9,7 @@ __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "fieldset", "fieldset", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "legend", "legend", __attrs__);
-contentHandler.characters(__chars__, 0, 25);
+contentHandler.characters(__chars__, 0, 15);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "legend", "legend");
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "table", "table", __attrs__);
@@ -23,7 +23,7 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs_
 __attrs__.clear();
 __attrs__.addAttribute("", "for", "for", "CDATA", "doc");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
-contentHandler.characters(__chars__, 25, 8);
+contentHandler.characters(__chars__, 15, 8);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "th", "th");
 __attrs__.clear();
@@ -31,6 +31,7 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs_
 t.emitDocField(); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
+t.maybeEmitCharsetField(); t.maybeEmitNsfilterField(); 
 __attrs__.clear();
 __attrs__.addAttribute("", "title", "title", "CDATA", "Display the markup source of the input document.");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
@@ -44,7 +45,7 @@ __attrs__.addAttribute("", "for", "for", "CDATA", "showsource");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
 t.emitShowSourceField(); 
 						
-contentHandler.characters(__chars__, 33, 12);
+contentHandler.characters(__chars__, 23, 12);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
@@ -57,7 +58,7 @@ __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs__);
 __attrs__.clear();
 __attrs__.addAttribute("", "name", "name", "CDATA", "submit");
-__attrs__.addAttribute("", "value", "value", "CDATA", "Check");
+__attrs__.addAttribute("", "value", "value", "CDATA", "Validate");
 __attrs__.addAttribute("", "type", "type", "CDATA", "submit");
 __attrs__.addAttribute("", "id", "id", "CDATA", "submit");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "input", "input", __attrs__);
@@ -69,5 +70,5 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "table", "table");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "fieldset", "fieldset");
 contentHandler.endPrefixMapping("");
 }
-private static final char[] __chars__ = { 'C', 'o', 'n', 'f', 'o', 'r', 'm', 'a', 'n', 'c', 'e', ' ', 'C', 'h', 'e', 'c', 'k', 'e', 'r', ' ', 'I', 'n', 'p', 'u', 't', 'D', 'o', 'c', 'u', 'm', 'e', 'n', 't', ' ', 'S', 'h', 'o', 'w', ' ', 'S', 'o', 'u', 'r', 'c', 'e' };
+private static final char[] __chars__ = { 'V', 'a', 'l', 'i', 'd', 'a', 't', 'o', 'r', ' ', 'I', 'n', 'p', 'u', 't', 'D', 'o', 'c', 'u', 'm', 'e', 'n', 't', ' ', 'S', 'h', 'o', 'w', ' ', 'S', 'o', 'u', 'r', 'c', 'e' };
 }

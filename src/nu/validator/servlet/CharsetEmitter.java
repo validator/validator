@@ -6,6 +6,9 @@ public static void emit(org.xml.sax.ContentHandler contentHandler, nu.validator.
 org.xml.sax.helpers.AttributesImpl __attrs__ = new org.xml.sax.helpers.AttributesImpl();
 contentHandler.startPrefixMapping("", "http://www.w3.org/1999/xhtml");
 __attrs__.clear();
+__attrs__.addAttribute("", "title", "title", "CDATA", "Selecting a preset overrides the schema field above.");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
+__attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs__);
 __attrs__.clear();
 __attrs__.addAttribute("", "for", "for", "CDATA", "charset");
@@ -28,6 +31,7 @@ t.emitCharsetOptions();
 		
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "select", "select");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
 contentHandler.endPrefixMapping("");
 }
 private static final char[] __chars__ = { 'E', 'n', 'c', 'o', 'd', 'i', 'n', 'g', 'D', 'o', 'n', '\u2019', 't', ' ', 'o', 'v', 'e', 'r', 'r', 'i', 'd', 'e' };

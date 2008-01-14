@@ -5,7 +5,7 @@
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <form xmlns="http://www.w3.org/1999/xhtml"
 	><fieldset
-		><legend>Conformance Checker Input</legend
+		><legend>Validator Input</legend
 		><table
 			><tbody
 				><tr title="IRI (http or https) of the document to be checked"
@@ -14,7 +14,7 @@
 					></th
 					><td><?SaxCompiler-code t.emitDocField(); ?></td
 				></tr
-				><tr title="Display the markup source of the input document."
+				><?SaxCompiler-code t.maybeEmitCharsetField(); t.maybeEmitNsfilterField(); ?><tr title="Display the markup source of the input document."
 					><th></th
 					><td
 						><label for='showsource'><?SaxCompiler-code t.emitShowSourceField(); 
