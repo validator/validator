@@ -391,8 +391,13 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
-        if (loggingOk && systemId != null && (systemId.startsWith("http:") || systemId.startsWith("https:")) && (type == MessageType.ERROR || type == MessageType.FATAL)) {
-            log4j.info(new StringBuilder().append(systemId).append('\t').append(message.getMessage()));
+        if (loggingOk
+                && (type == MessageType.ERROR || type == MessageType.FATAL)
+                && spec != EmptySpec.THE_INSTANCE
+                && systemId != null
+                && (systemId.startsWith("http:") || systemId.startsWith("https:"))) {
+            log4j.info(new StringBuilder().append(systemId).append('\t').append(
+                    message.getMessage()));
         }
         String uri = sourceCode.getUri();
         if (oneBasedLine > -1
