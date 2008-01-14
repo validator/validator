@@ -70,7 +70,7 @@ import nu.validator.xml.ForbiddenCharacterFilter;
 import nu.validator.xml.HtmlSerializer;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
-import nu.validator.xml.NamespaceDroppingFilter;
+import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.SystemErrErrorHandler;
@@ -91,6 +91,7 @@ import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.jing.CheckerValidator;
 import org.whattf.checker.table.TableChecker;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -794,7 +795,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             } else if (xmlParser != null) {
                 // this must be after wiretap!
                 if (!filteredNamespaces.isEmpty()) {
-                    reader = new NamespaceDroppingFilter(reader, filteredNamespaces);
+                    reader = new NamespaceDroppingXMLReaderWrapper(reader, filteredNamespaces);
                 }
                 xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
                 xmlParser.lockErrorHandler();
