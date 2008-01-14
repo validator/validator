@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -25,7 +25,9 @@ package nu.validator.xml;
 import java.util.Set;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.XMLFilterImpl;
@@ -46,6 +48,10 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
     
     private int depth;
     
+    private boolean alreadyWarned;
+
+    private Locator locator = null;
+    
     public NamespaceDroppingFilter(XMLReader parent, Set<String> namespacesToRemove) {
         super(parent);
         this.namespacesToRemove = toInternedArray(namespacesToRemove);
@@ -56,8 +62,9 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
      */
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        // TODO Auto-generated method stub
-        super.characters(ch, start, length);
+        if (depth == 0) {
+            super.characters(ch, start, length);
+        }
     }
 
     /**
@@ -78,6 +85,7 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
     @Override
     public void startDocument() throws SAXException {
         depth = 0;
+        alreadyWarned = false;
         super.startDocument();
     }
 
@@ -93,6 +101,10 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
                 super.startElement(uri, localName, qName, filterAttributes(atts));
             }
         } else {
+            if (!alreadyWarned && !isInNamespacesToRemove(uri)) {
+                warning(new SAXParseException("Filtering out selected namespaces causes descendants in other namespaces to be dropped as well.", locator));
+                alreadyWarned = true;
+            }
             depth++;
         }
     }
@@ -128,5 +140,14 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
             }
         }
         return false;
+    }
+    
+    /**
+     * @see org.xml.sax.helpers.XMLFilterImpl#setDocumentLocator(org.xml.sax.Locator)
+     */
+    @Override
+    public void setDocumentLocator(Locator locator) {
+        this.locator = locator;
+        super.setDocumentLocator(locator);
     }
 }
