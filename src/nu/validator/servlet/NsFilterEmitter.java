@@ -13,7 +13,13 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs_
 __attrs__.clear();
 __attrs__.addAttribute("", "for", "for", "CDATA", "nsfilter");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
-contentHandler.characters(__chars__, 0, 16);
+__attrs__.clear();
+__attrs__.addAttribute("", "title", "title", "CDATA", "XML namespace");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "abbr", "abbr", __attrs__);
+contentHandler.characters(__chars__, 0, 5);
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "abbr", "abbr");
+contentHandler.characters(__chars__, 5, 1);
+contentHandler.characters(__chars__, 6, 6);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "th", "th");
 __attrs__.clear();
@@ -23,5 +29,5 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
 contentHandler.endPrefixMapping("");
 }
-private static final char[] __chars__ = { 'N', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', ' ', 'F', 'i', 'l', 't', 'e', 'r' };
+private static final char[] __chars__ = { 'X', 'M', 'L', 'N', 'S', '\u00a0', 'F', 'i', 'l', 't', 'e', 'r' };
 }

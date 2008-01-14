@@ -5,7 +5,7 @@
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <html xmlns="http://www.w3.org/1999/xhtml"><tr title="Space-separated list of namespace URIs."
 	><th
-		><label for="nsfilter">Namespace Filter</label
+		><label for="nsfilter"><abbr title='XML namespace'>XMLNS</abbr>&#xA0;Filter</label
 	></th
 	><td><?SaxCompiler-code t.emitNsfilterField(); ?></td
 ></tr
