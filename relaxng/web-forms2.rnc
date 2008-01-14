@@ -649,7 +649,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Form: <form>, extensions
 	form.attrs.method.data |= 
-		( w:string "put" | "delete" )
+		( w:string "put" | w:string "delete" )
 	form.attrs.enctype.data |= 
 		( w:string "application/x-www-form+xml" | w:string "text/plain" )
 	form.attrs &= 
