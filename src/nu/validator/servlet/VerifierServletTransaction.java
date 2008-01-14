@@ -719,6 +719,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 htmlParser.setTreeBuilderErrorHandlerOverride(errorHandler);
                 errorHandler.setHtml(true);
             } else if (xmlParser != null) {
+                // this must be after wiretap!
+                if (!filteredNamespaces.isEmpty()) {
+                    reader = new NamespaceDroppingFilter(reader, filteredNamespaces);
+                }
                 xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
                 xmlParser.lockErrorHandler();
             } else {
@@ -919,9 +923,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
         xmlParser = new SAXDriver();
         xmlParser.setCharacterHandler(sourceCode);
         reader = new IdFilter(xmlParser);
-        if (!filteredNamespaces.isEmpty()) {
-            reader = new NamespaceDroppingFilter(reader, filteredNamespaces);
-        }
         reader.setFeature(
                 "http://xml.org/sax/features/string-interning",
                 true);
