@@ -24,7 +24,7 @@
 				><tr
 					><th></th
 					><td
-						><input name="submit" value="Check" type="submit" id="submit"></input
+						><input name="submit" value="Validate" type="submit" id="submit"></input
 					></td
 				></tr
 			></tbody

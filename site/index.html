@@ -9,221 +9,340 @@
 </head>
 <body>
 <H1>About Validator.nu</H1>
-<P>Validator.nu is validation 2.0: no DTDs but RELAX NG, Schematron as well as hand-crafted code.</P>
-<H2 id="what">What Does It Do?</H2>
-<P>Validotor.nu checks whether a given document meets the
-constraints of the chosen schema(s). Both XML syntax and compact
-syntax RELAX NG schemas are supported. There is “experimental”
-support for standalone (<EM>not</EM> embedded) Schematron <EM>1.5</EM>
-schemas. There are also <A HREF="#checkers">non-schema checkers</A>
-that can be used like schemas.</P>
-<P>Multiple schemas at a time are supported. (Separate schema URLs
-with spaces.)</P>
-<H2 id="what-not">What Doesn’t It Do?</H2>
+<P>Validator.nu is validation 2.0.</P>
+<H2>The Pitch</H2>
 <UL>
-	<LI><P>It does not check for full conformance to any markup language
-	specification (unless you can find a markup language specification
-	whose sole conformance criterion is adherence to a RELAX NG schema).
-	(Even the HTML5 conformance checking facet of this service cannot
-	check the conformance requirements that are not machine-checkable
-	and require human judgement.)</P>
-	<LI><P>It does not check Schematron assertions embedded in a RELAX
-	NG schema.</P>
-	<LI><P>It does not support ISO Schematron.</P>
-	<LI><P>It does not check for XML 1.0 validity constraints. That is,
-	DTD validation is not performed.</P>
+	<LI><P><a href='http://html5.validator.nu/'>Experimental (X)HTML5 conformance checking</a>. (Tracking the
+	spec as of early December 2007—substantial late December 2007
+	content model changes not yet supported.)</P>
+	<LI><P><a href='http://validator.nu/'>RELAX NG validation</a>—XML syntax and Compact Syntax</P>
+	<LI><P>Schematron <EM>1.5 </EM>validation (standalone schemas
+	only—ISO Schematron or Schematron embedded in RELAX NG are <EM>not</EM>
+	supported)</P>
+	<LI><P>XML 1.0 and <a href="http://about.validator.nu/htmlparser/">HTML5 parsing</a>.</P>
+	<LI><P><a href='#details'>Bring your own schemas</a> or <a href='#presets'>use easy presets</a>.</P>
+	<LI><P><a href='#api'>RESTful Web service API</a></P>
+</UL>
+<H2>No DTD-Based Validation</H2>
+<UL>
+	<LI><P>Validator.nu does not check for XML 1.0 validity constraints.
+	That is, DTD validation is not performed.</P>
 	<P>“Validation” and “validator” in the name and the user
 	interface of the service refer to the ISO/IEC FDIS 19757-2
-	definition of “validator” (which performs validation) and to the
+	definition of “validator” (which performs validation), to the
 	Schematron “validation” function (which is performed by a
-	validator).</P>
-	<LI><P>It does not perform the duties of a “validating SGML
-	parser” as defined in ISO 8879. In fact, this service does not
-	have any SGML functionality at all.</P>
+	validator), and to the HTML 5 definition of “validator”.</P>
+	<LI><P>Validator.nu does not perform the duties of a “validating
+	SGML parser” as defined in ISO 8879. In fact, this service does
+	<EM>not have any SGML functionality at all</EM>. In particular, the
+	HTML 4.01 support uses the HTML5 parser with some additional error
+	conditions.</P>
 </UL>
-<H2 id="usage">Usage</H2>
+<H2 id="usage">Basic Usage</H2>
 <P>Enter the URL (<CODE>http</CODE> or <CODE>https</CODE> IRI to be
 exact) of the document you want to validate in the field labeled
 “Document” and submit the form. That’s all it takes in most
-cases. The parser will be chosen based on the HTTP Content-Type of
-the document. A preset schema will be chosen based on the root
-namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
-<P>If you are not happy with the guessed preset, you can specify a
-schema either by selecting a preset or by entering a space-separated
-list of schema URLs (<CODE>http</CODE> or <CODE>https</CODE> IRIs).
-You can also choose the parser manually.</P>
-<p>You can check HTML5 fragments through <a href="http://html5.lachy.id.au/output">Lachlan Hunt’s service</a> that uses Validator.nu as its validation back end.</p>
-<H2 id="presets">About the Preset Schemas</H2>
+cases. 
+</P>
+<P>In the <a href='http://html5.validator.nu/'>(X)HTML5 facet</a>, the parser and the schema will be chosen
+based on the HTTP <CODE>Content-Type</CODE> of the document. In the
+<a href='http://validator.nu/'>generic facet</a>, the parser will be chosen based on the HTTP
+<CODE>Content-Type</CODE> and a preset schema will be chosen based on
+the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
+<H2>Configurability</H2>
+<DL>
+	<DT>Schemas 
+	</DT><DD><P>
+	When the field for schemas is left empty, the validator will try to
+	choose a schema on its own. If you are not happy with the guessed
+	preset, you can specify a schema either by selecting a preset or by
+	entering a space-separated list of schema URLs (<CODE>http</CODE> or
+	<CODE>https</CODE> IRIs). In addition to actual schemas hosted on an
+	HTTP server, you may use certain special URLs to invoke <A HREF="#checkers">checkers
+	that seem like special schemas but aren’t actually implemented as
+	schemas</A>.</P></DD><DT>
+	Parser 
+	</DT><DD><P>
+	If the automatic choice of parser does not work for you, you can
+	choose the parser manually. The choice of parser affects the HTTP
+	<CODE>Accept</CODE> request header that is sent.</P></DD><DT id="content-type">Be lax about HTTP Content-Type 
+	</DT><DD><P>
+	When the lax option is set, <CODE>text/html</CODE>, <CODE>text/xsl</CODE>
+	and <CODE>text/plain</CODE> are allowed as XML content types and
+	<CODE>text/plain</CODE> is allowed as an HTML content type and, if
+	the URL ends with <CODE>.rnc</CODE>, as a Compact Syntax content
+	type. Also, in the lax mode the US-ASCII default for <CODE>text/*</CODE>
+	XML types is not enforced.</P><P>
+	Normally, schemas using the RELAX NG XML syntax, Schematron schemas
+	and the XML documents to be validated are expected to be served
+	using an XML content type. Schemas using the RELAX NG Compact Syntax
+	are expected to be served using <CODE>application/relax-ng-compact-syntax</CODE>
+	content type. (The unregistered <CODE>application/vnd.relax-ng.rnc</CODE>
+	content type is also understood.) HTML documents are expected to be
+	served as <CODE>text/html</CODE>.</P></DD><DT>
+	Show Source 
+	</DT><DD><P>
+	You may check the “Show Source” checkbox to show the decoded
+	source of the document being checked. Please note that the source
+	may not be shown in its entirety if the parser encounters a fatal
+	error. Moreover, the show source feature shows the decoded Unicode
+	source. Erroneous byte sequences in the original source and
+	characters that would render the validator output as non-conforming
+	(e.g. U+0000) are not represented faithfully.</P></DD></DL>
+<H2>
+Alternative Modes of Input</H2>
+<P>There are various alternative ways of giving input to
+Validator.nu.</P>
+<UL>
+	<LI><P><A HREF="http://about.validator.nu/file-temp/">File upload</A>.
+	(This is likely to be integrated into the main UI in the future.)</P>
+	<LI><P><A HREF="http://about.validator.nu/textarea-temp/">Text area</A>.
+	(This is likely to be integrated into the main UI in the future.)</P>
+	<LI><P><A HREF="http://about.validator.nu/html5check.py">Command-line
+	script</A> that uploads documents from the local filesystem to the
+	(X)HTML5 validator.</P>
+	<LI><P>You can check HTML5 fragments through <A HREF="http://html5.lachy.id.au/output">Lachlan
+	Hunt’s service</A> that uses Validator.nu as its validation back
+	end.</P>
+	<LI><P><A HREF="http://cmlcomp.org/validator/">The CMLComp Validator</A>
+	makes it easy to upload CML files for checking.</P>
+</UL>
+<H2 id="api">Web Service API</H2>
+<P>If you want to create you own alternative mode of input or want to
+call Validator.nu (or <A HREF="#src">your own local copy</A>) from
+within your own application, there is a RESTful <A HREF="http://wiki.whatwg.org/wiki/Validator.nu_Web_Service_Interface">Web
+service API</A>. In addition to the modes of input that work from
+HTML forms, you can also <A HREF="http://wiki.whatwg.org/wiki/Validator.nu_POST_Body_Input">POST
+the document to be checked as an HTTP entity body</A>. In addition to
+the default HTML output, the messages are also available as XHTML,
+XML, JSON and plain text.</P>
+<H2>Preset Schemas</H2>
 <DL>
 	<DT>DocBook 5.0b5 
-	</DT><DD>
+	</DT><DD><P>
 	The official schema for DocBook 5.0b5. (DocBook 5 is namespaced, so
-	this schema won’t validate DocBook 4 documents.)</DD><DT>
+	this schema won’t validate DocBook 4 documents.)</P></DD><DT>
 	RELAX NG 
-	</DT><DD>
-	The RELAX NG schema for RELAX NG. Written by James Clark.</DD><DT>
-	SVG 1.2 Tiny 
-	</DT><DD>
-	The official SVG 1.2 Tiny schema from the W3C.</DD><DT>
+	</DT><DD><P>
+	The RELAX NG schema for RELAX NG. Written by James Clark.</P></DD><DT>
+	SVG 1.1 
+	</DT><DD><P>
+	The SVG 1.1 Full schema from the W3C with datatyping refinements by
+	Henri Sivonen.</P></DD><DT>
 	XHTML Basic 
-	</DT><DD>
+	</DT><DD><P>
 	A schema for XHTML Basic. Suitable for use with the HTML parser.
-	Originally written by James Clark. Improved by Petr N&aacute;levka.</DD><DT>
+	Originally written by James Clark. Improved by Petr N&aacute;levka
+	and Henri Sivonen.</P></DD><DT>
 	XHTML 1.0 Frameset 
-	</DT><DD>
-	A schema for XHTML 1.0 Frameset. Do not use. :-) <EM>Not</EM>
-	suitable for use with the HTML parser. Originally written by James
-	Clark. Improved by Petr N&aacute;levka.</DD><DT>
+	</DT><DD><P>
+	A schema for XHTML 1.0 Frameset. Do not use. :-) Originally written
+	by James Clark. Improved by Petr N&aacute;levka and Henri Sivonen.</P></DD><DT>
 	XHTML 1.0 Strict 
-	</DT><DD>
+	</DT><DD><P>
 	A schema for XHTML 1.0 Strict. Suitable for use HTML 4.01 checking
-	as well. Originally written by James Clark. Improved by Petr
-	N&aacute;levka. (Target support removed by me.)</DD><DT>
+	as well. Originally written by James Clark. Improved by Petr N&aacute;levka
+	and Henri Sivonen.</P></DD><DT>
 	XHTML 1.0 Strict with partial WCAG 1.0 checks 
-	</DT><DD>
-	A schema for XHTML 1.0 Strict. Adds partial WCAG checks. Suitable
-	for use HTML 4.01 checking as well. Originally written by James
-	Clark. Improved by Petr N&aacute;levka (including all the WCAG
-	features). (Target support removed by me.)</DD><DT>
-	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0</DT><DD>
-	This schema combines a schema for XHTML 1.0 Strict (by James Clark
-	and Petr N&aacute;levka), SVG 1.1 (from the W3C) and <A HREF="http://yupotan.sppd.ne.jp/relax-ng/mml2.html">MathML
-	2.0</A> (by Yutaka Furubayashi). The schema is modified from a
-	version that Relaxed uses. Specifically, a newer version of the
-	MathML schema was merged in but <CODE>annotation-xml</CODE> support
-	was disabled due to conflicts with RELAX NG DTD Compatibility. Note
-	that this schema uses XHTML 1.0 Strict as opposed to XHTML 1.1,
-	which is used in the W3C XHTML+SVG+MathML DTD.</DD><DT>
+	</DT><DD><P>
+	Adds partial WCAG checks (by Petr N&aacute;levka) to the previous
+	schema.</P></DD><DT>
+	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0</DT><DD><P>
+	This schema combines a schema for XHTML 1.0 Strict (see above), SVG
+	1.1 (see above) and <A HREF="http://yupotan.sppd.ne.jp/relax-ng/mml2.html">MathML
+	2.0</A> (by Yutaka Furubayashi with refinements by Henri Sivonen).
+	Note that this schema uses XHTML 1.0 Strict as opposed to XHTML 1.1,
+	which is used in the W3C XHTML+SVG+MathML DTD. SVG subtrees are
+	allowed where images are allowed in XHTML 1.0 Strict. The schema has
+	holes that allows embedded OpenMath, RDF and Inkscape markup, but
+	these are not properly validated. 
+	</P></DD><DT>
+	XHTML 1.0 Strict, Ruby, SVG 1.1 plus MathML 2.0 
+	</DT><DD><P>
+	Same as above except Ruby support is added as well. Please note that
+	XHTML 1.0 Strict plus Ruby is subtly different from XHTML 1.1.</P></DD><DT>
 	XHTML 1.0 Transitional 
-	</DT><DD>
+	</DT><DD><P>
 	A schema for XHTML 1.0 Transitional. Suitable for use HTML 4.01
 	checking as well. Originally written by James Clark. Improved by
-	Petr N&aacute;levka. (Target support removed by me.)</DD><DT>
+	Petr N&aacute;levka and Henri Sivonen.</P></DD><DT>
 	XHTML 1.0 Transitional with partial WCAG 1.0 checks 
-	</DT><DD>
-	A schema for XHTML 1.0 Transitional. Adds partial WCAG checks.
-	Suitable for use HTML 4.01 checking as well. Originally written by
-	James Clark. Improved by Petr N&aacute;levka (including all the WCAG
-	features).</DD><DT>
-	XHTML5 (prerelease schema) 
-	</DT><DD>
-	A schema for full XHTML5. <EM>Not</EM> suitable for use with the
-	HTML parser. Uses the <A HREF="http://hsivonen.iki.fi/html5-datatypes/">HTML5
-	datatype library</A>. Written by fantasai and me. (<EM>This schema
-	is just a CVS snapshot—not a stable release version.</EM>)</DD><DT>
-	XHTML5, text/html-serializable subset (prerelease schema) 
-	</DT><DD>
-	A schema for the subset of XHTML5 that can be serialized as HTML5.
-	Suitable for use with the HTML parser. Uses the <A HREF="http://hsivonen.iki.fi/html5-datatypes/">HTML5
-	datatype library</A>. Written by fantasai and me. (<EM>This schema
-	is just a CVS snapshot—not a stable release version.</EM>)</DD><DT>
+	</DT><DD><P>
+	Adds partial WCAG checks (by Petr N&aacute;levka) to the previous
+	schema.</P></DD><DT>
+	HTML5 (experimental) 
+	</DT><DD><P>
+	A schema for HTML5 as of early December 2007. Suitable for use with
+	the HTML parser. Written by fantasai and Henri Sivonen. (<EM>This
+	schema is just an SVN snapshot—not a stable release version.</EM>)</P></DD><DT>
+	XHTML5 (experimental) 
+	</DT><DD><P>
+	A schema for full XHTML5 as of early December 2007. <EM>Not</EM>
+	suitable for use with the HTML parser. Written by fantasai and Henri
+	Sivonen. (<EM>This schema is just an SVN snapshot—not a stable
+	release version.</EM>)</P></DD><DT>
+	XHTML5, SVG 1.1 plus MathML 2.0 (experimental) 
+	</DT><DD><P>
+	This schema combines a schema for XHTML5 (see above), SVG 1.1 (see
+	above) and <A HREF="http://yupotan.sppd.ne.jp/relax-ng/mml2.html">MathML
+	2.0</A> (by Yutaka Furubayashi with refinements by Henri Sivonen).
+	SVG subtrees are allowed where images are allowed. The schema has
+	holes that allows embedded OpenMath, RDF and Inkscape markup, but
+	these are not properly validated. 
+	</P></DD><DT>
 	XSLT 1.0 
-	</DT><DD STYLE="margin-bottom: 14.2pt">
-	A schema for XSLT 1.0. Written by James Clark.</DD></DL>
-<H2 id="html">HTML Support</H2>
-<P>The validation service features an <a href='htmlparser/'>HTML5 parser</a>.</P>
-<P>The parser emits parse events as if it was parsing an equivalent
-XHTML flavor document. Therefore, the schemas should assume lowercase
-element and attribute names in the the XHTML namespace (except the
-<CODE>lang</CODE> attribute maps to <CODE>xml:lang</CODE>). However, the <CODE>base</CODE> element is not mapped
-to <CODE>xml:base</CODE>, either, because doing so would not add any
-value to the validation process with the preset schemas but would
-require additional buffering.</P>
-<P>The HTML 4.01 parsing mode does <EM>not</EM> use an SGML parser.
-Instead, the HTML5 parser is used in an HTML 4.01
-compatibility mode.</P>
-<H2>XML Support</H2>
-<P>The service uses a non-validating XML 1.0 processor. By default,
-external entities are not resolved. 
-</P>
-<H2 id="content-type">HTTP Content-Type</H2>
-<P>Schemas using the RELAX NG XML syntax, Schematron schemas and the
-XML documents to be validated are expected to be served using an XML
-content type. Schemas using the RELAX NG Compact Syntax are expected
-to be served using <CODE>application/relax-ng-compact-syntax</CODE>
-content type. (The unregistered <CODE>application/vnd.relax-ng.rnc</CODE>
-content type is also understood.) HTML documents are expected to be
-served as <CODE>text/html</CODE>.</P>
-<P>When the lax option is set, <CODE>text/html</CODE>, <CODE>text/xsl</CODE>
-and <CODE>text/plain</CODE> are allowed as XML content types and
-<CODE>text/plain</CODE> is allowed as a Compact Syntax and HTML
-content type. Also, in the lax mode the US-ASCII default for <CODE>text/*</CODE>
-XML types is not enforced.</P>
-<P>If a schema is served using an ambiguous content type
-(<CODE>application/octet-stream</CODE> or <CODE>text/plain</CODE>),
-it is treated as a Compact Syntax schema if its URL ends with “.rnc”.</P>
-<P>The choice of parser affects the HTTP <CODE>Accept</CODE> request
-header that is sent.</P>
+	</DT><DD><P>
+	A schema for XSLT 1.0. Written by James Clark.</P></DD></DL>
 <H2 id="checkers">Non-Schema Checkers</H2>
 <P>The service supports a few special pseudo-schema URIs that map to
 checkers written in a Turing-complete programming language.</P>
 <DL>
-	<DT><CODE>http://hsivonen.iki.fi/checkers/table/</CODE> 
-	</DT><DD>
+	<DT><CODE>http://c.validator.nu/table/</CODE> 
+	</DT><DD><P>
 	Checks (X)HTML table integrity. The current implementation should be
 	considered a prototype that has not yet been updated to match the
 	latest spec language for HTML5. (See <A HREF="http://hsivonen.iki.fi/table-integrity-checker/">more
-	detailed discussion</A>.)</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/nfc/</CODE> 
-	</DT><DD>
+	detailed discussion</A>.)</P></DD><DT>
+	<CODE>http://c.validator.nu/nfc/</CODE> 
+	</DT><DD><P>
 	Checks that constructs in the document tree are in the Unicode
 	Normalization Form C and don’t start with a “composing
 	character”. Using this pseudo-schema also enables normalization
 	checking of source text. (See <A HREF="http://hsivonen.iki.fi/charmod-norm-checking/">more
-	detailed discussion</A>.)</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/significant-inline/</CODE> 
-	</DT><DD>
-	Checks that elements that require <A HREF="http://whatwg.org/specs/web-apps/current-work/#significant">significant
-	inline content</A> have it. Form controls are considered
-	significant.</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/text-content/</CODE> 
-	</DT><DD>
+	detailed discussion</A>.)</P></DD><DT>
+	<CODE>http://c.validator.nu/text-content/</CODE> 
+	</DT><DD><P>
 	Checks the text content of the (X)HTML5 <CODE>meter</CODE>, <CODE>progress</CODE>
-	and <CODE>t</CODE> elements for conformance. (This is a prototype
-	with liberties taken.)</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/all/</CODE> 
-	</DT><DD>
-	Shorthand for <CODE>http://hsivonen.iki.fi/checkers/table/
-	http://hsivonen.iki.fi/checkers/nfc/
-	http://hsivonen.iki.fi/checkers/significant-inline/
-	http://hsivonen.iki.fi/checkers/text-content/</CODE>.</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/all-html4/</CODE> 
-	</DT><DD>
-	Shorthand for <CODE>http://hsivonen.iki.fi/checkers/table/
-	http://hsivonen.iki.fi/checkers/nfc/</CODE>.</DD><DT>
-	<CODE>http://hsivonen.iki.fi/checkers/debug/</CODE> 
-	</DT><DD>
-	Dumps parse events as warnings.</DD></DL>
-<H2 id='no-badge'>No Badges, No Guarantee of Schema Stability</H2>
-<P>Some markup validation/checking services give out a <A HREF="http://www.cs.tut.fi/~jkorpela/html/validation.html#icon">small
-badge</A> for advertising that a document passed. This service does
-not.</P>
+	and <CODE>time</CODE> elements for conformance. (This is a prototype
+	with liberties taken.)</P></DD><DT>
+	<CODE>http://c.validator.nu/unchecked/</CODE> 
+	</DT><DD><P>
+	Warns about RDF, OpenMath and Inkspace holes and about the use of
+	<CODE>version=&quot;1.0&quot;</CODE> in SVG.</P></DD><DT>
+	<CODE>http://c.validator.nu/usemap/</CODE> 
+	</DT><DD><P>
+	Checks the <CODE>usemap</CODE> attribute for referential integrity.</P></DD><DT>
+	<CODE>http://c.validator.nu/all/</CODE> 
+	</DT><DD><P>
+	Shorthand for <CODE>http://c.validator.nu/table/
+	http://c.validator.nu/nfc/ http://c.validator.nu/text-content/</CODE>.</P></DD><DT>
+	<CODE>http://c.validator.nu/all-html4/</CODE> 
+	</DT><DD><P>
+	Shorthand for <CODE>http://c.validator.nu/table/
+	http://c.validator.nu/nfc/</CODE>.</P></DD><DT>
+	<CODE>http://c.validator.nu/debug/</CODE> 
+	</DT><DD><P>
+	Dumps parse events as warnings.</P></DD></DL>
+<H2 id="faq">FAQ</H2>
+<H3>My server gives the HTML5 validator a 406 status. What’s up?</H3>
+<P>Your server cannot properly deal with an <CODE>Accept</CODE>
+header that does not have <CODE>*/*</CODE> in it. Chances are that
+you are using Apache 1.3, PHP and MultiViews together. MultiViews
+thinks the type of your page is <CODE>application/x-httpd-php</CODE>,
+which isn’t in the <CODE>Accept</CODE> header. Apache 2 does not
+have this problem.</P>
+<H3 id="no-badge">Can I get a “Valid HTML5” badge?</H3>
 <P>I have observed that once people are given badges they start to
 feel entitled to the badges and become hostile if the validation
 service is changed so that some documents that previously were
 proclaimed valid no longer are. I do not want to deliberately incite
-an opposition to bug fixes.</P>
-<P>This service is an authoring aid. The code is not holy writ set in
-stone. I <EM>know</EM> some of the schemas are not as tight as the
-corresponding spec prose. If I make them tighter, consider it a bug
-fix. Also, I may (and even intend to) change the namespace
-associations of preset schemas in the future.</P>
-<H2 id="details">Feature Details</H2>
+an opposition to bug fixes. I <EM>know</EM> some of the schemas are
+not as tight as the corresponding spec prose. If I make them tighter,
+consider it a bug fix. Moreover, the HTML 5 spec is still changing,
+so the schema will change as well. Finally, I may (and even intend
+to) change the namespace associations of preset schemas in the
+future.</P>
+<P>In addition to the problem with changing the validator after
+badges have been awarded, badges <A HREF="http://www.cs.tut.fi/~jkorpela/html/validation.html#icon">don’t
+provide value to the readers</A> of validated pages. Validation is a
+tool for you as a page <EM>author</EM>—not something your <EM>readers</EM>
+need to verify. However, if you are writing about Web authoring and
+want to refer others to Validator.nu, please, by all means feel free
+to link to Validator.nu.</P>
+<H3>Java? Eww. Why didn’t you write it in Python or Ruby?</H3>
+<P>By the time Ruby on Rails hit everyone’s radar, this project was
+already underway. However, Ruby would still have been a bad choice
+had I considered it seriously earlier. Ruby lacks a solid Unicode
+infrastructure. <A HREF="http://hsivonen.iki.fi/php-utf8/">I’ve
+already been in a situation</A> when I had to stop writing app code
+and spend time writing the <EM>very basics</EM> Unicode
+infrastructure. I don’t want to be in that situation again. <A HREF="http://intertwingly.net/blog/2007/12/25/Two-Steps-Forward">Ruby
+lacks solid XML infrastructure</A> as well.</P>
+<P>I chose Java over Python for three reasons: SAX, Jing and more
+experience with Java. Apart from Java feeling like a more secure
+choice because I had more experience with it, the choice between Java
+and Python also comes down to infrastructure. Having a platform-wide
+unified way for plugging together XML tools is extremely important
+when what you are doing entails plugging together XML tools
+efficiently. 
+</P>
+<P>Java is in a unique position when it comes to XML tool
+infrastructure. Java has a lot of XML-related libraries available and
+they pretty much all plug into the same interface. Not only is there
+a platform-wide XML API, it is also happens to be one of the most
+complete and correct of the XML APIs around. From the point of view
+of RELAX NG, Java being the language Jing is written in is an
+extremely important consideration. Jing is a seriously good piece of
+software. Moreover, Java is the native language of the extensibility
+interface for RELAX NG datatype libraries.</P>
+<P>While I’m on a soap box, I should mention that ICU4J is a
+seriously good piece of software, too, and having Java’s notion of
+Unicode frozen as UTF-16 from to dawn of time until eternity is very
+important considering the stability of infrastructure. It is a
+horribly bad idea that the meaning of Python programs change (due to
+datatypes changing underneath) depending on <A HREF="http://www.python.org/dev/peps/pep-0261/">how
+the interpreter was compiled</A>. <A HREF="http://unicode.org/notes/tn12/tn12-1.html">Unicode
+is optimized for 16-bit units.</A> The stability of sticking to
+UTF-16 in RAM everywhere outweighs the theoretical purity of UTF-32
+in RAM. (On disk and network, use UTF-8, of course.)</P>
+<P>I do want to make the validator functionality available to
+applications that are not written in Java, though. This is why
+Validator.nu has a <A HREF="#api">Web service interface</A> that can
+be used either with the instance running at validator.nu or with a
+your private instance running at localhost. I encourage you to write
+a wrapper library for the Web service in your favorite programming
+language.</P>
+<H3>What’s wrong with DTDs?</H3>
+<P>I think DTDs are bad in four ways:</P>
+<OL>
+	<LI><P>DTDs pollute the document with schema-specific syntax. Since
+	the document itself declares the rules, the question on answered by
+	DTD validation is not the question that should be asked. DTD
+	validation aswers the question “Does this document conform to the
+	rules it declares itself?” The interesting question is “Does
+	this document conform to these rules?” when the person who asks
+	the question chooses the rules the question is about.</P>
+	<LI><P>DTDs mix a validation mechanism, an inclusion mechanism and
+	an infoset augmentation mechanism. The inclusion mechanism is mainly
+	used for character entities, which solve (but only if the DTD is
+	processed and processing it is not required!) an input problem by
+	burdening the recipient instead of keeping input matters between the
+	editing software and the document author.</P>
+	<LI><P>DTDs aren’t particularly expressive.</P>
+	<LI><P>DTDs don’t support Namespaces in XML.</P>
+</OL>
+<P>I hope providing an online validation service for RELAX NG removes
+the excuse that DTDs are needed for online validators.</P>
+<H2 id='details'>Feature Details for Custom Schemas</H2>
 <UL>
-	<LI><P>ID/IDREF/IDREFS checking in RELAX NG is enabled. (This has
-	turned out to be a problem. The feature may be disabled in the
-	future.)</P>
+	<LI><P>ID/IDREF/IDREFS checking in RELAX NG is enabled for the
+	benefit of those who use their own schemas and expect this feature
+	to work. However, the preset schemas do not use RELAX NG
+	ID/IDREF/IDREFS features, because the checking isn’t precise
+	enough (cannot require that the referent is of a certain type) and
+	using these features places really annoying restrictions on the
+	schemas.</P>
 	<LI><P>Comments are not exposed to the validation layer and,
 	therefore, cannot be matched in Schematron.</P>
 	<LI><P>The document is validated independently (but concurrently)
 	against each schema. The Schematron validators do not see IDness
 	assignments from the RELAX NG validators.</P>
 	<LI><P>Embedded Schematron is not supported.</P>
-	<LI><P><CODE>xml:id</CODE> processing is performed. After this,
-	IDness assignment to XHTML id is performed. This means that both
-	<CODE>xml:id</CODE> and (X)HTML <CODE>id</CODE> are matched by the
-	XPath <CODE>id()</CODE> function. ID uniqueness is not currently
-	enforced.</P>
+	<LI><P><CODE>xml:id</CODE> processing is performed. Also, the
+	attribute <CODE>id</CODE> in no namespace is given IDness unless the
+	host element is a CML element. This means that both <CODE>xml:id</CODE>
+	and (X)HTML <CODE>id</CODE> are matched by the XPath <CODE>id()</CODE>
+	function. SVG 1.2 IDness rules are not honored.</P>
 	<LI><P>The following datatype libraries are supported:</P>
 	<UL>
 		<LI><P>The <A HREF="http://relaxng.org/compatibility-20011203.html">RELAX
@@ -237,14 +356,45 @@ associations of preset schemas in the future.</P>
 		(<CODE>http://whattf.org/datatype-draft</CODE>) <EM>This is not a
 		stable library, so you should not rely on it at this time.</EM></P>
 	</UL>
+	<LI><P>The HTML parser emits
+	parse events as if it was parsing an equivalent XHTML flavor
+	document. Therefore, the schemas should assume lowercase element
+	names in the XHTML namespace and attributes in no namespace (except
+	the <CODE>lang</CODE>attribute maps to
+	<CODE>xml:lang</CODE>).</P>
+	<LI><P>The HTML 4.01 parsing
+	mode does not use
+	an SGML parser. Instead, the HTML5 parser is used in an HTML 4.01
+	compatibility mode. The names of boolean attributes are repeated as
+	values for compatibility with XHTML 1.0 schemas. (This does not
+	happen in the HTML5 mode.)</P>
 </UL>
-<h2 id='api'>Web Service API</h2>
-<p>There is a <a href="http://wiki.whatwg.org/wiki/Validator.nu_Web_Service_Interface">Web service API</a>.</p>
-<H2 id="local">Local Data</H2>
-<P>Some URLs (in particular, some popular external entities) map to
-local files. The URLs for the preset schemas map to pre-parsed
-in-memory schema data structures. You may experience unusually fast
-load times or lack of warnings with some resources for this reason.</P>
+<H2 id="src">Source Code</H2>
+<P><A HREF="http://cvsdude.com/"><IMG SRC="http://cvsdude.com/image/cvsdude_tag.jpg" ALT="CVSDude : CVS, Subversion, Trac source control and project management hosting" WIDTH=88 HEIGHT=31></A><A HREF="http://cvsdude.com/">
+</A>The source code and the dependencies can be obtained using a
+Python-based (no XML situps!) build script:</P>
+<PRE><KBD>mkdir checker</KBD>
+<KBD>cd checker</KBD>
+<KBD>svn co http://svn.versiondude.net/whattf/build/trunk/ build</KBD>
+<KBD>python build/build.py --html5load=http://about.validator.nu/spec2.html all</KBD></PRE><P>
+This will download, build and run the system at
+<CODE>http://localhost:8888/</CODE>. For other options, please run
+<KBD>python build/build.py --help</KBD> instead. Please note that the
+dependencies are big. The script will spend time downloading stuff.
+The script requires Python, Subversion and JDK 5 or later. (Tested on
+Mac OS X and Ubuntu. Windows compatibility is unknown.)</P>
+<H3>Deployment</H3>
+<P>The above example starts a standalone HTTP server with debug
+messages printed to the console. To use <A HREF="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP13</A>
+instead, use <KBD>--ajp=on</KBD>. A <A HREF="http://logging.apache.org/log4j/docs/">log4j</A>
+configuration for deployment can be given using the <KBD>--log4j=</KBD>
+option. There is a sample file in
+<CODE>validator/log4j-deployment-sample.properties</CODE>. The
+directory <CODE>extras/</CODE> is searched for additional jars for
+the classpath. For example, if you configure log4j to send email, you
+should put the <A HREF="http://java.sun.com/products/javamail/">Java
+Mail API</A> and <A HREF="http://java.sun.com/products/javabeans/jaf/">JavaBeans
+Activation Framework</A> jars in <CODE>extras/</CODE>.</P>
 <H2 id="issues">Known Issues</H2>
 <UL>
 	<LI><P>If a document references an external entity and retrieving
@@ -252,39 +402,20 @@ load times or lack of warnings with some resources for this reason.</P>
 	times out. (Fix designed. Not implemented, yet.)</P>
 	<LI><P>Embedded Schematron is not supported. (Not likely to be
 	fixed.)</P>
-	<LI><P>ISO Schematron not supported.</P>
+	<LI><P>ISO Schematron not supported. (Likely to be fixed when
+	upstream adds support.)</P>
 	<LI><P>NVDL and XSD support could be enabled, but need testing
 	first.</P>
 	<LI><P>Various schemas are not precise about attribute datatypes.</P>
-	<ul>
-	<li><p>The XHTML 1.0 schemas use the XSD notion of what an ID looks like, which arbitrarily forbids the colon compared to the XML 1.0 notion of what an ID looks like.</p>
-	<li><p>Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML 1.0 is supposed to be a reformulation of HTML 4.01 in XML. However, there are some subtle spec bugs introduced in the reformulation. For this reason, some errors for HTML 4.01 are wrong. For example, XHTML 1.0 (in the DTD) forbids the <code>name</code> attribute on the <code>form</code> element, although it is allowed in HTML 4.01.</p>
-	<li><p>The XHTML 1.0 schemas have the type <code>IDREF</code> for <code>usemap</code>.</p>
-	</ul>
-	<LI><P>The HTML parser has issues.</P>
 	<UL>
-		<LI><P>The HTML parser cannot rewind, yet, so documents that lack
-		external encoding information have to be ASCII until the charset
-		meta.</P>
-		<LI><P>The HTML parser implements the XML notion of whitespace—not
-		the HTML5 notion.</P>
-		<LI><P>The HTML parser only allows XML characters in the source and
-		in the infoset.</P>
-		<LI><P>The value space of attribute values allowed in HTML without
-		quotes is a lot narrower than what is required by HTML5.</P>
-		<LI><P>There are arbitrary limitations for denial of service
-		protection. These limitations are too prudent and need to be
-		relaxed.</P>
-		<LI><P>XHTML doctypes are treated as fatal errors. It would be
-		nicer to treat them as non-fatal errors and continue parsing as
-		HTML5.</P>
-	</UL>
-	<LI><P>The XML parser has issues.</P>
-	<UL>
-		<LI><P>Need to review the XML parser code for Unicode versioning
-		bugs.</P>
-		<LI><P>Need to fix PUA character warnings for XML.</P>
-		<LI><P>Need to address denial of service scenarios better.</P>
+		<LI><P>Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML
+		1.0 is supposed to be a reformulation of HTML 4.01 in XML. However,
+		there are some subtle spec bugs introduced in the reformulation.
+		For this reason, some errors for HTML 4.01 are wrong. For example,
+		XHTML 1.0 (in the DTD) forbids the <CODE>name</CODE> attribute on
+		the <CODE>form</CODE> element, although it is allowed in HTML 4.01.</P>
+		<LI><P>The XHTML 1.0 schemas have the type <CODE>IDREF</CODE> for
+		<CODE>usemap</CODE>.</P>
 	</UL>
 	<LI><P>There are a lot of issues with the (X)HTML5 schemas.</P>
 	<UL>
@@ -298,10 +429,6 @@ load times or lack of warnings with some resources for this reason.</P>
 		groups. Should they be restricted?</P>
 		<LI><P>Assuming an element cannot have both <CODE>id</CODE> and
 		<CODE>xml:id</CODE>.</P>
-		<LI><P>Interaction of <CODE>m</CODE> with HTML parsing untested.</P>
-		<LI><P>Interaction of <CODE>address</CODE> with HTML parsing
-		untested.</P>
-		<LI><P>Do not know whether fractional percentages are ok.</P>
 		<LI><P>Format of the names of form controls is unrestricted.</P>
 		<LI><P>The <CODE>maxlength</CODE> attribute is required to be
 		positive. Perhaps non-negative would be better.</P>
@@ -328,18 +455,16 @@ load times or lack of warnings with some resources for this reason.</P>
 		untested.</P>
 		<LI><P>Tables not allowed as struct-inline.</P>
 		<LI><P>Datatype for <CODE>accesskey</CODE> not done.</P>
-		<LI><P>Mimetype datatypes not done.</P>
-		<LI><P>Language datatypes not done.</P>
-		<LI><P>Mediaqueries not done.</P>
+		<LI><P>Mediaqueries do not support CSS character escapes or
+		comments. (This is an open issue in the CSS WG.)</P>
 		<LI><P>Datatype for <CODE>accept-charset</CODE> not done.</P>
-		<LI><P>Datatype for <CODE>time</CODE> not done.</P>
 		<LI><P>Datatype for <CODE>email</CODE> not done.</P>
 		<LI><P>Event handlers on <CODE>textarea</CODE>, <CODE>output</CODE>
 		and <CODE>select</CODE> may be broken.</P>
 		<LI><P>Subtrees rooted at <CODE>datagrid</CODE> not checked
 		properly.</P>
 		<LI><P>Revisit <CODE>usemap</CODE> on <CODE>input</CODE>.</P>
-		<LI><P>mailto:, javascript:, data: and unknown URI schemes are broken.</P>
+		<LI><P>mailto: and data: URI schemes are not properly validated.</P>
 	</UL>
 </UL>
 <H2 id="ideas">Ideas for Future Development</H2>
@@ -347,27 +472,13 @@ load times or lack of warnings with some resources for this reason.</P>
 	<LI><P>Build / test improvements</P>
 	<UL>
 		<LI><P>Unit tests for the front end.</P>
-		<LI><P>One-step build, test and deployment script.</P>
-		<LI><P>Publicly readable source control repository.</P>
-		<LI><P>Update all libraries to the latest versions.</P>
-		<UL>
-			<LI><P>Port to Jetty 6.1.</P>
-		</UL>
-		<LI><P>Get rid of the GNU JAXP dependency: Use pure SAX and Xalan
-		Serializer instead.</P>
 	</UL>
 	<LI><P>Improvements for checking of W3C document types</P>
 	<UL>
-		<LI><P>Use the HTML5 datatype library in the XHTML 1.x, SVG and
-		MathML schemas.</P>
 		<LI><P>Provide an XHTML <EM>1.1</EM> + SVG 1.1 + MathML 2.0 schema.</P>
 	</UL>
 	<LI><P>Reusability improvements</P>
 	<UL>
-		<LI><P>RESTful Web Service for POSTing the document.</P>
-		<LI><P>XHTML output.</P>
-		<LI><P>XML output.</P>
-		<LI><P>JSON output.</P>
 		<LI><P>Refactor the back end into a coherent reusable module that
 		can be embedded in-process by other Java apps.</P>
 		<LI><P>Implement the same interface as a facade for the RESTful Web
@@ -377,36 +488,6 @@ load times or lack of warnings with some resources for this reason.</P>
 			<LI><P>Also implement the facade for other important programming
 			languages such as Python.</P>
 		</UL>
-		<LI><P>Develop the HTML parser into a general-purpose HTML5 parsing
-		library</P>
-		<UL>
-			<LI><P>Make the tokenizer a conforming HTML5 tokenizer. (Needed
-			for the conformance checker anyway.)</P>
-			<LI><P>Supply a stack-based streaming tag-inference implementation
-			for SAX that treats non-streamable tree fix-ups as fatal errors.
-			(Needed for the conformance checker anyway.)</P>
-			<LI><P>Supply tree builders for XOM, DOM and a lightweight tree
-			that is optimized for SAX event replay (i.e. keeps attributes as
-			SAX <CODE>Attributes</CODE> and keeps text content as <CODE>char[]</CODE>).
-			(Not needed for conformance checking.)</P>
-			<UL>
-				<LI><P>Implement tree-buffered SAX and StAX on top the tree that
-				is optimized for SAX event replay.</P>
-			</UL>
-		</UL>
-		<LI><P>Refactor the validation service dependencies in
-		fi.iki.hsivonen.[xml|io|util] in a separate jar from the stuff with
-		exotic dependencies.</P>
-	</UL>
-	<LI><P>Error message improvements</P>
-	<UL>
-		<LI><P>Make Jing show the message of <CODE>DatatypeException</CODE>
-		upon the “Bad value for attribute <CODE>foo</CODE>.” error.</P>
-		<LI><P>Make Jing tell more about the context on “Element <CODE>foo</CODE>
-		not allowed in this context.” errors.</P>
-		<LI><P>Make Jing name the element on errors about illegal
-		attributes.</P>
-		<LI><P>Better error messages when outbound HTTP requests fail.</P>
 	</UL>
 	<LI><P>Feature parity with other services</P>
 	<UL>
@@ -414,20 +495,10 @@ load times or lack of warnings with some resources for this reason.</P>
 		<LI><P>Show parse tree.</P>
 		<LI><P>Show the outline of (X)HTML documents so that a human can
 		verify that it makes sense.</P>
-		<LI><P>Text area for giving the document source as form input.</P>
-		<LI><P>File upload.</P>
-		<LI><P>Show document source.</P>
-		<UL>
-			<LI><P>Line numbers for showing source.</P>
-		</UL>
 	</UL>
 	<LI><P>Miscellaneous improvements</P>
 	<UL>
 		<LI><P>data URIs</P>
-		<LI><P>Redirects URLs without the trailing slash instead of giving
-		404.</P>
-		<LI><P>Link errors to the document source view.</P>
-		<LI><P>Syntax highlighting for showing source.</P>
 		<LI><P>Advanced UI for subsetting (X)HTML5 in practical unofficial
 		ways.</P>
 		<LI><P>IRIfy URIs on output.</P>
@@ -441,60 +512,25 @@ load times or lack of warnings with some resources for this reason.</P>
 		behavior with HTTP resources that have the <CODE>Content-Location</CODE>
 		header.</P>
 		<LI><P>Command line tool.</P>
-		<LI><P><code>text/plain</code> output.</P>
 	</UL>
 </UL>
-<H2 id="reporting-bugs">Reporting Bugs</H2>
-<P>If you find undocumented bugs, please report them to
-<A HREF="mailto:hsivonen@iki.fi">hsivonen@iki.fi</A>.</P>
-<H2 id="faq">FAQ</H2>
-<H3>My server gives the HTML5 conformance checker a 406 status. What’s up?</H3>
-<P>Your server cannot properly deal with an <code>Accept</code> header that does not have <code>*/*</code> in it. Chances are that you are using Apache 1.3, PHP and MultiViews together. MultiViews thinks the type of your page is <code>application/x-httpd-php</code>, which isn’t in the <code>Accept</code> header.</P>
-
-<H3>Why Are You Doing This?</H3>
-<P>I think DTDs are bad in four ways:</P>
-<OL>
-	<LI><P>DTDs pollute the document with schema-specific syntax. Since
-	the document itself declares the rules, the question on answered by
-	DTD validation is not the question that should be asked. DTD
-	validation aswers the question “Does this document conform to the
-	rules it declares itself?” The interesting question is “Does
-	this document conform to these rules?” when the person who asks
-	the question chooses the rules the question is about.</P>
-	<LI><P>DTDs mix a validation mechanism, an inclusion mechanism and
-	an infoset augmentation mechanism. The inclusion mechanism is mainly
-	used for cheracter entities, which solve (but only it if the DTD is
-	processed and processing it is not required!) an input problem by
-	burdening the recipient instead of keeping input matters between the
-	editing software and the document author.</P>
-	<LI><P>DTDs aren’t particularly expressive.</P>
-	<LI><P>DTDs don’t support Namespaces in XML.</P>
-</OL>
-<P>I hope providing an online validation service for RELAX NG removes
-the excuse that DTDs are needed for online validators.</P>
-<H2 id="src">Source Code</H2>
-<p><a href="http://cvsdude.com"><img src="http://cvsdude.com/image/cvsdude_tag.jpg" alt="CVSDude : CVS, Subversion, Trac source control and project management hosting">
-</a>The source code and the dependencies can be obtained using a Python-based (no XML situps!) build script:</p>
-<pre><kbd>mkdir checker
-cd checker
-svn co http://svn.versiondude.net/whattf/build/trunk/ build
-python build/build.py all</kbd></pre>
-<p>This will download, build and run the system at <code>http://localhost:8888/</code>. For other options, please run <kbd>python build/build.py --help</kbd> instead. Please note that the dependencies are big. The script will spend time downloading stuff. The script requires Python, Subversion and JDK 5 or later. (Tested on Mac OS X and Ubuntu. Windows compatibility is unknown.)</p>
-<h3>Deployment</h3>
-<p>The above example starts a standalone HTTP server with debug messages printed to the console. To use <a href='http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html'>AJP13</a> instead, use <kbd>--ajp=on</kbd>. A <a href='http://logging.apache.org/log4j/docs/'>log4j</a> configuration for deployment can be given using the <kbd>--log4j=</kbd> option. There is a sample file in <code>validator/log4j-deployment-sample.properties</code>. The directory <code>extras/</code> is searched for additional jars for the classpath. For example, if you configure log4j to send email, you should put the <a href='http://java.sun.com/products/javamail/'>Java Mail API</a> and <a href='http://java.sun.com/products/javabeans/jaf/'>JavaBeans Activation Framework</a> jars in <code>extras/</code>.</p>
+<H2 id="reporting-bugs">Reporting Bugs and Getting Help</H2>
+<P>The preferred forum for discussing issues related to using the
+(X)HTML5 validator is the <A HREF="http://lists.whatwg.org/listinfo.cgi/help-whatwg.org">WHATWG
+Help mailing list</A>. The preferred forum for discussing issues
+related to implementing (X)HTML5 validators in general and this on in
+particular is the <A HREF="http://lists.whatwg.org/listinfo.cgi/implementors-whatwg.org">WHATWG
+Implementors mailing list</A>. For issues that are not related to the
+(X)HTML5 functionality, please email <A HREF="mailto:hsivonen@iki.fi">hsivonen@iki.fi</A>.</P>
 <H2 id="ack">Acknowledgments</H2>
-<P>I would like to thank the Mozilla Foundation and the Mozilla Corporation for funding this
-project.</P>
+<P>I would like to thank the Mozilla Foundation and the Mozilla
+Corporation for funding this project.</P>
 <P>I would like to thank James Clark for writing Jing and for
 championing RELAX NG and XML. I would also like to thank everyone who
 tested the development builds, the writers of test cases and everyone
 who has developed library code and schemas that the service uses.</P>
 <P>The XHTML 1.0 schemas were originally written by James Clark and
-have been improved by Petr N&aacute;levka. The schemas used here are
-not exactly identical to those used by N&aacute;levka’s <A HREF="http://badame.vse.cz/validator/">Relaxed</A>,
-because Jing does not allow <CODE>value-of</CODE> in Schematron
-assertion failure messages. I have also refined the messages
-slightly.</P>
+have been improved by Petr N&aacute;levka.</P>
 <P><A HREF="http://fantasai.inkedblade.net/">fantasai</A> designed
 the (X)HTML5 schema framework, wrote the (X)HTML5 Core schemas and
 helped along the way when I added features.</P>
@@ -513,32 +549,37 @@ Foundation (http://www.apache.org/).</P>
 <DL>
 	<DT><A HREF="http://www.validome.org/">Validome</A> by The Validome
 	Team 
-	</DT><DD>
+	</DT><DD><P>
 	Focuses on HTML, XHTML, WML. Uses SGML DTDs and custom code for
 	HTML. Uses XSD and custom code for XHTML. Recently added support for
-	RSS and Atom, but that feature is still in flux.</DD><DT>
+	RSS and Atom, but that feature is still in flux.</P></DD><DT>
 	<A HREF="http://schneegans.de/sv/">XHTML 1.0 schema validator</A> by
 	Christoph Schneegans 
-	</DT><DD>
-	Validates using the XSD implementation of XHTML 1.0.</DD><DT>
+	</DT><DD><P>
+	Validates using the XSD implementation of XHTML 1.0.</P></DD><DT>
 	<A HREF="http://badame.vse.cz/validator/">Relaxed</A> by Petr
 	N&aacute;levka 
-	</DT><DD>
-	Uses RELAX NG and Schematron for validating XHTML and HTML. TagSoup
-	is used for parsing HTML, so some errors go unnoticed. (The XHTML
-	1.0 schemas offered here as presets are copied form Relaxed.) 
-	</DD><DT>
+	</DT><DD><P>
+	Uses RELAX NG and Schematron for validating XHTML and HTML. (The
+	XHTML 1.0 schemas offered here as presets are based on the schemas
+	used in Relaxed.) 
+	</P></DD><DT>
 	<A HREF="http://valet.webthing.com/page/">Page Valet</A> by WebThing
 	/ Nick Kew 
-	</DT><DD>
-	DTD-based SGML and XML validation. Unlike the W3C validator, Page
-	Valet has a real XML parser for XML validation. 
-	</DD><DT>
+	</DT><DD><P>
+	DTD-based SGML and XML validation.</P></DD><DT>
 	<A HREF="http://feedvalidator.org/">Feed Validator</A> by Sam Ruby,
 	Mark Pilgrim, Joseph Walton, and Phil Ringnalda 
-	</DT><DD>
+	</DT><DD><P>
 	Checks Atom and RSS feeds. Uses Python as the schema language. :-) 
-	</DD></DL>
+	</P></DD><DT>
+	<A HREF="http://jigsaw.w3.org/css-validator/">The W3C CSS Validation
+	Service</A></DT><DD><P>
+	Checks CSS style sheets. 
+	</P></DD><DT>
+	<A HREF="http://validator.w3.org/">The W3C Markup Validation Service</A></DT><DD><P>
+	DTD-based SGML and XML validation. 
+	</P></DD></DL>
 <H2 id="tos">Terms of service</H2>
 <P><CODE>#include &quot;common-sense.h&quot;<BR>#include
 &quot;disclaimer.h&quot;</CODE></P>
@@ -547,12 +588,13 @@ not use the service.</P>
 <P>This service is provided in the hope that it is useful. Neither
 Henri Sivonen nor anyone else has any obligation to provide this
 service to you. The service or any part thereof may be discontinued
-at any time without notice. There is absolutely no warranty. There is 
-no guarantee of a level of service. If you need a guaranteed level of 
+at any time without notice. There is absolutely no warranty. There is
+no guarantee of a level of service. If you need a guaranteed level of
 service, you should probably run your own instance of the software.</P>
-<p>Please use the service reasonably. If you call it from your own blog, 
-that’s cool. If you need a validator as a part of a massively traffic-generating 
-blog hosting service, please run your own instance.</p>
+<P>Please use the service reasonably. If you call it from your own
+blog, that’s cool. If you need a validator as a part of a massively
+traffic-generating blog hosting service, please run your own
+instance.</P>
 <H2 id="privacy">Privacy policy</H2>
 <P>When you access the validation service, data about the access is
 logged for the purpose of understanding the use of the service,
@@ -574,14 +616,31 @@ conditions may also be logged. When an error condition is logged, the
 log entry may include data entered by you or pertaining to the
 resources your request caused the validator to process.</P>
 <P>The logs are readable by me (Henri Sivonen) and, technically, by
-the administrators of the server. I have no intent of sharing raw log
-entries with others (except with law enforcement officials if
-necessary). However, I reserve the right to publish aggregate
-statistics derived from the logs.</P>
+the administrators of the hosting provider. I have no intent of
+sharing raw log entries with others (except with law enforcement
+officials if necessary). However, I reserve the right to publish
+aggregate statistics derived from the logs.</P>
 <hr>
 <div class="footer">
-<p class="copyrightnotice">Copyright <a href="http://hsivonen.iki.fi/author/">Henri Sivonen</a></p>
-<p>Text last updated: 2007-11-27</p>
+<p>Text last updated: 2008-01-13</p>
+<p class="copyrightnotice">The following notice applies to this HTML file:</p>
+<p>Copyright (c) 2005-2007 Henri Sivonen<br>
+Copyright (c) 2007-2008 Mozilla Foundation</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a 
+copy of this software and associated documentation files (the "Software"), 
+to deal in the Software without restriction, including without limitation 
+the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.</p>
 </div>
 </body>
 </html>

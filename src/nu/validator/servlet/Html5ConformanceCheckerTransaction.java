@@ -165,4 +165,16 @@ public class Html5ConformanceCheckerTransaction extends
         // No-op
     }
 
+    void maybeEmitNsfilterField() throws SAXException {
+        if (request.getParameter("nsfilter") != null) {
+            NsFilterEmitter.emit(contentHandler, this);
+        }
+    }
+
+    void maybeEmitCharsetField() throws SAXException {
+        if (request.getParameter("charset") != null) {
+            CharsetEmitter.emit(contentHandler, this);
+        }
+    }
+
 }

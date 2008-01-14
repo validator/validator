@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +146,79 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "static", "super", "switch", "synchronized", "this", "throw",
             "throws", "transient", "try", "typeof", "var", "void", "volatile",
             "while", "with" };
+    
+    private static final String[] CHARSETS = {
+        "UTF-8",
+        "UTF-16",
+        "Windows-1250",
+        "Windows-1251",
+        "Windows-1252",
+        "Windows-1253",
+        "Windows-1254",
+        "Windows-1255",
+        "Windows-1256",
+        "Windows-1257",
+        "Windows-1258",
+        "ISO-8859-1",
+        "ISO-8859-2",
+        "ISO-8859-3",
+        "ISO-8859-4",
+        "ISO-8859-5",
+        "ISO-8859-6",
+        "ISO-8859-7",
+        "ISO-8859-8",
+        "ISO-8859-9",
+        "ISO-8859-13",
+        "ISO-8859-15",
+        "KOI8-R",
+        "TIS-620",
+        "GBK",
+        "GB18030",
+        "Big5",
+        "Big5-HKSCS",
+        "Shift_JIS",
+        "ISO-2022-JP",
+        "EUC-JP",
+        "ISO-2022-KR",
+        "EUC-KR"
+    };
 
+    private static final char[][] CHARSET_DESCRIPTIONS = {
+        "UTF-8 (Global)".toCharArray(),
+        "UTF-16 (Global)".toCharArray(),
+        "Windows-1250 (Central European)".toCharArray(),
+        "Windows-1251 (Cyrillic)".toCharArray(),
+        "Windows-1252 (Western)".toCharArray(),
+        "Windows-1253 (Greek)".toCharArray(),
+        "Windows-1254 (Turkish)".toCharArray(),
+        "Windows-1255 (Hebrew)".toCharArray(),
+        "Windows-1256 (Arabic)".toCharArray(),
+        "Windows-1257 (Baltic)".toCharArray(),
+        "Windows-1258 (Vietnamese)".toCharArray(),
+        "ISO-8859-1 (Western)".toCharArray(),
+        "ISO-8859-2 (Central European)".toCharArray(),
+        "ISO-8859-3 (South European)".toCharArray(),
+        "ISO-8859-4 (Baltic)".toCharArray(),
+        "ISO-8859-5 (Cyrillic)".toCharArray(),
+        "ISO-8859-6 (Arabic)".toCharArray(),
+        "ISO-8859-7 (Greek)".toCharArray(),
+        "ISO-8859-8 (Hebrew)".toCharArray(),
+        "ISO-8859-9 (Turkish)".toCharArray(),
+        "ISO-8859-13 (Baltic)".toCharArray(),
+        "ISO-8859-15 (Western)".toCharArray(),
+        "KOI8-R (Russian)".toCharArray(),
+        "TIS-620 (Thai)".toCharArray(),
+        "GBK (Chinese, simplified)".toCharArray(),
+        "GB18030 (Chinese, simplified)".toCharArray(),
+        "Big5 (Chinese, traditional)".toCharArray(),
+        "Big5-HKSCS (Chinese, traditional)".toCharArray(),
+        "Shift_JIS (Japanese)".toCharArray(),
+        "ISO-2022-JP (Japanese)".toCharArray(),
+        "EUC-JP (Japanese)".toCharArray(),
+        "ISO-2022-KR (Korean)".toCharArray(),
+        "EUC-KR (Korean)".toCharArray()
+    };
+        
     protected static final int HTML5_SCHEMA = 3;
 
     protected static final int XHTML1STRICT_SCHEMA = 2;
@@ -199,7 +272,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private long start = System.currentTimeMillis();
 
-    private final HttpServletRequest request;
+    protected final HttpServletRequest request;
 
     private final HttpServletResponse response;
 
@@ -275,7 +348,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     
     private String charsetOverride = null;
     
-    private Set<String> filteredNamespaces = new HashSet<String>();
+    private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked for UI stability
 
     static {
         try {
@@ -402,7 +475,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
     }
 
-    protected static String scrub(String s) {
+    protected static String scrub(CharSequence s) {
         return Normalizer.normalize(
                 CharacterUtil.prudentlyScrubCharacterData(s), Normalizer.NFC);
     }
@@ -535,7 +608,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         
         String charset = request.getParameter("charset");
         if (charset != null) {
-            charset = charset.trim();
+            charset = scrub(charset.trim());
             if (!"".equals(charset)) {
                 charsetOverride = charset;
             }
@@ -1415,7 +1488,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
     }
 
-    public void emitIncludes() throws SAXException {
+    void emitIncludes() throws SAXException {
         attrs.clear();
         attrs.addAttribute("src", SCRIPT);
         emitter.startElement("script", attrs);
@@ -1427,11 +1500,58 @@ class VerifierServletTransaction implements DocumentModeHandler {
         emitter.endElement("link");        
     }
 
-    public void emitAbout() throws SAXException {
+    void emitAbout() throws SAXException {
         attrs.clear();
         attrs.addAttribute("href", ABOUT_PAGE);
         emitter.startElement("a", attrs);
         emitter.characters(ABOUT_THIS_SERVICE);
         emitter.endElement("a");
+    }
+
+    void emitNsfilterField() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("name", "nsfilter");
+        attrs.addAttribute("id", "nsfilter");
+        attrs.addAttribute("pattern", "(?:.+:.+(?:\\s+.+:.+)*)?");
+        attrs.addAttribute(
+                "title",
+                "The namespace filter field takes zero or more space-separated namespace URIs for vocabularies to be filtered out between the parser and the validation engine.");
+        if (!filteredNamespaces.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            boolean first = true;
+            for (String ns : filteredNamespaces) {
+                if (!first) {
+                    sb.append(' ');
+                }
+                sb.append(ns);
+                first = false;
+            }
+            attrs.addAttribute("value", scrub(sb));
+        }
+        emitter.startElement("input", attrs);
+        emitter.endElement("input");
+    }
+
+    void maybeEmitNsfilterField() throws SAXException {
+        NsFilterEmitter.emit(contentHandler, this);
+    }
+
+    void emitCharsetOptions() throws SAXException {
+        boolean found = false;
+        for (int i = 0; i < CHARSETS.length; i++) {
+            String charset = CHARSETS[i];
+            boolean selected = charset.equalsIgnoreCase(charsetOverride); // XXX use ASCII-caseinsensitivity
+            emitter.option(CHARSET_DESCRIPTIONS[i], charset, selected);
+            if (selected) {
+                found = true;
+            }
+        }
+        if (!found && charsetOverride != null) {
+            emitter.option(charsetOverride, charsetOverride, true);
+        }
+    }
+
+    void maybeEmitCharsetField() throws SAXException {
+        CharsetEmitter.emit(contentHandler, this);
     }
 }

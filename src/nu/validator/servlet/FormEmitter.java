@@ -31,6 +31,7 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs_
 t.emitDocField(); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
+t.maybeEmitCharsetField(); 
 __attrs__.clear();
 __attrs__.addAttribute("", "title", "title", "CDATA", "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
@@ -98,6 +99,7 @@ t.emitParserOptions();
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "select", "select");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
+t.maybeEmitNsfilterField(); 
 __attrs__.clear();
 __attrs__.addAttribute("", "title", "title", "CDATA", "Being lax about the HTTP Content-Type means treating text/plain as XML and ignoring the US-ASCII default of the text/* XML content types.");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);

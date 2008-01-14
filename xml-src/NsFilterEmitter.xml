@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-omitRoot ?>
+<?SaxCompiler-package nu.validator.servlet?>
+<?SaxCompiler-class NsFilterEmitter?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
+<tr xmlns="http://www.w3.org/1999/xhtml" title="Space-separated list of namespace URIs."
+	><th
+		><label for="nsfilter">Namespace Filter</label
+	></th
+	><td><?SaxCompiler-code t.emitNsfilterField(); ?></td
+></tr
+>

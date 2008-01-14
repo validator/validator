@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-omitRoot ?>
+<?SaxCompiler-package nu.validator.servlet?>
+<?SaxCompiler-class CharsetEmitter?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
+<tr xmlns="http://www.w3.org/1999/xhtml" title="Selecting a preset overrides the schema field above."
+	><th
+		><label for="charset">Encoding</label
+	></th
+	><td
+		><select id='charset' name='charset'
+			><option value=''>Don’t override</option
+			><?SaxCompiler-code t.emitCharsetOptions(); 
+		?></select
+	></td
+></tr
+>

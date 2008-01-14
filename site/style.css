@@ -36,6 +36,7 @@ html {
 
 form {
 	font: caption;
+	margin-bottom: 1em;
 }
 
 fieldset {
@@ -44,7 +45,7 @@ fieldset {
 	margin: 0;
 }
 
-#schema, #doc {
+#schema, #doc, #nsfilter {
 	width: 99%;
 }
 

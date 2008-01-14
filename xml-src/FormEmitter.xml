@@ -14,7 +14,7 @@
 					></th
 					><td><?SaxCompiler-code t.emitDocField(); ?></td
 				></tr
-				><tr title="Space-separated list of schema IRIs. (Leave blank to let the service guess.)"
+				><?SaxCompiler-code t.maybeEmitCharsetField(); ?><tr title="Space-separated list of schema IRIs. (Leave blank to let the service guess.)"
 					><th
 						><label for="schema">Schemas</label
 					></th
@@ -41,7 +41,7 @@
 						?></select
 					></td
 				></tr
-				><tr title="Being lax about the HTTP Content-Type means treating text/plain as XML and ignoring the US-ASCII default of the text/* XML content types."
+				><?SaxCompiler-code t.maybeEmitNsfilterField(); ?><tr title="Being lax about the HTTP Content-Type means treating text/plain as XML and ignoring the US-ASCII default of the text/* XML content types."
 					><th></th
 					><td
 						><label for='laxtype'><?SaxCompiler-code t.emitLaxTypeField(); 
