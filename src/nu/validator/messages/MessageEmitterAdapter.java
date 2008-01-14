@@ -389,7 +389,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void message(MessageType type, Exception message, String systemId,
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
-        log4j.info(new StringBuilder().append(systemId).append('\t').append(message.getMessage()));
+        if (systemId != null && systemId.startsWith("http:") && type == MessageType.ERROR) {
+            log4j.info(new StringBuilder().append(systemId).append('\t').append(message.getMessage()));
+        }
         String uri = sourceCode.getUri();
         if (oneBasedLine > -1
                 && (uri == systemId || (uri != null && uri.equals(systemId)))) {
