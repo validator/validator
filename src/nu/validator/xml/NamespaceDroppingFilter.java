@@ -49,6 +49,8 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
     private int depth;
     
     private boolean alreadyWarned;
+    
+    private boolean rootSeen;
 
     private Locator locator = null;
     
@@ -86,6 +88,7 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
     public void startDocument() throws SAXException {
         depth = 0;
         alreadyWarned = false;
+        rootSeen = false;
         super.startDocument();
     }
 
@@ -96,7 +99,12 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         if (depth == 0) {
             if (isInNamespacesToRemove(uri)) {
-                depth = 1;
+                if (rootSeen) {
+                    depth = 1;                    
+                } else {
+                    warning(new SAXParseException("Cannot filter out the root element.", locator));
+                    super.startElement(uri, localName, qName, filterAttributes(atts));                    
+                }
             } else {
                 super.startElement(uri, localName, qName, filterAttributes(atts));
             }
@@ -107,6 +115,7 @@ public final class NamespaceDroppingFilter extends XMLFilterImpl {
             }
             depth++;
         }
+        rootSeen = true;
     }
 
     private final Attributes filterAttributes(Attributes atts) {
