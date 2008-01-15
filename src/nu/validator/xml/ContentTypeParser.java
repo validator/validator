@@ -164,7 +164,7 @@ public class ContentTypeParser {
                         is.setType(type);
                         wasHtml = true;
                     } else if (isOnlyHtmlAllowed()) {
-                        if (laxContentType && ("text/plain".equals(type) || "application/octet-stream".equals(type))) {
+                        if (laxContentType && "text/plain".equals(type)) {
                             is.setType(type);
                             wasHtml = true;
                             if (errorHandler != null) {
@@ -173,6 +173,9 @@ public class ContentTypeParser {
                                                 + type, is.getPublicId(),
                                         is.getSystemId(), -1, -1));
                             }
+                        } else if ("application/octet-stream".equals(type)) {
+                            is.setType(type);
+                            wasHtml = true;                            
                         } else {
                             String msg = "Non-HTML Content-Type: \u201C" + type
                                     + "\u201D.";
