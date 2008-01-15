@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2005-2007 Henri Sivonen
+ * Copyright (c) 2007-2008 Mozilla Foundation
  * Copyright (c) 2007 Simon Pieters
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,7 +21,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
 var hasDuplicateMessages = false
 var currentOl = null
 var ungroupedOl = null
@@ -29,7 +28,8 @@ var groupedOl = null
 
 function boot(){
     schemaChanged()
-	initGrouping()
+	parserChanged()
+    initGrouping()
 }
 
 function schemaChanged(){
@@ -123,10 +123,10 @@ function parserChanged(){
                         }
                     }
                 }
-				var nsfilter = document.getElementById("nsfilter")
-				if (nsfilter) {
-					nsfilter.disabled = true
-				}
+                var nsfilter = document.getElementById("nsfilter")
+                if (nsfilter) {
+                    nsfilter.disabled = true
+                }
             }
             else {
                 var select = document.getElementById("preset")
@@ -137,10 +137,10 @@ function parserChanged(){
                         }
                     }
                 }
-				var nsfilter = document.getElementById("nsfilter")
-				if (nsfilter) {
-					nsfilter.disabled = false
-				}
+                var nsfilter = document.getElementById("nsfilter")
+                if (nsfilter) {
+                    nsfilter.disabled = false
+                }
             }
         }
     }
@@ -156,27 +156,36 @@ function formSubmission(){
                 }
             }
         }
-        var submit = document.getElementById("submit")
-        if (submit) {
-            submit.disabled = true
-        }
-        var preset = document.getElementById("preset")
-        if (preset) {
-            preset.disabled = true
-        }
-        var parser = document.getElementById("parser")
-        if (parser) {
-            if ("" == parser.value) {
-                parser.disabled = true
-            }
-        }
-        var schema = document.getElementById("schema")
-        if (schema) {
-            if ("" == schema.value) {
-                schema.disabled = true
-            }
-        }
+        disableById("submit")
+        disableById("preset")
+        disableByIdIfEmptyString("parser")
+        disableByIdIfEmptyString("schema")
+        disableByIdIfEmptyString("charset")
+        disableByIdIfEmptyString("nsfilter")
         return true
+    }
+}
+
+function disableById(id){
+    var field = document.getElementById(id)
+    if (field) {
+        field.disabled = true
+    }
+}
+
+function disableByIdIfEmptyString(id){
+    var field = document.getElementById(id)
+    if (field) {
+        if ("" == field.value) {
+            field.disabled = true
+        }
+    }
+}
+
+function enableById(id){
+    var field = document.getElementById(id)
+    if (field) {
+        field.disabled = false
     }
 }
 
@@ -184,97 +193,113 @@ function createHtmlElement(tagName){
     return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName)
 }
 
-function installGroupingToggle() {
-	var para = createHtmlElement('p')
-	var button = createHtmlElement('input')
-	button.type = 'button'
-	button.value = 'Group Messages'
-	para.appendChild(button)
-	if (hasDuplicateMessages) {
-		button.onclick = function(){
-			if (currentOl == ungroupedOl) {
-				currentOl.parentNode.replaceChild(groupedOl, currentOl)
-				currentOl = groupedOl
-				this.value = 'Ungroup Messages'
-			} else {
-				currentOl.parentNode.replaceChild(ungroupedOl, currentOl)
-				currentOl = ungroupedOl
-				this.value = 'Group Messages'				
-			}
-		}
-	} else {
-		button.disabled = true
-	}
-	currentOl.parentNode.insertBefore(para, currentOl)
+function installGroupingToggle(){
+    var para = createHtmlElement('p')
+    var button = createHtmlElement('input')
+    button.type = 'button'
+    button.value = 'Group Messages'
+    para.appendChild(button)
+    if (hasDuplicateMessages) {
+        button.onclick = function(){
+            if (currentOl == ungroupedOl) {
+                currentOl.parentNode.replaceChild(groupedOl, currentOl)
+                currentOl = groupedOl
+                this.value = 'Ungroup Messages'
+            }
+            else {
+                currentOl.parentNode.replaceChild(ungroupedOl, currentOl)
+                currentOl = ungroupedOl
+                this.value = 'Group Messages'
+            }
+        }
+    }
+    else {
+        button.disabled = true
+    }
+    currentOl.parentNode.insertBefore(para, currentOl)
 }
 
-function initGrouping() {
-	var n = document.documentElement.lastChild.firstChild
-	while (n) {
-		// The line below protects IE users from a crash
-		if (n instanceof HTMLOListElement) { // deliberately IE-incompatible
-//		if (n.start) { // cross-browser compatible
-			currentOl = n
-			break
-		}
-		n = n.nextSibling
-	}
-	if (!currentOl) {
-		return
-	}
-	ungroupedOl = currentOl
-	groupedOl = buildGrouped(ungroupedOl)
-	installGroupingToggle()
+function initGrouping(){
+    var n = document.documentElement.lastChild.firstChild
+    while (n) {
+        // The line below protects IE users from a crash
+        if (n instanceof HTMLOListElement) { // deliberately IE-incompatible
+            //		if (n.start) { // cross-browser compatible
+            currentOl = n
+            break
+        }
+        n = n.nextSibling
+    }
+    if (!currentOl) {
+        return
+    }
+    ungroupedOl = currentOl
+    groupedOl = buildGrouped(ungroupedOl)
+    installGroupingToggle()
 }
 
-function buildGrouped(ol) {
-	var locListByMsg = {}
-	var rv = createHtmlElement('ol')
-	var li = ol.firstChild
-	var i = 1
-	while (li) {
-		var msgPara = li.firstChild
-		var locExtract = createHtmlElement('li')
-		locExtract.value = i
-		var loc = msgPara.nextSibling
-		var elaboration = null
-		if (loc && loc.className && loc.className == 'location') {
-			locExtract.appendChild(loc.cloneNode(true))
-			var extract = loc.nextSibling
-			if (extract && extract.className && extract.className == 'extract') {
-				locExtract.appendChild(extract.cloneNode(true))
-				elaboration = extract.nextSibling
-			} else {
-				elaboration = extract
-			}
-		} else {
-			elaboration = loc
-			var noLoc = createHtmlElement('p')
-			noLoc.appendChild(document.createTextNode("(No location)"))
-			locExtract.appendChild(noLoc)
-		}
-		var locList = null
-		var msgText = msgPara.innerHTML
-		locList = locListByMsg[msgText]
-		if (locList) {
-			hasDuplicateMessages = true
-		} else {
-			locList = createHtmlElement('ol')
-			locListByMsg[msgText] = locList
-			var msgItem = createHtmlElement('li')
-			msgItem.className = li.className
-			msgItem.appendChild(msgPara.cloneNode(true))
-			if (elaboration) {
-				msgItem.appendChild(elaboration.cloneNode(true))
-			}
-			msgItem.appendChild(locList)
-			rv.appendChild(msgItem)
-		}
-		locList.appendChild(locExtract)
-		
-		li = li.nextSibling
-		i++
-	}
-	
-	return rv
+function buildGrouped(ol){
+    var locListByMsg = {}
+    var rv = createHtmlElement('ol')
+    var li = ol.firstChild
+    var i = 1
+    while (li) {
+        var msgPara = li.firstChild
+        var locExtract = createHtmlElement('li')
+        locExtract.value = i
+        var loc = msgPara.nextSibling
+        var elaboration = null
+        if (loc && loc.className && loc.className == 'location') {
+            locExtract.appendChild(loc.cloneNode(true))
+            var extract = loc.nextSibling
+            if (extract && extract.className && extract.className == 'extract') {
+                locExtract.appendChild(extract.cloneNode(true))
+                elaboration = extract.nextSibling
+            }
+            else {
+                elaboration = extract
+            }
+        }
+        else {
+            elaboration = loc
+            var noLoc = createHtmlElement('p')
+            noLoc.appendChild(document.createTextNode("(No location)"))
+            locExtract.appendChild(noLoc)
+        }
+        var locList = null
+        var msgText = msgPara.innerHTML
+        locList = locListByMsg[msgText]
+        if (locList) {
+            hasDuplicateMessages = true
+        }
+        else {
+            locList = createHtmlElement('ol')
+            locListByMsg[msgText] = locList
+            var msgItem = createHtmlElement('li')
+            msgItem.className = li.className
+            msgItem.appendChild(msgPara.cloneNode(true))
+            if (elaboration) {
+                msgItem.appendChild(elaboration.cloneNode(true))
+            }
+            msgItem.appendChild(locList)
+            rv.appendChild(msgItem)
+        }
+        locList.appendChild(locExtract)
+        
+        li = li.nextSibling
+        i++
+    }
+    
+    return rv
+}
+
+window.onunload = function(){
+    enableById("submit")
+    enableById("preset")
+    enableById("parser")
+    enableById("schema")
+    enableById("charset")
+    enableById("nsfilter")
+    schemaChanged()
+    parserChanged()
 }
