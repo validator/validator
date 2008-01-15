@@ -164,7 +164,7 @@ public class ContentTypeParser {
                         is.setType(type);
                         wasHtml = true;
                     } else if (isOnlyHtmlAllowed()) {
-                        if (laxContentType && "text/plain".equals(type)) {
+                        if (laxContentType && ("text/plain".equals(type) || "application/octet-stream".equals(type))) {
                             is.setType(type);
                             wasHtml = true;
                             if (errorHandler != null) {
