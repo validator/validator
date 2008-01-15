@@ -3,7 +3,7 @@
 <?SaxCompiler-package nu.validator.servlet?>
 <?SaxCompiler-class CharsetEmitter?>
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
-<html xmlns="http://www.w3.org/1999/xhtml"><tr title="Selecting a preset overrides the schema field above."
+<html xmlns="http://www.w3.org/1999/xhtml"><tr title="Override for transfer protocol character encoding declaration."
 	><th
 		><label for="charset">Encoding</label
 	></th
