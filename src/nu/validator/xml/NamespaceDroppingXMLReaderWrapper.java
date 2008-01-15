@@ -38,7 +38,6 @@ import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.XMLFilterImpl;
 
 /**
  * This does not extend XMLFilterImpl, because XMLFilterImpl constructor overwrites 
@@ -159,11 +158,17 @@ public final class NamespaceDroppingXMLReaderWrapper implements XMLReader, Conte
         wrappedReader.getErrorHandler().warning(exception);
     }
 
-    private final Attributes filterAttributes(Attributes atts) {
+    private final Attributes filterAttributes(Attributes atts) throws SAXException {
         int length = atts.getLength();
         int i = 0;
         while (i < length) {
             if (isInNamespacesToRemove(atts.getURI(i))) {
+                if (!alreadyWarnedAboutFiltering) {
+                    warning(new SAXParseException(
+                            "Content is being hidden from the validator based on namespace filtering.",
+                            locator));
+                    alreadyWarnedAboutFiltering = true;
+                }
                 AttributesImpl rv = new AttributesImpl();
                 for (int j = 0; j < i; j++) {
                     rv.addAttribute(atts.getURI(j), atts.getLocalName(j),
