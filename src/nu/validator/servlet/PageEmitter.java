@@ -8,6 +8,7 @@ try {
 contentHandler.startDocument();
 contentHandler.startPrefixMapping("", "http://www.w3.org/1999/xhtml");
 __attrs__.clear();
+__attrs__.addAttribute("http://www.w3.org/XML/1998/namespace", "lang", "xml:lang", "CDATA", "en");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "html", "html", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "head", "head", __attrs__);

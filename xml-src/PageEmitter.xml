@@ -2,7 +2,7 @@
 <?SaxCompiler-package nu.validator.servlet?>
 <?SaxCompiler-class PageEmitter?>
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang='en'
 	><head
 		><?SaxCompiler-code t.emitIncludes(); ?><title
 		><?SaxCompiler-code t.emitTitle(false); ?></title
