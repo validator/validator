@@ -12,9 +12,7 @@
 <P>Validator.nu is validation 2.0.</P>
 <H2>The Pitch</H2>
 <UL>
-	<LI><P><a href='http://html5.validator.nu/'>Experimental (X)HTML5 conformance checking</a>. (Tracking the
-	spec as of early December 2007—substantial late December 2007
-	content model changes not yet supported.)</P>
+	<LI><P><a href='http://html5.validator.nu/'>Experimental (X)HTML5 conformance checking</a>.</P>
 	<LI><P><a href='http://validator.nu/'>RELAX NG validation</a>—XML syntax and Compact Syntax</P>
 	<LI><P>Schematron <EM>1.5 </EM>validation (standalone schemas
 	only—ISO Schematron or Schematron embedded in RELAX NG are <EM>not</EM>
@@ -172,12 +170,12 @@ XML, JSON and plain text.</P>
 	schema.</P></DD><DT>
 	HTML5 (experimental) 
 	</DT><DD><P>
-	A schema for HTML5 as of early December 2007. Suitable for use with
+	A schema for HTML5. Suitable for use with
 	the HTML parser. Written by fantasai and Henri Sivonen. (<EM>This
 	schema is just an SVN snapshot—not a stable release version.</EM>)</P></DD><DT>
 	XHTML5 (experimental) 
 	</DT><DD><P>
-	A schema for full XHTML5 as of early December 2007. <EM>Not</EM>
+	A schema for full XHTML5. <EM>Not</EM>
 	suitable for use with the HTML parser. Written by fantasai and Henri
 	Sivonen. (<EM>This schema is just an SVN snapshot—not a stable
 	release version.</EM>)</P></DD><DT>
@@ -610,11 +608,14 @@ and time of the request, the first line of the request including the
 HTTP version, the path part of the URL and <EM>the query string
 containing the validator arguments</EM>, the HTTP “<CODE>Referer</CODE>”
 header (where you came from) and HTTP “<CODE>User-Agent</CODE>”
-header (the name and version of your browser). Additionally, the URLs
-of the HTTP requests made by the validator are logged. Some error
-conditions may also be logged. When an error condition is logged, the
+header (the name and version of your browser).</p>
+<p>Additionally, the URLs
+of the HTTP requests made by the validator are logged. Some internal error
+conditions may also be logged. When an internal error condition is logged, the
 log entry may include data entered by you or pertaining to the
-resources your request caused the validator to process.</P>
+resources your request caused the validator to process. Finally, (X)HTML5 
+validation errors are logged for documents that are retrieved from the Web 
+(i.e. for documents that are world-readable anyway).</P>
 <P>The logs are readable by me (Henri Sivonen) and, technically, by
 the administrators of the hosting provider. I have no intent of
 sharing raw log entries with others (except with law enforcement
@@ -622,7 +623,7 @@ officials if necessary). However, I reserve the right to publish
 aggregate statistics derived from the logs.</P>
 <hr>
 <div class="footer">
-<p>Text last updated: 2008-01-13</p>
+<p>Text last updated: 2008-01-15</p>
 <p class="copyrightnotice">The following notice applies to this HTML file:</p>
 <p>Copyright (c) 2005-2007 Henri Sivonen<br>
 Copyright (c) 2007-2008 Mozilla Foundation</p>
