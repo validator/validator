@@ -8,7 +8,7 @@
 		><legend>Validator Input</legend
 		><table
 			><tbody
-				><tr title="IRI (http or https) of the document to be checked. (Leave blank to bookmark settings.)"
+				><tr title="The document to validate."
 					><th 
 						><label for="doc">Document</label
 					></th
@@ -31,7 +31,7 @@
 						?></select
 					></td
 				></tr
-				><tr title="The parser to use. This selection also affect the Accept HTTP request header that is sent. The HTML 4.01 parser options mean the HTML5 parser in a compatibility mode&#x2014;not an SGML parser."
+				><tr title="The parser to use. Affects HTTP Accept header."
 					><th
 						><label for="parser">Parser</label
 					></th
@@ -41,7 +41,7 @@
 						?></select
 					></td
 				></tr
-				><?SaxCompiler-code t.maybeEmitNsfilterField(); ?><tr title="Being lax about the HTTP Content-Type means treating text/plain as XML and ignoring the US-ASCII default of the text/* XML content types."
+				><?SaxCompiler-code t.maybeEmitNsfilterField(); ?><tr title="Disrespect MIME RFCs."
 					><th></th
 					><td
 						><label for='laxtype'><?SaxCompiler-code t.emitLaxTypeField(); 

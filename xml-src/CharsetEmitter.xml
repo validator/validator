@@ -9,7 +9,7 @@
 	></th
 	><td
 		><select id='charset' name='charset'
-			><option value=''>Don’t override</option
+			><option value=''>As set by the server/page</option
 			><?SaxCompiler-code t.emitCharsetOptions(); 
 		?></select
 	></td

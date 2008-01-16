@@ -25,11 +25,66 @@ var hasDuplicateMessages = false
 var currentOl = null
 var ungroupedOl = null
 var groupedOl = null
+var urlInput = null
+var fileInput = null
+var textarea = null
 
 function boot(){
+    initFieldHolders()
     schemaChanged()
-	parserChanged()
+    parserChanged()
     initGrouping()
+}
+
+function initFieldHolders(){
+	if (document.forms[0].className == 'simple') {
+		return
+	}
+    urlInput = document.getElementById('doc')
+    
+    textarea = createHtmlElement('textarea')
+    if (textarea) {
+        textarea.cols = 72
+        textarea.rows = 15
+        textarea.id = 'doc'
+        textarea.name = 'content'
+		textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+    }
+    
+    fileInput = createHtmlElement('input')
+    if (fileInput) {
+        fileInput.type = 'file'
+        fileInput.id = 'doc'
+        fileInput.name = 'file'
+    }
+	
+	var td = urlInput.parentNode
+	if (td) {
+		var th = td.previousSibling
+		var label = th.firstChild
+		var modeSelect = createHtmlElement("select")
+		modeSelect.appendChild(createOption('Address', ''))
+		modeSelect.appendChild(createOption('File Upload', 'file'))
+		modeSelect.appendChild(createOption('Text Field', 'textarea'))
+		modeSelect.onchange = function() {
+			if (this.value == 'file') {
+				installFileUpload()
+			} else if (this.value == 'textarea') {
+				installTextarea()
+			} else {
+				installUrlInput()
+			}
+		}
+		th.replaceChild(modeSelect, label)				
+	}
+}
+
+function createOption(text, value) {
+	var rv = createHtmlElement('option')
+	rv.value = value
+	var tn = document.createTextNode(text)
+	rv.appendChild(tn)
+	return rv
 }
 
 function schemaChanged(){
@@ -76,6 +131,13 @@ function toggleParsers(newValue){
                     if (select.firstChild) {
                         for (var n = select.firstChild; n != null; n = n.nextSibling) {
                             n.disabled = false
+                        }
+                        if (document.getElementById('doc').name == 'content') {
+                            // text area case
+                            if (select.firstChild.selected) {
+                                select.firstChild.nextSibling.nextSibling.nextSibling.selected = true
+                            }
+                            select.firstChild.disabled = true
                         }
                     }
                 }
@@ -162,7 +224,20 @@ function formSubmission(){
         disableByIdIfEmptyString("schema")
         disableByIdIfEmptyString("charset")
         disableByIdIfEmptyString("nsfilter")
+        maybeMoveDocumentRowDown()
         return true
+    }
+}
+
+function maybeMoveDocumentRowDown(){
+    var field = document.getElementById('doc')
+    if (field && field.name != 'doc') {
+        var td = field.parentNode
+        if (td) {
+            var tr = td.parentNode
+            var tbody = tr.parentNode
+            tbody.appendChild(tr)
+        }
     }
 }
 
@@ -293,13 +368,63 @@ function buildGrouped(ol){
     return rv
 }
 
+function installTextarea(){
+    if (document.getElementById) {
+        var input = document.getElementById('doc')
+        if (input && textarea) {
+            var form = document.forms[0]
+            if (form) {
+                form.method = 'post'
+                form.enctype = 'multipart/form-data'
+                input.parentNode.replaceChild(textarea, input)
+                disableById('charset')
+                schemaChanged()
+            }
+        }
+    }
+}
+
+function installFileUpload(){
+    if (document.getElementById) {
+        var input = document.getElementById('doc')
+        if (input && fileInput) {
+            var form = document.forms[0]
+            if (form) {
+                form.method = 'post'
+                form.enctype = 'multipart/form-data'
+                input.parentNode.replaceChild(fileInput, input)
+                enableById('charset')
+                schemaChanged()
+            }
+        }
+    }
+}
+
+function installUrlInput() {
+    if (document.getElementById) {
+        var input = document.getElementById('doc')
+        if (input && urlInput) {
+            var form = document.forms[0]
+            if (form) {
+                form.method = 'get'
+                form.enctype = ''
+                input.parentNode.replaceChild(urlInput, input)
+                enableById('charset')
+                schemaChanged()
+            }
+        }
+    }	
+}
+
 window.onunload = function(){
-    enableById("submit")
-    enableById("preset")
-    enableById("parser")
-    enableById("schema")
-    enableById("charset")
-    enableById("nsfilter")
-    schemaChanged()
-    parserChanged()
+    if (document.getElementById) {
+        enableById("submit")
+        enableById("preset")
+        enableById("parser")
+        enableById("schema")
+        enableById("charset")
+        enableById("nsfilter")
+        schemaChanged()
+        parserChanged()
+    }
 }

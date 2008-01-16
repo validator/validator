@@ -42,7 +42,16 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 public class Html5ConformanceCheckerTransaction extends
         VerifierServletTransaction {
 
-    private static final char[] SERVICE_TITLE = "(X)HTML5 Validator ".toCharArray();
+    /**
+     * @see nu.validator.servlet.VerifierServletTransaction#isSimple()
+     */
+    @Override
+    protected boolean isSimple() {
+        return true;
+    }
+
+    private static final char[] SERVICE_TITLE = (System.getProperty(
+            "nu.validator.servlet.service-name", "Validator.nu") + " (X)HTML5 Validator ").toCharArray();
 
     private static final char[] TECHNOLOGY_PREVIEW = "(Highly Experimental)".toCharArray();
 
@@ -119,7 +128,7 @@ public class Html5ConformanceCheckerTransaction extends
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
-            if (document != null) {
+            if (document != null && document.length() > 0) {
                 emitter.characters(FOR);                
                 emitter.characters(scrub(document));                
             }

@@ -228,11 +228,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     protected static final int XHTML5_SCHEMA = 7;
 
-    private static final char[] SERVICE_TITLE = "Validator.nu ".toCharArray();
+    private static final char[] SERVICE_TITLE = (System.getProperty(
+            "nu.validator.servlet.service-name", "Validator.nu") + " ").toCharArray();
 
-    private static final char[] TWO_POINT_OH_BETA = "2.1 Gamma".toCharArray();
+    private static final char[] VERSION = "3".toCharArray();
 
-    private static final char[] RESULTS_TITLE = "Validation results for ".toCharArray();
+    private static final char[] RESULTS_TITLE = "Validation results".toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
 
@@ -1165,7 +1166,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
-            if (document != null) {
+            if (document != null && document.length() > 0) {
                 emitter.characters(FOR);
                 emitter.characters(scrub(document));
             }
@@ -1173,7 +1174,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             emitter.characters(SERVICE_TITLE);
             if (markupAllowed) {
                 emitter.startElement("span");
-                emitter.characters(TWO_POINT_OH_BETA);
+                emitter.characters(VERSION);
                 emitter.endElement("span");
             }
         }
@@ -1182,13 +1183,18 @@ class VerifierServletTransaction implements DocumentModeHandler {
     void emitForm() throws SAXException {
         attrs.clear();
         attrs.addAttribute("method", "get");
-//        attrs.addAttribute("method", "post");
-//        attrs.addAttribute("enctype", "multipart/form-data");
         attrs.addAttribute("action", request.getRequestURL().toString());
+        if (isSimple()) {
+            attrs.addAttribute("class", "simple");            
+        }
         attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
         emitFormContent();
         emitter.endElement("form");
+    }
+
+    protected boolean isSimple() {
+        return false;
     }
 
     /**
@@ -1206,7 +1212,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("pattern", "(?:https?://.+(?:\\s+https?://.+)*)?");
         attrs.addAttribute(
                 "title",
-                "The schema field takes zero or more space-separated absolute IRIs (http or https only) of the schemas that the document is to be validated against. (When left blank, the service will attempt to pick schemas automatically.)");
+                "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
         if (schemaUrls != null) {
             attrs.addAttribute("value", scrub(schemaUrls));
         }
@@ -1222,8 +1228,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("pattern", "(?:https?://.+)?");
         attrs.addAttribute(
                 "title",
-                // XXX drop last sentence for html5 facet
-                "The document field takes the absolute IRI (http or https only) of the document to be checked. (The document field can also be left blank in order to bookmark settings.)");
+                "Absolute IRI (http or https only) of the document to be checked.");
         if (document != null) {
             attrs.addAttribute("value", scrub(document));
         }
@@ -1517,7 +1522,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("pattern", "(?:.+:.+(?:\\s+.+:.+)*)?");
         attrs.addAttribute(
                 "title",
-                "The namespace filter field takes zero or more space-separated namespace URIs for vocabularies to be filtered out between the parser and the validation engine.");
+                "Space-separated namespace URIs for vocabularies to be filtered out.");
         if (!filteredNamespaces.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             boolean first = true;

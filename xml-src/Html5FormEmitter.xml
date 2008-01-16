@@ -8,7 +8,7 @@
 		><legend>Validator Input</legend
 		><table
 			><tbody
-				><tr title="IRI (http or https) of the document to be checked"
+				><tr title="The document to validate."
 					><th 
 						><label for="doc">Document</label
 					></th

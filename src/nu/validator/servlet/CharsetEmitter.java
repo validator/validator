@@ -25,7 +25,7 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "select", "select", 
 __attrs__.clear();
 __attrs__.addAttribute("", "value", "value", "CDATA", "");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "option", "option", __attrs__);
-contentHandler.characters(__chars__, 8, 14);
+contentHandler.characters(__chars__, 8, 25);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "option", "option");
 t.emitCharsetOptions(); 
 		
@@ -34,5 +34,5 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
 contentHandler.endPrefixMapping("");
 }
-private static final char[] __chars__ = { 'E', 'n', 'c', 'o', 'd', 'i', 'n', 'g', 'D', 'o', 'n', '\u2019', 't', ' ', 'o', 'v', 'e', 'r', 'r', 'i', 'd', 'e' };
+private static final char[] __chars__ = { 'E', 'n', 'c', 'o', 'd', 'i', 'n', 'g', 'A', 's', ' ', 's', 'e', 't', ' ', 'b', 'y', ' ', 't', 'h', 'e', ' ', 's', 'e', 'r', 'v', 'e', 'r', '/', 'p', 'a', 'g', 'e' };
 }

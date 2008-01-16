@@ -49,12 +49,10 @@ public class VerifierServlet extends HttpServlet {
 
     static {
         PrudentHttpEntityResolver.setParams(5000, 5000, 100);
-        PrudentHttpEntityResolver.setUserAgent(System.getProperty(
+        PrudentHttpEntityResolver.setUserAgent("Validator.nu/" + System.getProperty(
                 "nu.validator.servlet.version",
-                "VerifierServlet-RELAX-NG-Validator/2.x (http://validator.nu/)"));
+                "3.x"));
     }
-
-    
     
     /**
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)

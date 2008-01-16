@@ -16,7 +16,7 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "table", "table", __
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "tbody", "tbody", __attrs__);
 __attrs__.clear();
-__attrs__.addAttribute("", "title", "title", "CDATA", "IRI (http or https) of the document to be checked");
+__attrs__.addAttribute("", "title", "title", "CDATA", "The document to validate.");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs__);
