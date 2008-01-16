@@ -136,6 +136,7 @@ function toggleParsers(newValue){
                             // text area case
                             if (select.firstChild.selected) {
                                 select.firstChild.nextSibling.nextSibling.nextSibling.selected = true
+								disableById('nsfilter')
                             }
                             select.firstChild.disabled = true
                         }
