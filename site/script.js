@@ -37,9 +37,9 @@ function boot(){
 }
 
 function initFieldHolders(){
-	if (document.forms[0].className == 'simple') {
-		return
-	}
+    if (document.forms[0].className == 'simple') {
+        return
+    }
     urlInput = document.getElementById('doc')
     
     textarea = createHtmlElement('textarea')
@@ -48,7 +48,10 @@ function initFieldHolders(){
         textarea.rows = 15
         textarea.id = 'doc'
         textarea.name = 'content'
-		textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+        copySourceIntoTextArea()
+        if (textarea.value == '') {
+            textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+        }
     }
     
     fileInput = createHtmlElement('input')
@@ -57,34 +60,37 @@ function initFieldHolders(){
         fileInput.id = 'doc'
         fileInput.name = 'file'
     }
-	
-	var td = urlInput.parentNode
-	if (td) {
-		var th = td.previousSibling
-		var label = th.firstChild
-		var modeSelect = createHtmlElement("select")
-		modeSelect.appendChild(createOption('Address', ''))
-		modeSelect.appendChild(createOption('File Upload', 'file'))
-		modeSelect.appendChild(createOption('Text Field', 'textarea'))
-		modeSelect.onchange = function() {
-			if (this.value == 'file') {
-				installFileUpload()
-			} else if (this.value == 'textarea') {
-				installTextarea()
-			} else {
-				installUrlInput()
-			}
-		}
-		th.replaceChild(modeSelect, label)				
-	}
+    
+    var td = urlInput.parentNode
+    if (td) {
+        var th = td.previousSibling
+        var label = th.firstChild
+        var modeSelect = createHtmlElement("select")
+        modeSelect.appendChild(createOption('Address', ''))
+        modeSelect.appendChild(createOption('File Upload', 'file'))
+        modeSelect.appendChild(createOption('Text Field', 'textarea'))
+        modeSelect.onchange = function(){
+            if (this.value == 'file') {
+                installFileUpload()
+            }
+            else 
+                if (this.value == 'textarea') {
+                    installTextarea()
+                }
+                else {
+                    installUrlInput()
+                }
+        }
+        th.replaceChild(modeSelect, label)
+    }
 }
 
-function createOption(text, value) {
-	var rv = createHtmlElement('option')
-	rv.value = value
-	var tn = document.createTextNode(text)
-	rv.appendChild(tn)
-	return rv
+function createOption(text, value){
+    var rv = createHtmlElement('option')
+    rv.value = value
+    var tn = document.createTextNode(text)
+    rv.appendChild(tn)
+    return rv
 }
 
 function schemaChanged(){
@@ -136,7 +142,7 @@ function toggleParsers(newValue){
                             // text area case
                             if (select.firstChild.selected) {
                                 select.firstChild.nextSibling.nextSibling.nextSibling.selected = true
-								disableById('nsfilter')
+                                disableById('nsfilter')
                             }
                             select.firstChild.disabled = true
                         }
@@ -299,7 +305,7 @@ function initGrouping(){
     var n = document.documentElement.lastChild.firstChild
     while (n) {
         // The line below protects IE users from a crash
-        if (n instanceof HTMLOListElement) { // deliberately IE-incompatible
+        if (n instanceof HTMLOListElement && n.className != 'source') { // deliberately IE-incompatible
             //		if (n.start) { // cross-browser compatible
             currentOl = n
             break
@@ -401,7 +407,7 @@ function installFileUpload(){
     }
 }
 
-function installUrlInput() {
+function installUrlInput(){
     if (document.getElementById) {
         var input = document.getElementById('doc')
         if (input && urlInput) {
@@ -414,7 +420,30 @@ function installUrlInput() {
                 schemaChanged()
             }
         }
-    }	
+    }
+}
+
+function copySourceIntoTextArea(){
+    var strings = []
+    var source = null
+    var n = document.documentElement.lastChild.firstChild
+    while (n) {
+        if (n.className == 'source') {
+            source = n
+            break
+        }
+        n = n.nextSibling
+    }
+    if (source && textarea) {
+        var li = source.firstChild
+        while (li) {
+            var code = li.firstChild
+            strings.push(code.textContent)
+            
+            li = li.nextSibling
+        }
+        textarea.value = strings.join('\n')
+    }
 }
 
 window.onunload = function(){
