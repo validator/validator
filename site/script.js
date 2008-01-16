@@ -438,7 +438,12 @@ function copySourceIntoTextArea(){
         var li = source.firstChild
         while (li) {
             var code = li.firstChild
-            strings.push(code.textContent)
+			var text = code.textContent
+			if (text) {
+	            strings.push(text)
+			} else {
+				strings.push(code.innerText)
+			}
             
             li = li.nextSibling
         }
