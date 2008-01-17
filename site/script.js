@@ -28,6 +28,7 @@ var groupedOl = null
 var urlInput = null
 var fileInput = null
 var textarea = null
+var hasTextContent = (createHtmlElement('code').textContent != undefined)
 
 function boot(){
     initFieldHolders()
@@ -438,13 +439,12 @@ function copySourceIntoTextArea(){
         var li = source.firstChild
         while (li) {
             var code = li.firstChild
-			var text = code.textContent
-			if (text) {
-	            strings.push(text)
-			} else {
-				strings.push(code.innerText)
-			}
-            
+            if (hasTextContent) {
+                strings.push(code.textContent)
+            }
+            else {
+                strings.push(code.innerText)
+            }
             li = li.nextSibling
         }
         textarea.value = strings.join('\n')
