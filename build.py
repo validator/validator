@@ -48,13 +48,14 @@ aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
 stylesheet = None
 script = None
+serviceName = 'Validator.nu'
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
   ("http://mirror.eunet.fi/apache/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/logging/binaries/commons-logging-1.1.zip", "cc4d307492a48e27fbfeeb04d59c6578"),
-  ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j_3_6_1.jar", "f5ffe0784a9e4c414f42d88e7f6ecefd"),
-  ("http://download.icu-project.org/files/icu4j/3.6.1/icu4j-charsets_3_6_1.jar", "0c8485bc3846fb8f243ed393f3f5b7f9"),
+  ("http://download.icu-project.org/files/icu4j/3.8.1/icu4j-3_8_1.jar", "16db643b3a65c5fe1c78954be60241b8"),
+  ("http://download.icu-project.org/files/icu4j/3.8.1/icu4j-charsets-3_8_1.jar", "ea30850dbbc32a8e879ab0f01698bc92"),
   ("http://switch.dl.sourceforge.net/sourceforge/jena/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
   ("http://dist.codehaus.org/jetty/jetty-6.1.5/jetty-6.1.5.zip", "c05153e639810c0d28a602366c69a632"),
   ("http://mirror.eunet.fi/apache/logging/log4j/1.2.14/logging-log4j-1.2.14.zip", "6c4f8da1fed407798ea0ad7984fe60db"),
@@ -79,8 +80,8 @@ dependencyJars = [
   "commons-logging-1.1/commons-logging-1.1.jar",
   "commons-logging-1.1/commons-logging-adapters-1.1.jar",
   "commons-logging-1.1/commons-logging-api-1.1.jar",
-  "icu4j-charsets_3_6_1.jar",
-  "icu4j_3_6_1.jar",
+  "icu4j-charsets-3_8_1.jar",
+  "icu4j-3_8_1.jar",
   "iri-0.5/lib/iri.jar",
   "jetty-6.1.5/lib/servlet-api-2.5-6.1.5.jar",
   "jetty-6.1.5/lib/jetty-6.1.5.jar",
@@ -316,7 +317,8 @@ def runValidator():
     '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
-    '-Dnu.validator.servlet.version="Validator.nu/2.2gamma (http://validator.nu/)"',
+    '-Dnu.validator.servlet.version="3"',
+    '-Dnu.validator.servlet.service-name=' + serviceName,
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
@@ -463,6 +465,7 @@ def printHelp():
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print "  --heap=64                  -- Sets the heap size in MB"
+  print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
   print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
@@ -534,6 +537,8 @@ else:
       stylesheet = arg[14:]
     elif arg.startswith("--script="):
       script = arg[9:]
+    elif arg.startswith("--name="):
+      script = arg[7:]
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
