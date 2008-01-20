@@ -217,7 +217,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.integer.non-negative
 			}
 	canvas.inner.prose =
-		( common.inner.phrase )
+		( common.inner.prose )
 	canvas.inner.embedded =
 		( common.inner.phrase )
 	
