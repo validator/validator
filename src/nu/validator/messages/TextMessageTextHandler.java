@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -41,7 +41,23 @@ public class TextMessageTextHandler implements MessageTextHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {
-            writer.write(ch, start, length);
+            int end = start + length;
+            for (int i = start; i < end; i++) {
+                char c = ch[i];
+                switch (c) {
+                    case '\n':
+                    case '\r':
+                        if (start < i) {
+                            writer.write(ch, start, i - start);                
+                        }                        
+                        start = i + 1;
+                        writer.write(0x21A9);
+                        break;
+                }
+            }
+            if (start < end) {
+                writer.write(ch, start, end - start);                
+            }
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);
         }

@@ -192,6 +192,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private boolean html = false;
 
     private boolean loggingOk = false;
+    
+    private boolean errorsOnly = false;
 
     protected static String scrub(String s) throws SAXException {
         if (s == null) {
@@ -392,12 +394,15 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             int oneBasedLine, int oneBasedColumn, boolean exact)
             throws SAXException {
         if (loggingOk
-                && (type == MessageType.ERROR || type == MessageType.FATAL)
+                && (type.getSuperType() == "error")
                 && spec != EmptySpec.THE_INSTANCE
                 && systemId != null
                 && (systemId.startsWith("http:") || systemId.startsWith("https:"))) {
             log4j.info(new StringBuilder().append(systemId).append('\t').append(
                     message.getMessage()));
+        }
+        if (errorsOnly && type.getSuperType() == "info") {
+            return;
         }
         String uri = sourceCode.getUri();
         if (oneBasedLine > -1
@@ -974,5 +979,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     public void setLoggingOk(boolean ok) {
         this.loggingOk = ok;
+    }
+
+    /**
+     * Sets the errorsOnly.
+     * 
+     * @param errorsOnly the errorsOnly to set
+     */
+    public void setErrorsOnly(boolean errorsOnly) {
+        this.errorsOnly = errorsOnly;
     }
 }

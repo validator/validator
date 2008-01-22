@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -65,8 +65,6 @@ public class TextMessageEmitter extends MessageEmitter {
     private int oneBasedLastLine;
 
     private int oneBasedLastColumn;
-
-    private boolean exact;
 
     private boolean textEmitted;
 
@@ -156,11 +154,10 @@ public class TextMessageEmitter extends MessageEmitter {
         this.oneBasedFirstColumn = oneBasedFirstColumn;
         this.oneBasedLastLine = oneBasedLastLine;
         this.oneBasedLastColumn = oneBasedLastColumn;
-        this.exact = exact;
         try {
             emitErrorLevel(type.getPresentationName());
         } catch (IOException e) {
-            throw new SAXException(e.getLocalizedMessage(), e);
+            throw new SAXException(e.getMessage(), e);
         }
         this.textEmitted = false;
     }
@@ -174,7 +171,7 @@ public class TextMessageEmitter extends MessageEmitter {
              writer.flush();
              writer.close();
          } catch (IOException e) {
-         throw new SAXException(e.getLocalizedMessage(), e);
+         throw new SAXException(e.getMessage(), e);
          }
     }
 
@@ -187,7 +184,7 @@ public class TextMessageEmitter extends MessageEmitter {
             this.writer.write('\n');
             this.textEmitted = true;
         } catch (IOException e) {
-            throw new SAXException(e.getLocalizedMessage(), e);
+            throw new SAXException(e.getMessage(), e);
         }
 
     }
@@ -208,7 +205,7 @@ public class TextMessageEmitter extends MessageEmitter {
             this.writer.write(COLON_SPACE);
             return messageTextHandler;
         } catch (IOException e) {
-            throw new SAXException(e.getLocalizedMessage(), e);
+            throw new SAXException(e.getMessage(), e);
         }
     }
 
@@ -222,7 +219,7 @@ public class TextMessageEmitter extends MessageEmitter {
             maybeEmitLocation();
             writer.write('\n');
         } catch (IOException e) {
-            throw new SAXException(e.getLocalizedMessage(), e);
+            throw new SAXException(e.getMessage(), e);
         }
     }
 

@@ -55,6 +55,7 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.messages.TextMessageEmitter;
@@ -91,10 +92,8 @@ import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.jing.CheckerValidator;
 import org.whattf.checker.table.TableChecker;
 import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -119,7 +118,6 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 
-
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
  *          hsivonen Exp $
@@ -128,13 +126,13 @@ import com.thaiopensource.validate.rng.RngProperty;
 class VerifierServletTransaction implements DocumentModeHandler {
 
     private enum OutputFormat {
-        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, EMACS
+        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, GNU
     }
 
     private static final Logger log4j = Logger.getLogger(VerifierServletTransaction.class);
 
     private static final Pattern SPACE = Pattern.compile("\\s+");
-    
+
     private static final Pattern JS_IDENTIFIER = Pattern.compile("[\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$][\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Nl}_\\$\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}]*");
 
     private static final String[] JS_RESERVED_WORDS = { "abstract", "boolean",
@@ -147,79 +145,49 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "static", "super", "switch", "synchronized", "this", "throw",
             "throws", "transient", "try", "typeof", "var", "void", "volatile",
             "while", "with" };
-    
-    private static final String[] CHARSETS = {
-        "UTF-8",
-        "UTF-16",
-        "Windows-1250",
-        "Windows-1251",
-        "Windows-1252",
-        "Windows-1253",
-        "Windows-1254",
-        "Windows-1255",
-        "Windows-1256",
-        "Windows-1257",
-        "Windows-1258",
-        "ISO-8859-1",
-        "ISO-8859-2",
-        "ISO-8859-3",
-        "ISO-8859-4",
-        "ISO-8859-5",
-        "ISO-8859-6",
-        "ISO-8859-7",
-        "ISO-8859-8",
-        "ISO-8859-9",
-        "ISO-8859-13",
-        "ISO-8859-15",
-        "KOI8-R",
-        "TIS-620",
-        "GBK",
-        "GB18030",
-        "Big5",
-        "Big5-HKSCS",
-        "Shift_JIS",
-        "ISO-2022-JP",
-        "EUC-JP",
-        "ISO-2022-KR",
-        "EUC-KR"
-    };
+
+    private static final String[] CHARSETS = { "UTF-8", "UTF-16",
+            "Windows-1250", "Windows-1251", "Windows-1252", "Windows-1253",
+            "Windows-1254", "Windows-1255", "Windows-1256", "Windows-1257",
+            "Windows-1258", "ISO-8859-1", "ISO-8859-2", "ISO-8859-3",
+            "ISO-8859-4", "ISO-8859-5", "ISO-8859-6", "ISO-8859-7",
+            "ISO-8859-8", "ISO-8859-9", "ISO-8859-13", "ISO-8859-15", "KOI8-R",
+            "TIS-620", "GBK", "GB18030", "Big5", "Big5-HKSCS", "Shift_JIS",
+            "ISO-2022-JP", "EUC-JP", "ISO-2022-KR", "EUC-KR" };
 
     private static final char[][] CHARSET_DESCRIPTIONS = {
-        "UTF-8 (Global)".toCharArray(),
-        "UTF-16 (Global)".toCharArray(),
-        "Windows-1250 (Central European)".toCharArray(),
-        "Windows-1251 (Cyrillic)".toCharArray(),
-        "Windows-1252 (Western)".toCharArray(),
-        "Windows-1253 (Greek)".toCharArray(),
-        "Windows-1254 (Turkish)".toCharArray(),
-        "Windows-1255 (Hebrew)".toCharArray(),
-        "Windows-1256 (Arabic)".toCharArray(),
-        "Windows-1257 (Baltic)".toCharArray(),
-        "Windows-1258 (Vietnamese)".toCharArray(),
-        "ISO-8859-1 (Western)".toCharArray(),
-        "ISO-8859-2 (Central European)".toCharArray(),
-        "ISO-8859-3 (South European)".toCharArray(),
-        "ISO-8859-4 (Baltic)".toCharArray(),
-        "ISO-8859-5 (Cyrillic)".toCharArray(),
-        "ISO-8859-6 (Arabic)".toCharArray(),
-        "ISO-8859-7 (Greek)".toCharArray(),
-        "ISO-8859-8 (Hebrew)".toCharArray(),
-        "ISO-8859-9 (Turkish)".toCharArray(),
-        "ISO-8859-13 (Baltic)".toCharArray(),
-        "ISO-8859-15 (Western)".toCharArray(),
-        "KOI8-R (Russian)".toCharArray(),
-        "TIS-620 (Thai)".toCharArray(),
-        "GBK (Chinese, simplified)".toCharArray(),
-        "GB18030 (Chinese, simplified)".toCharArray(),
-        "Big5 (Chinese, traditional)".toCharArray(),
-        "Big5-HKSCS (Chinese, traditional)".toCharArray(),
-        "Shift_JIS (Japanese)".toCharArray(),
-        "ISO-2022-JP (Japanese)".toCharArray(),
-        "EUC-JP (Japanese)".toCharArray(),
-        "ISO-2022-KR (Korean)".toCharArray(),
-        "EUC-KR (Korean)".toCharArray()
-    };
-        
+            "UTF-8 (Global)".toCharArray(), "UTF-16 (Global)".toCharArray(),
+            "Windows-1250 (Central European)".toCharArray(),
+            "Windows-1251 (Cyrillic)".toCharArray(),
+            "Windows-1252 (Western)".toCharArray(),
+            "Windows-1253 (Greek)".toCharArray(),
+            "Windows-1254 (Turkish)".toCharArray(),
+            "Windows-1255 (Hebrew)".toCharArray(),
+            "Windows-1256 (Arabic)".toCharArray(),
+            "Windows-1257 (Baltic)".toCharArray(),
+            "Windows-1258 (Vietnamese)".toCharArray(),
+            "ISO-8859-1 (Western)".toCharArray(),
+            "ISO-8859-2 (Central European)".toCharArray(),
+            "ISO-8859-3 (South European)".toCharArray(),
+            "ISO-8859-4 (Baltic)".toCharArray(),
+            "ISO-8859-5 (Cyrillic)".toCharArray(),
+            "ISO-8859-6 (Arabic)".toCharArray(),
+            "ISO-8859-7 (Greek)".toCharArray(),
+            "ISO-8859-8 (Hebrew)".toCharArray(),
+            "ISO-8859-9 (Turkish)".toCharArray(),
+            "ISO-8859-13 (Baltic)".toCharArray(),
+            "ISO-8859-15 (Western)".toCharArray(),
+            "KOI8-R (Russian)".toCharArray(), "TIS-620 (Thai)".toCharArray(),
+            "GBK (Chinese, simplified)".toCharArray(),
+            "GB18030 (Chinese, simplified)".toCharArray(),
+            "Big5 (Chinese, traditional)".toCharArray(),
+            "Big5-HKSCS (Chinese, traditional)".toCharArray(),
+            "Shift_JIS (Japanese)".toCharArray(),
+            "ISO-2022-JP (Japanese)".toCharArray(),
+            "EUC-JP (Japanese)".toCharArray(),
+            "ISO-2022-KR (Korean)".toCharArray(),
+            "EUC-KR (Korean)".toCharArray() };
+
     protected static final int HTML5_SCHEMA = 3;
 
     protected static final int XHTML1STRICT_SCHEMA = 2;
@@ -242,7 +210,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private static final Map pathMap = new HashMap();
 
     private static Spec html5spec;
-    
+
     private static int[] presetDoctypes;
 
     private static String[] presetLabels;
@@ -260,17 +228,13 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "http://www.w3.org/1999/xhtml", "http://www.w3.org/1999/xhtml" };
 
     private static final String[] ALL_CHECKERS = {
-            "http://c.validator.nu/table/",
-            "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
-            "http://c.validator.nu/unchecked/",
-            "http://c.validator.nu/usemap/"};
+            "http://c.validator.nu/unchecked/", "http://c.validator.nu/usemap/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
-            "http://c.validator.nu/table/",
-            "http://c.validator.nu/nfc/",
-            "http://c.validator.nu/unchecked/",
-            "http://c.validator.nu/usemap/"};
+            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/unchecked/", "http://c.validator.nu/usemap/" };
 
     private long start = System.currentTimeMillis();
 
@@ -305,12 +269,17 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private static String[] preloadedSchemaUrls;
 
     private static Schema[] preloadedSchemas;
-    
-    private final static String ABOUT_PAGE = System.getProperty("nu.validator.servlet.about-page", "http://about.validator.nu/");
 
-    private final static String STYLE_SHEET = System.getProperty("nu.validator.servlet.style-sheet", "http://about.validator.nu/style.css");
+    private final static String ABOUT_PAGE = System.getProperty(
+            "nu.validator.servlet.about-page", "http://about.validator.nu/");
 
-    private final static String SCRIPT = System.getProperty("nu.validator.servlet.script", "http://about.validator.nu/script.js");
+    private final static String STYLE_SHEET = System.getProperty(
+            "nu.validator.servlet.style-sheet",
+            "http://about.validator.nu/style.css");
+
+    private final static String SCRIPT = System.getProperty(
+            "nu.validator.servlet.script",
+            "http://about.validator.nu/script.js");
 
     private String schemaUrls = null;
 
@@ -323,7 +292,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected HtmlParser htmlParser = null;
 
     protected SAXDriver xmlParser = null;
-    
+
     protected XMLReader reader;
 
     protected TypedInputSource documentInput;
@@ -347,10 +316,13 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private SourceCode sourceCode = new SourceCode();
 
     private boolean showSource;
-    
+
     private String charsetOverride = null;
-    
-    private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked for UI stability
+
+    private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked
+                                                                            // for
+                                                                            // UI
+                                                                            // stability
 
     static {
         try {
@@ -470,7 +442,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             html5spec = Html5SpecBuilder.parseSpec();
 
             log4j.debug("Spec read.");
-            
+
             log4j.debug("Initialization complete.");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -483,9 +455,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
     }
 
     private static boolean isCheckerUrl(String url) {
-        if ("http://c.validator.nu/all/".equals(url) || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
+        if ("http://c.validator.nu/all/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
             return true;
-        } else if ("http://c.validator.nu/all-html4/".equals(url) || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+        } else if ("http://c.validator.nu/all-html4/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
@@ -529,10 +503,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Content-Type missing");
                 return;
-            } else if (postContentType.trim().toLowerCase().startsWith("application/x-www-form-urlencoded")) {
-                response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
-                "application/x-www-form-urlencoded not supported. Please use multipart/form-data.");
-                return;                
+            } else if (postContentType.trim().toLowerCase().startsWith(
+                    "application/x-www-form-urlencoded")) {
+                response.sendError(
+                        HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
+                        "application/x-www-form-urlencoded not supported. Please use multipart/form-data.");
+                return;
             }
         }
 
@@ -546,6 +522,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 outputFormat = OutputFormat.XHTML;
             } else if ("text".equals(outFormat)) {
                 outputFormat = OutputFormat.TEXT;
+            } else if ("gnu".equals(outFormat)) {
+                outputFormat = OutputFormat.GNU;
             } else if ("xml".equals(outFormat)) {
                 outputFormat = OutputFormat.XML;
             } else if ("json".equals(outFormat)) {
@@ -586,12 +564,13 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
 
         String methodCheck = request.getHeader("Method-Check");
-        
+
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-cache");
         } else if (methodCheck != null) {
-            // XXX revisit if anne changes the access-control stuff to use OPTIONS
+            // XXX revisit if anne changes the access-control stuff to use
+            // OPTIONS
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             response.setHeader("Allow", "POST");
             return;
@@ -607,7 +586,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         setup();
 
         showSource = (request.getParameter("showsource") != null);
-        
+
         String charset = request.getParameter("charset");
         if (charset != null) {
             charset = scrub(charset.trim());
@@ -615,7 +594,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 charsetOverride = charset;
             }
         }
-        
+
         String nsfilter = request.getParameter("nsfilter");
         if (nsfilter != null) {
             String[] nsfilterArr = SPACE.split(nsfilter);
@@ -627,6 +606,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
             }
         }
         
+        boolean errorsOnly = ("error".equals(request.getParameter("level")));
+
         try {
             if (outputFormat == OutputFormat.HTML
                     || outputFormat == OutputFormat.XHTML) {
@@ -639,37 +620,45 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    contentHandler = new ForbiddenCharacterFilter(ser.asContentHandler());
+                    contentHandler = new ForbiddenCharacterFilter(
+                            ser.asContentHandler());
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
-                errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                        new XhtmlMessageEmitter(contentHandler));
+                errorHandler = new MessageEmitterAdapter(sourceCode,
+                        showSource, new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                            new TextMessageEmitter(out));
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            showSource, new TextMessageEmitter(out));
+                } else if (outputFormat == OutputFormat.GNU) {
+                    response.setContentType("text/plain; charset=utf-8");
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            showSource, new GnuMessageEmitter(out));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                            new XmlMessageEmitter(new ForbiddenCharacterFilter(ser.asContentHandler())));
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            showSource, new XmlMessageEmitter(
+                                    new ForbiddenCharacterFilter(
+                                            ser.asContentHandler())));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
                         response.setContentType("application/json");
                     } else {
                         response.setContentType("application/javascript");
-                     }
-                    errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                            new JsonMessageEmitter(
+                    }
+                    errorHandler = new MessageEmitterAdapter(sourceCode,
+                            showSource, new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
                 } else {
                     throw new RuntimeException("Unreachable.");
                 }
+                errorHandler.setErrorsOnly(errorsOnly);
                 validate();
             }
         } catch (SAXException e) {
@@ -727,9 +716,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
         return !(schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-basic.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-strict.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") 
-                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") 
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc"));
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc"));
 
     }
 
@@ -769,7 +757,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             loadDocAndSetupParser();
 
-            reader.setErrorHandler(errorHandler); 
+            reader.setErrorHandler(errorHandler);
             // XXX set xml:id filter separately
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
@@ -796,7 +784,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
             } else if (xmlParser != null) {
                 // this must be after wiretap!
                 if (!filteredNamespaces.isEmpty()) {
-                    reader = new NamespaceDroppingXMLReaderWrapper(reader, filteredNamespaces);
+                    reader = new NamespaceDroppingXMLReaderWrapper(reader,
+                            filteredNamespaces);
                 }
                 xmlParser.setErrorHandler(errorHandler.getExactErrorHandler());
                 xmlParser.lockErrorHandler();
@@ -806,9 +795,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
             if (charsetOverride != null) {
                 String charset = documentInput.getEncoding();
                 if (charset == null) {
-                    errorHandler.warning(new SAXParseException("Overriding document character encoding from none to \u201C" + charsetOverride + "\u201D.", null));
+                    errorHandler.warning(new SAXParseException(
+                            "Overriding document character encoding from none to \u201C"
+                                    + charsetOverride + "\u201D.", null));
                 } else {
-                    errorHandler.warning(new SAXParseException("Overriding document character encoding from \u201C" + charset + "\u201D to \u201C" + charsetOverride + "\u201D.", null));                    
+                    errorHandler.warning(new SAXParseException(
+                            "Overriding document character encoding from \u201C"
+                                    + charset + "\u201D to \u201C"
+                                    + charsetOverride + "\u201D.", null));
                 }
                 documentInput.setEncoding(charsetOverride);
             }
@@ -998,9 +992,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         xmlParser = new SAXDriver();
         xmlParser.setCharacterHandler(sourceCode);
         reader = new IdFilter(xmlParser);
-        reader.setFeature(
-                "http://xml.org/sax/features/string-interning",
-                true);
+        reader.setFeature("http://xml.org/sax/features/string-interning", true);
         reader.setFeature(
                 "http://xml.org/sax/features/external-general-entities",
                 parser == ParserMode.XML_EXTERNAL_ENTITIES_NO_VALIDATION);
@@ -1036,12 +1028,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
             String url = schemas[i];
-            if ("http://c.validator.nu/all/".equals(url) || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
+            if ("http://c.validator.nu/all/".equals(url)
+                    || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS.length; j++) {
                     validator = combineValidatorByUrl(validator,
                             ALL_CHECKERS[j]);
                 }
-            } else if ("http://c.validator.nu/all-html4/".equals(url) || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+            } else if ("http://c.validator.nu/all-html4/".equals(url)
+                    || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
                     validator = combineValidatorByUrl(validator,
                             ALL_CHECKERS_HTML4[j]);
@@ -1087,23 +1081,33 @@ class VerifierServletTransaction implements DocumentModeHandler {
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://c.validator.nu/table/".equals(url) || "http://hsivonen.iki.fi/checkers/table/".equals(url)) {
+        if ("http://c.validator.nu/table/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/table/".equals(url)) {
             return new CheckerValidator(new TableChecker(), jingPropertyMap);
-        } else if ("http://c.validator.nu/nfc/".equals(url) || "http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
+        } else if ("http://c.validator.nu/nfc/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
             this.checkNormalization = true;
             return new CheckerValidator(new NormalizationChecker(),
                     jingPropertyMap);
-        } else if ("http://c.validator.nu/debug/".equals(url) || "http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
+        } else if ("http://c.validator.nu/debug/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
             return new CheckerValidator(new DebugChecker(), jingPropertyMap);
-        } else if ("http://c.validator.nu/text-content/".equals(url) || "http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
+        } else if ("http://c.validator.nu/text-content/".equals(url)
+                || "http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
             return new CheckerValidator(new TextContentChecker(),
                     jingPropertyMap);
-        } else if ("http://c.validator.nu/usemap/".equals(url) || "http://n.validator.nu/checkers/usemap/".equals(url)) {
+        } else if ("http://c.validator.nu/usemap/".equals(url)
+                || "http://n.validator.nu/checkers/usemap/".equals(url)) {
             return new CheckerValidator(new UsemapChecker(), jingPropertyMap);
         } else if ("http://c.validator.nu/unchecked/".equals(url)) {
-            return new CheckerValidator(new UncheckedSubtreeWarner(), jingPropertyMap);
+            return new CheckerValidator(new UncheckedSubtreeWarner(),
+                    jingPropertyMap);
         }
-        if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url) || "http://s.validator.nu/html5/html5full.rnc".equals(url) || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc".equals(url) || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
+        if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url)
+                || "http://s.validator.nu/html5/html5full.rnc".equals(url)
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
+                || "http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc".equals(url)
+                || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = schemaByUrl(url);
@@ -1185,7 +1189,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("method", "get");
         attrs.addAttribute("action", request.getRequestURL().toString());
         if (isSimple()) {
-            attrs.addAttribute("class", "simple");            
+            attrs.addAttribute("class", "simple");
         }
         attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
@@ -1210,8 +1214,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("id", "schema");
         attrs.addAttribute("onchange", "schemaChanged();");
         attrs.addAttribute("pattern", "(?:https?://.+(?:\\s+https?://.+)*)?");
-        attrs.addAttribute(
-                "title",
+        attrs.addAttribute("title",
                 "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
         if (schemaUrls != null) {
             attrs.addAttribute("value", scrub(schemaUrls));
@@ -1226,8 +1229,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("name", "doc");
         attrs.addAttribute("id", "doc");
         attrs.addAttribute("pattern", "(?:https?://.+)?");
-        attrs.addAttribute(
-                "title",
+        attrs.addAttribute("title",
                 "Absolute IRI (http or https only) of the document to be checked.");
         if (document != null) {
             attrs.addAttribute("value", scrub(document));
@@ -1318,7 +1320,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     void emitShowSourceField() throws SAXException {
         emitter.checkbox("showsource", "yes", showSource);
     }
-    
+
     void rootNamespace(String namespace, Locator locator) throws SAXException {
         if (validator == null) {
             int index = -1;
@@ -1499,12 +1501,12 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.clear();
         attrs.addAttribute("src", SCRIPT);
         emitter.startElement("script", attrs);
-        emitter.endElement("script");        
+        emitter.endElement("script");
         attrs.clear();
         attrs.addAttribute("href", STYLE_SHEET);
         attrs.addAttribute("rel", "stylesheet");
         emitter.startElement("link", attrs);
-        emitter.endElement("link");        
+        emitter.endElement("link");
     }
 
     void emitAbout() throws SAXException {
@@ -1520,8 +1522,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.addAttribute("name", "nsfilter");
         attrs.addAttribute("id", "nsfilter");
         attrs.addAttribute("pattern", "(?:.+:.+(?:\\s+.+:.+)*)?");
-        attrs.addAttribute(
-                "title",
+        attrs.addAttribute("title",
                 "Space-separated namespace URIs for vocabularies to be filtered out.");
         if (!filteredNamespaces.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -1547,7 +1548,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
         boolean found = false;
         for (int i = 0; i < CHARSETS.length; i++) {
             String charset = CHARSETS[i];
-            boolean selected = charset.equalsIgnoreCase(charsetOverride); // XXX use ASCII-caseinsensitivity
+            boolean selected = charset.equalsIgnoreCase(charsetOverride); // XXX
+                                                                            // use
+                                                                            // ASCII-caseinsensitivity
             emitter.option(CHARSET_DESCRIPTIONS[i], charset, selected);
             if (selected) {
                 found = true;
