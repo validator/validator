@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -29,8 +29,6 @@ import string
 import gzip
 import StringIO
 
-url = 'http://html5.validator.nu/?out=text'
-
 extPat = re.compile(r'^.*\.([A-Za-z]+)$')
 extDict = {
   "html" : "text/html",
@@ -44,24 +42,41 @@ argv = sys.argv[1:]
 
 forceXml = 0
 forceHtml = 0
+gnu = 0
+errorsOnly = 0
 encoding = None
 fileName = None
 contentType = None
 inputHandle = None
+service = 'http://html5.validator.nu/'
 
 for arg in argv:
   if '--help' == arg:
     print '-h : force text/html'
     print '-x : force application/xhtml+xml'
+    print '-g : GNU output'
+    print '-e : errors only (no info or warnings)'
     print '--encoding=foo : declare encoding foo'
+    print '--service=url  : the address of the HTML5 validator'
     print 'One file argument allowed. Leave out to read from stdin.' 
     sys.exit(0)
-  elif '-x' == arg:
-    forceXml = 1
-  elif '-h' == arg:
-    forceHtml = 1
   elif arg.startswith("--encoding="):
     encoding = arg[11:]
+  elif arg.startswith("--service="):
+    service = arg[10:]
+  elif arg.startswith("--"):
+      sys.stderr.write('Unknown argument %s.\n' % arg)
+      sys.exit(2)
+  elif arg.startswith("-"):
+    for c in arg[1:]:
+      if 'x' == c:
+        forceXml = 1
+      elif 'h' == c:
+        forceHtml = 1
+      elif 'g' == c:
+        gnu = 1  		
+      elif 'e' == c:
+        errorsOnly = 1  		
   else:
     if fileName:
       sys.stderr.write('Cannot have more than one input file.\n')
@@ -107,6 +122,15 @@ connection = None
 response = None
 status = 302
 redirectCount = 0
+
+url = service
+if gnu:
+  url = url + '?out=gnu'
+else:
+  url = url + '?out=text'
+  
+if errorsOnly:
+  url = url + '&level=error'
 
 while (status == 302 or status == 301 or status == 307) and redirectCount < 10:
   if redirectCount > 0:
