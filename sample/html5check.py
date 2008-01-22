@@ -76,7 +76,10 @@ for arg in argv:
       elif 'g' == c:
         gnu = 1  		
       elif 'e' == c:
-        errorsOnly = 1  		
+        errorsOnly = 1
+      else:
+        sys.stderr.write('Unknown argument %s.\n' % arg)
+        sys.exit(3)        		
   else:
     if fileName:
       sys.stderr.write('Cannot have more than one input file.\n')
