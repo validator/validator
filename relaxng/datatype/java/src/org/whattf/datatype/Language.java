@@ -56,6 +56,8 @@ public final class Language extends AbstractDatatype {
     
     private static String[] deprecated = null;
 
+    private static String[] deprecatedLang = null;
+    
     private static int[] suppressedScriptByLanguage = null;
     
     private static String[][][] prefixesByVariant = null;
@@ -69,6 +71,7 @@ public final class Language extends AbstractDatatype {
             variants = data.getVariants();
             grandfathered = data.getGrandfathered();
             deprecated = data.getDeprecated();
+            deprecatedLang = data.getDeprecatedLang();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
             prefixesByVariant = data.getPrefixesByVariant();
         } catch (IOException e) {
@@ -134,7 +137,7 @@ public final class Language extends AbstractDatatype {
                 throw newDatatypeException(
                         "Bad ISO language part in language tag.");
             }
-            if (isDeprecated(subtag)) {
+            if (isDeprecatedLang(subtag)) {
                 throw newDatatypeException(
                 "The language subtag ", subtag, " is deprecated.");                
             }
@@ -155,7 +158,7 @@ public final class Language extends AbstractDatatype {
                 throw newDatatypeException(
                         "Bad IANA language part in language tag.");
             }
-            if (isDeprecated(subtag)) {
+            if (isDeprecatedLang(subtag)) {
                 throw newDatatypeException(
                 "The language subtag ", subtag, " is deprecated.");                
             }
@@ -383,6 +386,10 @@ public final class Language extends AbstractDatatype {
         return Arrays.binarySearch(deprecated, subtag) > -1;
     }
 
+    private boolean isDeprecatedLang(String subtag) {
+        return Arrays.binarySearch(deprecatedLang, subtag) > -1;
+    }
+    
     @Override
     public String getName() {
         return "language tag";

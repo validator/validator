@@ -68,6 +68,8 @@ public class LanguageData {
     
     private SortedSet<String> grandfatheredSet = new TreeSet<String>();
 
+    private SortedSet<String> deprecatedLangSet = new TreeSet<String>();    
+    
     private SortedSet<String> deprecatedSet = new TreeSet<String>();
 
     private Map<String, String> suppressedScriptByLanguageMap = new HashMap<String, String>();
@@ -84,6 +86,8 @@ public class LanguageData {
     
     private String[] grandfathered = null;
 
+    private String[] deprecatedLang = null;
+    
     private String[] deprecated = null;
     
     private int[] suppressedScriptByLanguage = null;
@@ -110,6 +114,7 @@ public class LanguageData {
         regions = regionSet.toArray(EMPTY_STRING_ARRAY);
         grandfathered = grandfatheredSet.toArray(EMPTY_STRING_ARRAY);
         deprecated = deprecatedSet.toArray(EMPTY_STRING_ARRAY);
+        deprecatedLang = deprecatedLangSet.toArray(EMPTY_STRING_ARRAY);
         
         int i = 0;
         languages = new String[languageSet.size()];
@@ -183,7 +188,11 @@ public class LanguageData {
             return hasMore;
         }
         if (depr) {
-            deprecatedSet.add(subtag);
+            if ("language" == type) {
+                deprecatedLangSet.add(subtag);
+            } else {
+                deprecatedSet.add(subtag);
+            }
         }
         if ("language" == type) {
             languageSet.add(subtag);
@@ -271,5 +280,14 @@ public class LanguageData {
      */
     public String[] getGrandfathered() {
         return grandfathered;
+    }
+
+    /**
+     * Returns the deprecatedLang.
+     * 
+     * @return the deprecatedLang
+     */
+    public String[] getDeprecatedLang() {
+        return deprecatedLang;
     }
 }
