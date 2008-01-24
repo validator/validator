@@ -376,6 +376,12 @@ function buildGrouped(ol){
     return rv
 }
 
+function reflow(element) {
+    if (textarea.offsetHeight) {
+        var reflow = textarea.offsetHeight                
+    }
+}
+
 function installTextarea(){
     if (document.getElementById) {
         var input = document.getElementById('doc')
@@ -385,6 +391,7 @@ function installTextarea(){
                 form.method = 'post'
                 form.enctype = 'multipart/form-data'
                 input.parentNode.replaceChild(textarea, input)
+                reflow(textarea)
                 disableById('charset')
                 schemaChanged()
             }
@@ -401,6 +408,7 @@ function installFileUpload(){
                 form.method = 'post'
                 form.enctype = 'multipart/form-data'
                 input.parentNode.replaceChild(fileInput, input)
+                reflow(fileInput)
                 enableById('charset')
                 schemaChanged()
             }
@@ -417,6 +425,7 @@ function installUrlInput(){
                 form.method = 'get'
                 form.enctype = ''
                 input.parentNode.replaceChild(urlInput, input)
+                reflow(urlInput)
                 enableById('charset')
                 schemaChanged()
             }
