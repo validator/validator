@@ -70,6 +70,9 @@ dependencyPackages = [
   ("http://mirror.eunet.fi/apache/ant/binaries/apache-ant-1.7.0-bin.zip" , "ac30ce5b07b0018d65203fbc680968f5"),
   ("http://surfnet.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip" , "10381903828d30e36252910679fcbab6"),
   ("http://ovh.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
+  ("http://dist.codehaus.org/stax/jars/stax-api-1.0.1.jar", "7d436a53c64490bee564c576babb36b4"),
+  ("http://jdom.org/dist/binary/jdom-1.1.zip", "4073be59361ef017a04f9a67c7be8d98"),
+  ("http://kent.dl.sourceforge.net/sourceforge/dom4j/dom4j-1.6.1.jar", "4d8f51d3fe3900efc6e395be48030d6d"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -104,6 +107,9 @@ dependencyJars = [
   "isorelax.jar",
   "apache-ant-1.7.0/lib/ant.jar",
   "apache-ant-1.7.0/lib/ant-launcher.jar",
+  "stax-api-1.0.1.jar",
+  "jdom-1.1/build/jdom.jar",
+  "dom4j-1.6.1.jar",
 ]
 
 moduleNames = [
@@ -264,8 +270,16 @@ def buildHtmlParser():
     "htmlparser", 
     classPath)
 
-def buildOnvdl():
+def buildSaxon():
   classPath = os.pathsep.join(dependencyJarPaths())
+  buildModule(
+    os.path.join(buildRoot, "onvdl", "saxon"), 
+    "saxon-whattf", 
+    classPath)
+
+def buildOnvdl():
+  classPath = os.pathsep.join(dependencyJarPaths() 
+                              + jarNamesToPaths(["saxon-whattf"]))
   buildModule(
     os.path.join(buildRoot, "onvdl"), 
     "onvdl-whattf", 
@@ -306,7 +320,8 @@ def runValidator():
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "validator",
-                                                "onvdl-whattf"]))
+                                                "onvdl-whattf",
+                                                "saxon-whattf"]))
   args = [
     '-Xms%sm' % heapSize,
     '-Xmx%sm' % heapSize,
@@ -317,7 +332,7 @@ def runValidator():
     '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
     '-Dnu.validator.servlet.cachepathprefix=local-entities/',
     '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
-    '-Dnu.validator.servlet.version="3"',
+    '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
     '-Dnu.validator.servlet.about-page=' + aboutPage,
@@ -426,6 +441,7 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
+  buildSaxon()
   buildOnvdl()
   buildUtil()
   buildDatatypeLibrary()
@@ -448,7 +464,8 @@ def runTests():
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "test-harness",
-                                                "onvdl-whattf"]))
+                                                "onvdl-whattf",
+                                                "saxon-whattf"]))
   runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
 def printHelp():
