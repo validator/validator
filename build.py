@@ -186,7 +186,7 @@ def jarNamesToPaths(names):
 
 def runJavac(sourceDir, classDir, classPath):
   sourceFiles = findFilesWithExtension(sourceDir, "java")
-  runCmd("'%s' -Xlint:unchecked -classpath '%s' -sourcepath '%s' -d '%s' %s"\
+  runCmd("'%s' -nowarn -classpath '%s' -sourcepath '%s' -d '%s' %s"\
 		% (javacCmd, classPath, sourceDir, classDir, " ".join(sourceFiles)))
 
 def copyFiles(sourceDir, classDir):
