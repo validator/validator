@@ -186,8 +186,12 @@ def jarNamesToPaths(names):
 
 def runJavac(sourceDir, classDir, classPath):
   sourceFiles = findFilesWithExtension(sourceDir, "java")
+  f = open("temp-javac-list", "w")
+  f.write("\n".join(sourceFiles))
+  f.close()
   runCmd("'%s' -nowarn -classpath '%s' -sourcepath '%s' -d '%s' %s"\
-		% (javacCmd, classPath, sourceDir, classDir, " ".join(sourceFiles)))
+		% (javacCmd, classPath, sourceDir, classDir, "@temp-javac-list"))
+  removeIfExists("temp-javac-list")
 
 def copyFiles(sourceDir, classDir):
   files = findFiles(sourceDir)
@@ -203,8 +207,12 @@ def runJar(classDir, jarFile, sourceDir):
   classList = map(lambda x: 
                     "-C '" + classDir + "' '" + x[len(classDir)+1:] + "'", 
                   classFiles)
+  f = open("temp-jar-list", "w")
+  f.write("\n".join(classList))
+  f.close()
   runCmd("'%s' cf '%s' %s" 
-    % (jarCmd, jarFile, " ".join(classList)))
+    % (jarCmd, jarFile, "@temp-jar-list"))
+  removeIfExists("temp-jar-list")
 
 def buildModule(rootDir, jarName, classPath):
   sourceDir = os.path.join(rootDir, "src")
