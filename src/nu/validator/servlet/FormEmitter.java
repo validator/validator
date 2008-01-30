@@ -64,7 +64,6 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs_
 __attrs__.clear();
 __attrs__.addAttribute("", "id", "id", "CDATA", "preset");
 __attrs__.addAttribute("", "name", "name", "CDATA", "preset");
-__attrs__.addAttribute("", "onchange", "onchange", "CDATA", "presetChanged()");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "select", "select", __attrs__);
 __attrs__.clear();
 __attrs__.addAttribute("", "value", "value", "CDATA", "");
@@ -92,7 +91,6 @@ contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs_
 __attrs__.clear();
 __attrs__.addAttribute("", "id", "id", "CDATA", "parser");
 __attrs__.addAttribute("", "name", "name", "CDATA", "parser");
-__attrs__.addAttribute("", "onchange", "onchange", "CDATA", "parserChanged()");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "select", "select", __attrs__);
 t.emitParserOptions(); 
 						

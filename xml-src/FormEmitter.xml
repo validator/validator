@@ -25,7 +25,7 @@
 						><label for="preset">Preset</label
 					></th
 					><td
-						><select id='preset' name='preset' onchange="presetChanged()"
+						><select id='preset' name='preset'
 							><option value=''>None</option
 							><?SaxCompiler-code t.emitPresetOptions(); 
 						?></select
@@ -36,7 +36,7 @@
 						><label for="parser">Parser</label
 					></th
 					><td
-						><select id='parser' name='parser' onchange="parserChanged()"
+						><select id='parser' name='parser'
 							><?SaxCompiler-code t.emitParserOptions(); 
 						?></select
 					></td

@@ -35,6 +35,23 @@ function boot(){
     schemaChanged()
     parserChanged()
     initGrouping()
+    installHandlers()
+}
+
+function installHandlers() {
+	document.forms[0].onsubmit = formSubmission
+	var schema = document.getElementById("schema")
+	if (schema) {
+		schema.onchange = schemaChanged
+	}
+	var preset = document.getElementById("preset")
+	if (preset) {
+		preset.onchange = presetChanged
+	}
+	var parser = document.getElementById("parser")
+	if (parser) {
+		parser.onchange = parserChanged
+	}
 }
 
 function initFieldHolders(){
@@ -95,76 +112,70 @@ function createOption(text, value){
 }
 
 function schemaChanged(){
-    if (document.getElementById) {
-        var input = document.getElementById("schema")
-        var select = document.getElementById("preset")
-        if (input) {
-            var value = input.value
-            if (select) {
-                if (select.firstChild) {
-                    for (var n = select.firstChild; n != null; n = n.nextSibling) {
-                        if (n.value == value) {
-                            n.selected = true
-                            toggleParsers(value)
-                            return
-                        }
-                    }
-                    select.firstChild.selected = true
-                    toggleParsers("")
-                }
-            }
-        }
-    }
+	var input = document.getElementById("schema")
+	var select = document.getElementById("preset")
+	if (input) {
+		var value = input.value
+		if (select) {
+			if (select.firstChild) {
+				for (var n = select.firstChild; n != null; n = n.nextSibling) {
+					if (n.value == value) {
+						n.selected = true
+						toggleParsers(value)
+						return
+					}
+				}
+				select.firstChild.selected = true
+				toggleParsers("")
+			}
+		}
+	}
 }
 
 function presetChanged(){
-    if (document.getElementById) {
-        var input = document.getElementById("schema")
-        var select = document.getElementById("preset")
-        if (input && select) {
-            input.value = select.value
-        }
-    }
+	var input = document.getElementById("schema")
+	var select = document.getElementById("preset")
+	if (input && select) {
+		input.value = select.value
+	}
     toggleParsers(select.value)
 }
 
 function toggleParsers(newValue){
-    if (document.getElementById) {
-        var preset = document.getElementById("preset")
-        if (preset) {
-            if (isHtmlCompatiblePreset(newValue)) {
-                var select = document.getElementById("parser")
-                if (select) {
-                    if (select.firstChild) {
-                        for (var n = select.firstChild; n != null; n = n.nextSibling) {
-                            n.disabled = false
-                        }
-                        if (document.getElementById('doc').name == 'content') {
-                            // text area case
-                            if (select.firstChild.selected) {
-                                select.firstChild.nextSibling.nextSibling.nextSibling.selected = true
-                                disableById('nsfilter')
-                            }
-                            select.firstChild.disabled = true
-                        }
-                    }
-                }
-            }
-            else {
-                var select = document.getElementById("parser")
-                if (select) {
-                    if (select.firstChild) {
-                        if (select.firstChild.selected) {
-                            select.firstChild.nextSibling.selected = true
-                        }
-                        for (var n = select.firstChild; n != null; n = n.nextSibling) {
-                            n.disabled = (n.value == "" || isHtmlParserValue(n.value))
-                        }
-                    }
-                }
-            }
-        }
-    }
+	var preset = document.getElementById("preset")
+	if (preset) {
+		if (isHtmlCompatiblePreset(newValue)) {
+			var select = document.getElementById("parser")
+			if (select) {
+				if (select.firstChild) {
+					for (var n = select.firstChild; n != null; n = n.nextSibling) {
+						n.disabled = false
+					}
+					if (document.getElementById('doc').name == 'content') {
+						// text area case
+						if (select.firstChild.selected) {
+							select.firstChild.nextSibling.nextSibling.nextSibling.selected = true
+							disableById('nsfilter')
+						}
+						select.firstChild.disabled = true
+					}
+				}
+			}
+		}
+		else {
+			var select = document.getElementById("parser")
+			if (select) {
+				if (select.firstChild) {
+					if (select.firstChild.selected) {
+						select.firstChild.nextSibling.selected = true
+					}
+					for (var n = select.firstChild; n != null; n = n.nextSibling) {
+						n.disabled = (n.value == "" || isHtmlParserValue(n.value))
+					}
+				}
+			}
+		}
+	}
 }
 
 function isHtmlParserValue(parser){
@@ -181,60 +192,57 @@ function isHtmlCompatiblePreset(preset){
 }
 
 function parserChanged(){
-    if (document.getElementById) {
-        var parser = document.getElementById("parser")
-        if (parser) {
-            if (isHtmlParserValue(parser.value)) {
-                var select = document.getElementById("preset")
-                if (select) {
-                    if (select.firstChild) {
-                        for (var n = select.firstChild; n != null; n = n.nextSibling) {
-                            n.disabled = !isHtmlCompatiblePreset(n.value)
-                        }
-                    }
-                }
-                var nsfilter = document.getElementById("nsfilter")
-                if (nsfilter) {
-                    nsfilter.disabled = true
-                }
-            }
-            else {
-                var select = document.getElementById("preset")
-                if (select) {
-                    if (select.firstChild) {
-                        for (var n = select.firstChild; n != null; n = n.nextSibling) {
-                            n.disabled = false
-                        }
-                    }
-                }
-                var nsfilter = document.getElementById("nsfilter")
-                if (nsfilter) {
-                    nsfilter.disabled = false
-                }
-            }
-        }
-    }
+	var parser = document.getElementById("parser")
+	if (parser) {
+		if (isHtmlParserValue(parser.value)) {
+			var select = document.getElementById("preset")
+			if (select) {
+				if (select.firstChild) {
+					for (var n = select.firstChild; n != null; n = n.nextSibling) {
+						n.disabled = !isHtmlCompatiblePreset(n.value)
+					}
+				}
+			}
+			var nsfilter = document.getElementById("nsfilter")
+			if (nsfilter) {
+				nsfilter.disabled = true
+			}
+		}
+		else {
+			var select = document.getElementById("preset")
+			if (select) {
+				if (select.firstChild) {
+					for (var n = select.firstChild; n != null; n = n.nextSibling) {
+						n.disabled = false
+					}
+				}
+			}
+			var nsfilter = document.getElementById("nsfilter")
+			if (nsfilter) {
+				nsfilter.disabled = false
+			}
+		}
+	}
 }
 
 function formSubmission(){
-    if (document.getElementById) {
-        if (document.getElementsByTagName) {
-            var form = document.getElementsByTagName("form")[0]
-            if (form.checkValidity) {
-                if (!form.checkValidity()) {
-                    return true
-                }
-            }
-        }
-        disableById("submit")
-        disableById("preset")
-        disableByIdIfEmptyString("parser")
-        disableByIdIfEmptyString("schema")
-        disableByIdIfEmptyString("charset")
-        disableByIdIfEmptyString("nsfilter")
-        maybeMoveDocumentRowDown()
-        return true
-    }
+	if (document.getElementsByTagName) {
+		var form = document.getElementsByTagName("form")[0]
+		if (form.checkValidity) {
+			if (!form.checkValidity()) {
+				return true
+			}
+		}
+	}
+	disableById("submit")
+	disableById("preset")
+	disableByIdIfEmptyString("doc")
+	disableByIdIfEmptyString("parser")
+	disableByIdIfEmptyString("schema")
+	disableByIdIfEmptyString("charset")
+	disableByIdIfEmptyString("nsfilter")
+	maybeMoveDocumentRowDown()
+	return true
 }
 
 function maybeMoveDocumentRowDown(){
@@ -377,60 +385,58 @@ function buildGrouped(ol){
 }
 
 function reflow(element) {
-    if (textarea.offsetHeight) {
-        var reflow = textarea.offsetHeight                
+    if (element.offsetHeight) {
+        var reflow = element.offsetHeight                
     }
 }
 
 function installTextarea(){
-    if (document.getElementById) {
-        var input = document.getElementById('doc')
-        if (input && textarea) {
-            var form = document.forms[0]
-            if (form) {
-                form.method = 'post'
-                form.enctype = 'multipart/form-data'
-                input.parentNode.replaceChild(textarea, input)
-                reflow(textarea)
-                disableById('charset')
-                schemaChanged()
-            }
-        }
+	var input = document.getElementById('doc')
+	if (input && textarea) {
+		var form = document.forms[0]
+		if (form) {
+			form.method = 'post'
+			form.enctype = 'multipart/form-data'
+			input.parentNode.replaceChild(textarea, input)
+			reflow(textarea)
+			disableById('charset')
+			schemaChanged()
+		}
+	}
+	var showSource = document.getElementById("showsource")
+    if (showSource) {
+        showSource.checked = true
     }
 }
 
 function installFileUpload(){
-    if (document.getElementById) {
-        var input = document.getElementById('doc')
-        if (input && fileInput) {
-            var form = document.forms[0]
-            if (form) {
-                form.method = 'post'
-                form.enctype = 'multipart/form-data'
-                input.parentNode.replaceChild(fileInput, input)
-                reflow(fileInput)
-                enableById('charset')
-                schemaChanged()
-            }
-        }
-    }
+	var input = document.getElementById('doc')
+	if (input && fileInput) {
+		var form = document.forms[0]
+		if (form) {
+			form.method = 'post'
+			form.enctype = 'multipart/form-data'
+			input.parentNode.replaceChild(fileInput, input)
+			reflow(fileInput)
+			enableById('charset')
+			schemaChanged()
+		}
+	}
 }
 
 function installUrlInput(){
-    if (document.getElementById) {
-        var input = document.getElementById('doc')
-        if (input && urlInput) {
-            var form = document.forms[0]
-            if (form) {
-                form.method = 'get'
-                form.enctype = ''
-                input.parentNode.replaceChild(urlInput, input)
-                reflow(urlInput)
-                enableById('charset')
-                schemaChanged()
-            }
-        }
-    }
+	var input = document.getElementById('doc')
+	if (input && urlInput) {
+		var form = document.forms[0]
+		if (form) {
+			form.method = 'get'
+			form.enctype = ''
+			input.parentNode.replaceChild(urlInput, input)
+			reflow(urlInput)
+			enableById('charset')
+			schemaChanged()
+		}
+	}
 }
 
 function copySourceIntoTextArea(){
@@ -460,8 +466,18 @@ function copySourceIntoTextArea(){
     }
 }
 
-window.onunload = function(){
-    if (document.getElementById) {
+if (document.getElementById) {
+	window.onload = boot
+	
+	if (document.addEventListener) {
+		document.addEventListener("DOMContentLoaded", function() {
+			window.onload = undefined
+			boot()
+		}, false)
+	}
+
+	window.onunload = function(){
+        enableById("doc")
         enableById("submit")
         enableById("preset")
         enableById("parser")

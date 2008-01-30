@@ -1191,7 +1191,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (isSimple()) {
             attrs.addAttribute("class", "simple");
         }
-        attrs.addAttribute("onsubmit", "formSubmission()");
+//        attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
         emitFormContent();
         emitter.endElement("form");
@@ -1212,7 +1212,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.clear();
         attrs.addAttribute("name", "schema");
         attrs.addAttribute("id", "schema");
-        attrs.addAttribute("onchange", "schemaChanged();");
+//        attrs.addAttribute("onchange", "schemaChanged();");
         attrs.addAttribute("pattern", "(?:https?://.+(?:\\s+https?://.+)*)?");
         attrs.addAttribute("title",
                 "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
