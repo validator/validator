@@ -94,6 +94,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://www.inkscape.org/namespaces/inkscape", "Inkscape".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd", "Sodipodi".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.openmath.org/OpenMath", "OpenMath".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/", "Adobe SVG Viewer 3.0 extension".toCharArray());  
     }
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
@@ -204,6 +205,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             s = " " + s;
         }
         return Normalizer.normalize(s, Normalizer.NFC, 0);
+    }
+    
+    private StringBuilder zapLf(StringBuilder builder) {
+        int len = builder.length();
+        for (int i = 0; i < len; i++) {
+            char c = builder.charAt(i);
+            if (c == '\n' || c == '\r') {
+                builder.setCharAt(i, ' ');
+            }
+        }
+        return builder;
     }
 
     public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
@@ -398,8 +410,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 && spec != EmptySpec.THE_INSTANCE
                 && systemId != null
                 && (systemId.startsWith("http:") || systemId.startsWith("https:"))) {
-            log4j.info(new StringBuilder().append(systemId).append('\t').append(
-                    message.getMessage()));
+            log4j.info(zapLf(new StringBuilder().append(systemId).append('\t').append(
+                    message.getMessage())));
         }
         if (errorsOnly && type.getSuperType() == "info") {
             return;
