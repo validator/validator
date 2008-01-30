@@ -25,7 +25,7 @@ __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "h1", "h1", __attrs__);
 t.emitTitle(true); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "h1", "h1");
-t.emitForm(); t.validate(); t.emitScript(); 
+t.emitForm(); t.emitScript(); t.validate(); 
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "hr", "hr", __attrs__);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "hr", "hr");

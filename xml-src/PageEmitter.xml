@@ -9,7 +9,7 @@
 	></head
 	><body onload='boot()'
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
-		><?SaxCompiler-code t.emitForm(); t.validate(); t.emitScript(); ?><hr></hr
+		><?SaxCompiler-code t.emitForm(); t.emitScript(); t.validate(); ?><hr></hr
 		><p
 			><?SaxCompiler-code t.emitAbout(); ?></p
 	></body
