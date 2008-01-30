@@ -1497,16 +1497,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
     }
 
-    void emitIncludes() throws SAXException {
-        attrs.clear();
-        attrs.addAttribute("src", SCRIPT);
-        emitter.startElement("script", attrs);
-        emitter.endElement("script");
+    void emitStyle() throws SAXException {
         attrs.clear();
         attrs.addAttribute("href", STYLE_SHEET);
         attrs.addAttribute("rel", "stylesheet");
         emitter.startElement("link", attrs);
         emitter.endElement("link");
+    }
+
+    void emitScript() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("src", SCRIPT);
+        emitter.startElement("script", attrs);
+        emitter.endElement("script");
     }
 
     void emitAbout() throws SAXException {

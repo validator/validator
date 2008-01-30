@@ -12,7 +12,7 @@ __attrs__.addAttribute("http://www.w3.org/XML/1998/namespace", "lang", "xml:lang
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "html", "html", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "head", "head", __attrs__);
-t.emitIncludes(); 
+t.emitStyle(); 
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "title", "title", __attrs__);
 t.emitTitle(false); 
@@ -25,7 +25,7 @@ __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "h1", "h1", __attrs__);
 t.emitTitle(true); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "h1", "h1");
-t.emitForm(); t.validate(); 
+t.emitForm(); t.validate(); t.emitScript(); 
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "hr", "hr", __attrs__);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "hr", "hr");

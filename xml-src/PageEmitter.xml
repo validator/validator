@@ -4,12 +4,12 @@
 <?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang='en'
 	><head
-		><?SaxCompiler-code t.emitIncludes(); ?><title
+		><?SaxCompiler-code t.emitStyle(); ?><title
 		><?SaxCompiler-code t.emitTitle(false); ?></title
 	></head
 	><body onload='boot()'
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
-		><?SaxCompiler-code t.emitForm(); t.validate(); ?><hr></hr
+		><?SaxCompiler-code t.emitForm(); t.validate(); t.emitScript(); ?><hr></hr
 		><p
 			><?SaxCompiler-code t.emitAbout(); ?></p
 	></body

@@ -28,18 +28,38 @@ var groupedOl = null
 var urlInput = null
 var fileInput = null
 var textarea = null
+var dynamicStyle = null
+var prevHash = null
 var hasTextContent = (createHtmlElement('code').textContent != undefined)
 
-function boot(){
-    initFieldHolders()
+var linePattern = /^#l[0-9]+$/
+var rangePattern = /^#l[0-9]+c[0-9]+$/
+var exactPattern = /^#cl[0-9]+c[0-9]+$/
+
+function boot() {
     schemaChanged()
     parserChanged()
-    initGrouping()
     installHandlers()
 }
 
+function reboot(){
+	boot()
+    initFieldHolders()
+	installDynamicStyle()
+	updateFragmentIdHilite()
+	window.setInterval(emulateHashChanged, 50)
+    initGrouping()
+}
+
+function installDynamicStyle() {
+	dynamicStyle = createHtmlElement('style')
+	document.documentElement.firstChild.appendChild(dynamicStyle)
+}
+
 function installHandlers() {
-	document.forms[0].onsubmit = formSubmission
+	if (document.forms && document.forms.length) {
+		document.forms[0].onsubmit = formSubmission
+	}
 	var schema = document.getElementById("schema")
 	if (schema) {
 		schema.onchange = schemaChanged
@@ -466,13 +486,50 @@ function copySourceIntoTextArea(){
     }
 }
 
+function updateFragmentIdHilite() {
+	var fragment = window.location.hash
+	var selector = null
+	if (linePattern.exec(fragment)) {
+		selector = fragment + " *"
+	} else if (exactPattern.exec(fragment)) {
+		selector = fragment
+	} else if (rangePattern.exec(fragment)) {
+		selector = "html b." + fragment.substring(1)
+	}
+	var rule = ''
+	if (selector) {
+		rule = selector + " { background-color: #FF6666; font-weight: bold; }"
+	}
+	var newStyle = createHtmlElement('style')
+	var ex
+	try {
+		newStyle.appendChild(document.createTextNode(rule))
+	} catch (ex) {
+		if (ex.number == -0x7FFF0001) {
+			newStyle.styleSheet.cssText = rule
+		} else {
+			throw ex
+		} 
+	}
+	dynamicStyle.parentNode.replaceChild(newStyle, dynamicStyle)
+	dynamicStyle = newStyle
+}
+
+function emulateHashChanged() {
+	var hash = window.location.hash
+	if (prevHash != hash) {
+		updateFragmentIdHilite()
+		prevHash = hash
+	}
+}
+
 if (document.getElementById) {
-	window.onload = boot
-	
+	window.onload = reboot
+		
 	if (document.addEventListener) {
 		document.addEventListener("DOMContentLoaded", function() {
 			window.onload = undefined
-			boot()
+			reboot()
 		}, false)
 	}
 
@@ -487,4 +544,6 @@ if (document.getElementById) {
         schemaChanged()
         parserChanged()
     }
+	
+	boot()
 }
