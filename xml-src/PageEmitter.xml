@@ -7,7 +7,7 @@
 		><?SaxCompiler-code t.emitStyle(); ?><title
 		><?SaxCompiler-code t.emitTitle(false); ?></title
 	></head
-	><body onload='boot()'
+	><body
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
 		><?SaxCompiler-code t.emitForm(); t.emitScript(); t.validate(); ?><hr></hr
 		><p

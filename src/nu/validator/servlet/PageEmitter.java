@@ -19,7 +19,6 @@ t.emitTitle(false);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "title", "title");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "head", "head");
 __attrs__.clear();
-__attrs__.addAttribute("", "onload", "onload", "CDATA", "boot()");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "body", "body", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "h1", "h1", __attrs__);
