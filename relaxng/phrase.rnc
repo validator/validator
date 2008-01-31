@@ -253,6 +253,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrase |= span.elem
 
+
+## Inline Styling: <span>
+
+	font.elem =
+		element font { font.inner & font.attrs }
+	font.attrs =
+		( common.attrs )
+	font.inner =
+		( common.inner.phrase )
+
+	common.elem.phrase |= font.elem
+
 ## Bidirectional Override: <bdo>
 
 	bdo.elem =
