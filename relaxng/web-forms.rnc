@@ -455,6 +455,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.method?
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
+		&	form.attrs.accept-charset?
 		)
 		form.attrs.action =
 			attribute action {
