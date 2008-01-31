@@ -45,7 +45,7 @@ public class BrowsingContext extends AbstractDatatype {
         }
         if (literal.charAt(0) == '_') {
             String kw = toAsciiLowerCase(literal.toString().substring(1));
-            if (!("self".equals(kw) || "blank".equals(kw) || "parent".equals(kw))) {
+            if (!("self".equals(kw) || "top".equals(kw) || "parent".equals(kw))) {
                 throw newDatatypeException("Browsing context name started with the underscore and used a reserved keyword ", kw, ".");
             }
         } else {
