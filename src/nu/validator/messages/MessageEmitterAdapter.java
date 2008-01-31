@@ -646,6 +646,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             String ns = element.getNamespaceUri();
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
+                if (loggingOk) {
+                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                }
                 messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
                 linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));
                 messageTextString(messageTextHandler, FROM_NAMESPACE, false);
@@ -681,7 +684,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         } else {
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
-                log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                if (loggingOk) {
+                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                }
                 messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
                 codeString(messageTextHandler, attributeName.getLocalName());
                 messageTextString(messageTextHandler, FROM_NAMESPACE, false);
