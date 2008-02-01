@@ -160,6 +160,7 @@ http://syntax.whattf.org/relaxng/html5core.rnc	syntax/relaxng/html5core.rnc
 http://syntax.whattf.org/relaxng/html5exclusions.rnc	syntax/relaxng/html5exclusions.rnc
 http://syntax.whattf.org/relaxng/meta.rnc	syntax/relaxng/meta.rnc
 http://syntax.whattf.org/relaxng/phrase.rnc	syntax/relaxng/phrase.rnc
+http://syntax.whattf.org/relaxng/legacy.rnc	syntax/relaxng/legacy.rnc
 http://syntax.whattf.org/relaxng/repetition.rnc	syntax/relaxng/repetition.rnc
 http://syntax.whattf.org/relaxng/revision.rnc	syntax/relaxng/revision.rnc
 http://syntax.whattf.org/relaxng/sectional.rnc	syntax/relaxng/sectional.rnc
@@ -411,6 +412,7 @@ http://s.validator.nu/html5/html5full.rnc	schema/html5/html5full.rnc
 http://s.validator.nu/html5/media.rnc	schema/html5/media.rnc
 http://s.validator.nu/html5/meta.rnc	schema/html5/meta.rnc
 http://s.validator.nu/html5/phrase.rnc	schema/html5/phrase.rnc
+http://s.validator.nu/html5/legacy.rnc	schema/html5/legacy.rnc
 http://s.validator.nu/rdf/rdf.rnc	schema/rdf/rdf.rnc
 http://s.validator.nu/html5/repetition.rnc	schema/html5/repetition.rnc
 http://s.validator.nu/html5/revision.rnc	schema/html5/revision.rnc
