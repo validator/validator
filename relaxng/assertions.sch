@@ -354,7 +354,81 @@
 			</assert>
 		</rule>
 	</pattern>
-	
+
+<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<pattern name='center is prohibited'>
+		<rule context='h:center'>
+			<report test='true()'>
+				The &#x201C;center&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='big is prohibited'>
+		<rule context='h:big'>
+			<report test='true()'>
+				The &#x201C;big&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='s is prohibited'>
+		<rule context='h:s'>
+			<report test='true()'>
+				The &#x201C;s&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='strike is prohibited'>
+		<rule context='h:strike'>
+			<report test='true()'>
+				The &#x201C;strike&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='tt is prohibited'>
+		<rule context='h:tt'>
+			<report test='true()'>
+				The &#x201C;tt&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='u is prohibited'>
+		<rule context='h:u'>
+			<report test='true()'>
+				The &#x201C;u&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='acronym is prohibited'>
+		<rule context='h:acronym'>
+			<report test='true()'>
+				The &#x201C;acronym&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='dir is prohibited'>
+		<rule context='h:dir'>
+			<report test='true()'>
+				The &#x201C;dir&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name='applet is prohibited'>
+		<rule context='h:applet'>
+			<report test='true()'>
+				The &#x201C;applet&#x201D; element is obsolete.
+			</report>
+		</rule>
+	</pattern>
+
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 	<!-- Assuming that ID uniqueness is already enforced. -->

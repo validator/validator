@@ -214,59 +214,6 @@ namespace local = ""
 	common.elem.prose |= object.elem.prose
 	common.elem.embedded |= object.elem.embedded
 
-## Java Applets: <applet>
-
-	applet.elem.prose =
-		element applet { applet.inner.prose & applet.attrs }
-	applet.elem.embedded =
-		element applet { applet.inner.embedded & applet.attrs }
-	applet.attrs =
-		(	common.attrs
-		&	applet.attrs.archive?
-		&	applet.attrs.code
-		&	applet.attrs.codebase?
-		&	applet.attrs.name?
-		&	applet.attrs.height
-		&	applet.attrs.width
-		)
-		applet.attrs.archive =
-			attribute archive {
-				common.data.uri #FIXME *comma* separated URI list (*grumble*)
-			}
-		applet.attrs.code =
-			attribute code {
-				token
-			}
-		applet.attrs.codebase =
-			attribute codebase {
-				common.data.uri
-			}
-		applet.attrs.name =
-			attribute name {
-				string #FIXME refine
-			}
-		applet.attrs.height =
-			attribute height {
-				common.data.integer.positive
-			}
-		applet.attrs.width =
-			attribute width {
-				common.data.integer.positive
-			}
-	applet.inner.prose =
-		(	param.elem*
-		,	common.inner.prose
-		)
-	applet.inner.embedded =
-		(	param.elem*
-		,	common.inner.phrase
-		)
-
-# REVISIT commented out as per
-# http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2005-November/005137.html
-#	common.elem.prose |= applet.elem.prose
-#	common.elem.embedded |= applet.elem.embedded
-
 ## Initialization Parameters: <param>
 
 	param.elem =
