@@ -344,6 +344,16 @@
 			</assert>
 		</rule>
 	</pattern>
+
+	<pattern name='encoding decl must be first child of head'>
+		<rule context='/h:html/h:head/h:meta[@charset]
+		             | /h:html/h:head/h:meta["content-type" = translate(@http-equiv, "CONTEYP", "conteyp")]'>
+			<assert test='position()=1'>
+				The internal character encoding declaration must be the first child of 
+				the &#x201C;head&#x201D; element.
+			</assert>
+		</rule>
+	</pattern>
 	
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

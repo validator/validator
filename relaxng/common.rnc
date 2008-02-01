@@ -302,6 +302,14 @@ common.attrs.other =
 	common.data.mimetype =
 		w:mime-type
 
+## Encodings
+
+	common.data.charset =
+		w:charset
+
+	common.data.meta-charset =
+		w:meta-charset
+
 ## Media Queries
 
 	common.data.mediaquery =
