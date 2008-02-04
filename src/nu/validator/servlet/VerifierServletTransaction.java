@@ -65,6 +65,7 @@ import nu.validator.source.SourceCode;
 import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5SpecBuilder;
 import nu.validator.xml.AttributesImpl;
+import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.ForbiddenCharacterFilter;
@@ -792,6 +793,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             } else {
                 throw new RuntimeException("Bug. Unreachable.");
             }
+            reader = new AttributesPermutingXMLReaderWrapper(reader); // make RNG validation better
             if (charsetOverride != null) {
                 String charset = documentInput.getEncoding();
                 if (charset == null) {
