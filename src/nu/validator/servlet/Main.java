@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,6 +24,9 @@
 package nu.validator.servlet;
 
 
+import nu.validator.servletfilter.InboundGzipFilter;
+import nu.validator.servletfilter.InboundSizeLimitFilter;
+
 import org.apache.log4j.PropertyConfigurator;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Handler;
@@ -41,6 +44,9 @@ import org.mortbay.servlet.GzipFilter;
  */
 public class Main {
 
+    private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
+            "nu.validator.servlet.max-file-size", "2097152"));
+    
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         new VerifierServletTransaction(null, null);
@@ -59,11 +65,14 @@ public class Main {
         server.addConnector(connector);
 
         Context context = new Context(server, "/");
+        // The servlet leaves it to the container to limit the amount of data a client can POST!
         context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
+        context.addFilter(new FilterHolder(new InboundSizeLimitFilter(SIZE_LIMIT)), "/*", Handler.REQUEST);
+        context.addFilter(new FilterHolder(new InboundGzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new MultipartFormDataFilter()), "/*", Handler.REQUEST);
         server.start();
-        
+                
         System.in.read(); // XXX do something smarter
         server.stop();
     }

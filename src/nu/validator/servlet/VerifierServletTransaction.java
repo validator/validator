@@ -55,6 +55,8 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.io.BoundedInputStream;
+import nu.validator.io.StreamBoundException;
 import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
@@ -282,6 +284,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
             "nu.validator.servlet.script",
             "http://about.validator.nu/script.js");
 
+    private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
+            "nu.validator.servlet.max-file-size", "2097152"));
+
     private String schemaUrls = null;
 
     protected Validator validator = null;
@@ -321,9 +326,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
     private String charsetOverride = null;
 
     private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked
-                                                                            // for
-                                                                            // UI
-                                                                            // stability
+    // for
+    // UI
+    // stability
 
     static {
         try {
@@ -606,7 +611,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 }
             }
         }
-        
+
         boolean errorsOnly = ("error".equals(request.getParameter("level")));
 
         try {
@@ -735,7 +740,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         } catch (IOException e1) {
             throw new SAXException(e1);
         }
-        httpRes = new PrudentHttpEntityResolver(2048 * 1024, laxType,
+        httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
@@ -1193,7 +1198,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (isSimple()) {
             attrs.addAttribute("class", "simple");
         }
-//        attrs.addAttribute("onsubmit", "formSubmission()");
+        //        attrs.addAttribute("onsubmit", "formSubmission()");
         emitter.startElement("form", attrs);
         emitFormContent();
         emitter.endElement("form");
@@ -1214,7 +1219,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         attrs.clear();
         attrs.addAttribute("name", "schema");
         attrs.addAttribute("id", "schema");
-//        attrs.addAttribute("onchange", "schemaChanged();");
+        //        attrs.addAttribute("onchange", "schemaChanged();");
         attrs.addAttribute("pattern", "(?:https?://.+(?:\\s+https?://.+)*)?");
         attrs.addAttribute("title",
                 "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
@@ -1493,9 +1498,15 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     null, document);
             errorHandler.setLoggingOk(true);
         } else { // POST
+            long len = request.getContentLength();
+            if (len > SIZE_LIMIT) {
+                throw new StreamBoundException("Resource size exceeds limit.");
+            }
             documentInput = contentTypeParser.buildTypedInputSource(document,
                     null, postContentType);
-            documentInput.setByteStream(request.getInputStream());
+            documentInput.setByteStream(len < 0 ? new BoundedInputStream(
+                    request.getInputStream(), SIZE_LIMIT)
+                    : request.getInputStream());
         }
     }
 
@@ -1554,8 +1565,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
         for (int i = 0; i < CHARSETS.length; i++) {
             String charset = CHARSETS[i];
             boolean selected = charset.equalsIgnoreCase(charsetOverride); // XXX
-                                                                            // use
-                                                                            // ASCII-caseinsensitivity
+            // use
+            // ASCII-caseinsensitivity
             emitter.option(CHARSET_DESCRIPTIONS[i], charset, selected);
             if (selected) {
                 found = true;

@@ -59,12 +59,12 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class MultipartFormDataFilter implements Filter {
+public final class MultipartFormDataFilter implements Filter {
 
     private static Pattern EXTENSION = Pattern.compile("^.*\\.(.+)$");
-    
+
     private final static Map<String, String> EXTENSION_TO_TYPE = new HashMap<String, String>();
-    
+
     static {
         EXTENSION_TO_TYPE.put("html", "text/html");
         EXTENSION_TO_TYPE.put("htm", "text/html");
@@ -76,8 +76,9 @@ public class MultipartFormDataFilter implements Filter {
         EXTENSION_TO_TYPE.put("xml", "application/xml");
         EXTENSION_TO_TYPE.put("dbk", "application/xml");
     }
-    
-    private static String utf8ByteStreamToString(InputStream stream) throws IOException {
+
+    private static String utf8ByteStreamToString(InputStream stream)
+            throws IOException {
         CharsetDecoder dec = Charset.forName("UTF-8").newDecoder();
         dec.onMalformedInput(CodingErrorAction.REPORT);
         dec.onUnmappableCharacter(CodingErrorAction.REPORT);
@@ -89,13 +90,14 @@ public class MultipartFormDataFilter implements Filter {
             if (i > 2048) {
                 throw new IOException("Form field value too large.");
             }
-            builder.append((char)c);
+            builder.append((char) c);
             i++;
         }
         return builder.toString();
     }
 
-    private static void putParam(Map<String, String[]> params, String key, String value) {
+    private static void putParam(Map<String, String[]> params, String key,
+            String value) {
         String[] oldVal = params.get(key);
         if (oldVal == null) {
             String[] arr = new String[1];
@@ -111,10 +113,10 @@ public class MultipartFormDataFilter implements Filter {
             String[] arr = new String[oldVal.length + 1];
             System.arraycopy(oldVal, 0, arr, 0, oldVal.length);
             arr[oldVal.length] = value;
-            params.put(key, arr);            
+            params.put(key, arr);
         }
     }
-    
+
     public void destroy() {
     }
 
@@ -128,51 +130,57 @@ public class MultipartFormDataFilter implements Filter {
                 String contentType = null;
                 Map<String, String[]> params = new HashMap<String, String[]>();
                 InputStream fileStream = null;
-            ServletFileUpload upload = new ServletFileUpload();
-            FileItemIterator iter = upload.getItemIterator(request);
-            while (iter.hasNext()) {
-                FileItemStream fileItemStream = iter.next();
-                if (fileItemStream.isFormField()) {
-                    String fieldName = fileItemStream.getFieldName();
-                    if ("content".equals(fieldName)) {
-                        utf8 = true;
-                        String[] parser = params.get("parser");
-                        if (parser != null && parser[0].startsWith("xml")) {
-                            contentType = "application/xml";
+                ServletFileUpload upload = new ServletFileUpload();
+                FileItemIterator iter = upload.getItemIterator(request);
+                while (iter.hasNext()) {
+                    FileItemStream fileItemStream = iter.next();
+                    if (fileItemStream.isFormField()) {
+                        String fieldName = fileItemStream.getFieldName();
+                        if ("content".equals(fieldName)) {
+                            utf8 = true;
+                            String[] parser = params.get("parser");
+                            if (parser != null && parser[0].startsWith("xml")) {
+                                contentType = "application/xml";
+                            } else {
+                                contentType = "text/html";
+                            }
+                            fileStream = fileItemStream.openStream();
+                            break;
                         } else {
-                            contentType = "text/html";
+                            putParam(
+                                    params,
+                                    fieldName,
+                                    utf8ByteStreamToString(fileItemStream.openStream()));
                         }
-                        fileStream = fileItemStream.openStream();                      
-                        break;
                     } else {
-                        putParam(params, fieldName, utf8ByteStreamToString(fileItemStream.openStream()));
-                    }
-                } else {
-                    String fileName = fileItemStream.getName();
-                    if (fileName != null) {
-                        putParam(params,  fileItemStream.getFieldName(), fileName); 
-                        Matcher m = EXTENSION.matcher(fileName);
-                        if (m.matches()) {
-                            contentType = EXTENSION_TO_TYPE.get(m.group(1));
+                        String fileName = fileItemStream.getName();
+                        if (fileName != null) {
+                            putParam(params, fileItemStream.getFieldName(),
+                                    fileName);
+                            Matcher m = EXTENSION.matcher(fileName);
+                            if (m.matches()) {
+                                contentType = EXTENSION_TO_TYPE.get(m.group(1));
+                            }
                         }
+                        if (contentType == null) {
+                            contentType = fileItemStream.getContentType();
+                        }
+                        fileStream = fileItemStream.openStream();
+                        break;
                     }
-                    if (contentType == null) {
-                        contentType = fileItemStream.getContentType();      
-                    }
-                    fileStream = fileItemStream.openStream();
-                    break;
                 }
-            }
-            if (fileStream == null) {
-                fileStream = new ByteArrayInputStream(new byte[0]);
-            }
-            chain.doFilter(new RequestWrapper(request, params, contentType, utf8, fileStream), response);
+                if (fileStream == null) {
+                    fileStream = new ByteArrayInputStream(new byte[0]);
+                }
+                chain.doFilter(new RequestWrapper(request, params, contentType,
+                        utf8, fileStream), response);
             } catch (FileUploadException e) {
                 response.sendError(415, e.getMessage());
             } catch (CharacterCodingException e) {
-                response.sendError(415, e.getMessage());                
+                response.sendError(415, e.getMessage());
             } catch (IOException e) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());                
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        e.getMessage());
             }
         } else {
             chain.doFilter(req, res);
@@ -182,14 +190,19 @@ public class MultipartFormDataFilter implements Filter {
     public void init(FilterConfig arg0) throws ServletException {
     }
 
-    private class RequestWrapper extends HttpServletRequestWrapper {
+    private final class RequestWrapper extends HttpServletRequestWrapper {
 
         private final Map<String, String[]> params;
+
         private final String contentType;
+
         private final boolean utf8;
+
         private final ServletInputStream stream;
-        
-        public RequestWrapper(HttpServletRequest req, Map<String, String[]> params, String contentType, boolean utf8, InputStream stream) {
+
+        public RequestWrapper(HttpServletRequest req,
+                Map<String, String[]> params, String contentType, boolean utf8,
+                InputStream stream) {
             super(req);
             this.params = Collections.unmodifiableMap(params);
             this.contentType = contentType;
@@ -252,7 +265,7 @@ public class MultipartFormDataFilter implements Filter {
                     list.add(getContentType());
                 } else {
                     list.add(name);
-                }                
+                }
             }
             return Collections.enumeration(list);
         }
@@ -374,7 +387,7 @@ public class MultipartFormDataFilter implements Filter {
             Reader reader = new InputStreamReader(stream, dec);
             return new BufferedReader(reader);
         }
-        
+
     }
-    
+
 }
