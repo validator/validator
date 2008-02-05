@@ -62,7 +62,7 @@ public final class PermutingAttributesWrapper implements Attributes {
     
     public void pushDown(String uri, String localName) {
         int index = getIndex(uri, localName);
-        if (index < 0 && index == permutation.length - 1) {
+        if (index < 0 || index == permutation.length - 1) {
             return;
         }
         int temp = permutation[index];
