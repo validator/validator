@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.zip.GZIPInputStream;
 
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
@@ -230,6 +231,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             m.setFollowRedirects(true);
             m.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
             m.addRequestHeader("Accept", buildAccept());
+            m.addRequestHeader("Accept-Encoding", "gzip");
             log4j.info(systemId);
             client.executeMethod(m);
             int statusCode = m.getStatusCode();
@@ -264,9 +266,19 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
             final GetMethod meth = m;
-            InputStream stream = m.getResponseBodyAsStream();
+            InputStream stream = m.getResponseBodyAsStream();            
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit);
+            }
+            Header ce = m.getResponseHeader("Content-Encoding");
+            if (ce != null) {
+                String val = ce.getValue().trim();
+                if ("gzip".equalsIgnoreCase(val) || "x-gzip".equalsIgnoreCase(val)) {
+                    stream = new GZIPInputStream(stream);
+                    if (sizeLimit > -1) {
+                        stream = new BoundedInputStream(stream, sizeLimit);
+                    }                    
+                }
             }
             is.setByteStream(new ObservableInputStream(stream,
                     new StreamObserver() {
