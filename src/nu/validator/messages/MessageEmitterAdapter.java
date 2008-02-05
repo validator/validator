@@ -218,6 +218,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         return builder;
     }
 
+    private void throwIfTooManyMessages() throws SAXException {
+        if (warnings + errors > 1000) {
+            throw new TooManyErrorsException("Too many messages.");
+        }
+    }
+    
     public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
             MessageEmitter messageEmitter) {
         super();
@@ -269,6 +275,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             return;
         }
         this.warnings++;
+        throwIfTooManyMessages();
         messageFromSAXParseException(MessageType.WARNING, e, exact);
     }
 
@@ -288,6 +295,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             return;
         }
         this.errors++;
+        throwIfTooManyMessages();
         messageFromSAXParseException(MessageType.ERROR, e, exact);
     }
 

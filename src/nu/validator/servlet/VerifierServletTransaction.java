@@ -61,6 +61,7 @@ import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.messages.TextMessageEmitter;
+import nu.validator.messages.TooManyErrorsException;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.source.SourceCode;
@@ -814,6 +815,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 documentInput.setEncoding(charsetOverride);
             }
             reader.parse(documentInput);
+        } catch (TooManyErrorsException e) {
+            log4j.debug("TooManyErrorsException", e);
+            errorHandler.fatalError(e);                            
         } catch (SAXException e) {
             log4j.debug("SAXException", e);
         } catch (IOException e) {
