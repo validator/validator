@@ -120,7 +120,14 @@ else:
   inputHandle = sys.stdin
 
 data = inputHandle.read()
-  
+
+buf = StringIO.StringIO()
+gzipper = gzip.GzipFile(fileobj=buf, mode='wb')
+gzipper.write(data)
+gzipper.close()
+gzippeddata = buf.getvalue()
+buf.close()
+
 connection = None
 response = None
 status = 302
@@ -153,9 +160,10 @@ while (status == 302 or status == 301 or status == 307) and redirectCount < 10:
   connection.putrequest("POST", "%s?%s" % (parsed[2], parsed[3]), skip_accept_encoding=1)
   connection.putheader("Accept-Encoding", 'gzip')
   connection.putheader("Content-Type", contentType)
-  connection.putheader("Content-Length", len(data))
+  connection.putheader("Content-Encoding", 'gzip')
+  connection.putheader("Content-Length", len(gzippeddata))
   connection.endheaders()
-  connection.send(data)
+  connection.send(gzippeddata)
   response = connection.getresponse()
   status = response.status
   redirectCount += 1
