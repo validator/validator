@@ -31,8 +31,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import nu.validator.io.BoundednputStream;
+import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
+import nu.validator.io.StreamBoundException;
 import nu.validator.io.StreamObserver;
 
 import org.apache.commons.httpclient.Header;
@@ -69,7 +70,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     private static int maxRequests;
 
-    private int sizeLimit;
+    private long sizeLimit;
 
     private final ErrorHandler errorHandler;
 
@@ -125,7 +126,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
      * @param socketTimeout
      * @param sizeLimit
      */
-    public PrudentHttpEntityResolver(int sizeLimit, boolean laxContentType,
+    public PrudentHttpEntityResolver(long sizeLimit, boolean laxContentType,
             ErrorHandler errorHandler) {
         this.sizeLimit = sizeLimit;
         this.requestsLeft = maxRequests;
@@ -246,7 +247,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
                         "Resource size exceeds limit.", publicId,
-                        m.getURI().toString(), -1, -1, new IOException(
+                        m.getURI().toString(), -1, -1, new StreamBoundException(
                                 "Resource size exceeds limit."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
@@ -265,7 +266,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             final GetMethod meth = m;
             InputStream stream = m.getResponseBodyAsStream();
             if (sizeLimit > -1) {
-                stream = new BoundednputStream(stream, sizeLimit);
+                stream = new BoundedInputStream(stream, sizeLimit);
             }
             is.setByteStream(new ObservableInputStream(stream,
                     new StreamObserver() {

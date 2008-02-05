@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -23,6 +23,11 @@
 package nu.validator.servletfilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -32,8 +37,10 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 
-public class InboundGzipFilter implements Filter {
+public final class InboundGzipFilter implements Filter {
 
     public void destroy() {
     }
@@ -41,36 +48,133 @@ public class InboundGzipFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        String method = request.getMethod();
-        if ("POST".equals(method) || "PUT".equals(method)) {
-            String ce = request.getHeader("Content-Encoding");
-            if (ce != null && "gzip".equalsIgnoreCase(ce.trim())) {
-                chain.doFilter(wrap(request), res);                
-            } else {
-                // do nothing
-                chain.doFilter(req, res);
-            }
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.addHeader("Accept-Encoding", "gzip");
+        String ce = request.getHeader("Content-Encoding");
+        if (ce != null && "gzip".equalsIgnoreCase(ce.trim())) {
+            chain.doFilter(new RequestWrapper(request), res);
         } else {
-            // do nothing
             chain.doFilter(req, res);
         }
-    }
-
-    private ServletRequest wrap(HttpServletRequest request) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     public void init(FilterConfig config) throws ServletException {
     }
 
-    private class GzipServletInputStream extends ServletInputStream {
+    private final class RequestWrapper extends HttpServletRequestWrapper {
 
-        @Override
-        public int read() throws IOException {
-            // TODO Auto-generated method stub
-            return 0;
+        private ServletInputStream stream = null;
+
+        public RequestWrapper(HttpServletRequest req) throws IOException {
+            super(req);
         }
-        
+
+        /**
+         * @see javax.servlet.http.HttpServletRequestWrapper#getDateHeader(java.lang.String)
+         */
+        @Override
+        public long getDateHeader(String name) {
+            if ("Content-Length".equalsIgnoreCase(name)) {
+                return -1;
+            } else if ("Content-MD5".equalsIgnoreCase(name)) {
+                return -1;
+            } else if ("Content-Encoding".equalsIgnoreCase(name)) {
+                return -1;
+            } else {
+                return super.getDateHeader(name);
+            }
+        }
+
+        /**
+         * @see javax.servlet.http.HttpServletRequestWrapper#getHeader(java.lang.String)
+         */
+        @Override
+        public String getHeader(String name) {
+            if ("Content-Length".equalsIgnoreCase(name)) {
+                return null;
+            } else if ("Content-MD5".equalsIgnoreCase(name)) {
+                return null;
+            } else if ("Content-Encoding".equalsIgnoreCase(name)) {
+                return null;
+            } else {
+                return super.getHeader(name);
+            }
+        }
+
+        /**
+         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaderNames()
+         */
+        @Override
+        public Enumeration getHeaderNames() {
+            Enumeration e = super.getHeaderNames();
+            List<String> list = new ArrayList<String>();
+            while (e.hasMoreElements()) {
+                String name = (String) e.nextElement();
+                if ("Content-Length".equalsIgnoreCase(name)) {
+                    continue;
+                } else if ("Content-MD5".equalsIgnoreCase(name)) {
+                    continue;
+                } else if ("Content-Encoding".equalsIgnoreCase(name)) {
+                    continue;
+                } else {
+                    list.add(name);
+                }
+            }
+            return Collections.enumeration(list);
+        }
+
+        /**
+         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        public Enumeration getHeaders(String name) {
+            if ("Content-Length".equalsIgnoreCase(name)) {
+                return Collections.enumeration(Collections.EMPTY_SET);
+            } else if ("Content-MD5".equalsIgnoreCase(name)) {
+                return Collections.enumeration(Collections.EMPTY_SET);
+            } else if ("Content-Encoding".equalsIgnoreCase(name)) {
+                return Collections.enumeration(Collections.EMPTY_SET);
+            } else {
+                return super.getHeaders(name);
+            }
+        }
+
+        /**
+         * @see javax.servlet.http.HttpServletRequestWrapper#getIntHeader(java.lang.String)
+         */
+        @Override
+        public int getIntHeader(String name) {
+            if ("Content-Length".equalsIgnoreCase(name)) {
+                return -1;
+            } else if ("Content-MD5".equalsIgnoreCase(name)) {
+                return -1;
+            } else if ("Content-Encoding".equalsIgnoreCase(name)) {
+                return -1;
+            } else {
+                return super.getIntHeader(name);
+            }
+        }
+
+        /**
+         * @see javax.servlet.ServletRequestWrapper#getContentLength()
+         */
+        @Override
+        public int getContentLength() {
+            return -1;
+        }
+
+        /**
+         * @see javax.servlet.ServletRequestWrapper#getInputStream()
+         */
+        @Override
+        public ServletInputStream getInputStream() throws IOException {
+            if (stream == null) {
+                stream = new DelegatingServletInputStream(new GZIPInputStream(super.getInputStream()));
+            }
+            return stream;
+        }
+
     }
+
 }

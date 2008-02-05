@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -30,9 +31,9 @@ import java.io.InputStream;
  * @version $Id$
  * @author hsivonen
  */
-public class BoundednputStream extends InputStream {
+public final class BoundedInputStream extends InputStream {
 
-    private InputStream delegate;
+    private final InputStream delegate;
 
     private long counter = 0;
 
@@ -42,14 +43,14 @@ public class BoundednputStream extends InputStream {
      * @param delegate
      * @param limit
      */
-    public BoundednputStream(InputStream delegate, long limit) {
+    public BoundedInputStream(InputStream delegate, long limit) {
         this.delegate = delegate;
         this.limit = limit;
     }
 
     private void checkLimit() throws IOException {
         if (counter > limit) {
-            throw new StreamBoundException();
+            throw new StreamBoundException("Stream length exceeds limit.");
         }
     }
 
