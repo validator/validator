@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -182,14 +182,62 @@ class ValidatorTester:
     else:
       print "%s Expected %s but saw %s." % (uri, str(expectedErrs[0]), str(actualErrs[0]))
 
-  def dumpReference(self, uri):
-    pass
+# User-facing commands
+
+  def dumpReference(self, uri, handle):
+    simplejson.dump({uri:self.database[uri]}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    handle.write('\n')
+    handle.close()
     
-  def dumpUri(self, uri):
-    pass
+  def dumpUri(self, uri, handle):
+    simplejson.dump({uri:self.errorsForUri(uri)}, sys.stdout, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    handle.write('\n')
+    handle.close()
     
   def addToDatabase(self, uri):
-    pass
+    self.database[uri] = self.errorsForUri(uri)
+    self.dump()
 
-vt = ValidatorTester('db.json')
-vt.dump()
+  def mergeToDatabase(self, handle):
+    db = self.loadDatabase(handle)
+    self.database.update(db)
+    self.dump()
+    
+# End user-facing commands
+    
+  def runCommandLine(self, argv):
+    if len(argv) > 0:
+      if argv[0] == 'dumpref':
+        self.dumpReference(argv[1], self.argsToHandle(argv[2:], 0))
+      elif argv[0] == 'dumpuri':
+        self.dumpUri(argv[1], self.argsToHandle(argv[2:], 0))
+      elif argv[0] == 'adduri':
+        self.addToDatabase(argv[1])
+      elif argv[0] == 'mergedb':
+        self.mergeToDatabase(self.argsToHandle(argv[1:], 1))        
+
+  def argsToHandle(self, argv, input):
+    if len(argv) == 0:
+      if input:
+        return sys.stdin
+      else:
+        return sys.stdout
+    elif len(argv) == 1:
+      if input:
+        return open(argv[0], 'rb')
+      else:
+        return open(argv[0], 'wb')
+    else:
+      raise Exception("Too many arguments.")
+
+def main():
+  dbfile = 'db.json'
+  argv = sys.argv[1:]
+  if len(argv) > 0 and argv[0].startswith('--db='):
+    dbfile = argv[0][5:]
+    argv = argv[1:]
+  vt = ValidatorTester(dbfile)
+  vt.runCommandLine(argv)
+
+if __name__ == "__main__":
+  main()  
