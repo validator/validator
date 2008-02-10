@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,6 +23,8 @@
 
 package nu.validator.io;
 
+import java.io.IOException;
+
 
 /**
  * @version $Id$
@@ -30,7 +33,14 @@ package nu.validator.io;
 public interface StreamObserver {
     public void closeCalled();
 
-    public void exceptionOccurred(Exception ex);
+    /**
+     * The argument will be a <code>RuntimeException</code> or 
+     * an <code>IOException</code> the implementation of this 
+     * method should rethrow it or another exception that wraps it.
+     * 
+     * @param ex
+     */
+    public void exceptionOccurred(Exception ex) throws IOException;
     
     public void finalizerCalled();
 }

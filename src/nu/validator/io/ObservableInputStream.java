@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -51,10 +52,10 @@ public class ObservableInputStream extends InputStream {
             return delegate.available();
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -67,10 +68,10 @@ public class ObservableInputStream extends InputStream {
             delegate.close();
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -81,8 +82,12 @@ public class ObservableInputStream extends InputStream {
         try {
             delegate.mark(arg0);
         } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw e;
+            try {
+                observer.exceptionOccurred(e);
+            } catch (IOException e1) {
+                throw new RuntimeException("The observer threw against the  API contract.", e1);
+            }
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -93,8 +98,12 @@ public class ObservableInputStream extends InputStream {
         try {
             return delegate.markSupported();
         } catch (RuntimeException e) {
-            observer.exceptionOccurred(e);
-            throw e;
+            try {
+                observer.exceptionOccurred(e);
+            } catch (IOException e1) {
+                throw new RuntimeException("The observer threw against the  API contract.", e1);
+            }
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -107,10 +116,10 @@ public class ObservableInputStream extends InputStream {
             return delegate.read();
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -122,10 +131,10 @@ public class ObservableInputStream extends InputStream {
             return delegate.read(arg0);
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -137,10 +146,10 @@ public class ObservableInputStream extends InputStream {
             return delegate.read(arg0, arg1, arg2);
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -152,10 +161,10 @@ public class ObservableInputStream extends InputStream {
             delegate.reset();
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
 
@@ -167,10 +176,10 @@ public class ObservableInputStream extends InputStream {
             return delegate.skip(arg0);
         } catch (RuntimeException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         } catch (IOException e) {
             observer.exceptionOccurred(e);
-            throw e;
+            throw new RuntimeException("The observer failed to throw per API contract.");
         }
     }
     

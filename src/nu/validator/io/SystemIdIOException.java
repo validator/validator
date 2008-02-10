@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2005 Henri Sivonen
  * Copyright (c) 2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
@@ -23,28 +22,40 @@
 
 package nu.validator.io;
 
+import java.io.IOException;
 
-/**
- * @version $Id$
- * @author hsivonen
- */
-public class StreamBoundException extends SystemIdIOException {
+public class SystemIdIOException extends IOException {
 
-    /**
-     * 
-     */
-    public StreamBoundException() {
+    private final String systemId;
+    
+    public SystemIdIOException() {
         super();
+        this.systemId = null;
+    }
+    
+    public SystemIdIOException(String systemId) {
+        super();
+        this.systemId = systemId;
+    }
+
+    public SystemIdIOException(String systemId, String message) {
+        super(message);
+        this.systemId = systemId;
+    }
+
+    public SystemIdIOException(String systemId, String message, Exception cause) {
+        super(message);
+        this.systemId = systemId;
+        this.initCause(cause);
     }
 
     /**
-     * @param message
+     * Returns the systemId.
+     * 
+     * @return the systemId
      */
-    public StreamBoundException(String message) {
-        super(null, message);
+    public String getSystemId() {
+        return systemId;
     }
 
-    public StreamBoundException(String message, String systemId) {
-        super(message, systemId);
-    }
 }

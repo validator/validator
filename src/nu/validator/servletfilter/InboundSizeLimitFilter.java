@@ -23,11 +23,6 @@
 package nu.validator.servletfilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -95,7 +90,7 @@ public final class InboundSizeLimitFilter implements Filter {
                 if (super.getContentLength() > sizeLimit) {
                     throw new StreamBoundException("Resource size exceeds limit.");
                 }
-                stream = new DelegatingServletInputStream(new BoundedInputStream(super.getInputStream(), sizeLimit));
+                stream = new DelegatingServletInputStream(new BoundedInputStream(super.getInputStream(), sizeLimit, super.getHeader("Content-Location")));
             }
             return stream;
         }

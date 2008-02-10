@@ -36,6 +36,7 @@ import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
 import nu.validator.io.StreamBoundException;
 import nu.validator.io.StreamObserver;
+import nu.validator.io.SystemIdIOException;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
@@ -259,7 +260,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             TypedInputSource is;
             Header ct = m.getResponseHeader("Content-Type");
             String contentType = null;
-            String baseUri = m.getURI().toString();
+            final String baseUri = m.getURI().toString();
             if (ct != null) {
                 contentType = ct.getValue();
             }
@@ -268,7 +269,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             final GetMethod meth = m;
             InputStream stream = m.getResponseBodyAsStream();            
             if (sizeLimit > -1) {
-                stream = new BoundedInputStream(stream, sizeLimit);
+                stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
             Header ce = m.getResponseHeader("Content-Encoding");
             if (ce != null) {
@@ -276,7 +277,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 if ("gzip".equalsIgnoreCase(val) || "x-gzip".equalsIgnoreCase(val)) {
                     stream = new GZIPInputStream(stream);
                     if (sizeLimit > -1) {
-                        stream = new BoundedInputStream(stream, sizeLimit);
+                        stream = new BoundedInputStream(stream, sizeLimit, baseUri);
                     }                    
                 }
             }
@@ -300,7 +301,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                             }
                         }
 
-                        public void exceptionOccurred(Exception ex) {
+                        public void exceptionOccurred(Exception ex) throws IOException {
                             if (!released) {
                                 released = true;
                                 try {
@@ -316,6 +317,18 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                                                 e);
                                     }
                                 }
+                            }
+                            if (ex instanceof SystemIdIOException) {
+                                SystemIdIOException siie = (SystemIdIOException) ex;
+                                throw siie;
+                            } else if (ex instanceof IOException) {
+                                IOException ioe = (IOException) ex;
+                                throw new SystemIdIOException(baseUri, ioe.getMessage(), ioe);
+                            } else if (ex instanceof RuntimeException) {
+                                RuntimeException re = (RuntimeException) ex;
+                                throw re;
+                            } else {
+                                throw new RuntimeException("API contract violation. Wrong exception type.", ex);
                             }
                         }
 

@@ -34,6 +34,8 @@ import java.io.InputStream;
 public final class BoundedInputStream extends InputStream {
 
     private final InputStream delegate;
+    
+    private final String systemId;
 
     private long counter = 0;
 
@@ -43,14 +45,15 @@ public final class BoundedInputStream extends InputStream {
      * @param delegate
      * @param limit
      */
-    public BoundedInputStream(InputStream delegate, long limit) {
+    public BoundedInputStream(InputStream delegate, long limit, String systemId) {
         this.delegate = delegate;
         this.limit = limit;
+        this.systemId = systemId;
     }
 
     private void checkLimit() throws IOException {
         if (counter > limit) {
-            throw new StreamBoundException("Stream length exceeds limit.");
+            throw new StreamBoundException("Stream length exceeds limit.", systemId);
         }
     }
 
