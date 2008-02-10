@@ -227,7 +227,7 @@ class ValidatorTester:
     elif argv[0] == 'checkuri':
       self.checkUri(argv[1])
     elif argv[0] == 'checkall':
-      self.checkUri()
+      self.checkAll()
     elif argv[0] == 'mergedb':
       self.mergeToDatabase(self.argsToHandle(argv[1:], 1))        
     else:
