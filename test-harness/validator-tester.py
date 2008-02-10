@@ -95,8 +95,9 @@ class ValidationErrorMessageEncoder(simplejson.JSONEncoder):
 
 
 class ValidatorTester:
-  def __init__(self, dbpath):
+  def __init__(self, dbpath, serviceuri):
     self.dbpath = dbpath
+    self.serviceuri = serviceuri
     f = open(dbpath, 'rb')
     self.database = self.loadDatabase(f)
     f.close()
@@ -113,7 +114,7 @@ class ValidatorTester:
     response = None
     status = 302
     redirectCount = 0
-    url = 'http://html5.validator.nu/?out=json&' + urllib.urlencode({'doc':uri})
+    url = self.serviceuri + '?out=json&' + urllib.urlencode({'doc':uri})
     
     while (status == 302 or status == 301 or status == 307) and redirectCount < 10:
       if redirectCount > 0:
@@ -169,8 +170,34 @@ class ValidatorTester:
   def dumpDatabase(self, handle, database):
     simplejson.dump(database, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
 
-  def checkTestCase(uri, expectedErrs):
+# User-facing commands
+
+  def dumpReference(self, uri, handle):
+    simplejson.dump({uri:self.database[uri]}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    handle.write('\n')
+    handle.close()
+    
+  def dumpUri(self, uri, handle):
+    simplejson.dump({uri:self.errorsForUri(uri)}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    handle.write('\n')
+    handle.close()
+    
+  def addToDatabase(self, uri):
+    self.database[uri] = self.errorsForUri(uri)
+    self.dump()
+
+  def deleteFromDatabase(self, uri):
+    self.database.pop(uri)
+    self.dump()
+
+  def mergeToDatabase(self, handle):
+    db = self.loadDatabase(handle)
+    self.database.update(db)
+    self.dump()
+
+  def checkUri(self, uri):
     actualErrs = self.errorsForUri(uri)
+    expectedErrs = self.database[uri]
     if len(actualErrs) == 0 and len(expectedErrs) == 0:
       return
     elif len(expectedErrs) == 0:
@@ -181,40 +208,30 @@ class ValidatorTester:
       return
     else:
       print "%s Expected %s but saw %s." % (uri, str(expectedErrs[0]), str(actualErrs[0]))
-
-# User-facing commands
-
-  def dumpReference(self, uri, handle):
-    simplejson.dump({uri:self.database[uri]}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
-    handle.write('\n')
-    handle.close()
-    
-  def dumpUri(self, uri, handle):
-    simplejson.dump({uri:self.errorsForUri(uri)}, sys.stdout, cls=ValidationErrorMessageEncoder, sort_keys=True)
-    handle.write('\n')
-    handle.close()
-    
-  def addToDatabase(self, uri):
-    self.database[uri] = self.errorsForUri(uri)
-    self.dump()
-
-  def mergeToDatabase(self, handle):
-    db = self.loadDatabase(handle)
-    self.database.update(db)
-    self.dump()
+  
+  def checkAll(self):
+    for uri in self.database.iterkeys():
+      self.checkUri(uri)
     
 # End user-facing commands
     
   def runCommandLine(self, argv):
-    if len(argv) > 0:
-      if argv[0] == 'dumpref':
-        self.dumpReference(argv[1], self.argsToHandle(argv[2:], 0))
-      elif argv[0] == 'dumpuri':
-        self.dumpUri(argv[1], self.argsToHandle(argv[2:], 0))
-      elif argv[0] == 'adduri':
-        self.addToDatabase(argv[1])
-      elif argv[0] == 'mergedb':
-        self.mergeToDatabase(self.argsToHandle(argv[1:], 1))        
+    if argv[0] == 'dumpref':
+      self.dumpReference(argv[1], self.argsToHandle(argv[2:], 0))
+    elif argv[0] == 'dumpuri':
+      self.dumpUri(argv[1], self.argsToHandle(argv[2:], 0))
+    elif argv[0] == 'adduri':
+      self.addToDatabase(argv[1])
+    elif argv[0] == 'deluri':
+      self.deleteFromDatabase(argv[1])
+    elif argv[0] == 'checkuri':
+      self.checkUri(argv[1])
+    elif argv[0] == 'checkall':
+      self.checkUri()
+    elif argv[0] == 'mergedb':
+      self.mergeToDatabase(self.argsToHandle(argv[1:], 1))        
+    else:
+      raise Exception("Unknown command %s" % argv[0])
 
   def argsToHandle(self, argv, input):
     if len(argv) == 0:
@@ -232,11 +249,18 @@ class ValidatorTester:
 
 def main():
   dbfile = 'db.json'
+  serviceuri = 'http://html5.validator.nu/'
   argv = sys.argv[1:]
-  if len(argv) > 0 and argv[0].startswith('--db='):
-    dbfile = argv[0][5:]
-    argv = argv[1:]
-  vt = ValidatorTester(dbfile)
+  while len(argv) > 0 and argv[0].startswith('--'):
+    if argv[0].startswith('--db='):
+      dbfile = argv[0][5:]
+      argv = argv[1:]
+    elif argv[0].startswith('--service='):
+      serviceuri = argv[0][10:]
+      argv = argv[1:]
+    else:
+      raise Exception("Unknow argument %s" % argv[0])
+  vt = ValidatorTester(dbfile, serviceuri)
   vt.runCommandLine(argv)
 
 if __name__ == "__main__":
