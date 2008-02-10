@@ -65,12 +65,11 @@ public class Main {
         server.addConnector(connector);
 
         Context context = new Context(server, "/");
-        // The servlet leaves it to the container to limit the amount of data a client can POST!
-        context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
+        context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new InboundSizeLimitFilter(SIZE_LIMIT)), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new InboundGzipFilter()), "/*", Handler.REQUEST);
-        context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new MultipartFormDataFilter()), "/*", Handler.REQUEST);
+        context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
         server.start();
                 
         System.in.read(); // XXX do something smarter

@@ -1509,7 +1509,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             documentInput = contentTypeParser.buildTypedInputSource(document,
                     null, postContentType);
             documentInput.setByteStream(len < 0 ? new BoundedInputStream(
-                    request.getInputStream(), SIZE_LIMIT)
+                    request.getInputStream(), SIZE_LIMIT, document)
                     : request.getInputStream());
         }
     }

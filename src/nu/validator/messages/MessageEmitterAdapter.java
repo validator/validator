@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import nu.validator.io.SystemIdIOException;
 import nu.validator.messages.types.MessageType;
 import nu.validator.relaxng.exceptions.AbstractValidationException;
 import nu.validator.relaxng.exceptions.BadAttributeValueException;
@@ -336,7 +337,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     public void ioError(IOException e) throws SAXException {
         this.nonDocumentErrors++;
-        message(MessageType.IO, e, null, -1, -1, false);
+        String systemId = null;
+        if (e instanceof SystemIdIOException) {
+            SystemIdIOException siie = (SystemIdIOException) e;
+            systemId = siie.getSystemId();
+        }
+        message(MessageType.IO, e, systemId, -1, -1, false);
     }
 
     /**
