@@ -319,7 +319,7 @@ public final class SourceCode implements CharacterHandler {
             }
             Location start;
             if (i == locations.length - 1) {
-                start = loc.next();
+                start = new Location(this, 0, 0);
             } else {
                 start = locations[i + 1].next();                
             }
