@@ -49,6 +49,8 @@ microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
 stylesheet = None
 script = None
 serviceName = 'Validator.nu'
+maxFileSize = 2048
+usePromiscuousSsl = 0
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -349,8 +351,14 @@ def runValidator():
     '-Dnu.validator.spec.microsyntax-descriptions=' + microsyntax,
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
-    'nu.validator.servlet.Main',
+    '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
+    '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
   ]
+
+  if usePromiscuousSsl:
+    args.append('-Dnu.validator.xml.promiscuous-ssl=true')  
+
+  args.append('nu.validator.servlet.Main')
   
   if useAjp:
     args.append('ajp')
@@ -489,6 +497,7 @@ def printHelp():
   print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
   print "  --port=8888                -- Sets the server port number"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
+  print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
   print "  --heap=64                  -- Sets the heap size in MB"
   print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
@@ -568,6 +577,10 @@ else:
       useAjp = 1
     elif arg == '--ajp=off':
       useAjp = 0
+    elif arg == '--promiscuous-ssl=on':
+      usePromiscuousSsl = 1
+    elif arg == '--promiscuous-ssl=off':
+      usePromiscuousSsl = 0
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
