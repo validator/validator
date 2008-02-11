@@ -1,7 +1,8 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//httpclient/src/contrib/org/apache/commons/httpclient/contrib/ssl/EasySSLProtocolSocketFactory.java,v 1.7 2004/06/11 19:26:27 olegk Exp $
- * $Revision: 480424 $
- * $Date: 2006-11-29 06:56:49 +0100 (Wed, 29 Nov 2006) $
+ * This class is based on EasySSLProtocolSocketFactory from the
+ * Apache Software Foundation. Modifications are
+ * Copyright 2008 Mozilla Foundation. The original came with the 
+ * following notice:
  * 
  * ====================================================================
  *
@@ -37,6 +38,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
+import nu.validator.security.PromiscuousX509TrustManager;
+
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.HttpClientError;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
@@ -50,20 +53,20 @@ import javax.net.ssl.TrustManager;
 
 /**
  * <p>
- * EasySSLProtocolSocketFactory can be used to creats SSL {@link Socket}s 
- * that accept self-signed certificates. 
+ * PromiscuousSSLProtocolSocketFactory can be used to creats SSL {@link Socket}s 
+ * that do not check certificates. 
  * </p>
  * <p>
  * This socket factory SHOULD NOT be used for productive systems 
  * due to security reasons, unless it is a concious decision and 
- * you are perfectly aware of security implications of accepting 
- * self-signed certificates
+ * you are perfectly aware of security implications of foregoing
+ * trust checks
  * </p>
  *
  * <p>
  * Example of using custom protocol socket factory for a specific host:
  *     <pre>
- *     Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+ *     Protocol easyhttps = new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443);
  *
  *     HttpClient client = new HttpClient();
  *     client.getHostConfiguration().setHost("localhost", 443, easyhttps);
@@ -75,7 +78,7 @@ import javax.net.ssl.TrustManager;
  * <p>
  * Example of using custom protocol socket factory per default instead of the standard one:
  *     <pre>
- *     Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+ *     Protocol easyhttps = new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443);
  *     Protocol.registerProtocol("https", easyhttps);
  *
  *     HttpClient client = new HttpClient();
@@ -93,17 +96,17 @@ import javax.net.ssl.TrustManager;
  * </p>
  */
 
-public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory {
+public class PromiscuousSSLProtocolSocketFactory implements SecureProtocolSocketFactory {
 
     /** Log object for this class. */
-    private static final Log LOG = LogFactory.getLog(EasySSLProtocolSocketFactory.class);
+    private static final Log LOG = LogFactory.getLog(PromiscuousSSLProtocolSocketFactory.class);
 
     private SSLContext sslcontext = null;
 
     /**
-     * Constructor for EasySSLProtocolSocketFactory.
+     * Constructor for PromiscuousSSLProtocolSocketFactory.
      */
-    public EasySSLProtocolSocketFactory() {
+    public PromiscuousSSLProtocolSocketFactory() {
         super();
     }
 
@@ -112,7 +115,7 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
             SSLContext context = SSLContext.getInstance("SSL");
             context.init(
               null, 
-              new TrustManager[] {new EasyX509TrustManager(null)}, 
+              new TrustManager[] {new PromiscuousX509TrustManager()}, 
               null);
             return context;
         } catch (Exception e) {
@@ -220,11 +223,11 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
     }
 
     public boolean equals(Object obj) {
-        return ((obj != null) && obj.getClass().equals(EasySSLProtocolSocketFactory.class));
+        return ((obj != null) && obj.getClass().equals(PromiscuousSSLProtocolSocketFactory.class));
     }
 
     public int hashCode() {
-        return EasySSLProtocolSocketFactory.class.hashCode();
+        return PromiscuousSSLProtocolSocketFactory.class.hashCode();
     }
 
 }

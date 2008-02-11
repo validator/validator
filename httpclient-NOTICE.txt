@@ -1,5 +1,6 @@
 Apache Jakarta HttpClient
 Copyright 1999-2007 The Apache Software Foundation
+Modifications Copyright 2008 Mozilla Foundation
 
 This product includes software developed by
 The Apache Software Foundation (http://www.apache.org/).

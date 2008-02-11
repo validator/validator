@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
-import nu.validator.httpclient.ssl.EasySSLProtocolSocketFactory;
+import nu.validator.httpclient.ssl.PromiscuousSSLProtocolSocketFactory;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
 import nu.validator.io.StreamBoundException;
@@ -97,7 +97,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     private final ContentTypeParser contentTypeParser;
 
     static {
-        Protocol.registerProtocol("https", new Protocol("https", new EasySSLProtocolSocketFactory(), 443));
+        Protocol.registerProtocol("https", new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443));
     }
     
     /**
