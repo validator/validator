@@ -26,12 +26,12 @@ package nu.validator.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
+import nu.validator.httpclient.ssl.EasySSLProtocolSocketFactory;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.ObservableInputStream;
 import nu.validator.io.StreamBoundException;
@@ -46,6 +46,7 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
+import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -62,6 +63,7 @@ import com.hp.hpl.jena.iri.IRIFactory;
  *          hsivonen Exp $
  * @author hsivonen
  */
+@SuppressWarnings("deprecation")
 public class PrudentHttpEntityResolver implements EntityResolver {
 
     private static final Logger log4j = Logger.getLogger(PrudentHttpEntityResolver.class);
@@ -94,6 +96,10 @@ public class PrudentHttpEntityResolver implements EntityResolver {
 
     private final ContentTypeParser contentTypeParser;
 
+    static {
+        Protocol.registerProtocol("https", new Protocol("https", new EasySSLProtocolSocketFactory(), 443));
+    }
+    
     /**
      * Sets the timeouts of the HTTP client.
      * 
