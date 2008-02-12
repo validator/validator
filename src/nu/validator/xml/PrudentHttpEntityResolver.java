@@ -97,9 +97,13 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     private final ContentTypeParser contentTypeParser;
 
     static {
-        Protocol.registerProtocol("https", new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443));
+        if ("true".equals(System.getProperty(
+                "nu.validator.xml.promiscuous-ssl", "false"))) {
+            Protocol.registerProtocol("https", new Protocol("https",
+                    new PromiscuousSSLProtocolSocketFactory(), 443));
+        }
     }
-    
+
     /**
      * Sets the timeouts of the HTTP client.
      * 
@@ -122,7 +126,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         HttpClientParams hcp = client.getParams();
         hcp.setBooleanParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
         hcp.setIntParameter(HttpClientParams.MAX_REDIRECTS, 20); // Gecko
-                                                                    // default
+        // default
     }
 
     public static void setUserAgent(String ua) {
@@ -208,18 +212,6 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-//            String host = new URL(systemId).getHost(); // Jena IRI getHost is
-//                                                        // b0rked
-//            if ("127.0.0.1".equals(host) || "localhost".equals(host)) {
-//                SAXParseException spe = new SAXParseException(
-//                        "Attempted to connect to localhost.", publicId,
-//                        systemId, -1, -1, new IOException(
-//                                "Attempted to connect to localhost."));
-//                if (errorHandler != null) {
-//                    errorHandler.fatalError(spe);
-//                }
-//                throw spe;
-//            }
             try {
                 m = new GetMethod(systemId);
             } catch (IllegalArgumentException e) {
@@ -255,9 +247,12 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             long len = m.getResponseContentLength();
             if (sizeLimit > -1 && len > sizeLimit) {
                 SAXParseException spe = new SAXParseException(
-                        "Resource size exceeds limit.", publicId,
-                        m.getURI().toString(), -1, -1, new StreamBoundException(
-                                "Resource size exceeds limit."));
+                        "Resource size exceeds limit.",
+                        publicId,
+                        m.getURI().toString(),
+                        -1,
+                        -1,
+                        new StreamBoundException("Resource size exceeds limit."));
                 if (errorHandler != null) {
                     errorHandler.fatalError(spe);
                 }
@@ -273,18 +268,20 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
             final GetMethod meth = m;
-            InputStream stream = m.getResponseBodyAsStream();            
+            InputStream stream = m.getResponseBodyAsStream();
             if (sizeLimit > -1) {
                 stream = new BoundedInputStream(stream, sizeLimit, baseUri);
             }
             Header ce = m.getResponseHeader("Content-Encoding");
             if (ce != null) {
                 String val = ce.getValue().trim();
-                if ("gzip".equalsIgnoreCase(val) || "x-gzip".equalsIgnoreCase(val)) {
+                if ("gzip".equalsIgnoreCase(val)
+                        || "x-gzip".equalsIgnoreCase(val)) {
                     stream = new GZIPInputStream(stream);
                     if (sizeLimit > -1) {
-                        stream = new BoundedInputStream(stream, sizeLimit, baseUri);
-                    }                    
+                        stream = new BoundedInputStream(stream, sizeLimit,
+                                baseUri);
+                    }
                 }
             }
             is.setByteStream(new ObservableInputStream(stream,
@@ -307,7 +304,8 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                             }
                         }
 
-                        public void exceptionOccurred(Exception ex) throws IOException {
+                        public void exceptionOccurred(Exception ex)
+                                throws IOException {
                             if (!released) {
                                 released = true;
                                 try {
@@ -329,12 +327,15 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                                 throw siie;
                             } else if (ex instanceof IOException) {
                                 IOException ioe = (IOException) ex;
-                                throw new SystemIdIOException(baseUri, ioe.getMessage(), ioe);
+                                throw new SystemIdIOException(baseUri,
+                                        ioe.getMessage(), ioe);
                             } else if (ex instanceof RuntimeException) {
                                 RuntimeException re = (RuntimeException) ex;
                                 throw re;
                             } else {
-                                throw new RuntimeException("API contract violation. Wrong exception type.", ex);
+                                throw new RuntimeException(
+                                        "API contract violation. Wrong exception type.",
+                                        ex);
                             }
                         }
 
