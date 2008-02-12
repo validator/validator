@@ -1,6 +1,7 @@
 /* XmlParser.java -- 
  Copyright (C) 1999,2000,2001 Free Software Foundation, Inc.
- Portions Copyright 2006 Henri Sivonen.
+ Portions Copyright 2006-2007 Henri Sivonen
+ Portions Copyright 2007-2008 Mozilla Foundation
 
  This file is part of GNU JAXP.
 
