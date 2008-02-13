@@ -59,14 +59,7 @@ public final class InboundSizeLimitFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
-        response.addHeader("Accept-Encoding", "gzip");
-        String ce = request.getHeader("Content-Encoding");
-        if (ce != null && "gzip".equalsIgnoreCase(ce.trim())) {
-            chain.doFilter(new RequestWrapper(request), res);
-        } else {
-            chain.doFilter(req, res);
-        }
+        chain.doFilter(new RequestWrapper(request), res);
     }
 
     public void init(FilterConfig config) throws ServletException {

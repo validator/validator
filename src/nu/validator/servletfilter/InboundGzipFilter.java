@@ -49,7 +49,7 @@ public final class InboundGzipFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        response.addHeader("Accept-Encoding", "gzip");
+        response.setHeader("Accept-Encoding", "gzip");
         String ce = request.getHeader("Content-Encoding");
         if (ce != null && "gzip".equalsIgnoreCase(ce.trim())) {
             chain.doFilter(new RequestWrapper(request), res);
