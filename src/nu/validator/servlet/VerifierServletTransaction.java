@@ -55,6 +55,7 @@ import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.htmlparser.sax.HtmlSerializer;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.StreamBoundException;
 import nu.validator.messages.GnuMessageEmitter;
@@ -72,7 +73,6 @@ import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.ForbiddenCharacterFilter;
-import nu.validator.xml.HtmlSerializer;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
@@ -620,8 +620,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
                     || outputFormat == OutputFormat.XHTML) {
                 if (outputFormat == OutputFormat.HTML) {
                     response.setContentType("text/html; charset=utf-8");
-                    contentHandler = new HtmlSerializer(out,
-                            HtmlSerializer.DOCTYPE_HTML5, false, "UTF-8");
+                    contentHandler = new HtmlSerializer(out);
                 } else {
                     response.setContentType("application/xhtml+xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
