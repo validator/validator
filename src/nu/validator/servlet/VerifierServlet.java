@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,6 +24,8 @@
 package nu.validator.servlet;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,12 +48,57 @@ public class VerifierServlet extends HttpServlet {
     private static final long serialVersionUID = 7811043632732680935L;
 
     private static final Logger log4j = Logger.getLogger(VerifierServlet.class);
+    
+    private static final String GENERIC_HOST = System.getProperty("nu.validator.servlet.host.generic", "");
+    
+    private static final String HTML5_HOST = System.getProperty("nu.validator.servlet.host.html5", "");    
+    
+    private static final String PARSETREE_HOST = System.getProperty("nu.validator.servlet.host.parsetree", "");     
+    
+    private static final String GENERIC_PATH = System.getProperty("nu.validator.servlet.path.generic", "/");
+    
+    private static final String HTML5_PATH = System.getProperty("nu.validator.servlet.path.html5", "/html5/");    
+    
+    private static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
+    
+    private static final byte[] GENERIC_ROBOTS_TXT;
+    
+    private static final byte[] HTML5_ROBOTS_TXT;
+
+    private static final byte[] PARSETREE_ROBOTS_TXT;
 
     static {
+        try {
+            GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
+            HTML5_ROBOTS_TXT = buildRobotsTxt(HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH, PARSETREE_HOST, PARSETREE_PATH);
+            PARSETREE_ROBOTS_TXT = buildRobotsTxt(PARSETREE_HOST, PARSETREE_PATH, HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         PrudentHttpEntityResolver.setParams(5000, 5000, 100);
         PrudentHttpEntityResolver.setUserAgent("Validator.nu/" + System.getProperty(
                 "nu.validator.servlet.version",
                 "3.x"));
+    }
+
+    /**
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    private static byte[] buildRobotsTxt(String primaryHost, String primaryPath, String secondaryHost, String secondaryPath, String tertiaryHost, String tertiaryPath) throws UnsupportedEncodingException {
+        StringBuilder builder = new StringBuilder();
+        builder.append("User-agent: *\nDisallow: ");
+        builder.append(primaryPath);
+        builder.append("?\n");
+        if (primaryHost.equals(secondaryHost)) {
+            builder.append(secondaryPath);
+            builder.append("?\n");            
+        }
+        if (primaryHost.equals(tertiaryHost)) {
+            builder.append(tertiaryPath);
+            builder.append("?\n");            
+        }
+        return builder.toString().getBytes("UTF-8");
     }
     
     /**
@@ -59,10 +106,71 @@ public class VerifierServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if ("/robots.txt".equals(request.getPathInfo())) {
+            String serverName = request.getServerName();
+            byte[] robotsTxt = null;
+            if (hostMatch(GENERIC_HOST, serverName)) {
+                robotsTxt = GENERIC_ROBOTS_TXT;
+            } else if (hostMatch(HTML5_HOST, serverName)) {
+                robotsTxt = HTML5_ROBOTS_TXT;
+            } else if (hostMatch(PARSETREE_HOST, serverName)) {
+                robotsTxt = PARSETREE_ROBOTS_TXT;
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+            response.setContentType("text/plain; charset=utf-8");
+            response.setContentLength(robotsTxt.length);
+            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(robotsTxt);
+            out.flush();
+            out.close();
+            return;
+        }
         doPost(request, response);
     }
 
+    private boolean hostMatch(String reference, String host) {
+        if ("".equals(reference)) {
+            return true;
+        } else {
+            // XXX case-sensitivity
+            return reference.equalsIgnoreCase(host);
+        }
+    }
 
+    /**
+     * @see javax.servlet.http.HttpServlet#doOptions(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doOptions(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+        if ("*".equals(pathInfo)) { // useless RFC 2616 complication
+            return;
+        } else if ("/robots.txt".equals(pathInfo)) {
+            String serverName = request.getServerName();
+            if (hostMatch(GENERIC_HOST, serverName)
+                    || hostMatch(HTML5_HOST, serverName)
+                    || hostMatch(PARSETREE_HOST, serverName)) {
+                sendGetOnlyOptions(request, response);
+                return;
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+        }
+        doPost(request, response);
+    }
+
+    /**
+     * @see javax.servlet.http.HttpServlet#doTrace(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    }
 
     /**
      * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
@@ -72,44 +180,56 @@ public class VerifierServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         String serverName = request.getServerName();
+        if ("/robots.txt".equals(pathInfo)) {
+            // if we get here, we've got a POST
+            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            return;
+        }
         log4j.debug("pathInfo: " + pathInfo);
         log4j.debug("serverName: " + serverName);
-        if (serverName.endsWith("validator.nu")) {
-            if ("validator.nu".equals(serverName)) {
-                if ("/".equals(pathInfo)) {
-                    new VerifierServletTransaction(request, response).service();
-                } else if ("/html5/".equals(pathInfo)) {
-                    response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                    String queryString = request.getQueryString();
-                    response.setHeader("Location", "http://html5.validator.nu/" + (queryString == null ? "" : "?" + queryString));
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                }
-            } else if ("html5.validator.nu".equals(serverName)) {
-                if ("/".equals(pathInfo)) {
-                    new Html5ConformanceCheckerTransaction(request, response).service();
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                }
-            } else if ("parsetree.validator.nu".equals(serverName)) {
-                if ("/".equals(pathInfo)) {
-                    new ParseTreePrinter(request, response).service();
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                }
+        boolean isOptions = "OPTIONS".equals(request.getMethod());
+ 
+        if ("validator.nu".equals(serverName) && "/html5/".equals(pathInfo)) {
+                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                String queryString = request.getQueryString();
+                response.setHeader("Location", "http://html5.validator.nu/" + (queryString == null ? "" : "?" + queryString));
+        } else if (hostMatch(GENERIC_HOST, serverName) && GENERIC_PATH.equals(pathInfo)) {
+            response.setHeader("Access-Control", "allow <*>");
+            if (isOptions) {
+                response.setHeader("Access-Control-Policy-Path", GENERIC_PATH);
+                sendOptions(request, response);
             } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            }
-        } else {
-            if ("/".equals(pathInfo)) {
                 new VerifierServletTransaction(request, response).service();
-            } else if ("/html5/".equals(pathInfo)) {
-                new Html5ConformanceCheckerTransaction(request, response).service();
-            } else if ("/parsetree/".equals(pathInfo)) {
-                new ParseTreePrinter(request, response).service();
+            }        
+        } else if (hostMatch(HTML5_HOST, serverName) && HTML5_PATH.equals(pathInfo)) {
+            response.setHeader("Access-Control", "allow <*>");
+            if (isOptions) {
+                response.setHeader("Access-Control-Policy-Path", HTML5_PATH);
+                sendOptions(request, response);
             } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                new Html5ConformanceCheckerTransaction(request, response).service();
             }
+        } else if (hostMatch(PARSETREE_HOST, serverName) && PARSETREE_PATH.equals(pathInfo)) {
+            if (isOptions) {
+                sendGetOnlyOptions(request, response);
+            } else {
+                new ParseTreePrinter(request, response).service();
+            }        
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+
+    private void sendGetOnlyOptions(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Allow", "GET, HEAD, OPTIONS");
+        response.setContentType("application/octet-stream");
+        response.setContentLength(0);
+    }
+
+    private void sendOptions(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Max-Age", "43200"); // 12 hours
+        response.setHeader("Allow", "GET, HEAD, POST, OPTIONS");
+        response.setContentType("application/octet-stream");
+        response.setContentLength(0);
     }
 }

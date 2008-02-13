@@ -570,17 +570,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
             }
         }
 
-        String methodCheck = request.getHeader("Method-Check");
-
         if (willValidate()) {
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-cache");
-        } else if (methodCheck != null) {
-            // XXX revisit if anne changes the access-control stuff to use
-            // OPTIONS
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            response.setHeader("Allow", "POST");
-            return;
         } else if (outputFormat == OutputFormat.HTML
                 || outputFormat == OutputFormat.XHTML) {
             response.setDateHeader("Last-Modified", lastModified);
