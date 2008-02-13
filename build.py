@@ -51,6 +51,12 @@ script = None
 serviceName = 'Validator.nu'
 maxFileSize = 2048
 usePromiscuousSsl = 0
+genericHost = ''
+html5Host = ''
+parsetreeHost = ''
+genericPath = '/'
+html5Path = '/html5/'
+parsetreePath = '/parsetree/'
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -353,6 +359,12 @@ def runValidator():
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
+    '-Dnu.validator.servlet.host.generic=' + genericHost,
+    '-Dnu.validator.servlet.host.html5=' + html5Host,
+    '-Dnu.validator.servlet.host.parsetree=' + parsetreeHost,
+    '-Dnu.validator.servlet.path.generic=' + genericPath,
+    '-Dnu.validator.servlet.path.html5=' + html5Path,
+    '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
   ]
 
   if usePromiscuousSsl:
@@ -484,6 +496,10 @@ def runTests():
                                                 "saxon-whattf"]))
   runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
+def splitHostSpec(spec):
+  index = spec.find('/')
+  return (spec[0:index], spec[index:])
+
 def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
   print ""
@@ -573,6 +589,12 @@ else:
       script = arg[9:]
     elif arg.startswith("--name="):
       script = arg[7:]
+    elif arg.startswith("--genericpath="):
+      (genericHost, genericPath) = splitHostSpec(arg[14:])
+    elif arg.startswith("--html5path="):
+      (html5Host, html5Path) = splitHostSpec(arg[12:])
+    elif arg.startswith("--parsetreepath="):
+      (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
