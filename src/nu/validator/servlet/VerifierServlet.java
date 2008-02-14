@@ -91,10 +91,12 @@ public class VerifierServlet extends HttpServlet {
         builder.append(primaryPath);
         builder.append("?\n");
         if (primaryHost.equals(secondaryHost)) {
+            builder.append("Disallow: ");
             builder.append(secondaryPath);
             builder.append("?\n");            
         }
         if (primaryHost.equals(tertiaryHost)) {
+            builder.append("Disallow: ");
             builder.append(tertiaryPath);
             builder.append("?\n");            
         }
