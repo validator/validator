@@ -1,14 +1,14 @@
 -1	http://docbook.org/ns/docbook	DocBook 5.0b9	http://docbook.org/xml/5.0b9/rng/docbook.rnc http://docbook.org/xml/5.0b9/sch/docbook.sch
 -1	http://relaxng.org/ns/structure/1.0	RELAX NG	http://thaiopensource.com/relaxng/relaxng.rng
--1	http://www.w3.org/2000/svg	SVG 1.1	http://s.validator.nu/svg11/svg11.rnc http://c.validator.nu/unchecked/
--1	-	XHTML Basic	http://s.validator.nu/xhtml10/xhtml-basic.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Frameset	http://s.validator.nu/xhtml10/xhtml-frameset.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
-2	-	XHTML 1.0 Strict	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Strict with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0	http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Strict, Ruby, SVG 1.1 plus MathML 2.0	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
-1	-	XHTML 1.0 Transitional	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
--1	-	XHTML 1.0 Transitional with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
+-1	http://www.w3.org/2000/svg	SVG 1.1 + IRI	http://s.validator.nu/svg11/svg11.rnc http://c.validator.nu/unchecked/
+-1	-	XHTML Basic + IRI	http://s.validator.nu/xhtml10/xhtml-basic.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Frameset + IRI	http://s.validator.nu/xhtml10/xhtml-frameset.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
+2	-	XHTML 1.0 Strict + IRI	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Strict + IRI with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + IRI	http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + IRI	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
+1	-	XHTML 1.0 Transitional + IRI	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
+-1	-	XHTML 1.0 Transitional + IRI with partial WCAG 1.0 checks	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch http://s.validator.nu/xhtml10/wcag.sch http://c.validator.nu/all-html4/
 3	-	HTML5 (experimental)	http://s.validator.nu/html5/html5full.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 -1	-	XHTML5 (experimental)	http://s.validator.nu/html5/xhtml5full-xhtml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 7	http://www.w3.org/1999/xhtml	XHTML5, SVG 1.1 plus MathML 2.0 (experimental)	http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
