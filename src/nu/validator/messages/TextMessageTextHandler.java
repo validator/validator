@@ -56,16 +56,6 @@ public class TextMessageTextHandler implements MessageTextHandler {
                         start = i + 1;
                         writer.write(0x21A9);
                         break;
-                    case '\u201C':
-                    case '\u201D':
-                        if (asciiQuotes) {
-                            if (start < i) {
-                                writer.write(ch, start, i - start);                
-                            }                        
-                            start = i + 1;
-                            writer.write('\"');                            
-                        }
-                        break;
                     case '\u2018':
                     case '\u2019':
                         if (asciiQuotes) {
@@ -88,7 +78,11 @@ public class TextMessageTextHandler implements MessageTextHandler {
 
     public void endCode() throws SAXException {
         try {
-            writer.write('\u201D');
+            if (asciiQuotes) {
+                writer.write('\"');                            
+            } else {
+                writer.write('\u201D');
+            }
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);
         }
@@ -99,7 +93,11 @@ public class TextMessageTextHandler implements MessageTextHandler {
 
     public void startCode() throws SAXException {
         try {
-            writer.write('\u201C');
+            if (asciiQuotes) {
+                writer.write('\"');                            
+            } else {
+                writer.write('\u201C');
+            }
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);
         }
