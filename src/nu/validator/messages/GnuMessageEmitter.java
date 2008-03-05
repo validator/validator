@@ -125,6 +125,7 @@ public class GnuMessageEmitter extends MessageEmitter {
 
     private char[] toCString(String documentUri) {
         StringBuilder sb = new StringBuilder(documentUri.length() + 2);
+        sb.append('\"');
         for (int i = 0; i < documentUri.length(); i++) {
             char c = documentUri.charAt(i);
             if (c == '\"') {
@@ -133,6 +134,7 @@ public class GnuMessageEmitter extends MessageEmitter {
                 sb.append(c);
             }
         }
+        sb.append('\"');
         char[] rv = new char[sb.length()];
         sb.getChars(0, sb.length(), rv, 0);
         return rv;
