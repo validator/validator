@@ -49,9 +49,9 @@ public class GnuMessageEmitter extends MessageEmitter {
         return new OutputStreamWriter(out, enc);
     }
 
-    public GnuMessageEmitter(OutputStream out) {
+    public GnuMessageEmitter(OutputStream out, boolean asciiQuotes) {
         this.writer = newOutputStreamWriter(out);
-        this.messageTextHandler = new TextMessageTextHandler(writer);
+        this.messageTextHandler = new TextMessageTextHandler(writer, asciiQuotes);
     }
 
     @Override
@@ -61,9 +61,11 @@ public class GnuMessageEmitter extends MessageEmitter {
             throws SAXException {
         try {
             if (systemId == null) {
-                writer.write(fileName, 0, fileName.length);
+                if (fileName != null) {
+                    writer.write(fileName, 0, fileName.length);
+                }
             } else {
-                writer.write(systemId);
+                writer.write(toCString(systemId));
             }
             writer.write(':');
             if (oneBasedLastLine != -1) {
@@ -115,10 +117,25 @@ public class GnuMessageEmitter extends MessageEmitter {
     @Override
     public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
         if (documentUri == null) {
-            fileName = new char[0];
+            fileName = null;
         } else {
-            fileName = documentUri.toCharArray();
+            fileName = toCString(documentUri);
         }
+    }
+
+    private char[] toCString(String documentUri) {
+        StringBuilder sb = new StringBuilder(documentUri.length() + 2);
+        for (int i = 0; i < documentUri.length(); i++) {
+            char c = documentUri.charAt(i);
+            if (c == '\"') {
+                sb.append("\\\"");
+            } else {
+                sb.append(c);
+            }
+        }
+        char[] rv = new char[sb.length()];
+        sb.getChars(0, sb.length(), rv, 0);
+        return rv;
     }
 
     /**

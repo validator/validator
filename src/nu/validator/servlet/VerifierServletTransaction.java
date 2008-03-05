@@ -607,6 +607,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
         boolean errorsOnly = ("error".equals(request.getParameter("level")));
 
+        boolean asciiQuotes = (request.getParameter("asciiquotes") != null);
+        
         try {
             if (outputFormat == OutputFormat.HTML
                     || outputFormat == OutputFormat.XHTML) {
@@ -629,11 +631,11 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new TextMessageEmitter(out));
+                            showSource, new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new GnuMessageEmitter(out));
+                            showSource, new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);

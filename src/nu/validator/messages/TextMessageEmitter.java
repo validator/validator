@@ -75,9 +75,9 @@ public class TextMessageEmitter extends MessageEmitter {
         return new OutputStreamWriter(out, enc);
     }
 
-    public TextMessageEmitter(OutputStream out) {
+    public TextMessageEmitter(OutputStream out, boolean asciiQuotes) {
         this.writer = newOutputStreamWriter(out);
-        this.messageTextHandler = new TextMessageTextHandler(writer);
+        this.messageTextHandler = new TextMessageTextHandler(writer, asciiQuotes);
     }
 
     private void emitErrorLevel(char[] level) throws IOException {

@@ -31,11 +31,14 @@ public class TextMessageTextHandler implements MessageTextHandler {
 
     private final Writer writer;
     
+    private final boolean asciiQuotes;
+    
     /**
      * @param writer
      */
-    public TextMessageTextHandler(final Writer writer) {
+    public TextMessageTextHandler(final Writer writer, final boolean asciiQuotes) {
         this.writer = writer;
+        this.asciiQuotes = asciiQuotes;
     }
 
     public void characters(char[] ch, int start, int length)
@@ -52,6 +55,26 @@ public class TextMessageTextHandler implements MessageTextHandler {
                         }                        
                         start = i + 1;
                         writer.write(0x21A9);
+                        break;
+                    case '\u201C':
+                    case '\u201D':
+                        if (asciiQuotes) {
+                            if (start < i) {
+                                writer.write(ch, start, i - start);                
+                            }                        
+                            start = i + 1;
+                            writer.write('\"');                            
+                        }
+                        break;
+                    case '\u2018':
+                    case '\u2019':
+                        if (asciiQuotes) {
+                            if (start < i) {
+                                writer.write(ch, start, i - start);                
+                            }                        
+                            start = i + 1;
+                            writer.write('\'');                            
+                        }
                         break;
                 }
             }
