@@ -10,7 +10,26 @@
 <body>
 <H1>About Validator.nu</H1>
 <P>Validator.nu is validation 2.0.</P>
-<H2>The Pitch</H2>
+<ul class="toc">
+<li><a href="#pitch">The Pitch</a></li>
+<li><a href="#no-dtd">No DTD-Based Validation</a></li>
+<li><a href="#usage">Basic Usage</a></li>
+<li><a href="#config">Configurability</a></li>
+<li><a href="#alt-input">Alternative Modes of Input</a></li>
+<li><a href="#api">Web Service API</a></li>
+<li><a href="#presets">Preset Schemas</a></li>
+<li><a href="#checkers">Non-Schema Checkers</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#details">Feature Details for Custom Schemas</a></li>
+<li><a href="#src">Source Code</a></li>
+<li><a href="#ideas">Known Issues and Ideas for Future Development</a></li>
+<li><a href="#reporting-bugs">Reporting Bugs and Getting Help</a></li>
+<li><a href="#ack">Acknowledgments</a></li>
+<li><a href="#links">Links to Other Validators</a></li>
+<li><a href="#tos">Terms of service</a></li>
+<li><a href="#privacy">Privacy policy</a></li>
+</ul>
+<H2 id="pitch">The Pitch</H2>
 <UL>
 	<LI><P><a href='http://html5.validator.nu/'>Experimental (X)HTML5 conformance checking</a>.</P>
 	<LI><P><a href='http://validator.nu/'>RELAX NG validation</a>—XML syntax and Compact Syntax</P>
@@ -21,7 +40,7 @@
 	<LI><P><a href='#details'>Bring your own schemas</a> or <a href='#presets'>use easy presets</a>.</P>
 	<LI><P><a href='#api'>RESTful Web service API</a></P>
 </UL>
-<H2>No DTD-Based Validation</H2>
+<H2 id="no-dtd">No DTD-Based Validation</H2>
 <UL>
 	<LI><P>Validator.nu does not check for XML 1.0 validity constraints.
 	That is, DTD validation is not performed.</P>
@@ -47,7 +66,7 @@ based on the HTTP <CODE>Content-Type</CODE> of the document. In the
 <a href='http://validator.nu/'>generic facet</a>, the parser will be chosen based on the HTTP
 <CODE>Content-Type</CODE> and a preset schema will be chosen based on
 the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
-<H2>Configurability</H2>
+<H2 id="config">Configurability</H2>
 <DL>
 	<DT>Schemas 
 	</DT><DD><P>
@@ -87,8 +106,7 @@ the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
 	source. Erroneous byte sequences in the original source and
 	characters that would render the validator output as non-conforming
 	(e.g. U+0000) are not represented faithfully.</P></DD></DL>
-<H2>
-Alternative Modes of Input</H2>
+<H2 id="alt-input">Alternative Modes of Input</H2>
 <P>There are various alternative ways of giving input to
 Validator.nu.</P>
 <UL>
@@ -114,7 +132,7 @@ HTML forms, you can also <A HREF="http://wiki.whatwg.org/wiki/Validator.nu_POST_
 the document to be checked as an HTTP entity body</A>. In addition to
 the default HTML output, the messages are also available as XHTML,
 XML, JSON and plain text.</P>
-<H2>Preset Schemas</H2>
+<H2 id="presets">Preset Schemas</H2>
 <DL>
 	<DT>DocBook 5.0b5 
 	</DT><DD><P>
@@ -393,133 +411,23 @@ the classpath. For example, if you configure log4j to send email, you
 should put the <A HREF="http://java.sun.com/products/javamail/">Java
 Mail API</A> and <A HREF="http://java.sun.com/products/javabeans/jaf/">JavaBeans
 Activation Framework</A> jars in <CODE>extras/</CODE>.</P>
-<H2 id="issues">Known Issues</H2>
-<UL>
-	<LI><P>If a document references an external entity and retrieving
-	the entity takes for too long, the HTTP connection for the document
-	times out. (Fix designed. Not implemented, yet.)</P>
-	<LI><P>Embedded Schematron is not supported. (Not likely to be
-	fixed.)</P>
-	<LI><P>ISO Schematron not supported. (Likely to be fixed when
-	upstream adds support.)</P>
-	<LI><P>NVDL and XSD support could be enabled, but need testing
-	first.</P>
-	<LI><P>Various schemas are not precise about attribute datatypes.</P>
-	<UL>
-		<LI><P>Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML
+<H2 id="ideas">Known Issues and Ideas for Future Development</H2>
+<P id="issues">Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML
 		1.0 is supposed to be a reformulation of HTML 4.01 in XML. However,
 		there are some subtle spec bugs introduced in the reformulation.
 		For this reason, some errors for HTML 4.01 are wrong. For example,
 		XHTML 1.0 (in the DTD) forbids the <CODE>name</CODE> attribute on
 		the <CODE>form</CODE> element, although it is allowed in HTML 4.01.</P>
-		<LI><P>The XHTML 1.0 schemas have the type <CODE>IDREF</CODE> for
-		<CODE>usemap</CODE>.</P>
-	</UL>
-	<LI><P>There are a lot of issues with the (X)HTML5 schemas.</P>
-	<UL>
-		<LI><P>The allowed values for the <CODE>draggable</CODE> attribute
-		are unclear.</P>
-		<LI><P>The positiveness/non-negativeness of some attributes of
-		<CODE>progress</CODE> is speculative.</P>
-		<LI><P>Made attribute co-occurrence constraints on <CODE>command</CODE>
-		tighter that warranted by the spec.</P>
-		<LI><P>Not restricting the names of <CODE>command</CODE> radio
-		groups. Should they be restricted?</P>
-		<LI><P>Assuming an element cannot have both <CODE>id</CODE> and
-		<CODE>xml:id</CODE>.</P>
-		<LI><P>Format of the names of form controls is unrestricted.</P>
-		<LI><P>The <CODE>maxlength</CODE> attribute is required to be
-		positive. Perhaps non-negative would be better.</P>
-		<LI><P>Do not know if “nominally free of line breaks” affects
-		conformance.</P>
-		<LI><P>Do not know if radio buttons and checkboxes should be
-		required to have a non-empty value.</P>
-		<LI><P>Should hidden inputs be allowed in static context?</P>
-		<LI><P>Content model of <CODE>button</CODE> unclear.</P>
-		<LI><P>Should <CODE>button type='reset'</CODE> be allowed to have a
-		<CODE>value</CODE>?</P>
-		<LI><P>No enforcement for the content of the <CODE>form</CODE>
-		attribute.</P>
-		<LI><P>Do not know if the <CODE>enctype</CODE> attribute should be
-		case-insensitive in XHTML. It is an enumerated value, which suggest
-		not.</P>
-		<LI><P>IDREFS are whitespace-separated even though spec says
-		space-separated.</P>
-		<LI><P>Interaction of <CODE>output</CODE> with HTML parsing
-		untested.</P>
-		<LI><P><CODE>option</CODE> elements as children of <CODE>datalist</CODE>
-		are allowed to have the <CODE>selected</CODE> attribute.</P>
-		<LI><P>Interaction of <CODE>datalist</CODE> with HTML parsing
-		untested.</P>
-		<LI><P>Tables not allowed as struct-inline.</P>
-		<LI><P>Datatype for <CODE>accesskey</CODE> not done.</P>
-		<LI><P>Mediaqueries do not support CSS character escapes or
-		comments. (This is an open issue in the CSS WG.)</P>
-		<LI><P>Datatype for <CODE>accept-charset</CODE> not done.</P>
-		<LI><P>Datatype for <CODE>email</CODE> not done.</P>
-		<LI><P>Event handlers on <CODE>textarea</CODE>, <CODE>output</CODE>
-		and <CODE>select</CODE> may be broken.</P>
-		<LI><P>Subtrees rooted at <CODE>datagrid</CODE> not checked
-		properly.</P>
-		<LI><P>Revisit <CODE>usemap</CODE> on <CODE>input</CODE>.</P>
-		<LI><P>mailto: and data: URI schemes are not properly validated.</P>
-	</UL>
-</UL>
-<H2 id="ideas">Ideas for Future Development</H2>
-<UL>
-	<LI><P>Build / test improvements</P>
-	<UL>
-		<LI><P>Unit tests for the front end.</P>
-	</UL>
-	<LI><P>Improvements for checking of W3C document types</P>
-	<UL>
-		<LI><P>Provide an XHTML <EM>1.1</EM> + SVG 1.1 + MathML 2.0 schema.</P>
-	</UL>
-	<LI><P>Reusability improvements</P>
-	<UL>
-		<LI><P>Refactor the back end into a coherent reusable module that
-		can be embedded in-process by other Java apps.</P>
-		<LI><P>Implement the same interface as a facade for the RESTful Web
-		service so that Java apps can choose to use an out-of-process
-		service with minimal code changes.</P>
-		<UL>
-			<LI><P>Also implement the facade for other important programming
-			languages such as Python.</P>
-		</UL>
-	</UL>
-	<LI><P>Feature parity with other services</P>
-	<UL>
-		<LI><P>Ability to validate HTTP error pages.</P>
-		<LI><P>Show parse tree.</P>
-		<LI><P>Show the outline of (X)HTML documents so that a human can
-		verify that it makes sense.</P>
-	</UL>
-	<LI><P>Miscellaneous improvements</P>
-	<UL>
-		<LI><P>data URIs</P>
-		<LI><P>Advanced UI for subsetting (X)HTML5 in practical unofficial
-		ways.</P>
-		<LI><P>IRIfy URIs on output.</P>
-		<LI><P>Show XHTML serialization of conforming HTML documents.</P>
-		<LI><P>Implement hand-crafted efficient non-schema checker
-		replacements for the (X)HTML5 and XHTML 1.0 Schematron schemas.</P>
-		<LI><P>Add <CODE>value-of</CODE> support to Schematron 1.5.</P>
-		<LI><P>Add support for ISO Schematron.</P>
-		<LI><P>SNMP monitoring.</P>
-		<LI><P>Investigate (and fix if necessary) system ID and base URI
-		behavior with HTTP resources that have the <CODE>Content-Location</CODE>
-		header.</P>
-		<LI><P>Command line tool.</P>
-	</UL>
-</UL>
+
+<p>Please refer to the bug tracker for other <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor">known issues</a> and for <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=enhancement">ideas for future development</a>.</p>
+
 <H2 id="reporting-bugs">Reporting Bugs and Getting Help</H2>
 <P>The preferred forum for discussing issues related to using the
 (X)HTML5 validator is the <A HREF="http://lists.whatwg.org/listinfo.cgi/help-whatwg.org">WHATWG
 Help mailing list</A>. The preferred forum for discussing issues
 related to implementing (X)HTML5 validators in general and this on in
 particular is the <A HREF="http://lists.whatwg.org/listinfo.cgi/implementors-whatwg.org">WHATWG
-Implementors mailing list</A>. For issues that are not related to the
-(X)HTML5 functionality, please email <A HREF="mailto:hsivonen@iki.fi">hsivonen@iki.fi</A>.</P>
+Implementors mailing list</A>. Bugs should be reported to <a href="http://bugzilla.validator.nu/">Validator.nu Bugzilla</a>.</P>
 <H2 id="ack">Acknowledgments</H2>
 <P>I would like to thank the Mozilla Foundation and the Mozilla
 Corporation for funding this project.</P>
