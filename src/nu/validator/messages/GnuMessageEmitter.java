@@ -129,7 +129,7 @@ public class GnuMessageEmitter extends MessageEmitter {
         for (int i = 0; i < documentUri.length(); i++) {
             char c = documentUri.charAt(i);
             if (c == '\"') {
-                sb.append("\\\"");
+                sb.append("%22");
             } else {
                 sb.append(c);
             }
