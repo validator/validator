@@ -727,17 +727,19 @@ class VerifierServletTransaction implements DocumentModeHandler {
         if (!willValidate()) {
             return;
         }
-        try {
-            out.flush();
-        } catch (IOException e1) {
-            throw new SAXException(e1);
+        boolean isHtmlOrXhtml = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
+        if (isHtmlOrXhtml) {
+            try {
+                out.flush();
+            } catch (IOException e1) {
+                throw new SAXException(e1);
+            }
         }
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
         entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
         setAllowRnc(true);
-        boolean stats = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
         try {
             this.errorHandler.start(document);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
@@ -756,7 +758,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
             loadDocAndSetupParser();
 
             reader.setErrorHandler(errorHandler);
-            // XXX set xml:id filter separately
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
             if (validator == null) {
@@ -812,21 +813,21 @@ class VerifierServletTransaction implements DocumentModeHandler {
         } catch (SAXException e) {
             log4j.debug("SAXException", e);
         } catch (IOException e) {
-            stats = false;
+            isHtmlOrXhtml = false;
             log4j.info("IOException", e);
             errorHandler.ioError(e);
         } catch (IncorrectSchemaException e) {
             log4j.debug("IncorrectSchemaException", e);
             errorHandler.schemaError(e);
         } catch (RuntimeException e) {
-            stats = false;
+            isHtmlOrXhtml = false;
             log4j.error("RuntimeException, doc: " + document + " schema: "
                     + schemaUrls + " lax: " + laxType, e);
             errorHandler.internalError(
                     e,
                     "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } catch (Error e) {
-            stats = false;
+            isHtmlOrXhtml = false;
             log4j.error("Error, doc: " + document + " schema: " + schemaUrls
                     + " lax: " + laxType, e);
             errorHandler.internalError(
@@ -835,7 +836,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         } finally {
             errorHandler.end(successMessage(), failureMessage());
         }
-        if (stats) {
+        if (isHtmlOrXhtml) {
             StatsEmitter.emit(contentHandler, this);
         }
     }
@@ -1502,6 +1503,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             documentInput.setByteStream(len < 0 ? new BoundedInputStream(
                     request.getInputStream(), SIZE_LIMIT, document)
                     : request.getInputStream());
+            documentInput.setSystemId(request.getHeader("Content-Location"));
         }
     }
 
