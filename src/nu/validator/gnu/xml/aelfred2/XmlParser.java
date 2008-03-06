@@ -105,6 +105,8 @@ final class XmlParser {
 
     private static final int SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00;
 
+    private static final char[] NEW_LINE_ARR = {'\n'};
+    
     //
     // Constants for element content type.
     //
@@ -316,7 +318,8 @@ final class XmlParser {
     //
     // Buffer for undecoded raw byte input.
     //
-    private final static int READ_BUFFER_MAX = 16384;
+//    private final static int READ_BUFFER_MAX = 16384;
+    private final static int READ_BUFFER_MAX = 60;
 
     private byte[] rawReadBuffer;
 
@@ -2496,7 +2499,14 @@ final class XmlParser {
                         // that's not a whitespace char, and
                         // can not terminate pure whitespace either
                         pureWhite = false;
-                        if ((i + 2) < readBufferLength) {
+                        // Refill buffer if needed -- 2008-03-06 hsivonen
+                        if (readBufferOverflow == -1) {
+                            if ((i + 2) >= readBufferLength) {
+                                reportText(pureWhite, i);
+                                readBufferOverflow = ']';
+                                fillBuffer();
+                                i = readBufferPos;
+                            }
                             if ((readBuffer[i + 1] == ']')
                                     && (readBuffer[i + 2] == '>')) {
                                 // ERROR end of text sequence
@@ -2504,10 +2514,6 @@ final class XmlParser {
                                 rollbackLocation();
                                 break loop;
                             }
-                        } else {
-                            throw new RuntimeException(
-                                    "Unimplemented end of buffer in CDATA section.");
-                            // FIXME missing two end-of-buffer cases
                         }
                         break;
                     default:
@@ -2527,23 +2533,7 @@ final class XmlParser {
                 }
             }
             // report characters/whitspace
-            int length = i - readBufferPos;
-
-            if (length != 0) {
-                int saveLine = line;
-                int saveColumn = column;
-                line = linePrev;
-                column = columnPrev;
-                if (pureWhite) {
-                    handler.ignorableWhitespace(readBuffer, readBufferPos,
-                            length);
-                } else {
-                    handler.charData(readBuffer, readBufferPos, length);
-                }
-                line = saveLine;
-                column = saveColumn;
-                readBufferPos = i;
-            }
+            reportText(pureWhite, i);
 
             if (state != 0) {
                 break;
@@ -2560,6 +2550,31 @@ final class XmlParser {
         if (state != 1) // finish, no error
         {
             fatal("character data may not contain ']]>'");
+        }
+    }
+
+    /**
+     * @param pureWhite
+     * @param i
+     * @throws SAXException
+     */
+    private void reportText(boolean pureWhite, int i) throws SAXException {
+        int length = i - readBufferPos;
+
+        if (length != 0) {
+            int saveLine = line;
+            int saveColumn = column;
+            line = linePrev;
+            column = columnPrev;
+            if (pureWhite) {
+                handler.ignorableWhitespace(readBuffer, readBufferPos,
+                        length);
+            } else {
+                handler.charData(readBuffer, readBufferPos, length);
+            }
+            line = saveLine;
+            column = saveColumn;
+            readBufferPos = i;
         }
     }
 
@@ -3582,24 +3597,7 @@ final class XmlParser {
         // read buffer, try reading more data
         // (for an external entity) or popping
         // the entity stack (for either).
-        while (readBufferPos >= readBufferLength) {
-            switch (sourceType) {
-                case INPUT_READER:
-                    readDataChunk();
-                    while (readBufferLength < 1) {
-                        popInput();
-                        if (readBufferLength < 1) {
-                            readDataChunk();
-                        }
-                    }
-                    break;
-
-                default:
-
-                    popInput();
-                    break;
-            }
-        }
+        fillBuffer();
 
         char c = readBuffer[readBufferPos++];
         advanceLocation();
@@ -3656,6 +3654,31 @@ final class XmlParser {
         }
 
         return c;
+    }
+
+    /**
+     * @throws SAXException
+     * @throws IOException
+     */
+    private void fillBuffer() throws SAXException, IOException {
+        while (readBufferPos >= readBufferLength) {
+            switch (sourceType) {
+                case INPUT_READER:
+                    readDataChunk();
+                    while (readBufferLength < 1) {
+                        popInput();
+                        if (readBufferLength < 1) {
+                            readDataChunk();
+                        }
+                    }
+                    break;
+
+                default:
+
+                    popInput();
+                    break;
+            }
+        }
     }
 
     /**
