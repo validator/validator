@@ -89,4 +89,9 @@ September 2007
  * Support CharacterHandler
  
  * Count line break as being on the line it terminates
+
+December 2007
  
+ * Fixes to source position reporting.
+
+ * Merge minor changes from Savannah CVS revision 1.10.
