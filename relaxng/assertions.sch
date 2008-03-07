@@ -58,10 +58,6 @@
 				The sectioning element &#x201C;blockquote&#x201D; cannot 
 				appear as a descendant of the &#x201C;header&#x201D; element.
 			</report>
-			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;blockquote&#x201D; cannot 
-				appear as a descendant of the &#x201C;footer&#x201D; element.
-			</report>
 			<report test='ancestor::h:address'>
 				The sectioning element &#x201C;blockquote&#x201D; cannot 
 				appear as a descendant of the &#x201C;address&#x201D; element.
