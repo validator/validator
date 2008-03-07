@@ -84,17 +84,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrase |= small.elem
 
-## Marked (Highlighted) Text: <m>
+## Marked (Highlighted) Text: <mark>
 
-	m.elem =
-		element m { m.inner & m.attrs }
+	mark.elem =
+		element mark { mark.inner & mark.attrs }
 		& v5only
-	m.attrs =
+	mark.attrs =
 		( common.attrs )
-	m.inner =
+	mark.inner =
 		( common.inner.phrase )
 
-	common.elem.phrase |= m.elem
+	common.elem.phrase |= mark.elem
 
 ## Abbreviation: <abbr>
 
