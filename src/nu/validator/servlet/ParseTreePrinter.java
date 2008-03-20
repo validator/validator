@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
+import nu.validator.htmlparser.common.Heuristics;
+import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.TypedInputSource;
@@ -77,6 +79,8 @@ public class ParseTreePrinter {
             if ("text/html".equals(type)) {
                 writer.write("HTML parser\n\n#document\n");
                 parser = new nu.validator.htmlparser.sax.HtmlParser();
+                parser.setProperty("http://validator.nu/properties/heuristics", Heuristics.ALL);
+                parser.setProperty("http://validator.nu/properties/xml-policy", XmlViolationPolicy.ALLOW);
             } else if ("application/xhtml+xml".equals(type)) {
                 writer.write("XML parser\n\n#document\n");
                 parser = new SAXDriver();
@@ -105,11 +109,11 @@ public class ParseTreePrinter {
                 writer.write('\n');
             }
             } catch (SAXException e) {
-                writer.write("Exception:\n");
+                writer.write("SAXException:\n");
                 writer.write(e.getMessage());
                 writer.write("\n");
             } catch (IOException e) {
-                writer.write("Exception:\n");
+                writer.write("IOException:\n");
                 writer.write(e.getMessage());
                 writer.write("\n");
             } finally {
