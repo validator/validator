@@ -976,30 +976,30 @@ final class XmlParser {
         // revised -- 2008-03-17 hsivonen
         sourceType = INPUT_READER;
         characterEncoding = Encoding.toAsciiLowerCase(actualName);
-        encoding = encoding.toUpperCase();
+        encoding = Encoding.toAsciiLowerCase(encoding);
         try {
             Encoding cs = Encoding.forName(encoding);
             String canonName = cs.getCanonName();
             if (requireAsciiSuperset) {
                 if (!cs.isAsciiSuperset()) {
                     fatal("The encoding \u201C"
-                            + encoding
+                            + actualName
                             + "\u201D is not an ASCII superset and, therefore, cannot be used in an internal encoding declaration.");
                 }
             }
             if (!cs.isRegistered()) {
                 if (encoding.startsWith("x-")) {
                     err("The encoding \u201C"
-                            + encoding
+                            + actualName
                             + "\u201D is not an IANA-registered encoding. (Charmod C022)");                    
                 } else {
                     err("The encoding \u201C"
-                            + encoding
+                            + actualName
                             + "\u201D is not an IANA-registered encoding and did not use the \u201Cx-\u201D prefix. (Charmod C023)");
                 }
             } else if (!canonName.equals(encoding)) {
                 err("The encoding \u201C"
-                        + encoding
+                        + actualName
                         + "\u201D is not the preferred name of the character encoding in use. The preferred name is \u201C"
                         + canonName + "\u201D. (Charmod C024)");
             }
@@ -1011,12 +1011,21 @@ final class XmlParser {
                         + actualName
                         + "\u201D instead, which is an incompatibility risk.");
             }
+            Encoding htmlActual = cs.getActualHtmlEncoding();
+            if (htmlActual != null) {
+                handler.warn("Documents encoded as \u201C"
+                        + htmlActual.getCanonName()
+                        + "\u201D are often mislabeled as \u201C"
+                        + actualName
+                        + "\u201D, which is the declared encoding of this document.");
+            }
             CharsetDecoder decoder = cs.newDecoder();
             decoder.onMalformedInput(CodingErrorAction.REPORT);
             decoder.onUnmappableCharacter(CodingErrorAction.REPORT);
             this.reader = new InputStreamReader(stream, decoder);
         } catch (UnsupportedCharsetException e) {
-            fatal("Unsupported character encoding \u201C" + encoding + "\u201D.");
+            fatal("Unsupported character encoding \u201C" + actualName
+                    + "\u201D.");
         }
     }
 
