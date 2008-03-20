@@ -81,6 +81,7 @@ dependencyPackages = [
   ("http://dist.codehaus.org/stax/jars/stax-api-1.0.1.jar", "7d436a53c64490bee564c576babb36b4"),
   ("http://jdom.org/dist/binary/jdom-1.1.zip", "4073be59361ef017a04f9a67c7be8d98"),
   ("http://kent.dl.sourceforge.net/sourceforge/dom4j/dom4j-1.6.1.jar", "4d8f51d3fe3900efc6e395be48030d6d"),
+  ("http://kent.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -118,6 +119,7 @@ dependencyJars = [
   "stax-api-1.0.1.jar",
   "jdom-1.1/build/jdom.jar",
   "dom4j-1.6.1.jar",
+  "mozilla/intl/chardet/java/dist/lib/chardet.jar",
 ]
 
 moduleNames = [
