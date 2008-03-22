@@ -42,7 +42,7 @@ useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '64'
 html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
-html5specLoad = 'http://about.validator.nu/spec.html'
+html5specLoad = 'file:validator/spec/html5.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
 aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
@@ -57,6 +57,7 @@ parsetreeHost = ''
 genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
+noSelfUpdate = 0
 
 dependencyPackages = [
   ("http://www.nic.funet.fi/pub/mirrors/apache.org/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -123,7 +124,6 @@ dependencyJars = [
 ]
 
 moduleNames = [
-  "build",
   "syntax",
   "util",
   "htmlparser",
@@ -486,6 +486,12 @@ def checkout():
   for mod in moduleNames:
     runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + mod + '/trunk/', mod))
 
+def selfUpdate():
+  runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
+  newArgv = [sys.executable, script, '--no-self-update']
+  newArgv.extend(argv)
+  os.execv(sys.executable, newArgv)  
+
 def runTests():
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
@@ -520,9 +526,8 @@ def printHelp():
   print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
-  print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
+  print "  --html5load=file:validator/spec/html5.html"
   print "                                Sets the load URL of the HTML5 spec"
-  print "                                By default the same as --html5link="
   print "  --iana-lang=http://www.iana.org/assignments/language-subtag-registry"
   print "                                Sets the URL for language tag registry"
   print "  --about=http://about.validator.nu/"
@@ -546,6 +551,7 @@ def printHelp():
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
 
+script = sys.argv[0]
 argv = sys.argv[1:]
 if len(argv) == 0:
   printHelp()
@@ -605,41 +611,57 @@ else:
       usePromiscuousSsl = 1
     elif arg == '--promiscuous-ssl=off':
       usePromiscuousSsl = 0
+    elif arg == '--no-self-update':
+      noSelfUpdate = 1
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
-      downloadDependencies()
-      downloadLocalEntities()
-    elif arg == 'dltests':
-      downloadOperaSuite()
+      if noSelfUpdate:
+        downloadDependencies()
+        downloadLocalEntities()
+      else:
+        selfUpdate()
+#    elif arg == 'dltests':
+#      downloadOperaSuite()
     elif arg == 'checkout':
-      checkout()
+      if noSelfUpdate:
+        checkout()
+      else:
+        selfUpdate()
     elif arg == 'build':
-      buildAll()
+      if noSelfUpdate:
+        buildAll()
+      else:
+        selfUpdate()
     elif arg == 'test':
-      runTests()
+      if noSelfUpdate:
+        runTests()
+      else:
+        selfUpdate()
     elif arg == 'run':
-      if not html5specLoad:
-        html5specLoad = html5specLink
-      if not stylesheet:
-        stylesheet = aboutPage + 'style.css'
-      if not script:
-        script = aboutPage + 'script.js'
-      runValidator()
+      if noSelfUpdate:
+        if not stylesheet:
+          stylesheet = aboutPage + 'style.css'
+        if not script:
+          script = aboutPage + 'script.js'
+        runValidator()
+      else:
+        selfUpdate()
     elif arg == 'all':
-      checkout()
-      downloadDependencies()
-      downloadLocalEntities()
-      downloadOperaSuite()
-      buildAll()
-      runTests()
-      if not html5specLoad:
-        html5specLoad = html5specLink
-      if not stylesheet:
-        stylesheet = aboutPage + 'style.css'
-      if not script:
-        script = aboutPage + 'script.js'
-      runValidator()
+      if noSelfUpdate:
+        checkout()
+        downloadDependencies()
+        downloadLocalEntities()
+        downloadOperaSuite()
+        buildAll()
+        runTests()
+        if not stylesheet:
+          stylesheet = aboutPage + 'style.css'
+        if not script:
+          script = aboutPage + 'script.js'
+        runValidator()
+      else:
+        selfUpdate()
     else:
       print "Unknown option %s." % arg
 
