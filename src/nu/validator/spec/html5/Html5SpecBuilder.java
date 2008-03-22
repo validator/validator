@@ -22,6 +22,7 @@
 
 package nu.validator.spec.html5;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Html5SpecBuilder implements ContentHandler {
     
     private static final String SPEC_LINK_URI = System.getProperty("nu.validator.spec.html5-link", "http://www.whatwg.org/specs/web-apps/current-work/");
     
-    private static final String SPEC_LOAD_URI = System.getProperty("nu.validator.spec.html5-load", SPEC_LINK_URI);
+    private static final String SPEC_LOAD_URI = System.getProperty("nu.validator.spec.html5-load", "file:validator/spec/html5.html");
     
     private static final Pattern ELEMENT = Pattern.compile("^.*element\\s*$");
     
@@ -106,7 +107,7 @@ public class Html5SpecBuilder implements ContentHandler {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5SpecBuilder handler = new Html5SpecBuilder();
         parser.setContentHandler(handler);
-        parser.parse(new InputSource(SPEC_LOAD_URI));
+        parser.parse(new InputSource(SPEC_LOAD_URI));            
         return handler.buildSpec();
     }
     
@@ -194,7 +195,7 @@ public class Html5SpecBuilder implements ContentHandler {
                                     "Malformed spec: no element id.");
                         }
                         currentName = new Name(NS, ln);
-                        urisByElement.put(currentName, SPEC_LOAD_URI + "#" + currentId);
+                        urisByElement.put(currentName, SPEC_LINK_URI + "#" + currentId);
                         state = State.AWAITING_ELEMENT_DL;
                     } else {
                         currentId = null;
