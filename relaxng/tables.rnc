@@ -178,7 +178,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	tables.attrs.access-headers =
 		(	tables.attrs.headers?
-#		&	tables.attrs.axis? #REVISIT should this be dropped?
+		&	tables.attrs.axis? #REVISIT should this be dropped?
 		)
 		tables.attrs.axis = # categorization (implicit headers)
 			attribute axis {
@@ -191,7 +191,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	tables.attrs.define-headers =
 		(	tables.attrs.scope?
-		&	tables.attrs.abbr?
+#		&	tables.attrs.abbr?
 		)
 		tables.attrs.scope =
 			attribute scope {
@@ -213,6 +213,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	td.attrs =
 		(	common.attrs
 		&	tables.attrs.cell-structure
+		&	tables.attrs.headers?
 #		&	tables.attrs.access-headers
 #		&	tables.attrs.define-headers #REVISIT commented out per Hixie's mail
 #		&	tables.attrs.alignment
