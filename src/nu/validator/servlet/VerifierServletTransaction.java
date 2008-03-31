@@ -717,7 +717,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
         return !(schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-basic.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-strict.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc"));
+                || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-aria.rnc"));
 
     }
 
