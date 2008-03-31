@@ -684,6 +684,48 @@ minimum value ≤ optimum point ≤ maximum value -->
 		</rule>
 
 		 <!-- XXX directory must contain only link but seems bogus -->
-		
 	</pattern>
+	
+	<pattern name='aria-activedescendant must refer to a descendant'>
+		<rule context='*[@aria-activedescendant]'>
+			<assert test='id(@aria-activedescendant) = descendant::*'>
+				The &#x201C;aria-activedescendant&#x201D; attribute must refer to a 
+				descendant element.
+			</assert>
+		</rule>
+	</pattern>
+
+	<pattern name='ARIA IDREFs must not dangle'>
+		<rule context='*[@aria-controls]'>
+			<assert test='id(@aria-controls)'>
+				The &#x201C;aria-controls&#x201D; must point to an element in the 
+				same document.
+			</assert>
+		</rule>
+		<rule context='*[@aria-describedby]'>
+			<assert test='id(@aria-describedby)'>
+				The &#x201C;aria-describedby&#x201D; must point to an element in the 
+				same document.
+			</assert>
+		</rule>
+		<rule context='*[@aria-flowto]'>
+			<assert test='id(@aria-flowto)'>
+				The &#x201C;aria-flowto&#x201D; must point to an element in the 
+				same document.
+			</assert>
+		</rule>
+		<rule context='*[@aria-labelledby]'>
+			<assert test='id(@aria-labelledby)'>
+				The &#x201C;aria-labelledby&#x201D; must point to an element in the 
+				same document.
+			</assert>
+		</rule>
+		<rule context='*[@aria-owns]'>
+			<assert test='id(@aria-owns)'>
+				The &#x201C;aria-owns&#x201D; must point to an element in the 
+				same document.
+			</assert>
+		</rule>
+	</pattern>
+
 </schema>
