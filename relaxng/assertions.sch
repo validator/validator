@@ -12,47 +12,40 @@
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
                 
-<!-- Exclusions  - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    
     <!-- FIXME no nested forms in HTML-compatible docs -->
     
-	<pattern name='dfn cannot nest'>
+	<pattern name='Triggered on mutually exclusive elements'>
+
+	<!-- Exclusions  - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
 		<rule context='h:dfn'>
 			<report test='ancestor::h:dfn'>
 				The &#x201C;dfn&#x201D; element cannot contain any nested 
 				&#x201C;dfn&#x201D; elements.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='noscript cannot nest'>
 		<rule context='h:noscript'>
 			<report test='ancestor::h:noscript'>
 				The &#x201C;noscript&#x201D; element cannot contain any nested 
 				&#x201C;noscript&#x201D; elements.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='label cannot nest'>
 		<rule context='h:label'>
 			<report test='ancestor::h:label'>
 				The &#x201C;label&#x201D; element cannot contain any nested 
 				&#x201C;label&#x201D; elements.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='address cannot nest'>
 		<rule context='h:address'>
 			<report test='ancestor::h:address'>
 				The &#x201C;address&#x201D; element cannot contain any nested 
 				&#x201C;address&#x201D; elements.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='blockquote not allowed in headers, footers or address'>
 		<rule context='h:blockquote'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;blockquote&#x201D; cannot 
@@ -63,9 +56,7 @@
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='section not allowed in headers, footers or address'>
 		<rule context='h:section'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;section&#x201D; cannot 
@@ -80,9 +71,7 @@
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='nav not allowed in headers, footers or address'>
 		<rule context='h:nav'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;nav&#x201D; cannot 
@@ -97,9 +86,7 @@
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='article not allowed in headers, footers or address'>
 		<rule context='h:article'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;article&#x201D; cannot 
@@ -114,9 +101,7 @@
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='aside not allowed in headers, footers or address'>
 		<rule context='h:aside'>
 			<report test='ancestor::h:header'>
 				The sectioning element &#x201C;aside&#x201D; cannot 
@@ -131,9 +116,7 @@
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='header not allowed in headers, footers or address'>
 		<rule context='h:header'>
 			<report test='ancestor::h:header'>
 				The &#x201C;header&#x201D; element cannot appear as a 
@@ -147,10 +130,18 @@
 				The &#x201C;header&#x201D; element cannot appear as a 
 				descendant of the &#x201C;address&#x201D; element.
 			</report>
-		</rule>
-	</pattern>
 
-	<pattern name='footer not allowed in headers, footers or address'>
+			<assert test='count(descendant::h:h1 
+			                  | descendant::h:h2 
+			                  | descendant::h:h3 
+			                  | descendant::h:h4 
+			                  | descendant::h:h5 
+			                  | descendant::h:h6) >= 1'>
+				The &#x201C;header&#x201D; element must have at least one 
+				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
+			</assert>
+		</rule>
+
 		<rule context='h:footer'>
 			<report test='ancestor::h:header'>
 				The &#x201C;footer&#x201D; element cannot appear as a 
@@ -165,9 +156,7 @@
 				descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='headings not allowed in footers or address'>
 		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
 			<report test='ancestor::h:footer'>
 				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
@@ -180,11 +169,9 @@
 				element.
 			</report>
 		</rule>
-	</pattern>
 
-<!-- Interactive element exclusions -->
+	<!-- Interactive element exclusions -->
 
-	<pattern name='a cannot have interactive ancestors'>
 		<rule context='h:a'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;a&#x201D; cannot 
@@ -199,9 +186,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='datagrid cannot have interactive ancestors'>
 		<rule context='h:datagrid'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;datagrid&#x201D; cannot 
@@ -216,9 +201,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='details cannot have interactive ancestors'>
 		<rule context='h:details'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;details&#x201D; cannot 
@@ -233,9 +216,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='button cannot have interactive ancestors'>
 		<rule context='h:button'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;button&#x201D; cannot 
@@ -250,9 +231,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='textarea cannot have interactive ancestors'>
 		<rule context='h:textarea'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;textarea&#x201D; cannot 
@@ -267,9 +246,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='select cannot have interactive ancestors'>
 		<rule context='h:select'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;select&#x201D; cannot 
@@ -284,9 +261,7 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
-	<pattern name='non-hidden input cannot have interactive ancestors'>
 		<rule context='h:input[@type!="hidden"]'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;input&#x201D; cannot 
@@ -301,36 +276,18 @@
 				appear as a descendant of the &#x201C;details&#x201D; element.
 			</report>
 		</rule>
-	</pattern>
 
 	<!-- REVISIT fieldset http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2006-April/006181.html -->
 
-<!-- Misc requirements -->
-	
-	<pattern name='At least one heading in header'>
-		<rule context='h:header'>
-			<assert test='count(descendant::h:h1 
-			                  | descendant::h:h2 
-			                  | descendant::h:h3 
-			                  | descendant::h:h4 
-			                  | descendant::h:h5 
-			                  | descendant::h:h6) >= 1'>
-				The &#x201C;header&#x201D; element must have at least one 
-				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
-			</assert>
-		</rule>
-	</pattern>
-	
-	<pattern name='area must have a map ancestor'>
+	<!-- Misc requirements -->
+		
 		<rule context='h:area'>
 			<assert test='ancestor::h:map'>
 				The &#x201C;area&#x201D; element must have a 
 				&#x201C;map&#x201D; ancestor.
 			</assert>
 		</rule>
-	</pattern>
 
-	<pattern name='ismap requires a ancestor'>
 		<rule context='h:img[@ismap]'>
 			<assert test='ancestor::h:a[@href]'>
 				The &#x201C;img&#x201D; element with the 
@@ -339,9 +296,65 @@
 				attribute.
 			</assert>
 		</rule>
-	</pattern>
 
-	<pattern name='encoding decl must be first child of head'>
+	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<rule context='h:center'>
+			<report test='true()'>
+				The &#x201C;center&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:big'>
+			<report test='true()'>
+				The &#x201C;big&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:s'>
+			<report test='true()'>
+				The &#x201C;s&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:strike'>
+			<report test='true()'>
+				The &#x201C;strike&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:tt'>
+			<report test='true()'>
+				The &#x201C;tt&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:u'>
+			<report test='true()'>
+				The &#x201C;u&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:acronym'>
+			<report test='true()'>
+				The &#x201C;acronym&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:dir'>
+			<report test='true()'>
+				The &#x201C;dir&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:applet'>
+			<report test='true()'>
+				The &#x201C;applet&#x201D; element is obsolete.
+			</report>
+		</rule>
+
+	<!-- Encoding Declaration -->
+
 		<rule context='/h:html/h:head/h:meta[@charset]
 		             | /h:html/h:head/h:meta["content-type" = translate(@http-equiv, "CONTEYP", "conteyp")]'>
 			<assert test='position()=1'>
@@ -349,81 +362,9 @@
 				the &#x201C;head&#x201D; element.
 			</assert>
 		</rule>
+
 	</pattern>
 
-<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
-
-	<pattern name='center is prohibited'>
-		<rule context='h:center'>
-			<report test='true()'>
-				The &#x201C;center&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='big is prohibited'>
-		<rule context='h:big'>
-			<report test='true()'>
-				The &#x201C;big&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='s is prohibited'>
-		<rule context='h:s'>
-			<report test='true()'>
-				The &#x201C;s&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='strike is prohibited'>
-		<rule context='h:strike'>
-			<report test='true()'>
-				The &#x201C;strike&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='tt is prohibited'>
-		<rule context='h:tt'>
-			<report test='true()'>
-				The &#x201C;tt&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='u is prohibited'>
-		<rule context='h:u'>
-			<report test='true()'>
-				The &#x201C;u&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='acronym is prohibited'>
-		<rule context='h:acronym'>
-			<report test='true()'>
-				The &#x201C;acronym&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='dir is prohibited'>
-		<rule context='h:dir'>
-			<report test='true()'>
-				The &#x201C;dir&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
-
-	<pattern name='applet is prohibited'>
-		<rule context='h:applet'>
-			<report test='true()'>
-				The &#x201C;applet&#x201D; element is obsolete.
-			</report>
-		</rule>
-	</pattern>
 
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -573,7 +514,8 @@ minimum value ≤ optimum point ≤ maximum value -->
 
 <!-- ARIA containment    - - - - - - - - - - - - - - - - - - - - - -->
 
-	<pattern name='ARIA required parents and forbidden children'>
+	<pattern name='Mutually Exclusive Role triggers'>
+
 		<rule context='*[@role="option"]'>
 			<assert test='../@role="listbox" or
 			              ../@role="combobox"'>
@@ -581,81 +523,48 @@ minimum value ≤ optimum point ≤ maximum value -->
 				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; on the parent.
 			</assert>
 		</rule>
-		<rule context='*[not(@role="option")]'>
-			<report test='../@role="listbox" or
-			              ../@role="combobox"'>
-				An element must not be a child of
-				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; unless it has &#x201C;role=option&#x201D;.
-			</report>
-		</rule>
-		
+
 		<rule context='*[@role="menuitem"]'>
 			<assert test='../@role="menu"'>
 				An element with &#x201C;role=menuitem&#x201D; requires 
 				&#x201C;role=menu&#x201D; on the parent.
 			</assert>
 		</rule>
+
 		<rule context='*[@role="menuitemcheckbox"]'>
 			<assert test='../@role="menu"'>
 				An element with &#x201C;role=menuitemcheckbox&#x201D; requires 
 				&#x201C;role=menu&#x201D; on the parent.
 			</assert>
 		</rule>
+
 		<rule context='*[@role="menuitemradio"]'>
 			<assert test='../@role="menu"'>
 				An element with &#x201C;role=menuitemradio&#x201D; requires 
 				&#x201C;role=menu&#x201D; on the parent.
 			</assert>
 		</rule>
-		<rule context='*[not(@role="menuitem" or 
-		                     @role="menuitemcheckbox" or 
-		                     @role="menuitemradio")]'>
-			<report test='../@role="menu"'>
-				An element must not be a child of
-				&#x201C;role=menu&#x201D; unless it has 
-				&#x201C;role=menuitem&#x201D;, 
-				&#x201C;role=menuitemcheckbox&#x201D; or 
-				&#x201C;role=menuitemradio&#x201D;.
-			</report>
-		</rule>
-		
-		
-		<rule context='*[@role="tab"]'>
+
+		<rule context='*[@role="tab"]'><!-- XXX spec lacks reciprocal requirement -->
 			<assert test='../@role="tablist"'>
 				An element with &#x201C;role=tab&#x201D; requires 
 				&#x201C;role=tablist&#x201D; on the parent.
 			</assert>
 		</rule>
-		<!-- XXX spec lacks reciprocal requirement -->
-		
+
 		<rule context='*[@role="treeitem"]'>
 			<assert test='../@role="tree"'>
 				An element with &#x201C;role=treeitem&#x201D; requires 
 				&#x201C;role=tree&#x201D; on the parent.
 			</assert>
 		</rule>
-		<rule context='*[not(@role="treeitem")]'>
-			<report test='../@role="tree"'>
-				An element must not be a child of
-				&#x201C;role=tree&#x201D; unless it has 
-				&#x201C;role=treeitem&#x201D;.
-			</report>
-		</rule>
-		
+
 		<rule context='*[@role="listitem"]'>
 			<assert test='../@role="list"'>
 				An element with &#x201C;role=listitem&#x201D; requires 
 				&#x201C;role=list&#x201D; on the parent.
 			</assert>
 		</rule>
-		<rule context='*[not(@role="treeitem")]'>
-			<report test='../@role="tree"'>
-				An element must not be a child of
-				&#x201C;role=tree&#x201D; unless it has 
-				&#x201C;role=treeitem&#x201D;.
-			</report>
-		</rule>
-		<!-- XXX role=group omitted due to lack of detail in spec -->
 
 		<rule context='*[@role="row"]'>
 			<assert test='../@role="grid" or 
@@ -667,6 +576,7 @@ minimum value ≤ optimum point ≤ maximum value -->
 			</assert>
 		</rule> 
 		<!-- XXX hoping for a spec change so not bothering with the reciprocal case -->
+
 		<rule context='*[@role="gridcell"]'>
 			<assert test='../@role="row"'>
 				An element with &#x201C;role=gridcell&#x201D; requires 
@@ -674,7 +584,55 @@ minimum value ≤ optimum point ≤ maximum value -->
 			</assert>
 		</rule>
 		<!-- XXX hoping for a spec change so not bothering with the reciprocal case -->
-		 
+
+	</pattern>
+	
+	<pattern name='Not Option'>
+		<rule context='*[not(@role="option")]'>
+			<report test='../@role="listbox" or
+			              ../@role="combobox"'>
+				An element must not be a child of
+				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; unless it has &#x201C;role=option&#x201D;.
+			</report>
+		</rule>
+	</pattern>
+	
+	<pattern name='Not menuitem*'>
+		<rule context='*[not(@role="menuitem" or 
+		                     @role="menuitemcheckbox" or 
+		                     @role="menuitemradio")]'>
+			<report test='../@role="menu"'>
+				An element must not be a child of
+				&#x201C;role=menu&#x201D; unless it has 
+				&#x201C;role=menuitem&#x201D;, 
+				&#x201C;role=menuitemcheckbox&#x201D; or 
+				&#x201C;role=menuitemradio&#x201D;.
+			</report>
+		</rule>
+	</pattern>
+	
+	<pattern name='Not treeitem'>
+		<rule context='*[not(@role="treeitem")]'>
+			<report test='../@role="tree"'>
+				An element must not be a child of
+				&#x201C;role=tree&#x201D; unless it has 
+				&#x201C;role=treeitem&#x201D;.
+			</report>
+		</rule>
+	</pattern>
+	
+	<pattern name='Not listitem'>
+		<rule context='*[not(@role="listitem")]'>
+			<report test='../@role="list"'>
+				An element must not be a child of
+				&#x201C;role=tree&#x201D; unless it has 
+				&#x201C;role=treeitem&#x201D;.
+			</report>
+		</rule>
+		<!-- XXX role=group omitted due to lack of detail in spec -->
+	</pattern>
+	
+	<pattern name='Not radio'>
 		<rule context='*[not(@role="radio")]'>
 			<report test='../@role="radiogroup"'>
 				An element must not be a child of
@@ -682,7 +640,6 @@ minimum value ≤ optimum point ≤ maximum value -->
 				&#x201C;role=radio&#x201D;.
 			</report>
 		</rule>
-
 		 <!-- XXX directory must contain only link but seems bogus -->
 	</pattern>
 	
@@ -695,31 +652,43 @@ minimum value ≤ optimum point ≤ maximum value -->
 		</rule>
 	</pattern>
 
-	<pattern name='ARIA IDREFs must not dangle'>
+	<pattern name='controls must not dangle'>
 		<rule context='*[@aria-controls]'>
 			<assert test='id(@aria-controls)'>
 				The &#x201C;aria-controls&#x201D; must point to an element in the 
 				same document.
 			</assert>
 		</rule>
+	</pattern>
+
+	<pattern name='describedby must not dangle'>
 		<rule context='*[@aria-describedby]'>
 			<assert test='id(@aria-describedby)'>
 				The &#x201C;aria-describedby&#x201D; must point to an element in the 
 				same document.
 			</assert>
 		</rule>
+	</pattern>
+
+	<pattern name='flowto must not dangle'>
 		<rule context='*[@aria-flowto]'>
 			<assert test='id(@aria-flowto)'>
 				The &#x201C;aria-flowto&#x201D; must point to an element in the 
 				same document.
 			</assert>
 		</rule>
+	</pattern>
+
+	<pattern name='labelledby must not dangle'>
 		<rule context='*[@aria-labelledby]'>
 			<assert test='id(@aria-labelledby)'>
 				The &#x201C;aria-labelledby&#x201D; must point to an element in the 
 				same document.
 			</assert>
 		</rule>
+	</pattern>
+
+	<pattern name='owns must not dangle'>
 		<rule context='*[@aria-owns]'>
 			<assert test='id(@aria-owns)'>
 				The &#x201C;aria-owns&#x201D; must point to an element in the 
