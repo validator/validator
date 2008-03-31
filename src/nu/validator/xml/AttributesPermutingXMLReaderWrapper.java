@@ -101,6 +101,7 @@ public final class AttributesPermutingXMLReaderWrapper implements XMLReader,
         if ("http://www.w3.org/1999/xhtml" == uri) {
             if (("input" == localName || "command" == localName) && atts.getIndex("", "type") > 0) {
                 PermutingAttributesWrapper wrap = new PermutingAttributesWrapper(atts);
+                wrap.pullUp("", "role");
                 wrap.pullUp("", "type");
                 wrap.pullUp("", "template");                
                 contentHandler.startElement(uri, localName, qName, wrap);                
@@ -114,8 +115,9 @@ public final class AttributesPermutingXMLReaderWrapper implements XMLReader,
                 wrap.pushDown("", "content");
                 wrap.pullUp("", "template");                
                 contentHandler.startElement(uri, localName, qName, wrap);                
-            } else if (atts.getIndex("", "template") > 0) {
+            } else if (atts.getIndex("", "template") > 0 || atts.getIndex("", "role") > 0) {
                 PermutingAttributesWrapper wrap = new PermutingAttributesWrapper(atts);
+                wrap.pullUp("", "role");
                 wrap.pullUp("", "template");                
                 contentHandler.startElement(uri, localName, qName, wrap);                                
             } else {
