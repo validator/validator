@@ -273,7 +273,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	input.image.attrs.alt? 
 		&	input.image.attrs.src? 
-		&	common.attrs.aria.implicit.button?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.button
+			)?
 		)	
 		input.image.attrs.type = 
 			attribute type {
