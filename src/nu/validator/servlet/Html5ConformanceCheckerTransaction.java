@@ -59,9 +59,9 @@ public class Html5ConformanceCheckerTransaction extends
 
     private static final char[] FOR = " for ".toCharArray();
     
-    private static final String SUCCESS_HTML = "The document is valid HTML5 (subject to the utter previewness of this service).";
+    private static final String SUCCESS_HTML = "The document is valid HTML5 + ARIA (subject to the utter previewness of this service).";
 
-    private static final String SUCCESS_XHTML = "The document is valid XHTML5 + SVG 1.1 + MathML 2.0 (subject to the utter previewness of this service).";
+    private static final String SUCCESS_XHTML = "The document is valid XHTML5 + ARIA + SVG 1.1 + MathML 2.0 (subject to the utter previewness of this service).";
 
     private static final String FAILURE_HTML = "There were errors. (Tried in the text/html mode.)";
 

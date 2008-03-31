@@ -392,12 +392,12 @@ Python-based (no XML situps!) build script:</P>
 <PRE><KBD>mkdir checker</KBD>
 <KBD>cd checker</KBD>
 <KBD>svn co http://svn.versiondude.net/whattf/build/trunk/ build</KBD>
-<KBD>python build/build.py --html5load=http://about.validator.nu/spec2.html all</KBD></PRE><P>
+<KBD>python build/build.py all</KBD></PRE><P>
 This will download, build and run the system at
 <CODE>http://localhost:8888/</CODE>. For other options, please run
 <KBD>python build/build.py --help</KBD> instead. Please note that the
 dependencies are big. The script will spend time downloading stuff.
-The script requires Python, Subversion and JDK 5 or later. (Tested on
+The script requires Python, Subversion and JDK 5 or later (JDK 6 tested; JDK 7 or IcedTea not). (Tested on
 Mac OS X and Ubuntu. Windows compatibility is unknown.)</P>
 <H3>Deployment</H3>
 <P>The above example starts a standalone HTTP server with debug
