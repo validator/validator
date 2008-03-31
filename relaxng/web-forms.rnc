@@ -84,6 +84,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.readonly? 
 		&	input.password.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)
 		input.password.attrs.type = 
 			attribute type {
