@@ -488,7 +488,7 @@ def checkout():
 
 def selfUpdate():
   runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
-  newArgv = [sys.executable, script, '--no-self-update']
+  newArgv = [sys.executable, buildScript, '--no-self-update']
   newArgv.extend(argv)
   os.execv(sys.executable, newArgv)  
 
@@ -551,7 +551,7 @@ def printHelp():
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
 
-script = sys.argv[0]
+buildScript = sys.argv[0]
 argv = sys.argv[1:]
 if len(argv) == 0:
   printHelp()
