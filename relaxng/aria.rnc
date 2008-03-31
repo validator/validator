@@ -257,19 +257,19 @@ common.attrs.aria.implicit.select |=
 ## valuemax
 	aria.prop.valuemax =
 		attribute aria-valuemax {
-			xsd:decimal #REVISIT
+			common.data.float #REVISIT
 		}
 
 ## valuemin
 	aria.prop.valuemin =
 		attribute aria-valuemin {
-			xsd:decimal #REVISIT
+			common.data.float #REVISIT
 		}
 
 ## valuenow
 	aria.prop.valuenow =
 		attribute aria-valuenow {
-			xsd:decimal #REVISIT
+			common.data.float #REVISIT
 		}
 
 ## atomic
