@@ -9,11 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	html.elem =
 		element html { html.inner & html.attrs }
 	html.attrs =
-		(	common.attrs
-		&	(	common.attrs.aria
-			|	common.attrs.aria.implicit.structure
-			)?
-		)
+		( common.attrs )
 	html.inner =
 		(	head.elem
 		,	body.elem
@@ -49,7 +45,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 	body.elem =
 		element body { body.inner & body.attrs }
 	body.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.structure
+			)?
+		)
 	body.inner =
 		( common.inner.prose )
 
