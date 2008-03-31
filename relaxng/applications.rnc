@@ -190,12 +190,25 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "autosubmit" | w:string ""
 			}
 	menu.inner =
-		(	li.elem.phrase*
+		(	mli.elem.phrase*
 		|	common.inner.phrase
 		)
 	
 	common.elem.prose |= menu.elem
 	# REVISIT allow nested menus
+
+## Menu Item: <li>
+
+	mli.elem =
+		element li { mli.inner & mli.attrs }
+	mli.elem.phrase =
+		element li { mli.inner.phrase & mli.attrs }
+	mli.attrs =
+		( common.attrs )
+	mli.inner =
+		( common.inner.prose )
+	mli.inner.phrase =
+		( common.inner.phrase )
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
@@ -207,6 +220,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	canvas.attrs.height?
 		&	canvas.attrs.width?
+		&	common.attrs.aria?
 		)
 		canvas.attrs.height =
 			attribute height {
@@ -249,6 +263,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	details.attrs =
 		(	common.attrs
 		&	details.attrs.open?
+		&	common.attrs.aria.implicit.region?
 		)
 		details.attrs.open =
 			attribute open {

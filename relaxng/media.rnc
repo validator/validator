@@ -159,7 +159,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	figure.elem =
 		element figure { figure.inner & figure.attrs }
 	figure.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.img?
+		)
 	figure.inner =
 		(	( legend.elem, common.inner.prose )
 		|	( common.inner.prose, legend.elem )

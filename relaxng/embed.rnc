@@ -20,6 +20,7 @@ namespace local = ""
 		&	img.attrs.width?
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
+		&	common.attrs.aria?
 		)
 		img.attrs.src =
 			attribute src {
@@ -132,8 +133,12 @@ namespace local = ""
 			                    | onsubmit
 			                    | onunload
 			                    | role
-			                    | aria-checked
-			                    | aria-valuenow	
+			                    | aria-describedby
+			                    | aria-dropeffect
+			                    | aria-flowto
+			                    | aria-grab
+			                    | aria-haspopup
+			                    | aria-labelledby
 			                    ) 
 			{
 				string
@@ -163,6 +168,7 @@ namespace local = ""
 		&	object.attrs.height?
 		&	object.attrs.width?
 		&	object.attrs.usemap?
+		&	common.attrs.aria?
 		)
 		object.attrs.data =
 			attribute data {
@@ -243,6 +249,9 @@ namespace local = ""
 		&	iframe.attrs.src?
 #		&	iframe.attrs.width?
 #		&	iframe.attrs.height?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
+			)?
 		)
 		iframe.attrs.src =
 			attribute src {

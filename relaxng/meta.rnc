@@ -9,7 +9,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 	html.elem =
 		element html { html.inner & html.attrs }
 	html.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.structure
+			)?
+		)
 	html.inner =
 		(	head.elem
 		,	body.elem

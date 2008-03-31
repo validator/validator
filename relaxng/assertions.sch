@@ -570,4 +570,120 @@
 minimum value ≤ actual value ≤ maximum value 
 minimum value ≤ low boundary ≤ high boundary ≤ maximum value 
 minimum value ≤ optimum point ≤ maximum value -->
+
+<!-- ARIA containment    - - - - - - - - - - - - - - - - - - - - - -->
+
+	<pattern name='ARIA required parents and forbidden children'>
+		<rule context='*[@role="option"]'>
+			<assert test='../@role="listbox" or
+			              ../@role="combobox"'>
+				An element with &#x201C;role=option&#x201D; requires 
+				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[not(@role="option")]'>
+			<report test='../@role="listbox" or
+			              ../@role="combobox"'>
+				An element must not be a child of
+				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; unless it has &#x201C;role=option&#x201D;.
+			</report>
+		</rule>
+		
+		<rule context='*[@role="menuitem"]'>
+			<assert test='../@role="menu"'>
+				An element with &#x201C;role=menuitem&#x201D; requires 
+				&#x201C;role=menu&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[@role="menuitemcheckbox"]'>
+			<assert test='../@role="menu"'>
+				An element with &#x201C;role=menuitemcheckbox&#x201D; requires 
+				&#x201C;role=menu&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[@role="menuitemradio"]'>
+			<assert test='../@role="menu"'>
+				An element with &#x201C;role=menuitemradio&#x201D; requires 
+				&#x201C;role=menu&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[not(@role="menuitem" or 
+		                     @role="menuitemcheckbox" or 
+		                     @role="menuitemradio")]'>
+			<report test='../@role="menu"'>
+				An element must not be a child of
+				&#x201C;role=menu&#x201D; unless it has 
+				&#x201C;role=menuitem&#x201D;, 
+				&#x201C;role=menuitemcheckbox&#x201D; or 
+				&#x201C;role=menuitemradio&#x201D;.
+			</report>
+		</rule>
+		
+		
+		<rule context='*[@role="tab"]'>
+			<assert test='../@role="tablist"'>
+				An element with &#x201C;role=tab&#x201D; requires 
+				&#x201C;role=tablist&#x201D; on the parent.
+			</assert>
+		</rule>
+		<!-- XXX spec lacks reciprocal requirement -->
+		
+		<rule context='*[@role="treeitem"]'>
+			<assert test='../@role="tree"'>
+				An element with &#x201C;role=treeitem&#x201D; requires 
+				&#x201C;role=tree&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[not(@role="treeitem")]'>
+			<report test='../@role="tree"'>
+				An element must not be a child of
+				&#x201C;role=tree&#x201D; unless it has 
+				&#x201C;role=treeitem&#x201D;.
+			</report>
+		</rule>
+		
+		<rule context='*[@role="listitem"]'>
+			<assert test='../@role="list"'>
+				An element with &#x201C;role=listitem&#x201D; requires 
+				&#x201C;role=list&#x201D; on the parent.
+			</assert>
+		</rule>
+		<rule context='*[not(@role="treeitem")]'>
+			<report test='../@role="tree"'>
+				An element must not be a child of
+				&#x201C;role=tree&#x201D; unless it has 
+				&#x201C;role=treeitem&#x201D;.
+			</report>
+		</rule>
+		<!-- XXX role=group omitted due to lack of detail in spec -->
+
+		<rule context='*[@role="row"]'>
+			<assert test='../@role="grid" or 
+			              ../../@role="grid" or
+						  ../@role="treegrid" or 
+			              ../../@role="treegrid"'>
+				An element with &#x201C;role=row&#x201D; requires 
+				&#x201C;role=treegrid&#x201D; or &#x201C;role=grid&#x201D; on the parent.
+			</assert>
+		</rule> 
+		<!-- XXX hoping for a spec change so not bothering with the reciprocal case -->
+		<rule context='*[@role="gridcell"]'>
+			<assert test='../@role="row"'>
+				An element with &#x201C;role=gridcell&#x201D; requires 
+				&#x201C;role=row&#x201D; on the parent.
+			</assert>
+		</rule>
+		<!-- XXX hoping for a spec change so not bothering with the reciprocal case -->
+		 
+		<rule context='*[not(@role="radio")]'>
+			<report test='../@role="radiogroup"'>
+				An element must not be a child of
+				&#x201C;role=radiogroup&#x201D; unless it has 
+				&#x201C;role=radio&#x201D;.
+			</report>
+		</rule>
+
+		 <!-- XXX directory must contain only link but seems bogus -->
+		
+	</pattern>
 </schema>

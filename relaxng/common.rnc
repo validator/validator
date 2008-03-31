@@ -319,3 +319,19 @@ common.attrs.other =
 
 	common.data.langcode =
 		w:string "" | w:language
+		
+# #####################################################################
+##  ARIA Module Hooks                                                 #
+# #####################################################################
+
+common.attrs.aria = ( notAllowed )
+common.attrs.aria.implicit.button = ( notAllowed )
+common.attrs.aria.implicit.input = ( notAllowed )
+common.attrs.aria.implicit.region = ( notAllowed )
+common.attrs.aria.implicit.group = ( notAllowed )
+common.attrs.aria.implicit.th = ( notAllowed )
+common.attrs.aria.implicit.structure = ( notAllowed )
+common.attrs.aria.implicit.link = ( notAllowed )
+common.attrs.aria.implicit.listitem = ( notAllowed )
+common.attrs.aria.implicit.img = ( notAllowed )
+common.attrs.aria.implicit.select = ( notAllowed )

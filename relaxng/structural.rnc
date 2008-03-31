@@ -7,7 +7,9 @@
 	section.elem =
 		element section { section.inner & section.attrs }
 	section.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	section.inner =
 		(	style.elem.scoped*
 		,	common.inner.prose 
@@ -20,7 +22,9 @@
 	nav.elem =
 		element nav { nav.inner & nav.attrs }
 	nav.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	nav.inner =
 		( common.inner.prose )
 
@@ -31,7 +35,9 @@
 	article.elem =
 		element article { article.inner & article.attrs }
 	article.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	article.inner =
 		(	style.elem*
 		,	common.inner.prose 
@@ -44,7 +50,9 @@
 	aside.elem =
 		element aside { aside.inner & aside.attrs }
 	aside.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	aside.inner =
 		(	style.elem*
 		,	common.inner.prose 
@@ -57,7 +65,9 @@
 	header.elem =
 		element header { header.inner & header.attrs }
 	header.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	header.inner =
 		( common.inner.prose )
 
@@ -68,7 +78,9 @@
 	footer.elem =
 		element footer { footer.inner & footer.attrs }
 	footer.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	footer.inner =
 		( common.inner.prose )
 
@@ -79,7 +91,9 @@
 	dialog.elem =
 		element dialog { dialog.inner & dialog.attrs }
 	dialog.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	dialog.inner =
 		(	(	dt.elem
 			,	dd.elem

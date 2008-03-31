@@ -1,0 +1,1335 @@
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Accessible Rich Internet Applications #
+# #####################################################################
+
+# #####################################################################
+## ARIA
+
+## Global states and properties
+
+aria.global = 
+	(	aria.prop.describedby?
+#    &	aria.prop.datatype?
+    &	aria.prop.dropeffect?
+    &	aria.prop.flowto?
+    &	aria.state.grab?
+    &	aria.prop.haspopup?
+#    &	aria.state.hidden?
+    &	aria.prop.labelledby?
+#    &	aria.prop.owns?
+    )
+
+common.attrs.other &= aria.global?
+
+## States and Properties for Native Roles
+
+common.attrs.aria.implicit.button |=
+	(	aria.prop.controls?
+	)
+
+common.attrs.aria.implicit.input |=
+	(	aria.prop.controls?
+	&	aria.state.invalid?
+	&	aria.prop.required?
+	)
+
+common.attrs.aria.implicit.region |=
+    (	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.controls?
+	&	aria.state.expanded?
+#	&	aria.prop.level?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	)
+
+common.attrs.aria.implicit.group |=
+    (	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.controls?
+	&	aria.state.expanded?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	&	aria.prop.activedescendant?
+	)
+
+common.attrs.aria.implicit.th |=
+    (	aria.prop.sort?
+	&	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.controls?
+	&	aria.state.disabled?
+	&	aria.state.expanded?
+	&	aria.prop.live?
+	&	aria.prop.readonly?
+	&	aria.prop.relevant?
+	&	aria.state.selected?
+	)
+
+common.attrs.aria.implicit.structure |=
+    (	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	)
+
+common.attrs.aria.implicit.link |=
+    (	aria.prop.controls?
+	&	aria.state.disabled?
+	)
+
+common.attrs.aria.implicit.listitem |=
+    (	aria.prop.posinset?
+	&	aria.prop.setsize?
+	&	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	)
+
+common.attrs.aria.implicit.img |=
+    (	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.controls?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	)
+
+common.attrs.aria.implicit.select |=
+    (	aria.state.invalid?
+	&	aria.prop.required?
+	&	aria.prop.atomic?
+	&	aria.state.busy?
+	&	aria.prop.channel?
+	&	aria.prop.controls?
+	&	aria.prop.live?
+	&	aria.prop.relevant?
+	)
+
+# #####################################################################
+## States
+
+## checked
+	aria.state.checked =
+		attribute aria-checked 
+			{	string "true"
+			|	string "false"
+			|	string "mixed"
+			|	string "undefined" #default
+			}
+
+## disabled
+	aria.state.disabled =
+		attribute aria-disabled 
+			{	string "true"
+			|	string "false" #default
+			}
+
+## expanded
+	aria.state.expanded =
+		attribute aria-expanded 
+			{	string "true"
+			|	string "false"
+			|	string "undefined" #default
+			}
+
+## invalid
+	aria.state.invalid =
+		attribute aria-invalid 
+			{	string "true"
+			|	string "false" #default
+			}
+
+## pressed
+	aria.state.pressed =
+		attribute aria-pressed 
+			{	string "true"
+			|	string "false"
+			|	string "mixed"
+			|	string "undefined" #default
+			}
+
+## selected
+	aria.state.selected =
+		attribute aria-selected 
+			{	string "true"
+			|	string "false"
+			|	string "undefined" #default
+			}
+
+## busy
+	aria.state.busy =
+		attribute aria-busy 
+			{	string "true"
+			|	string "false" #default
+			|	string "error"
+			}
+
+## grab
+	aria.state.grab =
+		attribute aria-grab 
+			{	string "true"
+			|	string "supported"
+			|	string "false" #default
+			}
+
+## hidden
+	aria.state.hidden =
+		attribute aria-hidden 
+			{	string "true"
+			|	string "false" #default
+			}
+
+
+
+# #####################################################################
+## Properties
+
+## autocomplete
+	aria.prop.autocomplete =
+		attribute aria-autocomplete
+			{	string "inline"
+			|	string "list"
+			|	string "both"
+			|	string "none" #default
+			}
+
+## datatype
+	aria.prop.datatype =
+		attribute aria-datatype {
+			string #REVISIT oh this will be painful
+		}
+		
+## haspopup
+	aria.prop.haspopup =
+		attribute aria-haspopup
+			{	string "true" #REVISIT check owns or descendant
+			|	string "false" #default
+			}	
+
+## level
+	aria.prop.level =
+		attribute aria-level {
+			common.data.integer.positive
+		}
+
+## multiline
+	aria.prop.multiline =
+		attribute aria-multiline
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## multiselectable
+	aria.prop.multiselectable =
+		attribute aria-multiselectable
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## readonly
+	aria.prop.readonly =
+		attribute aria-readonly
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## required
+	aria.prop.required =
+		attribute aria-required
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## secret
+	aria.prop.secret =
+		attribute aria-secret
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## valuemax
+	aria.prop.valuemax =
+		attribute aria-valuemax {
+			xsd:decimal #REVISIT
+		}
+
+## valuemin
+	aria.prop.valuemin =
+		attribute aria-valuemin {
+			xsd:decimal #REVISIT
+		}
+
+## valuenow
+	aria.prop.valuenow =
+		attribute aria-valuenow {
+			xsd:decimal #REVISIT
+		}
+
+## atomic
+	aria.prop.atomic =
+		attribute aria-atomic
+			{	string "true"
+			|	string "false" #default
+			}	
+
+## channel
+	aria.prop.channel =
+		attribute aria-channel
+			{	string "main" #default
+			|	string "notify"
+			}	
+
+## live
+	aria.prop.live =
+		attribute aria-live
+			{	string "off" #default
+			|	string "polite"
+			|	string "assertive"
+			|	string "rude"
+			}	
+
+## relevant
+	aria.prop.relevant =
+		attribute aria-relevant
+			{	string "all"
+			|	list 
+				{	( string "additions" )
+				,	( string "removals" )?
+				,	( string "text" )?
+				}
+			|	list 
+				{	( string "additions" )
+				,	( string "text" )?
+				,	( string "removals" )?
+				}
+			|	list 
+				{	( string "removals" )
+				,	( string "additions" )?
+				,	( string "text" )?
+				}
+			|	list 
+				{	( string "removals" )
+				,	( string "text" )?
+				,	( string "additions" )?
+				}
+			|	list 
+				{	( string "text" )
+				,	( string "additions" )?
+				,	( string "removals" )?
+				}
+			|	list 
+				{	( string "text" )
+				,	( string "removals" )?
+				,	( string "additions" )?
+				}
+			}	
+
+## dropeffect
+	aria.prop.dropeffect =
+		attribute aria-dropeffect
+			{	string "none"
+			|	list 
+				{	( string "copy" )
+				,	( string "move" )?
+				,	( string "reference" )?
+				}
+			|	list 
+				{	( string "copy" )
+				,	( string "reference" )?
+				,	( string "move" )?
+				}
+			|	list 
+				{	( string "move" )
+				,	( string "copy" )?
+				,	( string "reference" )?
+				}
+			|	list 
+				{	( string "move" )
+				,	( string "reference" )?
+				,	( string "copy" )?
+				}
+			|	list 
+				{	( string "reference" )
+				,	( string "copy" )?
+				,	( string "move" )?
+				}
+			|	list 
+				{	( string "reference" )
+				,	( string "move" )?
+				,	( string "copy" )?
+				}
+			}
+
+## activedescendant
+	aria.prop.activedescendant =
+		attribute aria-activedescendant {
+			common.data.idref #REVISIT add Schematron check
+		}
+
+## controls
+	aria.prop.controls =
+		attribute aria-controls {
+			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## describedby
+	aria.prop.describedby =
+		attribute aria-describedby {
+			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## flowto
+	aria.prop.flowto =
+		attribute aria-flowto {
+			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## labelledby
+	aria.prop.labelledby =
+		attribute aria-labelledby {
+			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## owns
+	aria.prop.owns =
+		attribute aria-owns {
+			common.data.idrefs #REVISIT add Schematron check
+		}
+
+## posinset
+	aria.prop.posinset =
+		attribute aria-posinset {
+			common.data.integer.positive
+		}
+
+## setsize
+	aria.prop.setsize =
+		attribute aria-setsize {
+			common.data.integer.positive
+		}
+
+## sort
+	aria.prop.sort =
+		attribute aria-sort
+			{	string "ascending"
+			|	string "descending"
+			|	string "none" #default
+			|	string "other"
+			}	
+
+## templateid
+	aria.prop.templateid =
+		attribute aria-templateid {
+			common.data.uri.absolute
+		}
+
+# #####################################################################
+## Roles
+
+## listbox
+	aria.listbox =
+		(	aria.role.listbox
+#		&	aria.global
+		&	aria.prop.multiselectable? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.listbox = 
+			attribute role { string "listbox" }
+	
+	common.attrs.aria |= aria.listbox
+
+## combobox
+	aria.combobox =
+		(	aria.role.combobox
+#		&	aria.global
+		&	aria.prop.autocomplete? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.combobox = 
+			attribute role { string "combobox" }
+	
+	common.attrs.aria |= aria.combobox
+
+## option
+	aria.option =
+		(	aria.role.option
+#		&	aria.global
+		&	aria.state.checked? # not inherited
+		&	aria.state.selected? # not inherited
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		)
+		aria.role.option = 
+			attribute role { string "option" }
+	
+	common.attrs.aria |= aria.option
+
+## checkbox
+	aria.checkbox =
+		(	aria.role.checkbox
+#		&	aria.global
+		&	aria.state.checked?
+		&	aria.state.selected?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		)
+		aria.role.checkbox = 
+			attribute role { string "checkbox" }
+	
+	common.attrs.aria |= aria.checkbox
+
+## radio
+	aria.radio =
+		(	aria.role.radio
+#		&	aria.global
+		&	aria.state.checked?
+		&	aria.state.selected?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		)
+		aria.role.radio = 
+			attribute role { string "radio" }
+	
+	common.attrs.aria |= aria.radio
+
+## radiogroup
+	aria.radiogroup =
+		(	aria.role.radiogroup
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.radiogroup = 
+			attribute role { string "radiogroup" }
+	
+	common.attrs.aria |= aria.radiogroup
+
+## textbox
+	aria.textbox =
+		(	aria.role.textbox
+#		&	aria.global
+		&	aria.prop.autocomplete? # not inherited
+		&	aria.prop.multiline? # not inherited
+		&	aria.prop.readonly? # not inherited
+		&	aria.prop.secret? # not inherited
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		)
+		aria.role.textbox = 
+			attribute role { string "textbox" }
+	
+	common.attrs.aria |= aria.textbox
+
+## spinbutton
+	aria.spinbutton =
+		(	aria.role.spinbutton
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		&	aria.prop.valuemax
+		&	aria.prop.valuemin
+		&	aria.prop.valuenow
+		)
+		aria.role.spinbutton = 
+			attribute role { string "spinbutton" }
+	
+	common.attrs.aria |= aria.spinbutton
+
+## button
+	aria.button =
+		(	aria.role.button
+#		&	aria.global
+		&	aria.state.pressed? # not inherited
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		)
+		aria.role.button = 
+			attribute role { string "button" }
+	
+	common.attrs.aria |= aria.button
+
+## link
+	aria.link =
+		(	aria.role.link
+#		&	aria.global
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		)
+		aria.role.link = 
+			attribute role { string "link" }
+	
+	common.attrs.aria |= aria.link
+
+## menu
+	aria.menu =
+		(	aria.role.menu
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.menu = 
+			attribute role { string "menu" }
+	
+	common.attrs.aria |= aria.menu
+
+## menubar
+	aria.menubar =
+		(	aria.role.menubar
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.menubar = 
+			attribute role { string "menubar" }
+	
+	common.attrs.aria |= aria.menubar
+
+## toolbar
+	aria.toolbar =
+		(	aria.role.toolbar
+#		&	aria.global
+		&	aria.prop.multiselectable? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.toolbar = 
+			attribute role { string "toolbar" }
+	
+	common.attrs.aria |= aria.toolbar
+
+## menuitem
+	aria.menuitem =
+		(	aria.role.menuitem
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.state.checked?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.posinset?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+		&	aria.state.selected?
+		&	aria.prop.setsize?
+#		&	aria.prop.templateid?
+		)
+		aria.role.menuitem = 
+			attribute role { string "menuitem" }
+	
+	common.attrs.aria |= aria.menuitem
+
+## menuitemcheckbox
+	aria.menuitemcheckbox =
+		(	aria.role.menuitemcheckbox
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.state.checked?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.posinset?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+		&	aria.state.selected?
+		&	aria.prop.setsize?
+#		&	aria.prop.templateid?
+		)
+		aria.role.menuitemcheckbox = 
+			attribute role { string "menuitemcheckbox" }
+	
+	common.attrs.aria |= aria.menuitemcheckbox
+
+## menuitemradio
+	aria.menuitemradio =
+		(	aria.role.menuitemradio
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.state.checked?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.posinset?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+		&	aria.state.selected?
+		&	aria.prop.setsize?
+#		&	aria.prop.templateid?
+		)
+		aria.role.menuitemradio = 
+			attribute role { string "menuitemradio" }
+	
+	common.attrs.aria |= aria.menuitemradio
+
+## slider
+	aria.slider =
+		(	aria.role.slider
+#		&	aria.global
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.required?
+		&	aria.prop.valuemax
+		&	aria.prop.valuemin
+		&	aria.prop.valuenow
+		)
+		aria.role.slider = 
+			attribute role { string "slider" }
+	
+	common.attrs.aria |= aria.slider
+
+## tooltip
+	aria.tooltip =
+		(	aria.role.tooltip
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.tooltip = 
+			attribute role { string "tooltip" }
+	
+	common.attrs.aria |= aria.tooltip
+
+## tabpanel
+	aria.tabpanel =
+		(	aria.role.tabpanel
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.tabpanel = 
+			attribute role { string "tabpanel" }
+	
+	common.attrs.aria |= aria.tabpanel
+
+## tablist
+	aria.tablist =
+		(	aria.role.tablist
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.tablist = 
+			attribute role { string "tablist" }
+	
+	common.attrs.aria |= aria.tablist
+
+## tab
+	aria.tab =
+		(	aria.role.tab
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		)
+		aria.role.tab = 
+			attribute role { string "tab" }
+	
+	common.attrs.aria |= aria.tab
+
+## tree
+	aria.tree =
+		(	aria.role.tree
+#		&	aria.global
+		&	aria.prop.multiselectable? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.tree = 
+			attribute role { string "tree" }
+	
+	common.attrs.aria |= aria.tree
+
+## treeitem
+	aria.treeitem =
+		(	aria.role.treeitem
+#		&	aria.global
+		&	aria.state.expanded? # not inherited
+		&	aria.prop.level? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.state.checked?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.invalid?
+		&	aria.prop.live?
+		&	aria.prop.posinset?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+		&	aria.state.selected?
+		&	aria.prop.setsize?
+#		&	aria.prop.templateid?
+		)
+		aria.role.treeitem = 
+			attribute role { string "treeitem" }
+	
+	common.attrs.aria |= aria.treeitem
+
+# document
+# 	aria.document =
+# 		(	aria.role.document
+# #		&	aria.global
+# 		&	aria.prop.atomic?
+# 		&	aria.state.busy?
+# 		&	aria.prop.channel?
+# 		&	aria.prop.live?
+# 		&	aria.prop.relevant?
+# 		)
+# 		aria.role.document = 
+# 			attribute role { string "document" }
+# 	
+# 	common.attrs.aria |= aria.document
+
+## region
+	aria.region =
+		(	aria.role.region
+#		&	aria.global
+		&	aria.prop.controls? # not inherited
+		&	aria.state.expanded? # not inherited
+		&	aria.prop.level? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.region = 
+			attribute role { string "region" }
+	
+	common.attrs.aria |= aria.region
+
+# heading
+#	aria.heading =
+#		(	aria.role.heading
+##		&	aria.global
+#		&	aria.prop.level? # not inherited
+#		&	aria.prop.atomic?
+#		&	aria.state.busy?
+#		&	aria.prop.channel?
+#		&	aria.prop.live?
+#		&	aria.prop.relevant?
+#		)
+#		aria.role.heading = 
+#			attribute role { string "heading" }
+#	
+#	common.attrs.aria |= aria.heading
+
+## list
+	aria.list =
+		(	aria.role.list
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.list = 
+			attribute role { string "list" }
+	
+	common.attrs.aria |= aria.list
+
+## listitem
+	aria.listitem =
+		(	aria.role.listitem
+#		&	aria.global
+		&	aria.prop.posinset? # not inherited
+		&	aria.prop.setsize? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.listitem = 
+			attribute role { string "listitem" }
+	
+	common.attrs.aria |= aria.listitem
+
+## group
+	aria.group =
+		(	aria.role.group
+#		&	aria.global
+		&	aria.prop.activedescendant? # not inherited
+		&	aria.prop.controls? # not inherited
+		&	aria.state.expanded? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.group = 
+			attribute role { string "group" }
+	
+	common.attrs.aria |= aria.group
+
+## grid
+	aria.grid =
+		(	aria.role.grid
+#		&	aria.global
+		&	aria.prop.level? # not inherited
+		&	aria.prop.multiselectable? # not inherited
+		&	aria.prop.readonly? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.grid = 
+			attribute role { string "grid" }
+	
+	common.attrs.aria |= aria.grid
+
+
+## row
+	aria.row =
+		(	aria.role.row
+#		&	aria.global
+		&	aria.state.disabled? # not inherited
+		&	aria.prop.level? # not inherited
+		&	aria.state.selected? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.row = 
+			attribute role { string "row" }
+	
+	common.attrs.aria |= aria.row
+
+## gridcell
+	aria.gridcell =
+		(	aria.role.gridcell
+#		&	aria.global
+		&	aria.state.expanded? # not inherited
+		&	aria.prop.readonly? # not inherited
+		&	aria.state.selected? # not inherited
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.gridcell = 
+			attribute role { string "gridcell" }
+	
+	common.attrs.aria |= aria.gridcell
+
+# rowheader
+# columnheader
+
+## treegrid
+	aria.treegrid =
+		(	aria.role.treegrid
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.disabled?
+		&	aria.state.expanded?
+		&	aria.state.invalid?
+		&	aria.prop.level?
+		&	aria.prop.live?
+		&	aria.prop.multiselectable?
+		&	aria.prop.readonly?
+		&	aria.prop.relevant?
+		&	aria.prop.required?
+#		&	aria.prop.templateid?
+		)
+		aria.role.treegrid = 
+			attribute role { string "treegrid" }
+	
+	common.attrs.aria |= aria.treegrid
+
+## description
+	aria.description =
+		(	aria.role.description
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.description = 
+			attribute role { string "description" }
+	
+	common.attrs.aria |= aria.description
+
+## directory
+	aria.directory =
+		(	aria.role.directory
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.directory = 
+			attribute role { string "directory" }
+	
+	common.attrs.aria |= aria.directory
+
+## img
+	aria.img =
+		(	aria.role.img
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.img = 
+			attribute role { string "img" }
+	
+	common.attrs.aria |= aria.img
+
+## presentation
+	aria.presentation =
+		(	aria.role.presentation
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.presentation = 
+			attribute role { string "presentation" }
+	
+	common.attrs.aria |= aria.presentation
+
+
+## separator
+	aria.separator =
+		(	aria.role.separator
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.separator = 
+			attribute role { string "separator" }
+	
+	common.attrs.aria |= aria.separator
+
+## application
+	aria.application =
+		(	aria.role.application
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.application = 
+			attribute role { string "application" }
+	
+	common.attrs.aria |= aria.application
+
+## dialog
+	aria.dialog =
+		(	aria.role.dialog
+#		&	aria.global
+		)
+		aria.role.dialog = 
+			attribute role { string "dialog" }
+	
+	common.attrs.aria |= aria.dialog
+
+## alert
+	aria.alert =
+		(	aria.role.alert
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.alert = 
+			attribute role { string "alert" }
+	
+	common.attrs.aria |= aria.alert
+
+## alertdialog
+	aria.alertdialog =
+		(	aria.role.alertdialog
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.alertdialog = 
+			attribute role { string "alertdialog" }
+	
+	common.attrs.aria |= aria.alertdialog
+
+## marquee
+	aria.marquee =
+		(	aria.role.marquee
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.marquee = 
+			attribute role { string "marquee" }
+	
+	common.attrs.aria |= aria.marquee
+
+## log
+	aria.log =
+		(	aria.role.log
+#		&	aria.global
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.log = 
+			attribute role { string "log" }
+	
+	common.attrs.aria |= aria.log
+
+## status
+	aria.status =
+		(	aria.role.status
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.status = 
+			attribute role { string "status" }
+	
+	common.attrs.aria |= aria.status
+
+## progressbar
+	aria.progressbar =
+		(	aria.role.progressbar
+#		&	aria.global
+		&	aria.prop.valuemax? # not inherited
+		&	aria.prop.valuemin? # not inherited
+		&	aria.prop.valuenow? # not inherited
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.progressbar = 
+			attribute role { string "progressbar" }
+	
+	common.attrs.aria |= aria.progressbar
+
+## timer
+	aria.timer =
+		(	aria.role.timer
+#		&	aria.global
+		&	aria.prop.activedescendant?
+		&	aria.prop.atomic?
+		&	aria.state.busy?
+		&	aria.prop.channel?
+		&	aria.prop.controls?
+		&	aria.state.expanded?
+#		&	aria.state.level?
+		&	aria.prop.live?
+		&	aria.prop.relevant?
+#		&	aria.prop.templateid?
+		)
+		aria.role.timer = 
+			attribute role { string "timer" }
+	
+	common.attrs.aria |= aria.timer
+
+# landmarks

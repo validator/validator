@@ -199,6 +199,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.datetime.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.datetime.attrs.type = 
 			attribute type {
@@ -237,6 +238,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.datetime-local.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.datetime-local.attrs.type = 
 			attribute type {
@@ -275,6 +277,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.date.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.date.attrs.type = 
 			attribute type {
@@ -313,6 +316,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.month.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.month.attrs.type = 
 			attribute type {
@@ -351,6 +355,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.time.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.time.attrs.type = 
 			attribute type {
@@ -389,6 +394,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.week.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.week.attrs.type = 
 			attribute type {
@@ -427,6 +433,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.number.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.number.attrs.type = 
 			attribute type {
@@ -465,6 +472,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.range.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.range.attrs.type = 
 			attribute type {
@@ -503,6 +511,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.email.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.email.attrs.type = 
 			attribute type {
@@ -533,6 +542,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	input.url.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)	
 		input.url.attrs.type = 
 			attribute type {
@@ -556,6 +566,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	output.attrs.for?
 		#FIXME figure out how onchange, onforminput and onformchange
 		#fit together with a scripting module.
+		&	common.attrs.aria.implicit.region?
 		)
 		output.attrs.for = 
 			attribute for {
@@ -666,7 +677,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.metadata |=
 		( form.elem.empty & nonHTMLizable )
 	
-## Fieldset: <fieldset>
+## Fieldset: <fieldset>, extensions
 
 	fieldset.attrs &=
 		(	common-form.attrs.disabled?

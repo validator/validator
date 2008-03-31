@@ -10,7 +10,9 @@
 	h1.elem =
 		element h1 { h1.inner & h1.attrs }
 	h1.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h1.inner =
 		( common.inner.phrase )
 
@@ -21,7 +23,9 @@
 	h2.elem =
 		element h2 { h2.inner & h2.attrs }
 	h2.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h2.inner =
 		( common.inner.phrase )
 
@@ -32,7 +36,9 @@
 	h3.elem =
 		element h3 { h3.inner & h3.attrs }
 	h3.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h3.inner =
 		( common.inner.phrase )
 
@@ -43,7 +49,9 @@
 	h4.elem =
 		element h4 { h4.inner & h4.attrs }
 	h4.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h4.inner =
 		( common.inner.phrase )
 
@@ -54,7 +62,9 @@
 	h5.elem =
 		element h5 { h5.inner & h5.attrs }
 	h5.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h5.inner =
 		( common.inner.phrase )
 
@@ -65,7 +75,9 @@
 	h6.elem =
 		element h6 { h6.inner & h6.attrs }
 	h6.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
 	h6.inner =
 		( common.inner.phrase )
 
@@ -79,7 +91,9 @@
 	address.elem =
 		element address { address.inner & address.attrs }
 	address.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)
 	address.inner = 
 		( common.inner.prose )
 
@@ -95,6 +109,7 @@
 	blockquote.attrs =
 		(	common.attrs
 		&	blockquote.attrs.cite?
+		&	common.attrs.aria?
 		)
 		blockquote.attrs.cite =
 			attribute cite {

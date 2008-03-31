@@ -17,6 +17,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	a.attrs.media?
 		&	a.attrs.type?
 		&	a.attrs.ping?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.link
+			)?
 		)
 		a.attrs.href =
 			attribute href {
@@ -56,7 +59,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	em.elem =
 		element em { em.inner & em.attrs }
 	em.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	em.inner =
 		( common.inner.phrase )
 
@@ -67,7 +72,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	strong.elem =
 		element strong { strong.inner & strong.attrs }
 	strong.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	strong.inner =
 		( common.inner.phrase )
 
@@ -78,7 +85,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	small.elem =
 		element small { small.inner & small.attrs }
 	small.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	small.inner =
 		( common.inner.phrase )
 
@@ -103,6 +112,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	abbr.attrs =
 		(	common.attrs
 		#	abbr.attrs.title included in common.attrs
+		&	common.attrs.aria?
 		)
 	abbr.inner =
 		( common.inner.phrase )
@@ -116,6 +126,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	dfn.attrs =
 		(	common.attrs
 		#	dfn.attrs.title included in common.attrs
+		&	common.attrs.aria?
 		)
 	dfn.inner =
 		( common.inner.phrase )
@@ -127,7 +138,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	i.elem =
 		element i { i.inner & i.attrs }
 	i.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	i.inner =
 		( common.inner.phrase )
 
@@ -138,7 +151,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	b.elem =
 		element b { b.inner & b.attrs }
 	b.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	b.inner =
 		( common.inner.phrase )
 
@@ -151,7 +166,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	code.elem.strict =
 		element code { code.inner.strict & code.attrs }
 	code.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	code.inner =
 		( common.inner.phrase )
 	code.inner.strict =
@@ -164,7 +181,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	var.elem =
 		element var { var.inner & var.attrs }
 	var.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	var.inner =
 		( common.inner.phrase )
 
@@ -175,7 +194,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	samp.elem =
 		element samp { samp.inner & samp.attrs }
 	samp.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	samp.inner =
 		( common.inner.phrase )
 
@@ -186,7 +207,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	kbd.elem =
 		element kbd { kbd.inner & kbd.attrs }
 	kbd.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	kbd.inner =
 		( common.inner.phrase )
 
@@ -221,6 +244,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	q.attrs =
 		(	common.attrs
 		&	q.attrs.cite?
+		&	common.attrs.aria?
 		)
 		q.attrs.cite =
 			attribute cite {
@@ -231,12 +255,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrase |= q.elem
 
-## Source Citation: <cite>
+## Title of Work: <cite>
 
 	cite.elem =
 		element cite { cite.inner & cite.attrs }
 	cite.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	cite.inner =
 		( common.inner.phrase )
 
@@ -247,19 +273,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 	span.elem =
 		element span { span.inner & span.attrs }
 	span.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	span.inner =
 		( common.inner.phrase ) # REVISIT allow ol and ul?
 
 	common.elem.phrase |= span.elem
 
 
-## Inline Styling: <span>
+## Inline Styling: <font>
 
 	font.elem =
 		element font { font.inner & font.attrs }
 	font.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	font.inner =
 		( common.inner.phrase )
 

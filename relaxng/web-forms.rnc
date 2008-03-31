@@ -57,6 +57,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.readonly? 
 		&	input.text.attrs.value? 
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.input
+			)?
 		)		
 		input.text.attrs.type = 
 			attribute type {
@@ -104,6 +107,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)
 		input.checkbox.attrs.type = 
 			attribute type {
@@ -127,6 +131,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.radio.attrs.value? 
+		&	common.attrs.aria.implicit.input?
 		)
 		input.radio.attrs.type = 
 			attribute type {
@@ -149,6 +154,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.button.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.button.attrs.value? 
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.button
+			)?
 		)
 		input.button.attrs.type = 
 			attribute type {
@@ -172,6 +180,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.submit.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.submit.attrs.value? 
+		&	common.attrs.aria.implicit.button?
 		)
 		input.submit.attrs.type = 
 			attribute type {
@@ -194,6 +203,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.reset.attrs.type
 		&	common-form.attrs.accesskey?
 		&	input.reset.attrs.value? 
+		&	common.attrs.aria.implicit.button?
 		)
 		input.reset.attrs.type = 
 			attribute type {
@@ -217,6 +227,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
 		&	common-form.attrs.accesskey?
+		&	common.attrs.aria.implicit.input?
 		)
 		input.file.attrs.type = 
 			attribute type {
@@ -261,6 +272,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	input.image.attrs.alt? 
 		&	input.image.attrs.src? 
+		&	common.attrs.aria.implicit.button?
 		)	
 		input.image.attrs.type = 
 			attribute type {
@@ -289,6 +301,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	common-form.attrs.readonly?
 		&	textarea.attrs.rows-and-cols-wf1
+		&	common.attrs.aria.implicit.input?
 		#FIXME onfocus, onblur, onselect,onchange
 		)
 		# This is ugly. 
@@ -315,7 +328,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 # enforcement in RELAX NG seems to be possible but really awkward.
 # Tried it. Leaving it to Schematron.
 
-## Select menu option (selected): <option selected>
+## Select menu option: <option selected>
 
 	option.elem =
 		element option { option.inner & option.attrs }
@@ -325,6 +338,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	option.attrs.selected?
 		&	option.attrs.label?
 		&	option.attrs.value?
+		&	common.attrs.aria.implicit.input?
 		)
 		option.attrs.selected =
 			attribute selected {
@@ -399,6 +413,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	button.submit.attrs.type?
 		&	button.attrs.value?
+		&	common.attrs.aria.implicit.button?
 		)
 		button.submit.attrs.type =
 			attribute type {
@@ -417,6 +432,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	button.reset.attrs.type
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		&	common.attrs.aria.implicit.button?
 		)
 		button.reset.attrs.type =
 			attribute type {
@@ -435,6 +451,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	button.button.attrs.type
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.button
+			)?
 		)
 		button.button.attrs.type =
 			attribute type {
@@ -456,6 +475,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
 		&	form.attrs.accept-charset?
+		&	common.attrs.aria.implicit.region?
 		)
 		form.attrs.action =
 			attribute action {
@@ -495,6 +515,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	fieldset.attrs =
 		(	common.attrs
 		&	common-form.attrs.accesskey?
+		&	common.attrs.aria.implicit.group?
 		)	
 	fieldset.inner =
 		(	legend.elem? #REVISIT should this be required?
@@ -511,6 +532,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs.accesskey?
 		&	label.attrs.for?
+		&	common.attrs.aria.implicit.region?
 		)
 		label.attrs.for =
 			attribute for {

@@ -10,7 +10,9 @@
 	p.elem =
 		element p { p.inner & p.attrs }
 	p.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	p.inner =
 		( common.inner.phrase ) # REVISIT lists in span?
 
@@ -35,7 +37,9 @@
 	pre.elem =
 		element pre { pre.inner & pre.attrs }
 	pre.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	pre.inner =
 		( common.inner.phrase )
 
@@ -51,7 +55,11 @@
 	ul.elem.phrase =
 		element ul { ul.inner.phrase & ul.attrs }
 	ul.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
+			)?
+		)
 	ul.inner =
 		( li.elem* )
 	ul.inner.phrase =
@@ -66,7 +74,11 @@
 	li.elem.phrase =
 		element li { li.inner.phrase & li.attrs }
 	li.attrs =
-		( common.attrs )
+		(	common.attrs 
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.listitem
+			)?
+		)
 	li.inner =
 		( common.inner.prose )
 	li.inner.phrase =
@@ -81,6 +93,9 @@
 	ol.attrs =
 		(	common.attrs
 		&	ol.attrs.start?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
+			)?
 		)
 		ol.attrs.start =
 			attribute start {
@@ -102,6 +117,9 @@
 	oli.attrs =
 		(	common.attrs
 		&	oli.attrs.value?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.listitem
+			)?
 		)
 		oli.attrs.value =
 			attribute value {
@@ -122,7 +140,9 @@
 	dl.elem.phrase =
 		element dl { dl.inner.phrase & dl.attrs }
 	dl.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	dl.inner =
 		(	(	dt.elem+
 			,	dd.elem+
@@ -141,7 +161,9 @@
 	dt.elem =
 		element dt { dt.inner & dt.attrs }
 	dt.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	dt.inner =
 		( common.inner.phrase )
 
@@ -152,7 +174,9 @@
 	dd.elem.phrase =
 		element dd { dd.inner.phrase & dd.attrs }
 	dd.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	dd.inner =
 		( common.inner.prose )
 	dd.inner.phrase =
@@ -166,7 +190,9 @@
 	div.elem =
 		element div { div.inner & div.attrs }
 	div.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	common.attrs.aria?
+		)
 	div.inner =
 		(	style.elem.scoped*
 		,	common.inner.prose 
@@ -179,6 +205,8 @@
 	legend.elem =
 		element legend { legend.inner & legend.attrs }
 	legend.attrs =
-		( common.attrs )	
+		(	common.attrs
+		&	common.attrs.aria.implicit.region?
+		)	
 	legend.inner =
 		( common.inner.phrase )
