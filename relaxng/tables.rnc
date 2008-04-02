@@ -122,7 +122,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		&	tables.attrs.alignment
 		)
 	thead.inner =
-		( tr.elem+ )
+		( tr.elem* )
 
 ## Table Footer Row Group
 
@@ -133,7 +133,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		&	tables.attrs.alignment
 		)
 	tfoot.inner =
-		( tr.elem+ )
+		( tr.elem* )
 
 ## Table Row Group
 
@@ -144,7 +144,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		&	tables.attrs.alignment
 		)
 	tbody.inner =
-		( tr.elem+ )
+		( tr.elem* )
 
 # #####################################################################
 ## Cell Structure
@@ -159,7 +159,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	tr.inner =
-		( ( td.elem | th.elem )+ )
+		( ( td.elem | th.elem )* )
 
 ## Common Table Cell Attributes
 
