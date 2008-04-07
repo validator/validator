@@ -31,7 +31,7 @@ import java.util.SortedSet;
 public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         SortedSet<E> {
 
-    private class Node<F> {
+    private final class Node<F> {
         public final F value;
 
         public Node<F> next;
@@ -46,7 +46,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         }
     }
 
-    private class IteratorImpl implements Iterator<E> {
+    private final class IteratorImpl implements Iterator<E> {
 
         private Node<E> next;
 
