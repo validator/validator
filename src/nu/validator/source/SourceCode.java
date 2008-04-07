@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -28,8 +28,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
+import nu.validator.collections.HeadBiasedSortedSet;
+import nu.validator.collections.TailBiasedSortedSet;
 import nu.validator.htmlparser.impl.CharacterHandler;
 import nu.validator.xml.TypedInputSource;
 
@@ -51,13 +52,13 @@ public final class SourceCode implements CharacterHandler {
 
     private int expectedLength;
 
-    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(Collections.reverseOrder());
+    private final SortedSet<Location> reverseSortedLocations = new HeadBiasedSortedSet<Location>(Collections.reverseOrder());
 
-    private final SortedSet<Location> exactErrors = new TreeSet<Location>();
+    private final SortedSet<Location> exactErrors = new TailBiasedSortedSet<Location>();
 
-    private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
+    private final SortedSet<Location> rangeLasts = new TailBiasedSortedSet<Location>();
     
-    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<Integer>();
+    private final SortedSet<Integer> oneBasedLineErrors = new TailBiasedSortedSet<Integer>();
 
     private final List<Line> lines = new ArrayList<Line>();
 
