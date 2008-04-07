@@ -111,7 +111,7 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
 
     @Override
     public Iterator<E> iterator() {
-        return new IteratorImpl(head, tail);
+        return new IteratorImpl(head.next, tail);
     }
 
     @Override
