@@ -108,11 +108,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
     }
 
     public E first() {
-        if (head == null) {
-            throw new NoSuchElementException();
-        } else {
-            return head.value;
-        }
+        throw new UnsupportedOperationException();
     }
 
     public SortedSet<E> headSet(E toElement) {
