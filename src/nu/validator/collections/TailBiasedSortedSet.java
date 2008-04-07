@@ -53,13 +53,14 @@ public final class TailBiasedSortedSet<E> extends AbstractSet<E> implements
 
         private Node<E> next;
 
-        private Node<E> sentinel;
+        private final Node<E> sentinel;
         
         /**
          * @param next
          */
         IteratorImpl(Node<E> first, Node<E> sentinel) {
             this.next = first;
+            this.sentinel = sentinel;
         }
 
         public boolean hasNext() {
