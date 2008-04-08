@@ -164,7 +164,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	figure.inner =
 		(	( legend.elem, common.inner.prose )
-		|	( common.inner.prose, legend.elem )
+		|	( common.inner.prose, legend.elem? )
 		)
 
 	common.elem.prose |= figure.elem
