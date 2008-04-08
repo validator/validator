@@ -297,7 +297,7 @@ def buildSaxon():
 
 def buildOnvdl():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["saxon-whattf"]))
+                              + jarNamesToPaths(["saxon-whattf", "io-xml-util"]))
   buildModule(
     os.path.join(buildRoot, "onvdl"), 
     "onvdl-whattf", 
@@ -471,9 +471,9 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
+  buildUtil()
   buildSaxon()
   buildOnvdl()
-  buildUtil()
   buildDatatypeLibrary()
   buildNonSchema()
   buildHtmlParser()
