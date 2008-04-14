@@ -249,7 +249,8 @@ def dependencyJarPaths():
   return pathList
 
 def buildUtil():
-  classPath = os.pathsep.join(dependencyJarPaths())
+  classPath = os.pathsep.join(dependencyJarPaths()
+                              + jarNamesToPaths(["html5-datatypes"]))
   buildModule(
     os.path.join(buildRoot, "util"), 
     "io-xml-util", 
@@ -297,7 +298,7 @@ def buildSaxon():
 
 def buildOnvdl():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["saxon-whattf", "io-xml-util"]))
+                              + jarNamesToPaths(["saxon-whattf"]))
   buildModule(
     os.path.join(buildRoot, "onvdl"), 
     "onvdl-whattf", 
@@ -471,11 +472,11 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
-  buildUtil()
   buildSaxon()
   buildOnvdl()
   buildDatatypeLibrary()
   buildNonSchema()
+  buildUtil()
   buildHtmlParser()
   buildXmlParser()
   buildTestHarness()
