@@ -36,6 +36,28 @@ import java.io.InputStream;
  */
 public class Base64InputStream extends InputStream {
 
+    private static final int[] DECODING_TABLE = new int[256];
+    
+    static {
+        for (int i = 0; i < DECODING_TABLE.length; i++) {
+            if (i >= 'A' && i <= 'Z') {
+                DECODING_TABLE[i] = (i - 'A');
+            } else if (i >= 'a' && i <= 'z') {
+                DECODING_TABLE[i] = (i - 'a' + 26);
+            } else if (i >= '0' && i <= '9') {
+                DECODING_TABLE[i] = (i - '0' + 52);
+            } else if (i == '+') {
+                DECODING_TABLE[i] = 62;
+            } else if (i == '/') {
+                DECODING_TABLE[i] = 63;
+            } else if (i == '=') {
+                DECODING_TABLE[i] = -2;
+            } else {
+                DECODING_TABLE[i] = -1;
+            }
+        }
+    }
+    
     private final InputStream delegate;
 
     private int bytesLeftInBuffer = 0;
@@ -53,7 +75,6 @@ public class Base64InputStream extends InputStream {
     public int read() throws IOException {
         if (bytesLeftInBuffer == 0) {
             bytesLeftInBuffer = 3;
-            boolean paddingSeen = false;
             for (int i = 0; i < 4; i++) {
                 int c = delegate.read();
                 buffer <<= 6;
@@ -64,30 +85,26 @@ public class Base64InputStream extends InputStream {
                     } else {
                         throw new EOFException();
                     }
-                } else if (paddingSeen) {
+                } else if (bytesLeftInBuffer == 2) {
                     if (c == '=') {
-                        bytesLeftInBuffer--;
+                        bytesLeftInBuffer = 1;
                     } else {
                         throw new IOException("Non-padding in Base64 stream after padding had started.");
                     }
-                } else if (c >= 'A' && c <= 'Z') {
-                    buffer |= (c - 'A');
-                } else if (c >= 'a' && c <= 'z') {
-                    buffer |= (c - ('a' + 26));
-                } else if (c >= '0' && c <= '9') {
-                    buffer |= (c - ('0' + 52));
-                } else if (c == '+') {
-                    buffer |= 62;
-                } else if (c == '/') {
-                    buffer |= 63;
-                } else if (c == '=') {
-                    if (i == 0 || i == 1) {
-                        throw new IOException("Base 64 padding in a bad position.");
-                    }
-                    paddingSeen = true;
-                    bytesLeftInBuffer--;
                 } else {
-                    throw new IOException("Non-Base64 input: \u201C0x" + Integer.toHexString(c) + "\u201D.");
+                    int b = DECODING_TABLE[c];
+                    if (b == -2) {
+                        if (i <= 1) {
+                            throw new IOException(
+                                    "Base 64 padding in a bad position.");
+                        }
+                        bytesLeftInBuffer = 2;
+                    } else if (b == -1) {
+                        throw new IOException("Non-Base64 input: \u201C0x"
+                                + Integer.toHexString(c) + "\u201D.");
+                    } else {
+                        buffer |= b;
+                    }
                 }
             }
         }
