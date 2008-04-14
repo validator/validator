@@ -73,9 +73,9 @@ public class Base64InputStream extends InputStream {
                 } else if (c >= 'A' && c <= 'Z') {
                     buffer |= (c - 'A');
                 } else if (c >= 'a' && c <= 'z') {
-                    buffer |= (c - 'a' + 26);
+                    buffer |= (c - ('a' + 26));
                 } else if (c >= '0' && c <= '9') {
-                    buffer |= (c - '0' + 52);
+                    buffer |= (c - ('0' + 52));
                 } else if (c == '+') {
                     buffer |= 62;
                 } else if (c == '/') {
