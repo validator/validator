@@ -52,24 +52,30 @@ public class Base64InputStream extends InputStream {
     @Override
     public int read() throws IOException {
         if (bytesLeftInBuffer == 0) {
-            assert buffer == 0;
             bytesLeftInBuffer = 3;
+            boolean paddingSeen = false;
             for (int i = 0; i < 4; i++) {
                 int c = delegate.read();
                 buffer <<= 6;
                 if (c < 0) {
                     if (i == 0) {
+                        bytesLeftInBuffer = 0;
                         return -1;
                     } else {
                         throw new EOFException();
                     }
+                } else if (paddingSeen) {
+                    if (c == '=') {
+                        bytesLeftInBuffer--;
+                    } else {
+                        throw new IOException("Non-padding in Base64 stream after padding had started.");
+                    }
                 } else if (c >= 'A' && c <= 'Z') {
-                    buffer <<= 6;
-                    buffer |= (c - 'A') & 0x3F;
+                    buffer |= (c - 'A');
                 } else if (c >= 'a' && c <= 'z') {
-                    buffer |= (c - 'a' + 26) & 0x3F;
+                    buffer |= (c - 'a' + 26);
                 } else if (c >= '0' && c <= '9') {
-                    buffer |= (c - '0' + 52) & 0x3F;
+                    buffer |= (c - '0' + 52);
                 } else if (c == '+') {
                     buffer |= 62;
                 } else if (c == '/') {
@@ -78,19 +84,15 @@ public class Base64InputStream extends InputStream {
                     if (i == 0 || i == 1) {
                         throw new IOException("Base 64 padding in a bad position.");
                     }
+                    paddingSeen = true;
                     bytesLeftInBuffer--;
                 } else {
                     throw new IOException("Non-Base64 input: \u201C0x" + Integer.toHexString(c) + "\u201D.");
                 }
             }
-            if (bytesLeftInBuffer == 1) {
-                buffer >>= 16;
-            } else if (bytesLeftInBuffer == 2) {
-                buffer >>= 8;
-            }
         }
-        int rv = buffer & 0xFF;
-        buffer >>= 8;
+        int rv = (buffer & 0xFF0000) >> 16;
+        buffer <<= 8;
         bytesLeftInBuffer--;
         return rv;
     }
