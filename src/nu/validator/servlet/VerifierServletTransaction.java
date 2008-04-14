@@ -1226,7 +1226,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         attrs.addAttribute("name", "schema");
         attrs.addAttribute("id", "schema");
         //        attrs.addAttribute("onchange", "schemaChanged();");
-        attrs.addAttribute("pattern", "(?:(?:(?:https?://.+)|(?:data:.+))(?:\\s+(?:(?:https?://.+)|(?:data:.+)))*)?");
+        attrs.addAttribute("pattern", "(?:(?:(?:https?://\\S+)|(?:data:\\S+))(?:\\s+(?:(?:https?://\\S+)|(?:data:\\S+)))*)?");
         attrs.addAttribute("title",
                 "Space-separated list of schema IRIs. (Leave blank to let the service guess.)");
         if (schemaUrls != null) {
