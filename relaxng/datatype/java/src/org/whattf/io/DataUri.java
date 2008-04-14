@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -26,36 +26,41 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.net.MalformedURLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DataUri {
 
-    private static final Pattern DATA = Pattern.compile("^[dD][aA][tT][aA]:.*$");
-
+    public static boolean startsWithData(String uri) {
+        return uri != null && uri.length() >= 5
+                && (uri.charAt(0) == 'd' || uri.charAt(0) == 'D')
+                && (uri.charAt(1) == 'a' || uri.charAt(1) == 'A')
+                && (uri.charAt(2) == 't' || uri.charAt(2) == 'T')
+                && (uri.charAt(3) == 'a' || uri.charAt(3) == 'A')
+                && (uri.charAt(4) == ':');
+    }
+    
     private enum State {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
     
-    private String type;
-    private String charset;
+    private String contentType;
+    
+    private InputStream inputStream;
     
     /**
      * @throws IOException 
      * 
      */
     public DataUri(String uri) throws IOException {
-        Matcher m = DATA.matcher(uri);
-        if (!m.matches()) {
+        if (!startsWithData(uri)) {
             throw new IllegalArgumentException("The input did not start with data:.");
         }
         InputStream is = new PercentDecodingReaderInputStream(new StringReader(uri));
-        is.skip(5);
+        is.skip(5); // "data:"
         
-        boolean collectingCharsetValue = false;
-        int i = 0; // silence compiler 
+        StringBuilder sb = new StringBuilder();
         State state = State.AT_START;
-        for (;;) {
+        int i = 5; // string counter
+        for (;;i++) {
             int b = is.read();
             if (b == -1) {
                 throw new MalformedURLException("Premature end of URI.");
@@ -64,13 +69,21 @@ public class DataUri {
                 throw new MalformedURLException("Non-ASCII character in MIME type part of the data URI.");                
             }
             char c = (char) b;
-            StringBuilder sb = new StringBuilder();
+            sb.append(c);
             switch (state) {
                 case AT_START:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         state = State.IN_SUPERTYPE;
                         continue;
+                    } else if (c == ';') {
+                        sb.setLength(0);
+                        sb.append("text/plain;");
+                        state = State.SEMICOLON_SEEN;
+                        continue;
+                    } else if (c == ',') {
+                        contentType = "text/plain;charset=US-ASCII";
+                        inputStream = is;
+                        return;
                     } else {
                         throw newDatatypeException(i, 
                                 "Expected a token character but saw ",
@@ -78,10 +91,8 @@ public class DataUri {
                     }
                 case IN_SUPERTYPE:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         continue;
                     } else if (c == '/') {
-                        sb.append(c);
                         state = State.AT_SUBTYPE_START;
                         continue;
                     } else {
@@ -91,7 +102,6 @@ public class DataUri {
                     }
                 case AT_SUBTYPE_START:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         state = State.IN_SUBTYPE;
                         continue;
                     } else {
@@ -101,16 +111,11 @@ public class DataUri {
                     }
                 case IN_SUBTYPE:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         continue;
                     } else if (c == ';') {
-                        type = sb.toString();
-                        sb.setLength(0);
                         state = State.SEMICOLON_SEEN;
                         continue;
                     } else if (isWhitespace(c)) {
-                        type = sb.toString();
-                        sb.setLength(0);
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
                     } else {
@@ -133,7 +138,6 @@ public class DataUri {
                     if (isWhitespace(c)) {
                         continue;
                     } else if (isTokenChar(c)) {
-                        sb.append(c);
                         state = State.IN_PARAM_NAME;
                         continue;
                     } else {
@@ -143,21 +147,28 @@ public class DataUri {
                     }
                 case IN_PARAM_NAME:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         continue;
                     } else if (c == '=') {
-                        String name = sb.toString();
-                        sb.setLength(0);
-                        collectingCharsetValue = "charset".equals(name);                        
                         state = State.EQUALS_SEEN;
                         continue;
+                    } else if (c == ',') {
+                        // let's see if we had ;base64,
+                        int baseFirst = sb.length() - 8;
+                        if (baseFirst >= 0 && ";base64,".equals(sb.substring(baseFirst, sb.length()))) {
+                            contentType = sb.substring(0, baseFirst);
+                            inputStream = new Base64InputStream(is);
+                            return;
+                        }
+                    } else {
+                        throw newDatatypeException(i, 
+                                "Expected an equals sign, a comma or a token character but saw ",
+                                        c, " instead.");
                     }
                 case EQUALS_SEEN:
                     if (c == '\"') {
                         state = State.IN_QUOTED_STRING;
                         continue;
                     } else if (isTokenChar(c)) {
-                        sb.append(c);
                         state = State.IN_UNQUOTED_STRING;
                         continue;
                     } else {
@@ -170,14 +181,9 @@ public class DataUri {
                         state = State.IN_QUOTED_PAIR;
                         continue;
                     } else if (c == '\"') {
-                        if (collectingCharsetValue) {
-                            charset = sb.toString();
-                        }
-                        sb.setLength(0);
                         state = State.CLOSE_QUOTE_SEEN;
                         continue;
                     } else if (isQDTextChar(c)) {
-                        sb.append(c);
                         continue;
                     } else {
                         throw newDatatypeException(i, 
@@ -186,7 +192,6 @@ public class DataUri {
                     }
                 case IN_QUOTED_PAIR:
                     if (c <= 127) {
-                        sb.append(c);
                         state = State.IN_QUOTED_STRING;
                         continue;
                     } else {
@@ -201,6 +206,10 @@ public class DataUri {
                     } else if (isWhitespace(c)) {
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
+                    } else if (c == ',') {
+                        contentType = sb.substring(0, sb.length() - 1);
+                        inputStream = is;
+                        return;
                     } else {
                         throw newDatatypeException(i, 
                                 "Expected an ASCII character but saw ",
@@ -208,22 +217,17 @@ public class DataUri {
                     }
                 case IN_UNQUOTED_STRING:
                     if (isTokenChar(c)) {
-                        sb.append(c);
                         continue;
                     } else if (c == ';') {
-                        if (collectingCharsetValue) {
-                            charset = sb.toString();
-                        }
-                        sb.setLength(0);
                         state = State.SEMICOLON_SEEN;
                         continue;
                     } else if (isWhitespace(c)) {
-                        if (collectingCharsetValue) {
-                            charset = sb.toString();
-                        }
-                        sb.setLength(0);
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
+                    } else if (c == ',') {
+                        contentType = sb.substring(0, sb.length() - 1);
+                        inputStream = is;
+                        return;
                     } else {
                         throw newDatatypeException(i, 
                                 "Expected a token character, whitespace or a semicolon but saw ",
@@ -231,12 +235,10 @@ public class DataUri {
                     }
             }
         }
-
     }
 
-    private IOException newDatatypeException(int i, String string, char c, String string2) {
-        // TODO Auto-generated method stub
-        return null;
+    private IOException newDatatypeException(int i, String head, char c, String tail) {
+        return new DataUriException(i, head, c, tail);
     }
 
     private boolean isQDTextChar(char c) {
@@ -260,5 +262,23 @@ public class DataUri {
      */
     private boolean isWhitespace(char c) {
         return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+    }
+
+    /**
+     * Returns the contentType.
+     * 
+     * @return the contentType
+     */
+    public String getContentType() {
+        return contentType;
+    }
+
+    /**
+     * Returns the inputStream.
+     * 
+     * @return the inputStream
+     */
+    public InputStream getInputStream() {
+        return inputStream;
     }
 }

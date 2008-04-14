@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,6 +25,7 @@ package org.whattf.datatype;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
@@ -33,6 +35,8 @@ import java.util.regex.Pattern;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
+import org.whattf.io.DataUri;
+import org.whattf.io.DataUriException;
 import org.whattf.io.Utf8PercentDecodingReader;
 
 import com.hp.hpl.jena.iri.IRI;
@@ -159,7 +163,17 @@ public class IriRef extends AbstractDatatype {
             if (iri != null) {
                 String ascii = iri.toASCIIString();
                 if (data) {
-                    // XXX
+                    try {
+                        DataUri dataUri = new DataUri(ascii);
+                        InputStream is = dataUri.getInputStream();
+                        while (is.read() >= 0) {
+                            // spin
+                        }
+                    } catch (DataUriException e) {
+                        throw newDatatypeException(e.getIndex(), e.getHead(), e.getLiteral(), e.getTail());
+                    } catch (IOException e) {
+                        throw newDatatypeException(e.getMessage());
+                    }                    
                 }
             }
         } catch (MalformedURLException e) {
