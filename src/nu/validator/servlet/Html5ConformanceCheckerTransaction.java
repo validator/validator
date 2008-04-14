@@ -130,7 +130,7 @@ public class Html5ConformanceCheckerTransaction extends
             emitter.characters(RESULTS_TITLE);
             if (document != null && document.length() > 0) {
                 emitter.characters(FOR);                
-                emitter.characters(scrub(document));                
+                emitter.characters(scrub(shortenDataUri(document)));                
             }
         } else {
             emitter.characters(SERVICE_TITLE);

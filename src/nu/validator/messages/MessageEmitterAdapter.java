@@ -58,6 +58,7 @@ import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.datatype.Html5DatatypeException;
+import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -367,7 +368,15 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#start()
      */
     public void start(String documentUri) throws SAXException {
-        emitter.startMessages(scrub(documentUri), showSource);
+        emitter.startMessages(scrub(shortenDataUri(documentUri)), showSource);
+    }
+
+    private String shortenDataUri(String uri) {
+        if (DataUri.startsWithData(uri)) {
+            return "data:\u2026";
+        } else {
+            return uri;
+        }
     }
 
     /**
@@ -512,7 +521,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void messageWithoutExtract(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn)
             throws SAXException {
-        emitter.startMessage(type, scrub(systemId), oneBasedLine,
+        emitter.startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
                 oneBasedColumn, oneBasedLine, oneBasedColumn, false);
         messageText(message);
         elaboration(message);

@@ -72,6 +72,7 @@ import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.ContentTypeParser;
+import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.ForbiddenCharacterFilter;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
@@ -93,8 +94,10 @@ import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UncheckedSubtreeWarner;
 import org.whattf.checker.UsemapChecker;
+import org.whattf.checker.jing.CheckerSchema;
 import org.whattf.checker.jing.CheckerValidator;
 import org.whattf.checker.table.TableChecker;
+import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -110,15 +113,18 @@ import com.hp.hpl.jena.iri.IRI;
 import com.hp.hpl.jena.iri.IRIException;
 import com.hp.hpl.jena.iri.IRIFactory;
 import com.ibm.icu.text.Normalizer;
+import com.oxygenxml.validate.nvdl.NvdlProperty;
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.SchemaResolver;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.RngProperty;
 
@@ -127,7 +133,7 @@ import com.thaiopensource.validate.rng.RngProperty;
  *          hsivonen Exp $
  * @author hsivonen
  */
-class VerifierServletTransaction implements DocumentModeHandler {
+class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver {
 
     private enum OutputFormat {
         HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, GNU
@@ -246,8 +252,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
     private final HttpServletResponse response;
 
-    private IRIFactory iriFactory;
-
     protected String document = null;
 
     private ParserMode parser = ParserMode.AUTO;
@@ -305,6 +309,8 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected TypedInputSource documentInput;
 
     protected PrudentHttpEntityResolver httpRes;
+
+    protected DataUriEntityResolver dataRes;
 
     protected ContentTypeParser contentTypeParser;
 
@@ -434,13 +440,24 @@ class VerifierServletTransaction implements DocumentModeHandler {
 
             log4j.debug("Schemas read.");
 
+            schemaMap.put("http://c.validator.nu/table/", CheckerSchema.TABLE_CHECKER);
+            schemaMap.put("http://hsivonen.iki.fi/checkers/table/", CheckerSchema.TABLE_CHECKER);
+            schemaMap.put("http://c.validator.nu/nfc/", CheckerSchema.NORMALIZATION_CHECKER);
+            schemaMap.put("http://hsivonen.iki.fi/checkers/nfc/", CheckerSchema.NORMALIZATION_CHECKER);
+            schemaMap.put("http://c.validator.nu/debug/", CheckerSchema.DEBUG_CHECKER);
+            schemaMap.put("http://hsivonen.iki.fi/checkers/debug/", CheckerSchema.DEBUG_CHECKER);
+            schemaMap.put("http://c.validator.nu/text-content/", CheckerSchema.TEXT_CONTENT_CHECKER);
+            schemaMap.put("http://hsivonen.iki.fi/checkers/text-content/", CheckerSchema.TEXT_CONTENT_CHECKER);
+            schemaMap.put("http://c.validator.nu/usemap/", CheckerSchema.USEMAP_CHECKER);
+            schemaMap.put("http://n.validator.nu/checkers/usemap/", CheckerSchema.USEMAP_CHECKER);
+            schemaMap.put("http://c.validator.nu/unchecked/", CheckerSchema.UNCHECKED_SUBTREE_WARNER);
+            
             preloadedSchemaUrls = new String[schemaMap.size()];
             preloadedSchemas = new Schema[schemaMap.size()];
             int i = 0;
-            for (Iterator iter = schemaMap.entrySet().iterator(); iter.hasNext();) {
-                Map.Entry entry = (Map.Entry) iter.next();
-                preloadedSchemaUrls[i] = entry.getKey().toString().intern();
-                preloadedSchemas[i] = (Schema) entry.getValue();
+            for (Map.Entry<String, Schema> entry : schemaMap.entrySet()) {               
+                preloadedSchemaUrls[i] = entry.getKey().intern();
+                preloadedSchemas[i] = entry.getValue();
                 i++;
             }
 
@@ -485,7 +502,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
             HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        this.iriFactory = IRIFactory.iriImplementation();
     }
 
     protected boolean willValidate() {
@@ -543,10 +559,10 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
 
         if (!methodIsGet) {
-            document = scrubUrl(request.getHeader("Content-Location"));
+            document = request.getHeader("Content-Location");
         }
         if (document == null) {
-            document = scrubUrl(request.getParameter("doc"));
+            document = request.getParameter("doc");
         }
 
         document = ("".equals(document)) ? null : document;
@@ -740,8 +756,9 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
         httpRes = new PrudentHttpEntityResolver(SIZE_LIMIT, laxType,
                 errorHandler);
+        dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
-        entityResolver = new LocalCacheEntityResolver(pathMap, httpRes);
+        entityResolver = new LocalCacheEntityResolver(pathMap, dataRes);
         setAllowRnc(true);
         try {
             this.errorHandler.start(document);
@@ -751,6 +768,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             pmb.put(ValidateProperty.XML_READER_CREATOR,
                     new VerifierServletXMLReaderCreator(errorHandler,
                             entityResolver));
+            pmb.put(ValidateProperty.SCHEMA_RESOLVER, this);
             RngProperty.CHECK_ID_IDREF.add(pmb);
             jingPropertyMap = pmb.toPropertyMap();
 
@@ -1087,28 +1105,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://c.validator.nu/table/".equals(url)
-                || "http://hsivonen.iki.fi/checkers/table/".equals(url)) {
-            return new CheckerValidator(new TableChecker(), jingPropertyMap);
-        } else if ("http://c.validator.nu/nfc/".equals(url)
-                || "http://hsivonen.iki.fi/checkers/nfc/".equals(url)) {
-            this.checkNormalization = true;
-            return new CheckerValidator(new NormalizationChecker(),
-                    jingPropertyMap);
-        } else if ("http://c.validator.nu/debug/".equals(url)
-                || "http://hsivonen.iki.fi/checkers/debug/".equals(url)) {
-            return new CheckerValidator(new DebugChecker(), jingPropertyMap);
-        } else if ("http://c.validator.nu/text-content/".equals(url)
-                || "http://hsivonen.iki.fi/checkers/text-content/".equals(url)) {
-            return new CheckerValidator(new TextContentChecker(),
-                    jingPropertyMap);
-        } else if ("http://c.validator.nu/usemap/".equals(url)
-                || "http://n.validator.nu/checkers/usemap/".equals(url)) {
-            return new CheckerValidator(new UsemapChecker(), jingPropertyMap);
-        } else if ("http://c.validator.nu/unchecked/".equals(url)) {
-            return new CheckerValidator(new UncheckedSubtreeWarner(),
-                    jingPropertyMap);
-        }
         if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url)
                 || "http://s.validator.nu/html5/html5full.rnc".equals(url)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
@@ -1116,25 +1112,28 @@ class VerifierServletTransaction implements DocumentModeHandler {
                 || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
-        Schema sch = schemaByUrl(url);
+        Schema sch = resolveSchema(url, jingPropertyMap);
         Validator validator = sch.createValidator(jingPropertyMap);
         return validator;
     }
 
-    /**
-     * @param url
-     * @return
-     * @throws SAXException
-     * @throws IOException
-     * @throws IncorrectSchemaException
-     */
-    private Schema schemaByUrl(String url) throws SAXException, IOException,
-            IncorrectSchemaException {
+    public Schema resolveSchema(String url, PropertyMap options)
+            throws SAXException, IOException, IncorrectSchemaException {
         int i = Arrays.binarySearch(preloadedSchemaUrls, url);
         if (i > -1) {
-            return preloadedSchemas[i];
+            Schema rv = preloadedSchemas[i];
+            if (options.contains(NvdlProperty.ATTRIBUTES_SCHEMA) || options.contains(NrlProperty.ATTRIBUTES_SCHEMA)) {
+                if (rv instanceof CheckerSchema) {
+                    errorHandler.error(new SAXParseException("A non-schema checker cannot be used as an attribute schema.", null, url, -1, -1));
+                    throw new IncorrectSchemaException();
+                } else {
+                    // ugly fall through
+                }
+            } else {
+                return rv;
+            }
         }
-
+        
         TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
                 null, url);
         SchemaReader sr = null;
@@ -1143,7 +1142,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
         } else {
             sr = new AutoSchemaReader();
         }
-        Schema sch = sr.createSchema(schemaInput, jingPropertyMap);
+        Schema sch = sr.createSchema(schemaInput, options);
         return sch;
     }
 
@@ -1178,7 +1177,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
             emitter.characters(RESULTS_TITLE);
             if (document != null && document.length() > 0) {
                 emitter.characters(FOR);
-                emitter.characters(scrub(document));
+                emitter.characters(scrub(shortenDataUri(document)));
             }
         } else {
             emitter.characters(SERVICE_TITLE);
@@ -1190,6 +1189,14 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
     }
 
+    protected String shortenDataUri(String uri) {
+        if (DataUri.startsWithData(uri)) {
+            return "data:\u2026";
+        } else {
+            return uri;
+        }
+    }
+    
     void emitForm() throws SAXException {
         attrs.clear();
         attrs.addAttribute("method", "get");
@@ -1242,21 +1249,6 @@ class VerifierServletTransaction implements DocumentModeHandler {
         }
         emitter.startElement("input", attrs);
         emitter.endElement("input");
-    }
-
-    private String scrubUrl(String urlStr) {
-        if (urlStr == null) {
-            return null;
-        }
-
-        try {
-            IRI iri = iriFactory.construct(urlStr);
-            return iri.toASCIIString();
-        } catch (IRIException e) {
-            return null;
-        } catch (MalformedURLException e) {
-            return null;
-        }
     }
 
     /**
@@ -1447,6 +1439,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
      */
     protected void setAcceptAllKnownXmlTypes(boolean acceptAllKnownXmlTypes) {
         contentTypeParser.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
+        dataRes.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
         httpRes.setAcceptAllKnownXmlTypes(acceptAllKnownXmlTypes);
     }
 
@@ -1457,6 +1450,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected void setAllowGenericXml(boolean allowGenericXml) {
         contentTypeParser.setAllowGenericXml(allowGenericXml);
         httpRes.setAllowGenericXml(allowGenericXml);
+        dataRes.setAllowGenericXml(allowGenericXml);
     }
 
     /**
@@ -1466,6 +1460,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected void setAllowHtml(boolean allowHtml) {
         contentTypeParser.setAllowHtml(allowHtml);
         httpRes.setAllowHtml(allowHtml);
+        dataRes.setAllowHtml(allowHtml);
     }
 
     /**
@@ -1475,6 +1470,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected void setAllowRnc(boolean allowRnc) {
         contentTypeParser.setAllowRnc(allowRnc);
         httpRes.setAllowRnc(allowRnc);
+        dataRes.setAllowRnc(allowRnc);
         entityResolver.setAllowRnc(allowRnc);
     }
 
@@ -1485,6 +1481,7 @@ class VerifierServletTransaction implements DocumentModeHandler {
     protected void setAllowXhtml(boolean allowXhtml) {
         contentTypeParser.setAllowXhtml(allowXhtml);
         httpRes.setAllowXhtml(allowXhtml);
+        dataRes.setAllowXhtml(allowXhtml);
     }
 
     /**
