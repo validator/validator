@@ -86,7 +86,7 @@ public class DataUri {
                         return;
                     } else {
                         throw newDatatypeException(i, 
-                                "Expected a token character but saw ",
+                                "Expected a token character or a semicolon but saw ",
                                         c, " instead.");
                     }
                 case IN_SUPERTYPE:
@@ -118,9 +118,13 @@ public class DataUri {
                     } else if (isWhitespace(c)) {
                         state = State.WS_BEFORE_SEMICOLON;
                         continue;
+                    } else if (c == ',') {
+                        contentType = sb.substring(0, sb.length() - 1);
+                        inputStream = is;
+                        return;
                     } else {
                         throw newDatatypeException(i, 
-                                "Expected a token character, whitespace or a semicolon but saw ",
+                                "Expected a token character, whitespace, a semicolon or a comma but saw ",
                                         c, " instead.");
                     }
                 case WS_BEFORE_SEMICOLON:
@@ -230,7 +234,7 @@ public class DataUri {
                         return;
                     } else {
                         throw newDatatypeException(i, 
-                                "Expected a token character, whitespace or a semicolon but saw ",
+                                "Expected a token character, whitespace, a semicolon, or a comma but saw ",
                                         c, " instead.");
                     }
             }
