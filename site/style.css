@@ -62,7 +62,7 @@ h1 span {
 	color: #AAAAAA;
 }
 
-td, th {
+fieldeset td, fieldeset th {
 	padding-top: 0.4em;
 	padding-bottom: 0.4em;
 }
@@ -71,7 +71,7 @@ tr:first-child td, tr:first-child th {
   vertical-align: top;
 }
 
-th {
+fieldset th {
 	padding-left: 0;
 	padding-right: 0.4em;
 	text-align: right;
@@ -79,7 +79,7 @@ th {
 	font-weight: inherit;
 }
 
-td {
+fieldset td {
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -206,6 +206,69 @@ dd {
 	margin-left: 1.5em;
 	padding-left: 0;
 }
+
+table.imagereview {
+	width: 100%;
+	table-layout: auto;
+	border-spacing: 0.5em 0;
+}
+
+col.img {
+	width: 180px;
+}
+
+col.alt {
+	color: black;
+	background-color: #FFFFCC;
+}
+
+td.alt span {
+	color: black;
+	background-color: #FFFFAA;	
+}
+
+.imagereview th {
+	font-weight: bold;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+.imagereview td {
+	vertical-align: middle;
+}
+
+td.img {
+	padding-right: 0;
+	padding-left: 0;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+	text-align: right;
+}
+
+th.img {
+	padding-right: 0;
+	padding-left: 0;
+	padding-top: 0;
+	padding-bottom: 0.5em;	
+	vertical-align: bottom;
+}
+
+td.alt, td.location {
+	text-align: left;
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+}
+
+th.alt, th.location {
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+	vertical-align: bottom;
+}
+
 
 *[irrelevent], .irrelevant {
   display: none;

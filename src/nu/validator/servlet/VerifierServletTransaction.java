@@ -29,11 +29,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,12 +63,15 @@ import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.TooManyErrorsException;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
+import nu.validator.servlet.imagereview.ImageCollector;
 import nu.validator.source.SourceCode;
 import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5SpecBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.AttributesPermutingXMLReaderWrapper;
+import nu.validator.xml.BaseUriTracker;
 import nu.validator.xml.CharacterUtil;
+import nu.validator.xml.CombineContentHandler;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.ForbiddenCharacterFilter;
@@ -89,14 +90,7 @@ import org.apache.xml.serializer.Method;
 import org.apache.xml.serializer.OutputPropertiesFactory;
 import org.apache.xml.serializer.Serializer;
 import org.apache.xml.serializer.SerializerFactory;
-import org.whattf.checker.DebugChecker;
-import org.whattf.checker.NormalizationChecker;
-import org.whattf.checker.TextContentChecker;
-import org.whattf.checker.UncheckedSubtreeWarner;
-import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.jing.CheckerSchema;
-import org.whattf.checker.jing.CheckerValidator;
-import org.whattf.checker.table.TableChecker;
 import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
@@ -109,9 +103,6 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
-import com.hp.hpl.jena.iri.IRI;
-import com.hp.hpl.jena.iri.IRIException;
-import com.hp.hpl.jena.iri.IRIFactory;
 import com.ibm.icu.text.Normalizer;
 import com.oxygenxml.validate.nvdl.NvdlProperty;
 import com.thaiopensource.relaxng.impl.CombineValidator;
@@ -229,6 +220,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static String[] presetNamespaces;
 
+    // XXX SVG!!!
+    
     private static final String[] KNOWN_CONTENT_TYPES = {
             "application/atom+xml", "application/docbook+xml",
             "application/xhtml+xml", "application/xv+xml" };
@@ -329,6 +322,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private SourceCode sourceCode = new SourceCode();
 
     private boolean showSource;
+    
+    private BaseUriTracker baseUriTracker = null;
 
     private String charsetOverride = null;
 
@@ -336,6 +331,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     // for
     // UI
     // stability
+
+    protected ImageCollector imageCollector;
 
     static {
         try {
@@ -601,7 +598,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         setup();
 
         showSource = (request.getParameter("showsource") != null);
-
+        if (request.getParameter("showimagereport") != null) {
+            imageCollector = new ImageCollector(sourceCode);
+        }
+        
         String charset = request.getParameter("charset");
         if (charset != null) {
             charset = scrub(charset.trim());
@@ -641,24 +641,24 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
                 errorHandler = new MessageEmitterAdapter(sourceCode,
-                        showSource, new XhtmlMessageEmitter(contentHandler));
+                        showSource, imageCollector, new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new TextMessageEmitter(out, asciiQuotes));
+                            showSource, null, new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new GnuMessageEmitter(out, asciiQuotes));
+                            showSource, null, new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new XmlMessageEmitter(
+                            showSource, null, new XmlMessageEmitter(
                                     new ForbiddenCharacterFilter(
                                             ser.asContentHandler())));
                 } else if (outputFormat == OutputFormat.JSON) {
@@ -668,7 +668,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         response.setContentType("application/javascript");
                     }
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, new JsonMessageEmitter(
+                            showSource, null, new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
                 } else {
@@ -746,6 +746,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (!willValidate()) {
             return;
         }
+        
         boolean isHtmlOrXhtml = (outputFormat == OutputFormat.HTML || outputFormat == OutputFormat.XHTML);
         if (isHtmlOrXhtml) {
             try {
@@ -777,7 +778,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             setAllowRnc(false);
 
             loadDocAndSetupParser();
-
+            
             reader.setErrorHandler(errorHandler);
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
@@ -792,7 +793,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(
                     reader);
             ContentHandler recorder = sourceCode.getLocationRecorder();
-            wiretap.setWiretapContentHander(recorder);
+            if (baseUriTracker == null) {  
+                wiretap.setWiretapContentHander(recorder);
+            } else {
+                wiretap.setWiretapContentHander(new CombineContentHandler(recorder, baseUriTracker));                
+            }
             wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
             reader = wiretap;
             if (htmlParser != null) {
@@ -1048,27 +1053,34 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     private Validator validatorByUrls(String schemaList) throws SAXException,
             IOException, IncorrectSchemaException {
-        Validator validator = null;
+        Validator v = null;
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
             String url = schemas[i];
             if ("http://c.validator.nu/all/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS.length; j++) {
-                    validator = combineValidatorByUrl(validator,
+                    v = combineValidatorByUrl(v,
                             ALL_CHECKERS[j]);
                 }
             } else if ("http://c.validator.nu/all-html4/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
-                    validator = combineValidatorByUrl(validator,
+                    v = combineValidatorByUrl(v,
                             ALL_CHECKERS_HTML4[j]);
                 }
             } else {
-                validator = combineValidatorByUrl(validator, url);
+                v = combineValidatorByUrl(v, url);
             }
         }
-        return validator;
+        if (imageCollector != null) {
+            if (v == null) {
+                v = imageCollector;
+            } else {
+                v = new CombineValidator(imageCollector, v);
+            }
+        }
+        return v;
     }
 
     /**
@@ -1319,6 +1331,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.checkbox("showsource", "yes", showSource);
     }
 
+    /**
+     * @throws SAXException
+     * 
+     */
+    void emitShowImageReportField() throws SAXException {
+        emitter.checkbox("showimagereport", "yes", imageCollector != null);
+    }
+    
     void rootNamespace(String namespace, Locator locator) throws SAXException {
         if (validator == null) {
             int index = -1;
@@ -1504,6 +1524,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     request.getInputStream(), SIZE_LIMIT, document)
                     : request.getInputStream());
             documentInput.setSystemId(request.getHeader("Content-Location"));
+        }
+        if (imageCollector != null) {
+            baseUriTracker = new BaseUriTracker(documentInput.getSystemId(), documentInput.getLanguage());
+            imageCollector.initializeContext(baseUriTracker);
         }
     }
 

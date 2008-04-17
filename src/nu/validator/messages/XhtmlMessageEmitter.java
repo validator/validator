@@ -24,6 +24,8 @@
 package nu.validator.messages;
 
 import nu.validator.messages.types.MessageType;
+import nu.validator.saxtree.DocumentFragment;
+import nu.validator.servlet.imagereview.Image;
 import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
@@ -35,8 +37,10 @@ import org.xml.sax.SAXException;
  * @version $Id: XhtmlMessageEmitter.java 54 2007-09-20 15:37:38Z hsivonen $
  * @author hsivonen
  */
-public class XhtmlMessageEmitter extends MessageEmitter {
+public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHandler {
 
+    private static final int IMAGE_CLAMP = 180;
+    
     private static final char[] COLON_SPACE = { ':', ' ' };
 
     private static final char[] PERIOD = { '.' };
@@ -52,6 +56,18 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     private static final char[] COLUMN = ", column ".toCharArray();
 
     private static final char[] IN_RESOURCE = " in resource ".toCharArray();
+
+    private static final char[] NOT_RESOLVABLE = "Not resolvable".toCharArray();
+
+    private static final char[] EMPTY_STRING_AS_ALT = "Omit image in non-graphical presentation".toCharArray();
+
+    private static final char[] NO_ALT = "Not available".toCharArray();
+
+    private static final char[] IMAGE = "Image".toCharArray();
+
+    private static final char[] TEXTUAL_ALTERNATIVE = "Textual alternative".toCharArray();
+
+    private static final char[] LOCATION = "Location".toCharArray();
 
     private final AttributesImpl attrs = new AttributesImpl();
     
@@ -115,15 +131,17 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         if (!textEmitted) {
             this.emitter.characters(PERIOD);
             this.emitter.endElement("p");
-            maybeEmitLocation();
+            maybeEmitLocation(true);
         }
     }
 
-    private void maybeEmitLocation() throws SAXException {
+    private void maybeEmitLocation(boolean withPara) throws SAXException {
         if (oneBasedLastLine == -1 && systemId == null) {
             return;
         }
-        this.emitter.startElementWithClass("p", "location");
+        if (withPara) {
+            this.emitter.startElementWithClass("p", "location");
+        }
         if (oneBasedLastLine == -1) {
             emitSystemId();
         } else if (oneBasedLastColumn == -1) {
@@ -134,7 +152,9 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         } else {
             emitRangeLocation();
         }
-        this.emitter.endElement("p");
+        if (withPara) {
+            this.emitter.endElement("p");
+        }
     }
 
     /**
@@ -221,22 +241,16 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     }
 
     @Override
-    public void startMessage(MessageType type, @SuppressWarnings("hiding")
-    String systemId,
-            @SuppressWarnings("hiding")
-            int oneBasedFirstLine, @SuppressWarnings("hiding")
-            int oneBasedFirstColumn,
-            @SuppressWarnings("hiding")
-            int oneBasedLastLine, @SuppressWarnings("hiding")
-            int oneBasedLastColumn, @SuppressWarnings("hiding")
-            boolean exact)
+    public void startMessage(MessageType type, String aSystemId,
+            int aOneBasedFirstLine, int aOneBasedFirstColumn,
+            int aOneBasedLastLine, int aOneBasedLastColumn, boolean aExact)
             throws SAXException {
-        this.systemId = systemId;
-        this.oneBasedFirstLine = oneBasedFirstLine;
-        this.oneBasedFirstColumn = oneBasedFirstColumn;
-        this.oneBasedLastLine = oneBasedLastLine;
-        this.oneBasedLastColumn = oneBasedLastColumn;
-        this.exact = exact;
+        this.systemId = aSystemId;
+        this.oneBasedFirstLine = aOneBasedFirstLine;
+        this.oneBasedFirstColumn = aOneBasedFirstColumn;
+        this.oneBasedLastLine = aOneBasedLastLine;
+        this.oneBasedLastColumn = aOneBasedLastColumn;
+        this.exact = aExact;
 
         this.maybeOpenList();
         this.emitter.startElementWithClass("li", type.getFlatType());
@@ -271,7 +285,7 @@ public class XhtmlMessageEmitter extends MessageEmitter {
         this.emitter.endElement("span");
         this.emitter.endElement("p");
         this.textEmitted = true;
-        maybeEmitLocation();
+        maybeEmitLocation(true);
     }
 
     /**
@@ -359,6 +373,148 @@ public class XhtmlMessageEmitter extends MessageEmitter {
     @Override
     public ContentHandler startElaboration() throws SAXException {
         return contentHandler;
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#endImageReview()
+     */
+    @Override
+    public void endImageReview() throws SAXException {
+
+    }
+
+    /**
+     * @see nu.validator.messages.MessageEmitter#startImageReview()
+     */
+    @Override
+    public ImageReviewHandler startImageReview() throws SAXException {
+        return this;
+    }
+
+    public void endImageGroup() throws SAXException {
+        this.emitter.endElement("tbody");
+        this.emitter.endElement("table");
+    }
+
+    public void image(Image image, boolean showAlt, String aSystemId,
+            int aOneBasedFirstLine, int aOneBasedFirstColumn,
+            int aOneBasedLastLine, int aOneBasedLastColumn) throws SAXException {
+        this.systemId = null;
+        this.oneBasedFirstLine = aOneBasedFirstLine;
+        this.oneBasedFirstColumn = aOneBasedFirstColumn;
+        this.oneBasedLastLine = aOneBasedLastLine;
+        this.oneBasedLastColumn = aOneBasedLastColumn;
+
+        this.emitter.startElement("tr");
+        
+        imageCell(image);
+        if (showAlt) {
+            altCell(image.getAlt(), image.getLang());
+        }
+        locationCell();
+        
+        this.emitter.endElement("tr");
+    }
+
+    private void locationCell() throws SAXException {
+        this.emitter.startElementWithClass("td", "location");       
+        maybeEmitLocation(false);
+        this.emitter.endElement("td");
+    }
+
+    private void altCell(String alt, String lang) throws SAXException {
+        this.emitter.startElementWithClass("td", "alt");       
+        if (alt == null) {
+            this.emitter.startElement("i");       
+            this.emitter.characters(NO_ALT);
+            this.emitter.endElement("i");            
+        } else if ("".equals(alt)) {
+            this.emitter.startElement("i");       
+            this.emitter.characters(EMPTY_STRING_AS_ALT);
+            this.emitter.endElement("i");                        
+        } else {
+            attrs.clear();
+            attrs.addAttribute("http://www.w3.org/XML/1998/namespace", "lang", "xml:lang", "CDATA", lang);
+            this.emitter.startElement("span", attrs);       
+            this.emitter.characters(alt);
+            this.emitter.endElement("span");                                    
+        }
+        this.emitter.endElement("td");        
+    }
+
+    private void imageCell(Image image) throws SAXException {
+        this.emitter.startElementWithClass("td", "img");       
+        String src = image.getSrc();
+        if (src == null) {
+            this.emitter.startElement("i");       
+            this.emitter.characters(NOT_RESOLVABLE);
+            this.emitter.endElement("i");                        
+        } else {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            if (width < 1 || height < 1) {
+                width = height = IMAGE_CLAMP;
+            } else if (width > height) {
+                if (width > IMAGE_CLAMP) {
+                    height = (int) Math.ceil(height * (((double)IMAGE_CLAMP)/((double)width)));
+                    width = IMAGE_CLAMP;
+                }
+            } else {
+                width = (int) Math.ceil(width * (((double)IMAGE_CLAMP)/((double)height)));
+                height = IMAGE_CLAMP;                
+            }
+            attrs.clear();
+            attrs.addAttribute("src", src);
+            attrs.addAttribute("width", Integer.toString(width));
+            attrs.addAttribute("height", Integer.toString(height));
+            this.emitter.startElement("img", attrs);
+            this.emitter.endElement("img");            
+        }
+        this.emitter.endElement("td");
+    }
+
+    public void startImageGroup(char[] heading, DocumentFragment instruction,
+            boolean hasAlt) throws SAXException {
+        this.emitter.startElement("h3");               
+        this.emitter.characters(heading);
+        this.emitter.endElement("h3");               
+        
+        this.emitter.startElementWithClass("table", "imagereview");     
+        this.emitter.startElement("colgroup"); 
+
+        this.emitter.startElementWithClass("col", "img"); 
+        this.emitter.endElement("col");               
+
+        if (hasAlt) {
+            this.emitter.startElementWithClass("col", "alt"); 
+            this.emitter.endElement("col");               
+        }
+        
+        this.emitter.startElementWithClass("col", "location"); 
+        this.emitter.endElement("col");               
+        
+        this.emitter.endElement("colgroup");               
+        
+        this.emitter.startElement("thead");               
+        this.emitter.startElement("tr");               
+
+        this.emitter.startElementWithClass("th", "img");               
+        this.emitter.characters(IMAGE);        
+        this.emitter.endElement("th");               
+
+        if (hasAlt) {
+            this.emitter.startElementWithClass("th", "alt");               
+            this.emitter.characters(TEXTUAL_ALTERNATIVE);        
+            this.emitter.endElement("th");               
+        }
+        
+        this.emitter.startElementWithClass("th", "location");               
+        this.emitter.characters(LOCATION);        
+        this.emitter.endElement("th");                       
+        
+        this.emitter.endElement("tr");               
+        this.emitter.endElement("thead");               
+        this.emitter.startElement("tbody");               
     }
 
 }

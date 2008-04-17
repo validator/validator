@@ -26,6 +26,8 @@ package nu.validator.messages;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +46,8 @@ import nu.validator.relaxng.exceptions.UnfinishedElementException;
 import nu.validator.relaxng.exceptions.UnknownElementException;
 import nu.validator.saxtree.DocumentFragment;
 import nu.validator.saxtree.TreeParser;
+import nu.validator.servlet.imagereview.Image;
+import nu.validator.servlet.imagereview.ImageCollector;
 import nu.validator.source.Location;
 import nu.validator.source.SourceCode;
 import nu.validator.source.SourceHandler;
@@ -169,6 +173,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final static char[] TEXT_NOT_ALLOWED_IN = "Text not allowed in ".toCharArray();
     
     private final static char[] UNKNOWN = "Unknown ".toCharArray();
+
+    private static final char[] NO_ALT_NO_LINK_HEADING = "No textual alternative available, not linked".toCharArray();
+
+    private static final char[] NO_ALT_INK_HEADING = "No textual alternative available, image linked".toCharArray();
+
+    private static final char[] EMPTY_ALT = "Omitted from non-graphical presentation".toCharArray();
+
+    private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
     
     private final AttributesImpl attributesImpl = new AttributesImpl();
     
@@ -189,6 +201,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final ExactErrorHandler exactErrorHandler;
 
     private final boolean showSource;
+    
+    private final ImageCollector imageCollector;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
     
@@ -226,13 +240,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
     
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector,
             MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
         this.emitter = messageEmitter;
         this.exactErrorHandler = new ExactErrorHandler(this);
         this.showSource = showSource;
+        this.imageCollector = imageCollector;
     }
 
     /**
@@ -405,6 +420,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         emitter.endResult();
 
+        if (imageCollector != null) {
+            ImageReviewHandler imageReviewHandler = emitter.startImageReview();
+            if (imageReviewHandler != null) {
+                emitImageReview(imageReviewHandler);
+            }
+            emitter.endImageReview();
+        }
+        
         if (showSource) {
             SourceHandler sourceHandler = emitter.startFullSource();
             if (sourceHandler != null) {
@@ -413,6 +436,56 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             emitter.endFullSource();
         }
         emitter.endMessages();
+    }
+
+    private void emitImageReview(ImageReviewHandler imageReviewHandler) throws SAXException {
+        List<Image> noAltNoLink = new LinkedList<Image>();
+        List<Image> noAltLink = new LinkedList<Image>();
+        List<Image> emptyAlt = new LinkedList<Image>();
+        List<Image> hasAlt = new LinkedList<Image>();
+
+        for (Image image : imageCollector) {
+            String alt = image.getAlt();
+            if (alt == null) {
+                if (image.isLinked()) {
+                    noAltLink.add(image);
+                } else {
+                    noAltNoLink.add(image);
+                }
+            } else if ("".equals(alt)) {
+                emptyAlt.add(image);
+            } else {
+                hasAlt.add(image);
+            }
+        }
+        
+        emitImageList(imageReviewHandler, noAltLink, NO_ALT_INK_HEADING, null, false);
+        emitImageList(imageReviewHandler, noAltNoLink, NO_ALT_NO_LINK_HEADING, null, false);
+        emitImageList(imageReviewHandler, emptyAlt, EMPTY_ALT, null, false);
+        emitImageList(imageReviewHandler, hasAlt, HAS_ALT, null, true);
+    }
+
+    private void emitImageList(ImageReviewHandler imageReviewHandler,
+            List<Image> list, char[] heading, DocumentFragment instruction, boolean hasAlt) throws SAXException {
+        if (!list.isEmpty()) {
+            imageReviewHandler.startImageGroup(heading, instruction, hasAlt);
+            for (Image image : list) {
+                String systemId = image.getSystemId();
+                int oneBasedLine = image.getLineNumber();
+                int oneBasedColumn = image.getColumnNumber();
+                Location rangeLast = sourceCode.newLocatorLocation(oneBasedLine,
+                        oneBasedColumn);
+                if (sourceCode.isWithinKnownSource(rangeLast)) {
+                    Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
+                    imageReviewHandler.image(image, hasAlt, systemId, rangeStart.getLine() + 1,
+                            rangeStart.getColumn() + 1, oneBasedLine, oneBasedColumn); 
+                } else {
+                    imageReviewHandler.image(image, hasAlt, systemId, -1,
+                            -1, -1, -1);                     
+                }
+            }
+            imageReviewHandler.endImageGroup();
+        }
     }
 
     private boolean isIndeterminate() {

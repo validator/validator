@@ -38,6 +38,7 @@ import nu.validator.xml.TypedInputSource;
 import org.apache.log4j.Logger;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 public final class SourceCode implements CharacterHandler {
@@ -185,6 +186,13 @@ public final class SourceCode implements CharacterHandler {
         exactErrors.add(location);        
     }
 
+    public void registerRandeEnd(Locator locator) {
+        String systemId = locator.getSystemId();
+        if (uri == systemId || (uri != null && uri.equals(systemId))) {
+            rangeLasts.add(newLocatorLocation(locator.getLineNumber(), locator.getColumnNumber()));
+        }
+    }
+    
     public void rangeEndError(Location rangeStart, Location rangeLast,
             SourceHandler extractHandler) throws SAXException {
         reverseSortedLocations.add(rangeLast);

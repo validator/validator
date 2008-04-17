@@ -88,4 +88,12 @@ public abstract class MessageEmitter {
     public void endResult() throws SAXException {
         
     }
+
+    public ImageReviewHandler startImageReview() throws SAXException {
+        return null;
+    }
+
+    public void endImageReview() throws SAXException {
+
+    }
 }
