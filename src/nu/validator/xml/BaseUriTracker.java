@@ -414,7 +414,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
                     String value = atts.getValue(i);
                     if (equalsIgnoreAsciiCase("ltr", value)) {
                         dir = Direction.LTR;
-                    } else if (equalsIgnoreAsciiCase("rtr", value)) {
+                    } else if (equalsIgnoreAsciiCase("rtl", value)) {
                         dir = Direction.RTL;
                     }
                 }
