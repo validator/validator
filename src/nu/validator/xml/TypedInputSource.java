@@ -35,6 +35,8 @@ import org.xml.sax.InputSource;
 public class TypedInputSource extends InputSource {
 
     private String type;
+    
+    private String language = "";
 
     private int length = -1;
 
@@ -99,5 +101,23 @@ public class TypedInputSource extends InputSource {
             throw new IllegalArgumentException("Length must be -1 or greater.");
         }
         this.length = length;
+    }
+
+    /**
+     * Returns the language.
+     * 
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * Sets the language.
+     * 
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

@@ -267,6 +267,12 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
             is = contentTypeParser.buildTypedInputSource(baseUri, publicId,
                     contentType);
+            
+            Header cl = m.getResponseHeader("Content-Language");
+            if (cl != null) {
+                is.setLanguage(cl.getValue().trim());
+            }
+            
             final GetMethod meth = m;
             InputStream stream = m.getResponseBodyAsStream();
             if (sizeLimit > -1) {
