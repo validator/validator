@@ -54,8 +54,15 @@ table {
 	table-layout: fixed;
 }
 
-h1 {
+h1, h2 {
 	font-size: 1.2em;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 2em;
 }
 
 h1 span {
@@ -161,6 +168,10 @@ hr {
 }
 
 p {
+	margin: 0.5em 0 0.5em 0;
+}
+
+li p {
   margin: 0;
 }
 
@@ -210,7 +221,8 @@ dd {
 table.imagereview {
 	width: 100%;
 	table-layout: auto;
-	border-spacing: 0.5em 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 col.img {
@@ -238,19 +250,25 @@ td.alt span {
 }
 
 td.img {
-	padding-right: 0;
+	padding-right: 0.5em;
 	padding-left: 0;
 	padding-top: 0;
 	padding-bottom: 0.5em;
 	text-align: right;
 }
 
+img {
+	max-height: 180px;
+	max-width: 180px;
+}
+
 th.img {
-	padding-right: 0;
+	padding-right: 0.5em;
 	padding-left: 0;
 	padding-top: 0;
 	padding-bottom: 0.5em;	
 	vertical-align: bottom;
+	text-align: right;
 }
 
 td.alt, td.location {

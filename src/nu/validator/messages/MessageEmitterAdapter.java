@@ -198,7 +198,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final char[] NO_ALT_LINK_HEADING = "No textual alternative available, image linked".toCharArray();
 
-    private static final char[] EMPTY_ALT = "Omitted from non-graphical presentation".toCharArray();
+    private static final char[] EMPTY_ALT = "Empty textualy alternative\u2014Omitted from non-graphical presentation".toCharArray();
 
     private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
     
