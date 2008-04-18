@@ -402,14 +402,14 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
      * @see nu.validator.messages.MessageEmitter#startImageReview()
      */
     @Override
-    public ImageReviewHandler startImageReview() throws SAXException {
+    public ImageReviewHandler startImageReview(DocumentFragment instruction) throws SAXException {
         attrs.clear();
         attrs.addAttribute("id", "imagereport");
         this.emitter.startElement("h2", attrs);
         this.emitter.characters(IMAGE_REPORT);
         this.emitter.endElement("h2");
         
-        treeParser.parse(MessageEmitterAdapter.IMAGE_REPORT_GENERAL);
+        treeParser.parse(instruction);
         
         return this;
     }

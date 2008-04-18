@@ -154,5 +154,13 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
         return images.iterator();
     }
 
+    /**
+     * @return
+     * @see java.util.List#isEmpty()
+     */
+    public boolean isEmpty() {
+        return images.isEmpty();
+    }
+
 
 }

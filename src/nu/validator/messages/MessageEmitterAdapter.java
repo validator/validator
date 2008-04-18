@@ -106,8 +106,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
     
-    final static DocumentFragment IMAGE_REPORT_GENERAL;
+    private final static DocumentFragment IMAGE_REPORT_GENERAL;
     
+    private final static DocumentFragment IMAGE_REPORT_EMPTY;
+
     private final static DocumentFragment NO_ALT_NO_LINK_ADVICE;
 
     private final static DocumentFragment NO_ALT_LINK_ADVICE;
@@ -129,6 +131,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             NO_ALT_LINK_ADVICE = list.get(2);
             EMPTY_ALT_ADVICE = list.get(3);
             HAS_ALT_ADVICE = list.get(4);
+            IMAGE_REPORT_EMPTY = list.get(5);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SAXException e) {
@@ -198,7 +201,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final char[] NO_ALT_LINK_HEADING = "No textual alternative available, image linked".toCharArray();
 
-    private static final char[] EMPTY_ALT = "Empty textualy alternative\u2014Omitted from non-graphical presentation".toCharArray();
+    private static final char[] EMPTY_ALT = "Empty textual alternative\u2014Omitted from non-graphical presentation".toCharArray();
 
     private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
     
@@ -441,7 +444,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         emitter.endResult();
 
         if (imageCollector != null) {
-            ImageReviewHandler imageReviewHandler = emitter.startImageReview();
+            DocumentFragment instruction = IMAGE_REPORT_GENERAL;
+            if (imageCollector.isEmpty()) {
+                instruction = IMAGE_REPORT_EMPTY;
+            }
+            
+            ImageReviewHandler imageReviewHandler = emitter.startImageReview(instruction);
             if (imageReviewHandler != null) {
                 emitImageReview(imageReviewHandler);
             }

@@ -23,6 +23,7 @@
 package nu.validator.messages;
 
 import nu.validator.messages.types.MessageType;
+import nu.validator.saxtree.DocumentFragment;
 import nu.validator.source.SourceHandler;
 
 import org.xml.sax.ContentHandler;
@@ -89,7 +90,7 @@ public abstract class MessageEmitter {
         
     }
 
-    public ImageReviewHandler startImageReview() throws SAXException {
+    public ImageReviewHandler startImageReview(DocumentFragment instruction) throws SAXException {
         return null;
     }
 
