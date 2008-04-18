@@ -25,6 +25,7 @@ package nu.validator.messages;
 
 import nu.validator.messages.types.MessageType;
 import nu.validator.saxtree.DocumentFragment;
+import nu.validator.saxtree.TreeParser;
 import nu.validator.servlet.imagereview.Image;
 import nu.validator.source.SourceHandler;
 import nu.validator.xml.AttributesImpl;
@@ -69,6 +70,10 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
 
     private static final char[] LOCATION = "Location".toCharArray();
 
+    private static final char[] IMAGE_REPORT = "Image report".toCharArray();
+
+    private static final char[] SOURCE_CODE = "Source".toCharArray();
+    
     private final AttributesImpl attrs = new AttributesImpl();
     
     private boolean listOpen = false;
@@ -96,6 +101,8 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     private boolean exact;
 
     private boolean willShowSource;
+    
+    private final TreeParser treeParser;
 
     /**
      * @param contentHandler
@@ -106,6 +113,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         this.emitter = new XhtmlSaxEmitter(contentHandler);
         this.messageTextHandler = new XhtmlMessageTextHandler(emitter);
         this.extractHandler = new XhtmlExtractHandler(emitter);
+        this.treeParser = new TreeParser(contentHandler, null);
     }
 
     private void maybeOpenList() throws SAXException {
@@ -341,6 +349,13 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     @Override
     public SourceHandler startFullSource() throws SAXException {
         maybeCloseList();
+        
+        attrs.clear();
+        attrs.addAttribute("id", "source");
+        this.emitter.startElement("h2", attrs);
+        this.emitter.characters(SOURCE_CODE);
+        this.emitter.endElement("h2");
+        
         return new XhtmlSourceHandler(emitter);
     }
 
@@ -388,6 +403,14 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
      */
     @Override
     public ImageReviewHandler startImageReview() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("id", "imagereport");
+        this.emitter.startElement("h2", attrs);
+        this.emitter.characters(IMAGE_REPORT);
+        this.emitter.endElement("h2");
+        
+        treeParser.parse(MessageEmitterAdapter.IMAGE_REPORT_GENERAL);
+        
         return this;
     }
 
@@ -409,7 +432,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         
         imageCell(image);
         if (showAlt) {
-            altCell(image.getAlt(), image.getLang());
+            altCell(image.getAlt(), image.getLang(), image.isRtl());
         }
         locationCell();
         
@@ -422,8 +445,13 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         this.emitter.endElement("td");
     }
 
-    private void altCell(String alt, String lang) throws SAXException {
-        this.emitter.startElementWithClass("td", "alt");       
+    private void altCell(String alt, String lang, boolean rtl) throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("class", "alt");
+        if (rtl && !(alt == null || "".equals(alt))) {
+            attrs.addAttribute("dir", "rtl");
+        }        
+        this.emitter.startElement("td", attrs);       
         if (alt == null) {
             this.emitter.startElement("i");       
             this.emitter.characters(NO_ALT);
@@ -453,20 +481,24 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
             int width = image.getWidth();
             int height = image.getHeight();
             if (width < 1 || height < 1) {
-                width = height = IMAGE_CLAMP;
+                width = height = -1;
             } else if (width > height) {
                 if (width > IMAGE_CLAMP) {
                     height = (int) Math.ceil(height * (((double)IMAGE_CLAMP)/((double)width)));
                     width = IMAGE_CLAMP;
                 }
             } else {
-                width = (int) Math.ceil(width * (((double)IMAGE_CLAMP)/((double)height)));
-                height = IMAGE_CLAMP;                
+                if (height > IMAGE_CLAMP) {
+                    width = (int) Math.ceil(width * (((double)IMAGE_CLAMP)/((double)height)));
+                    height = IMAGE_CLAMP;                
+                }
             }
             attrs.clear();
             attrs.addAttribute("src", src);
-            attrs.addAttribute("width", Integer.toString(width));
-            attrs.addAttribute("height", Integer.toString(height));
+            if (width != -1) {
+                attrs.addAttribute("width", Integer.toString(width));
+                attrs.addAttribute("height", Integer.toString(height));
+            }
             this.emitter.startElement("img", attrs);
             this.emitter.endElement("img");            
         }
@@ -478,6 +510,8 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         this.emitter.startElement("h3");               
         this.emitter.characters(heading);
         this.emitter.endElement("h3");               
+        
+        treeParser.parse(instruction);
         
         this.emitter.startElementWithClass("table", "imagereview");     
         this.emitter.startElement("colgroup"); 

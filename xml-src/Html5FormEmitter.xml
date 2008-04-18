@@ -14,7 +14,14 @@
 					></th
 					><td><?SaxCompiler-code t.emitDocField(); ?></td
 				></tr
-				><?SaxCompiler-code t.maybeEmitCharsetField(); t.maybeEmitNsfilterField(); ?><tr title="Display the markup source of the input document."
+				><?SaxCompiler-code t.maybeEmitCharsetField(); t.maybeEmitNsfilterField(); ?><tr title="Display a report about the textual alternatives for images."
+					><th></th
+					><td
+						><label for='showimagereport'><?SaxCompiler-code t.emitShowImageReportField(); 
+						?> Show Image Report</label
+					></td
+				></tr
+				><tr title="Display the markup source of the input document."
 					><th></th
 					><td
 						><label for='showsource'><?SaxCompiler-code t.emitShowSourceField(); 

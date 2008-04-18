@@ -54,6 +54,7 @@ import nu.validator.source.SourceHandler;
 import nu.validator.spec.EmptySpec;
 import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5AttributeDatatypeBuilder;
+import nu.validator.spec.html5.ImageReportAdviceBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.XhtmlSaxEmitter;
@@ -105,10 +106,29 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
     
+    final static DocumentFragment IMAGE_REPORT_GENERAL;
+    
+    private final static DocumentFragment NO_ALT_NO_LINK_ADVICE;
+
+    private final static DocumentFragment NO_ALT_LINK_ADVICE;
+
+    private final static DocumentFragment EMPTY_ALT_ADVICE;
+
+    private final static DocumentFragment HAS_ALT_ADVICE;
+
+    
     static {
-        InputSource in = new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"));
         try {
+            InputSource in = new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"));
             HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions(in));
+            
+            in = new InputSource(System.getProperty("nu.validator.spec.alt-advice", "http://wiki.whatwg.org/wiki/Validator.nu_alt_advice"));
+            List<DocumentFragment> list = ImageReportAdviceBuilder.parseAltAdvice(in);
+            IMAGE_REPORT_GENERAL = list.get(0);
+            NO_ALT_NO_LINK_ADVICE = list.get(1);
+            NO_ALT_LINK_ADVICE = list.get(2);
+            EMPTY_ALT_ADVICE = list.get(3);
+            HAS_ALT_ADVICE = list.get(4);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SAXException e) {
@@ -176,7 +196,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final char[] NO_ALT_NO_LINK_HEADING = "No textual alternative available, not linked".toCharArray();
 
-    private static final char[] NO_ALT_INK_HEADING = "No textual alternative available, image linked".toCharArray();
+    private static final char[] NO_ALT_LINK_HEADING = "No textual alternative available, image linked".toCharArray();
 
     private static final char[] EMPTY_ALT = "Omitted from non-graphical presentation".toCharArray();
 
@@ -459,10 +479,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             }
         }
         
-        emitImageList(imageReviewHandler, noAltLink, NO_ALT_INK_HEADING, null, false);
-        emitImageList(imageReviewHandler, noAltNoLink, NO_ALT_NO_LINK_HEADING, null, false);
-        emitImageList(imageReviewHandler, emptyAlt, EMPTY_ALT, null, false);
-        emitImageList(imageReviewHandler, hasAlt, HAS_ALT, null, true);
+        emitImageList(imageReviewHandler, noAltLink, NO_ALT_LINK_HEADING, NO_ALT_LINK_ADVICE, false);
+        emitImageList(imageReviewHandler, noAltNoLink, NO_ALT_NO_LINK_HEADING, NO_ALT_NO_LINK_ADVICE, false);
+        emitImageList(imageReviewHandler, emptyAlt, EMPTY_ALT, EMPTY_ALT_ADVICE, false);
+        emitImageList(imageReviewHandler, hasAlt, HAS_ALT, HAS_ALT_ADVICE, true);
     }
 
     private void emitImageList(ImageReviewHandler imageReviewHandler,

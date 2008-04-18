@@ -135,4 +135,13 @@ public class Image implements Locator {
     public String getSystemId() {
         return systemId;
     }
+
+    /**
+     * Returns the rtl.
+     * 
+     * @return the rtl
+     */
+    public boolean isRtl() {
+        return rtl;
+    }
 }
