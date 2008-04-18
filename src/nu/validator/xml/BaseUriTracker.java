@@ -173,17 +173,20 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
 
         Node curr = peek();
         URI base = curr.currentAbsolute;
-        if (lang == null) {
+        if (!langSpecified) {
             lang = curr.lang;
         }
         boolean rtl;
         switch (dir) {
             case RTL:
                 rtl = true;
+                break;
             case LTR:
                 rtl = false;
+                break;
             default:
                 rtl = curr.rtl;
+                break;
         }
 
         if (relative == null) {
@@ -257,8 +260,8 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
             return;
         }
 
+        int i = 0;
         for (Node node : stack) {
-            int i = 0;
             if (i == 0) {
                 // nop
             } else if (i == 1) {
