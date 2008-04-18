@@ -250,7 +250,7 @@ def dependencyJarPaths():
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["html5-datatypes"]))
+                              + jarNamesToPaths(["html5-datatypes", "onvdl-whattf"]))
   buildModule(
     os.path.join(buildRoot, "util"), 
     "io-xml-util", 
