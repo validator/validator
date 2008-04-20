@@ -1073,12 +1073,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 v = combineValidatorByUrl(v, url);
             }
         }
-        if (imageCollector != null) {
-            if (v == null) {
-                v = imageCollector;
-            } else {
-                v = new CombineValidator(imageCollector, v);
-            }
+        if (imageCollector != null && v != null) {
+            v = new CombineValidator(imageCollector, v);
         }
         return v;
     }
