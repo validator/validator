@@ -1080,24 +1080,24 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     /**
-     * @param validator
+     * @param val
      * @param url
      * @return
      * @throws SAXException
      * @throws IOException
      * @throws IncorrectSchemaException
      */
-    private Validator combineValidatorByUrl(Validator validator, String url)
+    private Validator combineValidatorByUrl(Validator val, String url)
             throws SAXException, IOException, IncorrectSchemaException {
         if (!"".equals(url)) {
             Validator v = validatorByUrl(url);
-            if (validator == null) {
-                validator = v;
+            if (val == null) {
+                val = v;
             } else {
-                validator = new CombineValidator(v, validator);
+                val = new CombineValidator(v, val);
             }
         }
-        return validator;
+        return val;
     }
 
     /**
