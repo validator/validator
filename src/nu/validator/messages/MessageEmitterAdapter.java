@@ -226,6 +226,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final boolean showSource;
     
     private final ImageCollector imageCollector;
+    
+    private final int lineOffset;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
     
@@ -263,13 +265,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
     
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector,
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector, int lineOffset,
             MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
         this.emitter = messageEmitter;
         this.exactErrorHandler = new ExactErrorHandler(this);
         this.showSource = showSource;
+        this.lineOffset = lineOffset;
         this.imageCollector = imageCollector;
     }
 
@@ -457,7 +460,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         
         if (showSource) {
-            SourceHandler sourceHandler = emitter.startFullSource();
+            SourceHandler sourceHandler = emitter.startFullSource(lineOffset);
             if (sourceHandler != null) {
                 sourceCode.emitSource(sourceHandler);
             }
@@ -570,7 +573,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             return;
         }
         Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
-        emitter.startMessage(type, null, rangeStart.getLine() + 1,
+        startMessage(type, null, rangeStart.getLine() + 1,
                 rangeStart.getColumn() + 1, oneBasedLine, oneBasedColumn, false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
@@ -579,12 +582,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         emitter.endSource();
         elaboration(message);
-        emitter.endMessage();
+        endMessage();
     }
 
     private void messageWithExact(MessageType type, Exception message,
             int oneBasedLine, int oneBasedColumn) throws SAXException {
-        emitter.startMessage(type, null, oneBasedLine, oneBasedColumn,
+        startMessage(type, null, oneBasedLine, oneBasedColumn,
                 oneBasedLine, oneBasedColumn, true);
         messageText(message);
         Location location = sourceCode.newLocatorLocation(oneBasedLine,
@@ -599,7 +602,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             sourceCode.rememberExactError(location);
         }
         elaboration(message);
-        emitter.endMessage();
+        endMessage();
     }
 
     private void messageWithLine(MessageType type, Exception message,
@@ -607,7 +610,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (!sourceCode.isWithinKnownSource(oneBasedLine)) {
             throw new RuntimeException("Bug. Line out of range!");
         }
-        emitter.startMessage(type, null, oneBasedLine, -1, oneBasedLine, -1,
+        startMessage(type, null, oneBasedLine, -1, oneBasedLine, -1,
                 false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
@@ -616,17 +619,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         emitter.endSource();
         elaboration(message);
-        emitter.endMessage();
+        endMessage();
     }
 
     private void messageWithoutExtract(MessageType type, Exception message,
             String systemId, int oneBasedLine, int oneBasedColumn)
             throws SAXException {
-        emitter.startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
+        startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
                 oneBasedColumn, oneBasedLine, oneBasedColumn, false);
         messageText(message);
         elaboration(message);
-        emitter.endMessage();
+        endMessage();
     }
 
     /**
@@ -1129,5 +1132,33 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     public void setErrorsOnly(boolean errorsOnly) {
         this.errorsOnly = errorsOnly;
+    }
+
+    /**
+     * @throws SAXException
+     * @see nu.validator.messages.MessageEmitter#endMessage()
+     */
+    public void endMessage() throws SAXException {
+        emitter.endMessage();
+    }
+
+    /**
+     * @param type
+     * @param systemId
+     * @param oneBasedFirstLine
+     * @param oneBasedFirstColumn
+     * @param oneBasedLastLine
+     * @param oneBasedLastColumn
+     * @param exact
+     * @throws SAXException
+     * @see nu.validator.messages.MessageEmitter#startMessage(nu.validator.messages.types.MessageType, java.lang.String, int, int, int, int, boolean)
+     */
+    public void startMessage(MessageType type, String systemId,
+            int oneBasedFirstLine, int oneBasedFirstColumn,
+            int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
+            throws SAXException {
+        emitter.startMessage(type, systemId, (oneBasedFirstLine == -1) ? -1 : oneBasedFirstLine + lineOffset,
+                oneBasedFirstColumn, (oneBasedLastLine == -1) ? -1 : oneBasedLastLine + lineOffset, oneBasedLastColumn,
+                exact);
     }
 }

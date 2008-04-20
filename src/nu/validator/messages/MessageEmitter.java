@@ -74,7 +74,7 @@ public abstract class MessageEmitter {
 
     }
 
-    public SourceHandler startFullSource() throws SAXException {
+    public SourceHandler startFullSource(int lineOffset) throws SAXException {
         return null;
     }
 

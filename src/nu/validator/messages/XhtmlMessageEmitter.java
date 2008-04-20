@@ -344,10 +344,10 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startFullSource()
+     * @see nu.validator.messages.MessageEmitter#startFullSource(int)
      */
     @Override
-    public SourceHandler startFullSource() throws SAXException {
+    public SourceHandler startFullSource(int lineOffset) throws SAXException {
         maybeCloseList();
         
         attrs.clear();
@@ -356,7 +356,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
         this.emitter.characters(SOURCE_CODE);
         this.emitter.endElement("h2");
         
-        return new XhtmlSourceHandler(emitter);
+        return new XhtmlSourceHandler(emitter, lineOffset);
     }
 
     /**

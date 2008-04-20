@@ -625,6 +625,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         boolean asciiQuotes = (request.getParameter("asciiquotes") != null);
         
+        int lineOffset = 0;
+        String lineOffsetStr = request.getParameter("lineoffset");
+        if (lineOffsetStr != null) {
+            try {
+                lineOffset = Integer.parseInt(lineOffsetStr);
+            } catch (NumberFormatException e) {
+                
+            }
+        }
+        
         try {
             if (outputFormat == OutputFormat.HTML
                     || outputFormat == OutputFormat.XHTML) {
@@ -641,24 +651,24 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
                 errorHandler = new MessageEmitterAdapter(sourceCode,
-                        showSource, imageCollector, new XhtmlMessageEmitter(contentHandler));
+                        showSource, imageCollector, lineOffset, new XhtmlMessageEmitter(contentHandler));
                 PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, new TextMessageEmitter(out, asciiQuotes));
+                            showSource, null, lineOffset, new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, new GnuMessageEmitter(out, asciiQuotes));
+                            showSource, null, lineOffset, new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
                     Serializer ser = SerializerFactory.getSerializer(props);
                     ser.setOutputStream(out);
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, new XmlMessageEmitter(
+                            showSource, null, lineOffset, new XmlMessageEmitter(
                                     new ForbiddenCharacterFilter(
                                             ser.asContentHandler())));
                 } else if (outputFormat == OutputFormat.JSON) {
@@ -668,7 +678,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         response.setContentType("application/javascript");
                     }
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, new JsonMessageEmitter(
+                            showSource, null, lineOffset, new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
                 } else {

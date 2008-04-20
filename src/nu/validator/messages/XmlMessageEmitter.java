@@ -130,7 +130,7 @@ public class XmlMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startFullSource()
      */
     @Override
-    public SourceHandler startFullSource() throws SAXException {
+    public SourceHandler startFullSource(int lineOffset) throws SAXException {
         return new XmlSourceHandler(emitter);
     }
 

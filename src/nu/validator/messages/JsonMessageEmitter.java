@@ -141,7 +141,7 @@ public class JsonMessageEmitter extends MessageEmitter {
      * @see nu.validator.messages.MessageEmitter#startFullSource()
      */
     @Override
-    public SourceHandler startFullSource() throws SAXException {
+    public SourceHandler startFullSource(int lineOffset) throws SAXException {
         maybeCloseArray();
         handler.key("source");
         return new JsonSourceHandler(handler);

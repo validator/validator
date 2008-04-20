@@ -45,6 +45,8 @@ public class XhtmlSourceHandler implements SourceHandler {
     
     private final XhtmlSaxEmitter emitter;
     
+    private final int lineOffset;
+    
     private boolean listOpen;
 
     private boolean lineOpen;
@@ -62,8 +64,9 @@ public class XhtmlSourceHandler implements SourceHandler {
     /**
      * @param emitter
      */
-    public XhtmlSourceHandler(final XhtmlSaxEmitter emitter) {
+    public XhtmlSourceHandler(XhtmlSaxEmitter emitter, int lineOffset) {
         this.emitter = emitter;
+        this.lineOffset = lineOffset;
     }
     
     public void characters(char[] ch, int start, int length)
@@ -77,13 +80,18 @@ public class XhtmlSourceHandler implements SourceHandler {
     private void maybeOpen() throws SAXException {
         assert !(lineOpen && !listOpen);
         if (!listOpen) {
-            emitter.startElementWithClass("ol", "source");
+            attrs.clear();
+            attrs.addAttribute("class", "source");
+            if (lineOffset != 0) {
+                attrs.addAttribute("start", Integer.toString(1 + lineOffset));                
+            }
+            emitter.startElement("ol", attrs);
             listOpen = true;
         }
         if (!lineOpen) {
             lineNumber++;
             attrs.clear();
-            attrs.addAttribute("id", "l" + lineNumber);
+            attrs.addAttribute("id", "l" + (lineNumber + lineOffset));
             if (oneBasedLineErrors != null && oneBasedLineErrors.contains(lineNumber)) {
                 attrs.addAttribute("class", "b");
             }
@@ -147,7 +155,7 @@ public class XhtmlSourceHandler implements SourceHandler {
         assert !charOpen;
         assert lineNumber == oneBasedLine;
         attrs.clear();
-        attrs.addAttribute("id", "cl" + oneBasedLine + "c" + oneBasedColumn);
+        attrs.addAttribute("id", "cl" + (oneBasedLine + lineOffset) + "c" + oneBasedColumn);
         emitter.startElement("b", attrs);
         charOpen = true;
     }
@@ -156,7 +164,7 @@ public class XhtmlSourceHandler implements SourceHandler {
             throws SAXException {
         maybeOpen();
         assert rangeOpen == null;
-        rangeOpen = "l" + oneBasedLine + "c" + oneBasedColumn;
+        rangeOpen = "l" + (oneBasedLine + lineOffset) + "c" + oneBasedColumn;
         attrs.clear();
         attrs.addAttribute("id", rangeOpen);
         attrs.addAttribute("class", rangeOpen);
