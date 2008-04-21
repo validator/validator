@@ -311,7 +311,7 @@ namespace local = ""
 			}
 		area.attrs.target =
 			attribute target {
-				common.data.browsingcontext
+				common.data.browsing-context-or-keyword
 			}
 		area.attrs.ping =
 			attribute ping {

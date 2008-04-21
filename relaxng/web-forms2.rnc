@@ -47,7 +47,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	common-form.attrs.target = 
 		attribute target {
-			common.data.browsingcontext
+			common.data.browsing-context-or-keyword
 		}
 
 	common-form.attrs.template = 

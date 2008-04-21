@@ -205,12 +205,15 @@ common.attrs.other =
 	common.data.character = 
 		string #FIXME
 		
-	common.data.browsingcontext =
+	common.data.browsing-context =
 		w:browsing-context
+
+	common.data.browsing-context-or-keyword =
+		w:browsing-context-or-keyword
 #		xsd:string {
 #			pattern = "()|([^_].*)|(_[bB][lL][aA][nN][kK])|(_[sS][eE][lL][fF])|(_[pP][aA][rR][eE][nN][tT])|(_[tT][oO][pP])"
 #		}
-		
+
 
 ## IDs and IDREFs
 

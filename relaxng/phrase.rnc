@@ -27,7 +27,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		a.attrs.target =
 			attribute target {
-				common.data.browsingcontext
+				common.data.browsing-context-or-keyword
 			}
 		a.attrs.rel =
 			attribute rel {

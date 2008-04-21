@@ -77,7 +77,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 	base.attrs.target =
 		attribute target {
-			common.data.browsingcontext
+			common.data.browsing-context-or-keyword
 		}
 	base.inner =
 		( empty )
