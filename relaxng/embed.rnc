@@ -168,6 +168,7 @@ namespace local = ""
 		&	object.attrs.height?
 		&	object.attrs.width?
 		&	object.attrs.usemap?
+		&	object.attrs.name?
 		&	common.attrs.aria?
 		)
 		object.attrs.data =
@@ -205,6 +206,10 @@ namespace local = ""
 		object.attrs.usemap =
 			attribute usemap {
 				common.data.hashed-idref
+			}
+		object.attrs.name =
+			attribute name {
+				common.data.browsing-context
 			}
 	object.inner.prose =
 		(	param.elem*
@@ -247,6 +252,7 @@ namespace local = ""
 	iframe.attrs =
 		(	common.attrs
 		&	iframe.attrs.src?
+		&	iframe.attrs.name?
 #		&	iframe.attrs.width?
 #		&	iframe.attrs.height?
 		&	(	common.attrs.aria
@@ -256,6 +262,10 @@ namespace local = ""
 		iframe.attrs.src =
 			attribute src {
 				common.data.uri
+			}
+		iframe.attrs.name =
+			attribute name {
+				common.data.browsing-context
 			}
 #		iframe.attrs.height =
 #			attribute height {
