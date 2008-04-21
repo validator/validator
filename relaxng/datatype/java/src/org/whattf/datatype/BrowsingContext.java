@@ -24,17 +24,17 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class BrowsingContextOrKeyword extends AbstractDatatype {
+public class BrowsingContext extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final BrowsingContextOrKeyword THE_INSTANCE = new BrowsingContextOrKeyword();
+    public static final BrowsingContext THE_INSTANCE = new BrowsingContext();
 
     /**
      * 
      */
-    private BrowsingContextOrKeyword() {
+    private BrowsingContext() {
         super();
     }
 
@@ -44,10 +44,7 @@ public class BrowsingContextOrKeyword extends AbstractDatatype {
             return;
         }
         if (literal.charAt(0) == '_') {
-            String kw = toAsciiLowerCase(literal.toString().substring(1));
-            if (!("blank".equals(kw) || "self".equals(kw) || "top".equals(kw) || "parent".equals(kw))) {
-                throw newDatatypeException("Reserved keyword ", kw, " used.");
-            }
+            throw newDatatypeException("Browsing context name started with the underscore.");
         } else {
             return;
         }
@@ -55,7 +52,7 @@ public class BrowsingContextOrKeyword extends AbstractDatatype {
 
     @Override
     public String getName() {
-        return "browsing context name or keyword";
+        return "browsing context name";
     }
 
 }
