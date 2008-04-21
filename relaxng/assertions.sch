@@ -500,6 +500,17 @@
 		</rule>
 	</pattern>
 
+<!-- required attributes - - - - - - - - - - - - - - - - - - - - - -->
+
+	<pattern name='title on abbr'>
+		<rule context='h:abbr[not(@title)]'>
+			<report test='true()'>
+				A &#x201C;abbr&#x201D; must have a 
+				&#x201C;title&#x201D; attribute.
+			</report>
+		</rule>
+	</pattern>
+
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	
 	<!-- Only one definition per term per document' -->
