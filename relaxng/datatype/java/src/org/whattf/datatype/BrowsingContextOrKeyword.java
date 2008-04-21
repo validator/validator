@@ -24,17 +24,17 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class BrowsingContext extends AbstractDatatype {
+public class BrowsingContextOrKeyword extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final BrowsingContext THE_INSTANCE = new BrowsingContext();
+    public static final BrowsingContextOrKeyword THE_INSTANCE = new BrowsingContextOrKeyword();
 
     /**
      * 
      */
-    private BrowsingContext() {
+    private BrowsingContextOrKeyword() {
         super();
     }
 
