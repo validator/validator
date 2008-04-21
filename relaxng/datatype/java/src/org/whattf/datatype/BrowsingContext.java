@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -45,7 +45,7 @@ public class BrowsingContext extends AbstractDatatype {
         }
         if (literal.charAt(0) == '_') {
             String kw = toAsciiLowerCase(literal.toString().substring(1));
-            if (!("self".equals(kw) || "top".equals(kw) || "parent".equals(kw))) {
+            if (!("blank".equals(kw) || "self".equals(kw) || "top".equals(kw) || "parent".equals(kw))) {
                 throw newDatatypeException("Browsing context name started with the underscore and used a reserved keyword ", kw, ".");
             }
         } else {
