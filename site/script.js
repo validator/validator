@@ -32,9 +32,9 @@ var dynamicStyle = null
 var prevHash = null
 var hasTextContent = (createHtmlElement('code').textContent != undefined)
 
-var linePattern = /^#l[0-9]+$/
-var rangePattern = /^#l[0-9]+c[0-9]+$/
-var exactPattern = /^#cl[0-9]+c[0-9]+$/
+var linePattern = /^#l-?[0-9]+$/
+var rangePattern = /^#l-?[0-9]+c[0-9]+$/
+var exactPattern = /^#cl-?[0-9]+c[0-9]+$/
 
 function boot() {
     schemaChanged()
@@ -42,7 +42,7 @@ function boot() {
     installHandlers()
 }
 
-function reboot(){
+function reboot() {
 	boot()
     initFieldHolders()
 	installDynamicStyle()
@@ -74,7 +74,7 @@ function installHandlers() {
 	}
 }
 
-function initFieldHolders(){
+function initFieldHolders() {
     if (document.forms[0].className == 'simple') {
         return
     }
@@ -107,7 +107,7 @@ function initFieldHolders(){
         modeSelect.appendChild(createOption('Address', ''))
         modeSelect.appendChild(createOption('File Upload', 'file'))
         modeSelect.appendChild(createOption('Text Field', 'textarea'))
-        modeSelect.onchange = function(){
+        modeSelect.onchange = function() {
             if (this.value == 'file') {
                 installFileUpload()
             }
@@ -123,7 +123,7 @@ function initFieldHolders(){
     }
 }
 
-function createOption(text, value){
+function createOption(text, value) {
     var rv = createHtmlElement('option')
     rv.value = value
     var tn = document.createTextNode(text)
@@ -131,7 +131,7 @@ function createOption(text, value){
     return rv
 }
 
-function schemaChanged(){
+function schemaChanged() {
 	var input = document.getElementById("schema")
 	var select = document.getElementById("preset")
 	if (input) {
@@ -152,7 +152,7 @@ function schemaChanged(){
 	}
 }
 
-function presetChanged(){
+function presetChanged() {
 	var input = document.getElementById("schema")
 	var select = document.getElementById("preset")
 	if (input && select) {
@@ -161,7 +161,7 @@ function presetChanged(){
     toggleParsers(select.value)
 }
 
-function toggleParsers(newValue){
+function toggleParsers(newValue) {
 	var preset = document.getElementById("preset")
 	if (preset) {
 		if (isHtmlCompatiblePreset(newValue)) {
@@ -198,11 +198,11 @@ function toggleParsers(newValue){
 	}
 }
 
-function isHtmlParserValue(parser){
+function isHtmlParserValue(parser) {
     return (parser.indexOf("html") == 0)
 }
 
-function isHtmlCompatiblePreset(preset){
+function isHtmlCompatiblePreset(preset) {
     return (preset == "" ||
     preset.indexOf("http://s.validator.nu/xhtml10/xhtml-basic.rnc") == 0 ||
     preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
@@ -212,7 +212,7 @@ function isHtmlCompatiblePreset(preset){
     preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0)
 }
 
-function parserChanged(){
+function parserChanged() {
 	var parser = document.getElementById("parser")
 	if (parser) {
 		if (isHtmlParserValue(parser.value)) {
@@ -246,7 +246,7 @@ function parserChanged(){
 	}
 }
 
-function formSubmission(){
+function formSubmission() {
 	if (document.getElementsByTagName) {
 		var form = document.getElementsByTagName("form")[0]
 		if (form.checkValidity) {
@@ -266,7 +266,21 @@ function formSubmission(){
 	return true
 }
 
-function maybeMoveDocumentRowDown(){
+function undoFormSubmission() {
+	enableById("submit")
+	enableById("preset")
+	enableById("doc")
+	enableById("parser")
+	enableById("schema")
+	enableById("charset")
+	enableById("nsfilter")
+	maybeMoveDocumentRowUp()
+    schemaChanged()
+    parserChanged()
+	return true
+}
+
+function maybeMoveDocumentRowDown() {
     var field = document.getElementById('doc')
     if (field && field.name != 'doc') {
         var td = field.parentNode
@@ -278,14 +292,28 @@ function maybeMoveDocumentRowDown(){
     }
 }
 
-function disableById(id){
+function maybeMoveDocumentRowUp() {
+    var field = document.getElementById('doc')
+	if (field) {
+        var td = field.parentNode
+        if (td) {
+            var tr = td.parentNode
+			if (tr && tr.previousSibling) {
+				var tbody = tr.parentNode
+				tbody.insertBefore(tr, tbody.firstChild)
+			}
+        }		
+	}
+}
+
+function disableById(id) {
     var field = document.getElementById(id)
     if (field) {
         field.disabled = true
     }
 }
 
-function disableByIdIfEmptyString(id){
+function disableByIdIfEmptyString(id) {
     var field = document.getElementById(id)
     if (field) {
         if ("" == field.value) {
@@ -294,25 +322,25 @@ function disableByIdIfEmptyString(id){
     }
 }
 
-function enableById(id){
+function enableById(id) {
     var field = document.getElementById(id)
     if (field) {
         field.disabled = false
     }
 }
 
-function createHtmlElement(tagName){
+function createHtmlElement(tagName) {
     return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName)
 }
 
-function installGroupingToggle(){
+function installGroupingToggle() {
     var para = createHtmlElement('p')
     var button = createHtmlElement('input')
     button.type = 'button'
     button.value = 'Group Messages'
     para.appendChild(button)
     if (hasDuplicateMessages) {
-        button.onclick = function(){
+        button.onclick = function() {
             if (currentOl == ungroupedOl) {
                 currentOl.parentNode.replaceChild(groupedOl, currentOl)
                 currentOl = groupedOl
@@ -331,7 +359,7 @@ function installGroupingToggle(){
     currentOl.parentNode.insertBefore(para, currentOl)
 }
 
-function initGrouping(){
+function initGrouping() {
     var n = document.documentElement.lastChild.firstChild
     while (n) {
         // The line below protects IE users from a crash
@@ -350,7 +378,7 @@ function initGrouping(){
     installGroupingToggle()
 }
 
-function buildGrouped(ol){
+function buildGrouped(ol) {
     var locListByMsg = {}
     var rv = createHtmlElement('ol')
     var li = ol.firstChild
@@ -411,7 +439,7 @@ function reflow(element) {
     }
 }
 
-function installTextarea(){
+function installTextarea() {
 	var input = document.getElementById('doc')
 	if (input && textarea) {
 		var form = document.forms[0]
@@ -430,7 +458,7 @@ function installTextarea(){
     }
 }
 
-function installFileUpload(){
+function installFileUpload() {
 	var input = document.getElementById('doc')
 	if (input && fileInput) {
 		var form = document.forms[0]
@@ -445,7 +473,7 @@ function installFileUpload(){
 	}
 }
 
-function installUrlInput(){
+function installUrlInput() {
 	var input = document.getElementById('doc')
 	if (input && urlInput) {
 		var form = document.forms[0]
@@ -460,7 +488,7 @@ function installUrlInput(){
 	}
 }
 
-function copySourceIntoTextArea(){
+function copySourceIntoTextArea() {
     var strings = []
     var source = null
     var n = document.documentElement.lastChild.firstChild
@@ -534,17 +562,8 @@ if (document.getElementById) {
 		}, false)
 	}
 
-	window.onunload = function(){
-        enableById("doc")
-        enableById("submit")
-        enableById("preset")
-        enableById("parser")
-        enableById("schema")
-        enableById("charset")
-        enableById("nsfilter")
-        schemaChanged()
-        parserChanged()
-    }
+	window.onunload = undoFormSubmission
+	window.onabort = undoFormSubmission
 	
 	boot()
 }

@@ -260,6 +260,7 @@ td.img {
 img {
 	max-height: 180px;
 	max-width: 180px;
+	-ms-interpolation-mode: bicubic;
 }
 
 th.img {
