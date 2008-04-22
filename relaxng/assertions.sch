@@ -363,6 +363,23 @@
 			</assert>
 		</rule>
 
+	<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
+
+		<rule context='h:abbr[not(@title)]'>
+			<report test='true()'>
+				A &#x201C;abbr&#x201D; must have a 
+				&#x201C;title&#x201D; attribute.
+			</report>
+		</rule>
+
+
+		<rule context='h:map[not(@id)]'>
+			<report test='true()'>
+				A &#x201C;map&#x201D; must have an 
+				&#x201C;id&#x201D; attribute.
+			</report>
+		</rule>
+
 	</pattern>
 
 
@@ -500,16 +517,6 @@
 		</rule>
 	</pattern>
 
-<!-- required attributes - - - - - - - - - - - - - - - - - - - - - -->
-
-	<pattern name='title on abbr'>
-		<rule context='h:abbr[not(@title)]'>
-			<report test='true()'>
-				A &#x201C;abbr&#x201D; must have a 
-				&#x201C;title&#x201D; attribute.
-			</report>
-		</rule>
-	</pattern>
 
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	
