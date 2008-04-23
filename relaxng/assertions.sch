@@ -12,12 +12,17 @@
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
 
-
-    <!-- FIXME no nested forms in HTML-compatible docs -->
     
 	<pattern name='Triggered on mutually exclusive elements'>
 
 	<!-- Exclusions  - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<rule context='h:form'>
+			<report test='ancestor::h:form'>
+				The &#x201C;form&#x201D; element cannot contain any nested 
+				&#x201C;form&#x201D; elements.
+			</report>
+		</rule>
 
 		<rule context='h:dfn'>
 			<report test='ancestor::h:dfn'>
@@ -379,7 +384,8 @@
 			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
 							 or
 							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				Error!
+				When a &#x201C;table&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
+				must not have following siblings.
 			</assert>
 		</rule>
 
