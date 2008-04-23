@@ -365,14 +365,6 @@
 
 	<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:abbr[not(@title)]'>
-			<report test='true()'>
-				A &#x201C;abbr&#x201D; must have a 
-				&#x201C;title&#x201D; attribute.
-			</report>
-		</rule>
-
-
 		<rule context='h:map[not(@id)]'>
 			<report test='true()'>
 				A &#x201C;map&#x201D; must have an 
@@ -417,6 +409,7 @@
 				element must refer to a form control.
 			</assert>
 		</rule>
+
 	</pattern>
 
 	<pattern name='add button template must refer to a repetition template'>
