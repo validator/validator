@@ -11,7 +11,8 @@
 
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
-                
+
+
     <!-- FIXME no nested forms in HTML-compatible docs -->
     
 	<pattern name='Triggered on mutually exclusive elements'>
@@ -371,6 +372,16 @@
 				&#x201C;id&#x201D; attribute.
 			</report>
 		</rule>
+		
+	<!-- table in datagrid -->
+	
+		<rule context='h:datagrid/h:table'>
+			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
+							 or
+							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
+				Error!
+			</assert>
+		</rule>
 
 	</pattern>
 
@@ -445,7 +456,7 @@
 	<!-- FIXME form attribute -->
 	
 	<!-- FIXME output for -->
-
+	
 <!-- Form Constraints  - - - - - - - - - - - - - - - - - - - - - - -->
 
 	<pattern name='Non-multiple select can have up to one selected option'>
