@@ -33,7 +33,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.draggable =
 		attribute draggable {
-			w:string "true" | w:string "false" #REVISIT guessing here
+			w:string "true" | w:string "false"
 		}
 
 ## Irrelevant Attribute: irrelevant
