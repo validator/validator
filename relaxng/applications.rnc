@@ -63,11 +63,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		progress.attrs.value =
 			attribute value {
-				common.data.float.non-negative #REVISIT
+				common.data.float.non-negative
 			}
 		progress.attrs.max =
 			attribute max {
-				common.data.float.positive #REVISIT
+				common.data.float.positive
 			}
 	progress.inner =
 		( common.inner.phrase ) #Cannot enforce textContent format here
