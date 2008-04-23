@@ -373,8 +373,15 @@
 
 		<rule context='h:map[not(@id)]'>
 			<report test='true()'>
-				A &#x201C;map&#x201D; must have an 
+				A &#x201C;map&#x201D; element must have an 
 				&#x201C;id&#x201D; attribute.
+			</report>
+		</rule>
+
+		<rule context='h:bdo[not(@dir)]'>
+			<report test='true()'>
+				A &#x201C;bdo&#x201D; element must have an 
+				&#x201C;dir&#x201D; attribute.
 			</report>
 		</rule>
 		

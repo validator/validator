@@ -300,17 +300,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	bdo.elem =
 		element bdo { bdo.inner & bdo.attrs }
 	bdo.attrs =
-		(	common.attrs.basic
-		&	common.attrs.present
-		# List common.attrs.i18n explicitly
-		& 	common.attrs.language?
-		&	bdo.attrs.dir # required
-		&	common.attrs.other
-		)
-		bdo.attrs.dir =
-			attribute dir {
-				w:string "ltr" | w:string "rtl"
-			}
+		( common.attrs ) # dir required in Schematron
 	bdo.inner =
 		( common.inner.phrase )
 
