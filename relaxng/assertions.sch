@@ -303,6 +303,110 @@
 			</assert>
 		</rule>
 
+		<rule context='h:progress[@max and @value]'>
+			<assert test='number(@value) &lt;= number(@max)'>
+				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:progress[not(@max) and @value]'>
+			<assert test='number(@value) &lt;= 1'>
+				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</assert>
+		</rule>
+
+		<!-- 
+			min <= value <= max
+    		min <= low <= high <= max
+			min <= optimum <= max 
+		-->
+
+		<rule context='h:meter'>
+			<report test='@min and @value and not(number(@min) &lt;= number(@value))'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;value&#x201D; attribute.
+			</report>
+			<report test='not(@min) and @value and not(0 &lt;= number(@value))'>
+				The value of the &#x201C;value&#x201D; attribute must be greater than or equal to
+				zero when the &#x201C;min&#x201D; attribute is absent.
+			</report>
+			<report test='@value and @max and not(number(@value) &lt;= number(@max))'>
+				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</report>
+			<report test='@value and not(@max) and not(number(@value) &lt;= 1)'>
+				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</report>
+			<report test='@min and @max and not(number(@min) &lt;= number(@max))'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</report>
+			<report test='not(@min) and @max and not(0 &lt;= number(@max))'>
+				The value of the &#x201C;max&#x201D; attribute must be greater than or equal to
+				zero when the &#x201C;min&#x201D; attribute is absent.
+			</report>
+			<report test='@min and not(@max) and not(number(@min) &lt;= 1)'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</report>
+			<report test='@min and @low and not(number(@min) &lt;= number(@low))'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;low&#x201D; attribute.
+			</report>
+			<report test='not(@min) and @low and not(0 &lt;= number(@low))'>
+				The value of the &#x201C;low&#x201D; attribute must be greater than or equal to
+				zero when the &#x201C;min&#x201D; attribute is absent.
+			</report>
+			<report test='@min and @high and not(number(@min) &lt;= number(@high))'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;high&#x201D; attribute.
+			</report>
+			<report test='not(@min) and @high and not(0 &lt;= number(@high))'>
+				The value of the &#x201C;high&#x201D; attribute must be greater than or equal to
+				zero when the &#x201C;min&#x201D; attribute is absent.
+			</report>
+			<report test='@low and @high and not(number(@low) &lt;= number(@high))'>
+				The value of the  &#x201C;low&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;high&#x201D; attribute.
+			</report>
+			<report test='@high and @max and not(number(@high) &lt;= number(@max))'>
+				The value of the  &#x201C;high&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</report>
+			<report test='@high and not(@max) and not(number(@high) &lt;= 1)'>
+				The value of the  &#x201C;high&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</report>
+			<report test='@low and @max and not(number(@low) &lt;= number(@max))'>
+				The value of the  &#x201C;low&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</report>
+			<report test='@low and not(@max) and not(number(@low) &lt;= 1)'>
+				The value of the  &#x201C;low&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</report>
+			<report test='@min and @optimum and not(number(@min) &lt;= number(@optimum))'>
+				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;optimum&#x201D; attribute.
+			</report>
+			<report test='not(@min) and @optimum and not(0 &lt;= number(@optimum))'>
+				The value of the &#x201C;optimum&#x201D; attribute must be greater than or equal to
+				zero when the &#x201C;min&#x201D; attribute is absent.
+			</report>
+			<report test='@optimum and @max and not(number(@optimum) &lt;= number(@max))'>
+				The value of the  &#x201C;optimum&#x201D; attribute must be less than or equal to
+				the value of the &#x201C;max&#x201D; attribute.
+			</report>
+			<report test='@optimum and not(@max) and not(number(@optimum) &lt;= 1)'>
+				The value of the  &#x201C;optimum&#x201D; attribute must be less than or equal to
+				one when the &#x201C;max&#x201D; attribute is absent.
+			</report>
+		</rule>
+
+
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<rule context='h:center'>
@@ -538,14 +642,6 @@
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	
 	<!-- Only one definition per term per document' -->
-
-	
-	
-	
-	<!-- for meter enforce
-minimum value ≤ actual value ≤ maximum value 
-minimum value ≤ low boundary ≤ high boundary ≤ maximum value 
-minimum value ≤ optimum point ≤ maximum value -->
 
 <!-- ARIA containment    - - - - - - - - - - - - - - - - - - - - - -->
 
