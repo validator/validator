@@ -22,10 +22,14 @@
 
 package nu.validator.perftest;
 
+import java.io.CharArrayReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,46 +50,63 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParserPerfHarness {
 
     private final long endTime;
-    
+
     private final XMLReader reader;
-    
-    private final File testFile;
+
+    private final char[] testData;
 
     /**
      * @param endTime
      * @param reader
      * @param testFile
+     * @throws IOException
      */
-    public ParserPerfHarness(long endTime, XMLReader reader,
-            File testFile) {
+    public ParserPerfHarness(long endTime, XMLReader reader, char[] testData)
+            throws IOException {
         this.endTime = endTime;
         this.reader = reader;
-        this.testFile = testFile;
+        this.testData = testData;
     }
-        
+
+    private static char[] loadFileIntoArray(File testFile) throws IOException {
+        Reader in = new InputStreamReader(new FileInputStream(testFile),
+                "utf-8");
+        StringBuilder sb = new StringBuilder();
+        int c = 0;
+        while ((c = in.read()) != -1) {
+            sb.append((char) c);
+        }
+        char[] rv = new char[sb.length()];
+        sb.getChars(0, sb.length(), rv, 0);
+        return rv;
+    }
+
     public long runLoop() throws SAXException, IOException {
         long times = 0;
-         while (System.currentTimeMillis() < endTime) {
-//        for (int i = 0; i < 10000; i++) {
-            InputSource inputSource = new InputSource(new InputStreamReader(new FileInputStream(
-                    testFile), "utf-8"));
+        while (System.currentTimeMillis() < endTime) {
+            InputSource inputSource = new InputSource(new CharArrayReader(
+                    testData));
             inputSource.setEncoding("utf-8");
             reader.parse(inputSource);
             times++;
         }
         return times;
     }
-    
+
     /**
      * @param args
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws ParserConfigurationException 
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
      */
-    public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
+    public static void main(String[] args) throws SAXException, IOException,
+            ParserConfigurationException {
         long duration = Long.parseLong(args[0]) * 60000L;
         boolean html = "h".equals(args[1]);
         String path = args[2];
+        
+        char[] testData = loadFileIntoArray(new File(path));
+        
         XMLReader reader = null;
         if (html) {
             HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALLOW);
@@ -101,9 +122,11 @@ public class ParserPerfHarness {
             reader.setEntityResolver(new NullEntityResolver());
         }
         System.out.println("Warmup:");
-        System.out.println((new ParserPerfHarness(System.currentTimeMillis() + duration, reader, new File(path))).runLoop());
+        System.out.println((new ParserPerfHarness(System.currentTimeMillis()
+                + duration, reader, testData)).runLoop());
         System.gc();
-        System.out.println("Real");
-        System.out.println((new ParserPerfHarness(System.currentTimeMillis() + duration, reader, new File(path))).runLoop());
+        System.out.println("Real:");
+        System.out.println((new ParserPerfHarness(System.currentTimeMillis()
+                + duration, reader, testData)).runLoop());
     }
 }
