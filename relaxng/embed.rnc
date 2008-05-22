@@ -253,8 +253,8 @@ namespace local = ""
 		(	common.attrs
 		&	iframe.attrs.src?
 		&	iframe.attrs.name?
-#		&	iframe.attrs.width?
-#		&	iframe.attrs.height?
+		&	iframe.attrs.width?
+		&	iframe.attrs.height?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.region
 			)?
@@ -267,14 +267,14 @@ namespace local = ""
 			attribute name {
 				common.data.browsing-context
 			}
-#		iframe.attrs.height =
-#			attribute height {
-#				common.data.integer.positive
-#			}
-#		iframe.attrs.width =
-#			attribute width {
-#				common.data.integer.positive
-#			}
+		iframe.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		iframe.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
 	iframe.inner =
 		( text )
 
