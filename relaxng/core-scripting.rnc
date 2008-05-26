@@ -23,6 +23,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.defer?
 		&	script.attrs.async?
 		&	script.attrs.type?
+		&	script.attrs.charset?
 		)
 		script.attrs.src =
 			attribute src {
@@ -38,7 +39,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			} & v5only
 		script.attrs.type =
 			attribute type {
-				common.data.mimetype
+				common.data.mimetype # XXX without charset parameter!
+			}
+		script.attrs.charset =
+			attribute charset {
+				common.data.charset
 			}
 	script.inner.embedded =
 		( common.inner.anything )
