@@ -275,6 +275,43 @@ namespace local = ""
 			attribute width {
 				common.data.integer.positive
 			}
+		iframe.attrs.seamless =
+			attribute seamless {
+				w:string "seamless" | w:string ""
+			} & v5only
+		iframe.attrs.sandbox =
+			attribute sandbox
+				{	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				} & v5only
 	iframe.inner =
 		( text )
 
