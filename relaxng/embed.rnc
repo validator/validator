@@ -255,6 +255,8 @@ namespace local = ""
 		&	iframe.attrs.name?
 		&	iframe.attrs.width?
 		&	iframe.attrs.height?
+		&	iframe.attrs.sandbox?
+		&	iframe.attrs.seamless?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.region
 			)?
