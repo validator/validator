@@ -25,21 +25,15 @@ package nu.validator.perftest;
 import java.io.CharArrayReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 import nu.validator.htmlparser.common.XmlViolationPolicy;
-import nu.validator.htmlparser.dom.HtmlDocumentBuilder;
 import nu.validator.htmlparser.sax.HtmlParser;
-import nu.validator.saxtree.TreeBuilder;
 import nu.validator.xml.NullEntityResolver;
 
 import org.xml.sax.InputSource;
@@ -101,8 +95,8 @@ public class ParserPerfHarness {
      */
     public static void main(String[] args) throws SAXException, IOException,
             ParserConfigurationException {
-        long duration = Long.parseLong(args[0]) * 60000L;
-        boolean html = "h".equals(args[1]);
+        boolean html = "h".equals(args[0]);
+        long duration = Long.parseLong(args[1]) * 60000L;
         String path = args[2];
         
         char[] testData = loadFileIntoArray(new File(path));
