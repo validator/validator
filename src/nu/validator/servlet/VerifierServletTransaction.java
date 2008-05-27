@@ -84,6 +84,7 @@ import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlSaxEmitter;
+import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 
 import org.apache.log4j.Logger;
 import org.apache.xml.serializer.Method;
@@ -454,7 +455,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             int i = 0;
             for (Map.Entry<String, Schema> entry : schemaMap.entrySet()) {               
                 preloadedSchemaUrls[i] = entry.getKey().intern();
-                preloadedSchemas[i] = entry.getValue();
+                if (isDataAttributeDroppingSchema(entry.getKey())) {
+                    preloadedSchemas[i] = new DataAttributeDroppingSchemaWrapper(entry.getValue());
+                } else {
+                    preloadedSchemas[i] = entry.getValue();
+                }
                 i++;
             }
 
@@ -473,6 +478,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     protected static String scrub(CharSequence s) {
         return Normalizer.normalize(
                 CharacterUtil.prudentlyScrubCharacterData(s), Normalizer.NFC);
+    }
+
+    private static boolean isDataAttributeDroppingSchema(String key) {
+        return ("http://s.validator.nu/html5/html5full.rnc".equals(key) || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key) || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key) || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key));
     }
 
     private static boolean isCheckerUrl(String url) {
