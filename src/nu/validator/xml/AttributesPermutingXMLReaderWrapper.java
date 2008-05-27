@@ -110,6 +110,11 @@ public final class AttributesPermutingXMLReaderWrapper implements XMLReader,
                 wrap.pullUp("", "wrap");
                 wrap.pullUp("", "template");                
                 contentHandler.startElement(uri, localName, qName, wrap);                
+            } else if ("script" == localName && atts.getIndex("", "src") > 0) {
+                PermutingAttributesWrapper wrap = new PermutingAttributesWrapper(atts);
+                wrap.pullUp("", "src");
+                wrap.pullUp("", "template");                
+                contentHandler.startElement(uri, localName, qName, wrap);                
             } else if ("meta" == localName && atts.getIndex("", "content") < atts.getLength() - 1) {
                 PermutingAttributesWrapper wrap = new PermutingAttributesWrapper(atts);
                 wrap.pushDown("", "content");
