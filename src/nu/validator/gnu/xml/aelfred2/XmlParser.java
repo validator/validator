@@ -71,9 +71,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import nu.validator.htmlparser.impl.CharacterHandler;
-import nu.validator.htmlparser.impl.Encoding;
-import nu.validator.htmlparser.impl.NormalizationChecker;
+import nu.validator.htmlparser.common.CharacterHandler;
+import nu.validator.htmlparser.extra.NormalizationChecker;
+import nu.validator.htmlparser.io.Encoding;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
