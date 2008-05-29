@@ -30,9 +30,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import nu.validator.collections.HeadBiasedSortedSet;
-import nu.validator.collections.TailBiasedSortedSet;
-import nu.validator.htmlparser.impl.CharacterHandler;
+import nu.validator.htmlparser.common.CharacterHandler;
 import nu.validator.xml.TypedInputSource;
 
 import org.apache.log4j.Logger;
