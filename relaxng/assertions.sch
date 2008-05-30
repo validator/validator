@@ -500,6 +500,24 @@
 			</assert>
 		</rule>
 
+		<rule context='h:datagrid/h:select'>
+			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
+							 or
+							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
+				When a &#x201C;select&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
+				must not have following siblings.
+			</assert>
+		</rule>
+
+		<rule context='h:datagrid/h:datalist'>
+			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
+							 or
+							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
+				When a &#x201C;datalist&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
+				must not have following siblings.
+			</assert>
+		</rule>
+
 	</pattern>
 
 
