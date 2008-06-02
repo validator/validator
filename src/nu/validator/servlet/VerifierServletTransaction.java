@@ -1132,11 +1132,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc".equals(url)
+        if ("http://s.validator.nu/html5/html5full-aria.rnc".equals(url)
+                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(url)
                 || "http://s.validator.nu/html5/html5full.rnc".equals(url)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
-                || "http://syntax.whattf.org/relaxng/xhtml5full-xhtml.rnc".equals(url)
-                || "http://syntax.whattf.org/relaxng/html5full.rnc".equals(url)) {
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = resolveSchema(url, jingPropertyMap);
