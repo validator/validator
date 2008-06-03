@@ -268,7 +268,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:input[@type!="hidden"]'>
+		<rule context='h:input[not(@type="hidden")]'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;input&#x201D; cannot 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -546,7 +546,7 @@
 
 	<pattern name='for on label must refer to a form control'>
 		<rule context='h:label[@for]'>
-			<assert test='id(@for)/self::h:input or 
+			<assert test='id(@for)/self::h:input[not(@type="hidden")] or 
 			              id(@for)/self::h:textarea or 
 			              id(@for)/self::h:select or 
 			              id(@for)/self::h:button or 
