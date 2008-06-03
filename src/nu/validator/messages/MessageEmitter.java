@@ -90,7 +90,7 @@ public abstract class MessageEmitter {
         
     }
 
-    public ImageReviewHandler startImageReview(DocumentFragment instruction) throws SAXException {
+    public ImageReviewHandler startImageReview(DocumentFragment instruction, boolean fatal) throws SAXException {
         return null;
     }
 

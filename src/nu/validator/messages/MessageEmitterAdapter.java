@@ -118,6 +118,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final static DocumentFragment HAS_ALT_ADVICE;
 
+    private final static DocumentFragment IMAGE_REPORT_FATAL;
     
     static {
         try {
@@ -132,6 +133,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             EMPTY_ALT_ADVICE = list.get(3);
             HAS_ALT_ADVICE = list.get(4);
             IMAGE_REPORT_EMPTY = list.get(5);
+            IMAGE_REPORT_FATAL = list.get(6);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SAXException e) {
@@ -448,12 +450,16 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
         if (imageCollector != null) {
             DocumentFragment instruction = IMAGE_REPORT_GENERAL;
-            if (imageCollector.isEmpty()) {
+            boolean fatal = false;
+            if (getFatalErrors() > 0) {
+                fatal = true;
+                instruction = IMAGE_REPORT_FATAL;            
+            } else if (imageCollector.isEmpty()) {
                 instruction = IMAGE_REPORT_EMPTY;
             }
             
-            ImageReviewHandler imageReviewHandler = emitter.startImageReview(instruction);
-            if (imageReviewHandler != null) {
+            ImageReviewHandler imageReviewHandler = emitter.startImageReview(instruction, fatal);
+            if (imageReviewHandler != null && !fatal) {
                 emitImageReview(imageReviewHandler);
             }
             emitter.endImageReview();
