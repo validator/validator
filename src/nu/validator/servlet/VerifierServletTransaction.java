@@ -225,11 +225,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     
     private static final String[] KNOWN_CONTENT_TYPES = {
             "application/atom+xml", "application/docbook+xml",
-            "application/xhtml+xml", "application/xv+xml" };
+            "application/xhtml+xml", "application/xv+xml", "image/svg+xml" };
 
     private static final String[] NAMESPACES_FOR_KNOWN_CONTENT_TYPES = {
             "http://www.w3.org/2005/Atom", "http://docbook.org/ns/docbook",
-            "http://www.w3.org/1999/xhtml", "http://www.w3.org/1999/xhtml" };
+            "http://www.w3.org/1999/xhtml", "http://www.w3.org/1999/xhtml",
+            "http://www.w3.org/2000/svg" };
 
     private static final String[] ALL_CHECKERS = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
