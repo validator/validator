@@ -205,7 +205,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		meta.http-equiv.attrs.content.refresh =
 			attribute content { 
-				string # FIXME datatype
+				common.data.refresh
 			}
 		meta.http-equiv.attrs.content.default-style =
 			attribute content {

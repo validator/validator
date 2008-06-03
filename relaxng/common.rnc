@@ -313,6 +313,11 @@ common.attrs.other =
 	common.data.meta-charset =
 		w:meta-charset
 
+## Refresh
+
+	common.data.refresh =
+		w:refresh
+
 ## Media Queries
 
 	common.data.mediaquery =
