@@ -9,7 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 # nn for pixels or nn% for percentage length
 length.datatype =
     # modified - pattern: nn for pixels or nn% for percentage length
-    xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)" }
+    # Use HTML5 datatypes. -- hsivonen
+    w:integer-non-negative | xsd:string { pattern = "[0-9]+%" }
 # space-separated list of link types
 link-types.datatype = nmtokens.datatype
 # single or comma-separated list of media descriptors
@@ -52,7 +53,7 @@ media-desc.datatype =
 # pixel, percentage, or relative
 multilength.datatype =
     # modified - pattern: pixel, percentage, or relative
-    xsd:string { pattern = "[\-+]?(\d+|\d+(\.\d+)?%)|[1-9]?(\d+)?\*" }
+    (length.datatype | xsd:string { pattern="[0-9]+\*" })
 # added - bugfix - comma-separated list of MultiLength
 multi-lengths.datatype =
     xsd:string {
@@ -66,11 +67,7 @@ number.datatype =
     w:integer-non-negative
 # added - integer between 0 and 32767
 tabindexnumber.datatype =
-    xsd:nonNegativeInteger {
-        pattern = "[0-9]+"
-        minInclusive = "0"
-        maxInclusive = "32767"
-    }
+    w:integer # Use HTML5 datatype -- hsivonen
 # integer representing length in pixels
 pixels.datatype =
     # Use HTML5 datatype -- hsivonen
@@ -88,7 +85,7 @@ character.datatype =
 # a character encoding, as per [RFC2045]
 charset.datatype = text
 # a space separated list of character encodings, as per [RFC2045]
-charsets.datatype = text
+charsets.datatype = list { w:charset+ } # Use HTML5 datatype -- hsivonen
 # media type, as per [RFC2045]
 content-type.datatype = w:mime-type # Use HTML5 datatype -- hsivonen
 # comma-separated list of media types, as per [RFC2045]
@@ -112,4 +109,4 @@ idref.datatype = w:xml-name # Use HTML5 datatype -- hsivonen
 idrefs.datatype = list { w:xml-name+ } # Use HTML5 datatype -- hsivonen
 # added - bugfix - just the reserved names may start without an alphabethic character
 target.datatype =
-    xsd:string { pattern = "_(blank|self|parent|top)|[A-Za-z].*" }
+    w:browsing-context-or-keyword # Use HTML5 datatype -- hsivonen

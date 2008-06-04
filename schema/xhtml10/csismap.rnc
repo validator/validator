@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # Client-side Image Map Module
 
 # This file is based upon the work of James Clark "Modularization of XHTML in RELAX NG"
@@ -7,7 +9,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -72,23 +74,11 @@ shape.attrib =
         attribute coords { coords.circle.datatype }))?
 # possible shape coordinates
 coords.datatype =
-    xsd:string {
-        # multiple comma separated Lenghts (pixels or percentages)
-        pattern =
-            "( )*([\-+]?(\d+|\d+(\.\d+)?%))(( )*,( )*[\-+]?(\d+|\d+(\.\d+)?%))*( )*"
-    }
+    w:polyline # Use HTML5 datatype -- hsivonen
 coords.circle.datatype =
-    xsd:string {
-        # 3 comma separated Lenghts (pixels or percentages)
-        pattern =
-            "( )*([\-+]?(\d+|\d+(\.\d+)?%)( )*,( )*){2}([\-+]?(\d+|\d+(\.\d+)?%))( )*"
-    }
+    w:circle # Use HTML5 datatype -- hsivonen
 coords.rect.datatype =
-    xsd:string {
-        # 4 comma separated Lenghts (pixels or percentages)
-        pattern =
-            "( )*([\-+]?(\d+|\d+(\.\d+)?%)( )*,( )*){3}([\-+]?(\d+|\d+(\.\d+)?%))( )*"
-    }
+    w:rectangle # Use HTML5 datatype -- hsivonen
 Inline.class |= map
 # added - for elements with both attributes attributes specified,
 # name and id attribute needs to have the same value.
