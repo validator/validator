@@ -80,8 +80,8 @@ class ValidationErrorMessage:
   def __repr__(self):
     return repr(self.toDict())
     
-  def __str__(self):
-    return "%d,%d;%d,%d: %s" % (self.first.line, 
+  def __unicode__(self):
+    return u"%d,%d;%d,%d: %s" % (self.first.line, 
                                 self.first.column, 
                                 self.last.line, 
                                 self.last.column,
@@ -201,13 +201,13 @@ class ValidatorTester:
     if len(actualErrs) == 0 and len(expectedErrs) == 0:
       return
     elif len(expectedErrs) == 0:
-      print "%s Expected no errors but saw: %s" % (uri, str(actualErrs[0]))
+      print (u"%s Expected no errors but saw: %s" % (uri, unicode(actualErrs[0]))).encode('utf-8')
     elif len(actualErrs) == 0:
-      print "%s Expected %s but saw no errors." % (uri, str(expectedErrs[0]))
+      print (u"%s Expected %s but saw no errors." % (uri, unicode(expectedErrs[0]))).encode('utf-8')
     elif expectedErrs[0].contains(actualErrs[0]):
       return
     else:
-      print "%s Expected %s but saw %s." % (uri, str(expectedErrs[0]), str(actualErrs[0]))
+      print (u"%s Expected %s but saw %s." % (uri, unicode(expectedErrs[0]), str(actualErrs[0]))).encode('utf-8')
   
   def checkAll(self):
     for uri in self.database.iterkeys():
