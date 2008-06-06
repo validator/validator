@@ -59,7 +59,7 @@ map.attlist = CommonIdRequired.attrib
 a.attlist &= shape.attrib?
 img.attlist &= usemap.attlist
 object.attlist &= usemap.attlist
-usemap.attlist = attribute usemap { idref.datatype }?
+usemap.attlist = attribute usemap { w:hashed-id-ref	}?
 shape.attrib =
     (attribute coords {
          # rect is default
