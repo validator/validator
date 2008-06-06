@@ -22,7 +22,6 @@
 
 package org.whattf.checker;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -34,9 +33,9 @@ import org.xml.sax.SAXException;
 
 public class UsemapChecker extends Checker {
 
-    private final Map<String, Locator> usemapLocationsById = new LinkedHashMap<String, Locator>();
+    private final Map<String, Locator> usemapLocationsByName = new LinkedHashMap<String, Locator>();
     
-    private final Set<String> mapIds = new HashSet<String>();
+    private final Set<String> mapNames = new HashSet<String>();
     
     private Locator locator = null;
     
@@ -50,13 +49,9 @@ public class UsemapChecker extends Checker {
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == uri) {
             if ("map" == localName) {
-                String id = atts.getValue("", "id");
-                if (id != null && !"".equals(id)) {
-                    mapIds.add(id);
-                }
-                String name = atts.getValue("", "id");
+                String name = atts.getValue("", "name");
                 if (name != null && !"".equals(name)) {
-                    mapIds.add(name);
+                    mapNames.add(name);
                 }
             } else if ("img" == localName || "object" == localName) {
                 String usemap = atts.getValue("", "usemap");
@@ -67,7 +62,7 @@ public class UsemapChecker extends Checker {
                         // the schema takes care of that.
                         if (hashIndex < usemap.length() - 1) {
                             String ref = usemap.substring(hashIndex + 1);
-                            usemapLocationsById.put(ref, new LocatorImpl(locator));
+                            usemapLocationsByName.put(ref, new LocatorImpl(locator));
                         }
                     }
                 }
@@ -80,13 +75,13 @@ public class UsemapChecker extends Checker {
      */
     @Override
     public void endDocument() throws SAXException {
-        for (Map.Entry<String, Locator> entry : usemapLocationsById.entrySet()) {
-            if (!mapIds.contains(entry.getKey())) {
-                err("The hashed ID reference in attribute \u201Cusemap\u201D referred to \u201C" + entry.getKey() + "\u201D, but there is no \u201Cmap\u201D element with that \u201Cid\u201D or \u201Cname\u201D.", entry.getValue());
+        for (Map.Entry<String, Locator> entry : usemapLocationsByName.entrySet()) {
+            if (!mapNames.contains(entry.getKey())) {
+                err("The hash-name reference in attribute \u201Cusemap\u201D referred to \u201C" + entry.getKey() + "\u201D, but there is no \u201Cmap\u201D element with a \u201Cname\u201D attribute with that value.", entry.getValue());
             }
         }
-        usemapLocationsById.clear();
-        mapIds.clear();
+        usemapLocationsByName.clear();
+        mapNames.clear();
     }
 
     /**
@@ -94,8 +89,8 @@ public class UsemapChecker extends Checker {
      */
     @Override
     public void startDocument() throws SAXException {
-        usemapLocationsById.clear();
-        mapIds.clear();
+        usemapLocationsByName.clear();
+        mapNames.clear();
     }
 
     /**
