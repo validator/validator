@@ -24,33 +24,33 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class HashedIdRef extends AbstractDatatype {
+public class HashName extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final HashedIdRef THE_INSTANCE = new HashedIdRef();
+    public static final HashName THE_INSTANCE = new HashName();
 
     /**
      * 
      */
-    private HashedIdRef() {
+    private HashName() {
         super();
     }
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {
-            throw newDatatypeException("The empty string is not a valid hashed ID reference.");
+            throw newDatatypeException("The empty string is not a valid hash-name reference.");
         } else if (literal.charAt(0) != '#') {
-            throw newDatatypeException("A hashed ID reference must start with \u201C#\u201D.");            
+            throw newDatatypeException("A hash-name reference must start with \u201C#\u201D.");            
         }
         // Other cases 
     }
 
     @Override
     public String getName() {
-        return "hashed ID reference";
+        return "hash-name reference";
     }
 
 }

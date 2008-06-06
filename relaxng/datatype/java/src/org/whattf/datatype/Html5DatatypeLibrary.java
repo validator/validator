@@ -104,8 +104,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return BrowsingContext.THE_INSTANCE;
         } else if ("browsing-context-or-keyword".equals(typeLocalName)) {
             return BrowsingContextOrKeyword.THE_INSTANCE;
-        } else if ("hashed-id-ref".equals(typeLocalName)) {
-            return HashedIdRef.THE_INSTANCE;
+        } else if ("hash-name".equals(typeLocalName)) {
+            return HashName.THE_INSTANCE;
         } else if ("integer".equals(typeLocalName)) {
             return Int.THE_INSTANCE;
         } else if ("integer-non-negative".equals(typeLocalName)) {
