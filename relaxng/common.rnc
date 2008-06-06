@@ -229,8 +229,8 @@ common.attrs.other =
 	common.data.idrefs =
 		w:IDREFS
 
-	common.data.hashed-idref =
-		w:hashed-id-ref	
+	common.data.hash-name =
+		w:hash-name	
 #		xsd:string {
 #			pattern = "#.+"
 #		}

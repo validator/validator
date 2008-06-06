@@ -40,7 +40,7 @@ namespace local = ""
 			}
 		img.attrs.usemap =
 			attribute usemap {
-				common.data.hashed-idref
+				common.data.hash-name
 			}
 		img.attrs.ismap =
 			attribute ismap {
@@ -205,7 +205,7 @@ namespace local = ""
 			}
 		object.attrs.usemap =
 			attribute usemap {
-				common.data.hashed-idref
+				common.data.hash-name
 			}
 		object.attrs.name =
 			attribute name {
