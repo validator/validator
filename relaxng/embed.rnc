@@ -327,7 +327,13 @@ namespace local = ""
 	map.elem =
 		element map { map.inner & map.attrs }
 	map.attrs =
-		( common.attrs ) # REVISIT make id required in Schematron
+		(	common.attrs
+		&	map.attrs.name
+		) # REVISIT make id required in Schematron
+		map.attrs.name =
+			attribute name {
+				common.data.name
+			}
 	map.inner =
 		( common.inner.prose )
 

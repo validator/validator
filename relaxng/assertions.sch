@@ -475,11 +475,11 @@
 
 	<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:map[not(@id)]'>
-			<report test='true()'>
-				A &#x201C;map&#x201D; element must have an 
-				&#x201C;id&#x201D; attribute.
-			</report>
+		<rule context='h:map[@id and @name]'>
+			<assert test='@id = @name'>
+				A the &#x201C;id&#x201D; attribute on a &#x201C;id&#x201D; element must have an 
+				the same value as the &#x201C;name&#x201D; attribute.
+			</assert>
 		</rule>
 
 		<rule context='h:bdo[not(@dir)]'>

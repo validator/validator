@@ -229,6 +229,9 @@ common.attrs.other =
 	common.data.idrefs =
 		w:IDREFS
 
+	common.data.name =
+		w:ID #FIXME
+
 	common.data.hash-name =
 		w:hash-name	
 #		xsd:string {
