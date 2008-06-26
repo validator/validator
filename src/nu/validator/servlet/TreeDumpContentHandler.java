@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2007 Henri Sivonen
+ * Copyright (c) 2008 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -98,13 +99,29 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         try {
             printLead();
             writer.write('<');
-            writer.write(qName);
+            if ("http://www.w3.org/1998/Math/MathML" == uri) {
+                writer.write("math ");                
+            } else if ("http://www.w3.org/2000/svg" == uri) {
+                writer.write("svg ");                                
+            }
+            writer.write(localName);
             writer.write(">\n");
             level++;
 
             TreeMap<String, String> map = new TreeMap<String, String>();
             for (int i = 0; i < atts.getLength(); i++) {
-                map.put(atts.getQName(i), atts.getValue(i));
+                String ns = atts.getURI(i);
+                String name;
+                if ("http://www.w3.org/1999/xlink" == ns) {
+                    name = "xlink " + atts.getLocalName(i);
+                } else if ("http://www.w3.org/XML/1998/namespace" == ns) {
+                    name = "xml " + atts.getLocalName(i);                    
+                } else if ("http://www.w3.org/2000/xmlns/" == ns) {
+                    name = "xmlns " + atts.getLocalName(i);                    
+                } else {
+                    name = atts.getLocalName(i);                    
+                }
+                map.put(name, atts.getValue(i));
             }
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 printLead();
@@ -135,6 +152,16 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
             printLead();
             writer.write("<!DOCTYPE ");
             writer.write(name);
+            if (publicIdentifier.length() > 0 || systemIdentifier.length() > 0) {
+                writer.write(' ');
+                writer.write('\"');
+                writer.write(publicIdentifier);
+                writer.write('\"');
+                writer.write(' ');
+                writer.write('\"');
+                writer.write(systemIdentifier);
+                writer.write('\"');
+            }
             writer.write(">\n");
         } catch (IOException e) {
             throw new SAXException(e);
