@@ -103,6 +103,8 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
                 writer.write("math ");                
             } else if ("http://www.w3.org/2000/svg" == uri) {
                 writer.write("svg ");                                
+            } else if ("http://www.w3.org/1999/xhtml" != uri) {
+                writer.write("otherns ");                                
             }
             writer.write(localName);
             writer.write(">\n");
@@ -118,8 +120,10 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
                     name = "xml " + atts.getLocalName(i);                    
                 } else if ("http://www.w3.org/2000/xmlns/" == ns) {
                     name = "xmlns " + atts.getLocalName(i);                    
-                } else {
+                } else if ("" != uri) {
                     name = atts.getLocalName(i);                    
+                } else {
+                    name = "otherns " + atts.getLocalName(i);                    
                 }
                 map.put(name, atts.getValue(i));
             }

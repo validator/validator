@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
+import nu.validator.io.BoundedInputStream;
+import nu.validator.io.StreamBoundException;
+import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
 import nu.validator.xml.TypedInputSource;
@@ -24,7 +27,10 @@ import com.hp.hpl.jena.iri.IRIFactory;
 
 public class ParseTreePrinter {
     
-    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
+    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form><hr><form enctype='multipart/form-data' method=POST><p><select id=parser name=parser><option value=xml>XML; don’t load external entities</option><option value=html5 selected>HTML5</option></select><p><textarea name=content rows=20 cols=72></textarea> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
+    
+    private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
+            "nu.validator.servlet.max-file-size", "2097152"));
     
     private final HttpServletRequest request;
 
@@ -57,7 +63,7 @@ public class ParseTreePrinter {
         String document = scrubUrl(request.getParameter("doc"));
         document = ("".equals(document)) ? null : document;
         Writer writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8");
-        if (document == null) {
+        if (document == null && methodIsGet()) {
             response.setContentType("text/html; charset=utf-8");
             writer.write(FORM_HTML);
             writer.flush();
@@ -66,14 +72,45 @@ public class ParseTreePrinter {
         } else {
             response.setContentType("text/plain; charset=utf-8");
             try {
-            PrudentHttpEntityResolver httpRes = new PrudentHttpEntityResolver(
+            PrudentHttpEntityResolver entityResolver = new PrudentHttpEntityResolver(
                     2048 * 1024, false, null);
-            httpRes.setAllowGenericXml(false);
-            httpRes.setAcceptAllKnownXmlTypes(false);
-            httpRes.setAllowHtml(true);
-            httpRes.setAllowXhtml(true);
-            TypedInputSource documentInput = (TypedInputSource) httpRes.resolveEntity(
-                    null, document);
+            entityResolver.setAllowGenericXml(false);
+            entityResolver.setAcceptAllKnownXmlTypes(false);
+            entityResolver.setAllowHtml(true);
+            entityResolver.setAllowXhtml(true);
+            TypedInputSource documentInput;
+            if (methodIsGet()) {
+                documentInput = (TypedInputSource) entityResolver.resolveEntity(
+                        null, document);
+            } else { // POST
+                String postContentType = request.getContentType();
+                if (postContentType == null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                            "Content-Type missing");
+                    return;
+                } else if (postContentType.trim().toLowerCase().startsWith(
+                        "application/x-www-form-urlencoded")) {
+                    response.sendError(
+                            HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
+                            "application/x-www-form-urlencoded not supported. Please use multipart/form-data.");
+                    return;
+                }
+                long len = request.getContentLength();
+                if (len > SIZE_LIMIT) {
+                    throw new StreamBoundException("Resource size exceeds limit.");
+                }
+                ContentTypeParser contentTypeParser = new ContentTypeParser(null, false);
+                contentTypeParser.setAllowGenericXml(false);
+                contentTypeParser.setAcceptAllKnownXmlTypes(false);
+                contentTypeParser.setAllowHtml(true);
+                contentTypeParser.setAllowXhtml(true);
+                documentInput = contentTypeParser.buildTypedInputSource(document,
+                        null, postContentType);
+                documentInput.setByteStream(len < 0 ? new BoundedInputStream(
+                        request.getInputStream(), SIZE_LIMIT, document)
+                        : request.getInputStream());
+                documentInput.setSystemId(request.getHeader("Content-Location"));
+            }
             String type = documentInput.getType();
             XMLReader parser;
             if ("text/html".equals(type)) {
@@ -121,6 +158,11 @@ public class ParseTreePrinter {
                 writer.close();
             }
         }
+    }
+
+    private boolean methodIsGet() {
+        return "GET".equals(request.getMethod())
+                || "HEAD".equals(request.getMethod());
     }
 
 }
