@@ -2,6 +2,7 @@ package nu.validator.servlet;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 
@@ -27,7 +28,7 @@ import com.hp.hpl.jena.iri.IRIFactory;
 
 public class ParseTreePrinter {
     
-    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form><hr><form enctype='multipart/form-data' method=POST><p><select id=parser name=parser><option value=xml>XML; don’t load external entities</option><option value=html5 selected>HTML5</option></select><p><textarea name=content rows=20 cols=72></textarea> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
+    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form><hr><form><p><select id=parser name=parser><option value=xml>XML; don’t load external entities</option><option value=html5 selected>HTML5</option></select><p><textarea name=content rows=20 cols=72></textarea> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
     
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
@@ -60,10 +61,12 @@ public class ParseTreePrinter {
     }
 
     public void service() throws IOException {
+        request.setCharacterEncoding("utf-8");
+        String content = null;
         String document = scrubUrl(request.getParameter("doc"));
         document = ("".equals(document)) ? null : document;
         Writer writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8");
-        if (document == null && methodIsGet()) {
+        if (document == null && methodIsGet() && (content = request.getParameter("content")) == null) {
             response.setContentType("text/html; charset=utf-8");
             writer.write(FORM_HTML);
             writer.flush();
@@ -80,8 +83,17 @@ public class ParseTreePrinter {
             entityResolver.setAllowXhtml(true);
             TypedInputSource documentInput;
             if (methodIsGet()) {
-                documentInput = (TypedInputSource) entityResolver.resolveEntity(
-                        null, document);
+                if (content == null) {
+                    documentInput = (TypedInputSource) entityResolver.resolveEntity(
+                            null, document);
+                } else {
+                    documentInput = new TypedInputSource(new StringReader(content));
+                    if ("xml".equals(request.getParameter("parser"))) {
+                        documentInput.setType("application/xhtml+xml");
+                    } else {
+                        documentInput.setType("text/html");
+                    }
+                }
             } else { // POST
                 String postContentType = request.getContentType();
                 if (postContentType == null) {
