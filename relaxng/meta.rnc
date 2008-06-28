@@ -58,7 +58,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	title.elem =
 		element title { title.inner & title.attrs }
 	title.attrs =
-		( empty )
+		( common.attrs )
 	title.inner =
 		( text )
 
