@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import nu.validator.htmlparser.common.CharacterHandler;
+import nu.validator.htmlparser.io.CharacterHandler;
 import nu.validator.xml.TypedInputSource;
 
 import org.apache.log4j.Logger;

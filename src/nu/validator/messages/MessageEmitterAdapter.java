@@ -102,6 +102,11 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         WELL_KNOWN_NAMESPACES.put("http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd", "Sodipodi".toCharArray());
         WELL_KNOWN_NAMESPACES.put("http://www.openmath.org/OpenMath", "OpenMath".toCharArray());  
         WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/", "Adobe SVG Viewer 3.0 extension".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeIllustrator/10.0/", "Adobe Illustrator 10.0".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("adobe:ns:meta/", "XMP Container".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/xap/1.0/", "XMP".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/pdf/1.3/", "Adobe PDF 1.3".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/tiff/1.0/", "Adobe TIFF".toCharArray());  
     }
     
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
