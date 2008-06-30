@@ -591,9 +591,9 @@ else:
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
     elif arg.startswith("--microsyntax="):
-      microsyntax = arg[13:]
+      microsyntax = arg[14:]
     elif arg.startswith("--stylesheet="):
-      stylesheet = arg[14:]
+      stylesheet = arg[13:]
     elif arg.startswith("--script="):
       script = arg[9:]
     elif arg.startswith("--name="):
