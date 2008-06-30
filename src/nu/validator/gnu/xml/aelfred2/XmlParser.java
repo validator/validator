@@ -71,8 +71,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import nu.validator.htmlparser.common.CharacterHandler;
 import nu.validator.htmlparser.extra.NormalizationChecker;
+import nu.validator.htmlparser.io.CharacterHandler;
 import nu.validator.htmlparser.io.Encoding;
 
 import org.xml.sax.InputSource;
