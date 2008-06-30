@@ -68,7 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 
-import nu.validator.htmlparser.io.CharacterHandler;
+import nu.validator.htmlparser.common.CharacterHandler;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.Attributes;
