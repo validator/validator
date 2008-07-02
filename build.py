@@ -357,6 +357,7 @@ def runValidator():
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
+    '-Dnu.validator.servlet.icon=' + icon,
     '-Dnu.validator.servlet.script=' + script,
     '-Dnu.validator.spec.microsyntax-descriptions=' + microsyntax,
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
