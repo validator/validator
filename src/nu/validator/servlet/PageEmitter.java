@@ -12,6 +12,7 @@ __attrs__.addAttribute("http://www.w3.org/XML/1998/namespace", "lang", "xml:lang
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "html", "html", __attrs__);
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "head", "head", __attrs__);
+t.emitIcon(); 
 t.emitStyle(); 
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "title", "title", __attrs__);

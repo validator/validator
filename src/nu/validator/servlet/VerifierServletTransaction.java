@@ -280,6 +280,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "nu.validator.servlet.style-sheet",
             "http://about.validator.nu/style.css");
 
+    private final static String ICON = System.getProperty(
+            "nu.validator.servlet.icon",
+            "http://about.validator.nu/icon.png");
+    
     private final static String SCRIPT = System.getProperty(
             "nu.validator.servlet.script",
             "http://about.validator.nu/script.js");
@@ -1606,6 +1610,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.endElement("link");
     }
 
+    void emitIcon() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("href", ICON);
+        attrs.addAttribute("rel", "icon");
+        emitter.startElement("link", attrs);
+        emitter.endElement("link");
+    }
+    
     void emitScript() throws SAXException {
         attrs.clear();
         attrs.addAttribute("src", SCRIPT);
@@ -1668,4 +1680,5 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void maybeEmitCharsetField() throws SAXException {
         CharsetEmitter.emit(contentHandler, this);
     }
+
 }
