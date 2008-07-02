@@ -46,6 +46,7 @@ html5specLoad = 'file:validator/spec/html5.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
 aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
+icon = None
 stylesheet = None
 script = None
 serviceName = 'Validator.nu'
@@ -594,6 +595,8 @@ else:
       microsyntax = arg[14:]
     elif arg.startswith("--stylesheet="):
       stylesheet = arg[13:]
+    elif arg.startswith("--icon="):
+      icon = arg[7:]
     elif arg.startswith("--script="):
       script = arg[9:]
     elif arg.startswith("--name="):
@@ -645,6 +648,8 @@ else:
           stylesheet = aboutPage + 'style.css'
         if not script:
           script = aboutPage + 'script.js'
+        if not icon:
+          icon = aboutPage + 'icon.png'
         runValidator()
       else:
         selfUpdate()
@@ -660,6 +665,8 @@ else:
           stylesheet = aboutPage + 'style.css'
         if not script:
           script = aboutPage + 'script.js'
+        if not icon:
+          icon = aboutPage + 'icon.png'
         runValidator()
       else:
         selfUpdate()
