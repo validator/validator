@@ -149,7 +149,7 @@ public class ContentTypeParser {
         is.setSystemId(baseUri);
         if (contentType != null) {
             String[] params = contentType.split(";");
-            String type = params[0].trim();
+            String type = params[0].trim().toLowerCase();
             boolean wasRnc = false;
             boolean wasHtml = false;
             if (isAllowRnc()) {
