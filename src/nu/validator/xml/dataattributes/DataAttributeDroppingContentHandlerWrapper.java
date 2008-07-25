@@ -151,7 +151,7 @@ public class DataAttributeDroppingContentHandlerWrapper implements ContentHandle
             String local = attributes.getLocalName(i);
             if (local.length() > 5 && local.startsWith("data-") && attributes.getURI(i) == "") {
                 AttributesImpl attributesImpl = new AttributesImpl();
-                for (int j = 0; j < i; ) {
+                for (int j = 0; j < i; j++) {
                     attributesImpl.addAttribute(attributes.getURI(j), attributes.getLocalName(j), attributes.getQName(j), attributes.getType(j), attributes.getValue(j));
                 }
                 for (int k = i + 1; k < len; k++) {
