@@ -28,7 +28,7 @@ import com.hp.hpl.jena.iri.IRIFactory;
 
 public class ParseTreePrinter {
     
-    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form><hr><form><p><select id=parser name=parser><option value=xml>XML; don’t load external entities</option><option value=html5 selected>HTML5</option></select><p><textarea name=content rows=20 cols=72></textarea> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
+    private static final String FORM_HTML = "<!DOCTYPE html><title>Parse Tree Dump</title><form><p><input type='url' name='doc' id='doc' pattern='(?:https?://.+)?'> <input name='submit' value='Print Tree' type='submit' id='submit'></form><hr><form><p><select id=parser name=parser><option value=xml>XML; don\u2019t load external entities</option><option value=html5 selected>HTML5</option></select><p><textarea name=content rows=20 cols=72></textarea> <input name='submit' value='Print Tree' type='submit' id='submit'></form>";
     
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
