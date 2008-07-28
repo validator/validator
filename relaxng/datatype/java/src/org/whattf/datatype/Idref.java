@@ -22,7 +22,6 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
 
 /**
  * This datatype shall accept any string that consists of one or more characters 

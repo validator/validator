@@ -22,10 +22,10 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.DatatypeException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.relaxng.datatype.DatatypeException;
 
 public class XmlName extends AbstractDatatype {
 

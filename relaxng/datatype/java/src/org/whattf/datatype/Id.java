@@ -22,7 +22,6 @@
 
 package org.whattf.datatype;
 
-import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.DatatypeException;
 
 /**

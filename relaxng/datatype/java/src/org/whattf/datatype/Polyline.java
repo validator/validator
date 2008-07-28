@@ -25,7 +25,6 @@ package org.whattf.datatype;
 import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
-import org.whattf.datatype.AbstractDatatype.CharSequenceWithOffset;
 
 public class Polyline extends AbstractInt {
 
