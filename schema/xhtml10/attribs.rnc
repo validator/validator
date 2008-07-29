@@ -7,7 +7,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,11 @@ id.attrib = attribute id { id.datatype }?
 # for xinclude compatibility
 xml.base.attrib = attribute xml:base { text }?
 # icnore other namespaces than http://www.w3.org/1999/xhtml
-other.namespace.attrib = attribute * - (ns1:* | none:*) { text }*
+# other.namespace.attrib = attribute * - (ns1:* | none:*) { text }* -- commented out -- hsivonen
+xml.space.attrib = # added -- hsivonen
+    attribute xml:space {
+        string "preserve"
+    }?
 class.attrib =
     attribute class {
         list { nmtokens.datatype+ }

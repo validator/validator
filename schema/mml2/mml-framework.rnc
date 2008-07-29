@@ -18,6 +18,8 @@ mml.MathMLCharacters = mml.mglyph.qname | text
 # Common Attributes
 mml.Common.attrib &=
     attribute xlink:href { mml.uri.datatype }?,
+    attribute xlink:type { string "simple" }?,
+    attribute xml:space { string "preserve" }?,
     attribute class { text }?,
     attribute style { text }?,
     attribute id { mml.id.datatype }?,

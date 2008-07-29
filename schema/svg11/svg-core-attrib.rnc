@@ -9,7 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 ##     This is SVG, a language for describing two-dimensional graphics in XML.
 ##     Copyright 2001, 2002 W3C (MIT, INRIA, Keio), All Rights Reserved.
 ##
-##     Modifications Copyright 2007 Mozilla Foundation
+##     Modifications Copyright 2007-2008 Mozilla Foundation
 ## 
 ##     $Id$
 ##   
@@ -27,7 +27,7 @@ grammar {
     SVG.id.attrib = attribute id { w:xml-name }?
     SVG.base.attrib = attribute xml:base { URI.datatype }?
     SVG.lang.attrib = attribute xml:lang { LanguageCode.datatype }?
-    SVG.space.attrib = attribute xml:space { "default" | "preserve" }?
+    SVG.space.attrib = attribute xml:space { string "default" | string "preserve" }?
     SVG.Core.extra.attrib = empty
     SVG.Core.attrib =
         SVG.id.attrib,

@@ -39,13 +39,13 @@ sch:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 start = html
 # disambiguate from SVG -- hsivonen
 title.xhtml = element title { title.attlist, text }
-title.attlist = I18n.attrib
+title.attlist = I18n.attrib, xml.space.attrib
 head = element head { head.attlist, head.content }
-head.attlist = xml.base.attrib, I18n.attrib, profile.attlist
+head.attlist = xml.base.attrib, I18n.attrib, profile.attlist, xml.space.attrib
 head.content = title.xhtml
 profile.attlist = attribute profile { uri.datatype }?
 body = element body { body.attlist, Block.model }
 body.attlist = Common.attrib
 html = element html { html.attlist, head, body }
-html.attlist = XHTML.version.attrib, I18n.attrib, id.attrib
+html.attlist = XHTML.version.attrib, I18n.attrib, id.attrib, xml.space.attrib
 XHTML.version.attrib = attribute version { fpi.datatype }?

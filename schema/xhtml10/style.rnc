@@ -7,7 +7,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,6 @@ style.attlist =
     title.attrib,
     I18n.attrib,
     attribute type { content-type.datatype },
-    attribute media { media-desc.datatype }?,
-    attribute xml:space { string "preserve" }?
+    attribute media { media-desc.datatype }?
+# ,    attribute xml:space { string "preserve" }? # zapped -- hsivonen
 head.content &= style.xhtml*

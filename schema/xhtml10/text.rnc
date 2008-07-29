@@ -7,7 +7,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2008 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -104,8 +104,8 @@ pre =
         Inline.model
     }
 pre.attlist =
-    Common.attrib,
-    attribute xml:space { string "preserve" }?
+    Common.attrib
+#    , attribute xml:space { string "preserve" }? # zapped -- hsivonen
 h1 = element h1 { Heading.attrib, Heading.content }
 h2 = element h2 { Heading.attrib, Heading.content }
 h3 = element h3 { Heading.attrib, Heading.content }

@@ -167,17 +167,21 @@ mml.att-rowspan =
 mml.att-columnspan = attribute columnspan { mml.columnalign.datatype }?
 mml.att-edge = attribute edge { string "left" | string "right" }?
 # actiontypes
-mml.att-actiontype =
-    ((attribute actiontype { string "toggle" },
-      attribute selection { mml.positiveinteger.datatype })
-     | attribute actiontype { string "statusline" }
-     | attribute actiontype { string "tooltip" }
-     | (attribute actiontype { string "highlight" },
-        attribute * - (inherit:* | local:* | ns1:*) {
-            mml.color.datatype
-        }*)
-     | (attribute actiontype { string "menu" },
-        attribute selection { mml.positiveinteger.datatype }))?
+mml.att-actiontype = 
+    attribute actiontype {
+        string
+    }?
+#mml.att-actiontype =
+#    ((attribute actiontype { string "toggle" },
+#      attribute selection { mml.positiveinteger.datatype })
+#     | attribute actiontype { string "statusline" }
+#     | attribute actiontype { string "tooltip" }
+#     | (attribute actiontype { string "highlight" },
+#        attribute * - (inherit:* | local:* | ns1:*) {
+#            mml.color.datatype
+#        }*)
+#     | (attribute actiontype { string "menu" },
+#        attribute selection { mml.positiveinteger.datatype }))?
 mml.att-name = attribute name { text }?
 mml.att-alt = attribute alt { text }?
 mml.att-index = attribute index { mml.number.datatype }?
