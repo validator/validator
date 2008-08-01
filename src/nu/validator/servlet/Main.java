@@ -49,7 +49,6 @@ public class Main {
     
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
-        new VerifierServletTransaction(null, null);
         Server server = new Server();
         Connector connector;
         if (args.length > 0 && "ajp".equals(args[0])) {

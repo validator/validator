@@ -539,8 +539,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
         this.out = response.getOutputStream();
 
-        request.setCharacterEncoding("utf-8");
-
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (NoSuchMethodError e) {
+            log4j.debug("Vintage Servlet API doesn't support setCharacterEncoding().", e);
+        }
+        
         if (!methodIsGet) {
             postContentType = request.getContentType();
             if (postContentType == null) {
@@ -1242,7 +1246,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void emitForm() throws SAXException {
         attrs.clear();
         attrs.addAttribute("method", "get");
-        attrs.addAttribute("action", request.getRequestURL().toString());
+//        attrs.addAttribute("action", request.getRequestURL().toString());
         if (isSimple()) {
             attrs.addAttribute("class", "simple");
         }

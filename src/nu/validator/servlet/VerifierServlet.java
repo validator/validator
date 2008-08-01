@@ -79,6 +79,7 @@ public class VerifierServlet extends HttpServlet {
         PrudentHttpEntityResolver.setUserAgent("Validator.nu/" + System.getProperty(
                 "nu.validator.servlet.version",
                 "3.x"));
+        new VerifierServletTransaction(null, null);
     }
 
     /**
@@ -181,6 +182,9 @@ public class VerifierServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
+        if (pathInfo == null) {
+            pathInfo = "/"; // Fix for Jigsaw
+        }
         String serverName = request.getServerName();
         if ("/robots.txt".equals(pathInfo)) {
             // if we get here, we've got a POST
