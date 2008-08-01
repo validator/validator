@@ -36,7 +36,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -54,6 +53,7 @@ import nu.validator.htmlparser.common.DocumentModeHandler;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.HtmlSerializer;
+import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.StreamBoundException;
 import nu.validator.messages.GnuMessageEmitter;
@@ -74,7 +74,6 @@ import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.CombineContentHandler;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.DataUriEntityResolver;
-import nu.validator.xml.ForbiddenCharacterFilter;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.LocalCacheEntityResolver;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
@@ -87,10 +86,6 @@ import nu.validator.xml.XhtmlSaxEmitter;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 
 import org.apache.log4j.Logger;
-import org.apache.xml.serializer.Method;
-import org.apache.xml.serializer.OutputPropertiesFactory;
-import org.apache.xml.serializer.Serializer;
-import org.apache.xml.serializer.SerializerFactory;
 import org.whattf.checker.jing.CheckerSchema;
 import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
@@ -672,11 +667,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     contentHandler = new HtmlSerializer(out);
                 } else {
                     response.setContentType("application/xhtml+xml");
-                    Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
-                    Serializer ser = SerializerFactory.getSerializer(props);
-                    ser.setOutputStream(out);
-                    contentHandler = new ForbiddenCharacterFilter(
-                            ser.asContentHandler());
+                    contentHandler = 
+                            new XmlSerializer(out);
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
                 errorHandler = new MessageEmitterAdapter(sourceCode,
@@ -696,13 +688,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
-                    Properties props = OutputPropertiesFactory.getDefaultMethodProperties(Method.XML);
-                    Serializer ser = SerializerFactory.getSerializer(props);
-                    ser.setOutputStream(out);
                     errorHandler = new MessageEmitterAdapter(sourceCode,
                             showSource, null, lineOffset,
-                            new XmlMessageEmitter(new ForbiddenCharacterFilter(
-                                    ser.asContentHandler())));
+                            new XmlMessageEmitter(new XmlSerializer(out)));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
                         response.setContentType("application/json");
