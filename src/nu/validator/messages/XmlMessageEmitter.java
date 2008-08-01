@@ -140,8 +140,6 @@ public class XmlMessageEmitter extends MessageEmitter {
     @Override
     public void startMessages(String documentUri, boolean willShowSource) throws SAXException {
         contentHandler.startDocument();
-        contentHandler.startPrefixMapping("", XmlSaxEmitter.NAMESPACE);
-        contentHandler.startPrefixMapping("h", XhtmlSaxEmitter.XHTML_NS);
         attrs.clear();
         if (documentUri != null) {
             attrs.addAttribute("url", CharacterUtil.prudentlyScrubCharacterData(documentUri));
