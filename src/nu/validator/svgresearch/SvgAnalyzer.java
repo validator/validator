@@ -22,14 +22,81 @@
 
 package nu.validator.svgresearch;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.GZIPInputStream;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import nu.validator.xml.NullEntityResolver;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+
 public class SvgAnalyzer {
 
     /**
      * @param args
+     * @throws Exception
+     * @throws SAXException
      */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
+    public static void main(String[] args) throws SAXException, Exception {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setValidating(false);
+        XMLReader parser = factory.newSAXParser().getXMLReader();
+        
+        SvgAnalysisHandler analysisHandler = new SvgAnalysisHandler();
+        
+        parser.setContentHandler(analysisHandler);
+        parser.setDTDHandler(analysisHandler);
+        parser.setProperty("http://xml.org/sax/properties/lexical-handler", analysisHandler);
+        parser.setProperty("http://xml.org/sax/properties/declaration-handler", analysisHandler);
+        parser.setFeature("http://xml.org/sax/features/string-interning", true);
+        parser.setEntityResolver(new NullEntityResolver());
+        
+        File dir = new File(args[0]);
+        File[] list = dir.listFiles();
+        int nsError = 0;
+        int encodingErrors = 0;
+        int otherIllFormed = 0;
+        double total = (double) list.length;
+        for (int i = 0; i < list.length; i++) {
+            File file = list[i];
+            try {
+                InputSource is = new InputSource(new FileInputStream(file));
+                is.setSystemId(file.toURL().toExternalForm());
+                parser.parse(is);
+            } catch (SAXParseException e) {
+                String msg = e.getMessage();
+                if (msg.startsWith("The prefix ")) {
+                    nsError++;
+                } else if (msg.contains("Prefixed namespace bindings may not be empty.")) {
+                    nsError++;
+                } else if (msg.startsWith("Invalid byte ")) {
+                    encodingErrors++;
+                } else {
+                    otherIllFormed++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+            System.out.println(((double)i)/total);
+        }
+        
+        System.out.print("NS errors: ");
+        System.out.println(((double)nsError)/total);        
+        System.out.print("Encoding errors: ");
+        System.out.println(((double)encodingErrors)/total);        
+        System.out.print("Other WF errors: ");
+        System.out.println(((double)otherIllFormed)/total);        
+        
+        analysisHandler.print();
     }
 
 }

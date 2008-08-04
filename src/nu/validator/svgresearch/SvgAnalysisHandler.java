@@ -22,8 +22,10 @@
 
 package nu.validator.svgresearch;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import org.xml.sax.Attributes;
@@ -37,6 +39,10 @@ import org.xml.sax.ext.LexicalHandler;
 public class SvgAnalysisHandler implements ContentHandler, LexicalHandler,
         DTDHandler, DeclHandler {
 
+    private ScoreBoard generalScoreBoard = new ScoreBoard();
+    
+    private Map<String, ScoreBoard> scoreBoardsByCreator = new HashMap<String, ScoreBoard>();
+    
     private boolean nonSvgRoot = false;
 
     private boolean nonNamespaceSvgRoot = false;
@@ -107,6 +113,110 @@ public class SvgAnalysisHandler implements ContentHandler, LexicalHandler,
         return false;
     }
 
+    @SuppressWarnings("boxing") private void fillScoreBoard(ScoreBoard board) {
+        board.total++;
+        
+        if (nonSvgRoot) { board.nonSvgRoot++; }
+
+        if (nonNamespaceSvgRoot) { board.nonNamespaceSvgRoot++; }
+
+        if (otherNamespaceSvgRoot) { board.otherNamespaceSvgRoot++; }
+
+        if (hasFlowRoot) { board.hasFlowRoot++; }
+
+        if (hasDoctype) { board.hasDoctype++; }
+
+        if (hasInternalSubset) { board.hasInternalSubset++; }
+
+        if (hasMetadata) { board.hasMetadata++; }
+
+        if (hasStyleAttribute) { board.hasStyleAttribute++; }
+
+        if (hasPresentationAttributes) { board.hasPresentationAttributes++; }
+        
+        if (hasStyleElement) { board.hasStyleElement++; }
+
+        if (hasDefinitionElementsOutsideDefs) { board.hasDefinitionElementsOutsideDefs++; }
+        
+        Integer creatorCount = board.creator.get(creator);
+        if (creatorCount == null) {
+            board.creator.put(creator, 1);
+        } else {
+            board.creator.put(creator, creatorCount.intValue() + 1);
+        }
+        
+        fillMapFromSetTriple(board.prefixedSvgElements, prefixedSvgElements);
+
+        fillMapFromSetTriple(board.foreignElementsInMetadata, foreignElementsInMetadata);
+
+        fillMapFromSetTriple(board.foreignElementsElsewhere, foreignElementsElsewhere);
+
+        fillMapFromSetTriple(board.prefixedAttributes, prefixedAttributes);
+
+        fillMapFromSetTriple(board.fontAttributes, fontAttributes);
+
+        fillMapFromSetString(board.unconventionalXLinkPrefixes, unconventionalXLinkPrefixes);
+        
+        fillMapFromSetString(board.fontParent, fontParent);
+        
+        fillMapFromSetString(board.piTargets, piTargets);
+
+        fillMapFromSetString(board.requiredExtensions, requiredExtensions);
+        
+        fillMapFromSetString(board.internalEntities, internalEntities);
+    }
+    
+    @SuppressWarnings("boxing") private void fillMapFromSetString(Map<String, Integer> map, Set<String> set) {
+        if (set.size() > 0) {
+            Integer count = map.get("ANY");
+            if (count == null) {
+                map.put("ANY", 1);
+            } else {
+                map.put("ANY", count.intValue() + 1);
+            }
+        }
+        for (String object : set) {
+            Integer count = map.get(object);
+            if (count == null) {
+                map.put(object, 1);
+            } else {
+                map.put(object, count.intValue() + 1);
+            }
+        }
+    }
+
+    @SuppressWarnings("boxing") private void fillMapFromSetTriple(Map<NameTriple, Integer> map, Set<NameTriple> set) {
+        if (set.size() > 0) {
+            Integer count = map.get(NameTriple.ANY_MARKER);
+            if (count == null) {
+                map.put(NameTriple.ANY_MARKER, 1);
+            } else {
+                map.put(NameTriple.ANY_MARKER, count.intValue() + 1);
+            }
+        }
+        for (NameTriple object : set) {
+            Integer count = map.get(object);
+            if (count == null) {
+                map.put(object, 1);
+            } else {
+                map.put(object, count.intValue() + 1);
+            }
+        }
+    }
+
+    public void print() {
+        generalScoreBoard.printScoreBoard();
+                
+        for (Map.Entry<String, ScoreBoard> entry : scoreBoardsByCreator.entrySet()) {
+        
+            System.out.println("\n********************************\n");
+
+            System.out.println(entry.getKey());
+            
+            entry.getValue().printScoreBoard();
+        }
+    }
+    
     public void startDocument() throws SAXException {
         nonSvgRoot = false;
         nonNamespaceSvgRoot = false;
@@ -134,8 +244,16 @@ public class SvgAnalysisHandler implements ContentHandler, LexicalHandler,
     }
 
     public void endDocument() throws SAXException {
-        // TODO Auto-generated method stub
-
+        if (creator == null) {
+            creator = "NO CREATOR";
+        }
+        fillScoreBoard(generalScoreBoard);
+        ScoreBoard creatorBoard = scoreBoardsByCreator.get(creator);
+        if (creatorBoard == null) {
+            creatorBoard = new ScoreBoard();
+            scoreBoardsByCreator.put(creator, creatorBoard);
+        }
+        fillScoreBoard(creatorBoard);
     }
 
     public void endElement(String uri, String localName, String name)
@@ -300,8 +418,16 @@ public class SvgAnalysisHandler implements ContentHandler, LexicalHandler,
     public void comment(char[] ch, int start, int length) throws SAXException {
         if (creator == null) {
             String str = new String(ch, start, length);
-            if (str.startsWith(" Created with")) {
-                creator = str;
+            if (str.startsWith(" Created with Arkyan's SVGCensus script")) {
+                creator = "Arkyan's SVGCensus script";
+            } else if (str.startsWith(" Created with ")) {
+                int index = str.indexOf(' ', 14);
+                creator = str.substring(14, index);
+            } else if (str.startsWith(" Generator: Adobe Illustrator")) {
+                creator = "Adobe Illustrator";
+            } else if (str.startsWith(" Generator: ")) {
+                int index = str.indexOf(' ', 12);
+                creator = str.substring(12, index);
             }
         }
     }

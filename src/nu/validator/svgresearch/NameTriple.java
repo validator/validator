@@ -23,6 +23,9 @@
 package nu.validator.svgresearch;
 
 public class NameTriple {
+    
+    public static final NameTriple ANY_MARKER = new NameTriple();
+    
     private final String local;
     
     private final String prefix;
@@ -38,6 +41,12 @@ public class NameTriple {
         this.local = local;
         this.prefix = prefixFromQname(qname);
         this.uri = uri;
+    }
+
+    public NameTriple() {
+        this.local = "";
+        this.prefix = "";
+        this.uri = "";
     }
 
     private static String prefixFromQname(String qname) {
@@ -72,6 +81,9 @@ public class NameTriple {
      * @see java.lang.Object#toString()
      */
     @Override public String toString() {
+        if (this == ANY_MARKER) {
+            return "ANY";
+        }
         return uri + ' ' + prefix + ' ' + local;
     }
 
