@@ -1029,6 +1029,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     protected void newHtmlParser() {
         htmlParser = new HtmlParser();
+        htmlParser.setCommentPolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setContentSpacePolicy(XmlViolationPolicy.ALTER_INFOSET);
+        htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setMappingLangToXmlLang(true);
