@@ -41,6 +41,7 @@ public class Charset extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
+            // http://tools.ietf.org/html/rfc2978
             if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '-' || c == '!' || c == '#' || c == '$' || c == '%' || c == '&' || c == '\'' || c == '+' || c == '_' || c == '`' || c == '{' || c == '}' || c == '~' || c == '^')) {
                 throw newDatatypeException(
                         "Encoding name contained ", c, ", which is not a valid character in an encoding name.");                   
