@@ -32,6 +32,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import nu.validator.xml.NullEntityResolver;
 
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -58,6 +59,18 @@ public class SvgAnalyzer {
         parser.setProperty("http://xml.org/sax/properties/declaration-handler", analysisHandler);
         parser.setFeature("http://xml.org/sax/features/string-interning", true);
         parser.setEntityResolver(new NullEntityResolver());
+        parser.setErrorHandler(new ErrorHandler() {
+
+            public void error(SAXParseException exception) throws SAXException {
+            }
+
+            public void fatalError(SAXParseException exception)
+                    throws SAXException {
+            }
+
+            public void warning(SAXParseException exception)
+                    throws SAXException {
+            }});
         
         File dir = new File(args[0]);
         File[] list = dir.listFiles();
@@ -86,7 +99,6 @@ public class SvgAnalyzer {
                 e.printStackTrace();
                 System.exit(-1);
             }
-            System.out.println(((double)i)/total);
         }
         
         System.out.print("NS errors: ");
