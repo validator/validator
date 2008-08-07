@@ -3914,11 +3914,12 @@ final class XmlParser {
                 }
             } else {
                 // <?xml-stylesheet ...?> or similar
-                unread('l');
-                unread('m');
-                unread('x');
-                unread('?');
-                unread('<');
+                pushString(null, "<?xml");
+//                unread('l');
+//                unread('m');
+//                unread('x');
+//                unread('?');
+//                unread('<');
             }
         }
         // 2006-02-03 hsivonen
