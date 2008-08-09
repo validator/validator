@@ -51,6 +51,7 @@ class.attrib =
 title.attrib = attribute title { text.datatype }?
 Core.attrib =
     id.attrib,
+    xml.space.attrib, # added -- hsivonen
     # for xinclude compatibility
     xml.base.attrib,
     # ref name="other.namespace.attrib"/
