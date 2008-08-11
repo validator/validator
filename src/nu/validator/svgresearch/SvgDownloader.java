@@ -93,7 +93,6 @@ public class SvgDownloader {
                 m.setFollowRedirects(true);
                 m.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
                 m.addRequestHeader("Accept", "image/svg+xml, */*");
-                m.addRequestHeader("Accept-Encoding", "gzip");
                 client.executeMethod(m);
                 int status = m.getStatusCode();
                 if (m.getStatusCode() != 200) {
@@ -157,7 +156,7 @@ public class SvgDownloader {
         int total = theMap.size();
         int count = 0;
         for (Map.Entry<String, String> entry : theMap.entrySet()) {
-            File target = new File(dir, entry.getKey() + ".svg.gz");
+            File target = new File(dir, entry.getKey() + ".svg");
             retrieve(entry.getValue(), target);
             count++;
             System.out.println(((double) count) / ((double) total));
