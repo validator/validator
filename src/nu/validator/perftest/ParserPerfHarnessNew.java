@@ -38,6 +38,7 @@ import nu.validator.htmlparser.io.Driver;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.htmlparser.test.TokensToSax;
+import nu.validator.servlet.ParserMode;
 import nu.validator.xml.NullEntityResolver;
 
 import org.apache.xerces.impl.Version;
@@ -124,6 +125,9 @@ public class ParserPerfHarnessNew {
             reader = new SAXDriver();
             reader.setFeature("http://xml.org/sax/features/namespaces", true);
             reader.setFeature("http://xml.org/sax/features/validation", false);
+            reader.setFeature("http://xml.org/sax/features/string-interning", true);
+            reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             reader.setContentHandler(ch);
             reader.setEntityResolver(new NullEntityResolver());
        } else if ("n".equals(args[0])) {
@@ -131,6 +135,9 @@ public class ParserPerfHarnessNew {
             reader = new SAXParser();
             reader.setFeature("http://xml.org/sax/features/namespaces", false);
             reader.setFeature("http://xml.org/sax/features/validation", false);
+            reader.setFeature("http://xml.org/sax/features/string-interning", true);
+            reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             reader.setContentHandler(ch);
             reader.setEntityResolver(new NullEntityResolver());
         } else {
@@ -138,6 +145,9 @@ public class ParserPerfHarnessNew {
             reader = new SAXParser();
             reader.setFeature("http://xml.org/sax/features/namespaces", true);
             reader.setFeature("http://xml.org/sax/features/validation", false);
+            reader.setFeature("http://xml.org/sax/features/string-interning", true);
+            reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             reader.setContentHandler(ch);
             reader.setEntityResolver(new NullEntityResolver());            
         }
