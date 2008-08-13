@@ -112,8 +112,6 @@ public class ParserPerfHarnessNew {
             reader = parser;
         } else if ("t".equals(args[0])) {
             Driver driver = new Driver(new TokensToSax(ch));
-            driver.setAllowRewinding(false);
-            driver.setCheckingNormalization(false);
             driver.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
             driver.setContentSpacePolicy(XmlViolationPolicy.ALLOW);
             driver.setNamePolicy(XmlViolationPolicy.ALLOW);
