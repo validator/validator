@@ -34,12 +34,12 @@ import javax.xml.parsers.SAXParserFactory;
 
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.xml.NullEntityResolver;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class ParserPerfHarness {
 
@@ -101,10 +101,12 @@ public class ParserPerfHarness {
         
         char[] testData = loadFileIntoArray(new File(path));
         
+        XmlSerializer ch = new XmlSerializer(new NullWriter());
+        
         XMLReader reader = null;
         if (html) {
             HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALLOW);
-            parser.setContentHandler(new DefaultHandler());
+            parser.setContentHandler(ch);
             parser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
             reader = parser;
         } else {
@@ -112,7 +114,7 @@ public class ParserPerfHarness {
             factory.setNamespaceAware(true);
             factory.setValidating(false);
             reader = factory.newSAXParser().getXMLReader();
-            reader.setContentHandler(new DefaultHandler());
+            reader.setContentHandler(ch);
             reader.setEntityResolver(new NullEntityResolver());
         }
         System.out.println("Warmup:");
