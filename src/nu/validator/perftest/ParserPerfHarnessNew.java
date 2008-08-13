@@ -32,6 +32,7 @@ import java.io.Reader;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
+import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.io.Driver;
 import nu.validator.htmlparser.sax.HtmlParser;
@@ -39,6 +40,8 @@ import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.htmlparser.test.TokensToSax;
 import nu.validator.xml.NullEntityResolver;
 
+import org.apache.xerces.impl.Version;
+import org.apache.xerces.parsers.SAXParser;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -117,13 +120,26 @@ public class ParserPerfHarnessNew {
             driver.setNamePolicy(XmlViolationPolicy.ALLOW);
             driver.setXmlnsPolicy(XmlViolationPolicy.ALLOW);
             reader = new DriverWrapper(driver);
-        } else {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            factory.setValidating(false);
-            reader = factory.newSAXParser().getXMLReader();
+        } else if ("a".equals(args[0])) {
+            reader = new SAXDriver();
+            reader.setFeature("http://xml.org/sax/features/namespaces", true);
+            reader.setFeature("http://xml.org/sax/features/validation", false);
             reader.setContentHandler(ch);
             reader.setEntityResolver(new NullEntityResolver());
+       } else if ("n".equals(args[0])) {
+            System.out.println(Version.getVersion());
+            reader = new SAXParser();
+            reader.setFeature("http://xml.org/sax/features/namespaces", false);
+            reader.setFeature("http://xml.org/sax/features/validation", false);
+            reader.setContentHandler(ch);
+            reader.setEntityResolver(new NullEntityResolver());
+        } else {
+            System.out.println(Version.getVersion());
+            reader = new SAXParser();
+            reader.setFeature("http://xml.org/sax/features/namespaces", true);
+            reader.setFeature("http://xml.org/sax/features/validation", false);
+            reader.setContentHandler(ch);
+            reader.setEntityResolver(new NullEntityResolver());            
         }
         System.out.println("Warmup:");
         System.out.println((new ParserPerfHarnessNew(System.currentTimeMillis()
