@@ -30,15 +30,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.io.Driver;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.XmlSerializer;
-import nu.validator.htmlparser.test.TokensToSax;
-import nu.validator.servlet.ParserMode;
 import nu.validator.xml.NullEntityResolver;
 
 import org.apache.xerces.impl.Version;
