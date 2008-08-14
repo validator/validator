@@ -57,7 +57,7 @@ namespace local = ""
 		element embed { embed.inner & embed.attrs }
 	embed.attrs =
 		(	common.attrs
-		&	embed.attrs.src
+		&	embed.attrs.src?
 		&	embed.attrs.type?
 		&	embed.attrs.height?
 		&	embed.attrs.width?
