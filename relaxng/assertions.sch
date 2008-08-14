@@ -415,6 +415,12 @@
 			</report>
 		</rule>
 
+		<rule context='h:font'>
+			<report test='true()'>
+				The &#x201C;font&#x201D; element is obsolete.
+			</report>
+		</rule>
+
 		<rule context='h:big'>
 			<report test='true()'>
 				The &#x201C;big&#x201D; element is obsolete.
@@ -477,7 +483,7 @@
 
 		<rule context='h:map[@id and @name]'>
 			<assert test='@id = @name'>
-				A the &#x201C;id&#x201D; attribute on a &#x201C;id&#x201D; element must have an 
+				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have an 
 				the same value as the &#x201C;name&#x201D; attribute.
 			</assert>
 		</rule>
@@ -504,8 +510,8 @@
 			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
 							 or
 							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				When a &#x201C;select&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
-				must not have following siblings.
+				When a &#x201C;select&#x201D; element is the first child of a 
+				&#x201C;datagrid&#x201D; element, it must not have following siblings.
 			</assert>
 		</rule>
 
@@ -513,8 +519,8 @@
 			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
 							 or
 							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				When a &#x201C;datalist&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
-				must not have following siblings.
+				When a &#x201C;datalist&#x201D; element is the first child of a 
+				&#x201C;datagrid&#x201D; element, it must not have following siblings.
 			</assert>
 		</rule>
 
@@ -804,7 +810,7 @@
 	<pattern name='controls must not dangle'>
 		<rule context='*[@aria-controls]'>
 			<assert test='id(@aria-controls)'>
-				The &#x201C;aria-controls&#x201D; must point to an element in the 
+				The &#x201C;aria-controls&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
 		</rule>
@@ -813,7 +819,7 @@
 	<pattern name='describedby must not dangle'>
 		<rule context='*[@aria-describedby]'>
 			<assert test='id(@aria-describedby)'>
-				The &#x201C;aria-describedby&#x201D; must point to an element in the 
+				The &#x201C;aria-describedby&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
 		</rule>
@@ -822,7 +828,7 @@
 	<pattern name='flowto must not dangle'>
 		<rule context='*[@aria-flowto]'>
 			<assert test='id(@aria-flowto)'>
-				The &#x201C;aria-flowto&#x201D; must point to an element in the 
+				The &#x201C;aria-flowto&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
 		</rule>
@@ -831,7 +837,7 @@
 	<pattern name='labelledby must not dangle'>
 		<rule context='*[@aria-labelledby]'>
 			<assert test='id(@aria-labelledby)'>
-				The &#x201C;aria-labelledby&#x201D; must point to an element in the 
+				The &#x201C;aria-labelledby&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
 		</rule>
@@ -840,7 +846,7 @@
 	<pattern name='owns must not dangle'>
 		<rule context='*[@aria-owns]'>
 			<assert test='id(@aria-owns)'>
-				The &#x201C;aria-owns&#x201D; must point to an element in the 
+				The &#x201C;aria-owns&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
 		</rule>
