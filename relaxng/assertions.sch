@@ -526,6 +526,24 @@
 
 	</pattern>
 
+<!-- lang and xml:lang in XHTML  - - - - - - - - - - - - - - - - - -->
+
+	<pattern name='lang and xml:lang in XHTML'>
+		<rule context='h:*[@lang and @xml:lang]'>
+			<assert test='@lang = @xml:lang'>
+				When the attribute &#x201C;lang&#x201D; is specified, the element must also have 
+				the attribute &#x201C;lang&#x201D; in the XML namespace present with the same 
+				value.
+			</assert>
+		</rule>
+		<rule context='h:*[@lang and not(@xml:lang)]'>
+			<report test='true()'>
+				When the attribute &#x201C;lang&#x201D; is specified, the element must also have 
+				the attribute &#x201C;lang&#x201D; in the XML namespace present with the same 
+				value.
+			</report>
+		</rule>
+	</pattern>
 
 <!-- IDREFs  - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

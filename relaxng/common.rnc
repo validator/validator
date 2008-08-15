@@ -154,7 +154,18 @@ common.attrs.i18n =
 		attribute dir {
 			w:string "ltr" | w:string "rtl"
 		}
+	# This lang definition is a hack for enviroments where
+	# the HTML5 parser maps lang to xml:lang.
+	# Sameness check left to Schematron
 	common.attrs.language =
+		(	common.attrs.xmllang?
+		&	common.attrs.lang?
+		)
+	common.attrs.lang =
+		attribute lang {
+			common.data.langcode
+		} & XMLonly
+	common.attrs.xmllang =
 		attribute xml:lang {
 			common.data.langcode
 		}
