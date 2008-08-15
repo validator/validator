@@ -6,8 +6,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Contextual Hyperlink: <a>
 
-	a.elem =
-		element a { a.inner & a.attrs }
+	a.elem.phrase =
+		element a { a.inner.phrase & a.attrs }
+	a.elem.prose =
+		element a { a.inner.prose & a.attrs }
 	a.attrs =
 		(	common.attrs
 		&	a.attrs.href?
@@ -49,10 +51,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute ping {
 				common.data.uris
 			} & v5only
-	a.inner =
+	a.inner.phrase =
 		( common.inner.phrase )
+	a.inner.prose =
+		( common.inner.prose )
 
-	common.elem.phrase |= a.elem
+	common.elem.phrase |= a.elem.phrase
+	common.elem.prose |= a.elem.prose
 
 ## Emphatic Stress: <em>
 
@@ -280,20 +285,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( common.inner.phrase ) # REVISIT allow ol and ul?
 
 	common.elem.phrase |= span.elem
-
-
-## Inline Styling: <font>
-
-	font.elem =
-		element font { font.inner & font.attrs }
-	font.attrs =
-		(	common.attrs
-		&	common.attrs.aria?
-		)
-	font.inner =
-		( common.inner.phrase )
-
-	common.elem.phrase |= font.elem
 
 ## Bidirectional Override: <bdo>
 

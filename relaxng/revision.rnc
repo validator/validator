@@ -15,30 +15,28 @@
 
 ## Inserts: <ins>
 
-	ins.elem.phrase =
-		element ins { common.inner.phrase & ins.attrs }
-	ins.elem.prose =
-		element ins { common.inner.prose & ins.attrs }
+	ins.elem =
+		element ins { ins.inner & ins.attrs }
 	ins.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
+	ins.inner =
+		( common.inner.phrase )
 
-	common.elem.phrase |= ins.elem.phrase
-	common.elem.prose |= ins.elem.prose
+	common.elem.phrase |= ins.elem
 
 ## Deletions: <del>
 
-	del.elem.phrase =
-		element del { common.inner.phrase & del.attrs }
-	del.elem.prose =
-		element del { common.inner.prose & del.attrs }
+	del.elem =
+		element del { del.inner & del.attrs }
 	del.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
+	del.inner =
+		( common.inner.phrase )
 
-	common.elem.phrase |= del.elem.phrase
-	common.elem.prose |= del.elem.prose
+	common.elem.phrase |= del.elem

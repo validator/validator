@@ -16,6 +16,17 @@
 
 	common.elem.prose |= center.elem
 
+## Inline Styling: <font>
+
+	font.elem =
+		element font { font.inner & font.attrs }
+	font.attrs =
+		( common.attrs )
+	font.inner =
+		( common.inner.phrase )
+
+	common.elem.phrase |= font.elem
+
 ## Larger Font: <big>
 
 	big.elem =

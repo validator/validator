@@ -21,7 +21,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## MIME types
 		
 	form.data.mimetypelist = 
-		string #FIXME should suit the accept attribute
+		w:mime-type-list
 		
 	form.data.charsetlist =
 		string # FIXME should be a "a space- and/or comma-delimited 
