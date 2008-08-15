@@ -84,6 +84,7 @@ import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlSaxEmitter;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
+import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 
 import org.apache.log4j.Logger;
 import org.whattf.checker.jing.CheckerSchema;
@@ -467,12 +468,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             int i = 0;
             for (Map.Entry<String, Schema> entry : schemaMap.entrySet()) {
                 preloadedSchemaUrls[i] = entry.getKey().intern();
-                if (isDataAttributeDroppingSchema(entry.getKey())) {
-                    preloadedSchemas[i] = new DataAttributeDroppingSchemaWrapper(
-                            entry.getValue());
-                } else {
-                    preloadedSchemas[i] = entry.getValue();
+                Schema s = entry.getValue();
+                String u = entry.getKey();
+                if (isDataAttributeDroppingSchema(u)) {
+                    s = new DataAttributeDroppingSchemaWrapper(
+                            s);
                 }
+                if (isXmlLangAllowingSchema(u)) {
+                    s = new XmlLangAttributeDroppingSchemaWrapper(s);
+                }
+                preloadedSchemas[i] = s;
                 i++;
             }
 
@@ -499,6 +504,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key) || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key));
     }
 
+    private static boolean isXmlLangAllowingSchema(String key) {
+        return key.startsWith("http://s.validator.nu/") && key.endsWith(".rnc"); // Do this for all preset RNCs.
+    }
+    
     private static boolean isCheckerUrl(String url) {
         if ("http://c.validator.nu/all/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
