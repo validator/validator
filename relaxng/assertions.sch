@@ -177,6 +177,26 @@
 		</rule>
 
 	<!-- Interactive element exclusions -->
+	
+		<!-- 
+		   - Interactive descendants:
+		   - a
+		   - video[controls]
+		   - audio[controls]
+		   - details
+		   - datagrid
+		   - bb
+		   - menu[type=toolbar]
+		   - button
+		   - input[type!=hidden]
+		   - textarea
+		   - select
+		   -
+		   - Interactive ancestors
+		   - a
+		   - button
+		   - bb
+		  -->
 
 		<rule context='h:a'>
 			<report test='ancestor::h:a'>
@@ -187,9 +207,9 @@
 				The interactive element &#x201C;a&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;a&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -202,9 +222,9 @@
 				The interactive element &#x201C;datagrid&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;datagrid&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -217,9 +237,9 @@
 				The interactive element &#x201C;details&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;details&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -232,9 +252,9 @@
 				The interactive element &#x201C;button&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;button&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -247,9 +267,9 @@
 				The interactive element &#x201C;textarea&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;textarea&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -262,13 +282,13 @@
 				The interactive element &#x201C;select&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;select&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
-		<rule context='h:input[not(@type="hidden")]'>
+		<rule context='h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;input&#x201D; cannot 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -277,9 +297,69 @@
 				The interactive element &#x201C;input&#x201D; cannot 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:details'>
+			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;input&#x201D; cannot 
-				appear as a descendant of the &#x201C;details&#x201D; element.
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:bb'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;bb&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;bb&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The interactive element &#x201C;bb&#x201D; cannot 
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+		
+		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;menu type=toolbar&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;menu type=toolbar&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The interactive element &#x201C;menu type=toolbar&#x201D; cannot 
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:video[@controls]'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;video controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;video controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The interactive element &#x201C;video controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:audio[@controls]'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;audio controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;audio controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The interactive element &#x201C;audio controls&#x201D; cannot 
+				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -561,7 +641,7 @@
 	<pattern name='repeat-template must refer to a repetition template'>
 		<rule context='h:*[@repeat-template]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@repeat-template)/self::h:*[@repeat="template"]'>
+			<assert test='id(@repeat-template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
 				The &#x201C;repeat-template&#x201D; attribute must refer to a 
 				repetition template.
 			</assert>
@@ -570,7 +650,7 @@
 
 	<pattern name='for on label must refer to a form control'>
 		<rule context='h:label[@for]'>
-			<assert test='id(@for)/self::h:input[not(@type="hidden")] or 
+			<assert test='id(@for)/self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")] or 
 			              id(@for)/self::h:textarea or 
 			              id(@for)/self::h:select or 
 			              id(@for)/self::h:button or 
@@ -583,17 +663,17 @@
 	</pattern>
 
 	<pattern name='add button template must refer to a repetition template'>
-		<rule context='h:input[@template and @type="add"]'>
+		<rule context='h:input[@template and translate(@type, "AD", "ad")="add"]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@template)/self::h:*[@repeat="template"]'>
+			<assert test='id(@template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
 				The &#x201C;template&#x201D; attribute of an 
 				&#x201C;input&#x201D; element that is of 
 				&#x201C;type="add"&#x201D; must refer to a repetition template.
 			</assert>
 		</rule>
-		<rule context='h:button[@template and @type="add"]'>
+		<rule context='h:button[@template and translate(@type, "AD", "ad")="add"]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@template)/self::h:*[@repeat="template"]'>
+			<assert test='id(@template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
 				The &#x201C;template&#x201D; attribute of a 
 				&#x201C;button&#x201D; element that is of 
 				&#x201C;type="add"&#x201D; must refer to a repetition template.
@@ -630,7 +710,7 @@
 
 	<!-- REVISIT is this too constraining for scripted apps? -->
 	<pattern name='remove, move-up and move-down only in repetition blocks/templates'>
-		<rule context='h:input[@type=remove]'>
+		<rule context='h:input[translate(@type, "REMOV", "remov")=remove]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				An &#x201C;input&#x201D; element of 
@@ -638,7 +718,7 @@
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
-		<rule context='h:button[@type=remove]'>
+		<rule context='h:button[translate(@type, "REMOV", "remov")=remove]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				A &#x201C;button&#x201D; element of 
@@ -646,7 +726,7 @@
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
-		<rule context='h:input[@type=move-up]'>
+		<rule context='h:input[translate(@type, "MOVEUP", "moveup")=move-up]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				An &#x201C;input&#x201D; element of 
@@ -654,7 +734,7 @@
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
-		<rule context='h:button[@type=move-up]'>
+		<rule context='h:button[translate(@type, "MOVEUP", "moveup")=move-up]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				A &#x201C;button&#x201D; element of 
@@ -662,7 +742,7 @@
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
-		<rule context='h:input[@type=move-down]'>
+		<rule context='h:input[translate(@type, "MOVEDWN", "movedwn")=move-down]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				An &#x201C;input&#x201D; element of 
@@ -670,7 +750,7 @@
 				or a repetition template as an ancestor.
 			</assert>
 		</rule>
-		<rule context='h:button[@type=move-down]'>
+		<rule context='h:button[translate(@type, "MOVEDWN", "movedwn")=move-down]'>
 			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
 			<assert test='ancestor::h:*[@repeat]'>
 				A &#x201C;button&#x201D; element of 
