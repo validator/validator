@@ -427,18 +427,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             log4j.debug("Parsing set up. Starting to read schemas.");
 
             SortedMap<String, Schema> schemaMap = new TreeMap<String, Schema>();
-            for (int i = 0; i < presetUrls.length; i++) {
-                String[] urls1 = SPACE.split(presetUrls[i]);
-                for (int j = 0; j < urls1.length; j++) {
-                    String url = urls1[j];
-                    if (schemaMap.get(url) == null && !isCheckerUrl(url)) {
-                        Schema sch = schemaByUrl(url, er, pMap);
-                        schemaMap.put(url, sch);
-                    }
-                }
-            }
-
-            log4j.debug("Schemas read.");
 
             schemaMap.put("http://c.validator.nu/table/",
                     CheckerSchema.TABLE_CHECKER);
@@ -462,6 +450,21 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.USEMAP_CHECKER);
             schemaMap.put("http://c.validator.nu/unchecked/",
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
+            schemaMap.put("http://s.validator.nu/html5/assertions.sch",
+                    CheckerSchema.ASSERTION_SCH);
+
+            for (int i = 0; i < presetUrls.length; i++) {
+                String[] urls1 = SPACE.split(presetUrls[i]);
+                for (int j = 0; j < urls1.length; j++) {
+                    String url = urls1[j];
+                    if (schemaMap.get(url) == null && !isCheckerUrl(url)) {
+                        Schema sch = schemaByUrl(url, er, pMap);
+                        schemaMap.put(url, sch);
+                    }
+                }
+            }
+
+            log4j.debug("Schemas read.");
 
             preloadedSchemaUrls = new String[schemaMap.size()];
             preloadedSchemas = new Schema[schemaMap.size()];
