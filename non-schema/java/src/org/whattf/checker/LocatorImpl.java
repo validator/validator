@@ -24,7 +24,7 @@ package org.whattf.checker;
 
 import org.xml.sax.Locator;
 
-final class LocatorImpl implements Locator {
+public final class LocatorImpl implements Locator {
 
     private final String systemId;
     private final String publicId;

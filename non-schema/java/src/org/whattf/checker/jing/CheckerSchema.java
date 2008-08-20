@@ -28,6 +28,7 @@ import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UncheckedSubtreeWarner;
 import org.whattf.checker.UsemapChecker;
+import org.whattf.checker.schematronequiv.Assertions;
 import org.whattf.checker.table.TableChecker;
 
 import com.thaiopensource.util.PropertyMap;
@@ -47,6 +48,8 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema USEMAP_CHECKER = new CheckerSchema(PropertyMap.EMPTY, UsemapChecker.class);
 
     public static final CheckerSchema TABLE_CHECKER = new CheckerSchema(PropertyMap.EMPTY, TableChecker.class);
+
+    public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
     
     private final PropertyMap properties;
     

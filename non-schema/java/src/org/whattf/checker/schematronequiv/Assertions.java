@@ -93,7 +93,7 @@ public class Assertions extends Checker {
             String descendant) {
         int number = specialAncestorNumber(ancestor);
         if (number == -1) {
-            throw new IllegalStateException("Ancestor not found in array.");
+            throw new IllegalStateException("Ancestor not found in array: " + ancestor);
         }
         Integer maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(descendant);
         int mask = 0;
@@ -184,15 +184,15 @@ public class Assertions extends Checker {
     }
 
     static {
-        registerProhibitedAncestor("listbox", "option");
-        registerProhibitedAncestor("combobox", "option");
-        registerProhibitedAncestor("menu", "menuitem");
-        registerProhibitedAncestor("menu", "menuitemcheckbox");
-        registerProhibitedAncestor("menu", "menuitemradio");
-        registerProhibitedAncestor("tablist", "tab");
-        registerProhibitedAncestor("tree", "treeitem");
-        registerProhibitedAncestor("list", "listitem");
-        registerProhibitedAncestor("row", "gridcell");
+        registerRequiredParentRole("listbox", "option");
+        registerRequiredParentRole("combobox", "option");
+        registerRequiredParentRole("menu", "menuitem");
+        registerRequiredParentRole("menu", "menuitemcheckbox");
+        registerRequiredParentRole("menu", "menuitemradio");
+        registerRequiredParentRole("tablist", "tab");
+        registerRequiredParentRole("tree", "treeitem");
+        registerRequiredParentRole("list", "listitem");
+        registerRequiredParentRole("row", "gridcell");
     }
 
     private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<String>();
@@ -239,13 +239,13 @@ public class Assertions extends Checker {
          * @param idref
          */
         public IdrefLocator(Locator locator, String idref) {
-            this.locator = locator;
+            this.locator = new LocatorImpl(locator);
             this.idref = idref;
             this.additional = null;
         }
 
         public IdrefLocator(Locator locator, String idref, String additional) {
-            this.locator = locator;
+            this.locator = new LocatorImpl(locator);
             this.idref = idref;
             this.additional = additional;
         }
@@ -422,6 +422,10 @@ public class Assertions extends Checker {
 
     private int currentPtr;
 
+    public Assertions() {
+        super();
+    }
+    
     private void push(StackNode node) {
         currentPtr++;
         if (currentPtr == stack.length) {
@@ -478,7 +482,7 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : contextmenuReferences) {
             if (!menuIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;contextmenu&#x201D; attribute must refer to a &#x201C;menu&#x201D; element.",
+                        "The \u201Ccontextmenu\u201D attribute must refer to a \u201Cmenu\u201D element.",
                         idrefLocator.getLocator());
             }
         }
@@ -487,7 +491,7 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : repeatTemplateReferences) {
             if (!templateIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;repeat-template&#x201D; attribute must refer to a repetition template.",
+                        "The \u201Crepeat-template\u201D attribute must refer to a repetition template.",
                         idrefLocator.getLocator());
             }
         }
@@ -496,7 +500,7 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; element must refer to a form control.",
+                        "The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a form control.",
                         idrefLocator.getLocator());
             }
         }
@@ -505,14 +509,14 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : inputAddReferences) {
             if (!templateIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;template&#x201D; attribute of an &#x201C;input&#x201D; element that is of &#x201C;type=\"add\"&#x201D; must refer to a repetition template.",
+                        "The \u201Ctemplate\u201D attribute of an \u201Cinput\u201D element that is of \u201Ctype=\"add\"\u201D must refer to a repetition template.",
                         idrefLocator.getLocator());
             }
         }
         for (IdrefLocator idrefLocator : buttonAddReferences) {
             if (!templateIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;template&#x201D; attribute of an &#x201C;button&#x201D; element that is of &#x201C;type=\"add\"&#x201D; must refer to a repetition template.",
+                        "The \u201Ctemplate\u201D attribute of an \u201Cbutton\u201D element that is of \u201Ctype=\"add\"\u201D must refer to a repetition template.",
                         idrefLocator.getLocator());
             }
         }
@@ -521,7 +525,7 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : listReferences) {
             if (!listIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; element must refer to a &#x201C;datalist&#x201D; element or to a &#x201C;select&#x201D; element.",
+                        "The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element or to a \u201Cselect\u201D element.",
                         idrefLocator.getLocator());
             }
         }
@@ -530,9 +534,9 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : ariaReferences) {
             if (!allIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The &#x201C;"
+                        "The \u201C"
                                 + idrefLocator.getAdditional()
-                                + "&#x201D; attribute must point to an element in the same document.",
+                                + "\u201D attribute must point to an element in the same document.",
                         idrefLocator.getLocator());
             }
         }
@@ -571,7 +575,7 @@ public class Assertions extends Checker {
         }
         openSingleSelects.remove(node);
         if ((locator = openActiveDescendants.remove(node)) != null) {
-            err("The &#x201C;aria-activedescendant&#x201D; attribute must refer to a descendant element.", locator);
+            err("The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.", locator);
         }
     }
 
@@ -581,7 +585,8 @@ public class Assertions extends Checker {
     @Override public void startDocument() throws SAXException {
         clearCollections();
         stack = new StackNode[32];
-        currentPtr = -1;
+        currentPtr = 0;
+        stack[0] = null;
     }
 
     private void clearCollections() {
@@ -608,6 +613,7 @@ public class Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
+        boolean skipDatagridCheck = false;
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;
@@ -621,6 +627,7 @@ public class Assertions extends Checker {
         if (parent != null) {
             ancestorMask = parent.getAncestorMask();
             parentName = parent.getName();
+            parentRole = parent.getRole();
         }
         if ("http://www.w3.org/1999/xhtml" == uri) {
             boolean controls = false;
@@ -645,7 +652,7 @@ public class Assertions extends Checker {
             for (int i = 0; i < len; i++) {
                 String attUri = atts.getURI(i);
                 if (attUri.length() == 0) {
-                    String attLocal = atts.getValue(i);
+                    String attLocal = atts.getLocalName(i);
                     if ("href" == attLocal) {
                         href = true;
                     } else if ("controls" == attLocal) {
@@ -777,11 +784,11 @@ public class Assertions extends Checker {
                     double max = getDoubleAttribute(atts, "max");
                     if (Double.isNaN(max)) {
                         if (!(value <= 1.0)) {
-                            err("The value of the  &#x201C;value&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                            err("The value of the  \u201Cvalue\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                         }
                     } else {
                         if (!(value <= max)) {
-                            err("The value of the  &#x201C;value&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                            err("The value of the  \u201Cvalue\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                         }
                     }
                 }
@@ -798,94 +805,94 @@ public class Assertions extends Checker {
 
                 if (!Double.isNaN(min) && !Double.isNaN(value)
                         && !(min <= value)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to the value of the &#x201C;value&#x201D; attribute.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Cvalue\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(value) && !(0 <= value)) {
-                    err("The value of the &#x201C;value&#x201D; attribute must be greater than or equal to zero when the &#x201C;min&#x201D; attribute is absent.");
+                    err("The value of the \u201Cvalue\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(value) && !Double.isNaN(max)
                         && !(value <= max)) {
-                    err("The value of the &#x201C;value&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                    err("The value of the \u201Cvalue\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (!Double.isNaN(value) && Double.isNaN(max) && !(value <= 1)) {
-                    err("The value of the &#x201C;value&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                    err("The value of the \u201Cvalue\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && !Double.isNaN(max) && !(min <= max)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(max) && !(0 <= max)) {
-                    err("The value of the &#x201C;max&#x201D; attribute must be greater than or equal to zero when the &#x201C;min&#x201D; attribute is absent.");
+                    err("The value of the \u201Cmax\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && Double.isNaN(max) && !(min <= 1)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && !Double.isNaN(low) && !(min <= low)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to the value of the &#x201C;low&#x201D; attribute.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Clow\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(low) && !(0 <= low)) {
-                    err("The value of the &#x201C;low&#x201D; attribute must be greater than or equal to zero when the &#x201C;min&#x201D; attribute is absent.");
+                    err("The value of the \u201Clow\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && !Double.isNaN(high) && !(min <= high)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to the value of the &#x201C;high&#x201D; attribute.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Chigh\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(high) && !(0 <= high)) {
-                    err("The value of the &#x201C;high&#x201D; attribute must be greater than or equal to zero when the &#x201C;min&#x201D; attribute is absent.");
+                    err("The value of the \u201Chigh\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(low) && !Double.isNaN(high) && !(low <= high)) {
-                    err("The value of the &#x201C;low&#x201D; attribute must be less than or equal to the value of the &#x201C;high&#x201D; attribute.");
+                    err("The value of the \u201Clow\u201D attribute must be less than or equal to the value of the \u201Chigh\u201D attribute.");
                 }
                 if (!Double.isNaN(high) && !Double.isNaN(max) && !(high <= max)) {
-                    err("The value of the &#x201C;high&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                    err("The value of the \u201Chigh\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (!Double.isNaN(high) && Double.isNaN(max) && !(high <= 1)) {
-                    err("The value of the &#x201C;high&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                    err("The value of the \u201Chigh\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(low) && !Double.isNaN(max) && !(low <= max)) {
-                    err("The value of the &#x201C;low&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                    err("The value of the \u201Clow\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (!Double.isNaN(low) && Double.isNaN(max) && !(low <= 1)) {
-                    err("The value of the &#x201C;low&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                    err("The value of the \u201Clow\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(min) && !Double.isNaN(optimum)
                         && !(min <= optimum)) {
-                    err("The value of the &#x201C;min&#x201D; attribute must be less than or equal to the value of the &#x201C;optimum&#x201D; attribute.");
+                    err("The value of the \u201Cmin\u201D attribute must be less than or equal to the value of the \u201Coptimum\u201D attribute.");
                 }
                 if (Double.isNaN(min) && !Double.isNaN(optimum)
                         && !(0 <= optimum)) {
-                    err("The value of the &#x201C;optimum&#x201D; attribute must be greater than or equal to zero when the &#x201C;min&#x201D; attribute is absent.");
+                    err("The value of the \u201Coptimum\u201D attribute must be greater than or equal to zero when the \u201Cmin\u201D attribute is absent.");
                 }
                 if (!Double.isNaN(optimum) && !Double.isNaN(max)
                         && !(optimum <= max)) {
-                    err("The value of the &#x201C;optimum&#x201D; attribute must be less than or equal to the value of the &#x201C;max&#x201D; attribute.");
+                    err("The value of the \u201Coptimum\u201D attribute must be less than or equal to the value of the \u201Cmax\u201D attribute.");
                 }
                 if (!Double.isNaN(optimum) && Double.isNaN(max)
                         && !(optimum <= 1)) {
-                    err("The value of the &#x201C;optimum&#x201D; attribute must be less than or equal to one when the &#x201C;max&#x201D; attribute is absent.");
+                    err("The value of the \u201Coptimum\u201D attribute must be less than or equal to one when the \u201Cmax\u201D attribute is absent.");
                 }
             }
 
             // encoding decl
             else if ("meta" == localName
-                    && currentPtr == 1
-                    && stack[1].getName() == "body"
-                    && stack[0].getName() == "html"
+                    && currentPtr == 2
+                    && stack[2].getName() == "head"
+                    && stack[1].getName() == "html"
                     && (atts.getIndex("", "charset") > -1 || lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                             "content-type", atts.getValue("", "http-equiv")))
-                    && stack[1].isChildren()) {
-                err("The internal character encoding declaration must be the first child of the &#x201C;head&#x201D; element.");
+                    && stack[2].isChildren()) {
+                err("The internal character encoding declaration must be the first child of the \u201Chead\u201D element.");
             }
 
             // map required attrs
             else if ("map" == localName && id != null) {
                 String nameVal = atts.getValue("", "name");
                 if (nameVal != null && !nameVal.equals(id)) {
-                    err("The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have an the same value as the &#x201C;name&#x201D; attribute.");
+                    err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
                 }
             }
 
             // bdo required attrs
             else if ("bdo" == localName && atts.getIndex("", "dir") < 0) {
-                err("A &#x201C;bdo&#x201D; element must have an &#x201C;dir&#x201D; attribute.");
+                err("A \u201Cbdo\u201D element must have an \u201Cdir\u201D attribute.");
             }
 
             // datagrid silliness
@@ -893,11 +900,12 @@ public class Assertions extends Checker {
                     && !parent.isChildren()
                     && ("table" == localName || "select" == localName || "datalist" == localName)) {
                 parent.setDatagridFirstChild(localName);
+                skipDatagridCheck = true;
             }
 
             // lang and xml:lang for XHTML5
             if (lang != null && (xmlLang == null || !lang.equals(xmlLang))) {
-                err("When the attribute &#x201C;lang&#x201D; is specified, the element must also have the attribute &#x201C;lang&#x201D; in the XML namespace present with the same value.");
+                err("When the attribute \u201Clang\u201D is specified, the element must also have the attribute \u201Clang\u201D in the XML namespace present with the same value.");
             }
 
             // contextmenu
@@ -956,7 +964,7 @@ public class Assertions extends Checker {
                 for (Map.Entry<StackNode, Locator> entry : openSingleSelects.entrySet()) {
                     StackNode node = entry.getKey();
                     if (node.isSelectedOptions()) {
-                        err("The &#x201C;select&#x201D; element cannot have more than one selected &#x201C;option&#x201D; descendant unless the &#x201C;multiple&#x201D; attribute is specified.");
+                        err("The \u201Cselect\u201D element cannot have more than one selected \u201Coption\u201D descendant unless the \u201Cmultiple\u201D attribute is specified.");
                     } else {
                         node.setSelectedOptions();
                     }
@@ -964,22 +972,22 @@ public class Assertions extends Checker {
             }
 
             // move ancestors
-            if ((ancestorMask & REPEAT_MASK) != 0) {
+            if ((ancestorMask & REPEAT_MASK) == 0) {
                 if ("input" == localName) {
                     if (remove) {
-                        err("An &#x201C;input&#x201D; element of &#x201C;type=\"remove\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("An \u201Cinput\u201D element of \u201Ctype=\"remove\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     } else if (moveUp) {
-                        err("An &#x201C;input&#x201D; element of &#x201C;type=\"move-up\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("An \u201Cinput\u201D element of \u201Ctype=\"move-up\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     } else if (moveDown) {
-                        err("An &#x201C;input&#x201D; element of &#x201C;type=\"move-down\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("An \u201Cinput\u201D element of \u201Ctype=\"move-down\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     }
                 } else if ("button" == localName) {
                     if (remove) {
-                        err("A &#x201C;button&#x201D; element of &#x201C;type=\"remove\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("A \u201Cbutton\u201D element of \u201Ctype=\"remove\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     } else if (moveUp) {
-                        err("A &#x201C;button&#x201D; element of &#x201C;type=\"move-up\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("A \u201Cbutton\u201D element of \u201Ctype=\"move-up\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     } else if (moveDown) {
-                        err("A &#x201C;button&#x201D; element of &#x201C;type=\"move-down\"&#x201D; must have a repetition block or a repetition template as an ancestor.");
+                        err("A \u201Cbutton\u201D element of \u201Ctype=\"move-down\"\u201D must have a repetition block or a repetition template as an ancestor.");
                     }
                 }
             }
@@ -1010,8 +1018,8 @@ public class Assertions extends Checker {
         Set<String> requiredParents = REQUIRED_ROLE_PARENT_BY_CHILD.get(role);
         if (requiredParents != null) {
             if (!requiredParents.contains(parentRole)) {
-                err("An element with &#x201C;role=" + role
-                        + "&#x201D; requires " + renderRoleSet(requiredParents)
+                err("An element with \u201Crole=" + role
+                        + "\u201D requires " + renderRoleSet(requiredParents)
                         + " on the parent.");
             }
         }
@@ -1022,16 +1030,16 @@ public class Assertions extends Checker {
             if (!allowedChildren.contains(role)) {
                 err("Only elements with "
                         + renderRoleSet(allowedChildren)
-                        + " are allowed as children of an element with &#x201C;role="
-                        + parentRole + "&#x201D;.");
+                        + " are allowed as children of an element with \u201Crole="
+                        + parentRole + "\u201D.");
             }
         }
 
         // ARIA row
         if ("row".equals(role)) {
-            if (!("grid".equals(parentRole) || "treegrid".equals(parentRole) || (currentPtr > 0
+            if (!("grid".equals(parentRole) || "treegrid".equals(parentRole) || (currentPtr > 1
                     && "grid".equals(stack[currentPtr - 1].getRole()) || "treegrid".equals(stack[currentPtr - 1].getRole())))) {
-                err("An element with &#x201C;role=row&#x201D; requires &#x201C;role=treegrid&#x201D; or &#x201C;role=grid&#x201D; on the parent or grandparent.");
+                err("An element with \u201Crole=row\u201D requires \u201Crole=treegrid\u201D or \u201Crole=grid\u201D on the parent or grandparent.");
             }
         }
 
@@ -1070,30 +1078,36 @@ public class Assertions extends Checker {
             }
             StackNode child = new StackNode(ancestorMask, localName, role, activeDescendant);
             if (activeDescendant != null) {
-                openActiveDescendants.put(child, getDocumentLocator());
+                openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
             }
             if ("select" == localName && atts.getIndex("", "multiple") > -1) {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("header" == localName) {
-                openHeaders.put(child, getDocumentLocator());
+                openHeaders.put(child, new LocatorImpl(getDocumentLocator()));
             }
             push(child);
         } else {
             StackNode child = new StackNode(ancestorMask, null, role, activeDescendant);
             if (activeDescendant != null) {
-                openActiveDescendants.put(child, getDocumentLocator());
+                openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
             }
             push(child);
         }
         
-        processChildContent(parent);
+        processChildContent(parent, skipDatagridCheck);
     }
 
-    private void processChildContent(StackNode parent) throws SAXException {
+    private void processChildContent(StackNode parent, boolean skipDatagridCheck) throws SAXException {
+        if (parent == null) {
+            return;
+        }
         parent.setChildren();
+        if (skipDatagridCheck) {
+            return;
+        }
         String datagridFirstChild;
         if ((datagridFirstChild = parent.getDatagridFirstChild()) != null) {
-            err("When a &#x201C;" + datagridFirstChild + "&#x201D; is the first child of &#x201C;datagrid&#x201D;, it must not have following siblings.");
+            err("When a \u201C" + datagridFirstChild + "\u201D is the first child of \u201Cdatagrid\u201D, it must not have following siblings.");
             parent.setDatagridFirstChild(null);
         }
     }
@@ -1103,7 +1117,7 @@ public class Assertions extends Checker {
      */
     @Override public void characters(char[] ch, int start, int length)
             throws SAXException {
-        for (int i = 0; i < ch.length; i++) {
+        for (int i = start; i < length; i++) {
             char c = ch[i];
             switch (c) {
                 case ' ':
@@ -1112,7 +1126,7 @@ public class Assertions extends Checker {
                 case '\n':
                     continue;
                 default:
-                    processChildContent(peek());
+                    processChildContent(peek(), false);
                     return;
             }
         }
