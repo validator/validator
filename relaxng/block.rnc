@@ -101,6 +101,10 @@
 			attribute start {
 				common.data.integer
 			}
+		ol.attrs.reversed =
+			attribute reversed {
+				w:string "reversed" | w:string ""
+			}
 	ol.inner =
 		( oli.elem* )
 	ol.inner.phrase =
