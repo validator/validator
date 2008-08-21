@@ -825,7 +825,7 @@
 						  ../@role="treegrid" or 
 			              ../../@role="treegrid"'>
 				An element with &#x201C;role=row&#x201D; requires 
-				&#x201C;role=treegrid&#x201D; or &#x201C;role=grid&#x201D; on the parent.
+				&#x201C;role=treegrid&#x201D; or &#x201C;role=grid&#x201D; on the parent or grandparent.
 			</assert>
 		</rule> 
 		<!-- XXX hoping for a spec change so not bothering with the reciprocal case -->

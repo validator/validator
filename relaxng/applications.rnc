@@ -238,23 +238,23 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.prose |= canvas.elem.prose
 	common.elem.embedded |= canvas.elem.embedded
 
-## Server-sent events: <event-source>
+## Server-sent events: <eventsource>
 
-	event-source.elem =
-		element event-source { event-source.inner & event-source.attrs }
-	event-source.attrs =
+	eventsource.elem =
+		element eventsource { eventsource.inner & eventsource.attrs }
+	eventsource.attrs =
 		(	common.attrs
-		&	event-source.attrs.src?
+		&	eventsource.attrs.src?
 		)
-		event-source.attrs.src =
+		eventsource.attrs.src =
 			attribute src {
 				common.data.uri
 			}
-	event-source.inner =
+	eventsource.inner =
 		( empty )
 
-	common.elem.metadata |= ( event-source.elem & nonHTMLizable )
-	common.elem.phrase |= event-source.elem
+	common.elem.metadata |= ( eventsource.elem & nonHTMLizable )
+	common.elem.phrase |= eventsource.elem
 	
 ## Additional On-Demand Information: <details>
 
