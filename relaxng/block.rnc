@@ -95,6 +95,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	ol.attrs =
 		(	common.attrs
 		&	ol.attrs.start?
+		&	ol.attrs.reversed?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.region
 			)?
