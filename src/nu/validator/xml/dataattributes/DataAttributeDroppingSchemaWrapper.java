@@ -22,12 +22,14 @@
 
 package nu.validator.xml.dataattributes;
 
+import nu.validator.xml.langattributes.XmlLangAttributeDroppingValidatorWrapper;
+
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.Validator;
 
 public class DataAttributeDroppingSchemaWrapper implements Schema {
-
+    
     private final Schema delegate;
 
     /**
@@ -43,7 +45,7 @@ public class DataAttributeDroppingSchemaWrapper implements Schema {
      * @see com.thaiopensource.validate.Schema#createValidator(com.thaiopensource.util.PropertyMap)
      */
     public Validator createValidator(PropertyMap properties) {
-        return new DataAttributeDroppingValidatorWrapper(delegate.createValidator(properties));
+        return new XmlLangAttributeDroppingValidatorWrapper(delegate.createValidator(properties), properties);
     }
 
     /**

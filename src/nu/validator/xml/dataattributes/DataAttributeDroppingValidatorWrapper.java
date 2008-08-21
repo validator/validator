@@ -24,18 +24,25 @@ package nu.validator.xml.dataattributes;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
+import org.xml.sax.ErrorHandler;
 
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 
 public class DataAttributeDroppingValidatorWrapper implements Validator {
 
     private final Validator delegate;
 
+    private final PropertyMap properties;
+
     /**
      * @param delegate
+     * @param properties 
      */
-    public DataAttributeDroppingValidatorWrapper(Validator delegate) {
+    public DataAttributeDroppingValidatorWrapper(Validator delegate, PropertyMap properties) {
         this.delegate = delegate;
+        this.properties = properties;
     }
 
     /**
@@ -43,7 +50,7 @@ public class DataAttributeDroppingValidatorWrapper implements Validator {
      * @see com.thaiopensource.validate.Validator#getContentHandler()
      */
     public ContentHandler getContentHandler() {
-        return new DataAttributeDroppingContentHandlerWrapper(delegate.getContentHandler());
+        return new DataAttributeDroppingContentHandlerWrapper(delegate.getContentHandler(), (ErrorHandler) properties.get(ValidateProperty.ERROR_HANDLER));
     }
 
     /**
