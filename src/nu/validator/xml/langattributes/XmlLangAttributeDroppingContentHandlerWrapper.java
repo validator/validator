@@ -171,7 +171,7 @@ public class XmlLangAttributeDroppingContentHandlerWrapper implements ContentHan
                     uri = attributes.getURI(k);
                     local = attributes.getLocalName(k);
                     if (local == "lang" && uri == "http://www.w3.org/XML/1998/namespace") {
-                        langValue = attributes.getValue(i);
+                        langValue = attributes.getValue(k);
                     }
                     attributesImpl.addAttribute(uri, local, attributes.getQName(k), attributes.getType(k), attributes.getValue(k));                        
                 }
