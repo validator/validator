@@ -247,7 +247,7 @@ def dependencyJarPaths():
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["html5-datatypes", "onvdl-whattf"]))
+                              + jarNamesToPaths(["html5-datatypes", "onvdl-whattf", "htmlparser"]))
   buildModule(
     os.path.join(buildRoot, "util"), 
     "io-xml-util", 
@@ -279,8 +279,7 @@ def buildXmlParser():
     classPath)
 
 def buildHtmlParser():
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["io-xml-util"]))
+  classPath = os.pathsep.join(dependencyJarPaths())
   buildModule(
     os.path.join(buildRoot, "htmlparser"), 
     "htmlparser", 
@@ -474,8 +473,8 @@ def buildAll():
   buildOnvdl()
   buildDatatypeLibrary()
   buildNonSchema()
-  buildUtil()
   buildHtmlParser()
+  buildUtil()
   buildXmlParser()
   buildTestHarness()
   buildValidator()
