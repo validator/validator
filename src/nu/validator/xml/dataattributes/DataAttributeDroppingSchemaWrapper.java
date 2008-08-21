@@ -45,7 +45,7 @@ public class DataAttributeDroppingSchemaWrapper implements Schema {
      * @see com.thaiopensource.validate.Schema#createValidator(com.thaiopensource.util.PropertyMap)
      */
     public Validator createValidator(PropertyMap properties) {
-        return new XmlLangAttributeDroppingValidatorWrapper(delegate.createValidator(properties), properties);
+        return new DataAttributeDroppingValidatorWrapper(delegate.createValidator(properties), properties);
     }
 
     /**
