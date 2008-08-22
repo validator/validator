@@ -707,7 +707,7 @@ public class Assertions extends Checker {
                         }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
-                    if ("lang" == atts.getValue(i)) {
+                    if ("lang" == atts.getLocalName(i)) {
                         xmlLang = atts.getValue(i);
                     }
                 }
