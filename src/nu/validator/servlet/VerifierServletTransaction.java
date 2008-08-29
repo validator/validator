@@ -205,7 +205,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] ABOUT_THIS_SERVICE = "About this service".toCharArray();
 
-    private static final Map pathMap = new HashMap();
+    private static final Map<String, String> pathMap = new HashMap<String, String>();
 
     private static Spec html5spec;
 
