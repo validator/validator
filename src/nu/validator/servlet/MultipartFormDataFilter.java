@@ -144,6 +144,7 @@ public final class MultipartFormDataFilter implements Filter {
                             } else {
                                 contentType = "text/html";
                             }
+                            request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "textarea");
                             fileStream = fileItemStream.openStream();
                             break;
                         } else {
@@ -165,6 +166,7 @@ public final class MultipartFormDataFilter implements Filter {
                         if (contentType == null) {
                             contentType = fileItemStream.getContentType();
                         }
+                        request.setAttribute("nu.validator.servlet.MultipartFormDataFilter.type", "file");
                         fileStream = fileItemStream.openStream();
                         break;
                     }

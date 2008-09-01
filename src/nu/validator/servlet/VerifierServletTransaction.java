@@ -1311,6 +1311,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if (document != null) {
             attrs.addAttribute("value", scrub(document));
         }
+        Object att = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
+        if (att != null) {
+            attrs.addAttribute("class", att.toString());            
+        }
         emitter.startElement("input", attrs);
         emitter.endElement("input");
     }
