@@ -153,6 +153,35 @@ public class XmlLangAttributeDroppingContentHandlerWrapper implements ContentHan
         }
     }
 
+    private static boolean equalsIgnoreAsciiCase(String one,
+            String other) {
+        if (other == null) {
+            if (one == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (one.length() != other.length()) {
+            return false;
+        }
+        for (int i = 0; i < one.length(); i++) {
+            char c0 = one.charAt(i);
+            char c1 = other.charAt(i);
+            if (c0 >= 'A' && c0 <= 'Z') {
+                c0 += 0x20;
+            }
+            if (c1 >= 'A' && c1 <= 'Z') {
+                c1 += 0x20;
+            }
+            if (c0 != c1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    
     private Attributes filterAttributes(Attributes attributes) throws SAXException {
         int len = attributes.getLength();
         String langValue = null;
@@ -175,12 +204,8 @@ public class XmlLangAttributeDroppingContentHandlerWrapper implements ContentHan
                     }
                     attributesImpl.addAttribute(uri, local, attributes.getQName(k), attributes.getType(k), attributes.getValue(k));                        
                 }
-                if (errorHandler != null && !xmlLangValue.equals(langValue)) {
-                    if (langValue == null) {
-                        errorHandler.error(new SAXParseException("When the attribute \u201Cxml:lang\u201D is specified, the element must also have the attribute \u201Clang\u201D present with the same value.", locator));
-                    } else {
-                        errorHandler.error(new SAXParseException("When the attribute \u201Cxml:lang\u201D is specified, the element must also have the attribute \u201Clang\u201D present with the same value. (The values were \u201C" + xmlLangValue + "\u201D and \u201C" + langValue + "\u201D.)", locator));                        
-                    }
+                if (errorHandler != null && !equalsIgnoreAsciiCase(xmlLangValue, langValue)) {
+                    errorHandler.error(new SAXParseException("When the attribute \u201Cxml:lang\u201D in no namespace is specified, the element must also have the attribute \u201Clang\u201D present with the same value.", locator));
                 }
                 return attributesImpl;
             }
