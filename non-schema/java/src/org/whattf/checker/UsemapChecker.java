@@ -80,8 +80,6 @@ public class UsemapChecker extends Checker {
                 err("The hash-name reference in attribute \u201Cusemap\u201D referred to \u201C" + entry.getKey() + "\u201D, but there is no \u201Cmap\u201D element with a \u201Cname\u201D attribute with that value.", entry.getValue());
             }
         }
-        usemapLocationsByName.clear();
-        mapNames.clear();
     }
 
     /**
@@ -99,6 +97,14 @@ public class UsemapChecker extends Checker {
     @Override
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
+    }
+
+    /**
+     * @see org.whattf.checker.Checker#reset()
+     */
+    @Override public void reset() {
+        usemapLocationsByName.clear();
+        mapNames.clear();
     }
 
     

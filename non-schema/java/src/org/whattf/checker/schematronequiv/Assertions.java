@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
 
 public class Assertions extends Checker {
 
-    public static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+    private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
             String lowerCaseLiteral, String string) {
         if (string == null) {
             return false;
@@ -49,6 +49,34 @@ public class Assertions extends Checker {
         for (int i = 0; i < lowerCaseLiteral.length(); i++) {
             char c0 = lowerCaseLiteral.charAt(i);
             char c1 = string.charAt(i);
+            if (c1 >= 'A' && c1 <= 'Z') {
+                c1 += 0x20;
+            }
+            if (c0 != c1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private static boolean equalsIgnoreAsciiCase(String one,
+            String other) {
+        if (other == null) {
+            if (one == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (one.length() != other.length()) {
+            return false;
+        }
+        for (int i = 0; i < one.length(); i++) {
+            char c0 = one.charAt(i);
+            char c1 = other.charAt(i);
+            if (c0 >= 'A' && c0 <= 'Z') {
+                c0 += 0x20;
+            }
             if (c1 >= 'A' && c1 <= 'Z') {
                 c1 += 0x20;
             }
@@ -541,7 +569,7 @@ public class Assertions extends Checker {
             }
         }
         
-        clearCollections();
+        reset();
         stack = null;
     }
 
@@ -583,13 +611,13 @@ public class Assertions extends Checker {
      * @see org.whattf.checker.Checker#startDocument()
      */
     @Override public void startDocument() throws SAXException {
-        clearCollections();
+        reset();
         stack = new StackNode[32];
         currentPtr = 0;
         stack[0] = null;
     }
 
-    private void clearCollections() {
+    public void reset() {
         openHeaders.clear();
         openSingleSelects.clear();
         openActiveDescendants.clear();
@@ -904,7 +932,7 @@ public class Assertions extends Checker {
             }
 
             // lang and xml:lang for XHTML5
-            if (lang != null && (xmlLang == null || !lang.equals(xmlLang))) {
+            if (lang != null && (xmlLang == null || !equalsIgnoreAsciiCase(lang, xmlLang))) {
                 err("When the attribute \u201Clang\u201D is specified, the element must also have the attribute \u201Clang\u201D in the XML namespace present with the same value.");
             }
 
