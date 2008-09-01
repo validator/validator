@@ -37,18 +37,18 @@ var rangePattern = /^#l-?[0-9]+c[0-9]+$/
 var exactPattern = /^#cl-?[0-9]+c[0-9]+$/
 
 function boot() {
-    schemaChanged()
-    parserChanged()
-    installHandlers()
+	schemaChanged()
+	parserChanged()
+	installHandlers()
 }
 
 function reboot() {
 	boot()
-    initFieldHolders()
+	initFieldHolders()
 	installDynamicStyle()
 	updateFragmentIdHilite()
 	window.setInterval(emulateHashChanged, 50)
-    initGrouping()
+	initGrouping()
 }
 
 function installDynamicStyle() {
@@ -75,60 +75,66 @@ function installHandlers() {
 }
 
 function initFieldHolders() {
-    if (document.forms[0].className == 'simple') {
-        return
-    }
-    urlInput = document.getElementById('doc')
-    
-    textarea = createHtmlElement('textarea')
-    if (textarea) {
-        textarea.cols = 72
-        textarea.rows = 15
-        textarea.id = 'doc'
-        textarea.name = 'content'
-        copySourceIntoTextArea()
-        if (textarea.value == '') {
-            textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
-        }
-    }
-    
-    fileInput = createHtmlElement('input')
-    if (fileInput) {
-        fileInput.type = 'file'
-        fileInput.id = 'doc'
-        fileInput.name = 'file'
-    }
-    
-    var td = urlInput.parentNode
-    if (td) {
-        var th = td.previousSibling
-        var label = th.firstChild
-        var modeSelect = createHtmlElement("select")
-        modeSelect.appendChild(createOption('Address', ''))
-        modeSelect.appendChild(createOption('File Upload', 'file'))
-        modeSelect.appendChild(createOption('Text Field', 'textarea'))
-        modeSelect.onchange = function() {
-            if (this.value == 'file') {
-                installFileUpload()
-            }
-            else 
-                if (this.value == 'textarea') {
-                    installTextarea()
-                }
-                else {
-                    installUrlInput()
-                }
-        }
-        th.replaceChild(modeSelect, label)
-    }
+	if (document.forms[0].className == 'simple') {
+		return
+	}
+	urlInput = document.getElementById('doc')
+	
+	textarea = createHtmlElement('textarea')
+	if (textarea) {
+		textarea.cols = 72
+		textarea.rows = 15
+		textarea.id = 'doc'
+		textarea.name = 'content'
+		copySourceIntoTextArea()
+		if (textarea.value == '') {
+			textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
+		}
+	}
+	
+	fileInput = createHtmlElement('input')
+	if (fileInput) {
+		fileInput.type = 'file'
+		fileInput.id = 'doc'
+		fileInput.name = 'file'
+	}
+	
+	var td = urlInput.parentNode
+	if (td) {
+		var th = td.previousSibling
+		var label = th.firstChild
+		var modeSelect = createHtmlElement("select")
+		modeSelect.appendChild(createOption('Address', ''))
+		modeSelect.appendChild(createOption('File Upload', 'file'))
+		modeSelect.appendChild(createOption('Text Field', 'textarea'))
+		modeSelect.onchange = function() {
+			if (this.value == 'file') {
+				installFileUpload()
+			}
+			else 
+				if (this.value == 'textarea') {
+					installTextarea()
+				}
+				else {
+					installUrlInput()
+				}
+		}
+		th.replaceChild(modeSelect, label)
+	}
+	
+	if (urlInput.className == 'file') {
+	  installFileUpload()
+	} else if (urlInput.className == 'textarea') {
+	  installTextarea()	
+	}
 }
 
 function createOption(text, value) {
-    var rv = createHtmlElement('option')
-    rv.value = value
-    var tn = document.createTextNode(text)
-    rv.appendChild(tn)
-    return rv
+	var rv = createHtmlElement('option')
+	rv.value = value
+	var tn = document.createTextNode(text)
+	rv.appendChild(tn)
+	return rv
 }
 
 function schemaChanged() {
@@ -158,7 +164,7 @@ function presetChanged() {
 	if (input && select) {
 		input.value = select.value
 	}
-    toggleParsers(select.value)
+	toggleParsers(select.value)
 }
 
 function toggleParsers(newValue) {
@@ -199,17 +205,17 @@ function toggleParsers(newValue) {
 }
 
 function isHtmlParserValue(parser) {
-    return (parser.indexOf("html") == 0)
+	return (parser.indexOf("html") == 0)
 }
 
 function isHtmlCompatiblePreset(preset) {
-    return (preset == "" ||
-    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-basic.rnc") == 0 ||
-    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
-    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
-    preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
-    preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0 ||
-    preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0)
+	return (preset == "" ||
+	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-basic.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0)
 }
 
 function parserChanged() {
@@ -275,168 +281,168 @@ function undoFormSubmission() {
 	enableById("charset")
 	enableById("nsfilter")
 	maybeMoveDocumentRowUp()
-    schemaChanged()
-    parserChanged()
+	schemaChanged()
+	parserChanged()
 	return true
 }
 
 function maybeMoveDocumentRowDown() {
-    var field = document.getElementById('doc')
-    if (field && field.name != 'doc') {
-        var td = field.parentNode
-        if (td) {
-            var tr = td.parentNode
-            var tbody = tr.parentNode
-            tbody.appendChild(tr)
-        }
-    }
+	var field = document.getElementById('doc')
+	if (field && field.name != 'doc') {
+		var td = field.parentNode
+		if (td) {
+			var tr = td.parentNode
+			var tbody = tr.parentNode
+			tbody.appendChild(tr)
+		}
+	}
 }
 
 function maybeMoveDocumentRowUp() {
-    var field = document.getElementById('doc')
+	var field = document.getElementById('doc')
 	if (field) {
-        var td = field.parentNode
-        if (td) {
-            var tr = td.parentNode
+		var td = field.parentNode
+		if (td) {
+			var tr = td.parentNode
 			if (tr && tr.previousSibling) {
 				var tbody = tr.parentNode
 				tbody.insertBefore(tr, tbody.firstChild)
 			}
-        }		
+		}		
 	}
 }
 
 function disableById(id) {
-    var field = document.getElementById(id)
-    if (field) {
-        field.disabled = true
-    }
+	var field = document.getElementById(id)
+	if (field) {
+		field.disabled = true
+	}
 }
 
 function disableByIdIfEmptyString(id) {
-    var field = document.getElementById(id)
-    if (field) {
-        if ("" == field.value) {
-            field.disabled = true
-        }
-    }
+	var field = document.getElementById(id)
+	if (field) {
+		if ("" == field.value) {
+			field.disabled = true
+		}
+	}
 }
 
 function enableById(id) {
-    var field = document.getElementById(id)
-    if (field) {
-        field.disabled = false
-    }
+	var field = document.getElementById(id)
+	if (field) {
+		field.disabled = false
+	}
 }
 
 function createHtmlElement(tagName) {
-    return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName)
+	return document.createElementNS ? document.createElementNS("http://www.w3.org/1999/xhtml", tagName) : document.createElement(tagName)
 }
 
 function installGroupingToggle() {
-    var para = createHtmlElement('p')
-    var button = createHtmlElement('input')
-    button.type = 'button'
-    button.value = 'Group Messages'
-    para.appendChild(button)
-    if (hasDuplicateMessages) {
-        button.onclick = function() {
-            if (currentOl == ungroupedOl) {
-                currentOl.parentNode.replaceChild(groupedOl, currentOl)
-                currentOl = groupedOl
-                this.value = 'Ungroup Messages'
-            }
-            else {
-                currentOl.parentNode.replaceChild(ungroupedOl, currentOl)
-                currentOl = ungroupedOl
-                this.value = 'Group Messages'
-            }
-        }
-    }
-    else {
-        button.disabled = true
-    }
-    currentOl.parentNode.insertBefore(para, currentOl)
+	var para = createHtmlElement('p')
+	var button = createHtmlElement('input')
+	button.type = 'button'
+	button.value = 'Group Messages'
+	para.appendChild(button)
+	if (hasDuplicateMessages) {
+		button.onclick = function() {
+			if (currentOl == ungroupedOl) {
+				currentOl.parentNode.replaceChild(groupedOl, currentOl)
+				currentOl = groupedOl
+				this.value = 'Ungroup Messages'
+			}
+			else {
+				currentOl.parentNode.replaceChild(ungroupedOl, currentOl)
+				currentOl = ungroupedOl
+				this.value = 'Group Messages'
+			}
+		}
+	}
+	else {
+		button.disabled = true
+	}
+	currentOl.parentNode.insertBefore(para, currentOl)
 }
 
 function initGrouping() {
-    var n = document.documentElement.lastChild.firstChild
-    while (n) {
-        // The line below protects IE users from a crash
-        if (n instanceof HTMLOListElement && n.className != 'source') { // deliberately IE-incompatible
-            //		if (n.start) { // cross-browser compatible
-            currentOl = n
-            break
-        }
-        n = n.nextSibling
-    }
-    if (!currentOl) {
-        return
-    }
-    ungroupedOl = currentOl
-    groupedOl = buildGrouped(ungroupedOl)
-    installGroupingToggle()
+	var n = document.documentElement.lastChild.firstChild
+	while (n) {
+		// The line below protects IE users from a crash
+		if (n instanceof HTMLOListElement && n.className != 'source') { // deliberately IE-incompatible
+			//		if (n.start) { // cross-browser compatible
+			currentOl = n
+			break
+		}
+		n = n.nextSibling
+	}
+	if (!currentOl) {
+		return
+	}
+	ungroupedOl = currentOl
+	groupedOl = buildGrouped(ungroupedOl)
+	installGroupingToggle()
 }
 
 function buildGrouped(ol) {
-    var locListByMsg = {}
-    var rv = createHtmlElement('ol')
-    var li = ol.firstChild
-    var i = 1
-    while (li) {
-        var msgPara = li.firstChild
-        var locExtract = createHtmlElement('li')
-        locExtract.value = i
-        var loc = msgPara.nextSibling
-        var elaboration = null
-        if (loc && loc.className && loc.className == 'location') {
-            locExtract.appendChild(loc.cloneNode(true))
-            var extract = loc.nextSibling
-            if (extract && extract.className && extract.className == 'extract') {
-                locExtract.appendChild(extract.cloneNode(true))
-                elaboration = extract.nextSibling
-            }
-            else {
-                elaboration = extract
-            }
-        }
-        else {
-            elaboration = loc
-            var noLoc = createHtmlElement('p')
-            noLoc.appendChild(document.createTextNode("(No location)"))
-            locExtract.appendChild(noLoc)
-        }
-        var locList = null
-        var msgText = msgPara.innerHTML
-        locList = locListByMsg[msgText]
-        if (locList) {
-            hasDuplicateMessages = true
-        }
-        else {
-            locList = createHtmlElement('ol')
-            locListByMsg[msgText] = locList
-            var msgItem = createHtmlElement('li')
-            msgItem.className = li.className
-            msgItem.appendChild(msgPara.cloneNode(true))
-            if (elaboration) {
-                msgItem.appendChild(elaboration.cloneNode(true))
-            }
-            msgItem.appendChild(locList)
-            rv.appendChild(msgItem)
-        }
-        locList.appendChild(locExtract)
-        
-        li = li.nextSibling
-        i++
-    }
-    
-    return rv
+	var locListByMsg = {}
+	var rv = createHtmlElement('ol')
+	var li = ol.firstChild
+	var i = 1
+	while (li) {
+		var msgPara = li.firstChild
+		var locExtract = createHtmlElement('li')
+		locExtract.value = i
+		var loc = msgPara.nextSibling
+		var elaboration = null
+		if (loc && loc.className && loc.className == 'location') {
+			locExtract.appendChild(loc.cloneNode(true))
+			var extract = loc.nextSibling
+			if (extract && extract.className && extract.className == 'extract') {
+				locExtract.appendChild(extract.cloneNode(true))
+				elaboration = extract.nextSibling
+			}
+			else {
+				elaboration = extract
+			}
+		}
+		else {
+			elaboration = loc
+			var noLoc = createHtmlElement('p')
+			noLoc.appendChild(document.createTextNode("(No location)"))
+			locExtract.appendChild(noLoc)
+		}
+		var locList = null
+		var msgText = msgPara.innerHTML
+		locList = locListByMsg[msgText]
+		if (locList) {
+			hasDuplicateMessages = true
+		}
+		else {
+			locList = createHtmlElement('ol')
+			locListByMsg[msgText] = locList
+			var msgItem = createHtmlElement('li')
+			msgItem.className = li.className
+			msgItem.appendChild(msgPara.cloneNode(true))
+			if (elaboration) {
+				msgItem.appendChild(elaboration.cloneNode(true))
+			}
+			msgItem.appendChild(locList)
+			rv.appendChild(msgItem)
+		}
+		locList.appendChild(locExtract)
+		
+		li = li.nextSibling
+		i++
+	}
+	
+	return rv
 }
 
 function reflow(element) {
-    if (element.offsetHeight) {
-        var reflow = element.offsetHeight                
-    }
+	if (element.offsetHeight) {
+		var reflow = element.offsetHeight				
+	}
 }
 
 function installTextarea() {
@@ -453,9 +459,9 @@ function installTextarea() {
 		}
 	}
 	var showSource = document.getElementById("showsource")
-    if (showSource) {
-        showSource.checked = true
-    }
+	if (showSource) {
+		showSource.checked = true
+	}
 }
 
 function installFileUpload() {
@@ -489,30 +495,30 @@ function installUrlInput() {
 }
 
 function copySourceIntoTextArea() {
-    var strings = []
-    var source = null
-    var n = document.documentElement.lastChild.firstChild
-    while (n) {
-        if (n.className == 'source') {
-            source = n
-            break
-        }
-        n = n.nextSibling
-    }
-    if (source && textarea) {
-        var li = source.firstChild
-        while (li) {
-            var code = li.firstChild
-            if (hasTextContent) {
-                strings.push(code.textContent)
-            }
-            else {
-                strings.push(code.innerText)
-            }
-            li = li.nextSibling
-        }
-        textarea.value = strings.join('\n')
-    }
+	var strings = []
+	var source = null
+	var n = document.documentElement.lastChild.firstChild
+	while (n) {
+		if (n.className == 'source') {
+			source = n
+			break
+		}
+		n = n.nextSibling
+	}
+	if (source && textarea) {
+		var li = source.firstChild
+		while (li) {
+			var code = li.firstChild
+			if (hasTextContent) {
+				strings.push(code.textContent)
+			}
+			else {
+				strings.push(code.innerText)
+			}
+			li = li.nextSibling
+		}
+		textarea.value = strings.join('\n')
+	}
 }
 
 function updateFragmentIdHilite() {
