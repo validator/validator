@@ -37,6 +37,7 @@
 	<LI><P>Schematron <EM>1.5 </EM>validation (standalone schemas
 	only—ISO Schematron or Schematron embedded in RELAX NG are <EM>not</EM>
 	supported)</P>
+	<LI><P>NVDL-driven validation.</P>
 	<LI><P>XML 1.0 and <a href="http://about.validator.nu/htmlparser/">HTML5 parsing</a>.</P>
 	<LI><P><a href='#details'>Bring your own schemas</a> or <a href='#presets'>use easy presets</a>.</P>
 	<LI><P><a href='#api'>RESTful Web service API</a></P>
@@ -57,7 +58,7 @@
 	conditions.</P>
 </UL>
 <H2 id="usage">Basic Usage</H2>
-<P>Enter the URL (<CODE>http</CODE> or <CODE>https</CODE> IRI to be
+<P>Enter the URL (<CODE>http</CODE>, <CODE>https</CODE> or <code>data</code> IRI to be
 exact) of the document you want to validate in the field labeled
 “Document” and submit the form. That’s all it takes in most
 cases. 
@@ -69,61 +70,58 @@ based on the HTTP <CODE>Content-Type</CODE> of the document. In the
 the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
 <H2 id="config">Configurability</H2>
 <DL>
-	<DT>Schemas 
-	</DT><DD><P>
-	When the field for schemas is left empty, the validator will try to
+	<DT>Schemas</DT>
+	<DD><P>When the field for schemas is left empty, the validator will try to
 	choose a schema on its own. If you are not happy with the guessed
 	preset, you can specify a schema either by selecting a preset or by
-	entering a space-separated list of schema URLs (<CODE>http</CODE> or
-	<CODE>https</CODE> IRIs). In addition to actual schemas hosted on an
-	HTTP server, you may use certain special URLs to invoke <A HREF="#checkers">checkers
+	entering a space-separated list of schema URLs (<CODE>http</CODE>,
+	<CODE>https</CODE> or <code>data</code> IRIs). In addition to actual schemas, you may use 
+	certain special URLs to invoke <A HREF="#checkers">checkers
 	that seem like special schemas but aren’t actually implemented as
-	schemas</A>.</P></DD><DT>
-	Parser 
-	</DT><DD><P>
-	If the automatic choice of parser does not work for you, you can
+	schemas</A>.</P></DD>
+	
+	<DT>Parser</DT>
+	<DD><P>If the automatic choice of parser does not work for you, you can
 	choose the parser manually. The choice of parser affects the HTTP
-	<CODE>Accept</CODE> request header that is sent.</P></DD><DT id="content-type">Be lax about HTTP Content-Type 
-	</DT><DD><P>
-	When the lax option is set, <CODE>text/html</CODE>, <CODE>text/xsl</CODE>
+	<CODE>Accept</CODE> request header that is sent.</P></DD>
+	
+	<DT id="content-type">Be lax about HTTP Content-Type</DT>
+	<DD><P>When the lax option is set, <CODE>text/html</CODE>, <CODE>text/xsl</CODE>
 	and <CODE>text/plain</CODE> are allowed as XML content types and
 	<CODE>text/plain</CODE> is allowed as an HTML content type and, if
 	the URL ends with <CODE>.rnc</CODE>, as a Compact Syntax content
 	type. Also, in the lax mode the US-ASCII default for <CODE>text/*</CODE>
-	XML types is not enforced.</P><P>
-	Normally, schemas using the RELAX NG XML syntax, Schematron schemas
+	XML types is not enforced.</P>
+	<P>Normally, schemas using the RELAX NG XML syntax, Schematron schemas
 	and the XML documents to be validated are expected to be served
 	using an XML content type. Schemas using the RELAX NG Compact Syntax
 	are expected to be served using <CODE>application/relax-ng-compact-syntax</CODE>
 	content type. (The unregistered <CODE>application/vnd.relax-ng.rnc</CODE>
 	content type is also understood.) HTML documents are expected to be
-	served as <CODE>text/html</CODE>.</P></DD><DT>
-	Show Source 
-	</DT><DD><P>
-	You may check the “Show Source” checkbox to show the decoded
+	served as <CODE>text/html</CODE>.</P></DD>
+	
+	<dt>Show Image Report</dt>
+	<dd><p>When the “Show Image Report” checkbox is set, a report concerning the textual 
+	alternatives of <code>img</code> elements in the XHTML namespace is shown for accessibility 
+	review.</p></dd>
+	
+	<DT>Show Source</DT>
+	<DD><P>You may check the “Show Source” checkbox to show the decoded
 	source of the document being checked. Please note that the source
 	may not be shown in its entirety if the parser encounters a fatal
 	error. Moreover, the show source feature shows the decoded Unicode
 	source. Erroneous byte sequences in the original source and
 	characters that would render the validator output as non-conforming
-	(e.g. U+0000) are not represented faithfully.</P></DD></DL>
+	(e.g. U+0000) are not represented faithfully.</P></DD>
+	</DL>
 <H2 id="alt-input">Alternative Modes of Input</H2>
-<P>There are various alternative ways of giving input to
-Validator.nu.</P>
-<UL>
-	<LI><P><A HREF="http://about.validator.nu/file-temp/">File upload</A>.
-	(This is likely to be integrated into the main UI in the future.)</P>
-	<LI><P><A HREF="http://about.validator.nu/textarea-temp/">Text area</A>.
-	(This is likely to be integrated into the main UI in the future.)</P>
-	<LI><P><A HREF="http://about.validator.nu/html5check.py">Command-line
-	script</A> that uploads documents from the local filesystem to the
-	(X)HTML5 validator.</P>
-	<LI><P>You can check HTML5 fragments through <A HREF="http://html5.lachy.id.au/output">Lachlan
-	Hunt’s service</A> that uses Validator.nu as its validation back
-	end.</P>
-	<LI><P><A HREF="http://cmlcomp.org/validator/">The CMLComp Validator</A>
-	makes it easy to upload CML files for checking.</P>
-</UL>
+<P>For simplicity, the HTML5 facet only shows UI for validation by URL. Validation by text area 
+and by file upload are available in the generic facet.</P>
+<p>There is a <A HREF="http://about.validator.nu/html5check.py">command-line script</A> that 
+uploads documents from the local filesystem to the (X)HTML5 validator. <a href="http://blog.whatwg.org/vim-checker">Integration into vim is 
+available</a>.</P>
+<P><A HREF="http://cmlcomp.org/validator/">The CMLComp Validator</A> makes it easy to upload CML 
+files for checking.</P>
 <H2 id="api">Web Service API</H2>
 <P>If you want to create you own alternative mode of input or want to
 call Validator.nu (or <A HREF="#src">your own local copy</A>) from
@@ -132,84 +130,34 @@ service API</A>. In addition to the modes of input that work from
 HTML forms, you can also <A HREF="http://wiki.whatwg.org/wiki/Validator.nu_POST_Body_Input">POST
 the document to be checked as an HTTP entity body</A>. In addition to
 the default HTML output, the messages are also available as XHTML,
-XML, JSON and plain text.</P>
+XML, JSON, GNU error format and plain text.</P>
 <H2 id="presets">Preset Schemas</H2>
 <DL>
-	<DT>DocBook 5.0b5 
-	</DT><DD><P>
-	The official schema for DocBook 5.0b5. (DocBook 5 is namespaced, so
-	this schema won’t validate DocBook 4 documents.)</P></DD><DT>
-	RELAX NG 
-	</DT><DD><P>
-	The RELAX NG schema for RELAX NG. Written by James Clark.</P></DD><DT>
-	SVG 1.1 
-	</DT><DD><P>
-	The SVG 1.1 Full schema from the W3C with datatyping refinements by
-	Henri Sivonen.</P></DD><DT>
-	XHTML Basic 
-	</DT><DD><P>
-	A schema for XHTML Basic. Suitable for use with the HTML parser.
-	Originally written by James Clark. Improved by Petr N&aacute;levka
-	and Henri Sivonen.</P></DD><DT>
-	XHTML 1.0 Frameset 
-	</DT><DD><P>
-	A schema for XHTML 1.0 Frameset. Do not use. :-) Originally written
-	by James Clark. Improved by Petr N&aacute;levka and Henri Sivonen.</P></DD><DT>
-	XHTML 1.0 Strict 
-	</DT><DD><P>
-	A schema for XHTML 1.0 Strict. Suitable for use HTML 4.01 checking
-	as well. Originally written by James Clark. Improved by Petr N&aacute;levka
-	and Henri Sivonen.</P></DD><DT>
-	XHTML 1.0 Strict with partial WCAG 1.0 checks 
-	</DT><DD><P>
-	Adds partial WCAG checks (by Petr N&aacute;levka) to the previous
-	schema.</P></DD><DT>
-	XHTML 1.0 Strict, SVG 1.1 plus MathML 2.0</DT><DD><P>
-	This schema combines a schema for XHTML 1.0 Strict (see above), SVG
-	1.1 (see above) and <A HREF="http://yupotan.sppd.ne.jp/relax-ng/mml2.html">MathML
-	2.0</A> (by Yutaka Furubayashi with refinements by Henri Sivonen).
-	Note that this schema uses XHTML 1.0 Strict as opposed to XHTML 1.1,
-	which is used in the W3C XHTML+SVG+MathML DTD. SVG subtrees are
-	allowed where images are allowed in XHTML 1.0 Strict. The schema has
-	holes that allows embedded OpenMath, RDF and Inkscape markup, but
-	these are not properly validated. 
-	</P></DD><DT>
-	XHTML 1.0 Strict, Ruby, SVG 1.1 plus MathML 2.0 
-	</DT><DD><P>
-	Same as above except Ruby support is added as well. Please note that
-	XHTML 1.0 Strict plus Ruby is subtly different from XHTML 1.1.</P></DD><DT>
-	XHTML 1.0 Transitional 
-	</DT><DD><P>
-	A schema for XHTML 1.0 Transitional. Suitable for use HTML 4.01
-	checking as well. Originally written by James Clark. Improved by
-	Petr N&aacute;levka and Henri Sivonen.</P></DD><DT>
-	XHTML 1.0 Transitional with partial WCAG 1.0 checks 
-	</DT><DD><P>
-	Adds partial WCAG checks (by Petr N&aacute;levka) to the previous
-	schema.</P></DD><DT>
-	HTML5 (experimental) 
-	</DT><DD><P>
-	A schema for HTML5. Suitable for use with
-	the HTML parser. Written by fantasai and Henri Sivonen. (<EM>This
-	schema is just an SVN snapshot—not a stable release version.</EM>)</P></DD><DT>
-	XHTML5 (experimental) 
-	</DT><DD><P>
-	A schema for full XHTML5. <EM>Not</EM>
-	suitable for use with the HTML parser. Written by fantasai and Henri
-	Sivonen. (<EM>This schema is just an SVN snapshot—not a stable
-	release version.</EM>)</P></DD><DT>
-	XHTML5, SVG 1.1 plus MathML 2.0 (experimental) 
-	</DT><DD><P>
-	This schema combines a schema for XHTML5 (see above), SVG 1.1 (see
-	above) and <A HREF="http://yupotan.sppd.ne.jp/relax-ng/mml2.html">MathML
-	2.0</A> (by Yutaka Furubayashi with refinements by Henri Sivonen).
-	SVG subtrees are allowed where images are allowed. The schema has
-	holes that allows embedded OpenMath, RDF and Inkscape markup, but
-	these are not properly validated. 
-	</P></DD><DT>
-	XSLT 1.0 
-	</DT><DD><P>
-	A schema for XSLT 1.0. Written by James Clark.</P></DD></DL>
+<dt>HTML5 (experimental)</dt>
+<dd><p>HTML5 (<code>text/html</code>-compatible content models)</p></dd>
+<dt>HTML5+ARIA (experimental)</dt>
+<dd><p>HTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>)</p></dd>
+<dt>HTML 4.01 Strict + IRI / XHTML 1.0 Strict + IRI</dt>
+<dd><p>XHTML 1.0 Strict with IRI support. Generally suitable for use HTML 4.01 Strict checking
+as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes.</p></dd>
+<dt>HTML 4.01 Transitional + IRI / XHTML 1.0 Transitional + IRI</dt>
+<dd><p>XHTML 1.0 Transitional with IRI support. Generally suitable for use HTML 4.01 Transitional checking
+as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes.</p></dd>
+<dt>HTML 4.01 Frameset + IRI / XHTML 1.0 Frameset + IRI</dt>
+<dd><p>XHTML 1.0 Frameset with IRI support. Generally suitable for use HTML 4.01 Frameset checking
+as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes. Do not use. :-)</p></dd>
+<dt>XHTML5 (experimental)</dt>
+<dd><p>XHTML5 (XML-compatible content models)</p></dd>
+<dt>XHTML5+ARIA, SVG 1.1 plus MathML 2.0 (experimental)</dt>
+<dd><p>XHTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>), SVG 1.1, MathML 2.0 and holes for OpenMath, RDF and Inkscape cruft.</p></dd>
+<dt>XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + IRI</dt>
+<dd><p></p></dd>
+<dt>XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + IRI</dt>
+<dd><p></p></dd>
+<dt>XHTML Basic + IRI</dt>
+<dd><p>A schema for XHTML Basic with IRI support. Suitable for use with the HTML parser.</p></dd>
+<dt>SVG 1.1 + IRI</dt>
+<dd><p>SVG 1.1 Full with IRI support (Inkscape cruft not permitted).</p></dd>
 <H2 id="checkers">Non-Schema Checkers</H2>
 <P>The service supports a few special pseudo-schema URIs that map to
 checkers written in a Turing-complete programming language.</P>
@@ -398,8 +346,7 @@ This will download, build and run the system at
 <CODE>http://localhost:8888/</CODE>. For other options, please run
 <KBD>python build/build.py --help</KBD> instead. Please note that the
 dependencies are big. The script will spend time downloading stuff.
-The script requires Python, Subversion and JDK 5 or later (JDK 6 tested; JDK 7 or IcedTea not). (Tested on
-Mac OS X and Ubuntu. Windows compatibility is unknown.)</P>
+The script requires Python, Subversion and JDK 5 or later (JDK 6 and Hardy’s OpenJDK work). (Tested on Mac OS X and Ubuntu. Windows compatibility is unknown.) <strong>Note:</strong> The script wants to see a Sun-compatible <code>jar</code> executable. Debian <code>fastjar</code> will not work.</P>
 <H3>Deployment</H3>
 <P>The above example starts a standalone HTTP server with debug
 messages printed to the console. To use <A HREF="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP13</A>
@@ -532,7 +479,7 @@ officials if necessary). However, I reserve the right to publish
 aggregate statistics derived from the logs.</P>
 <hr>
 <div class="footer">
-<p>Text last updated: 2008-01-15</p>
+<p>Text last updated: 2008-07-14</p>
 <p class="copyrightnotice">The following notice applies to this HTML file:</p>
 <p>Copyright (c) 2005-2007 Henri Sivonen<br>
 Copyright (c) 2007-2008 Mozilla Foundation</p>
