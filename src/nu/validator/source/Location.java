@@ -33,10 +33,6 @@ public final class Location implements Comparable<Location>, Cloneable {
 
     private static int compares = 0;
     
-    public static int getCompares() {
-        return compares;
-    }
-    
     private final SourceCode owner;
     private final int line;
     private final int column;
