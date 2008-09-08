@@ -67,7 +67,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
 
     private static final Pattern[] PATTERNS = {
       Pattern.compile("Duplicate ID \u201C[^\u201D]*\u201D."),
-      Pattern.compile("Bad value \u201C.*\u201D for attribute "),
+      Pattern.compile("Bad value \u201C[^\u201D]*\u201D for attribute "),
       Pattern.compile("declares a duplicate ID value \u201C[^\u201D]*\u201D"),
       Pattern.compile("The hashed ID reference in attribute \u201Cusemap\u201D referred to \u201C[^\u201D]*\u201D,"),
     };
@@ -103,8 +103,6 @@ public class ValidationWorker implements Runnable, ErrorHandler,
 
     private final XMLReader parser;
 
-    private Validator validator;
-
     private final HashSet<String> parseErrors = new HashSet<String>();
 
     private final HashSet<String> validationErrors = new HashSet<String>();
@@ -125,7 +123,6 @@ public class ValidationWorker implements Runnable, ErrorHandler,
         this.out = out;
         this.rootDir = rootDir;
         this.schemas = schemas;
-        this.validator = setupValidator(schemas);
         this.parser = setupParser();
     }
 
@@ -174,7 +171,6 @@ public class ValidationWorker implements Runnable, ErrorHandler,
         htmlParser.setDocumentModeHandler(this);
         XMLReader rv = new AttributesPermutingXMLReaderWrapper(htmlParser);
         rv.setErrorHandler(this);
-        rv.setContentHandler(validator.getContentHandler());
         return rv;
     }
 
@@ -185,10 +181,10 @@ public class ValidationWorker implements Runnable, ErrorHandler,
             try {
                 while ((inLine = in.readLine()) != null) {
                     parseErrors.clear();
-                    validator.reset();
+                    validationErrors.clear();
                     documentMode = null;
 
-                    validator = setupValidator(schemas);
+                    Validator validator = setupValidator(schemas);
                     parser.setContentHandler(validator.getContentHandler());
                     
                     String md5;
@@ -214,6 +210,8 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                     
                     parser.parse(is);
 
+                    validator = null;
+                    
                     StringBuilder sb = new StringBuilder();
                     boolean first = true;
                     
@@ -223,7 +221,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                         } else {
                             first = false;                                
                         }
-                        sb.append(url + '\t' + documentMode + "\tPARSE\t"
+                        sb.append(url + '\t' + documentMode + "\tP\t"
                                 + "NEITHER ERRORS");                        
                     }
                     if (parseErrors.isEmpty()) {
@@ -232,7 +230,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                         } else {
                             first = false;                                
                         }
-                        sb.append(url + '\t' + documentMode + "\tPARSE\t"
+                        sb.append(url + '\t' + documentMode + "\tP\t"
                                 + "NO PARSE ERRORS");
                     } else {
                         for (String error : parseErrors) {
@@ -241,7 +239,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                             } else {
                                 first = false;                                
                             }
-                            sb.append(url + '\t' + documentMode + "\tPARSE\t"
+                            sb.append(url + '\t' + documentMode + "\tP\t"
                                     + sanitize(error));
                         }
                     }
@@ -251,7 +249,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                         } else {
                             first = false;                                
                         }
-                        sb.append(url + '\t' + documentMode + "\tVALIDATION\t"
+                        sb.append(url + '\t' + documentMode + "\tV\t"
                                 + "NO VALIDATION ERRORS");
                     } else {
                         for (String error : validationErrors) {
@@ -260,7 +258,7 @@ public class ValidationWorker implements Runnable, ErrorHandler,
                             } else {
                                 first = false;                                
                             }
-                            sb.append(url + '\t' + documentMode + "\tVALIDATION\t"
+                            sb.append(url + '\t' + documentMode + "\tV\t"
                                     + sanitize(error));
                         }
                     }

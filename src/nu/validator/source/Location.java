@@ -31,6 +31,12 @@ package nu.validator.source;
  */
 public final class Location implements Comparable<Location>, Cloneable {
 
+    private static int compares = 0;
+    
+    public static int getCompares() {
+        return compares;
+    }
+    
     private final SourceCode owner;
     private final int line;
     private final int column;
@@ -58,6 +64,7 @@ public final class Location implements Comparable<Location>, Cloneable {
     }
 
     public int compareTo(Location o) {
+        compares++;
         if (this.line < o.line) {
             return -1;
         } else if (this.line > o.line) {
