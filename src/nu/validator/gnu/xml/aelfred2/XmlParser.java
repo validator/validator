@@ -2676,10 +2676,10 @@ final class XmlParser {
                     return s;
                 default:
                     if (isName && (nameBufferPos == 0)
-                            && (!(('a' <= c && 'z' >= c) || NCName.isNCNameStart(c) || c == ':'))) {
+                            && (!(NCName.isNCNameStart(c)))) {
                         fatal("Not a name start character, U+"
                                 + Integer.toHexString(c));
-                    } else if (!(('a' <= c && 'z' >= c) || NCName.isNCNameTrail(c) || c == ':')) {
+                    } else if (!(NCName.isNCNameTrail(c) || c == ':')) {
                         fatal("Not a name character, U+"
                                 + Integer.toHexString(c));
                     }
