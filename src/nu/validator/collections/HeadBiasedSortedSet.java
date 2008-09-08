@@ -23,6 +23,7 @@
 package nu.validator.collections;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -93,6 +94,22 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         this.comparator = null;
     }
 
+    public HeadBiasedSortedSet(SortedSet<E> set) {
+        this.comparator = set.comparator();
+        // XXX this is very inefficient
+        for (E e : set) {
+            this.add(e);
+        }
+    }
+
+    public HeadBiasedSortedSet(Collection<? extends E> collection) {
+        this.comparator = null;
+        // XXX this is very inefficient
+        for (E e : collection) {
+            this.add(e);
+        }
+    }
+    
     public Comparator<? super E> comparator() {
         return comparator;
     }
@@ -108,7 +125,12 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
     }
 
     public E first() {
-        throw new UnsupportedOperationException();
+        Node<E> first = head.next;
+        if (first == null) {
+            throw new NoSuchElementException();
+        } else {
+            return first.value;
+        }
     }
 
     public SortedSet<E> headSet(E toElement) {
@@ -116,7 +138,16 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
     }
 
     public E last() {
-        throw new UnsupportedOperationException();
+        Node<E> first = head.next;
+        if (first == null) {
+            throw new NoSuchElementException();
+        } else {
+            Node<E> prev = first;
+            while(prev.next != null) {
+                prev = prev.next;
+            }
+            return prev.value;
+        }
     }
 
     public SortedSet<E> subSet(E fromElement, E toElement) {
@@ -137,6 +168,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
             int comp = compare(o, prev.next.value);
             if (comp < 0) {
                 prev.next = new Node<E>(o, prev.next);
+                size++;
                 return true;
             } else if (comp == 0) {
                 return false;
@@ -145,6 +177,7 @@ public final class HeadBiasedSortedSet<E> extends AbstractSet<E> implements
         }
         // if we haven't returned yet, this is greater than
         prev.next = new Node<E>(o, null);
+        size++;
         return true;
     }
 
