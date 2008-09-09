@@ -168,17 +168,17 @@ class ValidatorTester:
     return database
 
   def dumpDatabase(self, handle, database):
-    simplejson.dump(database, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    simplejson.dump(database, handle, cls=ValidationErrorMessageEncoder, sort_keys=True, indent=2)
 
 # User-facing commands
 
   def dumpReference(self, uri, handle):
-    simplejson.dump({uri:self.database[uri]}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    simplejson.dump({uri:self.database[uri]}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True, indent=2)
     handle.write('\n')
     handle.close()
     
   def dumpUri(self, uri, handle):
-    simplejson.dump({uri:self.errorsForUri(uri)}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True)
+    simplejson.dump({uri:self.errorsForUri(uri)}, handle, cls=ValidationErrorMessageEncoder, sort_keys=True, indent=2)
     handle.write('\n')
     handle.close()
     
