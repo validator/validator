@@ -1,1 +1,29 @@
-{"http://hsivonen.iki.fi/": [{"firstColumn": 1, "firstLine": 1, "lastColumn": 89, "lastLine": 1, "message": "Legacy doctype."}]}
+{
+  "http://hsivonen.iki.fi/": [
+    {
+      "firstColumn": 1, 
+      "firstLine": 1, 
+      "lastColumn": 90, 
+      "lastLine": 1, 
+      "message": "Legacy doctype."
+    }
+  ], 
+  "http://hsivonen.iki.fi/test/moz/en-UK.html": [
+    {
+      "firstColumn": 1, 
+      "firstLine": 7, 
+      "lastColumn": 16, 
+      "lastLine": 7, 
+      "message": "Bad value \u201cen-UK\u201d for attribute \u201clang\u201d on element \u201cp\u201d: Bad region subtag."
+    }
+  ], 
+  "http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html": [
+    {
+      "firstColumn": 7, 
+      "firstLine": 7, 
+      "lastColumn": 7, 
+      "lastLine": 7, 
+      "message": "Text after \u201c&\u201d did not match an entity name. Probable cause: \u201c&\u201d should have been escaped as \u201c&amp;\u201d."
+    }
+  ]
+}
