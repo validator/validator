@@ -54,6 +54,8 @@ class ValidationErrorMessage:
     self.last = Location(json['lastLine'], json['lastColumn'])
     if 'firstLine' in json and 'firstColumn' in json:
       self.first = Location(json['firstLine'], json['firstColumn'])
+    elif 'firstColumn' in json:
+      self.first = Location(json['lastLine'], json['firstColumn'])
     else:
       self.first = self.last
     
