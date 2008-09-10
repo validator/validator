@@ -157,7 +157,6 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "th", "th");
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs__);
 __attrs__.clear();
-__attrs__.addAttribute("", "name", "name", "CDATA", "submit");
 __attrs__.addAttribute("", "value", "value", "CDATA", "Validate");
 __attrs__.addAttribute("", "type", "type", "CDATA", "submit");
 __attrs__.addAttribute("", "id", "id", "CDATA", "submit");
