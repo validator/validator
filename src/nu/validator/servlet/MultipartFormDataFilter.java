@@ -174,6 +174,9 @@ public final class MultipartFormDataFilter implements Filter {
                 if (fileStream == null) {
                     fileStream = new ByteArrayInputStream(new byte[0]);
                 }
+                if (contentType == null) {
+                    contentType = "application/octet-stream";
+                }
                 chain.doFilter(new RequestWrapper(request, params, contentType,
                         utf8, fileStream), response);
             } catch (FileUploadException e) {
