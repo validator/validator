@@ -15,16 +15,16 @@
 <li><a href="#pitch">The Pitch</a></li>
 <li><a href="#no-dtd">No DTD-Based Validation</a></li>
 <li><a href="#usage">Basic Usage</a></li>
-<li><a href="#config">Configurability</a></li>
 <li><a href="#alt-input">Alternative Modes of Input</a></li>
+<li><a href="#config">Configurability</a></li>
 <li><a href="#api">Web Service API</a></li>
 <li><a href="#presets">Preset Schemas</a></li>
 <li><a href="#checkers">Non-Schema Checkers</a></li>
 <li><a href="#faq">FAQ</a></li>
-<li><a href="#details">Feature Details for Custom Schemas</a></li>
-<li><a href="#src">Source Code</a></li>
 <li><a href="#ideas">Known Issues and Ideas for Future Development</a></li>
 <li><a href="#reporting-bugs">Reporting Bugs and Getting Help</a></li>
+<li><a href="#details">Feature Details for Custom Schemas</a></li>
+<li><a href="#src">Source Code</a></li>
 <li><a href="#ack">Acknowledgments</a></li>
 <li><a href="#links">Links to Other Validators</a></li>
 <li><a href="#tos">Terms of service</a></li>
@@ -32,7 +32,7 @@
 </ul>
 <H2 id="pitch">The Pitch</H2>
 <UL>
-	<LI><P><a href='http://html5.validator.nu/'>Experimental (X)HTML5 conformance checking</a>.</P>
+	<LI><P><a href='http://html5.validator.nu/'>(X)HTML5 validation</a>.</P>
 	<LI><P><a href='http://validator.nu/'>RELAX NG validation</a>—XML syntax and Compact Syntax</P>
 	<LI><P>Schematron <EM>1.5 </EM>validation (standalone schemas
 	only—ISO Schematron or Schematron embedded in RELAX NG are <EM>not</EM>
@@ -46,11 +46,6 @@
 <UL>
 	<LI><P>Validator.nu does not check for XML 1.0 validity constraints.
 	That is, DTD validation is not performed.</P>
-	<P>“Validation” and “validator” in the name and the user
-	interface of the service refer to the ISO/IEC FDIS 19757-2
-	definition of “validator” (which performs validation), to the
-	Schematron “validation” function (which is performed by a
-	validator), and to the HTML 5 definition of “validator”.</P>
 	<LI><P>Validator.nu does not perform the duties of a “validating
 	SGML parser” as defined in ISO 8879. In fact, this service does
 	<EM>not have any SGML functionality at all</EM>. In particular, the
@@ -58,6 +53,7 @@
 	conditions.</P>
 </UL>
 <H2 id="usage">Basic Usage</H2>
+<p>Validator.nu has two facets: <a href='http://validator.nu/'>generic</a> (complex UI) and <a href='http://html5.validator.nu/'>(X)HTML5</a> (simple UI).</p>
 <P>Enter the URL (<CODE>http</CODE>, <CODE>https</CODE> or <code>data</code> IRI to be
 exact) of the document you want to validate in the field labeled
 “Document” and submit the form. That’s all it takes in most
@@ -68,6 +64,21 @@ based on the HTTP <CODE>Content-Type</CODE> of the document. In the
 <a href='http://validator.nu/'>generic facet</a>, the parser will be chosen based on the HTTP
 <CODE>Content-Type</CODE> and a preset schema will be chosen based on
 the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
+<H2 id="alt-input">Alternative Modes of Input</H2>
+<P>For simplicity, the HTML5 facet only shows UI for validation by URL. Validation by text area 
+and by file upload are available in the <a href='http://validator.nu/'>generic facet</a>.</P>
+<p>Here are bookmarklets:</p>
+<ul>
+<li><a href="javascript:void(location.href='http://html5.validator.nu/?doc='+encodeURIComponent(location.href))">Validate URL (generic)</a></li>
+<li><a href="javascript:void(location.href='http://html5.validator.nu/?doc='+encodeURIComponent(location.href))">Validate URL (HTML5)</a></li>
+<li><a href="javascript:(function(){ var str = ''; if (document.innerHTML) str += document.innerHTML; else { if (document.doctype) { str += '&lt;!DOCTYPE '; str += document.doctype.name; if (document.doctype.publicId) { str += ' PUBLIC &quot;' + document.doctype.publicId + '&quot;'; if (document.doctype.systemId) str += ' &quot;' + document.doctype.systemId + '&quot;'; } else if (document.doctype.systemId) { str += ' SYSTEM &quot;' + document.doctype.systemId + '&quot;'; } str += '>\n'; } var dummy = document.createElementNS('http://www.w3.org/1999/xhtml', 'div'); dummy.appendChild(document.documentElement); str += dummy.innerHTML; } var form = document.createElementNS('http://www.w3.org/1999/xhtml', 'form'); form.enctype = 'multipart/form-data'; form.method = 'post'; form.acceptCharset = 'utf-8'; form.action = 'http://validator.nu/'; form.innerHTML = '&lt;input name=&quot;parser&quot;/>&lt;input name=&quot;showsource&quot; value=&quot;yes&quot;/>&lt;textarea name=&quot;content&quot;>&lt;/textarea>'; form.parser.value = document.createElement('div').tagName == 'DIV' ? 'html' : 'xml'; form.content.value = str; if (document.documentElement) document.documentElement.appendChild(form); else document.appendChild(form); form.submit(); })()">Validate DOM (generic)</a>.</li>
+<li><a href="javascript:(function(){ var str = ''; if (document.innerHTML) str += document.innerHTML; else { if (document.doctype) { str += '&lt;!DOCTYPE '; str += document.doctype.name; if (document.doctype.publicId) { str += ' PUBLIC &quot;' + document.doctype.publicId + '&quot;'; if (document.doctype.systemId) str += ' &quot;' + document.doctype.systemId + '&quot;'; } else if (document.doctype.systemId) { str += ' SYSTEM &quot;' + document.doctype.systemId + '&quot;'; } str += '>\n'; } var dummy = document.createElementNS('http://www.w3.org/1999/xhtml', 'div'); dummy.appendChild(document.documentElement); str += dummy.innerHTML; } var form = document.createElementNS('http://www.w3.org/1999/xhtml', 'form'); form.enctype = 'multipart/form-data'; form.method = 'post'; form.acceptCharset = 'utf-8'; form.action = 'http://html5.validator.nu/'; form.innerHTML = '&lt;input name=&quot;parser&quot;/>&lt;input name=&quot;showsource&quot; value=&quot;yes&quot;/>&lt;textarea name=&quot;content&quot;>&lt;/textarea>'; form.parser.value = document.createElement('div').tagName == 'DIV' ? 'html' : 'xml'; form.content.value = str; if (document.documentElement) document.documentElement.appendChild(form); else document.appendChild(form); form.submit(); })()">Validate DOM (HTML5)</a>.</li>
+</ul>
+<p>There is a <A HREF="http://about.validator.nu/html5check.py">command-line script</A> that 
+uploads documents from the local filesystem to the (X)HTML5 validator. <a href="http://blog.whatwg.org/vim-checker">Integration into vim is 
+available</a>.</P>
+<P><A HREF="http://cmlcomp.org/validator/">The CMLComp Validator</A> makes it easy to upload CML 
+files for checking.</P>
 <H2 id="config">Configurability</H2>
 <DL>
 	<DT>Schemas</DT>
@@ -114,14 +125,6 @@ the root namespace (for XML) or the doctype (for <CODE>text/html</CODE>).</P>
 	characters that would render the validator output as non-conforming
 	(e.g. U+0000) are not represented faithfully.</P></DD>
 	</DL>
-<H2 id="alt-input">Alternative Modes of Input</H2>
-<P>For simplicity, the HTML5 facet only shows UI for validation by URL. Validation by text area 
-and by file upload are available in the generic facet.</P>
-<p>There is a <A HREF="http://about.validator.nu/html5check.py">command-line script</A> that 
-uploads documents from the local filesystem to the (X)HTML5 validator. <a href="http://blog.whatwg.org/vim-checker">Integration into vim is 
-available</a>.</P>
-<P><A HREF="http://cmlcomp.org/validator/">The CMLComp Validator</A> makes it easy to upload CML 
-files for checking.</P>
 <H2 id="api">Web Service API</H2>
 <P>If you want to create you own alternative mode of input or want to
 call Validator.nu (or <A HREF="#src">your own local copy</A>) from
@@ -151,13 +154,14 @@ as well, although there are theoretically wrong corner cases. Uses backported HT
 <dt>XHTML5+ARIA, SVG 1.1 plus MathML 2.0 (experimental)</dt>
 <dd><p>XHTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>), SVG 1.1, MathML 2.0 and holes for OpenMath, RDF and Inkscape cruft.</p></dd>
 <dt>XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + IRI</dt>
-<dd><p></p></dd>
+<dd><p>XHTML 1.0 (<em>not 1.1</em>), SVG 1.1 and MathML 2.0 with IRI support.</p></dd>
 <dt>XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + IRI</dt>
-<dd><p></p></dd>
+<dd><p>XHTML 1.0 (<em>not 1.1</em>), Ruby, SVG 1.1 and MathML 2.0 with IRI support.</p></dd>
 <dt>XHTML Basic + IRI</dt>
 <dd><p>A schema for XHTML Basic with IRI support. Suitable for use with the HTML parser.</p></dd>
 <dt>SVG 1.1 + IRI</dt>
 <dd><p>SVG 1.1 Full with IRI support (Inkscape cruft not permitted).</p></dd>
+</dl>
 <H2 id="checkers">Non-Schema Checkers</H2>
 <P>The service supports a few special pseudo-schema URIs that map to
 checkers written in a Turing-complete programming language.</P>
@@ -207,6 +211,7 @@ thinks the type of your page is <CODE>application/x-httpd-php</CODE>,
 which isn’t in the <CODE>Accept</CODE> header. Apache 2 does not
 have this problem.</P>
 <H3 id="no-badge">Can I get a “Valid HTML5” badge?</H3>
+<P>No, Validator.nu does not give badges.</P>
 <P>I have observed that once people are given badges they start to
 feel entitled to the badges and become hostile if the validation
 service is changed so that some documents that previously were
@@ -288,6 +293,29 @@ language.</P>
 </OL>
 <P>I hope providing an online validation service for RELAX NG removes
 the excuse that DTDs are needed for online validators.</P>
+<h3>Validation has a clear and precise meaning. Can’t you kids read ISO 8879?</h3>
+<P>“Validation” and “validator” in the name and the user
+	interface of the service refer to the ISO/IEC FDIS 19757-2
+	definition of “validator” (which performs validation), to the
+	Schematron “validation” function (which is performed by a
+	validator), and to the HTML 5 definition of “validator”.</P>
+<H2 id="ideas">Known Issues and Ideas for Future Development</H2>
+<P id="issues">Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML
+		1.0 is supposed to be a reformulation of HTML 4.01 in XML. However,
+		there are some subtle spec bugs introduced in the reformulation.
+		For this reason, some errors for HTML 4.01 are wrong. For example,
+		XHTML 1.0 (in the DTD) forbids the <CODE>name</CODE> attribute on
+		the <CODE>form</CODE> element, although it is allowed in HTML 4.01.</P>
+
+<p>Please refer to the bug tracker for other <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor">known issues</a> and for <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=enhancement">ideas for future development</a>.</p>
+
+<H2 id="reporting-bugs">Reporting Bugs and Getting Help</H2>
+<P>The preferred forum for discussing issues related to using the
+(X)HTML5 validator is the <A HREF="http://lists.whatwg.org/listinfo.cgi/help-whatwg.org">WHATWG
+Help mailing list</A>. The preferred forum for discussing issues
+related to implementing (X)HTML5 validators in general and this on in
+particular is the <A HREF="http://lists.whatwg.org/listinfo.cgi/implementors-whatwg.org">WHATWG
+Implementors mailing list</A>. Bugs should be reported to <a href="http://bugzilla.validator.nu/">Validator.nu Bugzilla</a>.</P>
 <H2 id='details'>Feature Details for Custom Schemas</H2>
 <UL>
 	<LI><P>ID/IDREF/IDREFS checking in RELAX NG is enabled for the
@@ -359,23 +387,6 @@ the classpath. For example, if you configure log4j to send email, you
 should put the <A HREF="http://java.sun.com/products/javamail/">Java
 Mail API</A> and <A HREF="http://java.sun.com/products/javabeans/jaf/">JavaBeans
 Activation Framework</A> jars in <CODE>extras/</CODE>.</P>
-<H2 id="ideas">Known Issues and Ideas for Future Development</H2>
-<P id="issues">Schemas for XHTML 1.0 are used for HTML 4.01, because XHTML
-		1.0 is supposed to be a reformulation of HTML 4.01 in XML. However,
-		there are some subtle spec bugs introduced in the reformulation.
-		For this reason, some errors for HTML 4.01 are wrong. For example,
-		XHTML 1.0 (in the DTD) forbids the <CODE>name</CODE> attribute on
-		the <CODE>form</CODE> element, although it is allowed in HTML 4.01.</P>
-
-<p>Please refer to the bug tracker for other <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor">known issues</a> and for <a href="http://bugzilla.validator.nu/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=enhancement">ideas for future development</a>.</p>
-
-<H2 id="reporting-bugs">Reporting Bugs and Getting Help</H2>
-<P>The preferred forum for discussing issues related to using the
-(X)HTML5 validator is the <A HREF="http://lists.whatwg.org/listinfo.cgi/help-whatwg.org">WHATWG
-Help mailing list</A>. The preferred forum for discussing issues
-related to implementing (X)HTML5 validators in general and this on in
-particular is the <A HREF="http://lists.whatwg.org/listinfo.cgi/implementors-whatwg.org">WHATWG
-Implementors mailing list</A>. Bugs should be reported to <a href="http://bugzilla.validator.nu/">Validator.nu Bugzilla</a>.</P>
 <H2 id="ack">Acknowledgments</H2>
 <P>I would like to thank the Mozilla Foundation and the Mozilla
 Corporation for funding this project.</P>
@@ -388,6 +399,7 @@ have been improved by Petr N&aacute;levka.</P>
 <P><A HREF="http://fantasai.inkedblade.net/">fantasai</A> designed
 the (X)HTML5 schema framework, wrote the (X)HTML5 Core schemas and
 helped along the way when I added features.</P>
+<p>JavaScript bits, the favicon and a lot of bug reports were contributed by Simon Pieters.</p>
 <P>The schemas for RELAX NG and XSLT were written by James Clark.</P>
 <P>The principal author of the schema for DocBook is Norman Walsh.</P>
 <P>The SVG schemas come from the W3C.</P>
@@ -479,10 +491,11 @@ officials if necessary). However, I reserve the right to publish
 aggregate statistics derived from the logs.</P>
 <hr>
 <div class="footer">
-<p>Text last updated: 2008-07-14</p>
+<p>Text last updated: 2008-09-03</p>
 <p class="copyrightnotice">The following notice applies to this HTML file:</p>
 <p>Copyright (c) 2005-2007 Henri Sivonen<br>
-Copyright (c) 2007-2008 Mozilla Foundation</p>
+Copyright (c) 2007-2008 Mozilla Foundation<br>
+Copyright (c) 2008 Simon Pieters<!-- DOM validation bookmarklet --></p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the "Software"), 
 to deal in the Software without restriction, including without limitation 

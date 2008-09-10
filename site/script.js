@@ -79,6 +79,7 @@ function initFieldHolders() {
 		return
 	}
 	urlInput = document.getElementById('doc')
+	urlInput.setAttribute('aria-labelledby', 'docselect')
 	
 	textarea = createHtmlElement('textarea')
 	if (textarea) {
@@ -86,6 +87,7 @@ function initFieldHolders() {
 		textarea.rows = 15
 		textarea.id = 'doc'
 		textarea.name = 'content'
+		textarea.setAttribute('aria-labelledby', 'docselect')
 		copySourceIntoTextArea()
 		if (textarea.value == '') {
 			textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
@@ -97,6 +99,7 @@ function initFieldHolders() {
 		fileInput.type = 'file'
 		fileInput.id = 'doc'
 		fileInput.name = 'file'
+		fileInput.setAttribute('aria-labelledby', 'docselect')
 	}
 	
 	var td = urlInput.parentNode
@@ -104,28 +107,31 @@ function initFieldHolders() {
 		var th = td.previousSibling
 		var label = th.firstChild
 		var modeSelect = createHtmlElement("select")
+		modeSelect.id = 'docselect'
 		modeSelect.appendChild(createOption('Address', ''))
 		modeSelect.appendChild(createOption('File Upload', 'file'))
 		modeSelect.appendChild(createOption('Text Field', 'textarea'))
 		modeSelect.onchange = function() {
-			if (this.value == 'file') {
-				installFileUpload()
-			}
-			else 
-				if (this.value == 'textarea') {
-					installTextarea()
-				}
-				else {
-					installUrlInput()
-				}
+    if (this.value == 'file') {
+      installFileUpload()
+    }
+    else 
+      if (this.value == 'textarea') {
+        installTextarea()
+      }
+      else {
+        installUrlInput()
+      }
 		}
 		th.replaceChild(modeSelect, label)
 	}
 	
 	if (urlInput.className == 'file') {
 	  installFileUpload()
+	  modeSelect.value = 'file'
 	} else if (urlInput.className == 'textarea') {
 	  installTextarea()	
+	  modeSelect.value = 'textarea'
 	}
 }
 
