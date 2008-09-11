@@ -138,6 +138,10 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Charset.THE_INSTANCE;
         } else if ("refresh".equals(typeLocalName)) {
             return Refresh.THE_INSTANCE;
+        } else if ("paren-start".equals(typeLocalName)) {
+            return ParenthesisStart.THE_INSTANCE;
+        } else if ("paren-end".equals(typeLocalName)) {
+            return ParenthesisEnd.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
