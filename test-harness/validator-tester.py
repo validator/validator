@@ -261,7 +261,7 @@ def main():
       serviceuri = argv[0][10:]
       argv = argv[1:]
     else:
-      raise Exception("Unknow argument %s" % argv[0])
+      raise Exception("Unknown argument %s" % argv[0])
   vt = ValidatorTester(dbfile, serviceuri)
   vt.runCommandLine(argv)
 
