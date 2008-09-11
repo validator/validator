@@ -154,7 +154,8 @@ http://syntax.whattf.org/relaxng/common.rnc	syntax/relaxng/common.rnc
 http://syntax.whattf.org/relaxng/core-scripting.rnc	syntax/relaxng/core-scripting.rnc
 http://syntax.whattf.org/relaxng/data.rnc	syntax/relaxng/data.rnc
 http://syntax.whattf.org/relaxng/embed.rnc	syntax/relaxng/embed.rnc
-http://syntax.whattf.org/relaxng/media.rnc	syntax/relaxng/media.rnc
+http://syntax.whattf.org/relaxng/embed.rnc	syntax/relaxng/embed.rnc
+http://syntax.whattf.org/relaxng/ruby.rnc	syntax/relaxng/ruby.rnc
 http://syntax.whattf.org/relaxng/form-datatypes.rnc	syntax/relaxng/form-datatypes.rnc
 http://syntax.whattf.org/relaxng/html5core.rnc	syntax/relaxng/html5core.rnc
 http://syntax.whattf.org/relaxng/html5exclusions.rnc	syntax/relaxng/html5exclusions.rnc
@@ -407,6 +408,7 @@ http://s.validator.nu/html5/common.rnc	schema/html5/common.rnc
 http://s.validator.nu/html5/core-scripting.rnc	schema/html5/core-scripting.rnc
 http://s.validator.nu/html5/data.rnc	schema/html5/data.rnc
 http://s.validator.nu/html5/embed.rnc	schema/html5/embed.rnc
+http://s.validator.nu/html5/ruby.rnc	schema/html5/ruby.rnc
 http://s.validator.nu/html5/form-datatypes.rnc	schema/html5/form-datatypes.rnc
 http://s.validator.nu/html5/html5core.rnc	schema/html5/html5core.rnc
 http://s.validator.nu/html5/html5exclusions.rnc	schema/html5/html5exclusions.rnc
