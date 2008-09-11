@@ -1,0 +1,55 @@
+datatypes w = "http://whattf.org/datatype-draft"
+namespace local = ""
+
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Ruby                                  #
+# #####################################################################
+
+#######################################################################
+
+## Ruby Annotation: <ruby>
+
+	ruby.elem =
+		element ruby { ruby.inner & ruby.attrs }
+	ruby.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	ruby.inner =
+		(  (  common.inner.phrase
+		   ,  (  rt.elem
+		      |  (  rp.elem.start
+		         ,  rt.elem
+		         ,  rp.elem.end
+		         )
+		      )
+		   )+
+		)
+
+	common.elem.phrase |= ruby.elem
+
+## Ruby Text: <rt>
+
+	rt.elem =
+		element rt { rt.inner & rt.attrs }
+	rt.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	rt.inner =
+		( common.inner.phrase )
+	
+## Ruby Parenthesis: <rp>
+
+	rp.elem.start =
+		element rp { rp.inner.start & rp.attrs }
+	rp.elem.end =
+		element rp { rp.inner.end & rp.attrs }
+	rp.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	rp.inner.start =
+		( w:paren-start )
+	rp.inner.end =
+		( w:paren-end )
