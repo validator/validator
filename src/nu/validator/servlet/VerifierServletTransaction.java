@@ -50,6 +50,7 @@ import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
 import nu.validator.htmlparser.common.DocumentModeHandler;
+import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.HtmlSerializer;
@@ -1049,6 +1050,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setMappingLangToXmlLang(true);
         htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
+        htmlParser.setHeuristics(Heuristics.ALL);
     }
 
     protected Validator validatorByDoctype(int schemaId) throws SAXException,
