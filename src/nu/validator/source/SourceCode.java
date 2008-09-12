@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import nu.validator.collections.HeadBiasedSortedSet;
 import nu.validator.collections.TailBiasedSortedSet;
@@ -54,21 +53,21 @@ public final class SourceCode implements CharacterHandler {
 
     private int expectedLength;
 
-//    private final SortedSet<Location> reverseSortedLocations = new HeadBiasedSortedSet<Location>(Collections.reverseOrder());
-//
-//    private final SortedSet<Location> exactErrors = new TailBiasedSortedSet<Location>();
-//
-//    private final SortedSet<Location> rangeLasts = new TailBiasedSortedSet<Location>();
-//    
-//    private final SortedSet<Integer> oneBasedLineErrors = new TailBiasedSortedSet<Integer>();
+    private final SortedSet<Location> reverseSortedLocations = new HeadBiasedSortedSet<Location>(Collections.reverseOrder());
 
-    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(Collections.reverseOrder());
+    private final SortedSet<Location> exactErrors = new TailBiasedSortedSet<Location>();
 
-    private final SortedSet<Location> exactErrors = new TreeSet<Location>();
-
-    private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
+    private final SortedSet<Location> rangeLasts = new TailBiasedSortedSet<Location>();
     
-    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<Integer>();
+    private final SortedSet<Integer> oneBasedLineErrors = new TailBiasedSortedSet<Integer>();
+
+//    private final SortedSet<Location> reverseSortedLocations = new TreeSet<Location>(Collections.reverseOrder());
+//
+//    private final SortedSet<Location> exactErrors = new TreeSet<Location>();
+//
+//    private final SortedSet<Location> rangeLasts = new TreeSet<Location>();
+//    
+//    private final SortedSet<Integer> oneBasedLineErrors = new TreeSet<Integer>();
 
     
     private final List<Line> lines = new ArrayList<Line>();
