@@ -509,7 +509,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     private static boolean isXmlLangAllowingSchema(String key) {
-        return key.startsWith("http://s.validator.nu/") && key.endsWith(".rnc"); // Do this for all preset RNCs.
+        return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
+                || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key) || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key));
     }
     
     private static boolean isCheckerUrl(String url) {
