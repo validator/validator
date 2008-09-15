@@ -1,0 +1,56 @@
+{
+  "http://simon.html5.org/test/validator/html4/end-tag-in-rcdata.html": [
+    {
+      "firstColumn": 98, 
+      "firstLine": 1, 
+      "lastColumn": 103, 
+      "lastLine": 1, 
+      "message": "RCDATA element \u201ctitle\u201d contained the string \u201c</\u201d, but it was not the start of the end tag. (HTML4-only error)"
+    }
+  ], 
+  "http://simon.html5.org/test/validator/html4/minimized-attr.html": [
+    {
+      "firstColumn": 137, 
+      "firstLine": 1, 
+      "lastColumn": 145, 
+      "lastLine": 1, 
+      "message": "Attribute value omitted for a non-boolean attribute. (HTML4-only error.)"
+    }
+  ], 
+  "http://simon.html5.org/test/validator/html4/trailing-slash.html": [
+    {
+      "firstColumn": 142, 
+      "firstLine": 1, 
+      "lastColumn": 146, 
+      "lastLine": 1, 
+      "message": "The \u201c/>\u201d syntax on void elements is not allowed.  (This is an HTML4-only error.)"
+    }
+  ], 
+  "http://simon.html5.org/test/validator/html4/unquoted-attr.html": [
+    {
+      "firstColumn": 144, 
+      "firstLine": 1, 
+      "lastColumn": 154, 
+      "lastLine": 1, 
+      "message": "Non-name character in an unquoted attribute value. (This is an HTML4-only error.)"
+    }
+  ], 
+  "http://simon.html5.org/test/validator/html4/xml-lang.html": [
+    {
+      "firstColumn": 91, 
+      "firstLine": 1, 
+      "lastColumn": 116, 
+      "lastLine": 1, 
+      "message": "Attribute \u201cxml:lang\u201d not allowed on element \u201chtml\u201d at this point."
+    }
+  ], 
+  "http://simon.html5.org/test/validator/html4/xmlns.html": [
+    {
+      "firstColumn": 91, 
+      "firstLine": 1, 
+      "lastColumn": 133, 
+      "lastLine": 1, 
+      "message": "Attribute \u201cxmlns\u201d not allowed here. (HTML4-only error.)"
+    }
+  ]
+}

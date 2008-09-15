@@ -1,13 +1,4 @@
 {
-  "http://hsivonen.iki.fi/": [
-    {
-      "firstColumn": 1, 
-      "firstLine": 1, 
-      "lastColumn": 90, 
-      "lastLine": 1, 
-      "message": "Legacy doctype."
-    }
-  ], 
   "http://hsivonen.iki.fi/test/moz/en-UK.html": [
     {
       "firstColumn": 1, 
