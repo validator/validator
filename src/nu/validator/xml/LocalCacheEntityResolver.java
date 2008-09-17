@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
  */
 public class LocalCacheEntityResolver implements EntityResolver {
 
-    private Map pathMap;
+    private Map<String, String> pathMap;
 
     private EntityResolver delegate;
     
@@ -25,7 +25,7 @@ public class LocalCacheEntityResolver implements EntityResolver {
      * @param pathMap
      * @param delegate
      */
-    public LocalCacheEntityResolver(Map pathMap, EntityResolver delegate) {
+    public LocalCacheEntityResolver(Map<String, String> pathMap, EntityResolver delegate) {
         this.pathMap = pathMap;
         this.delegate = delegate;
     }
@@ -35,10 +35,7 @@ public class LocalCacheEntityResolver implements EntityResolver {
      */
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
-        String path;
-        synchronized(pathMap) {
-            path = (String) pathMap.get(systemId);
-        }
+        String path = pathMap.get(systemId);
         if(path != null) {
             File f = new File(path);
             if (f.exists()) {
