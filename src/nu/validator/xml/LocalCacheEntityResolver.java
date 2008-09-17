@@ -22,7 +22,9 @@ public class LocalCacheEntityResolver implements EntityResolver {
     private boolean allowRnc = false;
 
     /**
-     * @param pathMap
+     * The map must be safe for concurrent reads.
+     * 
+     * @param pathMap 
      * @param delegate
      */
     public LocalCacheEntityResolver(Map<String, String> pathMap, EntityResolver delegate) {
