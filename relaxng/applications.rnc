@@ -10,7 +10,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs.contextmenu?
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
-		&	common.attrs.irrelevant?
+		&	common.attrs.hidden?
 		)
 		
 	common.attrs.other &= common.attrs.interact
@@ -36,11 +36,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			w:string "true" | w:string "false"
 		}
 
-## Irrelevant Attribute: irrelevant
+## Hidden Element: hidden
 
-	common.attrs.irrelevant =
-		attribute irrelevant {
-			w:string "irrelevant" | w:string ""
+	common.attrs.hidden =
+		attribute hidden {
+			w:string "hidden" | w:string ""
 		}
 
 ## Application Cache: manifest
@@ -116,7 +116,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)?
 		&	command.attrs.label?
 		&	command.attrs.icon?
-		&	command.attrs.hidden?
 		&	command.attrs.disabled?
 		&	command.attrs.default?
 		)
@@ -139,10 +138,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		command.attrs.icon =
 			attribute icon {
 				common.data.uri
-			}
-		command.attrs.hidden =
-			attribute hidden {
-				w:string "hidden" | w:string ""
 			}
 		command.attrs.disabled =
 			attribute disabled {
