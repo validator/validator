@@ -24,6 +24,13 @@
 package nu.validator.servlet;
 
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import nu.validator.servletfilter.InboundGzipFilter;
 import nu.validator.servletfilter.InboundSizeLimitFilter;
 
@@ -51,15 +58,22 @@ public class Main {
         PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         Server server = new Server();
         Connector connector;
+        int stopPort = -1;
         if (args.length > 0 && "ajp".equals(args[0])) {
             connector = new Ajp13SocketConnector();
             int port = Integer.parseInt(args[1]);
             connector.setPort(port);
             connector.setHost("127.0.0.1");
+            if (args.length > 2) {
+                stopPort = Integer.parseInt(args[2]);
+            }
         } else {
             connector = new SocketConnector();
             int port = Integer.parseInt(args[0]);
             connector.setPort(port);
+            if (args.length > 1) {
+                stopPort = Integer.parseInt(args[1]);
+            }
         }
         server.addConnector(connector);
 
@@ -69,9 +83,34 @@ public class Main {
         context.addFilter(new FilterHolder(new InboundGzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new MultipartFormDataFilter()), "/*", Handler.REQUEST);
         context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
-        server.start();
+        
+        if (stopPort != -1) {
+            try {
+                Socket clientSocket = new Socket(
+                        InetAddress.getByName("127.0.0.1"), stopPort);
+                InputStream in = clientSocket.getInputStream();
+                in.read();
+                in.close();
+                clientSocket.close();
+            } catch (ConnectException e) {
                 
-        System.in.read(); // XXX do something smarter
-        server.stop();
+            }
+
+            server.start();
+            
+            ServerSocket serverSocket = new ServerSocket(stopPort, 0, InetAddress.getByName("127.0.0.1"));
+            Socket s = serverSocket.accept();
+            
+            server.stop();
+            
+            OutputStream out = s.getOutputStream();
+            out.close();
+            s.close();
+            serverSocket.close();
+        } else {
+            server.start();
+            System.in.read();            
+            server.stop();
+        }
     }
 }
