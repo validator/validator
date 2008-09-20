@@ -121,7 +121,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         hcmp.setSoTimeout(socketTimeout);
         hcmp.setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION,
                 maxRequests);
-        hcmp.setMaxTotalConnections(maxRequests * 2);
+        hcmp.setMaxTotalConnections(200); // XXX take this from a property
         PrudentHttpEntityResolver.maxRequests = maxRequests;
         HttpClientParams hcp = client.getParams();
         hcp.setBooleanParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
