@@ -76,7 +76,7 @@ import nu.validator.xml.CombineContentHandler;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
-import nu.validator.xml.LocalCacheEntityResolver;
+import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
@@ -342,11 +342,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         try {
             log4j.debug("Starting static initializer.");
 
-            String presetPath = System.getProperty("nu.validator.servlet.presetconfpath");
-            File presetFile = new File(presetPath);
-            lastModified = presetFile.lastModified();
-            BufferedReader r = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(presetFile), "UTF-8"));
+            lastModified = 0;
+            BufferedReader r = new BufferedReader(new InputStreamReader(LocalCacheEntityResolver.getPresetsAsStream(), "UTF-8"));
             String line;
             List<String> doctypes = new LinkedList<String>();
             List<String> namespaces = new LinkedList<String>();
@@ -397,25 +394,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("The cache path prefix is: " + prefix);
 
-            String cacheConfPath = System.getProperty("nu.validator.servlet.cacheconfpath");
-
-            log4j.debug("The cache config path is: " + cacheConfPath);
-
-            r = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    cacheConfPath), "UTF-8"));
-            while ((line = r.readLine()) != null) {
-                if ("".equals(line.trim())) {
-                    break;
-                }
-                String s[] = line.split("\t");
-                pathMap.put(s[0], prefix + s[1]);
-            }
-
-            log4j.debug("Cache config read.");
-
             ErrorHandler eh = new SystemErrErrorHandler();
-            LocalCacheEntityResolver er = new LocalCacheEntityResolver(pathMap,
-                    new NullEntityResolver());
+            LocalCacheEntityResolver er = new LocalCacheEntityResolver(new NullEntityResolver());
             er.setAllowRnc(true);
             PropertyMapBuilder pmb = new PropertyMapBuilder();
             pmb.put(ValidateProperty.ERROR_HANDLER, eh);
@@ -808,7 +788,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 errorHandler);
         dataRes = new DataUriEntityResolver(httpRes, laxType, errorHandler);
         contentTypeParser = new ContentTypeParser(errorHandler, laxType);
-        entityResolver = new LocalCacheEntityResolver(pathMap, dataRes);
+        entityResolver = new LocalCacheEntityResolver(dataRes);
         setAllowRnc(true);
         try {
             this.errorHandler.start(document);

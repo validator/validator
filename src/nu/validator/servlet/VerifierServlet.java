@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nu.validator.messages.MessageEmitterAdapter;
 import nu.validator.xml.PrudentHttpEntityResolver;
 
 import org.apache.log4j.Logger;
@@ -79,7 +80,9 @@ public class VerifierServlet extends HttpServlet {
         PrudentHttpEntityResolver.setUserAgent("Validator.nu/" + System.getProperty(
                 "nu.validator.servlet.version",
                 "3.x"));
+        // force some class loading
         new VerifierServletTransaction(null, null);
+        new MessageEmitterAdapter(null, false, null, 0, null);
     }
 
     /**

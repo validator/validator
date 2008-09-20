@@ -42,6 +42,10 @@ public class LocalCacheEntityResolver implements EntityResolver {
         }
     }
 
+    public static InputStream getPresetsAsStream() {
+        return LOADER.getResourceAsStream("nu/validator/localentities/files/presets");
+    }
+    
     private EntityResolver delegate;
 
     private boolean allowRnc = false;

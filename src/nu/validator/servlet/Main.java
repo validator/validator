@@ -44,6 +44,8 @@ import org.mortbay.jetty.servlet.Context;
 import org.mortbay.jetty.servlet.FilterHolder;
 import org.mortbay.jetty.servlet.ServletHolder;
 import org.mortbay.servlet.GzipFilter;
+import org.mortbay.thread.QueuedThreadPool;
+import org.mortbay.thread.concurrent.ThreadPool;
 
 /**
  * @version $Id$
@@ -57,6 +59,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         Server server = new Server();
+        QueuedThreadPool pool = new QueuedThreadPool();
+        pool.setMaxThreads(100);
+        server.setThreadPool(pool);
         Connector connector;
         int stopPort = -1;
         if (args.length > 0 && "ajp".equals(args[0])) {
@@ -76,7 +81,7 @@ public class Main {
             }
         }
         server.addConnector(connector);
-
+        
         Context context = new Context(server, "/");
         context.addFilter(new FilterHolder(new GzipFilter()), "/*", Handler.REQUEST);
         context.addFilter(new FilterHolder(new InboundSizeLimitFilter(SIZE_LIMIT)), "/*", Handler.REQUEST);
@@ -97,6 +102,10 @@ public class Main {
             }
 
             server.start();
+            
+            System.in.close();
+            System.out.close();
+            System.err.close();
             
             ServerSocket serverSocket = new ServerSocket(stopPort, 0, InetAddress.getByName("127.0.0.1"));
             Socket s = serverSocket.accept();

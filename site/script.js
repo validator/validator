@@ -28,6 +28,7 @@ var groupedOl = null
 var urlInput = null
 var fileInput = null
 var textarea = null
+var textareaHidden = null
 var dynamicStyle = null
 var prevHash = null
 var hasTextContent = (createHtmlElement('code').textContent != undefined)
@@ -75,23 +76,22 @@ function installHandlers() {
 }
 
 function initFieldHolders() {
-	if (document.forms[0].className == 'simple') {
-		return
-	}
 	urlInput = document.getElementById('doc')
 	urlInput.setAttribute('aria-labelledby', 'docselect')
 	
+	textareaHidden = createHtmlElement('input')
 	textarea = createHtmlElement('textarea')
-	if (textarea) {
+	if (textarea && textareaHidden) {
+		textareaHidden.type = 'hidden'
+		textareaHidden.name = 'content'
 		textarea.cols = 72
 		textarea.rows = 15
 		textarea.id = 'doc'
-		textarea.name = 'content'
 		textarea.setAttribute('aria-labelledby', 'docselect')
 		copySourceIntoTextArea()
 		if (textarea.value == '') {
 			textarea.value = '<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n<p></p>\n</body>\n</html>'
-		}
+    }
 	}
 	
 	fileInput = createHtmlElement('input')
@@ -267,7 +267,7 @@ function formSubmission() {
 			}
 		}
 	}
-	disableById("submit")
+//	disableById("submit")
 	disableById("preset")
 	disableByIdIfEmptyString("doc")
 	disableByIdIfEmptyString("parser")
@@ -275,11 +275,14 @@ function formSubmission() {
 	disableByIdIfEmptyString("charset")
 	disableByIdIfEmptyString("nsfilter")
 	maybeMoveDocumentRowDown()
+	if (textareaHidden && textarea) {
+	  textareaHidden.value = textarea.value
+	}
 	return true
 }
 
 function undoFormSubmission() {
-	enableById("submit")
+//	enableById("submit")
 	enableById("preset")
 	enableById("doc")
 	enableById("parser")
@@ -294,7 +297,7 @@ function undoFormSubmission() {
 
 function maybeMoveDocumentRowDown() {
 	var field = document.getElementById('doc')
-	if (field && field.name != 'doc') {
+	if (field && field.name == 'file') {
 		var td = field.parentNode
 		if (td) {
 			var tr = td.parentNode
@@ -464,6 +467,12 @@ function installTextarea() {
 			schemaChanged()
 		}
 	}
+	if (textareaHidden) {
+	  var submit = document.getElementById("submit")
+	  if (submit) {
+	    submit.parentNode.appendChild(textareaHidden)
+	  }
+	}
 	var showSource = document.getElementById("showsource")
 	if (showSource) {
 		showSource.checked = true
@@ -483,6 +492,9 @@ function installFileUpload() {
 			schemaChanged()
 		}
 	}
+	if (textareaHidden && textareaHidden.parentNode) {
+	  textareaHidden.parentNode.removeChild(textareaHidden)
+	}
 }
 
 function installUrlInput() {
@@ -497,6 +509,9 @@ function installUrlInput() {
 			enableById('charset')
 			schemaChanged()
 		}
+	}
+	if (textareaHidden && textareaHidden.parentNode) {
+	  textareaHidden.parentNode.removeChild(textareaHidden)
 	}
 }
 
