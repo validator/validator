@@ -34,6 +34,7 @@ jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
 svnCmd = 'svn'
+tarCmd = 'tar'
 
 buildRoot = '.'
 svnRoot = 'http://svn.versiondude.net/whattf/'
@@ -79,15 +80,14 @@ dependencyPackages = [
   ("http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.zip" , "ac30ce5b07b0018d65203fbc680968f5"),
   ("http://surfnet.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip" , "10381903828d30e36252910679fcbab6"),
   ("http://ovh.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
-  ("http://dist.codehaus.org/stax/jars/stax-api-1.0.1.jar", "7d436a53c64490bee564c576babb36b4"),
-  ("http://jdom.org/dist/binary/jdom-1.1.zip", "4073be59361ef017a04f9a67c7be8d98"),
-  ("http://kent.dl.sourceforge.net/sourceforge/dom4j/dom4j-1.6.1.jar", "4d8f51d3fe3900efc6e395be48030d6d"),
   ("http://kent.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
+  ("http://kent.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
 # can't just autodiscover all jars. Hence, an explicit list.
-dependencyJars = [
+
+runDependencyJars = [
   "commons-codec-1.3/commons-codec-1.3.jar",
   "commons-httpclient-3.1/commons-httpclient-3.1.jar",
   "commons-logging-1.1.1/commons-logging-1.1.1.jar",
@@ -100,25 +100,27 @@ dependencyJars = [
   "jetty-6.1.11/lib/jetty-6.1.11.jar",
   "jetty-6.1.11/lib/jetty-util-6.1.11.jar",
   "jetty-6.1.11/lib/ext/jetty-ajp-6.1.11.jar",
-  "jetty-6.1.11/lib/ext/jetty-java5-threadpool-6.1.11.jar",
   "apache-log4j-1.2.15/log4j-1.2.15.jar",
   "rhino1_7R1/js.jar",
   "xerces-2_9_1/xercesImpl.jar",
   "xerces-2_9_1/xml-apis.jar",
+  "slf4j-1.5.2/slf4j-log4j12-1.5.2.jar",
+  "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
+  "isorelax.jar",
+  "mozilla/intl/chardet/java/dist/lib/chardet.jar",
+  "saxon9.jar",
+]
+
+buildOnlyDependencyJars = [
   "jsontools-core-1.5.jar",
   "antlr.jar",
   "xom-1.1.jar",
-  "slf4j-1.5.2/slf4j-log4j12-1.5.2.jar",
-  "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
   "junit-4.4.jar",
-  "isorelax.jar",
   "apache-ant-1.7.0/lib/ant.jar",
   "apache-ant-1.7.0/lib/ant-launcher.jar",
-  "stax-api-1.0.1.jar",
-  "jdom-1.1/build/jdom.jar",
-  "dom4j-1.6.1.jar",
-  "mozilla/intl/chardet/java/dist/lib/chardet.jar",
 ]
+
+dependencyJars = runDependencyJars + buildOnlyDependencyJars
 
 moduleNames = [
   "syntax",
@@ -129,6 +131,7 @@ moduleNames = [
   "validator",
 ]
 
+javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
 leafPat = re.compile(r'^[a-zA-Z0-9_-]+\.[a-z]+$')
 
@@ -236,11 +239,11 @@ def buildModule(rootDir, jarName, classPath):
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
 
-def dependencyJarPaths():
+def dependencyJarPaths(depList=dependencyJars):
   dependencyDir = os.path.join(buildRoot, "dependencies")
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
-  pathList = map(lambda x: os.path.join(dependencyDir, x), dependencyJars)
+  pathList = map(lambda x: os.path.join(dependencyDir, x), depList)
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
@@ -285,16 +288,8 @@ def buildHtmlParser():
     "htmlparser", 
     classPath)
 
-def buildSaxon():
-  classPath = os.pathsep.join(dependencyJarPaths())
-  buildModule(
-    os.path.join(buildRoot, "onvdl", "saxon"), 
-    "saxon-whattf", 
-    classPath)
-
 def buildOnvdl():
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["saxon-whattf"]))
+  classPath = os.pathsep.join(dependencyJarPaths())
   buildModule(
     os.path.join(buildRoot, "onvdl"), 
     "onvdl-whattf", 
@@ -326,17 +321,21 @@ def buildTestHarness():
     "test-harness", 
     classPath)
 
+def ownJarList():
+  return jarNamesToPaths(["non-schema", 
+                          "io-xml-util",
+                          "htmlparser",
+                          "hs-aelfred2",
+                          "html5-datatypes",
+                          "validator",
+                          "onvdl-whattf"])
+
+def buildRunJarPathList():
+  return dependencyJarPaths(runDependencyJars)  + ownJarList()
+
 def runValidator():
   ensureDirExists(os.path.join(buildRoot, "logs"))
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", 
-                                                "io-xml-util",
-                                                "htmlparser",
-                                                "hs-aelfred2",
-                                                "html5-datatypes",
-                                                "validator",
-                                                "onvdl-whattf",
-                                                "saxon-whattf"]))
+  classPath = os.pathsep.join(buildRunJarPathList())
   args = [
     '-Xms%sm' % heapSize,
     '-Xmx%sm' % heapSize,
@@ -344,9 +343,6 @@ def runValidator():
     '-cp',
     classPath,
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
-    '-Dnu.validator.servlet.presetconfpath=validator/presets.txt',
-    '-Dnu.validator.servlet.cachepathprefix=local-entities/',
-    '-Dnu.validator.servlet.cacheconfpath=validator/entity-map.txt',
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
@@ -376,6 +372,13 @@ def runValidator():
     args.append('ajp')
   args.append(portNumber)
   execCmd(javaCmd, args)
+
+def createTarball():
+  args = [
+    "zcf",
+    os.path.join(buildRoot, "validator-nu.tar.gz"),
+  ] + ownJarList()
+  execCmd(tarCmd, args)
 
 def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
@@ -431,6 +434,31 @@ def downloadLocalEntities():
   finally:
     f.close()
 
+def localPathToJarCompatName(path):
+  return javaSafeNamePat.sub('_', path)
+  
+def prepareLocalEntityJar():
+  filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
+  if os.path.exists(filesDir):
+    shutil.rmtree(filesDir)
+  os.makedirs(filesDir)
+  shutil.copyfile(os.path.join(buildRoot, "validator", "presets.txt"), os.path.join(filesDir, "presets"))
+  f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
+  o = open(os.path.join(filesDir, "entitymap"), 'wb')
+  try:
+    for line in f:
+      url, path = line.strip().split("\t")
+      entPath = os.path.join(buildRoot, "local-entities", path)
+      safeName = localPathToJarCompatName(path)
+      safePath = os.path.join(filesDir, safeName)
+      if os.path.exists(entPath):
+        o.write("%s\t%s\n" % (url, safeName))
+        shutil.copyfile(entPath, safePath)
+        
+  finally:
+    f.close()
+    o.close()
+
 def downloadOperaSuite():
   return
   operaSuiteDir = os.path.join(buildRoot, "opera-tests")
@@ -469,7 +497,6 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
-  buildSaxon()
   buildOnvdl()
   buildDatatypeLibrary()
   buildNonSchema()
@@ -498,8 +525,7 @@ def runTests():
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "test-harness",
-                                                "onvdl-whattf",
-                                                "saxon-whattf"]))
+                                                "onvdl-whattf"]))
   runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
 
 def splitHostSpec(spec):
@@ -633,6 +659,16 @@ else:
         buildAll()
       else:
         selfUpdate()
+    elif arg == 'localent':
+      if noSelfUpdate:
+        prepareLocalEntityJar()
+      else:
+        selfUpdate()
+    elif arg == 'tar':
+      if noSelfUpdate:
+        createTarball()
+      else:
+        selfUpdate()
     elif arg == 'test':
       if noSelfUpdate:
         runTests()
@@ -655,6 +691,7 @@ else:
         downloadDependencies()
         downloadLocalEntities()
         downloadOperaSuite()
+        prepareLocalEntityJar()
         buildAll()
         runTests()
         if not stylesheet:
