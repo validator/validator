@@ -45,7 +45,6 @@ import org.mortbay.jetty.servlet.FilterHolder;
 import org.mortbay.jetty.servlet.ServletHolder;
 import org.mortbay.servlet.GzipFilter;
 import org.mortbay.thread.QueuedThreadPool;
-import org.mortbay.thread.concurrent.ThreadPool;
 
 /**
  * @version $Id$
