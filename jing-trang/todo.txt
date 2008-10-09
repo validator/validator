@@ -1,3 +1,6 @@
+Fix bug with not checking "duplicate declaration" and maybe "xsd prefix"
+constraint.
+
 Fix bug with empty implicit grammars in compact syntax.
 
 Allow jing to use OASIS catalogs.
