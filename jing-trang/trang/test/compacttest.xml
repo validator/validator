@@ -472,7 +472,7 @@ any = mixed { element * { attribute * { text }*, any }* }
 <xml>
 <correct>
 <!-- Based on http://www.w3.org/TR/2001/WD-rdf-syntax-grammar-20010906/ -->
-<grammar xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <ref name="RDF"/>
   </start>
@@ -517,7 +517,7 @@ any = mixed { element * { attribute * { text }*, any }* }
     <element>
       <anyName>
         <except>
-          <nsName ns=""/>
+          <nsName/>
           <name>rdf:Description</name>
           <name>rdf:RDF</name>
           <name>rdf:ID</name>
@@ -546,7 +546,7 @@ any = mixed { element * { attribute * { text }*, any }* }
     <element>
       <anyName>
         <except>
-          <nsName ns=""/>
+          <nsName/>
           <name>rdf:Description</name>
           <name>rdf:RDF</name>
           <name>rdf:ID</name>
@@ -638,7 +638,7 @@ any = mixed { element * { attribute * { text }*, any }* }
     <attribute>
       <anyName>
         <except>
-          <nsName ns=""/>
+          <nsName/>
           <name>rdf:type</name>
           <name>rdf:li</name>
           <name>rdf:Description</name>
