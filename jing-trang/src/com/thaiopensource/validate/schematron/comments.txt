@@ -5,7 +5,6 @@
 3. Might be useful to allow test to be a child element rather than an attribute, since newlines
 in attribute values tend to disappear because of attribute value normalization.
 
-
 4. abstract="true" seems redundant
 
 5. Unclear which nodes patterns are applied to: certainly element
