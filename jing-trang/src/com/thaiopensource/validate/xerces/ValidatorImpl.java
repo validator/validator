@@ -90,7 +90,7 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
     setProperty(Properties.VALIDATION_MANAGER, validationManager);
     // In Xerces 2.4.0, XMLSchemaValidator uses ENTITY_MANAGER when
     // it should use ENTITY_RESOLVER
-    setProperty(Properties.ENTITY_MANAGER, this);
+    // setProperty(Properties.ENTITY_MANAGER, this);
     setProperty(Properties.ENTITY_RESOLVER, this);
     reset();
   }
@@ -311,6 +311,14 @@ class ValidatorImpl extends ParserConfigurationSettings implements Validator, Co
     return locator.getColumnNumber();
   }
 
+  public int getCharacterOffset() {
+    return -1;
+  }
+
+  public String getXMLVersion() {
+    return "1.0";
+  }
+  
   static SAXException toSAXException(XNIException e) {
     if (e instanceof XMLParseException) {
       XMLParseException pe = (XMLParseException)e;
