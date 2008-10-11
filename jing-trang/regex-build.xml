@@ -60,7 +60,7 @@
 <target name="compile-xerces" depends="check-xerces" if="xerces-available">
   <javac srcdir="src" destdir="${classes.dir}" 
          includes="com/thaiopensource/datatype/xsd/regex/xerces/*.java"
-         target="1.1"/>
+         target="1.1" source="1.2"/>
 </target>
 
 <target name="check-xerces2">
@@ -71,7 +71,7 @@
 <target name="compile-xerces2" depends="check-xerces2" if="xerces2-available">
   <javac srcdir="src" destdir="${classes.dir}" 
          includes="com/thaiopensource/datatype/xsd/regex/xerces2/*.java"
-         target="1.1"/>
+         target="1.1" source="1.2"/>
 </target>
 
 <target name="check-jdk1_4">
@@ -81,7 +81,7 @@
 <target name="compile-jdk1_4" depends="check-jdk1_4,gen" if="jdk1_4-available">
   <javac srcdir="src:${build.dir}/src" destdir="${classes.dir}" 
          includes="com/thaiopensource/datatype/xsd/regex/jdk1_4/*.java"
-         target="1.1"/>
+         target="1.1" source="1.4"/>
 </target>
 
 <target name="compile-base">
@@ -90,7 +90,7 @@
          includes="com/thaiopensource/datatype/xsd/regex/*.java,
                    com/thaiopensource/datatype/xsd/regex/test/*.java,
                    ${util.src}"
-          target="1.1"/>
+         target="1.1" source="1.2"/>
 </target>
 
 <target name="compile" depends="compile-base,compile-xerces,compile-xerces2,compile-jdk1_4"/>
