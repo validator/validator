@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module version="4" relativePaths="true" type="JAVA_MODULE">
-  <component name="ModuleRootManager" />
-  <component name="NewModuleRootManager">
+<module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/classes" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes" />
@@ -11,7 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/trang/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="java version &quot;1.4.2_04&quot;" />
+    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -62,6 +61,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/saxon.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/xalan.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
