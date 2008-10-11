@@ -60,9 +60,9 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   </jing>
   <delete dir="${build.dir}/compact-test"/>
   <mkdir dir="${build.dir}/compact-test"/>
-  <style basedir="test" destdir="${build.dir}/compact-test" includes="compacttest.xml" extension=".stamp" style="test/compactsplit.xsl">
+  <xslt basedir="test" destdir="${build.dir}/compact-test" includes="compacttest.xml" extension=".stamp" style="test/compactsplit.xsl">
     <param name="dir" expression="${build.dir}/compact-test"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-compact-split">
@@ -77,9 +77,9 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   </jing>
   <delete dir="${build.dir}/xsd-test"/>
   <mkdir dir="${build.dir}/xsd-test"/>
-  <style basedir="test" destdir="${build.dir}/xsd-test" includes="toxsdtest.xml" extension=".stamp" style="test/compactsplit.xsl">
+  <xslt basedir="test" destdir="${build.dir}/xsd-test" includes="toxsdtest.xml" extension=".stamp" style="test/compactsplit.xsl">
     <param name="dir" expression="${build.dir}/xsd-test"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-xsd-split">
