@@ -8,10 +8,11 @@ import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import org.iso_relax.verifier.Schema;
 import org.iso_relax.verifier.VerifierFactory;
 import org.relaxng.datatype.DatatypeLibraryFactory;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
+
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

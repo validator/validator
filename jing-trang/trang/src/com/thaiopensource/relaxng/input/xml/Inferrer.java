@@ -33,7 +33,7 @@ import com.thaiopensource.xml.infer.ParticleVisitor;
 import com.thaiopensource.xml.infer.Schema;
 import com.thaiopensource.xml.infer.SequenceParticle;
 import com.thaiopensource.xml.infer.TextParticle;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

@@ -8,10 +8,10 @@ import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.relaxng.translate.util.ParamProcessor;
 import com.thaiopensource.relaxng.translate.util.EncodingParam;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 
 import java.io.IOException;
 

@@ -4,10 +4,10 @@ import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.util.UriOrFile;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 
 import java.io.IOException;
 import java.util.Iterator;

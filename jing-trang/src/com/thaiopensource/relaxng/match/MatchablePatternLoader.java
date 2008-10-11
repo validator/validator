@@ -4,7 +4,6 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
 import org.relaxng.datatype.DatatypeLibraryFactory;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.relaxng.impl.SchemaPatternBuilder;
@@ -16,6 +15,7 @@ import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.compact.CompactParseable;
 import com.thaiopensource.relaxng.parse.sax.SAXParseable;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 
 import java.io.IOException;
 
