@@ -162,9 +162,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/rngtest"/>
   <mkdir dir="${build.dir}/rngtest"/>
-  <style basedir="test" destdir="${build.dir}/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
+  <xslt basedir="test" destdir="${build.dir}/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/rngtest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-spec-split">
@@ -190,9 +190,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/mnstest"/>
   <mkdir dir="${build.dir}/mnstest"/>
-  <style basedir="test" destdir="${build.dir}/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
+  <xslt basedir="test" destdir="${build.dir}/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/mnstest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-mns-split">
@@ -218,9 +218,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/nrltest"/>
   <mkdir dir="${build.dir}/nrltest"/>
-  <style basedir="test" destdir="${build.dir}/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
+  <xslt basedir="test" destdir="${build.dir}/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/nrltest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-nrl-split">
@@ -246,9 +246,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/schematrontest"/>
   <mkdir dir="${build.dir}/schematrontest"/>
-  <style basedir="test" destdir="${build.dir}/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
+  <xslt basedir="test" destdir="${build.dir}/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/schematrontest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-schematron-split">
@@ -274,9 +274,9 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/picltest"/>
   <mkdir dir="${build.dir}/picltest"/>
-  <style basedir="test" destdir="${build.dir}/picltest" includes="picltest.xml" extension=".stamp" style="test/split.xsl">
+  <xslt basedir="test" destdir="${build.dir}/picltest" includes="picltest.xml" extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/picltest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="check-picl-split">
@@ -320,15 +320,15 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
   <delete dir="${build.dir}/xsdtest"/>
   <mkdir dir="${build.dir}/xsdtest"/>
-  <style basedir="test" destdir="${build.dir}/xsdtest" includes="xsdtest.xml" extension=".xml"
-         style="test/xsdtest.xsl"/>
+  <xslt basedir="test" destdir="${build.dir}/xsdtest" includes="xsdtest.xml" extension=".xml"
+        style="test/xsdtest.xsl"/>
   <jing rngfile="eg/testSuite.rng">
     <fileset dir="${build.dir}/xsdtest" includes="xsdtest.xml"/>
   </jing>
-  <style basedir="${build.dir}/xsdtest" destdir="${build.dir}/xsdtest" includes="xsdtest.xml"
-         extension=".stamp" style="test/split.xsl">
+  <xslt basedir="${build.dir}/xsdtest" destdir="${build.dir}/xsdtest" includes="xsdtest.xml"
+        extension=".stamp" style="test/split.xsl">
     <param name="dir" expression="${build.dir}/xsdtest"/>
-  </style>
+  </xslt>
 </target>
 
 <target name="regex-jar">
@@ -421,12 +421,12 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 </target>
 
 <target name="doc">
-  <style basedir="doc" destdir="${build.dir}" includes="derivative.xml"
-         style="doc/derivative.xsl"/>
-  <style basedir="doc" destdir="${build.dir}" includes="design.xml"
-         style="doc/design.xsl"/>
-  <style basedir="doc" destdir="${build.dir}" includes="nrl.xml"
-         style="doc/nrl.xsl"/>
+  <xslt basedir="doc" destdir="${build.dir}" includes="derivative.xml"
+        style="doc/derivative.xsl"/>
+  <xslt basedir="doc" destdir="${build.dir}" includes="design.xml"
+        style="doc/design.xsl"/>
+  <xslt basedir="doc" destdir="${build.dir}" includes="nrl.xml"
+        style="doc/nrl.xsl"/>
   <copy todir="${build.dir}">
     <fileset dir="doc" includes="*.html"/>
   </copy>
