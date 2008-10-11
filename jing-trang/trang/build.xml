@@ -32,7 +32,8 @@
   <javac srcdir="src:${dtdinst.src}:${jing.src}:${jing.gen.src}"
          destdir="${build.dir}/classes"
          classpath="${lib.dir}/xercesImpl.jar:${lib.dir}/regex.jar"
-         excludes="${jing.excludes},com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"/>
+         excludes="${jing.excludes},com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"
+	 source="1.2"/>
 </target>
 
 <target name="jar" depends="compile">
