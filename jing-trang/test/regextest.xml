@@ -16,6 +16,7 @@
 <testCase>
 <incorrect>a??</incorrect>
 </testCase>
+<!--
 <testCase>
 <correct>\P{IsGothic}</correct>
 <invalid>&#x10330;</invalid>
@@ -38,6 +39,7 @@
 <invalid>&#x30330;</invalid>
 <invalid>&#x10350;</invalid>
 </testCase>
+-->
 <testCase>
 <correct>$</correct>
 <valid>$</valid>
