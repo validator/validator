@@ -7,13 +7,12 @@ import com.thaiopensource.util.Utf16;
 import com.thaiopensource.relaxng.parse.BuildException;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * An implementation of interface CharStream, where the stream is assumed to
  * contain 16-bit unicode characters.
  */
-public final class UCode_UCodeESC_CharStream {
+public final class JavaCharStream {
   public static final boolean staticFlag = false;
 
   static final int hexval(char c) {
@@ -411,7 +410,7 @@ public final class UCode_UCodeESC_CharStream {
       bufpos += bufsize;
   }
 
-  public UCode_UCodeESC_CharStream(java.io.Reader dstream,
+  public JavaCharStream(java.io.Reader dstream,
                                    int startline, int startcolumn, int buffersize) {
     inputStream = dstream;
     line = startline;
@@ -425,12 +424,12 @@ public final class UCode_UCodeESC_CharStream {
     skipBOM();
   }
 
-  public UCode_UCodeESC_CharStream(java.io.Reader dstream,
+  public JavaCharStream(java.io.Reader dstream,
                                    int startline, int startcolumn) {
     this(dstream, startline, startcolumn, 4096);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.Reader dstream) {
+  public JavaCharStream(java.io.Reader dstream) {
     this(dstream, 1, 1, 4096);
   }
 
@@ -463,7 +462,7 @@ public final class UCode_UCodeESC_CharStream {
     ReInit(dstream, 1, 1, 4096);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding,
+  public JavaCharStream(java.io.InputStream dstream, String encoding,
                                    int startline, int startcolumn, int buffersize)
           throws java.io.UnsupportedEncodingException {
     this(encoding == null
@@ -472,28 +471,28 @@ public final class UCode_UCodeESC_CharStream {
          startline, startcolumn, buffersize);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, int startline,
+  public JavaCharStream(java.io.InputStream dstream, int startline,
                                    int startcolumn, int buffersize) {
     this(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding, int startline,
+  public JavaCharStream(java.io.InputStream dstream, String encoding, int startline,
                                    int startcolumn)
           throws java.io.UnsupportedEncodingException {
     this(dstream, encoding, startline, startcolumn, 4096);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, int startline,
+  public JavaCharStream(java.io.InputStream dstream, int startline,
                                    int startcolumn) {
     this(dstream, startline, startcolumn, 4096);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding)
+  public JavaCharStream(java.io.InputStream dstream, String encoding)
           throws java.io.UnsupportedEncodingException {
     this(dstream, encoding, 1, 1, 4096);
   }
 
-  public UCode_UCodeESC_CharStream(java.io.InputStream dstream) {
+  public JavaCharStream(java.io.InputStream dstream) {
     this(dstream, 1, 1, 4096);
   }
 

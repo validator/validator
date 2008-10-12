@@ -25,12 +25,10 @@
          />
  <delete quiet="true">
   <fileset dir="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"
-           includes="UCode_UCodeESC_CharStream.java"/>
+           includes="JavaCharStream.java"/>
  </delete>
  <replace file="${build.dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
    token="java.io.IOException" value="EOFException"/>
- <replace file="${build.dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.java"
-   token="enum" value="enumeration"/>
 </target>
 
 <target name="regex-gen" depends="init">
