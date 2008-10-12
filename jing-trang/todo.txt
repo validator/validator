@@ -1,3 +1,17 @@
+With Ant build files, set classpath in build file not in script.
+
+Fix bug with regex and surrrogates in JDK > 1.4.
+
+Make GCJ stuff work again.
+
+Make sure the copying.html file is in place.
+
+Merge in oNVDL.
+
+Use JAXP-supplied XSLT implementation.
+
+Use Xsltc from Xalan.
+
 Fix bug with not checking "duplicate declaration" and maybe "xsd prefix"
 constraint.
 
