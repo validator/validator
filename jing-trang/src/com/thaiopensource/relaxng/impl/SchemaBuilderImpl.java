@@ -465,9 +465,9 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     }
 
     public ParsedPattern endGrammar(Location loc, Annotations anno) throws BuildException {
-      for (Enumeration enum = defines.keys();
-           enum.hasMoreElements();) {
-        String name = (String)enum.nextElement();
+      for (Enumeration e = defines.keys();
+           e.hasMoreElements();) {
+        String name = (String)e.nextElement();
         RefPattern rp = (RefPattern)defines.get(name);
         if (rp.getPattern() == null) {
           sb.error("reference_to_undefined", name, rp.getRefLocator());

@@ -162,8 +162,8 @@ class SchemaImpl extends AbstractSchema {
     public Schema getSchema() throws IncorrectSchemaException, SAXException {
       if (validator == null || ceh.getHadErrorOrFatalError())
         throw new IncorrectSchemaException();
-      for (Enumeration enum = modeMap.keys(); enum.hasMoreElements();) {
-        String modeName = (String)enum.nextElement();
+      for (Enumeration e = modeMap.keys(); e.hasMoreElements();) {
+        String modeName = (String)e.nextElement();
         Mode mode = (Mode)modeMap.get(modeName);
         if (!mode.defined && !modeName.equals(DEFAULT_MODE_NAME))
           error("undefined_mode", modeName, mode.whereDefined);

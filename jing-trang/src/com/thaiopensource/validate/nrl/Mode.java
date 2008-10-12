@@ -90,8 +90,8 @@ class Mode {
         attributeProcessing = baseMode.getAttributeProcessing();
       else
         attributeProcessing = ATTRIBUTE_PROCESSING_NONE;
-      for (Enumeration enum = attributeMap.keys(); enum.hasMoreElements() && attributeProcessing != ATTRIBUTE_PROCESSING_FULL;) {
-        String ns = (String)enum.nextElement();
+      for (Enumeration e = attributeMap.keys(); e.hasMoreElements() && attributeProcessing != ATTRIBUTE_PROCESSING_FULL;) {
+        String ns = (String)e.nextElement();
         AttributeActionSet actions = (AttributeActionSet)attributeMap.get(ns);
         if (!actions.getAttach()
             || actions.getReject()

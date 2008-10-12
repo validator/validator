@@ -218,8 +218,8 @@ class Analyzer extends AbstractVisitor {
     if (context == null || context == lastContext)
       return;
     lastContext = context;
-    for (Enumeration enum = context.prefixes(); enum.hasMoreElements();) {
-      String prefix = (String)enum.nextElement();
+    for (Enumeration e = context.prefixes(); e.hasMoreElements();) {
+      String prefix = (String)e.nextElement();
       noteNs(prefix, context.resolveNamespacePrefix(prefix));
     }
   }

@@ -122,8 +122,8 @@ class SchemaImpl extends AbstractSchema {
         throw new IncorrectSchemaException();
       Hashset openModes = new Hashset();
       Hashset checkedModes = new Hashset();
-      for (Enumeration enum = modeMap.keys(); enum.hasMoreElements();) {
-        String modeName = (String)enum.nextElement();
+      for (Enumeration e = modeMap.keys(); e.hasMoreElements();) {
+        String modeName = (String)e.nextElement();
         Mode mode = (Mode)modeMap.get(modeName);
         if (!mode.isDefined())
           error("undefined_mode", modeName, mode.getWhereUsed());
@@ -312,8 +312,8 @@ class SchemaImpl extends AbstractSchema {
                                            requestedProperties,
                                            isAttributesSchema);
       PropertyMap actualProperties = schema.getProperties();
-      for (Enumeration enum = mustSupportOptions.elements(); enum.hasMoreElements();) {
-        MustSupportOption mso = (MustSupportOption)enum.nextElement();
+      for (Enumeration e = mustSupportOptions.elements(); e.hasMoreElements();) {
+        MustSupportOption mso = (MustSupportOption)e.nextElement();
         Object actualValue = actualProperties.get(mso.pid);
         if (actualValue == null)
           error("unsupported_option", mso.name, mso.locator);

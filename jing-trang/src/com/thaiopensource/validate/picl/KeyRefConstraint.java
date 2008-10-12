@@ -29,8 +29,8 @@ class KeyRefConstraint extends KeyConstraint {
     }
 
     public void selectComplete(ErrorContext ec) {
-      for (Enumeration enum = index.keys(); enum.hasMoreElements();) {
-        Object key = enum.nextElement();
+      for (Enumeration e = index.keys(); e.hasMoreElements();) {
+        Object key = e.nextElement();
         KeyInfo info = index.lookupCreate(key);
         if (info.pendingRefLocators == null)
           continue;
