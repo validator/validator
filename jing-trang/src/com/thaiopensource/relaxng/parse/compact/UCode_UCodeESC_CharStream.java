@@ -7,6 +7,7 @@ import com.thaiopensource.util.Utf16;
 import com.thaiopensource.relaxng.parse.BuildException;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * An implementation of interface CharStream, where the stream is assumed to
@@ -80,6 +81,10 @@ public final class UCode_UCodeESC_CharStream {
   private int maxNextCharInd = 0;
   private int nextCharInd = -1;
   private int inBuf = 0;
+  private int tabSize = 8;
+
+  protected void setTabSize(int i) { tabSize = i; }
+  protected int getTabSize(int i) { return tabSize; }
 
   private final void ExpandBuff(boolean wrapAround) {
     char[] newbuffer = new char[bufsize + 2048];
@@ -156,8 +161,11 @@ public final class UCode_UCodeESC_CharStream {
   public final char BeginToken() throws EOFException {
     if (inBuf > 0) {
       --inBuf;
-      return buffer[tokenBegin = (bufpos == bufsize - 1) ? (bufpos = 0)
-              : ++bufpos];
+      if (++bufpos == bufsize)
+        bufpos = 0;
+
+      tokenBegin = bufpos;
+      return buffer[bufpos];
     }
 
     tokenBegin = 0;
@@ -197,7 +205,7 @@ public final class UCode_UCodeESC_CharStream {
       break;
     case '\t':
       column--;
-      column += (8 - (column & 07));
+      column += (tabSize - (column % tabSize));
       break;
     default :
       break;
@@ -212,7 +220,10 @@ public final class UCode_UCodeESC_CharStream {
   public final char readChar() throws EOFException {
     if (inBuf > 0) {
       --inBuf;
-      return buffer[(bufpos == bufsize - 1) ? (bufpos = 0) : ++bufpos];
+      if (++bufpos == bufsize)
+        bufpos = 0;
+
+      return buffer[bufpos];
     }
 
     char c;
@@ -419,6 +430,10 @@ public final class UCode_UCodeESC_CharStream {
     this(dstream, startline, startcolumn, 4096);
   }
 
+  public UCode_UCodeESC_CharStream(java.io.Reader dstream) {
+    this(dstream, 1, 1, 4096);
+  }
+
   public void ReInit(java.io.Reader dstream,
                      int startline, int startcolumn, int buffersize) {
     inputStream = dstream;
@@ -444,9 +459,28 @@ public final class UCode_UCodeESC_CharStream {
     ReInit(dstream, startline, startcolumn, 4096);
   }
 
+  public void ReInit(java.io.Reader dstream) {
+    ReInit(dstream, 1, 1, 4096);
+  }
+
+  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding,
+                                   int startline, int startcolumn, int buffersize)
+          throws java.io.UnsupportedEncodingException {
+    this(encoding == null
+         ? new java.io.InputStreamReader(dstream)
+         : new java.io.InputStreamReader(dstream, encoding),
+         startline, startcolumn, buffersize);
+  }
+
   public UCode_UCodeESC_CharStream(java.io.InputStream dstream, int startline,
                                    int startcolumn, int buffersize) {
-    this(new java.io.InputStreamReader(dstream), startline, startcolumn, 4096);
+    this(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);
+  }
+
+  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding, int startline,
+                                   int startcolumn)
+          throws java.io.UnsupportedEncodingException {
+    this(dstream, encoding, startline, startcolumn, 4096);
   }
 
   public UCode_UCodeESC_CharStream(java.io.InputStream dstream, int startline,
@@ -454,14 +488,46 @@ public final class UCode_UCodeESC_CharStream {
     this(dstream, startline, startcolumn, 4096);
   }
 
+  public UCode_UCodeESC_CharStream(java.io.InputStream dstream, String encoding)
+          throws java.io.UnsupportedEncodingException {
+    this(dstream, encoding, 1, 1, 4096);
+  }
+
+  public UCode_UCodeESC_CharStream(java.io.InputStream dstream) {
+    this(dstream, 1, 1, 4096);
+  }
+
+  public void ReInit(java.io.InputStream dstream, String encoding,
+                     int startline, int startcolumn, int buffersize)
+          throws java.io.UnsupportedEncodingException {
+    ReInit(encoding == null
+           ? new java.io.InputStreamReader(dstream)
+           : new java.io.InputStreamReader(dstream, encoding), startline, startcolumn, buffersize);
+  }
+  
   public void ReInit(java.io.InputStream dstream, int startline,
                      int startcolumn, int buffersize) {
-    ReInit(new java.io.InputStreamReader(dstream), startline, startcolumn, 4096);
+    ReInit(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);
+  }
+
+  public void ReInit(java.io.InputStream dstream, String encoding, int startline,
+                     int startcolumn)
+          throws java.io.UnsupportedEncodingException {
+    ReInit(dstream, encoding, startline, startcolumn, 4096);
   }
 
   public void ReInit(java.io.InputStream dstream, int startline,
                      int startcolumn) {
     ReInit(dstream, startline, startcolumn, 4096);
+  }
+
+  public void ReInit(java.io.InputStream dstream, String encoding)
+          throws java.io.UnsupportedEncodingException {
+    ReInit(dstream, encoding, 1, 1, 4096);
+  }
+
+  public void ReInit(java.io.InputStream dstream) {
+    ReInit(dstream, 1, 1, 4096);
   }
 
   static private final char BOM = '\ufeff';
