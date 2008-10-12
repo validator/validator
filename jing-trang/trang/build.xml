@@ -71,7 +71,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   </uptodate>
 </target>
 
-<target name="xsd-split" depends="init,check-xsd-split" unless="xsd-split-not-required">
+<target name="xsd-split" depends="init,check-xsd-split" unless="trang-xsd-split-not-required">
   <jing rngfile="test/toxsdtest.rnc" compactsyntax="yes">
     <fileset dir="test" includes="toxsdtest.xml"/>
   </jing>
@@ -83,7 +83,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
 </target>
 
 <target name="check-xsd-split">
-  <uptodate property="xsd-split-not-required" targetfile="${build.dir}/xsd-test/toxsdtest.stamp">
+  <uptodate property="trang-xsd-split-not-required" targetfile="${build.dir}/xsd-test/toxsdtest.stamp">
     <srcfiles dir="test" includes="toxsdtest.xml,compactsplit.xsl"/>
   </uptodate>
 </target>
