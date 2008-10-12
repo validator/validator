@@ -68,23 +68,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 </target>
 
-<target name="crimson-files" depends="check-crimson-files" unless="crimson-files-ok">
-  <mkdir dir="${build.dir}/crimson-files"/>
-  <unzip src="lib/crimson.jar" dest="${build.dir}/crimson-files"/>
-  <delete dir="${build.dir}/crimson-files/org/w3c"/>
-  <delete dir="${build.dir}/crimson-files/org/apache/crimson/tree"/>
-  <delete file="${build.dir}/crimson-files/META-INF/services/javax.xml.parsers.DocumentBuilderFactory"/>
-  <delete file="${build.dir}/crimson-files/javax/xml/parsers/DocumentBuilder.class"/>
-  <delete file="${build.dir}/crimson-files/javax/xml/parsers/DocumentBuilderFactory.class"/>
-  <delete dir="${build.dir}/crimson-files/org/apache/crimson/jaxp/DocumentBuilderImpl.class"/>
-  <delete dir="${build.dir}/crimson-files/org/apache/crimson/jaxp/DocumentBuilderFactoryImpl.class"/>
-</target>
-
-<target name="check-crimson-files">
-  <available property="crimson-files-ok"
-             file="${build.dir}/crimson-files/org/apache/crimson/parser/XMLReaderImpl.class"/>
-</target>
-
 <target name="regex-files" depends="check-regex-files" unless="regex-files-ok">
   <mkdir dir="${build.dir}/regex-files"/>
   <unzip src="lib/regex2.jar" dest="${build.dir}/regex-files"/>
@@ -98,7 +81,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 <target name="validate" depends="jar" description="Validate all XML files" >
   <jing rngfile="xhtml/xhtml.rng">
-    <fileset dir="doc" includes="*.html,jing-win32-bin/*.html,jing-bin/*.html,regex/*.html"/>
+    <fileset dir="doc" includes="*.html,jing-bin/*.html,regex/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
     <fileset dir="test" includes="index.html"/>
     <fileset dir="doc/compact" includes="*.html"/>
