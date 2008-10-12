@@ -66,17 +66,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 </target>
 
-<target name="regex-files" depends="check-regex-files" unless="regex-files-ok">
-  <mkdir dir="${build.dir}/regex-files"/>
-  <unzip src="lib/regex2.jar" dest="${build.dir}/regex-files"/>
-  <delete dir="${build.dir}/regex-files/META-INF"/>
-</target>
-
-<target name="check-regex-files">
-  <available property="regex-files-ok"
-             file="${build.dir}/regex-files/org/apache/xerces/impl/xpath/regex/RegularExpression.class"/>
-</target>
-
 <target name="validate" depends="jar" description="Validate all XML files" >
   <jing rngfile="xhtml/xhtml.rng">
     <fileset dir="doc" includes="*.html,jing-bin/*.html,regex/*.html"/>
