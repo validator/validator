@@ -1,12 +1,10 @@
-With Ant build files, set classpath in build file not in script.
-
 Fix bug with regex and surrrogates in JDK > 1.4.
 
 Make GCJ stuff work again.
 
 Make sure the copying.html file is in place.
 
-Merge in oNVDL.
+Merge Jing changes from oNVDL.
 
 Use JAXP-supplied XSLT implementation.
 

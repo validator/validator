@@ -41,7 +41,11 @@
 
 <target name="compile" depends="gen">
   <mkdir dir="${build.dir}/classes"/>
-  <javac srcdir="src:${build.dir}/src" destdir="${build.dir}/classes" excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java" target="1.1" source="1.2"/>
+  <javac srcdir="src:${build.dir}/src"
+	 destdir="${build.dir}/classes"
+	 excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"
+	 classpath="${lib.dir}/xercesImpl.jar:${lib.dir}/saxon.jar:${lib.dir}/xalan.jar"
+	 target="1.1" source="1.2"/>
 </target>
 
 <target name="jar" depends="compile" description="Build jing.jar" >
