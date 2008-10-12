@@ -52,17 +52,6 @@
   </uptodate>
 </target>
 
-<target name="check-xerces">
-  <available property="xerces-available"
-             classname="org.apache.xerces.utils.regex.RegularExpression"/>
-</target>
-
-<target name="compile-xerces" depends="check-xerces" if="xerces-available">
-  <javac srcdir="src" destdir="${classes.dir}" 
-         includes="com/thaiopensource/datatype/xsd/regex/xerces/*.java"
-         target="1.1" source="1.2"/>
-</target>
-
 <target name="check-xerces2">
   <available property="xerces2-available" 
              classname="org.apache.xerces.impl.xpath.regex.RegularExpression"/>
@@ -93,7 +82,7 @@
          target="1.1" source="1.2"/>
 </target>
 
-<target name="compile" depends="compile-base,compile-xerces,compile-xerces2,compile-jdk1_4"/>
+<target name="compile" depends="compile-base,compile-xerces2,compile-jdk1_4"/>
 
 <target name="jar" depends="compile">
   <jar jarfile="${jar.file}">
