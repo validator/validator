@@ -1,7 +1,5 @@
 <project name="jing" default="all">
 
-<property name="sdkjava.dir" value="c:\Program Files\Microsoft SDK for Java 4.0"/>
-
 <property name="lib.dir" value="lib"/>
 
 <property name="topbuild.dir" value="${basedir}/build"/>
@@ -15,9 +13,6 @@
   <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
   <condition property="linux">
     <os family="unix"/>
-  </condition>
-  <condition property="windows">
-    <os family="windows"/>
   </condition>
 </target>
 
@@ -71,34 +66,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     </classpath>
   </taskdef>
 
-</target>
-
-<target name="exegen" depends="compile,check-exe,crimson-files,regex-files"
-        unless="exe-ok" description="Build jing.exe" if="windows">
-  <exec dir="." executable="${sdkjava.dir}\bin\jexegen"
-        failonerror="yes">
-    <arg value="/main:com.thaiopensource.relaxng.util.ExegenDriver"/>
-    <arg value="/nologo"/>
-    <arg value="/out:${build.dir}\jing.exe"/>
-    <arg value="/r"/>
-    <arg value="/base:src"/>
-    <arg value="*.properties"/>
-    <arg value="*.rng"/>
-    <arg value="META-INF\services\*"/>
-    <arg value="/base:${build.dir}\classes"/>
-    <arg value="*.class"/>
-    <arg value="/base:${build.dir}\crimson-files"/>
-    <arg value="*.*"/>
-    <arg value="/base:${build.dir}\regex-files"/>
-    <arg value="*.*"/>
-  </exec>
-</target>
-
-<target name="check-exe">
-  <uptodate property="exe-ok" targetfile="${build.dir}/jing.exe">
-    <srcfiles dir="${build.dir}/classes" includes="**/*.class"/>
-    <srcfiles dir="src" includes="**/*.properties"/>
-  </uptodate>
 </target>
 
 <target name="crimson-files" depends="check-crimson-files" unless="crimson-files-ok">
@@ -595,20 +562,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <checksum file="${build.dir}/dist/jing-${version}.zip" fileext=".md5"/>
 </target>
 
-<target name="jing-win32-dist" depends="exegen" if="windows">
-  <mkdir dir="${build.dir}/jing-win32-bin"/>
-  <copy todir="${build.dir}/jing-win32-bin">
-    <fileset dir="doc/jing-win32-bin" includes="readme.html"/>
-  </copy>
-  <replace file="${build.dir}/jing-win32-bin/readme.html" token="@VERSION@" value="${version}"/>
-  <zip zipfile="${build.dir}/dist/jing-${version}-win32-bin.zip">
-    <fileset dir="${build.dir}/jing-win32-bin" includes="readme.html"/>
-    <fileset dir="doc/jing-win32-bin" includes="apache-license.txt"/>
-    <fileset dir="${build.dir}" includes="jing.exe,copying.html"/>
-  </zip>
-  <checksum file="${build.dir}/dist/jing-${version}-win32-bin.zip" fileext=".md5"/>
-</target>
-
 <target name="website" depends="validate,javadoc,datatype-sample,doc,trang-website,dtdinst-website"
   description="Build a .tar.gz containing the complete relaxng website" >
   <copy todir="${build.dir}">
@@ -677,7 +630,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 
 <target name="gcj-dist" depends="gcj-test,gcj-rpm"/>
 
-<target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,gcj-dist,jing-win32-dist,website"/>
+<target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,gcj-dist,website"/>
 
 <target name="clean" description="Remove all files created during the build process">
   <delete dir="${build.dir}"/>
