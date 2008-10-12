@@ -81,7 +81,7 @@
 <target name="compile-jdk1_4" depends="check-jdk1_4,gen" if="jdk1_4-available">
   <javac srcdir="src:${build.dir}/src" destdir="${classes.dir}" 
          includes="com/thaiopensource/datatype/xsd/regex/jdk1_4/*.java"
-         target="1.1" source="1.4"/>
+         target="1.4" source="1.4"/>
 </target>
 
 <target name="compile-base">
