@@ -4,6 +4,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.SchemaReaderFactory;
+import com.thaiopensource.validate.prop.schematron.SchematronProperty;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactoryConfigurationError;

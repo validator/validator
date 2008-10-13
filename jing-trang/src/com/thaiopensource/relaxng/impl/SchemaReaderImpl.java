@@ -10,8 +10,8 @@ import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.nrl.NrlProperty;
-import com.thaiopensource.validate.rng.RngProperty;
+import com.thaiopensource.validate.prop.rng.RngProperty;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import org.relaxng.datatype.DatatypeLibraryFactory;
@@ -28,7 +28,7 @@ public abstract class SchemaReaderImpl implements SchemaReader {
     RngProperty.DATATYPE_LIBRARY_FACTORY,
     RngProperty.CHECK_ID_IDREF,
     RngProperty.FEASIBLE,
-    NrlProperty.ATTRIBUTES_SCHEMA,
+    WrapProperty.ATTRIBUTES,
   };
 
   public Schema createSchema(InputSource in, PropertyMap properties)
@@ -41,7 +41,7 @@ public abstract class SchemaReaderImpl implements SchemaReader {
       dlf = new DatatypeLibraryLoader();
     try {
       Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
-                                              properties.contains(NrlProperty.ATTRIBUTES_SCHEMA));
+                                              properties.contains(WrapProperty.ATTRIBUTES));
       return wrapPattern(start, spb, properties);
     }
     catch (IllegalSchemaException e) {

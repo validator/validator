@@ -1,4 +1,4 @@
-package com.thaiopensource.validate.schematron;
+package com.thaiopensource.validate.prop.schematron;
 
 import com.thaiopensource.validate.StringPropertyId;
 import com.thaiopensource.validate.FlagPropertyId;

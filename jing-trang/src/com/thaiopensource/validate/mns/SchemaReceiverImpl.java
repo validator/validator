@@ -4,18 +4,14 @@ import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.rng.RngProperty;
 import com.thaiopensource.validate.rng.SAXSchemaReader;
-import com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory;
-import com.thaiopensource.validate.nrl.NrlProperty;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.validate.auto.SchemaReceiver;
 import com.thaiopensource.validate.auto.SchemaReceiverFactory;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -33,16 +29,16 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private Schema mnsSchema = null;
 
   public SchemaReceiverImpl(PropertyMap properties) {
-    this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
+    this.attributesSchema = properties.contains(WrapProperty.ATTRIBUTES);
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
     if (attributesSchema) {
       attributeSchemaProperties = properties;
-      builder.put(NrlProperty.ATTRIBUTES_SCHEMA, null);
+      builder.put(WrapProperty.ATTRIBUTES, null);
       this.properties = builder.toPropertyMap();
     }
     else {
       this.properties = properties;
-      NrlProperty.ATTRIBUTES_SCHEMA.add(builder);
+      WrapProperty.ATTRIBUTES.add(builder);
       attributeSchemaProperties = builder.toPropertyMap();
     }
     this.autoSchemaLanguage = new AutoSchemaReader(SchemaReceiverFactory.PROPERTY.get(properties));

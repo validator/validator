@@ -14,8 +14,9 @@ import org.xml.sax.EntityResolver;
  * @see SchemaReader#createSchema
  * @see PropertyMap
  * @see PropertyId
- * @see com.thaiopensource.validate.rng.RngProperty
- * @see com.thaiopensource.validate.schematron.SchematronProperty
+ * @see com.thaiopensource.validate.prop.rng.RngProperty
+ * @see com.thaiopensource.validate.prop.schematron.SchematronProperty
+ * @see com.thaiopensource.validate.prop.wrap.WrapProperty
  */
 public class ValidateProperty {
   /**

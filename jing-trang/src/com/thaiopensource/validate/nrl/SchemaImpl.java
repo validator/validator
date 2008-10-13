@@ -14,6 +14,7 @@ import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.OptionArgumentPresenceException;
 import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
@@ -507,7 +508,7 @@ class SchemaImpl extends AbstractSchema {
 
   SchemaImpl(PropertyMap properties) {
     super(properties);
-    this.attributesSchema = properties.contains(NrlProperty.ATTRIBUTES_SCHEMA);
+    this.attributesSchema = properties.contains(WrapProperty.ATTRIBUTES);
     makeBuiltinMode("#allow", AllowAction.class);
     makeBuiltinMode("#attach", AttachAction.class);
     makeBuiltinMode("#unwrap", UnwrapAction.class);
