@@ -75,7 +75,7 @@ class Inferrer {
       if (p1 instanceof RefPattern)
         return ((RefPattern)p1).getName().compareTo(((RefPattern)p2).getName());
       if (p1 instanceof ElementPattern)
-        return extractElementName(p1).compareTo(extractElementName(p2));
+        return Name.compare(extractElementName(p1), extractElementName(p2));
       return 0;
     }
 
@@ -316,7 +316,11 @@ class Inferrer {
       GroupPattern group = new GroupPattern();
       List<Name> attributeNames = new Vector<Name>();
       attributeNames.addAll(attributeDecls.keySet());
-      Collections.sort(attributeNames);
+      Collections.sort(attributeNames, new Comparator<Name>() {
+        public int compare(Name n1, Name n2) {
+          return Name.compare(n1, n2);
+        }
+      });
       for (Name attName : attributeNames) {
         AttributeDecl att = attributeDecls.get(attName);
         Pattern tem;

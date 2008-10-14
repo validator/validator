@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.output.common;
 
-final public class Name implements Comparable {
+final public class Name {
   private final String namespaceUri;
   private final String localName;
 
@@ -28,11 +28,11 @@ final public class Name implements Comparable {
     return this.namespaceUri.equals(other.namespaceUri) && this.localName.equals(other.localName);
   }
 
-  public int compareTo(Object o) {
-    Name other = (Name)o;
-    int ret = this.namespaceUri.compareTo(other.namespaceUri);
+  // We include this, but don't derive from Comparator<Name> to avoid a dependency on Java 5.
+  static public int compare(Name n1, Name n2) {
+    int ret = n1.namespaceUri.compareTo(n2.namespaceUri);
     if (ret != 0)
       return ret;
-    return this.localName.compareTo(other.localName);
+    return n1.localName.compareTo(n2.localName);
   }
 }
