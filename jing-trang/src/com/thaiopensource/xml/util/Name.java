@@ -31,5 +31,13 @@ public final class Name {
   public int hashCode() {
     return hc;
   }
+
+  // We include this, but don't derive from Comparator<Name> to avoid a dependency on Java 5.
+  static public int compare(Name n1, Name n2) {
+    int ret = n1.namespaceUri.compareTo(n2.namespaceUri);
+    if (ret != 0)
+      return ret;
+    return n1.localName.compareTo(n2.localName);
+  }
 }
 
