@@ -287,7 +287,7 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Jing.iml" filepath="$PROJECT_DIR$/Jing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jing.iml" filepath="$PROJECT_DIR$/jing.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtdinst/dtdinst.iml" filepath="$PROJECT_DIR$/dtdinst/dtdinst.iml" />
       <module fileurl="file://$PROJECT_DIR$/trang/trang.iml" filepath="$PROJECT_DIR$/trang/trang.iml" />
     </modules>
