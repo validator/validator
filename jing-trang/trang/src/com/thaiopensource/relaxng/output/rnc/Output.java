@@ -20,7 +20,7 @@ class Output {
   private final OutputDirectory od;
   private final ErrorReporter er;
   private final NamespaceManager.NamespaceBindings nsb;
-  private final Map datatypeLibraryMap = new HashMap();
+  private final Map<String, String> datatypeLibraryMap = new HashMap<String, String>();
   private final ComplexityCache complexityCache = new ComplexityCache();
   private final NameClassVisitor nameClassOutput = new NameClassOutput(true);
   private final NameClassVisitor noParenNameClassOutput = new NameClassOutput(false);
@@ -39,7 +39,7 @@ class Output {
     "parent", "start", "string", "text", "token"
   };
 
-  static private final Set keywordSet = new HashSet();
+  static private final Set<String> keywordSet = new HashSet<String>();
 
   static {
     for (int i = 0; i < keywords.length; i++)
@@ -86,15 +86,15 @@ class Output {
     outputNamespaceDeclarations();
     outputDatatypeLibraryDeclarations(p);
     if (implicitGrammar) {
-      for (Iterator iter = p.getChildElementAnnotations().iterator(); iter.hasNext();) {
-        ((AnnotationChild)iter.next()).accept(annotationChildOutput);
+      for (AnnotationChild annotationChild : p.getChildElementAnnotations()) {
+        annotationChild.accept(annotationChildOutput);
         pp.hardNewline();
       }
       innerBody(((GrammarPattern)p).getComponents());
       // This deals with trailing comments
-      for (Iterator iter = p.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
+      for (AnnotationChild annotationChild : p.getFollowingElementAnnotations()) {
         pp.hardNewline();
-        ((AnnotationChild)iter.next()).accept(annotationChildOutput);
+        annotationChild.accept(annotationChildOutput);
       }
     }
     else
@@ -104,7 +104,7 @@ class Output {
   }
 
   private void outputNamespaceDeclarations() {
-    List prefixes = new Vector();
+    List<String> prefixes = new Vector<String>();
     prefixes.addAll(nsb.getPrefixes());
     Collections.sort(prefixes);
 
@@ -114,8 +114,7 @@ class Output {
     String defaultNamespace = nsb.getNamespaceUri("");
     if (defaultNamespace != null && !defaultNamespace.equals(SchemaBuilder.INHERIT_NS))
       defaultPrefix = nsb.getNonEmptyPrefix(defaultNamespace);
-    for (Iterator iter = prefixes.iterator(); iter.hasNext();) {
-      String prefix = (String)iter.next();
+    for (String prefix : prefixes) {
       String ns = nsb.getNamespaceUri(prefix);
       if (prefix.length() == 0) {
         if (defaultPrefix == null && !ns.equals(SchemaBuilder.INHERIT_NS)) {
@@ -158,7 +157,7 @@ class Output {
 
   private void outputDatatypeLibraryDeclarations(Pattern p) {
     datatypeLibraryMap.put(WellKnownNamespaces.XML_SCHEMA_DATATYPES, "xsd");
-    List datatypeLibraries = new Vector();
+    List<String> datatypeLibraries = new Vector<String>();
     datatypeLibraries.addAll(DatatypeLibraryVisitor.findDatatypeLibraries(p));
     if (datatypeLibraries.isEmpty())
       return;
@@ -167,7 +166,7 @@ class Output {
       String prefix = "d";
       if (len > 1)
         prefix += Integer.toString(i + 1);
-      String uri = (String)datatypeLibraries.get(i);
+      String uri = datatypeLibraries.get(i);
       datatypeLibraryMap.put(uri, prefix);
       pp.startGroup();
       pp.text("datatypes ");
@@ -183,11 +182,11 @@ class Output {
     pp.hardNewline();
   }
 
-  static class TextAnnotationMerger extends NullVisitor {
+  private static class TextAnnotationMerger extends NullVisitor {
     public void nullVisitElement(ElementAnnotation ea) {
       TextAnnotation prevText = null;
-      for (Iterator iter = ea.getChildren().iterator(); iter.hasNext();) {
-        AnnotationChild child = (AnnotationChild)iter.next();
+      for (Iterator<AnnotationChild> iter = ea.getChildren().iterator(); iter.hasNext();) {
+        AnnotationChild child = iter.next();
         if (child instanceof TextAnnotation) {
           if (prevText == null)
             prevText = (TextAnnotation)child;
@@ -205,7 +204,7 @@ class Output {
   }
 
   static class DatatypeLibraryVisitor extends NullVisitor {
-    private final Set datatypeLibraries = new HashSet();
+    private final Set<String> datatypeLibraries = new HashSet<String>();
 
     public void nullVisitValue(ValuePattern p) {
       noteDatatypeLibrary(p.getDatatypeLibrary());
@@ -222,7 +221,7 @@ class Output {
         datatypeLibraries.add(uri);
     }
 
-    static Set findDatatypeLibraries(Pattern p) {
+    static Set<String> findDatatypeLibraries(Pattern p) {
       DatatypeLibraryVisitor dlv = new DatatypeLibraryVisitor();
       p.accept(dlv);
       return dlv.datatypeLibraries;
@@ -272,9 +271,8 @@ class Output {
 
     public void nullVisitValue(ValuePattern p) {
       super.nullVisitValue(p);
-      for (Iterator iter = p.getPrefixMap().entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        nsm.requireBinding((String)entry.getKey(), (String)entry.getValue());
+      for (Map.Entry<String, String> entry : p.getPrefixMap().entrySet()) {
+        nsm.requireBinding(entry.getKey(), entry.getValue());
       }
     }
 
@@ -318,13 +316,12 @@ class Output {
       p.leadingCommentsAccept(this);
       noteContext(p.getContext(), !p.getAttributeAnnotations().isEmpty());
       p.attributeAnnotationsAccept(this);
-      List before = (p.mayContainText()
+      List<AnnotationChild> before = (p.mayContainText()
                      ? p.getFollowingElementAnnotations()
                      : p.getChildElementAnnotations());
       // Avoid unnecessary prefix for documentation
       int state = 0;
-      for (Iterator iter = before.iterator(); iter.hasNext();) {
-        AnnotationChild child = (AnnotationChild)iter.next();
+      for (AnnotationChild child : before) {
         if (state < 2 && documentationString(child) != null)
           state = 1;
         else if (state != 1 || !(child instanceof Comment))
@@ -343,7 +340,7 @@ class Output {
     }
   }
 
-  class ComponentOutput implements ComponentVisitor {
+  private class ComponentOutput implements ComponentVisitor {
     public Object visitDefine(DefineComponent c) {
       startAnnotations(c);
       pp.startGroup();
@@ -387,7 +384,7 @@ class Output {
       inherit(c.getNs());
       pp.endNest();
       pp.endGroup();
-      List components = c.getComponents();
+      List<Component> components = c.getComponents();
       if (!components.isEmpty())
         body(components);
       endAnnotations(c);
@@ -579,7 +576,7 @@ class Output {
       }
 
       boolean first = true;
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
+      for (Pattern child : p.getChildren()) {
         if (!first) {
           if (sepBeforeNewline)
             pp.text(sep);
@@ -592,7 +589,7 @@ class Output {
             pp.startNest(sep);
           }
         }
-        ((Pattern)iter.next()).accept(patternOutput);
+        child.accept(patternOutput);
         if (first)
           first = false;
         else if (!sepBeforeNewline)
@@ -612,19 +609,18 @@ class Output {
       String lib = p.getDatatypeLibrary();
       String qn;
       if (!lib.equals(""))
-        qn = (String)datatypeLibraryMap.get(lib) + ":" + p.getType();
+        qn = datatypeLibraryMap.get(lib) + ":" + p.getType();
       else
         qn = p.getType();
       qn = encode(qn);
       pp.text(qn);
-      List params = p.getParams();
+      List<Param> params = p.getParams();
       if (params.size() > 0) {
         pp.startGroup();
         pp.text(" {");
         pp.startNest(indent);
-        for (Iterator iter = params.iterator(); iter.hasNext();) {
+        for (Param param : params) {
           pp.softNewline(" ");
-          Param param = (Param)iter.next();
           startAnnotations(param);
           pp.startGroup();
           encodedText(param.getName());
@@ -669,10 +665,9 @@ class Output {
     }
 
     public Object visitValue(ValuePattern p) {
-      for (Iterator iter = p.getPrefixMap().entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        String prefix = (String)entry.getKey();
-        String uri = (String)entry.getValue();
+      for (Map.Entry<String, String> entry : p.getPrefixMap().entrySet()) {
+        String prefix = entry.getKey();
+        String uri = entry.getValue();
         if (!uri.equals(nsb.getNamespaceUri(prefix))) {
           if (prefix.equals(""))
             er.error("value_inconsistent_default_binding", uri, p.getSourceLocation());
@@ -689,7 +684,7 @@ class Output {
           str = p.getType() + " ";
       }
       else
-        str = (String)datatypeLibraryMap.get(lib) + ":" + p.getType() + " ";
+        str = datatypeLibraryMap.get(lib) + ":" + p.getType() + " ";
       if (str != null) {
         String encoded = encode(str);
         pp.text(encoded);
@@ -775,14 +770,14 @@ class Output {
       }
       pp.startGroup();
       boolean first = true;
-      for (Iterator iter = nc.getChildren().iterator(); iter.hasNext();) {
+      for (NameClass child : nc.getChildren()) {
         if (first)
           first = false;
         else {
           pp.softNewline(" ");
           pp.text("| ");
         }
-        ((NameClass)iter.next()).accept(nameClassOutput);
+        child.accept(nameClassOutput);
       }
       pp.endGroup();
       if (useParens) {
@@ -840,9 +835,9 @@ class Output {
     }
     else if (!hasAnnotations(annotated))
       return false;
-    List before = (annotated.mayContainText()
-                   ? annotated.getFollowingElementAnnotations()
-                   : annotated.getChildElementAnnotations());
+    List<AnnotationChild> before = (annotated.mayContainText()
+                                    ? annotated.getFollowingElementAnnotations()
+                                    : annotated.getChildElementAnnotations());
     int i = 0;
     int len = before.size();
     for (; i < len; i++) {
@@ -855,14 +850,14 @@ class Output {
         if (j >= len)
           break;
       }
-      String doc = documentationString((AnnotationChild)before.get(j));
+      String doc = documentationString(before.get(j));
       if (doc == null)
         break;
       if (j == i)
         pp.hardNewline();
       else {
         for (;;) {
-          ((Comment)before.get(i)).accept(annotationChildOutput);
+          before.get(i).accept(annotationChildOutput);
           if (++i == j)
             break;
           pp.hardNewline();
@@ -894,18 +889,17 @@ class Output {
     if (!elem.getAttributes().isEmpty())
       return null;
     StringBuffer buf = new StringBuffer();
-    for (Iterator iter = elem.getChildren().iterator(); iter.hasNext();) {
-      Object obj = iter.next();
-      if (!(obj instanceof TextAnnotation))
+    for (AnnotationChild a : elem.getChildren()) {
+      if (!(a instanceof TextAnnotation))
         return null;
-      buf.append(((TextAnnotation)obj).getValue());
+      buf.append(((TextAnnotation)a).getValue());
     }
     return buf.toString();
   }
 
   private void endAnnotations(Annotated annotated) {
     if (!annotated.mayContainText()) {
-      for (Iterator iter = annotated.getFollowingElementAnnotations().iterator(); iter.hasNext();) {
+      for (AnnotationChild child : annotated.getFollowingElementAnnotations()) {
         if (annotated instanceof Component)
           pp.hardNewline();
         else
@@ -913,7 +907,7 @@ class Output {
         AnnotationChildVisitor output = (annotated instanceof Component
                                          ? annotationChildOutput
                                          : followingAnnotationChildOutput);
-        ((AnnotationChild)iter.next()).accept(output);
+        child.accept(output);
       }
     }
     if (hasAnnotations(annotated))
@@ -922,21 +916,20 @@ class Output {
 
   private void leadingComments(Annotated annotated) {
     boolean first = true;
-    for (Iterator iter = annotated.getLeadingComments().iterator(); iter.hasNext();) {
+    for (Comment comment : annotated.getLeadingComments()) {
       if (!first)
         pp.hardNewline();
       else
         first = false;
-      ((Comment)iter.next()).accept(annotationChildOutput);
+      comment.accept(annotationChildOutput);
     }
   }
 
-  private void annotationBody(List attributes, List children) {
+  private void annotationBody(List<AttributeAnnotation> attributes, List<AnnotationChild> children) {
     pp.startGroup();
     pp.text("[");
     pp.startNest(indent);
-    for (Iterator iter = attributes.iterator(); iter.hasNext();) {
-      AttributeAnnotation att = (AttributeAnnotation)iter.next();
+    for (AttributeAnnotation att : attributes) {
       pp.softNewline(" ");
       pp.startGroup();
       qualifiedName(att.getNamespaceUri(), att.getPrefix(), att.getLocalName(), true);
@@ -947,9 +940,9 @@ class Output {
       pp.endNest();
       pp.endGroup();
     }
-    for (Iterator iter = children.iterator(); iter.hasNext();) {
+    for (AnnotationChild child : children) {
       pp.softNewline(" ");
-      ((AnnotationChild)iter.next()).accept(annotationChildOutput);
+      child.accept(annotationChildOutput);
     }
     pp.endNest();
     pp.softNewline(" ");
@@ -961,7 +954,7 @@ class Output {
     body(container.getComponents());
   }
 
-  private void body(List components) {
+  private void body(List<Component> components) {
     if (components.size() == 0)
       pp.text(" { }");
     else {
@@ -975,14 +968,14 @@ class Output {
     }
   }
 
-  private void innerBody(List components) {
+  private void innerBody(List<Component> components) {
     boolean first = true;
-    for (Iterator iter = components.iterator(); iter.hasNext();) {
+    for (Component c : components) {
       if (first)
         first = false;
       else
         pp.hardNewline();
-      ((Component)iter.next()).accept(componentOutput);
+      c.accept(componentOutput);
     }
   }
 

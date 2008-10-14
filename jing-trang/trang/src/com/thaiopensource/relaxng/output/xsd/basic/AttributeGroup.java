@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Collections;
 
 public class AttributeGroup extends AttributeUse {
-  private final List children;
+  private final List<AttributeUse> children;
 
-  public static final AttributeGroup EMPTY = new AttributeGroup(null, null, Collections.EMPTY_LIST);
+  public static final AttributeGroup EMPTY = new AttributeGroup(null, null,
+                                                                (List<AttributeUse>)Collections.EMPTY_LIST);
 
-  public AttributeGroup(SourceLocation location, Annotation annotation, List children) {
+  public AttributeGroup(SourceLocation location, Annotation annotation, List<AttributeUse> children) {
     super(location, annotation);
     this.children = Collections.unmodifiableList(children);
   }
 
-  public List getChildren() {
+  public List<AttributeUse> getChildren() {
     return children;
   }
 

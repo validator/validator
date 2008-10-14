@@ -35,8 +35,8 @@ import java.util.Set;
 
 class ComplexTypeSelector extends SchemaWalker {
   static class Refs {
-    final Set referencingElements = new HashSet();
-    final Set referencingDefinitions = new HashSet();
+    final Set<Element> referencingElements = new HashSet<Element>();
+    final Set<String> referencingDefinitions = new HashSet<String>();
     boolean nonTypeReference = false;
     boolean desirable = false;
   }
@@ -49,14 +49,14 @@ class ComplexTypeSelector extends SchemaWalker {
     }
   }
 
-  private final Map groupMap = new HashMap();
-  private final Map attributeGroupMap = new HashMap();
-  private final Map simpleTypeMap = new HashMap();
+  private final Map<String, Refs> groupMap = new HashMap<String, Refs>();
+  private final Map<String, Refs> attributeGroupMap = new HashMap<String, Refs>();
+  private final Map<String, Refs> simpleTypeMap = new HashMap<String, Refs>();
   private String parentDefinition;
   private Element parentElement;
   private int nonTypeReference = 0;
   private int undesirable = 0;
-  private final Map complexTypeMap = new HashMap();
+  private final Map<String, NamedComplexType> complexTypeMap = new HashMap<String, NamedComplexType>();
   private final Schema schema;
   private final Transformer transformer;
   private final ParticleVisitor baseFinder = new BaseFinder();
@@ -95,7 +95,7 @@ class ComplexTypeSelector extends SchemaWalker {
     }
 
     public Object visitSequence(ParticleSequence p) {
-      return ((Particle)p.getChildren().get(0)).accept(this);
+      return p.getChildren().get(0).accept(this);
     }
 
     public Object visitElement(Element p) {
@@ -166,13 +166,13 @@ class ComplexTypeSelector extends SchemaWalker {
   }
 
   public Object visitSequence(ParticleSequence p) {
-    Iterator iter = p.getChildren().iterator();
+    Iterator<Particle> iter = p.getChildren().iterator();
     undesirable++;
-    ((Particle)iter.next()).accept(this);
+    (iter.next()).accept(this);
     undesirable--;
     nonTypeReference++;
     while (iter.hasNext())
-      ((Particle)iter.next()).accept(this);
+      (iter.next()).accept(this);
     nonTypeReference--;
     return null;
   }
@@ -249,7 +249,7 @@ class ComplexTypeSelector extends SchemaWalker {
     return null;
   }
 
-  private void noteRef(Map map, String name) {
+  private void noteRef(Map<String, Refs> map, String name) {
     Refs refs = lookupRefs(map, name);
     if (nonTypeReference > 0)
       refs.nonTypeReference = true;
@@ -261,8 +261,8 @@ class ComplexTypeSelector extends SchemaWalker {
       refs.desirable = true;
   }
 
-  static private Refs lookupRefs(Map map, String name) {
-    Refs refs = (Refs)map.get(name);
+  static private Refs lookupRefs(Map<String, Refs> map, String name) {
+    Refs refs = map.get(name);
     if (refs == null) {
       refs = new Refs();
       map.put(name, refs);
@@ -270,15 +270,14 @@ class ComplexTypeSelector extends SchemaWalker {
     return refs;
   }
 
-  private void chooseComplexTypes(Map definitionMap) {
+  private void chooseComplexTypes(Map<String, Refs> definitionMap) {
     for (;;) {
       boolean foundOne = false;
-      for (Iterator iter = definitionMap.entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        String name = (String)entry.getKey();
+      for (Map.Entry<String, Refs> entry : definitionMap.entrySet()) {
+        String name = entry.getKey();
         if (createComplexType(name,
-                              (Refs)entry.getValue(),
-                              (Refs)attributeGroupMap.get(name)))
+                              entry.getValue(),
+                              attributeGroupMap.get(name)))
           foundOne = true;
       }
       if (!foundOne)
@@ -300,8 +299,8 @@ class ComplexTypeSelector extends SchemaWalker {
       return false;
     boolean mixed = false;
     boolean hadReference = false;
-    for (Iterator iter = childRefs.referencingElements.iterator(); iter.hasNext();) {
-      boolean m = ((Element)iter.next()).getComplexType().isMixed();
+    for (Element elem : childRefs.referencingElements) {
+      boolean m = elem.getComplexType().isMixed();
       if (m != mixed) {
         if (hadReference)
           return false;
@@ -309,8 +308,8 @@ class ComplexTypeSelector extends SchemaWalker {
       }
       hadReference = true;
     }
-    for (Iterator iter = childRefs.referencingDefinitions.iterator(); iter.hasNext();) {
-      NamedComplexType ct = (NamedComplexType)complexTypeMap.get(iter.next());
+    for (String def : childRefs.referencingDefinitions) {
+      NamedComplexType ct = complexTypeMap.get(def);
       if (ct == null)
         return false;
       if (ct.mixed != mixed) {
@@ -358,7 +357,7 @@ class ComplexTypeSelector extends SchemaWalker {
     SimpleType st = ct.getSimpleType();
     if (st instanceof SimpleTypeRef) {
       String name = ((SimpleTypeRef)st).getName();
-      NamedComplexType nct = (NamedComplexType)complexTypeMap.get(name);
+      NamedComplexType nct = complexTypeMap.get(name);
       if (nct != null)
         return new ComplexTypeSimpleContentExtension(transformAttributeUses(ct.getAttributeUses()), null, name);
     }
@@ -366,7 +365,7 @@ class ComplexTypeSelector extends SchemaWalker {
   }
 
   ComplexTypeComplexContentExtension createComplexTypeForGroup(String name, NamespaceManager nsm) {
-    NamedComplexType ct = (NamedComplexType)complexTypeMap.get(name);
+    NamedComplexType ct = complexTypeMap.get(name);
     if (ct == null)
       return null;
     AttributeGroupDefinition attDef = schema.getAttributeGroup(name);
@@ -383,7 +382,7 @@ class ComplexTypeSelector extends SchemaWalker {
   }
 
   ComplexTypeSimpleContentExtension createComplexTypeForSimpleType(String name) {
-    NamedComplexType ct = (NamedComplexType)complexTypeMap.get(name);
+    NamedComplexType ct = complexTypeMap.get(name);
     if (ct == null)
       return null;
     AttributeGroupDefinition attDef = schema.getAttributeGroup(name);

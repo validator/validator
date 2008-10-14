@@ -1,19 +1,17 @@
 package com.thaiopensource.relaxng.output.rnc;
 
-import com.thaiopensource.relaxng.output.OutputFormat;
-import com.thaiopensource.relaxng.output.OutputDirectory;
-import com.thaiopensource.relaxng.output.OutputFailedException;
-import com.thaiopensource.relaxng.output.OutputDirectoryParamProcessor;
-import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
-import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.SchemaDocument;
+import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.output.OutputDirectoryParamProcessor;
+import com.thaiopensource.relaxng.output.OutputFailedException;
+import com.thaiopensource.relaxng.output.OutputFormat;
+import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 
 public class RncOutputFormat implements OutputFormat {
@@ -22,9 +20,8 @@ public class RncOutputFormat implements OutputFormat {
     new OutputDirectoryParamProcessor(od).process(params, eh);
     try {
       ErrorReporter er = new ErrorReporter(eh, RncOutputFormat.class);
-      for (Iterator iter = sc.getSchemaDocumentMap().entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        outputPattern((SchemaDocument)entry.getValue(), (String)entry.getKey(), od, er);
+      for (Map.Entry<String, SchemaDocument> entry : sc.getSchemaDocumentMap().entrySet()) {
+        outputPattern(entry.getValue(), entry.getKey(), od, er);
       }
     }
     catch (ErrorReporter.WrappedSAXException e) {

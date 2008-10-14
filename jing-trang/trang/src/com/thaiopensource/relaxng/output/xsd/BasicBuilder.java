@@ -32,6 +32,7 @@ import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
 import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.Comment;
+import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.output.xsd.basic.Occurs;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeUnion;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRestriction;
@@ -93,11 +94,11 @@ public class BasicBuilder {
    * - does not contains ELEMENT
    * - does not contain TEXT
    */
-  class SimpleTypeBuilder extends AbstractVisitor {
+  private class SimpleTypeBuilder extends AbstractVisitor {
     public Object visitData(DataPattern p) {
       String library = p.getDatatypeLibrary();
       String type = p.getType();
-      List facets = new Vector();
+      List<Facet> facets = new Vector<Facet>();
       SourceLocation location = p.getSourceLocation();
       if (!library.equals("") && !library.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES)) {
         type = "string";
@@ -106,13 +107,11 @@ public class BasicBuilder {
       else {
         if (type.equals("NOTATION"))
           type = "QName";
-        for (Iterator iter = p.getParams().iterator(); iter.hasNext();) {
-          Param param = (Param)iter.next();
+        for (Param param : p.getParams())
           facets.add(new Facet(param.getSourceLocation(),
                                makeAnnotation(param),
                                param.getName(),
                                param.getValue()));
-        }
       }
       return new SimpleTypeRestriction(location, makeAnnotation(p), type, facets);
     }
@@ -120,7 +119,7 @@ public class BasicBuilder {
     public Object visitValue(ValuePattern p) {
       String library = p.getDatatypeLibrary();
       String type = p.getType();
-      List facets = new Vector();
+      List<Facet> facets = new Vector<Facet>();
       SourceLocation location = p.getSourceLocation();
       if (!library.equals("") && !library.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES)) {
         type = "string";
@@ -131,11 +130,11 @@ public class BasicBuilder {
           type = "QName";
         String prefix = null;
         String namespace = null;
-        Iterator bindings = p.getPrefixMap().entrySet().iterator();
+        Iterator<Map.Entry<String,String>> bindings = p.getPrefixMap().entrySet().iterator();
         if (bindings.hasNext()) {
-          Map.Entry binding = (Map.Entry)bindings.next();
-          prefix = (String)binding.getKey();
-          namespace = resolveNamespace((String)binding.getValue());
+          Map.Entry<String,String> binding = bindings.next();
+          prefix = binding.getKey();
+          namespace = resolveNamespace(binding.getValue());
         }
         facets.add(new Facet(location, makeAnnotation(p), "enumeration", p.getValue(), prefix, namespace));
       }
@@ -143,11 +142,10 @@ public class BasicBuilder {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List result = new Vector();
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        Pattern child = (Pattern)iter.next();
+      List<SimpleType> result = new Vector<SimpleType>();
+      for (Pattern child : p.getChildren()) {
         if (si.getChildType(child).contains(ChildType.DATA))
-          result.add(child.accept(this));
+          result.add((SimpleType)child.accept(this));
       }
       if (result.size() == 1)
         return result.get(0);
@@ -223,9 +221,9 @@ public class BasicBuilder {
 
     private Occurs sum(CompositePattern p) {
       Occurs occ = new Occurs(0, 0);
-      List children = p.getChildren();
+      List<Pattern> children = p.getChildren();
       for (int i = 0, len = children.size(); i < len; i++)
-        occ = Occurs.add(occ, (Occurs)((Pattern)children.get(i)).accept(this));
+        occ = Occurs.add(occ, (Occurs)(children.get(i)).accept(this));
       return occ;
     }
 
@@ -238,10 +236,10 @@ public class BasicBuilder {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List children = p.getChildren();
-      Occurs occ = (Occurs)((Pattern)children.get(0)).accept(this);
+      List<Pattern> children = p.getChildren();
+      Occurs occ = (Occurs)(children.get(0)).accept(this);
       for (int i = 1, len = children.size(); i < len; i++) {
-        Occurs tem = (Occurs)((Pattern)children.get(i)).accept(this);
+        Occurs tem = (Occurs)(children.get(i)).accept(this);
         occ = new Occurs(Math.min(occ.getMin(), tem.getMin()),
                          Math.max(occ.getMax(), tem.getMax()));
       }
@@ -289,13 +287,13 @@ public class BasicBuilder {
         type = new ComplexTypeNotAllowedContent();
       else
         type = new ComplexTypeComplexContent(attributeUses, particle, mixed);
-      List names = NameClassSplitter.split(p.getNameClass());
+      List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
       Wildcard[] wc = splitElementWildcard(WildcardBuilder.createWildcard(p.getNameClass(), inheritedNamespace));
       Annotation annotation = makeAnnotation(p);
       Annotation elementAnnotation = names.size() + wc.length == 1 ? annotation : null;
-      List result = new Vector();
-      for (Iterator iter = names.iterator(); iter.hasNext();)
-        result.add(new Element(p.getSourceLocation(), elementAnnotation, makeName((NameNameClass)iter.next()), type));
+      List<Particle> result = new Vector<Particle>();
+      for (NameNameClass name : names)
+        result.add(new Element(p.getSourceLocation(), elementAnnotation, makeName(name), type));
       for (int i = 0; i < wc.length; i++)
         result.add(new WildcardElement(p.getSourceLocation(), elementAnnotation, wc[i]));
       if (result.size() == 1)
@@ -326,20 +324,19 @@ public class BasicBuilder {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List children = new Vector();
+      List<Particle> children = new Vector<Particle>();
       boolean optional = false;
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        Pattern pattern = (Pattern)iter.next();
+      for (Pattern pattern : p.getChildren()) {
         ChildType ct = si.getChildType(pattern);
         if (ct.contains(ChildType.ELEMENT))
-          children.add(pattern.accept(this));
+          children.add((Particle)pattern.accept(this));
         else if (!ct.equals(ChildType.NOT_ALLOWED))
           optional = true;
       }
       Annotation annotation = makeAnnotation(p);
       Particle result;
       if (children.size() == 1 && annotation == null)
-        result = (Particle)children.get(0);
+        result = children.get(0);
       else
         result = new ParticleChoice(p.getSourceLocation(), annotation, children);
       if (optional)
@@ -349,7 +346,7 @@ public class BasicBuilder {
 
     public Object visitGroup(GroupPattern p) {
       Annotation annotation = makeAnnotation(p);
-      List children = buildChildren(p);
+      List<Particle> children = buildChildren(p);
       if (children.size() == 1 && annotation == null)
         return children.get(0);
       else
@@ -358,19 +355,18 @@ public class BasicBuilder {
 
     public Object visitInterleave(InterleavePattern p) {
       Annotation annotation = makeAnnotation(p);
-      List children = buildChildren(p);
+      List<Particle> children = buildChildren(p);
       if (children.size() == 1 && annotation == null)
         return children.get(0);
       else
         return new ParticleAll(p.getSourceLocation(), annotation, children);
     }
 
-    private List buildChildren(CompositePattern p) {
-      List result = new Vector();
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        Pattern pattern = (Pattern)iter.next();
+    private List<Particle> buildChildren(CompositePattern p) {
+      List<Particle> result = new Vector<Particle>();
+      for (Pattern pattern : p.getChildren()) {
         if (si.getChildType(pattern).contains(ChildType.ELEMENT))
-          result.add(pattern.accept(this));
+          result.add((Particle)pattern.accept(this));
       }
       return result;
     }
@@ -403,16 +399,16 @@ public class BasicBuilder {
         value = makeEmptySimpleType(location);
       else
         value = null;
-      List names = NameClassSplitter.split(p.getNameClass());
+      List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
       Wildcard wc = WildcardBuilder.createWildcard(p.getNameClass(), inheritedNamespace);
-      List choices = new Vector();
+      List<AttributeUse> choices = new Vector<AttributeUse>();
       Annotation annotation = makeAnnotation(p);
       boolean singleChoice = names.size() + (wc != null ? 1 : 0) == 1;
       Annotation attributeAnnotation = singleChoice ? annotation : null;
-      for (Iterator iter = names.iterator(); iter.hasNext();) {
+      for (NameNameClass name : names) {
         Attribute att = new Attribute(location,
                                       attributeAnnotation,
-                                      makeName(((NameNameClass)iter.next())),
+                                      makeName((name)),
                                       value);
         if (!singleChoice || isOptional())
           choices.add(new OptionalAttribute(att.getLocation(), null, att,
@@ -454,18 +450,17 @@ public class BasicBuilder {
       AttributeUse ref = new AttributeGroupRef(p.getSourceLocation(), makeAnnotation(p), p.getName());
       if (!isOptional())
         return ref;
-      List choices = new Vector();
+      List<AttributeUse> choices = new Vector<AttributeUse>();
       choices.add(ref);
       choices.add(AttributeGroup.EMPTY);
       return new AttributeUseChoice(p.getSourceLocation(), null, choices);
     }
 
     public Object visitComposite(CompositePattern p) {
-      List uses = new Vector();
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        Pattern child = (Pattern)iter.next();
+      List<AttributeUse> uses = new Vector<AttributeUse>();
+      for (Pattern child : p.getChildren()) {
         if (si.getChildType(child).contains(ChildType.ATTRIBUTE))
-          uses.add(child.accept(this));
+          uses.add((AttributeUse)child.accept(this));
       }
       if (uses.size() == 0)
         return AttributeGroup.EMPTY;
@@ -478,16 +473,15 @@ public class BasicBuilder {
 
     public Object visitChoice(ChoicePattern p) {
       PatternVisitor childVisitor = this;
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        if (!si.getChildType((Pattern)iter.next()).contains(ChildType.ATTRIBUTE)) {
+      for (Pattern child : p.getChildren()) {
+        if (!si.getChildType(child).contains(ChildType.ATTRIBUTE)) {
           childVisitor = optionalAttributeUseBuilder;
           break;
         }
       }
       boolean hasChildren = false;
-      List uses = new Vector();
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        Pattern child = (Pattern)iter.next();
+      List<AttributeUse> uses = new Vector<AttributeUse>();
+      for (Pattern child : p.getChildren()) {
         ChildType ct = si.getChildType(child);
         if (ct.contains(ChildType.ATTRIBUTE)) {
           AttributeUse use = (AttributeUse)child.accept(childVisitor);
@@ -621,23 +615,24 @@ public class BasicBuilder {
   }
 
   private static SimpleType makeUnionWithEmptySimpleType(SimpleType type, SourceLocation location) {
-    List list = new Vector();
+    List<SimpleType> list = new Vector<SimpleType>();
     list.add(type);
     list.add(makeEmptySimpleType(location));
     return new SimpleTypeUnion(location, null, list);
   }
 
   private static SimpleType makeEmptySimpleType(SourceLocation location) {
-    List facets = new Vector();
+    List<Facet> facets = new Vector<Facet>();
     facets.add(new Facet(location, null, "length", "0"));
     return new SimpleTypeRestriction(location, null, "token", facets);
   }
 
   private static SimpleType makeStringType(SourceLocation sourceLocation) {
+    List<Facet> facets = Collections.emptyList();
     return new SimpleTypeRestriction(sourceLocation,
                                      null,
                                      "string",
-                                     Collections.EMPTY_LIST);
+                                     facets);
   }
 
   private Name makeName(NameNameClass nc) {
@@ -659,17 +654,15 @@ public class BasicBuilder {
       return new Wildcard[0];
     if (wc.isPositive() || wc.getNamespaces().contains("") || wc.getNamespaces().size() != 1)
       return new Wildcard[] { wc };
-    Set positiveNamespaces = new HashSet();
+    Set<String> positiveNamespaces = new HashSet<String>();
     positiveNamespaces.add("");
-    Set negativeNamespaces = new HashSet();
+    Set<String> negativeNamespaces = new HashSet<String>();
     negativeNamespaces.add(wc.getNamespaces().iterator().next());
     negativeNamespaces.add("");
-    Set positiveExcludeNames = new HashSet();
-    Set negativeExcludeNames = new HashSet();
-    for (Iterator iter = wc.getExcludedNames().iterator(); iter.hasNext();) {
-      Name name = (Name)iter.next();
-     (name.getNamespaceUri().equals("") ? positiveExcludeNames : negativeExcludeNames).add(name);
-    }
+    Set<Name> positiveExcludeNames = new HashSet<Name>();
+    Set<Name> negativeExcludeNames = new HashSet<Name>();
+    for (Name name : wc.getExcludedNames())
+      (name.getNamespaceUri().equals("") ? positiveExcludeNames : negativeExcludeNames).add(name);
     return new Wildcard[] {
       new Wildcard(false, negativeNamespaces, negativeExcludeNames),
       new Wildcard(true, positiveNamespaces, positiveExcludeNames)
@@ -696,14 +689,13 @@ public class BasicBuilder {
   }
 
   private static Annotation makeAnnotation(Annotated annotated) {
-    List elements = (annotated.mayContainText()
-                     ? annotated.getFollowingElementAnnotations()
-                     : annotated.getChildElementAnnotations());
-    for (Iterator iter = elements.iterator(); iter.hasNext();) {
-      Object obj = iter.next();
-      // obj might be a Comment
-      if (obj instanceof ElementAnnotation) {
-        ElementAnnotation element = (ElementAnnotation)obj;
+    List<AnnotationChild> elements = (annotated.mayContainText()
+                                      ? annotated.getFollowingElementAnnotations()
+                                      : annotated.getChildElementAnnotations());
+    for (AnnotationChild child : elements) {
+      // child might be a Comment
+      if (child instanceof ElementAnnotation) {
+        ElementAnnotation element = (ElementAnnotation)child;
         if (element.getNamespaceUri().equals(WellKnownNamespaces.RELAX_NG_COMPATIBILITY_ANNOTATIONS)
             && element.getLocalName().equals("documentation")) {
           String value = getAtomicValue(element);
@@ -719,7 +711,7 @@ public class BasicBuilder {
   private static String getAtomicValue(ElementAnnotation elem) {
     String value = null;
     StringBuffer buf = null;
-    List children = elem.getChildren();
+    List<AnnotationChild> children = elem.getChildren();
     for (int i = 0, len = children.size(); i < len; i++) {
       Object obj = children.get(i);
       if (obj instanceof TextAnnotation) {
@@ -770,21 +762,20 @@ public class BasicBuilder {
     addComments(annotated.getFollowingElementAnnotations());
   }
 
-  private void addComments(List list) {
-    for (Iterator iter = list.iterator(); iter.hasNext();) {
-      Object obj = iter.next();
-      if (obj instanceof Comment) {
-        Comment comment = (Comment)obj;
+  private void addComments(List<? extends AnnotationChild> list) {
+    for (AnnotationChild child : list) {
+      if (child instanceof Comment) {
+        Comment comment = (Comment)child;
         schema.addComment(comment.getValue(), comment.getSourceLocation());
       }
     }
   }
 
-  private static void copyComments(List fromList, List toList) {
-    for (Iterator iter = fromList.iterator(); iter.hasNext();) {
-      Object obj = iter.next();
-      if (obj instanceof Comment) {
-        Comment comment = (Comment)obj;
+  private static void copyComments(List<? extends AnnotationChild> fromList,
+                                   List<com.thaiopensource.relaxng.output.xsd.basic.Comment> toList) {
+    for (AnnotationChild child : fromList) {
+      if (child instanceof Comment) {
+        Comment comment = (Comment)child;
         toList.add(new com.thaiopensource.relaxng.output.xsd.basic.Comment(comment.getSourceLocation(),
                                                                            comment.getValue()));
       }

@@ -7,7 +7,7 @@ public class ValuePattern extends Pattern {
   private String datatypeLibrary;
   private String type;
   private String value;
-  private final Map prefixMap = new HashMap();
+  private final Map<String, String> prefixMap = new HashMap<String, String>();
 
   public ValuePattern(String datatypeLibrary, String type, String value) {
     this.datatypeLibrary = datatypeLibrary;
@@ -43,7 +43,7 @@ public class ValuePattern extends Pattern {
     return true;
   }
 
-  public Map getPrefixMap() {
+  public Map<String, String> getPrefixMap() {
     return prefixMap;
   }
 

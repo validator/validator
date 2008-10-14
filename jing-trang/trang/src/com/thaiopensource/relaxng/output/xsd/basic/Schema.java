@@ -2,34 +2,31 @@ package com.thaiopensource.relaxng.output.xsd.basic;
 
 import com.thaiopensource.relaxng.edit.SourceLocation;
 
-import java.util.List;
-import java.util.Vector;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Vector;
 
 public class Schema extends Annotated {
   private final String uri;
   private final String encoding;
   private Schema parent;
-  private final List topLevel = new Vector();
-  private final Map groupMap;
-  private final Map attributeGroupMap;
-  private final Map simpleTypeMap;
-  private final List subSchemas;
-  private final List leadingComments = new Vector();
-  private final List trailingComments = new Vector();
+  private final List<TopLevel> topLevel = new Vector<TopLevel>();
+  private final Map<String, GroupDefinition> groupMap;
+  private final Map<String, AttributeGroupDefinition> attributeGroupMap;
+  private final Map<String, SimpleTypeDefinition> simpleTypeMap;
+  private final List<Schema> subSchemas;
+  private final List<Comment> leadingComments = new Vector<Comment>();
+  private final List<Comment> trailingComments = new Vector<Comment>();
 
   public Schema(SourceLocation location, Annotation annotation, String uri, String encoding) {
     super(location, annotation);
     this.uri = uri;
     this.encoding = encoding;
-    this.groupMap = new HashMap();
-    this.attributeGroupMap = new HashMap();
-    this.simpleTypeMap = new HashMap();
-    this.subSchemas = new Vector();
+    this.groupMap = new HashMap<String, GroupDefinition>();
+    this.attributeGroupMap = new HashMap<String, AttributeGroupDefinition>();
+    this.simpleTypeMap = new HashMap<String, SimpleTypeDefinition>();
+    this.subSchemas = new Vector<Schema>();
     this.subSchemas.add(this);
   }
 
@@ -90,31 +87,31 @@ public class Schema extends Annotated {
   }
 
   public GroupDefinition getGroup(String name) {
-    return (GroupDefinition)groupMap.get(name);
+    return groupMap.get(name);
   }
 
   public SimpleTypeDefinition getSimpleType(String name) {
-    return (SimpleTypeDefinition)simpleTypeMap.get(name);
+    return simpleTypeMap.get(name);
   }
 
   public AttributeGroupDefinition getAttributeGroup(String name) {
-    return (AttributeGroupDefinition)attributeGroupMap.get(name);
+    return attributeGroupMap.get(name);
   }
 
   public void accept(SchemaVisitor visitor) {
-    for (Iterator iter = topLevel.iterator(); iter.hasNext();)
-      ((TopLevel)iter.next()).accept(visitor);
+    for (TopLevel t : this.topLevel)
+      t.accept(visitor);
   }
 
-  public List getSubSchemas() {
+  public List<Schema> getSubSchemas() {
     return subSchemas;
   }
 
-  public List getLeadingComments() {
+  public List<Comment> getLeadingComments() {
     return leadingComments;
   }
 
-  public List getTrailingComments() {
+  public List<Comment> getTrailingComments() {
     return trailingComments;
   }
 

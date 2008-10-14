@@ -25,15 +25,12 @@ import com.thaiopensource.relaxng.edit.SchemaDocument;
 
 import java.util.List;
 import java.util.Iterator;
-import java.util.Map;
 
 class Simplifier extends AbstractVisitor {
   public static void simplify(SchemaCollection sc) {
     Simplifier simplifier = new Simplifier();
-    for (Iterator iter = sc.getSchemaDocumentMap().values().iterator(); iter.hasNext();) {
-      SchemaDocument sd = (SchemaDocument)iter.next();
+    for (SchemaDocument sd : sc.getSchemaDocumentMap().values())
       sd.setPattern((Pattern)sd.getPattern().accept(simplifier));
-    }
   }
 
   private Simplifier() {
@@ -44,9 +41,8 @@ class Simplifier extends AbstractVisitor {
   }
 
   public Object visitContainer(Container c) {
-    List list = c.getComponents();
-    for (int i = 0, len = list.size(); i < len; i++)
-      ((Component)list.get(i)).accept(this);
+    for (Component component : c.getComponents())
+      component.accept(this);
     return c;
   }
 
@@ -66,11 +62,11 @@ class Simplifier extends AbstractVisitor {
 
   public Object visitChoice(ChoicePattern p) {
     boolean hadEmpty = false;
-    List list = p.getChildren();
+    List<Pattern> list = p.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
-      list.set(i, ((Pattern)list.get(i)).accept(this));
-    for (Iterator iter = list.iterator(); iter.hasNext();) {
-      Pattern child = (Pattern)iter.next();
+      list.set(i, (Pattern)(list.get(i).accept(this)));
+    for (Iterator<Pattern> iter = list.iterator(); iter.hasNext();) {
+      Pattern child = iter.next();
       if (child instanceof NotAllowedPattern)
         iter.remove();
       else if (child instanceof EmptyPattern) {
@@ -82,7 +78,7 @@ class Simplifier extends AbstractVisitor {
       return copy(new NotAllowedPattern(), p);
     Pattern tem;
     if (list.size() == 1)
-      tem = (Pattern)list.get(0);
+      tem = list.get(0);
     else
       tem = p;
     if (hadEmpty && !(tem instanceof OptionalPattern) && !(tem instanceof ZeroOrMorePattern)) {
@@ -96,26 +92,26 @@ class Simplifier extends AbstractVisitor {
   }
 
   public Object visitComposite(CompositePattern p) {
-    List list = p.getChildren();
+    List<Pattern> list = p.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
-      list.set(i, ((Pattern)list.get(i)).accept(this));
-    for (Iterator iter = list.iterator(); iter.hasNext();) {
-      Pattern child = (Pattern)iter.next();
+      list.set(i, (Pattern)(list.get(i).accept(this)));
+    for (Iterator<Pattern> iter = list.iterator(); iter.hasNext();) {
+      Pattern child = iter.next();
       if (child instanceof EmptyPattern)
         iter.remove();
     }
     if (list.size() == 0)
       return copy(new EmptyPattern(), p);
     if (list.size() == 1)
-      return (Pattern)p.getChildren().get(0);
+      return p.getChildren().get(0);
     return p;
   }
 
 
   public Object visitInterleave(InterleavePattern p) {
     boolean hadText = false;
-    for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-      Pattern child = (Pattern)iter.next();
+    for (Iterator<Pattern> iter = p.getChildren().iterator(); iter.hasNext();) {
+      Pattern child = iter.next();
       if (child instanceof TextPattern) {
         iter.remove();
         hadText = true;

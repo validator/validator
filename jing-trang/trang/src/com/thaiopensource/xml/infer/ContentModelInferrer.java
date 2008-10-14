@@ -11,7 +11,7 @@ public abstract class ContentModelInferrer {
 
   public abstract Particle inferContentModel();
 
-  public abstract Set getElementNames();
+  public abstract Set<Name> getElementNames();
 
   public static ContentModelInferrer createContentModelInferrer() {
     return new ContentModelInferrerImpl();

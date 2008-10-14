@@ -43,8 +43,8 @@ public class Driver {
   }
 
   private int doMain(String[] args) {
-    List inputParams = new Vector();
-    List outputParams = new Vector();
+    List<String> inputParams = new Vector<String>();
+    List<String> outputParams = new Vector<String>();
     try {
       OptionParser op = new OptionParser("I:O:i:o:", args);
       try {

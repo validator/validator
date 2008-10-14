@@ -7,29 +7,28 @@ import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.DefineComponent;
 import com.thaiopensource.relaxng.edit.DivComponent;
 import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.ValuePattern;
 import com.thaiopensource.relaxng.parse.Context;
-import com.thaiopensource.xml.util.WellKnownNamespaces;
 import com.thaiopensource.xml.util.Naming;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Enumeration;
 
 public class PrefixManager implements SourceUriGenerator {
 
-  private final Map prefixMap = new HashMap();
-  private final Set usedPrefixes = new HashSet();
+  private final Map<String, String> prefixMap = new HashMap<String, String>();
+  private final Set<String> usedPrefixes = new HashSet<String>();
   /**
    * Set of prefixes that cannot be used for schema namespace.
    */
-  private final Set reservedPrefixes = new HashSet();
+  private final Set<String> reservedPrefixes = new HashSet<String>();
   private int nextGenIndex = 1;
   static private final String[] xsdPrefixes  = { "xs", "xsd" };
   static private final int MAX_PREFIX_LENGTH = 10;
@@ -41,7 +40,7 @@ public class PrefixManager implements SourceUriGenerator {
   class PrefixSelector extends AbstractVisitor {
     private final SchemaInfo si;
     private String inheritedNamespace;
-    private final Map namespacePrefixUsageMap = new HashMap();
+    private final Map<String, Map<String, PrefixUsage>> namespacePrefixUsageMap = new HashMap<String, Map<String, PrefixUsage>>();
 
     PrefixSelector(SchemaInfo si) {
       this.si = si;
@@ -78,11 +77,10 @@ public class PrefixManager implements SourceUriGenerator {
     }
 
     public Object visitValue(ValuePattern p) {
-      for (Iterator iter = p.getPrefixMap().entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        String prefix = (String)entry.getKey();
+      for (Map.Entry<String, String> entry : p.getPrefixMap().entrySet()) {
+        String prefix = entry.getKey();
         if (prefix != null && !prefix.equals("")) {
-          String ns = resolveNamespace((String)entry.getValue());
+          String ns = resolveNamespace(entry.getValue());
           notePrefix(prefix, ns);
           if (!ns.equals(WellKnownNamespaces.XML_SCHEMA))
             reservedPrefixes.add(prefix);
@@ -98,12 +96,12 @@ public class PrefixManager implements SourceUriGenerator {
     private void notePrefix(String prefix, String ns) {
       if (prefix == null || ns == null || ns.equals(""))
         return;
-      Map prefixUsageMap = (Map)namespacePrefixUsageMap.get(ns);
+      Map<String, PrefixUsage> prefixUsageMap = namespacePrefixUsageMap.get(ns);
       if (prefixUsageMap == null) {
-        prefixUsageMap = new HashMap();
+        prefixUsageMap = new HashMap<String, PrefixUsage>();
         namespacePrefixUsageMap.put(ns, prefixUsageMap);
       }
-      PrefixUsage prefixUsage = (PrefixUsage)prefixUsageMap.get(prefix);
+      PrefixUsage prefixUsage = prefixUsageMap.get(prefix);
       if (prefixUsage == null) {
         prefixUsage = new PrefixUsage();
         prefixUsageMap.put(prefix, prefixUsage);
@@ -139,22 +137,20 @@ public class PrefixManager implements SourceUriGenerator {
     }
 
     void assignPrefixes() {
-      for (Iterator iter = namespacePrefixUsageMap.entrySet().iterator(); iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-        String ns = (String)entry.getKey();
+      for (Map.Entry<String, Map<String, PrefixUsage>> entry : namespacePrefixUsageMap.entrySet()) {
+        String ns = entry.getKey();
         if (!ns.equals("") && !ns.equals(WellKnownNamespaces.XML)) {
-          Map prefixUsageMap = (Map)entry.getValue();
+          Map<String, PrefixUsage> prefixUsageMap = entry.getValue();
           if (prefixUsageMap != null) {
-            Map.Entry best = null;
-            for (Iterator entryIter = prefixUsageMap.entrySet().iterator(); entryIter.hasNext();) {
-              Map.Entry tem = (Map.Entry)entryIter.next();
+            Map.Entry<String, PrefixUsage> best = null;
+            for (Map.Entry<String, PrefixUsage> tem : prefixUsageMap.entrySet()) {
               if ((best == null
-                   || ((PrefixUsage)tem.getValue()).count > ((PrefixUsage)best.getValue()).count)
-                  && prefixOk((String)tem.getKey(), ns))
+                   || (tem.getValue()).count > (best.getValue()).count)
+                  && prefixOk(tem.getKey(), ns))
                 best = tem;
             }
             if (best != null)
-              usePrefix((String)best.getKey(), ns);
+              usePrefix(best.getKey(), ns);
           }
         }
       }
@@ -167,7 +163,7 @@ public class PrefixManager implements SourceUriGenerator {
   }
 
   String getPrefix(String namespace) {
-    String prefix = (String)prefixMap.get(namespace);
+    String prefix = prefixMap.get(namespace);
     if (prefix == null && namespace.equals(WellKnownNamespaces.XML_SCHEMA)) {
       for (int i = 0; i < xsdPrefixes.length; i++)
         if (tryUsePrefix(xsdPrefixes[i], namespace))

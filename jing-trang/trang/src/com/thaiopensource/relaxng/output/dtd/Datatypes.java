@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Datatypes {
 
-  private static final Map xsdMap = new HashMap();
+  private static final Map<String, Info> xsdMap = new HashMap<String, Info>();
 
   // exactly equivalent to DTD datatype of same name
   private static final int COMPATIBLE = 0x0;
@@ -69,7 +69,7 @@ public class Datatypes {
 
   public static Info getInfo(String datatypeLibrary, String localName) {
     if (datatypeLibrary.equals(WellKnownNamespaces.XML_SCHEMA_DATATYPES))
-      return (Info)xsdMap.get(localName);
+      return xsdMap.get(localName);
     for (int i = 0; i < others.length; i += 2)
       if (datatypeLibrary.equals(others[i])
 	  && localName.equals(((Info)others[i + 1]).name))

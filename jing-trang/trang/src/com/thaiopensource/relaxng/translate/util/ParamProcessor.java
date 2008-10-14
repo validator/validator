@@ -12,8 +12,8 @@ import java.util.HashSet;
 public class ParamProcessor {
   private ErrorReporter er;
   private ParamFactory paramFactory;
-  private final Map paramMap = new HashMap();
-  private final Set processedParamNames = new HashSet();
+  private final Map<String, Param> paramMap = new HashMap<String, Param>();
+  private final Set<String> processedParamNames = new HashSet<String>();
 
   private static class BadParamException extends Exception { }
 
@@ -96,7 +96,7 @@ public class ParamProcessor {
   }
 
   private Param lookupParam(String name) throws BadParamException {
-    Param p = (Param)paramMap.get(name);
+    Param p = paramMap.get(name);
     if (p == null && paramFactory != null)
       p = paramFactory.createParam(name);
     if (p == null) {

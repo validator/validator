@@ -1,10 +1,13 @@
 package com.thaiopensource.relaxng.output.dtd;
 
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
+import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ChoiceNameClass;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.Component;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.Container;
@@ -14,7 +17,9 @@ import com.thaiopensource.relaxng.edit.DivComponent;
 import com.thaiopensource.relaxng.edit.ElementPattern;
 import com.thaiopensource.relaxng.edit.GrammarPattern;
 import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.ListPattern;
 import com.thaiopensource.relaxng.edit.MixedPattern;
 import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NameNameClass;
@@ -26,22 +31,16 @@ import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.ListPattern;
-import com.thaiopensource.relaxng.edit.Annotated;
-import com.thaiopensource.relaxng.edit.Comment;
-import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
+import com.thaiopensource.xml.out.CharRepertoire;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
-import com.thaiopensource.xml.out.CharRepertoire;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -55,37 +54,37 @@ class DtdOutput {
   private final int indent;
   private final int lineLength;
   private final String lineSep;
-  final StringBuffer buf = new StringBuffer();
-  final List elementQueue = new Vector();
-  final List requiredParamEntities = new Vector();
-  final List externallyRequiredParamEntities = new Vector();
-  final Set doneParamEntities = new HashSet();
-  final Set doneIncludes = new HashSet();
-  final Set pendingIncludes = new HashSet();
+  private final StringBuffer buf = new StringBuffer();
+  private final List<ElementPattern> elementQueue = new Vector<ElementPattern>();
+  private final List<String> requiredParamEntities = new Vector<String>();
+  private final List<String> externallyRequiredParamEntities = new Vector<String>();
+  private final Set<String> doneParamEntities = new HashSet<String>();
+  private final Set<String> doneIncludes = new HashSet<String>();
+  private final Set<String> pendingIncludes = new HashSet<String>();
   private final Analysis analysis;
   private final GrammarPart part;
   private final OutputDirectory od;
   private final ErrorReporter er;
-  private final Set reservedEntityNames;
+  private final Set<String> reservedEntityNames;
 
-  final PatternVisitor topLevelContentModelOutput = new TopLevelContentModelOutput();
-  final AbstractVisitor nestedContentModelOutput = new ContentModelOutput();
-  final PatternVisitor expandedContentModelOutput = new ExpandedContentModelOutput();
-  final PatternVisitor groupContentModelOutput = new GroupContentModelOutput();
-  final PatternVisitor choiceContentModelOutput = new ChoiceContentModelOutput();
-  final PatternVisitor occurContentModelOutput = new ParenthesizedContentModelOutput();
-  final PatternVisitor innerElementClassOutput = new InnerElementClassOutput();
-  final PatternVisitor expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
-  final AttributeOutput attributeOutput = new AttributeOutput();
-  final AttributeOutput optionalAttributeOutput = new OptionalAttributeOutput();
-  final PatternVisitor topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
-  final PatternVisitor nestedSimpleTypeOutput = new SimpleTypeOutput();
-  final PatternVisitor valueOutput = new ValueOutput();
-  final GrammarOutput grammarOutput = new GrammarOutput();
+  private final PatternVisitor topLevelContentModelOutput = new TopLevelContentModelOutput();
+  private final AbstractVisitor nestedContentModelOutput = new ContentModelOutput();
+  private final PatternVisitor expandedContentModelOutput = new ExpandedContentModelOutput();
+  private final PatternVisitor groupContentModelOutput = new GroupContentModelOutput();
+  private final PatternVisitor choiceContentModelOutput = new ChoiceContentModelOutput();
+  private final PatternVisitor occurContentModelOutput = new ParenthesizedContentModelOutput();
+  private final PatternVisitor innerElementClassOutput = new InnerElementClassOutput();
+  private final PatternVisitor expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
+  private final AttributeOutput attributeOutput = new AttributeOutput();
+  private final AttributeOutput optionalAttributeOutput = new OptionalAttributeOutput();
+  private final PatternVisitor topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
+  private final PatternVisitor nestedSimpleTypeOutput = new SimpleTypeOutput();
+  private final PatternVisitor valueOutput = new ValueOutput();
+  private final GrammarOutput grammarOutput = new GrammarOutput();
 
   static private final String DTD_URI = "http://www.thaiopensource.com/ns/relaxng/dtd";
 
-  private DtdOutput(boolean warnDatatypes, String sourceUri, Analysis analysis, Set reservedEntityNames, OutputDirectory od, ErrorReporter er) {
+  private DtdOutput(boolean warnDatatypes, String sourceUri, Analysis analysis, Set<String> reservedEntityNames, OutputDirectory od, ErrorReporter er) {
     this.warnDatatypes = warnDatatypes;
     this.sourceUri = sourceUri;
     this.analysis = analysis;
@@ -153,7 +152,7 @@ class DtdOutput {
 
   }
 
-  class GroupContentModelOutput extends ChoiceContentModelOutput {
+  private class GroupContentModelOutput extends ChoiceContentModelOutput {
     public Object visitGroup(GroupPattern p) {
       p.accept(nestedContentModelOutput);
       return null;
@@ -167,14 +166,14 @@ class DtdOutput {
     }
 
     public Object visitChoice(ChoiceNameClass nc) {
-      List list = nc.getChildren();
+      List<NameClass> list = nc.getChildren();
       boolean needSep = false;
       for (int i = 0, len = list.size(); i < len; i++) {
         if (needSep)
           buf.append('|');
         else
           needSep = true;
-        ((NameClass)list.get(i)).accept(this);
+        (list.get(i)).accept(this);
       }
       return null;
     }
@@ -223,11 +222,11 @@ class DtdOutput {
     }
 
     public Object visitGroup(GroupPattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
       for (int i = 0; i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType t = getContentType(member);
         if (!t.isA(ContentType.EMPTY)) {
           if (needSep)
@@ -249,9 +248,9 @@ class DtdOutput {
         buf.append('*');
       }
       else {
-        final List list = p.getChildren();
+        final List<Pattern> list = p.getChildren();
         for (int i = 0, len = list.size(); i < len; i++) {
-          Pattern member = (Pattern)list.get(i);
+          Pattern member = list.get(i);
           ContentType t = getContentType(member);
           if (!t.isA(ContentType.EMPTY))
             member.accept(this);
@@ -261,12 +260,12 @@ class DtdOutput {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
       if (getContentType(p).isA(ContentType.MIXED_ELEMENT_CLASS)) {
         for (int i = 0; i < len; i++) {
-          Pattern member = (Pattern)list.get(i);
+          Pattern member = list.get(i);
           if (getContentType(member).isA(ContentType.MIXED_ELEMENT_CLASS)) {
             member.accept(nestedContentModelOutput);
             needSep = true;
@@ -275,7 +274,7 @@ class DtdOutput {
         }
       }
       for (int i = 0; i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType t = getContentType(member);
         if (t != ContentType.NOT_ALLOWED && t != ContentType.EMPTY && !t.isA(ContentType.MIXED_ELEMENT_CLASS)) {
           if (needSep)
@@ -286,7 +285,7 @@ class DtdOutput {
         }
       }
       for (int i = 0; i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType t = getContentType(member);
         if (t == ContentType.NOT_ALLOWED) {
           if (needSep)
@@ -376,10 +375,10 @@ class DtdOutput {
     }
 
     public Object visitGroup(GroupPattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       Pattern main = null;
       for (int i = 0, len = list.size(); i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         if (!getContentType(member).isA(ContentType.EMPTY)) {
           if (main == null)
             main = member;
@@ -411,11 +410,11 @@ class DtdOutput {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       boolean needSep = false;
       int doneIndex = -1;
       for (int i = 0, len = list.size(); i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType ct = getContentType(member);
         if (ct.isA(ContentType.MIXED_MODEL) || ct == ContentType.TEXT) {
           member.accept(this);
@@ -426,7 +425,7 @@ class DtdOutput {
       }
       for (int i = 0, len = list.size(); i < len; i++) {
         if (i != doneIndex) {
-          Pattern member = (Pattern)list.get(i);
+          Pattern member = list.get(i);
           if (getContentType(member) != ContentType.EMPTY) {
             if (needSep)
               buf.append('|');
@@ -480,9 +479,9 @@ class DtdOutput {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       for (int i = 0, len = list.size(); i < len; i++)
-        output((Pattern)list.get(i));
+        output(list.get(i));
       return null;
     }
 
@@ -520,14 +519,14 @@ class DtdOutput {
       ContentType ct = getContentType(p.getChild());
       if (ct == ContentType.NOT_ALLOWED)
         return null;
-      List names = NameClassSplitter.split(p.getNameClass());
+      List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
       int len = names.size();
       if (len > 1)
         er.warning("attribute_occur_approx", p.getSourceLocation());
       for (int i = 0; i < len; i++) {
         int start = buf.length();
         newlineIndent();
-        NameNameClass nnc = (NameNameClass)names.get(i);
+        NameNameClass nnc = names.get(i);
         String ns = nnc.getNamespaceUri();
 
         if (!ns.equals("") && ns != NameClass.INHERIT_NS) {
@@ -638,11 +637,11 @@ class DtdOutput {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List list = p.getChildren();
+      List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
       for (int i = 0; i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType t = getContentType(member);
         if (t != ContentType.NOT_ALLOWED) {
           if (needSep)
@@ -653,7 +652,7 @@ class DtdOutput {
         }
       }
       for (int i = 0; i < len; i++) {
-        Pattern member = (Pattern)list.get(i);
+        Pattern member = list.get(i);
         ContentType t = getContentType(member);
         if (t == ContentType.NOT_ALLOWED) {
           if (needSep)
@@ -731,7 +730,7 @@ class DtdOutput {
 
   }
 
-  class ValueOutput extends AbstractVisitor {
+  private class ValueOutput extends AbstractVisitor {
     public Object visitValue(ValuePattern p) {
       buf.append("CDATA #FIXED ");
       attributeValueLiteral(p.getValue());
@@ -746,9 +745,9 @@ class DtdOutput {
 
   class GrammarOutput extends AbstractVisitor {
     public void visitContainer(Container c) {
-      final List list = c.getComponents();
+      final List<Component> list = c.getComponents();
       for (int i = 0, len = list.size(); i < len; i++)
-        ((Component)list.get(i)).accept(this);
+        (list.get(i)).accept(this);
     }
 
     public Object visitDiv(DivComponent c) {
@@ -785,14 +784,14 @@ class DtdOutput {
   }
 
   void outputQueuedElements() {
-    for (int i = 0; i < elementQueue.size(); i++)
-      outputElement((ElementPattern)elementQueue.get(i), null);
+    for (ElementPattern p : elementQueue)
+      outputElement(p, null);
     elementQueue.clear();
   }
 
   static void output(boolean warnDatatypes, Analysis analysis, OutputDirectory od, ErrorReporter er) throws IOException {
     try {
-      new DtdOutput(warnDatatypes, analysis.getMainUri(), analysis, new HashSet(), od, er).topLevelOutput();
+      new DtdOutput(warnDatatypes, analysis.getMainUri(), analysis, new HashSet<String>(), od, er).topLevelOutput();
     }
     catch (WrappedIOException e) {
       throw e.cause;
@@ -888,8 +887,7 @@ class DtdOutput {
   }
 
   void outputRequiredComponents() {
-    for (int i = 0; i < requiredParamEntities.size(); i++) {
-      String name = (String)requiredParamEntities.get(i);
+    for (String name : requiredParamEntities) {
       Component c = part.getWhereProvided(name);
       if (c == null)
         externallyRequiredParamEntities.add(name);
@@ -1071,9 +1069,8 @@ class DtdOutput {
     if (def != null)
       outputLeadingComments(def);
     outputLeadingComments(p);
-    List names = NameClassSplitter.split(p.getNameClass());
-    for (Iterator iter = names.iterator(); iter.hasNext();) {
-      NameNameClass name = (NameNameClass)iter.next();
+    List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
+    for (NameNameClass name : names) {
       String ns = name.getNamespaceUri();
       String qName;
       String prefix;
@@ -1123,9 +1120,8 @@ class DtdOutput {
   }
 
   void outputAttributeNamespaces(Pattern p) {
-    Set namespaces = analysis.getAttributeNamespaces(p);
-    for (Iterator iter = namespaces.iterator(); iter.hasNext();) {
-      String ns = (String)iter.next();
+    Set<String> namespaces = analysis.getAttributeNamespaces(p);
+    for (String ns : namespaces) {
       String prefix = analysis.getPrefixForNamespaceUri(ns);
       outputNewline();
       outputIndent();
@@ -1150,12 +1146,10 @@ class DtdOutput {
     outputComments(a.getFollowingElementAnnotations());
   }
 
-  void outputComments(List list) {
-    for (Iterator iter = list.iterator(); iter.hasNext();) {
-      AnnotationChild child = (AnnotationChild)iter.next();
+  void outputComments(List<? extends AnnotationChild> list) {
+    for (AnnotationChild child : list)
       if (child instanceof Comment)
         outputComment(((Comment)child).getValue());
-    }
   }
 
   void outputComment(String value) {
@@ -1238,9 +1232,9 @@ class DtdOutput {
   }
 
   private static String getAttributeAnnotation(Annotated p, String ns, String localName) {
-    List list = p.getAttributeAnnotations();
+    List<AttributeAnnotation> list = p.getAttributeAnnotations();
     for (int i = 0, len = list.size(); i < len; i++) {
-      AttributeAnnotation att = (AttributeAnnotation)list.get(i);
+      AttributeAnnotation att = list.get(i);
       if (att.getLocalName().equals(localName)
           && att.getNamespaceUri().equals(ns))
         return att.getValue();

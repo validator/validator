@@ -1,10 +1,5 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-import com.thaiopensource.relaxng.edit.SourceLocation;
-
-import java.util.List;
-import java.util.Iterator;
-
 public abstract class SchemaWalker implements
         ParticleVisitor, SimpleTypeVisitor, SchemaVisitor, ComplexTypeVisitor, AttributeUseVisitor {
   public Object visitElement(Element p) {
@@ -32,8 +27,8 @@ public abstract class SchemaWalker implements
   }
 
   public Object visitGroup(ParticleGroup p) {
-    for (Iterator iter = p.getChildren().iterator(); iter.hasNext();)
-      ((Particle)iter.next()).accept(this);
+    for (Particle child : p.getChildren())
+      child.accept(this);
     return null;
   }
 
@@ -46,8 +41,8 @@ public abstract class SchemaWalker implements
   }
 
   public Object visitUnion(SimpleTypeUnion t) {
-    for (Iterator iter = t.getChildren().iterator(); iter.hasNext();)
-      ((SimpleType)iter.next()).accept(this);
+    for (SimpleType child : t.getChildren())
+      child.accept(this);
     return null;
   }
 
@@ -86,8 +81,8 @@ public abstract class SchemaWalker implements
   }
 
   public Object visitAttributeGroup(AttributeGroup a) {
-    for (Iterator iter = a.getChildren().iterator(); iter.hasNext();)
-      ((AttributeUse)iter.next()).accept(this);
+    for (AttributeUse child : a.getChildren())
+      child.accept(this);
     return null;
   }
 

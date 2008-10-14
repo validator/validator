@@ -1,31 +1,30 @@
 package com.thaiopensource.relaxng.translate.test;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.List;
-import java.util.Vector;
-import java.util.Collections;
-import java.util.Comparator;
-import java.io.IOException;
-import java.io.File;
-
 import com.thaiopensource.util.UriOrFile;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
 import com.thaiopensource.xml.sax.AbstractLexicalHandler;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Vector;
 
 public class Compare {
   static public boolean compare(File file1, File file2, XMLReaderCreator xrc) throws SAXException, IOException {
     return load(xrc, file1).equals(load(xrc, file2));
   }
 
-  static private List load(XMLReaderCreator xrc, File file) throws SAXException, IOException {
+  static private List<Event> load(XMLReaderCreator xrc, File file) throws SAXException, IOException {
     InputSource in = new InputSource(UriOrFile.fileToUri(file));
     Saver saver = new Saver();
     XMLReader xr = xrc.createXMLReader();
@@ -95,7 +94,7 @@ public class Compare {
     }
   }
 
-  static class EndElement extends Event {
+  private static class EndElement extends Event {
     public boolean equals(Object obj) {
       return obj instanceof EndElement;
     }
@@ -152,10 +151,10 @@ public class Compare {
   }
 
   static class Saver extends DefaultHandler {
-    private final List eventList = new Vector();
-    private final List attributeList = new Vector();
+    private final List<Event> eventList = new Vector<Event>();
+    private final List<Attribute> attributeList = new Vector<Attribute>();
 
-    List getEventList() {
+    List<Event> getEventList() {
       return eventList;
     }
 
@@ -163,7 +162,7 @@ public class Compare {
       int len = eventList.size();
       if (len == 0)
         return;
-      if (!((Event)eventList.get(len - 1)).isWhitespace())
+      if (!(eventList.get(len - 1)).isWhitespace())
         return;
       if (endElement && len > 1 && eventList.get(len - 2) instanceof StartElement)
         return;
@@ -175,9 +174,9 @@ public class Compare {
       eventList.add(new StartElement(qName));
       for (int i = 0, len = attributes.getLength(); i < len; i++)
         attributeList.add(new Attribute(attributes.getQName(i), attributes.getValue(i)));
-      Collections.sort(attributeList, new Comparator() {
-        public int compare(Object o1, Object o2) {
-          return ((Attribute)o1).getQName().compareTo(((Attribute)o2).getQName());
+      Collections.sort(attributeList, new Comparator<Attribute>() {
+        public int compare(Attribute a1, Attribute a2) {
+          return a1.getQName().compareTo(a2.getQName());
         }
       });
       eventList.addAll(attributeList);
@@ -191,7 +190,7 @@ public class Compare {
 
     public void characters(char[] chars, int start, int length) {
       int len = eventList.size();
-      if (len == 0 || !((Event)eventList.get(len - 1)).merge(chars, start, length))
+      if (len == 0 || !(eventList.get(len - 1)).merge(chars, start, length))
         eventList.add(new Text(new String(chars, start, length)));
     }
 

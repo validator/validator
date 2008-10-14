@@ -7,9 +7,9 @@ import java.util.Collections;
 
 public class SimpleTypeRestriction extends SimpleType {
   private final String name;
-  private final List facets;
+  private final List<Facet> facets;
 
-  public SimpleTypeRestriction(SourceLocation location, Annotation annotation, String name, List facets) {
+  public SimpleTypeRestriction(SourceLocation location, Annotation annotation, String name, List<Facet> facets) {
     super(location, annotation);
     this.name = name;
     this.facets = Collections.unmodifiableList(facets);
@@ -24,7 +24,7 @@ public class SimpleTypeRestriction extends SimpleType {
     return name;
   }
 
-  public List getFacets() {
+  public List<Facet> getFacets() {
     return facets;
   }
 

@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Collections;
 
 public abstract class ParticleGroup extends Particle {
-  private final List children;
+  private final List<Particle> children;
 
-  public ParticleGroup(SourceLocation location, Annotation annotation, List children) {
+  public ParticleGroup(SourceLocation location, Annotation annotation, List<Particle> children) {
     super(location, annotation);
     this.children = Collections.unmodifiableList(children);
   }
 
-  public List getChildren() {
+  public List<Particle> getChildren() {
     return children;
   }
 

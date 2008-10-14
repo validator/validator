@@ -64,7 +64,7 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
   }
 
   public Object visitSequence(ParticleSequence p) {
-    List children = transformParticleList(p.getChildren());
+    List<Particle> children = transformParticleList(p.getChildren());
     if (children == p.getChildren())
       return p;
     if (children.size() == 1)
@@ -75,14 +75,14 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
   }
 
   public Object visitChoice(ParticleChoice p) {
-    List children = transformParticleList(p.getChildren());
+    List<Particle> children = transformParticleList(p.getChildren());
     if (children == p.getChildren())
       return p;
     return new ParticleChoice(p.getLocation(), p.getAnnotation(), children);
   }
 
   public Object visitAll(ParticleAll p) {
-    List children = transformParticleList(p.getChildren());
+    List<Particle> children = transformParticleList(p.getChildren());
     if (children == p.getChildren())
       return p;
     return new ParticleAll(p.getLocation(), p.getAnnotation(), children);
@@ -136,14 +136,14 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
   }
 
   public Object visitAttributeGroup(AttributeGroup a) {
-    List children = transformAttributeUseList(a.getChildren());
+    List<AttributeUse> children = transformAttributeUseList(a.getChildren());
     if (children == a.getChildren())
       return a;
     return new AttributeGroup(a.getLocation(), a.getAnnotation(), children);
   }
 
   public Object visitAttributeUseChoice(AttributeUseChoice a) {
-    List children = transformAttributeUseList(a.getChildren());
+    List<AttributeUse> children = transformAttributeUseList(a.getChildren());
     if (children == a.getChildren())
       return a;
     return new AttributeUseChoice(a.getLocation(), a.getAnnotation(), children);
@@ -154,7 +154,7 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
   }
 
   public Object visitUnion(SimpleTypeUnion t) {
-    List children = transformSimpleTypeList(t.getChildren());
+    List<SimpleType> children = transformSimpleTypeList(t.getChildren());
     if (children == t.getChildren())
       return t;
     return new SimpleTypeUnion(t.getLocation(), t.getAnnotation(), children);
@@ -171,18 +171,18 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
     return t;
   }
 
-  public List transformAttributeUseList(List list) {
-    List transformed = null;
+  public List<AttributeUse> transformAttributeUseList(List<AttributeUse> list) {
+    List<AttributeUse> transformed = null;
     for (int i = 0, len = list.size(); i < len; i++) {
-      Object obj = ((AttributeUse)list.get(i)).accept(this);
+      AttributeUse use = (AttributeUse)list.get(i).accept(this);
       if (transformed != null)
-        transformed.add(obj);
-      else if (obj != list.get(i)) {
-        transformed = new Vector();
+        transformed.add(use);
+      else if (use != list.get(i)) {
+        transformed = new Vector<AttributeUse>();
         for (int j = 0; j < i; j++)
           transformed.add(list.get(j));
-        if (!obj.equals(AttributeGroup.EMPTY))
-          transformed.add(obj);
+        if (!use.equals(AttributeGroup.EMPTY))
+          transformed.add(use);
       }
     }
     if (transformed == null)
@@ -190,20 +190,20 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
     return transformed;
   }
 
-  public List transformParticleList(List list) {
-    List transformed = null;
+  public List<Particle> transformParticleList(List<Particle> list) {
+    List<Particle> transformed = null;
     for (int i = 0, len = list.size(); i < len; i++) {
-      Object obj = ((Particle)list.get(i)).accept(this);
+      Particle p = (Particle)list.get(i).accept(this);
       if (transformed != null) {
-        if (obj != null)
-          transformed.add(obj);
+        if (p != null)
+          transformed.add(p);
       }
-      else if (obj != list.get(i)) {
-        transformed = new Vector();
+      else if (p != list.get(i)) {
+        transformed = new Vector<Particle>();
         for (int j = 0; j < i; j++)
           transformed.add(list.get(j));
-        if (obj != null)
-          transformed.add(obj);
+        if (p != null)
+          transformed.add(p);
       }
     }
     if (transformed == null)
@@ -211,17 +211,17 @@ public class SchemaTransformer implements SchemaVisitor, ParticleVisitor, Comple
     return transformed;
   }
 
-  public List transformSimpleTypeList(List list) {
-    List transformed = null;
+  public List<SimpleType> transformSimpleTypeList(List<SimpleType> list) {
+    List<SimpleType> transformed = null;
     for (int i = 0, len = list.size(); i < len; i++) {
-      Object obj = ((SimpleType)list.get(i)).accept(this);
+      SimpleType st = (SimpleType)list.get(i).accept(this);
       if (transformed != null)
-        transformed.add(obj);
-      else if (obj != list.get(i)) {
-        transformed = new Vector();
+        transformed.add(st);
+      else if (st != list.get(i)) {
+        transformed = new Vector<SimpleType>();
         for (int j = 0; j < i; j++)
           transformed.add(list.get(j));
-        transformed.add(obj);
+        transformed.add(st);
       }
     }
     if (transformed == null)

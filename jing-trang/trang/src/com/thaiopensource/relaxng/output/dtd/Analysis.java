@@ -1,70 +1,67 @@
 package com.thaiopensource.relaxng.output.dtd;
 
-import com.thaiopensource.relaxng.edit.PatternVisitor;
+import com.thaiopensource.relaxng.edit.AbstractVisitor;
+import com.thaiopensource.relaxng.edit.AnyNameNameClass;
+import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ChoiceNameClass;
+import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Component;
 import com.thaiopensource.relaxng.edit.ComponentVisitor;
-import com.thaiopensource.relaxng.edit.NameClassVisitor;
+import com.thaiopensource.relaxng.edit.CompositePattern;
+import com.thaiopensource.relaxng.edit.Container;
+import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.DivComponent;
 import com.thaiopensource.relaxng.edit.ElementPattern;
 import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ExternalRefPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.ListPattern;
+import com.thaiopensource.relaxng.edit.MixedPattern;
+import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.relaxng.edit.NameClassVisitor;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.NotAllowedPattern;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.ListPattern;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.ChoicePattern;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.InterleavePattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.ParentRefPattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.ExternalRefPattern;
-import com.thaiopensource.relaxng.edit.MixedPattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.Container;
-import com.thaiopensource.relaxng.edit.Component;
-import com.thaiopensource.relaxng.edit.DivComponent;
-import com.thaiopensource.relaxng.edit.DefineComponent;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.ChoiceNameClass;
-import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.AnyNameNameClass;
 import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.ParentRefPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.PatternVisitor;
+import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
-import com.thaiopensource.relaxng.edit.AbstractVisitor;
-import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.SchemaDocument;
-import com.thaiopensource.relaxng.output.OutputDirectory;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
-import com.thaiopensource.relaxng.output.common.NameClassSplitter;
 import com.thaiopensource.relaxng.output.common.Name;
+import com.thaiopensource.relaxng.output.common.NameClassSplitter;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashSet;
-import java.util.Collections;
-import java.util.Iterator;
 
 class Analysis {
   private final NamespaceManager nsm = new NamespaceManager();
   private final AttlistMapper am = new AttlistMapper();
   private final ErrorReporter er;
-  private final Map contentTypes = new HashMap();
-  private final Map attributeTypes = new HashMap();
-  private final Map attributeAlphabets = new HashMap();
-  private final Map attributeNamespaces = new HashMap();
-  private Map defines = null;
-  private final Set attlists = new HashSet();
-  private final Map parts = new HashMap();
-  private final Map seenTable = new HashMap();
-  private final Map elementDecls = new HashMap();
+  private final Map<Pattern, ContentType> contentTypes = new HashMap<Pattern, ContentType>();
+  private final Map<Pattern, AttributeType> attributeTypes = new HashMap<Pattern, AttributeType>();
+  private final Map<Pattern, Set<Name>> attributeAlphabets = new HashMap<Pattern, Set<Name>>();
+  private final Map<Pattern, Set<String>> attributeNamespaces = new HashMap<Pattern, Set<String>>();
+  private Map<String, Pattern> defines;
+  private final Set<String> attlists = new HashSet<String>();
+  private final Map<String, GrammarPart> parts = new HashMap<String, GrammarPart>();
+  private final Map<Pattern, Pattern> seenTable = new HashMap<Pattern, Pattern>();
+  private final Map<Name, ElementPattern> elementDecls = new HashMap<Name, ElementPattern>();
   private ContentType startType = ContentType.ERROR;
   private GrammarPart mainPart;
   private final SchemaCollection schemas;
@@ -73,21 +70,23 @@ class Analysis {
   private final AttributeAlphabetComputer attributeAlphabetComputer = new AttributeAlphabetComputer();
   private final AttributeNamespacesComputer attributeNamespacesComputer = new AttributeNamespacesComputer();
   private final IncludeContentChecker includeContentChecker = new IncludeContentChecker();
+  private final static Set<String> EMPTY_STRING_SET = Collections.emptySet();
+  private final static Set<Name> EMPTY_NAME_SET = Collections.emptySet();
 
   private class Analyzer implements PatternVisitor, ComponentVisitor, NameClassVisitor {
     private ElementPattern ancestorPattern;
-    private final Set pendingRefs;
+    private final Set<String> pendingRefs;
 
     public Analyzer() {
-      pendingRefs = new HashSet();
+      pendingRefs = new HashSet<String>();
     }
 
     private Analyzer(ElementPattern ancestorPattern) {
       this.ancestorPattern = ancestorPattern;
-      pendingRefs = new HashSet();
+      pendingRefs = new HashSet<String>();
     }
 
-    private Analyzer(Set pendingRefs) {
+    private Analyzer(Set<String> pendingRefs) {
       this.pendingRefs = pendingRefs;
     }
 
@@ -114,15 +113,15 @@ class Analysis {
         len = NameClassSplitter.split(p.getNameClass()).size();
       else {
         new Analyzer(p).analyzeContentType(p.getChild());
-        List names = noteNames(p.getNameClass(), true);
+        List<NameNameClass> names = noteNames(p.getNameClass(), true);
         len = names.size();
         for (int i = 0; i < len; i++) {
-          NameNameClass nnc = (NameNameClass)names.get(i);
+          NameNameClass nnc = names.get(i);
           String ns = nnc.getNamespaceUri();
           if (ns == NameClass.INHERIT_NS)
             ns = "";
           Name name = new Name(ns, nnc.getLocalName());
-          ElementPattern prev = (ElementPattern)elementDecls.get(name);
+          ElementPattern prev = elementDecls.get(name);
           if (prev != null) {
             er.error("sorry_multiple_element", ns, name.getLocalName(), p.getSourceLocation());
             er.error("other_element", prev.getSourceLocation());
@@ -144,12 +143,12 @@ class Analysis {
       return ContentType.EMPTY;
     }
 
-    private List noteNames(NameClass nc, boolean defaultable) {
+    private List<NameNameClass> noteNames(NameClass nc, boolean defaultable) {
       nc.accept(this);
-      List names = NameClassSplitter.split(nc);
+      List<NameNameClass> names = NameClassSplitter.split(nc);
       int len = names.size();
       for (int i = 0; i < len; i++)
-        nsm.noteName((NameNameClass)names.get(i), defaultable);
+        nsm.noteName(names.get(i), defaultable);
       return names;
     }
 
@@ -174,20 +173,19 @@ class Analysis {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List children = p.getChildren();
-      ContentType tem = analyzeContentType((Pattern)children.get(0));
-      for (int i = 1, len = children.size(); i < len; i++)
-        tem = checkContentType("sorry_choice", ContentType.choice(tem, analyzeContentType((Pattern)children.get(i))), p);
+      List<Pattern> children = p.getChildren();
+      ContentType tem = analyzeContentType(children.get(0));
+      for (Pattern child : children)
+        tem = checkContentType("sorry_choice", ContentType.choice(tem, analyzeContentType(child)), p);
       if (getAttributeType(p) == AttributeType.MULTI) {
-        Set attributeNames = new HashSet();
-        for (int i = 0, len = children.size(); i < len; i++) {
-          Set childAttributeNames = getAttributeAlphabet((Pattern)children.get(i));
-          for (Iterator iter = childAttributeNames.iterator(); iter.hasNext();) {
-            Object name = iter.next();
+        Set<Name> attributeNames = new HashSet<Name>();
+        for (Pattern child : children) {
+          Set<Name> childAttributeNames = getAttributeAlphabet(child);
+          for (Name name : childAttributeNames) {
             if (attributeNames.contains(name))
               er.error("sorry_choice_attribute_name",
-                       ((Name)name).getNamespaceUri(),
-                       ((Name)name).getLocalName(),
+                       name.getNamespaceUri(),
+                       name.getLocalName(),
                        p.getSourceLocation());
             else
               attributeNames.add(name);
@@ -198,18 +196,18 @@ class Analysis {
     }
 
     public Object visitInterleave(InterleavePattern p) {
-      List children = p.getChildren();
-      ContentType tem = analyzeContentType((Pattern)children.get(0));
+      List<Pattern> children = p.getChildren();
+      ContentType tem = analyzeContentType(children.get(0));
       for (int i = 1, len = children.size(); i < len; i++)
-        tem = checkContentType("sorry_interleave", ContentType.interleave(tem, analyzeContentType((Pattern)children.get(i))), p);
+        tem = checkContentType("sorry_interleave", ContentType.interleave(tem, analyzeContentType(children.get(i))), p);
       return tem;
     }
 
     public Object visitGroup(GroupPattern p) {
-      List children = p.getChildren();
-      ContentType tem = analyzeContentType((Pattern)children.get(0));
+      List<Pattern> children = p.getChildren();
+      ContentType tem = analyzeContentType(children.get(0));
       for (int i = 1, len = children.size(); i < len; i++)
-        tem = checkContentType("sorry_group", ContentType.group(tem, analyzeContentType((Pattern)children.get(i))), p);
+        tem = checkContentType("sorry_group", ContentType.group(tem, analyzeContentType(children.get(i))), p);
       return tem;
     }
 
@@ -242,7 +240,7 @@ class Analysis {
         er.error("sorry_nested_grammar", p.getSourceLocation());
         return ContentType.ERROR;
       }
-      defines = new HashMap();
+      defines = new HashMap<String, Pattern>();
       try {
         mainPart = new GrammarPart(er, defines, attlists, schemas, parts, p);
       }
@@ -269,9 +267,9 @@ class Analysis {
     }
 
     public Object visitContainer(Container c) {
-      List list = c.getComponents();
+      List<Component> list = c.getComponents();
       for (int i = 0, len = list.size(); i < len; i++)
-        ((Component)list.get(i)).accept(this);
+        (list.get(i)).accept(this);
       return null;
     }
 
@@ -293,14 +291,14 @@ class Analysis {
 
     public Object visitInclude(IncludeComponent c) {
       includeContentChecker.visitContainer(c);
-      visitContainer((GrammarPattern)((SchemaDocument)schemas.getSchemaDocumentMap().get(c.getHref())).getPattern());
+      visitContainer((GrammarPattern)(schemas.getSchemaDocumentMap().get(c.getHref())).getPattern());
       return null;
     }
 
     public Object visitChoice(ChoiceNameClass nc) {
-      List list = nc.getChildren();
+      List<NameClass> list = nc.getChildren();
       for (int i = 0, len = list.size(); i < len; i++)
-        ((NameClass)list.get(i)).accept(this);
+        (list.get(i)).accept(this);
       return ContentType.ELEMENT_CLASS;
     }
 
@@ -327,7 +325,7 @@ class Analysis {
     }
 
     ContentType analyzeContentType(Pattern p) {
-      ContentType t = (ContentType)contentTypes.get(p);
+      ContentType t = contentTypes.get(p);
       if (t == null) {
         t = (ContentType)p.accept(this);
         contentTypes.put(p, t);
@@ -343,9 +341,9 @@ class Analysis {
 
   class IncludeContentChecker extends AbstractVisitor {
     public Object visitContainer(Container c) {
-      List list = c.getComponents();
+      List<Component> list = c.getComponents();
       for (int i = 0, len = list.size(); i < len; i++)
-        ((Component)list.get(i)).accept(this);
+        (list.get(i)).accept(this);
       return null;
     }
 
@@ -359,7 +357,7 @@ class Analysis {
     }
   }
 
-  class AttributeTyper extends AbstractVisitor {
+  private class AttributeTyper extends AbstractVisitor {
     public Object visitPattern(Pattern p) {
       return AttributeType.EMPTY;
     }
@@ -381,10 +379,10 @@ class Analysis {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List list = p.getChildren();
-      AttributeType at = getAttributeType((Pattern)list.get(0));
+      List<Pattern> list = p.getChildren();
+      AttributeType at = getAttributeType(list.get(0));
       for (int i = 1, len = list.size(); i < len; i++)
-        at = AttributeType.group(at, getAttributeType((Pattern)list.get(i)));
+        at = AttributeType.group(at, getAttributeType(list.get(i)));
       return at;
     }
 
@@ -402,9 +400,9 @@ class Analysis {
   }
 
 
-  class AttributeAlphabetComputer extends AbstractVisitor {
+  private class AttributeAlphabetComputer extends AbstractVisitor {
     public Object visitPattern(Pattern p) {
-      return Collections.EMPTY_SET;
+      return EMPTY_NAME_SET;
     }
 
     public Object visitMixed(MixedPattern p) {
@@ -424,18 +422,18 @@ class Analysis {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List list = p.getChildren();
-      Set result = new HashSet();
+      List<Pattern> list = p.getChildren();
+      Set<Name> result = new HashSet<Name>();
       for (int i = 0, len = list.size(); i < len; i++)
-        result.addAll(getAttributeAlphabet((Pattern)list.get(i)));
+        result.addAll(getAttributeAlphabet(list.get(i)));
       return result;
     }
 
     public Object visitAttribute(AttributePattern p) {
-      Set result = new HashSet();
-      List names = NameClassSplitter.split(p.getNameClass());
+      Set<Name> result = new HashSet<Name>();
+      List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
       for (int i = 0, len = names.size(); i < len; i++) {
-        NameNameClass nnc = (NameNameClass)names.get(i);
+        NameNameClass nnc = names.get(i);
         String ns = nnc.getNamespaceUri();
         if (ns == NameClass.INHERIT_NS)
           ns = "";
@@ -449,9 +447,9 @@ class Analysis {
     }
   }
 
-  class AttributeNamespacesComputer extends AbstractVisitor {
+  private class AttributeNamespacesComputer extends AbstractVisitor {
     public Object visitPattern(Pattern p) {
-      return Collections.EMPTY_SET;
+      return EMPTY_STRING_SET;
     }
 
     public Object visitMixed(MixedPattern p) {
@@ -471,17 +469,16 @@ class Analysis {
     }
 
     public Object visitComposite(CompositePattern p) {
-      List list = p.getChildren();
-      Set result = Collections.EMPTY_SET;
+      Set<String> result = EMPTY_STRING_SET;
       boolean newResult = false;
-      for (int i = 0, len = list.size(); i < len; i++) {
-        Set tem = getAttributeNamespaces((Pattern)list.get(i));
-        if (tem != Collections.EMPTY_SET && !result.containsAll(tem)) {
-          if (result == Collections.EMPTY_SET)
+      for (Pattern child : p.getChildren()) {
+        Set<String> tem = getAttributeNamespaces(child);
+        if (tem != EMPTY_STRING_SET && !result.containsAll(tem)) {
+          if (result == EMPTY_STRING_SET)
             result = tem;
           else {
             if (!newResult) {
-              result = new HashSet(result);
+              result = new HashSet<String>(result);
               newResult = true;
             }
             result.addAll(tem);
@@ -494,18 +491,18 @@ class Analysis {
     }
 
     public Object visitAttribute(AttributePattern p) {
-      Set result = null;
-      List names = NameClassSplitter.split(p.getNameClass());
-      for (int i = 0, len = names.size(); i < len; i++) {
-        String ns = ((NameNameClass)names.get(i)).getNamespaceUri();
+      Set<String> result = null;
+      List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
+      for (NameNameClass name : names) {
+        String ns = name.getNamespaceUri();
         if (ns.length() != 0 && ns != NameClass.INHERIT_NS && !ns.equals(WellKnownNamespaces.XML)) {
           if (result == null)
-            result = new HashSet();
+            result = new HashSet<String>();
           result.add(ns);
         }
       }
       if (result == null)
-        return Collections.EMPTY_SET;
+        return EMPTY_STRING_SET;
       return Collections.unmodifiableSet(result);
     }
 
@@ -528,18 +525,17 @@ class Analysis {
     checkAttlists();
     if (!er.getHadError())
       nsm.assignPrefixes();
+    defines = null;
   }
 
   private void checkAttlists() {
-    for (Iterator iter = attlists.iterator(); iter.hasNext();) {
-      String name = (String)iter.next();
+    for (String name : attlists)
       if (getParamEntityElementName(name) == null)
         er.error("not_attlist", name, getBody(name).getSourceLocation());
-    }
   }
 
   Pattern getPattern() {
-    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(schemas.getMainUri())).getPattern();
+    return (schemas.getSchemaDocumentMap().get(schemas.getMainUri())).getPattern();
   }
 
   String getPrefixForNamespaceUri(String ns) {
@@ -555,11 +551,11 @@ class Analysis {
   }
 
   ContentType getContentType(Pattern p) {
-    return (ContentType)contentTypes.get(p);
+    return contentTypes.get(p);
   }
 
   AttributeType getAttributeType(Pattern p) {
-    AttributeType at = (AttributeType)attributeTypes.get(p);
+    AttributeType at = attributeTypes.get(p);
     if (at == null) {
       at = (AttributeType)p.accept(attributeTyper);
       attributeTypes.put(p, at);
@@ -567,27 +563,27 @@ class Analysis {
     return at;
   }
 
-  Set getAttributeAlphabet(Pattern p) {
-    Set aa = (Set)attributeAlphabets.get(p);
+  Set<Name> getAttributeAlphabet(Pattern p) {
+    Set<Name> aa = attributeAlphabets.get(p);
     if (aa == null) {
-      aa = Collections.unmodifiableSet((Set)p.accept(attributeAlphabetComputer));
+      aa = Collections.unmodifiableSet((Set<Name>)p.accept(attributeAlphabetComputer));
       attributeAlphabets.put(p, aa);
     }
     return aa;
   }
 
 
-  Set getAttributeNamespaces(Pattern p) {
-    Set aa = (Set)attributeNamespaces.get(p);
+  Set<String> getAttributeNamespaces(Pattern p) {
+    Set<String> aa = attributeNamespaces.get(p);
     if (aa == null) {
-      aa = (Set)p.accept(attributeNamespacesComputer);
+      aa = (Set<String>)p.accept(attributeNamespacesComputer);
       attributeNamespaces.put(p, aa);
     }
     return aa;
   }
 
   Pattern getBody(String name) {
-    return (Pattern)defines.get(name);
+    return defines.get(name);
   }
 
   GrammarPattern getGrammarPattern() {
@@ -602,14 +598,14 @@ class Analysis {
     if (sourceUri.equals(schemas.getMainUri()))
       return mainPart;
     else
-      return (GrammarPart)parts.get(sourceUri);
+      return parts.get(sourceUri);
   }
 
   Pattern getSchema(String sourceUri) {
-    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(sourceUri)).getPattern();
+    return (schemas.getSchemaDocumentMap().get(sourceUri)).getPattern();
   }
 
   String getEncoding(String sourceUri) {
-    return ((SchemaDocument)schemas.getSchemaDocumentMap().get(sourceUri)).getEncoding();
+    return (schemas.getSchemaDocumentMap().get(sourceUri)).getEncoding();
   }
 }

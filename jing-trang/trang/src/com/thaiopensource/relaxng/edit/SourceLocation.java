@@ -3,9 +3,9 @@ package com.thaiopensource.relaxng.edit;
 import com.thaiopensource.relaxng.parse.Location;
 
 public class SourceLocation implements Location {
-  public final String uri;
-  public final int lineNumber;
-  public final int columnNumber;
+  private final String uri;
+  private final int lineNumber;
+  private final int columnNumber;
 
   public SourceLocation(String uri, int lineNumber, int columnNumber) {
     this.uri = uri;

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Vector;
 
 public class GrammarPattern extends Pattern implements Container {
-  private final List components = new Vector();
+  private final List<Component> components = new Vector<Component>();
 
-  public List getComponents() {
+  public List<Component> getComponents() {
     return components;
   }
 
@@ -15,7 +15,7 @@ public class GrammarPattern extends Pattern implements Container {
   }
 
   public void componentsAccept(ComponentVisitor visitor) {
-    for (int i = 0, len = components.size();  i < len; i++)
-      ((Component)components.get(i)).accept(visitor);
+    for (Component c : components)
+      c.accept(visitor);
   }
 }

@@ -1,33 +1,30 @@
 package com.thaiopensource.relaxng.output.rnc;
 
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.NameClassedPattern;
-import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
 import com.thaiopensource.relaxng.edit.ListPattern;
 import com.thaiopensource.relaxng.edit.MixedPattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.PatternVisitor;
+import com.thaiopensource.relaxng.edit.NameClassedPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.UnaryPattern;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 class ComplexityCache {
   private final ComplexityVisitor complexityVisitor = new ComplexityVisitor();
-  private final Map cache = new HashMap();
+  private final Map<Pattern, Object> cache = new HashMap<Pattern, Object>();
 
   static private class Complexity {
     static private final int MAX_BRACE = 0;
     static private final int MAX_PAREN = 2;
-    static final Object SIMPLE = new Integer(0);
-    static final Object VERY_COMPLICATED = new Integer(MAX_BRACE + 1);
+    static final Object SIMPLE = 0;
+    static final Object VERY_COMPLICATED = MAX_BRACE + 1;
     static Object max(Object c1, Object c2) {
-      int n1 = ((Integer)c1).intValue();
-      int n2 = ((Integer)c2).intValue();
+      int n1 = (Integer)c1;
+      int n2 = (Integer)c2;
       if (n1 > 0)
         return n1 > n2 ? c1 : c2;
       if (n2 > 0)
@@ -35,15 +32,15 @@ class ComplexityCache {
       return n1 < n2 ? c1 : c2;
     }
     static Object brace(Object c) {
-      int n = ((Integer)c).intValue();
-      return new Integer(n <= 0 ? 1 : n + 1);
+      int n = (Integer)c;
+      return n <= 0 ? 1 : n + 1;
     }
     static Object paren(Object c) {
-      int n = ((Integer)c).intValue();
-      return new Integer(n > 0 ? n : n - 1);
+      int n = (Integer)c;
+      return n > 0 ? n : n - 1;
     }
     static boolean isComplex(Object c) {
-      int n = ((Integer)c).intValue();
+      int n = (Integer)c;
       return n > MAX_BRACE || n < -MAX_PAREN;
     }
   }
@@ -93,8 +90,8 @@ class ComplexityCache {
 
     public Object visitComposite(CompositePattern p) {
       Object ret = Complexity.SIMPLE;
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();)
-        ret = Complexity.max(ret, visit((Pattern)iter.next()));
+      for (Pattern child : p.getChildren())
+        ret = Complexity.max(ret, visit(child));
       return Complexity.paren(ret);
     }
 

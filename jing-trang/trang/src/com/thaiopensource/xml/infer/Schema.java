@@ -6,20 +6,20 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Schema {
-  private final Map elementDecls = new HashMap();
+  private final Map<Name, ElementDecl> elementDecls = new HashMap<Name, ElementDecl>();
   private Particle start;
-  private final Map prefixMap = new HashMap();
+  private final Map<String, String> prefixMap = new HashMap<String, String>();
 
-  public Map getElementDecls() {
+  public Map<Name, ElementDecl> getElementDecls() {
     return elementDecls;
   }
 
-  public Map getPrefixMap() {
+  public Map<String, String> getPrefixMap() {
     return prefixMap;
   }
 
   public ElementDecl getElementDecl(Name name) {
-    return (ElementDecl)elementDecls.get(name);
+    return elementDecls.get(name);
   }
 
   public Particle getStart() {

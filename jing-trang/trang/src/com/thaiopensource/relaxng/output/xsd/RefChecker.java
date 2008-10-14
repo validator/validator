@@ -20,7 +20,7 @@ import java.util.HashMap;
 class RefChecker extends AbstractVisitor {
   private final SchemaInfo schema;
   private final ErrorReporter er;
-  private final Map refMap = new HashMap();
+  private final Map<String, Ref> refMap = new HashMap<String, Ref>();
   private int currentDepth = 0;
 
   static private class Ref {
@@ -74,7 +74,7 @@ class RefChecker extends AbstractVisitor {
   }
 
   public Object visitRef(RefPattern p) {
-    Ref ref = (Ref)refMap.get(p.getName());
+    Ref ref = refMap.get(p.getName());
     if (ref == null) {
       ref = new Ref(currentDepth);
       refMap.put(p.getName(), ref);

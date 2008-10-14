@@ -4,12 +4,12 @@ import com.thaiopensource.relaxng.edit.ElementPattern;
 import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 class AttlistMapper {
-  private final Map elementToAttlistMap = new HashMap();
-  private final Map paramEntityToElementMap = new HashMap();
+  private final Map<ElementPattern, Object> elementToAttlistMap = new HashMap<ElementPattern, Object>();
+  private final Map<String, Object> paramEntityToElementMap = new HashMap<String, Object>();
 
   void noteAttribute(ElementPattern e) {
     elementToAttlistMap.put(e, Boolean.FALSE);

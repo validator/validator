@@ -1,40 +1,39 @@
 package com.thaiopensource.relaxng.output.xsd;
 
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
-import com.thaiopensource.relaxng.edit.PatternVisitor;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.AttributePattern;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.ListPattern;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.InterleavePattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.MixedPattern;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.edit.AnyNameNameClass;
-import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ComponentVisitor;
-import com.thaiopensource.relaxng.edit.DivComponent;
-import com.thaiopensource.relaxng.edit.DefineComponent;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
+import com.thaiopensource.relaxng.edit.DataPattern;
+import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.DivComponent;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.EmptyPattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.ListPattern;
+import com.thaiopensource.relaxng.edit.MixedPattern;
+import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.PatternVisitor;
+import com.thaiopensource.relaxng.edit.RefPattern;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.UnaryPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
-import java.util.Set;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Set;
 
 public class RestrictionsChecker {
   private final SchemaInfo si;
   private final ErrorReporter er;
-  private final Set checkedPatterns = new HashSet();
+  private final Set<Pattern> checkedPatterns = new HashSet<Pattern>();
 
   private static final int DISALLOW_ELEMENT = 0x1;
   private static final int DISALLOW_ATTRIBUTE = 0x2;
@@ -185,8 +184,8 @@ public class RestrictionsChecker {
     void checkGroup(CompositePattern p) {
       int simpleCount = 0;
       boolean hadComplex = false;
-      for (Iterator iter = p.getChildren().iterator(); iter.hasNext();) {
-        ChildType ct = si.getChildType((Pattern)iter.next());
+      for (Pattern child : p.getChildren()) {
+        ChildType ct = si.getChildType(child);
         boolean simple = ct.contains(ChildType.DATA);
         boolean complex = ct.contains(ChildType.TEXT) || ct.contains(ChildType.ELEMENT);
         if ((complex && simpleCount > 0) || (simple && hadComplex)) {

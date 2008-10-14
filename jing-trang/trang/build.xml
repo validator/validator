@@ -33,7 +33,7 @@
          destdir="${build.dir}/classes"
          classpath="${lib.dir}/xercesImpl.jar"
          excludes="${jing.excludes},com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"
-	 source="1.2"/>
+	 source="1.5"/>
 </target>
 
 <target name="jar" depends="compile">

@@ -9,9 +9,9 @@ import java.util.HashMap;
 public class ElementDecl {
   private Particle contentModel;
   private Name datatype;
-  private final Map attributeDecls = new HashMap();
+  private final Map<Name, AttributeDecl> attributeDecls = new HashMap<Name, AttributeDecl>();
 
-  public Map getAttributeDecls() {
+  public Map<Name, AttributeDecl> getAttributeDecls() {
     return attributeDecls;
   }
 

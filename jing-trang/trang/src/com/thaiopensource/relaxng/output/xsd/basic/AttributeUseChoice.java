@@ -5,7 +5,7 @@ import com.thaiopensource.relaxng.edit.SourceLocation;
 import java.util.List;
 
 public class AttributeUseChoice extends AttributeGroup {
-  public AttributeUseChoice(SourceLocation location, Annotation annotation, List children) {
+  public AttributeUseChoice(SourceLocation location, Annotation annotation, List<AttributeUse> children) {
     super(location, annotation, children);
   }
 

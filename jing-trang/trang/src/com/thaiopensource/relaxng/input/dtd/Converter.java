@@ -55,7 +55,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ public class Converter {
     String anyName;
     String annotationPrefix;
     String defaultNamespace;
-    final Map prefixMap = new HashMap();
+    final Map<String, String> prefixMap = new HashMap<String, String>();
   }
 
   private final Dtd dtd;
@@ -90,29 +89,29 @@ public class Converter {
   /**
    * Maps each element name to an Integer containing a set of flags.
    */
-  private final Map elementNameTable = new Hashtable();
+  private final Map<String, Integer> elementNameTable = new Hashtable<String, Integer>();
   /**
    * Maps each element name to a List of attribute groups of each attlist declaration.
    */
-  private final Map attlistDeclTable = new Hashtable();
+  private final Map<String, List<AttributeGroup>> attlistDeclTable = new Hashtable<String, List<AttributeGroup>>();
   /**
    * Set of strings representing names for which there are definitions in the DTD.
    */
-  private final Set definedNames = new HashSet();
+  private final Set<String> definedNames = new HashSet<String>();
   /**
    * Maps prefixes to namespace URIs.
    */
-  private final Map prefixTable = new Hashtable();
+  private final Map<String, String> prefixTable = new Hashtable<String, String>();
 
   /**
    * Maps a string representing an element name to the set of names of attributes
    * that have been declated for that element.
    */
-  private final Map attributeNamesTable = new Hashtable();
+  private final Map<String, Set<String>> attributeNamesTable = new Hashtable<String, Set<String>>();
   /**
    * Contains the set of attribute names that have already been output in the current scope.
    */
-  private Set attributeNames = null;
+  private Set<String> attributeNames = null;
   private String defaultNamespace = null;
   private String annotationPrefix = null;
 
@@ -264,9 +263,9 @@ public class Converter {
 
 
   private class ComponentOutput extends VisitorBase {
-    private final List components;
+    private final List<Component> components;
     private final Annotated grammar;
-    private List comments = null;
+    private List<Comment> comments = null;
 
     ComponentOutput(GrammarPattern grammar) {
       components = grammar.getComponents();
@@ -292,12 +291,12 @@ public class Converter {
     public void elementDecl(NameSpec nameSpec, ModelGroup modelGroup) throws Exception {
       GroupPattern gp = new GroupPattern();
       if (options.inlineAttlistDecls) {
-        List groups = (List)attlistDeclTable.get(nameSpec.getValue());
+        List<AttributeGroup> groups = attlistDeclTable.get(nameSpec.getValue());
         if (groups != null) {
-          attributeNames = new HashSet();
+          attributeNames = new HashSet<String>();
           AttributeGroupVisitor agv = new AttributeGroupOutput(gp);
-          for (Iterator iter = groups.iterator(); iter.hasNext();)
-            ((AttributeGroup)iter.next()).accept(agv);
+          for (AttributeGroup group : groups)
+            group.accept(agv);
         }
       }
       else
@@ -330,9 +329,9 @@ public class Converter {
         return;
       String name = nameSpec.getValue();
       attributeNames
-	= (Set)attributeNamesTable.get(name);
+	= attributeNamesTable.get(name);
       if (attributeNames == null) {
-	attributeNames = new HashSet();
+	attributeNames = new HashSet<String>();
 	attributeNamesTable.put(name, attributeNames);
       }
       Pattern pattern = convert(attributeGroup);
@@ -340,12 +339,12 @@ public class Converter {
         // Only keep an empty definition if this is the first attlist for this element,
         // and all attlists are also empty.  In this case, if we didn't keep the
         // definition, we would have no definition for the attlist.
-        List decls = (List)attlistDeclTable.get(name);
+        List<AttributeGroup> decls = attlistDeclTable.get(name);
         if (decls.get(0) != attributeGroup)
           return;
-        attributeNames = new HashSet();
+        attributeNames = new HashSet<String>();
         for (int i = 1, len = decls.size(); i < len; i++)
-          if (!(convert((AttributeGroup)decls.get(i)) instanceof EmptyPattern))
+          if (!(convert(decls.get(i)) instanceof EmptyPattern))
             return;
       }
       DefineComponent dc = new DefineComponent(attlistDeclName(name), pattern);
@@ -361,7 +360,7 @@ public class Converter {
     public void attributeGroupDef(String name, AttributeGroup attributeGroup)
             throws Exception {
       // This takes care of duplicates within the group
-      attributeNames = new HashSet();
+      attributeNames = new HashSet<String>();
       Pattern pattern;
       AttributeGroupMember[] members = attributeGroup.getMembers();
       GroupPattern group = new GroupPattern();
@@ -373,7 +372,7 @@ public class Converter {
         pattern = new EmptyPattern();
         break;
       case 1:
-        pattern = (Pattern)group.getChildren().get(0);
+        pattern = group.getChildren().get(0);
         break;
       default:
         pattern = group;
@@ -391,7 +390,7 @@ public class Converter {
         pattern = new NotAllowedPattern();
         break;
       case 1:
-        pattern = (Pattern)choice.getChildren().get(0);
+        pattern = choice.getChildren().get(0);
         break;
       default:
         pattern = choice;
@@ -406,7 +405,7 @@ public class Converter {
 
     public void comment(String value) {
       if (comments == null)
-        comments = new Vector();
+        comments = new Vector<Comment>();
       comments.add(new Comment(CommentTrimmer.trimComment(value)));
     }
 
@@ -447,7 +446,7 @@ public class Converter {
   }
 
   private class AttributeGroupOutput implements AttributeGroupVisitor {
-    final List group;
+    final List<Pattern> group;
 
     AttributeGroupOutput(GroupPattern gp) {
       group = gp.getChildren();
@@ -531,7 +530,7 @@ public class Converter {
   }
 
   private class EnumGroupOutput implements EnumGroupVisitor {
-    final private List list;
+    final private List<Pattern> list;
 
     EnumGroupOutput(ChoicePattern choice) {
       list = choice.getChildren();
@@ -557,7 +556,7 @@ public class Converter {
       else {
         ChoicePattern tem = new ChoicePattern();
         pattern = tem;
-        List children = tem.getChildren();
+        List<Pattern> children = tem.getChildren();
 	for (int i = 0; i < members.length; i++)
           children.add(convert(members[i]));
       }
@@ -571,7 +570,7 @@ public class Converter {
       else {
         GroupPattern tem = new GroupPattern();
         pattern = tem;
-        List children = tem.getChildren();
+        List<Pattern> children = tem.getChildren();
 	for (int i = 0; i < members.length; i++)
 	  children.add(convert(members[i]));
       }
@@ -612,7 +611,7 @@ public class Converter {
 
   private class DuplicateAttributeDetector implements AttributeGroupVisitor {
     private boolean containsDuplicate = false;
-    private final List names = new Vector();
+    private final List<String> names = new Vector<String>();
 
     public void attribute(NameSpec nameSpec,
 			  Datatype datatype,
@@ -726,11 +725,10 @@ public class Converter {
     }
     else if (defaultNamespace == null)
       defaultNamespace = SchemaBuilder.INHERIT_NS;
-    for (Iterator iter = options.prefixMap.entrySet().iterator(); iter.hasNext();) {
-      Map.Entry entry = (Map.Entry)iter.next();
-      String prefix = (String)entry.getKey();
-      String ns = (String)entry.getValue();
-      String s = (String)prefixTable.get(prefix);
+    for (Map.Entry<String, String> entry : options.prefixMap.entrySet()) {
+      String prefix = entry.getKey();
+      String ns = entry.getValue();
+      String s = prefixTable.get(prefix);
       if (s == null)
         warning("irrelevant_prefix", prefix);
       else {
@@ -778,11 +776,11 @@ public class Converter {
   }
 
   private boolean colonReplacementOk() {
-    Set names = new HashSet();
-    for (Iterator iter = elementNameTable.keySet().iterator(); iter.hasNext();) {
-      String name = mungeQName((String)iter.next());
+    Set<String> names = new HashSet<String>();
+    for (String s : elementNameTable.keySet()) {
+      String name = mungeQName(s);
       if (names.contains(name))
-	return false;
+        return false;
       names.add(name);
     }
     return true;
@@ -831,28 +829,25 @@ public class Converter {
   }
 
   private String namingPattern() {
-    Map patternTable = new Hashtable();
-    for (Iterator iter = definedNames.iterator(); iter.hasNext();) {
-      String name = (String)iter.next();
+    Map<String, Integer> patternTable = new Hashtable<String, Integer>();
+    for (String name : definedNames) {
       for (int i = 0; i < SEPARATORS.length(); i++) {
-	char sep = SEPARATORS.charAt(i);
-	int k = name.indexOf(sep);
-	if (k > 0)
-	  inc(patternTable, name.substring(0, k + 1) + "%");
-	k = name.lastIndexOf(sep);
-	if (k >= 0 && k < name.length() - 1)
-	  inc(patternTable, "%" + name.substring(k));
+        char sep = SEPARATORS.charAt(i);
+        int k = name.indexOf(sep);
+        if (k > 0)
+          inc(patternTable, name.substring(0, k + 1) + "%");
+        k = name.lastIndexOf(sep);
+        if (k >= 0 && k < name.length() - 1)
+          inc(patternTable, "%" + name.substring(k));
       }
     }
     String bestPattern = null;
     int bestCount = 0;
-    for (Iterator iter = patternTable.entrySet().iterator();
-	 iter.hasNext();) {
-      Map.Entry entry = (Map.Entry)iter.next();
-      int count = ((Integer)entry.getValue()).intValue();
+    for (Map.Entry<String, Integer> entry : patternTable.entrySet()) {
+      int count = entry.getValue();
       if (bestPattern == null || count > bestCount) {
-	bestCount = count;
-	bestPattern = (String)entry.getKey();
+        bestCount = count;
+        bestPattern = entry.getKey();
       }
     }
     if (bestPattern == null)
@@ -863,22 +858,21 @@ public class Converter {
       return "#" + bestPattern.substring(bestPattern.length() - 2);
   }
 
-  private static void inc(Map table, String str) {
-    Integer n = (Integer)table.get(str);
+  private static void inc(Map<String, Integer> table, String str) {
+    Integer n = table.get(str);
     if (n == null)
-      table.put(str, new Integer(1));
+      table.put(str, 1);
     else
-      table.put(str, new Integer(n.intValue() + 1));
+      table.put(str, n + 1);
   }
 
   private boolean patternOk(String pattern, String otherPattern) {
-    Set usedNames = new HashSet();
-    for (Iterator iter = elementNameTable.keySet().iterator();
-	 iter.hasNext();) {
-      String name = mungeQName((String)iter.next());
+    Set<String> usedNames = new HashSet<String>();
+    for (String s : elementNameTable.keySet()) {
+      String name = mungeQName(s);
       String declName = substitute(pattern, '%', name);
       if (definedNames.contains(declName))
-	return false;
+        return false;
       if (otherPattern != null) {
         String otherDeclName = substitute(otherPattern, '%', name);
         if (usedNames.contains(declName)
@@ -897,21 +891,21 @@ public class Converter {
   }
 
   private void noteElementName(String name, int flags) {
-    Integer n = (Integer)elementNameTable.get(name);
+    Integer n = elementNameTable.get(name);
     if (n != null) {
-      flags |= n.intValue();
-      if (n.intValue() == flags)
+      flags |= n;
+      if (n == flags)
 	return;
     }
     else
       noteNamePrefix(name);
-    elementNameTable.put(name, new Integer(flags));
+    elementNameTable.put(name, flags);
   }
 
   private void noteAttlist(String name, AttributeGroup group) {
-    List groups = (List)attlistDeclTable.get(name);
+    List<AttributeGroup> groups = attlistDeclTable.get(name);
     if (groups == null) {
-      groups = new Vector();
+      groups = new Vector<AttributeGroup>();
       attlistDeclTable.put(name, groups);
     }
     groups.add(group);
@@ -930,7 +924,7 @@ public class Converter {
     else if (name.startsWith("xmlns:")) {
       if (defaultValue != null) {
 	String prefix = name.substring(6);
-	String ns = (String)prefixTable.get(prefix);
+	String ns = prefixTable.get(prefix);
 	if (ns != null
 	    && !ns.equals("")
 	    && !ns.equals(defaultValue))
@@ -956,10 +950,10 @@ public class Converter {
   }
 
   private int nameFlags(String name) {
-    Integer n = (Integer)elementNameTable.get(name);
+    Integer n = elementNameTable.get(name);
     if (n == null)
       return 0;
-    return n.intValue();
+    return n;
   }
 
   private String elementDeclName(String name) {
@@ -1000,20 +994,18 @@ public class Converter {
     return buf.toString();
   }
 
-  private void outputStart(List components) {
+  private void outputStart(List<Component> components) {
     ChoicePattern choice = new ChoicePattern();
     // Use the defined but unreferenced elements.
     // If there aren't any, use all defined elements.
     int mask = ELEMENT_REF|ELEMENT_DECL;
     for (;;) {
       boolean gotOne = false;
-      for (Iterator iter = elementNameTable.entrySet().iterator();
-	   iter.hasNext();) {
-        Map.Entry entry = (Map.Entry)iter.next();
-	if ((((Integer)entry.getValue()).intValue() & mask) == ELEMENT_DECL) {
-	  gotOne = true;
-	  choice.getChildren().add(ref(elementDeclName((String)entry.getKey())));
-	}
+      for (Map.Entry<String, Integer> entry : elementNameTable.entrySet()) {
+        if ((entry.getValue() & mask) == ELEMENT_DECL) {
+          gotOne = true;
+          choice.getChildren().add(ref(elementDeclName(entry.getKey())));
+        }
       }
       if (gotOne)
 	break;
@@ -1024,7 +1016,7 @@ public class Converter {
     components.add(new DefineComponent(DefineComponent.START, choice));
   }
 
-  private void outputAny(List components) {
+  private void outputAny(List<Component> components) {
     if (!hadAny)
       return;
     if (options.strictAny) {
@@ -1045,14 +1037,12 @@ public class Converter {
     }
   }
 
-  private void outputUndefinedElements(List components) {
-    List elementNames = new Vector();
+  private void outputUndefinedElements(List<Component> components) {
+    List<String> elementNames = new Vector<String>();
     elementNames.addAll(elementNameTable.keySet());
     Collections.sort(elementNames);
-    for (Iterator iter = elementNames.iterator(); iter.hasNext();) {
-      String elementName = (String)iter.next();
-      if ((((Integer)elementNameTable.get(elementName)).intValue() & ELEMENT_DECL)
-	  == 0) {
+    for (String elementName : elementNames) {
+      if ((elementNameTable.get(elementName) & ELEMENT_DECL) == 0) {
         DefineComponent dc = new DefineComponent(elementDeclName(elementName), new NotAllowedPattern());
         dc.setCombine(Combine.CHOICE);
         components.add(dc);
@@ -1110,7 +1100,7 @@ public class Converter {
     case 0:
       return new EmptyPattern();
     case 1:
-      return (Pattern)group.getChildren().get(0);
+      return group.getChildren().get(0);
     }
     return group;
   }
@@ -1125,7 +1115,7 @@ public class Converter {
     if (prefix.equals("xml"))
       ns = WellKnownNamespaces.XML;
     else {
-      ns = (String)prefixTable.get(prefix);
+      ns = prefixTable.get(prefix);
       if (ns.equals("")) {
         error("UNDECLARED_PREFIX", prefix);
         ns = "##" + prefix;

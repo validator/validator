@@ -1,30 +1,28 @@
 package com.thaiopensource.xml.infer;
 
-import org.xml.sax.helpers.DefaultHandler;
+import com.thaiopensource.relaxng.output.common.Name;
+import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.relaxng.datatype.DatatypeLibraryFactory;
+import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
-import com.thaiopensource.relaxng.output.common.Name;
-
 public class InferHandler extends DefaultHandler {
-  private final Map inferrerMap = new HashMap();
+  private final Map<Name, ElementDeclInferrer> inferrerMap = new HashMap<Name, ElementDeclInferrer>();
   private OpenElement openElement = null;
-  private final Set startSet = new HashSet();
-  private final List attributeNames = new Vector();
+  private final Set<Name> startSet = new HashSet<Name>();
+  private final List<Name> attributeNames = new Vector<Name>();
   private final DatatypeRepertoire datatypes;
   private final StringBuffer textBuffer = new StringBuffer();
-  private final Set usedNamespaceUris = new HashSet();
+  private final Set<String> usedNamespaceUris = new HashSet<String>();
   private final Schema schema = new Schema();
-  private final Set assignedPrefixes = new HashSet();
+  private final Set<String> assignedPrefixes = new HashSet<String>();
 
   private static class OpenElement {
     final OpenElement parent;
@@ -52,7 +50,7 @@ public class InferHandler extends DefaultHandler {
     }
     for (int i = 0, len = attributes.getLength(); i < len; i++)
       attributeNames.add(makeName(attributes.getURI(i), attributes.getLocalName(i)));
-    ElementDeclInferrer inferrer = (ElementDeclInferrer)inferrerMap.get(name);
+    ElementDeclInferrer inferrer = inferrerMap.get(name);
     if (inferrer == null) {
       inferrer = new ElementDeclInferrer(datatypes, attributeNames);
       inferrerMap.put(name, inferrer);
@@ -60,7 +58,7 @@ public class InferHandler extends DefaultHandler {
     else
       inferrer.addAttributeNames(attributeNames);
     for (int i = 0, len = attributes.getLength(); i < len; i++)
-      inferrer.addAttributeValue((Name)attributeNames.get(i), attributes.getValue(i));
+      inferrer.addAttributeValue(attributeNames.get(i), attributes.getValue(i));
     attributeNames.clear();
     openElement = new OpenElement(openElement, inferrer);
   }
@@ -113,10 +111,9 @@ public class InferHandler extends DefaultHandler {
   }
 
   public Schema getSchema() {
-    for (Iterator iter = inferrerMap.entrySet().iterator(); iter.hasNext();) {
-      Map.Entry entry = (Map.Entry)iter.next();
-      ElementDecl decl = ((ElementDeclInferrer)entry.getValue()).infer();
-      Name name = (Name)entry.getKey();
+    for (Map.Entry<Name, ElementDeclInferrer> entry : inferrerMap.entrySet()) {
+      ElementDecl decl = (entry.getValue()).infer();
+      Name name = entry.getKey();
       schema.getElementDecls().put(name, decl);
     }
     schema.setStart(makeStart());
@@ -126,8 +123,8 @@ public class InferHandler extends DefaultHandler {
 
   private Particle makeStart() {
     Particle start = null;
-    for (Iterator iter = startSet.iterator(); iter.hasNext();) {
-      Particle tem = new ElementParticle((Name)iter.next());
+    for (Name name : startSet) {
+      Particle tem = new ElementParticle(name);
       if (start == null)
         start = tem;
       else

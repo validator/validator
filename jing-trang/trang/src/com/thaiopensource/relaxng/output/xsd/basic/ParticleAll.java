@@ -5,7 +5,7 @@ import com.thaiopensource.relaxng.edit.SourceLocation;
 import java.util.List;
 
 public class ParticleAll extends ParticleGroup {
-  public ParticleAll(SourceLocation location, Annotation annotation, List children) {
+  public ParticleAll(SourceLocation location, Annotation annotation, List<Particle> children) {
     super(location, annotation, children);
   }
 

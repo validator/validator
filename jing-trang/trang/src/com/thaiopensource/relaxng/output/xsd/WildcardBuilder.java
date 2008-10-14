@@ -18,8 +18,8 @@ class WildcardBuilder implements NameClassVisitor {
   private boolean inExcept = false;
   private final String inheritedNamespace;
   private Wildcard wildcard = null;
-  private Set excludedNames;
-  private Set namespaces;
+  private Set<Name> excludedNames;
+  private Set<String> namespaces;
   private String inNs = null;
 
   static Wildcard createWildcard(NameClass nc, String inheritedNamespace) {
@@ -40,24 +40,24 @@ class WildcardBuilder implements NameClassVisitor {
   }
 
   public Object visitChoice(ChoiceNameClass nc) {
-    List list = nc.getChildren();
+    List<NameClass> list = nc.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
-      ((NameClass)list.get(i)).accept(this);
+      (list.get(i)).accept(this);
     return null;
   }
 
   public Object visitAnyName(AnyNameNameClass nc) {
     if (!inExcept) {
       if (nc.getExcept() != null) {
-        namespaces = new HashSet();
-        excludedNames = new HashSet();
+        namespaces = new HashSet<String>();
+        excludedNames = new HashSet<Name>();
         inExcept = true;
         nc.getExcept().accept(this);
         inExcept = false;
       }
       else {
-        namespaces = Collections.EMPTY_SET;
-        excludedNames = Collections.EMPTY_SET;
+        namespaces = Collections.emptySet();
+        excludedNames = Collections.emptySet();
       }
       combineWildcard(new Wildcard(false, namespaces, excludedNames));
     }
@@ -69,7 +69,7 @@ class WildcardBuilder implements NameClassVisitor {
     if (!inExcept) {
       if (nc.getExcept() != null) {
         namespaces = null;
-        excludedNames = new HashSet();
+        excludedNames = new HashSet<Name>();
         inNs = ns;
         inExcept = true;
         nc.getExcept().accept(this);
@@ -77,8 +77,8 @@ class WildcardBuilder implements NameClassVisitor {
         inNs = null;
       }
       else
-        excludedNames = Collections.EMPTY_SET;
-      namespaces = new HashSet();
+        excludedNames = Collections.emptySet();
+      namespaces = new HashSet<String>();
       namespaces.add(ns);
       combineWildcard(new Wildcard(true, namespaces, excludedNames));
     }

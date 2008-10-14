@@ -4,9 +4,9 @@ import java.util.Vector;
 import java.util.List;
 
 public class ChoiceNameClass extends NameClass {
-  private final List children = new Vector();
+  private final List<NameClass> children = new Vector<NameClass>();
 
-  public List getChildren() {
+  public List<NameClass> getChildren() {
     return children;
   }
 
@@ -15,7 +15,7 @@ public class ChoiceNameClass extends NameClass {
   }
 
   public void childrenAccept(NameClassVisitor visitor) {
-    for (int i = 0, len = children.size();  i < len; i++)
-      ((NameClass)children.get(i)).accept(visitor);
+    for (NameClass nc : children)
+      nc.accept(visitor);
   }
 }

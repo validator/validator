@@ -2,17 +2,16 @@ package com.thaiopensource.relaxng.output.xsd.basic;
 
 import com.thaiopensource.relaxng.output.common.Name;
 
-import java.util.Set;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Set;
 
 public class Wildcard {
   private final boolean positive;
-  private final Set namespaces;
-  private final Set excludedNames;
+  private final Set<String> namespaces;
+  private final Set<Name> excludedNames;
 
-  public Wildcard(boolean positive, Set namespaces, Set excludedNames) {
+  public Wildcard(boolean positive, Set<String> namespaces, Set<Name> excludedNames) {
     this.positive = positive;
     this.namespaces = Collections.unmodifiableSet(namespaces);
     this.excludedNames = Collections.unmodifiableSet(excludedNames);
@@ -22,11 +21,11 @@ public class Wildcard {
     return positive;
   }
 
-  public Set getNamespaces() {
+  public Set<String> getNamespaces() {
     return namespaces;
   }
 
-  public Set getExcludedNames() {
+  public Set<Name> getExcludedNames() {
     return excludedNames;
   }
 
@@ -49,7 +48,7 @@ public class Wildcard {
 
   public static Wildcard union(Wildcard wc1, Wildcard wc2) {
     boolean positive;
-    Set namespaces = new HashSet();
+    Set<String> namespaces = new HashSet<String>();
     if (wc1.isPositive() && wc2.isPositive()) {
       positive = true;
       namespaces.addAll(wc1.getNamespaces());
@@ -70,7 +69,7 @@ public class Wildcard {
         namespaces.removeAll(wc1.getNamespaces());
       }
     }
-    Set excludedNames = new HashSet();
+    Set<Name> excludedNames = new HashSet<Name>();
     addExcludedNames(excludedNames, wc1, wc2);
     addExcludedNames(excludedNames, wc2, wc1);
     return new Wildcard(positive, namespaces, excludedNames);
@@ -79,9 +78,8 @@ public class Wildcard {
   /**
    * Add to result all members of the excludedNames of wc1 that are not contained in wc2.
    */
-  private static void addExcludedNames(Set result, Wildcard wc1, Wildcard wc2) {
-    for (Iterator iter = wc1.getExcludedNames().iterator(); iter.hasNext();) {
-      Name name = (Name)iter.next();
+  private static void addExcludedNames(Set<Name> result, Wildcard wc1, Wildcard wc2) {
+    for (Name name : wc1.getExcludedNames()) {
       if (!wc2.contains(name))
         result.add(name);
     }

@@ -82,16 +82,16 @@ public class BasicOutput {
   private final String sourceUri;
   private final ComplexTypeSelector complexTypeSelector;
   private final AbstractElementTypeSelector abstractElementTypeSelector;
-  private final Set globalElementsDefined;
-  private final Set globalAttributesDefined;
+  private final Set<Name> globalElementsDefined;
+  private final Set<Name> globalAttributesDefined;
   private final String xsPrefix;
   private final Options options;
 
   class SimpleTypeOutput implements SimpleTypeVisitor {
     public Object visitRestriction(SimpleTypeRestriction t) {
       boolean hadPatternFacet = false;
-      for (Iterator iter = t.getFacets().iterator(); iter.hasNext();) {
-        if (((Facet)iter.next()).getName().equals("pattern")) {
+      for (Facet facet : t.getFacets()) {
+        if (facet.getName().equals("pattern")) {
           if (!hadPatternFacet)
             hadPatternFacet = true;
           else {
@@ -103,8 +103,7 @@ public class BasicOutput {
       xw.startElement(xs("restriction"));
       xw.attribute("base", xs(t.getName()));
       hadPatternFacet = false;
-      for (Iterator iter = t.getFacets().iterator(); iter.hasNext();) {
-        Facet facet = (Facet)iter.next();
+      for (Facet facet : t.getFacets()) {
         if (facet.getName().equals("pattern")) {
           if (!hadPatternFacet) {
             hadPatternFacet = true;
@@ -116,8 +115,7 @@ public class BasicOutput {
       }
       xw.endElement();
       hadPatternFacet = false;
-      for (Iterator iter = t.getFacets().iterator(); iter.hasNext();) {
-        Facet facet = (Facet)iter.next();
+      for (Facet facet : t.getFacets()) {
         if (facet.getName().equals("pattern")) {
           if (!hadPatternFacet)
             hadPatternFacet = true;
@@ -153,8 +151,8 @@ public class BasicOutput {
     public Object visitUnion(SimpleTypeUnion t) {
       xw.startElement(xs("union"));
       StringBuffer buf = new StringBuffer();
-      for (Iterator iter = t.getChildren().iterator(); iter.hasNext();) {
-        String typeName = (String)((SimpleType)iter.next()).accept(simpleTypeNamer);
+      for (SimpleType child : t.getChildren()) {
+        String typeName = (String)(child).accept(simpleTypeNamer);
         if (typeName != null) {
           if (buf.length() != 0)
             buf.append(' ');
@@ -164,10 +162,9 @@ public class BasicOutput {
       if (buf.length() != 0)
         xw.attribute("memberTypes", buf.toString());
       outputAnnotation(t);
-      for (Iterator iter = t.getChildren().iterator(); iter.hasNext();) {
-        SimpleType simpleType = (SimpleType)iter.next();
-        if (simpleType.accept(simpleTypeNamer) == null)
-          outputWrap(simpleType, null);
+      for (SimpleType child : t.getChildren()) {
+        if (child.accept(simpleTypeNamer) == null)
+          outputWrap(child, null);
       }
       xw.endElement();
       return null;
@@ -376,9 +373,9 @@ public class BasicOutput {
       return null;
     }
 
-    private void outputParticles(List particles) {
-      for (Iterator iter = particles.iterator(); iter.hasNext();)
-        ((Particle)iter.next()).accept(this);
+    private void outputParticles(List<Particle> particles) {
+      for (Particle particle : particles)
+        particle.accept(this);
     }
 
     public Object visitGroupRef(GroupRef p) {
@@ -526,9 +523,9 @@ public class BasicOutput {
       return p.getChild().accept(this);
     }
 
-    void visitList(List list) {
-      for (Iterator iter = list.iterator(); iter.hasNext();)
-        ((Particle)iter.next()).accept(this);
+    void visitList(List<Particle> list) {
+      for (Particle p : list)
+        p.accept(this);
     }
 
     public Object visitSequence(ParticleSequence p) {
@@ -571,8 +568,8 @@ public class BasicOutput {
 
   class GlobalAttributeOutput extends AbstractAttributeUseVisitor {
     public Object visitAttributeGroup(AttributeGroup a) {
-      for (Iterator iter = a.getChildren().iterator(); iter.hasNext();)
-        ((AttributeUse)iter.next()).accept(this);
+      for (AttributeUse child : a.getChildren())
+        child.accept(this);
       return null;
     }
 
@@ -645,18 +642,18 @@ public class BasicOutput {
       Particle particle = def.getParticle();
       if (!(particle instanceof ParticleChoice))
         return false;
-      List children = ((ParticleChoice)particle).getChildren();
+      List<Particle> children = ((ParticleChoice)particle).getChildren();
       if (children.size() <= 1)
         return false;
-      Iterator iter = children.iterator();
-      Particle first = (Particle)iter.next();
+      Iterator<Particle> iter = children.iterator();
+      Particle first = iter.next();
       if (!(first instanceof Element))
         return false;
       if (!((Element)first).getName().getNamespaceUri().equals(targetNamespace))
         return false;
       ComplexType type = ((Element)first).getComplexType();
       do {
-        Particle tem = (Particle)iter.next();
+        Particle tem = iter.next();
         if (!(tem instanceof Element))
           return false;
         if (!((Element)tem).getComplexType().equals(type))
@@ -772,11 +769,11 @@ public class BasicOutput {
     NamespaceManager nsm = new NamespaceManager(schema, guide, pm);
     ComplexTypeSelector cts = new ComplexTypeSelector(schema);
     AbstractElementTypeSelector aets = new AbstractElementTypeSelector(schema, nsm, cts);
-    Set globalElementsDefined = new HashSet();
-    Set globalAttributesDefined = new HashSet();
+    Set<Name> globalElementsDefined = new HashSet<Name>();
+    Set<Name> globalAttributesDefined = new HashSet<Name>();
     try {
-      for (Iterator iter = schema.getSubSchemas().iterator(); iter.hasNext();)
-        new BasicOutput((Schema)iter.next(), er, od, options, nsm, pm, cts, aets,
+      for (Schema sch : schema.getSubSchemas())
+        new BasicOutput(sch, er, od, options, nsm, pm, cts, aets,
                         globalElementsDefined, globalAttributesDefined).output();
     }
     catch (XmlWriter.WrappedException e) {
@@ -787,7 +784,7 @@ public class BasicOutput {
   private BasicOutput(Schema schema, ErrorReporter er, OutputDirectory od, Options options,
                      NamespaceManager nsm, PrefixManager pm, ComplexTypeSelector complexTypeSelector,
                      AbstractElementTypeSelector abstractElementTypeSelector,
-                     Set globalElementsDefined, Set globalAttributesDefined) throws IOException {
+                     Set<Name> globalElementsDefined, Set<Name> globalAttributesDefined) throws IOException {
     this.schema = schema;
     this.nsm = nsm;
     this.pm = pm;
@@ -824,28 +821,26 @@ public class BasicOutput {
     xw.attribute("elementFormDefault", "qualified");
     if (!targetNamespace.equals(""))
       xw.attribute("targetNamespace", targetNamespace);
-    for (Iterator iter = nsm.getTargetNamespaces().iterator(); iter.hasNext();) {
-      String ns = (String)iter.next();
+    for (String ns : nsm.getTargetNamespaces()) {
       if (!ns.equals("")) {
         String prefix = pm.getPrefix(ns);
         if (!prefix.equals("xml"))
           xw.attribute("xmlns:" + pm.getPrefix(ns), ns);
       }
     }
-    for (Iterator iter = nsm.effectiveIncludes(schema.getUri()).iterator(); iter.hasNext();)
-      outputInclude((String)iter.next());
-    List targetNamespaces = new Vector();
+    for (String uri : nsm.effectiveIncludes(schema.getUri()))
+      outputInclude(uri);
+    List<String> targetNamespaces = new Vector<String>();
     targetNamespaces.addAll(nsm.getTargetNamespaces());
     Collections.sort(targetNamespaces);
-    for (Iterator iter = targetNamespaces.iterator(); iter.hasNext();) {
-      String ns = (String)iter.next();
+    for (String ns : targetNamespaces) {
       if (!ns.equals(targetNamespace))
         outputImport(ns, nsm.getRootSchema(ns));
     }
     schema.accept(schemaOutput);
     if (nsm.getRootSchema(targetNamespace).equals(sourceUri)) {
-      for (Iterator iter = nsm.getMovedStructures(targetNamespace).iterator(); iter.hasNext();)
-        ((Structure)iter.next()).accept(movedStructureOutput);
+      for (Structure structure : nsm.getMovedStructures(targetNamespace))
+        structure.accept(movedStructureOutput);
       outputOther();
     }
     xw.endElement();
@@ -869,12 +864,11 @@ public class BasicOutput {
   private void namespaceAttribute(Wildcard wc) {
     if (wc.isPositive()) {
       StringBuffer buf = new StringBuffer();
-      List namespaces = new Vector(wc.getNamespaces());
+      List<String> namespaces = new Vector<String>(wc.getNamespaces());
       Collections.sort(namespaces);
-      for (Iterator iter = namespaces.iterator(); iter.hasNext();) {
+      for (String ns : namespaces) {
         if (buf.length() > 0)
           buf.append(' ');
-        String ns = (String)iter.next();
         if (ns.equals(""))
           buf.append("##local");
         else if (ns.equals(targetNamespace))
@@ -1059,8 +1053,8 @@ public class BasicOutput {
     xw.endElement();
   }
 
-  private void outputCommentList(List list) {
-    for (Iterator iter = list.iterator(); iter.hasNext();)
-      xw.comment(((Comment)iter.next()).getContent());
+  private void outputCommentList(List<Comment> list) {
+    for (Comment comment : list)
+      xw.comment((comment).getContent());
   }
 }

@@ -42,6 +42,7 @@ import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.Combine;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.SchemaDocument;
+import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.DataPatternBuilder;
@@ -82,13 +83,13 @@ import java.util.Vector;
 class SchemaBuilderImpl implements SchemaBuilder {
   private final SubParser subParser;
   private final ErrorHandler eh;
-  private final Map schemas;
+  private final Map<String, SchemaDocument> schemas;
   private final DatatypeLibraryFactory dlf;
   private final boolean commentsNeedTrimming;
   private boolean hadError = false;
   static private final Localizer localizer = new Localizer(SchemaBuilderImpl.class);
 
-  private SchemaBuilderImpl(SubParser subParser, ErrorHandler eh, Map schemas, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming) {
+  private SchemaBuilderImpl(SubParser subParser, ErrorHandler eh, Map<String, SchemaDocument> schemas, DatatypeLibraryFactory dlf, boolean commentsNeedTrimming) {
     this.subParser = subParser;
     this.eh = eh;
     this.schemas = schemas;
@@ -101,9 +102,9 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   private static ParsedPattern makeComposite(CompositePattern p, ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException {
-    List children = p.getChildren();
+    List<Pattern> children = p.getChildren();
     for (int i = 0; i < nPatterns; i++)
-      children.add(patterns[i]);
+      children.add((Pattern)patterns[i]);
     return finishPattern(p, loc, anno);
   }
 
@@ -156,10 +157,10 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   private static class TraceValidationContext implements ValidationContext {
-    private final Map map;
+    private final Map<String, String> map;
     private final ValidationContext vc;
     private final String ns;
-    TraceValidationContext(Map map, ValidationContext vc, String ns) {
+    TraceValidationContext(Map<String, String> map, ValidationContext vc, String ns) {
       this.map = map;
       this.vc = vc;
       this.ns = ns.length() == 0 ? null : ns;
@@ -228,7 +229,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
     erp.setNs(mapInheritNs(ns));
     finishPattern(erp, loc, anno);
     if (schemas.get(uri) == null) {
-      schemas.put(uri, new Object()); // avoid possibility of infinite loop
+      schemas.put(uri, new SchemaDocument(null)); // avoid possibility of infinite loop
       schemas.put(uri, new SchemaDocument((Pattern)subParser.parseExternal(uri, this, scope)));
     }
     return erp;
@@ -241,9 +242,9 @@ class SchemaBuilderImpl implements SchemaBuilder {
 
   public ParsedNameClass makeChoice(ParsedNameClass[] nameClasses, int nNameClasses, Location loc, Annotations anno) {
     ChoiceNameClass nc = new ChoiceNameClass();
-    List children = nc.getChildren();
+    List<NameClass> children = nc.getChildren();
     for (int i = 0; i < nNameClasses; i++)
-      children.add(nameClasses[i]);
+      children.add((NameClass)nameClasses[i]);
     return finishNameClass(nc, loc, anno);
   }
 
@@ -280,7 +281,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
 
   private class GrammarSectionImpl extends ScopeImpl implements Grammar, Div, Include, IncludedGrammar {
     private final Annotated subject;
-    private final List components;
+    private final List<Component> components;
     Component lastComponent;
 
     private GrammarSectionImpl(Annotated subject, Container container) {
@@ -343,7 +344,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
       ic.setNs(mapInheritNs(ns));
       finishAnnotated(ic, loc, anno);
       if (schemas.get(uri) == null) {
-        schemas.put(uri, new Object()); // avoid possibility of infinite loop
+        schemas.put(uri, new SchemaDocument(null)); // avoid possibility of infinite loop
         GrammarPattern g = new GrammarPattern();
         try {
           ParsedPattern pattern = subParser.parseInclude(uri, SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
@@ -430,7 +431,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
   }
 
   static class CommentListImpl implements CommentList {
-    private final List list = new Vector();
+    private final List<Comment> list = new Vector<Comment>();
     public void addComment(String value, Location loc) throws BuildException {
       Comment comment = new Comment(value);
       comment.setSourceLocation((SourceLocation)loc);
@@ -495,10 +496,10 @@ class SchemaBuilderImpl implements SchemaBuilder {
     }
 
     public void annotation(ParsedElementAnnotation ea) {
-      List params = p.getParams();
+      List<Param> params = p.getParams();
       ((ElementAnnotationBuilderImpl)ea).addTo(params.isEmpty()
                                                ? p.getChildElementAnnotations()
-                                               : ((Param)params.get(params.size() - 1)).getFollowingElementAnnotations());
+                                               : (params.get(params.size() - 1)).getFollowingElementAnnotations());
     }
 
     public ParsedPattern makePattern(Location loc, Annotations anno)
@@ -537,8 +538,8 @@ class SchemaBuilderImpl implements SchemaBuilder {
 
   private static class AnnotationsImpl implements Annotations {
     private CommentList comments;
-    private final List attributes = new Vector();
-    private final List elements = new Vector();
+    private final List<AttributeAnnotation> attributes = new Vector<AttributeAnnotation>();
+    private final List<AnnotationChild> elements = new Vector<AnnotationChild>();
     private final Context context;
 
     AnnotationsImpl(CommentList comments, Context context) {
@@ -575,7 +576,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
       if (comments != null)
         subject.getLeadingComments().addAll(((CommentListImpl)comments).list);
       subject.getAttributeAnnotations().addAll(attributes);
-      List list;
+      List<AnnotationChild> list;
       if (subject.mayContainText())
         list = subject.getFollowingElementAnnotations();
       else
@@ -633,7 +634,7 @@ class SchemaBuilderImpl implements SchemaBuilder {
         ((CommentListImpl)this.comments).add((CommentListImpl)comments);
     }
 
-    void addTo(List elementList) {
+    void addTo(List<AnnotationChild> elementList) {
       if (comments != null)
         elementList.addAll(((CommentListImpl)comments).list);
       elementList.add(element);

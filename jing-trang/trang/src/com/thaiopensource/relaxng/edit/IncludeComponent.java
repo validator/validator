@@ -7,7 +7,7 @@ public class IncludeComponent extends Component implements Container {
   private String href;
   private String ns;
   private String baseUri;
-  private final List components = new Vector();
+  private final List<Component> components = new Vector<Component>();
 
   public IncludeComponent() {
   }
@@ -24,7 +24,7 @@ public class IncludeComponent extends Component implements Container {
     this.href = href;
   }
 
-  public List getComponents() {
+  public List<Component> getComponents() {
     return components;
   }
 
@@ -49,7 +49,7 @@ public class IncludeComponent extends Component implements Container {
   }
 
   public void componentsAccept(ComponentVisitor visitor) {
-    for (int i = 0, len = components.size();  i < len; i++)
-      ((Component)components.get(i)).accept(visitor);
+    for (Component c : components)
+      c.accept(visitor);
   }
 }

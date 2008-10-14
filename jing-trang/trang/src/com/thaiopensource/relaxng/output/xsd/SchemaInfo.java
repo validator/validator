@@ -3,6 +3,9 @@ package com.thaiopensource.relaxng.output.xsd;
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
 import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.ComponentVisitor;
+import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.DataPattern;
 import com.thaiopensource.relaxng.edit.DefineComponent;
 import com.thaiopensource.relaxng.edit.DivComponent;
@@ -21,30 +24,26 @@ import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.PatternVisitor;
 import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.ComponentVisitor;
-import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.Combine;
-import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashSet;
 import java.util.Vector;
-import java.util.Iterator;
 
 class SchemaInfo {
   private final SchemaCollection sc;
   private final GrammarPattern grammar;
   private final ErrorReporter er;
-  private final Map childTypeMap = new HashMap();
-  private final Map defineMap = new HashMap();
-  private final Set ignoredDefines = new HashSet();
+  private final Map<Pattern, ChildType> childTypeMap = new HashMap<Pattern, ChildType>();
+  private final Map<String, Define> defineMap = new HashMap<String, Define>();
+  private final Set<DefineComponent> ignoredDefines = new HashSet<DefineComponent>();
   private final PatternVisitor childTypeVisitor = new ChildTypeVisitor();
 
   private static final int DEFINE_KEEP = 0;
@@ -83,26 +82,26 @@ class SchemaInfo {
     }
 
     public Object visitChoice(ChoicePattern p) {
-      List list = p.getChildren();
-      Object obj = get((Pattern)list.get(0));
+      List<Pattern> list = p.getChildren();
+      Object obj = get(list.get(0));
       for (int i = 1, length = list.size(); i < length; i++)
-        obj = choice(obj, get((Pattern)list.get(i)));
+        obj = choice(obj, get(list.get(i)));
       return obj;
     }
 
     public Object visitGroup(GroupPattern p) {
-      List list = p.getChildren();
-      Object obj = get((Pattern)list.get(0));
+      List<Pattern> list = p.getChildren();
+      Object obj = get(list.get(0));
       for (int i = 1, length = list.size(); i < length; i++)
-        obj = group(obj, get((Pattern)list.get(i)));
+        obj = group(obj, get(list.get(i)));
       return obj;
     }
 
     public Object visitInterleave(InterleavePattern p) {
-      List list = p.getChildren();
-      Object obj = get((Pattern)list.get(0));
+      List<Pattern> list = p.getChildren();
+      Object obj = get(list.get(0));
       for (int i = 1, length = list.size(); i < length; i++)
-        obj = interleave(obj, get((Pattern)list.get(i)));
+        obj = interleave(obj, get(list.get(i)));
       return obj;
     }
 
@@ -209,9 +208,9 @@ class SchemaInfo {
   }
 
   class GrammarVisitor implements ComponentVisitor {
-    private final Set openIncludes = new HashSet();
-    private final Set allIncludes = new HashSet();
-    private List overrides = null;
+    private final Set<String> openIncludes = new HashSet<String>();
+    private final Set<String> allIncludes = new HashSet<String>();
+    private List<Override> overrides = null;
 
     public Object visitDefine(DefineComponent c) {
       Define define = lookupDefine(c.getName());
@@ -260,8 +259,8 @@ class SchemaInfo {
     }
 
     public Object visitInclude(IncludeComponent c) {
-      List overrides = new Vector();
-      List savedOverrides = this.overrides;
+      List<Override> overrides = new Vector<Override>();
+      List<Override> savedOverrides = this.overrides;
       this.overrides = overrides;
       c.componentsAccept(this);
       this.overrides = savedOverrides;
@@ -271,8 +270,7 @@ class SchemaInfo {
       else if (allIncludes.contains(href))
         er.error("multiple_include", href, c.getSourceLocation());
       else {
-        for (Iterator iter = overrides.iterator(); iter.hasNext();) {
-          Override or = (Override)iter.next();
+        for (Override or : overrides) {
           or.status = or.define.status;
           or.define.status = DEFINE_REQUIRE;
         }
@@ -280,8 +278,7 @@ class SchemaInfo {
         openIncludes.add(href);
         getSchema(href).componentsAccept(this);
         openIncludes.remove(href);
-        for (Iterator iter = overrides.iterator(); iter.hasNext();) {
-          Override or = (Override)iter.next();
+        for (Override or : overrides) {
           if (or.define.status == DEFINE_REQUIRE) {
             if (or.name == DefineComponent.START)
               er.error("missing_start_replacement", c.getSourceLocation());
@@ -304,7 +301,7 @@ class SchemaInfo {
   }
 
   private void forceGrammar() {
-    SchemaDocument sd = (SchemaDocument)sc.getSchemaDocumentMap().get(sc.getMainUri());
+    SchemaDocument sd = sc.getSchemaDocumentMap().get(sc.getMainUri());
     sd.setPattern(convertToGrammar(sd.getPattern()));
     // TODO convert other schemas
   }
@@ -331,15 +328,15 @@ class SchemaInfo {
   }
 
   GrammarPattern getSchema(String sourceUri) {
-    return (GrammarPattern)((SchemaDocument)sc.getSchemaDocumentMap().get(sourceUri)).getPattern();
+    return (GrammarPattern)(sc.getSchemaDocumentMap().get(sourceUri)).getPattern();
   }
 
   String getEncoding(String sourceUri) {
-    return ((SchemaDocument)sc.getSchemaDocumentMap().get(sourceUri)).getEncoding();
+    return (sc.getSchemaDocumentMap().get(sourceUri)).getEncoding();
   }
 
   ChildType getChildType(Pattern p) {
-    ChildType ct = (ChildType)childTypeMap.get(p);
+    ChildType ct = childTypeMap.get(p);
     if (ct == null) {
       ct = (ChildType)p.accept(childTypeVisitor);
       childTypeMap.put(p, ct);
@@ -367,7 +364,7 @@ class SchemaInfo {
   }
 
   private Define lookupDefine(String name) {
-    Define define = (Define)defineMap.get(name);
+    Define define = defineMap.get(name);
     if (define == null) {
       define = new Define();
       defineMap.put(name, define);

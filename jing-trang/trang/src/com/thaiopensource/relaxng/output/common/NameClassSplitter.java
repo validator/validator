@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class NameClassSplitter extends AbstractVisitor {
-  private final List names = new Vector();
+  private final List<NameNameClass> names = new Vector<NameNameClass>();
   private boolean negative = false;
 
-  static public List split(NameClass nc) {
+  static public List<NameNameClass> split(NameClass nc) {
     NameClassSplitter splitter = new NameClassSplitter();
     nc.accept(splitter);
     return splitter.names;
@@ -30,9 +30,8 @@ public class NameClassSplitter extends AbstractVisitor {
   }
 
   public Object visitChoice(ChoiceNameClass nc) {
-    List list = nc.getChildren();
-    for (int i = 0, len = list.size(); i < len; i++)
-      ((NameClass)list.get(i)).accept(this);
+    for (NameClass child : nc.getChildren())
+      child.accept(this);
     return null;
   }
 
@@ -57,7 +56,7 @@ public class NameClassSplitter extends AbstractVisitor {
         except.accept(this);
         negative = true;
         for (int i = startIndex, len = names.size(); i < len; i++) {
-          if (!((NameNameClass)names.get(i)).getNamespaceUri().equals(nc.getNs())) {
+          if (!(names.get(i)).getNamespaceUri().equals(nc.getNs())) {
             names.remove(i);
             i--;
             len--;

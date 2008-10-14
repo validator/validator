@@ -13,7 +13,7 @@ public class XmlWriter {
   private final String indentString;
   private final Writer w;
   private final CharRepertoire cr;
-  private final Stack tagStack = new Stack();
+  private final Stack<String> tagStack = new Stack<String>();
   private boolean inStartTag = false;
   private boolean inText = false;
   private int level = 0;
@@ -83,7 +83,7 @@ public class XmlWriter {
       else
         indent();
       write("</");
-      write((String)tagStack.pop());
+      write(tagStack.pop());
       write(">");
     }
     newline();
