@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.input.xml;
 
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import com.thaiopensource.relaxng.edit.AttributePattern;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
@@ -19,8 +19,6 @@ import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.SchemaDocument;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.output.common.Name;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.infer.AttributeDecl;
 import com.thaiopensource.xml.infer.ChoiceParticle;
 import com.thaiopensource.xml.infer.ElementDecl;
@@ -33,21 +31,23 @@ import com.thaiopensource.xml.infer.ParticleVisitor;
 import com.thaiopensource.xml.infer.Schema;
 import com.thaiopensource.xml.infer.SequenceParticle;
 import com.thaiopensource.xml.infer.TextParticle;
-import com.thaiopensource.datatype.DatatypeLibraryLoader;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.util.Name;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.ErrorHandler;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashSet;
 import java.util.Vector;
-import java.util.Collections;
-import java.util.Comparator;
 
 class Inferrer {
   private final Schema schema;

@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
 import com.thaiopensource.relaxng.edit.SourceLocation;
-import com.thaiopensource.relaxng.output.common.Name;
+import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.util.Equal;
 
 public class OptionalAttribute extends SingleAttributeUse {

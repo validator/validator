@@ -1,7 +1,6 @@
 package com.thaiopensource.relaxng.output.xsd;
 
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
-import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.xsd.basic.AbstractAttributeUseVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.Attribute;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroup;
@@ -32,6 +31,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardAttribute;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
 import com.thaiopensource.util.Equal;
+import com.thaiopensource.xml.util.Name;
 
 import java.util.Collections;
 import java.util.HashMap;

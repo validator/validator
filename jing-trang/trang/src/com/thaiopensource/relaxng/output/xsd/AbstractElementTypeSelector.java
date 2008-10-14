@@ -1,6 +1,5 @@
 package com.thaiopensource.relaxng.output.xsd;
 
-import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.xsd.basic.AttributeGroup;
 import com.thaiopensource.relaxng.output.xsd.basic.ComplexType;
 import com.thaiopensource.relaxng.output.xsd.basic.ComplexTypeComplexContent;
@@ -12,6 +11,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.Schema;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleType;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRef;
 import com.thaiopensource.relaxng.output.xsd.basic.SimpleTypeRestriction;
+import com.thaiopensource.xml.util.Name;
 
 import java.util.HashMap;
 import java.util.List;

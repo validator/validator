@@ -1,6 +1,6 @@
 package com.thaiopensource.xml.infer;
 
-import com.thaiopensource.relaxng.output.common.Name;
+import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

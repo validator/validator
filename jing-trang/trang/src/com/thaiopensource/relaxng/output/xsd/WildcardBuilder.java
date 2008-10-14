@@ -6,13 +6,13 @@ import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NameClassVisitor;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.NsNameNameClass;
-import com.thaiopensource.relaxng.output.common.Name;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
+import com.thaiopensource.xml.util.Name;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Collections;
 
 class WildcardBuilder implements NameClassVisitor {
   private boolean inExcept = false;

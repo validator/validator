@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.infer;
 
 import com.thaiopensource.datatype.DatatypeLibraryLoader;
-import com.thaiopensource.relaxng.output.common.Name;
+import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.sax.XMLReaderCreator;

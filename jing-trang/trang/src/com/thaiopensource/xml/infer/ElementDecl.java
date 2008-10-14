@@ -1,7 +1,7 @@
 package com.thaiopensource.xml.infer;
 
 
-import com.thaiopensource.relaxng.output.common.Name;
+import com.thaiopensource.xml.util.Name;
 
 import java.util.Map;
 import java.util.HashMap;
