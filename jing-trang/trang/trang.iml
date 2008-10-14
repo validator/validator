@@ -7,9 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Jing" />
-    <orderEntry type="library" name="xerces" level="project" />
+    <orderEntry type="module" module-name="jing" />
     <orderEntry type="module" module-name="dtdinst" />
+    <orderEntry type="library" name="xerces" level="project" />
     <orderEntryProperties />
   </component>
 </module>
