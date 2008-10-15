@@ -1,3 +1,12 @@
+Modularize the project structure
+
+In trang, make *Visitor classes generic, parameterized by the return
+type, so that we can avoid lots of casts.
+
+Think about what is the right source attribute for javac.
+
+Check we have the right version of xerces.
+
 Fix bug with regex and surrrogates in JDK > 1.4.
 
 Make GCJ stuff work again.
@@ -7,6 +16,10 @@ Make sure the copying.html file is in place.
 Merge Jing changes from oNVDL.
 
 Use JAXP-supplied XSLT implementation.
+
+Get javadoc to link to current JDK. 
+
+Update doccheck.jar.
 
 Use Xsltc from Xalan.
 
