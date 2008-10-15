@@ -1,5 +1,6 @@
 package com.thaiopensource.relaxng.output.dtd;
 
+import com.thaiopensource.relaxng.edit.AbstractPatternVisitor;
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
 import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
@@ -9,6 +10,7 @@ import com.thaiopensource.relaxng.edit.ChoiceNameClass;
 import com.thaiopensource.relaxng.edit.ChoicePattern;
 import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.Component;
+import com.thaiopensource.relaxng.edit.ComponentVisitor;
 import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.Container;
 import com.thaiopensource.relaxng.edit.DataPattern;
@@ -30,6 +32,7 @@ import com.thaiopensource.relaxng.edit.PatternVisitor;
 import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
@@ -67,19 +70,19 @@ class DtdOutput {
   private final ErrorReporter er;
   private final Set<String> reservedEntityNames;
 
-  private final PatternVisitor topLevelContentModelOutput = new TopLevelContentModelOutput();
+  private final PatternVisitor<VoidValue> topLevelContentModelOutput = new TopLevelContentModelOutput();
   private final AbstractVisitor nestedContentModelOutput = new ContentModelOutput();
-  private final PatternVisitor expandedContentModelOutput = new ExpandedContentModelOutput();
-  private final PatternVisitor groupContentModelOutput = new GroupContentModelOutput();
-  private final PatternVisitor choiceContentModelOutput = new ChoiceContentModelOutput();
-  private final PatternVisitor occurContentModelOutput = new ParenthesizedContentModelOutput();
-  private final PatternVisitor innerElementClassOutput = new InnerElementClassOutput();
-  private final PatternVisitor expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
+  private final PatternVisitor<VoidValue> expandedContentModelOutput = new ExpandedContentModelOutput();
+  private final PatternVisitor<VoidValue> groupContentModelOutput = new GroupContentModelOutput();
+  private final PatternVisitor<VoidValue> choiceContentModelOutput = new ChoiceContentModelOutput();
+  private final PatternVisitor<VoidValue> occurContentModelOutput = new ParenthesizedContentModelOutput();
+  private final PatternVisitor<VoidValue> innerElementClassOutput = new InnerElementClassOutput();
+  private final PatternVisitor<VoidValue> expandedInnerElementClassOutput = new ExpandedInnerElementClassOutput();
   private final AttributeOutput attributeOutput = new AttributeOutput();
   private final AttributeOutput optionalAttributeOutput = new OptionalAttributeOutput();
-  private final PatternVisitor topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
-  private final PatternVisitor nestedSimpleTypeOutput = new SimpleTypeOutput();
-  private final PatternVisitor valueOutput = new ValueOutput();
+  private final PatternVisitor<VoidValue> topLevelSimpleTypeOutput = new TopLevelSimpleTypeOutput();
+  private final PatternVisitor<VoidValue> nestedSimpleTypeOutput = new SimpleTypeOutput();
+  private final PatternVisitor<VoidValue> valueOutput = new ValueOutput();
   private final GrammarOutput grammarOutput = new GrammarOutput();
 
   static private final String DTD_URI = "http://www.thaiopensource.com/ns/relaxng/dtd";
@@ -106,66 +109,66 @@ class DtdOutput {
     this.lineLength = od.getLineLength();
   }
 
-  class ParenthesizedContentModelOutput extends AbstractVisitor {
-    public Object visitPattern(Pattern p) {
+  class ParenthesizedContentModelOutput extends AbstractPatternVisitor<VoidValue> {
+    public VoidValue visitPattern(Pattern p) {
       buf.append('(');
       p.accept(nestedContentModelOutput);
       buf.append(')');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       Pattern def = getBody(p.getName());
       if (getContentType(def) == ContentType.DIRECT_SINGLE_ELEMENT)
         ((ElementPattern)def).getNameClass().accept(nestedContentModelOutput);
       else
         visitPattern(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       if (getContentType(p) == ContentType.DIRECT_SINGLE_ELEMENT) {
         p.getNameClass().accept(nestedContentModelOutput);
         elementQueue.add(p);
       }
       else
         visitPattern(p);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
   class ChoiceContentModelOutput extends ParenthesizedContentModelOutput {
-    public Object visitOptional(OptionalPattern p) {
+    public VoidValue visitOptional(OptionalPattern p) {
       p.accept(nestedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       p.accept(nestedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       p.accept(nestedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
 
   }
 
   private class GroupContentModelOutput extends ChoiceContentModelOutput {
-    public Object visitGroup(GroupPattern p) {
+    public VoidValue visitGroup(GroupPattern p) {
       p.accept(nestedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
   class ContentModelOutput extends AbstractVisitor {
-    public Object visitName(NameNameClass nc) {
+    public VoidValue visitName(NameNameClass nc) {
       buf.append(nc.getLocalName());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitChoice(ChoiceNameClass nc) {
+    public VoidValue visitChoice(ChoiceNameClass nc) {
       List<NameClass> list = nc.getChildren();
       boolean needSep = false;
       for (int i = 0, len = list.size(); i < len; i++) {
@@ -173,55 +176,55 @@ class DtdOutput {
           buf.append('|');
         else
           needSep = true;
-        (list.get(i)).accept(this);
+        list.get(i).accept(this);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       p.getNameClass().accept(this);
       elementQueue.add(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       Pattern def = getBody(p.getName());
       if (getContentType(def) == ContentType.DIRECT_SINGLE_ELEMENT)
         ((ElementPattern)def).getNameClass().accept(this);
       else
         paramEntityRef(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       p.getChild().accept(occurContentModelOutput);
       buf.append('*');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       p.getChild().accept(occurContentModelOutput);
       buf.append('+');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public VoidValue visitOptional(OptionalPattern p) {
       p.getChild().accept(occurContentModelOutput);
       buf.append('?');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitText(TextPattern p) {
+    public VoidValue visitText(TextPattern p) {
       buf.append("#PCDATA");
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public VoidValue visitMixed(MixedPattern p) {
       buf.append("#PCDATA");
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public VoidValue visitGroup(GroupPattern p) {
       List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
@@ -236,10 +239,10 @@ class DtdOutput {
           member.accept(groupContentModelOutput);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInterleave(InterleavePattern p) {
+    public VoidValue visitInterleave(InterleavePattern p) {
       ContentType ct = getContentType(p);
       if (ct == ContentType.INTERLEAVE_ZERO_OR_MORE_ELEMENT_CLASS || ct == ContentType.INTERLEAVE_MIXED_MODEL) {
         buf.append('(');
@@ -256,10 +259,10 @@ class DtdOutput {
             member.accept(this);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public VoidValue visitChoice(ChoicePattern p) {
       List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
@@ -295,47 +298,47 @@ class DtdOutput {
           member.accept(nestedContentModelOutput);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitGrammar(GrammarPattern p) {
+    public VoidValue visitGrammar(GrammarPattern p) {
       return getBody(DefineComponent.START).accept(this);
     }
   }
 
   class TopLevelContentModelOutput extends ContentModelOutput {
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       buf.append('(');
       p.getChild().accept(nestedContentModelOutput);
       buf.append(')');
       buf.append('*');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       buf.append('(');
       p.getChild().accept(nestedContentModelOutput);
       buf.append(')');
       buf.append('+');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public VoidValue visitOptional(OptionalPattern p) {
       buf.append('(');
       p.getChild().accept(nestedContentModelOutput);
       buf.append(')');
       buf.append('?');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       buf.append('(');
       super.visitElement(p);
       buf.append(')');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       ContentType t = getContentType(p);
       if (t.isA(ContentType.MIXED_MODEL))
         super.visitRef(p);
@@ -344,24 +347,24 @@ class DtdOutput {
         super.visitRef(p);
         buf.append(')');
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public VoidValue visitChoice(ChoicePattern p) {
       buf.append('(');
       p.accept(nestedContentModelOutput);
       buf.append(')');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitText(TextPattern p) {
+    public VoidValue visitText(TextPattern p) {
       buf.append('(');
       p.accept(nestedContentModelOutput);
       buf.append(')');
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public VoidValue visitMixed(MixedPattern p) {
       buf.append('(');
       if (getContentType(p.getChild()) == ContentType.EMPTY)
         buf.append("#PCDATA)");
@@ -371,10 +374,10 @@ class DtdOutput {
         buf.append(')');
         buf.append('*');
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public VoidValue visitGroup(GroupPattern p) {
       List<Pattern> list = p.getChildren();
       Pattern main = null;
       for (int i = 0, len = list.size(); i < len; i++) {
@@ -386,30 +389,36 @@ class DtdOutput {
             buf.append('(');
             nestedContentModelOutput.visitGroup(p);
             buf.append(')');
-            return null;
+            return VoidValue.VOID;
           }
         }
       }
       if (main != null)
         main.accept(this);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
   class ExpandedContentModelOutput extends ContentModelOutput {
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       p.getNameClass().accept(this);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
-  class InnerElementClassOutput extends AbstractVisitor {
-    public Object visitRef(RefPattern p) {
+  class PatternOutput extends AbstractPatternVisitor<VoidValue> {
+    public VoidValue visitPattern(Pattern p) {
+      return VoidValue.VOID;
+    }
+  }
+
+  class InnerElementClassOutput extends PatternOutput {
+    public VoidValue visitRef(RefPattern p) {
       getBody(p.getName()).accept(expandedInnerElementClassOutput);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitComposite(CompositePattern p) {
+    public VoidValue visitComposite(CompositePattern p) {
       List<Pattern> list = p.getChildren();
       boolean needSep = false;
       int doneIndex = -1;
@@ -435,38 +444,38 @@ class DtdOutput {
           }
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       p.getChild().accept(nestedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public VoidValue visitMixed(MixedPattern p) {
       if (getContentType(p.getChild()) == ContentType.EMPTY)
         buf.append("#PCDATA");
       else {
         buf.append("#PCDATA|");
         p.getChild().accept(this);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitText(TextPattern p) {
+    public VoidValue visitText(TextPattern p) {
       buf.append("#PCDATA");
-      return null;
+      return VoidValue.VOID;
     }
   }
 
   class ExpandedInnerElementClassOutput extends InnerElementClassOutput {
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       p.getChild().accept(expandedContentModelOutput);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
-  class AttributeOutput extends AbstractVisitor {
+  class AttributeOutput extends PatternOutput {
     void output(Pattern p) {
       if (getAttributeType(p) != AttributeType.EMPTY)
         p.accept(this);
@@ -478,31 +487,31 @@ class DtdOutput {
         buf.append(' ');
     }
 
-    public Object visitComposite(CompositePattern p) {
+    public VoidValue visitComposite(CompositePattern p) {
       List<Pattern> list = p.getChildren();
       for (int i = 0, len = list.size(); i < len; i++)
         output(list.get(i));
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public VoidValue visitMixed(MixedPattern p) {
       output(p.getChild());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       output(p.getChild());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       if (getAttributeType(p) != AttributeType.SINGLE)
         er.warning("attribute_occur_approx", p.getSourceLocation());
       optionalAttributeOutput.output(p.getChild());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       ContentType t = getContentType(p);
       if (t.isA(ContentType.EMPTY) && isRequired()) {
         if (analysis.getParamEntityElementName(p.getName()) == null) {
@@ -512,13 +521,13 @@ class DtdOutput {
       }
       else
         output(getBody(p.getName()));
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitAttribute(AttributePattern p) {
+    public VoidValue visitAttribute(AttributePattern p) {
       ContentType ct = getContentType(p.getChild());
       if (ct == ContentType.NOT_ALLOWED)
-        return null;
+        return VoidValue.VOID;
       List<NameNameClass> names = NameClassSplitter.split(p.getNameClass());
       int len = names.size();
       if (len > 1)
@@ -572,25 +581,25 @@ class DtdOutput {
           }
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
     boolean isRequired() {
       return true;
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public VoidValue visitChoice(ChoicePattern p) {
       if (getAttributeType(p) != AttributeType.EMPTY)
         er.warning("attribute_occur_approx", p.getSourceLocation());
       optionalAttributeOutput.visitComposite(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public VoidValue visitOptional(OptionalPattern p) {
       if (getAttributeType(p) != AttributeType.SINGLE)
         er.warning("attribute_occur_approx", p.getSourceLocation());
       optionalAttributeOutput.output(p.getChild());
-      return null;
+      return VoidValue.VOID;
     }
   }
 
@@ -600,23 +609,23 @@ class DtdOutput {
     }
   }
 
-  class SimpleTypeOutput extends AbstractVisitor {
-    public Object visitText(TextPattern p) {
+  class SimpleTypeOutput extends PatternOutput {
+    public VoidValue visitText(TextPattern p) {
       buf.append("CDATA");
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitValue(ValuePattern p) {
+    public VoidValue visitValue(ValuePattern p) {
       buf.append(p.getValue());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       paramEntityRef(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitData(DataPattern p) {
+    public VoidValue visitData(DataPattern p) {
       Datatypes.Info info = Datatypes.getInfo(p.getDatatypeLibrary(), p.getType());
       if (info == null) {
         er.warning("unrecognized_datatype", p.getSourceLocation());
@@ -633,10 +642,10 @@ class DtdOutput {
         }
         buf.append(info.closestType());
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public VoidValue visitChoice(ChoicePattern p) {
       List<Pattern> list = p.getChildren();
       boolean needSep = false;
       final int len = list.size();
@@ -662,20 +671,19 @@ class DtdOutput {
           member.accept(this);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
-
   }
 
   class TopLevelSimpleTypeOutput extends SimpleTypeOutput {
-    public Object visitList(ListPattern p) {
+    public VoidValue visitList(ListPattern p) {
       if (warnDatatypes)
         er.warning("list_approx", p.getSourceLocation());
       buf.append("CDATA");
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitValue(ValuePattern p) {
+    public VoidValue visitValue(ValuePattern p) {
       if (getContentType(p) == ContentType.ENUM) {
         buf.append('(');
         super.visitValue(p);
@@ -694,10 +702,10 @@ class DtdOutput {
           buf.append(type);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public VoidValue visitChoice(ChoicePattern p) {
       ContentType t = getContentType(p);
       if (t == ContentType.ENUM) {
         buf.append('(');
@@ -711,10 +719,10 @@ class DtdOutput {
       }
       else
         super.visitChoice(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       ContentType t = getContentType(p);
       if (t == ContentType.ENUM) {
         buf.append('(');
@@ -725,40 +733,40 @@ class DtdOutput {
         buf.append("CDATA");
       else
         super.visitRef(p);
-      return null;
+      return VoidValue.VOID;
     }
 
   }
 
-  private class ValueOutput extends AbstractVisitor {
-    public Object visitValue(ValuePattern p) {
+  private class ValueOutput extends PatternOutput {
+    public VoidValue visitValue(ValuePattern p) {
       buf.append("CDATA #FIXED ");
       attributeValueLiteral(p.getValue());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       paramEntityRef(p);
-      return null;
+      return VoidValue.VOID;
     }
   }
 
-  class GrammarOutput extends AbstractVisitor {
+  class GrammarOutput implements ComponentVisitor<VoidValue> {
     public void visitContainer(Container c) {
       final List<Component> list = c.getComponents();
       for (int i = 0, len = list.size(); i < len; i++)
         (list.get(i)).accept(this);
     }
 
-    public Object visitDiv(DivComponent c) {
+    public VoidValue visitDiv(DivComponent c) {
       outputLeadingComments(c);
       outputInitialChildComments(c);
       visitContainer(c);
       outputFollowingComments(c);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitDefine(DefineComponent c) {
+    public VoidValue visitDefine(DefineComponent c) {
       if (c.getName() == DefineComponent.START) {
         outputLeadingComments(c);
         outputFollowingComments(c);
@@ -774,12 +782,12 @@ class DtdOutput {
         }
       }
       outputQueuedElements();
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInclude(IncludeComponent c) {
+    public VoidValue visitInclude(IncludeComponent c) {
       outputInclude(c);
-      return null;
+      return VoidValue.VOID;
     }
   }
 

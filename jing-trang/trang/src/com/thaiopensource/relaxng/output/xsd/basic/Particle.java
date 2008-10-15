@@ -7,5 +7,5 @@ public abstract class Particle extends Annotated {
     super(location, annotation);
   }
 
-  public abstract Object accept(ParticleVisitor visitor);
+  public abstract <T> T accept(ParticleVisitor<T> visitor);
 }

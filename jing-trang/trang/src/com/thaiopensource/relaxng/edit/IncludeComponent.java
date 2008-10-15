@@ -44,11 +44,11 @@ public class IncludeComponent extends Component implements Container {
     this.baseUri = baseUri;
   }
 
-  public Object accept(ComponentVisitor visitor) {
+  public <T> T accept(ComponentVisitor<T> visitor) {
     return visitor.visitInclude(this);
   }
 
-  public void componentsAccept(ComponentVisitor visitor) {
+  public void componentsAccept(ComponentVisitor<?> visitor) {
     for (Component c : components)
       c.accept(visitor);
   }

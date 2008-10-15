@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.edit;
 
 public class ChoicePattern extends CompositePattern {
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitChoice(this);
   }
 }

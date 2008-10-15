@@ -25,6 +25,7 @@ import com.thaiopensource.relaxng.edit.Param;
 import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
@@ -35,7 +36,7 @@ import java.util.Map;
 
 class Analyzer extends AbstractVisitor {
 
-  private Object visitAnnotated(Annotated anno) {
+  private VoidValue visitAnnotated(Annotated anno) {
     if (anno.getAttributeAnnotations().size() > 0
         || anno.getChildElementAnnotations().size() > 0
         || anno.getFollowingElementAnnotations().size() > 0)
@@ -43,7 +44,7 @@ class Analyzer extends AbstractVisitor {
     visitAnnotationAttributes(anno.getAttributeAnnotations());
     visitAnnotationChildren(anno.getChildElementAnnotations());
     visitAnnotationChildren(anno.getFollowingElementAnnotations());
-    return null;
+    return VoidValue.VOID;
   }
 
   private void visitAnnotationAttributes(List<AttributeAnnotation> list) {
@@ -67,57 +68,57 @@ class Analyzer extends AbstractVisitor {
     }
   }
 
-  public Object visitPattern(Pattern p) {
+  public VoidValue visitPattern(Pattern p) {
     return visitAnnotated(p);
   }
 
-  public Object visitDefine(DefineComponent c) {
+  public VoidValue visitDefine(DefineComponent c) {
     visitAnnotated(c);
     return c.getBody().accept(this);
   }
 
-  public Object visitDiv(DivComponent c) {
+  public VoidValue visitDiv(DivComponent c) {
     visitAnnotated(c);
     return visitContainer(c);
   }
 
-  public Object visitInclude(IncludeComponent c) {
+  public VoidValue visitInclude(IncludeComponent c) {
     visitAnnotated(c);
     noteInheritNs(c.getNs());
     return visitContainer(c);
   }
 
-  public Object visitGrammar(GrammarPattern p) {
+  public VoidValue visitGrammar(GrammarPattern p) {
     visitAnnotated(p);
     return visitContainer(p);
   }
 
-  private Object visitContainer(Container c) {
+  private VoidValue visitContainer(Container c) {
     List<Component> list = c.getComponents();
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitUnary(UnaryPattern p) {
+  public VoidValue visitUnary(UnaryPattern p) {
     visitAnnotated(p);
     return p.getChild().accept(this);
   }
 
-  public Object visitComposite(CompositePattern p) {
+  public VoidValue visitComposite(CompositePattern p) {
     visitAnnotated(p);
     List<Pattern> list = p.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitNameClassed(NameClassedPattern p) {
+  public VoidValue visitNameClassed(NameClassedPattern p) {
     p.getNameClass().accept(this);
     return visitUnary(p);
   }
 
-  public Object visitAttribute(AttributePattern p) {
+  public VoidValue visitAttribute(AttributePattern p) {
     NameClass nc = p.getNameClass();
     if (nc instanceof NameNameClass
         && ((NameNameClass)nc).getNamespaceUri().equals(""))
@@ -125,25 +126,25 @@ class Analyzer extends AbstractVisitor {
     return visitNameClassed(p);
   }
 
-  public Object visitChoice(ChoiceNameClass nc) {
+  public VoidValue visitChoice(ChoiceNameClass nc) {
     visitAnnotated(nc);
     List<NameClass> list = nc.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitValue(ValuePattern p) {
+  public VoidValue visitValue(ValuePattern p) {
     visitAnnotated(p);
     if (!p.getType().equals("token") || !p.getDatatypeLibrary().equals(""))
       noteDatatypeLibrary(p.getDatatypeLibrary());
     for (Map.Entry<String, String> entry : p.getPrefixMap().entrySet()) {
       noteNs(entry.getKey(), entry.getValue());
     }
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitData(DataPattern p) {
+  public VoidValue visitData(DataPattern p) {
     visitAnnotated(p);
     noteDatatypeLibrary(p.getDatatypeLibrary());
     Pattern except = p.getExcept();
@@ -151,35 +152,36 @@ class Analyzer extends AbstractVisitor {
       except.accept(this);
     for (Param param : p.getParams())
       visitAnnotated(param);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitExternalRef(ExternalRefPattern p) {
+  public VoidValue visitExternalRef(ExternalRefPattern p) {
+    visitAnnotated(p);
     noteInheritNs(p.getNs());
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitName(NameNameClass nc) {
+  public VoidValue visitName(NameNameClass nc) {
     visitAnnotated(nc);
     noteNs(nc.getPrefix(), nc.getNamespaceUri());
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAnyName(AnyNameNameClass nc) {
+  public VoidValue visitAnyName(AnyNameNameClass nc) {
     visitAnnotated(nc);
     NameClass except = nc.getExcept();
     if (except != null)
       except.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitNsName(NsNameNameClass nc) {
+  public VoidValue visitNsName(NsNameNameClass nc) {
     visitAnnotated(nc);
     noteInheritNs(nc.getNs());
     NameClass except = nc.getExcept();
     if (except != null)
       except.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
   private String datatypeLibrary = null;

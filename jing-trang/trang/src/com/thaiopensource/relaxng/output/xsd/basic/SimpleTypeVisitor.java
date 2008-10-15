@@ -1,8 +1,8 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-public interface SimpleTypeVisitor {
-  Object visitRestriction(SimpleTypeRestriction t);
-  Object visitUnion(SimpleTypeUnion t);
-  Object visitList(SimpleTypeList t);
-  Object visitRef(SimpleTypeRef t);
+public interface SimpleTypeVisitor<T> {
+  T visitRestriction(SimpleTypeRestriction t);
+  T visitUnion(SimpleTypeUnion t);
+  T visitList(SimpleTypeList t);
+  T visitRef(SimpleTypeRef t);
 }

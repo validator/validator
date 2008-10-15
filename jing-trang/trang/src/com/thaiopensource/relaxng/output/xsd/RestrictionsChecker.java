@@ -24,6 +24,7 @@ import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
@@ -54,15 +55,15 @@ public class RestrictionsChecker {
   private static final int ATTRIBUTE_DISALLOW =
           DISALLOW_ATTRIBUTE|DISALLOW_ELEMENT;
 
-  private final PatternVisitor startVisitor = new Visitor("start", START_DISALLOW);
-  private final PatternVisitor topLevelVisitor = new ListVisitor(null, 0);
-  private final PatternVisitor elementVisitor = new ElementVisitor();
-  private final PatternVisitor elementRepeatVisitor = new ElementRepeatVisitor();
-  private final PatternVisitor elementRepeatGroupVisitor = new Visitor("element_repeat_group", DISALLOW_ATTRIBUTE);
-  private final PatternVisitor elementRepeatInterleaveVisitor  = new Visitor("element_repeat_interleave", DISALLOW_ATTRIBUTE);
-  private final PatternVisitor attributeVisitor = new Visitor("attribute", ATTRIBUTE_DISALLOW);
-  private final PatternVisitor listVisitor = new ListVisitor("list", LIST_DISALLOW);
-  private final PatternVisitor dataExceptVisitor = new Visitor("data_except", DATA_EXCEPT_DISALLOW);
+  private final PatternVisitor<VoidValue> startVisitor = new Visitor("start", START_DISALLOW);
+  private final PatternVisitor<VoidValue> topLevelVisitor = new ListVisitor(null, 0);
+  private final PatternVisitor<VoidValue> elementVisitor = new ElementVisitor();
+  private final PatternVisitor<VoidValue> elementRepeatVisitor = new ElementRepeatVisitor();
+  private final PatternVisitor<VoidValue> elementRepeatGroupVisitor = new Visitor("element_repeat_group", DISALLOW_ATTRIBUTE);
+  private final PatternVisitor<VoidValue> elementRepeatInterleaveVisitor  = new Visitor("element_repeat_interleave", DISALLOW_ATTRIBUTE);
+  private final PatternVisitor<VoidValue> attributeVisitor = new Visitor("attribute", ATTRIBUTE_DISALLOW);
+  private final PatternVisitor<VoidValue> listVisitor = new ListVisitor("list", LIST_DISALLOW);
+  private final PatternVisitor<VoidValue> dataExceptVisitor = new Visitor("data_except", DATA_EXCEPT_DISALLOW);
 
   class Visitor extends AbstractVisitor {
     private final String contextKey;
@@ -82,96 +83,96 @@ public class RestrictionsChecker {
         return true;
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public VoidValue visitGroup(GroupPattern p) {
       if (checkContext(DISALLOW_GROUP, "group", p)) {
         checkGroup(p);
         super.visitGroup(p);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInterleave(InterleavePattern p) {
+    public VoidValue visitInterleave(InterleavePattern p) {
       if (checkContext(DISALLOW_INTERLEAVE, "interleave", p)) {
         checkGroup(p);
         super.visitInterleave(p);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       if (checkContext(DISALLOW_ELEMENT, "element", p)  && !alreadyChecked(p))
         p.getChild().accept(elementVisitor);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitAttribute(AttributePattern p) {
+    public VoidValue visitAttribute(AttributePattern p) {
       if (checkContext(DISALLOW_ATTRIBUTE, "attribute", p) && !alreadyChecked(p))
         p.getChild().accept(attributeVisitor);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitData(DataPattern p) {
+    public VoidValue visitData(DataPattern p) {
       if (checkContext(DISALLOW_DATA, "data", p) && !alreadyChecked(p)) {
         Pattern except = p.getExcept();
         if (except != null)
           except.accept(dataExceptVisitor);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitValue(ValuePattern p) {
+    public VoidValue visitValue(ValuePattern p) {
       checkContext(DISALLOW_DATA, "value", p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitList(ListPattern p) {
+    public VoidValue visitList(ListPattern p) {
      if (checkContext(DISALLOW_LIST, "list", p) && !alreadyChecked(p))
         p.getChild().accept(listVisitor);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitEmpty(EmptyPattern p) {
+    public VoidValue visitEmpty(EmptyPattern p) {
       checkContext(DISALLOW_EMPTY, "empty", p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public VoidValue visitOptional(OptionalPattern p) {
       if (checkContext(DISALLOW_EMPTY, "optional", p))
         super.visitOptional(p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitText(TextPattern p) {
+    public VoidValue visitText(TextPattern p) {
       checkContext(DISALLOW_TEXT, "text", p);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public VoidValue visitMixed(MixedPattern p) {
       if (checkContext(DISALLOW_TEXT, "mixed", p)) {
         if (si.getChildType(p.getChild()).contains(ChildType.DATA))
           er.error("mixed_data", p.getSourceLocation());
         super.visitMixed(p);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       if (checkContext(DISALLOW_ONE_OR_MORE, "oneOrMore", p)) {
         checkNoDataUnlessInList(p, "oneOrMore");
         super.visitOneOrMore(p);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       if (checkContext(DISALLOW_ONE_OR_MORE, "zeroOrMore", p)) {
         checkNoDataUnlessInList(p, "zeroOrMore");
         super.visitZeroOrMore(p);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitRef(RefPattern p) {
+    public VoidValue visitRef(RefPattern p) {
       return si.getBody(p).accept(this);
     }
 
@@ -228,27 +229,27 @@ public class RestrictionsChecker {
       super(null, 0);
     }
 
-    public Object visitAttribute(AttributePattern p) {
+    public VoidValue visitAttribute(AttributePattern p) {
       p.getNameClass().accept(this);
       return super.visitAttribute(p);
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
       return elementRepeatVisitor.visitZeroOrMore(p);
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public VoidValue visitOneOrMore(OneOrMorePattern p) {
       return elementRepeatVisitor.visitOneOrMore(p);
     }
 
-    public Object visitAnyName(AnyNameNameClass nc) {
+    public VoidValue visitAnyName(AnyNameNameClass nc) {
       er.error("any_name_attribute_not_repeated", nc.getSourceLocation());
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitNsName(NsNameNameClass nc) {
+    public VoidValue visitNsName(NsNameNameClass nc) {
       er.error("ns_name_attribute_not_repeated", nc.getSourceLocation());
-      return null;
+      return VoidValue.VOID;
     }
   }
 
@@ -257,30 +258,30 @@ public class RestrictionsChecker {
       super(null, 0);
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public VoidValue visitGroup(GroupPattern p) {
       return elementRepeatGroupVisitor.visitGroup(p);
     }
 
-    public Object visitInterleave(InterleavePattern p) {
+    public VoidValue visitInterleave(InterleavePattern p) {
       return elementRepeatInterleaveVisitor.visitInterleave(p);
     }
   }
 
-  class GrammarVisitor implements ComponentVisitor {
-    public Object visitDiv(DivComponent c) {
+  class GrammarVisitor implements ComponentVisitor<VoidValue> {
+    public VoidValue visitDiv(DivComponent c) {
       c.componentsAccept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitDefine(DefineComponent c) {
+    public VoidValue visitDefine(DefineComponent c) {
       if (c.getName() != DefineComponent.START)
         c.getBody().accept(topLevelVisitor);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInclude(IncludeComponent c) {
+    public VoidValue visitInclude(IncludeComponent c) {
       si.getSchema(c.getHref()).componentsAccept(this);
-      return null;
+      return VoidValue.VOID;
     }
   }
 

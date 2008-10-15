@@ -14,7 +14,7 @@ public class SimpleTypeRef extends SimpleType {
     return name;
   }
 
-  public Object accept(SimpleTypeVisitor visitor) {
+  public <T> T accept(SimpleTypeVisitor<T> visitor) {
     return visitor.visitRef(this);
   }
 

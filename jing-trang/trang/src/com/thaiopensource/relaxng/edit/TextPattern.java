@@ -4,7 +4,7 @@ public class TextPattern extends Pattern {
   public TextPattern() {
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitText(this);
   }
 }

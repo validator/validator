@@ -1,6 +1,6 @@
 package com.thaiopensource.relaxng.output.xsd;
 
-import com.thaiopensource.relaxng.edit.AbstractVisitor;
+import com.thaiopensource.relaxng.edit.AbstractPatternVisitor;
 import com.thaiopensource.relaxng.edit.Annotated;
 import com.thaiopensource.relaxng.edit.AnnotationChild;
 import com.thaiopensource.relaxng.edit.AttributePattern;
@@ -32,6 +32,7 @@ import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
@@ -76,12 +77,12 @@ import java.util.Set;
 import java.util.Vector;
 
 public class BasicBuilder {
-  private final PatternVisitor simpleTypeBuilder = new SimpleTypeBuilder();
-  private final PatternVisitor attributeUseBuilder = new AttributeUseBuilder();
-  private final PatternVisitor optionalAttributeUseBuilder = new OptionalAttributeUseBuilder();
-  private final PatternVisitor particleBuilder = new ParticleBuilder();
-  private final PatternVisitor occursCalculator = new OccursCalculator();
-  private final ComponentVisitor schemaBuilder;
+  private final PatternVisitor<SimpleType> simpleTypeBuilder = new SimpleTypeBuilder();
+  private final PatternVisitor<AttributeUse> attributeUseBuilder = new AttributeUseBuilder();
+  private final PatternVisitor<AttributeUse> optionalAttributeUseBuilder = new OptionalAttributeUseBuilder();
+  private final PatternVisitor<Particle> particleBuilder = new ParticleBuilder();
+  private final PatternVisitor<Occurs> occursCalculator = new OccursCalculator();
+  private final ComponentVisitor<VoidValue> schemaBuilder;
   private final ErrorReporter er;
   private final String inheritedNamespace;
   private final Schema schema;
@@ -94,8 +95,8 @@ public class BasicBuilder {
    * - does not contains ELEMENT
    * - does not contain TEXT
    */
-  private class SimpleTypeBuilder extends AbstractVisitor {
-    public Object visitData(DataPattern p) {
+  private class SimpleTypeBuilder extends AbstractPatternVisitor<SimpleType> {
+    public SimpleType visitData(DataPattern p) {
       String library = p.getDatatypeLibrary();
       String type = p.getType();
       List<Facet> facets = new Vector<Facet>();
@@ -116,7 +117,7 @@ public class BasicBuilder {
       return new SimpleTypeRestriction(location, makeAnnotation(p), type, facets);
     }
 
-    public Object visitValue(ValuePattern p) {
+    public SimpleType visitValue(ValuePattern p) {
       String library = p.getDatatypeLibrary();
       String type = p.getType();
       List<Facet> facets = new Vector<Facet>();
@@ -141,11 +142,11 @@ public class BasicBuilder {
       return new SimpleTypeRestriction(location, null, type, facets);
     }
 
-    public Object visitComposite(CompositePattern p) {
+    public SimpleType visitComposite(CompositePattern p) {
       List<SimpleType> result = new Vector<SimpleType>();
       for (Pattern child : p.getChildren()) {
         if (si.getChildType(child).contains(ChildType.DATA))
-          result.add((SimpleType)child.accept(this));
+          result.add(child.accept(this));
       }
       if (result.size() == 1)
         return result.get(0);
@@ -153,11 +154,11 @@ public class BasicBuilder {
         return new SimpleTypeUnion(p.getSourceLocation(), makeAnnotation(p), result);
     }
 
-    public Object visitUnary(UnaryPattern p) {
+    public SimpleType visitUnary(UnaryPattern p) {
       return p.getChild().accept(this);
     }
 
-    public Object visitList(ListPattern p) {
+    public SimpleType visitList(ListPattern p) {
       SourceLocation location = p.getSourceLocation();
       Pattern child = p.getChild();
       ChildType childType = si.getChildType(child);
@@ -185,37 +186,42 @@ public class BasicBuilder {
       // so the preconditions for calling accept(this) are met
       return new SimpleTypeList(location,
                                 makeAnnotation(p),
-                                (SimpleType)child.accept(this),
-                                (Occurs)child.accept(occursCalculator));
+                                child.accept(this),
+                                child.accept(occursCalculator));
     }
 
-    public Object visitRef(RefPattern p) {
+    public SimpleType visitRef(RefPattern p) {
       return new SimpleTypeRef(p.getSourceLocation(), makeAnnotation(p), p.getName());
+    }
+
+    public SimpleType visitPattern(Pattern p) {
+      // TODO throw an error
+      return null;
     }
   }
 
-  class OccursCalculator extends AbstractVisitor {
-    public Object visitOptional(OptionalPattern p) {
-      return new Occurs(0, ((Occurs)p.getChild().accept(this)).getMax());
+  class OccursCalculator extends AbstractPatternVisitor<Occurs> {
+    public Occurs visitOptional(OptionalPattern p) {
+      return new Occurs(0, p.getChild().accept(this).getMax());
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public Occurs visitZeroOrMore(ZeroOrMorePattern p) {
       return new Occurs(0, Occurs.UNBOUNDED);
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
-      return new Occurs(((Occurs)p.getChild().accept(this)).getMin(), Occurs.UNBOUNDED);
+    public Occurs visitOneOrMore(OneOrMorePattern p) {
+      return new Occurs(p.getChild().accept(this).getMin(), Occurs.UNBOUNDED);
     }
 
-    public Object visitData(DataPattern p) {
+    public Occurs visitData(DataPattern p) {
       return Occurs.EXACTLY_ONE;
     }
 
-    public Object visitValue(ValuePattern p) {
+    public Occurs visitValue(ValuePattern p) {
       return Occurs.EXACTLY_ONE;
     }
 
-    public Object visitEmpty(EmptyPattern p) {
+    public Occurs visitEmpty(EmptyPattern p) {
       return new Occurs(0, 0);
     }
 
@@ -223,31 +229,35 @@ public class BasicBuilder {
       Occurs occ = new Occurs(0, 0);
       List<Pattern> children = p.getChildren();
       for (int i = 0, len = children.size(); i < len; i++)
-        occ = Occurs.add(occ, (Occurs)(children.get(i)).accept(this));
+        occ = Occurs.add(occ, children.get(i).accept(this));
       return occ;
     }
 
-    public Object visitInterleave(InterleavePattern p) {
+    public Occurs visitInterleave(InterleavePattern p) {
       return sum(p);
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public Occurs visitGroup(GroupPattern p) {
       return sum(p);
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public Occurs visitChoice(ChoicePattern p) {
       List<Pattern> children = p.getChildren();
-      Occurs occ = (Occurs)(children.get(0)).accept(this);
+      Occurs occ = children.get(0).accept(this);
       for (int i = 1, len = children.size(); i < len; i++) {
-        Occurs tem = (Occurs)(children.get(i)).accept(this);
+        Occurs tem = children.get(i).accept(this);
         occ = new Occurs(Math.min(occ.getMin(), tem.getMin()),
                          Math.max(occ.getMax(), tem.getMax()));
       }
       return occ;
     }
 
-    public Object visitRef(RefPattern p) {
+    public Occurs visitRef(RefPattern p) {
       return si.getBody(p).accept(this);
+    }
+
+    public Occurs visitPattern(Pattern p) {
+      return null;
     }
   }
 
@@ -255,14 +265,14 @@ public class BasicBuilder {
    * Precondition for calling visit methods in this class is that the child type
    * contains ELEMENT.
    */
-  class ParticleBuilder extends AbstractVisitor {
-    public Object visitElement(ElementPattern p) {
+  class ParticleBuilder extends AbstractPatternVisitor<Particle> {
+    public Particle visitElement(ElementPattern p) {
       ComplexType type;
       Pattern child = p.getChild();
       ChildType ct = si.getChildType(child);
       AttributeUse attributeUses;
       if (ct.contains(ChildType.ATTRIBUTE))
-        attributeUses = (AttributeUse)child.accept(attributeUseBuilder);
+        attributeUses = child.accept(attributeUseBuilder);
       else
         attributeUses = AttributeGroup.EMPTY;
       Particle particle = null;
@@ -270,7 +280,7 @@ public class BasicBuilder {
       if (ct.contains(ChildType.ELEMENT)) {
         if (ct.contains(ChildType.DATA))
           mixed = true;  // TODO give an error
-        particle = (Particle)child.accept(particleBuilder);
+        particle = child.accept(particleBuilder);
       }
       if (ct.contains(ChildType.TEXT))
         mixed = true;
@@ -278,7 +288,7 @@ public class BasicBuilder {
         type = new ComplexTypeSimpleContent(attributeUses,
                                             makeStringType(p.getSourceLocation()));
       else if (ct.contains(ChildType.DATA) && !mixed && particle == null) {
-        SimpleType simpleType = (SimpleType)child.accept(simpleTypeBuilder);
+        SimpleType simpleType = child.accept(simpleTypeBuilder);
         if (ct.contains(ChildType.EMPTY))
           simpleType = makeUnionWithEmptySimpleType(simpleType, p.getSourceLocation());
         type = new ComplexTypeSimpleContent(attributeUses, simpleType);
@@ -301,35 +311,35 @@ public class BasicBuilder {
       return new ParticleChoice(p.getSourceLocation(), annotation, result);
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public Particle visitOneOrMore(OneOrMorePattern p) {
       return new ParticleRepeat(p.getSourceLocation(),
                                 makeAnnotation(p),
-                                (Particle)p.getChild().accept(this),
+                                p.getChild().accept(this),
                                 Occurs.ONE_OR_MORE);
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public Particle visitZeroOrMore(ZeroOrMorePattern p) {
       return new ParticleRepeat(p.getSourceLocation(),
                                 makeAnnotation(p),
-                                (Particle)p.getChild().accept(this),
+                                p.getChild().accept(this),
                                 Occurs.ZERO_OR_MORE);
 
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public Particle visitOptional(OptionalPattern p) {
       return new ParticleRepeat(p.getSourceLocation(),
                                 makeAnnotation(p),
-                                (Particle)p.getChild().accept(this),
+                                p.getChild().accept(this),
                                 Occurs.OPTIONAL);
     }
 
-    public Object visitChoice(ChoicePattern p) {
+    public Particle visitChoice(ChoicePattern p) {
       List<Particle> children = new Vector<Particle>();
       boolean optional = false;
       for (Pattern pattern : p.getChildren()) {
         ChildType ct = si.getChildType(pattern);
         if (ct.contains(ChildType.ELEMENT))
-          children.add((Particle)pattern.accept(this));
+          children.add(pattern.accept(this));
         else if (!ct.equals(ChildType.NOT_ALLOWED))
           optional = true;
       }
@@ -344,7 +354,7 @@ public class BasicBuilder {
       return result;
     }
 
-    public Object visitGroup(GroupPattern p) {
+    public Particle visitGroup(GroupPattern p) {
       Annotation annotation = makeAnnotation(p);
       List<Particle> children = buildChildren(p);
       if (children.size() == 1 && annotation == null)
@@ -353,7 +363,7 @@ public class BasicBuilder {
         return new ParticleSequence(p.getSourceLocation(), annotation, children);
     }
 
-    public Object visitInterleave(InterleavePattern p) {
+    public Particle visitInterleave(InterleavePattern p) {
       Annotation annotation = makeAnnotation(p);
       List<Particle> children = buildChildren(p);
       if (children.size() == 1 && annotation == null)
@@ -366,17 +376,21 @@ public class BasicBuilder {
       List<Particle> result = new Vector<Particle>();
       for (Pattern pattern : p.getChildren()) {
         if (si.getChildType(pattern).contains(ChildType.ELEMENT))
-          result.add((Particle)pattern.accept(this));
+          result.add(pattern.accept(this));
       }
       return result;
     }
 
-    public Object visitMixed(MixedPattern p) {
+    public Particle visitMixed(MixedPattern p) {
       return p.getChild().accept(this);
     }
 
-    public Object visitRef(RefPattern p) {
+    public Particle visitRef(RefPattern p) {
       return new GroupRef(p.getSourceLocation(), makeAnnotation(p), p.getName());
+    }
+
+    public Particle visitPattern(Pattern p) {
+      return null;
     }
   }
 
@@ -384,14 +398,14 @@ public class BasicBuilder {
   /**
    * Precondition for visitMethods is that the childType contains ATTRIBUTE
    */
-  class OptionalAttributeUseBuilder extends AbstractVisitor {
-    public Object visitAttribute(AttributePattern p) {
+  class OptionalAttributeUseBuilder extends AbstractPatternVisitor<AttributeUse> {
+    public AttributeUse visitAttribute(AttributePattern p) {
       SourceLocation location = p.getSourceLocation();
       Pattern child = p.getChild();
       ChildType ct = si.getChildType(child);
       SimpleType value;
       if (ct.contains(ChildType.DATA) && !ct.contains(ChildType.TEXT)) {
-        value = (SimpleType)child.accept(simpleTypeBuilder);
+        value = child.accept(simpleTypeBuilder);
         if (ct.contains(ChildType.EMPTY))
           value = makeUnionWithEmptySimpleType(value, location);
       }
@@ -434,19 +448,19 @@ public class BasicBuilder {
       return true;
     }
 
-    public Object visitOneOrMore(OneOrMorePattern p) {
+    public AttributeUse visitOneOrMore(OneOrMorePattern p) {
       return p.getChild().accept(this);
     }
 
-    public Object visitZeroOrMore(ZeroOrMorePattern p) {
+    public AttributeUse visitZeroOrMore(ZeroOrMorePattern p) {
       return p.getChild().accept(optionalAttributeUseBuilder);
     }
 
-    public Object visitOptional(OptionalPattern p) {
+    public AttributeUse visitOptional(OptionalPattern p) {
       return p.getChild().accept(optionalAttributeUseBuilder);
     }
 
-    public Object visitRef(RefPattern p) {
+    public AttributeUse visitRef(RefPattern p) {
       AttributeUse ref = new AttributeGroupRef(p.getSourceLocation(), makeAnnotation(p), p.getName());
       if (!isOptional())
         return ref;
@@ -456,11 +470,11 @@ public class BasicBuilder {
       return new AttributeUseChoice(p.getSourceLocation(), null, choices);
     }
 
-    public Object visitComposite(CompositePattern p) {
+    public AttributeUse visitComposite(CompositePattern p) {
       List<AttributeUse> uses = new Vector<AttributeUse>();
       for (Pattern child : p.getChildren()) {
         if (si.getChildType(child).contains(ChildType.ATTRIBUTE))
-          uses.add((AttributeUse)child.accept(this));
+          uses.add(child.accept(this));
       }
       if (uses.size() == 0)
         return AttributeGroup.EMPTY;
@@ -471,8 +485,8 @@ public class BasicBuilder {
       return new AttributeGroup(p.getSourceLocation(), null, uses);
     }
 
-    public Object visitChoice(ChoicePattern p) {
-      PatternVisitor childVisitor = this;
+    public AttributeUse visitChoice(ChoicePattern p) {
+      PatternVisitor<AttributeUse> childVisitor = this;
       for (Pattern child : p.getChildren()) {
         if (!si.getChildType(child).contains(ChildType.ATTRIBUTE)) {
           childVisitor = optionalAttributeUseBuilder;
@@ -484,7 +498,7 @@ public class BasicBuilder {
       for (Pattern child : p.getChildren()) {
         ChildType ct = si.getChildType(child);
         if (ct.contains(ChildType.ATTRIBUTE)) {
-          AttributeUse use = (AttributeUse)child.accept(childVisitor);
+          AttributeUse use = child.accept(childVisitor);
           if (uses.size() != 1 || !use.equals(uses.get(0)))
             uses.add(use);
         }
@@ -499,6 +513,10 @@ public class BasicBuilder {
         return uses.get(0);
       return new AttributeUseChoice(p.getSourceLocation(), null, uses);
     }
+
+    public AttributeUse visitPattern(Pattern p) {
+      return null;
+    }
   }
 
   class AttributeUseBuilder extends OptionalAttributeUseBuilder {
@@ -507,14 +525,14 @@ public class BasicBuilder {
     }
   }
 
-  class SchemaBuilder extends AbstractVisitor {
+  class SchemaBuilder implements ComponentVisitor<VoidValue> {
     boolean groupEnableAbstractElements;
 
     SchemaBuilder(boolean groupEnableAbstractElements) {
       this.groupEnableAbstractElements = groupEnableAbstractElements;
     }
 
-    public Object visitDefine(DefineComponent c) {
+    public VoidValue visitDefine(DefineComponent c) {
       addLeadingComments(c);
       String name = c.getName();
       SourceLocation location = c.getSourceLocation();
@@ -524,7 +542,7 @@ public class BasicBuilder {
           Pattern body = c.getBody();
           ChildType ct = si.getChildType(body);
           if (ct.contains(ChildType.ELEMENT))
-            schema.addRoot((Particle)body.accept(particleBuilder),
+            schema.addRoot(body.accept(particleBuilder),
                            location,
                            annotation);
         }
@@ -537,27 +555,27 @@ public class BasicBuilder {
             guide.setGroupEnableAbstractElement(name,
                                                 getGroupEnableAbstractElements(c, groupEnableAbstractElements));
             schema.defineGroup(name,
-                               (Particle)body.accept(particleBuilder),
+                               body.accept(particleBuilder),
                                location,
                                annotation);
           }
           else if (ct.contains(ChildType.DATA) && !ct.contains(ChildType.TEXT))
             schema.defineSimpleType(name,
-                                    (SimpleType)body.accept(simpleTypeBuilder),
+                                    body.accept(simpleTypeBuilder),
                                     location,
                                     annotation);
           if (ct.contains(ChildType.ATTRIBUTE))
             schema.defineAttributeGroup(name,
-                                        (AttributeUse)body.accept(attributeUseBuilder),
+                                        body.accept(attributeUseBuilder),
                                         location,
                                         annotation);
         }
       }
       addTrailingComments(c);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitDiv(DivComponent c) {
+    public VoidValue visitDiv(DivComponent c) {
       addLeadingComments(c);
       addInitialChildComments(c);
       boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
@@ -565,10 +583,10 @@ public class BasicBuilder {
       c.componentsAccept(this);
       groupEnableAbstractElements = saveGroupEnableAbstractElements;
       addTrailingComments(c);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInclude(IncludeComponent c) {
+    public VoidValue visitInclude(IncludeComponent c) {
       addLeadingComments(c);
       addInitialChildComments(c);
       boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
@@ -586,7 +604,7 @@ public class BasicBuilder {
                        groupEnableAbstractElements).processGrammar(includedGrammar);
       groupEnableAbstractElements = saveGroupEnableAbstractElements;
       addTrailingComments(c);
-      return null;
+      return VoidValue.VOID;
     }
   }
 

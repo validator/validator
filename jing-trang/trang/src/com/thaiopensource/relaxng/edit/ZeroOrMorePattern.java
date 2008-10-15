@@ -5,7 +5,7 @@ public class ZeroOrMorePattern extends UnaryPattern {
     super(child);
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitZeroOrMore(this);
   }
 }

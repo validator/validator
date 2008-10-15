@@ -18,7 +18,7 @@ public class OptionalAttribute extends SingleAttributeUse {
     return attribute;
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitOptionalAttribute(this);
   }
 

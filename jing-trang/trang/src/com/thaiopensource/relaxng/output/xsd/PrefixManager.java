@@ -11,6 +11,7 @@ import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
@@ -56,27 +57,27 @@ public class PrefixManager implements SourceUriGenerator {
       }
     }
 
-    public Object visitElement(ElementPattern p) {
+    public VoidValue visitElement(ElementPattern p) {
       p.getNameClass().accept(this);
       p.getChild().accept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitAttribute(AttributePattern p) {
+    public VoidValue visitAttribute(AttributePattern p) {
       return p.getNameClass().accept(this);
     }
 
-    public Object visitChoice(ChoiceNameClass nc) {
+    public VoidValue visitChoice(ChoiceNameClass nc) {
       nc.childrenAccept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitName(NameNameClass nc) {
+    public VoidValue visitName(NameNameClass nc) {
       notePrefix(nc.getPrefix(), resolveNamespace(nc.getNamespaceUri()));
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitValue(ValuePattern p) {
+    public VoidValue visitValue(ValuePattern p) {
       for (Map.Entry<String, String> entry : p.getPrefixMap().entrySet()) {
         String prefix = entry.getKey();
         if (prefix != null && !prefix.equals("")) {
@@ -86,7 +87,7 @@ public class PrefixManager implements SourceUriGenerator {
             reservedPrefixes.add(prefix);
         }
       }
-      return null;
+      return VoidValue.VOID;
     }
 
     private String resolveNamespace(String ns) {
@@ -109,31 +110,31 @@ public class PrefixManager implements SourceUriGenerator {
       prefixUsage.count++;
     }
 
-    public Object visitComposite(CompositePattern p) {
+    public VoidValue visitComposite(CompositePattern p) {
       p.childrenAccept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitUnary(UnaryPattern p) {
+    public VoidValue visitUnary(UnaryPattern p) {
       return p.getChild().accept(this);
     }
 
-    public Object visitDefine(DefineComponent c) {
+    public VoidValue visitDefine(DefineComponent c) {
       c.getBody().accept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitDiv(DivComponent c) {
+    public VoidValue visitDiv(DivComponent c) {
       c.componentsAccept(this);
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitInclude(IncludeComponent c) {
+    public VoidValue visitInclude(IncludeComponent c) {
       String saveInheritedNamespace = inheritedNamespace;
       inheritedNamespace = c.getNs();
       si.getSchema(c.getHref()).componentsAccept(this);
       inheritedNamespace = saveInheritedNamespace;
-      return null;
+      return VoidValue.VOID;
     }
 
     void assignPrefixes() {

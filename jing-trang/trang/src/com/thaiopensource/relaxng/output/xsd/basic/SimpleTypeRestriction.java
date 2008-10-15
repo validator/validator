@@ -28,7 +28,7 @@ public class SimpleTypeRestriction extends SimpleType {
     return facets;
   }
 
-  public Object accept(SimpleTypeVisitor visitor) {
+  public <T> T accept(SimpleTypeVisitor<T> visitor) {
     return visitor.visitRestriction(this);
   }
 

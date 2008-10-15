@@ -7,9 +7,9 @@ import java.util.Collections;
 
 public class AttributeGroup extends AttributeUse {
   private final List<AttributeUse> children;
+  private static final List<AttributeUse> EMPTY_LIST = Collections.emptyList();
 
-  public static final AttributeGroup EMPTY = new AttributeGroup(null, null,
-                                                                (List<AttributeUse>)Collections.EMPTY_LIST);
+  public static final AttributeGroup EMPTY = new AttributeGroup(null, null, EMPTY_LIST);
 
   public AttributeGroup(SourceLocation location, Annotation annotation, List<AttributeUse> children) {
     super(location, annotation);
@@ -28,7 +28,7 @@ public class AttributeGroup extends AttributeUse {
     return super.hashCode() ^ children.hashCode();
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitAttributeGroup(this);
   }
 }

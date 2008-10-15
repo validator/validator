@@ -9,7 +9,7 @@ public class AttributeUseChoice extends AttributeGroup {
     super(location, annotation, children);
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitAttributeUseChoice(this);
   }
 }

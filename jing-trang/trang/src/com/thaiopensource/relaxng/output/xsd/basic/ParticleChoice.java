@@ -9,7 +9,7 @@ public class ParticleChoice extends ParticleGroup {
     super(location, annotation, children);
   }
 
-  public Object accept(ParticleVisitor visitor) {
+  public <T> T accept(ParticleVisitor<T> visitor) {
     return visitor.visitChoice(this);
   }
 }

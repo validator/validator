@@ -4,7 +4,7 @@ public class EmptyPattern extends Pattern {
   public EmptyPattern() {
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitEmpty(this);
   }
 }

@@ -14,7 +14,7 @@ public class AttributeGroupRef extends AttributeUse {
     return name;
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitAttributeGroupRef(this);
   }
 

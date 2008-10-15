@@ -10,11 +10,11 @@ public class ChoiceNameClass extends NameClass {
     return children;
   }
 
-  public Object accept(NameClassVisitor visitor) {
+  public <T> T accept(NameClassVisitor<T> visitor) {
     return visitor.visitChoice(this);
   }
 
-  public void childrenAccept(NameClassVisitor visitor) {
+  public void childrenAccept(NameClassVisitor<?> visitor) {
     for (NameClass nc : children)
       nc.accept(visitor);
   }

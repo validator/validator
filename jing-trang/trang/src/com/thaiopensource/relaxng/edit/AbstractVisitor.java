@@ -1,152 +1,67 @@
 package com.thaiopensource.relaxng.edit;
 
-public class AbstractVisitor implements ComponentVisitor, PatternVisitor, NameClassVisitor,
-        AnnotationChildVisitor, AttributeAnnotationVisitor {
-  public Object visitDefine(DefineComponent c) {
+import com.thaiopensource.util.VoidValue;
+
+public class AbstractVisitor extends AbstractPatternVisitor<VoidValue> implements ComponentVisitor<VoidValue>, NameClassVisitor<VoidValue>,
+        AnnotationChildVisitor<VoidValue>, AttributeAnnotationVisitor<VoidValue> {
+
+  public VoidValue visitPattern(Pattern p) {
+    return VoidValue.VOID;
+  }
+
+  public VoidValue visitDefine(DefineComponent c) {
     return visitComponent(c);
   }
 
-  public Object visitDiv(DivComponent c) {
+  public VoidValue visitDiv(DivComponent c) {
     return visitComponent(c);
   }
 
-  public Object visitInclude(IncludeComponent c) {
+  public VoidValue visitInclude(IncludeComponent c) {
     return visitComponent(c);
   }
 
-  public Object visitComponent(Component c) {
-    return null;
+  public VoidValue visitComponent(Component c) {
+    return VoidValue.VOID;
   }
 
-  public Object visitElement(ElementPattern p) {
-    return visitNameClassed(p);
-  }
-
-  public Object visitAttribute(AttributePattern p) {
-    return visitNameClassed(p);
-  }
-
-  public Object visitOneOrMore(OneOrMorePattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitZeroOrMore(ZeroOrMorePattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitOptional(OptionalPattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitInterleave(InterleavePattern p) {
-    return visitComposite(p);
-  }
-
-  public Object visitGroup(GroupPattern p) {
-    return visitComposite(p);
-  }
-
-  public Object visitChoice(ChoicePattern p) {
-    return visitComposite(p);
-  }
-
-  public Object visitGrammar(GrammarPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitExternalRef(ExternalRefPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitRef(RefPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitParentRef(ParentRefPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitValue(ValuePattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitData(DataPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitMixed(MixedPattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitList(ListPattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitText(TextPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitEmpty(EmptyPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitNotAllowed(NotAllowedPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitNameClassed(NameClassedPattern p) {
-    return visitUnary(p);
-  }
-
-  public Object visitUnary(UnaryPattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitComposite(CompositePattern p) {
-    return visitPattern(p);
-  }
-
-  public Object visitPattern(Pattern p) {
-    return null;
-  }
-
-  public Object visitChoice(ChoiceNameClass nc) {
+  public VoidValue visitChoice(ChoiceNameClass nc) {
     return visitNameClass(nc);
   }
 
-  public Object visitAnyName(AnyNameNameClass nc) {
+  public VoidValue visitAnyName(AnyNameNameClass nc) {
     return visitNameClass(nc);
   }
 
-  public Object visitNsName(NsNameNameClass nc) {
+  public VoidValue visitNsName(NsNameNameClass nc) {
     return visitNameClass(nc);
   }
 
-  public Object visitName(NameNameClass nc) {
+  public VoidValue visitName(NameNameClass nc) {
     return visitNameClass(nc);
   }
 
-  public Object visitNameClass(NameClass nc) {
-    return null;
+  public VoidValue visitNameClass(NameClass nc) {
+    return VoidValue.VOID;
   }
 
-  public Object visitText(TextAnnotation ta) {
+  public VoidValue visitText(TextAnnotation ta) {
     return visitAnnotationChild(ta);
   }
 
-  public Object visitComment(Comment c) {
+  public VoidValue visitComment(Comment c) {
     return visitAnnotationChild(c);
   }
 
-  public Object visitElement(ElementAnnotation ea) {
+  public VoidValue visitElement(ElementAnnotation ea) {
     return visitAnnotationChild(ea);
   }
 
-  public Object visitAnnotationChild(AnnotationChild ac) {
-    return null;
+  public VoidValue visitAnnotationChild(AnnotationChild ac) {
+    return VoidValue.VOID;
   }
 
-  public Object visitAttribute(AttributeAnnotation a) {
-    return null;
+  public VoidValue visitAttribute(AttributeAnnotation a) {
+    return VoidValue.VOID;
   }
 }

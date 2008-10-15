@@ -6,6 +6,7 @@ import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NameClassVisitor;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.xml.util.Name;
 
@@ -14,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class WildcardBuilder implements NameClassVisitor {
+class WildcardBuilder implements NameClassVisitor<VoidValue> {
   private boolean inExcept = false;
   private final String inheritedNamespace;
   private Wildcard wildcard = null;
@@ -39,14 +40,14 @@ class WildcardBuilder implements NameClassVisitor {
     this.inheritedNamespace = inheritedNamespace;
   }
 
-  public Object visitChoice(ChoiceNameClass nc) {
+  public VoidValue visitChoice(ChoiceNameClass nc) {
     List<NameClass> list = nc.getChildren();
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAnyName(AnyNameNameClass nc) {
+  public VoidValue visitAnyName(AnyNameNameClass nc) {
     if (!inExcept) {
       if (nc.getExcept() != null) {
         namespaces = new HashSet<String>();
@@ -61,10 +62,10 @@ class WildcardBuilder implements NameClassVisitor {
       }
       combineWildcard(new Wildcard(false, namespaces, excludedNames));
     }
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitNsName(NsNameNameClass nc) {
+  public VoidValue visitNsName(NsNameNameClass nc) {
     String ns = resolve(nc.getNs());
     if (!inExcept) {
       if (nc.getExcept() != null) {
@@ -84,16 +85,16 @@ class WildcardBuilder implements NameClassVisitor {
     }
     else if (inNs == null)
       namespaces.add(ns);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitName(NameNameClass nc) {
+  public VoidValue visitName(NameNameClass nc) {
     if (inExcept) {
       String ns = resolve(nc.getNamespaceUri());
       if (inNs == null || inNs.equals(ns))
         excludedNames.add(new Name(ns, nc.getLocalName()));
     }
-    return null;
+    return VoidValue.VOID;
   }
 
   private String resolve(String ns) {

@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-public interface ComplexTypeVisitor {
-  Object visitComplexContent(ComplexTypeComplexContent t);
-  Object visitSimpleContent(ComplexTypeSimpleContent t);
-  Object visitNotAllowedContent(ComplexTypeNotAllowedContent t);
+public interface ComplexTypeVisitor<T> {
+  T visitComplexContent(ComplexTypeComplexContent t);
+  T visitSimpleContent(ComplexTypeSimpleContent t);
+  T visitNotAllowedContent(ComplexTypeNotAllowedContent t);
 }

@@ -48,22 +48,22 @@ public abstract class Annotated extends SourceObject {
     return null;
   }
 
-  public void attributeAnnotationsAccept(AttributeAnnotationVisitor visitor) {
+  public void attributeAnnotationsAccept(AttributeAnnotationVisitor<?> visitor) {
     for (AttributeAnnotation a : attributeAnnotations)
       a.accept(visitor);
   }
 
-  public void childElementAnnotationsAccept(AnnotationChildVisitor visitor) {
+  public void childElementAnnotationsAccept(AnnotationChildVisitor<?> visitor) {
     for (AnnotationChild a : childElementAnnotations)
       a.accept(visitor);
   }
 
-  public void followingElementAnnotationsAccept(AnnotationChildVisitor visitor) {
+  public void followingElementAnnotationsAccept(AnnotationChildVisitor<?> visitor) {
     for (AnnotationChild a : followingElementAnnotations)
       a.accept(visitor);
   }
 
-  public void leadingCommentsAccept(AnnotationChildVisitor visitor) {
+  public void leadingCommentsAccept(AnnotationChildVisitor<?> visitor) {
     for (Comment c : leadingComments)
       c.accept(visitor);
   }

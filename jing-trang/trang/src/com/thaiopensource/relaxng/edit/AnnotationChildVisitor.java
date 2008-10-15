@@ -1,7 +1,7 @@
 package com.thaiopensource.relaxng.edit;
 
-public interface AnnotationChildVisitor {
-  Object visitText(TextAnnotation ta);
-  Object visitComment(Comment c);
-  Object visitElement(ElementAnnotation ea);
+public interface AnnotationChildVisitor<T> {
+  T visitText(TextAnnotation ta);
+  T visitComment(Comment c);
+  T visitElement(ElementAnnotation ea);
 }

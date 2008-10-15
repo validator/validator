@@ -11,6 +11,7 @@ import com.thaiopensource.relaxng.edit.IncludeComponent;
 import com.thaiopensource.relaxng.edit.InterleavePattern;
 import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-class GrammarPart implements ComponentVisitor {
+class GrammarPart implements ComponentVisitor<VoidValue> {
   private final ErrorReporter er;
   private final Map<String, Pattern> defines;
   private final Set<String> attlists;
@@ -72,18 +73,18 @@ class GrammarPart implements ComponentVisitor {
     return whereProvided.keySet();
   }
 
-  public Object visitContainer(Container c) {
+  public VoidValue visitContainer(Container c) {
     List<Component> list = c.getComponents();
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitDiv(DivComponent c) {
+  public VoidValue visitDiv(DivComponent c) {
     return visitContainer(c);
   }
 
-  public Object visitDefine(DefineComponent c) {
+  public VoidValue visitDefine(DefineComponent c) {
     String name = c.getName();
     Combine combine = c.getCombine();
     if (combine == null) {
@@ -118,10 +119,10 @@ class GrammarPart implements ComponentVisitor {
       defines.put(name, c.getBody());
       whereProvided.put(name, c);
     }
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitInclude(IncludeComponent c) {
+  public VoidValue visitInclude(IncludeComponent c) {
     String href = c.getHref();
     if (pendingIncludes.contains(href))
       throw new IncludeLoopException(c);
@@ -132,7 +133,7 @@ class GrammarPart implements ComponentVisitor {
     for (String name : part.providedSet())
       whereProvided.put(name, c);
     pendingIncludes.remove(href);
-    return null;
+    return VoidValue.VOID;
   }
 
   Component getWhereProvided(String paramEntityName) {

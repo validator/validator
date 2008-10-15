@@ -26,11 +26,11 @@ public class Attribute extends SingleAttributeUse implements Structure {
     return type;
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitAttribute(this);
   }
 
-  public Object accept(StructureVisitor visitor) {
+  public <T> T accept(StructureVisitor<T> visitor) {
     return visitor.visitAttribute(this);
   }
 

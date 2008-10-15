@@ -43,6 +43,7 @@ import com.thaiopensource.relaxng.edit.TextAnnotation;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.XmlWriter;
@@ -52,7 +53,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
+class Output implements PatternVisitor<VoidValue>, NameClassVisitor<VoidValue>, ComponentVisitor<VoidValue> {
   private final String sourceUri;
   private final OutputDirectory od;
   private final XmlWriter xw;
@@ -106,7 +107,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return atts;
   }
 
-  public Object visitElement(ElementPattern p) {
+  public VoidValue visitElement(ElementPattern p) {
     leadingAnnotations(p);
     xw.startElement("element");
     boolean usedNameAtt = tryNameAttribute(p.getNameClass(), false);
@@ -115,10 +116,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
       p.getNameClass().accept(this);
     implicitGroup(p.getChild());
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAttribute(AttributePattern p) {
+  public VoidValue visitAttribute(AttributePattern p) {
     leadingAnnotations(p);
     xw.startElement("attribute");
     boolean usedNameAtt = tryNameAttribute(p.getNameClass(), true);
@@ -129,7 +130,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     if (!(child instanceof TextPattern) || hasAnnotations(child))
       child.accept(this);
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
   private boolean tryNameAttribute(NameClass nc, boolean isAttribute) {
@@ -165,65 +166,65 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     return true;
   }
 
-  public Object visitOneOrMore(OneOrMorePattern p) {
+  public VoidValue visitOneOrMore(OneOrMorePattern p) {
     return visitUnary("oneOrMore", p);
   }
 
-  public Object visitZeroOrMore(ZeroOrMorePattern p) {
+  public VoidValue visitZeroOrMore(ZeroOrMorePattern p) {
     return visitUnary("zeroOrMore", p);
   }
 
-  public Object visitOptional(OptionalPattern p) {
+  public VoidValue visitOptional(OptionalPattern p) {
     return visitUnary("optional", p);
   }
 
-  public Object visitInterleave(InterleavePattern p) {
+  public VoidValue visitInterleave(InterleavePattern p) {
     return visitComposite("interleave", p);
   }
 
-  public Object visitGroup(GroupPattern p) {
+  public VoidValue visitGroup(GroupPattern p) {
     return visitComposite("group", p);
   }
 
-  public Object visitChoice(ChoicePattern p) {
+  public VoidValue visitChoice(ChoicePattern p) {
     return visitComposite("choice", p);
   }
 
-  public Object visitGrammar(GrammarPattern p) {
+  public VoidValue visitGrammar(GrammarPattern p) {
     leadingAnnotations(p);
     xw.startElement("grammar");
     finishContainer(p, p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitExternalRef(ExternalRefPattern p) {
+  public VoidValue visitExternalRef(ExternalRefPattern p) {
     leadingAnnotations(p);
     xw.startElement("externalRef");
     xw.attribute("href", od.reference(sourceUri, p.getHref()));
     nsAttribute(p.getNs());
     innerAnnotations(p);
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitRef(RefPattern p) {
+  public VoidValue visitRef(RefPattern p) {
     return visitAbstractRef("ref", p);
   }
 
-  public Object visitParentRef(ParentRefPattern p) {
+  public VoidValue visitParentRef(ParentRefPattern p) {
     return visitAbstractRef("parentRef", p);
   }
 
-  private Object visitAbstractRef(String name, AbstractRefPattern p) {
+  private VoidValue visitAbstractRef(String name, AbstractRefPattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     xw.attribute("name", p.getName());
     innerAnnotations(p);
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitValue(ValuePattern p) {
+  public VoidValue visitValue(ValuePattern p) {
     leadingAnnotations(p);
     xw.startElement("value");
     if (!p.getType().equals("token")
@@ -243,10 +244,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     innerAnnotations(p);
     xw.text(p.getValue());
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitData(DataPattern p) {
+  public VoidValue visitData(DataPattern p) {
     leadingAnnotations(p);
     xw.startElement("data");
     xw.attribute("type", p.getType());
@@ -270,47 +271,47 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
       xw.endElement();
     }
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitMixed(MixedPattern p) {
+  public VoidValue visitMixed(MixedPattern p) {
     return visitUnary("mixed", p);
   }
 
-  public Object visitList(ListPattern p) {
+  public VoidValue visitList(ListPattern p) {
     return visitUnary("list", p);
   }
 
-  public Object visitText(TextPattern p) {
+  public VoidValue visitText(TextPattern p) {
     return visitNullary("text", p);
   }
 
-  public Object visitEmpty(EmptyPattern p) {
+  public VoidValue visitEmpty(EmptyPattern p) {
     return visitNullary("empty", p);
   }
 
-  public Object visitNotAllowed(NotAllowedPattern p) {
+  public VoidValue visitNotAllowed(NotAllowedPattern p) {
     return visitNullary("notAllowed", p);
   }
 
-  private Object visitNullary(String name, Pattern p) {
+  private VoidValue visitNullary(String name, Pattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  private Object visitUnary(String name, UnaryPattern p) {
+  private VoidValue visitUnary(String name, UnaryPattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
     implicitGroup(p.getChild());
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  private Object visitComposite(String name, CompositePattern p) {
+  private VoidValue visitComposite(String name, CompositePattern p) {
     leadingAnnotations(p);
     xw.startElement(name);
     innerAnnotations(p);
@@ -318,10 +319,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
     end(p);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitChoice(ChoiceNameClass nc) {
+  public VoidValue visitChoice(ChoiceNameClass nc) {
     leadingAnnotations(nc);
     xw.startElement("choice");
     innerAnnotations(nc);
@@ -329,19 +330,19 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     for (int i = 0, len = list.size(); i < len; i++)
       (list.get(i)).accept(this);
     end(nc);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAnyName(AnyNameNameClass nc) {
+  public VoidValue visitAnyName(AnyNameNameClass nc) {
     leadingAnnotations(nc);
     xw.startElement("anyName");
     innerAnnotations(nc);
     visitExcept(nc);
     end(nc);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitNsName(NsNameNameClass nc) {
+  public VoidValue visitNsName(NsNameNameClass nc) {
     leadingAnnotations(nc);
     xw.startElement("nsName");
     String saveNs = localNs;
@@ -350,7 +351,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     visitExcept(nc);
     localNs = saveNs;
     end(nc);
-    return null;
+    return VoidValue.VOID;
   }
 
   private void visitExcept(OpenNameClass onc) {
@@ -362,7 +363,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     xw.endElement();
   }
 
-  public Object visitName(NameNameClass nc) {
+  public VoidValue visitName(NameNameClass nc) {
     leadingAnnotations(nc);
     xw.startElement("name");
     String ns = nc.getNamespaceUri();
@@ -386,10 +387,10 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
       }
     }
     end(nc);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitDefine(DefineComponent c) {
+  public VoidValue visitDefine(DefineComponent c) {
     leadingAnnotations(c);
     String name = c.getName();
     if (name == DefineComponent.START)
@@ -403,17 +404,17 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     innerAnnotations(c);
     implicitGroup(c.getBody());
     end(c);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitDiv(DivComponent c) {
+  public VoidValue visitDiv(DivComponent c) {
     leadingAnnotations(c);
     xw.startElement("div");
     finishContainer(c, c);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitInclude(IncludeComponent c) {
+  public VoidValue visitInclude(IncludeComponent c) {
     leadingAnnotations(c);
     xw.startElement("include");
     xw.attribute("href", od.reference(sourceUri, c.getHref()));
@@ -421,7 +422,7 @@ class Output implements PatternVisitor, NameClassVisitor, ComponentVisitor {
     localNs = nsAttribute(c.getNs());
     finishContainer(c, c);
     localNs = saveNs;
-    return null;
+    return VoidValue.VOID;
   }
 
   private void finishContainer(Annotated subject, Container container) {

@@ -1,57 +1,59 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-public abstract class SchemaWalker implements
-        ParticleVisitor, SimpleTypeVisitor, SchemaVisitor, ComplexTypeVisitor, AttributeUseVisitor {
-  public Object visitElement(Element p) {
+import com.thaiopensource.util.VoidValue;
+
+public abstract class SchemaWalker implements ParticleVisitor<VoidValue>, SimpleTypeVisitor<VoidValue>,
+        SchemaVisitor, ComplexTypeVisitor<VoidValue>, AttributeUseVisitor<VoidValue> {
+  public VoidValue visitElement(Element p) {
     return p.getComplexType().accept(this);
   }
 
-  public Object visitWildcardElement(WildcardElement p) {
-    return null;
+  public VoidValue visitWildcardElement(WildcardElement p) {
+    return VoidValue.VOID;
   }
 
-  public Object visitRepeat(ParticleRepeat p) {
+  public VoidValue visitRepeat(ParticleRepeat p) {
     return p.getChild().accept(this);
   }
 
-  public Object visitSequence(ParticleSequence p) {
+  public VoidValue visitSequence(ParticleSequence p) {
     return visitGroup(p);
   }
 
-  public Object visitChoice(ParticleChoice p) {
+  public VoidValue visitChoice(ParticleChoice p) {
     return visitGroup(p);
   }
 
-  public Object visitAll(ParticleAll p) {
+  public VoidValue visitAll(ParticleAll p) {
     return visitGroup(p);
   }
 
-  public Object visitGroup(ParticleGroup p) {
+  public VoidValue visitGroup(ParticleGroup p) {
     for (Particle child : p.getChildren())
       child.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitGroupRef(GroupRef p) {
-    return null;
+  public VoidValue visitGroupRef(GroupRef p) {
+    return VoidValue.VOID;
   }
 
-  public Object visitRestriction(SimpleTypeRestriction t) {
-    return null;
+  public VoidValue visitRestriction(SimpleTypeRestriction t) {
+    return VoidValue.VOID;
   }
 
-  public Object visitUnion(SimpleTypeUnion t) {
+  public VoidValue visitUnion(SimpleTypeUnion t) {
     for (SimpleType child : t.getChildren())
       child.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitList(SimpleTypeList t) {
+  public VoidValue visitList(SimpleTypeList t) {
     return t.getItemType().accept(this);
   }
 
-  public Object visitRef(SimpleTypeRef t) {
-    return null;
+  public VoidValue visitRef(SimpleTypeRef t) {
+    return VoidValue.VOID;
   }
 
   public void visitGroup(GroupDefinition def) {
@@ -62,31 +64,31 @@ public abstract class SchemaWalker implements
     def.getAttributeUses().accept(this);
   }
 
-  public Object visitAttribute(Attribute a) {
+  public VoidValue visitAttribute(Attribute a) {
     if (a.getType() == null)
-      return null;
+      return VoidValue.VOID;
     return a.getType().accept(this);
   }
 
-  public Object visitWildcardAttribute(WildcardAttribute a) {
-    return null;
+  public VoidValue visitWildcardAttribute(WildcardAttribute a) {
+    return VoidValue.VOID;
   }
 
-  public Object visitOptionalAttribute(OptionalAttribute a) {
+  public VoidValue visitOptionalAttribute(OptionalAttribute a) {
     return a.getAttribute().accept(this);
   }
 
-  public Object visitAttributeGroupRef(AttributeGroupRef a) {
-    return null;
+  public VoidValue visitAttributeGroupRef(AttributeGroupRef a) {
+    return VoidValue.VOID;
   }
 
-  public Object visitAttributeGroup(AttributeGroup a) {
+  public VoidValue visitAttributeGroup(AttributeGroup a) {
     for (AttributeUse child : a.getChildren())
       child.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAttributeUseChoice(AttributeUseChoice a) {
+  public VoidValue visitAttributeUseChoice(AttributeUseChoice a) {
     return visitAttributeGroup(a);
   }
 
@@ -105,19 +107,19 @@ public abstract class SchemaWalker implements
   public void visitComment(Comment comment) {
   }
 
-  public Object visitComplexContent(ComplexTypeComplexContent t) {
+  public VoidValue visitComplexContent(ComplexTypeComplexContent t) {
     t.getAttributeUses().accept(this);
     if (t.getParticle() == null)
-      return null;
+      return VoidValue.VOID;
     return t.getParticle().accept(this);
   }
 
-  public Object visitSimpleContent(ComplexTypeSimpleContent t) {
+  public VoidValue visitSimpleContent(ComplexTypeSimpleContent t) {
     t.getAttributeUses().accept(this);
     return t.getSimpleType().accept(this);
   }
 
-  public Object visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
-    return null;
+  public VoidValue visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
+    return VoidValue.VOID;
   }
 }

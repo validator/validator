@@ -8,7 +8,7 @@ public abstract class CompositePattern extends Pattern {
   public List<Pattern> getChildren() {
     return children;
   }
-  public void childrenAccept(PatternVisitor visitor) {
+  public void childrenAccept(PatternVisitor<?> visitor) {
     for (Pattern p : children)
       p.accept(visitor);
   }

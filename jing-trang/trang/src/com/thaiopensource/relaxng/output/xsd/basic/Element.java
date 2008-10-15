@@ -21,11 +21,11 @@ public class Element extends Particle implements Structure {
     return complexType;
   }
 
-  public Object accept(ParticleVisitor visitor) {
+  public <T> T accept(ParticleVisitor<T> visitor) {
     return visitor.visitElement(this);
   }
 
-  public Object accept(StructureVisitor visitor) {
+  public <T> T accept(StructureVisitor<T> visitor) {
     return visitor.visitElement(this);
   }
 

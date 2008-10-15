@@ -1,16 +1,17 @@
 package com.thaiopensource.relaxng.output.common;
 
-import com.thaiopensource.relaxng.edit.AbstractVisitor;
-import com.thaiopensource.relaxng.edit.NameNameClass;
+import com.thaiopensource.relaxng.edit.AnyNameNameClass;
 import com.thaiopensource.relaxng.edit.ChoiceNameClass;
 import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.AnyNameNameClass;
+import com.thaiopensource.relaxng.edit.NameClassVisitor;
+import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.util.VoidValue;
 
 import java.util.List;
 import java.util.Vector;
 
-public class NameClassSplitter extends AbstractVisitor {
+public class NameClassSplitter implements NameClassVisitor<VoidValue> {
   private final List<NameNameClass> names = new Vector<NameNameClass>();
   private boolean negative = false;
 
@@ -23,19 +24,19 @@ public class NameClassSplitter extends AbstractVisitor {
   private NameClassSplitter() {
   }
 
-  public Object visitName(NameNameClass nc) {
+  public VoidValue visitName(NameNameClass nc) {
     if (!negative)
       names.add(nc);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitChoice(ChoiceNameClass nc) {
+  public VoidValue visitChoice(ChoiceNameClass nc) {
     for (NameClass child : nc.getChildren())
       child.accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitAnyName(AnyNameNameClass nc) {
+  public VoidValue visitAnyName(AnyNameNameClass nc) {
     if (!negative) {
       NameClass except = nc.getExcept();
       if (except != null) {
@@ -44,10 +45,10 @@ public class NameClassSplitter extends AbstractVisitor {
         negative = false;
       }
     }
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitNsName(NsNameNameClass nc) {
+  public VoidValue visitNsName(NsNameNameClass nc) {
     if (negative) {
       NameClass except = nc.getExcept();
       if (except != null) {
@@ -64,6 +65,6 @@ public class NameClassSplitter extends AbstractVisitor {
         }
       }
     }
-    return null;
+    return VoidValue.VOID;
   }
 }

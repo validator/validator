@@ -1,21 +1,22 @@
 package com.thaiopensource.relaxng.output.xsd;
 
 import com.thaiopensource.relaxng.edit.AbstractVisitor;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.UnaryPattern;
 import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.ExternalRefPattern;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.ParentRefPattern;
-import com.thaiopensource.relaxng.edit.DivComponent;
 import com.thaiopensource.relaxng.edit.DefineComponent;
+import com.thaiopensource.relaxng.edit.DivComponent;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.ExternalRefPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
 import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.ParentRefPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.RefPattern;
+import com.thaiopensource.relaxng.edit.UnaryPattern;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 class RefChecker extends AbstractVisitor {
   private final SchemaInfo schema;
@@ -40,40 +41,40 @@ class RefChecker extends AbstractVisitor {
     schema.getGrammar().componentsAccept(new RefChecker(schema, er));
   }
 
-  public Object visitDiv(DivComponent c) {
+  public VoidValue visitDiv(DivComponent c) {
     c.componentsAccept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitDefine(DefineComponent c) {
+  public VoidValue visitDefine(DefineComponent c) {
     String name = c.getName();
     if (name == DefineComponent.START || refMap.get(name) == null)
       c.getBody().accept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitInclude(IncludeComponent c) {
+  public VoidValue visitInclude(IncludeComponent c) {
     schema.getSchema(c.getHref()).componentsAccept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitElement(ElementPattern p) {
+  public VoidValue visitElement(ElementPattern p) {
     currentDepth++;
     p.getChild().accept(this);
     currentDepth--;
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitUnary(UnaryPattern p) {
+  public VoidValue visitUnary(UnaryPattern p) {
     return p.getChild().accept(this);
   }
 
-  public Object visitComposite(CompositePattern p) {
+  public VoidValue visitComposite(CompositePattern p) {
     p.childrenAccept(this);
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitRef(RefPattern p) {
+  public VoidValue visitRef(RefPattern p) {
     Ref ref = refMap.get(p.getName());
     if (ref == null) {
       ref = new Ref(currentDepth);
@@ -87,21 +88,21 @@ class RefChecker extends AbstractVisitor {
     }
     else if (currentDepth == ref.checkRecursionDepth)
       er.error("recursive_reference", p.getName(), p.getSourceLocation());
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitExternalRef(ExternalRefPattern p) {
+  public VoidValue visitExternalRef(ExternalRefPattern p) {
     er.error("external_ref_not_supported", p.getSourceLocation());
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitGrammar(GrammarPattern p) {
+  public VoidValue visitGrammar(GrammarPattern p) {
     er.error("nested_grammar_not_supported", p.getSourceLocation());
-    return null;
+    return VoidValue.VOID;
   }
 
-  public Object visitParentRef(ParentRefPattern p) {
+  public VoidValue visitParentRef(ParentRefPattern p) {
     er.error("parent_ref_no_grammar", p.getSourceLocation());
-    return null;
+    return VoidValue.VOID;
   }
 }

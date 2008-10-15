@@ -33,7 +33,7 @@ public class ExternalRefPattern extends Pattern {
     this.baseUri = baseUri;
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitExternalRef(this);
   }
 }

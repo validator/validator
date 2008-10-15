@@ -15,7 +15,7 @@ public class TextAnnotation extends AnnotationChild {
     this.value = value;
   }
 
-  public Object accept(AnnotationChildVisitor visitor) {
+  public <T> T accept(AnnotationChildVisitor<T> visitor) {
     return visitor.visitText(this);
   }
 }

@@ -47,6 +47,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.StructureVisitor;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardAttribute;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
@@ -68,13 +69,13 @@ public class BasicOutput {
   private final SimpleTypeOutput simpleTypeOutput = new SimpleTypeOutput();
   private final ComplexTypeOutput complexTypeOutput = new ComplexTypeOutput();
   private final AttributeUseOutput attributeUseOutput = new AttributeUseOutput();
-  private final AttributeUseVisitor attributeWildcardOutput = new AttributeWildcardOutput();
+  private final AttributeUseVisitor<VoidValue> attributeWildcardOutput = new AttributeWildcardOutput();
   private final ParticleOutput particleOutput = new ParticleOutput();
-  private final ParticleVisitor globalElementOutput = new GlobalElementOutput();
+  private final ParticleVisitor<VoidValue> globalElementOutput = new GlobalElementOutput();
   private final GlobalAttributeOutput globalAttributeOutput = new GlobalAttributeOutput();
   private final SchemaVisitor schemaOutput = new SchemaOutput();
-  private final StructureVisitor movedStructureOutput = new MovedStructureOutput();
-  private final SimpleTypeVisitor simpleTypeNamer = new SimpleTypeNamer();
+  private final StructureVisitor<VoidValue> movedStructureOutput = new MovedStructureOutput();
+  private final SimpleTypeVisitor<String> simpleTypeNamer = new SimpleTypeNamer();
   private final NamespaceManager nsm;
   private final PrefixManager pm;
   private final String targetNamespace;
@@ -87,8 +88,8 @@ public class BasicOutput {
   private final String xsPrefix;
   private final Options options;
 
-  class SimpleTypeOutput implements SimpleTypeVisitor {
-    public Object visitRestriction(SimpleTypeRestriction t) {
+  class SimpleTypeOutput implements SimpleTypeVisitor<VoidValue> {
+    public VoidValue visitRestriction(SimpleTypeRestriction t) {
       boolean hadPatternFacet = false;
       for (Facet facet : t.getFacets()) {
         if (facet.getName().equals("pattern")) {
@@ -140,7 +141,7 @@ public class BasicOutput {
     }
 
 
-    public Object visitRef(SimpleTypeRef t) {
+    public VoidValue visitRef(SimpleTypeRef t) {
       xw.startElement(xs("restriction"));
       xw.attribute("base", qualifyRef(schema.getSimpleType(t.getName()).getParentSchema().getUri(),
                                       t.getName()));
@@ -148,11 +149,11 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitUnion(SimpleTypeUnion t) {
+    public VoidValue visitUnion(SimpleTypeUnion t) {
       xw.startElement(xs("union"));
       StringBuffer buf = new StringBuffer();
       for (SimpleType child : t.getChildren()) {
-        String typeName = (String)(child).accept(simpleTypeNamer);
+        String typeName = child.accept(simpleTypeNamer);
         if (typeName != null) {
           if (buf.length() != 0)
             buf.append(' ');
@@ -170,7 +171,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitList(SimpleTypeList t) {
+    public VoidValue visitList(SimpleTypeList t) {
       Occurs occ = t.getOccurs();
       if (!occ.equals(Occurs.ZERO_OR_MORE)) {
         xw.startElement(xs("restriction"));
@@ -208,7 +209,7 @@ public class BasicOutput {
     }
 
     void outputWrap(SimpleType t, String attributeName, Annotated parent) {
-      String typeName = (String)t.accept(simpleTypeNamer);
+      String typeName = t.accept(simpleTypeNamer);
       if (typeName != null) {
         xw.attribute(attributeName, typeName);
         if (parent != null)
@@ -224,8 +225,8 @@ public class BasicOutput {
     }
   }
 
-  class SimpleTypeNamer implements SimpleTypeVisitor {
-    public Object visitRestriction(SimpleTypeRestriction t) {
+  class SimpleTypeNamer implements SimpleTypeVisitor<String> {
+    public String visitRestriction(SimpleTypeRestriction t) {
       if (t.getFacets().size() > 0)
         return null;
       if (t.getAnnotation() != null)
@@ -233,18 +234,18 @@ public class BasicOutput {
       return xs(t.getName());
     }
 
-    public Object visitRef(SimpleTypeRef t) {
+    public String visitRef(SimpleTypeRef t) {
       if (t.getAnnotation() != null)
         return null;
       return qualifyRef(schema.getSimpleType(t.getName()).getParentSchema().getUri(),
                         t.getName());
     }
 
-    public Object visitList(SimpleTypeList t) {
+    public String visitList(SimpleTypeList t) {
       return null;
     }
 
-    public Object visitUnion(SimpleTypeUnion t) {
+    public String visitUnion(SimpleTypeUnion t) {
       return null;
     }
   }
@@ -253,7 +254,7 @@ public class BasicOutput {
   private static final int COMPLEX_TYPE_CONTEXT = 1;
   private static final int NAMED_GROUP_CONTEXT = 2;
 
-  class ParticleOutput implements ParticleVisitor {
+  class ParticleOutput implements ParticleVisitor<VoidValue> {
     private Occurs occ = Occurs.EXACTLY_ONE;
     private int context = NORMAL_CONTEXT;
 
@@ -303,7 +304,7 @@ public class BasicOutput {
         xw.endElement();
     }
 
-    public Object visitElement(Element p) {
+    public VoidValue visitElement(Element p) {
       boolean usedWrapper;
       if (nsm.isGlobal(p)) {
         usedWrapper = startWrapperForElement();
@@ -326,7 +327,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitWildcardElement(WildcardElement p) {
+    public VoidValue visitWildcardElement(WildcardElement p) {
       String ns = NamespaceManager.otherNamespace(p.getWildcard());
       boolean usedWrapper;
       if (ns != null && !ns.equals(targetNamespace)) {
@@ -343,13 +344,13 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitRepeat(ParticleRepeat p) {
+    public VoidValue visitRepeat(ParticleRepeat p) {
       occ = Occurs.multiply(occ, p.getOccurs());
       p.getChild().accept(this);
       return null;
     }
 
-    public Object visitSequence(ParticleSequence p) {
+    public VoidValue visitSequence(ParticleSequence p) {
       boolean usedWrapper = startWrapperForGroup("sequence");
       outputAnnotation(p);
       outputParticles(p.getChildren());
@@ -357,7 +358,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitChoice(ParticleChoice p) {
+    public VoidValue visitChoice(ParticleChoice p) {
       boolean usedWrapper = startWrapperForGroup("choice");
       outputAnnotation(p);
       outputParticles(p.getChildren());
@@ -365,7 +366,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitAll(ParticleAll p) {
+    public VoidValue visitAll(ParticleAll p) {
       boolean usedWrapper = startWrapperForGroup("all");
       outputAnnotation(p);
       outputParticles(p.getChildren());
@@ -378,7 +379,7 @@ public class BasicOutput {
         particle.accept(this);
     }
 
-    public Object visitGroupRef(GroupRef p) {
+    public VoidValue visitGroupRef(GroupRef p) {
       String groupName = p.getName();
       GroupDefinition def = schema.getGroup(groupName);
       Name elementName = nsm.getElementNameForGroupRef(def);
@@ -406,20 +407,20 @@ public class BasicOutput {
     }
   }
 
-  class ComplexTypeOutput implements ComplexTypeVisitor {
+  class ComplexTypeOutput implements ComplexTypeVisitor<VoidValue> {
     Annotated parent;
 
-    public Object visitComplexContent(ComplexTypeComplexContent t) {
+    public VoidValue visitComplexContent(ComplexTypeComplexContent t) {
       outputComplexTypeComplexContent(complexTypeSelector.transformComplexContent(t), null, parent);
       return null;
     }
 
-    public Object visitSimpleContent(ComplexTypeSimpleContent t) {
+    public VoidValue visitSimpleContent(ComplexTypeSimpleContent t) {
       outputComplexTypeSimpleContent(complexTypeSelector.transformSimpleContent(t), null, parent);
       return null;
     }
 
-    public Object visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
+    public VoidValue visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
       xw.startElement(xs("complexType"));
       xw.startElement(xs("choice"));
       xw.endElement();
@@ -432,7 +433,7 @@ public class BasicOutput {
     boolean isOptional = false;
     String defaultValue = null;
 
-    public Object visitOptionalAttribute(OptionalAttribute a) {
+    public VoidValue visitOptionalAttribute(OptionalAttribute a) {
       isOptional = true;
       defaultValue = a.getDefaultValue();
       a.getAttribute().accept(this);
@@ -441,7 +442,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitAttribute(Attribute a) {
+    public VoidValue visitAttribute(Attribute a) {
       if (nsm.isGlobal(a)) {
         xw.startElement(xs("attribute"));
         xw.attribute("ref", qualifyName(a.getName()));
@@ -476,7 +477,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitAttributeGroupRef(AttributeGroupRef a) {
+    public VoidValue visitAttributeGroupRef(AttributeGroupRef a) {
       xw.startElement(xs("attributeGroup"));
       String name = a.getName();
       xw.attribute("ref",
@@ -487,7 +488,7 @@ public class BasicOutput {
   }
 
   class AttributeWildcardOutput extends SchemaWalker {
-    public Object visitWildcardAttribute(WildcardAttribute a) {
+    public VoidValue visitWildcardAttribute(WildcardAttribute a) {
       String ns = NamespaceManager.otherNamespace(a.getWildcard());
       if (ns != null && !ns.equals(targetNamespace)) {
         xw.startElement(xs("attributeGroup"));
@@ -504,8 +505,8 @@ public class BasicOutput {
     }
   }
 
-  class GlobalElementOutput implements ParticleVisitor, ComplexTypeVisitor {
-    public Object visitElement(Element p) {
+  class GlobalElementOutput implements ParticleVisitor<VoidValue>, ComplexTypeVisitor<VoidValue> {
+    public VoidValue visitElement(Element p) {
       Name name = p.getName();
       if (nsm.isGlobal(p)
           && name.getNamespaceUri().equals(targetNamespace)
@@ -519,7 +520,7 @@ public class BasicOutput {
       return p.getComplexType().accept(this);
     }
 
-    public Object visitRepeat(ParticleRepeat p) {
+    public VoidValue visitRepeat(ParticleRepeat p) {
       return p.getChild().accept(this);
     }
 
@@ -528,52 +529,52 @@ public class BasicOutput {
         p.accept(this);
     }
 
-    public Object visitSequence(ParticleSequence p) {
+    public VoidValue visitSequence(ParticleSequence p) {
       visitList(p.getChildren());
       return null;
     }
 
-    public Object visitChoice(ParticleChoice p) {
+    public VoidValue visitChoice(ParticleChoice p) {
       visitList(p.getChildren());
       return null;
     }
 
-    public Object visitAll(ParticleAll p) {
+    public VoidValue visitAll(ParticleAll p) {
       visitList(p.getChildren());
       return null;
     }
 
-    public Object visitGroupRef(GroupRef p) {
+    public VoidValue visitGroupRef(GroupRef p) {
       return null;
     }
 
-    public Object visitWildcardElement(WildcardElement p) {
+    public VoidValue visitWildcardElement(WildcardElement p) {
       return null;
     }
 
-    public Object visitComplexContent(ComplexTypeComplexContent t) {
+    public VoidValue visitComplexContent(ComplexTypeComplexContent t) {
       if (t.getParticle() == null)
         return null;
       return t.getParticle().accept(this);
     }
 
-    public Object visitSimpleContent(ComplexTypeSimpleContent t) {
+    public VoidValue visitSimpleContent(ComplexTypeSimpleContent t) {
       return null;
     }
 
-    public Object visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
+    public VoidValue visitNotAllowedContent(ComplexTypeNotAllowedContent t) {
       return null;
     }
   }
 
-  class GlobalAttributeOutput extends AbstractAttributeUseVisitor {
-    public Object visitAttributeGroup(AttributeGroup a) {
+  class GlobalAttributeOutput extends AbstractAttributeUseVisitor<VoidValue> {
+    public VoidValue visitAttributeGroup(AttributeGroup a) {
       for (AttributeUse child : a.getChildren())
         child.accept(this);
       return null;
     }
 
-    public Object visitAttribute(Attribute a) {
+    public VoidValue visitAttribute(Attribute a) {
       Name name = a.getName();
       if (nsm.isGlobal(a)
           && name.getNamespaceUri().equals(targetNamespace)
@@ -588,15 +589,15 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitOptionalAttribute(OptionalAttribute a) {
+    public VoidValue visitOptionalAttribute(OptionalAttribute a) {
       return a.getAttribute().accept(this);
     }
 
-    public Object visitAttributeGroupRef(AttributeGroupRef a) {
+    public VoidValue visitAttributeGroupRef(AttributeGroupRef a) {
       return null;
     }
 
-    public Object visitWildcardAttribute(WildcardAttribute a) {
+    public VoidValue visitWildcardAttribute(WildcardAttribute a) {
       return null;
     }
   }
@@ -739,8 +740,8 @@ public class BasicOutput {
     }
   }
 
-  class MovedStructureOutput implements StructureVisitor {
-    public Object visitElement(Element element) {
+  class MovedStructureOutput implements StructureVisitor<VoidValue> {
+    public VoidValue visitElement(Element element) {
       if (!nsm.isGlobal(element)) {
         xw.startElement(xs("group"));
         xw.attribute("name", nsm.getProxyName(element));
@@ -752,7 +753,7 @@ public class BasicOutput {
       return null;
     }
 
-    public Object visitAttribute(Attribute attribute) {
+    public VoidValue visitAttribute(Attribute attribute) {
       if (!nsm.isGlobal(attribute)) {
         xw.startElement(xs("attributeGroup"));
         xw.attribute("name", nsm.getProxyName(attribute));
@@ -1002,7 +1003,7 @@ public class BasicOutput {
       outputAnnotation(parent);
     xw.startElement(xs("simpleContent"));
     if (base == null)
-      base = (String)t.getSimpleType().accept(simpleTypeNamer);
+      base = t.getSimpleType().accept(simpleTypeNamer);
     if (base != null) {
       xw.startElement(xs("extension"));
       xw.attribute("base", base);

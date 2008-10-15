@@ -1,8 +1,8 @@
 package com.thaiopensource.relaxng.edit;
 
-public interface NameClassVisitor {
-  Object visitChoice(ChoiceNameClass nc);
-  Object visitAnyName(AnyNameNameClass nc);
-  Object visitNsName(NsNameNameClass nc);
-  Object visitName(NameNameClass nc);
+public interface NameClassVisitor<T> {
+  T visitChoice(ChoiceNameClass nc);
+  T visitAnyName(AnyNameNameClass nc);
+  T visitNsName(NsNameNameClass nc);
+  T visitName(NameNameClass nc);
 }

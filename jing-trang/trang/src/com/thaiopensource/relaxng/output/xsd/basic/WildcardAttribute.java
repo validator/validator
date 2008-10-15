@@ -22,7 +22,7 @@ public class WildcardAttribute extends AttributeUse {
     return super.hashCode() ^ wildcard.hashCode();
   }
 
-  public Object accept(AttributeUseVisitor visitor) {
+  public <T> T accept(AttributeUseVisitor<T> visitor) {
     return visitor.visitWildcardAttribute(this);
   }
 }

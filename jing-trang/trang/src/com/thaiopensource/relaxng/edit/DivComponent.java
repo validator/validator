@@ -10,11 +10,11 @@ public class DivComponent extends Component implements Container {
     return components;
   }
 
-  public Object accept(ComponentVisitor visitor) {
+  public <T> T accept(ComponentVisitor<T> visitor) {
     return visitor.visitDiv(this);
   }
 
-  public void componentsAccept(ComponentVisitor visitor) {
+  public void componentsAccept(ComponentVisitor<?> visitor) {
     for (Component c : components)
       c.accept(visitor);
   }

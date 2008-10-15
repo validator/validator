@@ -7,5 +7,5 @@ public abstract class AttributeUse extends Annotated {
     super(location, annotation);
   }
 
-  public abstract Object accept(AttributeUseVisitor visitor);
+  public abstract <T> T accept(AttributeUseVisitor<T> visitor);
 }

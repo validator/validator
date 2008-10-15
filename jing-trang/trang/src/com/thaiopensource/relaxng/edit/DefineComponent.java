@@ -35,7 +35,7 @@ public class DefineComponent extends Component {
     this.combine = combine;
   }
 
-  public Object accept(ComponentVisitor visitor) {
+  public <T> T accept(ComponentVisitor<T> visitor) {
     return visitor.visitDefine(this);
   }
 }

@@ -7,5 +7,5 @@ public abstract class SimpleType extends Annotated {
     super(location, annotation);
   }
 
-  public abstract Object accept(SimpleTypeVisitor visitor);
+  public abstract <T> T accept(SimpleTypeVisitor<T> visitor);
 }

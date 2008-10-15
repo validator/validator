@@ -1,5 +1,5 @@
 package com.thaiopensource.relaxng.edit;
 
-public interface AttributeAnnotationVisitor {
-  Object visitAttribute(AttributeAnnotation a);
+public interface AttributeAnnotationVisitor<T> {
+  T visitAttribute(AttributeAnnotation a);
 }

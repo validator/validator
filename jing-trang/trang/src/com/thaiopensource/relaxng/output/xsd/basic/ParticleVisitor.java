@@ -1,11 +1,11 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-public interface ParticleVisitor {
-  Object visitElement(Element p);
-  Object visitWildcardElement(WildcardElement p);
-  Object visitRepeat(ParticleRepeat p);
-  Object visitSequence(ParticleSequence p);
-  Object visitChoice(ParticleChoice p);
-  Object visitAll(ParticleAll p);
-  Object visitGroupRef(GroupRef p);
+public interface ParticleVisitor<T> {
+  T visitElement(Element p);
+  T visitWildcardElement(WildcardElement p);
+  T visitRepeat(ParticleRepeat p);
+  T visitSequence(ParticleSequence p);
+  T visitChoice(ParticleChoice p);
+  T visitAll(ParticleAll p);
+  T visitGroupRef(GroupRef p);
 }

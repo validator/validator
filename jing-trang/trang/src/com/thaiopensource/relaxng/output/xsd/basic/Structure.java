@@ -4,5 +4,5 @@ import com.thaiopensource.xml.util.Name;
 
 public interface Structure {
   Name getName();
-  Object accept(StructureVisitor visitor);
+  <T> T accept(StructureVisitor<T> visitor);
 }

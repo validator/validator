@@ -17,7 +17,7 @@ public class SimpleTypeUnion extends SimpleType {
     return children;
   }
 
-  public Object accept(SimpleTypeVisitor visitor) {
+  public <T> T accept(SimpleTypeVisitor<T> visitor) {
     return visitor.visitUnion(this);
   }
 

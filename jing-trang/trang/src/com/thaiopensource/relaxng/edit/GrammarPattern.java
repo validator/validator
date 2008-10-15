@@ -10,11 +10,11 @@ public class GrammarPattern extends Pattern implements Container {
     return components;
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitGrammar(this);
   }
 
-  public void componentsAccept(ComponentVisitor visitor) {
+  public void componentsAccept(ComponentVisitor<?> visitor) {
     for (Component c : components)
       c.accept(visitor);
   }

@@ -1,5 +1,5 @@
 package com.thaiopensource.relaxng.edit;
 
 public abstract class Component extends Annotated {
-  public abstract Object accept(ComponentVisitor visitor);
+  public abstract <T> T accept(ComponentVisitor<T> visitor);
 }

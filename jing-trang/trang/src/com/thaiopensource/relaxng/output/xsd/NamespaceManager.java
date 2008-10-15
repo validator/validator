@@ -14,6 +14,7 @@ import com.thaiopensource.relaxng.output.xsd.basic.Structure;
 import com.thaiopensource.relaxng.output.xsd.basic.Wildcard;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardAttribute;
 import com.thaiopensource.relaxng.output.xsd.basic.WildcardElement;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.xml.util.Name;
 
 import java.util.HashMap;
@@ -84,12 +85,12 @@ public class NamespaceManager {
     public void visitGroup(GroupDefinition def) {
     }
 
-    public Object visitElement(Element p) {
+    public VoidValue visitElement(Element p) {
       NameInfo info = lookupElementName(p.getName());
       info.globalType = p;
       info.occur = NameInfo.OCCUR_ROOT;
       lookupTargetNamespace(p.getName().getNamespaceUri());
-      return null;
+      return VoidValue.VOID;
     }
   }
 
@@ -119,7 +120,7 @@ public class NamespaceManager {
       lookupSourceUri(schema.getUri()).targetNamespace = selectTargetNamespace();
     }
 
-    public Object visitElement(Element element) {
+    public VoidValue visitElement(Element element) {
       NamespaceUsage usage = getUsage(element.getName().getNamespaceUri());
       if (!nested)
         usage.elementCount++;
@@ -127,33 +128,33 @@ public class NamespaceManager {
       nested = true;
       element.getComplexType().accept(this);
       nested = saveNested;
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitAttribute(Attribute a) {
+    public VoidValue visitAttribute(Attribute a) {
       NamespaceUsage usage = getUsage(a.getName().getNamespaceUri());
       if (!nested)
         usage.attributeCount++;
-      return null;
+      return VoidValue.VOID;
     }
 
 
-    public Object visitWildcardElement(WildcardElement p) {
+    public VoidValue visitWildcardElement(WildcardElement p) {
       return visitWildcard(p.getWildcard());
     }
 
-    public Object visitWildcardAttribute(WildcardAttribute a) {
+    public VoidValue visitWildcardAttribute(WildcardAttribute a) {
        return visitWildcard(a.getWildcard());
     }
 
-    private Object visitWildcard(Wildcard wc) {
+    private VoidValue visitWildcard(Wildcard wc) {
       String ns = otherNamespace(wc);
       if (ns != null) {
         lookupTargetNamespace(ns);
         if (!nested)
           getUsage(ns).attributeCount++;
       }
-      return null;
+      return VoidValue.VOID;
     }
 
     private NamespaceUsage getUsage(String ns) {
@@ -201,7 +202,7 @@ public class NamespaceManager {
       schema.accept(this);
     }
 
-    public Object visitElement(Element element) {
+    public VoidValue visitElement(Element element) {
       Name name = element.getName();
       if (!name.getNamespaceUri().equals("") || absentTargetNamespace) {
         NameInfo info = lookupElementName(name);
@@ -217,7 +218,7 @@ public class NamespaceManager {
       nested = true;
       element.getComplexType().accept(this);
       nested = saveNested;
-      return null;
+      return VoidValue.VOID;
     }
 
     public void visitInclude(Include include) {
@@ -232,7 +233,7 @@ public class NamespaceManager {
       this.currentNamespace = currentNamespace;
     }
 
-    public Object visitElement(Element p) {
+    public VoidValue visitElement(Element p) {
       NameInfo info = lookupElementName(p.getName());
       String ns = p.getName().getNamespaceUri();
       if (ns.equals(currentNamespace) || (ns.equals("") && !p.equals(info.globalType)))
@@ -242,16 +243,16 @@ public class NamespaceManager {
         moveStructure(p);
         p.getComplexType().accept(new StructureMover(ns));
       }
-      return null;
+      return VoidValue.VOID;
     }
 
-    public Object visitAttribute(Attribute a) {
+    public VoidValue visitAttribute(Attribute a) {
       String ns = a.getName().getNamespaceUri();
       if (!ns.equals("") && !ns.equals(currentNamespace)) {
         noteMoved(lookupAttributeName(a.getName()), a);
         moveStructure(a);
       }
-      return null;
+      return VoidValue.VOID;
     }
 
     private void noteMoved(NameInfo info, Structure s) {
@@ -276,15 +277,15 @@ public class NamespaceManager {
       included.accept(new StructureMover(getTargetNamespace(included.getUri())));
     }
 
-    public Object visitWildcardElement(WildcardElement p) {
+    public VoidValue visitWildcardElement(WildcardElement p) {
       return visitWildcard(p.getWildcard(), true);
     }
 
-    public Object visitWildcardAttribute(WildcardAttribute a) {
+    public VoidValue visitWildcardAttribute(WildcardAttribute a) {
       return visitWildcard(a.getWildcard(), false);
     }
 
-    private Object visitWildcard(Wildcard wc, boolean isElement) {
+    private VoidValue visitWildcard(Wildcard wc, boolean isElement) {
       String ns = otherNamespace(wc);
       if (ns != null && !ns.equals(currentNamespace)) {
         TargetNamespace tn = lookupTargetNamespace(ns);
@@ -293,7 +294,7 @@ public class NamespaceManager {
         else
           tn.movedOtherAttribute = true;
       }
-      return null;
+      return VoidValue.VOID;
     }
   }
 

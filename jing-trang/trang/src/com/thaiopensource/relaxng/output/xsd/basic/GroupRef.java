@@ -14,7 +14,7 @@ public class GroupRef extends Particle {
     return name;
   }
 
-  public Object accept(ParticleVisitor visitor) {
+  public <T> T accept(ParticleVisitor<T> visitor) {
     return visitor.visitGroupRef(this);
   }
 

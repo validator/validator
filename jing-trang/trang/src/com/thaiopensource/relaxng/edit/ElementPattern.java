@@ -5,7 +5,7 @@ public class ElementPattern extends NameClassedPattern {
     super(nameClass, child);
   }
 
-  public Object accept(PatternVisitor visitor) {
+  public <T> T accept(PatternVisitor<T> visitor) {
     return visitor.visitElement(this);
   }
 }

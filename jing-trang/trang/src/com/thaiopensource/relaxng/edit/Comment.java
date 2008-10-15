@@ -15,7 +15,7 @@ public class Comment extends AnnotationChild {
     this.value = value;
   }
 
-  public Object accept(AnnotationChildVisitor visitor) {
+  public <T> T accept(AnnotationChildVisitor<T> visitor) {
     return visitor.visitComment(this);
   }
 }

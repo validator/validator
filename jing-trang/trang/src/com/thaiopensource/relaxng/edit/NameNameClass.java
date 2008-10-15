@@ -44,7 +44,7 @@ public class NameNameClass extends NameClass {
     return true;
   }
 
-  public Object accept(NameClassVisitor visitor) {
+  public <T> T accept(NameClassVisitor<T> visitor) {
     return visitor.visitName(this);
   }
 }
