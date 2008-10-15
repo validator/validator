@@ -313,6 +313,7 @@ class Transformer extends SchemaTransformer {
   static class AttributeInfo {
     final Map<Name, SingleAttributeUse> map;
     final Wildcard wildcard;
+    final static Map<Name, SingleAttributeUse> EMPTY_MAP = Collections.emptyMap();
 
     AttributeInfo(Map<Name, SingleAttributeUse> map, Wildcard wildcard) {
       this.map = map;
@@ -369,7 +370,7 @@ class Transformer extends SchemaTransformer {
     }
 
     public AttributeInfo visitWildcardAttribute(WildcardAttribute a) {
-      return new AttributeInfo(Collections.EMPTY_MAP, a.getWildcard());
+      return new AttributeInfo(AttributeInfo.EMPTY_MAP, a.getWildcard());
     }
   }
 
