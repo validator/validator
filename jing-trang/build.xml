@@ -522,8 +522,8 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     <zipfileset dir="doc/jing-bin"
                 includes="copying.html"
                 prefix="jing-${version}/doc"/>
-    <zipfileset dir="gcj"
-                includes="xerces.copying.txt"
+    <zipfileset dir="lib"
+                includes="xerces.copying.txt,isorelax.copying.txt"
                 prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}/jing-bin"
                 includes="readme.html"
