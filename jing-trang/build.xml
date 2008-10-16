@@ -559,52 +559,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <gzip zipfile="${build.dir}/dist/relaxng.tar.gz" src="${build.dir}/relaxng.tar"/>
 </target>
 
-<target name="gcj" if="linux" depends="init">
-  <exec executable="${basedir}/gcj/dist" failonerror="true" dir=".">
-    <arg value="${build.dir}"/>
-  </exec>
-  <checksum fileext=".md5">
-    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
-  </checksum>
-</target>
-
-<target name="gcj-rpm" depends="gcj" if="linux">
-  <mkdir dir="${build.dir}/gcj-rpm"/>
-  <apply executable="rpmbuild" failonerror="true" dir=".">
-    <arg value="-ta"/>
-    <arg value="-D"/>
-    <arg value="_jingbuilddir ${build.dir}"/>
-    <arg value="--rcfile=gcj/rpmrc"/>
-    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
-  </apply>
-</target>
-
-<target name="gcj-test" depends="gcj" if="linux">
-  <mkdir dir="${build.dir}/gcj-test"/>
-  <untar compression="gzip" dest="${build.dir}/gcj-test">
-    <fileset dir="${build.dir}/dist/gcj" includes="*.tar.gz"/>
-  </untar>
-  <mkdir dir="${build.dir}/gcj-test/jingbuild"/>
-  <apply dir="${build.dir}/gcj-test/jingbuild" executable="/bin/sh" relative="false" failonerror="true">
-    <fileset dir="${build.dir}/gcj-test" includes="jing-*/configure"/>
-  </apply>
-  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild"/>
-  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/jingbuild">
-    <arg value="check"/>
-  </exec>
-  <mkdir dir="${build.dir}/gcj-test/trangbuild"/>
-  <apply dir="${build.dir}/gcj-test/trangbuild" executable="/bin/sh" relative="false" failonerror="true">
-    <fileset dir="${build.dir}/gcj-test" includes="trang-*/configure"/>
-  </apply>
-  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild"/>
-  <exec executable="make" failonerror="true" dir="${build.dir}/gcj-test/trangbuild">
-    <arg value="check"/>
-  </exec>
-</target>
-
-<target name="gcj-dist" depends="gcj-test,gcj-rpm"/>
-
-<target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,gcj-dist,website"/>
+<target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,website"/>
 
 <target name="clean" description="Remove all files created during the build process">
   <delete dir="${build.dir}"/>
