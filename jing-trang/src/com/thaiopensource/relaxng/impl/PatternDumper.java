@@ -1,14 +1,13 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.relaxng.datatype.Datatype;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Hashtable;
 import java.util.Vector;
-
-import com.thaiopensource.xml.util.WellKnownNamespaces;
-import com.thaiopensource.xml.util.Name;
 
 public class PatternDumper {
   private boolean startTagOpen = false;
@@ -296,6 +295,7 @@ public class PatternDumper {
 
     public void visitNsNameExcept(String ns, NameClass nc) {
       startElement("nsName");
+      attribute("ns", ns);
       startElement("except");
       nc.accept(choiceNameClassVisitor);
       endElement();
