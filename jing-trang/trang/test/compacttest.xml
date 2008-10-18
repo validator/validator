@@ -2375,6 +2375,22 @@ element # hello
 </correct>
 </xml>
 </testCase>
+<testCase>
+<compact>
+<incorrect><![CDATA[namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace xsd = "http://www.w3.org/2001/XMLSchema-instance"
+
+creator =
+  element creator {
+    (attribute scheme { xsd:QName "p:A" },
+     ("a" | "b" | "c"))
+    | (attribute scheme { xsd:QName "p:B" },
+       ("d" | "e" | "f"))
+  }
+start = creator
+]]></incorrect>
+</compact>
+</testCase>
 <!--
 <testCase>
 <compact>

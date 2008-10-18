@@ -213,7 +213,7 @@ public class CompactSyntax implements Context {
 
   public String resolveNamespacePrefix(String prefix) {
     String result = (String)namespaceTable.get(prefix);
-    if (result.length() == 0)
+    if (result == null || result.length() == 0)
       return null;
     return result;
   }
