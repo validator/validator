@@ -1,37 +1,27 @@
 package com.thaiopensource.validate.nrl;
 
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.DTDHandler;
-import com.thaiopensource.validate.Validator;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.nrl.ActionSet;
-import com.thaiopensource.validate.nrl.AttributeActionSet;
-import com.thaiopensource.validate.nrl.FilteredAttributes;
-import com.thaiopensource.validate.nrl.Hashset;
-import com.thaiopensource.validate.nrl.IntSet;
-import com.thaiopensource.validate.nrl.Mode;
-import com.thaiopensource.validate.nrl.ModeUsage;
-import com.thaiopensource.validate.nrl.NoResultAction;
-import com.thaiopensource.validate.nrl.ResultAction;
-import com.thaiopensource.validate.nrl.SectionState;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.Validator;
+import com.thaiopensource.xml.util.Name;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.Vector;
-import java.util.Stack;
-import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Stack;
+import java.util.Vector;
 
 class ValidatorImpl extends DefaultHandler implements Validator {
-  private static final String BEARER_URI = "";
-  private static final String BEARER_LOCAL_NAME = "#bearer";
+  static final Name OWNER_NAME = new Name("http://www.thaiopensource.com/validate/nrl/instance", "owner");
   private static final String NO_NS = "\0";
   private final ErrorHandler eh;
   private final PropertyMap properties;
@@ -279,8 +269,8 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     Validator validator = createValidator(schema);
     ContentHandler ch = validator.getContentHandler();
     initHandler(ch);
-    ch.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME, attributes);
-    ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
+    ch.startElement(OWNER_NAME.getNamespaceUri(), OWNER_NAME.getLocalName(), OWNER_NAME.getLocalName(), attributes);
+    ch.endElement(OWNER_NAME.getNamespaceUri(), OWNER_NAME.getLocalName(), OWNER_NAME.getLocalName());
     cleanupHandler(ch);
     releaseValidator(schema, validator);
   }

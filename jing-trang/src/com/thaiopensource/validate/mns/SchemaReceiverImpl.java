@@ -2,16 +2,17 @@ package com.thaiopensource.validate.mns;
 
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
-import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.rng.SAXSchemaReader;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.validate.auto.SchemaReceiver;
 import com.thaiopensource.validate.auto.SchemaReceiverFactory;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
+import com.thaiopensource.validate.rng.SAXSchemaReader;
+import com.thaiopensource.xml.util.Name;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -29,16 +30,22 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private Schema mnsSchema = null;
 
   public SchemaReceiverImpl(PropertyMap properties) {
-    this.attributesSchema = properties.contains(WrapProperty.ATTRIBUTES);
+    Name attributeOwner = WrapProperty.ATTRIBUTE_OWNER.get(properties);
+    attributesSchema = (attributeOwner != null);
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
-    if (attributesSchema) {
+    if (ValidatorImpl.OWNER_NAME.equals(attributeOwner)) {
       attributeSchemaProperties = properties;
-      builder.put(WrapProperty.ATTRIBUTES, null);
+      builder.put(WrapProperty.ATTRIBUTE_OWNER, null);
       this.properties = builder.toPropertyMap();
     }
     else {
-      this.properties = properties;
-      WrapProperty.ATTRIBUTES.add(builder);
+      if (attributeOwner == null)
+        this.properties = properties;
+      else {
+        builder.put(WrapProperty.ATTRIBUTE_OWNER, null);
+        this.properties = builder.toPropertyMap();
+      }
+      WrapProperty.ATTRIBUTE_OWNER.put(builder, ValidatorImpl.OWNER_NAME);
       attributeSchemaProperties = builder.toPropertyMap();
     }
     this.autoSchemaLanguage = new AutoSchemaReader(SchemaReceiverFactory.PROPERTY.get(properties));

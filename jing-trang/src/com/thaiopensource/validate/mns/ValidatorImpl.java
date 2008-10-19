@@ -1,29 +1,25 @@
 package com.thaiopensource.validate.mns;
 
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.Validator;
-import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.mns.ContextMap;
-import com.thaiopensource.validate.mns.Hashset;
-import com.thaiopensource.validate.mns.ElementsOrAttributes;
-import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.Validator;
+import com.thaiopensource.xml.util.Name;
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.Stack;
 import java.util.Hashtable;
+import java.util.Stack;
 
 class ValidatorImpl extends DefaultHandler implements Validator {
-  private static final String BEARER_URI = "";
-  private static final String BEARER_LOCAL_NAME = "#bearer";
+  static final Name OWNER_NAME = new Name("http://www.thaiopensource.com/ns/mns/instance", "owner");
   private SchemaImpl.Mode currentMode;
   private int laxDepth = 0;
   private final ErrorHandler eh;
@@ -173,9 +169,9 @@ class ValidatorImpl extends DefaultHandler implements Validator {
     Validator validator = createValidator(attributesSchema);
     ContentHandler ch = validator.getContentHandler();
     startSubtree(ch);
-    ch.startElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME,
+    ch.startElement(OWNER_NAME.getNamespaceUri(), OWNER_NAME.getLocalName(), OWNER_NAME.getLocalName(),
                     new NamespaceFilteredAttributes(ns, false, attributes));
-    ch.endElement(BEARER_URI, BEARER_LOCAL_NAME, BEARER_LOCAL_NAME);
+    ch.endElement(OWNER_NAME.getNamespaceUri(), OWNER_NAME.getLocalName(), OWNER_NAME.getLocalName());
     endSubtree(ch);
     releaseValidator(attributesSchema, validator);
   }

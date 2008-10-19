@@ -1,24 +1,24 @@
 package com.thaiopensource.validate.nrl;
 
 import com.thaiopensource.util.Localizer;
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.util.Uri;
-import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.PropertyId;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.util.Uri;
+import com.thaiopensource.validate.AbstractSchema;
 import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.ValidateProperty;
-import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.OptionArgumentPresenceException;
-import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.prop.wrap.WrapProperty;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
-import com.thaiopensource.xml.sax.XmlBaseHandler;
-import com.thaiopensource.xml.sax.DelegatingContentHandler;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.xml.sax.CountingErrorHandler;
+import com.thaiopensource.xml.sax.DelegatingContentHandler;
+import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
@@ -508,7 +508,7 @@ class SchemaImpl extends AbstractSchema {
 
   SchemaImpl(PropertyMap properties) {
     super(properties);
-    this.attributesSchema = properties.contains(WrapProperty.ATTRIBUTES);
+    this.attributesSchema = properties.contains(WrapProperty.ATTRIBUTE_OWNER);
     makeBuiltinMode("#allow", AllowAction.class);
     makeBuiltinMode("#attach", AttachAction.class);
     makeBuiltinMode("#unwrap", UnwrapAction.class);

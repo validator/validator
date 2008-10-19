@@ -38,7 +38,7 @@ public class SchemaReceiverImpl implements SchemaReceiver {
     return new SchemaFuture() {
       public Schema getSchema() throws IncorrectSchemaException, SAXException, IOException {
         try {
-          return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(WrapProperty.ATTRIBUTES)),
+          return SchemaReaderImpl.wrapPattern(pf.getPattern(properties.contains(WrapProperty.ATTRIBUTE_OWNER)),
                                               pb, properties);
         }
         catch (IllegalSchemaException e) {

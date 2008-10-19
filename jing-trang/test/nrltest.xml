@@ -2102,4 +2102,69 @@ attribute a:y { text }
 </env:Envelope>
 </valid>
 </testCase>
+<testCase>
+<resource name="atts1.xsd">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/ns/1">
+  <xsd:attribute name="int" type="xsd:integer"/>
+  <xsd:attribute name="bool" type="xsd:boolean"/>
+</xsd:schema>
+</resource>
+<resource name="atts2.xsd">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/ns/2">
+  <xsd:attribute name="date" type="xsd:date"/>
+</xsd:schema>
+</resource>
+<resource name="root.rnc">
+default namespace = "http://example.com/ns/0"
+element root { empty }
+</resource>
+<correct>
+<rules xmlns="http://www.thaiopensource.com/validate/nrl">
+  <namespace ns="http://example.com/ns/0">
+    <validate schema="root.rnc" schemaType="application/x-rnc"/>
+  </namespace>
+  <namespace ns="http://example.com/ns/1" match="attributes">
+    <validate schema="atts1.xsd"/>
+  </namespace>
+  <namespace ns="http://example.com/ns/2" match="attributes">
+    <validate schema="atts2.xsd"/>
+  </namespace>
+</rules>
+</correct>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n2="http://example.com/ns/2"
+      n2:date="1964-02-23"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:int="42"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:bool="true"/>
+</valid>
+<valid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      xmlns:n2="http://example.com/ns/2"
+      n1:bool="true"
+      n1:int="42"
+      n2:date="1964-02-23"/>
+</valid>
+<invalid>
+<rot xmlns="http://example.com/ns/0"
+     xmlns:n2="http://example.com/ns/2"
+     n2:date="1964-02-23"/>
+</invalid>
+<invalid>
+<root xmlns="http://example.com/ns/0"
+      xmlns:n1="http://example.com/ns/1"
+      n1:bool="jing"/>
+</invalid>
+</testCase>
 </testSuite>

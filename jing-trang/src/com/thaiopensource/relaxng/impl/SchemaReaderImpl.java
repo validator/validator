@@ -28,7 +28,7 @@ public abstract class SchemaReaderImpl implements SchemaReader {
     RngProperty.DATATYPE_LIBRARY_FACTORY,
     RngProperty.CHECK_ID_IDREF,
     RngProperty.FEASIBLE,
-    WrapProperty.ATTRIBUTES,
+    WrapProperty.ATTRIBUTE_OWNER,
   };
 
   public Schema createSchema(InputSource in, PropertyMap properties)
@@ -41,7 +41,7 @@ public abstract class SchemaReaderImpl implements SchemaReader {
       dlf = new DatatypeLibraryLoader();
     try {
       Pattern start = SchemaBuilderImpl.parse(createParseable(xrc, in, eh), eh, dlf, spb,
-                                              properties.contains(WrapProperty.ATTRIBUTES));
+                                              properties.contains(WrapProperty.ATTRIBUTE_OWNER));
       return wrapPattern(start, spb, properties);
     }
     catch (IllegalSchemaException e) {
