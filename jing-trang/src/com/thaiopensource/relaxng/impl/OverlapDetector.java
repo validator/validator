@@ -5,7 +5,7 @@ import com.thaiopensource.xml.util.Name;
 class OverlapDetector implements NameClassVisitor {
   private final NameClass nc1;
   private final NameClass nc2;
-  private NameClass overlapExample = null;
+  private Name overlapExample = null;
 
   private static final String IMPOSSIBLE = "\u0000";
 
@@ -17,18 +17,8 @@ class OverlapDetector implements NameClassVisitor {
   }
 
   private void probe(Name name) {
-    if (nc1.contains(name) && nc2.contains(name)) {
-      String localName = name.getLocalName();
-      if (localName == IMPOSSIBLE) {
-        String ns = name.getNamespaceUri();
-        if (ns == IMPOSSIBLE)
-          overlapExample = new AnyNameClass();
-        else
-          overlapExample = new NsNameClass(ns);
-      }
-      else
-        overlapExample = new SimpleNameClass(name);
-    }
+    if (nc1.contains(name) && nc2.contains(name))
+      overlapExample = name;
   }
 
   public void visitChoice(NameClass nc1, NameClass nc2) {
@@ -64,15 +54,34 @@ class OverlapDetector implements NameClassVisitor {
   public void visitError() {
   }
 
-  static NameClass getOverlapExample(NameClass nc1, NameClass nc2) {
+  static void checkOverlap(NameClass nc1, NameClass nc2,
+                           String messageForName,
+                           String messageForNs,
+                           String messageForOther) throws RestrictionViolationException {
     if (nc2 instanceof SimpleNameClass) {
       SimpleNameClass snc = (SimpleNameClass)nc2;
-      return nc1.contains(snc.getName()) ? snc : null;
+      if (nc1.contains(snc.getName()))
+        throw new RestrictionViolationException(messageForName, snc.getName());
     }
-    if (nc1 instanceof SimpleNameClass) {
+    else if (nc1 instanceof SimpleNameClass) {
       SimpleNameClass snc = (SimpleNameClass)nc1;
-      return nc2.contains(snc.getName()) ? snc : null;
+      if (nc2.contains(snc.getName()))
+        throw new RestrictionViolationException(messageForName, snc.getName());
     }
-    return new OverlapDetector(nc1, nc2).overlapExample;
+    else {
+      Name name = new OverlapDetector(nc1, nc2).overlapExample;
+      if (name != null) {
+        String localName = name.getLocalName();
+        if (localName == IMPOSSIBLE) {
+          String ns = name.getNamespaceUri();
+          if (ns == IMPOSSIBLE)
+            throw new RestrictionViolationException(messageForOther);
+          else
+            throw new RestrictionViolationException(messageForNs, ns);
+        }
+        else
+          throw new RestrictionViolationException(messageForName, name);
+      }
+    }
   }
 }

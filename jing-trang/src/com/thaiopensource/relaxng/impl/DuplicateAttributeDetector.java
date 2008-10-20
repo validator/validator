@@ -31,16 +31,10 @@ class DuplicateAttributeDetector {
   }
 
   static private void checkAttributeOverlap(NameClass nc1, NameClass nc2) throws RestrictionViolationException {
-    NameClass overlapExample = OverlapDetector.getOverlapExample(nc1, nc2);
-    if (overlapExample == null)
-      return;
-    if (overlapExample instanceof SimpleNameClass)
-      throw new RestrictionViolationException("duplicate_attribute_name",
-                                              ((SimpleNameClass)overlapExample).getName());
-    if (overlapExample instanceof NsNameClass)
-      throw new RestrictionViolationException("duplicate_attribute_ns",
-                                              ((NsNameClass)overlapExample).getNamespaceUri());
-    throw new RestrictionViolationException("duplicate_attribute");
+    OverlapDetector.checkOverlap(nc1, nc2,
+                                 "duplicate_attribute_name",
+                                 "duplicate_attribute_ns",
+                                 "duplicate_attribute");
   }
   
   void startChoice() {
