@@ -147,6 +147,8 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
       catch (RestrictionViolationException e) {
         if (e.getName() != null)
           error(e.getMessageId(), NameFormatter.format(e.getName()), e.getLocator());
+        else if (e.getNamespaceUri() != null)
+          error(e.getMessageId(), e.getNamespaceUri(), e.getLocator());
         else
           error(e.getMessageId(), e.getLocator());
       }

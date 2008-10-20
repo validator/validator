@@ -35,4 +35,8 @@ class NsNameClass implements NameClass {
   public boolean isOpen() {
     return true;
   }
+
+  public String getNamespaceUri() {
+    return namespaceUri;
+  }
 }

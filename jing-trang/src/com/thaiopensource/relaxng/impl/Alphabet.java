@@ -19,9 +19,18 @@ class Alphabet {
   }
 
   void checkOverlap(Alphabet a) throws RestrictionViolationException {
-    if (nameClass != null
-	&& a.nameClass != null
-	&& OverlapDetector.overlap(nameClass, a.nameClass))
-      throw new RestrictionViolationException("interleave_element_overlap");
+    if (nameClass != null && a.nameClass != null) {
+      NameClass overlapExample = OverlapDetector.getOverlapExample(nameClass, a.nameClass);
+      if (overlapExample != null) {
+        if (overlapExample instanceof SimpleNameClass)
+          throw new RestrictionViolationException("interleave_element_overlap_name",
+                                                  ((SimpleNameClass)overlapExample).getName());
+        if (overlapExample instanceof NsNameClass)
+          throw new RestrictionViolationException("interleave_element_overlap_ns",
+                                                  ((NsNameClass)overlapExample).getNamespaceUri());
+        throw new RestrictionViolationException("interleave_element_overlap");
+      }
+    }
+
   }
 }

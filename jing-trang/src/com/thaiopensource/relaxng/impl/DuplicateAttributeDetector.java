@@ -18,21 +18,31 @@ class DuplicateAttributeDetector {
     }
   }
 
-  boolean addAttribute(NameClass nc) {
+  void addAttribute(NameClass nc) throws RestrictionViolationException {
     int lim = nameClasses.size();
     for (Alternative a = alternatives; a != null; a = a.parent) {
       for (int i = a.endIndex; i < lim; i++)
-	if (OverlapDetector.overlap(nc, (NameClass)nameClasses.elementAt(i)))
-	  return false;
+	checkAttributeOverlap(nc, (NameClass)nameClasses.elementAt(i));
       lim = a.startIndex;
     }
     for (int i = 0; i < lim; i++)
-      if (OverlapDetector.overlap(nc, (NameClass)nameClasses.elementAt(i)))
-	return false;
+      checkAttributeOverlap(nc, (NameClass)nameClasses.elementAt(i));
     nameClasses.addElement(nc);
-    return true;
   }
 
+  static private void checkAttributeOverlap(NameClass nc1, NameClass nc2) throws RestrictionViolationException {
+    NameClass overlapExample = OverlapDetector.getOverlapExample(nc1, nc2);
+    if (overlapExample == null)
+      return;
+    if (overlapExample instanceof SimpleNameClass)
+      throw new RestrictionViolationException("duplicate_attribute_name",
+                                              ((SimpleNameClass)overlapExample).getName());
+    if (overlapExample instanceof NsNameClass)
+      throw new RestrictionViolationException("duplicate_attribute_ns",
+                                              ((NsNameClass)overlapExample).getNamespaceUri());
+    throw new RestrictionViolationException("duplicate_attribute");
+  }
+  
   void startChoice() {
     alternatives = new Alternative(nameClasses.size(), alternatives);
   }
