@@ -11,5 +11,15 @@
   <depends module="convert-to-xsd"/>
   <depends module="convert-dtd"/>
   <compile/>
-  <jar main="com.thaiopensource.relaxng.translate.Driver"/>
+  <jar>
+    <manifest>
+      <attribute name="Main-Class" value="com/thaiopensource/relaxng/translate/Driver"/>
+    </manifest>
+    <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
+      <provider classname="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
+      <provider classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    </service>
+    <service type="org.relaxng.datatype.DatatypeLibraryFactory"
+	     provider="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+  </jar>
 </module>

@@ -8,7 +8,7 @@
   </mode>
   <mode name="schematron">
     <namespace ns="http://www.ascc.net/xml/schematron">
-      <validate schema="../src/com/thaiopensource/validate/schematron/resources/schematron.rnc"
+      <validate schema="../mod/schematron/src/main/com/thaiopensource/validate/schematron/resources/schematron.rnc"
                 schemaType="application/x-rnc"
                 useMode="#attach"/>
       <attach useMode="#attach"/>

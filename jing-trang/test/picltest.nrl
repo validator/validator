@@ -8,7 +8,7 @@
   </mode>
   <mode name="picl">
     <namespace ns="http://www.thaiopensource.com/validate/picl">
-      <validate schema="../src/com/thaiopensource/validate/picl/resources/picl.rnc"
+      <validate schema="../mod/picl/src/main/com/thaiopensource/validate/picl/resources/picl.rnc"
                 schemaType="application/x-rnc"
                 useMode="#attach"/>
       <attach useMode="#attach"/>

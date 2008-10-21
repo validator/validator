@@ -4,5 +4,6 @@
   <depends module="validate"/>
   <depends module="rng-parse"/>
   <depends lib="isorelax"/>
+  <depends lib="ant"/>
   <compile/>
 </module>

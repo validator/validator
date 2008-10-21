@@ -1,19 +1,10 @@
-<project name="trang" default="jar">
+<project name="trang" default="test">
 
 <property name="website.dir" value="build"/>
 <property name="dist.dir" value="build/dist"/>
 <property name="jar.dir" value="build"/>
-<property name="dtdinst.src" value="../dtdinst/src"/>
-<property name="jing.src" value="../src"/>
 <property name="build.dir" value="build"/>
-<property name="jing.gen.src" value="${build.dir}/../src"/>
 <property name="lib.dir" value="../lib"/>
-<property name="jing.excludes"
-          value="com/thaiopensource/relaxng/impl/**,
-                 com/thaiopensource/relaxng/util/**,
-                 com/thaiopensource/relaxng/jarv/**,
-                 com/thaiopensource/relaxng/*.java,
-                 com/thaiopensource/validate/**"/>
 
 <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
   <classpath>
@@ -24,34 +15,7 @@
 <target name="init">
   <mkdir dir="${build.dir}"/>
   <mkdir dir="${website.dir}"/>
-  <property file="src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-</target>
-
-<target name="compile" depends="init">
-  <mkdir dir="${build.dir}/classes"/>
-  <javac srcdir="src:${dtdinst.src}:${jing.src}:${jing.gen.src}"
-         destdir="${build.dir}/classes"
-         classpath="${lib.dir}/xercesImpl.jar"
-         excludes="${jing.excludes},com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"
-	 source="1.5"/>
-</target>
-
-<target name="jar" depends="compile">
-  <echo file="${build.dir}/trang-manifest.txt">Manifest-Version: 1.0
-Main-Class: com/thaiopensource/relaxng/translate/Driver
-</echo>
-
-  <jar jarfile="${jar.dir}/trang.jar" manifest="${build.dir}/trang-manifest.txt">
-    <fileset dir="${build.dir}/classes"/>
-    <fileset dir="src" includes="**/*.properties"/>
-    <fileset dir="${dtdinst.src}" includes="**/*.properties"/>
-    <fileset dir="${jing.src}"
-             includes="**/*.properties,
-                       META-INF/services/org.relaxng.datatype.DatatypeLibraryFactory,
-                       META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"
-             excludes="${jing.excludes}"/>
-  </jar>
-  <chmod perm="+x" file="${jar.dir}/trang.jar"/>
+  <property file="../mod/trang/src/main/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
 </target>
 
 <target name="compact-split" depends="init,check-compact-split" unless="compact-split-not-required">
@@ -88,7 +52,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   </uptodate>
 </target>
 
-<target name="compact-test" depends="jar,compact-split">
+<target name="compact-test" depends="compact-split">
   <java classname="com.thaiopensource.relaxng.translate.test.CompactTestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/compact-test/out.log"/>
     <arg value="${build.dir}/compact-test"/>
@@ -100,7 +64,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   </java>
 </target>
 
-<target name="xsd-test" depends="jar,xsd-split">
+<target name="xsd-test" depends="xsd-split">
   <java classname="com.thaiopensource.relaxng.translate.test.CompactTestDriver" fork="yes" failonerror="yes">
     <arg value="${build.dir}/xsd-test/out.log"/>
     <arg value="${build.dir}/xsd-test"/>
@@ -127,19 +91,7 @@ Main-Class: com/thaiopensource/relaxng/translate/Driver
   <replace dir="${website.dir}" includes="trang.html,trang-manual.html" token="@VERSION@" value="${version}"/>
 </target>
 
-<target name="dist" depends="website,jar,test,xsd-test">
-  <zip zipfile="${build.dir}/src.zip">
-    <fileset dir="src" includes="**/*.java,**/*.properties"/>
-    <fileset dir="${dtdinst.src}" includes="**/*.java,**/*.properties"/>
-    <fileset dir="${jing.src}"
-             includes="**/*.java,**/*.jj,**/*.properties,
-                       META-INF/services/org.relaxng.datatype.DatatypeLibraryFactory,
-                       META-INF/services/com.thaiopensource.datatype.xsd.regex.RegexEngine"
-             excludes="${jing.excludes}"/>
-    <fileset dir="${jing.gen.src}" includes="**/*.java"/>
-    <zipfileset dir="${build.dir}" includes="trang-manifest.txt"
-                fullpath="META-INF/MANIFEST.MF"/>
-  </zip>
+<target name="dist" depends="website,test,xsd-test">
   <zip zipfile="${dist.dir}/trang-${version}.zip">
     <zipfileset dir="." includes="copying.txt" prefix="trang-${version}"/>
     <zipfileset dir="${website.dir}" includes="trang-manual.html" prefix="trang-${version}"/>

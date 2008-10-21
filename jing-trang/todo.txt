@@ -1,22 +1,23 @@
-Modularize the project structure
+Make regex-test target work.
+
+Rename Jing.ipr to jing-trang.ipr.
+
+Move tests into modules.
 
 Think about what is the right source attribute for javac.
 
-Check we have the right version of xerces.
+Make jdk 1.4 RegexEngineImpl fail on instantiation if the JDK has different
+handling of surrogates than is needed (i.e. for Sun JDK > 1.4).
 
-Fix bug with regex and surrrogates in JDK > 1.4.
+Make jdk 1.4 RegexEngineImple work with JDK > 1.4.
 
 Make GCJ stuff work again.
 
-Make sure the copying.html file is in place.
+Make sure the copying.html file is in place for trang.
 
 Merge Jing changes from oNVDL.
 
-Use JAXP-supplied XSLT implementation.
-
-Get javadoc to link to current JDK. 
-
-Update doccheck.jar.
+Use JAXP-supplied XSLT implementation. Get rid of saxon dependency.
 
 Use Xsltc from Xalan.
 
@@ -40,8 +41,6 @@ Allow jing to read from stdin.
 Put jing/trang man pages online.
 
 Add DTD validator
-
-Add build.xml for jing.
 
 Provide a validate method on Validator so that we can avoid messing
 with threads in some cases.

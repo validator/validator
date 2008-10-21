@@ -1,7 +1,7 @@
-<project name="jing-trang" default="compile">
+<project name="jing-trang" default="jar">
 
 <property name="lib.dir" value="lib"/>
-<property name="build.dir" value="${topbuild.dir}"/>
+<property name="build.dir" value="${basedir}/build"/>
 
 <property name="moddir" value="mod"/>
 <property name="modfile" value="mod.xml"/>
@@ -42,6 +42,15 @@
   <xslt style="build.xsl" in="modules.xml" out="modbuild.xml"/>
 </target>
 
+<target name="jar" depends="modbuild">
+  <ant antfile="modbuild.xml" target="jar"/>
+  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
+    <classpath>
+      <pathelement location="${build.dir}/jing.jar"/>
+    </classpath>
+  </taskdef>
+</target>
+
 <target name="compile" depends="modbuild">
   <ant antfile="modbuild.xml" target="compile"/>
 </target>
@@ -50,35 +59,21 @@
   <ant antfile="modbuild.xml" target="gen"/>
 </target>
 
+<target name="iml">
+  <xslt style="iml.xsl"
+	includes="${moddir}/*/${modfile}"
+	filedirparameter="name"
+	destdir=".">
+    <regexpmapper from="mod/([-a-zA-Z0-9_]*)/mod.xml"
+		  to="mod/\1/\1.iml"
+		  handledirsep="true"/>
+  </xslt>
+</target>
+
 <target name="init">
   <mkdir dir="${build.dir}"/>
   <mkdir dir="${build.dir}/dist"/>
-  <property file="src/com/thaiopensource/relaxng/util/resources/Version.properties"/>
-  <condition property="linux">
-    <os family="unix"/>
-  </condition>
-</target>
-
-<target name="jar" depends="compile" description="Build jing.jar" >
-
-  <echo file="${build.dir}/jing-manifest.txt">Manifest-Version: 1.0
-Main-Class: com/thaiopensource/relaxng/util/Driver
-Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
-</echo>
-
-  <jar jarfile="${build.dir}/jing.jar" manifest="${build.dir}/jing-manifest.txt">
-    <fileset dir="${build.dir}/classes"/>
-    <fileset dir="src" includes="**/resources/*,META-INF/services/*"/>
-  </jar>
-
-  <chmod perm="+x" file="${build.dir}/jing.jar"/>
-
-  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-    </classpath>
-  </taskdef>
-
+  <property file="mod/rng-validate/src/main/com/thaiopensource/relaxng/util/resources/Version.properties"/>
 </target>
 
 <target name="validate" depends="jar" description="Validate all XML files" >
@@ -107,7 +102,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </jing>
 </target>
 
-<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,picl-test,xsd-test,regex-test"
+<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,picl-test,xsd-test,regex-test,trang-test"
         description="Test all aspects of validation"/>
 
 <target name="spec-split" depends="init, check-spec-split" unless="spec-split-not-required">
@@ -289,9 +284,11 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <jing rngfile="test/regextest.rnc" compactsyntax="true">
     <fileset dir="test" includes="regextest.xml"/>
   </jing>
+<!--
   <ant antfile="regex-build.xml" target="test">
     <property name="classes.dir" value="${build.dir}/regex-classes"/>
   </ant>
+-->
 </target>
 
 <target name="xerces-regex-test" depends="jar">
@@ -306,6 +303,14 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 <target name="full-regex-test" description="Test (time-consumingly) the regex implementation" >
   <ant antfile="regex-build.xml" target="full-test">
     <property name="classes.dir" value="${build.dir}/regex-classes"/>
+  </ant>
+</target>
+
+<target name="trang-test" depends="jar" description="Test Trang" >
+  <ant dir="trang" target="test">
+    <property name="build.dir" value="${build.dir}/trang"/>
+    <property name="jar.dir" value="${build.dir}"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
   </ant>
 </target>
 

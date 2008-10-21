@@ -43,7 +43,7 @@
   <element name="xml">
     <choice>
       <ref name="anyElement"/>
-      <externalRef href="../src/com/thaiopensource/validate/nrl/resources/nrl.rng"/>
+      <externalRef href="../mod/nvdl/src/main/com/thaiopensource/validate/nrl/resources/nrl.rng"/>
     </choice>
   </element>
 </define>

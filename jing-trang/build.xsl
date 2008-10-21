@@ -29,6 +29,7 @@
       </xsl:attribute>
     </target>
     <target name="compile" depends="jing::compile-main,trang::compile-main"/>
+    <target name="jar" depends="jing::jar,trang::jar"/>
   </project>
 </xsl:template>
 
@@ -53,7 +54,8 @@
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/main"/>
     <xsl:if test="compile">
-      <javac destdir="{$build}/mod/{$name}/classes/main">
+      <javac destdir="{$build}/mod/{$name}/classes/main"
+	     includeAntRuntime="no">
 	<src>
 	  <pathelement location="mod/{$name}/src/main"/>
 	  <xsl:if test="ant/@precompile">
@@ -82,7 +84,8 @@
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/test"/>
     <xsl:if test="compile[@test]">
-      <javac destdir="{$build}/mod/{$name}/classes/test">
+      <javac destdir="{$build}/mod/{$name}/classes/test"
+	     includeAntRuntime="no">
 	<src>
 	  <pathelement location="mod/{$name}/src/test"/>
 	</src>
@@ -99,7 +102,19 @@
       </javac>
     </xsl:if>
   </target>
+  <target name="{$name}::jar" depends="{$name}::compile-main">
+    <jar jarfile="{$build}/{$name}.jar">
+      <xsl:copy-of select="jar/*"/>
+      <xsl:if test="compile">
+	<fileset dir="{$build}/mod/{$name}/classes/main"/>
+	<fileset dir="mod/{$name}/src/main" includes="**/resources/*"/>
+      </xsl:if>
+      <xsl:for-each select="depends[@module]">
+	<fileset dir="{$build}/mod/{@module}/classes/main"/>
+	<fileset dir="mod/{@module}/src/main" includes="**/resources/*"/>
+      </xsl:for-each>
+    </jar>
+  </target>
 </xsl:template>
-
 
 </xsl:stylesheet>
