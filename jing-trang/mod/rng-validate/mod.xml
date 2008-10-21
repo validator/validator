@@ -1,0 +1,8 @@
+<module>
+  <depends module="util"/>
+  <depends module="datatype"/>
+  <depends module="validate"/>
+  <depends module="rng-parse"/>
+  <depends lib="isorelax"/>
+  <compile/>
+</module>

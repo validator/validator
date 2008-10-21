@@ -1,0 +1,5 @@
+<module>
+  <depends module="util"/>
+  <depends lib="isorelax"/>
+  <compile/>
+</module>

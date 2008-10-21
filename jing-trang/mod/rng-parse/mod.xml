@@ -1,0 +1,19 @@
+<module>
+  <depends module="util"/>
+  <depends module="datatype"/>
+  <compile/>
+  <ant precompile="rng-parse::gen">
+    <target name="rng-parse::gen">
+      <mkdir dir="${build.dir}/mod/rng-parse/gensrc/main/com/thaiopensource/relaxng/parse/compact"/>
+      <javacc target="mod/rng-parse/src/main/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj"
+              outputdirectory="${build.dir}/mod/rng-parse/gensrc/main/com/thaiopensource/relaxng/parse/compact"
+              javacchome="lib" />
+      <delete quiet="true">
+	<fileset dir="${build.dir}/mod/rng-parse/gensrc/main/com/thaiopensource/relaxng/parse/compact"
+		 includes="JavaCharStream.java"/>
+      </delete>
+      <replace file="${build.dir}/mod/rng-parse/gensrc/main/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
+	       token="java.io.IOException" value="EOFException"/>
+    </target>
+  </ant>
+</module>

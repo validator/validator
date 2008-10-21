@@ -1,0 +1,8 @@
+<module>
+  <depends module="util"/>
+  <depends module="validate"/>
+  <depends module="rng-validate"/>
+  <depends lib="xalan"/>
+  <depends lib="saxon"/>
+  <compile/>
+</module>

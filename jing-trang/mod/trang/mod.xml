@@ -1,0 +1,15 @@
+<module>
+  <depends module="util"/>
+  <depends module="regex"/>
+  <depends module="datatype"/>
+  <depends module="xsd-datatype"/>
+  <depends module="rng-parse"/>
+  <depends module="dtd-parse"/>
+  <depends module="infer"/>
+  <depends module="rng-schema"/>
+  <depends module="convert-from-xml"/>
+  <depends module="convert-to-xsd"/>
+  <depends module="convert-dtd"/>
+  <compile/>
+  <jar main="com.thaiopensource.relaxng.translate.Driver"/>
+</module>

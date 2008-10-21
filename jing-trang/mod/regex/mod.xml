@@ -1,0 +1,38 @@
+<module>
+  <depends module="util"/>
+  <depends lib="xercesImpl"/>
+  <compile test="yes"/>
+  <ant precompile="regex::gen">
+    <target name="regex::gen" depends="regex::check-gen" unless="regex::gen-ok">
+      <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4"/>
+      <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.NamingExceptionsGen"
+	    fork="yes"
+	    failonerror="yes">
+	<arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.NamingExceptions"/>
+	<arg value="${build.dir}/mod/regex/gensrc/main"/>
+	<classpath>
+	  <pathelement location="${build.dir}/mod/regex-gen/classes/main"/>
+	  <pathelement location="${build.dir}/mod/util/classes/main"/>
+	</classpath>
+      </java>
+      <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.CategoriesGen"
+	    fork="yes"
+	    failonerror="yes">
+	<arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.Categories"/>
+	<arg value="${build.dir}/mod/regex/gensrc/main"/>
+	<arg value="lib/UnicodeData-3.1.0.txt"/>
+	<classpath>
+	  <pathelement location="${build.dir}/mod/regex-gen/classes/main"/>
+	  <pathelement location="${build.dir}/mod/util/classes/main"/>
+	</classpath>
+      </java>
+    </target>
+    
+    <target name="regex::check-gen" depends="regex-gen::compile-main">
+      <uptodate property="regex::gen-ok"
+		targetfile="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4/Categories.java">
+	<srcfiles dir="${build.dir}/mod/regex-gen/classes/main" includes="**/*.class"/>
+      </uptodate>
+    </target>
+  </ant>
+</module>

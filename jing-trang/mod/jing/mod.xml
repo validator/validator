@@ -1,0 +1,13 @@
+<module>
+  <depends module="util"/>
+  <depends module="regex"/>
+  <depends module="datatype"/>
+  <depends module="xsd-datatype"/>
+  <depends module="validate"/>
+  <depends module="rng-parse"/>
+  <depends module="rng-validate"/>
+  <depends module="nvdl"/>
+  <depends module="schematron"/>
+  <depends module="xerces"/>
+  <jar main="com.thaiopensource.relaxng.util.Driver"/>
+</module>
