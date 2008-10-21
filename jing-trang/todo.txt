@@ -1,6 +1,8 @@
 Make regex-test target work.
 
-Rename Jing.ipr to jing-trang.ipr.
+Add language level info to mod.xml.
+
+Set some more svn:ignore properties.
 
 Move tests into modules.
 
