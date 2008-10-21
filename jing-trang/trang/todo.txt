@@ -1,9 +1,5 @@
-Preserve directory structure on output.
-
-Detect unencodable characters in comments in XmlWriter.  Also in
-attribute names (from namespace prefixes).
-
-Ant task.
+Detect unencodable characters in attribute names (from namespace
+prefixes) in XmlWriter.
 
 Would it be better to have a different representation for prefixes?  Perhaps
 a schema document level map with overrides.  What about when annotations get
