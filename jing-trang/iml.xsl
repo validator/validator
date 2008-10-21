@@ -10,7 +10,7 @@
 <xsl:template match="module">
   <module relativePaths="true" type="JAVA_MODULE" version="4">
     <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5"
-	       inherit-compiler-output="true">
+	       inherit-compiler-output="false">
       <exclude-output />
       <output url="file://$MODULE_DIR$/../../build/{$name}/classes/main"/>
       <output-test url="file://$MODULE_DIR$/../../build/{$name}/classes/test"/>
