@@ -1,11 +1,54 @@
-<project name="jing" default="all">
+<project name="jing-trang" default="compile">
 
 <property name="lib.dir" value="lib"/>
-
-<property name="topbuild.dir" value="${basedir}/build"/>
 <property name="build.dir" value="${topbuild.dir}"/>
 
-<target name="all" depends="test, trang-test, validate"/>
+<property name="moddir" value="mod"/>
+<property name="modfile" value="mod.xml"/>
+
+<target name="check-modules">
+  <uptodate property="modules-ok" targetfile="modules.xml">
+    <srcresources>
+      <dirset dir="mod" includes=".,*"/>
+    </srcresources>
+  </uptodate>
+</target>
+
+<target name="modules" depends="check-modules" unless="modules-ok">
+  <pathconvert property="modfrag" pathsep="&lt;/module>&#xA;&lt;module>">
+    <fileset dir="${moddir}">
+      <include name="*/${modfile}"/>
+    </fileset>
+    <globmapper from="${basedir}/${moddir}/*/${modfile}"
+		to="*"
+		handledirsep="true"/>
+  </pathconvert>
+
+  <echo file="modules.xml" encoding="UTF-8">&lt;modules>
+&lt;module>${modfrag}&lt;/module>
+&lt;/modules></echo>
+
+</target>
+
+<target name="check-modbuild">
+  <uptodate property="modbuild-ok" targetfile="modbuild.xml">
+    <srcfiles dir="${moddir}" includes="*/${modfile}"/>
+    <srcfiles file="build.xsl"/>
+    <srcfiles file="modules.xml"/>
+  </uptodate>
+</target>
+
+<target name="modbuild" depends="modules,check-modbuild" unless="modbuild-ok">
+  <xslt style="build.xsl" in="modules.xml" out="modbuild.xml"/>
+</target>
+
+<target name="compile" depends="modbuild">
+  <ant antfile="modbuild.xml" target="compile"/>
+</target>
+
+<target name="gen" depends="modbuild">
+  <ant antfile="modbuild.xml" target="gen"/>
+</target>
 
 <target name="init">
   <mkdir dir="${build.dir}"/>
@@ -14,38 +57,6 @@
   <condition property="linux">
     <os family="unix"/>
   </condition>
-</target>
-
-<target name="compile-grammar" depends="init"
-        description="Compile the JavaCC grammar for the compact syntax" >
- <mkdir dir="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"/>
- <javacc target="src/com/thaiopensource/relaxng/parse/compact/CompactSyntax.jj"
-         outputdirectory="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"
-         javacchome="lib"
-         />
- <delete quiet="true">
-  <fileset dir="${build.dir}/src/com/thaiopensource/relaxng/parse/compact"
-           includes="JavaCharStream.java"/>
- </delete>
- <replace file="${build.dir}/src/com/thaiopensource/relaxng/parse/compact/CompactSyntaxTokenManager.java"
-   token="java.io.IOException" value="EOFException"/>
-</target>
-
-<target name="regex-gen" depends="init">
-  <ant antfile="regex-build.xml" target="gen">
-    <property name="UnicodeData.file" value="lib/UnicodeData-3.1.0.txt"/>
-  </ant>
-</target>
-
-<target name="gen" depends="compile-grammar,regex-gen"/>
-
-<target name="compile" depends="gen">
-  <mkdir dir="${build.dir}/classes"/>
-  <javac srcdir="src:${build.dir}/src"
-	 destdir="${build.dir}/classes"
-	 excludes="com/thaiopensource/datatype/xsd/regex/jdk1_4/gen/*.java"
-	 classpath="${lib.dir}/xercesImpl.jar:${lib.dir}/saxon.jar:${lib.dir}/xalan.jar"
-	 target="1.1" source="1.2"/>
 </target>
 
 <target name="jar" depends="compile" description="Build jing.jar" >
@@ -274,12 +285,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   </xslt>
 </target>
 
-<target name="regex-jar">
-  <ant antfile="regex-build.xml" target="jar">
-    <property name="classes.dir" value="${build.dir}/regex-classes"/>
-  </ant>
-</target>
-
 <target name="regex-test" depends="jar" description="Test the regex implementation" >
   <jing rngfile="test/regextest.rnc" compactsyntax="true">
     <fileset dir="test" includes="regextest.xml"/>
@@ -301,18 +306,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
 <target name="full-regex-test" description="Test (time-consumingly) the regex implementation" >
   <ant antfile="regex-build.xml" target="full-test">
     <property name="classes.dir" value="${build.dir}/regex-classes"/>
-  </ant>
-</target>
-
-<target name="regex-dist" depends="init">
-  <ant antfile="regex-build.xml" target="dist">
-    <property name="classes.dir" value="${build.dir}/regex-classes"/>
-    <property name="apidoc.dir" value="${build.dir}/regex-apidoc"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="build.xml" value="regex-build.xml"/>
-    <property name="UnicodeData.file" value="lib/UnicodeData-3.1.0.txt"/>
-    <property name="doc.src.dir" value="doc/regex"/>
-    <property name="doc.build.dir" value="${build.dir}/regex-doc"/>
   </ant>
 </target>
 
@@ -374,113 +367,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <replace file="${build.dir}/jing.html" token="@VERSION@" value="${version}"/>
 </target>
 
-<target name="trang-jar" depends="jar" description="Build trang.jar" >
-  <ant dir="trang" target="jar">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-test" depends="jar" description="Test Trang" >
-  <ant dir="trang" target="test">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-compact-test" depends="jar" description="Test compact to XML syntax conversion" >
-  <ant dir="trang" target="compact-test">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-xsd-test" depends="jar" description="Test compact to XSD syntax conversion" >
-  <ant dir="trang" target="xsd-test">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-validate" depends="jar">
-  <ant dir="trang" target="validate">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-website" depends="jar">
-  <ant dir="trang" target="website">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="trang-dist" depends="jar">
-  <ant dir="trang" target="dist">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="website.dir" value="${build.dir}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-    <property file="trang/src/com/thaiopensource/relaxng/translate/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="dtdinst-test" depends="init">
-  <ant dir="dtdinst" target="test">
-    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
-    <property name="website.dir" value="${build.dir}/dtdinst"/>
-    <property name="dist.dir" value="${build.dir}"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="dtdinst-website" depends="init">
-  <ant dir="dtdinst" target="website">
-    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
-    <property name="website.dir" value="${build.dir}/dtdinst"/>
-    <property name="dist.dir" value="${build.dir}"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
-  </ant>
-</target>
-
-<target name="dtdinst-dist" depends="trang-jar">
-  <ant dir="dtdinst" target="dist">
-    <property name="build.dir" value="${build.dir}/dtdinst-build"/>
-    <property name="website.dir" value="${build.dir}/dtdinst"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property file="dtdinst/src/com/thaiopensource/xml/dtd/app/resources/Version.properties"/>
-  </ant>
-</target>
-
 <target name="jing-dist" depends="jar,test,validate,javadoc,doc,datatype-sample">
   <mkdir dir="${build.dir}/jing-bin"/>
   <copy todir="${build.dir}/jing-bin">
@@ -534,7 +420,7 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
   <checksum file="${build.dir}/dist/jing-${version}.zip" fileext=".md5"/>
 </target>
 
-<target name="website" depends="validate,javadoc,datatype-sample,doc,trang-website,dtdinst-website"
+<target name="website" depends="validate,javadoc,datatype-sample,doc"
   description="Build a .tar.gz containing the complete relaxng website" >
   <copy todir="${build.dir}">
     <fileset dir="." includes="xhtml/**/*.rng,xhtml/index.html"/>
@@ -556,8 +442,6 @@ Class-Path: xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar
     includes="testSuite.zip,copying.txt,*.html,*.xsl,*.rng,xhtml/**,api/**,compact/**,dtdinst/**"/>
   <gzip zipfile="${build.dir}/dist/relaxng.tar.gz" src="${build.dir}/relaxng.tar"/>
 </target>
-
-<target name="dist" depends="jing-dist,dtdinst-dist,regex-dist,trang-dist,website"/>
 
 <target name="clean" description="Remove all files created during the build process">
   <delete dir="${build.dir}"/>
