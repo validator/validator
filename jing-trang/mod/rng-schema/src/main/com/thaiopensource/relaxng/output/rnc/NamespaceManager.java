@@ -171,6 +171,7 @@ class NamespaceManager {
     // maps namespace to preferred non-empty prefix
     Map<String, String> nsMap = new HashMap<String, String>();
     prefixMap.put("xml", WellKnownNamespaces.XML);
+    nsMap.put(WellKnownNamespaces.XML, "xml");
     requiredNamespaces.remove(WellKnownNamespaces.XML);
     List<Binding> bindingList = new Vector<Binding>();
     bindingList.addAll(bindingUsageMap.keySet());
