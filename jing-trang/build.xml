@@ -55,7 +55,7 @@
   <ant antfile="modbuild.xml" target="compile"/>
 </target>
 
-<target name="gen" depends="modbuild">
+<target name="gen" depends="modbuild,iml">
   <ant antfile="modbuild.xml" target="gen"/>
 </target>
 
