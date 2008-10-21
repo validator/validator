@@ -11,10 +11,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ant" level="project" />
-    <orderEntry type="library" name="xerces" level="project" />
     <orderEntry type="library" name="saxon" level="project" />
     <orderEntry type="library" name="isorelax" level="project" />
     <orderEntry type="library" name="xalan" level="project" />
+    <orderEntry type="library" name="xercesImpl" level="project" />
     <orderEntryProperties />
   </component>
 </module>

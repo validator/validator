@@ -327,13 +327,6 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="xerces">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/xercesImpl.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="saxon">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/saxon.jar!/" />
@@ -351,6 +344,13 @@
     <library name="xalan">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/xalan.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="xercesImpl">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/xercesImpl.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
