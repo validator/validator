@@ -309,7 +309,7 @@
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="1.6" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/idea-build" />
+    <output url="file://$PROJECT_DIR$/build" />
   </component>
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
