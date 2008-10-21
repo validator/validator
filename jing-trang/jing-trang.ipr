@@ -64,7 +64,6 @@
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
-    <scope name="trang" pattern="file[Jing]:trang/src//*" />
   </component>
   <component name="EclipseCompilerSettings">
     <option name="DEBUGGING_INFO" value="true" />
@@ -294,7 +293,6 @@
       <module fileurl="file://$PROJECT_DIR$/mod/datatype/datatype.iml" filepath="$PROJECT_DIR$/mod/datatype/datatype.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/infer/infer.iml" filepath="$PROJECT_DIR$/mod/infer/infer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/jing/jing.iml" filepath="$PROJECT_DIR$/mod/jing/jing.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/nvdl/nvdl.iml" filepath="$PROJECT_DIR$/mod/nvdl/nvdl.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/picl/picl.iml" filepath="$PROJECT_DIR$/mod/picl/picl.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/regex/regex.iml" filepath="$PROJECT_DIR$/mod/regex/regex.iml" />
@@ -307,6 +305,7 @@
       <module fileurl="file://$PROJECT_DIR$/mod/util/util.iml" filepath="$PROJECT_DIR$/mod/util/util.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/validate/validate.iml" filepath="$PROJECT_DIR$/mod/validate/validate.iml" />
       <module fileurl="file://$PROJECT_DIR$/mod/xerces/xerces.iml" filepath="$PROJECT_DIR$/mod/xerces/xerces.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" filepath="$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="1.6" project-jdk-type="JavaSDK">
