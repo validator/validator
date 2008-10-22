@@ -9,8 +9,10 @@
 
 <xsl:template match="module">
   <module relativePaths="true" type="JAVA_MODULE" version="4">
-    <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5"
-	       inherit-compiler-output="false">
+    <component name="NewModuleRootManager" inherit-compiler-output="false">
+      <xsl:if test="java5">
+	<xsl:attribute name="LANGUAGE_LEVEL">JDK_1_5</xsl:attribute>
+      </xsl:if>
       <exclude-output />
       <output url="file://$MODULE_DIR$/../../build/{$name}/classes/main"/>
       <output-test url="file://$MODULE_DIR$/../../build/{$name}/classes/test"/>
@@ -20,7 +22,7 @@
 			isTestSource="false" />
 	</content>
       </xsl:if>
-      <content url="file://$MODULE_DIR$/src/">
+      <content url="file://$MODULE_DIR$/">
 	<sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
 	<xsl:if test="compile[@test]">
 	  <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />

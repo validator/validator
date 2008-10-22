@@ -3,5 +3,6 @@
   <depends module="dtd-parse"/>
   <depends module="rng-parse"/>
   <depends module="rng-schema"/>
+  <java5/>
   <compile/>
 </module>

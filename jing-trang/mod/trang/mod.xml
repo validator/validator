@@ -10,7 +10,8 @@
   <depends module="convert-from-xml"/>
   <depends module="convert-to-xsd"/>
   <depends module="convert-dtd"/>
-  <compile java="1.5"/>
+  <java5/>
+  <compile/>
   <jar>
     <manifest>
       <attribute name="Main-Class" value="com/thaiopensource/relaxng/translate/Driver"/>

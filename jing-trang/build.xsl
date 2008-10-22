@@ -54,8 +54,8 @@
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/main"/>
     <xsl:if test="compile">
-      <javac destdir="{$build}/mod/{$name}/classes/main"
-	     includeAntRuntime="no">
+      <javac destdir="{$build}/mod/{$name}/classes/main">
+	<xsl:call-template name="javac-attributes"/>
 	<src>
 	  <pathelement location="mod/{$name}/src/main"/>
 	  <xsl:if test="ant/@precompile">
@@ -84,8 +84,8 @@
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/test"/>
     <xsl:if test="compile[@test]">
-      <javac destdir="{$build}/mod/{$name}/classes/test"
-	     includeAntRuntime="no">
+      <javac destdir="{$build}/mod/{$name}/classes/test">
+	<xsl:call-template name="javac-attributes"/>
 	<src>
 	  <pathelement location="mod/{$name}/src/test"/>
 	</src>
@@ -115,6 +115,20 @@
       </xsl:for-each>
     </jar>
   </target>
+</xsl:template>
+
+<xsl:template name="javac-attributes">
+  <xsl:attribute name="includeAntRuntime">no</xsl:attribute>
+  <xsl:choose>
+    <xsl:when test="java5">
+      <xsl:attribute name="source">1.5</xsl:attribute>
+      <xsl:attribute name="target">1.5</xsl:attribute>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:attribute name="source">1.3</xsl:attribute>
+      <xsl:attribute name="target">1.1</xsl:attribute>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 </xsl:stylesheet>

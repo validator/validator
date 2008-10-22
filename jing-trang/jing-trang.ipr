@@ -286,26 +286,25 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mod/convert/convert.iml" filepath="$PROJECT_DIR$/mod/convert/convert.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" filepath="$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" filepath="$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" filepath="$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/datatype/datatype.iml" filepath="$PROJECT_DIR$/mod/datatype/datatype.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/infer/infer.iml" filepath="$PROJECT_DIR$/mod/infer/infer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/nvdl/nvdl.iml" filepath="$PROJECT_DIR$/mod/nvdl/nvdl.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/picl/picl.iml" filepath="$PROJECT_DIR$/mod/picl/picl.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/regex/regex.iml" filepath="$PROJECT_DIR$/mod/regex/regex.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/regex-gen/regex-gen.iml" filepath="$PROJECT_DIR$/mod/regex-gen/regex-gen.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/rng-parse/rng-parse.iml" filepath="$PROJECT_DIR$/mod/rng-parse/rng-parse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/rng-schema/rng-schema.iml" filepath="$PROJECT_DIR$/mod/rng-schema/rng-schema.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/rng-validate/rng-validate.iml" filepath="$PROJECT_DIR$/mod/rng-validate/rng-validate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/schematron/schematron.iml" filepath="$PROJECT_DIR$/mod/schematron/schematron.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/trang/trang.iml" filepath="$PROJECT_DIR$/mod/trang/trang.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/util/util.iml" filepath="$PROJECT_DIR$/mod/util/util.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/validate/validate.iml" filepath="$PROJECT_DIR$/mod/validate/validate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/xerces/xerces.iml" filepath="$PROJECT_DIR$/mod/xerces/xerces.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" filepath="$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" filepath="$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" filepath="$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" filepath="$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/datatype/datatype.iml" filepath="$PROJECT_DIR$/mod/datatype/datatype.iml" group="Common" />
+      <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/infer/infer.iml" filepath="$PROJECT_DIR$/mod/infer/infer.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/nvdl/nvdl.iml" filepath="$PROJECT_DIR$/mod/nvdl/nvdl.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/picl/picl.iml" filepath="$PROJECT_DIR$/mod/picl/picl.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/regex/regex.iml" filepath="$PROJECT_DIR$/mod/regex/regex.iml" group="Common" />
+      <module fileurl="file://$PROJECT_DIR$/mod/regex-gen/regex-gen.iml" filepath="$PROJECT_DIR$/mod/regex-gen/regex-gen.iml" group="Common" />
+      <module fileurl="file://$PROJECT_DIR$/mod/rng-parse/rng-parse.iml" filepath="$PROJECT_DIR$/mod/rng-parse/rng-parse.iml" group="Common" />
+      <module fileurl="file://$PROJECT_DIR$/mod/rng-schema/rng-schema.iml" filepath="$PROJECT_DIR$/mod/rng-schema/rng-schema.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/rng-validate/rng-validate.iml" filepath="$PROJECT_DIR$/mod/rng-validate/rng-validate.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/schematron/schematron.iml" filepath="$PROJECT_DIR$/mod/schematron/schematron.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/trang/trang.iml" filepath="$PROJECT_DIR$/mod/trang/trang.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/util/util.iml" filepath="$PROJECT_DIR$/mod/util/util.iml" group="Common" />
+      <module fileurl="file://$PROJECT_DIR$/mod/validate/validate.iml" filepath="$PROJECT_DIR$/mod/validate/validate.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/xerces/xerces.iml" filepath="$PROJECT_DIR$/mod/xerces/xerces.iml" group="Jing" />
+      <module fileurl="file://$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" filepath="$PROJECT_DIR$/mod/xsd-datatype/xsd-datatype.iml" group="Common" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="1.6" project-jdk-type="JavaSDK">
