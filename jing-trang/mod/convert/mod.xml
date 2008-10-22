@@ -1,4 +1,0 @@
-<module>
-  <depends module="util"/>
-  <compile/>
-</module>
