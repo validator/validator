@@ -2391,6 +2391,58 @@ start = creator
 ]]></incorrect>
 </compact>
 </testCase>
+<testCase>
+<compact>
+<correct><![CDATA[namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+start = element rng:test { nonXMLForeignAttribute+ }
+nonXMLForeignAttribute = attribute * - xml:* { text }
+xmlAttribute =
+  attribute xml:lang { text }
+  | attribute xml:space { "default" | "preserve" }
+  | attribute xml:base { xsd:anyURI }
+]]></correct>
+</compact>
+<xml>
+<correct>
+<grammar ns="http://www.w3.org/XML/1998/namespace" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+  xmlns="http://relaxng.org/ns/structure/1.0" 
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="rng:test">
+      <oneOrMore>
+        <ref name="nonXMLForeignAttribute"/>
+      </oneOrMore>
+    </element>
+  </start>
+  <define name="nonXMLForeignAttribute">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName/>
+        </except>
+      </anyName>
+    </attribute>
+  </define>
+  <define name="xmlAttribute">
+    <choice>
+      <attribute name="xml:lang"/>
+      <attribute name="xml:space">
+        <choice>
+          <value>default</value>
+          <value>preserve</value>
+        </choice>
+      </attribute>
+      <attribute name="xml:base">
+        <data type="anyURI"/>
+      </attribute>
+    </choice>
+  </define>
+</grammar>
+</correct>
+</xml>
+</testCase>
 <!--
 <testCase>
 <compact>
