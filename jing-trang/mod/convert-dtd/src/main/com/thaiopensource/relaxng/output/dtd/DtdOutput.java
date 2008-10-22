@@ -792,8 +792,8 @@ class DtdOutput {
   }
 
   void outputQueuedElements() {
-    for (ElementPattern p : elementQueue)
-      outputElement(p, null);
+    for (int i = 0; i < elementQueue.size(); i++)
+      outputElement(elementQueue.get(i), null);
     elementQueue.clear();
   }
 
