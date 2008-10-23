@@ -1,0 +1,10 @@
+<module>
+  <depends module="util"/>
+  <depends module="dtd-parse"/>
+  <compile test="yes"/>
+  <jar>
+    <manifest>
+      <attribute name="Main-Class" value="com/thaiopensource/xml/dtd/app/Driver"/>
+    </manifest>
+  </jar>
+</module>

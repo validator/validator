@@ -291,6 +291,7 @@
       <module fileurl="file://$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" filepath="$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/datatype/datatype.iml" filepath="$PROJECT_DIR$/mod/datatype/datatype.iml" group="Common" />
       <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/dtdinst/dtdinst.iml" filepath="$PROJECT_DIR$/mod/dtdinst/dtdinst.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/infer/infer.iml" filepath="$PROJECT_DIR$/mod/infer/infer.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/nvdl/nvdl.iml" filepath="$PROJECT_DIR$/mod/nvdl/nvdl.iml" group="Jing" />
       <module fileurl="file://$PROJECT_DIR$/mod/picl/picl.iml" filepath="$PROJECT_DIR$/mod/picl/picl.iml" group="Jing" />

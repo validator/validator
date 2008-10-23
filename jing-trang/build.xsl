@@ -29,7 +29,7 @@
       </xsl:attribute>
     </target>
     <target name="compile" depends="jing::compile-main,trang::compile-main"/>
-    <target name="jar" depends="jing::jar,trang::jar"/>
+    <target name="jar" depends="dtdinst::jar,jing::jar,trang::jar"/>
     <target name="jing-jar" depends="jing::jar">
       <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
 	<classpath>
