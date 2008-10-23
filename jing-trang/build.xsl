@@ -30,6 +30,24 @@
     </target>
     <target name="compile" depends="jing::compile-main,trang::compile-main"/>
     <target name="jar" depends="jing::jar,trang::jar"/>
+    <target name="jing-jar" depends="jing::jar">
+      <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
+	<classpath>
+	  <pathelement location="{$build}/jing.jar"/>
+	</classpath>
+      </taskdef>
+    </target>
+
+    <target name="test">
+      <xsl:attribute name="depends">
+	<xsl:text>init</xsl:text>
+	<xsl:for-each select="modules/module">
+	  <xsl:text>,</xsl:text>
+	  <xsl:value-of select="."/>
+	  <xsl:text>::test</xsl:text>
+	</xsl:for-each>
+      </xsl:attribute>
+    </target>
   </project>
 </xsl:template>
 
@@ -75,7 +93,8 @@
   </target>
   <target name="{$name}::compile-test">
     <xsl:attribute name="depends">
-      <xsl:value-of select="concat($name, '::compile-main')"/>
+      <xsl:value-of select="$name"/>
+      <xsl:text>::compile-main</xsl:text>
       <xsl:for-each select="depends[@module]">
 	<xsl:text>,</xsl:text>
 	<xsl:value-of select="@module"/>
@@ -114,6 +133,91 @@
 	<fileset dir="mod/{@module}/src/main" includes="**/resources/*"/>
       </xsl:for-each>
     </jar>
+  </target>
+  <target name="{$name}::test">
+    <xsl:attribute name="depends">
+      <xsl:value-of select="$name"/>
+      <xsl:text>::compile-test</xsl:text>
+      <xsl:for-each select="test">
+	<xsl:text>,</xsl:text>
+	<xsl:value-of select="$name"/>
+	<xsl:text>::test-</xsl:text>
+	<xsl:value-of select="@name"/>
+      </xsl:for-each>
+    </xsl:attribute>
+  </target>
+  <xsl:apply-templates select="test">
+    <xsl:with-param name="name" select="$name"/>
+  </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="test[@type='validate']">
+  <xsl:param name="name"/>
+  <xsl:param name="runtestdir">
+    <xsl:value-of select="$build"/>
+    <xsl:text>/mod/</xsl:text>
+    <xsl:value-of select="$name"/>
+    <xsl:text>/test-</xsl:text>
+    <xsl:value-of select="@name"/>
+  </xsl:param>
+  <xsl:param name="srctestdir">
+    <xsl:text>mod/</xsl:text>
+    <xsl:value-of select="$name"/>
+    <xsl:text>/test</xsl:text>
+  </xsl:param>
+  <target name="{$name}::test-{@name}" depends="jing-jar, {$name}::split-{@name}">
+    <java classname="com.thaiopensource.relaxng.util.TestDriver"
+	  fork="yes"
+	  failonerror="yes">
+      <arg value="{$runtestdir}/out.log"/>
+      <arg value="{$runtestdir}"/>
+      <classpath>
+	<pathelement location="{$build}/jing.jar"/>
+	<pathelement location="lib/xercesImpl.jar"/>
+	<pathelement location="lib/saxon.jar"/>
+      </classpath>
+    </java>
+  </target>
+  <target name="{$name}::split-{@name}"
+	  depends="{$name}::uptodate-split-{@name}"
+	  unless="{$name}::uptodate-split-{@name}">
+    <xsl:if test="@schema">
+      <jing rngfile="{@schema}">
+	<xsl:if test="substring(@schema, string-length(@schema) - 3, 4) = '.rnc'">
+	  <xsl:attribute name="compactsyntax">true</xsl:attribute>
+	</xsl:if>
+	<fileset dir="test" includes="{@name}test.xml"/>
+      </jing>
+    </xsl:if>
+    <delete dir="{$runtestdir}"/>
+    <mkdir dir="{$runtestdir}"/>
+    <xsl:if test="@transform">
+      <xslt style="{$srctestdir}/{@transform}"
+	    in="{$srctestdir}/{@name}test.xml"
+	    out="{$runtestdir}/{@name}test.xml"/>
+      <!-- XXX Could validate intermediate result against a schema -->
+    </xsl:if>
+    <xslt style="test/split.xsl"
+	  out="{$runtestdir}/stamp">
+      <xsl:attribute name="in">
+	<xsl:choose>
+	  <xsl:when test="@transform">
+	    <xsl:value-of select="$runtestdir"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$srctestdir"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:value-of select="concat('/',@name,'test.xml')"/>
+      </xsl:attribute>
+      <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+      <param name="dir" expression="{$runtestdir}"/>
+    </xslt>
+  </target>
+  <target name="{$name}::uptodate-split-{@name}">
+    <uptodate property="{$name}::uptodate-split-{@name}"
+	      targetfile="{$runtestdir}/stamp"
+	      srcfile="{$srctestdir}/{@name}test.xml"/>
   </target>
 </xsl:template>
 

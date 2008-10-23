@@ -2,5 +2,6 @@
   <depends module="util"/>
   <depends module="datatype"/>
   <depends module="regex"/>
+  <test name="xsd" type="validate" transform="xsdtest.xsl" schema="test/xsdtest.rnc"/>
   <compile/>
 </module>

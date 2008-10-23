@@ -2,5 +2,7 @@
   <depends module="util"/>
   <depends module="validate"/>
   <depends module="rng-validate"/>
+  <test name="mns" type="validate" schema="test/mnstest.rng"/>
+  <test name="nrl" type="validate" schema="test/nrltest.rng"/>
   <compile/>
 </module>

@@ -1,7 +1,7 @@
 <module>
   <depends module="util"/>
   <depends lib="xercesImpl"/>
-  <compile test="yes"/>
+  <compile/>
   <ant precompile="regex::gen">
     <target name="regex::gen" depends="regex::check-gen" unless="regex::gen-ok">
       <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4"/>

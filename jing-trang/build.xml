@@ -102,182 +102,11 @@
   </jing>
 </target>
 
-<target name="test" depends="spec-test,mns-test,nrl-test,schematron-test,picl-test,xsd-test,regex-test,trang-test"
+<target name="test" depends="modtest,regex-test,trang-test"
         description="Test all aspects of validation"/>
 
-<target name="spec-split" depends="init, check-spec-split" unless="spec-split-not-required">
-  <jing rngfile="eg/testSuite.rng">
-    <fileset dir="test" includes="spectest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/rngtest"/>
-  <mkdir dir="${build.dir}/rngtest"/>
-  <xslt basedir="test" destdir="${build.dir}/rngtest" includes="spectest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/rngtest"/>
-  </xslt>
-</target>
-
-<target name="check-spec-split">
-  <uptodate property="spec-split-not-required" targetfile="${build.dir}/rngtest/spectest.stamp">
-    <srcfiles dir="test" includes="spectest.xml"/>
-  </uptodate>
-</target>
-
-<target name="spec-test" depends="jar,spec-split" description="Test conformance to the RELAX NG spec">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/rngtest/out.log"/>
-    <arg value="${build.dir}/rngtest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="mns-split" depends="init,check-mns-split" unless="mns-split-not-required">
-  <jing rngfile="test/mnstest.rng">
-    <fileset dir="test" includes="mnstest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/mnstest"/>
-  <mkdir dir="${build.dir}/mnstest"/>
-  <xslt basedir="test" destdir="${build.dir}/mnstest" includes="mnstest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/mnstest"/>
-  </xslt>
-</target>
-
-<target name="check-mns-split">
-  <uptodate property="mns-split-not-required" targetfile="${build.dir}/mnstest/mnstest.stamp">
-    <srcfiles dir="test" includes="mnstest.xml"/>
-  </uptodate>
-</target>
-
-<target name="mns-test" depends="jar,mns-split" description="Test MNS validation">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/mnstest/out.log"/>
-    <arg value="${build.dir}/mnstest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="nrl-split" depends="init,check-nrl-split" unless="nrl-split-not-required">
-  <jing rngfile="test/nrltest.rng">
-    <fileset dir="test" includes="nrltest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/nrltest"/>
-  <mkdir dir="${build.dir}/nrltest"/>
-  <xslt basedir="test" destdir="${build.dir}/nrltest" includes="nrltest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/nrltest"/>
-  </xslt>
-</target>
-
-<target name="check-nrl-split">
-  <uptodate property="nrl-split-not-required" targetfile="${build.dir}/nrltest/nrltest.stamp">
-    <srcfiles dir="test" includes="nrltest.xml"/>
-  </uptodate>
-</target>
-
-<target name="nrl-test" depends="jar,nrl-split" description="Test NRL validation">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/nrltest/out.log"/>
-    <arg value="${build.dir}/nrltest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="schematron-split" depends="init,check-schematron-split" unless="schematron-split-not-required">
-  <jing rngfile="test/schematrontest.nrl">
-    <fileset dir="test" includes="schematrontest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/schematrontest"/>
-  <mkdir dir="${build.dir}/schematrontest"/>
-  <xslt basedir="test" destdir="${build.dir}/schematrontest" includes="schematrontest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/schematrontest"/>
-  </xslt>
-</target>
-
-<target name="check-schematron-split">
-  <uptodate property="schematron-split-not-required" targetfile="${build.dir}/schematrontest/schematrontest.stamp">
-    <srcfiles dir="test" includes="schematrontest.xml"/>
-  </uptodate>
-</target>
-
-<target name="schematron-test" depends="jar,schematron-split" description="Test Schematron validation">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/schematrontest/out.log"/>
-    <arg value="${build.dir}/schematrontest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="picl-split" depends="init,check-picl-split" unless="picl-split-not-required">
-  <jing rngfile="test/picltest.nrl">
-    <fileset dir="test" includes="picltest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/picltest"/>
-  <mkdir dir="${build.dir}/picltest"/>
-  <xslt basedir="test" destdir="${build.dir}/picltest" includes="picltest.xml" extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/picltest"/>
-  </xslt>
-</target>
-
-<target name="check-picl-split">
-  <uptodate property="picl-split-not-required" targetfile="${build.dir}/picltest/picltest.stamp">
-    <srcfiles dir="test" includes="picltest.xml"/>
-  </uptodate>
-</target>
-
-<target name="picl-test" depends="jar,picl-split" description="Test PICL validation">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/picltest/out.log"/>
-    <arg value="${build.dir}/picltest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="xsd-test" depends="jar,xsd-split" description="Test the XML Schema Datatypes implementation">
-  <java classname="com.thaiopensource.relaxng.util.TestDriver" fork="yes" failonerror="yes">
-    <arg value="${build.dir}/xsdtest/out.log"/>
-    <arg value="${build.dir}/xsdtest"/>
-    <classpath>
-      <pathelement location="${build.dir}/jing.jar"/>
-      <pathelement path="${java.class.path}"/>
-    </classpath>
-  </java>
-</target>
-
-<target name="check-xsd-split">
-  <uptodate property="xsd-split-not-required" targetfile="${build.dir}/xsdtest/xsdtest.stamp">
-    <srcfiles dir="test" includes="xsdtest.xml,xsdtest.xsl,xsdtest.rnc,split.xsl"/>
-  </uptodate>
-</target>
-
-
-<target name="xsd-split" depends="jar,check-xsd-split" unless="xsd-split-not-required">
-  <jing rngfile="test/xsdtest.rnc" compactsyntax="true">
-    <fileset dir="test" includes="xsdtest.xml"/>
-  </jing>
-  <delete dir="${build.dir}/xsdtest"/>
-  <mkdir dir="${build.dir}/xsdtest"/>
-  <xslt basedir="test" destdir="${build.dir}/xsdtest" includes="xsdtest.xml" extension=".xml"
-        style="test/xsdtest.xsl"/>
-  <jing rngfile="eg/testSuite.rng">
-    <fileset dir="${build.dir}/xsdtest" includes="xsdtest.xml"/>
-  </jing>
-  <xslt basedir="${build.dir}/xsdtest" destdir="${build.dir}/xsdtest" includes="xsdtest.xml"
-        extension=".stamp" style="test/split.xsl">
-    <param name="dir" expression="${build.dir}/xsdtest"/>
-  </xslt>
+<target name="modtest" depends="modbuild">
+  <ant antfile="modbuild.xml" target="test"/>
 </target>
 
 <target name="regex-test" depends="jar" description="Test the regex implementation" >
@@ -392,13 +221,13 @@
     <zipfileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"
                 prefix="jing-${version}/lib"/>
     <zipfileset dir="doc/compact" includes="relaxng.rnc" prefix="jing-${version}/lib"/>
-    <zipfileset dir="src/com/thaiopensource/validate/schematron/resources"
+    <zipfileset dir="mod/schematron/src/main/com/thaiopensource/validate/schematron/resources"
                 includes="schematron.rnc"
                 prefix="jing-${version}/lib"/>
-    <zipfileset dir="src/com/thaiopensource/validate/mns/resources"
+    <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/mns/resources"
                 includes="mns.rng"
                 prefix="jing-${version}/lib"/>
-    <zipfileset dir="src/com/thaiopensource/validate/nrl/resources"
+    <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/nrl/resources"
                 includes="nrl.rng"
                 prefix="jing-${version}/lib"/>
     <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/lib"/>
