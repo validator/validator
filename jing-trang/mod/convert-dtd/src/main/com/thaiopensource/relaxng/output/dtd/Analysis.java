@@ -58,7 +58,7 @@ class Analysis {
   private final Map<Pattern, AttributeType> attributeTypes = new HashMap<Pattern, AttributeType>();
   private final Map<Pattern, Set<Name>> attributeAlphabets = new HashMap<Pattern, Set<Name>>();
   private final Map<Pattern, Set<String>> attributeNamespaces = new HashMap<Pattern, Set<String>>();
-  private Map<String, Pattern> defines;
+  private Map<String, Pattern> defines = null;
   private final Set<String> attlists = new HashSet<String>();
   private final Map<String, GrammarPart> parts = new HashMap<String, GrammarPart>();
   private final Map<Pattern, Pattern> seenTable = new HashMap<Pattern, Pattern>();
@@ -531,7 +531,6 @@ class Analysis {
     checkAttlists();
     if (!er.getHadError())
       nsm.assignPrefixes();
-    defines = null;
   }
 
   private void checkAttlists() {
