@@ -6,11 +6,9 @@ import com.thaiopensource.util.Version;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.out.XmlWriter;
+import com.thaiopensource.xml.em.UriEntityManager;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.MissingResourceException;
-import java.util.Properties;
 
 public class Driver {
   private static final int FAILURE_EXIT_CODE = 1;

@@ -14,7 +14,7 @@ import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.dtd.app.SchemaWriter;
 import com.thaiopensource.xml.dtd.app.XmlOutputStreamWriter;
-import com.thaiopensource.xml.dtd.app.FileEntityManager;
+import com.thaiopensource.xml.em.FileEntityManager;
 
 public class Driver {
   public static void main (String args[]) throws IOException, TestFailException {

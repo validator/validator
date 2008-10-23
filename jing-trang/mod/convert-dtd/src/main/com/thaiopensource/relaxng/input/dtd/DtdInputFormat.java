@@ -15,7 +15,7 @@ import com.thaiopensource.relaxng.translate.util.InvalidParamValueException;
 import com.thaiopensource.xml.dtd.om.Dtd;
 import com.thaiopensource.xml.dtd.parse.DtdParserImpl;
 import com.thaiopensource.xml.dtd.parse.ParseException;
-import com.thaiopensource.xml.dtd.app.UriEntityManager;
+import com.thaiopensource.xml.em.UriEntityManager;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.util.Localizer;
 import org.xml.sax.ErrorHandler;
