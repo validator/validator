@@ -9,6 +9,7 @@
 <xsl:template match="/">
   <project>
     <property name="build.dir" value="${{basedir}}/build"/>
+    <target name="dummy"/>
     <target name="init">
       <mkdir dir="{$build}"/>
     </target>
@@ -111,8 +112,8 @@
 	<classpath>
 	  <pathelement location="{$build}/mod/{$name}/classes/main"/>
 	  <xsl:for-each select="depends[@module]">
-	    <pathelement location="{$build}/mod/{@module}/classes/main"/>
 	    <pathelement location="{$build}/mod/{@module}/classes/test"/>
+	    <pathelement location="{$build}/mod/{@module}/classes/main"/>
 	  </xsl:for-each>
 	  <xsl:for-each select="depends[@lib]">
 	    <pathelement location="lib/{@lib}.jar"/>
@@ -136,8 +137,7 @@
   </target>
   <target name="{$name}::test">
     <xsl:attribute name="depends">
-      <xsl:value-of select="$name"/>
-      <xsl:text>::compile-test</xsl:text>
+      <xsl:text>dummy</xsl:text>
       <xsl:for-each select="test">
 	<xsl:text>,</xsl:text>
 	<xsl:value-of select="$name"/>
@@ -165,7 +165,8 @@
     <xsl:value-of select="$name"/>
     <xsl:text>/test</xsl:text>
   </xsl:param>
-  <target name="{$name}::test-{@name}" depends="jing-jar, {$name}::split-{@name}">
+  <target name="{$name}::test-{@name}"
+	  depends="{$name}::compile-test,jing-jar,{$name}::split-{@name}">
     <java classname="com.thaiopensource.relaxng.util.TestDriver"
 	  fork="yes"
 	  failonerror="yes">
@@ -218,6 +219,29 @@
     <uptodate property="{$name}::uptodate-split-{@name}"
 	      targetfile="{$runtestdir}/stamp"
 	      srcfile="{$srctestdir}/{@name}test.xml"/>
+  </target>
+</xsl:template>
+
+<xsl:template match="test[@type='java']">
+  <xsl:param name="name"/>
+  <target name="{$name}::test-{@name}" depends="{$name}::compile-test">
+    <mkdir dir="{$build}/mod/{$name}/test-{@name}"/>
+    <java classname="{@class}"
+	  fork="yes"
+	  failonerror="yes">
+      <xsl:copy-of select="*"/>
+      <classpath>
+	<pathelement location="{$build}/mod/{$name}/classes/test"/>
+	<pathelement location="{$build}/mod/{$name}/classes/main"/>
+	<xsl:for-each select="../depends[@module]">
+	  <pathelement location="{$build}/mod/{@module}/classes/test"/>
+	  <pathelement location="{$build}/mod/{@module}/classes/main"/>
+	</xsl:for-each>
+	<xsl:for-each select="depends[@lib]">
+	  <pathelement location="lib/{@lib}.jar"/>
+	</xsl:for-each>
+      </classpath>
+    </java>
   </target>
 </xsl:template>
 

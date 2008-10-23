@@ -3,8 +3,8 @@
   <depends module="dtd-parse"/>
   <compile test="yes"/>
   <test name="main" type="java" class="com.thaiopensource.xml.dtd.test.Driver">
-    <arg value="test"/>
-    <arg value="${build.dir}/mod/dtdinst/test"/>
+    <arg value="mod/dtdinst/test"/>
+    <arg value="${build.dir}/mod/dtdinst/test-main"/>
   </test>
   <jar>
     <manifest>
