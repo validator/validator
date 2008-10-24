@@ -4,5 +4,6 @@
   <depends module="rng-parse"/>
   <depends module="rng-schema"/>
   <java5/>
+  <test name="toxsd" type="convert" schema="trang/test/toxsdtest.rnc" output="xsd"/>
   <compile/>
 </module>

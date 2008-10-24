@@ -153,34 +153,62 @@
 
 <xsl:template match="test[@type='validate']">
   <xsl:param name="name"/>
-  <xsl:param name="runtestdir">
+  <xsl:call-template name="split-test">
+    <xsl:with-param name="name" select="$name"/>
+    <xsl:with-param name="class">com.thaiopensource.relaxng.util.TestDriver</xsl:with-param>
+    <xsl:with-param name="split">test/split.xsl</xsl:with-param>
+    <xsl:with-param name="app">jing</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="test[@type='convert']">
+  <xsl:param name="name"/>
+  <xsl:call-template name="split-test">
+    <xsl:with-param name="name" select="$name"/>
+    <xsl:with-param name="class">com.thaiopensource.relaxng.translate.test.CompactTestDriver</xsl:with-param>
+    <xsl:with-param name="split">trang/test/compactsplit.xsl</xsl:with-param>
+    <xsl:with-param name="app">trang</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="split-test">
+  <xsl:param name="name"/>
+  <xsl:param name="class"/>
+  <xsl:param name="split"/>
+  <xsl:param name="app"/>
+  <xsl:variable name="runtestdir">
     <xsl:value-of select="$build"/>
     <xsl:text>/mod/</xsl:text>
     <xsl:value-of select="$name"/>
     <xsl:text>/test-</xsl:text>
     <xsl:value-of select="@name"/>
-  </xsl:param>
-  <xsl:param name="srctestdir">
+  </xsl:variable>
+  <xsl:variable name="srctestdir">
     <xsl:text>mod/</xsl:text>
     <xsl:value-of select="$name"/>
     <xsl:text>/test</xsl:text>
-  </xsl:param>
+  </xsl:variable>
   <target name="{$name}::test-{@name}"
-	  depends="{$name}::compile-test,jing-jar,{$name}::split-{@name}">
-    <java classname="com.thaiopensource.relaxng.util.TestDriver"
+	  depends="{$name}::compile-test,{$app}::jar,{$name}::split-{@name}">
+    <java classname="{$class}"
 	  fork="yes"
 	  failonerror="yes">
       <arg value="{$runtestdir}/out.log"/>
       <arg value="{$runtestdir}"/>
+      <xsl:if test="@output">
+	<arg value="{@output}"/>
+      </xsl:if>
       <classpath>
-	<pathelement location="{$build}/jing.jar"/>
-	<pathelement location="lib/xercesImpl.jar"/>
-	<pathelement location="lib/saxon.jar"/>
+	<pathelement location="{$build}/{$app}.jar"/>
+	<xsl:if test="$app = 'jing'">
+	  <pathelement location="lib/xercesImpl.jar"/>
+	  <pathelement location="lib/saxon.jar"/>
+	</xsl:if>
       </classpath>
     </java>
   </target>
   <target name="{$name}::split-{@name}"
-	  depends="{$name}::uptodate-split-{@name}"
+	  depends="{$name}::uptodate-split-{@name},jing-jar"
 	  unless="{$name}::uptodate-split-{@name}">
     <xsl:if test="@schema">
       <jing rngfile="{@schema}">
@@ -198,7 +226,7 @@
 	    out="{$runtestdir}/{@name}test.xml"/>
       <!-- XXX Could validate intermediate result against a schema -->
     </xsl:if>
-    <xslt style="test/split.xsl"
+    <xslt style="{$split}"
 	  out="{$runtestdir}/stamp">
       <xsl:attribute name="in">
 	<xsl:choose>
@@ -216,6 +244,7 @@
     </xslt>
   </target>
   <target name="{$name}::uptodate-split-{@name}">
+    <!-- XXX include split.xsl in source files -->
     <uptodate property="{$name}::uptodate-split-{@name}"
 	      targetfile="{$runtestdir}/stamp"
 	      srcfile="{$srctestdir}/{@name}test.xml"/>
