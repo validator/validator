@@ -2,6 +2,18 @@
   <depends module="util"/>
   <depends lib="xercesImpl"/>
   <compile/>
+<!--
+  <test name="xerces" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
+    <arg value="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
+    <arg value="mod/regex/test/regextest.xml"/>
+  </test>
+-->
+  <test name="jdk1_4" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="mod/regex/test/regextest.xml"/>
+  </test>
   <ant precompile="regex::gen">
     <target name="regex::gen" depends="regex::check-gen" unless="regex::gen-ok">
       <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4"/>
