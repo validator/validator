@@ -1,14 +1,14 @@
 package com.thaiopensource.datatype.xsd.regex.jdk1_4;
 
-import com.thaiopensource.util.Utf16;
-import com.thaiopensource.util.Localizer;
 import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
+import com.thaiopensource.util.Localizer;
+import com.thaiopensource.util.Utf16;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.math.BigDecimal;
 
 /**
  * Translates XML Schema regexes into <code>java.util.regex</code> regexes.
@@ -23,6 +23,7 @@ public class Translator {
   private char curChar;
   private boolean eos = false;
   private final StringBuffer result = new StringBuffer();
+  static private final boolean surrogatesDirect = RegexFeatures.SURROGATES_DIRECT;
 
   static private final String categories = "LMNPZSC";
   static private final CharClass[] categoryCharClasses = new CharClass[categories.length()];
@@ -372,12 +373,19 @@ public class Translator {
     }
 
     final void output(StringBuffer buf) {
+      if (surrogatesDirect)
+        outputDirect(buf);
+      else
+        outputMungeSurrogates(buf);
+    }
+
+    final void outputMungeSurrogates(StringBuffer buf) {
       switch (containsNonBmp) {
       case NONE:
         if (containsBmp == NONE)
           buf.append(NOT_ALLOWED_CLASS);
         else
-          outputBmp(buf);
+          outputDirect(buf);
         break;
       case ALL:
         buf.append('(');
@@ -386,7 +394,7 @@ public class Translator {
           buf.append(SURROGATES2_CLASS);
         }
         else {
-          outputBmp(buf);
+          outputDirect(buf);
           buf.append(SURROGATES2_CLASS);
           buf.append('?');
         }
@@ -397,7 +405,7 @@ public class Translator {
         boolean needSep = false;
         if (containsBmp != NONE) {
           needSep = true;
-          outputBmp(buf);
+          outputDirect(buf);
         }
         List ranges = new Vector();
         addNonBmpRanges(ranges);
@@ -511,8 +519,8 @@ public class Translator {
       return lowRanges.toString();
     }
 
-    abstract void outputBmp(StringBuffer buf);
-    abstract void outputComplementBmp(StringBuffer buf);
+    abstract void outputDirect(StringBuffer buf);
+    abstract void outputComplementDirect(StringBuffer buf);
 
     int singleChar() {
       return -1;
@@ -553,23 +561,28 @@ public class Translator {
       super(containsBmp, containsNonBmp);
     }
 
-    void outputBmp(StringBuffer buf) {
+    void outputDirect(StringBuffer buf) {
       buf.append('[');
-      inClassOutputBmp(buf);
+      inClassOutputDirect(buf);
       buf.append(']');
     }
 
-    // must not call if containsBmp == ALL
-    void outputComplementBmp(StringBuffer buf) {
-      if (getContainsBmp() == NONE)
+    // must not call if containsBmp == ALL && !surrogatesDirect
+    void outputComplementDirect(StringBuffer buf) {
+      if (!surrogatesDirect && getContainsBmp() == NONE)
         buf.append("[\u0000-\uFFFF]");
       else {
         buf.append("[^");
-        inClassOutputBmp(buf);
+        inClassOutputDirect(buf);
         buf.append(']');
       }
     }
-    abstract void inClassOutputBmp(StringBuffer buf);
+    abstract void inClassOutputDirect(StringBuffer buf);
+
+    static void outputWide(StringBuffer buf, int c) {
+      buf.append(Utf16.surrogate1(c));
+      buf.append(Utf16.surrogate2(c));
+    }
   }
 
   static class SingleChar extends SimpleCharClass {
@@ -583,11 +596,11 @@ public class Translator {
       return c;
     }
 
-    void outputBmp(StringBuffer buf) {
-      inClassOutputBmp(buf);
+    void outputDirect(StringBuffer buf) {
+      inClassOutputDirect(buf);
     }
 
-    void inClassOutputBmp(StringBuffer buf) {
+    void inClassOutputDirect(StringBuffer buf) {
       if (isJavaMetaChar(c))
         buf.append('\\');
       buf.append(c);
@@ -603,8 +616,10 @@ public class Translator {
       this.c = c;
     }
 
-    void inClassOutputBmp(StringBuffer buf) {
-      throw new RuntimeException("BMP output botch");
+    void inClassOutputDirect(StringBuffer buf) {
+      if (!surrogatesDirect)
+        throw new RuntimeException("BMP output botch");
+      outputWide(buf, c);
     }
 
     int singleChar() {
@@ -614,22 +629,6 @@ public class Translator {
     void addNonBmpRanges(List ranges) {
       ranges.add(new Range(c, c));
     }
-  }
-
-  static class Empty extends SimpleCharClass {
-    static private final Empty instance = new Empty();
-    private Empty() {
-      super(NONE, NONE);
-    }
-
-    static Empty getInstance() {
-      return instance;
-    }
-
-    void inClassOutputBmp(StringBuffer buf) {
-      throw new RuntimeException("BMP output botch");
-    }
-
   }
 
   static class CharRange extends SimpleCharClass {
@@ -644,18 +643,24 @@ public class Translator {
       this.upper = upper;
     }
 
-    void inClassOutputBmp(StringBuffer buf) {
-      if (lower >= NONBMP_MIN)
+    void inClassOutputDirect(StringBuffer buf) {
+      if (lower < NONBMP_MIN) {
+        if (isJavaMetaChar((char)lower))
+          buf.append('\\');
+        buf.append((char)lower);
+      }
+      else if (surrogatesDirect)
+        outputWide(buf, lower);
+      else
         throw new RuntimeException("BMP output botch");
-      if (isJavaMetaChar((char)lower))
-        buf.append('\\');
-      buf.append((char)lower);
       buf.append('-');
       if (upper < NONBMP_MIN) {
         if (isJavaMetaChar((char)upper))
           buf.append('\\');
         buf.append((char)upper);
       }
+      else if (surrogatesDirect)
+        outputWide(buf, upper);
       else
         buf.append('\uFFFF');
     }
@@ -674,17 +679,17 @@ public class Translator {
       this.name = name;
     }
 
-    void outputBmp(StringBuffer buf) {
-      inClassOutputBmp(buf);
+    void outputDirect(StringBuffer buf) {
+      inClassOutputDirect(buf);
     }
 
-    void inClassOutputBmp(StringBuffer buf) {
+    void inClassOutputDirect(StringBuffer buf) {
       buf.append("\\p{");
       buf.append(name);
       buf.append('}');
     }
 
-    void outputComplementBmp(StringBuffer buf) {
+    void outputComplementDirect(StringBuffer buf) {
       buf.append("\\P{");
       buf.append(name);
       buf.append('}');
@@ -703,18 +708,18 @@ public class Translator {
       this.cc2 = cc2;
     }
 
-    void outputBmp(StringBuffer buf) {
+    void outputDirect(StringBuffer buf) {
       buf.append('[');
-      cc1.outputBmp(buf);
+      cc1.outputDirect(buf);
       buf.append("&&");
-      cc2.outputComplementBmp(buf);
+      cc2.outputComplementDirect(buf);
       buf.append(']');
     }
 
-    void outputComplementBmp(StringBuffer buf) {
+    void outputComplementDirect(StringBuffer buf) {
       buf.append('[');
-      cc1.outputComplementBmp(buf);
-      cc2.outputBmp(buf);
+      cc1.outputComplementDirect(buf);
+      cc2.outputDirect(buf);
       buf.append(']');
     }
 
@@ -778,36 +783,36 @@ public class Translator {
       this.members = members;
     }
 
-    void outputBmp(StringBuffer buf) {
+    void outputDirect(StringBuffer buf) {
       buf.append('[');
       for (int i = 0, len = members.size(); i < len; i++) {
         CharClass cc = (CharClass)members.get(i);
-        if (cc.getContainsBmp() != NONE) {
+        if (surrogatesDirect || cc.getContainsBmp() != NONE) {
           if (cc instanceof SimpleCharClass)
-            ((SimpleCharClass)cc).inClassOutputBmp(buf);
+            ((SimpleCharClass)cc).inClassOutputDirect(buf);
           else
-            cc.outputBmp(buf);
+            cc.outputDirect(buf);
         }
       }
       buf.append(']');
     }
 
-    void outputComplementBmp(StringBuffer buf) {
+    void outputComplementDirect(StringBuffer buf) {
       boolean first = true;
       int len = members.size();
       for (int i = 0; i < len; i++) {
         CharClass cc = (CharClass)members.get(i);
-        if (cc.getContainsBmp() != NONE && cc instanceof SimpleCharClass) {
+        if ((surrogatesDirect || cc.getContainsBmp() != NONE) && cc instanceof SimpleCharClass) {
           if (first) {
             buf.append("[^");
             first = false;
           }
-          ((SimpleCharClass)cc).inClassOutputBmp(buf);
+          ((SimpleCharClass)cc).inClassOutputDirect(buf);
         }
       }
       for (int i = 0; i < len; i++) {
         CharClass cc = (CharClass)members.get(i);
-        if (cc.getContainsBmp() != NONE && !(cc instanceof SimpleCharClass)) {
+        if ((surrogatesDirect || cc.getContainsBmp() != NONE) && !(cc instanceof SimpleCharClass)) {
           if (first) {
             buf.append('[');
             first = false;
@@ -815,11 +820,11 @@ public class Translator {
           else
             buf.append("&&");
           // can't have any members that are ALL, because that would make this ALL, which violates
-          // the precondition for outputComplementBmp
-          cc.outputComplementBmp(buf);
+          // the precondition for outputComplementDirect
+          cc.outputComplementDirect(buf);
         }
       }
-      if (first == true)
+      if (first)
         // all members are NONE, so this is NONE, so complement is everything
         buf.append("[\u0000-\uFFFF]");
       else
@@ -853,12 +858,12 @@ public class Translator {
       this.cc = cc;
     }
 
-    void outputBmp(StringBuffer buf) {
-      cc.outputComplementBmp(buf);
+    void outputDirect(StringBuffer buf) {
+      cc.outputComplementDirect(buf);
     }
 
-    void outputComplementBmp(StringBuffer buf) {
-      cc.outputBmp(buf);
+    void outputComplementDirect(StringBuffer buf) {
+      cc.outputDirect(buf);
     }
 
     void addNonBmpRanges(List ranges) {
@@ -1214,10 +1219,12 @@ public class Translator {
   static private CharClass computeCategoryCharClass(char code) {
     List classes = new Vector();
     classes.add(new Property(new String(new char[] { code })));
-    for (int ci = Categories.CATEGORY_NAMES.indexOf(code); ci >= 0; ci = Categories.CATEGORY_NAMES.indexOf(code, ci + 1)) {
-      int[] addRanges = Categories.CATEGORY_RANGES[ci/2];
-      for (int i = 0; i < addRanges.length; i += 2)
-        classes.add(new CharRange(addRanges[i], addRanges[i + 1]));
+    if (!surrogatesDirect) {
+      for (int ci = Categories.CATEGORY_NAMES.indexOf(code); ci >= 0; ci = Categories.CATEGORY_NAMES.indexOf(code, ci + 1)) {
+        int[] addRanges = Categories.CATEGORY_RANGES[ci/2];
+        for (int i = 0; i < addRanges.length; i += 2)
+          classes.add(new CharRange(addRanges[i], addRanges[i + 1]));
+      }
     }
     if (code == 'P')
       classes.add(makeCharClass(CATEGORY_Pi + CATEGORY_Pf));
@@ -1225,51 +1232,43 @@ public class Translator {
       classes.add(new SingleChar(UNICODE_3_1_ADD_Ll));
       classes.add(new SingleChar(UNICODE_3_1_ADD_Lu));
     }
-    if (code == 'C') {
-      // JDK 1.4 leaves Cn out of C?
-      classes.add(new Subtraction(new Property("Cn"),
-                                  new Union(new CharClass[] { new SingleChar(UNICODE_3_1_ADD_Lu),
-                                                              new SingleChar(UNICODE_3_1_ADD_Ll) })));
-      List assignedRanges = new Vector();
-      for (int i = 0; i < Categories.CATEGORY_RANGES.length; i++)
-        for (int j = 0; j < Categories.CATEGORY_RANGES[i].length; j += 2)
-          assignedRanges.add(new CharRange(Categories.CATEGORY_RANGES[i][j],
-                                           Categories.CATEGORY_RANGES[i][j + 1]));
-      classes.add(new Subtraction(new CharRange(NONBMP_MIN, NONBMP_MAX),
-                                  new Union(assignedRanges)));
-    }
+    if (code == 'C')
+      classes.add(computeSubCategoryCharClass("Cn")); // JDK 1.4 leaves Cn out of C?
     if (classes.size() == 1)
       return (CharClass)classes.get(0);
     return new Union(classes);
   }
 
   static private CharClass computeSubCategoryCharClass(String name) {
+    if (name.equals("Pi"))
+      return makeCharClass(CATEGORY_Pi);
+    if (name.equals("Pf"))
+      return makeCharClass(CATEGORY_Pf);
     CharClass base = new Property(name);
-    int sci = Categories.CATEGORY_NAMES.indexOf(name);
-    if (sci < 0) {
-      if (name.equals("Cn")) {
-        // Unassigned
-        List assignedRanges = new Vector();
-        assignedRanges.add(new SingleChar(UNICODE_3_1_ADD_Lu));
-        assignedRanges.add(new SingleChar(UNICODE_3_1_ADD_Ll));
+    if (name.equals("Cn")) {
+      // Unassigned
+      List assignedRanges = new Vector();
+      assignedRanges.add(new SingleChar(UNICODE_3_1_ADD_Lu));
+      assignedRanges.add(new SingleChar(UNICODE_3_1_ADD_Ll));
+      if (!surrogatesDirect) {
         for (int i = 0; i < Categories.CATEGORY_RANGES.length; i++)
           for (int j = 0; j < Categories.CATEGORY_RANGES[i].length; j += 2)
             assignedRanges.add(new CharRange(Categories.CATEGORY_RANGES[i][j],
                                              Categories.CATEGORY_RANGES[i][j + 1]));
-        return new Subtraction(new Union(new CharClass[] { base, new CharRange(NONBMP_MIN, NONBMP_MAX) }),
-                               new Union(assignedRanges));
+        base = new Union(new CharClass[] { base, new CharRange(NONBMP_MIN, NONBMP_MAX) });
       }
-      if (name.equals("Pi"))
-        return makeCharClass(CATEGORY_Pi);
-      if (name.equals("Pf"))
-        return makeCharClass(CATEGORY_Pf);
-      return base;
+      return new Subtraction(base, new Union(assignedRanges));
     }
     List classes = new Vector();
     classes.add(base);
-    int[] addRanges = Categories.CATEGORY_RANGES[sci/2];
-    for (int i = 0; i < addRanges.length; i += 2)
-      classes.add(new CharRange(addRanges[i], addRanges[i + 1]));
+    if (!surrogatesDirect) {
+      int sci = Categories.CATEGORY_NAMES.indexOf(name);
+      if (sci >= 0) {
+        int[] addRanges = Categories.CATEGORY_RANGES[sci/2];
+        for (int i = 0; i < addRanges.length; i += 2)
+          classes.add(new CharRange(addRanges[i], addRanges[i + 1]));
+      }
+    }
     if (name.equals("Lu"))
       classes.add(new SingleChar(UNICODE_3_1_ADD_Lu));
     else if (name.equals("Ll"))
@@ -1280,6 +1279,8 @@ public class Translator {
       return new Subtraction(new Union(classes),
                              new CharRange(UNICODE_3_1_CHANGE_No_to_Nl_MIN,
                                            UNICODE_3_1_CHANGE_No_to_Nl_MAX));
+    if (classes.size() == 1)
+      return base;
     return new Union(classes);
   }
 

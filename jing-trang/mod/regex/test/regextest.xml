@@ -88,9 +88,6 @@
 <incorrect>+</incorrect>
 </testCase>
 <testCase>
-<incorrect>)</incorrect>
-</testCase>
-<testCase>
 <incorrect>(</incorrect>
 </testCase>
 <testCase>
@@ -178,17 +175,6 @@
 </testCase>
 <testCase>
 <incorrect>x{+2}</incorrect>
-</testCase>
-<testCase>
-<correct>x{2147483648}</correct>
-<invalid>x</invalid>
-</testCase>
-<testCase>
-<incorrect>x{2147483649,2147483648}</incorrect>
-</testCase>
-<testCase>
-<correct>x{0,2147483648}</correct>
-<valid>x</valid>
 </testCase>
 <testCase>
 <correct>[a-z-[c-y]]</correct>

@@ -4,13 +4,11 @@ import com.thaiopensource.datatype.xsd.regex.Regex;
 import com.thaiopensource.datatype.xsd.regex.RegexEngine;
 import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
 import com.thaiopensource.util.Utf16;
-import com.thaiopensource.util.Service;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.Enumeration;
+import java.io.InputStreamReader;
 
 public class CategoryTest {
   static private final String categories = "LMNPZSC";
@@ -21,23 +19,15 @@ public class CategoryTest {
   private final Regex[] subCategoryPosRegexes = new Regex[subCategories.length()/2];
   private final Regex[] subCategoryNegRegexes = new Regex[subCategories.length()/2];
 
-  static public void main(String[] args) throws IOException, RegexSyntaxException {
+  static public void main(String[] args) throws IOException, RegexSyntaxException,
+          ClassNotFoundException, IllegalAccessException, InstantiationException {
     if (args.length != 2) {
       System.err.println("usage: " + CategoryTest.class.getName() + " engineClass UnicodeData");
       System.exit(2);
     }
     BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(args[1])));
-    Enumeration e = new Service(RegexEngine.class).getProviders();
-    RegexEngine engine;
-    for (;;) {
-      if (!e.hasMoreElements()) {
-        System.err.println("couldn't find regex engine");
-        System.exit(2);
-      }
-      engine = (RegexEngine)e.nextElement();
-      if (engine.getClass().getName().equals(args[0]))
-        break;
-    }
+    Class cls = CategoryTest.class.getClassLoader().loadClass(args[0]);
+    RegexEngine engine = (RegexEngine)cls.newInstance();
     int nFail = new CategoryTest(engine).testAll(r);
     System.err.println(nFail + " tests failed");
     System.exit(nFail > 0 ? 1 : 0);

@@ -1,0 +1,17 @@
+<!-- These are tests we don't run on the Xerces implementation. -->
+<testSuite>
+<testCase>
+<incorrect>)</incorrect>
+</testCase>
+<testCase>
+<correct>x{2147483648}</correct>
+<invalid>x</invalid>
+</testCase>
+<testCase>
+<incorrect>x{2147483649,2147483648}</incorrect>
+</testCase>
+<testCase>
+<correct>x{0,2147483648}</correct>
+<valid>x</valid>
+</testCase>
+</testSuite>
