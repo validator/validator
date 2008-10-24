@@ -164,7 +164,11 @@ class DtdOutput {
 
   class ContentModelOutput extends AbstractVisitor {
     public VoidValue visitName(NameNameClass nc) {
-      buf.append(nc.getLocalName());
+      String ns = nc.getNamespaceUri();
+      String prefix = null;
+      if (!ns.equals("") && !ns.equals(analysis.getDefaultNamespaceUri()) && ns != NameClass.INHERIT_NS)
+        prefix = analysis.getPrefixForNamespaceUri(ns);
+      buf.append(prefix==null ? nc.getLocalName() : prefix + ":" + nc.getLocalName());
       return VoidValue.VOID;
     }
 
