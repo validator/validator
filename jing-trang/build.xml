@@ -42,6 +42,10 @@
   <xslt style="build.xsl" in="modules.xml" out="modbuild.xml"/>
 </target>
 
+<target name="test" depends="modbuild">
+  <ant antfile="modbuild.xml" target="test"/>
+</target>
+
 <target name="jar" depends="modbuild">
   <ant antfile="modbuild.xml" target="jar"/>
   <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
@@ -77,6 +81,9 @@
 </target>
 
 <target name="validate" depends="jar" description="Validate all XML files" >
+  <jing rngfile="test/regextest.rnc" compactsyntax="true">
+    <fileset dir="test" includes="regextest.xml"/>
+  </jing>
   <jing rngfile="xhtml/xhtml.rng">
     <fileset dir="doc" includes="*.html,jing-bin/*.html,regex/*.html"/>
     <fileset dir="datatype-sample" includes="index.html"/>
@@ -100,47 +107,6 @@
   <jing rngfile="doc/nrl.rng">
     <fileset dir="doc" includes="nrl.xml"/>
   </jing>
-</target>
-
-<target name="test" depends="modtest,regex-test,trang-test"
-        description="Test all aspects of validation"/>
-
-<target name="modtest" depends="modbuild">
-  <ant antfile="modbuild.xml" target="test"/>
-</target>
-
-<target name="regex-test" depends="jar" description="Test the regex implementation" >
-  <jing rngfile="test/regextest.rnc" compactsyntax="true">
-    <fileset dir="test" includes="regextest.xml"/>
-  </jing>
-<!--
-  <ant antfile="regex-build.xml" target="test">
-    <property name="classes.dir" value="${build.dir}/regex-classes"/>
-  </ant>
--->
-</target>
-
-<target name="xerces-regex-test" depends="jar">
-  <jing rngfile="test/regextest.rnc" compactsyntax="true">
-    <fileset dir="test" includes="regextest.xml"/>
-  </jing>
-  <ant antfile="regex-build.xml" target="xerces-test">
-    <property name="classes.dir" value="${build.dir}/regex-classes"/>
-  </ant>
-</target>
-
-<target name="full-regex-test" description="Test (time-consumingly) the regex implementation" >
-  <ant antfile="regex-build.xml" target="full-test">
-    <property name="classes.dir" value="${build.dir}/regex-classes"/>
-  </ant>
-</target>
-
-<target name="trang-test" depends="jar" description="Test Trang" >
-  <ant dir="trang" target="test">
-    <property name="build.dir" value="${build.dir}/trang"/>
-    <property name="jar.dir" value="${build.dir}"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
-  </ant>
 </target>
 
 <target name="javadoc" depends="init">
