@@ -3,7 +3,6 @@ package com.thaiopensource.datatype.xsd.regex.test;
 import com.thaiopensource.datatype.xsd.regex.Regex;
 import com.thaiopensource.datatype.xsd.regex.RegexEngine;
 import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
-import com.thaiopensource.util.Service;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.util.Utf16;
 import org.xml.sax.Attributes;
@@ -13,10 +12,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
-import java.util.Enumeration;
 
 public class TestDriver extends DefaultHandler {
   private final StringBuffer buf = new StringBuffer();
@@ -26,7 +24,8 @@ public class TestDriver extends DefaultHandler {
   private Locator loc;
   private final RegexEngine engine;
 
-  static public void main(String[] args) throws SAXException, IOException, ParserConfigurationException {
+  static public void main(String[] args) throws SAXException, IOException, ParserConfigurationException,
+          ClassNotFoundException, IllegalAccessException, InstantiationException {
     if (args.length != 2) {
       System.err.println("usage: TestDriver class testfile");
       System.exit(2);
@@ -35,18 +34,8 @@ public class TestDriver extends DefaultHandler {
     factory.setNamespaceAware(true);
     factory.setValidating(false);
     XMLReader xr = factory.newSAXParser().getXMLReader();
-
-    Enumeration e = new Service(RegexEngine.class).getProviders();
-    RegexEngine engine;
-    for (;;) {
-      if (!e.hasMoreElements()) {
-        System.err.println("couldn't find regex engine");
-        System.exit(2);
-      }
-      engine = (RegexEngine)e.nextElement();
-      if (engine.getClass().getName().equals(args[0]))
-        break;
-    }
+    Class cls = TestDriver.class.getClassLoader().loadClass(args[0]);
+    RegexEngine engine = (RegexEngine)cls.newInstance();
     TestDriver tester = new TestDriver(engine);
     xr.setContentHandler(tester);
     InputSource in = new InputSource(UriOrFile.fileToUri(args[1]));
