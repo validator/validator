@@ -139,10 +139,7 @@ public class Translator {
     "CJKUnifiedIdeographsExtensionB",
     "CJKCompatibilityIdeographsSupplement",
     "Tags",
-    "PrivateUse",
-    "HighSurrogates",
-    "HighPrivateUseSurrogates",
-    "LowSurrogates",
+    "PrivateUse"
   };
 
   /**
@@ -162,10 +159,7 @@ public class Translator {
       new CharRange(0xE000, 0xF8FF),
       new CharRange(0xF0000, 0xFFFFD),
       new CharRange(0x100000, 0x10FFFD)
-    }),
-    Empty.getInstance(),
-    Empty.getInstance(),
-    Empty.getInstance()
+    })
   };
 
   static private final CharClass DOT = new Complement(new Union(new CharClass[] { new SingleChar('\n'), new SingleChar('\r') }));

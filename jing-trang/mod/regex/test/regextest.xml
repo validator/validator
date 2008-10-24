@@ -16,7 +16,6 @@
 <testCase>
 <incorrect>a??</incorrect>
 </testCase>
-<!--
 <testCase>
 <correct>\P{IsGothic}</correct>
 <invalid>&#x10330;</invalid>
@@ -39,7 +38,6 @@
 <invalid>&#x30330;</invalid>
 <invalid>&#x10350;</invalid>
 </testCase>
--->
 <testCase>
 <correct>$</correct>
 <valid>$</valid>
@@ -215,8 +213,13 @@
 <incorrect>\pL</incorrect>
 </testCase>
 <testCase>
-<correct>\p{IsHighSurrogates}\p{IsLowSurrogates}</correct>
-<invalid>&#x10330;</invalid>
+<incorrect>\p{IsHighSurrogates}</incorrect>
+</testCase>
+ <testCase>
+<incorrect>\p{IsHighPrivateUseSurrogates}</incorrect>
+</testCase>
+<testCase>
+<incorrect>\p{IsLowSurrogates}</incorrect>
 </testCase>
 <testCase>
 <correct>a[&#x10330;-[&#x10330;]]*b</correct>
