@@ -233,11 +233,15 @@
       <classpath>
 	<pathelement location="{$build}/mod/{$name}/classes/test"/>
 	<pathelement location="{$build}/mod/{$name}/classes/main"/>
+	<pathelement location="mod/{$name}/src/test"/>
+	<pathelement location="mod/{$name}/src/main"/>
 	<xsl:for-each select="../depends[@module]">
 	  <pathelement location="{$build}/mod/{@module}/classes/test"/>
 	  <pathelement location="{$build}/mod/{@module}/classes/main"/>
+	  <pathelement location="mod/{@module}/src/test"/>
+	  <pathelement location="mod/{@module}/src/main"/>
 	</xsl:for-each>
-	<xsl:for-each select="depends[@lib]">
+	<xsl:for-each select="../depends[@lib]">
 	  <pathelement location="lib/{@lib}.jar"/>
 	</xsl:for-each>
       </classpath>
