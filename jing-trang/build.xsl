@@ -29,9 +29,9 @@
 	</xsl:for-each>
       </xsl:attribute>
     </target>
-    <target name="compile" depends="jing::compile-main,trang::compile-main"/>
-    <target name="jar" depends="dtdinst::jar,jing::jar,trang::jar"/>
-    <target name="jing-jar" depends="jing::jar">
+    <target name="compile" depends="mod.jing.compile-main,mod.trang.compile-main"/>
+    <target name="jar" depends="mod.dtdinst.jar,mod.jing.jar,mod.trang.jar"/>
+    <target name="jing-jar" depends="mod.jing.jar">
       <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask">
 	<classpath>
 	  <pathelement location="{$build}/jing.jar"/>
@@ -43,9 +43,9 @@
       <xsl:attribute name="depends">
 	<xsl:text>init</xsl:text>
 	<xsl:for-each select="modules/module">
-	  <xsl:text>,</xsl:text>
+	  <xsl:text>,mod.</xsl:text>
 	  <xsl:value-of select="."/>
-	  <xsl:text>::test</xsl:text>
+	  <xsl:text>.test</xsl:text>
 	</xsl:for-each>
       </xsl:attribute>
     </target>
@@ -58,7 +58,7 @@
 <xsl:template match="module">
   <xsl:param name="name"/>
   <xsl:copy-of select="ant/*"/>
-  <target name="{$name}::compile-main">
+  <target name="mod.{$name}.compile-main">
     <xsl:attribute name="depends">
       <xsl:text>init</xsl:text>
       <xsl:if test="ant/@precompile">
@@ -66,9 +66,9 @@
 	<xsl:value-of select="ant/@precompile"/>
       </xsl:if>
       <xsl:for-each select="depends[@module]">
-	<xsl:text>,</xsl:text>
+	<xsl:text>,mod.</xsl:text>
 	<xsl:value-of select="@module"/>
-	<xsl:text>::compile-main</xsl:text>
+	<xsl:text>.compile-main</xsl:text>
       </xsl:for-each>
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/main"/>
@@ -92,14 +92,15 @@
       </javac>
     </xsl:if>
   </target>
-  <target name="{$name}::compile-test">
+  <target name="mod.{$name}.compile-test">
     <xsl:attribute name="depends">
+      <xsl:text>mod.</xsl:text>
       <xsl:value-of select="$name"/>
-      <xsl:text>::compile-main</xsl:text>
+      <xsl:text>.compile-main</xsl:text>
       <xsl:for-each select="depends[@module]">
-	<xsl:text>,</xsl:text>
+	<xsl:text>,mod.</xsl:text>
 	<xsl:value-of select="@module"/>
-	<xsl:text>::compile-test</xsl:text>
+	<xsl:text>.compile-test</xsl:text>
       </xsl:for-each>
     </xsl:attribute>
     <mkdir dir="{$build}/mod/{$name}/classes/test"/>
@@ -122,7 +123,7 @@
       </javac>
     </xsl:if>
   </target>
-  <target name="{$name}::jar" depends="{$name}::compile-main">
+  <target name="mod.{$name}.jar" depends="mod.{$name}.compile-main">
     <jar jarfile="{$build}/{$name}.jar">
       <xsl:copy-of select="jar/*"/>
       <xsl:if test="compile">
@@ -135,13 +136,13 @@
       </xsl:for-each>
     </jar>
   </target>
-  <target name="{$name}::test">
+  <target name="mod.{$name}.test">
     <xsl:attribute name="depends">
       <xsl:text>dummy</xsl:text>
       <xsl:for-each select="test">
-	<xsl:text>,</xsl:text>
+	<xsl:text>,mod.</xsl:text>
 	<xsl:value-of select="$name"/>
-	<xsl:text>::test-</xsl:text>
+	<xsl:text>.test-</xsl:text>
 	<xsl:value-of select="@name"/>
       </xsl:for-each>
     </xsl:attribute>
@@ -188,8 +189,8 @@
     <xsl:value-of select="$name"/>
     <xsl:text>/test</xsl:text>
   </xsl:variable>
-  <target name="{$name}::test-{@name}"
-	  depends="{$name}::compile-test,{$app}::jar,{$name}::split-{@name}">
+  <target name="mod.{$name}.test-{@name}"
+	  depends="mod.{$name}.compile-test,mod.{$app}.jar,mod.{$name}.split-{@name}">
     <java classname="{$class}"
 	  fork="yes"
 	  failonerror="yes">
@@ -207,9 +208,9 @@
       </classpath>
     </java>
   </target>
-  <target name="{$name}::split-{@name}"
-	  depends="{$name}::uptodate-split-{@name},jing-jar"
-	  unless="{$name}::uptodate-split-{@name}">
+  <target name="mod.{$name}.split-{@name}"
+	  depends="mod.{$name}.uptodate-split-{@name},jing-jar"
+	  unless="mod.{$name}.uptodate-split-{@name}">
     <xsl:if test="@schema">
       <jing rngfile="{@schema}">
 	<xsl:if test="substring(@schema, string-length(@schema) - 3, 4) = '.rnc'">
@@ -243,9 +244,9 @@
       <param name="dir" expression="{$runtestdir}"/>
     </xslt>
   </target>
-  <target name="{$name}::uptodate-split-{@name}">
+  <target name="mod.{$name}.uptodate-split-{@name}">
     <!-- XXX include split.xsl in source files -->
-    <uptodate property="{$name}::uptodate-split-{@name}"
+    <uptodate property="mod.{$name}.uptodate-split-{@name}"
 	      targetfile="{$runtestdir}/stamp"
 	      srcfile="{$srctestdir}/{@name}test.xml"/>
   </target>
@@ -253,7 +254,7 @@
 
 <xsl:template match="test[@type='java']">
   <xsl:param name="name"/>
-  <target name="{$name}::test-{@name}" depends="{$name}::compile-test">
+  <target name="mod.{$name}.test-{@name}" depends="mod.{$name}.compile-test">
     <mkdir dir="{$build}/mod/{$name}/test-{@name}"/>
     <java classname="{@class}"
 	  fork="yes"

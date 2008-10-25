@@ -21,8 +21,8 @@
     <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
     <arg value="mod/regex/test/hardtest.xml"/>
   </test>
-  <ant precompile="regex::gen">
-    <target name="regex::gen" depends="regex::check-gen" unless="regex::gen-ok">
+  <ant precompile="mod.regex.gen">
+    <target name="mod.regex.gen" depends="mod.regex.check-gen" unless="mod.regex.gen-ok">
       <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java"/>
       <java classname="com.thaiopensource.datatype.xsd.regex.java.gen.NamingExceptionsGen"
 	    fork="yes"
@@ -47,8 +47,8 @@
       </java>
     </target>
     
-    <target name="regex::check-gen" depends="regex-gen::compile-main">
-      <uptodate property="regex::gen-ok"
+    <target name="mod.regex.check-gen" depends="mod.regex-gen.compile-main">
+      <uptodate property="mod.regex.gen-ok"
 		targetfile="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java/Categories.java">
 	<srcfiles dir="${build.dir}/mod/regex-gen/classes/main" includes="**/*.class"/>
       </uptodate>
