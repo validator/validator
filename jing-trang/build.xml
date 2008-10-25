@@ -1,4 +1,4 @@
-<project name="jing-trang" default="jar">
+<project name="jing-trang" default="test">
 
 <property name="lib.dir" value="lib"/>
 <property name="build.dir" value="${basedir}/build"/>
