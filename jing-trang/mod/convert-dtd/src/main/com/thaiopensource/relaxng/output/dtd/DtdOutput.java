@@ -634,14 +634,16 @@ class DtdOutput {
         er.warning("unrecognized_datatype", p.getSourceLocation());
         buf.append("CDATA");
       }
-      else if (warnDatatypes) {
-        if (!info.isExact())
-          er.warning("datatype_approx", p.getType(), info.closestType(), p.getSourceLocation());
-        else {
-          if (p.getParams().size() > 0)
-            er.warning("ignore_params", p.getSourceLocation());
-          if (p.getExcept() != null)
-            er.warning("ignore_except", p.getSourceLocation());
+      else {
+        if (warnDatatypes) {
+          if (!info.isExact())
+            er.warning("datatype_approx", p.getType(), info.closestType(), p.getSourceLocation());
+          else {
+            if (p.getParams().size() > 0)
+              er.warning("ignore_params", p.getSourceLocation());
+            if (p.getExcept() != null)
+              er.warning("ignore_except", p.getSourceLocation());
+          }
         }
         buf.append(info.closestType());
       }
