@@ -12,6 +12,10 @@
 <correct>\i</correct>
 <valid>j</valid>
 <valid>&#x212E;</valid>
+<valid>:</valid>
+<invalid>&#x10000;</invalid>
+<invalid>&#x10400;</invalid>
+<invalid>&#x10428;</invalid>
 </testCase>
 <testCase>
 <incorrect>a??</incorrect>

@@ -955,6 +955,8 @@ public class Translator {
       else
         excludeList.add(new CharRange(min, max));
     }
+    if (surrogatesDirect)
+      excludeList.add(new CharRange(NONBMP_MIN, NONBMP_MAX)); // Unicode 4.0 adds some non-BMP letters
     return new Subtraction(new Union(includeList), new Union(excludeList));
   }
 

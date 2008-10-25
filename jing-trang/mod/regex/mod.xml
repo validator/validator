@@ -12,6 +12,10 @@
     <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
     <arg value="mod/regex/test/regextest.xml"/>
   </test>
+  <test name="naming" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.NameTest">
+    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+  </test>
   <test name="hard" type="java"
 	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
     <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
