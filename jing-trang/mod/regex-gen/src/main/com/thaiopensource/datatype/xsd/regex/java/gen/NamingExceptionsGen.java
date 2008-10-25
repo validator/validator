@@ -1,4 +1,4 @@
-package com.thaiopensource.datatype.xsd.regex.jdk1_4.gen;
+package com.thaiopensource.datatype.xsd.regex.java.gen;
 
 import com.thaiopensource.xml.util.Naming;
 

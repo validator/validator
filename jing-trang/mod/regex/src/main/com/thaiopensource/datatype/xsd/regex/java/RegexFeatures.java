@@ -1,4 +1,4 @@
-package com.thaiopensource.datatype.xsd.regex.jdk1_4;
+package com.thaiopensource.datatype.xsd.regex.java;
 
 import com.thaiopensource.util.Utf16;
 

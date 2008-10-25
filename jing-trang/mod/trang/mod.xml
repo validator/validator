@@ -18,7 +18,7 @@
     </manifest>
     <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
       <provider classname="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
-      <provider classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+      <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
     </service>
     <service type="org.relaxng.datatype.DatatypeLibraryFactory"
 	     provider="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>

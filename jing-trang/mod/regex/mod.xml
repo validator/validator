@@ -7,37 +7,37 @@
     <arg value="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
     <arg value="mod/regex/test/regextest.xml"/>
   </test>
-  <test name="jdk1_4" type="java"
+  <test name="java" type="java"
 	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
-    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
     <arg value="mod/regex/test/regextest.xml"/>
   </test>
   <test name="naming" type="java"
 	class="com.thaiopensource.datatype.xsd.regex.test.NameTest">
-    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
   </test>
   <test name="hard" type="java"
 	class="com.thaiopensource.datatype.xsd.regex.test.TestDriver">
-    <arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.RegexEngineImpl"/>
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
     <arg value="mod/regex/test/hardtest.xml"/>
   </test>
   <ant precompile="regex::gen">
     <target name="regex::gen" depends="regex::check-gen" unless="regex::gen-ok">
-      <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4"/>
-      <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.NamingExceptionsGen"
+      <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java"/>
+      <java classname="com.thaiopensource.datatype.xsd.regex.java.gen.NamingExceptionsGen"
 	    fork="yes"
 	    failonerror="yes">
-	<arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.NamingExceptions"/>
+	<arg value="com.thaiopensource.datatype.xsd.regex.java.NamingExceptions"/>
 	<arg value="${build.dir}/mod/regex/gensrc/main"/>
 	<classpath>
 	  <pathelement location="${build.dir}/mod/regex-gen/classes/main"/>
 	  <pathelement location="${build.dir}/mod/util/classes/main"/>
 	</classpath>
       </java>
-      <java classname="com.thaiopensource.datatype.xsd.regex.jdk1_4.gen.CategoriesGen"
+      <java classname="com.thaiopensource.datatype.xsd.regex.java.gen.CategoriesGen"
 	    fork="yes"
 	    failonerror="yes">
-	<arg value="com.thaiopensource.datatype.xsd.regex.jdk1_4.Categories"/>
+	<arg value="com.thaiopensource.datatype.xsd.regex.java.Categories"/>
 	<arg value="${build.dir}/mod/regex/gensrc/main"/>
 	<arg value="lib/UnicodeData-3.1.0.txt"/>
 	<classpath>
@@ -49,7 +49,7 @@
     
     <target name="regex::check-gen" depends="regex-gen::compile-main">
       <uptodate property="regex::gen-ok"
-		targetfile="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/jdk1_4/Categories.java">
+		targetfile="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java/Categories.java">
 	<srcfiles dir="${build.dir}/mod/regex-gen/classes/main" includes="**/*.class"/>
       </uptodate>
     </target>
