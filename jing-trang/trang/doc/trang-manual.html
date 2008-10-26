@@ -6,7 +6,7 @@
 
 <h1>Trang Manual</h1>
 
-<p>Copyright &#169; 2002, 2003 Thai Open Source Software Center Ltd</p>
+<p>Copyright &#169; 2002, 2003, 2008 Thai Open Source Software Center Ltd</p>
 
 <p>See the file <a href="copying.txt">copying.txt</a> for copying
 permission.</p>
@@ -75,34 +75,18 @@ output format.</p>
 <h2><a name="running">Running Trang</a></h2>
 
 <p>The file <code>trang.jar</code> contains Trang packaged for use
-with a Java runtime.  It depends on <code>jing.jar</code>, which must
-be put in the same directory as <code>trang.jar</code>.</p>
+with a Java runtime. It requires a Java runtime compatible with the
+Java 2 Platform, Standard Edition (J2SE) version 5 (or any later
+version), such as the Java Runtime Environment (JRE), which can be
+downloaded <a href="http://java.sun.com/j2se/downloads.html">here</a>.</p>
 
-<p>The most straightforward way to run this is to install the Java
-Runtime Environment (JRE) for the Java 2 Platform, Standard Edition
-(J2SE) version 1.4 (or any later version), which can be downloaded <a
-href="http://java.sun.com/j2se/downloads.html">here</a>.  Once you
-have installed JRE 1.4, you can run Trang by using the command:</p>
+<p>Once you have installed a suitable Java runtime, you can run Trang
+by using the command:</p>
 
 <pre>java -jar trang.jar <var>args</var></pre>
 
 <p>where <code><var>args</var></code> are additional command-line
 arguments described <a href="#arguments">below</a>.</p>
-
-<p>It is also possible to run Trang using versions 1.2 or 1.3 or the
-Java runtime, but to do so you must first install an implementation of
-<a href="http://java.sun.com/xml/">Java API for XML Processing (JAXP)
-1.1</a> as an extension.  One suitable implementation is Crimson,
-which can be downloaded <a
-href="http://xml.apache.org/dist/crimson/">here</a>.  The
-<code>crimson.jar</code> file must be copied into the
-<code>lib/ext</code> subdirectory of the Java home directory.</p>
-
-<p>If for some reason you do not wish to install JAXP 1.1 as an
-extension, then you must specify the classpath and main class
-explicitly using a command of the form:</p>
-
-<pre>java -cp trang.jar;jing.jar;crimson.jar com.thaiopensource.relaxng.translate.Driver <var>args</var></pre>
 
 <h2><a name="arguments">Command-line arguments</a></h2>
 
