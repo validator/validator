@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: xslt.rng,v 1.9 2002-05-23 09:39:03 jjc Exp $ -->
 <!-- This was mostly generated from the syntax summary in the XSLT
      Recommendation (using XSLT of course). -->
 <!-- Issues: this validates extension elements as literal result

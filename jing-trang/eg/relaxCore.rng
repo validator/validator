@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: relaxCore.rng,v 1.2 2001-10-23 05:57:44 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
          ns="http://www.xml.gr.jp/xmlns/relaxCore"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
