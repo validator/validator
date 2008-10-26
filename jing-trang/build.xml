@@ -337,8 +337,18 @@
 <target name="dist" depends="test,validate,jing-dist,trang-dist,dtdinst-dist,website"
 	description="Make a distribution, leaving artifacts in ${build.dir}/dist"/>
 
-<target name="clean" description="Remove all files created during the build process">
+<target name="clean" 
+	description="Remove almost all files created during the build process">
   <delete dir="${build.dir}"/>
 </target>
 
+<target name="realclean" depends="clean"
+	description="Remove all files created during the build process">
+  <delete>
+    <fileset dir="mod" includes="*/*.iml"/>
+    <fileset file="modbuild.xml"/>
+    <fileset file="modules.xml"/>
+  </delete>
+</target>
+  
 </project>
