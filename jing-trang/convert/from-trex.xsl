@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- $Id: from-trex.xsl,v 1.1 2001-06-11 07:13:44 jjc Exp $ -->
 <!-- Stylesheet performing partial conversion from TREX to RELAX NG. -->
 <xsl:stylesheet version="1.0"
   exclude-result-prefixes="trex"

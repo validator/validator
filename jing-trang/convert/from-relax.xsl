@@ -1,5 +1,4 @@
 <!-- Translate from RELAX Core to RELAX NG. -->
-<!-- $Id: from-relax.xsl,v 1.1 2001-06-11 07:00:57 jjc Exp $ -->
 <!-- This does not apply the RELAX semantic of implicitly allowing
 undeclared attributes. Only declared attributes are allowed. -->
 
