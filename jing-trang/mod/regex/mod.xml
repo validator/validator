@@ -61,4 +61,10 @@
       </uptodate>
     </target>
   </ant>
+  <jar>
+    <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
+      <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+      <provider classname="com.thaiopensource.datatype.xsd.regex.xerces2.RegexEngineImpl"/>
+    </service>
+  </jar>
 </module>
