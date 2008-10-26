@@ -1,25 +1,26 @@
-Make regex-test target work.
+Add reallyclean target.
 
-Add language level info to mod.xml.
+Reorganize schemas in source tree.
 
-Set some more svn:ignore properties.
+Move test-related .xsl files into mod/*/test.
 
-Move tests into modules.
+Move java sources used for testing only into test.
 
-Think about what is the right source attribute for javac.
+Split convert-dtd into two modules.
 
-Make jdk 1.4 RegexEngineImpl fail on instantiation if the JDK has different
-handling of surrogates than is needed (i.e. for Sun JDK > 1.4).
+Set some more svn:ignore properties; get rid of .cvsignore properties.
 
-Make jdk 1.4 RegexEngineImple work with JDK > 1.4.
+Ensure svn:mime-type is set correctly.  Ensure svn:eol-type is set correctly.
 
-Make GCJ stuff work again.
+test element in mod.xml should specify additional jars.
+
+Make dist target work again.
 
 Make sure the copying.html file is in place for trang.
 
 Merge Jing changes from oNVDL.
 
-Use JAXP-supplied XSLT implementation. Get rid of saxon dependency.
+?Use JAXP-supplied XSLT implementation. Get rid of saxon dependency.
 
 Use Xsltc from Xalan.
 

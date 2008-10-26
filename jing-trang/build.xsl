@@ -16,6 +16,7 @@
     <xsl:for-each select="modules/module">
       <xsl:apply-templates select="document(concat('mod/', .,'/mod.xml'), .)/module">
 	<xsl:with-param name="name" select="string(.)"/>
+	<xsl:with-param name="root" select="/"/>
       </xsl:apply-templates>
     </xsl:for-each>
     <target name="gen">
@@ -57,6 +58,7 @@
 
 <xsl:template match="module">
   <xsl:param name="name"/>
+  <xsl:param name="root"/>
   <xsl:copy-of select="ant/*"/>
   <target name="mod.{$name}.compile-main">
     <xsl:attribute name="depends">
@@ -136,6 +138,32 @@
       </xsl:for-each>
     </jar>
   </target>
+  <target name="mod.{$name}.srczip">
+    <xsl:attribute name="depends">
+      <xsl:text>init</xsl:text>
+      <xsl:if test="ant/@precompile">
+	<xsl:text>,</xsl:text>
+	<xsl:value-of select="ant/@precompile"/>
+      </xsl:if>
+      <xsl:for-each select="depends[@module]">
+	<xsl:for-each select="document(concat('mod/', @module,'/mod.xml'), $root)/module/ant/@precompile">
+	  <xsl:text>,</xsl:text>
+	  <xsl:value-of select="."/>
+	</xsl:for-each>
+      </xsl:for-each>
+    </xsl:attribute>
+    <zip zipfile="{$build}/mod/{$name}/src.zip">
+      <xsl:apply-templates select="." mode="src-fileset">
+	<xsl:with-param name="name" select="$name"/>
+      </xsl:apply-templates>
+      <xsl:for-each select="depends[@module]">
+	<xsl:apply-templates select="document(concat('mod/', @module,'/mod.xml'), $root)/module"
+			     mode="src-fileset">
+	  <xsl:with-param name="name" select="@module"/>
+	</xsl:apply-templates>
+      </xsl:for-each>
+    </zip>
+  </target>
   <target name="mod.{$name}.test">
     <xsl:attribute name="depends">
       <xsl:text>dummy</xsl:text>
@@ -150,6 +178,16 @@
   <xsl:apply-templates select="test">
     <xsl:with-param name="name" select="$name"/>
   </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="module" mode="src-fileset">
+  <xsl:param name="name"/>
+  <xsl:if test="compile">
+    <fileset dir="mod/{$name}/src/main" includes="**/*.java"/>
+    <xsl:if test="ant/@precompile">
+      <fileset dir="{$build}/mod/{$name}/gensrc/main" includes="**/*.java"/>
+    </xsl:if>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="test[@type='validate']">
