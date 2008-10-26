@@ -1,22 +1,32 @@
+Compare old relaxng.tar.gz to new to make sure nothing has been left out.
+
+Add readme to root directory saying how to build from SVN.
+
+Split convert-dtd into two modules.
+
+Update docs.
+
+Set up user mailing list.
+
+Add overview of modules to wiki.
+
+Specify version number in a single place.
+
 Add reallyclean target.
+
+Add a target to explicitly run the regex category test.
 
 Reorganize schemas in source tree.
 
 Move test-related .xsl files into mod/*/test.
 
-Move java sources used for testing only into test.
-
-Split convert-dtd into two modules.
+Move java sources used for testing only into test hierarchy.
 
 Set some more svn:ignore properties; get rid of .cvsignore properties.
 
 Ensure svn:mime-type is set correctly.  Ensure svn:eol-type is set correctly.
 
 test element in mod.xml should specify additional jars.
-
-Make dist target work again.
-
-Make sure the copying.html file is in place for trang.
 
 Merge Jing changes from oNVDL.
 
