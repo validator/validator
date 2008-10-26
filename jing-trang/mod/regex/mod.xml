@@ -21,6 +21,13 @@
     <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
     <arg value="mod/regex/test/hardtest.xml"/>
   </test>
+<!-- This takes about a minute to run, so we need to separate it into a separate target.
+  <test name="category" type="java"
+	class="com.thaiopensource.datatype.xsd.regex.test.CategoryTest">
+    <arg value="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
+    <arg value="lib/UnicodeData-4.0.0.txt"/>
+  </test>
+-->
   <ant precompile="mod.regex.gen">
     <target name="mod.regex.gen" depends="mod.regex.check-gen" unless="mod.regex.gen-ok">
       <mkdir dir="${build.dir}/mod/regex/gensrc/main/com/thaiopensource/datatype/xsd/regex/java"/>
