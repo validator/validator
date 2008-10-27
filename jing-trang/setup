@@ -1,4 +1,6 @@
 #!/bin/sh
-echo "#!/bin/sh" >ant
-echo `dirname $0`/ant "-Dtopbuild.dir=`pwd`" '"$@"' >>ant
+cat >ant <<EOF
+#!/bin/sh
+"`dirname $0`/ant" "-Dbuild.dir=`pwd`/build" "\$@"
+EOF
 chmod +x ant
