@@ -9,7 +9,7 @@
   <depends module="rng-schema"/>
   <depends module="convert-from-xml"/>
   <depends module="convert-to-xsd"/>
-  <depends module="convert-dtd"/>
+  <depends module="convert-from-dtd"/>
   <java5/>
   <compile/>
   <jar>
