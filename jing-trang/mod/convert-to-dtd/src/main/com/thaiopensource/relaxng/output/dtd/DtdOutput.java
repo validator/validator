@@ -640,9 +640,9 @@ class DtdOutput {
             er.warning("datatype_approx", p.getType(), info.closestType(), p.getSourceLocation());
           else {
             if (p.getParams().size() > 0)
-              er.warning("ignore_params", p.getSourceLocation());
+              er.warning("ignore_params", p.getType(), p.getSourceLocation());
             if (p.getExcept() != null)
-              er.warning("ignore_except", p.getSourceLocation());
+              er.warning("ignore_except", p.getType(), p.getSourceLocation());
           }
         }
         buf.append(info.closestType());
