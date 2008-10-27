@@ -1,7 +1,5 @@
 Compare old relaxng.tar.gz to new to make sure nothing has been left out.
 
-Add readme to root directory saying how to build from SVN.
-
 Update docs.
 
 Set up user mailing list.
