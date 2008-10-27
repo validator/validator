@@ -10,6 +10,7 @@
   <depends module="convert-from-xml"/>
   <depends module="convert-to-xsd"/>
   <depends module="convert-from-dtd"/>
+  <depends module="convert-to-dtd"/>
   <java5/>
   <compile/>
   <jar>

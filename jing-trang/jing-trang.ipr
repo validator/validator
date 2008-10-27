@@ -286,8 +286,9 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" filepath="$PROJECT_DIR$/mod/convert-dtd/convert-dtd.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/convert-from-dtd/convert-from-dtd.iml" filepath="$PROJECT_DIR$/mod/convert-from-dtd/convert-from-dtd.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" filepath="$PROJECT_DIR$/mod/convert-from-xml/convert-from-xml.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/convert-to-dtd/convert-to-dtd.iml" filepath="$PROJECT_DIR$/mod/convert-to-dtd/convert-to-dtd.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" filepath="$PROJECT_DIR$/mod/convert-to-xsd/convert-to-xsd.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/datatype/datatype.iml" filepath="$PROJECT_DIR$/mod/datatype/datatype.iml" group="Common" />
       <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" group="Trang" />
