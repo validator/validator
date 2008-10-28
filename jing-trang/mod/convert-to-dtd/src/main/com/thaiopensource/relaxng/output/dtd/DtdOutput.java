@@ -27,16 +27,17 @@ import com.thaiopensource.relaxng.edit.NameClass;
 import com.thaiopensource.relaxng.edit.NameNameClass;
 import com.thaiopensource.relaxng.edit.OneOrMorePattern;
 import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.Param;
 import com.thaiopensource.relaxng.edit.Pattern;
 import com.thaiopensource.relaxng.edit.PatternVisitor;
 import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.TextPattern;
 import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.common.ErrorReporter;
 import com.thaiopensource.relaxng.output.common.NameClassSplitter;
+import com.thaiopensource.util.VoidValue;
 import com.thaiopensource.xml.out.CharRepertoire;
 import com.thaiopensource.xml.util.Naming;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
@@ -639,8 +640,8 @@ class DtdOutput {
           if (!info.isExact())
             er.warning("datatype_approx", p.getType(), info.closestType(), p.getSourceLocation());
           else {
-            if (p.getParams().size() > 0)
-              er.warning("ignore_params", p.getType(), p.getSourceLocation());
+            for (Param param : p.getParams())
+              er.warning("ignore_param", param.getName(), p.getType(), p.getSourceLocation());
             if (p.getExcept() != null)
               er.warning("ignore_except", p.getType(), p.getSourceLocation());
           }
