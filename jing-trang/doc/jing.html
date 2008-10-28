@@ -78,10 +78,14 @@ by using the command:</p>
 
 <p>where <code><var>schema</var></code> is the name of the file
 containing the schema, and <code><var>XMLfile</var>...</code> are the
-names of one or more files to be validated against this schema,
-and <code><var>options</var></code> are zero or more of the following
-options.</p>
+names of one or more XML files to be validated against this schema,
+and <code><var>options</var></code> are zero or more
+options. If <code><var>schema</var></code> is correct, and
+each <code><var>XMLfile</var>...</code> is valid with respect to
+<code><var>schema</var></code>, then Jing will generate no output.
+Otherwise, it will generate one or more error messages.</p>
 
+<p>The following options are available:</p>
 <dl>
 
 <dt><code>-c</code></dt>
@@ -118,6 +122,41 @@ with respect to ID/IDREF/IDREFS.</dd>
 for validation.</dd>
 
 </dl>
+
+<p>When you use <code>jing.jar</code> with the <code>-jar</code>
+option, any jar files that have the same names as the jar files
+included with the Jing download and are in the same directory
+as <code>jing.jar</code> will be used automatically (i.e. they will be
+added to the classpath), specifically:</p>
+
+<ul>
+<li><code>xercesImpl.jar</code></li>
+<li><code>xml-apis.jar</code></li>
+<li><code>saxon.jar</code></li>
+<li><code>isorelax.jar</code></li>
+</ul>
+
+<p>Note that, when using the <code>-jar</code> option, the JRE will
+ignore any additional class path entries specified by
+the <code>-cp</code> or <code>-classpath</code> options or by
+the <code>CLASSPATH</code> environment variable.</p>
+
+<p>If you do not want use the <code>-jar</code> option (perhaps
+because you want to use some other <code>.jar</code> files not
+included with with Jing), then you must explicitly include all the
+needed
+<code>.jar</code> files with a <code>-cp</code> or
+<code>-classpath</code> option or with the <code>CLASSPATH</code>
+environment variable, and specify the main class name as
+<code>com.thaiopensource.relaxng.util.Driver</code>.  For example,
+on Linux you could do you could do:</p>
+
+<pre>
+java -classpath <var>path-to-dist</var>/jing-@VERSION@/bin/jing.jar com.thaiopensource.relaxng.util.Driver <var>file</var>.rng <var>file</var>.xml
+</pre>
+
+<p>This would use just <code>jing.jar</code> and the standard Java
+classes.</p>
 
 <p>Jing uses a vendor-independent <a
 href="pluggable-datatypes.html">pluggable datatypes API</a> that
