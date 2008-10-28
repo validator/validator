@@ -332,6 +332,46 @@
 <target name="dist" depends="test,validate,jing-dist,trang-dist,dtdinst-dist,website"
 	description="Make a distribution, leaving artifacts in ${build.dir}/dist"/>
 
+<target name="googlecode.properties.available">
+  <available file="${user.home}/googlecode.properties"
+	     property="googlecode.properties.available"/>
+</target>
+
+<target name="googlecode.properties"
+	depends="googlecode.properties.available"
+	if="googlecode.properties.available">
+  <property file="${user.home}/googlecode.properties"
+	    prefix="googlecode"/>
+</target>
+
+<target name="googlecode.upload"
+	depends="version,googlecode.properties"
+	description="Upload files to Google Code. Run dist before this.">
+  <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask"
+	   classpath="lib/ant-googlecode.jar" name="gcupload"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="jing-${version}.zip" 
+            filename="${build.dir}/dist/jing-${version}.zip"
+            summary="Jing version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Featured, Type-Archive, OpSys-All, Version-${version}"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="trang-${version}.zip" 
+            filename="${build.dir}/dist/trang-${version}.zip"
+            summary="Trang version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Featured, Type-Archive, OpSys-All, Version-${version}"/>
+  <gcupload username="${googlecode.username}" 
+            password="${googlecode.password}" 
+            projectname="jing-trang" 
+            targetfilename="dtdinst-${version}.zip" 
+            filename="${build.dir}/dist/dtdinst-${version}.zip"
+            summary="DTDinst version ${version} packaged for use with JRE (includes binary, source and documentation)"
+            labels="Type-Archive, OpSys-All, Version-${version}"/>
+</target>
+
 <target name="clean" 
 	description="Remove almost all files created during the build process">
   <delete dir="${build.dir}"/>
