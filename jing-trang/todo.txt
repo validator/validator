@@ -1,5 +1,3 @@
-Add overview of modules to wiki.
-
 Add a target to explicitly run the regex category test.
 
 Reorganize schemas in source tree.
