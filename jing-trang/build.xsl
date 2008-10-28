@@ -8,6 +8,7 @@
 <xsl:variable name="build" select="'${build.dir}'"/>
 <xsl:template match="/">
   <project>
+    <xmlproperty file="version.xml"/>
     <property name="build.dir" value="${{basedir}}/build"/>
     <target name="dummy"/>
     <target name="init">
@@ -93,6 +94,13 @@
 	  </xsl:for-each>
 	</classpath>
       </javac>
+    </xsl:if>
+    <xsl:if test="version">
+      <xsl:variable name="resdir"
+		    select="concat($build, '/mod/', $name, '/classes/main/',
+			           version/@package, '/resources')"/>
+      <mkdir dir="{$resdir}"/>
+      <echo file="{$resdir}/Version.properties" message="version=${{version}}&#xA;"/>
     </xsl:if>
   </target>
   <target name="mod.{$name}.compile-test">

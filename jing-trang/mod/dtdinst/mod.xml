@@ -6,6 +6,7 @@
     <arg value="mod/dtdinst/test"/>
     <arg value="${build.dir}/mod/dtdinst/test-main"/>
   </test>
+  <version package="com/thaiopensource/xml/dtd/app"/>
   <jar>
     <manifest>
       <attribute name="Main-Class" value="com/thaiopensource/xml/dtd/app/Driver"/>

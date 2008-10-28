@@ -6,8 +6,6 @@ Set up user mailing list.
 
 Add overview of modules to wiki.
 
-Specify version number in a single place.
-
 Add a target to explicitly run the regex category test.
 
 Reorganize schemas in source tree.

@@ -13,6 +13,7 @@
   <depends module="convert-to-dtd"/>
   <java5/>
   <compile/>
+  <version package="com/thaiopensource/relaxng/translate"/>
   <jar>
     <manifest>
       <attribute name="Main-Class" value="com/thaiopensource/relaxng/translate/Driver"/>

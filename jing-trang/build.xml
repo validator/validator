@@ -84,12 +84,7 @@
 </target>
 
 <target name="version">
-  <property file="mod/rng-validate/src/main/com/thaiopensource/relaxng/util/resources/Version.properties"
-	    prefix="jing"/>
-  <property file="mod/trang/src/main/com/thaiopensource/relaxng/translate/resources/Version.properties"
-	    prefix="trang"/>
-  <property file="mod/dtdinst/src/main/com/thaiopensource/xml/dtd/app/resources/Version.properties"
-	    prefix="dtdinst"/>
+  <xmlproperty file="version.xml"/>
 </target>
 
 <target name="validate" depends="jar" description="Validate all XML files" >
@@ -190,7 +185,7 @@
   <copy todir="${build.dir}">
     <fileset dir="doc" includes="*.html"/>
   </copy>
-  <replace file="${build.dir}/jing.html" token="@VERSION@" value="${jing.version}"/>
+  <replace file="${build.dir}/jing.html" token="@VERSION@" value="${version}"/>
 </target>
 
 <target name="jing-dist" depends="init,jar,javadoc,jing-doc,datatype-sample,srczip,version">
@@ -198,49 +193,49 @@
   <copy todir="${build.dir}/jing-bin">
     <fileset dir="doc/jing-bin" includes="readme.html"/>
   </copy>
-  <replace file="${build.dir}/jing-bin/readme.html" token="@VERSION@" value="${jing.version}"/>
-  <zip zipfile="${build.dir}/dist/jing-${jing.version}.zip">
-    <zipfileset dir="${build.dir}" includes="jing.jar" prefix="jing-${jing.version}/bin"/> 
+  <replace file="${build.dir}/jing-bin/readme.html" token="@VERSION@" value="${version}"/>
+  <zip zipfile="${build.dir}/dist/jing-${version}.zip">
+    <zipfileset dir="${build.dir}" includes="jing.jar" prefix="jing-${version}/bin"/> 
     <zipfileset dir="lib" includes="saxon.jar,isorelax.jar,xercesImpl.jar,xml-apis.jar" 
-                prefix="jing-${jing.version}/bin"/> 
+                prefix="jing-${version}/bin"/> 
     <zipfileset dir="${build.dir}/mod/jing"
 		includes="src.zip"
-		prefix="jing-${jing.version}"/> 
-    <zipfileset dir="${build.dir}" includes="api/**" prefix="jing-${jing.version}/doc"/>
+		prefix="jing-${version}"/> 
+    <zipfileset dir="${build.dir}" includes="api/**" prefix="jing-${version}/doc"/>
     <zipfileset dir="eg" includes="relaxng.rng,xslt.rng,relaxCore.rng,relaxCoreDatatypes.rng"
-                prefix="jing-${jing.version}/lib"/>
-    <zipfileset dir="doc/compact" includes="relaxng.rnc" prefix="jing-${jing.version}/lib"/>
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="doc/compact" includes="relaxng.rnc" prefix="jing-${version}/lib"/>
     <zipfileset dir="mod/schematron/src/main/com/thaiopensource/validate/schematron/resources"
                 includes="schematron.rnc"
-                prefix="jing-${jing.version}/lib"/>
+                prefix="jing-${version}/lib"/>
     <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/mns/resources"
                 includes="mns.rng"
-                prefix="jing-${jing.version}/lib"/>
+                prefix="jing-${version}/lib"/>
     <zipfileset dir="mod/nvdl/src/main/com/thaiopensource/validate/nrl/resources"
                 includes="nrl.rng"
-                prefix="jing-${jing.version}/lib"/>
-    <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${jing.version}/lib"/>
+                prefix="jing-${version}/lib"/>
+    <zipfileset dir="." includes="xhtml/**/*.rng,xhtml/index.html" prefix="jing-${version}/lib"/>
     <zipfileset dir="doc"
                 includes="jing-ant.html,jing-datatypes.html,jing-other.html,pluggable-datatypes.html"
-                prefix="jing-${jing.version}/doc"/>
+                prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}"
                 includes="jing.html,nrl.html"
-                prefix="jing-${jing.version}/doc"/>
+                prefix="jing-${version}/doc"/>
     <zipfileset dir="doc/jing-bin"
                 includes="copying.html"
-                prefix="jing-${jing.version}/doc"/>
+                prefix="jing-${version}/doc"/>
     <zipfileset dir="lib"
                 includes="xerces.copying.txt,isorelax.copying.txt"
-                prefix="jing-${jing.version}/doc"/>
+                prefix="jing-${version}/doc"/>
     <zipfileset dir="${build.dir}/jing-bin"
                 includes="readme.html"
-                prefix="jing-${jing.version}"/>
-    <zipfileset dir="datatype-sample" prefix="jing-${jing.version}/sample/datatype"/>
+                prefix="jing-${version}"/>
+    <zipfileset dir="datatype-sample" prefix="jing-${version}/sample/datatype"/>
     <zipfileset dir="${build.dir}/datatype-sample"
                 includes="datatype-sample.jar"
-                prefix="jing-${jing.version}/sample/datatype"/>
+                prefix="jing-${version}/sample/datatype"/>
   </zip>
-  <checksum file="${build.dir}/dist/jing-${jing.version}.zip" algorithm="sha1"/>
+  <checksum file="${build.dir}/dist/jing-${version}.zip" algorithm="sha1"/>
 </target>
 
 <target name="trang-doc" depends="version">
@@ -249,23 +244,23 @@
     <fileset dir="trang/doc" includes="trang.html,trang-manual.html,convert-to-xsd-talk.html"/>
   </copy>
   <replace dir="${build.dir}"
-	   includes="trang.html,trang-manual.html" token="@VERSION@" value="${trang.version}"/>
+	   includes="trang.html,trang-manual.html" token="@VERSION@" value="${version}"/>
 </target>
 
 <target name="trang-dist" depends="init,jar,trang-doc,srczip,version">
-  <zip zipfile="${build.dir}/dist/trang-${trang.version}.zip">
-    <zipfileset dir="trang" includes="copying.txt" prefix="trang-${trang.version}"/>
+  <zip zipfile="${build.dir}/dist/trang-${version}.zip">
+    <zipfileset dir="trang" includes="copying.txt" prefix="trang-${version}"/>
     <zipfileset dir="${build.dir}"
 		includes="trang-manual.html"
-		prefix="trang-${trang.version}"/>
+		prefix="trang-${version}"/>
     <zipfileset dir="${build.dir}"
 		includes="trang.jar"
-		prefix="trang-${trang.version}"/>
+		prefix="trang-${version}"/>
     <zipfileset dir="${build.dir}/mod/trang"
 		includes="src.zip" 
-		prefix="trang-${trang.version}"/>
+		prefix="trang-${version}"/>
   </zip>
-  <checksum file="${build.dir}/dist/trang-${trang.version}.zip" algorithm="sha1"/>
+  <checksum file="${build.dir}/dist/trang-${version}.zip" algorithm="sha1"/>
 </target>
 
 <target name="dtdinst-doc" depends="version">
@@ -295,20 +290,20 @@
   <copy file="dtdinst/teixml.dtd" tofile="${build.dir}/dtdinst/teixml.dtd.txt"/>
   <replace file="${build.dir}/dtdinst/index.html"
            token="@VERSION@"
-           value="${dtdinst.version}"/>
+           value="${version}"/>
 </target>
 
 <target name="dtdinst-dist" depends="init,jar,dtdinst-doc,srczip,version">
-  <zip zipfile="${build.dir}/dist/dtdinst-${dtdinst.version}.zip">
-    <zipfileset dir="${build.dir}/dtdinst" prefix="dtdinst-${dtdinst.version}"/>
+  <zip zipfile="${build.dir}/dist/dtdinst-${version}.zip">
+    <zipfileset dir="${build.dir}/dtdinst" prefix="dtdinst-${version}"/>
     <zipfileset dir="${build.dir}"
 		includes="dtdinst.jar"
-		prefix="dtdinst-${dtdinst.version}"/>
+		prefix="dtdinst-${version}"/>
     <zipfileset dir="${build.dir}/mod/dtdinst"
 		includes="src.zip" 
-		prefix="dtdinst-${dtdinst.version}"/>
+		prefix="dtdinst-${version}"/>
   </zip>
-  <checksum file="${build.dir}/dist/dtdinst-${dtdinst.version}.zip" algorithm="sha1"/>
+  <checksum file="${build.dir}/dist/dtdinst-${version}.zip" algorithm="sha1"/>
 </target>
 
 <target name="website" depends="validate,javadoc,datatype-sample,jing-doc,trang-doc,dtdinst-doc"
