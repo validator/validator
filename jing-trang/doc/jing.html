@@ -38,51 +38,49 @@ RELAX NG; specifically</p>
 <ul>
 <li><a href="http://www.w3.org/TR/xmlschema-1/">W3C
 XML Schema</a> (based on <a
-href="http://xml.apache.org/xerces2-j/">Xerces-J</a>);</li>
+href="http://xerces.apache.org/xerces2-j/">Xerces2-J</a>);</li>
 
-<li><a
-href="http://www.ascc.net/xml/resource/schematron/schematron.html">Schematron</a>;</li>
+<li><a href="http://xml.ascc.net/schematron">Schematron 1.5</a> (in a
+future version of Jing, the support for Schematron will be updated to
+support the
+<a href="http://www.schematron.com">ISO-standardized version of
+Schematron</a>);</li>
 
-<li><a href="nrl.html">Namespace Routing Language</a>.</li>
-
+<li><a href="nrl.html">Namespace Routing Language</a> (in a future
+version of Jing, the support for NRL will be updated to
+support <a href="http://www.nvdl.org">NVDL</a>, which is an
+ISO-standardized schema language based on NRL).</li>
 </ul>
 
 <p>A separate <a href="jing-other.html">document</a> describes this
 support in more detail.</p>
 
-<p>Jing is available in the <a
-href="http://www.thaiopensource.com/download/">download</a>
-directory in a number of different forms:</p>
+<p>Jing has a command-line user interface.  It has no graphical user
+interface.</p>
 
-<dl>
-<dt><code>jing-<var>version</var>.zip</code></dt>
+<p>Jing is available for download as the
+file <a href="http://jing-trang.googlecode.com/files/jing-@VERSION@.zip"
+>jing-@VERSION@.zip</a>, which contains binaries, source code and
+documentation.  It requires a Java runtime compatible with the Java 2
+Platform, Standard Edition (J2SE) version 1.4 (or any later version),
+such as the Java Runtime Environment (JRE), which can be
+downloaded <a href="http://java.sun.com/j2se/downloads.html">here</a>.</p>
 
-<dd>the main Jing distribution for use with a Java Runtime
-Environment, including binaries, source code, documentation</dd>
+<p>The latest version of Jing will always be available in
+the <a href="http://code.google.com/p/jing-trang/downloads/list">Downloads</a>
+section of the <a href="http://jing-trang.googlecode.com">project
+site</a>.</p>
 
-<dt><code>gcj/jing-<var>version</var>.tar.gz</code></dt>
+<p>Once you have installed a suitable Java runtime, you can run Jing
+by using the command:</p>
 
-<dd>source code packaged for compilation with GCJ (GNU Compiler for
-Java)</dd>
+<pre>java -jar jing.jar <var>options</var> <var>schema</var> <var>XMLfile</var>...</pre>
 
-<dt><code>gcj/jing-<var>version</var>-<var>release</var>.i386.rpm</code></dt>
-
-<dd>RPM for Linux compiled with GCJ</dd>
-
-<dt><code>gcj/jing-<var>version</var>-<var>release</var>.src.rpm</code></dt>
-
-<dd>source RPM for Linux for compilation with GCJ</dd>
-
-</dl>
-
-<p>The main class is
-<code>com.thaiopensource.relaxng.util.Driver</code>.  The first
-argument expected by the main class is the name of the file containing
-the schema.  The second and subsequent arguments are the names of one
-or more files to be validated against this schema.</p>
-
-<p>Jing accepts the following command-line options, which must precede
-the arguments specifying the schema and files to be validated:</p>
+<p>where <code><var>schema</var></code> is the name of the file
+containing the schema, and <code><var>XMLfile</var>...</code> are the
+names of one or more files to be validated against this schema,
+and <code><var>options</var></code> are zero or more of the following
+options.</p>
 
 <dl>
 
@@ -140,9 +138,9 @@ API</a>.</li>
 
 <li>You can use JARV (Java API for RELAX Verifiers).  JARV is part of
 the <a href="http://iso-relax.sourceforge.net">ISO-RELAX</a>
-SourceForge project.  Jing's implementation uses the <a
-href="http://prdownloads.sourceforge.net/iso-relax/isorelax.20030108.zip?download"
->20030108 version</a>. Support for DTD Compatibility validation of
+SourceForge project.  Jing's implementation uses
+the <a href="http://downloads.sourceforge.net/iso-relax/isorelax.20041111.zip"
+>20041111 version</a>. Support for DTD Compatibility validation of
 ID/IDREF and for validation with languages other than RELAX NG is not
 currently available via this interface.</li>
 
@@ -151,6 +149,28 @@ currently available via this interface.</li>
 <p>There is a <a href="jing-ant.html">Jing task</a> that allows Jing
 to be invoked by the <a href="http://ant.apache.org/">Ant</a>
 build tool.</p>
+
+<p>Development of Jing, together
+with <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a>,
+takes place in
+the <a href="http://jing-trang.googlecode.com">jing-trang project</a>,
+which is hosted on Google Code.</p>
+
+<p>If you find a bug or would like to request an enhancement, please
+create a new issue in
+the <a href="http://code.google.com/p/jing-trang/issues/list">Issues</a>
+section of the project site. You can talk with other users of Jing
+on
+the <a href="http://tech.groups.yahoo.com/group/rng-users/">rng-users</a>
+mailing list.</p>
+
+<p>If you want to make changes to Jing, you
+should <a href="http://code.google.com/p/jing-trang/source/checkout">check
+out</a> the source code from the project's Subversion repository. (The
+source code included in the Jing download is for reference purposes,
+and doesn't contain the supporting files, such as build scripts and
+test cases, that are needed for working conveniently with the source
+code.)</p>
 
 <address><a href="mailto:jjc@jclark.com">James Clark</a></address>
 
