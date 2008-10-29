@@ -4,5 +4,6 @@
   <depends module="rng-validate"/>
   <test name="mns" type="validate" schema="test/mnstest.rng"/>
   <test name="nrl" type="validate" schema="test/nrltest.rng"/>
+  <test name="nvdl" type="validate" schema="mod/nvdl/test/nvdltest.rng"/>
   <compile/>
 </module>
