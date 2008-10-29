@@ -34,7 +34,6 @@ import com.thaiopensource.util.Localizer;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.Locator;
 import org.xml.sax.helpers.LocatorImpl;
 
 import java.util.Hashtable;
@@ -1259,7 +1258,6 @@ ParsedElementAnnotation Documentation() :
   CommentList comments = getComments();
   ElementAnnotationBuilder eab;
   Token t;
-  String s;
 }
 {
   (t = <DOCUMENTATION> | t = <DOCUMENTATION_AFTER_SINGLE_LINE_COMMENT>)

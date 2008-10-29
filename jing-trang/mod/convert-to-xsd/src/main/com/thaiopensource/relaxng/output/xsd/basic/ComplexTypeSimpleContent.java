@@ -1,7 +1,5 @@
 package com.thaiopensource.relaxng.output.xsd.basic;
 
-import java.util.List;
-
 public class ComplexTypeSimpleContent extends ComplexTypeAllowedContent {
   private final SimpleType simpleType;
 

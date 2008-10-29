@@ -1,14 +1,11 @@
 package com.thaiopensource.datatype.xsd;
 
-import java.util.ResourceBundle;
-import java.text.MessageFormat;
-
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeBuilder;
-import org.relaxng.datatype.ValidationContext;
-import org.relaxng.datatype.DatatypeException;
 import com.thaiopensource.datatype.xsd.regex.RegexSyntaxException;
 import com.thaiopensource.util.Localizer;
+import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeBuilder;
+import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.ValidationContext;
 
 class DatatypeBuilderImpl implements DatatypeBuilder {
   static final Localizer localizer = new Localizer(DatatypeBuilderImpl.class);

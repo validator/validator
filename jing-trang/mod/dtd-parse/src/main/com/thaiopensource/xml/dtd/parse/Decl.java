@@ -1,9 +1,32 @@
 package com.thaiopensource.xml.dtd.parse;
 
-import java.util.Vector;
-import java.util.Enumeration;
+import com.thaiopensource.xml.dtd.om.AttlistDecl;
+import com.thaiopensource.xml.dtd.om.AttributeDefaultDef;
+import com.thaiopensource.xml.dtd.om.AttributeGroupDef;
+import com.thaiopensource.xml.dtd.om.Comment;
+import com.thaiopensource.xml.dtd.om.DatatypeDef;
+import com.thaiopensource.xml.dtd.om.Def;
+import com.thaiopensource.xml.dtd.om.ElementDecl;
+import com.thaiopensource.xml.dtd.om.EnumGroupDef;
+import com.thaiopensource.xml.dtd.om.ExternalEntityDecl;
+import com.thaiopensource.xml.dtd.om.ExternalIdDef;
+import com.thaiopensource.xml.dtd.om.ExternalIdRef;
+import com.thaiopensource.xml.dtd.om.Flag;
+import com.thaiopensource.xml.dtd.om.FlagDef;
+import com.thaiopensource.xml.dtd.om.IgnoredSection;
+import com.thaiopensource.xml.dtd.om.IncludedSection;
+import com.thaiopensource.xml.dtd.om.InternalEntityDecl;
+import com.thaiopensource.xml.dtd.om.ModelGroupDef;
+import com.thaiopensource.xml.dtd.om.NameSpec;
+import com.thaiopensource.xml.dtd.om.NameSpecDef;
+import com.thaiopensource.xml.dtd.om.NotationDecl;
+import com.thaiopensource.xml.dtd.om.OverriddenDef;
+import com.thaiopensource.xml.dtd.om.ParamDef;
+import com.thaiopensource.xml.dtd.om.ProcessingInstruction;
+import com.thaiopensource.xml.dtd.om.TopLevel;
 
-import com.thaiopensource.xml.dtd.om.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 class Decl {
   static final int REFERENCE = 0; // entity
@@ -226,7 +249,6 @@ class Decl {
   }
   
   NotationDecl createNotationDecl(DtdBuilder db) {
-    String name;
     ParamStream ps = new ParamStream(params);
     ps.advance();
     return new NotationDecl(ps.value,

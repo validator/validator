@@ -23,7 +23,7 @@ public class ErrorReporter {
     }
   }
 
-  public ErrorReporter(ErrorHandler eh, Class cls) {
+  public ErrorReporter(ErrorHandler eh, Class<?> cls) {
     this.eh = eh;
     this.localizer = new Localizer(cls);
   }

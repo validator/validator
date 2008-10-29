@@ -1,7 +1,5 @@
 package com.thaiopensource.relaxng.parse;
 
-import org.relaxng.datatype.ValidationContext;
-
 public interface SchemaBuilder {
   ParsedPattern makeChoice(ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException;
   ParsedPattern makeInterleave(ParsedPattern[] patterns, int nPatterns, Location loc, Annotations anno) throws BuildException;

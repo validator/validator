@@ -11,7 +11,6 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.io.File;
 
 public class DtdOutputFormat implements OutputFormat {
   public void output(SchemaCollection sc, final OutputDirectory od, String[] params, String inputFormat, ErrorHandler eh)

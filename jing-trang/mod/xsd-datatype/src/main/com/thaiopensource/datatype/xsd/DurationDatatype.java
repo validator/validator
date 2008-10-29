@@ -2,10 +2,9 @@ package com.thaiopensource.datatype.xsd;
 
 import org.relaxng.datatype.ValidationContext;
 
-import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 class DurationDatatype extends RegexDatatype implements OrderRelation {
   static private final String PATTERN =

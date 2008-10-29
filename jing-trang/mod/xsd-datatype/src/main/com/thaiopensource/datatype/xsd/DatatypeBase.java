@@ -1,11 +1,10 @@
 package com.thaiopensource.datatype.xsd;
 
-import org.relaxng.datatype.Datatype;
-import org.relaxng.datatype.DatatypeException;
-import org.relaxng.datatype.ValidationContext;
-import org.relaxng.datatype.DatatypeStreamingValidator;
-import org.relaxng.datatype.helpers.StreamingValidatorImpl;
 import com.thaiopensource.datatype.Datatype2;
+import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.DatatypeStreamingValidator;
+import org.relaxng.datatype.ValidationContext;
+import org.relaxng.datatype.helpers.StreamingValidatorImpl;
 
 abstract class DatatypeBase implements Datatype2 {
   abstract boolean lexicallyAllows(String str);

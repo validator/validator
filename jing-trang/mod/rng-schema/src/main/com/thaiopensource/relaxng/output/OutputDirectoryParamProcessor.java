@@ -3,7 +3,6 @@ package com.thaiopensource.relaxng.output;
 import com.thaiopensource.relaxng.translate.util.ParamProcessor;
 import com.thaiopensource.relaxng.translate.util.EncodingParam;
 import com.thaiopensource.relaxng.translate.util.IntegerParam;
-import com.thaiopensource.relaxng.translate.util.Param;
 
 public class OutputDirectoryParamProcessor extends ParamProcessor {
   private final OutputDirectory od;

@@ -10,7 +10,7 @@ class DatatypeInferrer {
   private boolean allWhiteSpace = true;
 
   DatatypeInferrer(DatatypeRepertoire datatypes, String value) {
-    uri = datatypes.getUri();
+    uri = DatatypeRepertoire.getUri();
     possibleTypes = new DatatypeRepertoire.Type[datatypes.size()];
     for (int i = 0; i < possibleTypes.length; i++)
       possibleTypes[i] = datatypes.get(i);
