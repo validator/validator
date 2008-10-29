@@ -24,12 +24,12 @@ import java.io.IOException;
 import java.net.URL;
 
 class SchemaReceiverImpl implements SchemaReceiver {
-  private static final String NRL_SCHEMA = "nrl.rng";
+  private static final String NVDL_SCHEMA = "nvdl.rng";
   private static final String RNC_MEDIA_TYPE = "application/x-rnc";
   private final PropertyMap properties;
   private final Name attributeOwner;
   private final SchemaReader autoSchemaReader;
-  private Schema nrlSchema = null;
+  private Schema nvdlSchema = null;
   private static final PropertyId subSchemaProperties[] = {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.XML_READER_CREATOR,
@@ -56,15 +56,15 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return new SchemaImpl(builder.toPropertyMap()).installHandlers(xr, this);
   }
 
-  Schema getNrlSchema() throws IOException, IncorrectSchemaException, SAXException {
-   if (nrlSchema == null) {
+  Schema getNvdlSchema() throws IOException, IncorrectSchemaException, SAXException {
+    if (nvdlSchema == null) {
       String className = SchemaReceiverImpl.class.getName();
-      String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + NRL_SCHEMA;
-      URL nrlSchemaUrl = getResource(resourceName);
-     nrlSchema = SAXSchemaReader.getInstance().createSchema(new InputSource(nrlSchemaUrl.toString()),
+      String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + NVDL_SCHEMA;
+      URL nvdlSchemaUrl = getResource(resourceName);
+      nvdlSchema = SAXSchemaReader.getInstance().createSchema(new InputSource(nvdlSchemaUrl.toString()),
                                                               properties);
     }
-    return nrlSchema;
+    return nvdlSchema;
   }
 
   private static URL getResource(String resourceName) {

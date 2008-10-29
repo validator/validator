@@ -21,7 +21,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 class ValidatorImpl extends DefaultHandler implements Validator {
-  static final Name OWNER_NAME = new Name("http://www.thaiopensource.com/validate/nrl/instance", "owner");
+  static final Name OWNER_NAME = new Name("http://purl.oclc.org/dsdl/nvdl/ns/instance/1.0", "virtualElement");
   private static final String NO_NS = "\0";
   private final ErrorHandler eh;
   private final PropertyMap properties;

@@ -32,7 +32,7 @@
     </service>
     <service type="com.thaiopensource.validate.auto.SchemaReceiverFactory">
       <provider classname="com.thaiopensource.validate.rng.SAXSchemaReceiverFactory"/>
-      <provider classname="com.thaiopensource.validate.nvdl.NrlSchemaReceiverFactory"/>
+      <provider classname="com.thaiopensource.validate.nvdl.NvdlSchemaReceiverFactory"/>
       <provider classname="com.thaiopensource.validate.nrl.NrlSchemaReceiverFactory"/>
       <provider classname="com.thaiopensource.validate.mns.MnsSchemaReceiverFactory"/>
       <provider classname="com.thaiopensource.validate.auto.SchemaReaderLoaderSchemaReceiverFactory"/>

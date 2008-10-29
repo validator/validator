@@ -11,7 +11,6 @@ import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.OptionArgumentPresenceException;
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.SchemaFuture;
@@ -37,7 +36,7 @@ import java.util.Vector;
 class SchemaImpl extends AbstractSchema {
   static private final String IMPLICIT_MODE_NAME = "#implicit";
   static private final String WRAPPER_MODE_NAME = "#wrapper";
-  static final String NRL_URI = "http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0";
+  static final String NVDL_URI = "http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0";
   private final Hashtable modeMap = new Hashtable();
   private Mode startMode;
   private final Mode defaultBaseMode;
@@ -104,13 +103,13 @@ class SchemaImpl extends AbstractSchema {
       try {
         PropertyMapBuilder builder = new PropertyMapBuilder(sr.getProperties());
         ValidateProperty.ERROR_HANDLER.put(builder, ceh);
-        validator = sr.getNrlSchema().createValidator(builder.toPropertyMap());
+        validator = sr.getNvdlSchema().createValidator(builder.toPropertyMap());
       }
       catch (IOException e) {
         throw new WrappedIOException(e);
       }
       catch (IncorrectSchemaException e) {
-        throw new RuntimeException("internal error in RNG schema for NRL");
+        throw new RuntimeException("internal error in RNG schema for NVDL");
       }
       setDelegate(validator.getContentHandler());
       if (locator != null)
@@ -159,7 +158,7 @@ class SchemaImpl extends AbstractSchema {
       String xmlBase = attributes.getValue(WellKnownNamespaces.XML, "base");
       if (xmlBase != null)
         xmlBaseHandler.xmlBaseAttribute(xmlBase);
-      if (!NRL_URI.equals(uri) || foreignDepth > 0) {
+      if (!NVDL_URI.equals(uri) || foreignDepth > 0) {
         foreignDepth++;
         return;
       }
@@ -333,7 +332,7 @@ class SchemaImpl extends AbstractSchema {
       }
       else
         mustSupport = false;
-      String name = Uri.resolve(NRL_URI, attributes.getValue("", "name"));
+      String name = Uri.resolve(NVDL_URI, attributes.getValue("", "name"));
       Option option = sr.getOption(name);
       if (option == null) {
         if (mustSupport)
