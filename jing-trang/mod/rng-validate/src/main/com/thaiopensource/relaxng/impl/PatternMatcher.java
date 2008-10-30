@@ -5,8 +5,10 @@ import com.thaiopensource.util.Equal;
 import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.ValidationContext;
 
+import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.Set;
 
 class PatternMatcher implements Cloneable, Matcher {
 
@@ -206,15 +208,12 @@ class PatternMatcher implements Cloneable, Matcher {
   }
 
   static abstract class PossibleNamesFunction extends AbstractPatternFunction implements NameClassVisitor {
-    private Vector knownNames;
-    private boolean[] knownNamesAdded;
-    private Vector possibleNames;
+    private Set knownNames;
+    private Set possibleNames;
 
-    Vector applyTo(Pattern p, Vector knownNames) {
+    Set applyTo(Pattern p, Set knownNames) {
       this.knownNames = knownNames;
-      this.possibleNames = new Vector();
-      if (knownNames != null)
-        knownNamesAdded = new boolean[knownNames.size()];
+      this.possibleNames = new HashSet();
       p.apply(this);
       return possibleNames;
     }
@@ -251,38 +250,19 @@ class PatternMatcher implements Cloneable, Matcher {
     }
 
     public void visitNsName(String ns) {
-      if (knownNames == null)
-        return;
-      boolean addedAll = true;
-      for (int i = 0, len = knownNames.size(); i < len; i++) {
-        if (!knownNamesAdded[i]) {
-          Name name = (Name)knownNames.elementAt(i);
-          if (!name.getNamespaceUri().equals(ns))
-            addedAll = false;
-          else {
-            possibleNames.addElement(name);
-            knownNamesAdded[i] = true;
-          }
-        }
-      }
-      if (addedAll)
-        knownNames = null;
+      visitNsNameExcept(ns, null);
     }
 
     public void visitNsNameExcept(String ns, NameClass nc) {
-      if (knownNames == null)
+     if (knownNames == null)
         return;
       boolean addedAll = true;
-      for (int i = 0, len = knownNames.size(); i < len; i++) {
-        if (!knownNamesAdded[i]) {
-          Name name = (Name)knownNames.elementAt(i);
-          if (!name.getNamespaceUri().equals(ns) || nc.contains(name))
-            addedAll = false;
-          else {
-            knownNamesAdded[i] = true;
-            possibleNames.addElement(name);
-          }
-        }
+      for (Iterator iter = knownNames.iterator(); iter.hasNext();) {
+        Name name = (Name)iter.next();
+        if (!name.getNamespaceUri().equals(ns) || (nc != null && nc.contains(name)))
+          addedAll = false;
+        else
+          possibleNames.add(name);
       }
       if (addedAll)
         knownNames = null;
@@ -291,9 +271,7 @@ class PatternMatcher implements Cloneable, Matcher {
     public void visitAnyName() {
       if (knownNames == null)
         return;
-      for (int i = 0, len = knownNames.size(); i < len; i++)
-        if (!knownNamesAdded[i])
-          possibleNames.addElement(knownNames.elementAt(i));
+      possibleNames.addAll(knownNames);
       knownNames = null;
     }
 
@@ -301,23 +279,19 @@ class PatternMatcher implements Cloneable, Matcher {
       if (knownNames == null)
         return;
       boolean addedAll = true;
-      for (int i = 0, len = knownNames.size(); i < len; i++) {
-        if (!knownNamesAdded[i]) {
-          Name name = (Name)knownNames.elementAt(i);
-          if (nc.contains(name))
-            addedAll = false;
-          else {
-            knownNamesAdded[i] = true;
-            possibleNames.addElement(name);
-          }
-        }
+      for (Iterator iter = knownNames.iterator(); iter.hasNext();) {
+        Name name = (Name)iter.next();
+        if (nc.contains(name))
+          addedAll = false;
+        else
+          possibleNames.add(name);
       }
       if (addedAll)
         knownNames = null;
     }
 
     public void visitName(Name name) {
-      possibleNames.addElement(name);
+      possibleNames.add(name);
     }
 
     public void visitNull() {
@@ -352,11 +326,11 @@ class PatternMatcher implements Cloneable, Matcher {
     }
   }
 
-  public Vector possibleStartTags(Vector knownNames) {
+  public Set possibleStartTags(Set knownNames) {
     return new PossibleStartTagsFunction().applyTo(memo.getPattern(), knownNames);
   }
 
-  public Vector possibleAttributes(Vector knownNames) {
+  public Set possibleAttributes(Set knownNames) {
     return new PossibleAttributesFunction().applyTo(memo.getPattern(), knownNames);
   }
 
