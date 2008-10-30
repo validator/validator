@@ -1,9 +1,10 @@
 package com.thaiopensource.relaxng.impl;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ValidatorPatternBuilder extends PatternBuilder {
-  private final Hashtable patternMemoMap = new Hashtable();
+  private final Map patternMemoMap = new HashMap();
   private final PatternFunction endAttributesFunction;
   private final PatternFunction ignoreMissingAttributesFunction;
   private final PatternFunction endTagDerivFunction;
@@ -12,7 +13,7 @@ public class ValidatorPatternBuilder extends PatternBuilder {
   private final PatternFunction recoverAfterFunction;
   private final PatternFunction dataDerivTypeFunction;
 
-  private final Hashtable choiceMap = new Hashtable();
+  private final Map choiceMap = new HashMap();
   private final PatternFunction removeChoicesFunction = new RemoveChoicesFunction();
   private final PatternFunction noteChoicesFunction = new NoteChoicesFunction();
 

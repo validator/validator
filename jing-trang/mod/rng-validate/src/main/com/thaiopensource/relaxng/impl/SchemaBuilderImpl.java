@@ -2,9 +2,10 @@ package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.BuildException;
+import com.thaiopensource.relaxng.parse.CommentList;
+import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.relaxng.parse.DataPatternBuilder;
 import com.thaiopensource.relaxng.parse.Div;
-import com.thaiopensource.relaxng.parse.ParsedElementAnnotation;
 import com.thaiopensource.relaxng.parse.ElementAnnotationBuilder;
 import com.thaiopensource.relaxng.parse.Grammar;
 import com.thaiopensource.relaxng.parse.GrammarSection;
@@ -12,35 +13,33 @@ import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.Include;
 import com.thaiopensource.relaxng.parse.IncludedGrammar;
 import com.thaiopensource.relaxng.parse.Location;
+import com.thaiopensource.relaxng.parse.ParseReceiver;
 import com.thaiopensource.relaxng.parse.Parseable;
+import com.thaiopensource.relaxng.parse.ParsedElementAnnotation;
 import com.thaiopensource.relaxng.parse.ParsedNameClass;
 import com.thaiopensource.relaxng.parse.ParsedPattern;
+import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
-import com.thaiopensource.relaxng.parse.Context;
-import com.thaiopensource.relaxng.parse.CommentList;
 import com.thaiopensource.relaxng.parse.SubParser;
-import com.thaiopensource.relaxng.parse.ParseReceiver;
-import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Name;
-
 import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeBuilder;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.ValidationContext;
-import org.relaxng.datatype.DatatypeBuilder;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilder, CommentList {
   private final SchemaBuilderImpl parent;
@@ -448,14 +447,14 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
 
   static class GrammarImpl implements Grammar, Div, IncludedGrammar {
     private final SchemaBuilderImpl sb;
-    private final Hashtable defines;
+    private final Map defines;
     private final RefPattern startRef;
     private final Scope parent;
 
     private GrammarImpl(SchemaBuilderImpl sb, Scope parent) {
       this.sb = sb;
       this.parent = parent;
-      this.defines = new Hashtable();
+      this.defines = new HashMap();
       this.startRef = new RefPattern(null);
     }
 
@@ -467,9 +466,9 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     }
 
     public ParsedPattern endGrammar(Location loc, Annotations anno) throws BuildException {
-      for (Enumeration e = defines.keys();
-           e.hasMoreElements();) {
-        String name = (String)e.nextElement();
+      for (Iterator iter = defines.keySet().iterator();
+           iter.hasNext();) {
+        String name = (String)iter.next();
         RefPattern rp = (RefPattern)defines.get(name);
         if (rp.getPattern() == null) {
           sb.error("reference_to_undefined", name, rp.getRefLocator());

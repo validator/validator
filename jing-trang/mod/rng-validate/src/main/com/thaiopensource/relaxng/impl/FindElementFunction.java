@@ -2,12 +2,13 @@ package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.xml.util.Name;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 class FindElementFunction extends AbstractPatternFunction {
   private final ValidatorPatternBuilder builder;
   private final Name name;
-  private final Hashtable processed = new Hashtable();
+  private final Map processed = new HashMap();
   private int specificity = NameClass.SPECIFICITY_NONE;
   private Pattern pattern = null;
 

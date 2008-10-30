@@ -1,24 +1,25 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.validate.Validator;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
-import com.thaiopensource.xml.util.WellKnownNamespaces;
+import com.thaiopensource.validate.Validator;
 import com.thaiopensource.xml.util.Name;
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.ContentHandler;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
   private final ErrorHandler eh;
-  private Hashtable recoverPatternTable;
+  private Map recoverPatternTable;
   private PatternMemo memo;
   private boolean hadError;
   private boolean collectingCharacters;
@@ -246,7 +247,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
 
   private Pattern findElement(Name name) {
     if (recoverPatternTable == null)
-     recoverPatternTable = new Hashtable();
+     recoverPatternTable = new HashMap();
     Pattern p = (Pattern)recoverPatternTable.get(name);
     if (p == null) {
       p = FindElementFunction.findElement(builder, name, start);

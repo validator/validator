@@ -1,10 +1,10 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.ValidationContext;
 
-import java.util.Hashtable;
-
-import com.thaiopensource.xml.util.Name;
+import java.util.HashMap;
+import java.util.Map;
 
 final class PatternMemo {
   private final Pattern pattern;
@@ -15,9 +15,9 @@ final class PatternMemo {
   private PatternMemo memoEndTagDeriv;
   private PatternMemo memoMixedTextDeriv;
   private PatternMemo memoIgnoreMissingAttributes;
-  private Hashtable startTagOpenDerivMap;
-  private Hashtable startTagOpenRecoverDerivMap;
-  private Hashtable startAttributeDerivMap;
+  private Map startTagOpenDerivMap;
+  private Map startTagOpenRecoverDerivMap;
+  private Map startAttributeDerivMap;
   private DataDerivType memoDataDerivType;
 
   PatternMemo(Pattern pattern, ValidatorPatternBuilder builder) {
@@ -111,7 +111,7 @@ final class PatternMemo {
   private PatternMemo startTagOpenDeriv(Name name, StartTagOpenDerivFunction f) {
     PatternMemo tem;
     if (startTagOpenDerivMap == null)
-      startTagOpenDerivMap = new Hashtable();
+      startTagOpenDerivMap = new HashMap();
     else {
       tem = (PatternMemo)startTagOpenDerivMap.get(name);
       if (tem != null)
@@ -135,7 +135,7 @@ final class PatternMemo {
   private PatternMemo startTagOpenRecoverDeriv(Name name, StartTagOpenRecoverDerivFunction f) {
     PatternMemo tem;
     if (startTagOpenRecoverDerivMap == null)
-      startTagOpenRecoverDerivMap = new Hashtable();
+      startTagOpenRecoverDerivMap = new HashMap();
     else {
       tem = (PatternMemo)startTagOpenRecoverDerivMap.get(name);
       if (tem != null)
@@ -159,7 +159,7 @@ final class PatternMemo {
   private PatternMemo startAttributeDeriv(Name name, StartAttributeDerivFunction f) {
     PatternMemo tem;
     if (startAttributeDerivMap == null)
-      startAttributeDerivMap = new Hashtable();
+      startAttributeDerivMap = new HashMap();
     else {
       tem = (PatternMemo)startAttributeDerivMap.get(name);
       if (tem != null)

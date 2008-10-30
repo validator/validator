@@ -1,9 +1,10 @@
 package com.thaiopensource.relaxng.impl;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 class DuplicateAttributeDetector {
-  private final Vector nameClasses = new Vector();
+  private final List nameClasses = new ArrayList();
   private Alternative alternatives = null;
 
   private static class Alternative {
@@ -22,12 +23,12 @@ class DuplicateAttributeDetector {
     int lim = nameClasses.size();
     for (Alternative a = alternatives; a != null; a = a.parent) {
       for (int i = a.endIndex; i < lim; i++)
-	checkAttributeOverlap(nc, (NameClass)nameClasses.elementAt(i));
+	checkAttributeOverlap(nc, (NameClass)nameClasses.get(i));
       lim = a.startIndex;
     }
     for (int i = 0; i < lim; i++)
-      checkAttributeOverlap(nc, (NameClass)nameClasses.elementAt(i));
-    nameClasses.addElement(nc);
+      checkAttributeOverlap(nc, (NameClass)nameClasses.get(i));
+    nameClasses.add(nc);
   }
 
   static private void checkAttributeOverlap(NameClass nc1, NameClass nc2) throws RestrictionViolationException {

@@ -3,12 +3,13 @@ package com.thaiopensource.relaxng.impl;
 import org.relaxng.datatype.Datatype;
 import org.relaxng.datatype.ValidationContext;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 class ValueDataDerivType extends DataDerivType {
   private final Datatype dt;
   private PatternMemo noValue;
-  private Hashtable valueTable;
+  private Map valueTable;
 
   ValueDataDerivType(Datatype dt) {
     this.dt = dt;
@@ -28,7 +29,7 @@ class ValueDataDerivType extends DataDerivType {
     else {
       DatatypeValue dtv = new DatatypeValue(value, dt);
       if (valueTable == null)
-        valueTable = new Hashtable();
+        valueTable = new HashMap();
       PatternMemo tem = (PatternMemo)valueTable.get(dtv);
       if (tem == null) {
         tem = super.dataDeriv(builder, p, str, vc);

@@ -1,14 +1,14 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 
-import java.util.Hashtable;
-
-import com.thaiopensource.xml.util.WellKnownNamespaces;
+import java.util.HashMap;
+import java.util.Map;
 
 class BuiltinDatatypeLibraryFactory implements DatatypeLibraryFactory {
-  private final Hashtable cache = new Hashtable();
+  private final Map cache = new HashMap();
   private final DatatypeLibraryFactory factory;
   private final DatatypeLibrary builtinDatatypeLibrary
     = new BuiltinDatatypeLibrary();

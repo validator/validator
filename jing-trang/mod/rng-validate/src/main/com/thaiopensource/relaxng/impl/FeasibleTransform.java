@@ -1,11 +1,12 @@
 package com.thaiopensource.relaxng.impl;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FeasibleTransform {
   private static class FeasiblePatternFunction extends AbstractPatternFunction {
     private final SchemaPatternBuilder spb;
-    private final Hashtable elementTable = new Hashtable();
+    private final Map elementTable = new HashMap();
 
     FeasiblePatternFunction(SchemaPatternBuilder spb) {
       this.spb = spb;

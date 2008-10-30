@@ -5,9 +5,10 @@ import com.thaiopensource.util.Equal;
 import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.ValidationContext;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 class PatternMatcher implements Cloneable, Matcher {
@@ -15,7 +16,7 @@ class PatternMatcher implements Cloneable, Matcher {
   static private class Shared {
     private final Pattern start;
     private final ValidatorPatternBuilder builder;
-    private Hashtable recoverPatternTable;
+    private Map recoverPatternTable;
     Shared(Pattern start, ValidatorPatternBuilder builder) {
       this.start = start;
       this.builder = builder;
@@ -23,7 +24,7 @@ class PatternMatcher implements Cloneable, Matcher {
 
     Pattern findElement(Name name) {
       if (recoverPatternTable == null)
-        recoverPatternTable = new Hashtable();
+        recoverPatternTable = new HashMap();
       Pattern p = (Pattern)recoverPatternTable.get(name);
       if (p == null) {
         p = FindElementFunction.findElement(builder, name, start);

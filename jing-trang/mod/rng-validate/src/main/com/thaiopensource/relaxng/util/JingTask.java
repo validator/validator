@@ -18,7 +18,8 @@ import org.xml.sax.SAXParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,7 +30,7 @@ public class JingTask extends Task {
 
   private File schemaFile;
   private File src;
-  private final Vector filesets = new Vector();
+  private final List filesets = new ArrayList();
   private PropertyMapBuilder properties = new PropertyMapBuilder();
   private boolean failOnError = true;
   private SchemaReader schemaReader = null;
@@ -83,7 +84,7 @@ public class JingTask extends Task {
 	    hadError = true;
 	}
 	for (int i = 0; i < filesets.size(); i++) {
-	  FileSet fs = (FileSet)filesets.elementAt(i);
+	  FileSet fs = (FileSet)filesets.get(i);
 	  DirectoryScanner ds = fs.getDirectoryScanner(getProject());
 	  File dir = fs.getDir(getProject());
 	  String[] srcs = ds.getIncludedFiles();
@@ -175,7 +176,7 @@ public class JingTask extends Task {
   }
 
   public void addFileset(FileSet set) {
-    filesets.addElement(set);
+    filesets.add(set);
   }
 
 }

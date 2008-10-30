@@ -1,31 +1,33 @@
 package com.thaiopensource.relaxng.impl;
 
 import com.thaiopensource.validate.Validator;
-import com.thaiopensource.xml.util.StringSplitter;
 import com.thaiopensource.xml.util.Name;
+import com.thaiopensource.xml.util.StringSplitter;
 import org.relaxng.datatype.Datatype;
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.DTDHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
 import org.xml.sax.helpers.LocatorImpl;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class IdSoundnessChecker implements Validator, ContentHandler {
   private final IdTypeMap idTypeMap;
   private final ErrorHandler eh;
   private Locator locator;
-  private final Hashtable table = new Hashtable();
+  private final Map map = new HashMap();
 
   private static class Entry {
     Locator idLoc;
-    Vector idrefLocs;
+    List idrefLocs;
     boolean hadId;
   }
 
@@ -35,7 +37,7 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   }
 
   public void reset() {
-    table.clear();
+    map.clear();
     locator = null;
   }
 
@@ -58,12 +60,12 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   }
 
   public void endDocument() throws SAXException {
-    for (Enumeration e = table.keys(); e.hasMoreElements();) {
-      String token = (String)e.nextElement();
-      Entry entry = (Entry)table.get(token);
+    for (Iterator idIter = map.keySet().iterator(); idIter.hasNext();) {
+      String token = (String)idIter.next();
+      Entry entry = (Entry)map.get(token);
       if (!entry.hadId) {
-        for (Enumeration f = entry.idrefLocs.elements(); f.hasMoreElements();)
-          error("missing_id", token, (Locator)f.nextElement());
+        for (Iterator locIter = entry.idrefLocs.iterator(); locIter.hasNext();)
+          error("missing_id", token, (Locator)locIter.next());
       }
     }
     setComplete();
@@ -115,10 +117,10 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   }
 
   private void id(String token) throws SAXException {
-    Entry entry = (Entry)table.get(token);
+    Entry entry = (Entry)map.get(token);
     if (entry == null) {
       entry = new Entry();
-      table.put(token, entry);
+      map.put(token, entry);
     }
     else if (entry.hadId) {
       error("duplicate_id", token);
@@ -130,16 +132,16 @@ public class IdSoundnessChecker implements Validator, ContentHandler {
   }
 
   private void idref(String token) {
-    Entry entry = (Entry)table.get(token);
+    Entry entry = (Entry)map.get(token);
     if (entry == null) {
       entry = new Entry();
-      table.put(token, entry);
+      map.put(token, entry);
     }
     if (entry.hadId)
       return;
     if (entry.idrefLocs == null)
-      entry.idrefLocs = new Vector();
-    entry.idrefLocs.addElement(new LocatorImpl(locator));
+      entry.idrefLocs = new ArrayList();
+    entry.idrefLocs.add(new LocatorImpl(locator));
   }
 
   public void endElement(String s, String s1, String s2) throws SAXException {

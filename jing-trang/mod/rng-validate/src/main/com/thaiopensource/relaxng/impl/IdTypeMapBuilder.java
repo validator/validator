@@ -1,27 +1,28 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.Datatype;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import com.thaiopensource.xml.util.Name;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class IdTypeMapBuilder {
   private boolean hadError;
   private final ErrorHandler eh;
   private final PatternFunction idTypeFunction = new IdTypeFunction();
   private final IdTypeMapImpl idTypeMap = new IdTypeMapImpl();
-  private final Hashtable elementProcessed = new Hashtable();
-  private final Vector possibleConflicts = new Vector();
+  private final Map elementProcessed = new HashMap();
+  private final List possibleConflicts = new ArrayList();
 
   private void notePossibleConflict(NameClass elementNameClass, NameClass attributeNameClass, Locator loc) {
-    possibleConflicts.addElement(new PossibleConflict(elementNameClass, attributeNameClass, loc));
+    possibleConflicts.add(new PossibleConflict(elementNameClass, attributeNameClass, loc));
   }
 
   private static class WrappedSAXException extends RuntimeException {
@@ -65,7 +66,7 @@ public class IdTypeMapBuilder {
   }
 
   private static class IdTypeMapImpl implements IdTypeMap {
-    private final Hashtable table = new Hashtable();
+    private final Map table = new HashMap();
     public int getIdType(Name elementName, Name attributeName) {
       Integer n = (Integer)table.get(new ScopedName(elementName, attributeName));
       if (n == null)
@@ -278,9 +279,9 @@ public class IdTypeMapBuilder {
     this.eh = eh;
     try {
       pattern.apply(new BuildFunction(null, null));
-      for (Enumeration e = possibleConflicts.elements();
-           e.hasMoreElements();) {
-        PossibleConflict pc = (PossibleConflict)e.nextElement();
+      for (Iterator iter = possibleConflicts.iterator();
+           iter.hasNext();) {
+        PossibleConflict pc = (PossibleConflict)iter.next();
         if (pc.elementNameClass instanceof SimpleNameClass
             && pc.attributeNameClass instanceof SimpleNameClass) {
           Name elementName = ((SimpleNameClass)pc.elementNameClass).getName();
@@ -291,8 +292,8 @@ public class IdTypeMapBuilder {
             error("id_type_conflict", elementName, attributeName, pc.locator);
         }
         else {
-          for (Enumeration f = idTypeMap.table.keys(); f.hasMoreElements();) {
-            ScopedName sn = (ScopedName)f.nextElement();
+          for (Iterator nameIter = idTypeMap.table.keySet().iterator(); nameIter.hasNext();) {
+            ScopedName sn = (ScopedName)nameIter.next();
             if (pc.elementNameClass.contains(sn.elementName)
                 && pc.attributeNameClass.contains(sn.attributeName)) {
               error("id_type_conflict", sn.elementName, sn.attributeName, pc.locator);

@@ -6,17 +6,19 @@ import org.relaxng.datatype.Datatype;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PatternDumper {
   private boolean startTagOpen = false;
-  private final Vector tagStack = new Vector();
+  private final ArrayList tagStack = new ArrayList();
   private final PrintWriter writer;
   private int level = 0;
   private boolean suppressIndent = false;
-  private final Vector patternList = new Vector();
-  private final Hashtable patternTable = new Hashtable();
+  private final List patternList = new ArrayList();
+  private final Map patternTable = new HashMap();
 
   private final PatternVisitor patternVisitor = new DumpPatternVisitor();
   private final PatternVisitor groupPatternVisitor = new GroupDumpPatternVisitor();
@@ -46,7 +48,7 @@ public class PatternDumper {
     endElement();
     for (int i = 0; i < patternList.size(); i++) {
       startElement("define");
-      Pattern tem = (Pattern)patternList.elementAt(i);
+      Pattern tem = (Pattern)patternList.get(i);
       attribute("name", getName(tem));
       tem.accept(groupPatternVisitor);
       endElement();
@@ -60,7 +62,7 @@ public class PatternDumper {
     String name = (String)patternTable.get(p);
     if (name == null) {
       name = "p" + patternList.size();
-      patternList.addElement(p);
+      patternList.add(p);
       patternTable.put(p, name);
     }
     return name;
@@ -159,13 +161,11 @@ public class PatternDumper {
   }
 
   private void push(String s) {
-    tagStack.addElement(s);
+    tagStack.add(s);
   }
 
   private String pop() {
-    String s = (String)tagStack.lastElement();
-    tagStack.setSize(tagStack.size() - 1);
-    return s;
+    return (String)tagStack.remove(tagStack.size() - 1);
   }
 
   class DumpPatternVisitor implements PatternVisitor {
