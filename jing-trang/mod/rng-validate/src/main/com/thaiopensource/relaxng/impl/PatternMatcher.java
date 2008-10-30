@@ -1,13 +1,12 @@
 package com.thaiopensource.relaxng.impl;
 
-import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.relaxng.match.Matcher;
 import com.thaiopensource.util.Equal;
-
-import java.util.Vector;
-import java.util.Hashtable;
-
+import com.thaiopensource.xml.util.Name;
 import org.relaxng.datatype.ValidationContext;
+
+import java.util.Hashtable;
+import java.util.Vector;
 
 class PatternMatcher implements Cloneable, Matcher {
 
@@ -107,7 +106,7 @@ class PatternMatcher implements Cloneable, Matcher {
     return error("impossible_attribute_ignored", name);
   }
 
-  public boolean matchAttributeValue(String value, ValidationContext vc) {
+  public boolean matchAttributeValue(Name name, String value, ValidationContext vc) {
     if (ignoreNextEndTag) {
       ignoreNextEndTag = false;
       return true;
@@ -115,7 +114,7 @@ class PatternMatcher implements Cloneable, Matcher {
     if (setMemo(memo.dataDeriv(value, vc)))
       return true;
     memo = memo.recoverAfter();
-    return error("bad_attribute_value_no_name"); // XXX add to catalog
+    return error("bad_attribute_value", name);
   }
 
   public boolean matchStartTagClose() {

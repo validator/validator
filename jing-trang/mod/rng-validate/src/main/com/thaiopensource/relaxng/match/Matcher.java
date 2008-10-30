@@ -76,11 +76,12 @@ public interface Matcher {
    * Match an attribute value.
    * The validation context must include all the namespace declarations in the start-tag
    * including those that lexically follow the attribute.
+   * @param name the attribute name (included for use in error messages)
    * @param value the attribute value, normalized in accordance with XML 1.0
    * @param vc a validation context
    * @return false if there was an error, true otherwise
    */
-  boolean matchAttributeValue(String value, ValidationContext vc);
+  boolean matchAttributeValue(Name name, String value, ValidationContext vc);
 
   /**
    * Match the close of a start-tag (the <code>&gt;</code> character that ends the start-tag).
