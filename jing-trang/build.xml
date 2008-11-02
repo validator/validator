@@ -385,5 +385,21 @@
     <fileset file="modules.xml"/>
   </delete>
 </target>
-  
+
+<target name="services" depends="jar"
+        description="Extract META-INF services files from jars into classes build directory (for debugging in an IDE)">
+  <unzip dest="${build.dir}/mod/jing/classes/main"
+	 src="${build.dir}/jing.jar">
+    <patternset>
+      <include name="META-INF/services/*"/>
+    </patternset>
+  </unzip>
+  <unzip dest="${build.dir}/mod/trang/classes/main"
+	 src="${build.dir}/trang.jar">
+    <patternset>
+      <include name="META-INF/services/*"/>
+    </patternset>
+  </unzip>
+</target>
+
 </project>
