@@ -8,6 +8,9 @@
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <properties />
+      <executeOn event="beforeRun" target="services" runConfigurationType="Application" runConfigurationName="Jing" />
+      <executeOn event="beforeRun" target="services" runConfigurationType="Application" runConfigurationName="Trang" />
+      <executeOn event="beforeRun" target="services" runConfigurationType="Application" runConfigurationName="mns-test" />
     </buildFile>
   </component>
   <component name="BuildJarProjectSettings">
@@ -39,6 +42,7 @@
         <option name="ELSE_ON_NEW_LINE" value="true" />
         <option name="CATCH_ON_NEW_LINE" value="true" />
         <option name="FINALLY_ON_NEW_LINE" value="true" />
+        <option name="INDENT_CASE_FROM_SWITCH" value="false" />
         <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
         <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
         <option name="ALIGN_MULTILINE_ASSIGNMENT" value="true" />
@@ -50,6 +54,15 @@
         <option name="OPTIMIZE_IMPORTS_ON_THE_FLY" value="true" />
         <option name="ADD_UNAMBIGIOUS_IMPORTS_ON_THE_FLY" value="true" />
         <option name="DOWHILE_BRACE_FORCE" value="1" />
+        <ADDITIONAL_INDENT_OPTIONS fileType="">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
@@ -58,6 +71,12 @@
     <option name="DEFAULT_COMPILER" value="Javac" />
     <option name="DEPLOY_AFTER_MAKE" value="0" />
     <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="*.properties" />
+      <entry name="*.rng" />
+      <entry name="*.rnc" />
+      <entry name="*.xsl" />
+    </wildcardResourcePatterns>
   </component>
   <component name="DependenciesAnalyzeManager">
     <option name="myForwardDirection" value="false" />
@@ -294,6 +313,7 @@
       <module fileurl="file://$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" filepath="$PROJECT_DIR$/mod/dtd-parse/dtd-parse.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/dtdinst/dtdinst.iml" filepath="$PROJECT_DIR$/mod/dtdinst/dtdinst.iml" group="Trang" />
       <module fileurl="file://$PROJECT_DIR$/mod/infer/infer.iml" filepath="$PROJECT_DIR$/mod/infer/infer.iml" group="Trang" />
+      <module fileurl="file://$PROJECT_DIR$/mod/jing/jing.iml" filepath="$PROJECT_DIR$/mod/jing/jing.iml" group="Jing" />
       <module fileurl="file://$PROJECT_DIR$/mod/nvdl/nvdl.iml" filepath="$PROJECT_DIR$/mod/nvdl/nvdl.iml" group="Jing" />
       <module fileurl="file://$PROJECT_DIR$/mod/picl/picl.iml" filepath="$PROJECT_DIR$/mod/picl/picl.iml" group="Jing" />
       <module fileurl="file://$PROJECT_DIR$/mod/regex/regex.iml" filepath="$PROJECT_DIR$/mod/regex/regex.iml" group="Common" />
