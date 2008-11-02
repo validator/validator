@@ -263,7 +263,7 @@
 	<xsl:if test="substring(@schema, string-length(@schema) - 3, 4) = '.rnc'">
 	  <xsl:attribute name="compactsyntax">true</xsl:attribute>
 	</xsl:if>
-	<fileset dir="test" includes="{@name}test.xml"/>
+	<fileset dir="{$srctestdir}" includes="{@name}test.xml"/>
       </jing>
     </xsl:if>
     <delete dir="{$runtestdir}"/>
