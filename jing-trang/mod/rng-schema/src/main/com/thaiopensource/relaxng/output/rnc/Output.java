@@ -435,7 +435,7 @@ class Output {
       pp.startGroup();
       pp.text("include ");
       pp.startNest("include ");
-      literal(od.reference(sourceUri, c.getHref()));
+      literal(od.reference(sourceUri, c.getUri()));
       inherit(c.getNs());
       pp.endNest();
       pp.endGroup();
@@ -557,7 +557,7 @@ class Output {
       pp.startGroup();
       pp.text("external ");
       pp.startNest("external ");
-      literal(od.reference(sourceUri, p.getHref()));
+      literal(od.reference(sourceUri, p.getUri()));
       inherit(p.getNs());
       pp.endNest();
       pp.endGroup();

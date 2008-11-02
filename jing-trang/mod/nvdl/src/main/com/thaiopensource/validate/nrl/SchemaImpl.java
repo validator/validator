@@ -10,6 +10,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.OptionArgumentPresenceException;
+import com.thaiopensource.validate.ResolverFactory;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
@@ -18,11 +19,11 @@ import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
+import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -71,6 +72,7 @@ class SchemaImpl extends AbstractSchema {
     private final SchemaReceiverImpl sr;
     private boolean hadError = false;
     private final ErrorHandler eh;
+    private final Resolver resolver;
     private final CountingErrorHandler ceh;
     private final Localizer localizer = new Localizer(SchemaImpl.class);
     private Locator locator;
@@ -83,6 +85,7 @@ class SchemaImpl extends AbstractSchema {
     private ActionSet actions;
     private AttributeActionSet attributeActions;
     private String schemaUri;
+    private String schemaUriBase;
     private String schemaType;
     private PropertyMapBuilder options;
     private final Vector mustSupportOptions = new Vector();
@@ -93,6 +96,7 @@ class SchemaImpl extends AbstractSchema {
       this.sr = sr;
       this.eh = ValidateProperty.ERROR_HANDLER.get(sr.getProperties());
       this.ceh = new CountingErrorHandler(this.eh);
+      this.resolver = ResolverFactory.createResolver(sr.getProperties());
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -276,6 +280,7 @@ class SchemaImpl extends AbstractSchema {
 
     private void parseValidate(Attributes attributes) throws SAXException {
       schemaUri = getSchema(attributes);
+      schemaUriBase = xmlBaseHandler.getBaseUri();
       schemaType = getSchemaType(attributes);
       if (schemaType == null)
         schemaType = defaultSchemaType;
@@ -308,7 +313,7 @@ class SchemaImpl extends AbstractSchema {
 
     private Schema createSubSchema(boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
       PropertyMap requestedProperties = options.toPropertyMap();
-      Schema schema = sr.createChildSchema(new InputSource(schemaUri),
+      Schema schema = sr.createChildSchema(resolver.resolve(schemaUri, schemaUriBase),
                                            schemaType,
                                            requestedProperties,
                                            isAttributesSchema);
@@ -438,8 +443,7 @@ class SchemaImpl extends AbstractSchema {
       String schemaUri = attributes.getValue("", "schema");
       if (Uri.hasFragmentId(schemaUri))
         error("schema_fragment_id");
-      return Uri.resolve(xmlBaseHandler.getBaseUri(),
-                         Uri.escapeDisallowedChars(schemaUri));
+      return schemaUri;
     }
 
     private String getSchemaType(Attributes attributes) {

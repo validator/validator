@@ -1,50 +1,52 @@
 package com.thaiopensource.relaxng.input.parse;
 
-import com.thaiopensource.relaxng.input.CommentTrimmer;
-import com.thaiopensource.relaxng.edit.ChoicePattern;
-import com.thaiopensource.relaxng.edit.CompositePattern;
-import com.thaiopensource.relaxng.edit.GroupPattern;
-import com.thaiopensource.relaxng.edit.InterleavePattern;
-import com.thaiopensource.relaxng.edit.OneOrMorePattern;
-import com.thaiopensource.relaxng.edit.Pattern;
-import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
-import com.thaiopensource.relaxng.edit.OptionalPattern;
-import com.thaiopensource.relaxng.edit.ListPattern;
-import com.thaiopensource.relaxng.edit.MixedPattern;
-import com.thaiopensource.relaxng.edit.EmptyPattern;
-import com.thaiopensource.relaxng.edit.NotAllowedPattern;
-import com.thaiopensource.relaxng.edit.TextPattern;
-import com.thaiopensource.relaxng.edit.AttributePattern;
-import com.thaiopensource.relaxng.edit.NameClass;
-import com.thaiopensource.relaxng.edit.ElementPattern;
-import com.thaiopensource.relaxng.edit.ValuePattern;
-import com.thaiopensource.relaxng.edit.ExternalRefPattern;
-import com.thaiopensource.relaxng.edit.ChoiceNameClass;
-import com.thaiopensource.relaxng.edit.NameNameClass;
-import com.thaiopensource.relaxng.edit.NsNameNameClass;
-import com.thaiopensource.relaxng.edit.AnyNameNameClass;
-import com.thaiopensource.relaxng.edit.RefPattern;
-import com.thaiopensource.relaxng.edit.ParentRefPattern;
 import com.thaiopensource.relaxng.edit.Annotated;
+import com.thaiopensource.relaxng.edit.AnnotationChild;
+import com.thaiopensource.relaxng.edit.AnyNameNameClass;
+import com.thaiopensource.relaxng.edit.AttributeAnnotation;
+import com.thaiopensource.relaxng.edit.AttributePattern;
+import com.thaiopensource.relaxng.edit.ChoiceNameClass;
+import com.thaiopensource.relaxng.edit.ChoicePattern;
+import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.Comment;
 import com.thaiopensource.relaxng.edit.Component;
+import com.thaiopensource.relaxng.edit.CompositePattern;
 import com.thaiopensource.relaxng.edit.Container;
+import com.thaiopensource.relaxng.edit.DataPattern;
 import com.thaiopensource.relaxng.edit.DefineComponent;
 import com.thaiopensource.relaxng.edit.DivComponent;
-import com.thaiopensource.relaxng.edit.IncludeComponent;
-import com.thaiopensource.relaxng.edit.GrammarPattern;
-import com.thaiopensource.relaxng.edit.SourceLocation;
-import com.thaiopensource.relaxng.edit.Comment;
-import com.thaiopensource.relaxng.edit.DataPattern;
-import com.thaiopensource.relaxng.edit.Param;
-import com.thaiopensource.relaxng.edit.AttributeAnnotation;
 import com.thaiopensource.relaxng.edit.ElementAnnotation;
-import com.thaiopensource.relaxng.edit.TextAnnotation;
-import com.thaiopensource.relaxng.edit.Combine;
+import com.thaiopensource.relaxng.edit.ElementPattern;
+import com.thaiopensource.relaxng.edit.EmptyPattern;
+import com.thaiopensource.relaxng.edit.ExternalRefPattern;
+import com.thaiopensource.relaxng.edit.GrammarPattern;
+import com.thaiopensource.relaxng.edit.GroupPattern;
+import com.thaiopensource.relaxng.edit.IncludeComponent;
+import com.thaiopensource.relaxng.edit.InterleavePattern;
+import com.thaiopensource.relaxng.edit.ListPattern;
+import com.thaiopensource.relaxng.edit.MixedPattern;
+import com.thaiopensource.relaxng.edit.NameClass;
+import com.thaiopensource.relaxng.edit.NameNameClass;
+import com.thaiopensource.relaxng.edit.NotAllowedPattern;
+import com.thaiopensource.relaxng.edit.NsNameNameClass;
+import com.thaiopensource.relaxng.edit.OneOrMorePattern;
+import com.thaiopensource.relaxng.edit.OptionalPattern;
+import com.thaiopensource.relaxng.edit.Param;
+import com.thaiopensource.relaxng.edit.ParentRefPattern;
+import com.thaiopensource.relaxng.edit.Pattern;
+import com.thaiopensource.relaxng.edit.RefPattern;
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.edit.SchemaDocument;
-import com.thaiopensource.relaxng.edit.AnnotationChild;
+import com.thaiopensource.relaxng.edit.SourceLocation;
+import com.thaiopensource.relaxng.edit.TextAnnotation;
+import com.thaiopensource.relaxng.edit.TextPattern;
+import com.thaiopensource.relaxng.edit.ValuePattern;
+import com.thaiopensource.relaxng.edit.ZeroOrMorePattern;
+import com.thaiopensource.relaxng.input.CommentTrimmer;
 import com.thaiopensource.relaxng.parse.Annotations;
 import com.thaiopensource.relaxng.parse.BuildException;
+import com.thaiopensource.relaxng.parse.CommentList;
+import com.thaiopensource.relaxng.parse.Context;
 import com.thaiopensource.relaxng.parse.DataPatternBuilder;
 import com.thaiopensource.relaxng.parse.Div;
 import com.thaiopensource.relaxng.parse.ElementAnnotationBuilder;
@@ -60,20 +62,19 @@ import com.thaiopensource.relaxng.parse.ParsedNameClass;
 import com.thaiopensource.relaxng.parse.ParsedPattern;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
-import com.thaiopensource.relaxng.parse.Context;
-import com.thaiopensource.relaxng.parse.CommentList;
+import com.thaiopensource.relaxng.parse.SubParseable;
 import com.thaiopensource.relaxng.parse.SubParser;
 import com.thaiopensource.util.Localizer;
 import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeBuilder;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeLibrary;
 import org.relaxng.datatype.DatatypeLibraryFactory;
 import org.relaxng.datatype.ValidationContext;
-import org.relaxng.datatype.DatatypeBuilder;
-import org.xml.sax.SAXException;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.IOException;
 import java.util.List;
@@ -223,14 +224,18 @@ class SchemaBuilderImpl implements SchemaBuilder {
     return finishPattern(p, loc, anno);
   }
 
-  public ParsedPattern makeExternalRef(String uri, String ns, Scope scope,
+  public ParsedPattern makeExternalRef(String href, String base, String ns, Scope scope,
                                        Location loc, Annotations anno) throws BuildException, IllegalSchemaException {
+    SubParseable subParseable = subParser.createSubParseable(href, base);
+    String uri = subParseable.getUri();
     ExternalRefPattern erp = new ExternalRefPattern(uri);
     erp.setNs(mapInheritNs(ns));
+    erp.setHref(href);
+    erp.setBaseUri(base);
     finishPattern(erp, loc, anno);
     if (schemas.get(uri) == null) {
       schemas.put(uri, new SchemaDocument(null)); // avoid possibility of infinite loop
-      schemas.put(uri, new SchemaDocument((Pattern)subParser.parseExternal(uri, this, scope)));
+      schemas.put(uri, new SchemaDocument((Pattern)subParseable.parse(this, scope)));
     }
     return erp;
   }
@@ -337,17 +342,21 @@ class SchemaBuilderImpl implements SchemaBuilder {
       finishAnnotated(subject, loc, anno);
     }
 
-    public void endInclude(String uri, String ns,
+    public void endInclude(String href, String base, String ns,
                            Location loc, Annotations anno) throws BuildException, IllegalSchemaException {
       IncludeComponent ic = (IncludeComponent)subject;
-      ic.setHref(uri);
+      SubParseable subParseable = subParser.createSubParseable(href, base);
+      String uri = subParseable.getUri();
+      ic.setUri(uri);
+      ic.setBaseUri(base);
+      ic.setHref(href);
       ic.setNs(mapInheritNs(ns));
       finishAnnotated(ic, loc, anno);
       if (schemas.get(uri) == null) {
         schemas.put(uri, new SchemaDocument(null)); // avoid possibility of infinite loop
         GrammarPattern g = new GrammarPattern();
         try {
-          ParsedPattern pattern = subParser.parseInclude(uri, SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
+          ParsedPattern pattern = subParseable.parseAsInclude(SchemaBuilderImpl.this, new GrammarSectionImpl(g, g));
           schemas.put(uri, new SchemaDocument((Pattern)pattern));
         }
         catch (IllegalSchemaException e) {

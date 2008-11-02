@@ -1,20 +1,21 @@
 package com.thaiopensource.relaxng.edit;
 
 public class ExternalRefPattern extends Pattern {
-  private String href;
+  private String uri;
   private String ns;
+  private String href;
   private String baseUri;
 
-  public ExternalRefPattern(String href) {
-    this.href = href;
+  public ExternalRefPattern(String uri) {
+    this.uri = uri;
   }
 
-  public String getHref() {
-    return href;
+  public String getUri() {
+    return uri;
   }
 
-  public void setHref(String href) {
-    this.href = href;
+  public void setUri(String uri) {
+    this.uri = uri;
   }
 
   public String getNs() {
@@ -23,6 +24,14 @@ public class ExternalRefPattern extends Pattern {
 
   public void setNs(String ns) {
     this.ns = ns;
+  }
+
+  public String getHref() {
+    return href;
+  }
+
+  public void setHref(String href) {
+    this.href = href;
   }
 
   public String getBaseUri() {

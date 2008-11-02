@@ -1,15 +1,16 @@
 package com.thaiopensource.validate.schematron;
 
-import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyId;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.AbstractSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.ResolverFactory;
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
-import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.prop.schematron.SchematronProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
@@ -17,7 +18,7 @@ import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.ForkContentHandler;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.Resolver;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -37,13 +38,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
-import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.sax.TemplatesHandler;
+import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 
-class SchemaReaderImpl implements SchemaReader {
+class SchemaReaderImpl extends AbstractSchemaReader {
   static final String SCHEMATRON_URI = "http://www.ascc.net/xml/schematron";
   private static final String LOCATION_URI = "http://www.thaiopensource.com/ns/location";
   private static final String ERROR_URI = "http://www.thaiopensource.com/ns/error";
@@ -414,8 +415,8 @@ class SchemaReaderImpl implements SchemaReader {
       PropertyMapBuilder builder = new PropertyMapBuilder(properties);
       ValidateProperty.ERROR_HANDLER.put(builder, ceh);
       Validator validator = schematronSchema.createValidator(builder.toPropertyMap());
-      XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
-      XMLReader xr = xrc.createXMLReader();
+      Resolver resolver = ResolverFactory.createResolver(properties);
+      XMLReader xr = resolver.createXMLReader();
       xr.setContentHandler(new ForkContentHandler(validator.getContentHandler(),
                                                   transformerHandler));
       factory.setErrorListener(new SAXErrorListener(ceh, systemId));
@@ -447,20 +448,20 @@ class SchemaReaderImpl implements SchemaReader {
 
   // This implementation was written in ignorance of SAXTransformerFactory.
 
-  public Schema createSchema(InputSource in, PropertyMap properties)
+  public Schema createSchema(SAXSource source, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
-    SAXErrorListener errorListener = new SAXErrorListener(eh, in.getSystemId());
+    SAXErrorListener errorListener = new SAXErrorListener(eh, source.getSystemId());
     UserWrapErrorHandler ueh1 = new UserWrapErrorHandler(eh);
     UserWrapErrorHandler ueh2 = new UserWrapErrorHandler(eh);
     try {
       PropertyMapBuilder builder = new PropertyMapBuilder(properties);
       ValidateProperty.ERROR_HANDLER.put(builder, ueh1);
-      SAXSource source = createValidatingSource(in, builder.toPropertyMap(), ueh1);
+      source = createValidatingSource(source, builder.toPropertyMap(), ueh1);
       source = createTransformingSource(source,
                                         SchematronProperty.PHASE.get(properties),
                                         properties.contains(SchematronProperty.DIAGNOSE),
-                                        in.getSystemId(),
+                                        source.getSystemId(),
                                         ueh2);
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
       initTransformerFactory(transformerFactory);
@@ -481,12 +482,13 @@ class SchemaReaderImpl implements SchemaReader {
     }
   }
 
-  private SAXSource createValidatingSource(InputSource in, PropertyMap properties, CountingErrorHandler ceh) throws SAXException {
+  private SAXSource createValidatingSource(SAXSource source, PropertyMap properties, CountingErrorHandler ceh) throws SAXException {
     Validator validator = schematronSchema.createValidator(properties);
-    XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
-    XMLReader xr = xrc.createXMLReader();
+    XMLReader xr = source.getXMLReader();
+    if (xr == null)
+      xr = ResolverFactory.createResolver(properties).createXMLReader();
     xr.setErrorHandler(ceh);
-    return new SAXSource(new ValidateStage(xr, validator, ceh), in);
+    return new SAXSource(new ValidateStage(xr, validator, ceh), source.getInputSource());
   }
 
   private SAXSource createTransformingSource(SAXSource in, String phase, boolean diagnose,

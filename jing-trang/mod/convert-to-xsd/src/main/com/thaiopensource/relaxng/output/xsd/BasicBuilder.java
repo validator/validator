@@ -592,7 +592,7 @@ public class BasicBuilder {
       boolean saveGroupEnableAbstractElements = groupEnableAbstractElements;
       groupEnableAbstractElements = getGroupEnableAbstractElements(c, groupEnableAbstractElements);
       c.componentsAccept(this);
-      String uri = c.getHref();
+      String uri = c.getUri();
       Schema sub = schema.addInclude(uri, si.getEncoding(uri), c.getSourceLocation(), makeAnnotation(c));
       GrammarPattern includedGrammar = si.getSchema(uri);
       new BasicBuilder(er,

@@ -280,7 +280,7 @@ public class RestrictionsChecker {
     }
 
     public VoidValue visitInclude(IncludeComponent c) {
-      si.getSchema(c.getHref()).componentsAccept(this);
+      si.getSchema(c.getUri()).componentsAccept(this);
       return VoidValue.VOID;
     }
   }

@@ -132,7 +132,7 @@ public class PrefixManager implements SourceUriGenerator {
     public VoidValue visitInclude(IncludeComponent c) {
       String saveInheritedNamespace = inheritedNamespace;
       inheritedNamespace = c.getNs();
-      si.getSchema(c.getHref()).componentsAccept(this);
+      si.getSchema(c.getUri()).componentsAccept(this);
       inheritedNamespace = saveInheritedNamespace;
       return VoidValue.VOID;
     }

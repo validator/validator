@@ -2,8 +2,8 @@ package com.thaiopensource.relaxng.translate.test;
 
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.sax.AbstractLexicalHandler;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.Resolver;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -220,6 +220,6 @@ public class Compare {
   }
 
   static public void main(String[] args) throws SAXException, IOException {
-    System.err.println(compare(new File(args[0]), new File(args[1]), new Jaxp11XMLReaderCreator()));
+    System.err.println(compare(new File(args[0]), new File(args[1]), Resolver.newInstance()));
   }
 }

@@ -2,22 +2,23 @@ package com.thaiopensource.validate.auto;
 
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.AbstractSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Option;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.validate.ResolverFactory;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.xml.sax.Resolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
-public class AutoSchemaReader implements SchemaReader {
+public class AutoSchemaReader extends AbstractSchemaReader {
   private final SchemaReceiverFactory srf;
 
   public AutoSchemaReader() {
@@ -28,13 +29,15 @@ public class AutoSchemaReader implements SchemaReader {
     this.srf = srf == null ? new SchemaReceiverLoader() : srf;
   }
 
-  public Schema createSchema(InputSource in, PropertyMap properties)
+  public Schema createSchema(SAXSource source, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
     if (SchemaReceiverFactory.PROPERTY.get(properties) != srf) {
       PropertyMapBuilder builder = new PropertyMapBuilder(properties);
       SchemaReceiverFactory.PROPERTY.put(builder, srf);
       properties = builder.toPropertyMap();
     }
+    Resolver resolver = ResolverFactory.createResolver(properties);
+    InputSource in = resolver.open(source.getInputSource());
     InputSource in2 = new InputSource();
     in2.setSystemId(in.getSystemId());
     in2.setPublicId(in.getPublicId());
@@ -44,21 +47,15 @@ public class AutoSchemaReader implements SchemaReader {
       throw new IllegalArgumentException("character stream input sources not supported for auto-detection");
     else {
       InputStream byteStream = in.getByteStream();
-      if (byteStream == null) {
-        String systemId = in.getSystemId();
-        if (systemId == null)
-          throw new IllegalArgumentException("null systemId and null byteStream");
-        byteStream = new URL(systemId).openStream();
-        // XXX should use encoding from MIME header
-      }
       RewindableInputStream rewindableByteStream = new RewindableInputStream(byteStream);
       in.setByteStream(rewindableByteStream);
       in2.setByteStream(rewindableByteStream);
       rewindable = rewindableByteStream;
     }
     SchemaReceiver sr = new AutoSchemaReceiver(properties, rewindable);
-    XMLReaderCreator xrc = ValidateProperty.XML_READER_CREATOR.get(properties);
-    XMLReader xr = xrc.createXMLReader();
+    XMLReader xr = source.getXMLReader();
+    if (xr == null)
+      xr = resolver.createXMLReader();
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
     if (eh != null)
       xr.setErrorHandler(eh);
@@ -71,7 +68,7 @@ public class AutoSchemaReader implements SchemaReader {
       catch (ReparseException e) {
         rewindable.rewind();
         rewindable.willNotRewind();
-        return e.reparse(in2);
+        return e.reparse(new SAXSource(xr, in2));
       }
       finally {
         rewindable.willNotRewind();

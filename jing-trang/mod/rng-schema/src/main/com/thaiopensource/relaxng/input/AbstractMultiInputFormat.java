@@ -8,8 +8,8 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 
 abstract public class AbstractMultiInputFormat implements MultiInputFormat {
-  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh)
+  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh, ClassLoader loader)
           throws InputFailedException, InvalidParamsException, IOException, SAXException {
-    return load(new String[] { uri }, params, outputFormat, eh);
+    return load(new String[] { uri }, params, outputFormat, eh, loader);
   }
 }

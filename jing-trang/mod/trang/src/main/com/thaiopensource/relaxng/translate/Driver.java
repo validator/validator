@@ -119,6 +119,7 @@ public class Driver {
       String[] inputParamArray = inputParams.toArray(new String[0]);
       outputType = outputType.toLowerCase();
       SchemaCollection sc;
+      ClassLoader loader = Driver.class.getClassLoader();
       if (args.length > 2) {
         if (!(inFormat instanceof MultiInputFormat)) {
           error(localizer.message("too_many_arguments"));
@@ -127,10 +128,10 @@ public class Driver {
         String[] uris = new String[args.length - 1];
         for (int i = 0; i < uris.length; i++)
           uris[i] = UriOrFile.toUri(args[i]);
-        sc = ((MultiInputFormat)inFormat).load(uris, inputParamArray, outputType, eh);
+        sc = ((MultiInputFormat)inFormat).load(uris, inputParamArray, outputType, eh, loader);
       }
       else
-        sc = inFormat.load(UriOrFile.toUri(args[0]), inputParamArray, outputType, eh);
+        sc = inFormat.load(UriOrFile.toUri(args[0]), inputParamArray, outputType, eh, loader);
       if (ext.length() == 0)
         ext = outputType;
       OutputDirectory od = new LocalOutputDirectory(sc.getMainUri(),

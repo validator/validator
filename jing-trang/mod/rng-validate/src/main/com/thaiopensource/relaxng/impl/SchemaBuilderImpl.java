@@ -21,6 +21,7 @@ import com.thaiopensource.relaxng.parse.ParsedPattern;
 import com.thaiopensource.relaxng.parse.ParsedPatternFuture;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
+import com.thaiopensource.relaxng.parse.SubParseable;
 import com.thaiopensource.relaxng.parse.SubParser;
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.xml.util.Name;
@@ -644,8 +645,10 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
       return this;
     }
 
-    public void endInclude(String uri, String ns,
+    public void endInclude(String href, String base, String ns,
                            Location loc, Annotations anno) throws BuildException {
+      SubParseable subParseable = sb.subParser.createSubParseable(href, base);
+      String uri = subParseable.getUri();
       for (OpenIncludes inc = sb.openIncludes;
            inc != null;
            inc = inc.parent) {
@@ -661,7 +664,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
       }
       try {
         SchemaBuilderImpl isb = new SchemaBuilderImpl(ns, uri, sb);
-        sb.subParser.parseInclude(uri, isb, new GrammarImpl(isb, grammar));
+        subParseable.parseAsInclude(isb, new GrammarImpl(isb, grammar));
         for (Override o = overrides; o != null; o = o.next) {
           if (o.prp.getReplacementStatus() == RefPattern.REPLACEMENT_REQUIRE) {
             if (o.prp.getName() == null)
@@ -713,9 +716,11 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
     return nc;
   }
 
-  public ParsedPattern makeExternalRef(String uri, String ns, Scope scope,
+  public ParsedPattern makeExternalRef(String href, String base, String ns, Scope scope,
                                        Location loc, Annotations anno)
           throws BuildException {
+    SubParseable subParseable = subParser.createSubParseable(href, base);
+    String uri = subParseable.getUri();
     for (OpenIncludes inc = openIncludes;
          inc != null;
          inc = inc.parent) {
@@ -725,7 +730,7 @@ public class SchemaBuilderImpl implements SchemaBuilder, ElementAnnotationBuilde
       }
     }
     try {
-      return subParser.parseExternal(uri, new SchemaBuilderImpl(ns, uri, this), scope);
+      return subParseable.parse(new SchemaBuilderImpl(ns, uri, this), scope);
     }
     catch (IllegalSchemaException e) {
       noteError();

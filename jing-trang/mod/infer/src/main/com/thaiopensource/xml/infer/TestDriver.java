@@ -1,10 +1,10 @@
 package com.thaiopensource.xml.infer;
 
 import com.thaiopensource.datatype.DatatypeLibraryLoader;
-import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.util.UriOrFile;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.Resolver;
+import com.thaiopensource.xml.util.Name;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class TestDriver {
   static public void main(String[] args) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
-    XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
+    XMLReaderCreator xrc = Resolver.newInstance();
     XMLReader xr = xrc.createXMLReader();
     xr.setContentHandler(handler);
     for (int i = 0; i < args.length; i++)

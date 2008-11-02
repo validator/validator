@@ -31,8 +31,7 @@ import com.thaiopensource.xml.infer.ParticleVisitor;
 import com.thaiopensource.xml.infer.Schema;
 import com.thaiopensource.xml.infer.SequenceParticle;
 import com.thaiopensource.xml.infer.TextParticle;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
+import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.util.Name;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -62,6 +61,7 @@ class Inferrer {
 
   static class Options {
     String encoding;
+    Resolver resolver;
   }
 
   private static class PatternComparator implements Comparator<Pattern> {
@@ -215,8 +215,10 @@ class Inferrer {
 
   static SchemaCollection infer(String[] args, Options options, ErrorHandler eh) throws SAXException, IOException {
     InferHandler handler = new InferHandler(new DatatypeLibraryLoader());
-    XMLReaderCreator xrc = new Jaxp11XMLReaderCreator();
-    XMLReader xr = xrc.createXMLReader();
+    Resolver resolver = options.resolver;
+    if (resolver == null)
+      resolver = Resolver.newInstance();
+    XMLReader xr = resolver.createXMLReader();
     xr.setErrorHandler(eh);
     xr.setContentHandler(handler);
     for (int i = 0; i < args.length; i++) {

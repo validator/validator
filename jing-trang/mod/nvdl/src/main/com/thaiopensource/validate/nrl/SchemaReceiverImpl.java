@@ -20,6 +20,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
 import java.net.URL;
 
@@ -61,8 +62,8 @@ class SchemaReceiverImpl implements SchemaReceiver {
       String className = SchemaReceiverImpl.class.getName();
       String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + NRL_SCHEMA;
       URL nrlSchemaUrl = getResource(resourceName);
-     nrlSchema = SAXSchemaReader.getInstance().createSchema(new InputSource(nrlSchemaUrl.toString()),
-                                                              properties);
+      nrlSchema = SAXSchemaReader.getInstance().createSchema(new InputSource(nrlSchemaUrl.openStream()),
+                                                             properties);
     }
     return nrlSchema;
   }
@@ -80,14 +81,14 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return properties;
   }
 
-  Schema createChildSchema(InputSource inputSource, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
+  Schema createChildSchema(SAXSource source, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
     SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaReader;
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
     if (isAttributesSchema)
       WrapProperty.ATTRIBUTE_OWNER.put(builder, ValidatorImpl.OWNER_NAME);
     for (int i = 0, len = options.size(); i < len; i++)
       builder.put(options.getKey(i), options.get(options.getKey(i)));
-    return reader.createSchema(inputSource, builder.toPropertyMap());
+    return reader.createSchema(source, builder.toPropertyMap());
   }
 
   Option getOption(String uri) {

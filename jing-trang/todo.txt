@@ -1,3 +1,16 @@
+CompactSyntax.jj should check that externalRef and include literal is
+a valid Uri.
+
+convert-from-dtd module should use a resolver
+
+Resolver.resolve needs a type argument
+
+Document -r Jing option and -Iresolver trang option.
+
+Add JingTask parameter to specify the resolver.
+
+Transformer in schematron needs a resolver.
+
 Add a target to explicitly run the regex category test.
 
 Reorganize schemas in source tree.
@@ -8,7 +21,7 @@ Move java sources used for testing only into test hierarchy.
 
 Set some more svn:ignore properties; get rid of .cvsignore properties.
 
-Ensure svn:mime-type is set correctly.  Ensure svn:eol-type is set correctly.
+Ensure svn:mime-type/svn:eol-type is set correctly.
 
 test element in mod.xml should specify additional jars.
 
@@ -22,8 +35,6 @@ Fix bug with not checking "duplicate declaration" and maybe "xsd prefix"
 constraint.
 
 Fix bug with empty implicit grammars in compact syntax.
-
-Allow jing to use OASIS catalogs.
 
 See whether there's a DTDinst bug with a parameter entity containing a
 single percent token.
@@ -55,12 +66,6 @@ map passed to schema.createValidator contains an error handler or
 maybe use DraconianErrorHandler by default.
 
 Maybe rename Validator to ValidationHandlers.
-
-The SAX RELAX NG parser should use any EntityResolver supplied in the
-PropertyMap by wrapping a class round the XMLReaderCreator which sets
-the specified EntityResolver before returning it.
-
-The SAX Compact syntax parser should be able to use an entity resolver.
 
 Allow PropertyIds to be used to represent SAX properties/features.
 Make use of them in the various SchemaReader implementations.

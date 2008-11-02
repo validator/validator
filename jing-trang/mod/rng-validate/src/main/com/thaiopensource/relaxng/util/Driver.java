@@ -1,19 +1,21 @@
 package com.thaiopensource.relaxng.util;
 
+import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.OptionParser;
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.util.Version;
-import com.thaiopensource.util.Localizer;
 import com.thaiopensource.validate.Flag;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
-import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import com.thaiopensource.xml.sax.Resolver;
+import com.thaiopensource.xml.sax.ResolverInstantiationException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -36,7 +38,7 @@ class Driver {
 
   public int doMain(String[] args) {
     ErrorHandlerImpl eh = new ErrorHandlerImpl(System.out);
-    OptionParser op = new OptionParser("itcdfe:p:", args);
+    OptionParser op = new OptionParser("itcdfe:p:r:", args);
     PropertyMapBuilder properties = new PropertyMapBuilder();
     ValidateProperty.ERROR_HANDLER.put(properties, eh);
     RngProperty.CHECK_ID_IDREF.add(properties);
@@ -89,6 +91,17 @@ class Driver {
               eh.print(localizer.message("invalid_phase", op.getOptionArg()));
               return 2;
             }
+          }
+          break;
+        case 'r':
+          try {
+            ValidateProperty.RESOLVER.put(properties,
+                                          Resolver.newInstance(op.getOptionArg(),
+                                                               Driver.class.getClassLoader()));
+          }
+          catch (ResolverInstantiationException e) {
+            eh.print(localizer.message("invalid_resolver_class", e.getMessage()));
+            return 2;
           }
           break;
         }

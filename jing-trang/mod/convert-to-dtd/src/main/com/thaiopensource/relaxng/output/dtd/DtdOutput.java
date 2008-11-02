@@ -918,7 +918,7 @@ class DtdOutput {
   }
 
   void outputInclude(IncludeComponent inc) {
-    String href = inc.getHref();
+    String href = inc.getUri();
     if (doneIncludes.contains(href))
       return;
     if (pendingIncludes.contains(href)) {
@@ -962,7 +962,7 @@ class DtdOutput {
       }
     }
     if (entityName == null) {
-      String uri = inc.getHref();
+      String uri = inc.getUri();
       int slash = uri.lastIndexOf('/');
       if (slash >= 0)
         uri = uri.substring(slash + 1);

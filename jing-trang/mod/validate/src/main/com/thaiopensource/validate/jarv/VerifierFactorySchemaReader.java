@@ -1,20 +1,20 @@
 package com.thaiopensource.validate.jarv;
 
 import com.thaiopensource.util.PropertyMap;
-import com.thaiopensource.validate.IncorrectSchemaException;
-import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.Validator;
-import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.AbstractSchema;
+import com.thaiopensource.validate.AbstractSchemaReader;
+import com.thaiopensource.validate.IncorrectSchemaException;
+import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.Validator;
 import org.iso_relax.verifier.VerifierConfigurationException;
 import org.iso_relax.verifier.VerifierFactory;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
 
-public class VerifierFactorySchemaReader implements SchemaReader {
+public class VerifierFactorySchemaReader extends AbstractSchemaReader {
   private final VerifierFactory vf;
 
   static private class SchemaImpl extends AbstractSchema {
@@ -42,10 +42,10 @@ public class VerifierFactorySchemaReader implements SchemaReader {
     this.vf = vf;
   }
 
-  public Schema createSchema(InputSource in, PropertyMap properties)
+  public Schema createSchema(SAXSource source, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
     try {
-      return new SchemaImpl(vf.compileSchema(in));
+      return new SchemaImpl(vf.compileSchema(source.getInputSource()));
     }
     catch (SAXException e) {
       System.err.println("compileSchema threw a SAXException class " + e.getClass().toString());

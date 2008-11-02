@@ -390,13 +390,6 @@ public class CompactSyntax implements Context {
     }
     return ns;
   }
-  private String resolve(String str) {
-    try {
-     return new URL(new URL(sourceUri), str).toString();
-    }
-    catch (MalformedURLException e) { }
-    return str;
-  }
 }
 
 PARSER_END(CompactSyntax)
@@ -1020,7 +1013,7 @@ void Include(GrammarSection section, Scope scope, Annotations a) :
   ("{" a = IncludeBody(include, scope, a) { topLevelComments(include); } "}")?
   {
     try {
-      include.endInclude(resolve(href), ns, makeLocation(t), a);
+      include.endInclude(href, sourceUri, ns, makeLocation(t), a);
     }
     catch (IllegalSchemaException e) { }
   }
@@ -1080,7 +1073,7 @@ ParsedPattern ExternalRefExpr(Scope scope, Annotations a) :
   ns = Inherit()
   {
     try {
-      return sb.makeExternalRef(resolve(href), ns, scope, makeLocation(t), a);
+      return sb.makeExternalRef(href, sourceUri, ns, scope, makeLocation(t), a);
     }
     catch (IllegalSchemaException e) {
       return sb.makeErrorPattern();

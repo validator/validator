@@ -2,10 +2,10 @@ package com.thaiopensource.validate.xerces;
 
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.validate.AbstractSchemaReader;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.SchemaReader;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.xml.util.Name;
@@ -24,16 +24,17 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-class SchemaReaderImpl implements SchemaReader {
+class SchemaReaderImpl extends AbstractSchemaReader {
   private static final PropertyId[] supportedPropertyIds = {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.ENTITY_RESOLVER,
   };
-  public Schema createSchema(InputSource in, PropertyMap properties)
+  public Schema createSchema(SAXSource source, PropertyMap properties)
           throws IOException, SAXException, IncorrectSchemaException {
     SymbolTable symbolTable = new SymbolTable();
     XMLGrammarPreparser preparser = new XMLGrammarPreparser(symbolTable);
@@ -47,7 +48,7 @@ class SchemaReaderImpl implements SchemaReader {
     if (er != null)
       preparser.setEntityResolver(new EntityResolverWrapper(er));
     try {
-      preparser.preparseGrammar(XMLGrammarDescription.XML_SCHEMA, toXMLInputSource(in));
+      preparser.preparseGrammar(XMLGrammarDescription.XML_SCHEMA, toXMLInputSource(source.getInputSource()));
       Name attributeOwner = WrapProperty.ATTRIBUTE_OWNER.get(properties);
       if (attributeOwner != null) {
         Reader r = new StringReader(createWrapper(attributeOwner));

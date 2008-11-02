@@ -54,7 +54,7 @@ class RefChecker extends AbstractVisitor {
   }
 
   public VoidValue visitInclude(IncludeComponent c) {
-    schema.getSchema(c.getHref()).componentsAccept(this);
+    schema.getSchema(c.getUri()).componentsAccept(this);
     return VoidValue.VOID;
   }
 

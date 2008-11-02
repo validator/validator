@@ -293,7 +293,7 @@ class Analysis {
 
     public VoidValue visitInclude(IncludeComponent c) {
       includeContentChecker.visitContainer(c);
-      visitContainer((GrammarPattern)(schemas.getSchemaDocumentMap().get(c.getHref())).getPattern());
+      visitContainer((GrammarPattern)(schemas.getSchemaDocumentMap().get(c.getUri())).getPattern());
       return VoidValue.VOID;
     }
 

@@ -4,12 +4,10 @@ import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
-import com.thaiopensource.validate.auto.ReparseException;
-import com.thaiopensource.validate.auto.SchemaFuture;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
 
 public class SchemaReaderSchemaReceiver implements SchemaReceiver {
@@ -23,8 +21,8 @@ public class SchemaReaderSchemaReceiver implements SchemaReceiver {
 
   public SchemaFuture installHandlers(XMLReader xr) throws SAXException {
     throw new ReparseException() {
-      public Schema reparse(InputSource in) throws IncorrectSchemaException, SAXException, IOException {
-        return schemaLanguage.createSchema(in, properties);
+      public Schema reparse(SAXSource source) throws IncorrectSchemaException, SAXException, IOException {
+        return schemaLanguage.createSchema(source, properties);
       }
     };
   }

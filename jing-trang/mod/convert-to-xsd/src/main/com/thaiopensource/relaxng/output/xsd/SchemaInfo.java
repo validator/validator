@@ -269,20 +269,20 @@ class SchemaInfo {
       this.overrides = overrides;
       c.componentsAccept(this);
       this.overrides = savedOverrides;
-      String href = c.getHref();
-      if (openIncludes.contains(href))
-        er.error("include_loop", href, c.getSourceLocation());
-      else if (allIncludes.contains(href))
-        er.error("multiple_include", href, c.getSourceLocation());
+      String uri = c.getUri();
+      if (openIncludes.contains(uri))
+        er.error("include_loop", uri, c.getSourceLocation());
+      else if (allIncludes.contains(uri))
+        er.error("multiple_include", uri, c.getSourceLocation());
       else {
         for (Override or : overrides) {
           or.status = or.define.status;
           or.define.status = DEFINE_REQUIRE;
         }
-        allIncludes.add(href);
-        openIncludes.add(href);
-        getSchema(href).componentsAccept(this);
-        openIncludes.remove(href);
+        allIncludes.add(uri);
+        openIncludes.add(uri);
+        getSchema(uri).componentsAccept(this);
+        openIncludes.remove(uri);
         for (Override or : overrides) {
           if (or.define.status == DEFINE_REQUIRE) {
             if (or.name == DefineComponent.START)

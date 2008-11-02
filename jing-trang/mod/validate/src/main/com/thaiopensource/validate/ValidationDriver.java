@@ -1,24 +1,22 @@
 package com.thaiopensource.validate;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.InputSource;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.XMLReader;
-import org.xml.sax.ErrorHandler;
-
-import java.io.IOException;
-import java.io.File;
-import java.net.MalformedURLException;
-
-import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
-import com.thaiopensource.util.PropertyId;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
-import com.thaiopensource.xml.sax.CountingErrorHandler;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
-import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
+import com.thaiopensource.xml.sax.CountingErrorHandler;
+import com.thaiopensource.xml.sax.ErrorHandlerImpl;
+import com.thaiopensource.xml.sax.Resolver;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import javax.xml.transform.sax.SAXSource;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 /**
  * Provides a simplified API for validating XML documents against schemas.
@@ -28,17 +26,7 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
  */
 
 public class ValidationDriver {
-  private static final PropertyId[] requiredProperties = {
-    ValidateProperty.XML_READER_CREATOR,
-    ValidateProperty.ERROR_HANDLER
-  };
-
-  private static final Class[] defaultClasses = {
-    Jaxp11XMLReaderCreator.class,
-    ErrorHandlerImpl.class
-  };
-
-  private final XMLReaderCreator xrc;
+  private final Resolver resolver;
   private XMLReader xr;
   private final CountingErrorHandler eh;
   private final SchemaReader sr;
@@ -61,30 +49,24 @@ public class ValidationDriver {
   public ValidationDriver(PropertyMap schemaProperties,
                           PropertyMap instanceProperties,
                           SchemaReader schemaReader) {
-    PropertyMapBuilder builder = new PropertyMapBuilder(schemaProperties);
-    for (int i = 0; i < requiredProperties.length; i++) {
-      if (!builder.contains(requiredProperties[i])) {
-        try {
-          builder.put(requiredProperties[i],
-                      defaultClasses[i].newInstance());
-        }
-        catch (InstantiationException e) {
-        }
-        catch (IllegalAccessException e) {
-        }
-      }
+    ErrorHandler seh = ValidateProperty.ERROR_HANDLER.get(schemaProperties);
+    PropertyMapBuilder builder;
+    if (seh == null) {
+      seh = new ErrorHandlerImpl();
+      builder = new PropertyMapBuilder(schemaProperties);
+      ValidateProperty.ERROR_HANDLER.put(builder, seh);
+      this.schemaProperties = builder.toPropertyMap();
     }
-    this.schemaProperties = builder.toPropertyMap();
+    else
+      this.schemaProperties = schemaProperties;
     builder = new PropertyMapBuilder(instanceProperties);
-    for (int i = 0; i < requiredProperties.length; i++) {
-      if (!builder.contains(requiredProperties[i]))
-        builder.put(requiredProperties[i],
-                    this.schemaProperties.get(requiredProperties[i]));
-    }
-    eh = new CountingErrorHandler((ErrorHandler)builder.get(ValidateProperty.ERROR_HANDLER));
+    ErrorHandler ieh = ValidateProperty.ERROR_HANDLER.get(instanceProperties);
+    if (ieh == null)
+      ieh = seh;
+    eh = new CountingErrorHandler(ieh);
     ValidateProperty.ERROR_HANDLER.put(builder, eh);
     this.instanceProperties = builder.toPropertyMap();
-    this.xrc = ValidateProperty.XML_READER_CREATOR.get(this.instanceProperties);
+    this.resolver = ResolverFactory.createResolver(this.instanceProperties);
     this.sr = schemaReader == null ? new AutoSchemaReader() : schemaReader;
   }
 
@@ -145,7 +127,7 @@ public class ValidationDriver {
    */
   public boolean loadSchema(InputSource in) throws SAXException, IOException {
     try {
-      schema = sr.createSchema(in, schemaProperties);
+      schema = sr.createSchema(new SAXSource(in), schemaProperties);
       validator = null;
       return true;
     }
@@ -170,7 +152,7 @@ public class ValidationDriver {
     if (validator == null)
       validator = schema.createValidator(instanceProperties);
     if (xr == null) {
-      xr = xrc.createXMLReader();
+      xr = resolver.createXMLReader();
       xr.setErrorHandler(eh);
     }
     eh.reset();

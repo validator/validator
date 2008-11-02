@@ -3,10 +3,10 @@ package com.thaiopensource.relaxng.parse.compact;
 import com.thaiopensource.relaxng.parse.BuildException;
 import com.thaiopensource.relaxng.parse.IllegalSchemaException;
 import com.thaiopensource.relaxng.parse.IncludedGrammar;
-import com.thaiopensource.relaxng.parse.Parseable;
 import com.thaiopensource.relaxng.parse.ParsedPattern;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
+import com.thaiopensource.relaxng.parse.SubParseable;
 import com.thaiopensource.xml.util.EncodingMap;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -16,14 +16,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
 import java.io.Reader;
-import java.net.URL;
 
-public class CompactParseable implements Parseable {
+public class CompactParseable implements SubParseable {
   private final InputSource in;
+  private final UriOpener opener;
   private final ErrorHandler eh;
 
-  public CompactParseable(InputSource in, ErrorHandler eh) {
+  public CompactParseable(InputSource in, UriOpener opener, ErrorHandler eh) {
     this.in = in;
+    this.opener = opener;
     this.eh = eh;
   }
 
@@ -31,41 +32,37 @@ public class CompactParseable implements Parseable {
     return new CompactSyntax(makeReader(in), in.getSystemId(), sb, eh).parse(scope);
   }
 
-  public ParsedPattern parseInclude(String uri, SchemaBuilder sb, IncludedGrammar g)
-          throws BuildException, IllegalSchemaException {
-    InputSource tem = new InputSource(uri);
-    tem.setEncoding(in.getEncoding());
-    return new CompactSyntax(makeReader(tem), uri, sb, eh).parseInclude(g);
+  public SubParseable createSubParseable(String href, String base) throws BuildException {
+    return new CompactParseable(opener.resolve(href, base), opener, eh);
   }
 
-  public ParsedPattern parseExternal(String uri, SchemaBuilder sb, Scope scope)
+  public ParsedPattern parseAsInclude(SchemaBuilder sb, IncludedGrammar g)
           throws BuildException, IllegalSchemaException {
-    InputSource tem = new InputSource(uri);
-    tem.setEncoding(in.getEncoding());
-    return new CompactSyntax(makeReader(tem), uri, sb, eh).parse(scope);
+    return new CompactSyntax(makeReader(in), in.getSystemId(), sb, eh).parseInclude(g);
+  }
+
+  public String getUri() {
+    return in.getSystemId();
   }
 
   private static final String UTF8 = EncodingMap.getJavaName("UTF-8");
   private static final String UTF16 = EncodingMap.getJavaName("UTF-16");
 
-  private static Reader makeReader(InputSource is) throws BuildException {
+  private Reader makeReader(InputSource in) throws BuildException {
+    in = opener.open(in);
     try {
-      Reader r = is.getCharacterStream();
-      if (r == null) {
-        InputStream in = is.getByteStream();
-        if (in == null) {
-          String systemId = is.getSystemId();
-          in = new URL(systemId).openStream();
-        }
-        String encoding = is.getEncoding();
+      Reader reader = in.getCharacterStream();
+      if (reader == null) {
+        InputStream byteStream = in.getByteStream();
+        String encoding = in.getEncoding();
         if (encoding == null) {
-          PushbackInputStream pb = new PushbackInputStream(in, 2);
+          PushbackInputStream pb = new PushbackInputStream(byteStream, 2);
           encoding = detectEncoding(pb);
-          in = pb;
+          byteStream = pb;
         }
-        r = new InputStreamReader(in, encoding);
+        reader = new InputStreamReader(byteStream, encoding);
       }
-      return r;
+      return reader;
     }
     catch (IOException e) {
       throw new BuildException(e);

@@ -67,7 +67,7 @@ public class DtdInputFormat implements InputFormat {
     abstract void setDeclPattern(String pattern);
   }
 
-  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh)
+  public SchemaCollection load(String uri, String[] params, String outputFormat, ErrorHandler eh, ClassLoader loader)
           throws InvalidParamsException, IOException, SAXException {
     final ErrorReporter er = new ErrorReporter(eh, DtdInputFormat.class);
     final Converter.Options options = new Converter.Options();

@@ -123,16 +123,16 @@ class GrammarPart implements ComponentVisitor<VoidValue> {
   }
 
   public VoidValue visitInclude(IncludeComponent c) {
-    String href = c.getHref();
-    if (pendingIncludes.contains(href))
+    String uri = c.getUri();
+    if (pendingIncludes.contains(uri))
       throw new IncludeLoopException(c);
-    pendingIncludes.add(href);
-    GrammarPattern p = (GrammarPattern)(schemas.getSchemaDocumentMap().get(href)).getPattern();
+    pendingIncludes.add(uri);
+    GrammarPattern p = (GrammarPattern)(schemas.getSchemaDocumentMap().get(uri)).getPattern();
     GrammarPart part = new GrammarPart(this, p);
-    parts.put(href, part);
+    parts.put(uri, part);
     for (String name : part.providedSet())
       whereProvided.put(name, c);
-    pendingIncludes.remove(href);
+    pendingIncludes.remove(uri);
     return VoidValue.VOID;
   }
 

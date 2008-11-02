@@ -200,7 +200,7 @@ class Output implements PatternVisitor<VoidValue>, NameClassVisitor<VoidValue>, 
   public VoidValue visitExternalRef(ExternalRefPattern p) {
     leadingAnnotations(p);
     xw.startElement("externalRef");
-    xw.attribute("href", od.reference(sourceUri, p.getHref()));
+    xw.attribute("href", od.reference(sourceUri, p.getUri()));
     nsAttribute(p.getNs());
     innerAnnotations(p);
     end(p);
@@ -417,7 +417,7 @@ class Output implements PatternVisitor<VoidValue>, NameClassVisitor<VoidValue>, 
   public VoidValue visitInclude(IncludeComponent c) {
     leadingAnnotations(c);
     xw.startElement("include");
-    xw.attribute("href", od.reference(sourceUri, c.getHref()));
+    xw.attribute("href", od.reference(sourceUri, c.getUri()));
     String saveNs = localNs;
     localNs = nsAttribute(c.getNs());
     finishContainer(c, c);

@@ -3,9 +3,12 @@ package com.thaiopensource.validate;
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.sax.XMLReaderCreator;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.EntityResolver;
+import org.xml.sax.ErrorHandler;
+
+import javax.xml.transform.URIResolver;
 
 /**
  * Provides common properties to control reading schemas and validation.
@@ -34,6 +37,22 @@ public class ValidateProperty {
    * @see EntityResolver
    */
   public static final EntityResolverPropertyId ENTITY_RESOLVER = new EntityResolverPropertyId("ENTITY_RESOLVER");
+
+  /**
+   * Property specifying URIResolver to be used for resolving URIs. The value
+   * to which this PropertyId maps must be an instance of URIResolver.
+   *
+   * @see URIResolver
+   */
+  public static final URIResolverPropertyId URI_RESOLVER = new URIResolverPropertyId("URI_RESOLVER");
+
+  /**
+   * Property specifying Resolver to be used. The value
+   * to which this PropertyId maps must be an instance of Resolver.
+   *
+   * @see Resolver
+   */
+  public static final ResolverPropertyId RESOLVER = new ResolverPropertyId("RESOLVER");
 
   /**
    * Property specifying XMLReaderCreator used to create XMLReader objects needed for
@@ -127,6 +146,87 @@ public class ValidateProperty {
     }
   }
 
+  /**
+   * A PropertyId whose value is constrained to be an instance of
+   * URIResolver.
+   *
+   * @see URIResolver
+   */
+  public static class URIResolverPropertyId extends PropertyId {
+    public URIResolverPropertyId(String name) {
+      super(name, URIResolver.class);
+    }
+
+    /**
+     * Returns the value of the property.  This is a typesafe
+     * version of <code>PropertyMap.get</code>.
+     *
+     * @param properties the PropertyMap to be used
+     * @return the URIResolver to which the PropertyMap maps this PropertyId,
+     * or <code>null</code> if this PropertyId is not in the PropertyMap
+     * @see PropertyMap#get
+     */
+    public URIResolver get(PropertyMap properties) {
+      return (URIResolver)properties.get(this);
+    }
+
+    /**
+     * Sets the value of the property. Modifies the PropertyMapBuilder
+     * so that this PropertyId is mapped to the specified value. This
+     * is a typesafe version of PropertyMapBuilder.put.
+     *
+     * @param builder the PropertyMapBuilder to be modified
+     * @param value the URIResolver to which this PropertyId is to be mapped
+     * @return the URIResolver to which this PropertyId was mapped before,
+     * or <code>null</code> if it was not mapped
+     *
+     * @see PropertyMapBuilder#put
+     */
+    public URIResolver put(PropertyMapBuilder builder, URIResolver value) {
+      return (URIResolver)builder.put(this, value);
+    }
+  }
+
+  /**
+   * A PropertyId whose value is constrained to be an instance of
+   * Resolver.
+   *
+   * @see Resolver
+   */
+  public static class ResolverPropertyId extends PropertyId {
+    public ResolverPropertyId(String name) {
+      super(name, Resolver.class);
+    }
+
+    /**
+     * Returns the value of the property.  This is a typesafe
+     * version of <code>PropertyMap.get</code>.
+     *
+     * @param properties the PropertyMap to be used
+     * @return the Resolver to which the PropertyMap maps this PropertyId,
+     * or <code>null</code> if this PropertyId is not in the PropertyMap
+     * @see PropertyMap#get
+     */
+    public Resolver get(PropertyMap properties) {
+      return (Resolver)properties.get(this);
+    }
+
+    /**
+     * Sets the value of the property. Modifies the PropertyMapBuilder
+     * so that this PropertyId is mapped to the specified value. This
+     * is a typesafe version of PropertyMapBuilder.put.
+     *
+     * @param builder the PropertyMapBuilder to be modified
+     * @param value the Resolver to which this PropertyId is to be mapped
+     * @return the Resolver to which this PropertyId was mapped before,
+     * or <code>null</code> if it was not mapped
+     *
+     * @see PropertyMapBuilder#put
+     */
+    public Resolver put(PropertyMapBuilder builder, Resolver value) {
+      return (Resolver)builder.put(this, value);
+    }
+  }
   /**
    * A PropertyId whose value is constrained to be an instance of
    * XMLReaderCreator.

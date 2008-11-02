@@ -975,6 +975,7 @@ class SchemaParser implements ParsedPatternFuture {
 
   class IncludeState extends GrammarSectionState {
     String href;
+    String base;
     final Include include;
 
     IncludeState(Include include) {
@@ -985,7 +986,7 @@ class SchemaParser implements ParsedPatternFuture {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("href")) {
 	href = value;
-	checkUri(href);
+	checkUriNoFragmentId(href);
       }
       else
 	super.setOtherAttribute(name, value);
@@ -995,14 +996,14 @@ class SchemaParser implements ParsedPatternFuture {
       if (href == null)
 	error("missing_href_attribute");
       else
-        href = resolve(href);
+        base = xmlBaseHandler.getBaseUri();
     }
 
     void end() throws SAXException {
       super.end();
       if (href != null) {
         try {
-          include.endInclude(href, getNs(), startLocation, annotations);
+          include.endInclude(href, base, getNs(), startLocation, annotations);
         }
         catch (IllegalSchemaException e) {
         }
@@ -1080,6 +1081,7 @@ class SchemaParser implements ParsedPatternFuture {
 
   class ExternalRefState extends EmptyContentState {
     String href;
+    String base;
     ParsedPattern includedPattern;
 
     State create() {
@@ -1089,7 +1091,7 @@ class SchemaParser implements ParsedPatternFuture {
     void setOtherAttribute(String name, String value) throws SAXException {
       if (name.equals("href")) {
 	href = value;
-	checkUri(href);
+	checkUriNoFragmentId(href);
       }
       else
 	super.setOtherAttribute(name, value);
@@ -1099,13 +1101,14 @@ class SchemaParser implements ParsedPatternFuture {
       if (href == null)
 	error("missing_href_attribute");
       else
-        href = resolve(href);
+        base = xmlBaseHandler.getBaseUri();
     }
 
     ParsedPattern makePattern() {
       if (href != null) {
         try {
           return schemaBuilder.makeExternalRef(href,
+                                               base,
                                                getNs(),
                                                scope,
                                                startLocation,
@@ -1593,19 +1596,18 @@ class SchemaParser implements ParsedPatternFuture {
     return str;
   }
 
-  private String resolve(String systemId) throws SAXException {
-    if (Uri.hasFragmentId(systemId))
-      error("href_fragment_id");
-    systemId = Uri.escapeDisallowedChars(systemId);
-    return Uri.resolve(xmlBaseHandler.getBaseUri(), systemId);
-  }
-
   private Location makeLocation() {
     if (locator == null)
       return null;
     return schemaBuilder.makeLocation(locator.getSystemId(),
 				      locator.getLineNumber(),
 				      locator.getColumnNumber());
+  }
+
+  private void checkUriNoFragmentId(String s) throws SAXException {
+    checkUri(s);
+    if (Uri.hasFragmentId(s))
+      error("href_fragment_id");
   }
 
   private void checkUri(String s) throws SAXException {
