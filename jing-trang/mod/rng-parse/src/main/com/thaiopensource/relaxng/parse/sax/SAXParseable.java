@@ -7,6 +7,7 @@ import com.thaiopensource.relaxng.parse.ParsedPattern;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
 import com.thaiopensource.relaxng.parse.SubParseable;
+import com.thaiopensource.util.Uri;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -60,6 +61,6 @@ public class SAXParseable extends SAXSubParser implements SubParseable {
   }
 
   public String getUri() {
-    return source.getInputSource().getSystemId();
+    return Uri.escapeDisallowedChars(source.getInputSource().getSystemId());
   }
 }

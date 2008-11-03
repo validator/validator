@@ -32,7 +32,9 @@ public class Resolver implements XMLReaderCreator {
   }
 
   /**
-   * Note that the XMLReader in returned SAXSource may be null; call createXMLReader if you need one
+   * Note that the XMLReader in the returned SAXSource may be null; call createXMLReader if you need one.
+   * The InputSource in the returned SAXSource must be non-null, and the systemId in that InputSource
+   * must also be non-null.
    * @param href
    * @param base
    * @return

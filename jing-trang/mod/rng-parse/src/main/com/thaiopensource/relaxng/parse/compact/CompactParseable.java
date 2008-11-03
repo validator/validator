@@ -7,6 +7,7 @@ import com.thaiopensource.relaxng.parse.ParsedPattern;
 import com.thaiopensource.relaxng.parse.SchemaBuilder;
 import com.thaiopensource.relaxng.parse.Scope;
 import com.thaiopensource.relaxng.parse.SubParseable;
+import com.thaiopensource.util.Uri;
 import com.thaiopensource.xml.util.EncodingMap;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -42,7 +43,7 @@ public class CompactParseable implements SubParseable {
   }
 
   public String getUri() {
-    return in.getSystemId();
+    return Uri.escapeDisallowedChars(in.getSystemId());
   }
 
   private static final String UTF8 = EncodingMap.getJavaName("UTF-8");
