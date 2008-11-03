@@ -864,14 +864,25 @@ xmlns:c="http://www.example.org/c" att1="val2" c:att2="val2"/>
 <rules startMode="root" xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0">
   <mode name="root">
     <namespace ns="http://www.w3.org/1999/xhtml">
-      <validate schema="xhtml.rng" useMode="#attach">
+      <validate schema="xhtml.rng">
+        <mode>
+          <anyNamespace>
+            <attach/>
+          </anyNamespace>
+        </mode>
         <context path="head" useMode="rdf"/>
       </validate>
     </namespace>
   </mode>
   <mode name="rdf">
     <namespace ns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <validate schema="rdfxml.rng" useMode="#attach"/>
+      <validate schema="rdfxml.rng">
+        <mode>
+          <anyNamespace>
+            <attach/>
+          </anyNamespace>
+        </mode>
+      </validate>
     </namespace>
   </mode>
 </rules>
@@ -1274,19 +1285,29 @@ element linux|windows { empty }
   </mode>
   <mode name="linux">
     <namespace ns="http://www.example.com/version">
-      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <unwrap useMode="#allow">
-	<context path="linux" useMode="#attach"/>
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="allow"/>
+      <unwrap useMode="allow">
+	<context path="linux" useMode="attach"/>
       </unwrap>
     </namespace>
   </mode>
   <mode name="windows">
     <namespace ns="http://www.example.com/version">
-      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="#allow"/>
-      <unwrap useMode="#allow">
-	<context path="windows" useMode="#attach"/>
+      <validate schema="version.rnc" schemaType="application/x-rnc" useMode="allow"/>
+      <unwrap useMode="allow">
+	<context path="windows" useMode="attach"/>
       </unwrap>
     </namespace>
+  </mode>
+  <mode name="attach">
+    <anyNamespace>
+      <attach/>
+    </anyNamespace>
+  </mode>
+  <mode name="allow">
+    <anyNamespace>
+      <allow/>
+    </anyNamespace>
   </mode>
 </rules>
 </correct>
@@ -1458,7 +1479,12 @@ attribute a:y { text }
 </resource>
 <correct>
 <rules xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0" startMode="start">
-<mode name="start" extends="c">
+<mode name="start">
+  <mode>
+    <namespace ns="http://www.example.org/c">
+      <allow/>
+    </namespace>
+  </mode>
   <namespace ns="http://www.example.org/a">
     <validate schema="ab.mns" useMode="cover"/>
   </namespace>
@@ -1466,17 +1492,17 @@ attribute a:y { text }
     <validate schema="ab.mns" useMode="cover"/>
   </namespace>
 </mode>
-<mode name="cover" extends="c">
+<mode name="cover">
+  <mode>
+    <namespace ns="http://www.example.org/c">
+      <allow/>
+    </namespace>
+  </mode>
   <namespace ns="http://www.example.org/a">
     <attach/>
   </namespace>
   <namespace ns="http://www.example.org/b">
     <attach/>
-  </namespace>
-</mode>
-<mode name="c">
-  <namespace ns="http://www.example.org/c">
-    <allow/>
   </namespace>
 </mode>
 </rules>

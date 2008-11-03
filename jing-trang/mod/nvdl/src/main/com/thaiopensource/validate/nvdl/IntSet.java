@@ -1,10 +1,28 @@
 package com.thaiopensource.validate.nvdl;
 
+/**
+ * Utility class. Stores a set of integers.
+ * The set is stored in an array and sorted.
+ */
 class IntSet {
+  /**
+   * Initial size.
+   */
   static private final int INIT_SIZE = 4;
+  /**
+   * An int array with the values.
+   */
   private int[] v = null;
+  
+  /**
+   * The number of stored values.
+   */
   private int len = 0;
 
+  /**
+   * Add a new value.
+   * @param n The value to be added.
+   */
   void add(int n) {
     if (v == null) {
       v = new int[INIT_SIZE];
@@ -35,6 +53,10 @@ class IntSet {
     ++len;
   }
 
+  /**
+   * Adds all the values from another set - union.
+   * @param is The other integer set.
+   */
   void addAll(IntSet is) {
     if (is.len == 0)
       return;
@@ -58,10 +80,19 @@ class IntSet {
     len = k;
   }
 
+  /**
+   * Get the number of values in this set.
+   * @return
+   */
   int size() {
     return len;
   }
 
+  /**
+   * Get the ith value from the set.
+   * @param i The index in the set, zero based.
+   * @return The value at position i.
+   */
   int get(int i) {
    if (i >= len)
      throw new IndexOutOfBoundsException();

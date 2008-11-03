@@ -1,7 +1,6 @@
 package com.thaiopensource.validate.nvdl;
 
 import com.thaiopensource.validate.Schema;
-import com.thaiopensource.validate.nvdl.ModeUsage;
 import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
 
@@ -20,4 +19,5 @@ interface SectionState {
   void addActiveHandler(ContentHandler handler, ModeUsage attributeModeUsage);
   void addAttributeValidationModeUsage(ModeUsage modeUsage);
   void reject() throws SAXException;
+  void attachPlaceholder(ModeUsage modeUsage, ContentHandler handler);
 }

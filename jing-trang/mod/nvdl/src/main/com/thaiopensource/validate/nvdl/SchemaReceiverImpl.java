@@ -23,13 +23,50 @@ import org.xml.sax.XMLReader;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * Schema receiver implementation for NVDL scripts. 
+ *
+ */
 class SchemaReceiverImpl implements SchemaReceiver {
+  /**
+   * Relax NG schema for NVDL scripts.
+   */
   private static final String NVDL_SCHEMA = "nvdl.rng";
-  private static final String RNC_MEDIA_TYPE = "application/x-rnc";
+  /**
+   * The type used for specifying RNC schemas.
+   */
+  private static final String RNC_MEDIA_TYPE = "application/relax-ng-compact-syntax";
+
+  /**
+   * Legacy type used for specifying RNC schemas.
+   */
+  static final String LEGACY_RNC_MEDIA_TYPE = "application/x-rnc";
+  
+  /**
+   * Properties.
+   */
   private final PropertyMap properties;
+  
+  /**
+   * Property indicating if we need to check only attributes,
+   * that means the root element is just a placeholder for the attributes.
+   */
   private final Name attributeOwner;
+  
+  /**
+   * The schema reader capable of parsing the input schema file.
+   * It will be an auto schema reader as NVDL is XML.
+   */
   private final SchemaReader autoSchemaReader;
+  
+  /**
+   * Schema object created by this schema receiver.
+   */
   private Schema nvdlSchema = null;
+  
+  /**
+   * Required properties.
+   */
   private static final PropertyId subSchemaProperties[] = {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.XML_READER_CREATOR,
@@ -37,6 +74,11 @@ class SchemaReceiverImpl implements SchemaReceiver {
     SchemaReceiverFactory.PROPERTY,
   };
 
+  /**
+   * Creates a schema receiver for NVDL schemas.
+   * 
+   * @param properties Properties.
+   */
   public SchemaReceiverImpl(PropertyMap properties) {
     this.attributeOwner = WrapProperty.ATTRIBUTE_OWNER.get(properties);
     PropertyMapBuilder builder = new PropertyMapBuilder();
@@ -67,6 +109,11 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return nvdlSchema;
   }
 
+  /**
+   * Get a resource using this class class loader.
+   * @param resourceName the resource.
+   * @return An URL pointing to the resource.
+   */
   private static URL getResource(String resourceName) {
     ClassLoader cl = SchemaReceiverImpl.class.getClassLoader();
     // XXX see if we should borrow 1.2 code from Service
@@ -76,10 +123,27 @@ class SchemaReceiverImpl implements SchemaReceiver {
       return cl.getResource(resourceName);
   }
 
+  /**
+   * Get the properties.
+   * @return a PropertyMap.
+   */
   PropertyMap getProperties() {
     return properties;
   }
 
+  /**
+   * Creates a child schema. This schema is referred in a validate action.
+   * 
+   * @param inputSource The input source for the schema.
+   * @param schemaType The schema type.
+   * @param options Options specified for this schema in the NVDL script.
+   * @param isAttributesSchema Flag indicating if the schema should be modified
+   * to check attributes only. 
+   * @return
+   * @throws IOException In case of IO problems.
+   * @throws IncorrectSchemaException In case of invalid schema.
+   * @throws SAXException In case if XML problems while creating the schema.
+   */
   Schema createChildSchema(InputSource inputSource, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
     SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaReader;
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
@@ -90,6 +154,12 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return reader.createSchema(inputSource, builder.toPropertyMap());
   }
 
+  /**
+   * Get an option for the given URI.
+   * @param uri The URI for an option.
+   * @return Either the option from the auto schema reader or 
+   * from the compact schema reader.
+   */
   Option getOption(String uri) {
     Option option = autoSchemaReader.getOption(uri);
     if (option != null)
@@ -97,10 +167,15 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return CompactSchemaReader.getInstance().getOption(uri);
   }
 
+  /**
+   * Checks is a schema type is RNC.
+   * @param schemaType The schema type specification.
+   * @return true if the schema type refers to a RNC schema.
+   */
   private static boolean isRnc(String schemaType) {
     if (schemaType == null)
       return false;
     schemaType = schemaType.trim();
-    return schemaType.equals(RNC_MEDIA_TYPE);
+    return schemaType.equals(RNC_MEDIA_TYPE) || schemaType.equals(LEGACY_RNC_MEDIA_TYPE);
   }
 }
