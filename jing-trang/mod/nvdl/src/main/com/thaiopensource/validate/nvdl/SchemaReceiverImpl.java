@@ -67,12 +67,14 @@ class SchemaReceiverImpl implements SchemaReceiver {
   private Schema nvdlSchema = null;
   
   /**
-   * Required properties.
+   * Properties that will be passed to sub-schemas.
    */
   private static final PropertyId subSchemaProperties[] = {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.XML_READER_CREATOR,
     ValidateProperty.ENTITY_RESOLVER,
+    ValidateProperty.URI_RESOLVER,
+    ValidateProperty.RESOLVER,
     SchemaReceiverFactory.PROPERTY,
   };
 
