@@ -10,6 +10,7 @@ import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Option;
 import com.thaiopensource.validate.OptionArgumentException;
 import com.thaiopensource.validate.OptionArgumentPresenceException;
+import com.thaiopensource.validate.ResolverFactory;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
@@ -17,11 +18,11 @@ import com.thaiopensource.validate.auto.SchemaFuture;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
+import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -35,9 +36,9 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.Stack;
 
 /**
  * Schema implementation for NVDL scripts.
@@ -173,6 +174,11 @@ class SchemaImpl extends AbstractSchema {
      * It is useful to stop early if we encounter errors.
      */
     private final CountingErrorHandler ceh;
+
+    /**
+     * The Resolver to use for resolving URIs and entities.
+     */
+    private final Resolver resolver;
     
     /**
      * Convert error keys to messages.
@@ -234,7 +240,7 @@ class SchemaImpl extends AbstractSchema {
 	     * The URI of the schema for the current validate action.
 	     */
 	    private String schemaUri;
-	    
+
 	    /**
 	     * The current validate action schema type.
 	     */
@@ -299,6 +305,7 @@ class SchemaImpl extends AbstractSchema {
       this.sr = sr;
       this.eh = ValidateProperty.ERROR_HANDLER.get(sr.getProperties());
       this.ceh = new CountingErrorHandler(this.eh);
+      this.resolver = ResolverFactory.createResolver(sr.getProperties());
     }
 
     /**
@@ -739,7 +746,7 @@ class SchemaImpl extends AbstractSchema {
       // the user specified options
       PropertyMap requestedProperties = md.options.toPropertyMap();
       // let the schema receiver create a child schema
-      Schema schema = sr.createChildSchema(new InputSource(md.schemaUri),
+      Schema schema = sr.createChildSchema(resolver.resolve(md.schemaUri, null),
                                            md.schemaType,
                                            requestedProperties,
                                            isAttributesSchema);

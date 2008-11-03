@@ -20,7 +20,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -103,8 +105,11 @@ class SchemaReceiverImpl implements SchemaReceiver {
       String className = SchemaReceiverImpl.class.getName();
       String resourceName = className.substring(0, className.lastIndexOf('.')).replace('.', '/') + "/resources/" + NVDL_SCHEMA;
       URL nvdlSchemaUrl = getResource(resourceName);
-      nvdlSchema = SAXSchemaReader.getInstance().createSchema(new InputSource(nvdlSchemaUrl.toString()),
-                                                              properties);
+      InputStream stream = nvdlSchemaUrl.openStream();
+      // this is just to ensure that there aren't any problems with the parser opening the schema resource
+      InputSource inputSource = new InputSource(nvdlSchemaUrl.toString());
+      inputSource.setByteStream(stream);
+      nvdlSchema = SAXSchemaReader.getInstance().createSchema(inputSource, properties);
     }
     return nvdlSchema;
   }
@@ -134,24 +139,24 @@ class SchemaReceiverImpl implements SchemaReceiver {
   /**
    * Creates a child schema. This schema is referred in a validate action.
    * 
-   * @param inputSource The input source for the schema.
-   * @param schemaType The schema type.
-   * @param options Options specified for this schema in the NVDL script.
-   * @param isAttributesSchema Flag indicating if the schema should be modified
+   * @param source the SAXSource for the schema.
+   * @param schemaType the schema type.
+   * @param options options specified for this schema in the NVDL script.
+   * @param isAttributesSchema flag indicating if the schema should be modified
    * to check attributes only. 
    * @return
    * @throws IOException In case of IO problems.
    * @throws IncorrectSchemaException In case of invalid schema.
    * @throws SAXException In case if XML problems while creating the schema.
    */
-  Schema createChildSchema(InputSource inputSource, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
+  Schema createChildSchema(SAXSource source, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
     SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaReader;
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
     if (isAttributesSchema)
       WrapProperty.ATTRIBUTE_OWNER.put(builder, ValidatorImpl.OWNER_NAME);
     for (int i = 0, len = options.size(); i < len; i++)
       builder.put(options.getKey(i), options.get(options.getKey(i)));
-    return reader.createSchema(inputSource, builder.toPropertyMap());
+    return reader.createSchema(source, builder.toPropertyMap());
   }
 
   /**
