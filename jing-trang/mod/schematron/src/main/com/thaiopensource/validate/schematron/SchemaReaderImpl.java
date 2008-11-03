@@ -58,6 +58,9 @@ class SchemaReaderImpl extends AbstractSchemaReader {
   private static final PropertyId[] supportedPropertyIds = {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.XML_READER_CREATOR,
+    ValidateProperty.ENTITY_RESOLVER,
+    ValidateProperty.URI_RESOLVER,
+    ValidateProperty.RESOLVER,
     SchematronProperty.DIAGNOSE,
     SchematronProperty.PHASE,
   };
