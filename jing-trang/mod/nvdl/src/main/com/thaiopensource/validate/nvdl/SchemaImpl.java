@@ -237,9 +237,15 @@ class SchemaImpl extends AbstractSchema {
       private AttributeActionSet attributeActions;
 
       /**
-       * The URI of the schema for the current validate action.
+       * The URI reference for the schema for the current validate action.
+       * This is as specified in the attribute before any resolution.
        */
-      private String schemaUri;
+      private String schemaUriRef;
+
+      /**
+       * The base URI to be used for resolving schemaUriRef.
+       */
+      private String schemaUriBase;
 
       /**
        * The current validate action schema type.
@@ -661,7 +667,8 @@ class SchemaImpl extends AbstractSchema {
      */
     private void parseValidate(Attributes attributes) throws SAXException {
       // get the resolved URI pointing to the schema.
-      md.schemaUri = getSchema(attributes);
+      md.schemaUriRef = getSchema(attributes);
+      md.schemaUriBase = xmlBaseHandler.getBaseUri();
       // get the schema type
       md.schemaType = getSchemaType(attributes);
       // if no schemaType attribute, use the default schema type.
@@ -684,7 +691,7 @@ class SchemaImpl extends AbstractSchema {
      * @throws SAXException
      */
     private void finishValidate() throws SAXException {
-      if (md.schemaUri != null) {
+      if (md.schemaUriRef != null) {
         try {
           // if we had attribute actions, that is matching attributes
           // we add a schema to the attributes action set.
@@ -745,7 +752,7 @@ class SchemaImpl extends AbstractSchema {
       // the user specified options
       PropertyMap requestedProperties = md.options.toPropertyMap();
       // let the schema receiver create a child schema
-      Schema schema = sr.createChildSchema(resolver.resolve(md.schemaUri, null),
+      Schema schema = sr.createChildSchema(resolver.resolve(md.schemaUriRef, md.schemaUriBase),
                                            md.schemaType,
                                            requestedProperties,
                                            isAttributesSchema);
@@ -1000,8 +1007,7 @@ class SchemaImpl extends AbstractSchema {
       if (schemaUri != null) {
         if (Uri.hasFragmentId(schemaUri))
           error("schema_fragment_id");
-        return Uri.resolve(xmlBaseHandler.getBaseUri(),
-                           Uri.escapeDisallowedChars(schemaUri));
+        return schemaUri;
       }
       return null;
     }
