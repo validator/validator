@@ -13,6 +13,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.Enumeration;
@@ -21,8 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
-
-import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * Implementation of a validator of XML documents against NVDL scripts.
@@ -127,6 +126,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
 
   /**
    * Stores the element local names. Used for triggers.
+   * This is a Stack<String>.
    */
   private final Stack elementsLocalNameStack;
   
@@ -403,11 +403,10 @@ class ValidatorImpl extends DefaultHandler implements Validator {
           throws SAXException {
     
     // if we have a different namespace than the current section namespace
+    // or there's an applicable trigger
     // then we start a new section on the new namespace.
-    if (!uri.equals(currentSection.ns))
-      startSection(uri);
-    else
-    if (trigger(uri, localName, String.valueOf(elementsLocalNameStack.peek())))
+    if (!uri.equals(currentSection.ns)
+        || trigger(uri, localName, (String)elementsLocalNameStack.peek()))
       startSection(uri);
     
     elementsLocalNameStack.push(localName);
@@ -432,7 +431,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
                            // otherwise just pass all the attributes
                            : attributes);
     }
-    if (currentSection.depth==1 && currentSection.placeholderHandlers.size()>0) {
+    if (currentSection.depth == 1 && currentSection.placeholderHandlers.size() > 0) {
       AttributesImpl atts = new AttributesImpl();
       atts.addAttribute("", "ns", "ns", "", uri);
       atts.addAttribute("", "localName", "localName", "", localName);
@@ -446,7 +445,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
 
   /**
    * Checks if a trigger matches.
-   * @param ns The namespace.
+   * @param namespace The namespace.
    * @param name The local name.
    * @param parent The local name of the parent.
    * @return true if we have a trigger set, otherwise false.
@@ -713,7 +712,7 @@ class ValidatorImpl extends DefaultHandler implements Validator {
   public void endElement(String uri, String localName, String qName)
           throws SAXException {
 	  
-	  elementsLocalNameStack.pop();
+    elementsLocalNameStack.pop();
     // iterate the active handlers from the current section and call
     // endElement on them
     for (int i = 0, len = currentSection.activeHandlers.size(); i < len; i++)
