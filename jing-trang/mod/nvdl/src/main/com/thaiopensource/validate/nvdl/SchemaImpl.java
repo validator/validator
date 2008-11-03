@@ -418,7 +418,8 @@ class SchemaImpl extends AbstractSchema {
         else
           // nested mode
           parseNestedMode(attributes);
-      } else if (localName.equals("namespace"))
+      }
+      else if (localName.equals("namespace"))
         parseNamespace(attributes);
       else if (localName.equals("anyNamespace"))
         parseAnyNamespace(attributes);
@@ -623,7 +624,7 @@ class SchemaImpl extends AbstractSchema {
       md.match = toElementsOrAttributes(attributes.getValue("", "match"),
                                         ElementsOrAttributes.ELEMENTS);
       String wildcard = attributes.getValue("", "wildCard");
-      if (wildcard==null) {
+      if (wildcard == null) {
         wildcard = NamespaceSpecification.DEFAULT_WILDCARD;
       }
       
@@ -639,7 +640,8 @@ class SchemaImpl extends AbstractSchema {
           else
             error("duplicate_attribute_action", ns);
         }
-      } else
+      }
+      else
         md.attributeActions = null;
       // XXX: george // } else md.attributeActions=null; //???
       
