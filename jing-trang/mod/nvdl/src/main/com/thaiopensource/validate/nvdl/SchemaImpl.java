@@ -216,70 +216,70 @@ class SchemaImpl extends AbstractSchema {
      * We use this to handle included and nested modes.
      */
     class ModeData {
-	    /**
-	     * Points to the current mode.
-	     */
-	    private Mode currentMode = null;
-	  
-	    /**
-	     * The value of the match attribute on the current rule.
-	     */
-	    private ElementsOrAttributes match;
-	    
-	    /**
-	     * The current element actions.
-	     */
-	    private ActionSet actions;
-	    
-	    /**
-	     * The current attribute actions.
-	     */
-	    private AttributeActionSet attributeActions;
-	    
-	    /**
-	     * The URI of the schema for the current validate action.
-	     */
-	    private String schemaUri;
+      /**
+       * Points to the current mode.
+       */
+      private Mode currentMode = null;
 
-	    /**
-	     * The current validate action schema type.
-	     */
-	    private String schemaType;
-	    
-	    /**
-	     * The options defined for a validate action.
-	     */
-	    private PropertyMapBuilder options;
-	    
-	    /**
-	     * The options that must be supported by the validator
-	     * for the current validate action.
-	     */
-	    private final Vector mustSupportOptions = new Vector();
-	    
-	    /**
-	     * The current mode usage, for the current action.
-	     */
-	    private ModeUsage modeUsage;
-	    
-	    /**
-	     * Flag indicating if we are in a namespace rule or in an anyNamespace rule.
-	     */
-	    private boolean anyNamespace;
-	    
-	    /**
-	     * The lastMode stores the last created mode.
-	     * For example when we have an action we need to create the 
-	     * ModeUsage for it and lastMode points to the mode for that action.
-	     * It is possible that lastMode is created without having encountered 
-	     * its definition, in the case of nested modes. In that case we have
-	     * no useMode attribute but a mode element can appear further inside 
-	     * the action (a nested mode). If no mode appears inside the action then
-	     * we need to resolve the anonymous mode that is not defined to the current mode.
-	     */
-	    private Mode lastMode;
+      /**
+       * The value of the match attribute on the current rule.
+       */
+      private ElementsOrAttributes match;
+
+      /**
+       * The current element actions.
+       */
+      private ActionSet actions;
+
+      /**
+       * The current attribute actions.
+       */
+      private AttributeActionSet attributeActions;
+
+      /**
+       * The URI of the schema for the current validate action.
+       */
+      private String schemaUri;
+
+      /**
+       * The current validate action schema type.
+       */
+      private String schemaType;
+
+      /**
+       * The options defined for a validate action.
+       */
+      private PropertyMapBuilder options;
+
+      /**
+       * The options that must be supported by the validator
+       * for the current validate action.
+       */
+      private final Vector mustSupportOptions = new Vector();
+
+      /**
+       * The current mode usage, for the current action.
+       */
+      private ModeUsage modeUsage;
+
+      /**
+       * Flag indicating if we are in a namespace rule or in an anyNamespace rule.
+       */
+      private boolean anyNamespace;
+
+      /**
+       * The lastMode stores the last created mode.
+       * For example when we have an action we need to create the
+       * ModeUsage for it and lastMode points to the mode for that action.
+       * It is possible that lastMode is created without having encountered
+       * its definition, in the case of nested modes. In that case we have
+       * no useMode attribute but a mode element can appear further inside
+       * the action (a nested mode). If no mode appears inside the action then
+       * we need to resolve the anonymous mode that is not defined to the current mode.
+       */
+      private Mode lastMode;
     }
-    
+
     /**
      * Stores mode data.
      */
@@ -438,9 +438,8 @@ class SchemaImpl extends AbstractSchema {
         error("embedded_schemas");
       else if (localName.equals("cancelNestedActions"))
         parseCancelNestedActions(attributes);
-      else if (localName.equals("message")) {
-    	  // noop;
-      }
+      else if (localName.equals("message"))
+    	;  // noop
       else
         throw new RuntimeException("unexpected element \"" + localName + "\"");
       // add the NVDL element on the stack
@@ -557,7 +556,7 @@ class SchemaImpl extends AbstractSchema {
       Mode parent = md.currentMode;
       modeDataStack.push(md);
       md = new ModeData();      
-      md.currentMode = new Mode(defaultBaseMode);;
+      md.currentMode = new Mode(defaultBaseMode);
       md.currentMode.noteDefined(locator);
       parent.addIncludedMode(md.currentMode);
     }
@@ -616,7 +615,7 @@ class SchemaImpl extends AbstractSchema {
     private void parseRule(String ns, Attributes attributes) throws SAXException {
       // gets the value of the match attribute, defaults to match elements only.
       md.match = toElementsOrAttributes(attributes.getValue("", "match"),
-                                     ElementsOrAttributes.ELEMENTS);
+                                        ElementsOrAttributes.ELEMENTS);
       String wildcard = attributes.getValue("", "wildCard");
       if (wildcard==null) {
         wildcard = NamespaceSpecification.DEFAULT_WILDCARD;
@@ -686,26 +685,26 @@ class SchemaImpl extends AbstractSchema {
      */
     private void finishValidate() throws SAXException {
       if (md.schemaUri != null) {
-	      try {
-	        // if we had attribute actions, that is matching attributes
-	        // we add a schema to the attributes action set.
-	        if (md.attributeActions != null) {
-	          Schema schema = createSubSchema(true);
-	          md.attributeActions.addSchema(schema);
-	        }
-	        // if we had element actions, that is macting elements
-	        // we add a validate action with the schema and the specific mode usage.
-	        if (md.actions != null) {
-	          Schema schema = createSubSchema(false);
-	          md.actions.addNoResultAction(new ValidateAction(md.modeUsage, schema));
-	        }
-	      }
-	      catch (IncorrectSchemaException e) {
-	        hadError = true;
-	      }
-	      catch (IOException e) {
-	        throw new WrappedIOException(e);
-	      }
+        try {
+          // if we had attribute actions, that is matching attributes
+          // we add a schema to the attributes action set.
+          if (md.attributeActions != null) {
+            Schema schema = createSubSchema(true);
+            md.attributeActions.addSchema(schema);
+          }
+          // if we had element actions, that is macting elements
+          // we add a validate action with the schema and the specific mode usage.
+          if (md.actions != null) {
+            Schema schema = createSubSchema(false);
+            md.actions.addNoResultAction(new ValidateAction(md.modeUsage, schema));
+          }
+        }
+        catch (IncorrectSchemaException e) {
+          hadError = true;
+        }
+        catch (IOException e) {
+          throw new WrappedIOException(e);
+        }
       }
     }
 
