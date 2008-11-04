@@ -14,13 +14,10 @@ class OutputHandler extends DefaultHandler {
   private String systemId = null;
   private final StringBuffer message = new StringBuffer();
   private boolean inMessage = false;
-  private final String lineSeparator;
-  private static final String indent = "  ";
   private final Localizer localizer = new Localizer(OutputHandler.class);
 
   OutputHandler(ErrorHandler eh) {
     this.eh = eh;
-    this.lineSeparator = System.getProperty("line.separator");
   }
 
   public void characters(char ch[], int start, int length)
@@ -85,8 +82,8 @@ class OutputHandler extends DefaultHandler {
     }
     else if (localName.equals("statement") || localName.equals("diagnostic")) {
       inMessage = true;
-      message.append(lineSeparator);
-      message.append(indent);
+      if (message.charAt(message.length() - 1) != ' ')
+        message.append(' ');
     }
   }
 
