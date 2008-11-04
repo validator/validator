@@ -8,6 +8,7 @@ import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.ext.LexicalHandler;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ abstract class XMLReaderImpl implements XMLReader {
   private ErrorHandler errorHandler;
   private DTDHandler dtdHandler;
   private EntityResolver entityResolver;
+  private LexicalHandler lexicalHandler;
 
   public void parse(String systemId)
           throws SAXException, IOException {
@@ -46,14 +48,24 @@ abstract class XMLReaderImpl implements XMLReader {
     return entityResolver;
   }
 
-  public Object getProperty(String name)
-          throws SAXNotRecognizedException, SAXNotSupportedException {
-    throw new SAXNotRecognizedException(name);
+  public Object getProperty(String name) throws SAXNotRecognizedException,
+      SAXNotSupportedException {
+    if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
+      return lexicalHandler;
+    }
+    else {
+      throw new SAXNotRecognizedException(name);
+    }
   }
 
   public void setProperty(String name, Object value)
-          throws SAXNotRecognizedException, SAXNotSupportedException {
-    throw new SAXNotRecognizedException(name);
+      throws SAXNotRecognizedException, SAXNotSupportedException {
+    if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
+      lexicalHandler = (LexicalHandler)value;
+    }
+    else {
+      throw new SAXNotRecognizedException(name);
+    }
   }
 
   public boolean getFeature(String name)
