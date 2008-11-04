@@ -33,7 +33,9 @@ class OutputHandler extends DefaultHandler {
           case '\r':
           case '\n':
           case '\t':
-            if (message.length() == 0 || message.charAt(message.length() - 1) != ' ')
+            if (message.length() == 0)
+              break;
+            if (message.charAt(message.length() - 1) != ' ')
               message.append(' ');
             break;
           default:
