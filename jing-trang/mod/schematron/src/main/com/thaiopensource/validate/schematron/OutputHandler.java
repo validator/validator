@@ -10,6 +10,7 @@ import com.thaiopensource.util.Localizer;
 class OutputHandler extends DefaultHandler {
   private final ErrorHandler eh;
   private int lineNumber = -1;
+  private int columnNumber = -1;
   private String systemId = null;
   private final StringBuffer message = new StringBuffer();
   private boolean inMessage = false;
@@ -28,16 +29,16 @@ class OutputHandler extends DefaultHandler {
       for (int i = 0; i < length; i++) {
         char c = ch[start + i];
         switch (c) {
-        case ' ':
-        case '\r':
-        case '\n':
-        case '\t':
-          if (message.length() == 0 || message.charAt(message.length() - 1) != ' ')
-            message.append(' ');
-          break;
-        default:
-          message.append(c);
-          break;
+          case ' ':
+          case '\r':
+          case '\n':
+          case '\t':
+            if (message.length() == 0 || message.charAt(message.length() - 1) != ' ')
+              message.append(' ');
+            break;
+          default:
+            message.append(c);
+            break;
         }
       }
     }
@@ -64,6 +65,17 @@ class OutputHandler extends DefaultHandler {
           lineNumber = -1;
         }
       }
+      value = attributes.getValue("", "column-number");
+      if (value == null)
+        columnNumber = -1;
+      else {
+        try {
+          columnNumber = Integer.parseInt(value);
+        }
+        catch (NumberFormatException e) {
+          columnNumber = -1;
+        }
+      }
       value = attributes.getValue("", "system-id");
       if (value != null && value.equals(""))
         value = null;
@@ -88,7 +100,7 @@ class OutputHandler extends DefaultHandler {
     }
     else if (localName.equals("failed-assertion")
              || localName.equals("report")) {
-      eh.error(new SAXParseException(message.toString(), null, systemId, lineNumber, -1));
+      eh.error(new SAXParseException(message.toString(), null, systemId, lineNumber, columnNumber));
       message.setLength(0);
     }
   }

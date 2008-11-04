@@ -5,6 +5,7 @@
         xmlns:loc="http://www.thaiopensource.com/ns/location"
         xmlns:err="http://www.thaiopensource.com/ns/error"
 	xmlns:saxon="http://icl.com/saxon"
+	xmlns:saxon9="http://saxon.sf.net/"
         xmlns:xj="http://xml.apache.org/xalan/java">
 
 <xsl:param name="phase" select="'#DEFAULT'"/>
@@ -257,6 +258,14 @@
 
 <xsl:template match="*"/>
 
+<xsl:variable name="saxon9"
+              select="function-available('saxon9:lineNumber')
+                      and function-available('saxon9:systemId')"/>
+
+<xsl:variable name="saxon9col"
+              select="function-available('saxon9:lineNumber')
+                      and function-available('saxon9:systemId') and function-available('saxon9:columnNumber')"/>
+
 <xsl:variable name="saxon"
               select="function-available('saxon:lineNumber')
                       and function-available('saxon:systemId')"/>
@@ -274,6 +283,25 @@
 <xsl:template name="define-location">
   <axsl:template name="location">
     <xsl:choose>
+      <xsl:when test="$saxon9col">
+        <axsl:attribute name="line-number">
+          <axsl:value-of select="saxon9:lineNumber()"/>
+        </axsl:attribute>
+        <axsl:attribute name="column-number">
+          <axsl:value-of select="saxon9:columnNumber()"/>
+        </axsl:attribute>        
+        <axsl:attribute name="system-id">
+          <axsl:value-of select="saxon9:systemId()"/>
+        </axsl:attribute>
+      </xsl:when>
+      <xsl:when test="$saxon9">
+        <axsl:attribute name="line-number">
+          <axsl:value-of select="saxon9:lineNumber()"/>
+        </axsl:attribute>
+        <axsl:attribute name="system-id">
+          <axsl:value-of select="saxon9:systemId()"/>
+        </axsl:attribute>
+      </xsl:when>
       <xsl:when test="$saxon">
 	<axsl:attribute name="line-number">
 	  <axsl:value-of select="saxon:lineNumber()"/>
@@ -286,6 +314,9 @@
 	<axsl:attribute name="line-number">
 	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
 	</axsl:attribute>
+    <axsl:attribute name="column-number">
+      <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.columnNumber()"/>
+    </axsl:attribute>        
 	<axsl:attribute name="system-id">
 	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
 	</axsl:attribute>
