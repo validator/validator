@@ -18,9 +18,14 @@ import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.ForkContentHandler;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.sax.Resolver;
+import com.thaiopensource.xml.sax.ResolverURIResolver;
+import com.thaiopensource.xml.sax.XMLReaderCreator;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
@@ -475,6 +480,7 @@ class SchemaReaderImpl extends AbstractSchemaReader {
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
+      transformerFactory.setURIResolver(new ResolverURIResolver(ResolverFactory.createResolver(properties)));  
       Templates templates = transformerFactory.newTemplates(source);
       return new SchemaImpl(templates, transformerFactoryClass, properties, supportedPropertyIds);
     }
