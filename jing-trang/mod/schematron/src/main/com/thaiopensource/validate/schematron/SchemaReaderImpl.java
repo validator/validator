@@ -95,7 +95,13 @@ class SchemaReaderImpl extends AbstractSchemaReader {
     try {
       if (name.equals("com.icl.saxon.TransformerFactoryImpl"))
         factory.setAttribute("http://icl.com/saxon/feature/linenumbering",
-                             Boolean.TRUE);
+            Boolean.TRUE);
+      else if (name.equals("net.sf.saxon.TransformerFactoryImpl")) {
+        factory.setAttribute("http://saxon.sf.net/feature/linenumbering",
+            Boolean.TRUE);
+        factory.setAttribute("http://saxon.sf.net/feature/version-warning",
+            Boolean.FALSE);
+      }
       else if (name.equals("org.apache.xalan.processor.TransformerFactoryImpl")) {
         // Try both the documented URI and the URI that the code expects.
         try {
