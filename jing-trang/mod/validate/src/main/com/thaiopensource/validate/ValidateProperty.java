@@ -55,6 +55,15 @@ public class ValidateProperty {
   public static final ResolverPropertyId RESOLVER = new ResolverPropertyId("RESOLVER");
 
   /**
+   * Property specifying SchemaResolver to be used for resolving schemas. The value
+   * to which this PropertyId maps must be an instance of SchemaResolver.
+   *
+   * @see SchemaResolver
+   */
+  public static final SchemaResolverPropertyId SCHEMA_RESOLVER = new SchemaResolverPropertyId("SCHEMA_RESOLVER");
+
+  
+  /**
    * Property specifying XMLReaderCreator used to create XMLReader objects needed for
    * parsing XML documents.  The value to which this PropertyId maps must be an
    * instance of XMLReaderCreator.
@@ -199,12 +208,13 @@ public class ValidateProperty {
     }
 
     /**
-     * Returns the value of the property.  This is a typesafe
-     * version of <code>PropertyMap.get</code>.
-     *
-     * @param properties the PropertyMap to be used
-     * @return the Resolver to which the PropertyMap maps this PropertyId,
-     * or <code>null</code> if this PropertyId is not in the PropertyMap
+     * Returns the value of the property. This is a typesafe version of
+     * <code>PropertyMap.get</code>.
+     * 
+     * @param properties
+     *          the PropertyMap to be used
+     * @return the Resolver to which the PropertyMap maps this PropertyId, or
+     *         <code>null</code> if this PropertyId is not in the PropertyMap
      * @see PropertyMap#get
      */
     public Resolver get(PropertyMap properties) {
@@ -212,21 +222,68 @@ public class ValidateProperty {
     }
 
     /**
-     * Sets the value of the property. Modifies the PropertyMapBuilder
-     * so that this PropertyId is mapped to the specified value. This
-     * is a typesafe version of PropertyMapBuilder.put.
-     *
-     * @param builder the PropertyMapBuilder to be modified
-     * @param value the Resolver to which this PropertyId is to be mapped
-     * @return the Resolver to which this PropertyId was mapped before,
-     * or <code>null</code> if it was not mapped
-     *
+     * Sets the value of the property. Modifies the PropertyMapBuilder so that
+     * this PropertyId is mapped to the specified value. This is a typesafe
+     * version of PropertyMapBuilder.put.
+     * 
+     * @param builder
+     *          the PropertyMapBuilder to be modified
+     * @param value
+     *          the Resolver to which this PropertyId is to be mapped
+     * @return the Resolver to which this PropertyId was mapped before, or
+     *         <code>null</code> if it was not mapped
+     * 
      * @see PropertyMapBuilder#put
      */
     public Resolver put(PropertyMapBuilder builder, Resolver value) {
       return (Resolver)builder.put(this, value);
     }
   }
+
+  /**
+   * A PropertyId whose value is constrained to be an instance of
+   * SchemaResolver.
+   * 
+   * @see SchemaResolver
+   */
+  public static class SchemaResolverPropertyId extends PropertyId {
+    public SchemaResolverPropertyId(String name) {
+      super(name, SchemaResolver.class);
+    }
+
+    /**
+     * Returns the value of the property. This is a typesafe version of
+     * <code>PropertyMap.get</code>.
+     * 
+     * @param properties
+     *          the PropertyMap to be used
+     * @return the SchemaResolver to which the PropertyMap maps this PropertyId,
+     *         or <code>null</code> if this PropertyId is not in the
+     *         PropertyMap
+     * @see PropertyMap#get
+     */
+    public SchemaResolver get(PropertyMap properties) {
+      return (SchemaResolver)properties.get(this);
+    }
+
+    /**
+     * Sets the value of the property. Modifies the PropertyMapBuilder so that
+     * this PropertyId is mapped to the specified value. This is a typesafe
+     * version of PropertyMapBuilder.put.
+     * 
+     * @param builder
+     *          the PropertyMapBuilder to be modified
+     * @param value
+     *          the SchemaResolver to which this PropertyId is to be mapped
+     * @return the SchemaResolver to which this PropertyId was mapped before, or
+     *         <code>null</code> if it was not mapped
+     * 
+     * @see PropertyMapBuilder#put
+     */
+    public SchemaResolver put(PropertyMapBuilder builder, SchemaResolver value) {
+      return (SchemaResolver)builder.put(this, value);
+    }
+  }  
   /**
    * A PropertyId whose value is constrained to be an instance of
    * XMLReaderCreator.

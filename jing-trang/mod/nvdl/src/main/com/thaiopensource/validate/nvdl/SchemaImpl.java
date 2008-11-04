@@ -754,7 +754,8 @@ class SchemaImpl extends AbstractSchema {
       // the user specified options
       PropertyMap requestedProperties = md.options.toPropertyMap();
       // let the schema receiver create a child schema
-      Schema schema = sr.createChildSchema(resolver.resolve(md.schemaUriRef, md.schemaUriBase),
+      Schema schema = sr.createChildSchema(md.schemaUriRef, 
+                                           md.schemaUriBase,
                                            md.schemaType,
                                            requestedProperties,
                                            isAttributesSchema);
