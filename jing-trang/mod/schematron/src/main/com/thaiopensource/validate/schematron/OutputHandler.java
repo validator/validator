@@ -82,9 +82,6 @@ class OutputHandler extends DefaultHandler {
       if (value != null && value.equals(""))
         value = null;
       systemId = value;
-      message.append(localizer.message(localName.equals("failed-assertion")
-                                       ? "failed_assertion"
-                                       : "report"));
     }
     else if (localName.equals("statement") || localName.equals("diagnostic")) {
       inMessage = true;
