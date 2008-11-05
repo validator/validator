@@ -3,10 +3,13 @@ package com.thaiopensource.validate.nrl;
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.util.Uri;
 import com.thaiopensource.validate.IncorrectSchemaException;
 import com.thaiopensource.validate.Option;
+import com.thaiopensource.validate.ResolverFactory;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.SchemaResolver;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.auto.SchemaFuture;
@@ -15,6 +18,7 @@ import com.thaiopensource.validate.auto.SchemaReceiverFactory;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.validate.rng.SAXSchemaReader;
+import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.util.Name;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,7 +30,8 @@ import java.net.URL;
 
 class SchemaReceiverImpl implements SchemaReceiver {
   private static final String NRL_SCHEMA = "nrl.rng";
-  private static final String RNC_MEDIA_TYPE = "application/x-rnc";
+  private static final String RNC_MEDIA_TYPE = "application/relax-ng-compact-syntax";
+  static final String LEGACY_RNC_MEDIA_TYPE = "application/x-rnc";  
   private final PropertyMap properties;
   private final Name attributeOwner;
   private final SchemaReader autoSchemaReader;
@@ -35,6 +40,7 @@ class SchemaReceiverImpl implements SchemaReceiver {
     ValidateProperty.ERROR_HANDLER,
     ValidateProperty.XML_READER_CREATOR,
     ValidateProperty.ENTITY_RESOLVER,
+    ValidateProperty.SCHEMA_RESOLVER,
     SchemaReceiverFactory.PROPERTY,
   };
 
@@ -81,14 +87,27 @@ class SchemaReceiverImpl implements SchemaReceiver {
     return properties;
   }
 
-  Schema createChildSchema(SAXSource source, String schemaType, PropertyMap options, boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
-    SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance() : autoSchemaReader;
+  Schema createChildSchema(String href, String base, String schemaType,
+      PropertyMap options, boolean isAttributesSchema) throws IOException,
+      IncorrectSchemaException, SAXException {
     PropertyMapBuilder builder = new PropertyMapBuilder(properties);
     if (isAttributesSchema)
       WrapProperty.ATTRIBUTE_OWNER.put(builder, ValidatorImpl.OWNER_NAME);
     for (int i = 0, len = options.size(); i < len; i++)
       builder.put(options.getKey(i), options.get(options.getKey(i)));
-    return reader.createSchema(source, builder.toPropertyMap());
+
+    SchemaResolver sr = ValidateProperty.SCHEMA_RESOLVER.get(properties);
+    if (sr == null) {
+      Resolver resolver = ResolverFactory.createResolver(properties);
+      SAXSource source = resolver.resolve(href, base);
+      // XXX isRnc should also check the HTTP content type of the subschema
+      SchemaReader reader = isRnc(schemaType) ? CompactSchemaReader.getInstance()
+          : autoSchemaReader;
+      return reader.createSchema(source, builder.toPropertyMap());
+    }
+    else {
+      return sr.resolveSchema(Uri.resolve(base, href), builder.toPropertyMap());
+    }
   }
 
   Option getOption(String uri) {
@@ -102,6 +121,6 @@ class SchemaReceiverImpl implements SchemaReceiver {
     if (schemaType == null)
       return false;
     schemaType = schemaType.trim();
-    return schemaType.equals(RNC_MEDIA_TYPE);
+    return schemaType.equalsIgnoreCase(RNC_MEDIA_TYPE) || schemaType.equalsIgnoreCase(LEGACY_RNC_MEDIA_TYPE);
   }
 }

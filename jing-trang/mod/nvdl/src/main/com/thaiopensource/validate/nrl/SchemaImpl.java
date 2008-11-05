@@ -1,5 +1,18 @@
 package com.thaiopensource.validate.nrl;
 
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.LocatorImpl;
+
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
@@ -22,18 +35,6 @@ import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.sax.Resolver;
 import com.thaiopensource.xml.sax.XmlBaseHandler;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
-import org.xml.sax.Attributes;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.LocatorImpl;
-
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 class SchemaImpl extends AbstractSchema {
   static private final String IMPLICIT_MODE_NAME = "#implicit";
@@ -284,6 +285,8 @@ class SchemaImpl extends AbstractSchema {
       schemaType = getSchemaType(attributes);
       if (schemaType == null)
         schemaType = defaultSchemaType;
+      if (SchemaReceiverImpl.LEGACY_RNC_MEDIA_TYPE.equalsIgnoreCase(schemaType))
+        warning("legacy_rnc_media_type", locator);
       if (actions != null)
         modeUsage = getModeUsage(attributes);
       else
@@ -313,7 +316,8 @@ class SchemaImpl extends AbstractSchema {
 
     private Schema createSubSchema(boolean isAttributesSchema) throws IOException, IncorrectSchemaException, SAXException {
       PropertyMap requestedProperties = options.toPropertyMap();
-      Schema schema = sr.createChildSchema(resolver.resolve(schemaUri, schemaUriBase),
+      Schema schema = sr.createChildSchema(schemaUri, 
+                                           schemaUriBase,
                                            schemaType,
                                            requestedProperties,
                                            isAttributesSchema);
@@ -508,6 +512,11 @@ class SchemaImpl extends AbstractSchema {
       eh.error(new SAXParseException(localizer.message(key, arg1, arg2), locator));
     }
 
+    void warning(String key, Locator locator) throws SAXException {
+      if (eh == null)
+        return;
+      eh.warning(new SAXParseException(localizer.message(key), locator));
+    }
   }
 
   SchemaImpl(PropertyMap properties) {
