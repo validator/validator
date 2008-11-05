@@ -1,3 +1,8 @@
 build
 .nbattrs
 classes
+eclipse-classes
+.classpath
+.project
+.settings
+service-src
