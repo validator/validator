@@ -1523,6 +1523,7 @@ class SchemaParser implements ParsedPatternFuture {
     if (eh != null)
       xr.setErrorHandler(eh);
     xr.setDTDHandler(context);
+    // XXX does xr already have a proper EntityResolver here?
     if (schemaBuilder.usesComments()) {
       try {
         xr.setProperty("http://xml.org/sax/properties/lexical-handler", new LexicalHandlerImpl());
