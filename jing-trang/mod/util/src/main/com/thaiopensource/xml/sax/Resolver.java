@@ -15,6 +15,7 @@ import java.net.URL;
 
 public class Resolver implements XMLReaderCreator {
   private final URIResolver uriResolver;
+  private final URIResolver uriResolverWrapper;
   private final EntityResolver entityResolver;
   private final XMLReaderCreator xrc;
 
@@ -22,6 +23,7 @@ public class Resolver implements XMLReaderCreator {
     this.xrc = xrc == null ? new Jaxp11XMLReaderCreator() : xrc;
     this.entityResolver = entityResolver;
     this.uriResolver = uriResolver;
+    this.uriResolverWrapper = new URIResolverImpl();
   }
 
   public XMLReader createXMLReader() throws SAXException {
@@ -42,23 +44,10 @@ public class Resolver implements XMLReaderCreator {
    * @throws SAXException
    */
   public SAXSource resolve(String href, String base) throws IOException, SAXException {
-    SAXSource source = null;
+    Source source = null;
     if (uriResolver != null) {
       try {
-        Source s = uriResolver.resolve(href, base);
-        if (s != null) {
-          if (s instanceof SAXSource) {
-            source = (SAXSource)s;
-          }
-          else {
-            InputSource in = SAXSource.sourceToInputSource(s);
-            if (in == null) {
-              String systemId = s.getSystemId();
-              in = new InputSource(systemId);
-            }
-            source = new SAXSource(in);
-          }
-        }
+        source = uriResolver.resolve(href, base);
       }
       catch (TransformerException e) {
         Throwable t = e.getException();
@@ -74,16 +63,77 @@ public class Resolver implements XMLReaderCreator {
         throw new SAXException(e);
       }
     }
-    if (source == null) {
+    return resolveFinish(source, href, base);
+  }
+
+  /**
+   * Finish off the resolution process using the Source from the URIResolver. This is split off
+   * from resolve so that any exception returned from the uriResolver doesn't get wrapped when it is called
+   * from the URIResolver wrapper returned by getURIResolver.
+   * @param source the Source returned from URIResolver.resolve; may be null
+   * @param href
+   * @param base
+   * @return
+   * @throws IOException
+   * @throws SAXException
+   */
+  private SAXSource resolveFinish(Source source, String href, String base) throws IOException, SAXException {
+    SAXSource saxSource = null;
+    if (source != null) {
+      if (source instanceof SAXSource) {
+        saxSource = (SAXSource)source;
+      }
+      else {
+        InputSource in = SAXSource.sourceToInputSource(source);
+        if (in == null) {
+          String systemId = source.getSystemId();
+          in = new InputSource(systemId);
+        }
+        saxSource = new SAXSource(in);
+      }
+    }
+    if (saxSource == null) {
       InputSource in = null;
       String uri = Uri.resolve(base, href);
       if (uriResolver == null && entityResolver != null)
         in = entityResolver.resolveEntity(null, uri);
       if (in == null)
         in = new InputSource(uri);
-      source = new SAXSource(in);
+      saxSource = new SAXSource(in);
     }
-    return source;
+    return saxSource;
+  }
+
+  // Note that this is not static so we can access the methods and fields of the Resolver.
+  private class URIResolverImpl implements URIResolver {
+    public Source resolve(String href, String base) throws TransformerException {
+      Source source = null;
+      if (uriResolver != null)
+        source = uriResolver.resolve(href, base);
+      try {
+        SAXSource saxSource = resolveFinish(source, href, base);
+        if (saxSource.getXMLReader() == null)
+          saxSource = new SAXSource(createXMLReader(), saxSource.getInputSource());
+        return saxSource;
+      }
+      catch (SAXException e) {
+        throw new TransformerException(e);
+      }
+      catch (IOException e) {
+        throw new TransformerException(e);
+      }
+    }
+  }
+
+  /**
+   * Return a wrapper around this Resolver that allows it to be used as a URIResolver.
+   * (for use with Transformer).
+   * @return a URIResolver, never null.
+   * @see javax.xml.transform.Transformer
+   */
+  public URIResolver getURIResolver() {
+    // Always return a wrapper, so that the right XMLReader and EntityResolver gets used.
+    return uriResolverWrapper;
   }
 
   public InputSource open(InputSource in) throws IOException, SAXException {
@@ -100,10 +150,6 @@ public class Resolver implements XMLReaderCreator {
     // XXX if encoding is null, should use charset parameter of content-type to set encoding in text/xml case
     opened.setByteStream(url.openStream());
     return opened;
-  }
-
-  public URIResolver getUriResolver() {
-    return uriResolver;
   }
 
   public EntityResolver getEntityResolver() {

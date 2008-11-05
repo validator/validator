@@ -477,7 +477,7 @@ class SchemaReaderImpl extends AbstractSchemaReader {
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
-      transformerFactory.setURIResolver(ResolverFactory.createResolver(properties).getUriResolver());  
+      transformerFactory.setURIResolver(ResolverFactory.createResolver(properties).getURIResolver());  
       Templates templates = transformerFactory.newTemplates(source);
       return new SchemaImpl(templates, transformerFactoryClass, properties, supportedPropertyIds);
     }

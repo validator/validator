@@ -11,7 +11,6 @@ import org.xml.sax.ErrorHandler;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.URIResolver;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
@@ -47,9 +46,7 @@ class ValidatorImpl implements Validator {
   private void initTransformerHandler() {
     try {
       transformerHandler = factory.newTransformerHandler(templates);
-      URIResolver uriResolver = resolver.getUriResolver();
-      if (uriResolver != null)
-        transformerHandler.getTransformer().setURIResolver(uriResolver);
+      transformerHandler.getTransformer().setURIResolver(resolver.getURIResolver());
       // XXX set up transformer with an ErrorListener that just throws
       // XXX (what about errors from document() calls?)
     }
