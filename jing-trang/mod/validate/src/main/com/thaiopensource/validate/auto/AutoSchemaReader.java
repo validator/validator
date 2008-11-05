@@ -59,6 +59,7 @@ public class AutoSchemaReader extends AbstractSchemaReader {
     ErrorHandler eh = ValidateProperty.ERROR_HANDLER.get(properties);
     if (eh != null)
       xr.setErrorHandler(eh);
+    // XXX does xr already have a proper EntityResolver here?
     SchemaFuture sf = sr.installHandlers(xr);
     try {
       try {
