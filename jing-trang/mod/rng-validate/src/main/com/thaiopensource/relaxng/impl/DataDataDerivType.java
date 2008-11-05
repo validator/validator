@@ -1,6 +1,7 @@
 package com.thaiopensource.relaxng.impl;
 
 import org.relaxng.datatype.Datatype;
+import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext;
 
 class DataDataDerivType extends DataDerivType {
@@ -12,13 +13,22 @@ class DataDataDerivType extends DataDerivType {
     this.dt = dt;
   }
 
-  PatternMemo dataDeriv(ValidatorPatternBuilder builder, Pattern p, String str, ValidationContext vc) {
-    if (dt.isValid(str, vc)) {
+  PatternMemo dataDeriv(ValidatorPatternBuilder builder, Pattern p, String str,
+      ValidationContext vc) {
+    try {
+      dt.checkValid(str, vc);
       if (validMemo == null)
         validMemo = super.dataDeriv(builder, p, str, vc);
       return validMemo;
     }
-    else {
+    catch (DatatypeException e) {
+      String msg = e.getMessage();
+      if (msg != null && !"".equals(msg)) {
+        if (vc instanceof PatternValidator) {
+          PatternValidator pv = (PatternValidator)vc;
+          pv.addDatatypeError(msg, e);
+        }
+      }
       if (invalidMemo == null)
         invalidMemo = super.dataDeriv(builder, p, str, vc);
       return invalidMemo;

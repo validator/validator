@@ -1,5 +1,15 @@
 package com.thaiopensource.relaxng.impl;
 
+import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
+import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException;
+import com.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.OutOfContextElementException;
+import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
+import com.thaiopensource.relaxng.exceptions.StringNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.TextNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
+import com.thaiopensource.relaxng.exceptions.UnknownElementException;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.xml.util.Name;
@@ -28,6 +38,10 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   private final StringBuffer charBuf = new StringBuffer();
   private PrefixMapping prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
   private Locator locator;
+  private final Map datatypeErrors = new HashMap();
+  private Name[] stack = null;
+  private int stackLen = 0;
+  private int suppressDepth = 0;
 
   private static final class PrefixMapping {
     private final String prefix;
@@ -75,36 +89,53 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
 			   Attributes atts) throws SAXException {
     if (collectingCharacters)
       flushCharacters();
-
+    if (suppressDepth > 0) {
+      suppressDepth++;
+    }
+    
     Name name = new Name(namespaceURI, localName);
     if (!setMemo(memo.startTagOpenDeriv(name))) {
       PatternMemo next = memo.startTagOpenRecoverDeriv(name);
       if (!next.isNotAllowed())
-        error("required_elements_missing");
+        error(new RequiredElementsMissingException(locator, name, peek()));
       else {
-        next = builder.getPatternMemo(builder.makeAfter(findElement(name), memo.getPattern()));
-        error(next.isNotAllowed() ? "unknown_element" : "out_of_context_element", name);
+        next = builder.getPatternMemo(builder.makeAfter(findElement(name),
+            memo.getPattern()));
+        if (next.isNotAllowed()) {
+          error(new UnknownElementException(locator, name, peek()));
+        }
+        else {
+          error(new OutOfContextElementException(locator, name, peek()));
+        }
+        if (suppressDepth == 0) {
+          suppressDepth = 1;
+        }
       }
       memo = next;
     }
     int len = atts.getLength();
     for (int i = 0; i < len; i++) {
       Name attName = new Name(atts.getURI(i), atts.getLocalName(i));
+      String value = atts.getValue(i);
+      datatypeErrors.clear();
 
       if (!setMemo(memo.startAttributeDeriv(attName)))
-	error("impossible_attribute_ignored", attName);
-      else if (!setMemo(memo.dataDeriv(atts.getValue(i), this))) {
-        error("bad_attribute_value", attName);
+        error(new ImpossibleAttributeIgnoredException(locator, name, peek(),
+            attName));
+      else if (!setMemo(memo.dataDeriv(value, this))) {
+        error(new BadAttributeValueException(locator, name, peek(), attName,
+            value, datatypeErrors));
         memo = memo.recoverAfter();
       }
     }
     if (!setMemo(memo.endAttributes())) {
       // XXX should specify which attributes
-      error("required_attributes_missing");
+      error(new RequiredAttributesMissingException(locator, name, peek()));
       memo = memo.ignoreMissingAttributes();
     }
     if (memo.getPattern().getContentType() == Pattern.DATA_CONTENT_TYPE)
       startCollectingCharacters();
+    push(name);
   }
 
   private PatternMemo fixAfter(PatternMemo p) {
@@ -118,22 +149,24 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   public void endElement(String namespaceURI,
 			 String localName,
 			 String qName) throws SAXException {
+    Name name = pop();
     // The tricky thing here is that the derivative that we compute may be notAllowed simply because the parent
     // is notAllowed; we don't want to give an error in this case.
     if (collectingCharacters) {
       collectingCharacters = false;
       if (!setMemo(memo.textOnly())) {
-	error("only_text_not_allowed");
+        error(new OnlyTextNotAllowedException(locator, name, peek()));
 	memo = memo.recoverAfter();
 	return;
       }
       final String data = charBuf.toString();
       if (!setMemo(memo.dataDeriv(data, this))) {
         PatternMemo next = memo.recoverAfter();
+        datatypeErrors.clear();
         if (!memo.isNotAllowed()) {
           if (!next.isNotAllowed()
               || fixAfter(memo).dataDeriv(data, this).isNotAllowed())
-            error("string_not_allowed");
+            error(new StringNotAllowedException(locator, name, peek(), data, datatypeErrors));
         }
         memo = next;
       }
@@ -143,9 +176,12 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
       if (!memo.isNotAllowed()) {
         if (!next.isNotAllowed()
             || fixAfter(memo).endTagDeriv().isNotAllowed())
-          error("unfinished_element");
+          error(new UnfinishedElementException(locator, name, peek()));
       }
       memo = next;
+    }
+    if (suppressDepth > 0) {
+      suppressDepth--;
     }
   }
 
@@ -170,7 +206,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
 
   private void text() throws SAXException {
     if (!setMemo(memo.mixedTextDeriv()))
-      error("text_not_allowed");
+      error(new TextNotAllowedException(locator, peek()));
   }
 
   public void endDocument() {
@@ -182,6 +218,9 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   }
 
   public void startDocument() throws SAXException {
+    stack = new Name[48];
+    stackLen = 0;
+    suppressDepth = 0;
     if (memo.isNotAllowed())
       error("schema_allows_nothing");
   }
@@ -209,6 +248,10 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     memo = builder.getPatternMemo(start);
     prefixMapping = new PrefixMapping("xml", WellKnownNamespaces.XML, null);
     clearDtdContext();
+    charBuf.setLength(0);
+    datatypeErrors.clear();
+    stack = null;
+    recoverPatternTable.clear();
   }
 
   public ContentHandler getContentHandler() {
@@ -220,21 +263,17 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   }
 
   private void error(String key) throws SAXException {
-    if (hadError && memo.isNotAllowed())
+    if ((suppressDepth > 0) || (hadError && memo.isNotAllowed()))
       return;
     hadError = true;
     eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key), locator));
   }
 
-  private void error(String key, Name arg) throws SAXException {
-    error(key, NameFormatter.format(arg));
-  }
-
-  private void error(String key, String arg) throws SAXException {
-    if (hadError && memo.isNotAllowed())
+  private void error(SAXParseException e) throws SAXException {
+    if ((suppressDepth > 0) || (hadError && memo.isNotAllowed()))
       return;
     hadError = true;
-    eh.error(new SAXParseException(SchemaBuilderImpl.localizer.message(key, arg), locator));
+    eh.error(e);
   }
 
   /* Return false if m is notAllowed. */
@@ -268,5 +307,32 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
 
   public String getBaseUri() {
     return null;
+  }
+  
+  public final void addDatatypeError(String message, DatatypeException exception) {
+    datatypeErrors.put(message, exception);
+  }
+  
+  private final void push(Name name) {
+      if (stackLen == stack.length) {
+          Name[] newStack = new Name[stackLen + (stackLen >> 1)];
+          System.arraycopy(stack, 0, newStack, 0, stackLen);
+          stack = newStack;
+      }
+      stack[stackLen] = name;
+      stackLen++;
+  }
+  
+  private final Name pop() {
+      stackLen--;
+      return stack[stackLen];
+  }
+  
+  private final Name peek() {
+      if (stackLen == 0) {
+          return null;
+      } else {
+          return stack[stackLen - 1];
+      }
   }
 }

@@ -3,8 +3,8 @@ package com.thaiopensource.relaxng.impl;
 import com.thaiopensource.xml.util.Name;
 
 
-class NameFormatter {
-  static String format(Name name) {
+public class NameFormatter {
+  public static String format(Name name) {
     String localName = name.getLocalName();
     String namespaceUri = name.getNamespaceUri();
     if (namespaceUri.equals(""))
