@@ -1,5 +1,31 @@
 package com.thaiopensource.validate.schematron;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.transform.ErrorListener;
+import javax.xml.transform.SourceLocator;
+import javax.xml.transform.Templates;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TemplatesHandler;
+import javax.xml.transform.sax.TransformerHandler;
+import javax.xml.transform.stream.StreamSource;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+
 import com.thaiopensource.util.Localizer;
 import com.thaiopensource.util.PropertyId;
 import com.thaiopensource.util.PropertyMap;
@@ -18,36 +44,7 @@ import com.thaiopensource.xml.sax.CountingErrorHandler;
 import com.thaiopensource.xml.sax.DelegatingContentHandler;
 import com.thaiopensource.xml.sax.DraconianErrorHandler;
 import com.thaiopensource.xml.sax.ForkContentHandler;
-import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 import com.thaiopensource.xml.sax.Resolver;
-import com.thaiopensource.xml.sax.ResolverURIResolver;
-import com.thaiopensource.xml.sax.XMLReaderCreator;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
-
-import javax.xml.transform.ErrorListener;
-import javax.xml.transform.SourceLocator;
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.sax.SAXTransformerFactory;
-import javax.xml.transform.sax.TemplatesHandler;
-import javax.xml.transform.sax.TransformerHandler;
-import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
-import java.io.InputStream;
 
 class SchemaReaderImpl extends AbstractSchemaReader {
   static final String SCHEMATRON_URI = "http://www.ascc.net/xml/schematron";
@@ -480,7 +477,7 @@ class SchemaReaderImpl extends AbstractSchemaReader {
       TransformerFactory transformerFactory = (TransformerFactory)transformerFactoryClass.newInstance();
       initTransformerFactory(transformerFactory);
       transformerFactory.setErrorListener(errorListener);
-      transformerFactory.setURIResolver(new ResolverURIResolver(ResolverFactory.createResolver(properties)));  
+      transformerFactory.setURIResolver(ResolverFactory.createResolver(properties).getUriResolver());  
       Templates templates = transformerFactory.newTemplates(source);
       return new SchemaImpl(templates, transformerFactoryClass, properties, supportedPropertyIds);
     }
