@@ -31,7 +31,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
   private final ErrorHandler eh;
-  private final Map recoverPatternTable = new HashMap();
+  private Map recoverPatternTable;
   private PatternMemo memo;
   private boolean hadError;
   private boolean collectingCharacters;
@@ -251,7 +251,7 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     charBuf.setLength(0);
     datatypeErrors.clear();
     stack = null;
-    recoverPatternTable.clear();
+    recoverPatternTable = null;
   }
 
   public ContentHandler getContentHandler() {
@@ -287,6 +287,8 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
   }
 
   private Pattern findElement(Name name) {
+    if (recoverPatternTable == null)
+      recoverPatternTable = new HashMap();
     Pattern p = (Pattern)recoverPatternTable.get(name);
     if (p == null) {
       p = FindElementFunction.findElement(builder, name, start);
