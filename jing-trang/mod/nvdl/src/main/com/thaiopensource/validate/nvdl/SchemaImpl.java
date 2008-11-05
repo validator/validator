@@ -676,7 +676,7 @@ class SchemaImpl extends AbstractSchema {
       // if no schemaType attribute, use the default schema type.
       if (md.schemaType == null)
         md.schemaType = defaultSchemaType;
-      if (SchemaReceiverImpl.LEGACY_RNC_MEDIA_TYPE.equals(md.schemaType))
+      if (SchemaReceiverImpl.LEGACY_RNC_MEDIA_TYPE.equalsIgnoreCase(md.schemaType))
         warning("legacy_rnc_media_type", locator);
       // if we matched on elements create a mode usage.
       if (md.actions != null)
