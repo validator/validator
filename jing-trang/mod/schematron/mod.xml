@@ -4,6 +4,7 @@
   <depends module="rng-validate"/>
   <depends lib="xalan"/>
   <depends lib="saxon"/>
+  <depends lib="saxon9"/>
   <test name="schematron" type="validate" schema="test/schematrontest.nrl"/>
   <compile/>
 </module>
