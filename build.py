@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 # Copyright (c) 2007 Henri Sivonen
+# Copyright (c) 2008 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -35,10 +36,12 @@ javaCmd = 'java'
 javadocCmd = 'javadoc'
 svnCmd = 'svn'
 tarCmd = 'tar'
+scpCmd = 'scp'
 
 buildRoot = '.'
 svnRoot = 'http://svn.versiondude.net/whattf/'
 portNumber = '8888'
+controlPort = None
 useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '64'
@@ -59,7 +62,10 @@ parsetreeHost = ''
 genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
+deploymentTarget = None
 noSelfUpdate = 0
+
+downloadedDeps = 0
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
@@ -127,7 +133,6 @@ moduleNames = [
   "util",
   "htmlparser",
   "xmlparser",
-  "onvdl",
   "validator",
 ]
 
@@ -149,10 +154,21 @@ class UrlExtractor(SGMLParser):
           self.directories.append(self.baseUrl + value)
         if leafPat.match(value):
           self.leaves.append(self.baseUrl + value)    
+
+def symlinkOrCopytree(pointer, linkfile):
+  if hasattr(os, 'symlink'):
+    os.symlink(pointer, linkfile)
+  else:
+    shutil.copytree(os.path.join(linkfile, "..", pointer), linkfile)
     
 def runCmd(cmd):
-  print cmd
-  os.system(cmd)
+  if os.name == 'nt':
+    cmd = cmd.replace('"', '')
+    print cmd
+    os.system(cmd)    
+  else:
+    print cmd
+    os.system(cmd)
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
@@ -190,16 +206,22 @@ def findFiles(directory):
         rv.append(candidate)
   return rv
 
-
 def jarNamesToPaths(names):
   return map(lambda x: os.path.join(buildRoot, "jars", x + ".jar"), names)
 
+def jingJarPath():
+  return [os.path.join("jing-trang", "build", "jing.jar"),]
+
 def runJavac(sourceDir, classDir, classPath):
+  ensureDirExists(classDir)
   sourceFiles = findFilesWithExtension(sourceDir, "java")
   f = open("temp-javac-list", "w")
-  f.write("\n".join(sourceFiles))
+  if os.name == 'nt':
+    f.write("\r\n".join(sourceFiles))
+  else:
+    f.write("\n".join(sourceFiles))
   f.close()
-  runCmd("'%s' -nowarn -classpath '%s' -sourcepath '%s' -d '%s' %s"\
+  runCmd('"%s" -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
 		% (javacCmd, classPath, sourceDir, classDir, "@temp-javac-list"))
   removeIfExists("temp-javac-list")
 
@@ -215,12 +237,15 @@ def copyFiles(sourceDir, classDir):
 def runJar(classDir, jarFile, sourceDir):
   classFiles = findFiles(classDir)
   classList = map(lambda x: 
-                    "-C '" + classDir + "' '" + x[len(classDir)+1:] + "'", 
+                    "-C " + classDir + " " + x[len(classDir)+1:] + "", 
                   classFiles)
   f = open("temp-jar-list", "w")
-  f.write("\n".join(classList))
+  if os.name == 'nt':
+    f.write("\r\n".join(classList))
+  else:
+    f.write("\n".join(classList))
   f.close()
-  runCmd("'%s' cf '%s' %s" 
+  runCmd('"%s" cf "%s" %s' 
     % (jarCmd, jarFile, "@temp-jar-list"))
   removeIfExists("temp-jar-list")
 
@@ -250,7 +275,8 @@ def dependencyJarPaths(depList=dependencyJars):
 
 def buildUtil():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["html5-datatypes", "onvdl-whattf", "htmlparser"]))
+                              + jarNamesToPaths(["html5-datatypes", "htmlparser"])
+                              + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "util"), 
     "io-xml-util", 
@@ -258,7 +284,7 @@ def buildUtil():
 
 def buildDatatypeLibrary():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["onvdl-whattf"]))
+                              + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"), 
     "html5-datatypes", 
@@ -266,8 +292,8 @@ def buildDatatypeLibrary():
 
 def buildNonSchema():
   classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["html5-datatypes",
-                                                "onvdl-whattf"]))
+                              + jarNamesToPaths(["html5-datatypes",])
+                              + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "syntax", "non-schema", "java"), 
     "non-schema", 
@@ -288,13 +314,10 @@ def buildHtmlParser():
     "htmlparser", 
     classPath)
 
-def buildOnvdl():
-  classPath = os.pathsep.join(dependencyJarPaths())
-  buildModule(
-    os.path.join(buildRoot, "onvdl"), 
-    "onvdl-whattf", 
-    classPath)
-
+def buildJing():
+  os.chdir("jing-trang")
+  runCmd(os.path.join(".", "ant"))
+  os.chdir("..")
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths() 
@@ -302,8 +325,8 @@ def buildValidator():
                                                 "io-xml-util",
                                                 "htmlparser",
                                                 "hs-aelfred2",
-                                                "html5-datatypes",
-                                                "onvdl-whattf"]))
+                                                "html5-datatypes"])
+                              + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "validator"), 
     "validator", 
@@ -314,8 +337,8 @@ def buildTestHarness():
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2",
-                                                "onvdl-whattf"]))
+                                                "hs-aelfred2"])
+                              + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "syntax", "relaxng", "tests", "jdriver"), 
     "test-harness", 
@@ -327,18 +350,16 @@ def ownJarList():
                           "htmlparser",
                           "hs-aelfred2",
                           "html5-datatypes",
-                          "validator",
-                          "onvdl-whattf"])
+                          "validator"]) + jingJarPath()
 
 def buildRunJarPathList():
   return dependencyJarPaths(runDependencyJars)  + ownJarList()
 
-def runValidator():
-  ensureDirExists(os.path.join(buildRoot, "logs"))
+def getRunArgs(heap="$((HEAP))"):
   classPath = os.pathsep.join(buildRunJarPathList())
   args = [
-    '-Xms%sm' % heapSize,
-    '-Xmx%sm' % heapSize,
+    '-Xms%sk' % heap,
+    '-Xmx%sk' % heap,
     '-XX:ThreadStackSize=2048',
     '-cp',
     classPath,
@@ -371,14 +392,57 @@ def runValidator():
   if useAjp:
     args.append('ajp')
   args.append(portNumber)
+  if controlPort:
+    args.append(controlPort)
+  return args
+  
+def generateRunScript():
+  args = getRunArgs()
+  f = open(os.path.join(buildRoot, "run-validator.sh"), 'wb')
+  f.write("#!/bin/sh\n")
+  if heapSize.startswith('-'):
+    f.write("HEAP=`grep MemTotal /proc/meminfo | awk '{print $2}'`\n")
+    f.write("HEAP=$((HEAP-%d))\n" % (int(heapSize[1:]) * 1024))
+  else:
+    f.write("HEAP=%d\n" % (int(heapSize) * 1024))
+  f.write(" ".join([javaCmd,] + args))
+  if controlPort:
+    f.write(" <&- 1>/dev/null 2>&1 &")
+  f.write("\n")
+  f.close()  
+
+def runValidator():
+  ensureDirExists(os.path.join(buildRoot, "logs"))
+  args = getRunArgs(str(int(heapSize) * 1024))
   execCmd(javaCmd, args)
 
 def createTarball():
   args = [
     "zcf",
-    os.path.join(buildRoot, "validator-nu.tar.gz"),
+    os.path.join(buildRoot, "jars.tar.gz"),
+    os.path.join(buildRoot, "run-validator.sh"),
   ] + ownJarList()
-  execCmd(tarCmd, args)
+  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+
+def createDepTarball():
+  args = [
+    "zcf",
+    os.path.join(buildRoot, "deps.tar.gz"),
+  ] + dependencyJarPaths(runDependencyJars)
+  runCmd('"%s" %s' %(tarCmd, " ".join(args)))
+
+def deployOverScp():
+  if not deploymentTarget:
+    print "No target"
+    return
+  if downloadedDeps:
+    runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))  
+  runCmd('"%s" "%s" %s/jars.tar.gz' % (scpCmd, os.path.join(buildRoot, "jars.tar.gz"), deploymentTarget))
+  emptyPath = os.path.join(buildRoot, "EMPTY")
+  f = open(emptyPath, 'wb')
+  f.close()
+  runCmd('"%s" "%s" %s/DEPLOY' % (scpCmd, emptyPath, deploymentTarget))  
+  os.remove(emptyPath)
 
 def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
@@ -412,16 +476,13 @@ def spiderApacheDirectories(baseUrl, baseDir):
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
   if not os.path.exists(os.path.join(buildRoot, "local-entities", "syntax")):
-    # XXX not portable to Windows
-    os.symlink(os.path.join("..", "syntax"), 
+    symlinkOrCopytree(os.path.join("..", "syntax"), 
                os.path.join(buildRoot, "local-entities", "syntax"))
   if not os.path.exists(os.path.join(buildRoot, "local-entities", "schema")):
-    # XXX not portable to Windows
-    os.symlink(os.path.join("..", "validator", "schema"), 
+    symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
                os.path.join(buildRoot, "local-entities", "schema"))
   if not os.path.exists(os.path.join(buildRoot, "validator", "schema", "html5")):
-    # XXX not portable to Windows
-    os.symlink(os.path.join("..", "..", "syntax", "relaxng"), 
+    symlinkOrCopytree(os.path.join("..", "..", "syntax", "relaxng"), 
                os.path.join(buildRoot, "validator", "schema", "html5"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
@@ -443,6 +504,7 @@ def prepareLocalEntityJar():
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
   shutil.copyfile(os.path.join(buildRoot, "validator", "presets.txt"), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
@@ -484,6 +546,7 @@ def zipExtract(zipArch, targetDir):
       o.close()
 
 def downloadDependency(url, md5sum):
+  downloadedDeps = 1
   dependencyDir = os.path.join(buildRoot, "dependencies")
   ensureDirExists(dependencyDir)
   path = os.path.join(dependencyDir, url[url.rfind("/") + 1:])
@@ -497,7 +560,7 @@ def downloadDependencies():
     downloadDependency(url, md5sum)
 
 def buildAll():
-  buildOnvdl()
+  buildJing()
   buildDatatypeLibrary()
   buildNonSchema()
   buildHtmlParser()
@@ -509,13 +572,15 @@ def buildAll():
 def checkout():
   # XXX root dir
   for mod in moduleNames:
-    runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + mod + '/trunk/', mod))
+    runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + mod + '/trunk/', mod))
+  runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
 
 def selfUpdate():
-  runCmd("'%s' co '%s' '%s'" % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
+  runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
   newArgv = [sys.executable, buildScript, '--no-self-update']
   newArgv.extend(argv)
   os.execv(sys.executable, newArgv)  
+
 
 def runTests():
   classPath = os.pathsep.join(dependencyJarPaths() 
@@ -524,9 +589,9 @@ def runTests():
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
-                                                "test-harness",
-                                                "onvdl-whattf"]))
-  runCmd("'%s' -cp %s org.whattf.syntax.Driver" % (javaCmd, classPath))
+                                                "test-harness"])
+                              + jingJarPath())
+  runCmd('"%s" -cp %s org.whattf.syntax.Driver' % (javaCmd, classPath))
 
 def splitHostSpec(spec):
   index = spec.find('/')
@@ -601,6 +666,8 @@ else:
       svnRoot = arg[10:]
     elif arg.startswith("--port="):
       portNumber = arg[7:]
+    elif arg.startswith("--control-port="):
+      controlPort = arg[15:]
     elif arg.startswith("--log4j="):
       log4jProps = arg[8:]
     elif arg.startswith("--heap="):
@@ -619,6 +686,8 @@ else:
       stylesheet = arg[13:]
     elif arg.startswith("--icon="):
       icon = arg[7:]
+    elif arg.startswith("--scp-target="):
+      deploymentTarget = arg[13:]
     elif arg.startswith("--script="):
       script = arg[9:]
     elif arg.startswith("--name="):
@@ -664,9 +733,26 @@ else:
         prepareLocalEntityJar()
       else:
         selfUpdate()
+    elif arg == 'deploy':
+      if noSelfUpdate:
+        deployOverScp()
+      else:
+        selfUpdate()
     elif arg == 'tar':
       if noSelfUpdate:
         createTarball()
+        createDepTarball()
+      else:
+        selfUpdate()
+    elif arg == 'script':
+      if noSelfUpdate:
+        if not stylesheet:
+          stylesheet = aboutPage + 'style.css'
+        if not script:
+          script = aboutPage + 'script.js'
+        if not icon:
+          icon = aboutPage + 'icon.png'
+        generateRunScript()
       else:
         selfUpdate()
     elif arg == 'test':
@@ -705,4 +791,3 @@ else:
         selfUpdate()
     else:
       print "Unknown option %s." % arg
-
