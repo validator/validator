@@ -154,15 +154,6 @@ class UrlExtractor(SGMLParser):
           self.directories.append(self.baseUrl + value)
         if leafPat.match(value):
           self.leaves.append(self.baseUrl + value)    
-
-def symlinkOrCopytree(pointer, linkfile):
-  if hasattr(os, 'symlink'):
-    if not os.path.exists(linkfile):
-      os.symlink(pointer, linkfile)
-  else:
-    if os.path.exists(linkfile):
-      shutil.rmtree(linkfile)
-    shutil.copytree(os.path.join(linkfile, "..", pointer), linkfile)
     
 def runCmd(cmd):
   if os.name == 'nt':
@@ -478,16 +469,11 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  symlinkOrCopytree(os.path.join("..", "..", "syntax", "relaxng"), 
-             os.path.join(buildRoot, "validator", "schema", "html5"))
-  symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
-             os.path.join(buildRoot, "local-entities", "schema"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
       url, path = line.strip().split("\t")
-      if not (path.startswith("syntax/") or path.startswith("schema/")):
-        # XXX may not work on Windows
+      if not path.startswith("schema/"):
         if not os.path.exists(os.path.join(buildRoot, "local-entities", path)):
           fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
   finally:
@@ -508,7 +494,13 @@ def prepareLocalEntityJar():
   try:
     for line in f:
       url, path = line.strip().split("\t")
-      entPath = os.path.join(buildRoot, "local-entities", path)
+      entPath = None
+      if path.startswith("schema/html5/"):
+        entPath = os.path.join(buildRoot, "syntax", "relaxng", path[13:])
+      elif path.startswith("schema/"):
+        entPath = os.path.join(buildRoot, "validator", path)
+      else:
+        entPath = os.path.join(buildRoot, "local-entities", path)
       safeName = localPathToJarCompatName(path)
       safePath = os.path.join(filesDir, safeName)
       if os.path.exists(entPath):
