@@ -475,15 +475,12 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  if not os.path.exists(os.path.join(buildRoot, "local-entities", "syntax")):
-    symlinkOrCopytree(os.path.join("..", "syntax"), 
-               os.path.join(buildRoot, "local-entities", "syntax"))
-  if not os.path.exists(os.path.join(buildRoot, "local-entities", "schema")):
-    symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
-               os.path.join(buildRoot, "local-entities", "schema"))
-  if not os.path.exists(os.path.join(buildRoot, "validator", "schema", "html5")):
+  if os.name == 'nt' or not os.path.exists(os.path.join(buildRoot, "validator", "schema", "html5")):
     symlinkOrCopytree(os.path.join("..", "..", "syntax", "relaxng"), 
                os.path.join(buildRoot, "validator", "schema", "html5"))
+  if os.name == 'nt' or not os.path.exists(os.path.join(buildRoot, "local-entities", "schema")):
+    symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
+               os.path.join(buildRoot, "local-entities", "schema"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
