@@ -157,8 +157,11 @@ class UrlExtractor(SGMLParser):
 
 def symlinkOrCopytree(pointer, linkfile):
   if hasattr(os, 'symlink'):
-    os.symlink(pointer, linkfile)
+    if not os.path.exists(linkfile):
+      os.symlink(pointer, linkfile)
   else:
+    if os.path.exists(linkfile):
+      shutil.rmtree(linkfile)
     shutil.copytree(os.path.join(linkfile, "..", pointer), linkfile)
     
 def runCmd(cmd):
@@ -475,12 +478,10 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  if os.name == 'nt' or not os.path.exists(os.path.join(buildRoot, "validator", "schema", "html5")):
-    symlinkOrCopytree(os.path.join("..", "..", "syntax", "relaxng"), 
-               os.path.join(buildRoot, "validator", "schema", "html5"))
-  if os.name == 'nt' or not os.path.exists(os.path.join(buildRoot, "local-entities", "schema")):
-    symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
-               os.path.join(buildRoot, "local-entities", "schema"))
+  symlinkOrCopytree(os.path.join("..", "..", "syntax", "relaxng"), 
+             os.path.join(buildRoot, "validator", "schema", "html5"))
+  symlinkOrCopytree(os.path.join("..", "validator", "schema"), 
+             os.path.join(buildRoot, "local-entities", "schema"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
