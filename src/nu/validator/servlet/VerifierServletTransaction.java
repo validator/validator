@@ -24,13 +24,10 @@
 package nu.validator.servlet;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -57,6 +54,7 @@ import nu.validator.htmlparser.sax.HtmlSerializer;
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.io.BoundedInputStream;
 import nu.validator.io.StreamBoundException;
+import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.messages.GnuMessageEmitter;
 import nu.validator.messages.JsonMessageEmitter;
 import nu.validator.messages.MessageEmitterAdapter;
@@ -76,7 +74,6 @@ import nu.validator.xml.CombineContentHandler;
 import nu.validator.xml.ContentTypeParser;
 import nu.validator.xml.DataUriEntityResolver;
 import nu.validator.xml.IdFilter;
-import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.xml.NamespaceDroppingXMLReaderWrapper;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.PrudentHttpEntityResolver;
@@ -102,7 +99,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
 import com.ibm.icu.text.Normalizer;
-import com.oxygenxml.validate.nvdl.NvdlProperty;
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -113,9 +109,9 @@ import com.thaiopensource.validate.SchemaResolver;
 import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
-import com.thaiopensource.validate.nrl.NrlProperty;
+import com.thaiopensource.validate.prop.rng.RngProperty;
+import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
-import com.thaiopensource.validate.rng.RngProperty;
 
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48
@@ -204,10 +200,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] FOR = " for ".toCharArray();
 
-    private static final char[] ABOUT_THIS_SERVICE = "About this service".toCharArray();
+    private static final char[] ABOUT_THIS_SERVICE = "About this Service".toCharArray();
 
-    private static final Map<String, String> pathMap = new HashMap<String, String>();
-
+    private static final char[] SIMPLE_UI = "Simplified Interface".toCharArray();    
+    
     private static Spec html5spec;
 
     private static int[] presetDoctypes;
@@ -256,7 +252,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     protected MessageEmitterAdapter errorHandler;
 
-    private AttributesImpl attrs = new AttributesImpl();
+    protected final AttributesImpl attrs = new AttributesImpl();
 
     private OutputStream out;
 
@@ -273,6 +269,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private final static String ABOUT_PAGE = System.getProperty(
             "nu.validator.servlet.about-page", "http://about.validator.nu/");
 
+    private final static String HTML5_FACET = "http://" + VerifierServlet.HTML5_HOST + VerifierServlet.HTML5_PATH;
+    
     private final static String STYLE_SHEET = System.getProperty(
             "nu.validator.servlet.style-sheet",
             "http://about.validator.nu/style.css");
@@ -467,7 +465,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
             log4j.debug("Reading spec.");
 
-            html5spec = Html5SpecBuilder.parseSpec();
+            html5spec = Html5SpecBuilder.parseSpec(LocalCacheEntityResolver.getHtml5SpecAsStream());
 
             log4j.debug("Spec read.");
 
@@ -1165,8 +1163,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         int i = Arrays.binarySearch(preloadedSchemaUrls, url);
         if (i > -1) {
             Schema rv = preloadedSchemas[i];
-            if (options.contains(NvdlProperty.ATTRIBUTES_SCHEMA)
-                    || options.contains(NrlProperty.ATTRIBUTES_SCHEMA)) {
+            if (options.contains(WrapProperty.ATTRIBUTE_OWNER)) {
                 if (rv instanceof CheckerSchema) {
                     errorHandler.error(new SAXParseException(
                             "A non-schema checker cannot be used as an attribute schema.",
@@ -1627,6 +1624,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.startElement("a", attrs);
         emitter.characters(ABOUT_THIS_SERVICE);
         emitter.endElement("a");
+    }
+    
+    void emitOtherFacetLink() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("href", HTML5_FACET);
+        emitter.startElement("a", attrs);
+        emitter.characters(SIMPLE_UI);
+        emitter.endElement("a");   
     }
 
     void emitNsfilterField() throws SAXException {

@@ -45,6 +45,10 @@ public class LocalCacheEntityResolver implements EntityResolver {
     public static InputStream getPresetsAsStream() {
         return LOADER.getResourceAsStream("nu/validator/localentities/files/presets");
     }
+
+    public static InputStream getHtml5SpecAsStream() {
+        return LOADER.getResourceAsStream("nu/validator/localentities/files/html5spec");
+    }
     
     private EntityResolver delegate;
 

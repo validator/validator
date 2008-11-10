@@ -33,17 +33,6 @@ import java.util.Set;
 
 import nu.validator.io.SystemIdIOException;
 import nu.validator.messages.types.MessageType;
-import nu.validator.relaxng.exceptions.AbstractValidationException;
-import nu.validator.relaxng.exceptions.BadAttributeValueException;
-import nu.validator.relaxng.exceptions.ImpossibleAttributeIgnoredException;
-import nu.validator.relaxng.exceptions.OnlyTextNotAllowedException;
-import nu.validator.relaxng.exceptions.OutOfContextElementException;
-import nu.validator.relaxng.exceptions.RequiredAttributesMissingException;
-import nu.validator.relaxng.exceptions.RequiredElementsMissingException;
-import nu.validator.relaxng.exceptions.StringNotAllowedException;
-import nu.validator.relaxng.exceptions.TextNotAllowedException;
-import nu.validator.relaxng.exceptions.UnfinishedElementException;
-import nu.validator.relaxng.exceptions.UnknownElementException;
 import nu.validator.saxtree.DocumentFragment;
 import nu.validator.saxtree.TreeParser;
 import nu.validator.servlet.imagereview.Image;
@@ -71,6 +60,17 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.ibm.icu.text.Normalizer;
+import com.thaiopensource.relaxng.exceptions.AbstractValidationException;
+import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
+import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException;
+import com.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.OutOfContextElementException;
+import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
+import com.thaiopensource.relaxng.exceptions.StringNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.TextNotAllowedException;
+import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
+import com.thaiopensource.relaxng.exceptions.UnknownElementException;
 import com.thaiopensource.xml.util.Name;
 
 public final class MessageEmitterAdapter implements ErrorHandler {

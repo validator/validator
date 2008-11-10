@@ -23,6 +23,7 @@
 package nu.validator.spec.html5;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -93,16 +94,24 @@ public class Html5SpecBuilder implements ContentHandler {
 
     private Map<Name, DocumentFragment> attributesByElement = new HashMap<Name, DocumentFragment>();
 
-    public static Spec parseSpec() throws IOException, SAXException {
+    public static Spec parseSpec(InputSource in) throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5SpecBuilder handler = new Html5SpecBuilder();
         parser.setContentHandler(handler);
-        parser.parse(new InputSource(SPEC_LOAD_URI));
+        parser.parse(in);
         return handler.buildSpec();
     }
 
+    public static Spec parseSpec() throws IOException, SAXException {
+        return parseSpec(new InputSource(SPEC_LOAD_URI));
+    }
+    
     public static void main(String[] args) throws IOException, SAXException {
         parseSpec();
+    }
+    
+    public static Spec parseSpec(InputStream html5SpecAsStream) throws IOException, SAXException {
+        return parseSpec(new InputSource(html5SpecAsStream));
     }
 
     private Spec buildSpec() {

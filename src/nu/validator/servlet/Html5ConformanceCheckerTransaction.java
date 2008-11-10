@@ -50,7 +50,11 @@ public class Html5ConformanceCheckerTransaction extends
     protected boolean isSimple() {
         return true;
     }
+    
+    private final static String GENERIC_FACET = "http://" + VerifierServlet.GENERIC_HOST + VerifierServlet.GENERIC_PATH;
 
+    private static final char[] GENERIC_UI = "More options".toCharArray();    
+    
     private static final char[] SERVICE_TITLE = (System.getProperty(
             "nu.validator.servlet.service-name", "Validator.nu") + " (X)HTML5 Validator ").toCharArray();
 
@@ -185,6 +189,14 @@ public class Html5ConformanceCheckerTransaction extends
         if (request.getParameter("charset") != null) {
             CharsetEmitter.emit(contentHandler, this);
         }
+    }
+    
+    void emitOtherFacetLink() throws SAXException {
+        attrs.clear();
+        attrs.addAttribute("href", GENERIC_FACET);
+        emitter.startElement("a", attrs);
+        emitter.characters(GENERIC_UI);
+        emitter.endElement("a");   
     }
 
 }

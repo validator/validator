@@ -50,17 +50,17 @@ public class VerifierServlet extends HttpServlet {
 
     private static final Logger log4j = Logger.getLogger(VerifierServlet.class);
     
-    private static final String GENERIC_HOST = System.getProperty("nu.validator.servlet.host.generic", "");
+    static final String GENERIC_HOST = System.getProperty("nu.validator.servlet.host.generic", "");
     
-    private static final String HTML5_HOST = System.getProperty("nu.validator.servlet.host.html5", "");    
+    static final String HTML5_HOST = System.getProperty("nu.validator.servlet.host.html5", "");    
     
-    private static final String PARSETREE_HOST = System.getProperty("nu.validator.servlet.host.parsetree", "");     
+    static final String PARSETREE_HOST = System.getProperty("nu.validator.servlet.host.parsetree", "");     
     
-    private static final String GENERIC_PATH = System.getProperty("nu.validator.servlet.path.generic", "/");
+    static final String GENERIC_PATH = System.getProperty("nu.validator.servlet.path.generic", "/");
     
-    private static final String HTML5_PATH = System.getProperty("nu.validator.servlet.path.html5", "/html5/");    
+    static final String HTML5_PATH = System.getProperty("nu.validator.servlet.path.html5", "/html5/");    
     
-    private static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
+    static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
     
     private static final byte[] GENERIC_ROBOTS_TXT;
     

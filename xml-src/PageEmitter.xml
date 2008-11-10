@@ -11,6 +11,6 @@
 		><h1><?SaxCompiler-code t.emitTitle(true); ?></h1
 		><?SaxCompiler-code t.emitForm(); t.emitScript(); t.validate(); ?><hr></hr
 		><p
-			><?SaxCompiler-code t.emitAbout(); ?></p
+			><?SaxCompiler-code t.emitAbout(); ?> &#x2022; <?SaxCompiler-code t.emitOtherFacetLink(); ?></p
 	></body
 ></html>

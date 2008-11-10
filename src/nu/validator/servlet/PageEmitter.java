@@ -32,6 +32,10 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "hr", "hr");
 __attrs__.clear();
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "p", "p", __attrs__);
 t.emitAbout(); 
+contentHandler.characters(__chars__, 0, 1);
+contentHandler.characters(__chars__, 1, 1);
+contentHandler.characters(__chars__, 2, 1);
+t.emitOtherFacetLink(); 
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "p", "p");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "body", "body");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "html", "html");
@@ -40,5 +44,5 @@ contentHandler.endPrefixMapping("");
 contentHandler.endDocument();
 }
 }
-private static final char[] __chars__ = { };
+private static final char[] __chars__ = { ' ', '\u2022', ' ' };
 }

@@ -102,10 +102,6 @@ public class Main {
 
             server.start();
             
-            System.in.close();
-            System.out.close();
-            System.err.close();
-            
             ServerSocket serverSocket = new ServerSocket(stopPort, 0, InetAddress.getByName("127.0.0.1"));
             Socket s = serverSocket.accept();
             
