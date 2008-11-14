@@ -6,5 +6,17 @@
   <depends lib="saxon"/>
   <depends lib="saxon9"/>
   <test name="schematron" type="validate" schema="test/schematrontest.nrl"/>
+  <ant rescompile="mod.schematron.compile-res">
+    <target name="mod.schematron.compile-res">
+      <property name="mod.schematron.respackage"
+		value="com/thaiopensource/validate/schematron/resources"/>
+      <property name="mod.schematron.resdir"
+		value="${build.dir}/mod/schematron/classes/main/${mod.schematron.respackage}"/>
+      <mkdir dir="${mod.schematron.resdir}"/>
+      <xslt style="mod/schematron/lib/xsltc-fixup.xsl"
+	    in="mod/schematron/src/main/${mod.schematron.respackage}/schematron.xsl"
+	    out="${mod.schematron.resdir}/schematron-xsltc.xsl"/>
+    </target>
+  </ant>
   <compile/>
 </module>

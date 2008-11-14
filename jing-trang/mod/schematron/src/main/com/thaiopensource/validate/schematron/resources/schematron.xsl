@@ -4,9 +4,10 @@
 	xmlns:sch="http://www.ascc.net/xml/schematron"
         xmlns:loc="http://www.thaiopensource.com/ns/location"
         xmlns:err="http://www.thaiopensource.com/ns/error"
-	xmlns:saxon="http://icl.com/saxon"
-	xmlns:saxon9="http://saxon.sf.net/"
-        xmlns:xj="http://xml.apache.org/xalan/java">
+        xmlns:xsltc="http://www.thaiopensource.com/ns/xsltc"
+        xmlns:osaxon="http://icl.com/saxon"
+        xmlns:nsaxon="http://saxon.sf.net/"
+        xmlns:xalan-node-info="http://xml.apache.org/xalan/java/org.apache.xalan.lib.NodeInfo">
 
 <xsl:param name="phase" select="'#DEFAULT'"/>
 <xsl:param name="diagnose" select="false()"/>
@@ -182,7 +183,7 @@
 
 <xsl:template name="assertion-body">
   <axsl:call-template name="location"/>
-  <xsl:if test="* or normalize-space(text())">
+  <xsl:if test="boolean(*) or normalize-space(text())">
     <statement>
       <xsl:apply-templates/>
     </statement>
@@ -258,67 +259,60 @@
 
 <xsl:template match="*"/>
 
-<xsl:variable name="saxon9"
-              select="function-available('saxon9:lineNumber')
-                      and function-available('saxon9:systemId')"/>
+<xsl:variable name="osaxon"
+              select="function-available('osaxon:lineNumber')
+                      and function-available('osaxon:systemId')"
+              xsltc:remove="yes"/>
 
-<xsl:variable name="saxon9col"
-              select="function-available('saxon9:lineNumber')
-                      and function-available('saxon9:systemId') and function-available('saxon9:columnNumber')"/>
-
-<xsl:variable name="saxon"
-              select="function-available('saxon:lineNumber')
-                      and function-available('saxon:systemId')"/>
+<xsl:variable name="nsaxon"
+              select="function-available('nsaxon:line-number')
+                      and function-available('nsaxon:system-id')
+                      and function-available('nsaxon:column-number')"
+              xsltc:remove="yes"/>
 
 <!-- The JDK 1.4 version of Xalan is buggy and gets an exception if we try
      to use these extension functions, so detect this version and don't use it. -->
 <xsl:variable name="xalan"
               xmlns:xalan="http://xml.apache.org/xalan"
-              select="function-available('xj:org.apache.xalan.lib.NodeInfo.lineNumber')
-                      and function-available('xj:org.apache.xalan.lib.NodeInfo.systemId')
+              select="function-available('xalan-node-info:columnNumber')
+                      and function-available('xalan-node-info:lineNumber')
+                      and function-available('xalan-node-info:systemId')
                       and function-available('xalan:checkEnvironment')
                       and not(contains(xalan:checkEnvironment()//item[@key='version.xalan2'],
-                                       'Xalan Java 2.2'))"/>
+                                       'Xalan Java 2.2'))"
+              xsltc:remove="yes"/>
 
 <xsl:template name="define-location">
   <axsl:template name="location">
-    <xsl:choose>
-      <xsl:when test="$saxon9col">
-        <axsl:attribute name="line-number">
-          <axsl:value-of select="saxon9:lineNumber()"/>
-        </axsl:attribute>
-        <axsl:attribute name="column-number">
-          <axsl:value-of select="saxon9:columnNumber()"/>
-        </axsl:attribute>        
-        <axsl:attribute name="system-id">
-          <axsl:value-of select="saxon9:systemId()"/>
-        </axsl:attribute>
-      </xsl:when>
-      <xsl:when test="$saxon9">
-        <axsl:attribute name="line-number">
-          <axsl:value-of select="saxon9:lineNumber()"/>
-        </axsl:attribute>
-        <axsl:attribute name="system-id">
-          <axsl:value-of select="saxon9:systemId()"/>
-        </axsl:attribute>
-      </xsl:when>
-      <xsl:when test="$saxon">
+    <xsl:choose xsltc:remove="yes">
+      <xsl:when test="$osaxon">
 	<axsl:attribute name="line-number">
-	  <axsl:value-of select="saxon:lineNumber()"/>
+	  <axsl:value-of select="osaxon:lineNumber()"/>
 	</axsl:attribute>
 	<axsl:attribute name="system-id">
-	  <axsl:value-of select="saxon:systemId()"/>
+	  <axsl:value-of select="osaxon:systemId()"/>
+	</axsl:attribute>
+      </xsl:when>
+      <xsl:when test="$nsaxon">
+        <axsl:attribute name="column-number">
+	  <axsl:value-of select="nsaxon:column-number()"/>
+	</axsl:attribute>
+        <axsl:attribute name="line-number">
+	  <axsl:value-of select="nsaxon:line-number()"/>
+	</axsl:attribute>
+	<axsl:attribute name="system-id">
+	  <axsl:value-of select="nsaxon:system-id()"/>
 	</axsl:attribute>
       </xsl:when>
       <xsl:when test="$xalan">
-	<axsl:attribute name="line-number">
-	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
+	<axsl:attribute name="column-number">
+	  <axsl:value-of select="xalan-node-info:columnNumber()"/>
 	</axsl:attribute>
-    <axsl:attribute name="column-number">
-      <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.columnNumber()"/>
-    </axsl:attribute>        
-	<axsl:attribute name="system-id">
-	  <axsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
+        <axsl:attribute name="line-number">
+	  <axsl:value-of select="xalan-node-info:lineNumber()"/>
+	</axsl:attribute>
+        <axsl:attribute name="system-id">
+	  <axsl:value-of select="xalan-node-info:systemId()"/>
 	</axsl:attribute>
       </xsl:when>
     </xsl:choose>
@@ -326,21 +320,35 @@
 </xsl:template>
 
 <xsl:template name="location">
-  <xsl:choose>
-    <xsl:when test="$saxon">
+  <xsl:choose xsltc:remove="yes">
+    <xsl:when test="$osaxon">
       <xsl:attribute name="loc:line-number">
-	<xsl:value-of select="saxon:lineNumber()"/>
+	<xsl:value-of select="osaxon:lineNumber()"/>
       </xsl:attribute>
       <xsl:attribute name="loc:system-id">
-	<xsl:value-of select="saxon:systemId()"/>
+	<xsl:value-of select="osaxon:systemId()"/>
+      </xsl:attribute>
+    </xsl:when>
+    <xsl:when test="$nsaxon">
+      <xsl:attribute name="loc:column-number">
+	<xsl:value-of select="nsaxon:column-number()"/>
+      </xsl:attribute>
+      <xsl:attribute name="loc:line-number">
+	<xsl:value-of select="nsaxon:line-number()"/>
+      </xsl:attribute>
+      <xsl:attribute name="loc:system-id">
+	<xsl:value-of select="nsaxon:system-id()"/>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="$xalan">
+      <xsl:attribute name="loc:column-number">
+	<xsl:value-of select="xalan-node-info:columnNumber()"/>
+      </xsl:attribute>
       <xsl:attribute name="loc:line-number">
-	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.lineNumber()"/>
+	<xsl:value-of select="xalan-node-info:lineNumber()"/>
       </xsl:attribute>
       <xsl:attribute name="loc:system-id">
-	<xsl:value-of select="xj:org.apache.xalan.lib.NodeInfo.systemId()"/>
+	<xsl:value-of select="xalan-node-info:systemId()"/>
       </xsl:attribute>
     </xsl:when>
   </xsl:choose>

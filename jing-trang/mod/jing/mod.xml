@@ -14,7 +14,7 @@
     <manifest>
       <attribute name="Main-Class" value="com/thaiopensource/relaxng/util/Driver"/>
       <attribute name="Class-Path"
-		 value="xercesImpl.jar xml-apis.jar saxon.jar isorelax.jar"/>
+		 value="xercesImpl.jar xml-apis.jar saxon.jar saxon9.jar xalan.jar isorelax.jar"/>
     </manifest>
     <service type="com.thaiopensource.datatype.xsd.regex.RegexEngine">
       <provider classname="com.thaiopensource.datatype.xsd.regex.java.RegexEngineImpl"/>
@@ -27,8 +27,10 @@
     <service type="com.thaiopensource.validate.SchemaReaderFactory">
       <provider classname="com.thaiopensource.validate.xerces.XsdSchemaReaderFactory"/>
       <provider classname="com.thaiopensource.validate.jarv.JarvSchemaReaderFactory"/>
-      <provider classname="com.thaiopensource.validate.schematron.SaxonSchemaReaderFactory"/>
+      <provider classname="com.thaiopensource.validate.schematron.NewSaxonSchemaReaderFactory"/>
+      <provider classname="com.thaiopensource.validate.schematron.OldSaxonSchemaReaderFactory"/>
       <provider classname="com.thaiopensource.validate.schematron.XalanSchemaReaderFactory"/>
+      <provider classname="com.thaiopensource.validate.schematron.SchematronSchemaReaderFactory"/>
     </service>
     <service type="com.thaiopensource.validate.auto.SchemaReceiverFactory">
       <provider classname="com.thaiopensource.validate.rng.SAXSchemaReceiverFactory"/>

@@ -51,39 +51,31 @@ class OutputHandler extends DefaultHandler {
   public void startElement(String uri, String localName,
                            String qName, Attributes attributes)
           throws SAXException {
-    if (localName.equals("failed-assertion")
-        || localName.equals("report")) {
-      String value = attributes.getValue("", "line-number");
-      if (value == null)
-        lineNumber = -1;
-      else {
-        try {
-          lineNumber = Integer.parseInt(value);
-        }
-        catch (NumberFormatException e) {
-          lineNumber = -1;
-        }
-      }
-      value = attributes.getValue("", "column-number");
-      if (value == null)
-        columnNumber = -1;
-      else {
-        try {
-          columnNumber = Integer.parseInt(value);
-        }
-        catch (NumberFormatException e) {
-          columnNumber = -1;
-        }
-      }
-      value = attributes.getValue("", "system-id");
-      if (value != null && value.equals(""))
-        value = null;
-      systemId = value;
+    if (localName.equals("failed-assertion") || localName.equals("report")) {
+      lineNumber = toInteger(attributes.getValue("", "line-number"));
+      columnNumber = toInteger(attributes.getValue("", "column-number"));
+      systemId = attributes.getValue("", "system-id");
+      if ("".equals(systemId))
+        systemId = null;
+      message.append(localizer.message(localName.equals("failed-assertion")
+                                       ? "failed_assertion"
+                                       : "report"));
     }
     else if (localName.equals("statement") || localName.equals("diagnostic")) {
       inMessage = true;
       if (message.charAt(message.length() - 1) != ' ')
         message.append(' ');
+    }
+  }
+  
+  private static int toInteger(String value) {
+    if (value == null)
+      return -1;
+    try {
+      return Integer.parseInt(value);
+    }
+    catch (NumberFormatException e) {
+      return -1;
     }
   }
 
@@ -94,8 +86,7 @@ class OutputHandler extends DefaultHandler {
         message.setLength(message.length() - 1);
       inMessage = false;
     }
-    else if (localName.equals("failed-assertion")
-             || localName.equals("report")) {
+    else if (localName.equals("failed-assertion") || localName.equals("report")) {
       eh.error(new SAXParseException(message.toString(), null, systemId, lineNumber, columnNumber));
       message.setLength(0);
     }

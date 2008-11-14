@@ -363,6 +363,21 @@
             </SvnBranchConfiguration>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/mod/nvdl">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://jing-trang.googlecode.com/svn/2156" />
+                  <option value="https://jing-trang.googlecode.com/svn/branches" />
+                  <option value="https://jing-trang.googlecode.com/svn/tags" />
+                  <option value="https://jing-trang.googlecode.com/svn/wiki" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://jing-trang.googlecode.com/svn/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/trang">
           <value>
             <SvnBranchConfiguration>
@@ -420,6 +435,13 @@
     <library name="xercesImpl">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/xercesImpl.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="saxon9">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/saxon9.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

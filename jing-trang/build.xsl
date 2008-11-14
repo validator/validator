@@ -69,6 +69,10 @@
 	<xsl:text>,</xsl:text>
 	<xsl:value-of select="ant/@precompile"/>
       </xsl:if>
+      <xsl:if test="ant/@rescompile">
+	<xsl:text>,</xsl:text>
+	<xsl:value-of select="ant/@rescompile"/>
+      </xsl:if>
       <xsl:for-each select="depends[@module]">
 	<xsl:text>,mod.</xsl:text>
 	<xsl:value-of select="@module"/>
