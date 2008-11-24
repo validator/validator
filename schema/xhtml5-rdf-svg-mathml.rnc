@@ -19,12 +19,12 @@ SVG.foreignObject.content |=
 	(	mml.math.qname
 	|	html.elem
 	|	body.elem
-	|	common.inner.prose
+	|	common.inner.flow
 	)
 	
 mml.Annotation-xml.datatype.svg |= svg
 
 mml.Annotation-xml.datatype.xhtml |=
 	(	html.elem
-	|	common.elem.prose
+	|	common.elem.flow
 	)
