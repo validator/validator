@@ -70,9 +70,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.float.positive
 			}
 	progress.inner =
-		( common.inner.phrase ) #Cannot enforce textContent format here
+		( common.inner.phrasing ) #Cannot enforce textContent format here
 
-	common.elem.phrase |= progress.elem
+	common.elem.phrasing |= progress.elem
 
 ## Datagrid: <datagrid>
 
@@ -92,12 +92,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "disabled" | w:string ""
 			}
 	datagrid.inner =
-		(	common.inner.prose # table case left to schematron 
+		(	common.inner.flow # table case left to schematron 
 		|	select.elem
-		|	datalist.elem.prose
+		|	datalist.elem.flow
 		)
 	
-	common.elem.prose |= datagrid.elem
+	common.elem.flow |= datagrid.elem
 
 ## Command: <command>
 
@@ -160,7 +160,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	common.elem.metadata |=
 		( command.elem & nonHTMLizable )
-	common.elem.phrase |= command.elem
+	common.elem.phrasing |= command.elem
 
 ## Menu: <menu>
 
@@ -185,30 +185,30 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "autosubmit" | w:string ""
 			}
 	menu.inner =
-		(	mli.elem.phrase*
-		|	common.inner.phrase
+		(	mli.elem.phrasing*
+		|	common.inner.phrasing
 		)
 	
-	common.elem.prose |= menu.elem
+	common.elem.flow |= menu.elem
 	# REVISIT allow nested menus
 
 ## Menu Item: <li>
 
 	mli.elem =
 		element li { mli.inner & mli.attrs }
-	mli.elem.phrase =
-		element li { mli.inner.phrase & mli.attrs }
+	mli.elem.phrasing =
+		element li { mli.inner.phrasing & mli.attrs }
 	mli.attrs =
 		( common.attrs )
 	mli.inner =
-		( common.inner.prose )
-	mli.inner.phrase =
-		( common.inner.phrase )
+		( common.inner.flow )
+	mli.inner.phrasing =
+		( common.inner.phrasing )
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
-	canvas.elem.prose =
-		element canvas { canvas.inner.prose & canvas.attrs }
+	canvas.elem.flow =
+		element canvas { canvas.inner.flow & canvas.attrs }
 	canvas.elem.embedded =
 		element canvas { canvas.inner.embedded & canvas.attrs }
 	canvas.attrs =
@@ -225,12 +225,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute width {
 				common.data.integer.non-negative
 			}
-	canvas.inner.prose =
-		( common.inner.prose )
+	canvas.inner.flow =
+		( common.inner.flow )
 	canvas.inner.embedded =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 	
-	common.elem.prose |= canvas.elem.prose
+	common.elem.flow |= canvas.elem.flow
 	common.elem.embedded |= canvas.elem.embedded
 
 ## Server-sent events: <eventsource>
@@ -249,7 +249,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( empty )
 
 	common.elem.metadata |= ( eventsource.elem & nonHTMLizable )
-	common.elem.phrase |= eventsource.elem
+	common.elem.phrasing |= eventsource.elem
 	
 ## Additional On-Demand Information: <details>
 
@@ -266,7 +266,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	details.inner =
 		(	legend.elem
-		,	common.inner.prose 
+		,	common.inner.flow 
 		)
 	
-	common.elem.prose |= details.elem
+	common.elem.flow |= details.elem

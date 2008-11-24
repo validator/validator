@@ -16,9 +16,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	p.inner =
-		( common.inner.phrase ) # REVISIT lists in span?
+		( common.inner.phrasing ) # REVISIT lists in span?
 
-	common.elem.prose |= p.elem
+	common.elem.flow |= p.elem
 
 ## Hint Transition: <hr>
 
@@ -29,7 +29,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	hr.inner =
 		( empty )
 
-	common.elem.prose |= hr.elem
+	common.elem.flow |= hr.elem
 
 # #####################################################################
 ## Preformatting Blocks
@@ -43,9 +43,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	pre.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= pre.elem
+	common.elem.flow |= pre.elem
 
 # #####################################################################
 ## Simple Lists
@@ -54,8 +54,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	ul.elem =
 		element ul { ul.inner & ul.attrs }
-	ul.elem.phrase =
-		element ul { ul.inner.phrase & ul.attrs }
+	ul.elem.phrasing =
+		element ul { ul.inner.phrasing & ul.attrs }
 	ul.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria
@@ -64,17 +64,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	ul.inner =
 		( li.elem* )
-	ul.inner.phrase =
-		( li.elem.phrase* )
+	ul.inner.phrasing =
+		( li.elem.phrasing* )
 
-	common.elem.prose |= ul.elem
+	common.elem.flow |= ul.elem
 
 ## Unordered List Item: <li>
 
 	li.elem =
 		element li { li.inner & li.attrs }
-	li.elem.phrase =
-		element li { li.inner.phrase & li.attrs }
+	li.elem.phrasing =
+		element li { li.inner.phrasing & li.attrs }
 	li.attrs =
 		(	common.attrs 
 		&	(	common.attrs.aria
@@ -82,16 +82,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)?
 		)
 	li.inner =
-		( common.inner.prose )
-	li.inner.phrase =
-		( common.inner.phrase )
+		( common.inner.flow )
+	li.inner.phrasing =
+		( common.inner.phrasing )
 
 ## Ordered List: <ol>
 
 	ol.elem =
 		element ol { ol.inner & ol.attrs }
-	ol.elem.phrase =
-		element ol { ol.inner.phrase & ol.attrs }
+	ol.elem.phrasing =
+		element ol { ol.inner.phrasing & ol.attrs }
 	ol.attrs =
 		(	common.attrs
 		&	ol.attrs.start?
@@ -110,17 +110,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	ol.inner =
 		( oli.elem* )
-	ol.inner.phrase =
-		( oli.elem.phrase* )
+	ol.inner.phrasing =
+		( oli.elem.phrasing* )
 
-	common.elem.prose |= ol.elem
+	common.elem.flow |= ol.elem
 
 ## Ordered List Item: <li>
 
 	oli.elem =
 		element li { oli.inner & oli.attrs }
-	oli.elem.phrase =
-		element li { oli.inner.phrase & oli.attrs }
+	oli.elem.phrasing =
+		element li { oli.inner.phrasing & oli.attrs }
 	oli.attrs =
 		(	common.attrs
 		&	oli.attrs.value?
@@ -133,9 +133,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.integer
 			}
 	oli.inner =
-		( common.inner.prose )
-	oli.inner.phrase =
-		( common.inner.phrase )
+		( common.inner.flow )
+	oli.inner.phrasing =
+		( common.inner.phrasing )
 
 # #####################################################################
 ## Definition Lists
@@ -144,8 +144,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	dl.elem =
 		element dl { dl.inner & dl.attrs }
-	dl.elem.phrase =
-		element dl { dl.inner.phrase & dl.attrs }
+	dl.elem.phrasing =
+		element dl { dl.inner.phrasing & dl.attrs }
 	dl.attrs =
 		(	common.attrs
 		&	common.attrs.aria?
@@ -155,13 +155,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 			,	dd.elem+
 			)*
 		)
-	dl.inner.phrase =
+	dl.inner.phrasing =
 		(	(	dt.elem+
-			,	dd.elem.phrase+
+			,	dd.elem.phrasing+
 			)*
 		)
 
-	common.elem.prose |= dl.elem
+	common.elem.flow |= dl.elem
 
 ## Definition Term: <dt>
 
@@ -172,22 +172,22 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	dt.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
 ## Definition Description: <dd>
 
 	dd.elem =
 		element dd { dd.inner & dd.attrs }
-	dd.elem.phrase =
-		element dd { dd.inner.phrase & dd.attrs }
+	dd.elem.phrasing =
+		element dd { dd.inner.phrasing & dd.attrs }
 	dd.attrs =
 		(	common.attrs
 		&	common.attrs.aria?
 		)
 	dd.inner =
-		( common.inner.prose )
-	dd.inner.phrase =
-		( common.inner.phrase )
+		( common.inner.flow )
+	dd.inner.phrasing =
+		( common.inner.phrasing )
 
 # #####################################################################
 ## Miscellaneous Elements
@@ -202,10 +202,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	div.inner =
 		(	style.elem.scoped*
-		,	common.inner.prose 
+		,	common.inner.flow 
 		)
 
-	common.elem.prose |= div.elem
+	common.elem.flow |= div.elem
 
 ## Title or Explanatory Caption: <legend>
 
@@ -216,4 +216,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.region?
 		)	
 	legend.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )

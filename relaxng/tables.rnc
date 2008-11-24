@@ -65,7 +65,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)
 		) 
 
-	common.elem.prose |= table.elem
+	common.elem.flow |= table.elem
 
 ## Table Caption: <caption>
 
@@ -76,7 +76,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.region?
 		)
 	caption.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
 # #####################################################################
 ## Table Super Structure
@@ -218,7 +218,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	td.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
 ## Table Header Cells: <th>
 
@@ -232,4 +232,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.th?
 		)
 	th.inner =
-		( common.inner.prose )
+		( common.inner.flow )

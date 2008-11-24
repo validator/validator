@@ -56,7 +56,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		
 	common.elem.metadata |= script.elem
-	common.elem.phrase |= script.elem
+	common.elem.phrasing |= script.elem
 
 ## Fallback Unscripted Content: <noscript>
 
@@ -68,18 +68,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	meta.elem.http-equiv
 			|	style.elem
 			)*
-	noscript.elem.phrase =
-		element noscript { common.inner.phrase & noscript.attrs }
+	noscript.elem.phrasing =
+		element noscript { common.inner.phrasing & noscript.attrs }
 		& HTMLonly
-	noscript.elem.prose =
-		element noscript { common.inner.prose & noscript.attrs }
+	noscript.elem.flow =
+		element noscript { common.inner.flow & noscript.attrs }
 		& HTMLonly
 	noscript.attrs =
 		( common.attrs )
 
 	common.elem.metadata |= noscript.elem.head
-	common.elem.phrase |= noscript.elem.phrase
-	common.elem.prose |= noscript.elem.prose
+	common.elem.phrasing |= noscript.elem.phrasing
+	common.elem.flow |= noscript.elem.flow
 
 # #####################################################################
 ## Event Handler Attribute Definitions

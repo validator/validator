@@ -6,10 +6,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Contextual Hyperlink: <a>
 
-	a.elem.phrase =
-		element a { a.inner.phrase & a.attrs }
-	a.elem.prose =
-		element a { a.inner.prose & a.attrs }
+	a.elem.phrasing =
+		element a { a.inner.phrasing & a.attrs }
+	a.elem.flow =
+		element a { a.inner.flow & a.attrs }
 	a.attrs =
 		(	common.attrs
 		&	a.attrs.href?
@@ -51,13 +51,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute ping {
 				common.data.uris
 			} & v5only
-	a.inner.phrase =
-		( common.inner.phrase )
-	a.inner.prose =
-		( common.inner.prose )
+	a.inner.phrasing =
+		( common.inner.phrasing )
+	a.inner.flow =
+		( common.inner.flow )
 
-	common.elem.phrase |= a.elem.phrase
-	common.elem.prose |= a.elem.prose
+	common.elem.phrasing |= a.elem.phrasing
+	common.elem.flow |= a.elem.flow
 
 ## Emphatic Stress: <em>
 
@@ -68,9 +68,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	em.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= em.elem
+	common.elem.phrasing |= em.elem
 
 ## Strong Importance: <strong>
 
@@ -81,9 +81,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	strong.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= strong.elem
+	common.elem.phrasing |= strong.elem
 
 ## Small Print and Side Comments: <small>
 
@@ -94,9 +94,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	small.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= small.elem
+	common.elem.phrasing |= small.elem
 
 ## Marked (Highlighted) Text: <mark>
 
@@ -106,9 +106,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	mark.attrs =
 		( common.attrs )
 	mark.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= mark.elem
+	common.elem.phrasing |= mark.elem
 
 ## Abbreviation: <abbr>
 
@@ -120,9 +120,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	abbr.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= abbr.elem
+	common.elem.phrasing |= abbr.elem
 
 ## Defining Instance: <dfn>
 
@@ -134,9 +134,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	dfn.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= dfn.elem
+	common.elem.phrasing |= dfn.elem
 
 ## Italic: <i>
 
@@ -147,9 +147,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	i.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= i.elem
+	common.elem.phrasing |= i.elem
 
 ## Bold: <b>
 
@@ -160,9 +160,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	b.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= b.elem
+	common.elem.phrasing |= b.elem
 
 ## Code Fragment: <code>
 
@@ -175,11 +175,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	code.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 	code.inner.strict =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= code.elem.strict
+	common.elem.phrasing |= code.elem.strict
 
 ## Variable or Placeholder: <var>
 
@@ -190,9 +190,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	var.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= var.elem
+	common.elem.phrasing |= var.elem
 
 ## (Sample) Output: <samp>
 
@@ -203,9 +203,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	samp.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= samp.elem
+	common.elem.phrasing |= samp.elem
 
 ## User Input: <kbd>
 
@@ -216,9 +216,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	kbd.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= kbd.elem
+	common.elem.phrasing |= kbd.elem
 
 ## Superscript: <sup>
 
@@ -227,9 +227,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	sup.attrs =
 		( common.attrs )
 	sup.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= sup.elem
+	common.elem.phrasing |= sup.elem
 
 ## Subscript: <sub>
 
@@ -238,9 +238,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	sub.attrs =
 		( common.attrs )
 	sub.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= sub.elem
+	common.elem.phrasing |= sub.elem
 
 ## Quotation: <q>
 
@@ -256,9 +256,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.uri
 			}
 	q.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= q.elem
+	common.elem.phrasing |= q.elem
 
 ## Title of Work: <cite>
 
@@ -269,9 +269,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	cite.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= cite.elem
+	common.elem.phrasing |= cite.elem
 
 ## Generic Span: <span>
 
@@ -282,9 +282,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	span.inner =
-		( common.inner.phrase ) # REVISIT allow ol and ul?
+		( common.inner.phrasing ) # REVISIT allow ol and ul?
 
-	common.elem.phrase |= span.elem
+	common.elem.phrasing |= span.elem
 
 ## Bidirectional Override: <bdo>
 
@@ -293,9 +293,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	bdo.attrs =
 		( common.attrs ) # dir required in Schematron
 	bdo.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= bdo.elem
+	common.elem.phrasing |= bdo.elem
 
 ## Line Break: <br>
 
@@ -306,4 +306,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 	br.inner =
 		( empty )
 
-	common.elem.phrase |= br.elem
+	common.elem.phrasing |= br.elem

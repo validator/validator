@@ -12,9 +12,9 @@
 	center.attrs =
 		( common.attrs )
 	center.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.prose |= center.elem
+	common.elem.flow |= center.elem
 
 ## Inline Styling: <font>
 
@@ -23,9 +23,9 @@
 	font.attrs =
 		( common.attrs )
 	font.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= font.elem
+	common.elem.phrasing |= font.elem
 
 ## Larger Font: <big>
 
@@ -34,9 +34,9 @@
 	big.attrs =
 		( common.attrs )
 	big.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= big.elem
+	common.elem.phrasing |= big.elem
 
 ## Struck Text: <s>
 
@@ -45,9 +45,9 @@
 	s.attrs =
 		( common.attrs )
 	s.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= s.elem
+	common.elem.phrasing |= s.elem
 
 ## Struck Text: <strike>
 
@@ -56,9 +56,9 @@
 	strike.attrs =
 		( common.attrs )
 	strike.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= strike.elem
+	common.elem.phrasing |= strike.elem
 
 ## Teletype: <tt>
 
@@ -67,9 +67,9 @@
 	tt.attrs =
 		( common.attrs )
 	tt.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= tt.elem
+	common.elem.phrasing |= tt.elem
 
 ## Underline: <u>
 
@@ -78,9 +78,9 @@
 	u.attrs =
 		( common.attrs )
 	u.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= u.elem
+	common.elem.phrasing |= u.elem
 
 ## Abbreviation: <acronym>
 
@@ -89,9 +89,9 @@
 	acronym.attrs =
 		( common.attrs )
 	acronym.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.phrase |= acronym.elem
+	common.elem.phrasing |= acronym.elem
 
 ## Directory: <dir>
 
@@ -102,12 +102,12 @@
 	dir.inner =
 		( li.elem* )
 
-	common.elem.prose |= dir.elem
+	common.elem.flow |= dir.elem
 
 ## Java Applets: <applet>
 
-	applet.elem.prose =
-		element applet { applet.inner.prose & applet.attrs }
+	applet.elem.flow =
+		element applet { applet.inner.flow & applet.attrs }
 	applet.elem.embedded =
 		element applet { applet.inner.embedded & applet.attrs }
 	applet.attrs =
@@ -143,14 +143,14 @@
 			attribute width {
 				common.data.integer.positive
 			}
-	applet.inner.prose =
+	applet.inner.flow =
 		(	param.elem*
-		,	common.inner.prose
+		,	common.inner.flow
 		)
 	applet.inner.embedded =
 		(	param.elem*
-		,	common.inner.phrase
+		,	common.inner.phrasing
 		)
 
-	common.elem.prose |= applet.elem.prose
+	common.elem.flow |= applet.elem.flow
 	common.elem.embedded |= applet.elem.embedded

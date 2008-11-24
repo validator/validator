@@ -23,9 +23,9 @@
 		&	edit.attrs.datetime?
 		)
 	ins.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= ins.elem
+	common.elem.phrasing |= ins.elem
 
 ## Deletions: <del>
 
@@ -37,6 +37,6 @@
 		&	edit.attrs.datetime?
 		)
 	del.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= del.elem
+	common.elem.phrasing |= del.elem

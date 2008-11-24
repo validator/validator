@@ -573,9 +573,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.idrefs #REVISIT spec says space--not whitespace
 			}
 	output.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.phrase |= output.elem
+	common.elem.phrasing |= output.elem
 
 ## Text Area: <textarea>, extensions
 
@@ -625,17 +625,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	#REVISIT should the options in datalist be non-selectable?
 
-	datalist.elem.phrase=
-		element datalist { option.elem* & common.inner.phrase & datalist.attrs }
-	datalist.elem.prose =
-		element datalist { option.elem* & common.inner.prose & datalist.attrs }
+	datalist.elem.phrasing=
+		element datalist { option.elem* & common.inner.phrasing & datalist.attrs }
+	datalist.elem.flow =
+		element datalist { option.elem* & common.inner.flow & datalist.attrs }
 	datalist.attrs =
 		(	common.attrs
 		&	common-form.attrs.data?
 		)
 
-	common.elem.phrase |= datalist.elem.phrase
-	common.elem.prose |= datalist.elem.prose
+	common.elem.phrasing |= datalist.elem.phrasing
+	common.elem.flow |= datalist.elem.flow
 
 ## Complex Submit Button: <button type='submit'>, extensions
 

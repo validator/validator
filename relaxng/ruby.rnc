@@ -16,7 +16,7 @@ namespace local = ""
 		&	common.attrs.aria?
 		)
 	ruby.inner =
-		(  (  common.inner.phrase
+		(  (  common.inner.phrasing
 		   ,  (  rt.elem
 		      |  (  rp.elem.start
 		         ,  rt.elem
@@ -26,7 +26,7 @@ namespace local = ""
 		   )+
 		)
 
-	common.elem.phrase |= ruby.elem
+	common.elem.phrasing |= ruby.elem
 
 ## Ruby Text: <rt>
 
@@ -37,7 +37,7 @@ namespace local = ""
 		&	common.attrs.aria?
 		)
 	rt.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 	
 ## Ruby Parenthesis: <rp>
 

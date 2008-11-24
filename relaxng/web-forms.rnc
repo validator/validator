@@ -292,7 +292,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	input.elem |= input.image.elem
 	
-	common.elem.phrase |= input.elem
+	common.elem.phrasing |= input.elem
 
 ## Text Area: <textarea>
 
@@ -325,7 +325,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	textarea.inner =
 		( text )
 
-	common.elem.phrase |= textarea.elem
+	common.elem.phrasing |= textarea.elem
 
 # Due to limitations with interleave, handling single/multiple selection
 # enforcement in RELAX NG seems to be possible but really awkward.
@@ -395,7 +395,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	option.elem*
 		)
 
-	common.elem.phrase |= select.elem
+	common.elem.phrasing |= select.elem
 	
 ## Shared Definitions for Complex Button
 	
@@ -404,7 +404,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	button.inner = 
-		( common.inner.prose )
+		( common.inner.flow )
 	
 ## Complex Submit Button: <button type='submit'>
 
@@ -465,7 +465,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	button.elem |= button.button.elem
 
-	common.elem.phrase |= button.elem
+	common.elem.phrasing |= button.elem
 
 ## Form: <form>
 
@@ -507,9 +507,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				form.data.charsetlist
 			}	
 	form.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.prose |= form.elem
+	common.elem.flow |= form.elem
 
 ## Fieldset: <fieldset>
 
@@ -522,10 +522,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)	
 	fieldset.inner =
 		(	legend.elem? #REVISIT should this be required?
-		,	common.inner.prose
+		,	common.inner.flow
 		)
 
-	common.elem.prose |= fieldset.elem
+	common.elem.flow |= fieldset.elem
 	
 ## Label: <label>
 
@@ -542,7 +542,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.idref
 			}
 	label.inner =
-		( common.inner.phrase ) #REVISIT making obvious guess
+		( common.inner.phrasing ) #REVISIT making obvious guess
 
-	common.elem.phrase |= label.elem
+	common.elem.phrasing |= label.elem
 

@@ -97,8 +97,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Video: <video>
 
-	video.elem.prose =
-		element video { video.inner.prose & video.attrs }
+	video.elem.flow =
+		element video { video.inner.flow & video.attrs }
 	video.elem.embedded =
 		element video { video.inner.embedded & video.attrs }
 	video.attrs =
@@ -120,38 +120,38 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute width {
 				common.data.integer.positive
 			}
-	video.inner.prose =
+	video.inner.flow =
 		(	media.source
-		,	common.inner.prose
+		,	common.inner.flow
 		)
 	video.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
 
-	common.elem.prose |= video.elem.prose
+	common.elem.flow |= video.elem.flow
 	common.elem.embedded |= video.elem.embedded
 
 ## Audio: <audio>
 
-	audio.elem.prose =
-		element audio { audio.inner.prose & audio.attrs }
+	audio.elem.flow =
+		element audio { audio.inner.flow & audio.attrs }
 	audio.elem.embedded =
 		element audio { audio.inner.embedded & audio.attrs }
 	audio.attrs =
 		(	common.attrs
 		&	media.attrs
 		)
-	audio.inner.prose =
+	audio.inner.flow =
 		(	media.source
-		,	common.inner.prose
+		,	common.inner.flow
 		)
 	audio.inner.embedded =
 		(	media.source
 		,	common.elem.embedded
 		)
 
-	common.elem.prose |= audio.elem.prose
+	common.elem.flow |= audio.elem.flow
 	common.elem.embedded |= audio.elem.embedded
 
 ## Captioned Content: <figure>
@@ -163,8 +163,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.img?
 		)
 	figure.inner =
-		(	( legend.elem, common.inner.prose )
-		|	( common.inner.prose, legend.elem? )
+		(	( legend.elem, common.inner.flow )
+		|	( common.inner.flow, legend.elem? )
 		)
 
-	common.elem.prose |= figure.elem
+	common.elem.flow |= figure.elem

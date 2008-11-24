@@ -150,8 +150,8 @@ namespace local = ""
 
 ## Generic Objects: <object>
 
-	object.elem.prose =
-		element object { object.inner.prose & object.attrs }
+	object.elem.flow =
+		element object { object.inner.flow & object.attrs }
 	object.elem.embedded =
 		element object { object.inner.embedded & object.attrs }
 	object.attrs =
@@ -211,18 +211,18 @@ namespace local = ""
 			attribute name {
 				common.data.browsing-context
 			}
-	object.inner.prose =
+	object.inner.flow =
 		(	param.elem*
-		,	common.inner.prose
+		,	common.inner.flow
 		)
 	object.inner.embedded =
 		(	param.elem*
-		,	(	common.inner.prose
+		,	(	common.inner.flow
 			|	object.elem.embedded
 			)
 		)
 
-	common.elem.prose |= object.elem.prose
+	common.elem.flow |= object.elem.flow
 	common.elem.embedded |= object.elem.embedded
 
 ## Initialization Parameters: <param>
@@ -335,9 +335,9 @@ namespace local = ""
 				common.data.name
 			}
 	map.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.prose |= map.elem
+	common.elem.flow |= map.elem
 
 ## Map Area Definition: <area>
 
@@ -434,4 +434,4 @@ namespace local = ""
 	area.inner =
 		( empty )
 
-	common.elem.phrase |= area.elem
+	common.elem.phrasing |= area.elem

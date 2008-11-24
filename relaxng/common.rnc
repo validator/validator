@@ -66,13 +66,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Phrase Elements
 
-	common.elem.phrase =
+	common.elem.phrasing =
 		( common.elem.embedded )
 
 ## Prose Elements
 
-	common.elem.prose =
-		( common.elem.phrase )
+	common.elem.flow =
+		( common.elem.phrasing )
 
 
 # #####################################################################
@@ -86,13 +86,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Phrase Content
 
-	common.inner.phrase =
-		( text & common.elem.phrase* )
+	common.inner.phrasing =
+		( text & common.elem.phrasing* )
 
 ## Prose Content
 
-	common.inner.prose =
-		( text & common.elem.prose* ) # REVISIT <style scoped>
+	common.inner.flow =
+		( text & common.elem.flow* ) # REVISIT <style scoped>
 
 # #####################################################################
 ##  Common Attributes                                                 #

@@ -51,7 +51,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)?
 		)
 	body.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
 ## Document Title: <title>
 

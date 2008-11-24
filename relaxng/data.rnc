@@ -15,9 +15,9 @@
 				common.data.date-or-time #REVISIT check format
 			}
 	time.inner =
-		( common.inner.phrase ) #Cannot enforce textContent format here
+		( common.inner.phrasing ) #Cannot enforce textContent format here
 
-	common.elem.phrase |= time.elem
+	common.elem.phrasing |= time.elem
 
 ## Scalar Gauge: <meter>
 
@@ -57,6 +57,6 @@
 				common.data.float
 			}
 	meter.inner =
-		( common.inner.phrase ) #Cannot enforce textContent format here
+		( common.inner.phrasing ) #Cannot enforce textContent format here
 
-	common.elem.phrase |= meter.elem
+	common.elem.phrasing |= meter.elem

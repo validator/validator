@@ -14,9 +14,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h1.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h1.elem
+	common.elem.flow |= h1.elem
 
 ## Heading (Rank 2): <h2>
 
@@ -27,9 +27,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h2.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h2.elem
+	common.elem.flow |= h2.elem
 
 ## Heading (Rank 3): <h3>
 
@@ -40,9 +40,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h3.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h3.elem
+	common.elem.flow |= h3.elem
 
 ## Heading (Rank 4): <h4>
 
@@ -53,9 +53,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h4.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h4.elem
+	common.elem.flow |= h4.elem
 
 ## Heading (Rank 5): <h5>
 
@@ -66,9 +66,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h5.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h5.elem
+	common.elem.flow |= h5.elem
 
 ## Heading (Rank 6): <h6>
 
@@ -79,9 +79,9 @@
 		&	common.attrs.aria.implicit.structure?
 		)
 	h6.inner =
-		( common.inner.phrase )
+		( common.inner.phrasing )
 
-	common.elem.prose |= h6.elem
+	common.elem.flow |= h6.elem
 
 # #####################################################################
 ## Section Meta
@@ -95,9 +95,9 @@
 		&	common.attrs.aria.implicit.region?
 		)
 	address.inner = 
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.prose |= address.elem
+	common.elem.flow |= address.elem
 
 # #####################################################################
 ## Quotations	
@@ -116,6 +116,6 @@
 				common.data.uri
 			}
 	blockquote.inner =
-		( common.inner.prose )
+		( common.inner.flow )
 
-	common.elem.prose |= blockquote.elem
+	common.elem.flow |= blockquote.elem
