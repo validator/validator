@@ -108,8 +108,8 @@
 
 	applet.elem.flow =
 		element applet { applet.inner.flow & applet.attrs }
-	applet.elem.embedded =
-		element applet { applet.inner.embedded & applet.attrs }
+	applet.elem.phrasing =
+		element applet { applet.inner.phrasing & applet.attrs }
 	applet.attrs =
 		(	common.attrs
 		&	applet.attrs.archive?
@@ -147,10 +147,10 @@
 		(	param.elem*
 		,	common.inner.flow
 		)
-	applet.inner.embedded =
+	applet.inner.phrasing =
 		(	param.elem*
 		,	common.inner.phrasing
 		)
 
 	common.elem.flow |= applet.elem.flow
-	common.elem.embedded |= applet.elem.embedded
+	common.elem.phrasing |= applet.elem.phrasing

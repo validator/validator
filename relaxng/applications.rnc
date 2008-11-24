@@ -209,8 +209,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	canvas.elem.flow =
 		element canvas { canvas.inner.flow & canvas.attrs }
-	canvas.elem.embedded =
-		element canvas { canvas.inner.embedded & canvas.attrs }
+	canvas.elem.phrasing =
+		element canvas { canvas.inner.phrasing & canvas.attrs }
 	canvas.attrs =
 		(	common.attrs
 		&	canvas.attrs.height?
@@ -227,11 +227,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	canvas.inner.flow =
 		( common.inner.flow )
-	canvas.inner.embedded =
+	canvas.inner.phrasing =
 		( common.inner.phrasing )
 	
 	common.elem.flow |= canvas.elem.flow
-	common.elem.embedded |= canvas.elem.embedded
+	common.elem.phrasing |= canvas.elem.phrasing
 
 ## Server-sent events: <eventsource>
 

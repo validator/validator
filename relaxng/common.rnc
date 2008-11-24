@@ -59,15 +59,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.metadata =
 		( notAllowed )
 
-## Embedded Content
-
-	common.elem.embedded =
-		( notAllowed )
-
 ## Phrase Elements
 
 	common.elem.phrasing =
-		( common.elem.embedded )
+		( notAllowed )
 
 ## Prose Elements
 

@@ -99,8 +99,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	video.elem.flow =
 		element video { video.inner.flow & video.attrs }
-	video.elem.embedded =
-		element video { video.inner.embedded & video.attrs }
+	video.elem.phrasing =
+		element video { video.inner.phrasing & video.attrs }
 	video.attrs =
 		(	common.attrs
 		&	media.attrs
@@ -124,20 +124,20 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	media.source
 		,	common.inner.flow
 		)
-	video.inner.embedded =
+	video.inner.phrasing =
 		(	media.source
-		,	common.elem.embedded
+		,	common.elem.phrasing
 		)
 
 	common.elem.flow |= video.elem.flow
-	common.elem.embedded |= video.elem.embedded
+	common.elem.phrasing |= video.elem.phrasing
 
 ## Audio: <audio>
 
 	audio.elem.flow =
 		element audio { audio.inner.flow & audio.attrs }
-	audio.elem.embedded =
-		element audio { audio.inner.embedded & audio.attrs }
+	audio.elem.phrasing =
+		element audio { audio.inner.phrasing & audio.attrs }
 	audio.attrs =
 		(	common.attrs
 		&	media.attrs
@@ -146,13 +146,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	media.source
 		,	common.inner.flow
 		)
-	audio.inner.embedded =
+	audio.inner.phrasing =
 		(	media.source
-		,	common.elem.embedded
+		,	common.elem.phrasing
 		)
 
 	common.elem.flow |= audio.elem.flow
-	common.elem.embedded |= audio.elem.embedded
+	common.elem.phrasing |= audio.elem.phrasing
 
 ## Captioned Content: <figure>
 

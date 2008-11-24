@@ -49,7 +49,7 @@ namespace local = ""
 	img.inner =
 		empty
 
-	common.elem.embedded |= img.elem
+	common.elem.phrasing |= img.elem
 
 ## Plug-ins: <embed>
 
@@ -146,14 +146,14 @@ namespace local = ""
 	embed.inner =
 		empty
 
-	common.elem.embedded |= embed.elem
+	common.elem.phrasing |= embed.elem
 
 ## Generic Objects: <object>
 
 	object.elem.flow =
 		element object { object.inner.flow & object.attrs }
-	object.elem.embedded =
-		element object { object.inner.embedded & object.attrs }
+	object.elem.phrasing =
+		element object { object.inner.phrasing & object.attrs }
 	object.attrs =
 		(	common.attrs
 		&	(	(	object.attrs.data
@@ -215,15 +215,15 @@ namespace local = ""
 		(	param.elem*
 		,	common.inner.flow
 		)
-	object.inner.embedded =
+	object.inner.phrasing =
 		(	param.elem*
 		,	(	common.inner.flow
-			|	object.elem.embedded
+			|	object.elem.phrasing
 			)
 		)
 
 	common.elem.flow |= object.elem.flow
-	common.elem.embedded |= object.elem.embedded
+	common.elem.phrasing |= object.elem.phrasing
 
 ## Initialization Parameters: <param>
 
@@ -317,7 +317,7 @@ namespace local = ""
 	iframe.inner =
 		( text )
 
-	common.elem.embedded |= iframe.elem
+	common.elem.phrasing |= iframe.elem
 
 #######################################################################
 ## Image Maps
