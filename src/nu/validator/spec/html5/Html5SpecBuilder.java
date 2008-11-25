@@ -42,6 +42,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.xml.util.Name;
 
@@ -70,6 +71,8 @@ public class Html5SpecBuilder implements ContentHandler {
         AWAITING_HEADING, IN_H4, IN_CODE_IN_H4, AWAITING_ELEMENT_DL, IN_ELEMENT_DL_START, IN_CATEGORIES_DT, CAPTURING_CATEGORIES_DDS, IN_CONTEXT_DT, CAPTURING_CONTEXT_DDS, IN_CONTENT_MODEL_DT, CAPTURING_CONTENT_MODEL_DDS, IN_ATTRIBUTES_DT, CAPTURING_ATTRIBUTES_DDS
     }
 
+    private Locator locator;
+    
     private State state = State.AWAITING_HEADING;
 
     private int captureDepth = 0;
@@ -107,7 +110,12 @@ public class Html5SpecBuilder implements ContentHandler {
     }
     
     public static void main(String[] args) throws IOException, SAXException {
-        parseSpec();
+        try {
+            parseSpec();            
+        } catch (SAXParseException e) {
+            System.err.printf("Line: %d Col: %d\n", e.getLineNumber(), e.getColumnNumber());
+            e.printStackTrace();
+        }
     }
     
     public static Spec parseSpec(InputStream html5SpecAsStream) throws IOException, SAXException {
@@ -189,16 +197,17 @@ public class Html5SpecBuilder implements ContentHandler {
                     if (m.matches()) {
                         String ln = nameText.toString().intern();
                         if ("" == ln) {
-                            throw new SAXException(
-                                    "Malformed spec: no element currentName.");
+                            throw new SAXParseException(
+                                    "Malformed spec: no element currentName.", locator);
                         }
                         currentName = new Name(NS, ln);
                         if (urisByElement.containsKey(currentName)) {
                             state = State.AWAITING_HEADING;
                         } else {
                             if (currentId == null) {
-                                throw new SAXException(
-                                        "Malformed spec: no element id.");
+                                state = State.AWAITING_HEADING;
+//                                throw new SAXParseException(
+//                                        "Malformed spec: no element id.", locator);
                             }
                             urisByElement.put(currentName, SPEC_LINK_URI + "#"
                                     + currentId);
@@ -219,8 +228,8 @@ public class Html5SpecBuilder implements ContentHandler {
             case AWAITING_ELEMENT_DL:
                 break;
             case IN_ELEMENT_DL_START:
-                throw new SAXException(
-                        "Malformed spec: no children in element dl.");
+                throw new SAXParseException(
+                        "Malformed spec: no children in element dl.", locator);
             case IN_CATEGORIES_DT:
                 if ("dt" == localName && NS == uri) {
                     Matcher m = CATEGORIES.matcher(referenceText);
@@ -229,8 +238,8 @@ public class Html5SpecBuilder implements ContentHandler {
                         captureDepth = 0;
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
-                        throw new SAXException(
-                                "Malformed spec: Expected dt to be categories dt but it was not.");
+                        throw new SAXParseException(
+                                "Malformed spec: Expected dt to be categories dt but it was not.", locator);
                     }
                 }
                 break;
@@ -242,8 +251,8 @@ public class Html5SpecBuilder implements ContentHandler {
                         captureDepth = 0;
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
-                        throw new SAXException(
-                                "Malformed spec: Expected dt to be context dt but it was not.");
+                        throw new SAXParseException(
+                                "Malformed spec: Expected dt to be context dt but it was not.", locator);
                     }
                 }
                 break;
@@ -255,8 +264,8 @@ public class Html5SpecBuilder implements ContentHandler {
                         captureDepth = 0;
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
-                        throw new SAXException(
-                                "Malformed spec: Expected dt to be context dt but it was not.");
+                        throw new SAXParseException(
+                                "Malformed spec: Expected dt to be context dt but it was not.", locator);
                     }
                 }
                 break;
@@ -268,8 +277,8 @@ public class Html5SpecBuilder implements ContentHandler {
                         captureDepth = 0;
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
-                        throw new SAXException(
-                                "Malformed spec: Expected dt to be context dt but it was not.");
+                        throw new SAXParseException(
+                                "Malformed spec: Expected dt to be context dt but it was not.", locator);
                     }
                 }
                 break;
@@ -278,8 +287,8 @@ public class Html5SpecBuilder implements ContentHandler {
             case CAPTURING_CONTENT_MODEL_DDS:
             case CAPTURING_ATTRIBUTES_DDS:
                 if (captureDepth == 0) {
-                    throw new SAXException(
-                            "Malformed spec: Did not see following dt when capturing dds.");
+                    throw new SAXParseException(
+                            "Malformed spec: Did not see following dt when capturing dds.", locator);
                 }
                 captureDepth--;
                 fragmentBuilder.endElement(uri, localName, qName);
@@ -299,6 +308,7 @@ public class Html5SpecBuilder implements ContentHandler {
     }
 
     public void setDocumentLocator(Locator locator) {
+        this.locator = locator;
     }
 
     public void skippedEntity(String name) throws SAXException {
@@ -341,15 +351,15 @@ public class Html5SpecBuilder implements ContentHandler {
                     referenceText.setLength(0);
                     state = State.IN_CATEGORIES_DT;
                 } else {
-                    throw new SAXException("Malformed spec: Expected dt in dl.");
+                    throw new SAXParseException("Malformed spec: Expected dt in dl.", locator);
                 }
                 break;
             case IN_CATEGORIES_DT:
             case IN_CONTEXT_DT:
             case IN_CONTENT_MODEL_DT:
             case IN_ATTRIBUTES_DT:
-                throw new SAXException(
-                        "Malformed spec: Not expecting children in dts.");
+                throw new SAXParseException(
+                        "Malformed spec: Not expecting children in dts.", locator);
             case CAPTURING_CATEGORIES_DDS:
             case CAPTURING_CONTEXT_DDS:
             case CAPTURING_CONTENT_MODEL_DDS:
