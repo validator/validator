@@ -65,6 +65,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 			w:string "required" | w:string ""
 		}
 
+	common-form.attrs.placeholder = 
+		attribute placeholder {
+			string # FIXME line breaks
+		}
+
+
 ## Shared attributes for <input>
 		
 	input.attrs.autocomplete = 
@@ -106,6 +112,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.attrs.list? 
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.required? 
+		&	common-form.attrs.placeholder?
 		)
 
 ## Password Field: <input type='password'>, Extensions
@@ -116,6 +123,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.inputmode? 
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.required? 
+		&	common-form.attrs.placeholder?
 		)
 
 ## Checkbox <input type='checkbox'>, Extensions
@@ -511,6 +519,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	common-form.attrs.size?
+		&	common-form.attrs.placeholder?
 		&	input.email.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
@@ -543,6 +552,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
 		&	common-form.attrs.size?
+		&	common-form.attrs.placeholder?
 		&	input.url.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
@@ -553,6 +563,39 @@ datatypes w = "http://whattf.org/datatype-draft"
 		input.url.attrs.value =
 			attribute value {
 				w:string "" | common.data.uri.absolute
+			}
+		
+	input.elem |= input.url.elem
+
+## Search: <input type='search'>
+
+	input.search.elem = 
+		element input { input.search.attrs }	
+	input.search.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	input.search.attrs.type
+		&	common-form.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	common-form.attrs.autofocus? 
+		&	common-form.attrs.inputmode? 
+		&	input.attrs.list? 
+		&	common-form.attrs.maxlength? 
+		&	common-form.attrs.pattern? 
+		&	common-form.attrs.readonly? 
+		&	common-form.attrs.required? 
+		&	common-form.attrs.size?
+		&	common-form.attrs.placeholder?
+		&	input.search.attrs.value? 
+		&	common.attrs.aria.implicit.input?
+		)	
+		input.search.attrs.type = 
+			attribute type {
+				w:string "search"
+			}
+		input.search.attrs.value =
+			attribute value {
+				string # FIXME line breaks
 			}
 		
 	input.elem |= input.url.elem
