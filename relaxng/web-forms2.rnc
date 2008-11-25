@@ -598,7 +598,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				string # FIXME line breaks
 			}
 		
-	input.elem |= input.url.elem
+	input.elem |= input.search.elem
 
 ## Form Output: <output>
 
