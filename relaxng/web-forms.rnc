@@ -35,6 +35,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute maxlength {
 			common.data.integer.positive #REVISIT should this be non-negative?
 		}
+
+	common-form.attrs.size = 
+		attribute size {
+			common.data.integer.positive
+		}
 	
 	# REVISIT tabindex goes in common.attrs
 
@@ -56,6 +61,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.readonly? 
+		&	common-form.attrs.size?
 		&	input.text.attrs.value? 
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.input
@@ -83,6 +89,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.accesskey?
 		&	common-form.attrs.maxlength? 
 		&	common-form.attrs.readonly? 
+		&	common-form.attrs.size?
 		&	input.password.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)

@@ -510,6 +510,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
+		&	common-form.attrs.size?
 		&	input.email.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
@@ -541,6 +542,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.pattern? 
 		&	common-form.attrs.readonly? 
 		&	common-form.attrs.required? 
+		&	common-form.attrs.size?
 		&	input.url.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
