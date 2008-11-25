@@ -126,7 +126,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	video.inner.phrasing =
 		(	media.source
-		,	common.elem.phrasing
+		,	common.inner.phrasing
 		)
 
 	common.elem.flow |= video.elem.flow
@@ -148,7 +148,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	audio.inner.phrasing =
 		(	media.source
-		,	common.elem.phrasing
+		,	common.inner.phrasing
 		)
 
 	common.elem.flow |= audio.elem.flow

@@ -217,9 +217,7 @@ namespace local = ""
 		)
 	object.inner.phrasing =
 		(	param.elem*
-		,	(	common.inner.flow
-			|	object.elem.phrasing
-			)
+		,	common.inner.phrasing
 		)
 
 	common.elem.flow |= object.elem.flow
