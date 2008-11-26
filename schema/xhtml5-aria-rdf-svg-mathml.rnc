@@ -11,9 +11,9 @@ include "rdf/rdf.rnc"
 common.elem.metadata |= rdf.elem
 SVG.metadata.content |= rdf.elem
 
-common.elem.embedded |= svg
+common.elem.phrasing |= svg
 
-common.elem.phrase |= mml.math.qname
+common.elem.phrasing |= mml.math.qname
 
 SVG.foreignObject.content |=
 	(	mml.math.qname
