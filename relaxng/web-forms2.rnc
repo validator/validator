@@ -6,7 +6,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Shared attributes for form controls
 
-	commen-form.attrs &=
+	common-form.attrs &=
 		( common-form.attrs.form? )
 
 	common-form.attrs.form = 
