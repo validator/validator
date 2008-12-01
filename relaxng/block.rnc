@@ -54,8 +54,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	ul.elem =
 		element ul { ul.inner & ul.attrs }
-	ul.elem.phrasing =
-		element ul { ul.inner.phrasing & ul.attrs }
 	ul.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria
@@ -64,8 +62,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	ul.inner =
 		( li.elem* )
-	ul.inner.phrasing =
-		( li.elem.phrasing* )
 
 	common.elem.flow |= ul.elem
 
@@ -73,8 +69,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	li.elem =
 		element li { li.inner & li.attrs }
-	li.elem.phrasing =
-		element li { li.inner.phrasing & li.attrs }
 	li.attrs =
 		(	common.attrs 
 		&	(	common.attrs.aria
@@ -83,15 +77,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	li.inner =
 		( common.inner.flow )
-	li.inner.phrasing =
-		( common.inner.phrasing )
 
 ## Ordered List: <ol>
 
 	ol.elem =
 		element ol { ol.inner & ol.attrs }
-	ol.elem.phrasing =
-		element ol { ol.inner.phrasing & ol.attrs }
 	ol.attrs =
 		(	common.attrs
 		&	ol.attrs.start?
@@ -110,8 +100,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	ol.inner =
 		( oli.elem* )
-	ol.inner.phrasing =
-		( oli.elem.phrasing* )
 
 	common.elem.flow |= ol.elem
 
@@ -119,8 +107,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	oli.elem =
 		element li { oli.inner & oli.attrs }
-	oli.elem.phrasing =
-		element li { oli.inner.phrasing & oli.attrs }
 	oli.attrs =
 		(	common.attrs
 		&	oli.attrs.value?
@@ -134,8 +120,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	oli.inner =
 		( common.inner.flow )
-	oli.inner.phrasing =
-		( common.inner.phrasing )
 
 # #####################################################################
 ## Definition Lists
@@ -144,8 +128,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	dl.elem =
 		element dl { dl.inner & dl.attrs }
-	dl.elem.phrasing =
-		element dl { dl.inner.phrasing & dl.attrs }
 	dl.attrs =
 		(	common.attrs
 		&	common.attrs.aria?
@@ -153,11 +135,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	dl.inner =
 		(	(	dt.elem+
 			,	dd.elem+
-			)*
-		)
-	dl.inner.phrasing =
-		(	(	dt.elem+
-			,	dd.elem.phrasing+
 			)*
 		)
 
