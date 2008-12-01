@@ -186,7 +186,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	menu.inner =
 		(	mli.elem*
-		|	common.inner.phrasing
+		|	common.inner.flow
 		)
 	
 	common.elem.flow |= menu.elem
