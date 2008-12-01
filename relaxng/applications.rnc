@@ -185,7 +185,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "autosubmit" | w:string ""
 			}
 	menu.inner =
-		(	mli.elem.phrasing*
+		(	mli.elem*
 		|	common.inner.phrasing
 		)
 	
@@ -196,14 +196,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	mli.elem =
 		element li { mli.inner & mli.attrs }
-	mli.elem.phrasing =
-		element li { mli.inner.phrasing & mli.attrs }
 	mli.attrs =
 		( common.attrs )
 	mli.inner =
 		( common.inner.flow )
-	mli.inner.phrasing =
-		( common.inner.phrasing )
 	
 ## Canvas for Dynamic Graphics: <canvas>
 
