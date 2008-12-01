@@ -11,7 +11,7 @@
 #		(	scripting.attr.form.select?
 #		)
 
-#	common-form.attrs &=
+#	shared-form.attrs &=
 #		(	scripting.attr.form.change?
 #		)
 
