@@ -55,11 +55,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			common.data.idref
 		}
 
-	common-form.attrs.data = 
-		attribute data {
-			common.data.uri
-		}
-
 	common-form.attrs.required = 
 		attribute required {
 			w:string "required" | w:string ""
@@ -662,9 +657,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Selection Menu: <select>, extensions
 	select.attrs &=
-		(	common-form.attrs.accesskey?
-		&	common-form.attrs.data?
-		)
+		( common-form.attrs.accesskey? )
 
 ## List of Prefill Data: <datalist>
 
@@ -675,9 +668,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	datalist.elem.flow =
 		element datalist { option.elem* & common.inner.flow & datalist.attrs }
 	datalist.attrs =
-		(	common.attrs
-		&	common-form.attrs.data?
-		)
+		( common.attrs )
 
 	common.elem.phrasing |= datalist.elem.phrasing
 	common.elem.flow |= datalist.elem.flow
@@ -710,7 +701,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( w:string "application/x-www-form+xml" | w:string "text/plain" )
 	form.attrs &= 
 		(	common-form.attrs.replace?
-		&	common-form.attrs.data?
 		&	common-form.attrs.target?
 		)
 	
