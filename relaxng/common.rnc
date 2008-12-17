@@ -202,11 +202,6 @@ common.attrs.other =
 
 	common.data.tokens =
 		list { token* }
-		
-	common.data.tokens.comma-separated =
-		xsd:string {
-			pattern = "[^,]+(,[^,]+)*"
-		}
 
 	common.data.character = 
 		string #FIXME
