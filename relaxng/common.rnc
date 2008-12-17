@@ -295,9 +295,6 @@ common.attrs.other =
 	common.data.date-or-time =
 		w:date-or-time
 
-	common.data.timeoffset =
-		string #FIXME
-
 ## IRIs
 
 	common.data.uri =

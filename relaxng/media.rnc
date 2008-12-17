@@ -9,39 +9,20 @@ datatypes w = "http://whattf.org/datatype-draft"
 	# src not included
 	media.attrs = 
 		(	media.attrs.autoplay?
-		&	media.attrs.start?
-		&	media.attrs.loopstart?
-		&	media.attrs.loopend?
-		&	media.attrs.playcount?
 		&	media.attrs.controls?
+		&	media.attrs.loop?
 		)
 		media.attrs.autoplay   =
 			attribute autoplay   {
 				w:string "autoplay" | w:string ""
 			}
-		media.attrs.start   =
-			attribute start   {
-				common.data.timeoffset
-			}
-		media.attrs.loopstart  =
-			attribute loopstart  {
-				common.data.timeoffset
-			}
-		media.attrs.loopend  =
-			attribute loopend  {
-				common.data.timeoffset
-			}
-		media.attrs.end  =
-			attribute end  {
-				common.data.timeoffset
-			}
-		media.attrs.playcount  =
-			attribute playcount  {
-				common.data.integer.positive
-			}
 		media.attrs.controls  =
 			attribute controls  {
 				w:string "controls" | w:string ""
+			}
+		media.attrs.loop =
+			attribute loop {
+				w:string "loop" | w:string ""
 			}
 		
 ## Source: <source>
