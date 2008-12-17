@@ -8,17 +8,6 @@
 	scripting.attr.form.forminput =
 		attribute onforminput { string }
 
-	scripting.attr.form.input =
-		attribute oninput { string }
-
-	scripting.attr.form.invalid =
-		attribute oninvalid { string }
-
-	common-form.attrs &=
-		(	scripting.attr.form.input?
-		&	scripting.attr.form.invalid?
-		)
-
 	output.attrs &=
 		(	scripting.attr.form.formchange?
 		&	scripting.attr.form.forminput?
