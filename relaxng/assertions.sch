@@ -638,16 +638,6 @@
 		</rule>
 	</pattern>
 
-	<pattern name='repeat-template must refer to a repetition template'>
-		<rule context='h:*[@repeat-template]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@repeat-template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
-				The &#x201C;repeat-template&#x201D; attribute must refer to a 
-				repetition template.
-			</assert>
-		</rule>
-	</pattern>
-
 	<pattern name='for on label must refer to a form control'>
 		<rule context='h:label[@for]'>
 			<assert test='id(@for)/self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")] or 
@@ -660,25 +650,6 @@
 			</assert>
 		</rule>
 
-	</pattern>
-
-	<pattern name='add button template must refer to a repetition template'>
-		<rule context='h:input[@template and translate(@type, "AD", "ad")="add"]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
-				The &#x201C;template&#x201D; attribute of an 
-				&#x201C;input&#x201D; element that is of 
-				&#x201C;type="add"&#x201D; must refer to a repetition template.
-			</assert>
-		</rule>
-		<rule context='h:button[@template and translate(@type, "AD", "ad")="add"]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='id(@template)/self::h:*[translate(@repeat, "TEMPLA", "templa")="template"]'>
-				The &#x201C;template&#x201D; attribute of a 
-				&#x201C;button&#x201D; element that is of 
-				&#x201C;type="add"&#x201D; must refer to a repetition template.
-			</assert>
-		</rule>
 	</pattern>
 
 	<pattern name='list on input must refer to a select or a datalist'>
@@ -707,59 +678,6 @@
 			</report>
 		</rule>
 	</pattern>
-
-	<!-- REVISIT is this too constraining for scripted apps? -->
-	<pattern name='remove, move-up and move-down only in repetition blocks/templates'>
-		<rule context='h:input[translate(@type, "REMOV", "remov")=remove]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				An &#x201C;input&#x201D; element of 
-				&#x201C;type="remove"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-		<rule context='h:button[translate(@type, "REMOV", "remov")=remove]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				A &#x201C;button&#x201D; element of 
-				&#x201C;type="remove"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-		<rule context='h:input[translate(@type, "MOVEUP", "moveup")=move-up]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				An &#x201C;input&#x201D; element of 
-				&#x201C;type="move-up"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-		<rule context='h:button[translate(@type, "MOVEUP", "moveup")=move-up]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				A &#x201C;button&#x201D; element of 
-				&#x201C;type="move-up"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-		<rule context='h:input[translate(@type, "MOVEDWN", "movedwn")=move-down]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				An &#x201C;input&#x201D; element of 
-				&#x201C;type="move-down"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-		<rule context='h:button[translate(@type, "MOVEDWN", "movedwn")=move-down]'>
-			<!-- REVISIT deal with SVG, MathML, XUL, etc. later -->
-			<assert test='ancestor::h:*[@repeat]'>
-				A &#x201C;button&#x201D; element of 
-				&#x201C;type="move-down"&#x201D; must have a repetition block 
-				or a repetition template as an ancestor.
-			</assert>
-		</rule>
-	</pattern>
-
 
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	

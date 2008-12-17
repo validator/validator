@@ -91,11 +91,6 @@ namespace local = ""
 			                    | lang 
 			                    | style 
 			                    | tabindex 
-			                    | repeat-min 
-			                    | repeat-max 
-			                    | repeat-start 
-			                    | repeat 
-			                    | repeat-template 
 			                    | contextmenu 
 			                    | contenteditable 
 			                    | draggable 
