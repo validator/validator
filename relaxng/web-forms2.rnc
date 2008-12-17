@@ -639,10 +639,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute wrap {
 				w:string "soft"
 			}
-			
-## Option Group: <optgroup>, extensions
-	optgroup.inner &= 
-		( optgroup.elem* )
 
 ## Selection Menu: <select>, extensions
 	select.attrs &=
