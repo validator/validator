@@ -85,12 +85,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	input.attrs.step.float = 
 		attribute step {
-			w:string "any" | form.data.float.positive
+			w:string "any" | common.data.float.positive
 		}
 	
 	input.attrs.step.integer = 
 		attribute step {
 			w:string "any" | common.data.integer.positive 
+		}
+	
+	input.attrs.multiple = 
+		attribute multiple {
+			w:string "multiple" | w:string ""
 		}
 		
 ## Text Field: <input type='text'>, Extensions
@@ -156,6 +161,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.required? 
 		&	input.file.attrs.min? 
 		&	input.file.attrs.max? 
+		&	input.attrs.multiple? 
 		)
 		input.file.attrs.min =
 			attribute min {
@@ -509,6 +515,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.placeholder?
 		&	input.email.attrs.value? 
 		&	common.attrs.aria.implicit.input?
+		&	input.attrs.multiple?
 		)	
 		input.email.attrs.type = 
 			attribute type {
