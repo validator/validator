@@ -177,13 +177,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 
 	tables.attrs.access-headers =
-		(	tables.attrs.headers?
-#		&	tables.attrs.axis? #REVISIT should this be dropped?
-		)
-		tables.attrs.axis = # categorization (implicit headers)
-			attribute axis {
-				common.data.tokens.comma-separated
-			}
+		( tables.attrs.headers? )
 		tables.attrs.headers =
 			attribute headers {
 				common.data.idrefs

@@ -99,38 +99,74 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 	common.elem.flow |= datagrid.elem
 
-## Command: <command>
+## Command with an associated action: <command type='command'>
 
-	command.elem =
-		element command { command.inner & command.attrs }
-	command.attrs =
+	command.command.elem =
+		element command { command.inner & command.command.attrs }
+	command.command.attrs =
 		(	common.attrs
-		&	(	command.attrs.type.command
-			|	(	command.attrs.type.radio
+		&	command.command.attrs.type?
+		&	common-command.attrs
+		)
+		command.command.attrs.type =
+			attribute type {
+				w:string "command"
+			}
+	command.elem = command.command.elem
+
+## Selection of one item from a list of items: <command type='radio'>
+
+	command.radio.elem =
+		element command { command.inner & command.radio.attrs }
+	command.radio.attrs =
+		(	common.attrs
+			&	(	command.radio.attrs.type
 				&	command.attrs.radiogroup #REVISIT taking liberties here
-				&	command.attrs.checked?
+				&	command.radio.attrs.checked?
 				)
-			|	(	command.attrs.type.checkbox
-				&	command.attrs.checked?
+			&	common-command.attrs
+		)
+		command.radio.attrs.type =
+			attribute type {
+				w:string "radio"
+			}
+		command.attrs.radiogroup =
+			attribute radiogroup {
+				string #REVISIT need special format here?
+			}
+		command.radio.attrs.checked =
+			attribute checked {
+				w:string "checked" | w:string ""
+			}
+	command.elem |= command.radio.elem
+
+## State or option that can be toggled: <command type='checkbox'>
+
+	command.checkbox.elem =
+		element command { command.inner & command.checkbox.attrs }
+	command.checkbox.attrs =
+		(	common.attrs
+			&	(	command.checkbox.attrs.type
+				&	command.checkbox.attrs.checked?
 				)
-			)?
-		&	command.attrs.label?
+			&	common-command.attrs
+			)
+		command.checkbox.attrs.type =
+			attribute type {
+				w:string "checkbox"
+			}
+		command.checkbox.attrs.checked =
+			attribute checked {
+				w:string "checked" | w:string ""
+			}
+	command.elem |= command.checkbox.elem
+
+	common-command.attrs =
+		(	command.attrs.label?
 		&	command.attrs.icon?
 		&	command.attrs.disabled?
 		&	command.attrs.default?
 		)
-		command.attrs.type.command =
-			attribute type {
-				w:string "command"
-			}
-		command.attrs.type.radio =
-			attribute type {
-				w:string "radio"
-			}
-		command.attrs.type.checkbox =
-			attribute type {
-				w:string "checkbox"
-			}
 		command.attrs.label =
 			attribute label {
 				string
@@ -142,14 +178,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		command.attrs.disabled =
 			attribute disabled {
 				w:string "disabled" | w:string ""
-			}
-		command.attrs.checked =
-			attribute checked {
-				w:string "checked" | w:string ""
-			}
-		command.attrs.radiogroup =
-			attribute radiogroup {
-				string #REVISIT need special format here?
 			}
 		command.attrs.default =
 			attribute default {
