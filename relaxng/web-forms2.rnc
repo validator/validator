@@ -203,15 +203,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.datetime.attrs.min =
 			attribute min {
-				form.data.datetime
+				common.data.datetime
 			}
 		input.datetime.attrs.max =
 			attribute max {
-				form.data.datetime			
+				common.data.datetime
 			}	
 		input.datetime.attrs.value =
 			attribute value {
-				form.data.datetime
+				common.data.datetime
 			}
 		
 	input.elem |= input.datetime.elem

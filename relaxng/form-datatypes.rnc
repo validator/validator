@@ -34,9 +34,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 ## Temporal
 		
-	form.data.datetime =
-		w:datetime
-	
 	form.data.datetime-local =
 		w:datetime-local
 	
