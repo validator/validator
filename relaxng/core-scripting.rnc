@@ -65,7 +65,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		& HTMLonly
 		noscript.inner.head = 
 			(	link.elem
-			|	meta.elem.http-equiv
+			|	meta.http-equiv.elem
 			|	style.elem
 			)*
 	noscript.elem.phrasing =
