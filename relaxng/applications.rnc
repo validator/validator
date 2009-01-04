@@ -121,7 +121,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	command.radio.attrs =
 		(	common.attrs
 			&	(	command.radio.attrs.type
-				&	command.attrs.radiogroup #REVISIT taking liberties here
+				&	command.radio.attrs.radiogroup #REVISIT taking liberties here
 				&	command.radio.attrs.checked?
 				)
 			&	common-command.attrs
@@ -130,7 +130,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute type {
 				w:string "radio"
 			}
-		command.attrs.radiogroup =
+		command.radio.attrs.radiogroup =
 			attribute radiogroup {
 				string #REVISIT need special format here?
 			}
@@ -189,6 +189,25 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.metadata |=
 		( command.elem & nonHTMLizable )
 	common.elem.phrasing |= command.elem
+
+## User-agent command: <bb>
+
+	bb.elem =
+		element bb { bb.inner & bb.attrs }	
+	bb.attrs =
+		(	common.attrs
+		&	shared-form.attrs.accesskey?
+		&	bb.attrs.type?
+		&	common.attrs.aria.implicit.button?
+		)
+		bb.attrs.type =
+			attribute type {
+				w:string "makeapp"
+			}
+	bb.inner = 
+		( common.inner.phrasing )
+
+	common.elem.phrasing |= bb.elem
 
 ## Menu: <menu>
 
