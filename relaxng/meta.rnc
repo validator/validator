@@ -88,32 +88,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element link { link.inner & link.attrs }
 	link.attrs =
 		(	common.attrs
-		&	link.attrs.href
-		&	link.attrs.rel
-		&	link.attrs.hreflang?
-		&	link.attrs.media?
-		&	link.attrs.type?
+		&	shared-hyperlink.attrs.href
+		&	shared-hyperlink.attrs.rel
+		&	shared-hyperlink.attrs.hreflang?
+		&	shared-hyperlink.attrs.media?
+		&	shared-hyperlink.attrs.type?
+		&	link.attrs.sizes?
 		#	link.attrs.title included in common.attrs
 		)
-		link.attrs.href =
-			attribute href {
-				common.data.uri
-			}
-		link.attrs.rel =
-			attribute rel {
-				common.data.tokens # REVISIT non-schema checker needed
-			}
-		link.attrs.hreflang =
-			attribute hreflang {
-				common.data.langcode
-			}
-		link.attrs.media =
-			attribute media {
-				common.data.mediaquery
-			}
-		link.attrs.type =
-			attribute type {
-				common.data.mimetype
+		link.attrs.sizes =
+			attribute sizes {
+				w:string "any" | common.data.sizes
 			}
 	link.inner =
 		( empty )

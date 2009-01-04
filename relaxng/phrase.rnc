@@ -12,45 +12,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element a { a.inner.flow & a.attrs }
 	a.attrs =
 		(	common.attrs
-		&	a.attrs.href?
-		&	a.attrs.target?
-		&	a.attrs.rel?
-		&	a.attrs.hreflang?
-		&	a.attrs.media?
-		&	a.attrs.type?
-		&	a.attrs.ping?
+		&	shared-hyperlink.attrs.href?
+		&	shared-hyperlink.attrs.target?
+		&	shared-hyperlink.attrs.rel?
+		&	shared-hyperlink.attrs.hreflang?
+		&	shared-hyperlink.attrs.media?
+		&	shared-hyperlink.attrs.type?
+		&	shared-hyperlink.attrs.ping?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.link
 			)?
 		)
-		a.attrs.href =
-			attribute href {
-				common.data.uri
-			}
-		a.attrs.target =
-			attribute target {
-				common.data.browsing-context-or-keyword
-			}
-		a.attrs.rel =
-			attribute rel {
-				common.data.tokens
-			}
-		a.attrs.hreflang =
-			attribute hreflang {
-				common.data.langcode
-			}
-		a.attrs.media =
-			attribute media {
-				common.data.mediaquery
-			}
-		a.attrs.type =
-			attribute type {
-				common.data.mimetype
-			}
-		a.attrs.ping =
-			attribute ping {
-				common.data.uris
-			} & v5only
 	a.inner.phrasing =
 		( common.inner.phrasing )
 	a.inner.flow =
@@ -58,6 +30,37 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= a.elem.phrasing
 	common.elem.flow |= a.elem.flow
+
+## Shared hyperlink attributes
+
+		shared-hyperlink.attrs.href =
+			attribute href {
+				common.data.uri
+			}
+		shared-hyperlink.attrs.target =
+			attribute target {
+				common.data.browsing-context-or-keyword
+			}
+		shared-hyperlink.attrs.rel =
+			attribute rel {
+				common.data.tokens
+			}
+		shared-hyperlink.attrs.hreflang =
+			attribute hreflang {
+				common.data.langcode
+			}
+		shared-hyperlink.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
+		shared-hyperlink.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+		shared-hyperlink.attrs.ping =
+			attribute ping {
+				common.data.uris
+			} & v5only
 
 ## Emphatic Stress: <em>
 

@@ -332,97 +332,104 @@ namespace local = ""
 
 	common.elem.flow |= map.elem
 
-## Map Area Definition: <area>
+## Rectangular Map Area Definition: <area shape='rect'>
 
-	area.elem =
-		element area { area.inner & area.attrs }
-	area.attrs =
+	area.rect.elem =
+		element area { area.inner & area.rect.attrs }
+	area.rect.attrs =
 		(	common.attrs
-		&	(	area.attrs.alt
-			&	area.attrs.href
-			)?
-		&	area.attrs.target?
-		&	area.attrs.ping?
-		&	area.attrs.rel?
-		&	area.attrs.media?
-		&	area.attrs.hreflang?
-		&	area.attrs.type?
-		&	area.attrs.shape?
+		&	area.rect.attrs.shape?
+		&	area.rect.attrs.coords
+		&	common-area.attrs
 		)
-		area.attrs.alt =
-			attribute alt {
-				text
-			}
-		area.attrs.href =
-			attribute href {
-				common.data.uri
-			}
-		area.attrs.target =
-			attribute target {
-				common.data.browsing-context-or-keyword
-			}
-		area.attrs.ping =
-			attribute ping {
-				common.data.uris
-			} & v5only
-		area.attrs.rel =
-			attribute rel {
-				common.data.tokens
-			}
-		area.attrs.media =
-			attribute media {
-				common.data.mediaquery
-			}
-		area.attrs.hreflang =
-			attribute hreflang {
-				common.data.langcode
-			}
-		area.attrs.type =
-			attribute type {
-				common.data.mimetype
-			}
-		area.attrs.shape =
-			(	( area.attrs.shape.rect?  & area.attrs.coords.rect   )
-			|	( area.attrs.shape.circle & area.attrs.coords.circle )
-			|	( area.attrs.shape.poly   & area.attrs.coords.poly   )
-			|	( area.attrs.shape.default )
-			)
-		area.attrs.shape.rect =
+		area.rect.attrs.shape =
 			attribute shape {
 				w:string "rect"
 			}
-		area.attrs.coords.rect =
+		area.rect.attrs.coords =
 			attribute coords {
 				w:rectangle
 #				xsd:token {
 #					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
 #				}
 			}
-		area.attrs.shape.circle =
+	area.elem = area.rect.elem
+
+## Circular Map Area Definition: <area shape='circle'>
+
+	area.circle.elem =
+		element area { area.inner & area.circle.attrs }
+	area.circle.attrs =
+		(	common.attrs
+		&	area.circle.attrs.shape?
+		&	area.circle.attrs.coords
+		&	common-area.attrs
+		)
+		area.circle.attrs.shape =
 			attribute shape {
 				w:string "circle"
 			}
-		area.attrs.coords.circle =
+		area.circle.attrs.coords =
 			attribute coords {
 				w:circle
 #				xsd:token {
 #					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
 #				}
 			}
-		area.attrs.shape.poly =
+	area.elem |= area.circle.elem
+
+## Polygonal Map Area Definition: <area shape='poly'>
+
+	area.poly.elem =
+		element area { area.inner & area.poly.attrs }
+	area.poly.attrs =
+		(	common.attrs
+		&	area.poly.attrs.shape?
+		&	area.poly.attrs.coords
+		&	common-area.attrs
+		)
+		area.poly.attrs.shape =
 			attribute shape {
 				w:string "poly"
 			}
-		area.attrs.coords.poly =
+		area.poly.attrs.coords =
 			attribute coords {
 				w:polyline
 #				xsd:token {
 #					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
 #				}
 			}
-		area.attrs.shape.default =
+	area.elem |= area.poly.elem
+
+## Default Map Area Definition: <area shape='default'>
+
+	area.default.elem =
+		element area { area.inner & area.default.attrs }
+	area.default.attrs =
+		(	common.attrs
+		&	area.default.attrs.shape?
+		&	common-area.attrs
+		)
+		area.default.attrs.shape =
 			attribute shape {
 				w:string "default"
+			}
+	area.elem |= area.default.elem
+
+	common-area.attrs =
+		(	(	area.attrs.alt
+			&	shared-hyperlink.attrs.href
+			)?
+		&	shared-hyperlink.attrs.target?
+		&	shared-hyperlink.attrs.ping?
+		&	shared-hyperlink.attrs.rel?
+		&	shared-hyperlink.attrs.media?
+		&	shared-hyperlink.attrs.hreflang?
+		&	shared-hyperlink.attrs.type?
+		)
+		area.attrs.alt =
+			attribute alt {
+				text
 			}
 	area.inner =
 		( empty )
