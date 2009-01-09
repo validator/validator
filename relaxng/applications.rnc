@@ -94,7 +94,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	datagrid.inner =
 		(	common.inner.flow # table case left to schematron 
 		|	select.elem
-		|	datalist.elem.flow
+		|	datalist.elem
 		)
 	
 	common.elem.flow |= datagrid.elem
@@ -217,7 +217,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	menu.attrs.type?
 		&	menu.attrs.label?
-		&	menu.attrs.autosubmit?
 		)
 		menu.attrs.type =
 			attribute type {
@@ -226,10 +225,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		menu.attrs.label =
 			attribute label {
 				string
-			}
-		menu.attrs.autosubmit =
-			attribute autosubmit {
-				w:string "autosubmit" | w:string ""
 			}
 	menu.inner =
 		(	mli.elem*

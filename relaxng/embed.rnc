@@ -156,7 +156,6 @@ namespace local = ""
 				)
 			|	object.attrs.type
 			)
-		&	object.attrs.archive?
 #		&	object.attrs.classid?
 #		&	object.attrs.codebase?
 #		&	object.attrs.codetype?
@@ -164,6 +163,7 @@ namespace local = ""
 		&	object.attrs.width?
 		&	object.attrs.usemap?
 		&	object.attrs.name?
+		&	common-form.attrs.form?
 		&	common.attrs.aria?
 		)
 		object.attrs.data =
@@ -173,10 +173,6 @@ namespace local = ""
 		object.attrs.type =
 			attribute type {
 				common.data.mimetype
-			}
-		object.attrs.archive =
-			attribute archive {
-				common.data.uris
 			}
 		object.attrs.classid =
 			attribute classid {
@@ -332,92 +328,13 @@ namespace local = ""
 
 	common.elem.flow |= map.elem
 
-## Rectangular Map Area Definition: <area shape='rect'>
+## Map Area Definition: <area>
 
-	area.rect.elem =
-		element area { area.inner & area.rect.attrs }
-	area.rect.attrs =
+	area.elem =
+		element area { area.inner & area.attrs }
+	area.attrs =
 		(	common.attrs
-		&	area.rect.attrs.shape?
-		&	area.rect.attrs.coords
-		&	common-area.attrs
-		)
-		area.rect.attrs.shape =
-			attribute shape {
-				w:string "rect"
-			}
-		area.rect.attrs.coords =
-			attribute coords {
-				w:rectangle
-#				xsd:token {
-#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
-#				}
-			}
-	area.elem = area.rect.elem
-
-## Circular Map Area Definition: <area shape='circle'>
-
-	area.circle.elem =
-		element area { area.inner & area.circle.attrs }
-	area.circle.attrs =
-		(	common.attrs
-		&	area.circle.attrs.shape?
-		&	area.circle.attrs.coords
-		&	common-area.attrs
-		)
-		area.circle.attrs.shape =
-			attribute shape {
-				w:string "circle"
-			}
-		area.circle.attrs.coords =
-			attribute coords {
-				w:circle
-#				xsd:token {
-#					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
-#				}
-			}
-	area.elem |= area.circle.elem
-
-## Polygonal Map Area Definition: <area shape='poly'>
-
-	area.poly.elem =
-		element area { area.inner & area.poly.attrs }
-	area.poly.attrs =
-		(	common.attrs
-		&	area.poly.attrs.shape?
-		&	area.poly.attrs.coords
-		&	common-area.attrs
-		)
-		area.poly.attrs.shape =
-			attribute shape {
-				w:string "poly"
-			}
-		area.poly.attrs.coords =
-			attribute coords {
-				w:polyline
-#				xsd:token {
-#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
-#				}
-			}
-	area.elem |= area.poly.elem
-
-## Default Map Area Definition: <area shape='default'>
-
-	area.default.elem =
-		element area { area.inner & area.default.attrs }
-	area.default.attrs =
-		(	common.attrs
-		&	area.default.attrs.shape?
-		&	common-area.attrs
-		)
-		area.default.attrs.shape =
-			attribute shape {
-				w:string "default"
-			}
-	area.elem |= area.default.elem
-
-	common-area.attrs =
-		(	(	area.attrs.alt
+		&	(	area.attrs.alt
 			&	shared-hyperlink.attrs.href
 			)?
 		&	shared-hyperlink.attrs.target?
@@ -426,10 +343,54 @@ namespace local = ""
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.type?
+		&	area.attrs.shape?
 		)
 		area.attrs.alt =
 			attribute alt {
 				text
+			}
+		area.attrs.shape =
+			(	( area.attrs.shape.rect?  & area.attrs.coords.rect   )
+			|	( area.attrs.shape.circle & area.attrs.coords.circle )
+			|	( area.attrs.shape.poly   & area.attrs.coords.poly   )
+			|	( area.attrs.shape.default )
+			)
+		area.attrs.shape.rect =
+			attribute shape {
+				w:string "rect"
+			}
+		area.attrs.coords.rect =
+			attribute coords {
+				w:rectangle
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+"
+#				}
+			}
+		area.attrs.shape.circle =
+			attribute shape {
+				w:string "circle"
+			}
+		area.attrs.coords.circle =
+			attribute coords {
+				w:circle
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,[0-9]+"
+#				}
+			}
+		area.attrs.shape.poly =
+			attribute shape {
+				w:string "poly"
+			}
+		area.attrs.coords.poly =
+			attribute coords {
+				w:polyline
+#				xsd:token {
+#					pattern = "-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+,-?[0-9]+(,-?[0-9]+,-?[0-9]+)*"
+#				}
+			}
+		area.attrs.shape.default =
+			attribute shape {
+				w:string "default"
 			}
 	area.inner =
 		( empty )

@@ -8,8 +8,8 @@
 	scripting.attr.form.forminput =
 		attribute onforminput { string }
 
-	output.attrs &=
-		(	scripting.attr.form.formchange?
-		&	scripting.attr.form.forminput?
+#	output.attrs &=
+#		(	scripting.attr.form.formchange?
+#		&	scripting.attr.form.forminput?
 #		&	scripting.attr.form.change?
-		)
+#		)

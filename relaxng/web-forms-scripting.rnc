@@ -15,10 +15,10 @@
 #		(	scripting.attr.form.change?
 #		)
 
-	form.attrs &=
-		(	scripting.attr.form.reset?
+#	form.attrs &=
+#		(	scripting.attr.form.reset?
 #		&	scripting.attr.form.submit?
-		)
+#		)
 		scripting.attr.form.submit =
 			attribute onsubmit { string }
 		scripting.attr.form.reset =

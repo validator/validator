@@ -166,41 +166,48 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 	common.elem.metadata |= meta.name.elem
 
-## Pragma Directives: <meta http-equiv>
+## "refresh" pragma directive: <meta http-equiv='refresh'>
 
-	meta.http-equiv.elem =
-		element meta { meta.inner & meta.http-equiv.attrs }
-	meta.http-equiv.attrs =
+	meta.http-equiv.refresh.elem =
+		element meta { meta.inner & meta.http-equiv.refresh.attrs }
+	meta.http-equiv.refresh.attrs =
 		(	common.attrs
-		&	(	(	meta.http-equiv.attrs.http-equiv.refresh
-				&	meta.http-equiv.attrs.content.refresh
-				)
-			|	(	meta.http-equiv.attrs.http-equiv.default-style
-				&	meta.http-equiv.attrs.content.default-style
-				)
-			)
+		&	meta.http-equiv.attrs.http-equiv.refresh
+		&	meta.http-equiv.attrs.content.refresh
 		)
 		meta.http-equiv.attrs.http-equiv.refresh =
 			attribute http-equiv {
 				w:string "refresh"
 			}
-		meta.http-equiv.attrs.http-equiv.default-style =
-			attribute http-equiv {
-				w:string "default-style"
-			}
 		meta.http-equiv.attrs.content.refresh =
 			attribute content { 
 				common.data.refresh
 			}
+	common.elem.metadata |= meta.http-equiv.refresh.elem # not quite right per spec
+                                                       # if the definition is 
+                                                       # reused in another language
+
+## "default-style" pragma directive: <meta http-equiv='default-style'>
+
+	meta.http-equiv.default-style.elem =
+		element meta { meta.inner & meta.http-equiv.default-style.attrs }
+	meta.http-equiv.default-style.attrs =
+		(	common.attrs
+		&	meta.http-equiv.attrs.http-equiv.default-style
+		&	meta.http-equiv.attrs.content.default-style
+		)
+		meta.http-equiv.attrs.http-equiv.default-style =
+			attribute http-equiv {
+				w:string "default-style"
+			}
 		meta.http-equiv.attrs.content.default-style =
 			attribute content {
-				string
+				common.data.default-style
 			}
 		
-	common.elem.metadata |= meta.http-equiv.elem # not quite right per spec
-	                                             # if the definition is 
-	                                             # reused in another language
-
+	common.elem.metadata |= meta.http-equiv.default-style.elem # not quite right per spec
+                                                               # if the definition is 
+                                                               # reused in another language
 
 ## Inline Character Encoding Statement for HTML: <meta charset>
 
@@ -235,7 +242,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.meta-charset
 			}
 
-	meta.encoding.elem =
-		( meta.charset.elem | meta.http-equiv.content-type.elem )
-		
-	common.elem.metadata |= meta.encoding.elem
+	common.elem.metadata |= ( meta.charset.elem | meta.http-equiv.content-type.elem )

@@ -65,15 +65,20 @@ datatypes w = "http://whattf.org/datatype-draft"
 		& HTMLonly
 		noscript.inner.head = 
 			(	link.elem
-			|	meta.http-equiv.elem
+			|	meta.http-equiv.default-style.elem
+			|	meta.http-equiv.refresh.elem
 			|	style.elem
 			)*
 	noscript.elem.phrasing =
-		element noscript { common.inner.phrasing & noscript.attrs }
+		element noscript { noscript.inner.phrasing & noscript.attrs }
 		& HTMLonly
+	noscript.inner.phrasing =
+		( common.inner.phrasing )
 	noscript.elem.flow =
-		element noscript { common.inner.flow & noscript.attrs }
+		element noscript { noscript.inner.flow & noscript.attrs }
 		& HTMLonly
+	noscript.inner.flow =
+		( common.inner.flow )
 	noscript.attrs =
 		( common.attrs )
 

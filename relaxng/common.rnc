@@ -267,19 +267,19 @@ common.attrs.other =
 	common.data.float =
 		w:float
 #		xsd:string {
-#			pattern = "-?((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+#			pattern = "-?[0-9]+(\.[0-9]+)?([eE]-?[0-9]+)?"
 #		}
 
 	common.data.float.positive =
 		w:float-positive
 #		xsd:string {
-#			pattern = "0*((\.0*[1-9][0-9]*)|([1-9][0-9]*(\.[0-9]*)?))"
+#			pattern = "(0*[1-9][0-9]*(\.[0-9]+)?)|([0-9]+(\.0*[1-9][0-9]*)?)([eE]-?[0-9]+)?"
 #		}
 		
 	common.data.float.non-negative =
 		w:float-non-negative
 #		xsd:string {
-#			pattern = "((\.[0-9]+)|([0-9]+(\.[0-9]*)?))"
+#			pattern = "[0-9]+(\.[0-9]+)?([eE]-?[0-9]+)?"
 #		}
 		
 ## Temporal
@@ -329,6 +329,12 @@ common.attrs.other =
 	common.data.refresh =
 		w:refresh
 
+## Default style
+
+	common.data.default-style =
+        string
+#		w:default-style
+
 ## Media Queries
 
 	common.data.mediaquery =
@@ -338,7 +344,13 @@ common.attrs.other =
 
 	common.data.langcode =
 		w:string "" | w:language
+
+# #####################################################################
+##  WF2 Module Hook                                                   #
+# #####################################################################
 		
+common-form.attrs.form = ( notAllowed )
+
 # #####################################################################
 ##  ARIA Module Hooks                                                 #
 # #####################################################################

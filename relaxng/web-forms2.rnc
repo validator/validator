@@ -9,17 +9,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common-form.attrs &=
 		( common-form.attrs.form? )
 
-	common-form.attrs.form = 
+	common-form.attrs.form |= 
 		attribute form {
-			#"" | common.data.idrefs #REVISIT spec says space--not whitespace
-			string #FIXME
+			common.data.idref
 		}
 
-	shared-form.attrs.method = 
-		attribute method {
-			w:string "get" | w:string "post" | w:string "put" | w:string "delete"
-		}
-		
+	# REVISIT should this be case-insensitive in conforming XHTML documents?
+	shared-form.attrs.enctype.data |= 
+		( w:string "text/plain" )
+
+	shared-form.attrs.method.data |= 
+		( w:string "put" | w:string "delete" )
+
 	shared-form.attrs.autofocus = 
 		attribute autofocus {
 			w:string "autofocus" | w:string ""
@@ -29,17 +30,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute pattern {
 			form.data.pattern
 		}
-		
-	shared-form.attrs.replace = 
-		attribute replace {
-			w:string "document" | w:string "values"
-		}
 
-	shared-form.attrs.action = 
-		attribute action {
-			common.data.uri
-		}
-	
 	shared-form.attrs.target = 
 		attribute target {
 			common.data.browsing-context-or-keyword
@@ -60,6 +51,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string # FIXME line breaks
 		}
 
+	shared-form.attrs.novalidate = 
+		attribute novalidate {
+			w:string "novalidate" | w:string ""
+		}
 
 ## Shared attributes for <input>
 		
@@ -67,17 +62,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute autocomplete {
 			w:string "on" | w:string "off"
 		}
-			
-	# REVISIT should this be case-insensitive in conforming XHTML documents?
-	input.attrs.enctype = 
-		attribute enctype {
-			(	w:string "application/x-www-form-urlencoded" 
-			|	w:string "multipart/form-data"
-			|	w:string "application/x-www-form+xml"
-			|	w:string "text/plain"
-			)
-		}
-		
+	
 	input.attrs.list = 
 		attribute list {
 			common.data.idref
@@ -143,10 +128,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.submit.attrs &=
 		(	shared-form.attrs.action? 
 		&	shared-form.attrs.autofocus? 
-		&	input.attrs.enctype? 
+		&	shared-form.attrs.enctype? 
 		&	shared-form.attrs.method? 
-		&	shared-form.attrs.replace? 
 		&	shared-form.attrs.target? 
+		&	shared-form.attrs.novalidate? 
 		)
 
 ## Reset Button: <input type='reset'>, Extensions
@@ -159,31 +144,31 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.file.attrs &=
 		(	shared-form.attrs.autofocus? 
 		&	shared-form.attrs.required? 
-		&	input.file.attrs.min? 
-		&	input.file.attrs.max? 
 		&	input.attrs.multiple? 
 		)
-		input.file.attrs.min =
-			attribute min {
-				common.data.integer.non-negative
-			}
-		input.file.attrs.max =
-			attribute max {
-				common.data.integer.positive
-			}
 
 ## Image Submit Button: <input type='image'>, Extensions
 
 	input.image.attrs &=
 		(	shared-form.attrs.action? 
 		&	shared-form.attrs.autofocus? 
-		&	input.attrs.enctype? 
+		&	shared-form.attrs.enctype? 
 		&	shared-form.attrs.method? 
-		&	shared-form.attrs.replace? 
 		&	shared-form.attrs.target? 
+		&	shared-form.attrs.novalidate? 
+		&	input.image.attrs.height?
+		&	input.image.attrs.width?
 		)	
+		input.image.attrs.height =
+			attribute height {
+				common.data.integer.positive
+			}
+		input.image.attrs.width =
+			attribute width {
+				common.data.integer.positive
+			}
 
-## Date and Time with Time Zone Set to UTC: <input type='datetime'>
+## Global Date and Time: <input type='datetime'>
 
 	input.datetime.elem = 
 		element input { input.datetime.attrs }	
@@ -443,15 +428,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.number.attrs.min =
 			attribute min {
-				form.data.float
+				common.data.float
 			}
 		input.number.attrs.max =
 			attribute max {
-				form.data.float			
+				common.data.float			
 			}	
 		input.number.attrs.value =
 			attribute value {
-				form.data.float
+				common.data.float
 			}
 		
 	input.elem |= input.number.elem
@@ -471,8 +456,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.range.attrs.min? 
 		&	input.range.attrs.max? 
 		&	input.attrs.step.float? 
-		&	shared-form.attrs.readonly? 
-		&	shared-form.attrs.required? 
 		&	input.range.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
@@ -482,15 +465,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.range.attrs.min =
 			attribute min {
-				form.data.float
+				common.data.float
 			}
 		input.range.attrs.max =
 			attribute max {
-				form.data.float			
+				common.data.float			
 			}	
 		input.range.attrs.value =
 			attribute value {
-				form.data.float
+				common.data.float
 			}
 		
 	input.elem |= input.range.elem
@@ -513,17 +496,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
-		&	input.email.attrs.value? 
+		&	(	(	input.attrs.multiple
+				&	input.email.attrs.value.multiple?
+				)
+			|	input.email.attrs.value.single?
+			)?
 		&	common.attrs.aria.implicit.input?
-		&	input.attrs.multiple?
 		)	
 		input.email.attrs.type = 
 			attribute type {
 				w:string "email"
 			}
-		input.email.attrs.value =
+		input.email.attrs.value.single =
 			attribute value {
-				form.data.email
+				form.data.emailaddress
+			}
+		input.email.attrs.value.multiple =
+			attribute value {
+				form.data.emailaddresslist
 			}
 		
 	input.elem |= input.email.elem
@@ -592,6 +582,32 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 	input.elem |= input.search.elem
 
+## Color: <input type='color'>
+
+	input.color.elem = 
+		element input { input.color.attrs }	
+	input.color.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	input.color.attrs.type
+		&	shared-form.attrs.accesskey?
+		&	input.attrs.autocomplete? 
+		&	shared-form.attrs.autofocus? 
+		&	input.attrs.list? 
+		&	input.color.attrs.value? 
+		&	common.attrs.aria.implicit.input?
+		)	
+		input.color.attrs.type = 
+			attribute type {
+				w:string "color"
+			}
+		input.color.attrs.value =
+			attribute value {
+				form.data.color
+			}
+		
+	input.elem |= input.color.elem
+
 ## Form Output: <output>
 
 	output.elem =
@@ -599,10 +615,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	output.attrs =
 		(	common.attrs
 		&	common-form.attrs.name?
-		&	common-form.attrs.disabled?
+		&	common-form.attrs.form?
 		&	output.attrs.for?
-		#FIXME figure out how onchange, onforminput and onformchange
-		#fit together with a scripting module.
 		&	common.attrs.aria.implicit.region?
 		)
 		output.attrs.for = 
@@ -622,9 +636,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		empty
 	textarea.attrs &=
 		(	shared-form.attrs.maxlength?
-		&	shared-form.attrs.pattern? 
+		&	shared-form.attrs.autofocus? 
 		&	shared-form.attrs.required? 
-		&	textarea.attrs.accept?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols
@@ -634,10 +647,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			)
 		)
-		textarea.attrs.accept =
-			attribute accept {
-				common.data.mimetype
-			}
 		textarea.attrs.wrap.hard =
 			attribute wrap {
 				w:string "hard"
@@ -655,25 +664,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	#REVISIT should the options in datalist be non-selectable?
 
-	datalist.elem.phrasing=
-		element datalist { option.elem* & common.inner.phrasing & datalist.attrs }
-	datalist.elem.flow =
-		element datalist { option.elem* & common.inner.flow & datalist.attrs }
+	datalist.elem =
+		element datalist { datalist.inner & datalist.attrs }
+	datalist.inner =
+		( option.elem* & common.inner.phrasing )
 	datalist.attrs =
 		( common.attrs )
 
-	common.elem.phrasing |= datalist.elem.phrasing
-	common.elem.flow |= datalist.elem.flow
+	common.elem.phrasing |= datalist.elem
 
 ## Complex Submit Button: <button type='submit'>, extensions
 
 	button.submit.attrs &=
 		(	shared-form.attrs.action? 
 		&	shared-form.attrs.autofocus? 
-		&	input.attrs.enctype? 
+		&	shared-form.attrs.enctype? 
 		&	shared-form.attrs.method? 
-		&	shared-form.attrs.replace? 
 		&	shared-form.attrs.target? 
+		&	shared-form.attrs.novalidate? 
 		)
 	
 ## Complex Reset Button: <button type='reset'>, extensions
@@ -687,27 +695,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( shared-form.attrs.autofocus? )
 
 ## Form: <form>, extensions
-	form.attrs.method.data |= 
-		( w:string "put" | w:string "delete" )
-	form.attrs.enctype.data |= 
-		( w:string "application/x-www-form+xml" | w:string "text/plain" )
 	form.attrs &= 
-		(	shared-form.attrs.replace?
+		(	shared-form.attrs.novalidate?
 		&	shared-form.attrs.target?
 		)
-	
-	form.elem.empty =
-		element form { form.inner.empty & form.attrs }
-	form.inner.empty =
-		( empty )
 
-	common.elem.metadata |=
-		( form.elem.empty & nonHTMLizable )
-	
 ## Fieldset: <fieldset>, extensions
 
 	fieldset.attrs &=
-		(	common-form.attrs.disabled?
-		&	common-form.attrs.form?
-		)
+		( common-form.attrs )
 
+## Label: <label>, extensions
+
+	label.attrs &=
+		( common-form.attrs.form )
