@@ -87,16 +87,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element colgroup { colgroup.inner & colgroup.attrs }
 	colgroup.attrs =
 		(	common.attrs
-#		&	tables.attrs.alignment
+		&	colgroup.attrs.span?
 		)
 		colgroup.attrs.span =
 			attribute span {
 				common.data.integer.positive
 			}
 	colgroup.inner =
-		(	col.elem*
-		|	colgroup.attrs.span?
-		)
+		( col.elem* )
 
 ## Table Column: <col>
 
@@ -104,7 +102,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element col { col.inner & col.attrs }
 	col.attrs =
 		(	common.attrs
-#		&	tables.attrs.alignment
+		&	col.attrs.span?
 		)
 		col.attrs.span =
 			attribute span {
@@ -118,9 +116,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	thead.elem =
 		element thead { thead.inner & thead.attrs }
 	thead.attrs =
-		(	common.attrs
-#		&	tables.attrs.alignment
-		)
+		( common.attrs )
 	thead.inner =
 		( tr.elem* )
 
@@ -129,9 +125,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	tfoot.elem =
 		element tfoot { tfoot.inner & tfoot.attrs }
 	tfoot.attrs =
-		(	common.attrs
-#		&	tables.attrs.alignment
-		)
+		( common.attrs )
 	tfoot.inner =
 		( tr.elem* )
 
@@ -140,9 +134,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	tbody.elem =
 		element tbody { tbody.inner & tbody.attrs }
 	tbody.attrs =
-		(	common.attrs
-#		&	tables.attrs.alignment
-		)
+		( common.attrs )
 	tbody.inner =
 		( tr.elem* )
 
@@ -155,7 +147,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element tr { tr.inner & tr.attrs }
 	tr.attrs =
 		(	common.attrs
-#		&	tables.attrs.alignment
 		&	common.attrs.aria?
 		)
 	tr.inner =
@@ -184,9 +175,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 
 	tables.attrs.define-headers =
-		(	tables.attrs.scope?
-#		&	tables.attrs.abbr?
-		)
+		( tables.attrs.scope? )
 		tables.attrs.scope =
 			attribute scope {
 				(	w:string "row"

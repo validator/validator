@@ -708,4 +708,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Label: <label>, extensions
 
 	label.attrs &=
-		( common-form.attrs.form )
+		( common-form.attrs.form? )
