@@ -86,15 +86,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 	colgroup.elem =
 		element colgroup { colgroup.inner & colgroup.attrs }
 	colgroup.attrs =
-		(	common.attrs
-		&	colgroup.attrs.span?
-		)
+		( common.attrs )
 		colgroup.attrs.span =
 			attribute span {
 				common.data.integer.positive
 			}
 	colgroup.inner =
-		( col.elem* )
+		(	col.elem*
+		|	colgroup.attrs.span?
+		)
 
 ## Table Column: <col>
 
