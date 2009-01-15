@@ -211,6 +211,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	tables.attrs.cell-structure
 		&	tables.attrs.scope?
+		&	tables.attrs.headers?
 #		&	tables.attrs.alignment
 		&	common.attrs.aria.implicit.th?
 		)
