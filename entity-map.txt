@@ -178,12 +178,14 @@ http://s.validator.nu/html5/html5core.rnc	schema/html5/html5core.rnc
 http://s.validator.nu/html5/html5exclusions.rnc	schema/html5/html5exclusions.rnc
 http://s.validator.nu/html5/html5full.rnc	schema/html5/html5full.rnc
 http://s.validator.nu/html5/html5full-aria.rnc	schema/html5/html5full-aria.rnc
+http://s.validator.nu/html5/html5full-aria-rdfa.rnc	schema/html5/html5full-aria-rdfa.rnc
 http://s.validator.nu/html5/media.rnc	schema/html5/media.rnc
 http://s.validator.nu/html5/meta.rnc	schema/html5/meta.rnc
 http://s.validator.nu/html5/phrase.rnc	schema/html5/phrase.rnc
 http://s.validator.nu/html5/legacy.rnc	schema/html5/legacy.rnc
 http://s.validator.nu/rdf/rdf.rnc	schema/rdf/rdf.rnc
 http://s.validator.nu/html5/repetition.rnc	schema/html5/repetition.rnc
+http://s.validator.nu/html5/rdfa.rnc	schema/html5/rdfa.rnc
 http://s.validator.nu/html5/revision.rnc	schema/html5/revision.rnc
 http://s.validator.nu/html5/sectional.rnc	schema/html5/sectional.rnc
 http://s.validator.nu/html5/structural.rnc	schema/html5/structural.rnc
@@ -198,6 +200,7 @@ http://s.validator.nu/html5/xhtml5core.rnc	schema/html5/xhtml5core.rnc
 http://s.validator.nu/html5/xhtml5full-html.rnc	schema/html5/xhtml5full-html.rnc
 http://s.validator.nu/html5/xhtml5full-xhtml.rnc	schema/html5/xhtml5full-xhtml.rnc
 http://s.validator.nu/html5/xhtml5full-xhtml-aria.rnc	schema/html5/xhtml5full-xhtml-aria.rnc
+http://s.validator.nu/html5/xhtml5full-xhtml-aria-rdfa.rnc	schema/html5/xhtml5full-xhtml-aria-rdfa.rnc
 http://s.validator.nu/xhtml10/applet.rnc	schema/xhtml10/applet.rnc
 http://s.validator.nu/xhtml10/attribs.rnc	schema/xhtml10/attribs.rnc
 http://s.validator.nu/xhtml10/base.rnc	schema/xhtml10/base.rnc
@@ -240,5 +243,6 @@ http://s.validator.nu/xhtml10/xhtml.sch	schema/xhtml10/xhtml.sch
 http://s.validator.nu/inkscape/inkscape.rnc	schema/inkscape/inkscape.rnc
 http://s.validator.nu/xhtml5-rdf-svg-mathml.rnc	schema/xhtml5-rdf-svg-mathml.rnc
 http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc	schema/xhtml5-aria-rdf-svg-mathml.rnc
+http://s.validator.nu/xhtml5-aria-rdf-svg-mathml-rdfa.rnc	schema/xhtml5-aria-rdf-svg-mathml-rdfa.rnc
 http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc	schema/xhtml1-rdf-svg-mathml.rnc
 http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc

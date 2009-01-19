@@ -139,7 +139,8 @@ XML, JSON, GNU error format and plain text.</P>
 <dt>HTML5 (experimental)</dt>
 <dd><p>HTML5 (<code>text/html</code>-compatible content models)</p></dd>
 <dt>HTML5+ARIA (experimental)</dt>
-<dd><p>HTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>)</p></dd>
+<dd><p>HTML5 with ARIA (<a href="http://hsivonen.iki.fi/aria-html5-bis/">unendorsed integration prototype</a>)</p>
+<p>Mike(tm) Smith has <a href="http://www.w3.org/html/wg/markup-spec/">generated documentation for this schema</a>.</p></dd>
 <dt>HTML 4.01 Strict + IRI / XHTML 1.0 Strict + IRI</dt>
 <dd><p>XHTML 1.0 Strict with IRI support. Generally suitable for use HTML 4.01 Strict checking
 as well, although there are theoretically wrong corner cases. Uses backported HTML5 datatypes.</p></dd>
@@ -366,6 +367,7 @@ Implementors mailing list</A>. Bugs should be reported to <a href="http://bugzil
 <P><A HREF="http://cvsdude.com/"><IMG SRC="http://cvsdude.com/image/cvsdude_tag.jpg" ALT="CVSDude : CVS, Subversion, Trac source control and project management hosting" WIDTH=88 HEIGHT=31></A><A HREF="http://cvsdude.com/">
 </A>The source code and the dependencies can be obtained using a
 Python-based (no XML situps!) build script:</P>
+<p>First, set the <code>JAVA_HOME</code> environment variable properly.</p>
 <PRE><KBD>mkdir checker</KBD>
 <KBD>cd checker</KBD>
 <KBD>svn co http://svn.versiondude.net/whattf/build/trunk/ build</KBD>
@@ -374,7 +376,7 @@ This will download, build and run the system at
 <CODE>http://localhost:8888/</CODE>. For other options, please run
 <KBD>python build/build.py --help</KBD> instead. Please note that the
 dependencies are big. The script will spend time downloading stuff.
-The script requires Python, Subversion and JDK 5 or later (JDK 6 and Hardy’s OpenJDK work). (Tested on Mac OS X and Ubuntu. Windows compatibility is unknown.) <strong>Note:</strong> The script wants to see a Sun-compatible <code>jar</code> executable. Debian <code>fastjar</code> will not work.</P>
+The script requires Python, Subversion and JDK 5 or later (JDK 6 and Hardy’s OpenJDK work). (Tested on Mac OS X and Ubuntu. On Windows, the build completes but the app crashes on startup.) <strong>Note:</strong> The script wants to see a Sun-compatible <code>jar</code> executable. Debian <code>fastjar</code> will not work.</P>
 <H3>Deployment</H3>
 <P>The above example starts a standalone HTTP server with debug
 messages printed to the console. To use <A HREF="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP13</A>
@@ -491,7 +493,7 @@ officials if necessary). However, I reserve the right to publish
 aggregate statistics derived from the logs.</P>
 <hr>
 <div class="footer">
-<p>Text last updated: 2008-09-03</p>
+<p>Text last updated: 2008-11-13</p>
 <p class="copyrightnotice">The following notice applies to this HTML file:</p>
 <p>Copyright (c) 2005-2007 Henri Sivonen<br>
 Copyright (c) 2007-2008 Mozilla Foundation<br>

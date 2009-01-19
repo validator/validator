@@ -221,7 +221,8 @@ function isHtmlCompatiblePreset(preset) {
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0)
+	preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/html5/html5full-aria-rdfa.rnc") == 0)
 }
 
 function parserChanged() {
@@ -591,6 +592,5 @@ if (document.getElementById) {
 
 	window.onunload = undoFormSubmission
 	window.onabort = undoFormSubmission
-	
 	boot()
 }
