@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2009 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -76,7 +76,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @throws DatatypeException if the literal does not conform to the datatype definition
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
-    public final void checkValid(String literal, ValidationContext context) throws DatatypeException {
+    public void checkValid(String literal, ValidationContext context) throws DatatypeException {
         checkValid(literal);
     }
 
@@ -142,11 +142,11 @@ public abstract class AbstractDatatype implements Datatype {
     }
 
     /**
-     * Always returns <code>false</code>
+     * Returns <code>false</code>
      * @return <code>false</code>
      * @see org.relaxng.datatype.Datatype#isContextDependent()
      */
-    public final boolean isContextDependent() {
+    public boolean isContextDependent() {
         return false;
     }
 

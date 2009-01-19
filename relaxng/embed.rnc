@@ -134,6 +134,11 @@ namespace local = ""
 			                    | aria-grab
 			                    | aria-haspopup
 			                    | aria-labelledby
+			                    | about
+			                    | property
+			                    | resource
+			                    | datatype
+			                    | typeof
 			                    ) 
 			{
 				string
