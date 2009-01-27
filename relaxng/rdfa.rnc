@@ -1,0 +1,62 @@
+datatypes w = "http://whattf.org/datatype-draft"
+# #####################################################################
+##  RELAX NG Schema for HTML 5: CURIEless RDFa                        #
+# #####################################################################
+
+# #####################################################################
+## CURIEless RDFa
+
+## Non-CURIE URL
+common.rdfa.data.uri =
+	w:string "" | w:non-curie-iri-ref
+
+## Non-CURIE Absolute URL
+common.rdfa.data.uri.absolute =
+	w:non-curie-iri
+
+## List of Non-CURIE Absolute URL
+common.rdfa.data.uris.absolute =
+	list { w:non-curie-iri+ }
+
+## RDFa About
+
+common.attrs.rdfa.about =
+	attribute about {
+		common.rdfa.data.uri
+	}
+
+## RDFa Property
+
+common.attrs.rdfa.property =
+	attribute property {
+		common.rdfa.data.uris.absolute
+	}
+
+## RDFa Resource
+
+common.attrs.rdfa.resource =
+	attribute resource {
+		common.rdfa.data.uri
+	}
+
+## RDFa Datatype
+
+common.attrs.rdfa.datatype =
+	attribute datatype {
+		common.rdfa.data.uri.absolute
+	}
+
+## RDFa TypeOf
+
+common.attrs.rdfa.typeof =
+	attribute typeof {
+		common.rdfa.data.uris.absolute
+	}
+
+common.attrs &= 
+	(	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.property?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.typeof?
+	)
