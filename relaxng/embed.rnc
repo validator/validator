@@ -139,6 +139,7 @@ namespace local = ""
 			                    | resource
 			                    | datatype
 			                    | typeof
+			                    | spellcheck
 			                    ) 
 			{
 				string
