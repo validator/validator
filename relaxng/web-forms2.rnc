@@ -698,7 +698,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 	form.attrs &= 
 		(	shared-form.attrs.novalidate?
 		&	shared-form.attrs.target?
+		&	form.attrs.autocomplete?
 		)
+		form.attrs.autocomplete = 
+			attribute autocomplete {
+				w:string "on" | w:string "off"
+			}
+	
 
 ## Fieldset: <fieldset>, extensions
 
