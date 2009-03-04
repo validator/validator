@@ -11,6 +11,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
 		&	common.attrs.hidden?
+		&	common.attrs.spellcheck?
 		)
 		
 	common.attrs.other &= common.attrs.interact
@@ -41,6 +42,13 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.hidden =
 		attribute hidden {
 			w:string "hidden" | w:string ""
+		}
+
+## Spellchecking and grammar checking: spellcheck
+
+	common.attrs.spellcheck =
+		attribute spellcheck{
+			w:string "true" | w:string "false"
 		}
 
 ## Application Cache: manifest
