@@ -271,24 +271,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.flow |= canvas.elem.flow
 	common.elem.phrasing |= canvas.elem.phrasing
 
-## Server-sent events: <eventsource>
-
-	eventsource.elem =
-		element eventsource { eventsource.inner & eventsource.attrs }
-	eventsource.attrs =
-		(	common.attrs
-		&	eventsource.attrs.src?
-		)
-		eventsource.attrs.src =
-			attribute src {
-				common.data.uri
-			}
-	eventsource.inner =
-		( empty )
-
-	common.elem.metadata |= ( eventsource.elem & nonHTMLizable )
-	common.elem.phrasing |= eventsource.elem
-	
 ## Additional On-Demand Information: <details>
 
 	details.elem =
