@@ -335,30 +335,36 @@
 
 		<rule context='h:video[@controls]'>
 			<report test='ancestor::h:a'>
-				The interactive element &#x201C;video controls&#x201D; cannot 
+				The interactive element &#x201C;video&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
-				The interactive element &#x201C;video controls&#x201D; cannot 
+				The interactive element &#x201C;video&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;video controls&#x201D; cannot 
+				The interactive element &#x201C;video&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
 		<rule context='h:audio[@controls]'>
 			<report test='ancestor::h:a'>
-				The interactive element &#x201C;audio controls&#x201D; cannot 
+				The interactive element &#x201C;audio&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
-				The interactive element &#x201C;audio controls&#x201D; cannot 
+				The interactive element &#x201C;audio&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;audio controls&#x201D; cannot 
+				The interactive element &#x201C;audio&#x201D;
+				with the &#x201C;controls&#x201D; attribute cannot
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
