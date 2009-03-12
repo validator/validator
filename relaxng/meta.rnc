@@ -1,7 +1,7 @@
 datatypes w = "http://whattf.org/datatype-draft"
 
 # #####################################################################
-##  RELAX NG Schema for HTML 5: Global Structure & Meta Data          #
+##  RELAX NG Schema for HTML 5: Global Structure & Metadata          #
 # #####################################################################
 
 ## Root Element: <html>
@@ -15,7 +15,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		,	body.elem
 		)
 
-## Meta Data Container: <head>
+## Metadata Container: <head>
 
 	head.elem =
 		element head { head.inner & head.attrs }
@@ -144,7 +144,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "scoped" | w:string ""
 			}
 
-## Name-Value Meta Data: <meta name>
+## Name-Value Metadata: <meta name>
 
 	meta.name.elem =
 		element meta { meta.inner & meta.name.attrs }
