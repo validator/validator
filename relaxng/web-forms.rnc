@@ -42,11 +42,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	w:string "multipart/form-data"
 			)
 
-	shared-form.attrs.accesskey = 
-		attribute accesskey {
-			common.data.character
-		}
-
 	shared-form.attrs.readonly = 
 		attribute readonly {
 			w:string "readonly" | w:string ""
@@ -79,7 +74,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.text.attrs.type?
-		&	shared-form.attrs.accesskey?
 		&	shared-form.attrs.maxlength? 
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.size?
@@ -107,7 +101,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.password.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	shared-form.attrs.maxlength? 
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.size?
@@ -133,7 +126,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.checkbox.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
 		&	common.attrs.aria.implicit.input?
@@ -157,7 +149,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.radio.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.checked? 
 		&	input.radio.attrs.value? 
 		&	common.attrs.aria.implicit.input?
@@ -181,7 +172,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.button.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.button.attrs.value? 
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.button
@@ -207,7 +197,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.submit.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.submit.attrs.value? 
 		&	common.attrs.aria.implicit.button?
 		)
@@ -230,7 +219,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.reset.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.reset.attrs.value? 
 		&	common.attrs.aria.implicit.button?
 		)
@@ -255,7 +243,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
-		&	shared-form.attrs.accesskey?
 		&	common.attrs.aria.implicit.input?
 		)
 		input.file.attrs.type = 
@@ -298,7 +285,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.image.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.image.attrs.alt 
 		&	input.image.attrs.src? 
 		&	(	common.attrs.aria
@@ -329,7 +315,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	textarea.attrs =
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-form.attrs.accesskey?
 		&	shared-form.attrs.readonly?
 		&	textarea.attrs.rows-and-cols-wf1
 		&	common.attrs.aria.implicit.input?
@@ -443,7 +428,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	button.submit.attrs =
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-form.attrs.accesskey?
 		&	button.submit.attrs.type?
 		&	button.attrs.value?
 		&	common.attrs.aria.implicit.button?
@@ -462,7 +446,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	button.reset.attrs =
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-form.attrs.accesskey?
 		&	button.reset.attrs.type
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
 		&	common.attrs.aria.implicit.button?
@@ -481,7 +464,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	button.button.attrs =
 		(	common.attrs
 		&	common-form.attrs
-		&	shared-form.attrs.accesskey?
 		&	button.button.attrs.type
 		&	button.attrs.value? #REVISIT I guess this still affects the DOM
 		&	(	common.attrs.aria
@@ -525,7 +507,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element fieldset { fieldset.inner & fieldset.attrs }
 	fieldset.attrs =
 		(	common.attrs
-		&	shared-form.attrs.accesskey?
 		&	common.attrs.aria.implicit.group?
 		)	
 	fieldset.inner =
@@ -541,7 +522,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element label { label.inner & label.attrs }
 	label.attrs =
 		(	common.attrs
-		&	shared-form.attrs.accesskey?
 		&	label.attrs.for?
 		&	common.attrs.aria.implicit.region?
 		)

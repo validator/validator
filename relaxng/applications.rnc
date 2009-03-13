@@ -204,7 +204,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element bb { bb.inner & bb.attrs }	
 	bb.attrs =
 		(	common.attrs
-		&	shared-form.attrs.accesskey?
 		&	bb.attrs.type?
 		&	common.attrs.aria.implicit.button?
 		)

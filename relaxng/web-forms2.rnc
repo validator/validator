@@ -176,7 +176,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.datetime.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -215,7 +214,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.datetime-local.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -254,7 +252,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.date.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -293,7 +290,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.month.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -332,7 +328,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.time.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -371,7 +366,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.week.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -410,7 +404,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.number.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -449,7 +442,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.range.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -486,7 +478,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.email.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -526,7 +517,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.url.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -558,7 +548,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.search.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -590,7 +579,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	input.color.attrs.type
-		&	shared-form.attrs.accesskey?
 		&	input.attrs.autocomplete? 
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
@@ -655,10 +643,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute wrap {
 				w:string "soft"
 			}
-
-## Selection Menu: <select>, extensions
-	select.attrs &=
-		( shared-form.attrs.accesskey? )
 
 ## List of Prefill Data: <datalist>
 
