@@ -21,27 +21,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			w:string "disabled" | w:string ""
 		}
 
-	shared-form.attrs.action =
-		attribute action {
-			common.data.uri
-		}
-
-	shared-form.attrs.method =
-		attribute method {
-			shared-form.attrs.method.data
-		}
-		shared-form.attrs.method.data = 
-			( w:string "get" | w:string "post" )
-
-	shared-form.attrs.enctype =
-		attribute enctype {
-			shared-form.attrs.enctype.data
-		}
-		shared-form.attrs.enctype.data = 
-			(	w:string "application/x-www-form-urlencoded" 
-			|	w:string "multipart/form-data"
-			)
-
 	shared-form.attrs.readonly = 
 		attribute readonly {
 			w:string "readonly" | w:string ""
@@ -485,13 +464,31 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element form { form.inner & form.attrs }
 	form.attrs =
 		(	common.attrs
-		&	shared-form.attrs.action? #REVISIT Should this be required anyway?
-		&	shared-form.attrs.method?
-		&	shared-form.attrs.enctype?
+		&	form.attrs.action? #REVISIT Should this be required anyway?
+		&	form.attrs.method?
+		&	form.attrs.enctype?
 		&	common-form.attrs.name?
 		&	form.attrs.accept-charset?
 		&	common.attrs.aria.implicit.region?
 		)
+		form.attrs.action =
+			attribute action {
+				common.data.uri
+			}
+		form.attrs.method =
+			attribute method {
+				form.attrs.method.data
+			}
+			form.attrs.method.data = 
+				( w:string "get" | w:string "post" )
+		form.attrs.enctype =
+			attribute enctype {
+				form.attrs.enctype.data
+			}
+			form.attrs.enctype.data = 
+				(	w:string "application/x-www-form-urlencoded" 
+				|	w:string "multipart/form-data"
+				)
 		form.attrs.accept-charset =
 			attribute accept-charset {
 				form.data.charsetlist

@@ -14,12 +14,41 @@ datatypes w = "http://whattf.org/datatype-draft"
 			common.data.idref
 		}
 
-	# REVISIT should this be case-insensitive in conforming XHTML documents?
-	shared-form.attrs.enctype.data |= 
-		( w:string "text/plain" )
+	shared-form.attrs.formaction =
+		attribute formaction {
+			common.data.uri
+		}
 
-	shared-form.attrs.method.data |= 
-		( w:string "put" | w:string "delete" )
+	shared-form.attrs.formenctype =
+		attribute enctype {
+			shared-form.attrs.formenctype.data
+		}
+		shared-form.attrs.formenctype.data = 
+			(	w:string "application/x-www-form-urlencoded" 
+			|	w:string "multipart/form-data"
+			|	w:string "text/plain"
+			)
+
+	shared-form.attrs.formmethod =
+		attribute formmethod {
+			shared-form.attrs.formmethod.data
+		}
+		shared-form.attrs.formmethod.data = 
+			( w:string "get"
+			| w:string "post"
+			| w:string "put"
+			| w:string "delete"
+			)
+
+	shared-form.attrs.formtarget = 
+		attribute formtarget {
+			common.data.browsing-context-or-keyword
+		}
+
+	shared-form.attrs.formnovalidate = 
+		attribute formnovalidate {
+			w:string "formnovalidate" | w:string ""
+		}
 
 	shared-form.attrs.autofocus = 
 		attribute autofocus {
@@ -29,11 +58,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	shared-form.attrs.pattern = 
 		attribute pattern {
 			form.data.pattern
-		}
-
-	shared-form.attrs.target = 
-		attribute target {
-			common.data.browsing-context-or-keyword
 		}
 
 	shared-form.attrs.template = 
@@ -49,11 +73,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	shared-form.attrs.placeholder = 
 		attribute placeholder {
 			string # FIXME line breaks
-		}
-
-	shared-form.attrs.novalidate = 
-		attribute novalidate {
-			w:string "novalidate" | w:string ""
 		}
 
 ## Shared attributes for <input>
@@ -126,12 +145,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Submit Button: <input type='submit'>, Extensions
 
 	input.submit.attrs &=
-		(	shared-form.attrs.action? 
+		(	shared-form.attrs.formaction? 
 		&	shared-form.attrs.autofocus? 
-		&	shared-form.attrs.enctype? 
-		&	shared-form.attrs.method? 
-		&	shared-form.attrs.target? 
-		&	shared-form.attrs.novalidate? 
+		&	shared-form.attrs.formenctype? 
+		&	shared-form.attrs.formmethod? 
+		&	shared-form.attrs.formtarget? 
+		&	shared-form.attrs.formnovalidate? 
 		)
 
 ## Reset Button: <input type='reset'>, Extensions
@@ -150,12 +169,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Image Submit Button: <input type='image'>, Extensions
 
 	input.image.attrs &=
-		(	shared-form.attrs.action? 
+		(	shared-form.attrs.formaction? 
 		&	shared-form.attrs.autofocus? 
-		&	shared-form.attrs.enctype? 
-		&	shared-form.attrs.method? 
-		&	shared-form.attrs.target? 
-		&	shared-form.attrs.novalidate? 
+		&	shared-form.attrs.formenctype? 
+		&	shared-form.attrs.formmethod? 
+		&	shared-form.attrs.formtarget? 
+		&	shared-form.attrs.formnovalidate? 
 		&	input.image.attrs.height?
 		&	input.image.attrs.width?
 		)	
@@ -660,12 +679,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## Complex Submit Button: <button type='submit'>, extensions
 
 	button.submit.attrs &=
-		(	shared-form.attrs.action? 
+		(	shared-form.attrs.formaction? 
 		&	shared-form.attrs.autofocus? 
-		&	shared-form.attrs.enctype? 
-		&	shared-form.attrs.method? 
-		&	shared-form.attrs.target? 
-		&	shared-form.attrs.novalidate? 
+		&	shared-form.attrs.formenctype? 
+		&	shared-form.attrs.formmethod? 
+		&	shared-form.attrs.formtarget? 
+		&	shared-form.attrs.formnovalidate? 
 		)
 	
 ## Complex Reset Button: <button type='reset'>, extensions
@@ -680,15 +699,27 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Form: <form>, extensions
 	form.attrs &= 
-		(	shared-form.attrs.novalidate?
-		&	shared-form.attrs.target?
+		(	form.attrs.novalidate?
+		&	form.attrs.target?
 		&	form.attrs.autocomplete?
 		)
+		form.attrs.novalidate = 
+			attribute novalidate {
+				w:string "novalidate" | w:string ""
+			}
+		form.attrs.target = 
+			attribute target {
+				common.data.browsing-context-or-keyword
+			}
 		form.attrs.autocomplete = 
 			attribute autocomplete {
 				w:string "on" | w:string "off"
 			}
-	
+		# REVISIT should this be case-insensitive in conforming XHTML documents?
+		form.attrs.enctype.data |= 
+			( w:string "text/plain" )
+		form.attrs.method.data |= 
+			( w:string "put" | w:string "delete" )
 
 ## Fieldset: <fieldset>, extensions
 
