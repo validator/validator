@@ -203,9 +203,6 @@ common.attrs.other =
 	common.data.tokens =
 		list { token* }
 
-	common.data.character = 
-		string #FIXME
-		
 	common.data.browsing-context =
 		w:browsing-context
 
