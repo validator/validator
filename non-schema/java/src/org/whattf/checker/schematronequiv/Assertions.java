@@ -762,13 +762,13 @@ public class Assertions extends Checker {
                 descendantUiString = localName;
             } else if ("video" == localName && controls) {
                 mask = A_BUTTON_BB_MASK;
-                descendantUiString = "video controls";
+                descendantUiString = "video\u201D with the attribute \u201Ccontrols";
             } else if ("audio" == localName && controls) {
                 mask = A_BUTTON_BB_MASK;
-                descendantUiString = "audio controls";
+                descendantUiString = "audio\u201D with the attribute \u201Ccontrols";
             } else if ("menu" == localName && toolbar) {
                 mask = A_BUTTON_BB_MASK;
-                descendantUiString = "menu type=toolbar";
+                descendantUiString = "menu\u201D with the attribute \u201Ctype=toolbar";
             } else if ("input" == localName && !hidden) {
                 mask = A_BUTTON_BB_MASK;
                 descendantUiString = "input";
@@ -778,7 +778,7 @@ public class Assertions extends Checker {
                 if (maskHit != 0) {
                     for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
                         if ((maskHit & 1) != 0) {
-                            err("The element \u201C"
+                            err("The interactive element \u201C"
                                     + descendantUiString
                                     + "\u201D must not appear as a descendant of the \u201C"
                                     + SPECIAL_ANCESTORS[j] + "\u201D element.");
