@@ -355,7 +355,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	optgroup.elem =
 		element optgroup { optgroup.inner & optgroup.attrs }
 	optgroup.attrs = 
-		(	optgroup.attrs.label
+		(	common.attrs
+		&	optgroup.attrs.label
 		&	common-form.attrs.disabled?
 		)
 		optgroup.attrs.label =
