@@ -645,6 +645,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	shared-form.attrs.maxlength?
 		&	shared-form.attrs.autofocus? 
 		&	shared-form.attrs.required? 
+		&	shared-form.attrs.placeholder?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols
