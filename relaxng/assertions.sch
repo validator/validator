@@ -670,7 +670,7 @@
 
 	<pattern name='contextmenu must refer to a menu'>
 		<rule context='h:*[@contextmenu]'>
-			<assert test='id(@contextmenu)/self::h:menu'>
+		  <assert test='//h:menu[@id = current()/@contextmenu]'>
 				The &#x201C;contextmenu&#x201D; attribute must refer to a 
 				&#x201C;menu&#x201D; element.
 			</assert>
@@ -679,11 +679,11 @@
 
 	<pattern name='for on label must refer to a form control'>
 		<rule context='h:label[@for]'>
-			<assert test='id(@for)/self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")] or 
-			              id(@for)/self::h:textarea or 
-			              id(@for)/self::h:select or 
-			              id(@for)/self::h:button or 
-			              id(@for)/self::h:output'>
+		  <assert test='//h:input[not(translate(@type, "HIDEN", "hiden")="hidden")][@id = current()/@for] or 
+			              //h:textarea[@id = current()/@for] or 
+			              //h:select[@id = current()/@for] or 
+			              //h:button[@id = current()/@for] or 
+			              //h:output[@id = current()/@for]'>
 				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
 				element must refer to a form control.
 			</assert>
@@ -693,8 +693,8 @@
 
 	<pattern name='list on input must refer to a select or a datalist'>
 		<rule context='h:input[@list]'>
-			<assert test='id(@list)/self::h:datalist or 
-			              id(@list)/self::h:select'>
+			<assert test='//h:datalist[@id = current()/@list] or 
+			              //h:select[@id = current()/@list]'>
 				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
 				element must refer to a &#x201C;datalist&#x201D; element or to 
 				a &#x201C;select&#x201D; element.
@@ -855,7 +855,7 @@
 	
 	<pattern name='aria-activedescendant must refer to a descendant'>
 		<rule context='*[@aria-activedescendant]'>
-			<assert test='id(@aria-activedescendant) = descendant::*'>
+			<assert test='descendant::*[@id = current()/@aria-activedescendant]'>
 				The &#x201C;aria-activedescendant&#x201D; attribute must refer to a 
 				descendant element.
 			</assert>
@@ -864,7 +864,7 @@
 
 	<pattern name='controls must not dangle'>
 		<rule context='*[@aria-controls]'>
-			<assert test='id(@aria-controls)'>
+		  <assert test='//*[@id = current()/@aria-controls]'>
 				The &#x201C;aria-controls&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
@@ -873,7 +873,7 @@
 
 	<pattern name='describedby must not dangle'>
 		<rule context='*[@aria-describedby]'>
-			<assert test='id(@aria-describedby)'>
+		  <assert test='//*[@id = current()/@aria-describedby]'>
 				The &#x201C;aria-describedby&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
@@ -882,7 +882,7 @@
 
 	<pattern name='flowto must not dangle'>
 		<rule context='*[@aria-flowto]'>
-			<assert test='id(@aria-flowto)'>
+		  <assert test='//*[@id = current()/@aria-flowto]'>
 				The &#x201C;aria-flowto&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
@@ -891,7 +891,7 @@
 
 	<pattern name='labelledby must not dangle'>
 		<rule context='*[@aria-labelledby]'>
-			<assert test='id(@aria-labelledby)'>
+		  <assert test='//*[@id = current()/@aria-labelledby]'>
 				The &#x201C;aria-labelledby&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
@@ -900,7 +900,7 @@
 
 	<pattern name='owns must not dangle'>
 		<rule context='*[@aria-owns]'>
-			<assert test='id(@aria-owns)'>
+		  <assert test='//*[@id = current()/@aria-owns]'>
 				The &#x201C;aria-owns&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
