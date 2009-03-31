@@ -266,9 +266,9 @@
 				The interactive element &#x201C;button&#x201D; cannot 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='ancestor::h:label[@for] and not(count(.|id(ancestor::h:label/@for)) = count(id(ancestor::h:label/@for)))'>
+			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;button&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have a unique
+				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
@@ -286,9 +286,9 @@
 				The interactive element &#x201C;textarea&#x201D; cannot 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='ancestor::h:label[@for] and not(count(.|id(ancestor::h:label/@for)) = count(id(ancestor::h:label/@for)))'>
+			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;textarea&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have a unique
+				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
@@ -306,9 +306,9 @@
 				The interactive element &#x201C;select&#x201D; cannot 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='ancestor::h:label[@for] and not(count(.|id(ancestor::h:label/@for)) = count(id(ancestor::h:label/@for)))'>
+			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;select&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have a unique
+				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
@@ -326,9 +326,9 @@
 				The interactive element &#x201C;input&#x201D; cannot 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='ancestor::h:label[@for] and not(count(.|id(ancestor::h:label/@for)) = count(id(ancestor::h:label/@for)))'>
+			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;input&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have a unique
+				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
