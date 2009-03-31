@@ -200,6 +200,8 @@ public class Assertions extends Checker {
 
     private static final int REPEAT_MASK = (1 << 29);
 
+    private static final int LABEL_FOR_MASK = (1 << 28);
+
     private static final Map<String, Set<String>> REQUIRED_ROLE_PARENT_BY_CHILD = new HashMap<String, Set<String>>();
 
     private static void registerRequiredParentRole(String parent, String child) {
@@ -314,7 +316,9 @@ public class Assertions extends Checker {
         private final String role;
 
         private final String activeDescendant;
-        
+
+        private final String forAttr;
+
         private boolean headingDescendants = false;
 
         private boolean children = false;
@@ -345,11 +349,12 @@ public class Assertions extends Checker {
         /**
          * @param ancestorMask
          */
-        public StackNode(int ancestorMask, String name, String role, String activeDescendant) {
+        public StackNode(int ancestorMask, String name, String role, String activeDescendant, String forAttr) {
             this.ancestorMask = ancestorMask;
             this.name = name;
             this.role = role;
             this.activeDescendant = activeDescendant;
+            this.forAttr = forAttr;
         }
 
         /**
@@ -443,6 +448,15 @@ public class Assertions extends Checker {
          */
         public String getActiveDescendant() {
             return activeDescendant;
+        }
+
+        /**
+         * Returns the forAttr.
+         * 
+         * @return the forAttr
+         */
+        public String getForAttr() {
+            return forAttr;
         }
     }
 
@@ -645,6 +659,7 @@ public class Assertions extends Checker {
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;
+        String forAttr = null;
         boolean href = false;
         boolean repeat = false;
 
@@ -718,6 +733,9 @@ public class Assertions extends Checker {
                         lang = atts.getValue(i);
                     } else if ("id" == attLocal) {
                         id = atts.getValue(i);
+                    } else if ("for" == attLocal && "label" == localName) {
+                        forAttr = atts.getValue(i);
+                        ancestorMask |= LABEL_FOR_MASK;
                     } else if ("contextmenu" == attLocal) {
                         contextmenu = atts.getValue(i);
                     } else if ("repeat-template" == attLocal) {
@@ -794,6 +812,18 @@ public class Assertions extends Checker {
             } else if ("img" == localName && ismap
                     && ((ancestorMask & HREF_MASK) == 0)) {
                 err("The \u201Cimg\u201D element with the \u201Cismap\u201D attribute set must have an \u201Ca\u201D ancestor with the \u201Chref\u201D attribute.");
+            } else if (("input" == localName
+                      || "button" == localName
+                      || "select" == localName
+                      || "textarea" == localName)
+                      && ((ancestorMask & LABEL_FOR_MASK) != 0)) {
+              Set<String> forVals = new HashSet<String>();
+              for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
+                forVals.add(stack[currentPtr - i].getForAttr());
+              }
+              if (id == null || !forVals.contains(id)) {
+                err("Any \u201C" + localName + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
+              }
             }
 
             // at least 1 h1-h6 in header
@@ -1104,7 +1134,7 @@ public class Assertions extends Checker {
             if ("a" == localName && href) {
                 ancestorMask |= HREF_MASK;
             }
-            StackNode child = new StackNode(ancestorMask, localName, role, activeDescendant);
+            StackNode child = new StackNode(ancestorMask, localName, role, activeDescendant, forAttr);
             if (activeDescendant != null) {
                 openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
             }
@@ -1115,7 +1145,7 @@ public class Assertions extends Checker {
             }
             push(child);
         } else {
-            StackNode child = new StackNode(ancestorMask, null, role, activeDescendant);
+            StackNode child = new StackNode(ancestorMask, null, role, activeDescendant, forAttr);
             if (activeDescendant != null) {
                 openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
             }
