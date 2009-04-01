@@ -796,7 +796,7 @@ public class Assertions extends Checker {
                 if (maskHit != 0) {
                     for (int j = 0; j < SPECIAL_ANCESTORS.length; j++) {
                         if ((maskHit & 1) != 0) {
-                            err("The interactive element \u201C"
+                            err("The element \u201C"
                                     + descendantUiString
                                     + "\u201D must not appear as a descendant of the \u201C"
                                     + SPECIAL_ANCESTORS[j] + "\u201D element.");
