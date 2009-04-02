@@ -325,6 +325,8 @@ public class Assertions extends Checker {
 
         private boolean selectedOptions = false;
 
+        private boolean labeledDescendants = false;
+
         private String datagridFirstChild = null;
 
         /**
@@ -433,6 +435,25 @@ public class Assertions extends Checker {
         }
 
         /**
+         * Returns the labeledDescendants.
+         * 
+         * @return the labeledDescendants
+         */
+        public boolean isLabeledDescendants() {
+            return labeledDescendants;
+        }
+
+        /**
+         * Sets the labeledDescendants.
+         * 
+         * @param labeledDescendants
+         *            the labeledDescendants to set
+         */
+        public void setLabeledDescendants() {
+            this.labeledDescendants = true;
+        }
+
+        /**
          * Returns the role.
          * 
          * @return the role
@@ -489,6 +510,8 @@ public class Assertions extends Checker {
     private Map<StackNode, Locator> openHeaders = new HashMap<StackNode, Locator>();
 
     private Map<StackNode, Locator> openSingleSelects = new HashMap<StackNode, Locator>();
+
+    private Map<StackNode, Locator> openLabels = new HashMap<StackNode, Locator>();
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<StackNode, Locator>();
     
@@ -616,6 +639,7 @@ public class Assertions extends Checker {
             }
         }
         openSingleSelects.remove(node);
+        openLabels.remove(node);
         if ((locator = openActiveDescendants.remove(node)) != null) {
             err("The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.", locator);
         }
@@ -634,6 +658,7 @@ public class Assertions extends Checker {
     public void reset() {
         openHeaders.clear();
         openSingleSelects.clear();
+        openLabels.clear();
         openActiveDescendants.clear();
         contextmenuReferences.clear();
         menuIds.clear();
@@ -812,17 +837,32 @@ public class Assertions extends Checker {
             } else if ("img" == localName && ismap
                     && ((ancestorMask & HREF_MASK) == 0)) {
                 err("The \u201Cimg\u201D element with the \u201Cismap\u201D attribute set must have an \u201Ca\u201D ancestor with the \u201Chref\u201D attribute.");
-            } else if (("input" == localName
+            } else if ("input" == localName
                       || "button" == localName
                       || "select" == localName
-                      || "textarea" == localName)
-                      && ((ancestorMask & LABEL_FOR_MASK) != 0)) {
-              Set<String> forVals = new HashSet<String>();
-              for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
-                forVals.add(stack[currentPtr - i].getForAttr());
+                      || "textarea" == localName) {
+              for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
+                StackNode node = entry.getKey();
+                Locator locator = entry.getValue();
+                if (node.isLabeledDescendants()) {
+                  err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, or \u201Ctextarea\u201D descendant.");
+                  warn("\u201Clabel\u201D element with multiple labelable descendants.", locator);
+                } else {
+                  node.setLabeledDescendants();
+                }
               }
-              if (id == null || !forVals.contains(id)) {
-                err("Any \u201C" + localName + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
+              if ((ancestorMask & LABEL_FOR_MASK) != 0) {
+                boolean hasMatchingFor = false;
+                for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
+                  String forVal = stack[currentPtr - i].getForAttr();
+                  if (forVal != null && forVal.equals(id)) {
+                    hasMatchingFor = true;
+                    break;
+                  }
+                }
+                if (id == null || !hasMatchingFor) {
+                  err("Any \u201C" + localName + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
+                }
               }
             }
 
@@ -1140,6 +1180,8 @@ public class Assertions extends Checker {
             }
             if ("select" == localName && atts.getIndex("", "multiple") > -1) {
                 openSingleSelects.put(child, getDocumentLocator());
+            } else if ("label" == localName) {
+                openLabels.put(child, new LocatorImpl(getDocumentLocator()));
             } else if ("header" == localName) {
                 openHeaders.put(child, new LocatorImpl(getDocumentLocator()));
             }
