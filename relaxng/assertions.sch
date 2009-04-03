@@ -12,38 +12,17 @@
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
 
-    
-	<pattern name='Triggered on mutually exclusive elements'>
+	<pattern name='Triggered on mutually exclusive elements and prohibited-descendant cases'>
 
-	<!-- Exclusions  - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Exclusions and prohibited-descendant contraints  - - - - - - - - - - - -->
 
-		<rule context='h:form'>
-			<report test='ancestor::h:form'>
-				The &#x201C;form&#x201D; element cannot contain any nested 
-				&#x201C;form&#x201D; elements.
+	<rule context='h:form|h:dfn|h:noscript|h:label|h:address'>
+			<report test='ancestor::*[name() = name(current())]'>
+			  The &#x201C;<name/>&#x201D; element must not contain any nested 
+			  &#x201C;<name/>&#x201D; elements.
 			</report>
-		</rule>
-
-		<rule context='h:dfn'>
-			<report test='ancestor::h:dfn'>
-				The &#x201C;dfn&#x201D; element cannot contain any nested 
-				&#x201C;dfn&#x201D; elements.
-			</report>
-		</rule>
-
-		<rule context='h:noscript'>
-			<report test='ancestor::h:noscript'>
-				The &#x201C;noscript&#x201D; element cannot contain any nested 
-				&#x201C;noscript&#x201D; elements.
-			</report>
-		</rule>
-
-		<rule context='h:label'>
-			<report test='ancestor::h:label'>
-				The &#x201C;label&#x201D; element cannot contain any nested 
-				&#x201C;label&#x201D; elements.
-			</report>
-			<report test='count(descendant::h:input
+			<report test='self::h:label and
+			                   count(descendant::h:input
 			                   | descendant::h:button
 			                   | descendant::h:select
 			                   | descendant::h:textarea) > 1'>
@@ -53,101 +32,47 @@
 				&#x201C;select&#x201D;,
 				or &#x201C;textarea&#x201D; descendant.
 			</report>
-		</rule>
-
-		<rule context='h:address'>
-			<report test='ancestor::h:address'>
-				The &#x201C;address&#x201D; element cannot contain any nested 
-				&#x201C;address&#x201D; elements.
+			<report test='self::h:label[@for] and 
+			              not(//h:input[not(translate(@type, "HIDEN", "hiden")="hidden")][@id = current()/@for] or 
+			              //h:textarea[@id = current()/@for] or 
+			              //h:select[@id = current()/@for] or 
+			              //h:button[@id = current()/@for] or 
+			              //h:output[@id = current()/@for])'>
+				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
+				element must refer to a form control.
 			</report>
 		</rule>
 
-		<rule context='h:blockquote'>
+		<rule context='h:section|h:nav|h:article|h:aside|h:footer'>
 			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;blockquote&#x201D; cannot 
-				appear as a descendant of the &#x201C;header&#x201D; element.
-			</report>
-			<report test='ancestor::h:address'>
-				The sectioning element &#x201C;blockquote&#x201D; cannot 
-				appear as a descendant of the &#x201C;address&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:section'>
-			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;section&#x201D; cannot 
+				The sectioning element &#x201C;<name/>&#x201D; must not
 				appear as a descendant of the &#x201C;header&#x201D; element.
 			</report>
 			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;section&#x201D; cannot 
+				The sectioning element &#x201C;<name/>&#x201D; must not
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
 			<report test='ancestor::h:address'>
-				The sectioning element &#x201C;section&#x201D; cannot 
+				The sectioning element &#x201C;<name/>&#x201D; must not
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
 
-		<rule context='h:nav'>
-			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;nav&#x201D; cannot 
-				appear as a descendant of the &#x201C;header&#x201D; element.
-			</report>
+		<rule context='h:header|h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
 			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;nav&#x201D; cannot 
-				appear as a descendant of the &#x201C;footer&#x201D; element.
-			</report>
-			<report test='ancestor::h:address'>
-				The sectioning element &#x201C;nov&#x201D; cannot 
-				appear as a descendant of the &#x201C;address&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:article'>
-			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;article&#x201D; cannot 
-				appear as a descendant of the &#x201C;header&#x201D; element.
-			</report>
-			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;article&#x201D; cannot 
-				appear as a descendant of the &#x201C;footer&#x201D; element.
-			</report>
-			<report test='ancestor::h:address'>
-				The sectioning element &#x201C;article&#x201D; cannot 
-				appear as a descendant of the &#x201C;address&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:aside'>
-			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;aside&#x201D; cannot 
-				appear as a descendant of the &#x201C;header&#x201D; element.
-			</report>
-			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;aside&#x201D; cannot 
-				appear as a descendant of the &#x201C;footer&#x201D; element.
-			</report>
-			<report test='ancestor::h:address'>
-				The sectioning element &#x201C;aside&#x201D; cannot 
-				appear as a descendant of the &#x201C;address&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:header'>
-			<report test='ancestor::h:header'>
-				The &#x201C;header&#x201D; element cannot appear as a 
-				descendant of the &#x201C;header&#x201D; element.
-			</report>
-			<report test='ancestor::h:footer'>
-				The &#x201C;header&#x201D; element cannot appear as a 
+				The &#x201C;<name/>&#x201D; element must not appear as a 
 				descendant of the &#x201C;footer&#x201D; element.
 			</report>
 			<report test='ancestor::h:address'>
-				The &#x201C;header&#x201D; element cannot appear as a 
+				The &#x201C;<name/>&#x201D; element must not appear as a 
 				descendant of the &#x201C;address&#x201D; element.
 			</report>
-
-			<assert test='count(descendant::h:h1 
+			<report test='self::header and ancestor::h:header'>
+				The &#x201C;header&#x201D; element must not appear as a 
+				descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<assert test='self::h:header and
+			                  count(descendant::h:h1 
 			                  | descendant::h:h2 
 			                  | descendant::h:h3 
 			                  | descendant::h:h4 
@@ -156,34 +81,6 @@
 				The &#x201C;header&#x201D; element must have at least one 
 				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
 			</assert>
-		</rule>
-
-		<rule context='h:footer'>
-			<report test='ancestor::h:header'>
-				The &#x201C;footer&#x201D; element cannot appear as a 
-				descendant of the &#x201C;header&#x201D; element.
-			</report>
-			<report test='ancestor::h:footer'>
-				The &#x201C;footer&#x201D; element cannot appear as a 
-				descendant of the &#x201C;footer&#x201D; element.
-			</report>
-			<report test='ancestor::h:address'>
-				The &#x201C;footer&#x201D; element cannot appear as a 
-				descendant of the &#x201C;address&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
-			<report test='ancestor::h:footer'>
-				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
-				cannot appear as descendants of the &#x201C;footer&#x201D; 
-				element.
-			</report>
-			<report test='ancestor::h:address'>
-				The &#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; elements 
-				cannot appear as descendants of the &#x201C;address&#x201D; 
-				element.
-			</report>
 		</rule>
 
 	<!-- Interactive element exclusions -->
@@ -208,196 +105,41 @@
 		   - bb
 		  -->
 
-		<rule context='h:a'>
+		<rule context='h:a|h:datagrid|h:details|h:bb|h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]|h:button|h:textarea|h:select|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
 			<report test='ancestor::h:a'>
-				The interactive element &#x201C;a&#x201D; cannot 
+				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
-				The interactive element &#x201C;a&#x201D; cannot 
+				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;a&#x201D; cannot 
+				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-		</rule>
-
-		<rule context='h:datagrid'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;datagrid&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;datagrid&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;datagrid&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:details'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;details&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;details&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;details&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:button'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;button&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;button&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;button&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;button&#x201D; descendant of a &#x201C;label&#x201D;
+			<report test='self::h:button|self::h:textarea|self::h:select|self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]
+			and (ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id]))'>
+				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D;
 				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
 
-		<rule context='h:textarea'>
+		<rule context='h:video[@controls]|h:audio[@controls]'>
 			<report test='ancestor::h:a'>
-				The interactive element &#x201C;textarea&#x201D; cannot 
+				The interactive element &#x201C;<name/>&#x201D;
+				with the attribute &#x201C;controls&#x201D; must not
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
-				The interactive element &#x201C;textarea&#x201D; cannot 
+				The interactive element &#x201C;<name/>&#x201D;
+				with the attribute &#x201C;controls&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;textarea&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;textarea&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have an
-				ID value that matches that &#x201C;for&#x201D; attribute.
-			</report>
-		</rule>
-
-		<rule context='h:select'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;select&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;select&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;select&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;select&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have an
-				ID value that matches that &#x201C;for&#x201D; attribute.
-			</report>
-		</rule>
-
-		<rule context='h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;input&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;input&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;input&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;input&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have an
-				ID value that matches that &#x201C;for&#x201D; attribute.
-			</report>
-		</rule>
-
-		<rule context='h:bb'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;bb&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;bb&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;bb&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-		</rule>
-		
-		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;menu&#x201D; with the attribute
-				&#x201C;type=toolbar&#x201D; cannot 
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;menu&#x201D; with the attribute
-				&#x201C;type=toolbar&#x201D; cannot 
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;menu&#x201D; with the attribute
-				&#x201C;type=toolbar&#x201D; cannot 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:video[@controls]'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;video&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;video&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;video&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:audio[@controls]'>
-			<report test='ancestor::h:a'>
-				The interactive element &#x201C;audio&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
-				appear as a descendant of the &#x201C;a&#x201D; element.
-			</report>
-			<report test='ancestor::h:button'>
-				The interactive element &#x201C;audio&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
-				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;audio&#x201D;
-				with the attribute &#x201C;controls&#x201D; cannot
+				The interactive element &#x201C;<name/>&#x201D;
+				with the attribute &#x201C;controls&#x201D; must not
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
@@ -528,63 +270,9 @@
 
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:center'>
+		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet'>
 			<report test='true()'>
-				The &#x201C;center&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:font'>
-			<report test='true()'>
-				The &#x201C;font&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:big'>
-			<report test='true()'>
-				The &#x201C;big&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:s'>
-			<report test='true()'>
-				The &#x201C;s&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:strike'>
-			<report test='true()'>
-				The &#x201C;strike&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:tt'>
-			<report test='true()'>
-				The &#x201C;tt&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:u'>
-			<report test='true()'>
-				The &#x201C;u&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:acronym'>
-			<report test='true()'>
-				The &#x201C;acronym&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:dir'>
-			<report test='true()'>
-				The &#x201C;dir&#x201D; element is obsolete.
-			</report>
-		</rule>
-
-		<rule context='h:applet'>
-			<report test='true()'>
-				The &#x201C;applet&#x201D; element is obsolete.
+			  The &#x201C;<name/>&#x201D; element is obsolete.
 			</report>
 		</rule>
 
@@ -675,20 +363,6 @@
 				&#x201C;menu&#x201D; element.
 			</assert>
 		</rule>
-	</pattern>
-
-	<pattern name='for on label must refer to a form control'>
-		<rule context='h:label[@for]'>
-		  <assert test='//h:input[not(translate(@type, "HIDEN", "hiden")="hidden")][@id = current()/@for] or 
-			              //h:textarea[@id = current()/@for] or 
-			              //h:select[@id = current()/@for] or 
-			              //h:button[@id = current()/@for] or 
-			              //h:output[@id = current()/@for]'>
-				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
-				element must refer to a form control.
-			</assert>
-		</rule>
-
 	</pattern>
 
 	<pattern name='list on input must refer to a select or a datalist'>
