@@ -138,8 +138,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("noscript", "noscript");
         registerProhibitedAncestor("label", "label");
         registerProhibitedAncestor("address", "address");
-        registerProhibitedAncestor("header", "blockquote");
-        registerProhibitedAncestor("address", "blockquote");
         registerProhibitedAncestor("header", "section");
         registerProhibitedAncestor("footer", "section");
         registerProhibitedAncestor("address", "section");
