@@ -198,8 +198,6 @@ public class Assertions extends Checker {
 
     private static final int HREF_MASK = (1 << 30);
 
-    private static final int REPEAT_MASK = (1 << 29);
-
     private static final int LABEL_FOR_MASK = (1 << 28);
 
     private static final Map<String, Set<String>> REQUIRED_ROLE_PARENT_BY_CHILD = new HashMap<String, Set<String>>();
@@ -519,17 +517,9 @@ public class Assertions extends Checker {
 
     private Set<String> menuIds = new HashSet<String>();
 
-    private LinkedHashSet<IdrefLocator> repeatTemplateReferences = new LinkedHashSet<IdrefLocator>();
-
-    private Set<String> templateIds = new HashSet<String>();
-
     private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<IdrefLocator>();
 
     private Set<String> formControlIds = new HashSet<String>();
-
-    private LinkedHashSet<IdrefLocator> inputAddReferences = new LinkedHashSet<IdrefLocator>();
-
-    private LinkedHashSet<IdrefLocator> buttonAddReferences = new LinkedHashSet<IdrefLocator>();
 
     private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<IdrefLocator>();
 
@@ -552,36 +542,11 @@ public class Assertions extends Checker {
             }
         }
 
-        // repeat-template
-        for (IdrefLocator idrefLocator : repeatTemplateReferences) {
-            if (!templateIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Crepeat-template\u201D attribute must refer to a repetition template.",
-                        idrefLocator.getLocator());
-            }
-        }
-
         // label for
         for (IdrefLocator idrefLocator : formControlReferences) {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
                 err(
                         "The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a form control.",
-                        idrefLocator.getLocator());
-            }
-        }
-
-        // type=add
-        for (IdrefLocator idrefLocator : inputAddReferences) {
-            if (!templateIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Ctemplate\u201D attribute of an \u201Cinput\u201D element that is of \u201Ctype=\"add\"\u201D must refer to a repetition template.",
-                        idrefLocator.getLocator());
-            }
-        }
-        for (IdrefLocator idrefLocator : buttonAddReferences) {
-            if (!templateIds.contains(idrefLocator.getIdref())) {
-                err(
-                        "The \u201Ctemplate\u201D attribute of an \u201Cbutton\u201D element that is of \u201Ctype=\"add\"\u201D must refer to a repetition template.",
                         idrefLocator.getLocator());
             }
         }
@@ -662,12 +627,8 @@ public class Assertions extends Checker {
         openActiveDescendants.clear();
         contextmenuReferences.clear();
         menuIds.clear();
-        repeatTemplateReferences.clear();
-        templateIds.clear();
         formControlReferences.clear();
         formControlIds.clear();
-        inputAddReferences.clear();
-        buttonAddReferences.clear();
         listReferences.clear();
         listIds.clear();
         ariaReferences.clear();
@@ -686,7 +647,6 @@ public class Assertions extends Checker {
         String activeDescendant = null;
         String forAttr = null;
         boolean href = false;
-        boolean repeat = false;
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -703,17 +663,11 @@ public class Assertions extends Checker {
             boolean add = false;
             boolean toolbar = false;
             boolean ismap = false;
-            boolean isTemplate = false;
             boolean selected = false;
-            boolean remove = false;
-            boolean moveUp = false;
-            boolean moveDown = false;
-            String templateRef = null;
             String xmlLang = null;
             String lang = null;
             String id = null;
             String contextmenu = null;
-            String repeatTemplate = null;
             String list = null;
 
             int len = atts.getLength();
@@ -733,25 +687,11 @@ public class Assertions extends Checker {
                         } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "toolbar", attValue)) {
                             toolbar = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "add", attValue)) {
-                            add = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "remove", attValue)) {
-                            remove = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "move-up", attValue)) {
-                            moveUp = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "move-down", attValue)) {
-                            moveDown = true;
                         }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal) {
                         activeDescendant = atts.getValue(i);
-                    } else if ("template" == attLocal) {
-                        templateRef = atts.getValue(i);
                     } else if ("list" == attLocal) {
                         list = atts.getValue(i);
                     } else if ("lang" == attLocal) {
@@ -763,19 +703,10 @@ public class Assertions extends Checker {
                         ancestorMask |= LABEL_FOR_MASK;
                     } else if ("contextmenu" == attLocal) {
                         contextmenu = atts.getValue(i);
-                    } else if ("repeat-template" == attLocal) {
-                        repeatTemplate = atts.getValue(i);
                     } else if ("ismap" == attLocal) {
                         ismap = true;
                     } else if ("selected" == attLocal) {
                         selected = true;
-                    } else if ("repeat" == attLocal) {
-                        repeat = true;
-                        String attValue = atts.getValue(i);
-                        if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "template", attValue)) {
-                            isTemplate = true;
-                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -1015,15 +946,6 @@ public class Assertions extends Checker {
                 menuIds.addAll(ids);
             }
 
-            // repeat-template
-            if (repeatTemplate != null) {
-                repeatTemplateReferences.add(new IdrefLocator(new LocatorImpl(
-                        getDocumentLocator()), repeatTemplate));
-            }
-            if (isTemplate) {
-                templateIds.addAll(ids);
-            }
-
             // label for
             if ("label" == localName) {
                 String forVal = atts.getValue("", "for");
@@ -1038,23 +960,10 @@ public class Assertions extends Checker {
                 formControlIds.addAll(ids);
             }
 
-            // type=add
-            if ("input" == localName && templateRef != null && add) {
-                inputAddReferences.add(new IdrefLocator(new LocatorImpl(
-                        getDocumentLocator()), repeatTemplate));
-            }
-            if ("button" == localName && templateRef != null && add) {
-                buttonAddReferences.add(new IdrefLocator(new LocatorImpl(
-                        getDocumentLocator()), repeatTemplate));
-            }
-
             // input list
             if ("input" == localName && list != null) {
                 listReferences.add(new IdrefLocator(new LocatorImpl(
                         getDocumentLocator()), list));
-            }
-            if (isTemplate) {
-                listIds.addAll(ids);
             }
 
             // multiple selected options
@@ -1068,28 +977,6 @@ public class Assertions extends Checker {
                     }
                 }
             }
-
-            // move ancestors
-            if ((ancestorMask & REPEAT_MASK) == 0) {
-                if ("input" == localName) {
-                    if (remove) {
-                        err("An \u201Cinput\u201D element of \u201Ctype=\"remove\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    } else if (moveUp) {
-                        err("An \u201Cinput\u201D element of \u201Ctype=\"move-up\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    } else if (moveDown) {
-                        err("An \u201Cinput\u201D element of \u201Ctype=\"move-down\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    }
-                } else if ("button" == localName) {
-                    if (remove) {
-                        err("A \u201Cbutton\u201D element of \u201Ctype=\"remove\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    } else if (moveUp) {
-                        err("A \u201Cbutton\u201D element of \u201Ctype=\"move-up\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    } else if (moveDown) {
-                        err("A \u201Cbutton\u201D element of \u201Ctype=\"move-down\"\u201D must have a repetition block or a repetition template as an ancestor.");
-                    }
-                }
-            }
-
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
@@ -1167,9 +1054,6 @@ public class Assertions extends Checker {
             int number = specialAncestorNumber(localName);
             if (number > -1) {
                 ancestorMask |= (1 << number);
-            }
-            if (repeat) {
-                ancestorMask |= REPEAT_MASK;
             }
             if ("a" == localName && href) {
                 ancestorMask |= HREF_MASK;
