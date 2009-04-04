@@ -186,6 +186,9 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("a", "select");
         registerProhibitedAncestor("button", "select");
         registerProhibitedAncestor("bb", "select");
+        registerProhibitedAncestor("a", "bb");
+        registerProhibitedAncestor("button", "bb");
+        registerProhibitedAncestor("bb", "bb");
     }
 
     private static final int A_BUTTON_BB_MASK = (1 << specialAncestorNumber("a"))
