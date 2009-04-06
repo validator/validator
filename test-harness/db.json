@@ -10,11 +10,11 @@
   ], 
   "http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html": [
     {
-      "firstColumn": 7, 
+      "firstColumn": 4, 
       "firstLine": 7, 
-      "lastColumn": 7, 
+      "lastColumn": 4, 
       "lastLine": 7, 
-      "message": "Text after \u201c&\u201d did not match an entity name. Probable cause: \u201c&\u201d should have been escaped as \u201c&amp;\u201d."
+      "message": "\u201c&\u201d did not start a character reference. (\u201c&\u201d probably should have been escaped as \u201c&amp;\u201d.)"
     }
   ]
 }
