@@ -1,0 +1,220 @@
+This file is a static copy of the following Wiki page:
+
+  http://wiki.whatwg.org/wiki/Validator.nu_Full-Stack_Tests
+
+This file was last updated (checked in) on $Date$
+
+This file providea details on using the validator-tester.py
+program and other files in this directory. For more up-to-date
+information, see the Wiki page at the address given above.
+
+-----------------------------------------------------------------
+
+Validator.nu Full-Stack Tests
+
+From WHATWG Wiki
+
+   Validator.nu has a framework for doing full-stack HTML5 validator
+   testing in an implementation-independent manner. Currently, the
+   framework is lacking tests.
+
+   The framework implements the design discussed at the HTML WG
+   unconference session on validator testing at TPAC 2007.
+
+   Contents
+
+        * 1 The Front End
+        * 2 The General Idea
+        * 3 Writing a Test Eliciting an Error
+             + 3.1 Identifying a Testable Conformance Criterion
+             + 3.2 Writing a Test Violationg the Conformance Criterion
+             + 3.3 Placing the Test Case on a Server
+             + 3.4 Generating a Reference Result
+        * 4 Writing a Test Eliciting No Errors
+        * 5 Running a Test
+        * 6 Running All Tests
+
+The Front End
+
+   The front end for the system is the script named validator-tester.py in
+   the test-harness/ directory of the validator SVN module. The script
+   requires a recent version of simplejson.
+
+   The script is documented on a separate page.
+
+The General Idea
+
+   The idea is to test the full validator through a Web service API in
+   order to test the aggregation of software components running together
+   with a realistic configuration. Testing merely the parser or the
+   validation layer risks testing them in a different configuration than
+   what gets deployed and without a real HTTP client connecting to real
+   HTTP server.
+
+   The tests are intended to be implementation-independent for two
+   reasons:
+    1. to make the tests reusable for different products
+    2. to avoid clamping down the implementation details within a product
+
+   There's no cross-product way to give identifiers to HTML5 errors. For
+   example, the identification of errors pertaining to element nesting
+   would be different in a grammar-based implementation and in an
+   assertion-based implementation. Moreover, with grammar-based
+   implementations, only the first error is reliable.
+
+   Therefore, the testing framework does not test for error identity. It
+   only tests that the first error elicited by a test case falls within a
+   specified source code character range. (This assumes that
+   implementations can report error location, which is a bad assumption
+   for validators that validate the DOM inside a browser, but we'd be left
+   with no useful assumptions without this one.)
+
+   Thus, a test suite consists of files on a public HTTP server and a
+   reference database of URIs pointing to the tests and expected locations
+   of the first error for each URI.
+
+Writing a Test Eliciting an Error
+
+Identifying a Testable Conformance Criterion
+
+   First, a testable assertion needs to be identified. For example: "The
+   ampersand must be followed by one of the names given in the named
+   character references section, using the same case."
+
+Writing a Test Violationg the Conformance Criterion
+
+   The test document should have a violation of the previously identified
+   conformance criterion as its first error. Preferably, this error should
+   be the only error in the document.
+
+   We can go read the list of named characters and come up with a test
+   document like this:
+
+     <!DOCTYPE html>
+     <html>
+     <head>
+     <title>Unescaped ampersand</title>
+     </head>
+     <body>
+     <p>&amgueao</p>
+     <p>There should be an error.</p>
+     </body>
+     </html>
+
+   Note that a test that isn't testing the doctype or tag inference should
+   have the doctype and explicit tags for html, head, title and body in
+   order to avoid accidentally testing something related to tag inference.
+   It is a good idea to make the content of title hint at what is being
+   tested and include a paragraph saying whether an error is expected or
+   not.
+
+Placing the Test Case on a Server
+
+   Next, the test file needs to be put on an HTTP server. If you are not
+   testing the internal encoding declaration, the absence of an encoding
+   declaration or a particular encoding, you should serve the file with
+   the header Content-Type: text/html; charset=utf-8 (or Content-Type:
+   application/xhtml+xml for XHTML5 tests).
+
+   In this case, the sample test has the URI
+   http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html.
+
+Generating a Reference Result
+
+   If this is a regression test (i.e. a check for the error has already
+   been implemented in Validator.nu), the reference result can be
+   generated using Validator.nu.
+
+   First, use the HTML UI to check that the right error is given and
+   that the right piece of source is highlighted.
+
+   Then, use validator-tester.py to dump the result in a JSON file:
+
+     python validator-tester.py dumpuri \
+       http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html temp.json
+
+   You can then open the temporary file in your favorite text editor:
+
+     edit temp.json
+
+   You should see contents like this:
+     {
+       "http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html": [
+         {
+           "firstColumn": 7,
+           "firstLine": 7,
+           "lastColumn": 7,
+           "lastLine": 7,
+           "message": "Text after \u201c&\u201d did not match an entity name. Probable cause: \u201c&\u201d should have been escaped as \u201c&\u201d."
+         }
+       ]
+     }
+
+   The outmost JSON object has a single key-value pair with the URI as the
+   key and an array of errors as the value. In this case, the array has
+   only one element. If it had more, the rest of the elements would be
+   merely informative for a human and would be ignored by the test harness
+   when comparing results.
+
+   The error is a JSON object that has five keys. Four for the error range
+   and one for the message. The message is merely informative for humans.
+   It isn't compared by the test harness.
+
+   In this case, the first character of the error range is on column 7 on
+   line 7 (inclusive), and the last character of the range is on column 7
+   on line 7 (inclusive). The first line is line 1. The first column is
+   column 1. The columns are counted by UTF-16 code unit. The lines are
+   separated by CR, LF, or CRLF.
+
+   Validator.nu highlights only a single character. This is an
+   implementation detail, however. It is reasonable for an implementation
+   to locate the error a bit more broadly. In general, if an error occurs
+   in a tag, the error range should cover the whole tag and if an error
+   occurs in a text node, the range should cover the text node plus the
+   following < character.
+
+   Edit the range to start 3 column earlier and end 5 columns later:
+     {
+       "http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html": [
+         {
+           "firstColumn": 4,
+           "firstLine": 7,
+           "lastColumn": 12,
+           "lastLine": 7,
+           "message": "Text after \u201c&\u201d did not match an entity name. Probable cause: \u201c&\u201d should have been escaped as \u201c&\u201d."
+         }
+       ]
+     }
+
+   For an implementation to pass the test, it must report at least one
+   error and the location of the first error must fall within this range.
+
+   Now you can save the file and commit the modified file into the
+   reference database:
+
+     python validator-tester.py mergedb temp.json
+
+   When the autogenerated reference does not need editing, you can use
+   this shortcut:
+
+     python validator-tester.py adduri http://hsivonen.iki.fi/test/moz/en-UK.html
+
+Writing a Test Eliciting No Errors
+
+   When writing a test case that is expected to pass without errors, you
+   need to write it and put in on the server as above. However, since
+   there is nothing to edit in the reference results, you can always use
+   the adduri shortcut command mentioned above.
+
+Running a Test
+
+   You can run the test created above with this command:
+     python validator-tester.py checkuri http://hsivonen.iki.fi/test/moz/unescaped-ampersand.html
+
+   There is no output if the test passes.
+
+Running All Tests
+
+   To run all tests that have reference results in the database, run:
+
+     python validator-tester.py checkall
