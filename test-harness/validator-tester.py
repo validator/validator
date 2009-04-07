@@ -171,6 +171,7 @@ class ValidatorTester:
 
   def dumpDatabase(self, handle, database):
     simplejson.dump(database, handle, cls=ValidationErrorMessageEncoder, sort_keys=True, indent=2)
+    handle.write('\n')
 
 # User-facing commands
 
