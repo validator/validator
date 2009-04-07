@@ -44,6 +44,8 @@ public class HashName extends AbstractDatatype {
             throw newDatatypeException("The empty string is not a valid hash-name reference.");
         } else if (literal.charAt(0) != '#') {
             throw newDatatypeException("A hash-name reference must start with \u201C#\u201D.");            
+        } else if (literal.length() == 1) {
+            throw newDatatypeException("A hash-name reference must have at least one character after \u201C#\u201D.");
         }
         // Other cases 
     }
