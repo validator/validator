@@ -17,6 +17,25 @@
       "message": "\u201c&\u201d did not start a character reference. (\u201c&\u201d probably should have been escaped as \u201c&amp;\u201d.)"
     }
   ], 
+  "http://simon.html5.org/test/validator/character-encoding/legacy-decl.html": [], 
+  "http://simon.html5.org/test/validator/character-encoding/non-ascii-past-512.html": [
+    {
+      "firstColumn": 512, 
+      "firstLine": 1, 
+      "lastColumn": 512, 
+      "lastLine": 1, 
+      "message": "No explicit character encoding declaration has been seen yet (assumed \u201cwindows-1252\u201d) but the document contains non-ASCII."
+    }
+  ], 
+  "http://simon.html5.org/test/validator/character-encoding/non-ascii.html": [
+    {
+      "firstColumn": 23, 
+      "firstLine": 1, 
+      "lastColumn": 23, 
+      "lastLine": 1, 
+      "message": "No explicit character encoding declaration has been seen yet (assumed \u201cwindows-1252\u201d) but the document contains non-ASCII."
+    }
+  ], 
   "http://simon.html5.org/test/validator/content-model/label/belts-and-braces.html": [], 
   "http://simon.html5.org/test/validator/content-model/label/input-in-label-with-for.html": [
     {
