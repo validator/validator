@@ -1,18 +1,103 @@
-This file is a static copy of the following Wiki page:
+This file is a static copy of the following Wiki pages:
 
+  http://wiki.whatwg.org/wiki/Validator.nu_validator-tester.py
   http://wiki.whatwg.org/wiki/Validator.nu_Full-Stack_Tests
 
 This file was last updated (checked in) on $Date$
 
-This file provide details on using the validator-tester.py
-program and other files in this directory. For more up-to-date
-information, see the Wiki page at the address given above.
+This file provide reference information about the command-line
+arguments for validator-tester.py script in this directory, as
+well as how-to guidance on using it. For more up-to-date
+information, see the Wiki pages at the addresses above.
+
+-----------------------------------------------------------------
+
+   python validator-tester.py config command command-arguments
+
+   Contents
+
+        * 1 config
+             + 1.1 --db=filename
+             + 1.2 --service=URI
+        * 2 command
+             + 2.1 dumpref
+             + 2.2 dumpuri
+             + 2.3 adduri
+             + 2.4 deluri
+             + 2.5 checkuri
+             + 2.6 checkall
+             + 2.7 mergedb
+        * 3 command-arguments
+
+config
+
+   The following configuration parameters are available:
+
+--db=filename
+
+   Specifies the name of the database file. Defaults to db.json in the
+   current working directory.
+
+--service=URI
+
+   Specifies the root URI of the service to be tested. Defaults to
+   http://html5.validator.nu/.
+
+command
+
+dumpref
+
+   Dumps the reference data for a URI from the database into a JSON file.
+
+   Takes two arguments: URI and file name.
+
+dumpuri
+
+   Dumps the result data for a URI as reported by the remote service into
+   a JSON file.
+
+   Takes two arguments: URI and file name.
+
+adduri
+
+   Adds the remote service output for a URI into the database.
+
+   Takes one argument: URI
+
+deluri
+
+   Deletes the reference data for a URI from the database.
+
+   Takes one argument: URI
+
+checkuri
+
+   Compare the service output for a URI against the reference data for the
+   same URI in the database and print discrepancies.
+
+   Takes one argument: URI
+
+checkall
+
+   Runs checkuri for each URI recorded in the database.
+
+   Takes no arguments.
+
+mergedb
+
+   Reads an external database file (e.g. one written by dumpref) and adds
+   the entries to the reference database overwriting existing entries in
+   the case of key overlap.
+
+   Takes one argument: file name
+
+command-arguments
+
+   The arguments to the command as documented for each command.
 
 -----------------------------------------------------------------
 
 Validator.nu Full-Stack Tests
-
-From WHATWG Wiki
 
    Validator.nu has a framework for doing full-stack HTML5 validator
    testing in an implementation-independent manner. Currently, the
@@ -218,3 +303,5 @@ Running All Tests
    To run all tests that have reference results in the database, run:
 
      python validator-tester.py checkall
+
+
