@@ -663,6 +663,7 @@ public class Assertions extends Checker {
             boolean hidden = false;
             boolean add = false;
             boolean toolbar = false;
+            boolean usemap = false;
             boolean ismap = false;
             boolean selected = false;
             String xmlLang = null;
@@ -708,6 +709,8 @@ public class Assertions extends Checker {
                         ismap = true;
                     } else if ("selected" == attLocal) {
                         selected = true;
+                    } else if ("usemap" == attLocal) {
+                        usemap = true;
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -744,6 +747,9 @@ public class Assertions extends Checker {
             } else if ("menu" == localName && toolbar) {
                 mask = A_BUTTON_BB_MASK;
                 descendantUiString = "menu\u201D with the attribute \u201Ctype=toolbar";
+            } else if ("img" == localName && usemap) {
+                mask = A_BUTTON_BB_MASK;
+                descendantUiString = "img\u201D with the attribute \u201Cusemap";
             } else if ("input" == localName && !hidden) {
                 mask = A_BUTTON_BB_MASK;
                 descendantUiString = "input";

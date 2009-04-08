@@ -105,7 +105,7 @@
 		   - bb
 		  -->
 
-		<rule context='h:a|h:datagrid|h:details|h:bb|h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]|h:button|h:textarea|h:select|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
+		<rule context='h:a|h:datagrid|h:details|h:bb|h:button|h:textarea|h:select|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -140,6 +140,42 @@
 			<report test='ancestor::h:bb'>
 				The interactive element &#x201C;<name/>&#x201D;
 				with the attribute &#x201C;controls&#x201D; must not
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
+			<report test='ancestor::h:a'>
+				The element &#x201C;menu&#x201D;
+				with the attribute &#x201C;toolbar&#x201D; must not
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The element &#x201C;menu&#x201D;
+				with the attribute &#x201C;toolbar&#x201D; must not
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The element &#x201C;menu&#x201D;
+				with the attribute &#x201C;toolbar&#x201D; must not
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:img[@usemap]'>
+			<report test='ancestor::h:a'>
+				The element &#x201C;img&#x201D;
+				with the attribute &#x201C;usemap&#x201D; must not
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The element &#x201C;img&#x201D;
+				with the attribute &#x201C;usemap&#x201D; must not
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The element &#x203C;img&#x201D;
+				with the attribute &#x201C;usemap&#x201D; must not
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
