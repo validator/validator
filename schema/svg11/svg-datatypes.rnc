@@ -102,7 +102,7 @@ grammar {
     PreserveAspectRatioSpec.datatype =
         xsd:string {
             pattern =
-                "([ \t\r\n])*(none|xMinYMin|xMidYMin|xMaxYMin|xMinYMid|xMidYMid|xMaxYMid|xMinYMax|xMidYMax|xMaxYMax)(([ \t\r\n])+(meet|slice))?([ \t\r\n])*"
+                "([ \t\r\n])*(defer([ \t\r\n])+)?(none|xMinYMin|xMidYMin|xMaxYMin|xMinYMid|xMidYMid|xMaxYMid|xMinYMax|xMidYMax|xMaxYMax)(([ \t\r\n])+(meet|slice))?([ \t\r\n])*"
         }
     
     ## 
