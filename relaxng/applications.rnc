@@ -48,7 +48,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.spellcheck =
 		attribute spellcheck{
-			w:string "true" | w:string "false"
+			w:string "true" | w:string "false" | w:string ""
 		}
 
 ## Application Cache: manifest
