@@ -189,6 +189,9 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("a", "bb");
         registerProhibitedAncestor("button", "bb");
         registerProhibitedAncestor("bb", "bb");
+        registerProhibitedAncestor("a", "keygen");
+        registerProhibitedAncestor("button", "keygen");
+        registerProhibitedAncestor("bb", "keygen");
     }
 
     private static final int A_BUTTON_BB_MASK = (1 << specialAncestorNumber("a"))
@@ -778,12 +781,13 @@ public class Assertions extends Checker {
             } else if ("input" == localName
                       || "button" == localName
                       || "select" == localName
-                      || "textarea" == localName) {
+                      || "textarea" == localName
+                      || "keygen" == localName) {
               for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
                 StackNode node = entry.getKey();
                 Locator locator = entry.getValue();
                 if (node.isLabeledDescendants()) {
-                  err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, or \u201Ctextarea\u201D descendant.");
+                  err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, \u201Ctextarea\u201D, or \u201Ckeygen\u201D descendant.");
                   warn("\u201Clabel\u201D element with multiple labelable descendants.", locator);
                 } else {
                   node.setLabeledDescendants();
@@ -963,6 +967,7 @@ public class Assertions extends Checker {
             }
             if (("input" == localName && !hidden) || "textarea" == localName
                     || "select" == localName || "button" == localName
+                    || "keygen" == localName
                     || "output" == localName) {
                 formControlIds.addAll(ids);
             }

@@ -25,6 +25,7 @@
 			                   count(descendant::h:input
 			                   | descendant::h:button
 			                   | descendant::h:select
+			                   | descendant::h:keygen
 			                   | descendant::h:textarea) > 1'>
 				The &#x201C;label&#x201D; element may contain at most one
 				&#x201C;input&#x201D;,
@@ -37,6 +38,7 @@
 			              //h:textarea[@id = current()/@for] or 
 			              //h:select[@id = current()/@for] or 
 			              //h:button[@id = current()/@for] or 
+			              //h:keygen[@id = current()/@for] or 
 			              //h:output[@id = current()/@for])'>
 				The &#x201C;for&#x201D; attribute of the &#x201C;label&#x201D; 
 				element must refer to a form control.
@@ -105,7 +107,7 @@
 		   - bb
 		  -->
 
-		<rule context='h:a|h:datagrid|h:details|h:bb|h:button|h:textarea|h:select|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
+		<rule context='h:a|h:datagrid|h:details|h:bb|h:button|h:textarea|h:select|h:keygen|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -118,7 +120,7 @@
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='self::h:button|self::h:textarea|self::h:select|self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]
+			<report test='self::h:button|self::h:textarea|self::h:select|h:keygen|self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]
 			and (ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id]))'>
 				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D;
 				element with a &#x201C;for&#x201D; attribute must have an

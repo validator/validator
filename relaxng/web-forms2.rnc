@@ -731,3 +731,29 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	label.attrs &=
 		( common-form.attrs.form? )
+
+## Key-pair generator/input control: <keygen>
+
+	keygen.elem =
+		element keygen { keygen.inner & keygen.attrs }
+	keygen.attrs =
+		(	common.attrs
+		&	keygen.attrs.challenge?
+		&	keygen.attrs.keytype?
+		&	shared-form.attrs.autofocus? 
+		&	common-form.attrs?
+		#REVISIT which ARIA attributes needed here
+		)
+		keygen.attrs.challenge =
+			attribute challenge {
+				string
+			}
+		keygen.attrs.keytype = 
+			attribute keytype {
+				w:string "rsa"
+			}
+	keygen.inner =
+		( empty )
+
+	common.elem.phrasing |= keygen.elem
+
