@@ -32,11 +32,11 @@ namespace local = ""
 			}
 		img.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		img.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		img.attrs.usemap =
 			attribute usemap {
