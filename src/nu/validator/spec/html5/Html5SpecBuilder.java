@@ -57,15 +57,17 @@ public class Html5SpecBuilder implements ContentHandler {
     private static final String SPEC_LOAD_URI = System.getProperty(
             "nu.validator.spec.html5-load", "file:validator/spec/html5.html");
 
-    private static final Pattern ELEMENT = Pattern.compile("^.*element\\s*$");
+    private static final Pattern THE = Pattern.compile("^.*The.*$", Pattern.DOTALL);
+
+    private static final Pattern ELEMENT = Pattern.compile("^.*The.*element\\s*$", Pattern.DOTALL);
 
     private static final Pattern CATEGORIES = Pattern.compile("^\\s*Categories\\s*");
 
-    private static final Pattern CONTEXT = Pattern.compile("^\\s*Contexts\\s+in\\s+which\\s+this\\s+element\\s+may\\s+be\\s+used:\\s*");
+    private static final Pattern CONTEXT = Pattern.compile("^\\s*Contexts\\s+in\\s+which\\s+th(is|ese)\\s+element[s]?\\s+may\\s+be\\s+used:\\s*");
 
     private static final Pattern CONTENT_MODEL = Pattern.compile("^\\s*Content\\s+model:\\s*$");
 
-    private static final Pattern ATTRIBUTES = Pattern.compile("^\\s*Element-specific\\s+attributes:\\s*$");
+    private static final Pattern ATTRIBUTES = Pattern.compile("^\\s*Content\\s+attributes:\\s*$");
 
     private enum State {
         AWAITING_HEADING, IN_H4, IN_CODE_IN_H4, AWAITING_ELEMENT_DL, IN_ELEMENT_DL_START, IN_CATEGORIES_DT, CAPTURING_CATEGORIES_DDS, IN_CONTEXT_DT, CAPTURING_CONTEXT_DDS, IN_CONTENT_MODEL_DT, CAPTURING_CONTENT_MODEL_DDS, IN_ATTRIBUTES_DT, CAPTURING_ATTRIBUTES_DDS
@@ -141,6 +143,26 @@ public class Html5SpecBuilder implements ContentHandler {
                 break;
             case IN_H4:
                 referenceText.append(ch, start, length);
+                if (nameText.length() != 0) {
+                  Matcher m = THE.matcher(referenceText);
+                  if (m.matches()) {
+                    String ln = nameText.toString().intern();
+                    if ("" == ln) {
+                      throw new SAXParseException(
+                          "Malformed spec: no element "+currentName, locator);
+                    }
+                    currentName = new Name(NS, ln);
+                    if (!urisByElement.containsKey(currentName)) {
+                      if (currentId == null) {
+                        state = State.AWAITING_HEADING;
+                        //                                throw new SAXParseException(
+                        //                                        "Malformed spec: no element id.", locator);
+                      }
+                      urisByElement.put(currentName, SPEC_LINK_URI + "#"
+                          + currentId);
+                    }
+                  }
+                }
                 break;
             case IN_CODE_IN_H4:
                 nameText.append(ch, start, length);
@@ -198,21 +220,14 @@ public class Html5SpecBuilder implements ContentHandler {
                         String ln = nameText.toString().intern();
                         if ("" == ln) {
                             throw new SAXParseException(
-                                    "Malformed spec: no element currentName.", locator);
+                                    "Malformed spec: no element"+currentName, locator);
                         }
-                        currentName = new Name(NS, ln);
-                        if (urisByElement.containsKey(currentName)) {
-                            state = State.AWAITING_HEADING;
-                        } else {
                             if (currentId == null) {
                                 state = State.AWAITING_HEADING;
 //                                throw new SAXParseException(
 //                                        "Malformed spec: no element id.", locator);
                             }
-                            urisByElement.put(currentName, SPEC_LINK_URI + "#"
-                                    + currentId);
                             state = State.AWAITING_ELEMENT_DL;
-                        }
                     } else {
                         currentId = null;
                         nameText.setLength(0);
@@ -265,7 +280,7 @@ public class Html5SpecBuilder implements ContentHandler {
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
                         throw new SAXParseException(
-                                "Malformed spec: Expected dt to be context dt but it was not.", locator);
+                                "Malformed spec: Expected dt to be content-model dt but it was not.", locator);
                     }
                 }
                 break;
@@ -278,7 +293,7 @@ public class Html5SpecBuilder implements ContentHandler {
                         fragmentBuilder = new TreeBuilder(true, true);
                     } else {
                         throw new SAXParseException(
-                                "Malformed spec: Expected dt to be context dt but it was not.", locator);
+                                "Malformed spec: Expected dt to be content-attributes dt but it was not.", locator);
                     }
                 }
                 break;
@@ -325,7 +340,7 @@ public class Html5SpecBuilder implements ContentHandler {
             case AWAITING_HEADING:
                 if ("h4" == localName && NS == uri) {
                     referenceText.setLength(0);
-                    currentId = null;
+                    currentId = atts.getValue("", "id");
                     currentName = null;
                     state = State.IN_H4;
                 }
@@ -334,8 +349,6 @@ public class Html5SpecBuilder implements ContentHandler {
                 if ("code" == localName && NS == uri) {
                     nameText.setLength(0);
                     state = State.IN_CODE_IN_H4;
-                } else if ("dfn" == localName && NS == uri) {
-                    currentId = atts.getValue("", "id");
                 }
                 break;
             case IN_CODE_IN_H4:
