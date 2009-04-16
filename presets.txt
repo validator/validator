@@ -10,4 +10,4 @@
 -1	-	XHTML 1.0 Strict, SVG 1.1, MathML 2.0 + IRI	http://s.validator.nu/xhtml1-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 -1	-	XHTML 1.0 Strict, Ruby, SVG 1.1, MathML 2.0 + IRI	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 -1	-	XHTML Basic + IRI	http://s.validator.nu/xhtml10/xhtml-basic.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
--1	http://www.w3.org/2000/svg	SVG 1.1 + IRI	http://s.validator.nu/svg11/svg11.rnc http://c.validator.nu/unchecked/
+-1	http://www.w3.org/2000/svg	SVG 1.1+IRI, XHTML5+ARIA plus MathML 2.0 (experimental)	http://s.validator.nu/svg-xhtml5-aria-rdf-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/

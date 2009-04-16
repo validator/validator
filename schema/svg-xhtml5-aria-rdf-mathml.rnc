@@ -1,0 +1,32 @@
+namespace svg = "http://www.w3.org/2000/svg"
+namespace math = "http://www.w3.org/1998/Math/MathML"
+namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+include "html5/xhtml5full-xhtml-aria.rnc" {
+	start = svg
+}
+include "svg11/svg11-inc.rnc"
+include "inkscape/inkscape.rnc"
+include "mml2/mathml2-inc.rnc"
+include "rdf/rdf.rnc"
+
+common.elem.metadata |= rdf.elem
+SVG.metadata.content |= rdf.elem
+
+common.elem.phrasing |= svg
+
+common.elem.phrasing |= mml.math.qname
+
+SVG.foreignObject.content |=
+	(	mml.math.qname
+	|	html.elem
+	|	body.elem
+	|	common.inner.flow
+	)
+	
+mml.Annotation-xml.datatype.svg |= svg
+
+mml.Annotation-xml.datatype.xhtml |=
+	(	html.elem
+	|	common.elem.flow
+	)
