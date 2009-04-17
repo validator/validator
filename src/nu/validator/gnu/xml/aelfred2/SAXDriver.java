@@ -1103,9 +1103,9 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
     }
 
     /**
-     *     * Checks whether a given character is an ASCII alpha or not.     * @param
-     * character     * The character to check.     * @return     * True if the
-     * character is an ASCII alpha.     
+     * Checks whether a given character is an ASCII alpha or not.
+     * @param character The character to check.
+     * @return <code>true</code> if the character is an ASCII alpha.     
      */
     private boolean isAlpha(char character) {
         // Range of alpha characters in ASCII, should be the same for
@@ -1118,9 +1118,8 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
      * Checks whether a given character is in "+-." or an ASCII alphanumeric.
      * This is useful for a check related to [RFC 2396]
      * 
-     * @param character
-     *                * The character to check.
-     * @return     * True if the character is in "+-." or an ASCII alphanumeric.
+     * @param character The character to check.
+     * @return <code>true</code> if the character is in "+-." or an ASCII alphanumeric.
      */
     private boolean isAlphanumericOrPlusMinusPoint(char character) {
         return (character >= 'A' && character <= 'Z') // Unicode A..Z
