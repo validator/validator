@@ -36,7 +36,7 @@ start = html.elem
 
 include "meta.rnc"
 include "phrase.rnc" {
-	m.elem = empty
+	mark.elem = empty
 }
 include "block.rnc"
 include "sectional.rnc"
