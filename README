@@ -1,6 +1,6 @@
-fi.iki.hsivonen.gnu library README
+nu.validator.gnu library README
 
-2006-11-12 Henri Sivonen (hsivonen@iki.fi)
+2009-04-17 Henri Sivonen (hsivonen@iki.fi)
 
 This library is a modified version of the GNU JAXP library.
 This library requires the GNU JAXP library, which can be obtained 
@@ -10,7 +10,18 @@ The GNU JAXP library and, hence, this library are licensed under
 the "GPL with Library Exception" license. See the source file 
 boilerplate and the accompanying COPYING file for details.
 
-The following modifications have been performed by Henri Sivonen:
+The following modifications have been performed:
+ 
+ * Checked that the part before colon in namespace URIs matches 
+   the production for URI schemes.
+
+ * Fixed buffer boundary falling across CDATA end ]]>
+
+ * Adjusted the way line and column numbers are reported around
+   line breaks.
+
+ * Made the parser feed the decoded UTF-16 data to an external 
+   handler.
 
  * All classes except gnu.xml.pipeline.DomConsumer were removed.
 

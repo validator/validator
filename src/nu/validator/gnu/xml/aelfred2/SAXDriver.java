@@ -827,8 +827,18 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
             warn("relative URI for namespace: " + uri);
         }
 
-        // FIXME: char [0] must be ascii alpha; chars [1..index]
-        // must be ascii alphanumeric or in "+-." [RFC 2396]
+        // char [0] must be ascii alpha [RFC 2396]
+        if (!isAlpha(uri.charAt(0))) {
+            fatal("First character of the URI must be ascii alpha");
+        }
+
+        // chars [1..index] must be ascii alphanumeric or in "+-." [RFC 2396]
+        for (int i = 1; i < index; i++) {
+            if (!isAlphanumericOrPlusMinusPoint(uri.charAt(i))) {
+                fatal("Character " + i
+                        + " of the URI must be ascii alpha or in \"+-.\"");
+            }
+        }
 
         // Namespace Constraints
         // name for xml prefix must be http://www.w3.org/XML/1998/namespace
@@ -1092,6 +1102,33 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
         errorHandler.warning(err);
     }
 
+    /**
+     *     * Checks whether a given character is an ASCII alpha or not.     * @param
+     * character     * The character to check.     * @return     * True if the
+     * character is an ASCII alpha.     
+     */
+    private boolean isAlpha(char character) {
+        // Range of alpha characters in ASCII, should be the same for
+        // Unicode according to "The Unicode Standard 4.0", section 5.2
+        return (character >= 'A' && character <= 'Z') // Unicode A..Z
+                || (character >= 'a' && character <= 'z'); // Unicode a..z
+    }
+
+    /**
+     * Checks whether a given character is in "+-." or an ASCII alphanumeric.
+     * This is useful for a check related to [RFC 2396]
+     * 
+     * @param character
+     *                * The character to check.
+     * @return     * True if the character is in "+-." or an ASCII alphanumeric.
+     */
+    private boolean isAlphanumericOrPlusMinusPoint(char character) {
+        return (character >= 'A' && character <= 'Z') // Unicode A..Z
+                || (character >= 'a' && character <= 'z') // Unicode a..z
+                || (character >= '0' && character <= '9') // Unicode 0..9
+                || character == '+' || character == '-' || character == '.';
+    }
+    
     //
     // Implementation of org.xml.sax.Attributes.
     //
