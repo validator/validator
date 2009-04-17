@@ -1105,7 +1105,7 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
     /**
      * Checks whether a given character is an ASCII alpha or not.
      * @param character The character to check.
-     * @return <code>true</code> if the character is an ASCII alpha.     
+     * @return <code>true</code> if the character is an ASCII alpha.
      */
     private boolean isAlpha(char character) {
         // Range of alpha characters in ASCII, should be the same for
