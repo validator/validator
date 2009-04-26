@@ -179,17 +179,17 @@
 		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
 			<report test='ancestor::h:a'>
 				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;toolbar&#x201D; must not
+				with the attribute &#x201C;type=toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
 				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;toolbar&#x201D; must not
+				with the attribute &#x201C;type=toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:bb'>
 				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;toolbar&#x201D; must not
+				with the attribute &#x201C;type=toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
