@@ -16,13 +16,19 @@
 
 	<!-- Exclusions and prohibited-descendant contraints  - - - - - - - - - - - -->
 
-	<rule context='h:form|h:dfn|h:noscript|h:label|h:address'>
+	<rule context='h:form|h:dfn|h:noscript|h:address'>
 			<report test='ancestor::*[name() = name(current())]'>
 				The &#x201C;<name/>&#x201D; element must not contain any nested 
 				&#x201C;<name/>&#x201D; elements.
 			</report>
-			<report test='self::h:label and
-			                   count(descendant::h:input
+		</rule>
+
+	<rule context='h:label'>
+			<report test='ancestor::*[name() = name(current())]'>
+				The &#x201C;<name/>&#x201D; element must not contain any nested 
+				&#x201C;<name/>&#x201D; elements.
+			</report>
+			<report test='count(descendant::h:input
 			                   | descendant::h:button
 			                   | descendant::h:select
 			                   | descendant::h:keygen
@@ -33,7 +39,7 @@
 				&#x201C;select&#x201D;,
 				or &#x201C;textarea&#x201D; descendant.
 			</report>
-			<report test='self::h:label[@for] and 
+			<report test='@for and 
 			              not(//h:input[not(translate(@type, "HIDEN", "hiden")="hidden")][@id = current()/@for] or 
 			              //h:textarea[@id = current()/@for] or 
 			              //h:select[@id = current()/@for] or 
@@ -60,7 +66,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:header|h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
+		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
 			<report test='ancestor::h:footer'>
 				The &#x201C;<name/>&#x201D; element must not appear as a 
 				descendant of the &#x201C;footer&#x201D; element.
@@ -69,12 +75,22 @@
 				The &#x201C;<name/>&#x201D; element must not appear as a 
 				descendant of the &#x201C;address&#x201D; element.
 			</report>
-			<report test='self::header and ancestor::h:header'>
+		</rule>
+
+		<rule context='h:header'>
+			<report test='ancestor::h:footer'>
+				The &#x201C;<name/>&#x201D; element must not appear as a 
+				descendant of the &#x201C;footer&#x201D; element.
+			</report>
+			<report test='ancestor::h:address'>
+				The &#x201C;<name/>&#x201D; element must not appear as a 
+				descendant of the &#x201C;address&#x201D; element.
+			</report>
+			<report test='ancestor::h:header'>
 				The &#x201C;header&#x201D; element must not appear as a 
 				descendant of the &#x201C;header&#x201D; element.
 			</report>
-			<assert test='self::h:header and
-			                  count(descendant::h:h1 
+			<assert test='count(descendant::h:h1 
 			                  | descendant::h:h2 
 			                  | descendant::h:h3 
 			                  | descendant::h:h4 
@@ -107,7 +123,7 @@
 		   - bb
 		  -->
 
-		<rule context='h:a|h:datagrid|h:details|h:bb|h:button|h:textarea|h:select|h:keygen|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
+		<rule context='h:a|h:datagrid|h:details|h:bb'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -120,8 +136,22 @@
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
-			<report test='self::h:button|self::h:textarea|self::h:select|h:keygen|self::h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]
-			and (ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id]))'>
+		</rule>
+
+		<rule context='h:button|h:textarea|h:select|h:keygen|h:input[not(translate(@type, "HIDEN", "hiden")="hidden")]'>
+			<report test='ancestor::h:a'>
+				The interactive element &#x201C;<name/>&#x201D; must not 
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The interactive element &#x201C;<name/>&#x201D; must not 
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+			<report test='ancestor::h:bb'>
+				The interactive element &#x201C;<name/>&#x201D; must not 
+				appear as a descendant of the &#x201C;bb&#x201D; element.
+			</report>
+			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D;
 				element with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
