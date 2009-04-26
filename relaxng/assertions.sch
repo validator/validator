@@ -18,8 +18,8 @@
 
 	<rule context='h:form|h:dfn|h:noscript|h:label|h:address'>
 			<report test='ancestor::*[name() = name(current())]'>
-			  The &#x201C;<name/>&#x201D; element must not contain any nested 
-			  &#x201C;<name/>&#x201D; elements.
+				The &#x201C;<name/>&#x201D; element must not contain any nested 
+				&#x201C;<name/>&#x201D; elements.
 			</report>
 			<report test='self::h:label and
 			                   count(descendant::h:input
@@ -310,7 +310,7 @@
 
 		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet'>
 			<report test='true()'>
-			  The &#x201C;<name/>&#x201D; element is obsolete.
+				The &#x201C;<name/>&#x201D; element is obsolete.
 			</report>
 		</rule>
 
