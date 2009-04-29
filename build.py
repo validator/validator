@@ -293,6 +293,181 @@ def buildNonSchema():
     "non-schema", 
     classPath)
 
+def buildSchemaDrivers():
+  schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
+  buildSchemaDriverHtmlCore(schemaDir)
+  buildSchemaDriverHtml5(schemaDir)
+  buildSchemaDriverHtml5Aria(schemaDir)
+  buildSchemaDriverHtml5AriaRdfa(schemaDir)
+  buildSchemaDriverXhtmlCore(schemaDir)
+  buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
+  buildSchemaDriverXhtml5html(schemaDir)
+  buildSchemaDriverXhtml5xhtml(schemaDir)
+  buildSchemaDriverXhtml5Aria(schemaDir)
+  buildSchemaDriverXhtml5AriaRdfa(schemaDir)
+
+#################################################################
+# start of data and functions for building schema drivers
+#################################################################
+
+schemaDriverBase = '''\
+start = html.elem
+include "meta.rnc"
+include "phrase.rnc"
+include "block.rnc"
+include "sectional.rnc"
+include "revision.rnc"
+include "embed.rnc"
+include "core-scripting.rnc"
+'''
+schemaDriverHtml5 = '''\
+include "structural.rnc"
+include "ruby.rnc"
+include "media.rnc"
+include "tables.rnc"
+include "form-datatypes.rnc"
+include "web-forms.rnc"
+include "web-forms2.rnc"
+include "applications.rnc"
+include "data.rnc"
+include "legacy.rnc"
+'''
+schemaDriverPlusWebForms2 = '''\
+include "tables.rnc"
+include "form-datatypes.rnc"
+include "web-forms.rnc"
+include "web-forms2.rnc"
+'''
+schemaDriverNamespace = '''\
+default namespace = "http://www.w3.org/1999/xhtml"
+'''
+schemaDriverToggle_HtmlCore = '''\
+include "common.rnc" {
+		XMLonly = notAllowed
+		HTMLonly = empty
+		v5only = notAllowed
+}
+'''
+schemaDriverToggle_XhtmlCore = '''\
+include "common.rnc" {
+		XMLonly = empty
+		HTMLonly = notAllowed
+		v5only = notAllowed
+}
+'''
+schemaDriverToggle_Html5 = '''\
+include "common.rnc" {
+		XMLonly = notAllowed
+		HTMLonly = empty
+		v5only = empty
+		nonHTMLizable = notAllowed
+		nonRoundtrippable = notAllowed
+}
+'''
+schemaDriverToggle_Xhtml5xhtml = '''\
+include "common.rnc" {
+		XMLonly = empty
+		HTMLonly = notAllowed
+		v5only = empty
+}
+'''
+schemaDriverToggle_Xhtml5html = '''\
+include "common.rnc" {
+		XMLonly = empty
+		HTMLonly = notAllowed
+		v5only = empty
+		nonHTMLizable = notAllowed
+		nonRoundtrippable = notAllowed
+}
+'''
+schemaDriverHtml5Aria = '''\
+include "aria.rnc"
+'''
+schemaDriverHtml5Rdfa = '''\
+include "rdfa.rnc"
+'''
+
+def openDriver(schemaDir, driverName, sourceName=""):
+  removeIfExists(os.path.join(schemaDir, driverName))
+  if sourceName != "":
+    # if we have a file sourceName, copy it so that we can later
+    # just append additions to the copy
+    shutil.copyfile(os.path.join(schemaDir, sourceName), os.path.join(schemaDir, driverName))
+  f = open(os.path.join(schemaDir, driverName),"a")
+  return f
+
+################################
+# HTML schema drivers
+################################
+def buildSchemaDriverHtmlCore(schemaDir):
+  f = openDriver(schemaDir, "html5core.rnc")
+  f.write(schemaDriverToggle_HtmlCore)
+  f.write(schemaDriverBase)
+  f.close()
+
+def buildSchemaDriverHtml5(schemaDir):
+  f = openDriver(schemaDir, "html5full.rnc")
+  f.write(schemaDriverNamespace)
+  f.write(schemaDriverToggle_Html5)
+  f.write(schemaDriverBase)
+  f.write(schemaDriverHtml5)
+  f.close()
+
+def buildSchemaDriverHtml5Aria(schemaDir):
+  f = openDriver(schemaDir, "html5full-aria.rnc", "html5full.rnc")
+  f.write(schemaDriverHtml5Aria)
+  f.close()
+
+def buildSchemaDriverHtml5AriaRdfa(schemaDir):
+  f = openDriver(schemaDir, "html5full-aria-rdfa.rnc", "html5full-aria.rnc")
+  f.write(schemaDriverHtml5Rdfa)
+  f.close()
+
+################################
+# XHTML schema drivers
+################################
+def buildSchemaDriverXhtmlCore(schemaDir):
+  f = openDriver(schemaDir, "xhtml5core.rnc")
+  f.write(schemaDriverNamespace)
+  f.write(schemaDriverToggle_XhtmlCore)
+  f.write(schemaDriverBase)
+  f.close()
+
+def buildSchemaDriverXhtmlCorePlusWf2(schemaDir):
+  f = openDriver(schemaDir, "xhtml5core-plus-web-forms2.rnc", "xhtml5core.rnc")
+  f.write(schemaDriverPlusWebForms2)
+  f.close()
+
+def buildSchemaDriverXhtml5html(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html.rnc")
+  f.write(schemaDriverNamespace)
+  f.write(schemaDriverToggle_Xhtml5html)
+  f.write(schemaDriverBase)
+  f.write(schemaDriverHtml5)
+  f.close()
+
+def buildSchemaDriverXhtml5xhtml(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverNamespace)
+  f.write(schemaDriverToggle_Xhtml5xhtml)
+  f.write(schemaDriverBase)
+  f.write(schemaDriverHtml5)
+  f.close()
+
+def buildSchemaDriverXhtml5Aria(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-aria.rnc", "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverHtml5Aria)
+  f.close()
+
+def buildSchemaDriverXhtml5AriaRdfa(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-aria-rdfa.rnc", "xhtml5full-xhtml-aria.rnc")
+  f.write(schemaDriverHtml5Rdfa)
+  f.close()
+
+#################################################################
+# end of data and functions for building schema drivers
+#################################################################
+
 def buildXmlParser():
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["htmlparser", "io-xml-util"]))
@@ -553,6 +728,7 @@ def buildAll():
   buildJing()
   buildDatatypeLibrary()
   buildNonSchema()
+  buildSchemaDrivers()
   buildHtmlParser()
   buildUtil()
   buildXmlParser()
