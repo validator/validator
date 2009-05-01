@@ -295,6 +295,7 @@ def buildNonSchema():
 
 def buildSchemaDrivers():
   schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
+  legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
   buildSchemaDriverHtml5Aria(schemaDir)
@@ -305,6 +306,8 @@ def buildSchemaDrivers():
   buildSchemaDriverXhtml5xhtml(schemaDir)
   buildSchemaDriverXhtml5Aria(schemaDir)
   buildSchemaDriverXhtml5AriaRdfa(schemaDir)
+  removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
+  shutil.copy(legacyRnc, schemaDir)
 
 #################################################################
 # start of data and functions for building schema drivers
