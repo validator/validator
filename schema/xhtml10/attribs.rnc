@@ -45,9 +45,7 @@ xml.space.attrib = # added -- hsivonen
         string "preserve"
     }?
 class.attrib =
-    attribute class {
-        list { nmtokens.datatype+ }
-    }?
+    attribute class { text }? # changed (was nmtokens.datatype+) -- mikesmith
 title.attrib = attribute title { text.datatype }?
 Core.attrib =
     id.attrib,
