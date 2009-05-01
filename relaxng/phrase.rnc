@@ -171,18 +171,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	code.elem =
 		element code { code.inner & code.attrs }
-	code.elem.strict =
-		element code { code.inner.strict & code.attrs }
 	code.attrs =
 		(	common.attrs
 		&	common.attrs.aria?
 		)
 	code.inner =
 		( common.inner.phrasing )
-	code.inner.strict =
-		( common.inner.phrasing )
 
-	common.elem.phrasing |= code.elem.strict
+	common.elem.phrasing |= code.elem
 
 ## Variable or Placeholder: <var>
 
