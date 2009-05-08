@@ -173,7 +173,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	command.attrs.label?
 		&	command.attrs.icon?
 		&	command.attrs.disabled?
-		&	command.attrs.default?
 		)
 		command.attrs.label =
 			attribute label {
@@ -186,10 +185,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		command.attrs.disabled =
 			attribute disabled {
 				w:string "disabled" | w:string ""
-			}
-		command.attrs.default =
-			attribute default {
-				w:string "default" | w:string ""
 			}
 	command.inner =
 		( empty )
