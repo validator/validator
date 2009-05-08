@@ -590,6 +590,37 @@ datatypes w = "http://whattf.org/datatype-draft"
 		
 	input.elem |= input.search.elem
 
+## Telephone Number: <input type='tel'>
+
+	input.tel.elem = 
+		element input { input.tel.attrs }	
+	input.tel.attrs = 
+		(	common.attrs
+		&	common-form.attrs
+		&	input.tel.attrs.type
+		&	input.attrs.autocomplete? 
+		&	shared-form.attrs.autofocus? 
+		&	input.attrs.list? 
+		&	shared-form.attrs.maxlength? 
+		&	shared-form.attrs.pattern? 
+		&	shared-form.attrs.readonly? 
+		&	shared-form.attrs.required? 
+		&	shared-form.attrs.size?
+		&	shared-form.attrs.placeholder?
+		&	input.tel.attrs.value? 
+		&	common.attrs.aria.implicit.input?
+		)	
+		input.tel.attrs.type = 
+			attribute type {
+				w:string "tel"
+			}
+		input.tel.attrs.value =
+			attribute value {
+				string # FIXME line breaks
+			}
+		
+	input.elem |= input.tel.elem
+
 ## Color: <input type='color'>
 
 	input.color.elem = 
