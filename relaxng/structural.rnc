@@ -8,8 +8,13 @@
 		element section { section.inner & section.attrs }
 	section.attrs =
 		(	common.attrs
+		&	section.attrs.cite?
 		&	common.attrs.aria.implicit.region?
 		)
+		section.attrs.cite =
+			attribute cite {
+				common.data.uri
+			}
 	section.inner =
 		(	style.elem.scoped*
 		,	common.inner.flow 
@@ -36,8 +41,13 @@
 		element article { article.inner & article.attrs }
 	article.attrs =
 		(	common.attrs
+		&	article.attrs.cite?
 		&	common.attrs.aria.implicit.region?
 		)
+		article.attrs.cite =
+			attribute cite {
+				common.data.uri
+			}
 	article.inner =
 		(	style.elem*
 		,	common.inner.flow 
