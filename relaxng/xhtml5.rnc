@@ -3,10 +3,8 @@ default namespace = "http://www.w3.org/1999/xhtml"
 ##  RELAX NG Schema for XHTML 5                                       #
 # #####################################################################
 
-  # XHTML 5 is WHATWG XHTML 5                                        #
-
-  # To validate an HTML 5 document, you must first validate against #
-  # this schema and then ALSO validate against assertions.sch       #
+  # To validate an XHTML 5 document, you must first validate against #
+  # this schema and then ALSO validate against assertions.sch        #
 
 # #####################################################################
 ## Schema Framework & Parameters

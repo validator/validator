@@ -1,12 +1,22 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 # #####################################################################
-##  RELAX NG Schema for XHTML 5                                       #
+##  RELAX NG Schema for HTML 5                                       #
 # #####################################################################
 
-  # XHTML 5 is WHATWG XHTML 5                                        #
+  # To validate an HTML 5 document, you must first validate against  #
+  # this schema and then ALSO validate against assertions.sch        #
 
-  # To validate an HTML 5 document, you must first validate against #
-  # this schema and then ALSO validate against assertions.sch       #
+  ## HTML flavor RELAX NG schemas can only be used after the         #
+  ## document has been transformed to well-formed XML.               #
+  ##   - Insert closing slashes in all empty element tags            #
+  ##   - Insert all optional start and end tags                      #
+  ##   - Add xmlns "http://www.w3.org/1999/xhtml"                    #
+  ##   - Properly escape <script> and <style> CDATA                  #
+  ##   - Parse and transform all HTML-only entities to numeric       #
+  ##     character references                                        #
+  ## Obviously, syntax-checking involving these features cannot be   #
+  ## done by the RELAX NG schema and must be checked, along with the #
+  ## <!DOCTYPE> requirement, by some other application.              #
 
 # #####################################################################
 ## Schema Framework & Parameters
