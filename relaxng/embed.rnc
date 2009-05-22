@@ -128,12 +128,23 @@ namespace local = ""
 			                    | onsubmit
 			                    | onunload
 			                    | role
+			                    | aria-atomic
+			                    | aria-busy
+			                    | aria-controls
 			                    | aria-describedby
+			                    | aria-disabled
 			                    | aria-dropeffect
 			                    | aria-flowto
-			                    | aria-grab
+			                    | aria-grabbed
 			                    | aria-haspopup
+			                    | aria-hidden
+			                    | aria-invalid
+			                    | aria-label
 			                    | aria-labelledby
+			                    | aria-live
+			                    | aria-owns
+			                    | aria-relevant
+			                    | aria-required	
 			                    | about
 			                    | property
 			                    | resource
