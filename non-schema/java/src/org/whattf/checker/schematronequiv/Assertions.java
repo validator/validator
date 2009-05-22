@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2009 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -217,7 +217,6 @@ public class Assertions extends Checker {
 
     static {
         registerRequiredParentRole("listbox", "option");
-        registerRequiredParentRole("combobox", "option");
         registerRequiredParentRole("menu", "menuitem");
         registerRequiredParentRole("menu", "menuitemcheckbox");
         registerRequiredParentRole("menu", "menuitemradio");
@@ -250,13 +249,14 @@ public class Assertions extends Checker {
 
     static {
         registerAllowedChildRole("listbox", "option");
-        registerAllowedChildRole("combobox", "option");
         registerAllowedChildRole("menu", "menuitem");
         registerAllowedChildRole("menu", "menuitemcheckbox");
         registerAllowedChildRole("menu", "menuitemradio");
         registerAllowedChildRole("tree", "treeitem");
         registerAllowedChildRole("list", "listitem");
         registerAllowedChildRole("radiogroup", "radio");
+        registerAllowedChildRole("tablist", "tab");
+        registerAllowedChildRole("row", "gridcell");
     }
 
     private class IdrefLocator {
