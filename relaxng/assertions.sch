@@ -468,11 +468,12 @@
 
 	<pattern name='Mutually Exclusive Role triggers'>
 
+    <!-- XXX columnheader and rowheader require row parent -->
+
 		<rule context='*[@role="option"]'>
-			<assert test='../@role="listbox" or
-			              ../@role="combobox"'>
+			<assert test='../@role="listbox"'>
 				An element with &#x201C;role=option&#x201D; requires 
-				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; on the parent.
+				&#x201C;role=listbox&#x201D; on the parent.
 			</assert>
 		</rule>
 
@@ -497,7 +498,7 @@
 			</assert>
 		</rule>
 
-		<rule context='*[@role="tab"]'><!-- XXX spec lacks reciprocal requirement -->
+		<rule context='*[@role="tab"]'>
 			<assert test='../@role="tablist"'>
 				An element with &#x201C;role=tab&#x201D; requires 
 				&#x201C;role=tablist&#x201D; on the parent.
@@ -541,10 +542,9 @@
 	
 	<pattern name='Not Option'>
 		<rule context='*[not(@role="option")]'>
-			<report test='../@role="listbox" or
-			              ../@role="combobox"'>
+			<report test='../@role="listbox"'>
 				An element must not be a child of
-				&#x201C;role=listbox&#x201D; or &#x201C;role=combobox&#x201D; unless it has &#x201C;role=option&#x201D;.
+				&#x201C;role=listbox&#x201D; unless it has &#x201C;role=option&#x201D;.
 			</report>
 		</rule>
 	</pattern>
@@ -577,8 +577,8 @@
 		<rule context='*[not(@role="listitem")]'>
 			<report test='../@role="list"'>
 				An element must not be a child of
-				&#x201C;role=tree&#x201D; unless it has 
-				&#x201C;role=treeitem&#x201D;.
+				&#x201C;role=list&#x201D; unless it has 
+				&#x201C;role=listitem&#x201D;.
 			</report>
 		</rule>
 		<!-- XXX role=group omitted due to lack of detail in spec -->
@@ -592,8 +592,29 @@
 				&#x201C;role=radio&#x201D;.
 			</report>
 		</rule>
-		 <!-- XXX directory must contain only link but seems bogus -->
 	</pattern>
+	
+	<pattern name='Not gridcell'>
+		<rule context='*[not(@role="gridcell")]'>
+			<report test='../@role="row"'>
+				An element must not be a child of
+				&#x201C;role=row&#x201D; unless it has 
+				&#x201C;role=gridcell&#x201D;.
+			</report>
+		</rule>
+	</pattern>
+	
+	<pattern name='Not tab'>
+		<rule context='*[not(@role="tab")]'>
+			<report test='../@role="tablist"'>
+				An element must not be a child of
+				&#x201C;role=tablist&#x201D; unless it has 
+				&#x201C;role=role&#x201D;.
+			</report>
+		</rule>
+	</pattern>
+
+  <!-- XXX combobox requires a listbox child -->
 	
 	<pattern name='aria-activedescendant must refer to a descendant'>
 		<rule context='*[@aria-activedescendant]'>
