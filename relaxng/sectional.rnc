@@ -83,6 +83,25 @@
 
 	common.elem.flow |= h6.elem
 
+## Heading Group: <hgroup>
+
+	hgroup.elem =
+		element hgroup { hgroup.inner & hgroup.attrs }
+	hgroup.attrs =
+		(	common.attrs
+		&	common.attrs.aria.implicit.structure?
+		)
+	hgroup.inner =
+		(	h1.elem
+		|	h2.elem
+		|	h3.elem
+		|	h4.elem
+		|	h5.elem
+		|	h6.elem
+		)+
+
+	common.elem.flow |= hgroup.elem
+
 # #####################################################################
 ## Section Meta
 

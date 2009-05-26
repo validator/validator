@@ -394,10 +394,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 	
 ## Shared Definitions for Complex Button
 	
-	button.attrs.value =
-		attribute value {
-			string
-		}
 	button.inner = 
 		( common.inner.flow )
 	
@@ -409,12 +405,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.submit.attrs.type?
-		&	button.attrs.value?
+		&	button.submit.attrs.value?
 		&	common.attrs.aria.implicit.button?
 		)
 		button.submit.attrs.type =
 			attribute type {
 				w:string "submit"
+			}
+		button.submit.attrs.value =
+			attribute value {
+				string
 			}
 
 	button.elem = button.submit.elem
@@ -427,12 +427,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.reset.attrs.type
-		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		&	button.reset.attrs.value? #REVISIT I guess this still affects the DOM
 		&	common.attrs.aria.implicit.button?
 		)
 		button.reset.attrs.type =
 			attribute type {
 				w:string "reset"
+			}
+		button.reset.attrs.value =
+			attribute value {
+				string
 			}
 
 	button.elem |= button.reset.elem
@@ -445,7 +449,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	common-form.attrs
 		&	button.button.attrs.type
-		&	button.attrs.value? #REVISIT I guess this still affects the DOM
+		&	button.button.attrs.value? #REVISIT I guess this still affects the DOM
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.button
 			)?
@@ -453,6 +457,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		button.button.attrs.type =
 			attribute type {
 				w:string "button"
+			}
+		button.button.attrs.value =
+			attribute value {
+				string
 			}
 
 	button.elem |= button.button.elem

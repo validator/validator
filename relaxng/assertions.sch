@@ -51,17 +51,28 @@
 			</report>
 		</rule>
 
-		<rule context='h:section|h:nav|h:article|h:aside|h:footer'>
-			<report test='ancestor::h:header'>
-				The sectioning element &#x201C;<name/>&#x201D; must not
-				appear as a descendant of the &#x201C;header&#x201D; element.
-			</report>
+		<rule context='h:section|h:nav|h:article|h:aside'>
 			<report test='ancestor::h:footer'>
 				The sectioning element &#x201C;<name/>&#x201D; must not
 				appear as a descendant of the &#x201C;footer&#x201D; element.
 			</report>
 			<report test='ancestor::h:address'>
 				The sectioning element &#x201C;<name/>&#x201D; must not
+				appear as a descendant of the &#x201C;address&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:footer'>
+			<report test='ancestor::h:header'>
+				The element &#x201C;footer&#x201D; must not
+				appear as a descendant of the &#x201C;header&#x201D; element.
+			</report>
+			<report test='ancestor::h:footer'>
+				The element &#x201C;footer&#x201D; must not
+				appear as a descendant of the &#x201C;footer&#x201D; element.
+			</report>
+			<report test='ancestor::h:address'>
+				The element &#x201C;footer&#x201D; must not
 				appear as a descendant of the &#x201C;address&#x201D; element.
 			</report>
 		</rule>
@@ -90,15 +101,6 @@
 				The &#x201C;header&#x201D; element must not appear as a 
 				descendant of the &#x201C;header&#x201D; element.
 			</report>
-			<assert test='count(descendant::h:h1 
-			                  | descendant::h:h2 
-			                  | descendant::h:h3 
-			                  | descendant::h:h4 
-			                  | descendant::h:h5 
-			                  | descendant::h:h6) >= 1'>
-				The &#x201C;header&#x201D; element must have at least one 
-				&#x201C;h1&#x201D;&#x2013;&#x201C;h6&#x201D; descendant.
-			</assert>
 		</rule>
 
 	<!-- Interactive element exclusions -->
@@ -338,7 +340,10 @@
 
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet'>
+		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet
+		  |h:basefont
+		  |h:frameset
+		  |h:noframes'>
 			<report test='true()'>
 				The &#x201C;<name/>&#x201D; element is obsolete.
 			</report>
