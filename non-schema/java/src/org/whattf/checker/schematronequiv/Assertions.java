@@ -138,16 +138,12 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("noscript", "noscript");
         registerProhibitedAncestor("label", "label");
         registerProhibitedAncestor("address", "address");
-        registerProhibitedAncestor("header", "section");
         registerProhibitedAncestor("footer", "section");
         registerProhibitedAncestor("address", "section");
-        registerProhibitedAncestor("header", "nav");
         registerProhibitedAncestor("footer", "nav");
         registerProhibitedAncestor("address", "nav");
-        registerProhibitedAncestor("header", "article");
         registerProhibitedAncestor("footer", "article");
         registerProhibitedAncestor("address", "article");
-        registerProhibitedAncestor("header", "aside");
         registerProhibitedAncestor("footer", "aside");
         registerProhibitedAncestor("address", "aside");
         registerProhibitedAncestor("header", "header");
@@ -321,8 +317,6 @@ public class Assertions extends Checker {
 
         private final String forAttr;
 
-        private boolean headingDescendants = false;
-
         private boolean children = false;
 
         private boolean selectedOptions = false;
@@ -368,25 +362,6 @@ public class Assertions extends Checker {
          */
         public int getAncestorMask() {
             return ancestorMask;
-        }
-
-        /**
-         * Returns the headingDescendants.
-         * 
-         * @return the headingDescendants
-         */
-        public boolean isHeadingDescendants() {
-            return headingDescendants;
-        }
-
-        /**
-         * Sets the headingDescendants.
-         * 
-         * @param headingDescendants
-         *            the headingDescendants to set
-         */
-        public void setHeadingDescendants() {
-            this.headingDescendants = true;
         }
 
         /**
@@ -509,8 +484,6 @@ public class Assertions extends Checker {
         return stack[currentPtr];
     }
 
-    private Map<StackNode, Locator> openHeaders = new HashMap<StackNode, Locator>();
-
     private Map<StackNode, Locator> openSingleSelects = new HashMap<StackNode, Locator>();
 
     private Map<StackNode, Locator> openLabels = new HashMap<StackNode, Locator>();
@@ -600,13 +573,6 @@ public class Assertions extends Checker {
             throws SAXException {
         StackNode node = pop();
         Locator locator = null;
-        if ((locator = openHeaders.remove(node)) != null) {
-            if (!node.isHeadingDescendants()) {
-                err(
-                        "The \u201Cheader\u201D element must have at least one \u201Ch1\u201D\u2013\u201Ch6\u201D descendant.",
-                        locator);
-            }
-        }
         openSingleSelects.remove(node);
         openLabels.remove(node);
         if ((locator = openActiveDescendants.remove(node)) != null) {
@@ -625,7 +591,6 @@ public class Assertions extends Checker {
     }
 
     public void reset() {
-        openHeaders.clear();
         openSingleSelects.clear();
         openLabels.clear();
         openActiveDescendants.clear();
@@ -806,15 +771,6 @@ public class Assertions extends Checker {
                   err("Any \u201C" + localName + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
                 }
               }
-            }
-
-            // at least 1 h1-h6 in header
-            else if ("h1" == localName || "h2" == localName
-                    || "h3" == localName || "h4" == localName
-                    || "h5" == localName || "h6" == localName) {
-                for (Map.Entry<StackNode, Locator> entry : openHeaders.entrySet()) {
-                    entry.getKey().setHeadingDescendants();
-                }
             }
 
             // progress
@@ -1078,8 +1034,6 @@ public class Assertions extends Checker {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("label" == localName) {
                 openLabels.put(child, new LocatorImpl(getDocumentLocator()));
-            } else if ("header" == localName) {
-                openHeaders.put(child, new LocatorImpl(getDocumentLocator()));
             }
             push(child);
         } else {

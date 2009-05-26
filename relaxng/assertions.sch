@@ -340,10 +340,7 @@
 
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet
-		  |h:basefont
-		  |h:frameset
-		  |h:noframes'>
+		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet'>
 			<report test='true()'>
 				The &#x201C;<name/>&#x201D; element is obsolete.
 			</report>
