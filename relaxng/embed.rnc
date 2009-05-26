@@ -151,6 +151,7 @@ namespace local = ""
 			                    | datatype
 			                    | typeof
 			                    | spellcheck
+			                    | accesskey
 			                    ) 
 			{
 				string
