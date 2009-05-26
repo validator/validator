@@ -3618,7 +3618,10 @@ final class XmlParser {
                     warnAboutPrivateUseChar();
                 }
             } else {
-                fatal("Unmatched low surrogate.");
+                if (prev != 0) {
+                    // the prev == 0 situation is bogus, but better not to fail
+                    fatal("Unmatched low surrogate.");
+                }
             }
             prev = c;
         } else {
