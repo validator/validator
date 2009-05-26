@@ -152,6 +152,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return NonCurieIri.THE_INSTANCE;
         } else if ("non-curie-iri-ref".equals(typeLocalName)) {
             return NonCurieIriRef.THE_INSTANCE;
+        } else if ("keylabellist".equals(typeLocalName)) {
+            return KeyLabelList.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
