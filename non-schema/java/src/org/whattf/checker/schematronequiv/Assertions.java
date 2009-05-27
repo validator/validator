@@ -100,6 +100,9 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.add("acronym");
         OBSOLETE_ELEMENTS.add("dir");
         OBSOLETE_ELEMENTS.add("applet");
+        OBSOLETE_ELEMENTS.add("basefont");
+        OBSOLETE_ELEMENTS.add("frameset");
+        OBSOLETE_ELEMENTS.add("noframes");
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address", "bb",
