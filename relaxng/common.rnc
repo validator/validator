@@ -310,7 +310,7 @@ common.attrs.other =
 		list {
 			xsd:string {
 				pattern = "[1-9][0-9]*x[1-9][0-9]*"
-			}
+			}*
 		}
 
 ## MIME types
@@ -372,3 +372,11 @@ common.attrs.aria.implicit.link = ( notAllowed )
 common.attrs.aria.implicit.listitem = ( notAllowed )
 common.attrs.aria.implicit.img = ( notAllowed )
 common.attrs.aria.implicit.select = ( notAllowed )
+common.attrs.aria.landmark.application = ( notAllowed )
+common.attrs.aria.landmark.article = ( notAllowed )
+common.attrs.aria.landmark.banner = ( notAllowed )
+common.attrs.aria.landmark.complementary = ( notAllowed )
+common.attrs.aria.landmark.contentinfo = ( notAllowed )
+common.attrs.aria.landmark.document = ( notAllowed )
+common.attrs.aria.landmark.main = ( notAllowed )
+common.attrs.aria.landmark.navigation = ( notAllowed )
