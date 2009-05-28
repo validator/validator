@@ -429,6 +429,9 @@ common.attrs.aria.implicit.listitem |=
 		aria.role.application = 
 			attribute role { string "application" }
 
+	common.attrs.aria |= aria.application
+	common.attrs.aria.landmark.application |= aria.application
+
 ## article
 	aria.article =
 		(	aria.role.article
@@ -436,6 +439,9 @@ common.attrs.aria.implicit.listitem |=
 		)
 		aria.role.article = 
 			attribute role { string "article" }
+
+	common.attrs.aria |= aria.article
+	common.attrs.aria.landmark.article |= aria.article
 
 ## banner
 	aria.banner =
@@ -446,7 +452,8 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "banner" }
 	
 	common.attrs.aria |= aria.banner
-
+	common.attrs.aria.landmark.banner |= aria.banner
+	
 ## button
 	aria.button =
 		(	aria.role.button
@@ -488,6 +495,9 @@ common.attrs.aria.implicit.listitem |=
 		aria.role.complementary = 
 			attribute role { string "complementary" }
 
+	common.attrs.aria |= aria.complementary
+	common.attrs.aria.landmark.complementary |= aria.complementary
+
 ## contentinfo
 	aria.contentinfo =
 		(	aria.role.contentinfo
@@ -495,6 +505,9 @@ common.attrs.aria.implicit.listitem |=
 		)
 		aria.role.contentinfo = 
 			attribute role { string "contentinfo" }
+
+	common.attrs.aria |= aria.contentinfo
+	common.attrs.aria.landmark.contentinfo |= aria.contentinfo
 
 ## definition
 	aria.definition =
@@ -535,6 +548,7 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "document" }
 
 	common.attrs.aria |= aria.document
+	common.attrs.aria.landmark.document |= aria.document
 
 ## grid
 	aria.grid =
@@ -649,6 +663,7 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "main" }
 	
 	common.attrs.aria |= aria.main
+	common.attrs.aria.landmark.main |= aria.main
 
 ## marquee
 	aria.marquee =
@@ -730,6 +745,7 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "navigation" }
 	
 	common.attrs.aria |= aria.navigation
+	common.attrs.aria.landmark.navigation |= aria.navigation
 
 ## note
 	aria.note =

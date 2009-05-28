@@ -28,7 +28,9 @@
 		element nav { nav.inner & nav.attrs }
 	nav.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.region?
+		&	( common.attrs.aria.implicit.region
+		  | common.attrs.aria.landmark.navigation
+		  )?
 		)
 	nav.inner =
 		( common.inner.flow )
@@ -42,7 +44,11 @@
 	article.attrs =
 		(	common.attrs
 		&	article.attrs.cite?
-		&	common.attrs.aria.implicit.region?
+		&	( common.attrs.aria.implicit.region
+		  | common.attrs.aria.landmark.article
+		  | common.attrs.aria.landmark.main
+		  | common.attrs.aria.landmark.document
+		  )?
 		)
 		article.attrs.cite =
 			attribute cite {
@@ -61,7 +67,9 @@
 		element aside { aside.inner & aside.attrs }
 	aside.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.region?
+		&	( common.attrs.aria.implicit.region
+		  | common.attrs.aria.landmark.complementary
+		  )?
 		)
 	aside.inner =
 		(	style.elem*
@@ -76,7 +84,9 @@
 		element header { header.inner & header.attrs }
 	header.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.region?
+		&	( common.attrs.aria.implicit.region
+		  | common.attrs.aria.landmark.banner
+		  )?
 		)
 	header.inner =
 		( common.inner.flow )
@@ -89,7 +99,9 @@
 		element footer { footer.inner & footer.attrs }
 	footer.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.region?
+		&	( common.attrs.aria.implicit.region
+		  | common.attrs.aria.landmark.contentinfo
+		  )?
 		)
 	footer.inner =
 		( common.inner.flow )
