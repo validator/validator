@@ -331,8 +331,10 @@ namespace local = ""
 
 ## Map Definition: <map>
 
-	map.elem =
-		element map { map.inner & map.attrs }
+	map.elem.flow =
+		element map { map.inner.flow & map.attrs }
+	map.elem.phrasing  =
+		element map { map.inner.phrasing & map.attrs }
 	map.attrs =
 		(	common.attrs
 		&	map.attrs.name
@@ -341,10 +343,13 @@ namespace local = ""
 			attribute name {
 				common.data.name
 			}
-	map.inner =
+	map.inner.flow =
 		( common.inner.flow )
+	map.inner.phrasing =
+		( common.inner.phrasing )
 
-	common.elem.flow |= map.elem
+	common.elem.flow |= map.elem.flow
+	common.elem.phrasing |= map.elem.phrasing
 
 ## Map Area Definition: <area>
 
