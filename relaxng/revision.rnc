@@ -15,28 +15,38 @@
 
 ## Inserts: <ins>
 
-	ins.elem =
-		element ins { ins.inner & ins.attrs }
+	ins.elem.flow =
+		element ins { ins.inner.flow & ins.attrs }
+	ins.elem.phrasing =
+		element ins { ins.inner.phrasing & ins.attrs }
 	ins.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
-	ins.inner =
+	ins.inner.flow =
+		( common.inner.flow )
+	ins.inner.phrasing =
 		( common.inner.phrasing )
 
-	common.elem.phrasing |= ins.elem
+	common.elem.flow |= ins.elem.flow
+	common.elem.phrasing |= ins.elem.phrasing
 
 ## Deletions: <del>
 
-	del.elem =
-		element del { del.inner & del.attrs }
+	del.elem.flow =
+		element del { del.inner.flow & del.attrs }
+	del.elem.phrasing =
+		element del { del.inner.phrasing & del.attrs }
 	del.attrs =
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
 		)
-	del.inner =
+	del.inner.flow =
+		( common.inner.flow )
+	del.inner.phrasing =
 		( common.inner.phrasing )
 
-	common.elem.phrasing |= del.elem
+	common.elem.flow |= del.elem.flow
+	common.elem.phrasing |= del.elem.phrasing
