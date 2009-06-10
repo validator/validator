@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008 Mozilla Foundation
+# Copyright (c) 2008-2009 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -25,7 +25,10 @@ import os
 import shutil
 import urllib
 import re
-import md5
+try:
+  from hashlib import md5
+except ImportError:
+  from md5 import new as md5
 import zipfile
 import sys
 from sgmllib import SGMLParser
