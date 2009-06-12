@@ -626,7 +626,7 @@ def fetchUrlTo(url, path, md5sum=None):
   data = f.read()
   f.close()
   if md5sum:
-    m = md5.new(data)
+    m = md5(data)
     if md5sum != m.hexdigest():
       print "Bad MD5 hash for %s." % url
       sys.exit(1)
