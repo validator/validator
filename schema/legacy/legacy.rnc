@@ -21,8 +21,25 @@
 	font.elem =
 		element font { font.inner & font.attrs }
 	font.attrs =
-		( common.attrs )
-	font.inner =
+		(	common.attrs
+		&	font.attrs.color?
+		&	font.attrs.face?
+		&	font.attrs.size?
+		&	common.attrs.aria?
+		)
+		font.attrs.color =
+			attribute color {
+				string
+			}
+		font.attrs.face =
+			attribute face {
+				string
+			}
+		font.attrs.size =
+			attribute size {
+				string
+			}
+  font.inner =
 		( common.inner.phrasing )
 
 	common.elem.phrasing |= font.elem
