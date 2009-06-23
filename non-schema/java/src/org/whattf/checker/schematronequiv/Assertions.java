@@ -870,17 +870,6 @@ public class Assertions extends Checker {
                 }
             }
 
-            // encoding decl
-            else if ("meta" == localName
-                    && currentPtr == 2
-                    && stack[2].getName() == "head"
-                    && stack[1].getName() == "html"
-                    && (atts.getIndex("", "charset") > -1 || lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                            "content-type", atts.getValue("", "http-equiv")))
-                    && stack[2].isChildren()) {
-                err("The internal character encoding declaration must be the first child of the \u201Chead\u201D element.");
-            }
-
             // map required attrs
             else if ("map" == localName && id != null) {
                 String nameVal = atts.getValue("", "name");
