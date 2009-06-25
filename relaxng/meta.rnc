@@ -213,15 +213,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	meta.charset.elem =
 		element meta { meta.inner & meta.charset.attrs }
-		& HTMLonly
 	meta.charset.attrs =
 		(	common.attrs
 		&	meta.charset.attrs.charset
 		)
 		meta.charset.attrs.charset =
 			attribute charset {
-				common.data.charset
-			}
+				(common.data.charset & HTMLonly)
+				| (xsd:string {
+					pattern = "[uU][tT][fF]-8"
+				} & XMLonly )
+			} 
 
 ## Inline Character Encoding Statement for HTML: <meta http-equiv='content-type'>
 
