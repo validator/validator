@@ -18,9 +18,9 @@ namespace local = ""
 	ruby.inner =
 		(  (  common.inner.phrasing
 		   ,  (  rt.elem
-		      |  (  rp.elem.start
+		      |  (  rp.elem
 		         ,  rt.elem
-		         ,  rp.elem.end
+		         ,  rp.elem
 		         )
 		      )
 		   )+
@@ -41,15 +41,11 @@ namespace local = ""
 	
 ## Ruby Parenthesis: <rp>
 
-	rp.elem.start =
-		element rp { rp.inner.start & rp.attrs }
-	rp.elem.end =
-		element rp { rp.inner.end & rp.attrs }
+	rp.elem =
+		element rp { rp.inner & rp.attrs }
 	rp.attrs =
 		(	common.attrs
 		&	common.attrs.aria?
 		)
-	rp.inner.start =
-		( w:paren-start )
-	rp.inner.end =
-		( w:paren-end )
+	rp.inner =
+		( common.inner.phrasing )
