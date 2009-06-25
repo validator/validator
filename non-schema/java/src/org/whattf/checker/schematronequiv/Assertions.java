@@ -326,27 +326,6 @@ public class Assertions extends Checker {
 
         private boolean labeledDescendants = false;
 
-        private String datagridFirstChild = null;
-
-        /**
-         * Returns the datagridFirstChild.
-         * 
-         * @return the datagridFirstChild
-         */
-        public String getDatagridFirstChild() {
-            return datagridFirstChild;
-        }
-
-        /**
-         * Sets the datagridFirstChild.
-         * 
-         * @param datagridFirstChild
-         *            the datagridFirstChild to set
-         */
-        public void setDatagridFirstChild(String datagridFirstChild) {
-            this.datagridFirstChild = datagridFirstChild;
-        }
-
         /**
          * @param ancestorMask
          */
@@ -613,7 +592,6 @@ public class Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
-        boolean skipDatagridCheck = false;
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;
@@ -883,14 +861,6 @@ public class Assertions extends Checker {
                 err("A \u201Cbdo\u201D element must have an \u201Cdir\u201D attribute.");
             }
 
-            // datagrid silliness
-            else if (parentName == "datagrid"
-                    && !parent.isChildren()
-                    && ("table" == localName || "select" == localName || "datalist" == localName)) {
-                parent.setDatagridFirstChild(localName);
-                skipDatagridCheck = true;
-            }
-
             // lang and xml:lang for XHTML5
             if (lang != null && (xmlLang == null || !equalsIgnoreAsciiCase(lang, xmlLang))) {
                 err("When the attribute \u201Clang\u201D is specified, the element must also have the attribute \u201Clang\u201D in the XML namespace present with the same value.");
@@ -1036,22 +1006,13 @@ public class Assertions extends Checker {
             push(child);
         }
         
-        processChildContent(parent, skipDatagridCheck);
     }
 
-    private void processChildContent(StackNode parent, boolean skipDatagridCheck) throws SAXException {
+    private void processChildContent(StackNode parent) throws SAXException {
         if (parent == null) {
             return;
         }
         parent.setChildren();
-        if (skipDatagridCheck) {
-            return;
-        }
-        String datagridFirstChild;
-        if ((datagridFirstChild = parent.getDatagridFirstChild()) != null) {
-            err("When a \u201C" + datagridFirstChild + "\u201D is the first child of \u201Cdatagrid\u201D, it must not have following siblings.");
-            parent.setDatagridFirstChild(null);
-        }
     }
 
     /**
@@ -1068,7 +1029,7 @@ public class Assertions extends Checker {
                 case '\n':
                     continue;
                 default:
-                    processChildContent(peek(), false);
+                    processChildContent(peek());
                     return;
             }
         }

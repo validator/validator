@@ -364,35 +364,6 @@
 				&#x201C;dir&#x201D; attribute.
 			</report>
 		</rule>
-		
-	<!-- table in datagrid -->
-	
-		<rule context='h:datagrid/h:table'>
-			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
-							 or
-							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				When a &#x201C;table&#x201D; is the first child of &#x201C;datagrid&#x201D;, it 
-				must not have following siblings.
-			</assert>
-		</rule>
-
-		<rule context='h:datagrid/h:select'>
-			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
-							 or
-							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				When a &#x201C;select&#x201D; element is the first child of a 
-				&#x201C;datagrid&#x201D; element, it must not have following siblings.
-			</assert>
-		</rule>
-
-		<rule context='h:datagrid/h:datalist'>
-			<assert test="( (not(((../*)|(../text()[normalize-space()]))[2]))
-							 or
-							 ((preceding-sibling::*) or (preceding-sibling::text()[normalize-space()])) )">
-				When a &#x201C;datalist&#x201D; element is the first child of a 
-				&#x201C;datagrid&#x201D; element, it must not have following siblings.
-			</assert>
-		</rule>
 
 	</pattern>
 

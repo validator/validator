@@ -100,10 +100,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "disabled" | w:string ""
 			}
 	datagrid.inner =
-		(	common.inner.flow # table case left to schematron 
-		|	select.elem
-		|	datalist.elem
-		)
+		( common.inner.flow )
 	
 	common.elem.flow |= datagrid.elem
 
