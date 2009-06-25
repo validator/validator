@@ -93,6 +93,9 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd	www.w3.org/TR/xhtml1/DTD
 http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd	www.w3.org/TR/xhtml1/DTD/xhtml11.dtd
 http://www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod	www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod
 http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd	www.w3.org/TR/xhtml11/DTD/xhtml11.dtd
+http://www.iana.org/assignments/language-subtag-registry	www.iana.org/assignments/language-subtag-registry
+http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions	wiki.whatwg.org/wiki/MicrosyntaxDescriptions
+http://wiki.whatwg.org/wiki/Validator.nu_alt_advice	wiki.whatwg.org/wiki/Validator.nu_alt_advice
 http://s.validator.nu/mml2/mathml2.rnc	schema/mml2/mathml2.rnc
 http://s.validator.nu/mml2/mathml2-inc.rnc	schema/mml2/mathml2-inc.rnc
 http://s.validator.nu/mml2/mml-content-all.rnc	schema/mml2/mml-content-all.rnc
