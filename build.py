@@ -53,6 +53,7 @@ html5specLoad = 'file:validator/spec/html5.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
 aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
+altAdvice = 'http://wiki.whatwg.org/wiki/Validator.nu_alt_advice'
 icon = None
 stylesheet = None
 script = None
@@ -67,6 +68,7 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
+useLocalCopies = 0
 
 downloadedDeps = 0
 
@@ -547,6 +549,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.icon=' + icon,
     '-Dnu.validator.servlet.script=' + script,
     '-Dnu.validator.spec.microsyntax-descriptions=' + microsyntax,
+    '-Dnu.validator.spec.alt-advice=' + altAdvice,
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
@@ -802,6 +805,9 @@ def printHelp():
   print "  --microsyntax=http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"
   print "                                Sets the URL for microformat"
   print "                                descriptions"
+  print "  --alt-advice=http://wiki.whatwg.org/wiki/Validator.nu_alt_advice"
+  print "                                Sets the URL for alt attribute"
+  print "                                advice"
   print ""
   print "Tasks:"
   print "  checkout -- Checks out the source from SVN"
@@ -854,6 +860,8 @@ else:
       aboutPage = arg[8:]
     elif arg.startswith("--microsyntax="):
       microsyntax = arg[14:]
+    elif arg.startswith("--alt-advice="):
+      altAdvice = arg[13:]
     elif arg.startswith("--stylesheet="):
       stylesheet = arg[13:]
     elif arg.startswith("--icon="):
@@ -879,6 +887,9 @@ else:
     elif arg == '--promiscuous-ssl=off':
       usePromiscuousSsl = 0
     elif arg == '--no-self-update':
+      noSelfUpdate = 1
+    elif arg == '--local':
+      useLocalCopies = 1
       noSelfUpdate = 1
     elif arg == '--help':
       printHelp()
@@ -940,6 +951,10 @@ else:
           script = aboutPage + 'script.js'
         if not icon:
           icon = aboutPage + 'icon.png'
+        if useLocalCopies:
+          ianaLang = 'file:local-entities/www.iana.org/assignments/language-subtag-registry'
+          microsyntax = 'file:local-entities/wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
+          altAdvice = 'file:local-entities/wiki.whatwg.org/wiki/Validator.nu_alt_advice'
         runValidator()
       else:
         selfUpdate()
