@@ -320,7 +320,6 @@ def buildSchemaDrivers():
 
 schemaDriverBase = '''\
 start = html.elem
-include "meta.rnc"
 include "phrase.rnc"
 include "block.rnc"
 include "sectional.rnc"
@@ -339,6 +338,14 @@ include "web-forms2.rnc"
 include "applications.rnc"
 include "data.rnc"
 include "legacy.rnc"
+include "meta.rnc" {
+		html.inner =
+			(	head.elem
+			,	(	body.elem
+				|	frameset.elem
+				)
+			)
+}
 '''
 schemaDriverPlusWebForms2 = '''\
 include "tables.rnc"
@@ -348,6 +355,9 @@ include "web-forms2.rnc"
 '''
 schemaDriverNamespace = '''\
 default namespace = "http://www.w3.org/1999/xhtml"
+'''
+schemaDriverMeta = '''\
+include "meta.rnc"
 '''
 schemaDriverToggle_HtmlCore = '''\
 include "common.rnc" {
@@ -411,6 +421,7 @@ def buildSchemaDriverHtmlCore(schemaDir):
   f = openDriver(schemaDir, "html5core.rnc")
   f.write(schemaDriverToggle_HtmlCore)
   f.write(schemaDriverBase)
+  f.write(schemaDriverMeta)
   f.close()
 
 def buildSchemaDriverHtml5(schemaDir):
@@ -439,6 +450,7 @@ def buildSchemaDriverXhtmlCore(schemaDir):
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_XhtmlCore)
   f.write(schemaDriverBase)
+  f.write(schemaDriverMeta)
   f.close()
 
 def buildSchemaDriverXhtmlCorePlusWf2(schemaDir):
