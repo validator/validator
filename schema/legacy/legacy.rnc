@@ -39,10 +39,19 @@
 			attribute size {
 				string
 			}
-  font.inner =
+	font.inner =
 		( common.inner.phrasing )
 
 	common.elem.phrasing |= font.elem
+
+## Base Font Size: <basefont>
+
+	basefont.elem =
+		element basefont { empty & basefont.attrs }
+	basefont.attrs =
+		( common.attrs )
+
+	common.elem.flow |= basefont.elem
 
 ## Larger Font: <big>
 
@@ -171,3 +180,36 @@
 
 	common.elem.flow |= applet.elem.flow
 	common.elem.phrasing |= applet.elem.phrasing
+
+## Frame Set: <frameset>
+
+	frameset.elem =
+		element frameset { frameset.inner & frameset.attrs }
+	frameset.attrs =
+		( common.attrs )
+	frameset.inner =
+		(
+			(	frameset.elem
+			|	frame.elem
+			)+
+			& noframes.elem?
+		)
+
+## Frame: <frame>
+
+	frame.elem =
+		element frame { empty & frame.attrs }
+	frame.attrs =
+		( common.attrs )
+
+## Alternate no-frames content: <noframes>
+
+	noframes.elem =
+		element noframes { noframes.inner & noframes.attrs }
+	noframes.attrs =
+		( common.attrs )
+	noframes.inner =
+		( common.inner.flow )
+
+	common.elem.flow |= noframes.elem
+
