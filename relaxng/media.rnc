@@ -34,19 +34,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	source.elem =
 		element source { source.inner & source.attrs }
-	source.elem.last =
-		element source { source.inner & source.last.attrs }
 	source.attrs =
-		(	common.attrs
-		&	source.attrs.src
-		&	(	(	source.attrs.type
-				&	source.attrs.media?
-				)
-			|	(	source.attrs.media
-				)
-			)
-		)
-	source.last.attrs =
 		(	common.attrs
 		&	source.attrs.src
 		&	source.attrs.type?
@@ -71,9 +59,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	media.source = 
 		(	media.attrs.src
-		|	(	source.elem*
-			,	source.elem.last
-			)
+		|	source.elem*
 		)
 
 	media.attrs.src =
