@@ -146,7 +146,7 @@ public abstract class AbstractDatatype implements Datatype {
      * @return <code>false</code>
      * @see org.relaxng.datatype.Datatype#isContextDependent()
      */
-    public boolean isContextDependent() {
+    public final boolean isContextDependent() {
         return false;
     }
 

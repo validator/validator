@@ -148,10 +148,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return EmailAddress.THE_INSTANCE;
         } else if ("email-address-list".equals(typeLocalName)) {
             return EmailAddressList.THE_INSTANCE;
-        } else if ("non-curie-iri".equals(typeLocalName)) {
-            return NonCurieIri.THE_INSTANCE;
-        } else if ("non-curie-iri-ref".equals(typeLocalName)) {
-            return NonCurieIriRef.THE_INSTANCE;
         } else if ("keylabellist".equals(typeLocalName)) {
             return KeyLabelList.THE_INSTANCE;
         }
