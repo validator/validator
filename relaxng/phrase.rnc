@@ -33,34 +33,34 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Shared hyperlink attributes
 
-		shared-hyperlink.attrs.href =
-			attribute href {
-				common.data.uri
-			}
-		shared-hyperlink.attrs.target =
-			attribute target {
-				common.data.browsing-context-or-keyword
-			}
-		shared-hyperlink.attrs.rel =
-			attribute rel {
-				common.data.tokens
-			}
-		shared-hyperlink.attrs.hreflang =
-			attribute hreflang {
-				common.data.langcode
-			}
-		shared-hyperlink.attrs.media =
-			attribute media {
-				common.data.mediaquery
-			}
-		shared-hyperlink.attrs.type =
-			attribute type {
-				common.data.mimetype
-			}
-		shared-hyperlink.attrs.ping =
-			attribute ping {
-				common.data.uris
-			} & v5only
+  shared-hyperlink.attrs.href =
+    attribute href {
+      common.data.uri
+    }
+  shared-hyperlink.attrs.target =
+    attribute target {
+      common.data.browsing-context-or-keyword
+    }
+  shared-hyperlink.attrs.rel =
+    attribute rel {
+      common.data.tokens
+    }
+  shared-hyperlink.attrs.hreflang =
+    attribute hreflang {
+      common.data.langcode
+    }
+  shared-hyperlink.attrs.media =
+    attribute media {
+      common.data.mediaquery
+    }
+  shared-hyperlink.attrs.type =
+    attribute type {
+      common.data.mimetype
+    }
+  shared-hyperlink.attrs.ping =
+    attribute ping {
+      common.data.uris
+    } & v5only
 
 ## Emphatic Stress: <em>
 
