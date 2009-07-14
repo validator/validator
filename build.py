@@ -304,13 +304,11 @@ def buildSchemaDrivers():
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
   buildSchemaDriverHtml5Aria(schemaDir)
-  buildSchemaDriverHtml5AriaRdfa(schemaDir)
   buildSchemaDriverXhtmlCore(schemaDir)
   buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
   buildSchemaDriverXhtml5html(schemaDir)
   buildSchemaDriverXhtml5xhtml(schemaDir)
   buildSchemaDriverXhtml5Aria(schemaDir)
-  buildSchemaDriverXhtml5AriaRdfa(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
   shutil.copy(legacyRnc, schemaDir)
 
@@ -338,6 +336,7 @@ include "web-forms2.rnc"
 include "applications.rnc"
 include "data.rnc"
 include "legacy.rnc"
+include "microdata.rnc"
 include "meta.rnc" {
 		html.inner =
 			(	head.elem
@@ -401,9 +400,6 @@ include "common.rnc" {
 schemaDriverHtml5Aria = '''\
 include "aria.rnc"
 '''
-schemaDriverHtml5Rdfa = '''\
-include "rdfa.rnc"
-'''
 
 def openDriver(schemaDir, driverName, sourceName=""):
   removeIfExists(os.path.join(schemaDir, driverName))
@@ -435,11 +431,6 @@ def buildSchemaDriverHtml5(schemaDir):
 def buildSchemaDriverHtml5Aria(schemaDir):
   f = openDriver(schemaDir, "html5full-aria.rnc", "html5full.rnc")
   f.write(schemaDriverHtml5Aria)
-  f.close()
-
-def buildSchemaDriverHtml5AriaRdfa(schemaDir):
-  f = openDriver(schemaDir, "html5full-aria-rdfa.rnc", "html5full-aria.rnc")
-  f.write(schemaDriverHtml5Rdfa)
   f.close()
 
 ################################
@@ -477,11 +468,6 @@ def buildSchemaDriverXhtml5xhtml(schemaDir):
 def buildSchemaDriverXhtml5Aria(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-xhtml-aria.rnc", "xhtml5full-xhtml.rnc")
   f.write(schemaDriverHtml5Aria)
-  f.close()
-
-def buildSchemaDriverXhtml5AriaRdfa(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-aria-rdfa.rnc", "xhtml5full-xhtml-aria.rnc")
-  f.write(schemaDriverHtml5Rdfa)
   f.close()
 
 #################################################################
