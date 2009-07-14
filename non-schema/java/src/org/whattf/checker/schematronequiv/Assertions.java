@@ -615,6 +615,8 @@ public class Assertions extends Checker {
             boolean usemap = false;
             boolean ismap = false;
             boolean selected = false;
+            boolean languageJavaScript = false;
+            boolean typeNotTextJavaScript = true;
             String xmlLang = null;
             String lang = null;
             String id = null;
@@ -639,6 +641,11 @@ public class Assertions extends Checker {
                                 "toolbar", attValue)) {
                             toolbar = true;
                         }
+                        
+                        if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "text/javascript", attValue)) {
+                            typeNotTextJavaScript = false;
+                        }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal) {
@@ -660,6 +667,11 @@ public class Assertions extends Checker {
                         selected = true;
                     } else if ("usemap" == attLocal) {
                         usemap = true;
+                    } else if ("language" == attLocal) {
+                        if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "javascript", atts.getValue(i))) {
+                            languageJavaScript = true;
+                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -854,6 +866,11 @@ public class Assertions extends Checker {
                 if (nameVal != null && !nameVal.equals(id)) {
                     err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
                 }
+            }
+            
+            // script language
+            else if ("script" == localName && languageJavaScript && typeNotTextJavaScript) {
+                err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
             }
 
             // bdo required attrs
