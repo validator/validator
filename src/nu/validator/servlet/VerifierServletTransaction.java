@@ -228,7 +228,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final String[] ALL_CHECKERS = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
-            "http://c.validator.nu/unchecked/", "http://c.validator.nu/usemap/" };
+            "http://c.validator.nu/unchecked/",
+            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -431,6 +432,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
             schemaMap.put("http://s.validator.nu/html5/assertions.sch",
                     CheckerSchema.ASSERTION_SCH);
+            schemaMap.put("http://c.validator.nu/obsolete/",
+                    CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
 
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
