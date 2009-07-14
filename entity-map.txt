@@ -172,6 +172,7 @@ http://s.validator.nu/html5/applications.rnc	schema/html5/applications.rnc
 http://s.validator.nu/html5/aria.rnc	schema/html5/aria.rnc
 http://s.validator.nu/html5/block.rnc	schema/html5/block.rnc
 http://s.validator.nu/html5/common.rnc	schema/html5/common.rnc
+http://s.validator.nu/html5/microdata.rnc	schema/html5/microdata.rnc
 http://s.validator.nu/html5/core-scripting.rnc	schema/html5/core-scripting.rnc
 http://s.validator.nu/html5/data.rnc	schema/html5/data.rnc
 http://s.validator.nu/html5/embed.rnc	schema/html5/embed.rnc
