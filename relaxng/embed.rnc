@@ -145,13 +145,11 @@ namespace local = ""
 			                    | aria-owns
 			                    | aria-relevant
 			                    | aria-required	
-			                    | about
-			                    | property
-			                    | resource
-			                    | datatype
-			                    | typeof
 			                    | spellcheck
 			                    | accesskey
+			                    | item
+			                    | itemprop
+			                    | subject
 			                    ) 
 			{
 				string

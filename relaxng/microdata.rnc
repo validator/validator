@@ -1,0 +1,27 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
+# #####################################################################
+##  RELAX NG Schema for HTML 5: Microdata                             #
+# #####################################################################
+
+common.attrs.microdata =
+	(	common.attrs.microdata.item?
+	&	common.attrs.microdata.subject?
+	&	common.attrs.microdata.itemprop?
+	)
+	common.attrs.microdata.item =
+		attribute item {
+			(	w:string ""
+			|	w:microdata-identifier
+			)
+		}
+	common.attrs.microdata.subject =
+		attribute subject {
+			common.data.idref
+		}
+	common.attrs.microdata.itemprop =
+		attribute itemprop {
+			w:microdata-identifier
+		}
+
+common.attrs &= common.attrs.microdata
