@@ -12,7 +12,7 @@ common.attrs.microdata =
 	common.attrs.microdata.item =
 		attribute item {
 			(	w:string ""
-			|	w:microdata-identifier
+			|	common.data.microdata-identifier
 			)
 		}
 	common.attrs.microdata.subject =
@@ -21,7 +21,7 @@ common.attrs.microdata =
 		}
 	common.attrs.microdata.itemprop =
 		attribute itemprop {
-			w:microdata-identifier
+			common.data.microdata-identifier
 		}
 
 common.attrs &= common.attrs.microdata

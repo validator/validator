@@ -351,6 +351,10 @@ common.attrs.other =
 	common.data.keylabellist =
 		w:keylabellist
 
+## Microdata Identifier
+  common.data.microdata-identifier =
+    w:microdata-identifier
+
 # #####################################################################
 ##  WF2 Module Hook                                                   #
 # #####################################################################
