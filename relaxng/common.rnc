@@ -355,6 +355,10 @@ common.attrs.other =
   common.data.microdata-identifier =
     w:microdata-identifier
 
+## Zero
+  common.data.zero =
+    w:zero
+
 # #####################################################################
 ##  WF2 Module Hook                                                   #
 # #####################################################################

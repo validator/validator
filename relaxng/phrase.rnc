@@ -12,6 +12,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element a { a.inner.flow & a.attrs }
 	a.attrs =
 		(	common.attrs
+		& a.attrs.name?
 		&	shared-hyperlink.attrs.href?
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.rel?
@@ -23,6 +24,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.implicit.link
 			)?
 		)
+		a.attrs.name =
+		  attribute name {
+		    common.data.id # XXX not what the spec says
+		  }
 	a.inner.phrasing =
 		( common.inner.phrasing )
 	a.inner.flow =

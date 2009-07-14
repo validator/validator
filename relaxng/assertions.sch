@@ -218,6 +218,15 @@
 
 	<!-- Misc requirements -->
 		
+		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
+			<assert test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
+				A &#x201C;script&#x201D; element with the 
+				&#x201C;language="JavaScript"&#x201D; attribute set must not have a 
+				&#x201C;type&#x201D; attribute whose value is not 
+				&#x201C;text/javascript&#x201D;.
+			</assert>
+		</rule>
+
 		<rule context='h:area'>
 			<assert test='ancestor::h:map'>
 				The &#x201C;area&#x201D; element must have a 

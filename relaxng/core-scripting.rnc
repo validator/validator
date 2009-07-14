@@ -24,6 +24,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	script.attrs.async?
 		&	script.attrs.type?
 		&	script.attrs.charset?
+		&	script.attrs.language? # restricted in Schematron
 		)
 		script.attrs.src =
 			attribute src {
@@ -44,6 +45,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		script.attrs.charset =
 			attribute charset {
 				common.data.charset
+			}
+		script.attrs.language =
+			attribute language {
+				w:string "javascript"
 			}
 	script.inner.embedded =
 		( common.inner.anything )

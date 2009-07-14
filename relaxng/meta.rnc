@@ -209,6 +209,28 @@ datatypes w = "http://whattf.org/datatype-draft"
                                                                # if the definition is 
                                                                # reused in another language
 
+## "content-language" pragma directive: <meta http-equiv='content-language'> (obsolete)
+
+	meta.http-equiv.content-language.elem =
+		element meta { meta.inner & meta.http-equiv.content-language.attrs }
+	meta.http-equiv.content-language.attrs =
+		(	common.attrs
+		&	meta.http-equiv.attrs.http-equiv.content-language
+		&	meta.http-equiv.attrs.content.content-language
+		)
+		meta.http-equiv.attrs.http-equiv.content-language =
+			attribute http-equiv {
+				w:string "content-language"
+			}
+		meta.http-equiv.attrs.content.content-language =
+			attribute content {
+				common.data.langcode
+			}
+		
+	common.elem.metadata |= meta.http-equiv.content-language.elem # not quite right per spec
+                                                               # if the definition is 
+                                                               # reused in another language
+
 ## Inline Character Encoding Statement for HTML: <meta charset>
 
 	meta.charset.elem =
