@@ -122,7 +122,7 @@ public class MediaQuery extends AbstractDatatype {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        List<CharSequenceWithOffset> queries = splitOnComma(literal);
+        List<CharSequenceWithOffset> queries = split(literal, ',');
         for (CharSequenceWithOffset query : queries) {
             checkQuery(query.getSequence(), query.getOffset());
         }

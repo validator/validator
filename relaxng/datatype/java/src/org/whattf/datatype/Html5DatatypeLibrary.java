@@ -134,6 +134,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return XmlName.THE_INSTANCE;
         } else if ("meta-charset".equals(typeLocalName)) {
             return MetaCharset.THE_INSTANCE;
+        } else if ("microdata-identifier".equals(typeLocalName)) {
+            return MicrodataIdentifier.THE_INSTANCE;
         } else if ("charset".equals(typeLocalName)) {
             return Charset.THE_INSTANCE;
         } else if ("refresh".equals(typeLocalName)) {

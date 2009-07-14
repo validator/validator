@@ -42,7 +42,7 @@ public class Polyline extends AbstractInt {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        List<CharSequenceWithOffset> list = split(literal, ',');
         if (list.size() < 6) {
             throw newDatatypeException("A polyline must have at least six comma-separated integers.");
         }

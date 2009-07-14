@@ -42,7 +42,7 @@ public class Circle extends AbstractInt {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        List<CharSequenceWithOffset> list = split(literal, ',');
         if (list.size() != 3) {
             throw newDatatypeException("A circle must have three comma-separated integers.");
         }

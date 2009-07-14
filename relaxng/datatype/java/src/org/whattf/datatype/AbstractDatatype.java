@@ -216,12 +216,12 @@ public abstract class AbstractDatatype implements Datatype {
     
     public abstract String getName();
     
-    protected List<CharSequenceWithOffset> splitOnComma(CharSequence sequence) {
+    protected List<CharSequenceWithOffset> split(CharSequence sequence, char delimiter) {
         List<CharSequenceWithOffset> rv = new ArrayList<CharSequenceWithOffset>();
         int offset = 0;
         for (int i = 0; i < sequence.length(); i++) {
             char c = sequence.charAt(i);
-            if (c == ',') {
+            if (c == delimiter) {
                 rv.add(new CharSequenceWithOffset(sequence.subSequence(offset, i), offset));
                 offset = i + 1;
             }

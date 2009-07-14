@@ -42,7 +42,7 @@ public class Rectangle extends AbstractInt {
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
-        List<CharSequenceWithOffset> list = splitOnComma(literal);
+        List<CharSequenceWithOffset> list = split(literal, ',');
         if (list.size() != 4) {
             throw newDatatypeException("A rectangle must have four comma-separated integers.");
         }
