@@ -152,6 +152,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return EmailAddressList.THE_INSTANCE;
         } else if ("keylabellist".equals(typeLocalName)) {
             return KeyLabelList.THE_INSTANCE;
+        } else if ("zero".equals(typeLocalName)) {
+            return Zero.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
