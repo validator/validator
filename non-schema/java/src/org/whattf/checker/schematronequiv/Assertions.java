@@ -616,7 +616,7 @@ public class Assertions extends Checker {
             boolean ismap = false;
             boolean selected = false;
             boolean languageJavaScript = false;
-            boolean typeNotTextJavaScript = true;
+            boolean typeNotTextJavaScript = false;
             String xmlLang = null;
             String lang = null;
             String id = null;
@@ -644,7 +644,7 @@ public class Assertions extends Checker {
                         
                         if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "text/javascript", attValue)) {
-                            typeNotTextJavaScript = false;
+                            typeNotTextJavaScript = true;
                         }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
