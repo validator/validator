@@ -25,11 +25,9 @@ package org.whattf.datatype;
 import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
-import org.whattf.datatype.AbstractDatatype.CharSequenceWithOffset;
 
 import com.ibm.icu.text.IDNA;
 import com.ibm.icu.text.StringPrepParseException;
-import com.sun.org.apache.xerces.internal.dom3.as.ASAttributeDeclaration;
 
 public class MicrodataIdentifier extends Iri {
 
