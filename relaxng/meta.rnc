@@ -49,9 +49,49 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.implicit.structure
 			)?
+		&	body.attrs.onafterprint?
+		&	body.attrs.onbeforeprint?
+		&	body.attrs.onbeforeunload?
+		&	body.attrs.onhashchange?
+		&	body.attrs.onmessage?
+		&	body.attrs.onoffline?
+		&	body.attrs.ononline?
+		&	body.attrs.onpopstate?
+		&	body.attrs.onredo?
+		&	body.attrs.onresize?
+		&	body.attrs.onstorage?
+		&	body.attrs.onundo?
+		&	body.attrs.onunload?
 		)
 	body.inner =
 		( common.inner.flow )
+
+	body.attrs.onafterprint =
+		attribute onafterprint { string }
+	body.attrs.onbeforeprint =
+		attribute onbeforeprint { string }
+	body.attrs.onbeforeunload =
+		attribute onbeforeunload { string }
+	body.attrs.onhashchange =
+		attribute onhashchange { string }
+	body.attrs.onmessage =
+		attribute onmessage { string }
+	body.attrs.onoffline =
+		attribute onoffline { string }
+	body.attrs.ononline =
+		attribute ononline { string }
+	body.attrs.onpopstate =
+		attribute onpopstate { string }
+	body.attrs.onredo =
+		attribute onredo { string }
+	body.attrs.onresize =
+		attribute onresize { string }
+	body.attrs.onstorage =
+		attribute onstorage { string }
+	body.attrs.onundo =
+		attribute onundo { string }
+	body.attrs.onunload =
+		attribute onunload { string }
 
 ## Document Title: <title>
 

@@ -97,8 +97,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.scripting &=
 		(	scripting.attr.onabort?
-		&	scripting.attr.onbeforeunload?
 		&	scripting.attr.onblur?
+		&	scripting.attr.oncanplay?
+		&	scripting.attr.oncanplaythrough?
 		&	scripting.attr.onchange?
 		&	scripting.attr.onclick?
 		&	scripting.attr.oncontextmenu?
@@ -110,34 +111,57 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.ondragover?
 		&	scripting.attr.ondragstart?
 		&	scripting.attr.ondrop?
+		&	scripting.attr.ondurationchange?
+		&	scripting.attr.onemptied?
+		&	scripting.attr.onended?
 		&	scripting.attr.onerror?
 		&	scripting.attr.onfocus?
+		&	scripting.attr.onformchange?
+		&	scripting.attr.onforminput?
+		&	scripting.attr.oninput?
+		&	scripting.attr.oninvalid?
 		&	scripting.attr.onkeydown?
 		&	scripting.attr.onkeypress?
 		&	scripting.attr.onkeyup?
 		&	scripting.attr.onload?
-		&	scripting.attr.onmessage?
+		&	scripting.attr.onloadeddata?
+		&	scripting.attr.onloadedmetadata?
+		&	scripting.attr.onloadstart?
 		&	scripting.attr.onmousedown?
 		&	scripting.attr.onmousemove?
 		&	scripting.attr.onmouseout?
 		&	scripting.attr.onmouseover?
 		&	scripting.attr.onmouseup?
 		&	scripting.attr.onmousewheel?
-		&	scripting.attr.onresize?
+		&	scripting.attr.onpause?
+		&	scripting.attr.onplay?
+		&	scripting.attr.onplaying?
+		&	scripting.attr.onprogress?
+		&	scripting.attr.onratechange?
+		&	scripting.attr.onreadystatechange?
 		&	scripting.attr.onscroll?
+		&	scripting.attr.onseeked?
+		&	scripting.attr.onseeking?
 		&	scripting.attr.onselect?
+		&	scripting.attr.onshow?
+		&	scripting.attr.onstalled?
 		&	scripting.attr.onsubmit?
-		&	scripting.attr.onunload?
+		&	scripting.attr.onsuspend?
+		&	scripting.attr.ontimeupdate?
+		&	scripting.attr.onvolumechange?
+		&	scripting.attr.onwaiting?
 		)
 		
 	common.attrs.other &= common.attrs.scripting
 
 	scripting.attr.onabort =
 		attribute onabort { string }
-	scripting.attr.onbeforeunload =
-		attribute onbeforeunload { string }
 	scripting.attr.onblur =
 		attribute onblur { string }
+	scripting.attr.oncanplay =
+		attribute oncanplay { string }
+	scripting.attr.oncanplaythrough =
+		attribute oncanplaythrough { string }
 	scripting.attr.onchange =
 		attribute onchange { string }
 	scripting.attr.onclick =
@@ -160,10 +184,24 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute ondragstart { string }
 	scripting.attr.ondrop =
 		attribute ondrop { string }
+	scripting.attr.ondurationchange =
+		attribute ondurationchange { string }
+	scripting.attr.onemptied =
+		attribute onemptied { string }
+	scripting.attr.onended =
+		attribute onended { string }
 	scripting.attr.onerror =
 		attribute onerror { string }
 	scripting.attr.onfocus =
 		attribute onfocus { string }
+	scripting.attr.onformchange =
+		attribute onformchange { string }
+	scripting.attr.onforminput =
+		attribute onforminput { string }
+	scripting.attr.oninput =
+		attribute oninput { string }
+	scripting.attr.oninvalid =
+		attribute oninvalid { string }
 	scripting.attr.onkeydown =
 		attribute onkeydown { string }
 	scripting.attr.onkeypress =
@@ -172,8 +210,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onkeyup { string }
 	scripting.attr.onload =
 		attribute onload { string }
-	scripting.attr.onmessage =
-		attribute onmessage { string }
+	scripting.attr.onloadeddata =
+		attribute onloadeddata { string }
+	scripting.attr.onloadedmetadata =
+		attribute onloadedmetadata { string }
+	scripting.attr.onloadstart =
+		attribute onloadstart { string }
 	scripting.attr.onmousedown =
 		attribute onmousedown { string }
 	scripting.attr.onmousemove =
@@ -186,16 +228,40 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onmouseup { string }
 	scripting.attr.onmousewheel =
 		attribute onmousewheel { string }
-	scripting.attr.onresize =
-		attribute onresize { string }
+	scripting.attr.onpause =
+		attribute onpause { string }
+	scripting.attr.onplay =
+		attribute onplay { string }
+	scripting.attr.onplaying =
+		attribute onplaying { string }
+	scripting.attr.onprogress =
+		attribute onprogress { string }
+	scripting.attr.onratechange =
+		attribute onratechange { string }
+	scripting.attr.onreadystatechange =
+		attribute onreadystatechange { string }
 	scripting.attr.onscroll =
 		attribute onscroll { string }
+	scripting.attr.onseeked =
+		attribute onseeked { string }
+	scripting.attr.onseeking =
+		attribute onseeking { string }
 	scripting.attr.onselect =
 		attribute onselect { string }
+	scripting.attr.onshow =
+		attribute onshow { string }
+	scripting.attr.onstalled =
+		attribute onstalled { string }
 	scripting.attr.onsubmit =
 		attribute onsubmit { string }
-	scripting.attr.onunload =
-		attribute onunload { string }
+	scripting.attr.onsuspend =
+		attribute onsuspend { string }
+	scripting.attr.ontimeupdate =
+		attribute ontimeupdate { string }
+	scripting.attr.onvolumechange =
+		attribute onvolumechange { string }
+	scripting.attr.onwaiting =
+		attribute onwaiting { string }
 
 #	scripting.attr.common =
 #		(	scripting.attr.mouse

@@ -101,8 +101,9 @@ namespace local = ""
 			                    | draggable 
 			                    | hidden
 			                    | onabort
-			                    | onbeforeunload
 			                    | onblur
+			                    | oncanplay
+			                    | oncanplaythrough
 			                    | onchange
 			                    | onclick
 			                    | oncontextmenu
@@ -114,23 +115,57 @@ namespace local = ""
 			                    | ondragover
 			                    | ondragstart
 			                    | ondrop
+			                    | ondurationchange
+			                    | onemptied
+			                    | onended
 			                    | onerror
 			                    | onfocus
+			                    | onformchange
+			                    | onforminput
+			                    | oninput
+			                    | oninvalid
 			                    | onkeydown
 			                    | onkeypress
 			                    | onkeyup
 			                    | onload
-			                    | onmessage
+			                    | onloadeddata
+			                    | onloadedmetadata
+			                    | onloadstart
 			                    | onmousedown
 			                    | onmousemove
 			                    | onmouseout
 			                    | onmouseover
 			                    | onmouseup
 			                    | onmousewheel
-			                    | onresize
+			                    | onpause
+			                    | onplay
+			                    | onplaying
+			                    | onprogress
+			                    | onratechange
+			                    | onreadystatechange
 			                    | onscroll
+			                    | onseeked
+			                    | onseeking
 			                    | onselect
+			                    | onshow
+			                    | onstalled
 			                    | onsubmit
+			                    | onsuspend
+			                    | ontimeupdate
+			                    | onvolumechange
+			                    | onwaiting
+			                    | onafterprint
+			                    | onbeforeprint
+			                    | onbeforeunload
+			                    | onhashchange
+			                    | onmessage
+			                    | onoffline
+			                    | ononline
+			                    | onpopstate
+			                    | onredo
+			                    | onresize
+			                    | onstorage
+			                    | onundo
 			                    | onunload
 			                    | role
 			                    | aria-atomic
