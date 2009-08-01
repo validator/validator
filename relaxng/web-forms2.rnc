@@ -20,7 +20,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		}
 
 	shared-form.attrs.formenctype =
-		attribute enctype {
+		attribute formenctype {
 			shared-form.attrs.formenctype.data
 		}
 		shared-form.attrs.formenctype.data = 
