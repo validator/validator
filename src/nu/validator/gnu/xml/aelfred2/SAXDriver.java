@@ -90,6 +90,7 @@ import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.ext.Locator2;
 import org.xml.sax.helpers.NamespaceSupport;
 
 /**
@@ -180,7 +181,7 @@ import org.xml.sax.helpers.NamespaceSupport;
  * @author Updated by David Brownell &lt;dbrownell@users.sourceforge.net&gt;
  * @see org.xml.sax.Parser
  */
-final public class SAXDriver implements Locator, Attributes2, XMLReader,
+final public class SAXDriver implements Locator2, Attributes2, XMLReader,
         Parser, AttributeList {
 
     private final DefaultHandler2 base = new DefaultHandler2();
@@ -1484,6 +1485,14 @@ final public class SAXDriver implements Locator, Attributes2, XMLReader,
      */
     public void setCharacterHandler(CharacterHandler characterHandler) {
         this.characterHandler = characterHandler;
+    }
+
+    public String getEncoding() {
+        return parser.getEncoding();
+    }
+
+    public String getXMLVersion() {
+        return "1.0";
     }
 
 }

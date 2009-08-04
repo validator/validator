@@ -1,6 +1,6 @@
 nu.validator.gnu library README
 
-2009-04-17 Henri Sivonen (hsivonen@iki.fi)
+2009-08-04 Henri Sivonen (hsivonen@iki.fi)
 
 This library is a modified version of the GNU JAXP library.
 This library requires the GNU JAXP library, which can be obtained 
@@ -11,6 +11,8 @@ the "GPL with Library Exception" license. See the source file
 boilerplate and the accompanying COPYING file for details.
 
 The following modifications have been performed:
+
+ * Exposed the Locator2 interface.
  
  * Checked that the part before colon in namespace URIs matches 
    the production for URI schemes.

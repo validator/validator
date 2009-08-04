@@ -4742,4 +4742,8 @@ final class XmlParser {
         NormalizationChecker normalizationChecker;
     }
 
+    public String getEncoding() {
+        return characterEncoding;
+    }
+
 }
