@@ -41,7 +41,7 @@ public class BrowsingContextOrKeyword extends AbstractDatatype {
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         if (literal.length() == 0) {
-            return;
+            throw newDatatypeException("Browsing context name must be at least one character long.");
         }
         if (literal.charAt(0) == '_') {
             String kw = toAsciiLowerCase(literal.toString().substring(1));
