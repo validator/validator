@@ -16,6 +16,7 @@ import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
 
 import org.relaxng.datatype.DatatypeException;
+import org.relaxng.datatype.ValidationContext2;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -27,7 +28,7 @@ import org.xml.sax.SAXParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler {
+public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler, ValidationContext2 {
   private final ValidatorPatternBuilder builder;
   private final Pattern start;
   private final ErrorHandler eh;
@@ -336,5 +337,9 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
       } else {
           return stack[stackLen - 1];
       }
+  }
+
+  public Locator getLocator() {
+    return locator;
   }
 }
