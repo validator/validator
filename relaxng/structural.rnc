@@ -8,13 +8,8 @@
 		element section { section.inner & section.attrs }
 	section.attrs =
 		(	common.attrs
-		&	section.attrs.cite?
 		&	common.attrs.aria.implicit.region?
 		)
-		section.attrs.cite =
-			attribute cite {
-				common.data.uri
-			}
 	section.inner =
 		(	style.elem.scoped*
 		,	common.inner.flow 
@@ -43,7 +38,6 @@
 		element article { article.inner & article.attrs }
 	article.attrs =
 		(	common.attrs
-		&	article.attrs.cite?
 		&	article.attrs.pubdate?
 		&	( common.attrs.aria.implicit.region
 		  | common.attrs.aria.landmark.article
@@ -51,10 +45,6 @@
 		  | common.attrs.aria.landmark.document
 		  )?
 		)
-		article.attrs.cite =
-			attribute cite {
-				common.data.uri
-			}
 		article.attrs.pubdate =
 			attribute pubdate {
 				common.data.datetime
