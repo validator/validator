@@ -112,7 +112,6 @@
 		   - audio[controls]
 		   - details
 		   - datagrid
-		   - bb
 		   - menu[type=toolbar]
 		   - button
 		   - input[type!=hidden]
@@ -122,10 +121,9 @@
 		   - Interactive ancestors
 		   - a
 		   - button
-		   - bb
 		  -->
 
-		<rule context='h:a|h:datagrid|h:details|h:bb'>
+		<rule context='h:a|h:datagrid|h:details'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -133,10 +131,6 @@
 			<report test='ancestor::h:button'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;<name/>&#x201D; must not 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 
@@ -148,10 +142,6 @@
 			<report test='ancestor::h:button'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;<name/>&#x201D; must not 
-				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
 				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D;
@@ -171,11 +161,6 @@
 				with the attribute &#x201C;controls&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:bb'>
-				The interactive element &#x201C;<name/>&#x201D;
-				with the attribute &#x201C;controls&#x201D; must not
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
 		</rule>
 
 		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
@@ -189,11 +174,6 @@
 				with the attribute &#x201C;type=toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
-			<report test='ancestor::h:bb'>
-				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;type=toolbar&#x201D; must not
-				appear as a descendant of the &#x201C;bb&#x201D; element.
-			</report>
 		</rule>
 
 		<rule context='h:img[@usemap]'>
@@ -206,11 +186,6 @@
 				The element &#x201C;img&#x201D;
 				with the attribute &#x201C;usemap&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
-			</report>
-			<report test='ancestor::h:bb'>
-				The element &#x203C;img&#x201D;
-				with the attribute &#x201C;usemap&#x201D; must not
-				appear as a descendant of the &#x201C;bb&#x201D; element.
 			</report>
 		</rule>
 

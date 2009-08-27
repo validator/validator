@@ -105,7 +105,7 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.add("noframes");
     }
 
-    private static final String[] SPECIAL_ANCESTORS = { "a", "address", "bb",
+    private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "dfn", "footer", "form", "header", "label", "map",
             "noscript" };
 
@@ -169,33 +169,22 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "h6");
         registerProhibitedAncestor("a", "a");
         registerProhibitedAncestor("button", "a");
-        registerProhibitedAncestor("bb", "a");
         registerProhibitedAncestor("a", "datagrid");
         registerProhibitedAncestor("button", "datagrid");
-        registerProhibitedAncestor("bb", "datagrid");
         registerProhibitedAncestor("a", "details");
         registerProhibitedAncestor("button", "details");
-        registerProhibitedAncestor("bb", "details");
         registerProhibitedAncestor("a", "button");
         registerProhibitedAncestor("button", "button");
-        registerProhibitedAncestor("bb", "button");
         registerProhibitedAncestor("a", "textarea");
         registerProhibitedAncestor("button", "textarea");
-        registerProhibitedAncestor("bb", "textarea");
         registerProhibitedAncestor("a", "select");
         registerProhibitedAncestor("button", "select");
-        registerProhibitedAncestor("bb", "select");
-        registerProhibitedAncestor("a", "bb");
-        registerProhibitedAncestor("button", "bb");
-        registerProhibitedAncestor("bb", "bb");
         registerProhibitedAncestor("a", "keygen");
         registerProhibitedAncestor("button", "keygen");
-        registerProhibitedAncestor("bb", "keygen");
     }
 
-    private static final int A_BUTTON_BB_MASK = (1 << specialAncestorNumber("a"))
-            | (1 << specialAncestorNumber("button"))
-            | (1 << specialAncestorNumber("bb"));
+    private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
+            | (1 << specialAncestorNumber("button"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
 
@@ -700,19 +689,19 @@ public class Assertions extends Checker {
                 mask = maskAsObject.intValue();
                 descendantUiString = localName;
             } else if ("video" == localName && controls) {
-                mask = A_BUTTON_BB_MASK;
+                mask = A_BUTTON_MASK;
                 descendantUiString = "video\u201D with the attribute \u201Ccontrols";
             } else if ("audio" == localName && controls) {
-                mask = A_BUTTON_BB_MASK;
+                mask = A_BUTTON_MASK;
                 descendantUiString = "audio\u201D with the attribute \u201Ccontrols";
             } else if ("menu" == localName && toolbar) {
-                mask = A_BUTTON_BB_MASK;
+                mask = A_BUTTON_MASK;
                 descendantUiString = "menu\u201D with the attribute \u201Ctype=toolbar";
             } else if ("img" == localName && usemap) {
-                mask = A_BUTTON_BB_MASK;
+                mask = A_BUTTON_MASK;
                 descendantUiString = "img\u201D with the attribute \u201Cusemap";
             } else if ("input" == localName && !hidden) {
-                mask = A_BUTTON_BB_MASK;
+                mask = A_BUTTON_MASK;
                 descendantUiString = "input";
             }
             if (mask != 0) {
