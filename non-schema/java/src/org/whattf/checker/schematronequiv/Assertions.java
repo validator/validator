@@ -169,8 +169,6 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "h6");
         registerProhibitedAncestor("a", "a");
         registerProhibitedAncestor("button", "a");
-        registerProhibitedAncestor("a", "datagrid");
-        registerProhibitedAncestor("button", "datagrid");
         registerProhibitedAncestor("a", "details");
         registerProhibitedAncestor("button", "details");
         registerProhibitedAncestor("a", "button");

@@ -82,28 +82,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= progress.elem
 
-## Datagrid: <datagrid>
-
-	datagrid.elem =
-		element datagrid { datagrid.inner & datagrid.attrs }
-	datagrid.attrs =
-		(	common.attrs
-		&	datagrid.attrs.multiple?
-		&	datagrid.attrs.disabled?
-		)
-		datagrid.attrs.multiple =
-			attribute multiple {
-				w:string "multiple" | w:string ""
-			}
-		datagrid.attrs.disabled =
-			attribute disabled {
-				w:string "disabled" | w:string ""
-			}
-	datagrid.inner =
-		( common.inner.flow )
-	
-	common.elem.flow |= datagrid.elem
-
 ## Command with an associated action: <command type='command'>
 
 	command.command.elem =

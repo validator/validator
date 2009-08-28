@@ -111,7 +111,6 @@
 		   - video[controls]
 		   - audio[controls]
 		   - details
-		   - datagrid
 		   - menu[type=toolbar]
 		   - button
 		   - input[type!=hidden]
@@ -123,7 +122,7 @@
 		   - button
 		  -->
 
-		<rule context='h:a|h:datagrid|h:details'>
+		<rule context='h:a|h:details'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
