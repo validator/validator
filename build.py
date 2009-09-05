@@ -42,7 +42,7 @@ tarCmd = 'tar'
 scpCmd = 'scp'
 
 buildRoot = '.'
-svnRoot = 'http://svn.versiondude.net/whattf/'
+svnRoot = 'https://whattf.svn.cvsdude.com/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
