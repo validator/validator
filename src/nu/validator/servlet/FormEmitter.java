@@ -97,6 +97,28 @@ t.emitParserOptions();
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "select", "select");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
+__attrs__.clear();
+__attrs__.addAttribute("", "title", "title", "CDATA", "Additional checks beyond what the spec requires.");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "tr", "tr", __attrs__);
+__attrs__.clear();
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "th", "th", __attrs__);
+__attrs__.clear();
+__attrs__.addAttribute("", "for", "for", "CDATA", "profile");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
+contentHandler.characters(__chars__, 46, 7);
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "th", "th");
+__attrs__.clear();
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "td", "td", __attrs__);
+__attrs__.clear();
+__attrs__.addAttribute("", "id", "id", "CDATA", "profile");
+__attrs__.addAttribute("", "name", "name", "CDATA", "profile");
+contentHandler.startElement("http://www.w3.org/1999/xhtml", "select", "select", __attrs__);
+t.emitProfileOptions(); 
+						
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "select", "select");
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
+contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
 t.maybeEmitNsfilterField(); 
 __attrs__.clear();
 __attrs__.addAttribute("", "title", "title", "CDATA", "Disrespect MIME RFCs.");
@@ -111,7 +133,7 @@ __attrs__.addAttribute("", "for", "for", "CDATA", "laxtype");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
 t.emitLaxTypeField(); 
 						
-contentHandler.characters(__chars__, 46, 31);
+contentHandler.characters(__chars__, 53, 31);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
@@ -128,7 +150,7 @@ __attrs__.addAttribute("", "for", "for", "CDATA", "showimagereport");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
 t.emitShowImageReportField(); 
 						
-contentHandler.characters(__chars__, 77, 18);
+contentHandler.characters(__chars__, 84, 18);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
@@ -145,7 +167,7 @@ __attrs__.addAttribute("", "for", "for", "CDATA", "showsource");
 contentHandler.startElement("http://www.w3.org/1999/xhtml", "label", "label", __attrs__);
 t.emitShowSourceField(); 
 						
-contentHandler.characters(__chars__, 95, 12);
+contentHandler.characters(__chars__, 102, 12);
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "label", "label");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "td", "td");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "tr", "tr");
@@ -169,5 +191,5 @@ contentHandler.endElement("http://www.w3.org/1999/xhtml", "table", "table");
 contentHandler.endElement("http://www.w3.org/1999/xhtml", "fieldset", "fieldset");
 contentHandler.endPrefixMapping("");
 }
-private static final char[] __chars__ = { 'V', 'a', 'l', 'i', 'd', 'a', 't', 'o', 'r', ' ', 'I', 'n', 'p', 'u', 't', 'D', 'o', 'c', 'u', 'm', 'e', 'n', 't', 'S', 'c', 'h', 'e', 'm', 'a', 's', 'P', 'r', 'e', 's', 'e', 't', 'N', 'o', 'n', 'e', 'P', 'a', 'r', 's', 'e', 'r', ' ', 'B', 'e', ' ', 'l', 'a', 'x', ' ', 'a', 'b', 'o', 'u', 't', ' ', 'H', 'T', 'T', 'P', ' ', 'C', 'o', 'n', 't', 'e', 'n', 't', '-', 'T', 'y', 'p', 'e', ' ', 'S', 'h', 'o', 'w', ' ', 'I', 'm', 'a', 'g', 'e', ' ', 'R', 'e', 'p', 'o', 'r', 't', ' ', 'S', 'h', 'o', 'w', ' ', 'S', 'o', 'u', 'r', 'c', 'e' };
+private static final char[] __chars__ = { 'V', 'a', 'l', 'i', 'd', 'a', 't', 'o', 'r', ' ', 'I', 'n', 'p', 'u', 't', 'D', 'o', 'c', 'u', 'm', 'e', 'n', 't', 'S', 'c', 'h', 'e', 'm', 'a', 's', 'P', 'r', 'e', 's', 'e', 't', 'N', 'o', 'n', 'e', 'P', 'a', 'r', 's', 'e', 'r', 'P', 'r', 'o', 'f', 'i', 'l', 'e', ' ', 'B', 'e', ' ', 'l', 'a', 'x', ' ', 'a', 'b', 'o', 'u', 't', ' ', 'H', 'T', 'T', 'P', ' ', 'C', 'o', 'n', 't', 'e', 'n', 't', '-', 'T', 'y', 'p', 'e', ' ', 'S', 'h', 'o', 'w', ' ', 'I', 'm', 'a', 'g', 'e', ' ', 'R', 'e', 'p', 'o', 'r', 't', ' ', 'S', 'h', 'o', 'w', ' ', 'S', 'o', 'u', 'r', 'c', 'e' };
 }

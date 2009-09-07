@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -808,6 +809,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             setAllowRnc(false);
 
             loadDocAndSetupParser();
+            setErrorProfile();
 
             reader.setErrorHandler(errorHandler);
             contentType = documentInput.getType();
@@ -921,6 +923,23 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     protected void tryToSetupValidator() throws SAXException, IOException,
             IncorrectSchemaException {
         validator = validatorByUrls(schemaUrls);
+    }
+
+    protected void setErrorProfile() {
+        String profile = request.getParameter("profile");
+
+        HashMap<String, String> profileMap = new HashMap<String, String>();
+
+        if ("pedagogical".equals(profile)) {
+            profileMap.put("xhtml1", "warn");
+        } else if ("polyglot".equals(profile)) {
+            profileMap.put("xhtml1", "warn");
+            profileMap.put("xhtml2", "warn");
+        } else {
+            return; // presumed to be permissive
+        }
+
+        htmlParser.setErrorProfile(profileMap);
     }
 
     /**
@@ -1359,6 +1378,19 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 (parser == ParserMode.HTML401_STRICT));
         emitter.option("HTML 4.01 Transitional", "html4tr",
                 (parser == ParserMode.HTML401_TRANSITIONAL));
+    }
+
+    /**
+     * @throws SAXException
+     * 
+     */
+    void emitProfileOptions() throws SAXException {
+        emitter.option("Permissive: only what the spec requires", "permissive",
+                true);
+        emitter.option("Pedagogical: suitable for teaching purposes",
+                "pedagogical", false);
+        emitter.option("Polyglot: works both as HTML and as XML",
+                "polyglot", false);
     }
 
     /**

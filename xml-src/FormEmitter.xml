@@ -41,6 +41,16 @@
 						?></select
 					></td
 				></tr
+				><tr title="Additional checks beyond what the spec requires."
+					><th
+						><label for="profile">Profile</label
+					></th
+					><td
+						><select id='profile' name='profile'
+							><?SaxCompiler-code t.emitProfileOptions(); 
+						?></select
+					></td
+				></tr
 				><?SaxCompiler-code t.maybeEmitNsfilterField(); ?><tr title="Disrespect MIME RFCs."
 					><th></th
 					><td
