@@ -246,6 +246,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private ParserMode parser = ParserMode.AUTO;
 
+    private String profile = "";
+
     private boolean laxType = false;
 
     protected ContentHandler contentHandler;
@@ -926,7 +928,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     protected void setErrorProfile() {
-        String profile = request.getParameter("profile");
+        profile = request.getParameter("profile");
 
         HashMap<String, String> profileMap = new HashMap<String, String>();
 
@@ -1385,12 +1387,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * 
      */
     void emitProfileOptions() throws SAXException {
-        emitter.option("Permissive: only what the spec requires", "permissive",
-                true);
+        profile = request.getParameter("profile");
+
+        emitter.option("Permissive: only what the spec requires",
+                "", ("".equals(profile)));
         emitter.option("Pedagogical: suitable for teaching purposes",
-                "pedagogical", false);
+                "pedagogical", ("pedagogical".equals(profile)));
         emitter.option("Polyglot: works both as HTML and as XML",
-                "polyglot", false);
+                "polyglot", ("polyglot".equals(profile)));
     }
 
     /**

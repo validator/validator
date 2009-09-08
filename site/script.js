@@ -274,6 +274,7 @@ function formSubmission() {
 	disableByIdIfEmptyString("parser")
 	disableByIdIfEmptyString("schema")
 	disableByIdIfEmptyString("charset")
+	disableByIdIfEmptyString("profile")
 	disableByIdIfEmptyString("nsfilter")
 	maybeMoveDocumentRowDown()
 	if (textareaHidden && textarea) {
@@ -289,6 +290,7 @@ function undoFormSubmission() {
 	enableById("parser")
 	enableById("schema")
 	enableById("charset")
+	enableById("profile")
 	enableById("nsfilter")
 	maybeMoveDocumentRowUp()
 	schemaChanged()
