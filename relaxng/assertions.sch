@@ -52,10 +52,6 @@
 		</rule>
 
 		<rule context='h:section|h:nav|h:article|h:aside'>
-			<report test='ancestor::h:footer'>
-				The sectioning element &#x201C;<name/>&#x201D; must not
-				appear as a descendant of the &#x201C;footer&#x201D; element.
-			</report>
 			<report test='ancestor::h:address'>
 				The sectioning element &#x201C;<name/>&#x201D; must not
 				appear as a descendant of the &#x201C;address&#x201D; element.
@@ -78,10 +74,6 @@
 		</rule>
 
 		<rule context='h:h1|h:h2|h:h3|h:h4|h:h5|h:h6'>
-			<report test='ancestor::h:footer'>
-				The &#x201C;<name/>&#x201D; element must not appear as a 
-				descendant of the &#x201C;footer&#x201D; element.
-			</report>
 			<report test='ancestor::h:address'>
 				The &#x201C;<name/>&#x201D; element must not appear as a 
 				descendant of the &#x201C;address&#x201D; element.
