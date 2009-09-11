@@ -1,3 +1,5 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
 # #####################################################################
 ##  RELAX NG Schema for HTML 5: Static Data Markup                    #
 # #####################################################################
@@ -9,10 +11,15 @@
 	time.attrs =
 		(	common.attrs
 		&	time.attrs.datetime?
+		&	time.attrs.pubdate?
 		)
 		time.attrs.datetime =
 			attribute datetime {
 				common.data.date-or-time #REVISIT check format
+			}
+		time.attrs.pubdate =
+			attribute pubdate {
+				w:string "pubdate" | w:string ""
 			}
 	time.inner =
 		( common.inner.phrasing ) #Cannot enforce textContent format here
