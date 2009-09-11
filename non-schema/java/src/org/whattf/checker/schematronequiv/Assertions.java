@@ -169,6 +169,12 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("button", "select");
         registerProhibitedAncestor("a", "keygen");
         registerProhibitedAncestor("button", "keygen");
+        registerProhibitedAncestor("a", "embed");
+        registerProhibitedAncestor("button", "embed");
+        registerProhibitedAncestor("a", "iframe");
+        registerProhibitedAncestor("button", "iframe");
+        registerProhibitedAncestor("a", "label");
+        registerProhibitedAncestor("button", "label");
     }
 
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
@@ -688,6 +694,9 @@ public class Assertions extends Checker {
             } else if ("img" == localName && usemap) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "img\u201D with the attribute \u201Cusemap";
+            } else if ("object" == localName && usemap) {
+                mask = A_BUTTON_MASK;
+                descendantUiString = "object\u201D with the attribute \u201Cusemap";
             } else if ("input" == localName && !hidden) {
                 mask = A_BUTTON_MASK;
                 descendantUiString = "input";

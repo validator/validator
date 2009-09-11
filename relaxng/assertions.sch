@@ -108,13 +108,19 @@
 		   - input[type!=hidden]
 		   - textarea
 		   - select
-		   -
+		   - img[usemap]
+		   - embed
+		   - iframe
+		   - keygen
+		   - label
+		   - object[usemap]
+		
 		   - Interactive ancestors
 		   - a
 		   - button
 		  -->
 
-		<rule context='h:a|h:details'>
+		<rule context='h:a|h:details|h:embed|h:iframe|h:label'>
 			<report test='ancestor::h:a'>
 				The interactive element &#x201C;<name/>&#x201D; must not 
 				appear as a descendant of the &#x201C;a&#x201D; element.
@@ -175,6 +181,19 @@
 			</report>
 			<report test='ancestor::h:button'>
 				The element &#x201C;img&#x201D;
+				with the attribute &#x201C;usemap&#x201D; must not
+				appear as a descendant of the &#x201C;button&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:object[@usemap]'>
+			<report test='ancestor::h:a'>
+				The element &#x201C;object&#x201D;
+				with the attribute &#x201C;usemap&#x201D; must not
+				appear as a descendant of the &#x201C;a&#x201D; element.
+			</report>
+			<report test='ancestor::h:button'>
+				The element &#x201C;object&#x201D;
 				with the attribute &#x201C;usemap&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
