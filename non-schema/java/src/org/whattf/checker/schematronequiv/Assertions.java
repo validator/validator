@@ -107,7 +107,7 @@ public class Assertions extends Checker {
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "dfn", "footer", "form", "header", "label", "map",
-            "noscript" };
+            "noscript", "time", "progress", "meter" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -137,6 +137,9 @@ public class Assertions extends Checker {
 
     static {
         registerProhibitedAncestor("form", "form");
+        registerProhibitedAncestor("time", "time");
+        registerProhibitedAncestor("progress", "progress");
+        registerProhibitedAncestor("meter", "meter");
         registerProhibitedAncestor("dfn", "dfn");
         registerProhibitedAncestor("noscript", "noscript");
         registerProhibitedAncestor("label", "label");

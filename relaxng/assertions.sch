@@ -228,15 +228,23 @@
 			</assert>
 		</rule>
 
-		<rule context='h:progress[@max and @value]'>
-			<assert test='number(@value) &lt;= number(@max)'>
+		<rule context='h:time'>
+			<report test='ancestor::h:time'>
+				The element &#x201C;meter&#x201D; must not
+				appear as a descendant of the &#x201C;meter&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:progress'>
+			<report test='ancestor::h:progress'>
+				The element &#x201C;progress&#x201D; must not
+				appear as a descendant of the &#x201C;progress&#x201D; element.
+			</report>
+			<assert test='@max and @value and number(@value) &lt;= number(@max)'>
 				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
 				the value of the &#x201C;max&#x201D; attribute.
 			</assert>
-		</rule>
-
-		<rule context='h:progress[not(@max) and @value]'>
-			<assert test='number(@value) &lt;= 1'>
+			<assert test='not(@max) and @value and number(@value) &lt;= 1'>
 				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
 				one when the &#x201C;max&#x201D; attribute is absent.
 			</assert>
@@ -249,6 +257,10 @@
 		-->
 
 		<rule context='h:meter'>
+			<report test='ancestor::h:meter'>
+				The element &#x201C;meter&#x201D; must not
+				appear as a descendant of the &#x201C;meter&#x201D; element.
+			</report>
 			<report test='@min and @value and not(number(@min) &lt;= number(@value))'>
 				The value of the  &#x201C;min&#x201D; attribute must be less than or equal to
 				the value of the &#x201C;value&#x201D; attribute.
