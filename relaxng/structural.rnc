@@ -98,18 +98,3 @@
 
 	common.elem.flow |= footer.elem
 
-## Dialog: <dialog>
-
-	dialog.elem =
-		element dialog { dialog.inner & dialog.attrs }
-	dialog.attrs =
-		(	common.attrs
-		&	common.attrs.aria.implicit.region?
-		)
-	dialog.inner =
-		(	(	dt.elem
-			,	dd.elem
-			)*
-		)
-
-	common.elem.flow |= dialog.elem
