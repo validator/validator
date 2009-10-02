@@ -71,7 +71,7 @@ public class MediaQuery extends AbstractDatatype {
 
     static {
         MEDIA_TYPES.add("all");
-        MEDIA_TYPES.add("aural");
+        MEDIA_TYPES.add("aural"); // FIXME: CSS 2.1 deprecated aural, should warn here
         MEDIA_TYPES.add("braille");
         MEDIA_TYPES.add("handheld");
         MEDIA_TYPES.add("print");
@@ -80,6 +80,7 @@ public class MediaQuery extends AbstractDatatype {
         MEDIA_TYPES.add("tty");
         MEDIA_TYPES.add("tv");
         MEDIA_TYPES.add("embossed");
+        MEDIA_TYPES.add("speech");
     }
 
     private static final Map<String, ValueType> FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
