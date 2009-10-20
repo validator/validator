@@ -68,6 +68,8 @@ public class LanguageData {
     
     private SortedSet<String> grandfatheredSet = new TreeSet<String>();
 
+    private SortedSet<String> redundantSet = new TreeSet<String>();
+
     private SortedSet<String> deprecatedLangSet = new TreeSet<String>();    
     
     private SortedSet<String> deprecatedSet = new TreeSet<String>();
@@ -85,6 +87,8 @@ public class LanguageData {
     private String[] variants = null;
     
     private String[] grandfathered = null;
+
+    private String[] redundant  = null;
 
     private String[] deprecatedLang = null;
     
@@ -113,6 +117,7 @@ public class LanguageData {
         scripts = scriptSet.toArray(EMPTY_STRING_ARRAY);
         regions = regionSet.toArray(EMPTY_STRING_ARRAY);
         grandfathered = grandfatheredSet.toArray(EMPTY_STRING_ARRAY);
+        redundant = redundantSet.toArray(EMPTY_STRING_ARRAY);
         deprecated = deprecatedSet.toArray(EMPTY_STRING_ARRAY);
         deprecatedLang = deprecatedLangSet.toArray(EMPTY_STRING_ARRAY);
         
@@ -206,6 +211,8 @@ public class LanguageData {
             prefixesByVariantMap.put(subtag, prefixes);
         } else if ("grandfathered" == type) {
             grandfatheredSet.add(subtag);
+        } else if ("redundant" == type) {
+            redundantSet.add(subtag);
         }
         return hasMore;
     }
@@ -280,6 +287,15 @@ public class LanguageData {
      */
     public String[] getGrandfathered() {
         return grandfathered;
+    }
+
+    /**
+     * Returns the redundant.
+     * 
+     * @return the redundant
+     */
+    public String[] getRedundant() {
+        return redundant;
     }
 
     /**

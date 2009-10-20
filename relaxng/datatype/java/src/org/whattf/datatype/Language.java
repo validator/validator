@@ -54,6 +54,8 @@ public final class Language extends AbstractDatatype {
     
     private static String[] grandfathered = null;
     
+    private static String[] redundant = null;
+    
     private static String[] deprecated = null;
 
     private static String[] deprecatedLang = null;
@@ -70,6 +72,7 @@ public final class Language extends AbstractDatatype {
             regions = data.getRegions();
             variants = data.getVariants();
             grandfathered = data.getGrandfathered();
+            redundant = data.getRedundant();
             deprecated = data.getDeprecated();
             deprecatedLang = data.getDeprecatedLang();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
@@ -98,6 +101,13 @@ public final class Language extends AbstractDatatype {
             if (isDeprecated(literal)) {
                 throw newDatatypeException(
                 "The grandfathered language tag ", literal, " is deprecated.");                
+            }
+            return;
+        }
+        if (isRedundant(literal)) {
+            if (isDeprecated(literal)) {
+                throw newDatatypeException(
+                "The redundant language tag ", literal, " is deprecated.");                
             }
             return;
         }
@@ -380,6 +390,10 @@ public final class Language extends AbstractDatatype {
 
     private boolean isGrandfathered(String literal) {
         return Arrays.binarySearch(grandfathered, literal) > -1;
+    }
+    
+    private boolean isRedundant(String literal) {
+        return Arrays.binarySearch(redundant, literal) > -1;
     }
     
     private boolean isDeprecated(String subtag) {
