@@ -190,6 +190,8 @@ namespace local = ""
 			                    | item
 			                    | itemprop
 			                    | subject
+			                    | name
+			                    | align
 			                    ) 
 			{
 				string
