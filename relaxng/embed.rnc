@@ -189,6 +189,8 @@ namespace local = ""
 			                    | accesskey
 			                    | item
 			                    | itemprop
+			                    | itemscope
+			                    | itemtype
 			                    | subject
 			                    | name
 			                    | align

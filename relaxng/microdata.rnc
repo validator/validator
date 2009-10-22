@@ -8,6 +8,8 @@ common.attrs.microdata =
 	(	common.attrs.microdata.item?
 	&	common.attrs.microdata.subject?
 	&	common.attrs.microdata.itemprop?
+	&	common.attrs.microdata.itemscope?
+	&	common.attrs.microdata.itemtype?
 	)
 	common.attrs.microdata.item =
 		attribute item {
@@ -22,6 +24,14 @@ common.attrs.microdata =
 	common.attrs.microdata.itemprop =
 		attribute itemprop {
 			common.data.microdata-identifier
+		}
+	common.attrs.microdata.itemscope =
+		attribute itemscope {
+			w:string "itemscope" | w:string ""
+		}
+	common.attrs.microdata.itemtype =
+		attribute itemtype {
+			common.data.uri
 		}
 
 common.attrs &= common.attrs.microdata
