@@ -95,6 +95,13 @@
 			</report>
 		</rule>
 
+		<rule context='h:table'>
+			<report test='ancestor::h:caption'>
+				The element &#x201C;table&#x201D; must not appear as a
+				descendant of the &#x201C;caption&#x201D; element.
+			</report>
+		</rule>
+
 	<!-- Interactive element exclusions -->
 	
 		<!-- 

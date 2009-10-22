@@ -81,7 +81,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.region?
 		)
 	caption.inner =
-		( common.inner.phrasing )
+		( common.inner.flow )
 
 # #####################################################################
 ## Table Super Structure
