@@ -87,22 +87,22 @@ public class Assertions extends Checker {
         return true;
     }
 
-    private static final Set<String> OBSOLETE_ELEMENTS = new HashSet<String>();
+    private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<String, String>();
 
     static {
-        OBSOLETE_ELEMENTS.add("center");
-        OBSOLETE_ELEMENTS.add("font");
-        OBSOLETE_ELEMENTS.add("big");
-        OBSOLETE_ELEMENTS.add("s");
-        OBSOLETE_ELEMENTS.add("strike");
-        OBSOLETE_ELEMENTS.add("tt");
-        OBSOLETE_ELEMENTS.add("u");
-        OBSOLETE_ELEMENTS.add("acronym");
-        OBSOLETE_ELEMENTS.add("dir");
-        OBSOLETE_ELEMENTS.add("applet");
-        OBSOLETE_ELEMENTS.add("basefont");
-        OBSOLETE_ELEMENTS.add("frameset");
-        OBSOLETE_ELEMENTS.add("noframes");
+        OBSOLETE_ELEMENTS.put("center", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("font", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("s", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("strike", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("u", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("acronym", "Use the \u201Cabbr\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("dir", "Use the \u201Cul\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("applet", "Use the \u201Cobject\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
+        OBSOLETE_ELEMENTS.put("frameset", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put("noframes", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
@@ -675,8 +675,8 @@ public class Assertions extends Checker {
             }
 
             // Obsolete elements
-            if (OBSOLETE_ELEMENTS.contains(localName)) {
-                err("The \u201C" + localName + "\u201D element is obsolete.");
+            if (OBSOLETE_ELEMENTS.get(localName) != null) {
+                err("The \u201C" + localName + "\u201D element is obsolete. " + OBSOLETE_ELEMENTS.get(localName));
             }
 
             // Exclusions
