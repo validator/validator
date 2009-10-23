@@ -353,16 +353,37 @@
 
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:acronym|h:dir|h:applet
-		  |h:basefont
-		  |h:frameset
-		  |h:noframes'>
+		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:basefont'>
 			<report test='true()'>
-				The &#x201C;<name/>&#x201D; element is obsolete.
+				The &#x201C;<name/>&#x201D; element is obsolete. Use CSS instead.
 			</report>
 		</rule>
 
-	<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
+		<rule context='h:acronym'>
+			<report test='true()'>
+				The &#x201C;acronym&#x201D; element is obsolete. Use the &#x201C;abbr&#x201D; element instead.
+			</report>
+		</rule>
+
+		<rule context='h:dir'>
+			<report test='true()'>
+				The &#x201C;dir&#x201D; element is obsolete. Use the &#x201C;ul&#x201D; element instead.
+			</report>
+		</rule>
+
+		<rule context='h:applet'>
+			<report test='true()'>
+				The &#x201C;applet&#x201D; element is obsolete. Use the &#x201C;object&#x201D; element instead.
+			</report>
+		</rule>
+
+		<rule context='h:frameset|h:noframes'>
+			<report test='true()'>
+				The &#x201C;<name/>&#x201D; element is obsolete. Use the &#x201C;iframe&#x201D; element and CSS instead, or use server-side includes.
+			</report>
+		</rule>
+
+<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
 
 		<rule context='h:map[@id and @name]'>
 			<assert test='@id = @name'>
