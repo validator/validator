@@ -5,21 +5,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 # #####################################################################
 
 common.attrs.microdata =
-	(	common.attrs.microdata.item?
-	&	common.attrs.microdata.subject?
+	(	common.attrs.microdata.itemref?
 	&	common.attrs.microdata.itemprop?
 	&	common.attrs.microdata.itemscope?
 	&	common.attrs.microdata.itemtype?
+	&	common.attrs.microdata.itemid?
 	)
-	common.attrs.microdata.item =
-		attribute item {
-			(	w:string ""
-			|	common.data.microdata-identifier
-			)
-		}
-	common.attrs.microdata.subject =
-		attribute subject {
-			common.data.idref
+	common.attrs.microdata.itemref =
+		attribute itemref {
+			common.data.idrefs
 		}
 	common.attrs.microdata.itemprop =
 		attribute itemprop {
@@ -31,6 +25,10 @@ common.attrs.microdata =
 		}
 	common.attrs.microdata.itemtype =
 		attribute itemtype {
+			common.data.uri
+		}
+	common.attrs.microdata.itemid =
+		attribute itemid {
 			common.data.uri
 		}
 

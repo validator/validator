@@ -187,11 +187,11 @@ namespace local = ""
 			                    | aria-required	
 			                    | spellcheck
 			                    | accesskey
-			                    | item
+			                    | itemref
 			                    | itemprop
 			                    | itemscope
 			                    | itemtype
-			                    | subject
+			                    | itemid
 			                    | name
 			                    | align
 			                    ) 
