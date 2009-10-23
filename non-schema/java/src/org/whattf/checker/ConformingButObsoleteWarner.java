@@ -44,7 +44,7 @@ public class ConformingButObsoleteWarner extends Checker {
             } else if ("script" == localName) {
                 if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("javascript", atts.getValue("", "language"))) {
                     String type = atts.getValue("", "type");
-                    if (type == null && lowerCaseLiteralEqualsIgnoreAsciiCaseString("text/javascript", type)) {
+                    if (type == null || lowerCaseLiteralEqualsIgnoreAsciiCaseString("text/javascript", type)) {
                         warn("The \u201Clanguage\u201D attribute is obsolete. It is not needed.");
                     }
                 }
