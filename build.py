@@ -747,7 +747,10 @@ def checkout():
   for mod in moduleNames:
     runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + mod + '/trunk/', mod))
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
-  runCmd('"%s" pull http://hg.mozilla.org/projects/htmlparser/ htmlparser' % (hgCmd))
+  if os.path.exists("htmlparser"):
+    runCmd('"%s" pull --rebase -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))  
+  else:
+    runCmd('"%s" clone http://hg.mozilla.org/projects/htmlparser/ htmlparser' % (hgCmd))
 
 def selfUpdate():
   runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
