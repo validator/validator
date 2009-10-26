@@ -748,7 +748,11 @@ def checkout():
     runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + mod + '/trunk/', mod))
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   if os.path.exists("htmlparser"):
-    runCmd('"%s" pull --rebase -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))  
+    if os.path.exists("htmlparser/.hg"):
+      runCmd('"%s" pull --rebase -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))
+    else:
+      print "The htmlparser module has moved to hg. Please back up local changes (if any) and remove the htmlparser directory."
+      sys.exit(3)
   else:
     runCmd('"%s" clone http://hg.mozilla.org/projects/htmlparser/ htmlparser' % (hgCmd))
 
