@@ -40,6 +40,7 @@ javadocCmd = 'javadoc'
 svnCmd = 'svn'
 tarCmd = 'tar'
 scpCmd = 'scp'
+hgCmd = 'hg'
 
 buildRoot = '.'
 svnRoot = 'https://whattf.svn.cvsdude.com/'
@@ -136,7 +137,6 @@ dependencyJars = runDependencyJars + buildOnlyDependencyJars
 moduleNames = [
   "syntax",
   "util",
-  "htmlparser",
   "xmlparser",
   "validator",
 ]
@@ -747,6 +747,7 @@ def checkout():
   for mod in moduleNames:
     runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + mod + '/trunk/', mod))
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
+  runCmd('"%s" pull http://hg.mozilla.org/projects/htmlparser/ htmlparser' % (hgCmd))
 
 def selfUpdate():
   runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
@@ -824,6 +825,8 @@ else:
   for arg in argv:
     if arg.startswith("--svn="):
       svnCmd = arg[6:]
+    elif arg.startswith("--hg="):
+      hgCmd = arg[5:]
     elif arg.startswith("--java="):
       javaCmd = arg[7:]
     elif arg.startswith("--jar="):
