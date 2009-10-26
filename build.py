@@ -749,7 +749,7 @@ def checkout():
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   if os.path.exists("htmlparser"):
     if os.path.exists("htmlparser/.hg"):
-      runCmd('"%s" pull -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))
+      runCmd('"%s" pull --update -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))
     else:
       print "The htmlparser module has moved to hg. Please back up local changes (if any) and remove the htmlparser directory."
       sys.exit(3)
