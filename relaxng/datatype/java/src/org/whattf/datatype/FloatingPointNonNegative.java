@@ -44,7 +44,7 @@ public class FloatingPointNonNegative extends AbstractDatatype {
             throw newDatatypeException("The empty string is not a valid non-negative floating point number.");
         }
         boolean dotSeen = false;
-        for (int i = 1; i < literal.length(); i++) {
+        for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             if (!dotSeen && (c == '.')) {
                 dotSeen = true;
