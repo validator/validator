@@ -45,7 +45,7 @@ public class FloatingPointPositive extends AbstractDatatype {
         }
         boolean dotSeen = false;
         boolean zero = true;
-        for (int i = 1; i < literal.length(); i++) {
+        for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             if (!dotSeen && (c == '.')) {
                 dotSeen = true;
