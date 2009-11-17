@@ -213,3 +213,794 @@
 
 	common.elem.flow |= noframes.elem
 
+## Obsolete attributes
+
+## abbr attribute
+
+	td.attrs.abbr =
+		attribute abbr {
+			string
+		}
+	td.attrs &= td.attrs.abbr?
+
+	th.attrs.abbr =
+		attribute abbr {
+			string
+		}
+	th.attrs &= th.attrs.abbr?
+
+## axis attribute
+
+	td.attrs.axis =
+		attribute axis {
+			string
+		}
+	td.attrs &= td.attrs.axis?
+
+	th.attrs.axis =
+		attribute axis {
+			string
+		}
+	th.attrs &= th.attrs.axis?
+
+## charset attribute
+
+	link.attrs.charset =
+		attribute charset {
+			string
+		}
+	link.attrs &= link.attrs.charset?
+
+	a.attrs.charset =
+		attribute charset {
+			string
+		}
+	a.attrs &= a.attrs.charset?
+
+## classid attribute
+
+	object.attrs.classid =
+		attribute classid {
+			common.data.uri
+		}
+	object.attrs &= object.attrs.classid?
+
+## codebase attribute
+
+	object.attrs.codebase =
+		attribute codebase {
+			common.data.uri
+		}
+	object.attrs &= object.attrs.codebase?
+
+## codetype attribute
+
+	object.attrs.codetype =
+		attribute codetype {
+			common.data.mimetype
+		}
+	object.attrs &= object.attrs.codetype?
+
+## coords attribute
+
+	a.attrs.coords =
+		attribute coords {
+			string
+		}
+	a.attrs &= a.attrs.coords?
+
+## declare attribute
+
+	object.attrs.declare =
+		attribute declare {
+			string
+		}
+	object.attrs &= object.attrs.declare?
+
+## longdesc attribute
+
+	img.attrs.longdesc =
+		attribute longdesc {
+			string
+		}
+	img.attrs &= img.attrs.longdesc?
+
+	iframe.attrs.longdesc =
+		attribute longdesc {
+			string
+		}
+	iframe.attrs &= iframe.attrs.longdesc?
+
+## name attribute
+
+	img.attrs.name =
+		attribute name {
+			string
+		}
+	img.attrs &= img.attrs.name?
+
+## nohref attribute
+
+	area.attrs.nohref =
+		attribute nohref {
+			string
+		}
+	area.attrs &= area.attrs.nohref?
+
+## profile attribute
+
+	head.attrs.profile =
+		attribute profile {
+			string
+		}
+	head.attrs &= head.attrs.profile?
+
+## rev attribute
+
+	link.attrs.rev =
+		attribute rev {
+			string
+		}
+	link.attrs &= link.attrs.rev?
+
+	a.attrs.rev =
+		attribute rev {
+			string
+		}
+	a.attrs &= a.attrs.rev?
+
+## scheme attribute
+
+	meta.attrs.scheme =
+		attribute scheme {
+			string
+		}
+	meta.attrs &= meta.attrs.scheme?
+
+## scope attribute
+
+	td.attrs.scope =
+		attribute scope {
+			string
+		}
+	td.attrs &= td.attrs.scope?
+
+## shape attribute
+
+	a.attrs.shape =
+		attribute shape {
+			string
+		}
+	a.attrs &= a.attrs.shape?
+
+## standby attribute
+
+	object.attrs.standby =
+		attribute standby {
+			string
+		}
+	object.attrs &= object.attrs.standby?
+
+## target attribute
+
+	link.attrs.target =
+		attribute target {
+			string
+		}
+	link.attrs &= link.attrs.target?
+
+## type attribute
+
+	param.attrs.type =
+		attribute type {
+			string
+		}
+	param.attrs &= param.attrs.type?
+
+## valuetype attribute
+
+	param.attrs.valuetype =
+		attribute valuetype {
+			string
+		}
+	param.attrs &= param.attrs.valuetype?
+
+## version attribute
+
+	html.attrs.version =
+		attribute version {
+			string
+		}
+	html.attrs &= html.attrs.version?
+
+## Obsolete style attributes
+
+## align attribute
+
+	caption.attrs.align =
+		attribute align {
+			string
+		}
+	caption.attrs &= caption.attrs.align?
+
+	col.attrs.align =
+		attribute align {
+			string
+		}
+	col.attrs &= col.attrs.align?
+
+	colgroup.attrs.align =
+		attribute align {
+			string
+		}
+	colgroup.attrs &= colgroup.attrs.align?
+
+	div.attrs.align =
+		attribute align {
+			string
+		}
+	div.attrs &= div.attrs.align?
+
+	h1.attrs.align =
+		attribute align {
+			string
+		}
+	h1.attrs &= h1.attrs.align?
+
+	h2.attrs.align =
+		attribute align {
+			string
+		}
+	h2.attrs &= h2.attrs.align?
+
+	h3.attrs.align =
+		attribute align {
+			string
+		}
+	h3.attrs &= h3.attrs.align?
+
+	h4.attrs.align =
+		attribute align {
+			string
+		}
+	h4.attrs &= h4.attrs.align?
+
+	h5.attrs.align =
+		attribute align {
+			string
+		}
+	h5.attrs &= h5.attrs.align?
+
+	h6.attrs.align =
+		attribute align {
+			string
+		}
+	h6.attrs &= h6.attrs.align?
+
+	hr.attrs.align =
+		attribute align {
+			string
+		}
+	hr.attrs &= hr.attrs.align?
+
+	iframe.attrs.align =
+		attribute align {
+			string
+		}
+	iframe.attrs &= iframe.attrs.align?
+
+	img.attrs.align =
+		attribute align {
+			string
+		}
+	img.attrs &= img.attrs.align?
+
+	input.attrs.align =
+		attribute align {
+			string
+		}
+	input.attrs &= input.attrs.align?
+
+	legend.attrs.align =
+		attribute align {
+			string
+		}
+	legend.attrs &= legend.attrs.align?
+
+	object.attrs.align =
+		attribute align {
+			string
+		}
+	object.attrs &= object.attrs.align?
+
+	p.attrs.align =
+		attribute align {
+			string
+		}
+	p.attrs &= p.attrs.align?
+
+	table.attrs.align =
+		attribute align {
+			string
+		}
+	table.attrs &= table.attrs.align?
+
+	tbody.attrs.align =
+		attribute align {
+			string
+		}
+	tbody.attrs &= tbody.attrs.align?
+
+	td.attrs.align =
+		attribute align {
+			string
+		}
+	td.attrs &= td.attrs.align?
+
+	tfoot.attrs.align =
+		attribute align {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.align?
+
+	th.attrs.align =
+		attribute align {
+			string
+		}
+	th.attrs &= th.attrs.align?
+
+	thead.attrs.align =
+		attribute align {
+			string
+		}
+	thead.attrs &= thead.attrs.align?
+
+	tr.attrs.align =
+		attribute align {
+			string
+		}
+	tr.attrs &= tr.attrs.align?
+
+## alink attribute
+
+	body.attrs.alink =
+		attribute alink {
+			string
+		}
+	body.attrs &= body.attrs.alink?
+
+## background attribute
+
+	body.attrs.background =
+		attribute background {
+			string
+		}
+	body.attrs &= body.attrs.background?
+
+## border attribute
+
+	table.attrs.border =
+		attribute border {
+			string
+		}
+	table.attrs &= table.attrs.border?
+
+	object.attrs.border =
+		attribute border {
+			string
+		}
+	object.attrs &= object.attrs.border?
+
+## cellpadding attribute
+
+	table.attrs.cellpadding =
+		attribute cellpadding {
+			string
+		}
+	table.attrs &= table.attrs.cellpadding?
+
+## cellspacing attribute
+
+	table.attrs.cellspacing =
+		attribute cellspacing {
+			string
+		}
+	table.attrs &= table.attrs.cellspacing?
+
+## char attribute
+
+	col.attrs.char =
+		attribute char {
+			string
+		}
+	col.attrs &= col.attrs.char?
+
+	colgroup.attrs.char =
+		attribute char {
+			string
+		}
+	colgroup.attrs &= colgroup.attrs.char?
+
+	tbody.attrs.char =
+		attribute char {
+			string
+		}
+	tbody.attrs &= tbody.attrs.char?
+
+	td.attrs.char =
+		attribute char {
+			string
+		}
+	td.attrs &= td.attrs.char?
+
+	tfoot.attrs.char =
+		attribute char {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.char?
+
+	th.attrs.char =
+		attribute char {
+			string
+		}
+	th.attrs &= th.attrs.char?
+
+	thead.attrs.char =
+		attribute char {
+			string
+		}
+	thead.attrs &= thead.attrs.char?
+
+	tr.attrs.char =
+		attribute char {
+			string
+		}
+	tr.attrs &= tr.attrs.char?
+
+## charoff attribute
+
+	col.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	col.attrs &= col.attrs.charoff?
+
+	colgroup.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	colgroup.attrs &= colgroup.attrs.charoff?
+
+	tbody.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	tbody.attrs &= tbody.attrs.charoff?
+
+	td.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	td.attrs &= td.attrs.charoff?
+
+	tfoot.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.charoff?
+
+	th.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	th.attrs &= th.attrs.charoff?
+
+	thead.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	thead.attrs &= thead.attrs.charoff?
+
+	tr.attrs.charoff =
+		attribute charoff {
+			string
+		}
+	tr.attrs &= tr.attrs.charoff?
+
+## clear attribute
+
+	br.attrs.clear =
+		attribute clear {
+			string
+		}
+	br.attrs &= br.attrs.clear?
+
+## compact attribute
+
+	dl.attrs.compact =
+		attribute compact {
+			string
+		}
+	dl.attrs &= dl.attrs.compact?
+
+	menu.attrs.compact =
+		attribute compact {
+			string
+		}
+	menu.attrs &= menu.attrs.compact?
+
+	ol.attrs.compact =
+		attribute compact {
+			string
+		}
+	ol.attrs &= ol.attrs.compact?
+
+	ul.attrs.compact =
+		attribute compact {
+			string
+		}
+	ul.attrs &= ul.attrs.compact?
+
+## frame attribute
+
+	table.attrs.frame =
+		attribute frame {
+			string
+		}
+	table.attrs &= table.attrs.frame?
+
+## frameborder attribute
+
+	iframe.attrs.frameborder =
+		attribute frameborder {
+			string
+		}
+	iframe.attrs &= iframe.attrs.frameborder?
+
+## height attribute
+
+	td.attrs.height =
+		attribute height {
+			string
+		}
+	td.attrs &= td.attrs.height?
+
+	th.attrs.height =
+		attribute height {
+			string
+		}
+	th.attrs &= th.attrs.height?
+
+## hspace attribute
+
+	img.attrs.hspace =
+		attribute hspace {
+			string
+		}
+	img.attrs &= img.attrs.hspace?
+
+	object.attrs.hspace =
+		attribute hspace {
+			string
+		}
+	object.attrs &= object.attrs.hspace?
+
+## link attribute
+
+	body.attrs.link =
+		attribute link {
+			string
+		}
+	body.attrs &= body.attrs.link?
+
+## marginheight attribute
+
+	iframe.attrs.marginheight =
+		attribute marginheight {
+			string
+		}
+	iframe.attrs &= iframe.attrs.marginheight?
+
+## marginwidth attribute
+
+	iframe.attrs.marginwidth =
+		attribute marginwidth {
+			string
+		}
+	iframe.attrs &= iframe.attrs.marginwidth?
+
+## noshade attribute
+
+	hr.attrs.noshade =
+		attribute noshade {
+			string
+		}
+	hr.attrs &= hr.attrs.noshade?
+
+## nowrap attribute
+
+	td.attrs.nowrap =
+		attribute nowrap {
+			string
+		}
+	td.attrs &= td.attrs.nowrap?
+
+	th.attrs.nowrap =
+		attribute nowrap {
+			string
+		}
+	th.attrs &= th.attrs.nowrap?
+
+## rules attribute
+
+	table.attrs.rules =
+		attribute rules {
+			string
+		}
+	table.attrs &= table.attrs.rules?
+
+## scrolling attribute
+
+	iframe.attrs.scrolling =
+		attribute scrolling {
+			string
+		}
+	iframe.attrs &= iframe.attrs.scrolling?
+
+## size attribute
+
+	hr.attrs.size =
+		attribute size {
+			string
+		}
+	hr.attrs &= hr.attrs.size?
+
+## text attribute
+
+	body.attrs.text =
+		attribute text {
+			string
+		}
+	body.attrs &= body.attrs.text?
+
+## type attribute
+
+	li.attrs.type =
+		attribute type {
+			string
+		}
+	li.attrs &= li.attrs.type?
+
+	ol.attrs.type =
+		attribute type {
+			string
+		}
+	ol.attrs &= ol.attrs.type?
+
+	ul.attrs.type =
+		attribute type {
+			string
+		}
+	ul.attrs &= ul.attrs.type?
+
+## valign attribute
+
+	col.attrs.valign =
+		attribute valign {
+			string
+		}
+	col.attrs &= col.attrs.valign?
+
+	colgroup.attrs.valign =
+		attribute valign {
+			string
+		}
+	colgroup.attrs &= colgroup.attrs.valign?
+
+	table.attrs.valign =
+		attribute valign {
+			string
+		}
+	table.attrs &= table.attrs.valign?
+
+	tbody.attrs.valign =
+		attribute valign {
+			string
+		}
+	tbody.attrs &= tbody.attrs.valign?
+
+	td.attrs.valign =
+		attribute valign {
+			string
+		}
+	td.attrs &= td.attrs.valign?
+
+	tfoot.attrs.valign =
+		attribute valign {
+			string
+		}
+	tfoot.attrs &= tfoot.attrs.valign?
+
+	th.attrs.valign =
+		attribute valign {
+			string
+		}
+	th.attrs &= th.attrs.valign?
+
+	thead.attrs.valign =
+		attribute valign {
+			string
+		}
+	thead.attrs &= thead.attrs.valign?
+
+	tr.attrs.valign =
+		attribute valign {
+			string
+		}
+	tr.attrs &= tr.attrs.valign?
+
+## vlink attribute
+
+	body.attrs.vlink =
+		attribute vlink {
+			string
+		}
+	body.attrs &= body.attrs.vlink?
+
+## vspace attribute
+
+	img.attrs.vspace =
+		attribute vspace {
+			string
+		}
+	img.attrs &= img.attrs.vspace?
+
+	object.attrs.vspace =
+		attribute vspace {
+			string
+		}
+	object.attrs &= object.attrs.vspace?
+
+## width attribute
+
+	col.attrs.width =
+		attribute width {
+			string
+		}
+	col.attrs &= col.attrs.width?
+
+	colgroup.attrs.width =
+		attribute width {
+			string
+		}
+	colgroup.attrs &= colgroup.attrs.width?
+
+	hr.attrs.width =
+		attribute width {
+			string
+		}
+	hr.attrs &= hr.attrs.width?
+
+	pre.attrs.width =
+		attribute width {
+			string
+		}
+	pre.attrs &= pre.attrs.width?
+
+	table.attrs.width =
+		attribute width {
+			string
+		}
+	table.attrs &= table.attrs.width?
+
+	td.attrs.width =
+		attribute width {
+			string
+		}
+	td.attrs &= td.attrs.width?
+
+	th.attrs.width =
+		attribute width {
+			string
+		}
+	th.attrs &= th.attrs.width?
