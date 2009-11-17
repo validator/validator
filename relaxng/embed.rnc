@@ -85,22 +85,44 @@ namespace local = ""
 				common.data.integer.positive
 			}
 		embed.attrs.other = # REVISIT common.attrs
-			attribute local:* - ( src 
-			                    | type 
-			                    | height 
-			                    | width 
-			                    | id 
+			attribute local:* - ( accesskey
+			                    | align
+			                    | aria-atomic
+			                    | aria-busy
+			                    | aria-controls
+			                    | aria-describedby
+			                    | aria-disabled
+			                    | aria-dropeffect
+			                    | aria-flowto
+			                    | aria-grabbed
+			                    | aria-haspopup
+			                    | aria-hidden
+			                    | aria-invalid
+			                    | aria-label
+			                    | aria-labelledby
+			                    | aria-live
+			                    | aria-owns
+			                    | aria-relevant
+			                    | aria-required	
 			                    | class
-			                    | title 
-			                    | dir 
-			                    | lang 
-			                    | style 
-			                    | tabindex 
-			                    | contextmenu 
 			                    | contenteditable 
+			                    | contextmenu 
+			                    | dir 
 			                    | draggable 
+			                    | height 
 			                    | hidden
+			                    | id 
+			                    | itemid
+			                    | itemprop
+			                    | itemref
+			                    | itemscope
+			                    | itemtype
+			                    | lang 
+			                    | name
 			                    | onabort
+			                    | onafterprint
+			                    | onbeforeprint
+			                    | onbeforeunload
 			                    | onblur
 			                    | oncanplay
 			                    | oncanplaythrough
@@ -122,6 +144,7 @@ namespace local = ""
 			                    | onfocus
 			                    | onformchange
 			                    | onforminput
+			                    | onhashchange
 			                    | oninput
 			                    | oninvalid
 			                    | onkeydown
@@ -131,69 +154,90 @@ namespace local = ""
 			                    | onloadeddata
 			                    | onloadedmetadata
 			                    | onloadstart
+			                    | onmessage
 			                    | onmousedown
 			                    | onmousemove
 			                    | onmouseout
 			                    | onmouseover
 			                    | onmouseup
 			                    | onmousewheel
+			                    | onoffline
+			                    | ononline
 			                    | onpause
 			                    | onplay
 			                    | onplaying
+			                    | onpopstate
 			                    | onprogress
 			                    | onratechange
 			                    | onreadystatechange
+			                    | onredo
+			                    | onresize
 			                    | onscroll
 			                    | onseeked
 			                    | onseeking
 			                    | onselect
 			                    | onshow
 			                    | onstalled
+			                    | onstorage
 			                    | onsubmit
 			                    | onsuspend
 			                    | ontimeupdate
-			                    | onvolumechange
-			                    | onwaiting
-			                    | onafterprint
-			                    | onbeforeprint
-			                    | onbeforeunload
-			                    | onhashchange
-			                    | onmessage
-			                    | onoffline
-			                    | ononline
-			                    | onpopstate
-			                    | onredo
-			                    | onresize
-			                    | onstorage
 			                    | onundo
 			                    | onunload
+			                    | onvolumechange
+			                    | onwaiting
 			                    | role
-			                    | aria-atomic
-			                    | aria-busy
-			                    | aria-controls
-			                    | aria-describedby
-			                    | aria-disabled
-			                    | aria-dropeffect
-			                    | aria-flowto
-			                    | aria-grabbed
-			                    | aria-haspopup
-			                    | aria-hidden
-			                    | aria-invalid
-			                    | aria-label
-			                    | aria-labelledby
-			                    | aria-live
-			                    | aria-owns
-			                    | aria-relevant
-			                    | aria-required	
 			                    | spellcheck
-			                    | accesskey
-			                    | itemref
-			                    | itemprop
-			                    | itemscope
-			                    | itemtype
-			                    | itemid
-			                    | name
-			                    | align
+			                    | src 
+			                    | style 
+			                    | tabindex 
+			                    | title 
+			                    | type 
+			                    | width 
+			                    | abbr
+			                    | axis
+			                    | charset
+			                    | classid
+			                    | codebase
+			                    | codetype
+			                    | coords
+			                    | declare
+			                    | longdesc
+			                    | nohref
+			                    | profile
+			                    | rev
+			                    | scheme
+			                    | scope
+			                    | shape
+			                    | standby
+			                    | target
+			                    | valuetype
+			                    | version
+			                    | alink
+			                    | background
+			                    | bgcolor
+			                    | border
+			                    | cellpadding
+			                    | cellspacing
+			                    | char
+			                    | charoff
+			                    | clear
+			                    | compact
+			                    | frame
+			                    | frameborder
+			                    | hspace
+			                    | link
+			                    | marginheight
+			                    | marginwidth
+			                    | noshade
+			                    | nowrap
+			                    | rules
+			                    | scrolling
+			                    | size
+			                    | text
+			                    | valign
+			                    | vlink
+			                    | vspace
 			                    ) 
 			{
 				string
@@ -232,18 +276,6 @@ namespace local = ""
 			}
 		object.attrs.type =
 			attribute type {
-				common.data.mimetype
-			}
-		object.attrs.classid =
-			attribute classid {
-				common.data.uri
-			}
-		object.attrs.codebase =
-			attribute codebase {
-				common.data.uri
-			}
-		object.attrs.codetype =
-			attribute codetype {
 				common.data.mimetype
 			}
 		object.attrs.height =

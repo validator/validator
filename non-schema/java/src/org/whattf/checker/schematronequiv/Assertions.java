@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Arrays;
 
 import org.whattf.checker.AttributeUtil;
 import org.whattf.checker.Checker;
@@ -103,6 +104,68 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("frameset", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
         OBSOLETE_ELEMENTS.put("noframes", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+    }
+
+    private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<String, String[]>();
+
+    static {
+        OBSOLETE_ATTRIBUTES.put("abbr", new String[] {"td","th"});
+        OBSOLETE_ATTRIBUTES.put("axis", new String[] {"td","th"});
+        OBSOLETE_ATTRIBUTES.put("charset", new String[] {"link","a"});
+        OBSOLETE_ATTRIBUTES.put("classid", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("codebase", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("codetype", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("coords", new String[] {"a"});
+        OBSOLETE_ATTRIBUTES.put("declare", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] {"img","iframe"});
+        OBSOLETE_ATTRIBUTES.put("name", new String[] {"img"});
+        OBSOLETE_ATTRIBUTES.put("nohref", new String[] {"area"});
+        OBSOLETE_ATTRIBUTES.put("profile", new String[] {"head"});
+        OBSOLETE_ATTRIBUTES.put("rev", new String[] {"link","a"});
+        OBSOLETE_ATTRIBUTES.put("scheme", new String[] {"meta"});
+        OBSOLETE_ATTRIBUTES.put("scope", new String[] {"td"});
+        OBSOLETE_ATTRIBUTES.put("shape", new String[] {"a"});
+        OBSOLETE_ATTRIBUTES.put("standby", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("target", new String[] {"link"});
+        OBSOLETE_ATTRIBUTES.put("type", new String[] {"param"});
+        OBSOLETE_ATTRIBUTES.put("valuetype", new String[] {"param"});
+        OBSOLETE_ATTRIBUTES.put("version", new String[] {"html"});
+    }
+
+    private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<String, String[]>();
+
+    static {
+      OBSOLETE_STYLE_ATTRS.put("align",
+          new String[] {"caption","iframe","img","input","object","legend","table","hr","div",
+            "h1","h2","h3","h4","h5","h6", "p","col","colgroup","tbody","td","tfoot","th","thead","tr"});
+      OBSOLETE_STYLE_ATTRS.put("alink", new String[] {"body"});
+      OBSOLETE_STYLE_ATTRS.put("background", new String[] {"body"});
+      OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] {"table","tr","td","th","body"});
+      OBSOLETE_STYLE_ATTRS.put("border", new String[] {"table","object"});
+      OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] {"table"});
+      OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] {"table"});
+      OBSOLETE_STYLE_ATTRS.put("char", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
+      OBSOLETE_STYLE_ATTRS.put("charoff", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
+      OBSOLETE_STYLE_ATTRS.put("clear", new String[] {"br"});
+      OBSOLETE_STYLE_ATTRS.put("compact", new String[] {"dl","menu","ol","ul"});
+      OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] {"iframe"});
+      OBSOLETE_STYLE_ATTRS.put("frame", new String[] {"table"});
+      OBSOLETE_STYLE_ATTRS.put("height", new String[] {"td","th"});
+      OBSOLETE_STYLE_ATTRS.put("hspace", new String[] {"img","object"});
+      OBSOLETE_STYLE_ATTRS.put("link", new String[] {"body"});
+      OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] {"iframe"});
+      OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] {"iframe"});
+      OBSOLETE_STYLE_ATTRS.put("noshade", new String[] {"hr"});
+      OBSOLETE_STYLE_ATTRS.put("nowrap", new String[] {"td","th"});
+      OBSOLETE_STYLE_ATTRS.put("rules", new String[] {"table"});
+      OBSOLETE_STYLE_ATTRS.put("scrolling", new String[] {"iframe"});
+      OBSOLETE_STYLE_ATTRS.put("size", new String[] {"hr"});
+      OBSOLETE_STYLE_ATTRS.put("text", new String[] {"body"});
+      OBSOLETE_STYLE_ATTRS.put("type", new String[] {"li","ol","ul"});
+      OBSOLETE_STYLE_ATTRS.put("valign", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
+      OBSOLETE_STYLE_ATTRS.put("vlink", new String[] {"body"});
+      OBSOLETE_STYLE_ATTRS.put("vspace", new String[] {"img","object"});
+      OBSOLETE_STYLE_ATTRS.put("width", new String[] {"hr","table","td","th","col","colgroup","pre"});
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
@@ -659,6 +722,10 @@ public class Assertions extends Checker {
                                 "javascript", atts.getValue(i))) {
                             languageJavaScript = true;
                         }
+                    } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)) {
+                      if (Arrays.asList(OBSOLETE_ATTRIBUTES.get(attLocal)).contains(localName)) {
+                        err("The \u201C" +  attLocal + "\u201D attribute is obsolete.");
+                      }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
