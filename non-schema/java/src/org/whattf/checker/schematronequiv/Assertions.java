@@ -726,6 +726,10 @@ public class Assertions extends Checker {
                       if (Arrays.asList(OBSOLETE_ATTRIBUTES.get(attLocal)).contains(localName)) {
                         err("The \u201C" +  attLocal + "\u201D attribute is obsolete.");
                       }
+                    } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
+                      if (Arrays.asList(OBSOLETE_STYLE_ATTRS.get(attLocal)).contains(localName)) {
+                        err("The \u201C" +  attLocal + "\u201D attribute is obsolete. Use CSS instead.");
+                      }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
