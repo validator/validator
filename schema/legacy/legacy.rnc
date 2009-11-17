@@ -577,6 +577,38 @@
 		}
 	body.attrs &= body.attrs.background?
 
+## bgcolor attribute
+
+	body.attrs.bgcolor =
+		attribute bgcolor {
+			string
+		}
+	body.attrs &= body.attrs.bgcolor?
+
+	table.attrs.bgcolor =
+		attribute bgcolor {
+			string
+		}
+	table.attrs &= table.attrs.bgcolor?
+
+	tr.attrs.bgcolor =
+		attribute bgcolor {
+			string
+		}
+	tr.attrs &= tr.attrs.bgcolor?
+
+	td.attrs.bgcolor =
+		attribute bgcolor {
+			string
+		}
+	td.attrs &= td.attrs.bgcolor?
+
+	th.attrs.bgcolor =
+		attribute bgcolor {
+			string
+		}
+	th.attrs &= th.attrs.bgcolor?
+
 ## border attribute
 
 	table.attrs.border =
