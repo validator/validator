@@ -85,44 +85,22 @@ namespace local = ""
 				common.data.integer.positive
 			}
 		embed.attrs.other = # REVISIT common.attrs
-			attribute local:* - ( accesskey
-			                    | align
-			                    | aria-atomic
-			                    | aria-busy
-			                    | aria-controls
-			                    | aria-describedby
-			                    | aria-disabled
-			                    | aria-dropeffect
-			                    | aria-flowto
-			                    | aria-grabbed
-			                    | aria-haspopup
-			                    | aria-hidden
-			                    | aria-invalid
-			                    | aria-label
-			                    | aria-labelledby
-			                    | aria-live
-			                    | aria-owns
-			                    | aria-relevant
-			                    | aria-required	
-			                    | class
-			                    | contenteditable 
-			                    | contextmenu 
-			                    | dir 
-			                    | draggable 
+			attribute local:* - ( src 
+			                    | type 
 			                    | height 
-			                    | hidden
+			                    | width 
 			                    | id 
-			                    | itemid
-			                    | itemprop
-			                    | itemref
-			                    | itemscope
-			                    | itemtype
+			                    | class
+			                    | title 
+			                    | dir 
 			                    | lang 
-			                    | name
+			                    | style 
+			                    | tabindex 
+			                    | contextmenu 
+			                    | contenteditable 
+			                    | draggable 
+			                    | hidden
 			                    | onabort
-			                    | onafterprint
-			                    | onbeforeprint
-			                    | onbeforeunload
 			                    | onblur
 			                    | oncanplay
 			                    | oncanplaythrough
@@ -144,7 +122,6 @@ namespace local = ""
 			                    | onfocus
 			                    | onformchange
 			                    | onforminput
-			                    | onhashchange
 			                    | oninput
 			                    | oninvalid
 			                    | onkeydown
@@ -154,90 +131,69 @@ namespace local = ""
 			                    | onloadeddata
 			                    | onloadedmetadata
 			                    | onloadstart
-			                    | onmessage
 			                    | onmousedown
 			                    | onmousemove
 			                    | onmouseout
 			                    | onmouseover
 			                    | onmouseup
 			                    | onmousewheel
-			                    | onoffline
-			                    | ononline
 			                    | onpause
 			                    | onplay
 			                    | onplaying
-			                    | onpopstate
 			                    | onprogress
 			                    | onratechange
 			                    | onreadystatechange
-			                    | onredo
-			                    | onresize
 			                    | onscroll
 			                    | onseeked
 			                    | onseeking
 			                    | onselect
 			                    | onshow
 			                    | onstalled
-			                    | onstorage
 			                    | onsubmit
 			                    | onsuspend
 			                    | ontimeupdate
-			                    | onundo
-			                    | onunload
 			                    | onvolumechange
 			                    | onwaiting
+			                    | onafterprint
+			                    | onbeforeprint
+			                    | onbeforeunload
+			                    | onhashchange
+			                    | onmessage
+			                    | onoffline
+			                    | ononline
+			                    | onpopstate
+			                    | onredo
+			                    | onresize
+			                    | onstorage
+			                    | onundo
+			                    | onunload
 			                    | role
+			                    | aria-atomic
+			                    | aria-busy
+			                    | aria-controls
+			                    | aria-describedby
+			                    | aria-disabled
+			                    | aria-dropeffect
+			                    | aria-flowto
+			                    | aria-grabbed
+			                    | aria-haspopup
+			                    | aria-hidden
+			                    | aria-invalid
+			                    | aria-label
+			                    | aria-labelledby
+			                    | aria-live
+			                    | aria-owns
+			                    | aria-relevant
+			                    | aria-required	
 			                    | spellcheck
-			                    | src 
-			                    | style 
-			                    | tabindex 
-			                    | title 
-			                    | type 
-			                    | width 
-			                    | abbr
-			                    | axis
-			                    | charset
-			                    | classid
-			                    | codebase
-			                    | codetype
-			                    | coords
-			                    | declare
-			                    | longdesc
-			                    | nohref
-			                    | profile
-			                    | rev
-			                    | scheme
-			                    | scope
-			                    | shape
-			                    | standby
-			                    | target
-			                    | valuetype
-			                    | version
-			                    | alink
-			                    | background
-			                    | bgcolor
-			                    | border
-			                    | cellpadding
-			                    | cellspacing
-			                    | char
-			                    | charoff
-			                    | clear
-			                    | compact
-			                    | frame
-			                    | frameborder
-			                    | hspace
-			                    | link
-			                    | marginheight
-			                    | marginwidth
-			                    | noshade
-			                    | nowrap
-			                    | rules
-			                    | scrolling
-			                    | size
-			                    | text
-			                    | valign
-			                    | vlink
-			                    | vspace
+			                    | accesskey
+			                    | itemref
+			                    | itemprop
+			                    | itemscope
+			                    | itemtype
+			                    | itemid
+			                    | name
+			                    | align
 			                    ) 
 			{
 				string
