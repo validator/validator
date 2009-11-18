@@ -687,6 +687,7 @@ public class Assertions extends Checker {
                     } else if ("controls" == attLocal) {
                         controls = true;
                     } else if ("type" == attLocal
+                        && "param" != localName
                         && "ol" != localName
                         && "ul" != localName
                         && "li" != localName
