@@ -391,6 +391,12 @@
 			</report>
 		</rule>
 
+		<rule context='h:*[@archive]'>
+			<report test='self::h:object'>
+				The &#x201C;archive&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
 		<rule context='h:*[@axis]'>
 			<report test='self::h:td|self::h:th'>
 				The &#x201C;axis&#x201D; attribute is obsolete.
@@ -433,8 +439,14 @@
 			</report>
 		</rule>
 
+		<rule context='h:*[@methods]'>
+			<report test='self::h:link|self::h:a'>
+				The &#x201C;methods&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
 		<rule context='h:*[@name]'>
-			<report test='self::h:img'>
+			<report test='self::h:img|self::h:embed'>
 				The &#x201C;name&#x201D; attribute is obsolete.
 			</report>
 		</rule>
@@ -493,6 +505,18 @@
 			</report>
 		</rule>
 
+		<rule context='h:*[@urn]'>
+			<report test='self::h:a'>
+				The &#x201C;urn&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@usemap]'>
+			<report test='self::h:input'>
+				The &#x201C;usemap&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
 		<rule context='h:*[@valuetype]'>
 			<report test='self::h:param'>
 				The &#x201C;valuetype&#x201D; attribute is obsolete.
@@ -509,7 +533,7 @@
 
 		<rule context='h:*[@align]'>
 			<report test='self::h:caption|self::h:iframe|self::h:img
-				|self::h:input|self::h:object|self::h:legend|self::h:table
+				|self::h:input|self::h:object|self::h:embed|self::h:legend|self::h:table
 				|self::h:hr|self::h:div|self::h:h1|self::h:h2|self::h:h3
 				|self::h:h4|self::h:h5|self::h:h6|self::h:p|self::h:col
 				|self::h:colgroup|self::h:tbody|self::h:td|self::h:tfoot

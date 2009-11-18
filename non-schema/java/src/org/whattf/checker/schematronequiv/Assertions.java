@@ -110,6 +110,7 @@ public class Assertions extends Checker {
 
     static {
         OBSOLETE_ATTRIBUTES.put("abbr", new String[] {"td","th"});
+        OBSOLETE_ATTRIBUTES.put("archive", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("axis", new String[] {"td","th"});
         OBSOLETE_ATTRIBUTES.put("charset", new String[] {"link","a"});
         OBSOLETE_ATTRIBUTES.put("classid", new String[] {"object"});
@@ -118,7 +119,8 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("coords", new String[] {"a"});
         OBSOLETE_ATTRIBUTES.put("declare", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("longdesc", new String[] {"img","iframe"});
-        OBSOLETE_ATTRIBUTES.put("name", new String[] {"img"});
+        OBSOLETE_ATTRIBUTES.put("methods", new String[] {"link","a"});
+        OBSOLETE_ATTRIBUTES.put("name", new String[] {"img","embed"});
         OBSOLETE_ATTRIBUTES.put("nohref", new String[] {"area"});
         OBSOLETE_ATTRIBUTES.put("profile", new String[] {"head"});
         OBSOLETE_ATTRIBUTES.put("rev", new String[] {"link","a"});
@@ -128,6 +130,8 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("standby", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("target", new String[] {"link"});
         OBSOLETE_ATTRIBUTES.put("type", new String[] {"param"});
+        OBSOLETE_ATTRIBUTES.put("urn", new String[] {"a"});
+        OBSOLETE_ATTRIBUTES.put("usemap", new String[] {"input"});
         OBSOLETE_ATTRIBUTES.put("valuetype", new String[] {"param"});
         OBSOLETE_ATTRIBUTES.put("version", new String[] {"html"});
     }
@@ -136,7 +140,7 @@ public class Assertions extends Checker {
 
     static {
       OBSOLETE_STYLE_ATTRS.put("align",
-          new String[] {"caption","iframe","img","input","object","legend","table","hr","div",
+          new String[] {"caption","iframe","img","input","object","embed","legend","table","hr","div",
             "h1","h2","h3","h4","h5","h6", "p","col","colgroup","tbody","td","tfoot","th","thead","tr"});
       OBSOLETE_STYLE_ATTRS.put("alink", new String[] {"body"});
       OBSOLETE_STYLE_ATTRS.put("background", new String[] {"body"});
