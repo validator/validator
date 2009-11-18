@@ -439,7 +439,7 @@
 		attribute usemap {
 			string
 		}
-	input.attrs &= input.attrs.usemap?
+	input.image.attrs &= input.attrs.usemap?
 
 ## valuetype attribute
 
