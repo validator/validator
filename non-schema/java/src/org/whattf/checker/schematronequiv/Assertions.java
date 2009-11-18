@@ -740,13 +740,13 @@ public class Assertions extends Checker {
                       String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
                       Arrays.sort(elementNames);
                       if (Arrays.binarySearch(elementNames,localName) >= 0) {
-                        err("The \u201C" +  attLocal + "\u201D attribute is obsolete.");
+                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete.");
                       }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                       String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
                       Arrays.sort(elementNames);
                       if (Arrays.binarySearch(elementNames,localName) >= 0) {
-                        err("The \u201C" +  attLocal + "\u201D attribute is obsolete. Use CSS instead.");
+                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete. Use CSS instead.");
                       }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
