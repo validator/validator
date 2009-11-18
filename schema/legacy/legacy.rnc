@@ -549,7 +549,28 @@
 		attribute align {
 			string
 		}
-	input.attrs &= input.attrs.align?
+	input.text.attrs &= input.attrs.align?
+	input.password.attrs &= input.attrs.align?
+	input.checkbox.attrs &= input.attrs.align?
+	input.radio.attrs &= input.attrs.align?
+	input.button.attrs &= input.attrs.align?
+	input.submit.attrs &= input.attrs.align?
+	input.reset.attrs &= input.attrs.align?
+	input.file.attrs &= input.attrs.align?
+	input.image.attrs &= input.attrs.align?
+	input.datetime.attrs &= input.attrs.align?
+	input.datetime-local.attrs &= input.attrs.align?
+	input.date.attrs &= input.attrs.align?
+	input.month.attrs &= input.attrs.align?
+	input.time.attrs &= input.attrs.align?
+	input.week.attrs &= input.attrs.align?
+	input.number.attrs &= input.attrs.align?
+	input.range.attrs &= input.attrs.align?
+	input.email.attrs &= input.attrs.align?
+	input.url.attrs &= input.attrs.align?
+	input.search.attrs &= input.attrs.align?
+	input.tel.attrs &= input.attrs.align?
+	input.color.attrs &= input.attrs.align?
 
 	legend.attrs.align =
 		attribute align {
@@ -952,6 +973,7 @@
 			string
 		}
 	li.attrs &= li.attrs.type?
+	oli.attrs &= li.attrs.type?
 
 	ol.attrs.type =
 		attribute type {
