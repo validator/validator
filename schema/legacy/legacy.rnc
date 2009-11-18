@@ -229,6 +229,14 @@
 		}
 	th.attrs &= th.attrs.abbr?
 
+## archive attribute
+
+	object.attrs.archive =
+		attribute archive {
+			string
+		}
+	object.attrs &= object.attrs.archive?
+
 ## axis attribute
 
 	td.attrs.axis =
@@ -311,6 +319,20 @@
 		}
 	iframe.attrs &= iframe.attrs.longdesc?
 
+## methods attribute
+
+	a.attrs.methods =
+		attribute methods {
+			string
+		}
+	a.attrs &= a.attrs.methods?
+
+	link.attrs.methods =
+		attribute methods {
+			string
+		}
+	link.attrs &= link.attrs.methods?
+
 ## name attribute
 
 	img.attrs.name =
@@ -318,6 +340,12 @@
 			string
 		}
 	img.attrs &= img.attrs.name?
+
+	embed.attrs.name =
+		attribute name {
+			string
+		}
+	embed.attrs &= embed.attrs.name?
 
 ## nohref attribute
 
@@ -397,6 +425,22 @@
 		}
 	param.attrs &= param.attrs.type?
 
+## urn attribute
+
+	a.attrs.urn =
+		attribute urn {
+			string
+		}
+	a.attrs &= a.attrs.urn?
+
+## usemap attribute
+
+	input.attrs.usemap =
+		attribute usemap {
+			string
+		}
+	input.attrs &= input.attrs.usemap?
+
 ## valuetype attribute
 
 	param.attrs.valuetype =
@@ -440,6 +484,12 @@
 			string
 		}
 	div.attrs &= div.attrs.align?
+
+	embed.attrs.align =
+		attribute align {
+			string
+		}
+	embed.attrs &= embed.attrs.align?
 
 	h1.attrs.align =
 		attribute align {
