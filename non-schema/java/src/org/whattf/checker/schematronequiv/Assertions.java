@@ -687,18 +687,22 @@ public class Assertions extends Checker {
                     } else if ("controls" == attLocal) {
                         controls = true;
                     } else if ("type" == attLocal) {
-                        String attValue = atts.getValue(i);
-                        if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
+                        Arrays.sort(elementNames);
+                        if (Arrays.binarySearch(elementNames,localName) >= 0) {
+                          err("The \u201C" +  attLocal + "\u201D attribute is obsolete.");
+                        } else {
+                          String attValue = atts.getValue(i);
+                          if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "hidden", attValue)) {
                             hidden = true;
-                        } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "toolbar", attValue)) {
+                          } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString( "toolbar", attValue)) {
                             toolbar = true;
-                        }
-                        
-                        if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                          }
+                          if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "text/javascript", attValue)) {
                             typeNotTextJavaScript = true;
+                          }
                         }
                     } else if ("role" == attLocal) {
                         role = atts.getValue(i);
@@ -720,6 +724,11 @@ public class Assertions extends Checker {
                     } else if ("selected" == attLocal) {
                         selected = true;
                     } else if ("usemap" == attLocal) {
+                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
+                        Arrays.sort(elementNames);
+                        if (Arrays.binarySearch(elementNames,localName) >= 0) {
+                          err("The \u201C" +  attLocal + "\u201D attribute is obsolete.");
+                        }
                         usemap = true;
                     } else if ("language" == attLocal) {
                         if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
