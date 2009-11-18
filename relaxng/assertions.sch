@@ -503,6 +503,9 @@
 			<report test='self::h:param'>
 				The &#x201C;type&#x201D; attribute is obsolete.
 			</report>
+			<report test='self::h:li|self::h:ol|self::h:ul'>
+				The &#x201C;type&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
 		</rule>
 
 		<rule context='h:*[@urn]'>
@@ -680,12 +683,6 @@
 		<rule context='h:*[@text]'>
 			<report test='self::h:body'>
 				The &#x201C;text&#x201D; attribute is obsolete. Use CSS instead.
-			</report>
-		</rule>
-
-		<rule context='h:*[@type]'>
-			<report test='self::h:li|self::h:ol|self::h:ul'>
-				The &#x201C;type&#x201D; attribute is obsolete. Use CSS instead.
 			</report>
 		</rule>
 
