@@ -383,6 +383,314 @@
 			</report>
 		</rule>
 
+	<!-- Obsolete Attributes- - - - - - - - - - - - - - - - - - - - - - -->
+
+		<rule context='h:*[@abbr]'>
+			<report test='self::h:td|self::h:th'>
+				The &#x201C;abbr&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@axis]'>
+			<report test='self::h:td|self::h:th'>
+				The &#x201C;axis&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@charset]'>
+			<report test='self::h:link|self::h:a'>
+				The &#x201C;charset&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@codebase]'>
+			<report test='self::h:object'>
+				The &#x201C;codebase&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@codetype]'>
+			<report test='self::h:object'>
+				The &#x201C;codetype&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@coords]'>
+			<report test='self::h:a'>
+				The &#x201C;coords&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@declare]'>
+			<report test='self::h:object'>
+				The &#x201C;declare&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@longdesc]'>
+			<report test='self::h:img|self::h:iframe'>
+				The &#x201C;longdesc&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@name]'>
+			<report test='self::h:img'>
+				The &#x201C;name&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@nohref]'>
+			<report test='self::h:area'>
+				The &#x201C;nohref&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@profile]'>
+			<report test='self::h:head'>
+				The &#x201C;profile&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@rev]'>
+			<report test='self::h:link|self::h:a'>
+				The &#x201C;rev&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@scheme]'>
+			<report test='self::h:meta'>
+				The &#x201C;scheme&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@scope]'>
+			<report test='self::h:td'>
+				The &#x201C;scope&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@shape]'>
+			<report test='self::h:a'>
+				The &#x201C;shape&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@standby]'>
+			<report test='self::h:object'>
+				The &#x201C;standby&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@target]'>
+			<report test='self::h:link'>
+				The &#x201C;target&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@type]'>
+			<report test='self::h:param'>
+				The &#x201C;type&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@valuetype]'>
+			<report test='self::h:param'>
+				The &#x201C;valuetype&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+		<rule context='h:*[@version]'>
+			<report test='self::h:html'>
+				The &#x201C;version&#x201D; attribute is obsolete.
+			</report>
+		</rule>
+
+	<!-- Obsolete presentational Attributes- - - - - - - - - - - - - - - - - - - - - - -->
+
+		<rule context='h:*[@align]'>
+			<report test='self::h:caption|self::h:iframe|self::h:img
+				|self::h:input|self::h:object|self::h:legend|self::h:table
+				|self::h:hr|self::h:div|self::h:h1|self::h:h2|self::h:h3
+				|self::h:h4|self::h:h5|self::h:h6|self::h:p|self::h:col
+				|self::h:colgroup|self::h:tbody|self::h:td|self::h:tfoot
+				|self::h:th|self::h:thead|self::h:tr'>
+				The &#x201C;align&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@alink]'>
+			<report test='self::h:body'>
+				The &#x201C;alink&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@background]'>
+			<report test='self::h:body'>
+				The &#x201C;background&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@bgcolor]'>
+			<report test='self::h:table|self::h:tr|self::h:td|self::h:th
+				|self::h:body'>
+				The &#x201C;bgcolor&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@border]'>
+			<report test='self::h:table|self::h:object'>
+				The &#x201C;border&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@cellpadding]'>
+			<report test='self::h:table'>
+				The &#x201C;cellpadding&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@cellspacing]'>
+			<report test='self::h:table'>
+				The &#x201C;cellspacing&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@char]'>
+			<report test='self::h:col|self::h:colgroup|self::h:tbody
+				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+				The &#x201C;char&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@charoff]'>
+			<report test='self::h:col|self::h:colgroup|self::h:tbody
+				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+				The &#x201C;charoff&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@clear]'>
+			<report test='self::h:br'>
+				The &#x201C;clear&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@compact]'>
+			<report test='self::h:dl|self::h:menu|self::h:ol|self::h:ul'>
+				The &#x201C;compact&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@frameborder]'>
+			<report test='self::h:iframe'>
+				The &#x201C;frameborder&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@frame]'>
+			<report test='self::h:table'>
+				The &#x201C;frame&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@height]'>
+			<report test='self::h:td|self::h:th'>
+				The &#x201C;height&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@hspace]'>
+			<report test='self::h:img|self::h:object'>
+				The &#x201C;hspace&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@link]'>
+			<report test='self::h:body'>
+				The &#x201C;link&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@marginheight]'>
+			<report test='self::h:iframe'>
+				The &#x201C;marginheight&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@marginwidth]'>
+			<report test='self::h:iframe'>
+				The &#x201C;marginwidth&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@noshade]'>
+			<report test='self::h:hr'>
+				The &#x201C;noshade&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@nowrap]'>
+			<report test='self::h:td|self::h:th'>
+				The &#x201C;nowrap&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@rules]'>
+			<report test='self::h:table'>
+				The &#x201C;rules&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@scrolling]'>
+			<report test='self::h:iframe'>
+				The &#x201C;scrolling&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@size]'>
+			<report test='self::h:hr'>
+				The &#x201C;size&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@text]'>
+			<report test='self::h:body'>
+				The &#x201C;text&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@type]'>
+			<report test='self::h:li|self::h:ol|self::h:ul'>
+				The &#x201C;type&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@valign]'>
+			<report test='self::h:col|self::h:colgroup|self::h:tbody
+				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+				The &#x201C;valign&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@vlink]'>
+			<report test='self::h:body'>
+				The &#x201C;vlink&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@vspace]'>
+			<report test='self::h:img|self::h:object'>
+				The &#x201C;vspace&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
+		<rule context='h:*[@width]'>
+			<report test='self::h:hr|self::h:table|self::h:td|self::h:th
+				|self::h:col|self::h:colgroup|self::h:pre'>
+				The &#x201C;width&#x201D; attribute is obsolete. Use CSS instead.
+			</report>
+		</rule>
+
 <!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
 
 		<rule context='h:map[@id and @name]'>
