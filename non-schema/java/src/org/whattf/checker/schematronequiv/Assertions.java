@@ -114,6 +114,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("axis", new String[] {"td","th"});
         OBSOLETE_ATTRIBUTES.put("charset", new String[] {"link","a"});
         OBSOLETE_ATTRIBUTES.put("classid", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("code", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("codebase", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("codetype", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("coords", new String[] {"a"});
@@ -134,6 +135,37 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("usemap", new String[] {"input"});
         OBSOLETE_ATTRIBUTES.put("valuetype", new String[] {"param"});
         OBSOLETE_ATTRIBUTES.put("version", new String[] {"html"});
+    }
+
+    private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<String, String>();
+
+    static {
+        OBSOLETE_ATTRIBUTES_MSG.put("abbr", "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
+        OBSOLETE_ATTRIBUTES_MSG.put("archive", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("axis", "Use the \u201Cscope\u201D attribute.");
+        OBSOLETE_ATTRIBUTES_MSG.put("charset", "Use an HTTP Content-Type header on the linked resource instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("classid", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("code", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("codebase", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("codetype", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("coords", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put("declare", "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
+        OBSOLETE_ATTRIBUTES_MSG.put("longdesc", "Use a regular \u201Ca\u201D element to link to the description.");
+        OBSOLETE_ATTRIBUTES_MSG.put("methods", "Use the HTTP OPTIONS feature instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("name", "Use the \u201Cid\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("nohref", "Omitting the \u201Chref\u201D attribute is sufficient.");
+        OBSOLETE_ATTRIBUTES_MSG.put("profile", "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("rev", "Use the \u201Crel\u201D attribute instead, with a term having the opposite meaning.");
+        OBSOLETE_ATTRIBUTES_MSG.put("scheme", "Use only one scheme per field, or make the scheme declaration part of the value.");
+        OBSOLETE_ATTRIBUTES_MSG.put("scope", "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("shape", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put("standby", "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
+        OBSOLETE_ATTRIBUTES_MSG.put("target", "You can safely omit it.");
+        OBSOLETE_ATTRIBUTES_MSG.put("type", "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
+        OBSOLETE_ATTRIBUTES_MSG.put("urn", "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("usemap", "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put("valuetype", "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
+        OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
     }
 
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<String, String[]>();
@@ -740,7 +772,8 @@ public class Assertions extends Checker {
                       String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
                       Arrays.sort(elementNames);
                       if (Arrays.binarySearch(elementNames,localName) >= 0) {
-                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete.");
+                        String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " " + OBSOLETE_ATTRIBUTES_MSG.get(attLocal) : "";
+                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete." + suggestion);
                       }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                       String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
