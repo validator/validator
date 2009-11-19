@@ -189,7 +189,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	meta.name.elem =
 		element meta { meta.inner & meta.name.attrs }
 	meta.name.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.name.attrs.name
 		&	meta.name.attrs.content
 		)
@@ -211,7 +214,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	meta.http-equiv.refresh.elem =
 		element meta { meta.inner & meta.http-equiv.refresh.attrs }
 	meta.http-equiv.refresh.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.http-equiv.attrs.http-equiv.refresh
 		&	meta.http-equiv.attrs.content.refresh
 		)
@@ -232,7 +238,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	meta.http-equiv.default-style.elem =
 		element meta { meta.inner & meta.http-equiv.default-style.attrs }
 	meta.http-equiv.default-style.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.http-equiv.attrs.http-equiv.default-style
 		&	meta.http-equiv.attrs.content.default-style
 		)
@@ -254,7 +263,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	meta.http-equiv.content-language.elem =
 		element meta { meta.inner & meta.http-equiv.content-language.attrs }
 	meta.http-equiv.content-language.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.http-equiv.attrs.http-equiv.content-language
 		&	meta.http-equiv.attrs.content.content-language
 		)
@@ -276,7 +288,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	meta.charset.elem =
 		element meta { meta.inner & meta.charset.attrs }
 	meta.charset.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.charset.attrs.charset
 		)
 		meta.charset.attrs.charset =
@@ -293,7 +308,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element meta { meta.inner & meta.http-equiv.content-type.attrs }
 		& HTMLonly
 	meta.http-equiv.content-type.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	meta.http-equiv.attrs.http-equiv.content-type
 		&	meta.http-equiv.attrs.content.content-type
 		)
