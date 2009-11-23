@@ -991,8 +991,8 @@ public class Assertions extends Checker {
             }
 
             // lang and xml:lang for XHTML5
-            if (lang != null && (xmlLang == null || !equalsIgnoreAsciiCase(lang, xmlLang))) {
-                err("When the attribute \u201Clang\u201D is specified, the element must also have the attribute \u201Clang\u201D in the XML namespace present with the same value.");
+            if (lang != null && xmlLang != null && !equalsIgnoreAsciiCase(lang, xmlLang)) {
+                err("When the attribute \u201Clang\u201D in no namespace and the attribute \u201Clang\u201D in the XML namespace are both present, they must have the same value.");
             }
 
             // contextmenu
