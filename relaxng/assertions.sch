@@ -735,17 +735,10 @@
 	<pattern name='lang and xml:lang in XHTML'>
 		<rule context='h:*[@lang and @xml:lang]'>
 			<assert test='translate(@lang, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz") = translate(@xml:lang, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")'>
-				When the attribute &#x201C;lang&#x201D; is specified, the element must also have 
-				the attribute &#x201C;lang&#x201D; in the XML namespace present with the same 
-				value.
+				When the attribute &#x201C;lang&#x201D; in no namespace and the attribute 
+				&#x201C;lang&#x201D; in the XML namespace are both present, they must have the 
+				same value.
 			</assert>
-		</rule>
-		<rule context='h:*[@lang and not(@xml:lang)]'>
-			<report test='true()'>
-				When the attribute &#x201C;lang&#x201D; is specified, the element must also have 
-				the attribute &#x201C;lang&#x201D; in the XML namespace present with the same 
-				value.
-			</report>
 		</rule>
 	</pattern>
 
