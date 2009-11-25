@@ -542,6 +542,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
+    '-Dorg.whattf.datatype.warn=true',
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
     '-Dnu.validator.servlet.icon=' + icon,
