@@ -344,6 +344,22 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (fatalErrors > 0 || nonDocumentErrors > 0) {
             return;
         }
+        if (e instanceof BadAttributeValueException) {
+          BadAttributeValueException ex = (BadAttributeValueException) e;
+          Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+          for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+            DatatypeException dex = entry.getValue();
+            if (dex instanceof Html5DatatypeException) {
+              Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+              if (ex5.isWarning()) {
+                this.warnings++;
+                throwIfTooManyMessages();
+                messageFromSAXParseException(MessageType.WARNING, e, exact);
+                return;
+              }
+            }
+          }
+        }
         this.errors++;
         throwIfTooManyMessages();
         messageFromSAXParseException(MessageType.ERROR, e, exact);
