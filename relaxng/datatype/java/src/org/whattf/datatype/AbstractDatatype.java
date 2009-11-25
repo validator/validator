@@ -214,6 +214,33 @@ public abstract class AbstractDatatype implements Datatype {
         return new Html5DatatypeException(position, this.getClass(), this.getName(), head, String.valueOf(literal), tail);
     }    
     
+    /* for datatype exceptions that are handled as warnings, the following are
+     * alternative forms of all the above, with an additional "warning" parameter */
+
+    protected DatatypeException newDatatypeException(String message, boolean warning) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), message, warning);
+    }
+
+    protected DatatypeException newDatatypeException(String head, String literal, String tail, boolean warning) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), head, literal, tail, warning);
+    }
+
+    protected DatatypeException newDatatypeException(String head, char literal, String tail, boolean warning) {
+        return new Html5DatatypeException(this.getClass(), this.getName(), head, String.valueOf(literal), tail, warning);
+    }
+    
+    protected DatatypeException newDatatypeException(int position, String message, boolean warning) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), message, warning);
+    }
+
+    protected DatatypeException newDatatypeException(int position, String head, String literal, String tail, boolean warning) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), head, literal, tail, warning);
+    }
+
+    protected DatatypeException newDatatypeException(int position, String head, char literal, String tail, boolean warning) {
+        return new Html5DatatypeException(position, this.getClass(), this.getName(), head, String.valueOf(literal), tail, warning);
+    }    
+    
     public abstract String getName();
     
     protected List<CharSequenceWithOffset> split(CharSequence sequence, char delimiter) {

@@ -55,6 +55,8 @@ public class LanguageData {
     private static final String TYPE = "type: ";
     
     private static final String DEPRECATED = "deprecated: "; 
+
+    private static final String PREFERRED_VALUE = "preferred-value: "; 
     
     private BufferedReader in;
     
@@ -75,6 +77,8 @@ public class LanguageData {
     private SortedSet<String> deprecatedSet = new TreeSet<String>();
 
     private Map<String, String> suppressedScriptByLanguageMap = new HashMap<String, String>();
+
+    private Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
     
     private Map<String, Set<String[]>> prefixesByVariantMap = new HashMap<String, Set<String[]>>();
     
@@ -95,7 +99,7 @@ public class LanguageData {
     private String[] deprecated = null;
     
     private int[] suppressedScriptByLanguage = null;
-    
+
     private String[][][] prefixesByVariant = null;
     
     public LanguageData() throws IOException {
@@ -159,6 +163,7 @@ public class LanguageData {
         String type = null;
         String subtag = null;
         String suppressScript = null;
+        String preferredValue = null;
         Set<String[]> prefixes = new HashSet<String[]>();
         boolean depr = false;
         String line = null;
@@ -187,6 +192,9 @@ public class LanguageData {
                 prefixes.add(prefixSubtags);
             } else if (line.startsWith(DEPRECATED)) {
                 depr = true;
+            } else if (line.startsWith(PREFERRED_VALUE)) {
+                preferredValue = line.substring(PREFERRED_VALUE.length()).trim().intern();
+                preferredValueByLanguageMap.put(subtag, preferredValue);
             }
         }
         if (subtag == null) {
@@ -278,6 +286,15 @@ public class LanguageData {
      */
     public String[] getDeprecated() {
         return deprecated;
+    }
+
+    /**
+     * Returns the preferredValueByLanguageMap.
+     * 
+     * @return the preferredValueByLanguageMap
+     */
+    public Map<String, String> getPreferredValueByLanguageMap() {
+      return preferredValueByLanguageMap;
     }
 
     /**

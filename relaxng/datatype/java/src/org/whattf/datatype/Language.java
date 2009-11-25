@@ -25,6 +25,8 @@ package org.whattf.datatype;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
@@ -44,6 +46,8 @@ public final class Language extends AbstractDatatype {
     
     private static final Pattern HYPHEN = Pattern.compile("-");
     
+    private static final boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
+
     private static String[] languages = null;
     
     private static String[] scripts = null;
@@ -61,6 +65,8 @@ public final class Language extends AbstractDatatype {
     private static String[] deprecatedLang = null;
     
     private static int[] suppressedScriptByLanguage = null;
+
+    private static Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
     
     private static String[][][] prefixesByVariant = null;
     
@@ -76,6 +82,7 @@ public final class Language extends AbstractDatatype {
             deprecated = data.getDeprecated();
             deprecatedLang = data.getDeprecatedLang();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
+            preferredValueByLanguageMap = data.getPreferredValueByLanguageMap();
             prefixesByVariant = data.getPrefixesByVariant();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -97,17 +104,19 @@ public final class Language extends AbstractDatatype {
                     "The empty string is not a valid language tag.");
         }
         literal = toAsciiLowerCase(literal);
-        if (isGrandfathered(literal)) {
+        if (isGrandfathered(literal) && WARN) {
             if (isDeprecated(literal)) {
                 throw newDatatypeException(
-                "The grandfathered language tag ", literal, " is deprecated.");                
+                "The grandfathered language tag ", literal, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             return;
         }
-        if (isRedundant(literal)) {
+        if (isRedundant(literal) && WARN) {
             if (isDeprecated(literal)) {
                 throw newDatatypeException(
-                "The redundant language tag ", literal, " is deprecated.");                
+                "The redundant language tag ", literal, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             return;
         }
@@ -147,9 +156,10 @@ public final class Language extends AbstractDatatype {
                 throw newDatatypeException(
                         "Bad ISO language part in language tag.");
             }
-            if (isDeprecatedLang(subtag)) {
+            if (isDeprecatedLang(subtag) && WARN) {
                 throw newDatatypeException(
-                "The language subtag ", subtag, " is deprecated.");                
+                "The language subtag ", subtag, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -168,9 +178,10 @@ public final class Language extends AbstractDatatype {
                 throw newDatatypeException(
                         "Bad IANA language part in language tag.");
             }
-            if (isDeprecatedLang(subtag)) {
+            if (isDeprecatedLang(subtag) && WARN) {
                 throw newDatatypeException(
-                "The language subtag ", subtag, " is deprecated.");                
+                "The language subtag ", subtag, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -190,9 +201,10 @@ public final class Language extends AbstractDatatype {
             if (!isScript(subtag)) {
                 throw newDatatypeException("Bad script subtag.");
             }
-            if (isDeprecated(subtag)) {
+            if (isDeprecated(subtag) && WARN) {
                 throw newDatatypeException(
-                "The script subtag ", subtag, " is deprecated.");                
+                "The script subtag ", subtag, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             if (shouldSuppressScript(subtags[0], subtag)) {
                 throw newDatatypeException("Language tag should omit the default script for the language.");                
@@ -212,9 +224,10 @@ public final class Language extends AbstractDatatype {
             if (!isRegion(subtag)) {
                 throw newDatatypeException("Bad region subtag.");
             }
-            if (isDeprecated(subtag)) {
+            if (isDeprecated(subtag) && WARN) {
                 throw newDatatypeException(
-                "The region subtag ", subtag, " is deprecated.");                
+                "The region subtag ", subtag, " is deprecated."
+                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -238,9 +251,10 @@ public final class Language extends AbstractDatatype {
                 if (!isVariant(subtag)) {
                     throw newDatatypeException("Bad variant subtag.");
                 }
-                if (isDeprecated(subtag)) {
+                if (isDeprecated(subtag) && WARN) {
                     throw newDatatypeException(
-                    "The variant subtag ", subtag, " is deprecated.");                
+                    "The variant subtag ", subtag, " is deprecated."
+                    + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
                 }
                 if (!hasGoodPrefix(subtags, i)) {
                     throw newDatatypeException("Variant lacks required prefix.");                    

@@ -34,12 +34,16 @@ public class Html5DatatypeException extends DatatypeException {
     private Class datatypeClass;
     
     private String[] segments;
-    
+
+    /** To flag datatype exceptions that are handled as warnings */
+    final boolean warning;
+
     public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String message) {
         super(index, "Bad " + datatypeName + ": " + message);
         this.datatypeClass = datatypeClass;
         this.segments = new String[1];
         this.segments[0] = message;
+        this.warning = false;
     }
 
     public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String head, String literal, String tail) {
@@ -49,6 +53,7 @@ public class Html5DatatypeException extends DatatypeException {
         this.segments[0] = head;
         this.segments[1] = literal;
         this.segments[2] = tail;
+        this.warning = false;
     }
 
     public Html5DatatypeException(Class datatypeClass, String datatypeName, String message) {
@@ -57,6 +62,35 @@ public class Html5DatatypeException extends DatatypeException {
 
     public Html5DatatypeException(Class datatypeClass, String datatypeName, String head, String literal, String tail) {
         this(-1, datatypeClass, datatypeName, head, literal, tail);
+    }
+
+    /* for datatype exceptions that are handled as warnings, the following are
+     * alternative forms of all the above, with an additional "warning" parameter */
+
+    public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String message, boolean warning) {
+        super(index, "Bad " + datatypeName + ": " + message);
+        this.datatypeClass = datatypeClass;
+        this.segments = new String[1];
+        this.segments[0] = message;
+        this.warning = warning;
+    }
+
+    public Html5DatatypeException(int index, Class datatypeClass, String datatypeName, String head, String literal, String tail, boolean warning) {
+        super(index, "Bad " + datatypeName + ": " + head + '\u201C' + literal + '\u201D' + tail);
+        this.datatypeClass = datatypeClass;
+        this.segments = new String[3];
+        this.segments[0] = head;
+        this.segments[1] = literal;
+        this.segments[2] = tail;
+        this.warning = warning;
+    }
+
+    public Html5DatatypeException(Class datatypeClass, String datatypeName, String message, boolean warning) {
+        this(-1, datatypeClass, datatypeName, message, warning);
+    }
+
+    public Html5DatatypeException(Class datatypeClass, String datatypeName, String head, String literal, String tail, boolean warning) {
+        this(-1, datatypeClass, datatypeName, head, literal, tail, warning);
     }
     
     /**
@@ -76,5 +110,15 @@ public class Html5DatatypeException extends DatatypeException {
     public String[] getSegments() {
         return segments;
     }
+
+   /** 
+     * Returns true if the datatype exception should be handled as a warning, false otherwise.
+     *
+     * @return true if the datatype exception should be handled as a warning, false otherwise.
+     */
+    public boolean isWarning()
+    {   
+      return warning;
+    }   
 
 }

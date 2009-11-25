@@ -53,6 +53,8 @@ public class IriRef extends AbstractDatatype {
         super();
     }
 
+    private final static boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
+
     private final CharSequencePair splitScheme(CharSequence iri) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < iri.length(); i++) {
@@ -145,8 +147,15 @@ public class IriRef extends AbstractDatatype {
             }
         } catch (IRIException e) {
             Violation v = e.getViolation();
-            throw newDatatypeException(v.codeName() + " in " + v.component()
-                    + ".");
+            if (v.codeName() == "COMPATIBILITY_CHARACTER") {
+              if (WARN) {
+                throw newDatatypeException(v.codeName() + " in " + v.component() + ".", WARN);
+              } else {
+                return;
+              }
+            } else {
+              throw newDatatypeException(v.codeName() + " in " + v.component() + ".");
+            }
         } catch (IOException e) {
             throw newDatatypeException(e.getMessage());
         } catch (RhinoException e) {
