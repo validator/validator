@@ -289,6 +289,14 @@
 		}
 	object.attrs &= object.attrs.codetype?
 
+## code attribute
+
+	object.attrs.code =
+		attribute code {
+			token
+		}
+	object.attrs &= object.attrs.code?
+
 ## coords attribute
 
 	a.attrs.coords =
@@ -383,7 +391,7 @@
 		attribute scheme {
 			string
 		}
-	meta.attrs &= meta.attrs.scheme?
+	meta.name.attrs &= meta.attrs.scheme?
 
 ## scope attribute
 
