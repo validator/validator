@@ -1,9 +1,12 @@
 # #####################################################################
-##  RELAX NG Schema for HTML 5: Obsolete Elements                     #
+##  RELAX NG Schema for HTML 5: Obsolete Elements and Attributes      #
 # #####################################################################
 
-## These elements are allowed here and disallowed in Schematron in order to 
-## work around RELAX NG limitations and to thereby get more useful messages.
+## In order to work around RELAX NG limitations and to thereby get more
+## useful error messages, the following elements and attributes are
+## allowed here but disallowed in the assertions-checking code.
+
+## Obsolete elements
 
 ## Centering: <center>
 
@@ -49,7 +52,23 @@
 	basefont.elem =
 		element basefont { empty & basefont.attrs }
 	basefont.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	basefont.attrs.color?
+		&	basefont.attrs.face?
+		&	basefont.attrs.size?
+		)
+		basefont.attrs.color =
+			attribute color {
+				string
+			}
+		basefont.attrs.face =
+			attribute face {
+				string
+			}
+		basefont.attrs.size =
+			attribute size {
+				string
+			}
 
 	common.elem.flow |= basefont.elem
 
@@ -124,7 +143,13 @@
 	dir.elem =
 		element dir { dir.inner & dir.attrs }
 	dir.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	dir.attrs.compact?
+		)
+	dir.attrs.compact =
+		attribute compact {
+			string
+		}
 	dir.inner =
 		( li.elem* )
 
@@ -186,7 +211,23 @@
 	frameset.elem =
 		element frameset { frameset.inner & frameset.attrs }
 	frameset.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	frameset.attrs.rows?
+		&	frameset.attrs.columns?
+		&	frameset.attrs.onunload?
+		)
+		frameset.attrs.rows =
+			attribute rows {
+				string
+			}
+		frameset.attrs.columns =
+			attribute columns {
+				string
+			}
+		frameset.attrs.onunload =
+			attribute onunload {
+				string
+			}
 	frameset.inner =
 		(
 			(	frameset.elem
@@ -200,7 +241,48 @@
 	frame.elem =
 		element frame { empty & frame.attrs }
 	frame.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	frame.attrs.longdesc?
+		&	frame.attrs.name?
+		&	frame.attrs.src?
+		&	frame.attrs.frameborder?
+		&	frame.attrs.marginwidth?
+		&	frame.attrs.marginheight?
+		&	frame.attrs.noresize?
+		&	frame.attrs.scrolling?
+		)
+		frame.attrs.longdesc =
+			attribute longdesc {
+				string
+			}
+		frame.attrs.name =
+			attribute name {
+				string
+			}
+		frame.attrs.src =
+			attribute src {
+				string
+			}
+		frame.attrs.frameborder =
+			attribute frameborder {
+				string
+			}
+		frame.attrs.marginwidth =
+			attribute marginwidth {
+				string
+			}
+		frame.attrs.marginheight =
+			attribute marginheight {
+				string
+			}
+		frame.attrs.noresize =
+			attribute noresize {
+				string
+			}
+		frame.attrs.scrolling =
+			attribute scrolling {
+				string
+			}
 
 ## Alternate no-frames content: <noframes>
 
