@@ -115,7 +115,7 @@ public final class Language extends AbstractDatatype {
         if (isRedundant(literal) && WARN) {
             if (isDeprecated(literal)) {
                 throw newDatatypeException(
-                "The redundant language tag ", literal, " is deprecated."
+                "The language tag ", lit.toString(), " is deprecated."
                 + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
             }
             return;
