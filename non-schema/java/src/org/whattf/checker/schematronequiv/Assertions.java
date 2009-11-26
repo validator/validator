@@ -141,13 +141,13 @@ public class Assertions extends Checker {
 
     static {
         OBSOLETE_ATTRIBUTES_MSG.put("abbr", "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
-        OBSOLETE_ATTRIBUTES_MSG.put("archive", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("archive", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("axis", "Use the \u201Cscope\u201D attribute.");
         OBSOLETE_ATTRIBUTES_MSG.put("charset", "Use an HTTP Content-Type header on the linked resource instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("classid", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
-        OBSOLETE_ATTRIBUTES_MSG.put("code", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codebase", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codetype", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set parameters with these names in particular, the \u201Cparam\u201D element can be used.");
+        OBSOLETE_ATTRIBUTES_MSG.put("classid", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put("code", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put("codebase", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put("codetype", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("coords", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         OBSOLETE_ATTRIBUTES_MSG.put("declare", "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("longdesc", "Use a regular \u201Ca\u201D element to link to the description.");
