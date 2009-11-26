@@ -49,7 +49,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		script.attrs.language =
 			attribute language {
-				w:string "javascript"
+				string
 			}
 	script.inner.embedded =
 		( common.inner.anything )
