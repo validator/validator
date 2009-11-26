@@ -119,6 +119,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("codetype", new String[] {"object"});
         OBSOLETE_ATTRIBUTES.put("coords", new String[] {"a"});
         OBSOLETE_ATTRIBUTES.put("declare", new String[] {"object"});
+        OBSOLETE_ATTRIBUTES.put("language", new String[] {"script"});
         OBSOLETE_ATTRIBUTES.put("longdesc", new String[] {"img","iframe"});
         OBSOLETE_ATTRIBUTES.put("methods", new String[] {"link","a"});
         OBSOLETE_ATTRIBUTES.put("name", new String[] {"img","embed"});
@@ -150,6 +151,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put("codetype", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("coords", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         OBSOLETE_ATTRIBUTES_MSG.put("declare", "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
+        OBSOLETE_ATTRIBUTES_MSG.put("language", "Use the \u201Ctype\u201D attribute instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("longdesc", "Use a regular \u201Ca\u201D element to link to the description.");
         OBSOLETE_ATTRIBUTES_MSG.put("methods", "Use the HTTP OPTIONS feature instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("name", "Use the \u201Cid\u201D attribute instead.");
@@ -759,11 +761,10 @@ public class Assertions extends Checker {
                     } else if ("usemap" == attLocal
                         && "input" != localName) {
                         usemap = true;
-                    } else if ("language" == attLocal) {
-                        if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                    } else if ("language" == attLocal
+                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "javascript", atts.getValue(i))) {
                             languageJavaScript = true;
-                        }
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                         && "ol" != localName
                         && "ul" != localName

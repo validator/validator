@@ -38,14 +38,14 @@ public class ConformingButObsoleteWarner extends Checker {
                     warn("The \u201CContent-Language\u201D state is obsolete. Consider specifying the language on the root element instead.");
                 }
             } else if ("img" == localName) {
-                if ("0".equals(atts.getValue("", "border"))) {
+                if (atts.getIndex("", "border") > -1) {
                     warn("The \u201Cborder\u201D attribute is obsolete. Consider specifying \u201Ca img, img[usemap] { border: 0; }\u201D in CSS instead.");
                 }
             } else if ("script" == localName) {
                 if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("javascript", atts.getValue("", "language"))) {
                     String type = atts.getValue("", "type");
                     if (type == null || lowerCaseLiteralEqualsIgnoreAsciiCaseString("text/javascript", type)) {
-                        warn("The \u201Clanguage\u201D attribute is obsolete. It is not needed.");
+                        warn("The \u201Clanguage\u201D attribute on the \u201Cscript\u201D element is obsolete. You can safely omit it.");
                     }
                 }
             } else if ("a" == localName) {
