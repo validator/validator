@@ -39,7 +39,7 @@ public class ConformingButObsoleteWarner extends Checker {
                 }
             } else if ("img" == localName) {
                 if (atts.getIndex("", "border") > -1) {
-                    warn("The \u201Cborder\u201D attribute is obsolete. Consider specifying \u201Ca img, img[usemap] { border: 0; }\u201D in CSS instead.");
+                    warn("The \u201Cborder\u201D attribute is obsolete. Consider specifying \u201Cimg { border: 0; }\u201D in CSS instead.");
                 }
             } else if ("script" == localName) {
                 if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("javascript", atts.getValue("", "language"))) {
