@@ -756,6 +756,7 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "note" }
 	
 	common.attrs.aria |= aria.note
+	common.attrs.aria.landmark.note |= aria.note
 
 ## option
 	aria.option =
@@ -848,6 +849,7 @@ common.attrs.aria.implicit.listitem |=
 			attribute role { string "search" }
 	
 	common.attrs.aria |= aria.search
+	common.attrs.aria.landmark.search |= aria.search
 
 ## separator
 	aria.separator =

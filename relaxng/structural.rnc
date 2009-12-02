@@ -8,7 +8,9 @@
 		element section { section.inner & section.attrs }
 	section.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.region?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
+			)?
 		)
 	section.inner =
 		(	style.elem.scoped*
@@ -42,6 +44,7 @@
 		  | common.attrs.aria.landmark.article
 		  | common.attrs.aria.landmark.main
 		  | common.attrs.aria.landmark.document
+		  | common.attrs.aria.landmark.application
 		  )?
 		)
 	article.inner =
@@ -59,6 +62,8 @@
 		(	common.attrs
 		&	( common.attrs.aria.implicit.region
 		  | common.attrs.aria.landmark.complementary
+		  | common.attrs.aria.landmark.search
+		  | common.attrs.aria.landmark.note
 		  )?
 		)
 	aside.inner =

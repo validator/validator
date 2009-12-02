@@ -47,6 +47,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	body.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria.landmark.application
+			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.implicit.structure
 			)?
 		&	body.attrs.onafterprint?
