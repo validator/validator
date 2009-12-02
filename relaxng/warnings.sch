@@ -19,7 +19,7 @@
     </rule>
     <rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
       <report test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
-        The &#x201C;language&#x201D; attribute is obsolete. It is not needed.
+        The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete. You can safely omit it.
       </report>
     </rule>
     <rule context='h:a'>

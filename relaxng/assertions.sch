@@ -219,6 +219,13 @@
 			</assert>
 		</rule>
 
+		<rule context='h:script[not(translate(@language, "JAVSCRIPT", "javscript")="javascript")]'>
+		  <report test='true()'>
+				The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete.
+				Use the &#x201C;type&#x201D; attribute instead.
+			</report>
+		</rule>
+
 		<rule context='h:area'>
 			<assert test='ancestor::h:map'>
 				The &#x201C;area&#x201D; element must have a 
