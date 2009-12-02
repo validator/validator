@@ -602,7 +602,7 @@ public class Assertions extends Checker {
         for (IdrefLocator idrefLocator : listReferences) {
             if (!listIds.contains(idrefLocator.getIdref())) {
                 err(
-                        "The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element or to a \u201Cselect\u201D element.",
+                        "The \u201Clist\u201D attribute of the \u201Cinput\u201D element must refer to a \u201Cdatalist\u201D element.",
                         idrefLocator.getLocator());
             }
         }
@@ -1003,6 +1003,9 @@ public class Assertions extends Checker {
             }
             if ("menu" == localName) {
                 menuIds.addAll(ids);
+            }
+            if ("datalist" == localName) {
+                listIds.addAll(ids);
             }
 
             // label for

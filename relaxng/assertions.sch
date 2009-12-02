@@ -755,13 +755,12 @@
 		</rule>
 	</pattern>
 
-	<pattern name='list on input must refer to a select or a datalist'>
+	<pattern name='list on input must refer to a datalist'>
 		<rule context='h:input[@list]'>
 			<assert test='//h:datalist[@id = current()/@list] or 
 			              //h:select[@id = current()/@list]'>
 				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
-				element must refer to a &#x201C;datalist&#x201D; element or to 
-				a &#x201C;select&#x201D; element.
+				element must refer to a &#x201C;datalist&#x201D; element.
 			</assert>
 		</rule>
 	</pattern>
