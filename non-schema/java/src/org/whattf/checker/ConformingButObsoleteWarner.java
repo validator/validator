@@ -49,8 +49,7 @@ public class ConformingButObsoleteWarner extends Checker {
                     }
                 }
             } else if ("a" == localName) {
-                String n = atts.getValue("", "name");
-                if (n != null && n.length() > 0) {
+                if (atts.getIndex("", "name") > -1) {
                     warn("The \u201Cname\u201D attribute is obsolete. Consider putting an \u201Cid\u201D attribute on the nearest container instead.");
                 }
             } else if ("table" == localName) {
