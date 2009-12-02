@@ -470,7 +470,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
 		&	form.attrs.accept-charset?
-		&	common.attrs.aria.implicit.region?
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
+			)?
 		)
 		form.attrs.action =
 			attribute action {
