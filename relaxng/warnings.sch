@@ -13,7 +13,7 @@
     </rule>
     <rule context='h:img[@border]'>
       <report test='@border="0"'>
-        The &#x201C;border&#x201D; attribute is obsolete.
+        The &#x201C;border&#x201D; attribute on the &#x201C;img&#x201D; element is obsolete.
         Consider specifying &#x201C;a img, img[usemap] { border: 0; }&#x201C; in CSS instead.
       </report>
     </rule>
@@ -24,15 +24,15 @@
     </rule>
     <rule context='h:a'>
       <report test='@name'>
-        The &#x201C;name&#x201D; attribute is obsolete. Consider putting an
+        The &#x201C;name&#x201D; attribute on the &#x201C;a&#x201D; element is obsolete. Consider putting an
         &#x201C;id&#x201D; attribute on the nearest container instead.
       </report>
     </rule>
     <rule context='h:table'>
       <report test='@summary'>
-        The &#x201C;summary&#x201D; attribute is obsolete.
+        The &#x201C;summary&#x201D; attribute on the &#x201C;a&#x201D; element is obsolete.
         Consider describing the structure of complex tables in a &#x201C;caption&#x201D; element
-        or in a paragraph, and pointing to the paragraph using the &#x201C;aria-describedby&#x201D;.
+        or in a paragraph, and pointing to the paragraph using the &#x201C;aria-describedby&#x201D; attribute.
       </report>
     </rule>
   </pattern>
