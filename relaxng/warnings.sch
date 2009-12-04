@@ -12,9 +12,9 @@
       </report>
     </rule>
     <rule context='h:img[@border]'>
-      <report test='@border="0"' role='warning'>
+      <report test='true()' role='warning'>
         The &#x201C;border&#x201D; attribute on the &#x201C;img&#x201D; element is obsolete.
-        Consider specifying &#x201C;a img, img[usemap] { border: 0; }&#x201C; in CSS instead.
+        Consider specifying &#x201C;img { border: 0; }&#x201C; in CSS instead.
       </report>
     </rule>
     <rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
