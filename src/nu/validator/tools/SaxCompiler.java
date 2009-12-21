@@ -23,7 +23,7 @@
 
 package nu.validator.tools;
 
-import java.io.FileInputStream;
+import java.net.URL;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -331,7 +331,12 @@ public class SaxCompiler implements ContentHandler {
             factory.setNamespaceAware(true);
             factory.setValidating(false);
             XMLReader reader = factory.newSAXParser().getXMLReader();
-            InputSource in = new InputSource(new FileInputStream(args[0]));
+            if (!args[0].contains(":")) {
+              args[0] = "file:" + args[0];
+            }
+            System.err.println(args[0]);
+            URL url = new URL(args[0]);
+            InputSource in = new InputSource(url.openStream());
             SaxCompiler sc = new SaxCompiler(new OutputStreamWriter(
                     new FileOutputStream(args[1]), "UTF-8"));
             reader.setContentHandler(sc);
