@@ -139,7 +139,7 @@ public class Html5ConformanceCheckerTransaction extends
             }
         } else {
             emitter.characters(SERVICE_TITLE);
-            if (markupAllowed) {
+            if (markupAllowed && System.getProperty("nu.validator.servlet.service-name", "Validator.nu").equals("Validator.nu")) {
                 emitter.startElement("span");
                 emitter.characters(TECHNOLOGY_PREVIEW);
                 emitter.endElement("span");

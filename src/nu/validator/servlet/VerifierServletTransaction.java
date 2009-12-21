@@ -1254,7 +1254,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         } else {
             emitter.characters(SERVICE_TITLE);
-            if (markupAllowed) {
+            if (markupAllowed && System.getProperty("nu.validator.servlet.service-name", "Validator.nu").equals("Validator.nu")) {
                 emitter.startElement("span");
                 emitter.characters(VERSION);
                 emitter.endElement("span");
