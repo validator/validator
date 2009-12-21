@@ -70,6 +70,7 @@ parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
 useLocalCopies = 0
+pageTemplate = None
 
 downloadedDeps = 0
 
@@ -495,6 +496,10 @@ def buildJing():
   os.chdir("..")
 
 def buildValidator():
+  if pageTemplate:
+    ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
+    pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
+    runCmd('"%s" -cp %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -884,13 +889,15 @@ else:
     elif arg.startswith("--script="):
       script = arg[9:]
     elif arg.startswith("--name="):
-      script = arg[7:]
+      serviceName = arg[7:]
     elif arg.startswith("--genericpath="):
       (genericHost, genericPath) = splitHostSpec(arg[14:])
     elif arg.startswith("--html5path="):
       (html5Host, html5Path) = splitHostSpec(arg[12:])
     elif arg.startswith("--parsetreepath="):
       (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
+    elif arg.startswith("--page-template="):
+      pageTemplate = arg[16:]
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
