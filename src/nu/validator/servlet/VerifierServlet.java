@@ -76,7 +76,10 @@ public class VerifierServlet extends HttpServlet {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        PrudentHttpEntityResolver.setParams(5000, 5000, 100);
+        PrudentHttpEntityResolver.setParams(
+            Integer.parseInt(System.getProperty("nu.validator.servlet.connection-timeout","5000")),
+            Integer.parseInt(System.getProperty("nu.validator.servlet.socket-timeout","5000")),
+            100);
         PrudentHttpEntityResolver.setUserAgent("Validator.nu/" + System.getProperty(
                 "nu.validator.servlet.version",
                 "3.x"));
