@@ -71,6 +71,8 @@ deploymentTarget = None
 noSelfUpdate = 0
 useLocalCopies = 0
 pageTemplate = None
+connectionTimeoutSeconds = 5
+socketTimeoutSeconds = 5
 
 downloadedDeps = 0
 
@@ -557,6 +559,8 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
+    '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
+    '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
     '-Dnu.validator.servlet.host.html5=' + html5Host,
@@ -911,6 +915,10 @@ else:
     elif arg == '--local':
       useLocalCopies = 1
       noSelfUpdate = 1
+    elif arg.startswith("--connection-timeout="):
+      connectionTimeoutSeconds = int(arg[21:]);
+    elif arg.startswith("--socket-timeout="):
+      socketTimeoutSeconds = int(arg[17:]);
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
