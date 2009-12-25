@@ -5,8 +5,8 @@
 <schema xmlns='http://www.ascc.net/xml/schematron'>
   <ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
   <pattern name="Warnings for HTML5 attributes that are obsolete but conforming">
-    <rule context='h:meta' role='warning'>
-      <report test='translate(@http-equiv,"CONTELAGUA", "contelagua")="content-language"'>
+    <rule context='h:meta'>
+      <report test='translate(@http-equiv,"CONTELAGUA", "contelagua")="content-language"' role='warning'>
         Using the &#x201C;meta&#x201D; element to specify the document-wide default language is obsolete.
         Consider specifying the language on the root element instead.
       </report>
