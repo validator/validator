@@ -39,11 +39,11 @@ public class MediaQuery extends AbstractDatatype {
     public static final MediaQuery THE_INSTANCE = new MediaQuery();
 
     private enum State {
-        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_STRING, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN
+        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN
     }
 
     private enum ValueType {
-        LENGTH, RATIO, INTEGER, RESOLUTION, SCAN
+        LENGTH, RATIO, INTEGER, RESOLUTION, SCAN, ORIENTATION
     }
 
     private static final Pattern COMMA = Pattern.compile(",");
@@ -117,6 +117,7 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("min-resolution", ValueType.RESOLUTION);
         FEATURES_TO_VALUE_TYPES.put("max-resolution", ValueType.RESOLUTION);
         FEATURES_TO_VALUE_TYPES.put("scan", ValueType.SCAN);
+        FEATURES_TO_VALUE_TYPES.put("orientation", ValueType.ORIENTATION);
         FEATURES_TO_VALUE_TYPES.put("grid", ValueType.INTEGER);
     }
 
@@ -313,7 +314,17 @@ public class MediaQuery extends AbstractDatatype {
                             case SCAN:
                                 if ('a' <= c && 'z' >= c) {
                                     sb.append(c);
-                                    state = State.IN_VALUE_STRING;
+                                    state = State.IN_VALUE_SCAN;
+                                    continue;
+                                } else {
+                                    throw newDatatypeException(offset + i, 
+                                            "Expected a letter but saw \u201C"
+                                                    + c + "\u201D instead.");
+                                }
+                            case ORIENTATION:
+                                if ('a' <= c && 'z' >= c) {
+                                    sb.append(c);
+                                    state = State.IN_VALUE_ORIENTATION;
                                     continue;
                                 } else {
                                     throw newDatatypeException(offset + i, 
@@ -345,7 +356,7 @@ public class MediaQuery extends AbstractDatatype {
                                 }
                         }
                     }
-                case IN_VALUE_STRING:
+                case IN_VALUE_SCAN:
                     if ('a' <= c && 'z' >= c) {
                         sb.append(c);
                         continue;
@@ -354,7 +365,32 @@ public class MediaQuery extends AbstractDatatype {
                         sb.setLength(0);
                         if (!("progressive".equals(kw) || "interlace".equals(kw))) {
                             throw newDatatypeException(offset + i, 
-                                    "Expected \u201Cprogressive\u201D or \u201Cinterlace\u201C as the scan mode value but saw \u201C"
+                                    "Expected \u201Cprogressive\u201D or \u201Cinterlace\u201D as the scan mode value but saw \u201C"
+                                            + kw + "\u201D instead.");
+
+                        }
+                        if (c == ')') {
+                            state = State.AFTER_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i, 
+                                "Expected a letter, whitespace or \u201C)\u201D but saw \u201C"
+                                        + c + "\u201D instead.");
+                    }
+                case IN_VALUE_ORIENTATION:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if (isWhitespace(c) || c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!("portrait".equals(kw) || "landscape".equals(kw))) {
+                            throw newDatatypeException(offset + i, 
+                                    "Expected \u201Cportrait\u201D or \u201Clandscape\u201D as the orientation value but saw \u201C"
                                             + kw + "\u201D instead.");
 
                         }
