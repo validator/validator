@@ -101,6 +101,9 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("device-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("min-device-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("max-device-aspect-ratio", ValueType.RATIO);
+        FEATURES_TO_VALUE_TYPES.put("aspect-ratio", ValueType.RATIO);
+        FEATURES_TO_VALUE_TYPES.put("min-aspect-ratio", ValueType.RATIO);
+        FEATURES_TO_VALUE_TYPES.put("max-aspect-ratio", ValueType.RATIO);
         FEATURES_TO_VALUE_TYPES.put("color", ValueType.INTEGER);
         FEATURES_TO_VALUE_TYPES.put("min-color", ValueType.INTEGER);
         FEATURES_TO_VALUE_TYPES.put("max-color", ValueType.INTEGER);
