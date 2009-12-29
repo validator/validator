@@ -272,6 +272,21 @@ public class MediaQuery extends AbstractDatatype {
                     if (('a' <= c && 'z' >= c) || c == '-') {
                         sb.append(c);
                         continue;
+                    } else if (c == ')') {
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if (!isMediaFeature(kw)) {
+                            throw newDatatypeException(offset + i, 
+                                "Expected a CSS media feature but saw \u201C"
+                                    + kw + "\u201D instead.");
+                        }
+                        if (kw.startsWith("min-") || kw.startsWith("max-")) {
+                            throw newDatatypeException(offset + i, 
+                                "The media feature \u201C"
+                                    + kw + "\u201D requires a value.");
+                        }
+                        state = State.AFTER_CLOSE_PAREN;
+                        continue;
                     } else if (isWhitespace(c) || c == ':') {
                         String kw = sb.toString();
                         sb.setLength(0);
@@ -637,6 +652,10 @@ public class MediaQuery extends AbstractDatatype {
                 throw newDatatypeException( 
                         "Media query ended prematurely.");
             }
+    }
+
+    private boolean isMediaFeature(String feature) {
+        return FEATURES_TO_VALUE_TYPES.containsKey(feature);
     }
 
     private ValueType valueExpectationFor(String feature) {
