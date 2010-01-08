@@ -52,6 +52,7 @@ heapSize = '128'
 html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'file:validator/spec/html5.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
+ianaCharset = 'http://www.iana.org/assignments/character-sets'
 aboutPage = 'http://about.validator.nu/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
 altAdvice = 'http://wiki.whatwg.org/wiki/Validator.nu_alt_advice'
@@ -549,6 +550,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
     '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
+    '-Dorg.whattf.datatype.charset-registry=' + ianaCharset,
     '-Dorg.whattf.datatype.warn=true',
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
@@ -814,6 +816,8 @@ def printHelp():
   print "                                Sets the load URL of the HTML5 spec"
   print "  --iana-lang=http://www.iana.org/assignments/language-subtag-registry"
   print "                                Sets the URL for language tag registry"
+  print "  --iana-charset=http://www.iana.org/assignments/character-sets"
+  print "                                Sets the URL for charset registry"
   print "  --about=http://about.validator.nu/"
   print "                                Sets the URL for the about page"
   print "  --stylesheet=http://about.validator.nu/style.css"
@@ -878,6 +882,8 @@ else:
       html5specLoad = arg[12:]
     elif arg.startswith("--iana-lang="):
       ianaLang = arg[12:]
+    elif arg.startswith("--iana-charset="):
+      ianaCharset = arg[15:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
     elif arg.startswith("--microsyntax="):
@@ -981,6 +987,7 @@ else:
           icon = aboutPage + 'icon.png'
         if useLocalCopies:
           ianaLang = 'file:local-entities/www.iana.org/assignments/language-subtag-registry'
+          ianaCharset = 'file:local-entities/www.iana.org/assignments/character-sets'
           microsyntax = 'file:local-entities/wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
           altAdvice = 'file:local-entities/wiki.whatwg.org/wiki/Validator.nu_alt_advice'
         runValidator()
