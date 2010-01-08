@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,6 +22,12 @@
 
 package org.whattf.datatype;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.whattf.datatype.data.CharsetData;
 import org.relaxng.datatype.DatatypeException;
 
 public class Charset extends AbstractDatatype {
@@ -30,27 +36,60 @@ public class Charset extends AbstractDatatype {
      * The singleton instance.
      */
     public static final Charset THE_INSTANCE = new Charset();
-    
-//    private static final Pattern THE_PATTERN = Pattern.compile("^[0-9a-zA-Z!#$%&'+_`{}~^-]+$");
+
+    private static String[] preferred = null;
+
+    private static Map<String, String> nameByAliasMap = new HashMap<String, String>();
+
+    static {
+        try {
+            CharsetData data = new CharsetData();
+            preferred = data.getPreferred();
+            nameByAliasMap = data.getNameByAliasMap();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Charset() {
         super();
     }
 
-    @Override
-    public void checkValid(CharSequence literal) throws DatatypeException {
+    @Override public void checkValid(CharSequence literal) throws DatatypeException {
+        if (literal.length() == 0) {
+            throw newDatatypeException("The empty string is not a valid character encoding name.");
+        }
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             // http://tools.ietf.org/html/rfc2978
-            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '-' || c == '!' || c == '#' || c == '$' || c == '%' || c == '&' || c == '\'' || c == '+' || c == '_' || c == '`' || c == '{' || c == '}' || c == '~' || c == '^')) {
-                throw newDatatypeException(
-                        "Encoding name contained ", c, ", which is not a valid character in an encoding name.");                   
+            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+                    || (c >= 'A' && c <= 'Z') || c == '-' || c == '!'
+                    || c == '#' || c == '$' || c == '%' || c == '&'
+                    || c == '\'' || c == '+' || c == '_' || c == '`'
+                    || c == '{' || c == '}' || c == '~' || c == '^')) {
+                throw newDatatypeException("Value contained ", c,
+                        ", which is not a valid character in an encoding name.");
             }
+        }
+        String encodingName = literal.toString();
+        encodingName = toAsciiLowerCase(encodingName);
+        if (!isPreferred(encodingName)) {
+            String preferred = nameByAliasMap.get(encodingName);
+            if (preferred == null) {
+                throw newDatatypeException("\u201c" + encodingName
+                        + "\u201d is not a valid character encoding name.");
+            }
+            throw newDatatypeException("\u201c" + encodingName
+                    + "\u201d is not a preferred MIME name." + " Use \u201C"
+                    + preferred + "\u201D instead.");
         }
     }
 
-    @Override
-    public String getName() {
+    private boolean isPreferred(String encodingName) {
+        return Arrays.binarySearch(preferred, encodingName) > -1;
+    }
+
+    @Override public String getName() {
         return "encoding name";
     }
 
