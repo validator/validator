@@ -59,9 +59,8 @@ public class Assertions extends Checker {
         }
         return true;
     }
-    
-    private static boolean equalsIgnoreAsciiCase(String one,
-            String other) {
+
+    private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
             if (one == null) {
                 return true;
@@ -98,117 +97,170 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("strike", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("u", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("acronym", "Use the \u201Cabbr\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("acronym",
+                "Use the \u201Cabbr\u201D element instead.");
         OBSOLETE_ELEMENTS.put("dir", "Use the \u201Cul\u201D element instead.");
-        OBSOLETE_ELEMENTS.put("applet", "Use the \u201Cobject\u201D element instead.");
+        OBSOLETE_ELEMENTS.put("applet",
+                "Use the \u201Cobject\u201D element instead.");
         OBSOLETE_ELEMENTS.put("basefont", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("frameset", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
-        OBSOLETE_ELEMENTS.put("noframes", "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put(
+                "frameset",
+                "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        OBSOLETE_ELEMENTS.put(
+                "noframes",
+                "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
     }
 
     private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<String, String[]>();
 
     static {
-        OBSOLETE_ATTRIBUTES.put("abbr", new String[] {"td","th"});
-        OBSOLETE_ATTRIBUTES.put("archive", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("axis", new String[] {"td","th"});
-        OBSOLETE_ATTRIBUTES.put("charset", new String[] {"link","a"});
-        OBSOLETE_ATTRIBUTES.put("classid", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("code", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("codebase", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("codetype", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("coords", new String[] {"a"});
-        OBSOLETE_ATTRIBUTES.put("declare", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("language", new String[] {"script"});
-        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] {"img","iframe"});
-        OBSOLETE_ATTRIBUTES.put("methods", new String[] {"link","a"});
-        OBSOLETE_ATTRIBUTES.put("name", new String[] {"img","embed"});
-        OBSOLETE_ATTRIBUTES.put("nohref", new String[] {"area"});
-        OBSOLETE_ATTRIBUTES.put("profile", new String[] {"head"});
-        OBSOLETE_ATTRIBUTES.put("rev", new String[] {"link","a"});
-        OBSOLETE_ATTRIBUTES.put("scheme", new String[] {"meta"});
-        OBSOLETE_ATTRIBUTES.put("scope", new String[] {"td"});
-        OBSOLETE_ATTRIBUTES.put("shape", new String[] {"a"});
-        OBSOLETE_ATTRIBUTES.put("standby", new String[] {"object"});
-        OBSOLETE_ATTRIBUTES.put("target", new String[] {"link"});
-        OBSOLETE_ATTRIBUTES.put("type", new String[] {"param"});
-        OBSOLETE_ATTRIBUTES.put("urn", new String[] {"a"});
-        OBSOLETE_ATTRIBUTES.put("usemap", new String[] {"input"});
-        OBSOLETE_ATTRIBUTES.put("valuetype", new String[] {"param"});
-        OBSOLETE_ATTRIBUTES.put("version", new String[] {"html"});
+        OBSOLETE_ATTRIBUTES.put("abbr", new String[] { "td", "th" });
+        OBSOLETE_ATTRIBUTES.put("archive", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("axis", new String[] { "td", "th" });
+        OBSOLETE_ATTRIBUTES.put("charset", new String[] { "link", "a" });
+        OBSOLETE_ATTRIBUTES.put("classid", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("code", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("codebase", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("codetype", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("coords", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("declare", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
+        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
+        OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
+        OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed" });
+        OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
+        OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
+        OBSOLETE_ATTRIBUTES.put("rev", new String[] { "link", "a" });
+        OBSOLETE_ATTRIBUTES.put("scheme", new String[] { "meta" });
+        OBSOLETE_ATTRIBUTES.put("scope", new String[] { "td" });
+        OBSOLETE_ATTRIBUTES.put("shape", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("standby", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("target", new String[] { "link" });
+        OBSOLETE_ATTRIBUTES.put("type", new String[] { "param" });
+        OBSOLETE_ATTRIBUTES.put("urn", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
+        OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
+        OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
     }
 
     private static final Map<String, String> OBSOLETE_ATTRIBUTES_MSG = new HashMap<String, String>();
 
     static {
-        OBSOLETE_ATTRIBUTES_MSG.put("abbr", "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
-        OBSOLETE_ATTRIBUTES_MSG.put("archive", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("axis", "Use the \u201Cscope\u201D attribute.");
-        OBSOLETE_ATTRIBUTES_MSG.put("charset", "Use an HTTP Content-Type header on the linked resource instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("classid", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("code", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codebase", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("codetype", "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
-        OBSOLETE_ATTRIBUTES_MSG.put("coords", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("declare", "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
-        OBSOLETE_ATTRIBUTES_MSG.put("language", "Use the \u201Ctype\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("longdesc", "Use a regular \u201Ca\u201D element to link to the description.");
-        OBSOLETE_ATTRIBUTES_MSG.put("methods", "Use the HTTP OPTIONS feature instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("name", "Use the \u201Cid\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("nohref", "Omitting the \u201Chref\u201D attribute is sufficient.");
-        OBSOLETE_ATTRIBUTES_MSG.put("profile", "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("rev", "Use the \u201Crel\u201D attribute instead, with a term having the opposite meaning.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scheme", "Use only one scheme per field, or make the scheme declaration part of the value.");
-        OBSOLETE_ATTRIBUTES_MSG.put("scope", "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("shape", "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("standby", "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "abbr",
+                "Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "archive",
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Carchive\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put("axis",
+                "Use the \u201Cscope\u201D attribute.");
+        OBSOLETE_ATTRIBUTES_MSG.put("charset",
+                "Use an HTTP Content-Type header on the linked resource instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "classid",
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Cclassid\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "code",
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccode\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "codebase",
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodebase\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "codetype",
+                "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
+        OBSOLETE_ATTRIBUTES_MSG.put("coords",
+                "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "declare",
+                "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
+        OBSOLETE_ATTRIBUTES_MSG.put("language",
+                "Use the \u201Ctype\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
+                "Use a regular \u201Ca\u201D element to link to the description.");
+        OBSOLETE_ATTRIBUTES_MSG.put("methods",
+                "Use the HTTP OPTIONS feature instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("name",
+                "Use the \u201Cid\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("nohref",
+                "Omitting the \u201Chref\u201D attribute is sufficient.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "profile",
+                "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "rev",
+                "Use the \u201Crel\u201D attribute instead, with a term having the opposite meaning.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "scheme",
+                "Use only one scheme per field, or make the scheme declaration part of the value.");
+        OBSOLETE_ATTRIBUTES_MSG.put("scope",
+                "Use the \u201Cscope\u201D attribute on a \u201Cth\u201D element instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put("shape",
+                "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "standby",
+                "Optimise the linked resource so that it loads quickly or, at least, incrementally.");
         OBSOLETE_ATTRIBUTES_MSG.put("target", "You can safely omit it.");
-        OBSOLETE_ATTRIBUTES_MSG.put("type", "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
-        OBSOLETE_ATTRIBUTES_MSG.put("urn", "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("usemap", "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
-        OBSOLETE_ATTRIBUTES_MSG.put("valuetype", "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "type",
+                "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "urn",
+                "Specify the preferred persistent identifier using the \u201Chref\u201D attribute instead.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "usemap",
+                "Use the \u201Cimg\u201D element instead of the \u201Cinput\u201D element for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put(
+                "valuetype",
+                "Use the \u201Cname\u201D and \u201Cvalue\u201D attributes without declaring value types.");
         OBSOLETE_ATTRIBUTES_MSG.put("version", "You can safely omit it.");
     }
 
     private static final Map<String, String[]> OBSOLETE_STYLE_ATTRS = new HashMap<String, String[]>();
 
     static {
-      OBSOLETE_STYLE_ATTRS.put("align",
-          new String[] {"caption","iframe","img","input","object","embed","legend","table","hr","div",
-            "h1","h2","h3","h4","h5","h6", "p","col","colgroup","tbody","td","tfoot","th","thead","tr"});
-      OBSOLETE_STYLE_ATTRS.put("alink", new String[] {"body"});
-      OBSOLETE_STYLE_ATTRS.put("background", new String[] {"body"});
-      OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] {"table","tr","td","th","body"});
-      OBSOLETE_STYLE_ATTRS.put("border", new String[] {"table","object"});
-      OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] {"table"});
-      OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] {"table"});
-      OBSOLETE_STYLE_ATTRS.put("char", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
-      OBSOLETE_STYLE_ATTRS.put("charoff", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
-      OBSOLETE_STYLE_ATTRS.put("clear", new String[] {"br"});
-      OBSOLETE_STYLE_ATTRS.put("compact", new String[] {"dl","menu","ol","ul"});
-      OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] {"iframe"});
-      OBSOLETE_STYLE_ATTRS.put("frame", new String[] {"table"});
-      OBSOLETE_STYLE_ATTRS.put("height", new String[] {"td","th"});
-      OBSOLETE_STYLE_ATTRS.put("hspace", new String[] {"img","object"});
-      OBSOLETE_STYLE_ATTRS.put("link", new String[] {"body"});
-      OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] {"iframe"});
-      OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] {"iframe"});
-      OBSOLETE_STYLE_ATTRS.put("noshade", new String[] {"hr"});
-      OBSOLETE_STYLE_ATTRS.put("nowrap", new String[] {"td","th"});
-      OBSOLETE_STYLE_ATTRS.put("rules", new String[] {"table"});
-      OBSOLETE_STYLE_ATTRS.put("scrolling", new String[] {"iframe"});
-      OBSOLETE_STYLE_ATTRS.put("size", new String[] {"hr"});
-      OBSOLETE_STYLE_ATTRS.put("text", new String[] {"body"});
-      OBSOLETE_STYLE_ATTRS.put("type", new String[] {"li","ol","ul"});
-      OBSOLETE_STYLE_ATTRS.put("valign", new String[] {"col","colgroup","tbody","td","tfoot","th","thead","tr"});
-      OBSOLETE_STYLE_ATTRS.put("vlink", new String[] {"body"});
-      OBSOLETE_STYLE_ATTRS.put("vspace", new String[] {"img","object"});
-      OBSOLETE_STYLE_ATTRS.put("width", new String[] {"hr","table","td","th","col","colgroup","pre"});
+        OBSOLETE_STYLE_ATTRS.put("align", new String[] { "caption", "iframe",
+                "img", "input", "object", "embed", "legend", "table", "hr",
+                "div", "h1", "h2", "h3", "h4", "h5", "h6", "p", "col",
+                "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr" });
+        OBSOLETE_STYLE_ATTRS.put("alink", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] { "table", "tr", "td",
+                "th", "body" });
+        OBSOLETE_STYLE_ATTRS.put("border", new String[] { "table", "object" });
+        OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
+        OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
+        OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
+                "tbody", "td", "tfoot", "th", "thead", "tr" });
+        OBSOLETE_STYLE_ATTRS.put("charoff", new String[] { "col", "colgroup",
+                "tbody", "td", "tfoot", "th", "thead", "tr" });
+        OBSOLETE_STYLE_ATTRS.put("clear", new String[] { "br" });
+        OBSOLETE_STYLE_ATTRS.put("compact", new String[] { "dl", "menu", "ol",
+                "ul" });
+        OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("frame", new String[] { "table" });
+        OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
+        OBSOLETE_STYLE_ATTRS.put("hspace", new String[] { "img", "object" });
+        OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("noshade", new String[] { "hr" });
+        OBSOLETE_STYLE_ATTRS.put("nowrap", new String[] { "td", "th" });
+        OBSOLETE_STYLE_ATTRS.put("rules", new String[] { "table" });
+        OBSOLETE_STYLE_ATTRS.put("scrolling", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("size", new String[] { "hr" });
+        OBSOLETE_STYLE_ATTRS.put("text", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("type", new String[] { "li", "ol", "ul" });
+        OBSOLETE_STYLE_ATTRS.put("valign", new String[] { "col", "colgroup",
+                "tbody", "td", "tfoot", "th", "thead", "tr" });
+        OBSOLETE_STYLE_ATTRS.put("vlink", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("vspace", new String[] { "img", "object" });
+        OBSOLETE_STYLE_ATTRS.put("width", new String[] { "hr", "table", "td",
+                "th", "col", "colgroup", "pre" });
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
-            "button", "caption", "dfn", "footer", "form", "header", "label", "map",
-            "noscript", "time", "progress", "meter" };
+            "button", "caption", "dfn", "footer", "form", "header", "label",
+            "map", "noscript", "time", "progress", "meter" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -225,7 +277,8 @@ public class Assertions extends Checker {
             String descendant) {
         int number = specialAncestorNumber(ancestor);
         if (number == -1) {
-            throw new IllegalStateException("Ancestor not found in array: " + ancestor);
+            throw new IllegalStateException("Ancestor not found in array: "
+                    + ancestor);
         }
         Integer maskAsObject = ANCESTOR_MASK_BY_DESCENDANT.get(descendant);
         int mask = 0;
@@ -417,7 +470,8 @@ public class Assertions extends Checker {
         /**
          * @param ancestorMask
          */
-        public StackNode(int ancestorMask, String name, String role, String activeDescendant, String forAttr) {
+        public StackNode(int ancestorMask, String name, String role,
+                String activeDescendant, String forAttr) {
             this.ancestorMask = ancestorMask;
             this.name = name;
             this.role = role;
@@ -535,7 +589,7 @@ public class Assertions extends Checker {
     public Assertions() {
         super();
     }
-    
+
     private void push(StackNode node) {
         currentPtr++;
         if (currentPtr == stack.length) {
@@ -559,7 +613,7 @@ public class Assertions extends Checker {
     private Map<StackNode, Locator> openLabels = new HashMap<StackNode, Locator>();
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<StackNode, Locator>();
-    
+
     private LinkedHashSet<IdrefLocator> contextmenuReferences = new LinkedHashSet<IdrefLocator>();
 
     private Set<String> menuIds = new HashSet<String>();
@@ -617,7 +671,7 @@ public class Assertions extends Checker {
                         idrefLocator.getLocator());
             }
         }
-        
+
         reset();
         stack = null;
     }
@@ -646,7 +700,9 @@ public class Assertions extends Checker {
         openSingleSelects.remove(node);
         openLabels.remove(node);
         if ((locator = openActiveDescendants.remove(node)) != null) {
-            err("The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.", locator);
+            err(
+                    "The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.",
+                    locator);
         }
     }
 
@@ -671,7 +727,7 @@ public class Assertions extends Checker {
         listReferences.clear();
         listIds.clear();
         ariaReferences.clear();
-        allIds.clear();        
+        allIds.clear();
     }
 
     /**
@@ -720,12 +776,9 @@ public class Assertions extends Checker {
                         href = true;
                     } else if ("controls" == attLocal) {
                         controls = true;
-                    } else if ("type" == attLocal
-                        && "param" != localName
-                        && "ol" != localName
-                        && "ul" != localName
-                        && "li" != localName
-                        ) {
+                    } else if ("type" == attLocal && "param" != localName
+                            && "ol" != localName && "ul" != localName
+                            && "li" != localName) {
                         String attValue = atts.getValue(i);
                         if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "hidden", attValue)) {
@@ -734,7 +787,7 @@ public class Assertions extends Checker {
                                 "toolbar", attValue)) {
                             toolbar = true;
                         }
-                        
+
                         if (!lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                 "text/javascript", attValue)) {
                             typeNotTextJavaScript = true;
@@ -758,30 +811,36 @@ public class Assertions extends Checker {
                         ismap = true;
                     } else if ("selected" == attLocal) {
                         selected = true;
-                    } else if ("usemap" == attLocal
-                        && "input" != localName) {
+                    } else if ("usemap" == attLocal && "input" != localName) {
                         usemap = true;
                     } else if ("language" == attLocal
-                        && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
-                                "javascript", atts.getValue(i))) {
-                            languageJavaScript = true;
+                            && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                    "javascript", atts.getValue(i))) {
+                        languageJavaScript = true;
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
-                        && "ol" != localName
-                        && "ul" != localName
-                        && "li" != localName
-                        ) {
-                      String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
-                      Arrays.sort(elementNames);
-                      if (Arrays.binarySearch(elementNames,localName) >= 0) {
-                        String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " " + OBSOLETE_ATTRIBUTES_MSG.get(attLocal) : "";
-                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete." + suggestion);
-                      }
+                            && "ol" != localName && "ul" != localName
+                            && "li" != localName) {
+                        String[] elementNames = OBSOLETE_ATTRIBUTES.get(attLocal);
+                        Arrays.sort(elementNames);
+                        if (Arrays.binarySearch(elementNames, localName) >= 0) {
+                            String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " "
+                                    + OBSOLETE_ATTRIBUTES_MSG.get(attLocal)
+                                    : "";
+                            err("The \u201C" + attLocal
+                                    + "\u201D attribute on the \u201C"
+                                    + localName + "\u201D element is obsolete."
+                                    + suggestion);
+                        }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
-                      String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
-                      Arrays.sort(elementNames);
-                      if (Arrays.binarySearch(elementNames,localName) >= 0) {
-                        err("The \u201C" +  attLocal + "\u201D attribute on the \u201C" + localName + "\u201D element is obsolete. Use CSS instead.");
-                      }
+                        String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
+                        Arrays.sort(elementNames);
+                        if (Arrays.binarySearch(elementNames, localName) >= 0) {
+                            err("The \u201C"
+                                    + attLocal
+                                    + "\u201D attribute on the \u201C"
+                                    + localName
+                                    + "\u201D element is obsolete. Use CSS instead.");
+                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
@@ -799,7 +858,8 @@ public class Assertions extends Checker {
 
             // Obsolete elements
             if (OBSOLETE_ELEMENTS.get(localName) != null) {
-                err("The \u201C" + localName + "\u201D element is obsolete. " + OBSOLETE_ELEMENTS.get(localName));
+                err("The \u201C" + localName + "\u201D element is obsolete. "
+                        + OBSOLETE_ELEMENTS.get(localName));
             }
 
             // Exclusions
@@ -848,35 +908,40 @@ public class Assertions extends Checker {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName && ismap
                     && ((ancestorMask & HREF_MASK) == 0)) {
+                if (atts.getIndex("", "src") < 0) {
+                    err("An \u201Cimg\u201D element must have an \u201Csrc\u201D attribute.");
+                }
                 err("The \u201Cimg\u201D element with the \u201Cismap\u201D attribute set must have an \u201Ca\u201D ancestor with the \u201Chref\u201D attribute.");
-            } else if ("input" == localName
-                      || "button" == localName
-                      || "select" == localName
-                      || "textarea" == localName
-                      || "keygen" == localName) {
-              for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
-                StackNode node = entry.getKey();
-                Locator locator = entry.getValue();
-                if (node.isLabeledDescendants()) {
-                  err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, \u201Ctextarea\u201D, or \u201Ckeygen\u201D descendant.");
-                  warn("\u201Clabel\u201D element with multiple labelable descendants.", locator);
-                } else {
-                  node.setLabeledDescendants();
+            } else if ("input" == localName || "button" == localName
+                    || "select" == localName || "textarea" == localName
+                    || "keygen" == localName) {
+                for (Map.Entry<StackNode, Locator> entry : openLabels.entrySet()) {
+                    StackNode node = entry.getKey();
+                    Locator locator = entry.getValue();
+                    if (node.isLabeledDescendants()) {
+                        err("The \u201Clabel\u201D element may contain at most one \u201Cinput\u201D, \u201Cbutton\u201D, \u201Cselect\u201D, \u201Ctextarea\u201D, or \u201Ckeygen\u201D descendant.");
+                        warn(
+                                "\u201Clabel\u201D element with multiple labelable descendants.",
+                                locator);
+                    } else {
+                        node.setLabeledDescendants();
+                    }
                 }
-              }
-              if ((ancestorMask & LABEL_FOR_MASK) != 0) {
-                boolean hasMatchingFor = false;
-                for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
-                  String forVal = stack[currentPtr - i].getForAttr();
-                  if (forVal != null && forVal.equals(id)) {
-                    hasMatchingFor = true;
-                    break;
-                  }
+                if ((ancestorMask & LABEL_FOR_MASK) != 0) {
+                    boolean hasMatchingFor = false;
+                    for (int i = 0; (stack[currentPtr - i].getAncestorMask() & LABEL_FOR_MASK) != 0; i++) {
+                        String forVal = stack[currentPtr - i].getForAttr();
+                        if (forVal != null && forVal.equals(id)) {
+                            hasMatchingFor = true;
+                            break;
+                        }
+                    }
+                    if (id == null || !hasMatchingFor) {
+                        err("Any \u201C"
+                                + localName
+                                + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
+                    }
                 }
-                if (id == null || !hasMatchingFor) {
-                  err("Any \u201C" + localName + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
-                }
-              }
             }
 
             // progress
@@ -973,16 +1038,57 @@ public class Assertions extends Checker {
                 }
             }
 
-            // map required attrs
-            else if ("map" == localName && id != null) {
-                String nameVal = atts.getValue("", "name");
-                if (nameVal != null && !nameVal.equals(id)) {
-                    err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
+            // link required attrs
+            else if ("link" == localName) {
+                if (atts.getIndex("", "href") < 0) {
+                    err("A \u201Clink\u201D element must have an \u201Chref\u201D attribute.");
+                }
+                if (atts.getIndex("", "rel") < 0) {
+                    err("A \u201Clink\u201D element must have a \u201Crel\u201D attribute.");
                 }
             }
-            
+
+            // img required attrs
+            else if ("img" == localName && atts.getIndex("", "src") < 0) {
+                err("An \u201Cimg\u201D element must have a \u201Csrc\u201D attribute.");
+            }
+
+            // source required attrs
+            else if ("source" == localName && atts.getIndex("", "src") < 0) {
+                err("A \u201Csource\u201D element must have a \u201Csrc\u201D attribute.");
+            }
+
+            // param required attrs
+            else if ("param" == localName) {
+                if (atts.getIndex("", "name") < 0) {
+                    err("A \u201Cparam\u201D element must have a \u201Cname\u201D attribute.");
+                }
+                if (atts.getIndex("", "value") < 0) {
+                    err("A \u201Cparam\u201D element must have a \u201Cvalue\u201D attribute.");
+                }
+            }
+
+            // object required attrs
+            else if ("object" == localName && atts.getIndex("", "data") < 0
+                    && atts.getIndex("", "type") < 0) {
+                err("An \u201Cobject\u201D element must have a \u201Cdata\u201D attribute or a \u201Ctype\u201D attribute.");
+            }
+
+            // map required attrs
+            else if ("map" == localName) {
+                if (atts.getIndex("", "name") < 0) {
+                    err("A \u201Cmap\u201D element must have a \u201Cname\u201D attribute.");
+                } else if (id != null) {
+                    String nameVal = atts.getValue("", "name");
+                    if (nameVal != null && !nameVal.equals(id)) {
+                        err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
+                    }
+                }
+            }
+
             // script language
-            else if ("script" == localName && languageJavaScript && typeNotTextJavaScript) {
+            else if ("script" == localName && languageJavaScript
+                    && typeNotTextJavaScript) {
                 err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
             }
 
@@ -992,7 +1098,8 @@ public class Assertions extends Checker {
             }
 
             // lang and xml:lang for XHTML5
-            if (lang != null && xmlLang != null && !equalsIgnoreAsciiCase(lang, xmlLang)) {
+            if (lang != null && xmlLang != null
+                    && !equalsIgnoreAsciiCase(lang, xmlLang)) {
                 err("When the attribute \u201Clang\u201D in no namespace and the attribute \u201Clang\u201D in the XML namespace are both present, they must have the same value.");
             }
 
@@ -1018,8 +1125,7 @@ public class Assertions extends Checker {
             }
             if (("input" == localName && !hidden) || "textarea" == localName
                     || "select" == localName || "button" == localName
-                    || "keygen" == localName
-                    || "output" == localName) {
+                    || "keygen" == localName || "output" == localName) {
                 formControlIds.addAll(ids);
             }
 
@@ -1066,9 +1172,8 @@ public class Assertions extends Checker {
         Set<String> requiredParents = REQUIRED_ROLE_PARENT_BY_CHILD.get(role);
         if (requiredParents != null) {
             if (!requiredParents.contains(parentRole)) {
-                err("An element with \u201Crole=" + role
-                        + "\u201D requires " + renderRoleSet(requiredParents)
-                        + " on the parent.");
+                err("An element with \u201Crole=" + role + "\u201D requires "
+                        + renderRoleSet(requiredParents) + " on the parent.");
             }
         }
 
@@ -1112,7 +1217,7 @@ public class Assertions extends Checker {
                 iterator.remove();
             }
         }
-        
+
         if ("http://www.w3.org/1999/xhtml" == uri) {
             int number = specialAncestorNumber(localName);
             if (number > -1) {
@@ -1121,9 +1226,11 @@ public class Assertions extends Checker {
             if ("a" == localName && href) {
                 ancestorMask |= HREF_MASK;
             }
-            StackNode child = new StackNode(ancestorMask, localName, role, activeDescendant, forAttr);
+            StackNode child = new StackNode(ancestorMask, localName, role,
+                    activeDescendant, forAttr);
             if (activeDescendant != null) {
-                openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
+                openActiveDescendants.put(child, new LocatorImpl(
+                        getDocumentLocator()));
             }
             if ("select" == localName && atts.getIndex("", "multiple") > -1) {
                 openSingleSelects.put(child, getDocumentLocator());
@@ -1132,13 +1239,15 @@ public class Assertions extends Checker {
             }
             push(child);
         } else {
-            StackNode child = new StackNode(ancestorMask, null, role, activeDescendant, forAttr);
+            StackNode child = new StackNode(ancestorMask, null, role,
+                    activeDescendant, forAttr);
             if (activeDescendant != null) {
-                openActiveDescendants.put(child, new LocatorImpl(getDocumentLocator()));
+                openActiveDescendants.put(child, new LocatorImpl(
+                        getDocumentLocator()));
             }
             push(child);
         }
-        
+
     }
 
     private void processChildContent(StackNode parent) throws SAXException {

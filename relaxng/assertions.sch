@@ -12,6 +12,68 @@
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
 
+	<pattern name="required attributes">
+		<rule context='h:bdo[@dir]'>
+			<assert test='@dir'>
+				A &#x201C;bdo&#x201D; element must have an 
+				&#x201C;dir&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:img'>
+			<assert test='@src'>
+				An &#x201C;img&#x201D; element must have a
+				&#x201C;src&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:link'>
+			<assert test='@href'>
+				A &#x201C;link&#x201D; element must have an &#x201C;href&#x201D; attribute.
+			</assert>
+			<assert test='@rel'>
+				A &#x201C;link&#x201D; element must have a &#x201C;rel&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:map'>
+			<assert test='@name'>
+				A &#x201C;map&#x201D; element must have a &#x201C;name&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:meter'>
+			<assert test='@value'>
+				An &#x201C;meter&#x201D; element must have a
+				&#x201C;value&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:object'>
+			<assert test='@data or @type'>
+				An &#x201C;object&#x201D; element must have a
+				&#x201C;data&#x201D; attribute or a
+				&#x201C;type&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:param'>
+			<assert test='@name'>
+				A &#x201C;param&#x201D; element must have an &#x201C;name&#x201D; attribute.
+			</assert>
+			<assert test='@value'>
+				A &#x201C;param&#x201D; element must have a &#x201C;value&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:source'>
+			<assert test='@src'>
+				A &#x201C;source&#x201D; element must have a
+				&#x201C;src&#x201D; attribute.
+			</assert>
+		</rule>
+	</pattern>
+
 	<pattern name='Triggered on mutually exclusive elements and prohibited-descendant cases'>
 
 	<!-- Exclusions and prohibited-descendant contraints  - - - - - - - - - - - -->
@@ -101,8 +163,10 @@
 				descendant of the &#x201C;caption&#x201D; element.
 			</report>
 		</rule>
+	</pattern>
 
 	<!-- Interactive element exclusions -->
+	<pattern name='interactive element exclusions'>
 	
 		<!-- 
 		   - Interactive descendants:
@@ -205,27 +269,13 @@
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 		</rule>
+	</pattern>
 
 	<!-- REVISIT fieldset http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2006-April/006181.html -->
 
 	<!-- Misc requirements -->
 		
-		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
-			<assert test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
-				A &#x201C;script&#x201D; element with the 
-				&#x201C;language="JavaScript"&#x201D; attribute set must not have a 
-				&#x201C;type&#x201D; attribute whose value is not 
-				&#x201C;text/javascript&#x201D;.
-			</assert>
-		</rule>
-
-		<rule context='h:script[not(translate(@language, "JAVSCRIPT", "javscript")="javascript")]'>
-			<report test='true()'>
-				The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete.
-				Use the &#x201C;type&#x201D; attribute instead.
-			</report>
-		</rule>
-
+	<pattern name="miscellaneous requirements">
 		<rule context='h:area'>
 			<assert test='ancestor::h:map'>
 				The &#x201C;area&#x201D; element must have a 
@@ -239,6 +289,38 @@
 				&#x201C;ismap&#x201D; attribute set must have an 
 				&#x201C;a&#x201D; ancestor with the &#x201C;href&#x201D; 
 				attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:input[@list]'>
+			<assert test='//h:datalist[@id = current()/@list] or 
+			              //h:select[@id = current()/@list]'>
+				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
+				element must refer to a &#x201C;datalist&#x201D; element.
+			</assert>
+		</rule>
+
+		<rule context='h:map[@id and @name]'>
+			<assert test='@id = @name'>
+				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have an 
+				the same value as the &#x201C;name&#x201D; attribute.
+			</assert>
+		</rule>
+
+		<rule context='h:select[not(@multiple)]'>
+			<report test='count(descendant::h:option[@selected]) > 1'>
+				The &#x201C;select&#x201D; element cannot have more than one 
+				selected &#x201C;option&#x201D; descendant unless the 
+				&#x201C;multiple&#x201D; attribute is specified.
+			</report>
+		</rule>
+
+		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
+			<assert test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
+				A &#x201C;script&#x201D; element with the 
+				&#x201C;language="JavaScript"&#x201D; attribute set must not have a 
+				&#x201C;type&#x201D; attribute whose value is not 
+				&#x201C;text/javascript&#x201D;.
 			</assert>
 		</rule>
 
@@ -356,26 +438,13 @@
 				one when the &#x201C;max&#x201D; attribute is absent.
 			</report>
 		</rule>
-
+	</pattern>
 
 	<!-- Obsolete Elements - - - - - - - - - - - - - - - - - - - - - - -->
-
-		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:basefont'>
-			<report test='true()'>
-				The &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
+	<pattern name="obsolete elements">
 		<rule context='h:acronym'>
 			<report test='true()'>
 				The &#x201C;acronym&#x201D; element is obsolete. Use the &#x201C;abbr&#x201D; element instead.
-			</report>
-		</rule>
-
-		<rule context='h:dir'>
-			<report test='true()'>
-				The &#x201C;dir&#x201D; element is obsolete. Use the &#x201C;ul&#x201D; element instead.
 			</report>
 		</rule>
 
@@ -385,120 +454,77 @@
 			</report>
 		</rule>
 
+		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:basefont'>
+			<report test='true()'>
+				The &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:dir'>
+			<report test='true()'>
+				The &#x201C;dir&#x201D; element is obsolete. Use the &#x201C;ul&#x201D; element instead.
+			</report>
+		</rule>
+
 		<rule context='h:frameset|h:noframes'>
 			<report test='true()'>
 				The &#x201C;<name/>&#x201D; element is obsolete.
 				Use the &#x201C;iframe&#x201D; element and CSS instead, or use server-side includes.
 			</report>
 		</rule>
+	</pattern>
 
 	<!-- Obsolete Attributes- - - - - - - - - - - - - - - - - - - - - - -->
 
-		<rule context='h:*[@abbr]'>
-			<report test='self::h:td|self::h:th'>
-				The &#x201C;abbr&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.
-			</report>
-		</rule>
-
-		<rule context='h:*[@archive]'>
-			<report test='self::h:object'>
-				The &#x201C;archive&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
-				To set a parameter with the name &#x201C;archive&#x201D;, use the &#x201C;param&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:*[@axis]'>
-			<report test='self::h:td|self::h:th'>
-				The &#x201C;axis&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;scope&#x201D; attribute.
-			</report>
-		</rule>
-
-		<rule context='h:*[@charset]'>
-			<report test='self::h:link|self::h:a'>
-				The &#x201C;charset&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use an HTTP Content-Type header on the linked resource instead.
-			</report>
-		</rule>
-
-		<rule context='h:*[@classid]'>
-			<report test='self::h:object'>
-				The &#x201C;classid&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
-				To set a parameter with the name &#x201C;classid&#x201D;, use the &#x201C;param&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:*[@code]'>
-			<report test='self::h:object'>
-				The &#x201C;code&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
-				To set a parameter with the name &#x201C;code&#x201D;, use the &#x201C;param&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:*[@codebase]'>
-			<report test='self::h:object'>
-				The &#x201C;codebase&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
-				To set a parameter with the name &#x201C;codebase&#x201D;, use the &#x201C;param&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:*[@codetype]'>
-			<report test='self::h:object'>
-				The &#x201C;codetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
-				To set a parameter with the name &#x201C;codetype&#x201D;, use the &#x201C;param&#x201D; element.
-			</report>
-		</rule>
-
-		<rule context='h:*[@coords]'>
-			<report test='self::h:a'>
+	<pattern name="obsolete attributes">
+		<rule context='h:a|h:link'>
+			<report test='@coords and self::h:a'>
 				The &#x201C;coords&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use &#x201C;area&#x201D; instead of &#x201C;a&#x201D; for image maps.
 			</report>
-		</rule>
-
-		<rule context='h:*[@declare]'>
-			<report test='self::h:object'>
-				The &#x201C;declare&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Repeat the &#x201C;object&#x201D; element completely each time the resource is to be reused.
+			<report test='@shape and self::h:a'>
+				The &#x201C;shape&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use &#x201C;area&#x201D; instead of &#x201C;a&#x201D; for image maps.
 			</report>
-		</rule>
-
-		<rule context='h:*[@longdesc]'>
-			<report test='self::h:img|self::h:iframe'>
-				The &#x201C;longdesc&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use a regular &#x201C;a&#x201D; element to link to the description.
+			<report test='@urn and self::h:a'>
+				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Specify the preferred persistent identifier using the &#x201C;href&#x201D; attribute instead.
 			</report>
-		</rule>
-
-		<rule context='h:*[@methods]'>
-			<report test='self::h:link|self::h:a'>
+			<report test='@target and self::h:link'>
+				The &#x201C;target&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				You can safely omit it.
+			</report>
+			<report test='@charset'>
+				The &#x201C;charset&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use an HTTP Content-Type header on the linked resource instead.
+			</report>
+			<report test='@methods'>
 				The &#x201C;methods&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use the HTTP OPTIONS feature instead.
 			</report>
-		</rule>
-
-		<rule context='h:*[@name]'>
-			<report test='self::h:img|self::h:embed'>
-				The &#x201C;name&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;id&#x201D; attribute instead.
+			<report test='@rev'>
+				The &#x201C;rev&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;rel&#x201D; attribute instead, with a term having the opposite meaning.
 			</report>
 		</rule>
 
-		<rule context='h:*[@nohref]'>
-			<report test='self::h:area'>
+		<rule context="h:area">
+			<report test='@nohref'>
 				The &#x201C;nohref&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Omitting the &#x201C;href&#x201D; attribute is sufficient.
 			</report>
 		</rule>
 
-		<rule context='h:*[@profile]'>
-			<report test='self::h:head'>
+		<rule context='h:embed'>
+			<report test='@name'>
+				The &#x201C;name&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;id&#x201D; attribute instead.
+			</report>
+		</rule>
+
+		<rule context='h:head'>
+			<report test='@profile'>
 				The &#x201C;profile&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				To declare which &#x201C;meta&#x201D; terms are used in the document, instead register the
 				names as meta extensions. &lt;http://wiki.whatwg.org/wiki/MetaExtensions>
@@ -506,311 +532,294 @@
 			</report>
 		</rule>
 
-		<rule context='h:*[@rev]'>
-			<report test='self::h:link|self::h:a'>
-				The &#x201C;rev&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;rel&#x201D; attribute instead, with a term having the opposite meaning.
-			</report>
-		</rule>
-
-		<rule context='h:*[@scheme]'>
-			<report test='self::h:meta'>
-				The &#x201C;scheme&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use only one scheme per field, or make the scheme declaration part of the value.
-			</report>
-		</rule>
-
-		<rule context='h:*[@scope]'>
-			<report test='self::h:td'>
-				The &#x201C;scope&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;scope&#x201D; attribute on a &#x201C;th&#x201D; element instead.
-			</report>
-		</rule>
-
-		<rule context='h:*[@shape]'>
-			<report test='self::h:a'>
-				The &#x201C;shape&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use &#x201C;area&#x201D; instead of &#x201C;a&#x201D; for image maps.
-			</report>
-		</rule>
-
-		<rule context='h:*[@standby]'>
-			<report test='self::h:object'>
-				The &#x201C;standby&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Optimise the linked resource so that it loads quickly or, at least, incrementally.
-			</report>
-		</rule>
-
-		<rule context='h:*[@target]'>
-			<report test='self::h:link'>
-				The &#x201C;target&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				You can safely omit it.
-			</report>
-		</rule>
-
-		<rule context='h:*[@type]'>
-			<report test='self::h:param'>
-				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
-			</report>
-			<report test='self::h:li|self::h:ol|self::h:ul'>
-				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@urn]'>
-			<report test='self::h:a'>
-				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Specify the preferred persistent identifier using the &#x201C;href&#x201D; attribute instead.
-			</report>
-		</rule>
-
-		<rule context='h:*[@usemap]'>
-			<report test='self::h:input'>
-				The &#x201C;usemap&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;img&#x201D; element instead of the &#x201C;input&#x201D; element for image maps.
-			</report>
-		</rule>
-
-		<rule context='h:*[@valuetype]'>
-			<report test='self::h:param'>
-				The &#x201C;valuetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
-			</report>
-		</rule>
-
-		<rule context='h:*[@version]'>
-			<report test='self::h:html'>
+		<rule context='h:html'>
+			<report test='@version'>
 				The &#x201C;version&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				You can safely omit it.
 			</report>
 		</rule>
 
-	<!-- Obsolete presentational Attributes- - - - - - - - - - - - - - - - - - - - - - -->
+		<rule context='h:iframe'>
+			<report test='@longdesc'>
+				The &#x201C;longdesc&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use a regular &#x201C;a&#x201D; element to link to the description.
+			</report>
+		</rule>
 
-		<rule context='h:*[@align]'>
-			<report test='self::h:caption|self::h:iframe|self::h:img
-				|self::h:input|self::h:object|self::h:embed|self::h:legend|self::h:table
-				|self::h:hr|self::h:div|self::h:h1|self::h:h2|self::h:h3
-				|self::h:h4|self::h:h5|self::h:h6|self::h:p|self::h:col
-				|self::h:colgroup|self::h:tbody|self::h:td|self::h:tfoot
-				|self::h:th|self::h:thead|self::h:tr'>
+		<rule context='h:img'>
+			<report test='@longdesc'>
+				The &#x201C;longdesc&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use a regular &#x201C;a&#x201D; element to link to the description.
+			</report>
+			<report test='@name'>
+				The &#x201C;name&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;id&#x201D; attribute instead.
+			</report>
+		</rule>
+
+		<rule context='h:input'>
+			<report test='@usemap'>
+				The &#x201C;usemap&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;img&#x201D; element instead of the &#x201C;input&#x201D; element for image maps.
+			</report>
+		</rule>
+
+		<rule context='h:li|h:ol|h:ul'>
+			<report test='@type'>
+				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:meta'>
+			<report test='@scheme'>
+				The &#x201C;scheme&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use only one scheme per field, or make the scheme declaration part of the value.
+			</report>
+		</rule>
+
+		<rule context='h:object'>
+			<report test='@archive'>
+				The &#x201C;archive&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				To set a parameter with the name &#x201C;archive&#x201D;, use the &#x201C;param&#x201D; element.
+			</report>
+			<report test='@classid'>
+				The &#x201C;classid&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				To set a parameter with the name &#x201C;classid&#x201D;, use the &#x201C;param&#x201D; element.
+			</report>
+			<report test='@code'>
+				The &#x201C;code&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				To set a parameter with the name &#x201C;code&#x201D;, use the &#x201C;param&#x201D; element.
+			</report>
+			<report test='@codebase'>
+				The &#x201C;codebase&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				To set a parameter with the name &#x201C;codebase&#x201D;, use the &#x201C;param&#x201D; element.
+			</report>
+			<report test='@codetype'>
+				The &#x201C;codetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				To set a parameter with the name &#x201C;codetype&#x201D;, use the &#x201C;param&#x201D; element.
+			</report>
+			<report test='@declare'>
+				The &#x201C;declare&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Repeat the &#x201C;object&#x201D; element completely each time the resource is to be reused.
+			</report>
+			<report test='@standby'>
+				The &#x201C;standby&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Optimise the linked resource so that it loads quickly or, at least, incrementally.
+			</report>
+		</rule>
+
+		<rule context='h:param'>
+			<report test='@type'>
+				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
+			</report>
+			<report test='@valuetype'>
+				The &#x201C;valuetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
+			</report>
+		</rule>
+
+		<rule context='h:script[not(translate(@language, "JAVSCRIPT", "javscript")="javascript")]'>
+			<report test='true()'>
+				The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete.
+				Use the &#x201C;type&#x201D; attribute instead.
+			</report>
+		</rule>
+
+		<rule context='h:td|h:th'>
+			<report test='@scope and self::h:td'>
+				The &#x201C;scope&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;scope&#x201D; attribute on a &#x201C;th&#x201D; element instead.
+			</report>
+			<report test='@abbr'>
+				The &#x201C;abbr&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Consider instead beginning the cell contents with concise text, followed by further elaboration if needed.
+			</report>
+			<report test='@axis'>
+				The &#x201C;axis&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;scope&#x201D; attribute.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name="obsolete presentational align attribute">
+		<rule context='h:caption|h:iframe|h:img|h:input|h:object|h:embed|h:legend
+			|h:table|h:hr|h:div|h:h1|h:h2|h:h3|h:h4|h:h5|h:h6|h:p|h:col|h:colgroup
+			|h:tbody|h:td|h:tfoot|h:th|h:thead|h:tr'>
+			<report test='@align'>
 				The &#x201C;align&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
+	</pattern>
 
-		<rule context='h:*[@alink]'>
-			<report test='self::h:body'>
-				The &#x201C;alink&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+	<pattern name="obsolete presentational width attribute">
+		<rule context='h:col|h:colgroup|h:hr|h:pre|h:table|h:td|h:th'>
+			<report test='@width'>
+				The &#x201C;width&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
+	</pattern>
 
-		<rule context='h:*[@background]'>
-			<report test='self::h:body'>
-				The &#x201C;background&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@bgcolor]'>
-			<report test='self::h:table|self::h:tr|self::h:td|self::h:th
-				|self::h:body'>
-				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@border]'>
-			<report test='self::h:table|self::h:object'>
-				The &#x201C;border&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@cellpadding]'>
-			<report test='self::h:table'>
-				The &#x201C;cellpadding&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@cellspacing]'>
-			<report test='self::h:table'>
-				The &#x201C;cellspacing&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@char]'>
-			<report test='self::h:col|self::h:colgroup|self::h:tbody
-				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+	<pattern name="obsolete presentational table attributes">
+		<rule context='h:col|h:colgroup|h:tbody|h:td|h:tfoot|h:th|h:thead|h:tr'>
+			<report test='@char'>
 				The &#x201C;char&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
-		</rule>
-
-		<rule context='h:*[@charoff]'>
-			<report test='self::h:col|self::h:colgroup|self::h:tbody
-				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+			<report test='@charoff'>
 				The &#x201C;charoff&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
-		</rule>
-
-		<rule context='h:*[@clear]'>
-			<report test='self::h:br'>
-				The &#x201C;clear&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@compact]'>
-			<report test='self::h:dl|self::h:menu|self::h:ol|self::h:ul'>
-				The &#x201C;compact&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@frameborder]'>
-			<report test='self::h:iframe'>
-				The &#x201C;frameborder&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@frame]'>
-			<report test='self::h:table'>
-				The &#x201C;frame&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@height]'>
-			<report test='self::h:td|self::h:th'>
-				The &#x201C;height&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@hspace]'>
-			<report test='self::h:img|self::h:object'>
-				The &#x201C;hspace&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@link]'>
-			<report test='self::h:body'>
-				The &#x201C;link&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@marginheight]'>
-			<report test='self::h:iframe'>
-				The &#x201C;marginheight&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@marginwidth]'>
-			<report test='self::h:iframe'>
-				The &#x201C;marginwidth&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@noshade]'>
-			<report test='self::h:hr'>
-				The &#x201C;noshade&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@nowrap]'>
-			<report test='self::h:td|self::h:th'>
-				The &#x201C;nowrap&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@rules]'>
-			<report test='self::h:table'>
-				The &#x201C;rules&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@scrolling]'>
-			<report test='self::h:iframe'>
-				The &#x201C;scrolling&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@size]'>
-			<report test='self::h:hr'>
-				The &#x201C;size&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@text]'>
-			<report test='self::h:body'>
-				The &#x201C;text&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
-			</report>
-		</rule>
-
-		<rule context='h:*[@valign]'>
-			<report test='self::h:col|self::h:colgroup|self::h:tbody
-				|self::h:td|self::h:tfoot|self::h:th|self::h:thead|self::h:tr'>
+			<report test='@valign'>
 				The &#x201C;valign&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
+	</pattern>
 
-		<rule context='h:*[@vlink]'>
-			<report test='self::h:body'>
+	<pattern name="obsolete presentational attributes">
+		<rule context='h:body'>
+			<report test='@alink'>
+				The &#x201C;alink&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@background'>
+				The &#x201C;background&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@bgcolor'>
+				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@link'>
+				The &#x201C;link&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@text'>
+				The &#x201C;text&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@vlink'>
 				The &#x201C;vlink&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
 
-		<rule context='h:*[@vspace]'>
-			<report test='self::h:img|self::h:object'>
+		<rule context='h:br'>
+			<report test='@clear'>
+				The &#x201C;clear&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:hr'>
+			<report test='@noshade'>
+				The &#x201C;noshade&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@size'>
+				The &#x201C;size&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:dl|h:menu|h:ol|h:ul'>
+			<report test='@compact'>
+				The &#x201C;compact&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:iframe'>
+			<report test='@frameborder'>
+				The &#x201C;frameborder&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginheight'>
+				The &#x201C;marginheight&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginwidth'>
+				The &#x201C;marginwidth&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@scrolling'>
+				The &#x201C;scrolling&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:img|h:object'>
+			<report test='@hspace'>
+				The &#x201C;hspace&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@vspace'>
 				The &#x201C;vspace&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
-		</rule>
-
-		<rule context='h:*[@width]'>
-			<report test='self::h:hr|self::h:table|self::h:td|self::h:th
-				|self::h:col|self::h:colgroup|self::h:pre'>
-				The &#x201C;width&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+			<report test='@border and self::h:object'>
+				The &#x201C;border&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
 
-<!-- required attributes  - - - - - - - - - - - - - - - - - - - -->
-
-		<rule context='h:map[@id and @name]'>
-			<assert test='@id = @name'>
-				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have an 
-				the same value as the &#x201C;name&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:bdo[not(@dir)]'>
-			<report test='true()'>
-				A &#x201C;bdo&#x201D; element must have an 
-				&#x201C;dir&#x201D; attribute.
+		<rule context='h:table'>
+			<report test='@bgcolor'>
+				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@border'>
+				The &#x201C;border&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@cellpadding'>
+				The &#x201C;cellpadding&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@cellspacing'>
+				The &#x201C;cellspacing&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@frame'>
+				The &#x201C;frame&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@rules'>
+				The &#x201C;rules&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 		</rule>
 
+		<rule context='h:td|h:th'>
+			<report test='@bgcolor'>
+				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@height'>
+				The &#x201C;height&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@nowrap'>
+				The &#x201C;nowrap&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
+		<rule context='h:tr'>
+			<report test='@bgcolor'>
+				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
 	</pattern>
 
 <!-- lang and xml:lang in XHTML  - - - - - - - - - - - - - - - - - -->
@@ -838,32 +847,10 @@
 		</rule>
 	</pattern>
 
-	<pattern name='list on input must refer to a datalist'>
-		<rule context='h:input[@list]'>
-			<assert test='//h:datalist[@id = current()/@list] or 
-			              //h:select[@id = current()/@list]'>
-				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
-				element must refer to a &#x201C;datalist&#x201D; element.
-			</assert>
-		</rule>
-	</pattern>
-		
 	<!-- FIXME form attribute -->
 	
 	<!-- FIXME output for -->
 	
-<!-- Form Constraints  - - - - - - - - - - - - - - - - - - - - - - -->
-
-	<pattern name='Non-multiple select can have up to one selected option'>
-		<rule context='h:select[not(@multiple)]'>
-			<report test='count(descendant::h:option[@selected]) > 1'>
-				The &#x201C;select&#x201D; element cannot have more than one 
-				selected &#x201C;option&#x201D; descendant unless the 
-				&#x201C;multiple&#x201D; attribute is specified.
-			</report>
-		</rule>
-	</pattern>
-
 <!-- Unique Definitions  - - - - - - - - - - - - - - - - - - - - - -->
 	
 	<!-- Only one definition per term per document' -->
