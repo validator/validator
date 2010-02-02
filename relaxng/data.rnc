@@ -32,7 +32,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element meter { meter.inner & meter.attrs }
 	meter.attrs =
 		(	common.attrs
-		&	meter.attrs.value?
+		&	meter.attrs.value
 		&	meter.attrs.min?
 		&	meter.attrs.low?
 		&	meter.attrs.high?
