@@ -19,59 +19,6 @@
 				&#x201C;dir&#x201D; attribute.
 			</assert>
 		</rule>
-
-		<rule context='h:img'>
-			<assert test='@src'>
-				An &#x201C;img&#x201D; element must have a
-				&#x201C;src&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:link'>
-			<assert test='@href'>
-				A &#x201C;link&#x201D; element must have an &#x201C;href&#x201D; attribute.
-			</assert>
-			<assert test='@rel'>
-				A &#x201C;link&#x201D; element must have a &#x201C;rel&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:map'>
-			<assert test='@name'>
-				A &#x201C;map&#x201D; element must have a &#x201C;name&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:meter'>
-			<assert test='@value'>
-				An &#x201C;meter&#x201D; element must have a
-				&#x201C;value&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:object'>
-			<assert test='@data or @type'>
-				An &#x201C;object&#x201D; element must have a
-				&#x201C;data&#x201D; attribute or a
-				&#x201C;type&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:param'>
-			<assert test='@name'>
-				A &#x201C;param&#x201D; element must have an &#x201C;name&#x201D; attribute.
-			</assert>
-			<assert test='@value'>
-				A &#x201C;param&#x201D; element must have a &#x201C;value&#x201D; attribute.
-			</assert>
-		</rule>
-
-		<rule context='h:source'>
-			<assert test='@src'>
-				A &#x201C;source&#x201D; element must have a
-				&#x201C;src&#x201D; attribute.
-			</assert>
-		</rule>
 	</pattern>
 
 	<pattern name='Triggered on mutually exclusive elements and prohibited-descendant cases'>
