@@ -244,8 +244,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "open" | w:string ""
 			}
 	details.inner =
-		(	legend.elem
+		(	summary.elem?
 		,	common.inner.flow 
 		)
 	
 	common.elem.flow |= details.elem
+
+## Caption/summary for details element: <summary>
+
+	summary.elem =
+		element summary { summary.inner & summary.attrs }
+	summary.attrs =
+		( common.attrs )
+	summary.inner =
+		( common.inner.phrasing )
