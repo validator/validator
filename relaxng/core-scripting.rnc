@@ -54,7 +54,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	script.inner.embedded =
 		( common.inner.anything )
 	script.inner.imported =
-		( empty )
+		( common.inner.anything )
 		
 	script.elem = 
 		(	script.elem.embedded
