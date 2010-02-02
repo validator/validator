@@ -135,8 +135,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.img?
 		)
 	figure.inner =
-		(	( legend.elem, common.inner.flow )
-		|	( common.inner.flow, legend.elem? )
+		(	( figcaption.elem, common.inner.flow )
+		|	( common.inner.flow, figcaption.elem? )
 		)
 
 	common.elem.flow |= figure.elem
+
+## Figure caption: <figcaption>
+
+	figcaption.elem =
+		element figcaption { figcaption.inner & figcaption.attrs }
+	figcaption.attrs =
+		( common.attrs )
+	figcaption.inner =
+		( common.inner.phrasing )
