@@ -817,6 +817,7 @@ def buildAll():
     print "Error: The JAVA_HOME environment variable is not set."
     print "Set the JAVA_HOME environment variable to the pathname of the directory where your JDK is installed."
     sys.exit(1)
+  prepareLocalEntityJar()
   buildJing()
   buildDatatypeLibrary()
   buildNonSchema()
