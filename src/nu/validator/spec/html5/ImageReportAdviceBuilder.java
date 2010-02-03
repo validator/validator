@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -60,23 +60,26 @@ public class ImageReportAdviceBuilder implements ContentHandler {
     private TreeBuilder treeBuilder;
 
     private final List<DocumentFragment> fragments = new LinkedList<DocumentFragment>();
-    
-    public static List<DocumentFragment> parseAltAdvice(InputSource in) throws IOException, SAXException {
+
+    public static List<DocumentFragment> parseAltAdvice(InputSource in)
+            throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         ImageReportAdviceBuilder handler = new ImageReportAdviceBuilder();
         parser.setContentHandler(handler);
         parser.parse(in);
         return handler.getFragments();
     }
-    
+
     public static void main(String[] args) throws IOException, SAXException {
-        parseAltAdvice(new InputSource(System.getProperty("nu.validator.spec.alt-advice", "http://wiki.whatwg.org/wiki/Validator.nu_alt_advice")));
+        parseAltAdvice(new InputSource(System.getProperty(
+                "nu.validator.spec.alt-advice",
+                "http://wiki.whatwg.org/wiki/Validator.nu_alt_advice")));
     }
-    
+
     private ImageReportAdviceBuilder() {
 
     }
-    
+
     public void startDocument() throws SAXException {
         state = State.AWAITING_H2;
     }
@@ -105,28 +108,26 @@ public class ImageReportAdviceBuilder implements ContentHandler {
                 depth++;
                 return;
             case IN_PROSE:
-                depth++;
                 String href = null;
                 if (NS == uri && "a" == localName) {
-                    if (atts.getValue("", "name") != null) {
-                        if (depth != 1) {
-                            throw new SAXException("Malformed alt advice");
-                        } else {
-                            fragments.add((DocumentFragment) treeBuilder.getRoot());
-                            treeBuilder = null;
-                            state = State.AWAITING_H2;                            
-                        }
-                    }  else if ((href = atts.getValue("", "href")) != null) {
+                    if ((href = atts.getValue("", "href")) != null) {
                         AttributesImpl ai = new AttributesImpl();
                         ai.addAttribute("href", href);
+                        depth++;
                         treeBuilder.startElement(uri, localName, qName, ai);
                     }
-                } else if (NS == uri && "div" == localName
+                } else if (depth == 0 && NS == uri && "div" == localName
                         && ("printfooter".equals(atts.getValue("", "class")))) {
                     fragments.add((DocumentFragment) treeBuilder.getRoot());
                     treeBuilder = null;
                     state = State.AWAITING_H2;
+                } else if (depth == 0 && "h2" == localName && NS == uri) {
+                    fragments.add((DocumentFragment) treeBuilder.getRoot());
+                    treeBuilder = null;
+                    depth = 0;
+                    state = State.AWAITING_HEADLINE;
                 } else {
+                    depth++;
                     treeBuilder.startElement(uri, localName, qName,
                             EmptyAttributes.EMPTY_ATTRIBUTES);
                 }
@@ -210,6 +211,5 @@ public class ImageReportAdviceBuilder implements ContentHandler {
     private List<DocumentFragment> getFragments() {
         return fragments;
     }
-
 
 }
