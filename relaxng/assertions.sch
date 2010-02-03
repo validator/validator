@@ -581,7 +581,7 @@
 
 		<rule context='h:td|h:th'>
 			<report test='@scope and self::h:td'>
-				The &#x201C;scope&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				The &#x201C;scope&#x201D; attribute on the &#x201C;td&#x201D; element is obsolete.
 				Use the &#x201C;scope&#x201D; attribute on a &#x201C;th&#x201D; element instead.
 			</report>
 			<report test='@abbr'>
