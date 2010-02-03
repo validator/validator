@@ -11,8 +11,8 @@
         Consider specifying the language on the root element instead.
       </report>
     </rule>
-    <rule context='h:img[@border]'>
-      <report test='true()' role='warning'>
+    <rule context='h:img'>
+      <report test='@border' role='warning'>
         The &#x201C;border&#x201D; attribute on the &#x201C;img&#x201D; element is obsolete.
         Consider specifying &#x201C;img { border: 0; }&#x201C; in CSS instead.
       </report>
