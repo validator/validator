@@ -508,7 +508,7 @@ def buildEmbedRnc(schemaDir):
     line = line.replace("&\timg.attrs.src", "&\timg.attrs.src?")
     line = line.replace("(\tobject.attrs.data", "(\tobject.attrs.data?")
     line = line.replace("&\tobject.attrs.type?", "&\tempty")
-    line = line.replace("|\tobject.attrs.type", "|\tobject.attrs.type?")
+    line = line.replace("|\tobject.attrs.type", "&\tobject.attrs.type?")
     line = line.replace("&\tparam.attrs.name", "&\tparam.attrs.name?")
     line = line.replace("&\tparam.attrs.value", "&\tparam.attrs.value?")
     line = line.replace("&\tmap.attrs.name", "&\tmap.attrs.name?")
