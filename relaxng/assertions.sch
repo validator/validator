@@ -159,7 +159,7 @@
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D; element
+				Any &#x201C;<name/>&#x201D; element descendant of a &#x201C;label&#x201D; element
 				with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
