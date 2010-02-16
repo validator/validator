@@ -272,8 +272,8 @@
 
 		<rule context='h:time'>
 			<report test='ancestor::h:time'>
-				The element &#x201C;meter&#x201D; must not
-				appear as a descendant of the &#x201C;meter&#x201D; element.
+				The element &#x201C;time&#x201D; must not
+				appear as a descendant of the &#x201C;time&#x201D; element.
 			</report>
 		</rule>
 
