@@ -427,11 +427,11 @@
 		<rule context='h:a|h:link'>
 			<report test='@coords and self::h:a'>
 				The &#x201C;coords&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				For image maps, use the &#x201C;area&#x201D; element instead of &#x201C;a&#x201D; element.
+				For image maps, use the &#x201C;area&#x201D; element instead of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='@shape and self::h:a'>
 				The &#x201C;shape&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				For image maps, use the &#x201C;area&#x201D; element instead of &#x201C;a&#x201D; element.
+				For image maps, use the &#x201C;area&#x201D; element instead of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='@urn and self::h:a'>
 				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
