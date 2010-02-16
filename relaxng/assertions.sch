@@ -42,11 +42,11 @@
 			                   | descendant::h:select
 			                   | descendant::h:keygen
 			                   | descendant::h:textarea) > 1'>
-				The &#x201C;label&#x201D; element may contain at most one
-				&#x201C;input&#x201D;,
-				&#x201C;button&#x201D;,
-				&#x201C;select&#x201D;,
-				or &#x201C;textarea&#x201D; descendant.
+				The &#x201C;label&#x201D; element may contain at most one descendant
+				&#x201C;input&#x201D; element,
+				&#x201C;button&#x201D; element,
+				&#x201C;select&#x201D; element,
+				or &#x201C;textarea&#x201D; element.
 			</report>
 			<report test='@for and 
 			              not(//h:input[not(translate(@type, "HIDEN", "hiden")="hidden")][@id = current()/@for] or 
@@ -159,8 +159,8 @@
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 			<report test='ancestor::h:label[@for] and not(ancestor::h:label[@for = current()/@id])'>
-				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D;
-				element with a &#x201C;for&#x201D; attribute must have an
+				Any &#x201C;<name/>&#x201D; descendant of a &#x201C;label&#x201D; element
+				with a &#x201C;for&#x201D; attribute must have an
 				ID value that matches that &#x201C;for&#x201D; attribute.
 			</report>
 		</rule>
@@ -181,12 +181,12 @@
 		<rule context='h:menu[translate(@type, "TOLBAR", "tolbar")="toolbar"]'>
 			<report test='ancestor::h:a'>
 				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;type=toolbar&#x201D; must not
+				with the attribute &#x201C;type&#x201D; whose value is &#x201C;toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;a&#x201D; element.
 			</report>
 			<report test='ancestor::h:button'>
 				The element &#x201C;menu&#x201D;
-				with the attribute &#x201C;type=toolbar&#x201D; must not
+				with the attribute &#x201C;type&#x201D; whose value is &#x201C;toolbar&#x201D; must not
 				appear as a descendant of the &#x201C;button&#x201D; element.
 			</report>
 		</rule>
@@ -225,17 +225,16 @@
 	<pattern name="miscellaneous requirements">
 		<rule context='h:area'>
 			<assert test='ancestor::h:map'>
-				The &#x201C;area&#x201D; element must have a 
-				&#x201C;map&#x201D; ancestor.
+				The &#x201C;area&#x201D; element must have an ancestor
+				&#x201C;map&#x201D; element.
 			</assert>
 		</rule>
 
 		<rule context='h:img[@ismap]'>
 			<assert test='ancestor::h:a[@href]'>
 				The &#x201C;img&#x201D; element with the 
-				&#x201C;ismap&#x201D; attribute set must have an 
-				&#x201C;a&#x201D; ancestor with the &#x201C;href&#x201D; 
-				attribute.
+				&#x201C;ismap&#x201D; attribute set must have an ancestor 
+				&#x201C;a&#x201D; element with the &#x201C;href&#x201D; attribute.
 			</assert>
 		</rule>
 
@@ -257,15 +256,15 @@
 		<rule context='h:select[not(@multiple)]'>
 			<report test='count(descendant::h:option[@selected]) > 1'>
 				The &#x201C;select&#x201D; element cannot have more than one 
-				selected &#x201C;option&#x201D; descendant unless the 
+				selected &#x201C;option&#x201D; element descendant unless the 
 				&#x201C;multiple&#x201D; attribute is specified.
 			</report>
 		</rule>
 
 		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
 			<assert test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
-				A &#x201C;script&#x201D; element with the 
-				&#x201C;language="JavaScript"&#x201D; attribute set must not have a 
+				A &#x201C;script&#x201D; element with a
+				&#x201C;language&#x201D; attribute whose value is &#x201C;JavaScript&#x201D; must not have a 
 				&#x201C;type&#x201D; attribute whose value is not 
 				&#x201C;text/javascript&#x201D;.
 			</assert>
@@ -284,7 +283,7 @@
 				appear as a descendant of the &#x201C;progress&#x201D; element.
 			</report>
 			<assert test='@max and @value and number(@value) &lt;= number(@max)'>
-				The value of the  &#x201C;value&#x201D; attribute must be less than or equal to
+				The value of the &#x201C;value&#x201D; attribute must be less than or equal to
 				the value of the &#x201C;max&#x201D; attribute.
 			</assert>
 			<assert test='not(@max) and @value and number(@value) &lt;= 1'>
@@ -428,11 +427,11 @@
 		<rule context='h:a|h:link'>
 			<report test='@coords and self::h:a'>
 				The &#x201C;coords&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use &#x201C;area&#x201D; instead of &#x201C;a&#x201D; for image maps.
+				For image maps, use the &#x201C;area&#x201D; element instead of &#x201C;a&#x201D; element.
 			</report>
 			<report test='@shape and self::h:a'>
 				The &#x201C;shape&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use &#x201C;area&#x201D; instead of &#x201C;a&#x201D; for image maps.
+				For image maps, use the &#x201C;area&#x201D; element instead of &#x201C;a&#x201D; element.
 			</report>
 			<report test='@urn and self::h:a'>
 				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
@@ -473,7 +472,7 @@
 		<rule context='h:head'>
 			<report test='@profile'>
 				The &#x201C;profile&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				To declare which &#x201C;meta&#x201D; terms are used in the document, instead register the
+				To declare which &#x201C;meta&#x201D; element terms are used in the document, instead register the
 				names as meta extensions. &lt;http://wiki.whatwg.org/wiki/MetaExtensions>
 				To trigger specific UA behaviors, use a &#x201C;link&#x201D; element instead.
 			</report>
@@ -528,27 +527,27 @@
 		<rule context='h:object'>
 			<report test='@archive'>
 				The &#x201C;archive&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				Use the &#x201C;data&#x201D; attribute and &#x201C;type&#x201D; attribute to invoke plugins.
 				To set a parameter with the name &#x201C;archive&#x201D;, use the &#x201C;param&#x201D; element.
 			</report>
 			<report test='@classid'>
 				The &#x201C;classid&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				Use the &#x201C;data&#x201D; attribute and &#x201C;type&#x201D; attribute to invoke plugins.
 				To set a parameter with the name &#x201C;classid&#x201D;, use the &#x201C;param&#x201D; element.
 			</report>
 			<report test='@code'>
 				The &#x201C;code&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				Use the &#x201C;data&#x201D; attribute and &#x201C;type&#x201D; attribute to invoke plugins.
 				To set a parameter with the name &#x201C;code&#x201D;, use the &#x201C;param&#x201D; element.
 			</report>
 			<report test='@codebase'>
 				The &#x201C;codebase&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				Use the &#x201C;data&#x201D; attribute and &#x201C;type&#x201D; attribute to invoke plugins.
 				To set a parameter with the name &#x201C;codebase&#x201D;, use the &#x201C;param&#x201D; element.
 			</report>
 			<report test='@codetype'>
 				The &#x201C;codetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;data&#x201D; and &#x201C;type&#x201D; attributes to invoke plugins.
+				Use the &#x201C;data&#x201D; attribute and &#x201C;type&#x201D; attribute to invoke plugins.
 				To set a parameter with the name &#x201C;codetype&#x201D;, use the &#x201C;param&#x201D; element.
 			</report>
 			<report test='@declare'>
@@ -557,18 +556,18 @@
 			</report>
 			<report test='@standby'>
 				The &#x201C;standby&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Optimise the linked resource so that it loads quickly or, at least, incrementally.
+				Optimize the linked resource so that it loads quickly or, at least, incrementally.
 			</report>
 		</rule>
 
 		<rule context='h:param'>
 			<report test='@type'>
 				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
+				Use the &#x201C;name&#x201D; attribute and &#x201C;value&#x201D; attribute without declaring value types.
 			</report>
 			<report test='@valuetype'>
 				The &#x201C;valuetype&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;name&#x201D; and &#x201C;value&#x201D; attributes without declaring value types.
+				Use the &#x201C;name&#x201D; attribute and &#x201C;value&#x201D; attribute without declaring value types.
 			</report>
 		</rule>
 
@@ -590,7 +589,7 @@
 			</report>
 			<report test='@axis'>
 				The &#x201C;axis&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
-				Use the &#x201C;scope&#x201D; attribute.
+				Use the &#x201C;scope&#x201D; attribute instead.
 			</report>
 		</rule>
 	</pattern>
@@ -774,9 +773,8 @@
 	<pattern name='lang and xml:lang in XHTML'>
 		<rule context='h:*[@lang and @xml:lang]'>
 			<assert test='translate(@lang, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz") = translate(@xml:lang, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")'>
-				When the attribute &#x201C;lang&#x201D; in no namespace and the attribute 
-				&#x201C;lang&#x201D; in the XML namespace are both present, they must have the 
-				same value.
+				When the attribute &#x201C;lang&#x201D; in no namespace and the attribute &#x201C;lang&#x201D;
+				in the XML namespace are both present, they must have the same value.
 			</assert>
 		</rule>
 	</pattern>
