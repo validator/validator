@@ -32,6 +32,7 @@ except ImportError:
 import zipfile
 import sys
 from sgmllib import SGMLParser
+import subprocess
 
 javacCmd = 'javac'
 jarCmd = 'jar'
@@ -165,19 +166,22 @@ class UrlExtractor(SGMLParser):
           self.leaves.append(self.baseUrl + value)    
     
 def runCmd(cmd):
-  if os.name == 'nt':
-    cmd = cmd.replace('"', '')
-    print cmd
-    os.system(cmd)    
+  print cmd
+  if os.name == 'nt' and cmd[:1] == '"':
+    subprocess.call(cmd)
   else:
-    print cmd
     os.system(cmd)
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
-  if os.execvp(cmd, [cmd,] + args):
-    print "Command failed."
-    sys.exit(2)
+  if os.name == 'nt':
+    if subprocess.call([cmd,] + args):
+      print "Command failed."
+      sys.exit(2)
+  else:
+    if os.execvp(cmd, [cmd,] + args):
+      print "Command failed."
+      sys.exit(2)
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
@@ -224,7 +228,7 @@ def runJavac(sourceDir, classDir, classPath):
   else:
     f.write("\n".join(sourceFiles))
   f.close()
-  runCmd('"%s" -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
+  runCmd('"%s" -g -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
 		% (javacCmd, classPath, sourceDir, classDir, "@temp-javac-list"))
   removeIfExists("temp-javac-list")
 
@@ -571,7 +575,7 @@ def buildValidator():
   if pageTemplate:
     ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
     pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
-    runCmd('"%s" -cp %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
+    runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -613,7 +617,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
     '-XX:ThreadStackSize=2048',
-    '-cp',
+    '-classpath',
     classPath,
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
@@ -846,7 +850,10 @@ def selfUpdate():
   runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
   newArgv = [sys.executable, buildScript, '--no-self-update']
   newArgv.extend(argv)
-  os.execv(sys.executable, newArgv)  
+  if os.name == 'nt':
+    sys.exit(subprocess.call(newArgv))
+  else:
+    os.execv(sys.executable, newArgv)  
 
 
 def runTests():
@@ -858,7 +865,7 @@ def runTests():
                                                 "html5-datatypes",
                                                 "test-harness"])
                               + jingJarPath())
-  runCmd('"%s" -cp %s org.whattf.syntax.Driver' % (javaCmd, classPath))
+  runCmd('"%s" -classpath %s org.whattf.syntax.Driver' % (javaCmd, classPath))
 
 def splitHostSpec(spec):
   index = spec.find('/')
