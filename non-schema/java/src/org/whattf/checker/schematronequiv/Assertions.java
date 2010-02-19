@@ -123,7 +123,10 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("codebase", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("codetype", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("coords", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("datapagesize", new String[] { "table" });
         OBSOLETE_ATTRIBUTES.put("declare", new String[] { "object" });
+        OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
+        OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
@@ -170,6 +173,11 @@ public class Assertions extends Checker {
                 "Use the \u201Cdata\u201D and \u201Ctype\u201D attributes to invoke plugins. To set a parameter with the name \u201Ccodetype\u201D, use the \u201Cparam\u201D element.");
         OBSOLETE_ATTRIBUTES_MSG.put("coords",
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
+        OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
+        OBSOLETE_ATTRIBUTES_MSG.put("for",
+                "Use DOM Events mechanisms to register event listeners.");
+        OBSOLETE_ATTRIBUTES_MSG.put("event",
+                "Use DOM Events mechanisms to register event listeners.");
         OBSOLETE_ATTRIBUTES_MSG.put(
                 "declare",
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
