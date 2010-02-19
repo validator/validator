@@ -1032,6 +1032,14 @@
 		}
 	table.attrs &= table.attrs.rules?
 
+## datapagesize attribute
+
+	table.attrs.datapagesize =
+		attribute datapagesize {
+			string
+		}
+	table.attrs &= table.attrs.datapagesize?
+
 ## scrolling attribute
 
 	iframe.attrs.scrolling =
@@ -1198,3 +1206,21 @@
 			string
 		}
 	th.attrs &= th.attrs.width?
+
+## event attribute
+
+	script.attrs.event =
+		attribute event {
+			string
+		}
+	script.attrs.imported &= script.attrs.event?
+	script.attrs.embedded &= script.attrs.event?
+
+## for attribute
+
+	script.attrs.for =
+		attribute for {
+			string
+		}
+	script.attrs.imported &= script.attrs.for?
+	script.attrs.embedded &= script.attrs.for?
