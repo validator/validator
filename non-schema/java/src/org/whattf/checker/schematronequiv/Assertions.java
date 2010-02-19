@@ -123,6 +123,12 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("codebase", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("codetype", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("coords", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("datafld", new String[] { "span", "div",
+                "object", "input", "select", "textarea", "button", "table" });
+        OBSOLETE_ATTRIBUTES.put("dataformatas", new String[] { "span", "div",
+                "object", "input", "select", "textarea", "button", "table" });
+        OBSOLETE_ATTRIBUTES.put("datasrc", new String[] { "span", "div",
+                "object", "input", "select", "textarea", "button", "table" });
         OBSOLETE_ATTRIBUTES.put("datapagesize", new String[] { "table" });
         OBSOLETE_ATTRIBUTES.put("declare", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
@@ -174,6 +180,9 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put("coords",
                 "Use \u201Carea\u201D instead of \u201Ca\u201D for image maps.");
         OBSOLETE_ATTRIBUTES_MSG.put("datapagesize", "You can safely omit it.");
+        OBSOLETE_ATTRIBUTES_MSG.put("datafld", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
+        OBSOLETE_ATTRIBUTES_MSG.put("dataformatas", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
+        OBSOLETE_ATTRIBUTES_MSG.put("datasrc", "Use script and a mechanism such as XMLHttpRequest to populate the page dynamically");
         OBSOLETE_ATTRIBUTES_MSG.put("for",
                 "Use DOM Events mechanisms to register event listeners.");
         OBSOLETE_ATTRIBUTES_MSG.put("event",
