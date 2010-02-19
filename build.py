@@ -73,6 +73,7 @@ deploymentTarget = None
 noSelfUpdate = 0
 useLocalCopies = 0
 pageTemplate = None
+formTemplate = None
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 
@@ -576,6 +577,10 @@ def buildValidator():
     ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
     pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
     runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
+  if formTemplate:
+    ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
+    formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
+    runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplate, formEmitter))
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -985,6 +990,8 @@ else:
       (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
     elif arg.startswith("--page-template="):
       pageTemplate = arg[16:]
+    elif arg.startswith("--form-template="):
+      formTemplate = arg[16:]
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
