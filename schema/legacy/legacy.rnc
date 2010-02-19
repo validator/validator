@@ -1224,3 +1224,118 @@
 		}
 	script.attrs.imported &= script.attrs.for?
 	script.attrs.embedded &= script.attrs.for?
+
+## datafld attribute
+
+	legacy.attrs.datafld =
+		attribute datafld {
+			string
+		}
+	span.attrs &= legacy.attrs.datafld?
+	div.attrs &= legacy.attrs.datafld?
+	object.attrs &= legacy.attrs.datafld?
+	input.text.attrs &= legacy.attrs.datafld?
+	input.password.attrs &= legacy.attrs.datafld?
+	input.checkbox.attrs &= legacy.attrs.datafld?
+	input.radio.attrs &= legacy.attrs.datafld?
+	input.button.attrs &= legacy.attrs.datafld?
+	input.submit.attrs &= legacy.attrs.datafld?
+	input.reset.attrs &= legacy.attrs.datafld?
+	input.file.attrs &= legacy.attrs.datafld?
+	input.image.attrs &= legacy.attrs.datafld?
+	input.datetime.attrs &= legacy.attrs.datafld?
+	input.datetime-local.attrs &= legacy.attrs.datafld?
+	input.date.attrs &= legacy.attrs.datafld?
+	input.month.attrs &= legacy.attrs.datafld?
+	input.time.attrs &= legacy.attrs.datafld?
+	input.week.attrs &= legacy.attrs.datafld?
+	input.number.attrs &= legacy.attrs.datafld?
+	input.range.attrs &= legacy.attrs.datafld?
+	input.email.attrs &= legacy.attrs.datafld?
+	input.url.attrs &= legacy.attrs.datafld?
+	input.search.attrs &= legacy.attrs.datafld?
+	input.tel.attrs &= legacy.attrs.datafld?
+	input.color.attrs &= legacy.attrs.datafld?
+	select.attrs &= legacy.attrs.datafld?
+	textarea.attrs &= legacy.attrs.datafld?
+	button.submit.attrs &= legacy.attrs.datafld?
+	button.reset.attrs &= legacy.attrs.datafld?
+	button.button.attrs &= legacy.attrs.datafld?
+	table.attrs &= legacy.attrs.datafld?
+
+## dataformatas attribute
+
+	legacy.attrs.dataformatas =
+		attribute dataformatas {
+			string
+		}
+	span.attrs &= legacy.attrs.dataformatas?
+	div.attrs &= legacy.attrs.dataformatas?
+	object.attrs &= legacy.attrs.dataformatas?
+	input.attrs &= legacy.attrs.dataformatas?
+	input.text.attrs &= legacy.attrs.dataformatas?
+	input.password.attrs &= legacy.attrs.dataformatas?
+	input.checkbox.attrs &= legacy.attrs.dataformatas?
+	input.radio.attrs &= legacy.attrs.dataformatas?
+	input.button.attrs &= legacy.attrs.dataformatas?
+	input.submit.attrs &= legacy.attrs.dataformatas?
+	input.reset.attrs &= legacy.attrs.dataformatas?
+	input.file.attrs &= legacy.attrs.dataformatas?
+	input.image.attrs &= legacy.attrs.dataformatas?
+	input.datetime.attrs &= legacy.attrs.dataformatas?
+	input.datetime-local.attrs &= legacy.attrs.dataformatas?
+	input.date.attrs &= legacy.attrs.dataformatas?
+	input.month.attrs &= legacy.attrs.dataformatas?
+	input.time.attrs &= legacy.attrs.dataformatas?
+	input.week.attrs &= legacy.attrs.dataformatas?
+	input.number.attrs &= legacy.attrs.dataformatas?
+	input.range.attrs &= legacy.attrs.dataformatas?
+	input.email.attrs &= legacy.attrs.dataformatas?
+	input.url.attrs &= legacy.attrs.dataformatas?
+	input.search.attrs &= legacy.attrs.dataformatas?
+	input.tel.attrs &= legacy.attrs.dataformatas?
+	input.color.attrs &= legacy.attrs.dataformatas?
+	select.attrs &= legacy.attrs.dataformatas?
+	textarea.attrs &= legacy.attrs.dataformatas?
+	button.submit.attrs &= legacy.attrs.dataformatas?
+	button.reset.attrs &= legacy.attrs.dataformatas?
+	button.button.attrs &= legacy.attrs.dataformatas?
+	table.attrs &= legacy.attrs.dataformatas?
+
+## datasrc attribute
+
+	legacy.attrs.datasrc =
+		attribute datasrc {
+			string
+		}
+	span.attrs &= legacy.attrs.datasrc?
+	div.attrs &= legacy.attrs.datasrc?
+	object.attrs &= legacy.attrs.datasrc?
+	input.text.attrs &= legacy.attrs.datasrc?
+	input.password.attrs &= legacy.attrs.datasrc?
+	input.checkbox.attrs &= legacy.attrs.datasrc?
+	input.radio.attrs &= legacy.attrs.datasrc?
+	input.button.attrs &= legacy.attrs.datasrc?
+	input.submit.attrs &= legacy.attrs.datasrc?
+	input.reset.attrs &= legacy.attrs.datasrc?
+	input.file.attrs &= legacy.attrs.datasrc?
+	input.image.attrs &= legacy.attrs.datasrc?
+	input.datetime.attrs &= legacy.attrs.datasrc?
+	input.datetime-local.attrs &= legacy.attrs.datasrc?
+	input.date.attrs &= legacy.attrs.datasrc?
+	input.month.attrs &= legacy.attrs.datasrc?
+	input.time.attrs &= legacy.attrs.datasrc?
+	input.week.attrs &= legacy.attrs.datasrc?
+	input.number.attrs &= legacy.attrs.datasrc?
+	input.range.attrs &= legacy.attrs.datasrc?
+	input.email.attrs &= legacy.attrs.datasrc?
+	input.url.attrs &= legacy.attrs.datasrc?
+	input.search.attrs &= legacy.attrs.datasrc?
+	input.tel.attrs &= legacy.attrs.datasrc?
+	input.color.attrs &= legacy.attrs.datasrc?
+	select.attrs &= legacy.attrs.datasrc?
+	textarea.attrs &= legacy.attrs.datasrc?
+	button.submit.attrs &= legacy.attrs.datasrc?
+	button.reset.attrs &= legacy.attrs.datasrc?
+	button.button.attrs &= legacy.attrs.datasrc?
+	table.attrs &= legacy.attrs.datasrc?
