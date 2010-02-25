@@ -9,7 +9,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	# src not included
 	media.attrs = 
 		(	media.attrs.autoplay?
-		&	media.attrs.autobuffer?
+		&	media.attrs.preload?
 		&	media.attrs.controls?
 		&	media.attrs.loop?
 		)
@@ -17,9 +17,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute autoplay   {
 				w:string "autoplay" | w:string ""
 			}
-		media.attrs.autobuffer   =
-			attribute autobuffer   {
-				w:string "autobuffer" | w:string ""
+		media.attrs.preload   =
+			attribute preload   {
+				w:string "preload" | w:string ""
 			}
 		media.attrs.controls  =
 			attribute controls  {
