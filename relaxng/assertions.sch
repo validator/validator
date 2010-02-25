@@ -675,6 +675,10 @@
 				The &#x201C;size&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
+			<report test='@color'>
+				The &#x201C;color&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
 		</rule>
 
 		<rule context='h:dl|h:menu|h:ol|h:ul'>

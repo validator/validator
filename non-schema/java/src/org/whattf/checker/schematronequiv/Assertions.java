@@ -251,6 +251,7 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("charoff", new String[] { "col", "colgroup",
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("clear", new String[] { "br" });
+        OBSOLETE_STYLE_ATTRS.put("color", new String[] { "hr" });
         OBSOLETE_STYLE_ATTRS.put("compact", new String[] { "dl", "menu", "ol",
                 "ul" });
         OBSOLETE_STYLE_ATTRS.put("frameborder", new String[] { "iframe" });
