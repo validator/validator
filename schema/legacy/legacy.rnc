@@ -738,6 +738,15 @@
 		}
 	body.attrs &= body.attrs.background?
 
+## color attribute
+
+	hr.attrs.color =
+		attribute color {
+			string
+		}
+	hr.attrs &= hr.attrs.color?
+
+
 ## bgcolor attribute
 
 	body.attrs.bgcolor =
