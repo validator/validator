@@ -424,20 +424,35 @@
 	<!-- Obsolete Attributes- - - - - - - - - - - - - - - - - - - - - - -->
 
 	<pattern name="obsolete attributes">
-		<rule context='h:a|h:link'>
-			<report test='@coords and self::h:a'>
+		<rule context='h:a'>
+			<report test='@coords'>
 				The &#x201C;coords&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				For image maps, use the &#x201C;area&#x201D; element instead of the &#x201C;a&#x201D; element.
 			</report>
-			<report test='@shape and self::h:a'>
+			<report test='@shape'>
 				The &#x201C;shape&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				For image maps, use the &#x201C;area&#x201D; element instead of the &#x201C;a&#x201D; element.
 			</report>
-			<report test='@urn and self::h:a'>
+			<report test='@urn'>
 				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Specify the preferred persistent identifier using the &#x201C;href&#x201D; attribute instead.
 			</report>
-			<report test='@target and self::h:link'>
+			<report test='@charset'>
+				The &#x201C;charset&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use an HTTP Content-Type header on the linked resource instead.
+			</report>
+			<report test='@methods'>
+				The &#x201C;methods&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the HTTP OPTIONS feature instead.
+			</report>
+			<report test='@rev'>
+				The &#x201C;rev&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;rel&#x201D; attribute instead, with a term having the opposite meaning.
+			</report>
+		</rule>
+
+		<rule context='h:a|h:link'>
+			<report test='@target'>
 				The &#x201C;target&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				You can safely omit it.
 			</report>
