@@ -451,7 +451,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:a|h:link'>
+		<rule context='h:link'>
 			<report test='@target'>
 				The &#x201C;target&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				You can safely omit it.
