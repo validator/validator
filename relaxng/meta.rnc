@@ -109,8 +109,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element base { base.inner & base.attrs }
 	base.attrs =
 		(	common.attrs
-		&	base.attrs.href?
-		&	base.attrs.target?
+		&	(	(	base.attrs.href
+				&	base.attrs.target?
+				)
+			|	base.attrs.target
+			)
 		)
 	base.attrs.href =
 		attribute href {
