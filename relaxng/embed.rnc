@@ -321,34 +321,148 @@ namespace local = ""
 		iframe.attrs.sandbox =
 			attribute sandbox
 				{	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
 					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-forms" )?
 					,	( w:string "allow-scripts" )?
 					}
 				|	list 
 					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-scripts" )?
 					,	( w:string "allow-forms" )?
 					}
 				|	list 
 					{	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-same-origin" )?
 					,	( w:string "allow-scripts" )?
 					}
 				|	list 
 					{	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-scripts" )?
 					,	( w:string "allow-same-origin" )?
 					}
 				|	list 
 					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-same-origin" )?
 					,	( w:string "allow-forms" )?
 					}
 				|	list 
 					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
 					,	( w:string "allow-forms" )?
 					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-scripts" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-forms" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
+					,	( w:string "allow-same-origin" )?
+					}
+				|	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
+					}
+				|	list 
+					{	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-top-navigation" )?
+					}
+				|	list 
+					{	( w:string "allow-forms" )?
+					,	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-top-navigation" )?
+					}
+				|	list 
+					{	( w:string "allow-scripts" )?
+					,	( w:string "allow-forms" )?
+					,	( w:string "allow-same-origin" )?
+					,	( w:string "allow-top-navigation" )?
 					}
 				} & v5only
 	iframe.inner =
