@@ -523,6 +523,12 @@
 		}
 	a.attrs &= a.attrs.urn?
 
+	link.attrs.urn =
+		attribute urn {
+			string
+		}
+	link.attrs &= link.attrs.urn?
+
 ## usemap attribute
 
 	input.attrs.usemap =
