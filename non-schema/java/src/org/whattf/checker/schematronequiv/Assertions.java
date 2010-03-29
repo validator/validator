@@ -146,7 +146,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("standby", new String[] { "object" });
         OBSOLETE_ATTRIBUTES.put("target", new String[] { "link" });
         OBSOLETE_ATTRIBUTES.put("type", new String[] { "param" });
-        OBSOLETE_ATTRIBUTES.put("urn", new String[] { "a" });
+        OBSOLETE_ATTRIBUTES.put("urn", new String[] { "a", "link" });
         OBSOLETE_ATTRIBUTES.put("usemap", new String[] { "input" });
         OBSOLETE_ATTRIBUTES.put("valuetype", new String[] { "param" });
         OBSOLETE_ATTRIBUTES.put("version", new String[] { "html" });
