@@ -19,7 +19,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		media.attrs.preload   =
 			attribute preload   {
-				w:string "preload" | w:string ""
+				w:string "none" | w:string "metadata" | w:string "auto" | w:string ""
 			}
 		media.attrs.controls  =
 			attribute controls  {
