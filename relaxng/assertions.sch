@@ -456,6 +456,10 @@
 				The &#x201C;target&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				You can safely omit it.
 			</report>
+			<report test='@urn'>
+				The &#x201C;urn&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Specify the preferred persistent identifier using the &#x201C;href&#x201D; attribute instead.
+			</report>
 			<report test='@charset'>
 				The &#x201C;charset&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use an HTTP Content-Type header on the linked resource instead.
