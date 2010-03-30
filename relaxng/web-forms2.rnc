@@ -180,11 +180,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)	
 		input.image.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		input.image.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 
 ## Global Date and Time: <input type='datetime'>

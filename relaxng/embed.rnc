@@ -78,11 +78,11 @@ namespace local = ""
 			}
 		embed.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		embed.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		embed.attrs.other = # REVISIT common.attrs
 			attribute local:* - ( src 
@@ -236,11 +236,11 @@ namespace local = ""
 			}
 		object.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		object.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		object.attrs.usemap =
 			attribute usemap {
@@ -308,11 +308,11 @@ namespace local = ""
 			}
 		iframe.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		iframe.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		iframe.attrs.seamless =
 			attribute seamless {

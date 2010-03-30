@@ -86,11 +86,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		video.attrs.height =
 			attribute height {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 		video.attrs.width =
 			attribute width {
-				common.data.integer.positive
+				common.data.integer.non-negative
 			}
 	video.inner.flow =
 		(	media.source
