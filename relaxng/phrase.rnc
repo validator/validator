@@ -311,3 +311,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( empty )
 
 	common.elem.phrasing |= br.elem
+
+## Line-break opportunity: <wbr>
+
+	wbr.elem =
+		element wbr { wbr.inner & wbr.attrs }
+	wbr.attrs =
+		( common.attrs )
+	wbr.inner =
+		( empty )
+
+	common.elem.phrasing |= wbr.elem
