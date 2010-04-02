@@ -1001,7 +1001,21 @@
 		}
 	body.attrs &= body.attrs.link?
 
+## marginbottom attribute
+
+	body.attrs.marginbottom =
+		attribute marginbottom {
+			string
+		}
+	body.attrs &= body.attrs.marginbottom?
+
 ## marginheight attribute
+
+	body.attrs.marginheight =
+		attribute marginheight {
+			string
+		}
+	body.attrs &= body.attrs.marginheight?
 
 	iframe.attrs.marginheight =
 		attribute marginheight {
@@ -1009,7 +1023,37 @@
 		}
 	iframe.attrs &= iframe.attrs.marginheight?
 
+## marginleft attribute
+
+	body.attrs.marginleft =
+		attribute marginleft {
+			string
+		}
+	body.attrs &= body.attrs.marginleft?
+
+## marginright attribute
+
+	body.attrs.marginright =
+		attribute marginright {
+			string
+		}
+	body.attrs &= body.attrs.marginright?
+
+## margintop attribute
+
+	body.attrs.margintop =
+		attribute margintop {
+			string
+		}
+	body.attrs &= body.attrs.margintop?
+
 ## marginwidth attribute
+
+	body.attrs.marginwidth =
+		attribute marginwidth {
+			string
+		}
+	body.attrs &= body.attrs.marginwidth?
 
 	iframe.attrs.marginwidth =
 		attribute marginwidth {
