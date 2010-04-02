@@ -668,6 +668,30 @@
 				The &#x201C;link&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
+			<report test='@marginbottom'>
+				The &#x201C;marginbottom&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginheight'>
+				The &#x201C;marginheight&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginleft'>
+				The &#x201C;marginleft&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginright'>
+				The &#x201C;marginright&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@margintop'>
+				The &#x201C;margintop&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@marginwidth'>
+				The &#x201C;marginwidth&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
 			<report test='@text'>
 				The &#x201C;text&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes

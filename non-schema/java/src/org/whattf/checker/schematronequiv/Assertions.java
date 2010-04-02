@@ -259,8 +259,12 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("height", new String[] { "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("hspace", new String[] { "img", "object" });
         OBSOLETE_STYLE_ATTRS.put("link", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe" });
-        OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] { "iframe" });
+        OBSOLETE_STYLE_ATTRS.put("marginbottom", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginheight", new String[] { "iframe", "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginleft", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginright", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("margintop", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("marginwidth", new String[] { "iframe", "body" });
         OBSOLETE_STYLE_ATTRS.put("noshade", new String[] { "hr" });
         OBSOLETE_STYLE_ATTRS.put("nowrap", new String[] { "td", "th" });
         OBSOLETE_STYLE_ATTRS.put("rules", new String[] { "table" });
