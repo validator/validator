@@ -136,7 +136,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
-        OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed" });
+        OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed", "option" });
         OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
         OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
         OBSOLETE_ATTRIBUTES.put("rev", new String[] { "link", "a" });

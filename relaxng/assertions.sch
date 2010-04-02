@@ -579,6 +579,13 @@
 			</report>
 		</rule>
 
+		<rule context='h:option'>
+			<report test='@name'>
+				The &#x201C;name&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use the &#x201C;id&#x201D; attribute instead.
+			</report>
+		</rule>
+
 		<rule context='h:param'>
 			<report test='@type'>
 				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
