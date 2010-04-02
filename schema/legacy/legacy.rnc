@@ -437,6 +437,12 @@
 		}
 	embed.attrs &= embed.attrs.name?
 
+	option.attrs.name =
+		attribute name {
+			string
+		}
+	option.attrs &= option.attrs.name?
+
 ## nohref attribute
 
 	area.attrs.nohref =
