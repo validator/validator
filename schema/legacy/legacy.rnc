@@ -742,6 +742,12 @@
 		}
 	body.attrs &= body.attrs.alink?
 
+	iframe.attrs.allowtransparency =
+		attribute allowtransparency {
+			string
+		}
+	iframe.attrs &= iframe.attrs.allowtransparency?
+
 ## background attribute
 
 	body.attrs.background =
