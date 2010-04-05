@@ -240,6 +240,7 @@ public class Assertions extends Checker {
                 "div", "h1", "h2", "h3", "h4", "h5", "h6", "p", "col",
                 "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("alink", new String[] { "body" });
+        OBSOLETE_STYLE_ATTRS.put("allowtransparency", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] { "table", "tr", "td",
                 "th", "body" });
