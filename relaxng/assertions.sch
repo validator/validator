@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+?xml version="1.0"?>
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- RELAX NG Schema for HTML 5: Schematron Assertions             -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -716,6 +716,17 @@
 			</report>
 		</rule>
 
+		<rule context='h:embed'>
+			<report test='@hspace'>
+				The &#x201C;hspace&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+			<report test='@vspace'>
+				The &#x201C;vspace&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
+		</rule>
+
 		<rule context='h:hr'>
 			<report test='@noshade'>
 				The &#x201C;noshade&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
@@ -739,6 +750,10 @@
 		</rule>
 
 		<rule context='h:iframe'>
+			<report test='@allowtransparency'>
+				The &#x201C;allowtransparency&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
+			</report>
 			<report test='@frameborder'>
 				The &#x201C;frameborder&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
