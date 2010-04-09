@@ -1255,7 +1255,7 @@ public class Assertions extends Checker {
                 openActiveDescendants.put(child, new LocatorImpl(
                         getDocumentLocator()));
             }
-            if ("select" == localName && atts.getIndex("", "multiple") > -1) {
+            if ("select" == localName && atts.getIndex("", "multiple") == -1) {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("label" == localName) {
                 openLabels.put(child, new LocatorImpl(getDocumentLocator()));
