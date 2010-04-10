@@ -399,7 +399,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			string
 		}
 	button.inner = 
-		( common.inner.flow )
+		( common.inner.phrasing )
 	
 ## Complex Submit Button: <button type='submit'>
 
