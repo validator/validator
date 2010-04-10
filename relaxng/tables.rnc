@@ -221,4 +221,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria.implicit.th?
 		)
 	th.inner =
-		( common.inner.flow )
+		( common.inner.phrasing )
