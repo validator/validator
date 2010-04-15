@@ -148,4 +148,4 @@ datatypes w = "http://whattf.org/datatype-draft"
 	figcaption.attrs =
 		( common.attrs )
 	figcaption.inner =
-		( common.inner.phrasing )
+		( common.inner.flow )
