@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2007 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  * Copyright (c) 2007 Simon Pieters
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -222,7 +222,8 @@ function isHtmlCompatiblePreset(preset) {
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5/html5full-aria-rdfa.rnc") == 0)
+	preset.indexOf("http://s.validator.nu/html5/html5full-aria-rdfa.rnc") == 0 ||
+        preset.indexOf("http://s.validator.nu/html5-aria-svg-mathml.rnc") == 0)
 }
 
 function parserChanged() {
