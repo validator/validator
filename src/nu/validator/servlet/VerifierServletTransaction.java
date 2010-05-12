@@ -489,13 +489,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static boolean isDataAttributeDroppingSchema(String key) {
         return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
                 || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key) || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key));
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
     }
 
     private static boolean isXmlLangAllowingSchema(String key) {
         return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
                 || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key) || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key));
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
     }
     
     private static boolean isCheckerUrl(String url) {
@@ -768,7 +770,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-strict.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-aria.rnc"));
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-aria.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5-aria-svg-mathml.rnc"));
 
     }
 
@@ -1174,7 +1177,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         if ("http://s.validator.nu/html5/html5full-aria.rnc".equals(url)
                 || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(url)
                 || "http://s.validator.nu/html5/html5full.rnc".equals(url)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)) {
+                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
+                || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = resolveSchema(url, jingPropertyMap);

@@ -1,0 +1,24 @@
+namespace svg = "http://www.w3.org/2000/svg"
+namespace math = "http://www.w3.org/1998/Math/MathML"
+
+include "html5/html5full-aria.rnc"
+include "svg11/svg11-inc.rnc"
+include "mml2/mathml2-inc.rnc"
+
+common.elem.phrasing |= svg
+
+common.elem.phrasing |= mml.math.qname
+
+SVG.foreignObject.content |=
+	(	mml.math.qname
+	|	html.elem
+	|	body.elem
+	|	common.inner.flow
+	)
+	
+mml.Annotation-xml.datatype.svg |= svg
+
+mml.Annotation-xml.datatype.xhtml |=
+	(	html.elem
+	|	common.elem.flow
+	)
