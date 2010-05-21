@@ -39,16 +39,11 @@ mml.Annotation-xml.datatype =
 # Space datatype
 mml.namedspace.datatype =
     # <ref name="mml.length.datatype"/> forbidden pattern list//ref
+    # MikeSmith: I copied the pattern below from the MathML3 RNC
+    # schema at http://www.w3.org/TR/MathML3/appendixa.html#parsing_length
     xsd:string {
-        pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+        pattern = '\s*((-?[0-9]*(\.[0-9]*)?(e[mx]|in|cm|mm|p[xtc]|%)?)|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*'
     }
-    | string "veryverythinmathspace"
-    | string "verythinmathspace"
-    | string "thinmathspace"
-    | string "mediummathspace"
-    | string "thickmathspace"
-    | string "verythickmathspace"
-    | string "veryverythickmathspace"
 # datatypes for making matrix
 mml.align.datatype =
     list {
