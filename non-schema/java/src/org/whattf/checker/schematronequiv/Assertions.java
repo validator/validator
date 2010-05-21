@@ -931,9 +931,6 @@ public class Assertions extends Checker {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName && ismap
                     && ((ancestorMask & HREF_MASK) == 0)) {
-                if (atts.getIndex("", "src") < 0) {
-                    err("An \u201Cimg\u201D element must have an \u201Csrc\u201D attribute.");
-                }
                 err("The \u201Cimg\u201D element with the \u201Cismap\u201D attribute set must have an \u201Ca\u201D ancestor with the \u201Chref\u201D attribute.");
             } else if ("input" == localName || "button" == localName
                     || "select" == localName || "textarea" == localName
@@ -1061,51 +1058,11 @@ public class Assertions extends Checker {
                 }
             }
 
-            // link required attrs
-            else if ("link" == localName) {
-                if (atts.getIndex("", "href") < 0) {
-                    err("A \u201Clink\u201D element must have an \u201Chref\u201D attribute.");
-                }
-                if (atts.getIndex("", "rel") < 0) {
-                    err("A \u201Clink\u201D element must have a \u201Crel\u201D attribute.");
-                }
-            }
-
-            // img required attrs
-            else if ("img" == localName && atts.getIndex("", "src") < 0) {
-                err("An \u201Cimg\u201D element must have a \u201Csrc\u201D attribute.");
-            }
-
-            // source required attrs
-            else if ("source" == localName && atts.getIndex("", "src") < 0) {
-                err("A \u201Csource\u201D element must have a \u201Csrc\u201D attribute.");
-            }
-
-            // param required attrs
-            else if ("param" == localName) {
-                if (atts.getIndex("", "name") < 0) {
-                    err("A \u201Cparam\u201D element must have a \u201Cname\u201D attribute.");
-                }
-                if (atts.getIndex("", "value") < 0) {
-                    err("A \u201Cparam\u201D element must have a \u201Cvalue\u201D attribute.");
-                }
-            }
-
-            // object required attrs
-            else if ("object" == localName && atts.getIndex("", "data") < 0
-                    && atts.getIndex("", "type") < 0) {
-                err("An \u201Cobject\u201D element must have a \u201Cdata\u201D attribute or a \u201Ctype\u201D attribute.");
-            }
-
             // map required attrs
-            else if ("map" == localName) {
-                if (atts.getIndex("", "name") < 0) {
-                    err("A \u201Cmap\u201D element must have a \u201Cname\u201D attribute.");
-                } else if (id != null) {
-                    String nameVal = atts.getValue("", "name");
-                    if (nameVal != null && !nameVal.equals(id)) {
-                        err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
-                    }
+            else if ("map" == localName && id != null) {
+                String nameVal = atts.getValue("", "name");
+                if (nameVal != null && !nameVal.equals(id)) {
+                    err("The \u201Cid\u201D attribute on a \u201Cmap\u201D element must have an the same value as the \u201Cname\u201D attribute.");
                 }
             }
 
