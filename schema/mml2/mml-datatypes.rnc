@@ -122,6 +122,8 @@ mml.columnspacing.datatype =
     }
 mml.columnspan.datatype =
     mml.positiveinteger.datatype
+mml.rowspan.datatype =
+    mml.positiveinteger.datatype
 mml.lines.datatype =
     list {
         # (none | solid | dashed) +

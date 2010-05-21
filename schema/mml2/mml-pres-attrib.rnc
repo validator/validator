@@ -160,10 +160,7 @@ mml.att-tableinfo &=
     mml.att-equalrows,
     mml.att-equalcolumns,
     mml.att-displaystyle
-mml.att-rowspan =
-    attribute rowspan {
-        string "top" | string "bottom" | string "center" | string "baseline" | string "axis "
-    }?
+mml.att-rowspan = attribute rowspan { mml.rowspan.datatype }?
 mml.att-columnspan = attribute columnspan { mml.columnspan.datatype }?
 mml.att-edge = attribute edge { string "left" | string "right" }?
 # actiontypes
