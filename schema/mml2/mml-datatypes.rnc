@@ -37,13 +37,8 @@ mml.Annotation-xml.datatype =
         }*
     }
 # Space datatype
-mml.namedspace.datatype =
+mml.namedspace.datatype = mml.length.datatype
     # <ref name="mml.length.datatype"/> forbidden pattern list//ref
-    # MikeSmith: I copied the pattern below from the MathML3 RNC
-    # schema at http://www.w3.org/TR/MathML3/appendixa.html#parsing_length
-    xsd:string {
-        pattern = '\s*((-?[0-9]*(\.[0-9]*)?(e[mx]|in|cm|mm|p[xtc]|%)?)|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*'
-    }
 # datatypes for making matrix
 mml.align.datatype =
     list {
@@ -66,22 +61,7 @@ mml.columnwidth.datatype =
     list {
         # ( auto | number h-unit | namedspace | fit ) +
         (string "auto"
-         | # <ref name="mml.length.datatype"/> forbidden pattern list//ref
-           xsd:string {
-               pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-           }
-         | # <ref name="mml.namedspace.datatype"/> forbidden pattern list//ref
-           (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-            xsd:string {
-                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-            }
-            | string "veryverythinmathspace"
-            | string "verythinmathspace"
-            | string "thinmathspace"
-            | string "mediummathspace"
-            | string "thickmathspace"
-            | string "verythickmathspace"
-            | string "veryverythickmathspace")
+         | mml.length.datatype
          | string "fit")+
     }
 mml.groupalign.datatype =
@@ -97,28 +77,11 @@ mml.rowspacing.datatype =
     list {
         # ( number v-unit ) +
         # <ref name="mml.length.datatype"/> forbidden pattern list//ref
-        xsd:string {
-            pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-        }+
+        mml.length.datatype+
     }
 mml.columnspacing.datatype =
     list {
-        # ( number h-unit | namedspace ) +
-        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-         xsd:string {
-             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-         },
-         (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-          xsd:string {
-              pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-          }
-          | string "veryverythinmathspace"
-          | string "verythinmathspace"
-          | string "thinmathspace"
-          | string "mediummathspace"
-          | string "thickmathspace"
-          | string "verythickmathspace"
-          | string "veryverythickmathspace"))+
+        mml.length.datatype+
     }
 mml.columnspan.datatype =
     mml.positiveinteger.datatype
@@ -132,34 +95,5 @@ mml.lines.datatype =
 mml.framespacing.datatype =
     list {
         # (number h-unit | namedspace) (number v-unit | namedspace)
-        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-         xsd:string {
-             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-         }
-         | (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-            xsd:string {
-                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-            }
-            | string "veryverythinmathspace"
-            | string "verythinmathspace"
-            | string "thinmathspace"
-            | string "mediummathspace"
-            | string "thickmathspace"
-            | string "verythickmathspace"
-            | string "veryverythickmathspace")),
-        (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-         xsd:string {
-             pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-         }
-         | (# <ref name="mml.length.datatype"/> forbidden pattern list//ref
-            xsd:string {
-                pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
-            }
-            | string "veryverythinmathspace"
-            | string "verythinmathspace"
-            | string "thinmathspace"
-            | string "mediummathspace"
-            | string "thickmathspace"
-            | string "verythickmathspace"
-            | string "veryverythickmathspace"))
+        mml.length.datatype
     }
