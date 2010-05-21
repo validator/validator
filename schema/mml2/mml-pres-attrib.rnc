@@ -164,7 +164,7 @@ mml.att-rowspan =
     attribute rowspan {
         string "top" | string "bottom" | string "center" | string "baseline" | string "axis "
     }?
-mml.att-columnspan = attribute columnspan { mml.columnalign.datatype }?
+mml.att-columnspan = attribute columnspan { mml.columnspan.datatype }?
 mml.att-edge = attribute edge { string "left" | string "right" }?
 # actiontypes
 mml.att-actiontype = 

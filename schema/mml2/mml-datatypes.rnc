@@ -120,6 +120,8 @@ mml.columnspacing.datatype =
           | string "verythickmathspace"
           | string "veryverythickmathspace"))+
     }
+mml.columnspan.datatype =
+    mml.positiveinteger.datatype
 mml.lines.datatype =
     list {
         # (none | solid | dashed) +
