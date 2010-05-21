@@ -18,7 +18,7 @@ mml.uri.datatype = w:iri-ref
 mml.nonnegativefloat.datatype = xsd:float { minInclusive = "0" }
 mml.length.datatype =
     xsd:string {
-        pattern = "[0-9]+(em|ex|px|in|cm|mm|pt|pc|%)?"
+        pattern = '\s*((-?[0-9]*(\.[0-9]*)?(e[mx]|in|cm|mm|p[xtc]|%)?)|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*'
     }
 mml.color.datatype =
     xsd:string { pattern = "#[0-9A-Fa-f]{6}" }
