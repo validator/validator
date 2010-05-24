@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.whattf.datatype.DateOrTimeContent;
-import org.whattf.datatype.Ratio;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -76,11 +75,7 @@ public final class TextContentChecker extends Checker {
     private DatatypeStreamingValidator streamingValidatorFor(String uri,
             String localName, Attributes atts) {
         if ("http://www.w3.org/1999/xhtml".equals(uri)) {
-            if ("meter".equals(localName) || "progress".equals(localName)) {
-                if (atts.getIndex("", "value") < 0) {
-                    return Ratio.THE_INSTANCE.createStreamingValidator(null);
-                }
-            } else if ("time".equals(localName)) {
+            if ("time".equals(localName)) {
                 if (atts.getIndex("", "datetime") < 0) {
                     return DateOrTimeContent.THE_INSTANCE.createStreamingValidator(null);
                 }
