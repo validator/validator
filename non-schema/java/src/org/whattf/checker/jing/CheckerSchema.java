@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -29,6 +29,7 @@ import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UncheckedSubtreeWarner;
 import org.whattf.checker.UsemapChecker;
+import org.whattf.checker.XmlPiChecker;
 import org.whattf.checker.schematronequiv.Assertions;
 import org.whattf.checker.table.TableChecker;
 
@@ -53,6 +54,8 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
     
     public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
+    
+    public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
     
     private final PropertyMap properties;
     
