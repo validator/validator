@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -152,6 +152,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return KeyLabelList.THE_INSTANCE;
         } else if ("zero".equals(typeLocalName)) {
             return Zero.THE_INSTANCE;
+        } else if ("cdo-cdc-pair".equals(typeLocalName)) {
+            return CdoCdcPair.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
