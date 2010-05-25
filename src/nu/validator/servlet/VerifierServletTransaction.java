@@ -85,6 +85,8 @@ import nu.validator.xml.XhtmlSaxEmitter;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 
+import org.whattf.checker.XmlPiChecker;
+
 import org.apache.log4j.Logger;
 import org.whattf.checker.jing.CheckerSchema;
 import org.whattf.io.DataUri;
@@ -230,7 +232,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
-            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/" };
+            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
+            "http://c.validator.nu/xml-pi/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -333,6 +336,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private String charsetOverride = null;
 
     private Set<String> filteredNamespaces = new LinkedHashSet<String>(); // linked
+
+    private LexicalHandler lexicalHandler;
 
     // for
     // UI
@@ -437,6 +442,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.ASSERTION_SCH);
             schemaMap.put("http://c.validator.nu/obsolete/",
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
+            schemaMap.put("http://c.validator.nu/xml-pi/",
+                    CheckerSchema.XML_PI_CHECKER);
 
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
@@ -1083,6 +1090,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             SAXNotSupportedException {
         xmlParser = new SAXDriver();
         xmlParser.setCharacterHandler(sourceCode);
+        if (lexicalHandler != null) {
+          xmlParser.setProperty("http://xml.org/sax/properties/lexical-handler",
+              (LexicalHandler) lexicalHandler);
+        }
         reader = new IdFilter(xmlParser);
         reader.setFeature("http://xml.org/sax/features/string-interning", true);
         reader.setFeature(
@@ -1183,6 +1194,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         Schema sch = resolveSchema(url, jingPropertyMap);
         Validator validator = sch.createValidator(jingPropertyMap);
+        if (validator.getContentHandler() instanceof XmlPiChecker) {
+          lexicalHandler = (LexicalHandler) validator.getContentHandler();
+        }
         return validator;
     }
 

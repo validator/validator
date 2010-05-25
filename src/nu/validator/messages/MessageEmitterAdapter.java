@@ -51,6 +51,7 @@ import nu.validator.xml.XhtmlSaxEmitter;
 import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
 import org.whattf.checker.NormalizationChecker;
+import org.whattf.checker.DatatypeMismatchException;
 import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
@@ -346,6 +347,22 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         if (e instanceof BadAttributeValueException) {
           BadAttributeValueException ex = (BadAttributeValueException) e;
+          Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+          for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+            DatatypeException dex = entry.getValue();
+            if (dex instanceof Html5DatatypeException) {
+              Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+              if (ex5.isWarning()) {
+                this.warnings++;
+                throwIfTooManyMessages();
+                messageFromSAXParseException(MessageType.WARNING, e, exact);
+                return;
+              }
+            }
+          }
+        }
+        if (e instanceof DatatypeMismatchException) {
+          DatatypeMismatchException ex = (DatatypeMismatchException) e;
           Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
           for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
             DatatypeException dex = entry.getValue();
@@ -912,7 +929,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     @SuppressWarnings("unchecked")
     private void elaboration(Exception e) throws SAXException {
-        if (!(e instanceof AbstractValidationException)) {
+        if (!(e instanceof AbstractValidationException
+              || e instanceof DatatypeMismatchException)) {
             return;
         }
 
@@ -955,6 +973,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             elaborateContentModel(elt);
         } else if (e instanceof BadAttributeValueException) {
             BadAttributeValueException ex = (BadAttributeValueException) e;
+            Map<String, DatatypeException> map = ex.getExceptions();
+            elaborateDatatypes(map);
+        } else if (e instanceof DatatypeMismatchException) {
+            DatatypeMismatchException ex = (DatatypeMismatchException) e;
             Map<String, DatatypeException> map = ex.getExceptions();
             elaborateDatatypes(map);
         } else if (e instanceof StringNotAllowedException) {
