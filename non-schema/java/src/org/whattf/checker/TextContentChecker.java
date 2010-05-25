@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -26,6 +27,8 @@ import java.util.LinkedList;
 
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
+import org.whattf.datatype.Html5DatatypeException;
+import org.whattf.datatype.CdoCdcPair;
 import org.whattf.datatype.DateOrTimeContent;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -37,10 +40,6 @@ import org.xml.sax.SAXException;
  * custom datatypes, this class uses objects that implement
  * <code>DatatypeStreamingValidator</code>.
  * 
- * <p>
- * Examples of elements handled by this class are <code>time</code>,
- * <code>meter</code> and <code>progress</code>.
- * 
  * @version $Id$
  * @author hsivonen
  */
@@ -49,7 +48,7 @@ public final class TextContentChecker extends Checker {
     /**
      * The stack of <code>DatatypeStreamingValidator</code>s corresponding to
      * open elements. Stack entry is <code>null</code> if the corresponding
-     * element does not need <code>textContent</code> checking. Grows from the 
+     * element does not need <code>textContent</code> checking. Grows from the
      * tail.
      */
     private final LinkedList<DatatypeStreamingValidator> stack = new LinkedList<DatatypeStreamingValidator>();
@@ -62,15 +61,18 @@ public final class TextContentChecker extends Checker {
     }
 
     /**
-     * Returns a <code>DatatypeStreamingValidator</code> for the element if it 
-     * needs <code>textContent</code> checking or <code>null</code> if it does 
+     * Returns a <code>DatatypeStreamingValidator</code> for the element if it
+     * needs <code>textContent</code> checking or <code>null</code> if it does
      * not.
      * 
-     * @param uri the namespace URI of the element
-     * @param localName the local name of the element
-     * @param atts the attributes
-     * @return a <code>DatatypeStreamingValidator</code> or <code>null</code> if 
-     * checks not necessary
+     * @param uri
+     *            the namespace URI of the element
+     * @param localName
+     *            the local name of the element
+     * @param atts
+     *            the attributes
+     * @return a <code>DatatypeStreamingValidator</code> or <code>null</code> if
+     *         checks not necessary
      */
     private DatatypeStreamingValidator streamingValidatorFor(String uri,
             String localName, Attributes atts) {
@@ -79,6 +81,11 @@ public final class TextContentChecker extends Checker {
                 if (atts.getIndex("", "datetime") < 0) {
                     return DateOrTimeContent.THE_INSTANCE.createStreamingValidator(null);
                 }
+            }
+            if ("style".equals(localName)
+                    || "textarea".equals(localName)
+                    || "title".equals(localName)) {
+                return CdoCdcPair.THE_INSTANCE.createStreamingValidator(null);
             }
         }
         return null;
@@ -113,11 +120,66 @@ public final class TextContentChecker extends Checker {
                             + "\u201D from namespace \u201C" + uri
                             + "\u201D was not in the required format.");
                 } else {
-                    err("The text content of element \u201C" + localName
-                            + "\u201D from namespace \u201C" + uri
-                            + "\u201D was not in the required format: " + msg);
+                    if ("time".equals(localName)) {
+                        try {
+                            errBadTextContent(e,
+                                    DateOrTimeContent.class,
+                                    localName, uri);
+                        } catch (ClassNotFoundException ce) {
+                        }
+                    } else if ("style".equals(localName)) {
+                        try {
+                            errBadTextContent(e,
+                                    CdoCdcPair.class,
+                                    localName, uri);
+                        } catch (ClassNotFoundException ce) {
+                        }
+                    } else if ("textarea".equals(localName)
+                            || "title".equals(localName)) {
+                        try {
+                            warnBadTextContent(e,
+                                    CdoCdcPair.class,
+                                    localName, uri);
+                        } catch (ClassNotFoundException ce) {
+                        }
+                    } else {
+                        err("The text content of element \u201C" + localName
+                                // + "\u201D from namespace \u201C" + uri
+                                + "\u201D was not in the required format: "
+                                + msg.split(": ")[1]);
+                    }
                 }
             }
+        }
+    }
+
+    private void errBadTextContent(DatatypeException e, Class<?> datatypeClass,
+            String localName, String uri) throws SAXException,
+            ClassNotFoundException {
+        if (getErrorHandler() != null) {
+            Html5DatatypeException ex5 = (Html5DatatypeException) e;
+            boolean warning = ex5.isWarning() ? true : false;
+            DatatypeMismatchException dme = new DatatypeMismatchException(
+                    "The text content of element \u201c" + localName
+                            // + "\u201D from namespace \u201C" + uri
+                            + "\u201d was not in the required format: "
+                            + e.getMessage().split(": ")[1],
+                    getDocumentLocator(), datatypeClass, warning);
+            getErrorHandler().error(dme);
+        }
+    }
+
+    private void warnBadTextContent(DatatypeException e, Class<?> datatypeClass,
+            String localName, String uri) throws SAXException,
+            ClassNotFoundException {
+        if (getErrorHandler() != null) {
+            DatatypeMismatchException dme = new DatatypeMismatchException(
+                    "Possible problem in text content of element \u201c"
+                            + localName
+                            // + "\u201D from namespace \u201C" + uri
+                            + "\u201d: " + e.getMessage().split(": ")[1],
+                    getDocumentLocator(), datatypeClass, true);
+            getErrorHandler().error(dme);
         }
     }
 
