@@ -90,8 +90,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Iri.THE_INSTANCE;
         } else if ("iri-ref".equals(typeLocalName)) {
             return IriRef.THE_INSTANCE;
-        } else if ("ratio".equals(typeLocalName)) {
-            return Ratio.THE_INSTANCE;
         } else if ("string".equals(typeLocalName)) {
             return AsciiCaseInsensitiveString.THE_INSTANCE;
         } else if ("language".equals(typeLocalName)) {
