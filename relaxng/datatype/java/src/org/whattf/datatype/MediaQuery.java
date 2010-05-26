@@ -89,7 +89,7 @@ public class MediaQuery extends AbstractDatatype {
         ALL, AURAL, BRAILLE, HANDHELD, PRINT, PROJECTION, SCREEN, TTY, TV, EMBOSSED, SPEECH, INVALID;
         private static MediaType toCaps(String str) {
             try {
-                return valueOf(str.toUpperCase());
+                return valueOf(toAsciiUpperCase(str));
             } catch (Exception ex) {
                 return INVALID;
             }

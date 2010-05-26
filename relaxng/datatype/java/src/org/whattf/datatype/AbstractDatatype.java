@@ -42,11 +42,6 @@ import org.relaxng.datatype.ValidationContext;
 public abstract class AbstractDatatype implements Datatype {
 
     /**
-     * Mask for ASCII case folding.
-     */
-    private static final int CASE_MASK = (1 << 5);
-
-    /**
      * Constructor
      */
     AbstractDatatype() {
@@ -164,32 +159,50 @@ public abstract class AbstractDatatype implements Datatype {
         return c >= '0' && c <= '9';
     }
 
-    /**
-     * If the argument is an upper case ASCII letter, returns the letter in 
-     * lower case. Otherwise returns the argument.
-     * @param c a UTF-16 code unit
-     * @return upper case ASCII lower cased
-     */
-    protected final char toAsciiLowerCase(char c) {
+    protected static final char toAsciiLowerCase(char c) {
         if (c >= 'A' && c <= 'Z') {
-            return (char) (c | CASE_MASK);
-        } else {
-           return c;
+            c += 0x20;
         }
+        return c;
     }
-    
-    protected final String toAsciiLowerCase(CharSequence str) {
-        int len = str.length();
-        if (len == 0) {
-            return "";
+
+    protected static final String toAsciiLowerCase(CharSequence str) {
+        if (str == null) {
+            return null;
         }
-        char[] buf = new char[len];
-        for (int i = 0; i < len; i++) {
-            buf[i] = toAsciiLowerCase(str.charAt(i));
+        char[] buf = new char[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'A' && c <= 'Z') {
+                c += 0x20;
+            }
+            buf[i] = c;
         }
         return new String(buf);
     }
-    
+
+    protected static final char toAsciiUpperCase(char c) {
+        if (c >= 'a' && c <= 'z') {
+            c -= 0x20;
+        }
+        return c;
+    }
+
+    protected static final String toAsciiUpperCase(CharSequence str) {
+        if (str == null) {
+            return null;
+        }
+        char[] buf = new char[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                c -= 0x20;
+            }
+            buf[i] = c;
+        }
+        return new String(buf);
+    }
+
     protected DatatypeException newDatatypeException(String message) {
         return new Html5DatatypeException(this.getClass(), this.getName(), message);
     }
