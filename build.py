@@ -547,6 +547,7 @@ def buildRunJarPathList():
 def getRunArgs(heap="$((HEAP))"):
   classPath = os.pathsep.join(buildRunJarPathList())
   args = [
+    '-XX:-DontCompileHugeMethods',
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
     '-XX:ThreadStackSize=2048',
