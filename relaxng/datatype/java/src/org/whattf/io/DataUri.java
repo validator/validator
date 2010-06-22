@@ -27,6 +27,9 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 
+import com.hp.hpl.jena.iri.IRI;
+import com.hp.hpl.jena.iri.IRIFactory;
+
 public class DataUri {
 
     public static boolean startsWithData(String uri) {
@@ -47,19 +50,22 @@ public class DataUri {
     private InputStream inputStream;
     
     /**
-     * @throws IOException 
+     * @throws IOException, MalformedURLException
      * 
      */
-    public DataUri(String uri) throws IOException {
-        if (!startsWithData(uri)) {
+    protected void init(IRI uri) throws IOException, MalformedURLException {
+        if (!uri.getScheme().equals("data")) {
             throw new IllegalArgumentException("The input did not start with data:.");
         }
-        InputStream is = new PercentDecodingReaderInputStream(new StringReader(uri));
-        is.skip(5); // "data:"
-        
+
+        if (uri.getRawFragment() != null) {
+            throw new MalformedURLException("Fragment is not allowed for data: URIs according to RFC 2397. But if strictly comply with RFC 3986, ignore this error.");
+        }
+
+        InputStream is = new PercentDecodingReaderInputStream(new StringReader(uri.getRawPath()));
         StringBuilder sb = new StringBuilder();
         State state = State.AT_START;
-        int i = 5; // string counter
+        int i = 0; // string counter
         for (;;i++) {
             int b = is.read();
             if (b == -1) {
@@ -239,6 +245,29 @@ public class DataUri {
                     }
             }
         }
+
+    }
+
+    /**
+     * @throws IOException, MalformedURLException
+     * 
+     */
+    public DataUri(String uri) throws IOException, MalformedURLException {
+        IRIFactory fac = new IRIFactory();
+        fac.shouldViolation(true, false);
+        fac.securityViolation(true, false);
+        fac.dnsViolation(true, false);
+        fac.mintingViolation(false, false);
+        fac.useSpecificationIRI(true);
+        init(fac.construct(uri));
+    }
+
+    /**
+     * @throws IOException, MalformedURLException
+     * 
+     */
+    public DataUri(IRI uri) throws IOException, MalformedURLException {
+        init(uri);
     }
 
     private IOException newDatatypeException(int i, String head, char c, String tail) {

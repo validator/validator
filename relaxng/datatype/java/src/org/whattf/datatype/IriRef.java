@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.RhinoException;
@@ -166,25 +165,20 @@ public class IriRef extends AbstractDatatype {
                 throw newDatatypeException("Not an absolute IRI.");
             }
         }
-        try {
-            if (iri != null) {
-                String ascii = iri.toASCIIString();
-                if (data) {
-                    try {
-                        DataUri dataUri = new DataUri(ascii);
-                        InputStream is = dataUri.getInputStream();
-                        while (is.read() >= 0) {
-                            // spin
-                        }
-                    } catch (DataUriException e) {
-                        throw newDatatypeException(e.getIndex(), e.getHead(), e.getLiteral(), e.getTail());
-                    } catch (IOException e) {
-                        throw newDatatypeException(e.getMessage());
-                    }                    
-                }
+        if (iri != null) {
+            if (data) {
+                try {
+                    DataUri dataUri = new DataUri(iri);
+                    InputStream is = dataUri.getInputStream();
+                    while (is.read() >= 0) {
+                        // spin
+                    }
+                } catch (DataUriException e) {
+                    throw newDatatypeException(e.getIndex(), e.getHead(), e.getLiteral(), e.getTail());
+                } catch (IOException e) {
+                    throw newDatatypeException(e.getMessage());
+                }                    
             }
-        } catch (MalformedURLException e) {
-            throw newDatatypeException(e.getMessage());
         }
     }
 
