@@ -138,7 +138,7 @@ common.attrs.basic =
 		common.attrs.xmlspace
 	common.attrs.xmlspace =
 		attribute xml:space {
-			string "preserve" # REVISIT this is not allowed per spec
+			string "preserve" | string "default"
 		} & XMLonly
 
 common.attrs.i18n =
