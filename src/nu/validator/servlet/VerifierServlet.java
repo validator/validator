@@ -206,7 +206,7 @@ public class VerifierServlet extends HttpServlet {
                 String queryString = request.getQueryString();
                 response.setHeader("Location", "http://html5.validator.nu/" + (queryString == null ? "" : "?" + queryString));
         } else if (hostMatch(GENERIC_HOST, serverName) && GENERIC_PATH.equals(pathInfo)) {
-            response.setHeader("Access-Control", "allow <*>");
+            response.setHeader("Access-Control-Allow-Origin", "*");
             if (isOptions) {
                 response.setHeader("Access-Control-Policy-Path", GENERIC_PATH);
                 sendOptions(request, response);
@@ -214,9 +214,8 @@ public class VerifierServlet extends HttpServlet {
                 new VerifierServletTransaction(request, response).service();
             }        
         } else if (hostMatch(HTML5_HOST, serverName) && HTML5_PATH.equals(pathInfo)) {
-            response.setHeader("Access-Control", "allow <*>");
+            response.setHeader("Access-Control-Allow-Origin", "*");
             if (isOptions) {
-                response.setHeader("Access-Control-Policy-Path", HTML5_PATH);
                 sendOptions(request, response);
             } else {
                 new Html5ConformanceCheckerTransaction(request, response).service();
@@ -234,6 +233,7 @@ public class VerifierServlet extends HttpServlet {
 
     private void sendGetOnlyOptions(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Allow", "GET, HEAD, OPTIONS");
+        response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, OPTIONS");
         response.setContentType("application/octet-stream");
         response.setContentLength(0);
     }
@@ -241,6 +241,7 @@ public class VerifierServlet extends HttpServlet {
     private void sendOptions(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Max-Age", "43200"); // 12 hours
         response.setHeader("Allow", "GET, HEAD, POST, OPTIONS");
+        response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, OPTIONS");
         response.setContentType("application/octet-stream");
         response.setContentLength(0);
     }
