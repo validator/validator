@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -43,37 +43,43 @@ public final class Language extends AbstractDatatype {
      * The singleton instance.
      */
     public static final Language THE_INSTANCE = new Language();
-    
+
     private static final Pattern HYPHEN = Pattern.compile("-");
-    
-    private static final boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
+
+    private static final boolean WARN = System.getProperty(
+            "org.whattf.datatype.warn", "").equals("true") ? true : false;
 
     private static String[] languages = null;
-    
+
+    private static String[] extlangs = null;
+
     private static String[] scripts = null;
-    
+
     private static String[] regions = null;
-    
+
     private static String[] variants = null;
-    
+
     private static String[] grandfathered = null;
-    
+
     private static String[] redundant = null;
-    
+
     private static String[] deprecated = null;
 
     private static String[] deprecatedLang = null;
-    
+
     private static int[] suppressedScriptByLanguage = null;
 
     private static Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
-    
+
     private static String[][][] prefixesByVariant = null;
-    
+
+    private static int[] prefixByExtlang = null;
+
     static {
         try {
             LanguageData data = new LanguageData();
             languages = data.getLanguages();
+            extlangs = data.getExtlangs();
             scripts = data.getScripts();
             regions = data.getRegions();
             variants = data.getVariants();
@@ -82,6 +88,7 @@ public final class Language extends AbstractDatatype {
             deprecated = data.getDeprecated();
             deprecatedLang = data.getDeprecatedLang();
             suppressedScriptByLanguage = data.getSuppressedScriptByLanguage();
+            prefixByExtlang = data.getPrefixByExtlang();
             preferredValueByLanguageMap = data.getPreferredValueByLanguageMap();
             prefixesByVariant = data.getPrefixesByVariant();
         } catch (IOException e) {
@@ -96,54 +103,50 @@ public final class Language extends AbstractDatatype {
         super();
     }
 
-    public void checkValid(CharSequence lit)
-            throws DatatypeException {
+    public void checkValid(CharSequence lit) throws DatatypeException {
         String literal = lit.toString();
         if (literal.length() == 0) {
-            throw newDatatypeException(
-                    "The empty string is not a valid language tag.");
+            throw newDatatypeException("The empty string is not a valid language tag.");
         }
         literal = toAsciiLowerCase(literal);
-        if (isGrandfathered(literal) && WARN) {
-            if (isDeprecated(literal)) {
-                throw newDatatypeException(
-                "The grandfathered language tag ", literal, " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+        if (isGrandfathered(literal)) {
+            if (isDeprecated(literal) && WARN) {
+                throw newDatatypeException("The grandfathered language tag ",
+                        literal, " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
             }
             return;
         }
-        if (isRedundant(literal) && WARN) {
-            if (isDeprecated(literal)) {
-                throw newDatatypeException(
-                "The language tag ", lit.toString(), " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+        if (isRedundant(literal)) {
+            if (isDeprecated(literal) && WARN) {
+                throw newDatatypeException("The language tag ", lit.toString(),
+                        " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
             }
             return;
         }
         if (literal.startsWith("-")) {
-            throw newDatatypeException(
-                    "Language tag must not start with HYPHEN-MINUS.");
+            throw newDatatypeException("Language tag must not start with HYPHEN-MINUS.");
         }
         if (literal.endsWith("-")) {
-            throw newDatatypeException(
-                    "Language tag must not end with HYPHEN-MINUS.");
+            throw newDatatypeException("Language tag must not end with HYPHEN-MINUS.");
         }
-        
+
         String[] subtags = HYPHEN.split(literal);
-        
+
         for (int j = 0; j < subtags.length; j++) {
             int len = subtags[j].length();
             if (len == 0) {
-                throw newDatatypeException(
-                "Zero-length subtag.");                                
+                throw newDatatypeException("Zero-length subtag.");
             } else if (len > 8) {
-                throw newDatatypeException(
-                "Subtags must next exceed 8 characters in length.");                                                
+                throw newDatatypeException("Subtags must not exceed 8 characters in length.");
             }
         }
-        
+
         // Language
-        
+
         int i = 0;
         String subtag = subtags[i];
         int len = subtag.length();
@@ -153,13 +156,14 @@ public final class Language extends AbstractDatatype {
         }
         if ((len == 2 || len == 3) && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw newDatatypeException(
-                        "Bad ISO language part in language tag.");
+                throw newDatatypeException("The language subtag ", subtag,
+                        " is not a valid ISO language part of a language tag.");
             }
             if (isDeprecatedLang(subtag) && WARN) {
-                throw newDatatypeException(
-                "The language subtag ", subtag, " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+                throw newDatatypeException("The language subtag ", subtag,
+                        " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -167,21 +171,19 @@ public final class Language extends AbstractDatatype {
             }
             subtag = subtags[i];
             len = subtag.length();
-            if (len == 3) {
-                throw newDatatypeException(
-                        "Found reserved language extension subtag.");
-            }
         } else if (len == 4 && isLowerCaseAlpha(subtag)) {
-            throw newDatatypeException("Found reserved language tag.");
-        } else if (len == 5 && isLowerCaseAlpha(subtag)) {
+            throw newDatatypeException("Found reserved language tag: ", subtag,
+                    ".");
+        } else if (len >= 5 && isLowerCaseAlpha(subtag)) {
             if (!isLanguage(subtag)) {
-                throw newDatatypeException(
-                        "Bad IANA language part in language tag.");
+                throw newDatatypeException("The language subtag ", subtag,
+                        " is not a valid IANA language part of a language tag.");
             }
             if (isDeprecatedLang(subtag) && WARN) {
-                throw newDatatypeException(
-                "The language subtag ", subtag, " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+                throw newDatatypeException("The language subtag ", subtag,
+                        " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -189,25 +191,25 @@ public final class Language extends AbstractDatatype {
             }
             subtag = subtags[i];
             len = subtag.length();
+        } else {
+            throw newDatatypeException("The language subtag ", subtag,
+                    " is not a valid language subtag.");
         }
-        
-        // Script?
-        
+
+        // extlang
+
         if ("x".equals(subtag)) {
             checkPrivateUse(i, subtags);
             return;
         }
-        if (subtag.length() == 4) {
-            if (!isScript(subtag)) {
-                throw newDatatypeException("Bad script subtag.");
+        if (subtag.length() == 3 && isLowerCaseAlpha(subtag)) {
+            if (!isExtlang(subtag)) {
+                throw newDatatypeException("Bad extlang subtag ", subtag, ".");
             }
-            if (isDeprecated(subtag) && WARN) {
-                throw newDatatypeException(
-                "The script subtag ", subtag, " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
-            }
-            if (shouldSuppressScript(subtags[0], subtag)) {
-                throw newDatatypeException("Language tag should omit the default script for the language.");                
+            if (!usesPrefixByExtlang(subtags[0], subtag)) {
+                // IANA language tags are never correct prefixes.
+                throw newDatatypeException("Extlang subtag ", subtag,
+                        " has an incorrect prefix.");
             }
             i++;
             if (i == subtags.length) {
@@ -216,18 +218,46 @@ public final class Language extends AbstractDatatype {
             subtag = subtags[i];
             len = subtag.length();
         }
-        
+
+        // Script?
+
+        if ("x".equals(subtag)) {
+            checkPrivateUse(i, subtags);
+            return;
+        }
+        if (subtag.length() == 4 & isLowerCaseAlpha(subtag)) {
+            if (!isScript(subtag)) {
+                throw newDatatypeException("Bad script subtag.");
+            }
+            if (isDeprecated(subtag) && WARN) {
+                throw newDatatypeException("The script subtag ", subtag,
+                        " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
+            }
+            if (shouldSuppressScript(subtags[0], subtag)) {
+                throw newDatatypeException("Language tag should omit the default script for the language.");
+            }
+            i++;
+            if (i == subtags.length) {
+                return;
+            }
+            subtag = subtags[i];
+            len = subtag.length();
+        }
+
         // Region
-        
+
         if ((len == 3 && isDigit(subtag))
                 || (len == 2 && isLowerCaseAlpha(subtag))) {
             if (!isRegion(subtag)) {
                 throw newDatatypeException("Bad region subtag.");
             }
             if (isDeprecated(subtag) && WARN) {
-                throw newDatatypeException(
-                "The region subtag ", subtag, " is deprecated."
-                + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+                throw newDatatypeException("The region subtag ", subtag,
+                        " is deprecated." + " Use \u201C"
+                                + preferredValueByLanguageMap.get(literal)
+                                + "\u201D instead.", WARN);
             }
             i++;
             if (i == subtags.length) {
@@ -236,29 +266,35 @@ public final class Language extends AbstractDatatype {
             subtag = subtags[i];
             len = subtag.length();
         }
-        
+
         // Variant
-        
+
         for (;;) {
             if ("x".equals(subtag)) {
                 checkPrivateUse(i, subtags);
                 return;
             }
-            // cutting corners here a bit since there are no extensions at this time
-            if (len == 1) {
-                throw newDatatypeException("Unknown extension.");
-            } else {
+            // cutting corners here a bit since there are no extensions at this
+            // time
+            if (len == 1 && isLowerCaseAlphaNumeric(subtag)) {
+                throw newDatatypeException("Unknown extension ", subtag, ".");
+            } else if ((len == 4 && isDigit(subtag.charAt(0)) && isLowerCaseAlphaNumeric(subtag))
+                    || (len >= 5 && isLowerCaseAlphaNumeric(subtag))) {
                 if (!isVariant(subtag)) {
-                    throw newDatatypeException("Bad variant subtag.");
+                    throw newDatatypeException("Bad variant subtag ", subtag, ".");
                 }
                 if (isDeprecated(subtag) && WARN) {
-                    throw newDatatypeException(
-                    "The variant subtag ", subtag, " is deprecated."
-                    + " Use \u201C" + preferredValueByLanguageMap.get(literal) + "\u201D instead." , WARN);
+                    throw newDatatypeException("The variant subtag ", subtag,
+                            " is deprecated." + " Use \u201C"
+                                    + preferredValueByLanguageMap.get(literal)
+                                    + "\u201D instead.", WARN);
                 }
                 if (!hasGoodPrefix(subtags, i)) {
-                    throw newDatatypeException("Variant lacks required prefix.");                    
+                    throw newDatatypeException("Variant ", subtag, " lacks required prefix.");
                 }
+            } else {
+                throw newDatatypeException("The subtag ", subtag,
+                        " does not match the format for any permissible subtag type.");
             }
             i++;
             if (i == subtags.length) {
@@ -290,13 +326,14 @@ public final class Language extends AbstractDatatype {
         for (int i = 0; i < prefix.length; i++) {
             String prefixComponent = prefix[i];
             if (!subtagsContainPrefixComponent(prefixComponent, subtags, limit)) {
-                return false;   
+                return false;
             }
         }
         return true;
     }
 
-    private boolean subtagsContainPrefixComponent(String prefixComponent, String[] subtags, int limit) {
+    private boolean subtagsContainPrefixComponent(String prefixComponent,
+            String[] subtags, int limit) {
         for (int i = 0; i < limit; i++) {
             String subtag = subtags[i];
             if (subtag.equals(prefixComponent)) {
@@ -304,6 +341,14 @@ public final class Language extends AbstractDatatype {
             }
         }
         return false;
+    }
+
+    private boolean usesPrefixByExtlang(String language, String extlang) {
+        int langIndex = Arrays.binarySearch(languages, language);
+        int extlangIndex = Arrays.binarySearch(extlangs, extlang);
+        assert langIndex > -1;
+        int prefixExpected = prefixByExtlang[extlangIndex];
+        return prefixExpected == langIndex;
     }
 
     private boolean shouldSuppressScript(String language, String script) {
@@ -322,7 +367,8 @@ public final class Language extends AbstractDatatype {
     }
 
     private boolean isRegion(String subtag) {
-        return (Arrays.binarySearch(regions, subtag) > -1) || "aa".equals(subtag)
+        return (Arrays.binarySearch(regions, subtag) > -1)
+                || "aa".equals(subtag)
                 || ("qm".compareTo(subtag) <= 0 && "qz".compareTo(subtag) >= 0)
                 || ("xa".compareTo(subtag) <= 0 && "xz".compareTo(subtag) >= 0)
                 || "zz".equals(subtag);
@@ -331,6 +377,10 @@ public final class Language extends AbstractDatatype {
     private boolean isScript(String subtag) {
         return (Arrays.binarySearch(scripts, subtag) > -1)
                 || ("qaaa".compareTo(subtag) <= 0 && "qabx".compareTo(subtag) >= 0);
+    }
+
+    private boolean isExtlang(String subtag) {
+        return (Arrays.binarySearch(extlangs, subtag) > -1);
     }
 
     private boolean isLanguage(String subtag) {
@@ -347,9 +397,11 @@ public final class Language extends AbstractDatatype {
         }
         while (i < len) {
             String subtag = subtags[i];
+            if (subtag.length() < 2) {
+                throw newDatatypeException("Private use subtag ", subtag, " is too short.");                
+            }
             if (!isLowerCaseAlphaNumeric(subtag)) {
-                throw newDatatypeException(
-                        "Bad character in private use subtag.");
+                throw newDatatypeException("Bad character in private use subtag ", subtag, ".");
             }
             i++;
         }
@@ -405,11 +457,11 @@ public final class Language extends AbstractDatatype {
     private boolean isGrandfathered(String literal) {
         return Arrays.binarySearch(grandfathered, literal) > -1;
     }
-    
+
     private boolean isRedundant(String literal) {
         return Arrays.binarySearch(redundant, literal) > -1;
     }
-    
+
     private boolean isDeprecated(String subtag) {
         return Arrays.binarySearch(deprecated, subtag) > -1;
     }
@@ -417,9 +469,8 @@ public final class Language extends AbstractDatatype {
     private boolean isDeprecatedLang(String subtag) {
         return Arrays.binarySearch(deprecatedLang, subtag) > -1;
     }
-    
-    @Override
-    public String getName() {
+
+    @Override public String getName() {
         return "language tag";
     }
 }

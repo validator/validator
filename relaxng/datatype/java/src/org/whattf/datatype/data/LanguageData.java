@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -37,11 +37,11 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class LanguageData {
-    
+
     private static final Pattern HYPHEN = Pattern.compile("-");
-    
+
     private static final String[][] EMPTY_DOUBLE_STRING_ARRAY = {};
-    
+
     private static final String[] EMPTY_STRING_ARRAY = {};
 
     private static final String PREFIX = "prefix: ";
@@ -53,70 +53,81 @@ public class LanguageData {
     private static final String TAG = "tag: ";
 
     private static final String TYPE = "type: ";
-    
-    private static final String DEPRECATED = "deprecated: "; 
 
-    private static final String PREFERRED_VALUE = "preferred-value: "; 
-    
+    private static final String DEPRECATED = "deprecated: ";
+
+    private static final String PREFERRED_VALUE = "preferred-value: ";
+
     private BufferedReader in;
-    
+
     private SortedSet<String> languageSet = new TreeSet<String>();
-    
+
+    private SortedSet<String> extlangSet = new TreeSet<String>();
+
     private SortedSet<String> scriptSet = new TreeSet<String>();
-    
+
     private SortedSet<String> regionSet = new TreeSet<String>();
-    
+
     private SortedSet<String> variantSet = new TreeSet<String>();
-    
+
     private SortedSet<String> grandfatheredSet = new TreeSet<String>();
 
     private SortedSet<String> redundantSet = new TreeSet<String>();
 
-    private SortedSet<String> deprecatedLangSet = new TreeSet<String>();    
-    
+    private SortedSet<String> deprecatedLangSet = new TreeSet<String>();
+
     private SortedSet<String> deprecatedSet = new TreeSet<String>();
 
     private Map<String, String> suppressedScriptByLanguageMap = new HashMap<String, String>();
 
+    private Map<String, String> prefixByExtlangMap = new HashMap<String, String>();
+
     private Map<String, String> preferredValueByLanguageMap = new HashMap<String, String>();
-    
+
     private Map<String, Set<String[]>> prefixesByVariantMap = new HashMap<String, Set<String[]>>();
-    
+
     private String[] languages = null;
-    
+
+    private String[] extlangs = null;
+
     private String[] scripts = null;
-    
+
     private String[] regions = null;
-    
+
     private String[] variants = null;
-    
+
     private String[] grandfathered = null;
 
-    private String[] redundant  = null;
+    private String[] redundant = null;
 
     private String[] deprecatedLang = null;
-    
+
     private String[] deprecated = null;
-    
+
     private int[] suppressedScriptByLanguage = null;
 
+    private int[] prefixByExtlang = null;
+
     private String[][][] prefixesByVariant = null;
-    
+
     public LanguageData() throws IOException {
         super();
-        URL url = new URL(System.getProperty("org.whattf.datatype.lang-registry", "http://www.iana.org/assignments/language-subtag-registry"));
-        in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+        URL url = new URL(System.getProperty(
+                "org.whattf.datatype.lang-registry",
+                "http://www.iana.org/assignments/language-subtag-registry"));
+        in = new BufferedReader(
+                new InputStreamReader(url.openStream(), "UTF-8"));
         consumeRegistry();
         prepareArrays();
     }
-    
+
     private void consumeRegistry() throws IOException {
-        while(consumeRecord()) {
-          // spin
+        while (consumeRecord()) {
+            // spin
         }
         in.close();
     }
-    
+
     private void prepareArrays() throws IOException {
         scripts = scriptSet.toArray(EMPTY_STRING_ARRAY);
         regions = regionSet.toArray(EMPTY_STRING_ARRAY);
@@ -124,7 +135,7 @@ public class LanguageData {
         redundant = redundantSet.toArray(EMPTY_STRING_ARRAY);
         deprecated = deprecatedSet.toArray(EMPTY_STRING_ARRAY);
         deprecatedLang = deprecatedLangSet.toArray(EMPTY_STRING_ARRAY);
-        
+
         int i = 0;
         languages = new String[languageSet.size()];
         suppressedScriptByLanguage = new int[languageSet.size()];
@@ -136,13 +147,33 @@ public class LanguageData {
             } else {
                 int index = Arrays.binarySearch(scripts, suppressed);
                 if (index < 0) {
-                    throw new IOException("Malformed registry: reference to non-existent script.");
+                    throw new IOException(
+                            "Malformed registry: reference to non-existent script.");
                 }
                 suppressedScriptByLanguage[i] = index;
             }
             i++;
         }
-        
+
+        i = 0;
+        extlangs = new String[extlangSet.size()];
+        prefixByExtlang = new int[extlangSet.size()];
+        for (String extlang : extlangSet) {
+            extlangs[i] = extlang;
+            String prefix = prefixByExtlangMap.get(extlang);
+            if (prefix == null) {
+                prefixByExtlang[i] = -1;
+            } else {
+                int index = Arrays.binarySearch(languages, prefix);
+                if (index < 0) {
+                    throw new IOException(
+                            "Malformed registry: reference to non-existent prefix for extlang.");
+                }
+                prefixByExtlang[i] = index;
+            }
+            i++;
+        }
+
         i = 0;
         variants = new String[variantSet.size()];
         prefixesByVariant = new String[variantSet.size()][][];
@@ -157,7 +188,7 @@ public class LanguageData {
             i++;
         }
     }
-    
+
     private boolean consumeRecord() throws IOException {
         boolean hasMore = true;
         String type = null;
@@ -165,6 +196,7 @@ public class LanguageData {
         String suppressScript = null;
         String preferredValue = null;
         Set<String[]> prefixes = new HashSet<String[]>();
+        String singlePrefix = null;
         boolean depr = false;
         String line = null;
         for (;;) {
@@ -185,11 +217,13 @@ public class LanguageData {
             } else if (line.startsWith(SUPPRESS_SCRIPT)) {
                 suppressScript = line.substring(SUPPRESS_SCRIPT.length()).trim().intern();
             } else if (line.startsWith(PREFIX)) {
-                String[] prefixSubtags = HYPHEN.split(line.substring(PREFIX.length()).trim());
+                String[] prefixSubtags = HYPHEN.split(line.substring(
+                        PREFIX.length()).trim());
                 for (int i = 0; i < prefixSubtags.length; i++) {
                     prefixSubtags[i] = prefixSubtags[i].intern();
                 }
                 prefixes.add(prefixSubtags);
+                singlePrefix = prefixSubtags[0];
             } else if (line.startsWith(DEPRECATED)) {
                 depr = true;
             } else if (line.startsWith(PREFERRED_VALUE)) {
@@ -210,6 +244,10 @@ public class LanguageData {
         if ("language" == type) {
             languageSet.add(subtag);
             suppressedScriptByLanguageMap.put(subtag, suppressScript);
+        }
+        if ("extlang" == type) {
+            extlangSet.add(subtag);
+            prefixByExtlangMap.put(subtag, singlePrefix);
         } else if ("region" == type) {
             regionSet.add(subtag);
         } else if ("script" == type) {
@@ -234,6 +272,10 @@ public class LanguageData {
         return languages;
     }
 
+    public String[] getExtlangs() {
+        return extlangs;
+    }
+
     /**
      * Returns the prefixesByVariant.
      * 
@@ -241,6 +283,10 @@ public class LanguageData {
      */
     public String[][][] getPrefixesByVariant() {
         return prefixesByVariant;
+    }
+
+    public int[] getPrefixByExtlang() {
+        return prefixByExtlang;
     }
 
     /**
@@ -294,7 +340,7 @@ public class LanguageData {
      * @return the preferredValueByLanguageMap
      */
     public Map<String, String> getPreferredValueByLanguageMap() {
-      return preferredValueByLanguageMap;
+        return preferredValueByLanguageMap;
     }
 
     /**
