@@ -3842,8 +3842,10 @@ final class XmlParser {
                     unread(bom);
                 }
             }
-            tryEncodingDecl(source.getEncoding() == null ? ""
-                    : source.getEncoding());
+            if (tryEncodingDecl(source.getEncoding() == null ? ""
+                    : source.getEncoding()) == null) {
+                pushString(null, "<?xml");
+            }
             return;
         }
 
@@ -3873,14 +3875,20 @@ final class XmlParser {
                     unread(bom);
                 }
             }
-            tryEncodingDecl(source.getEncoding());
+            if (tryEncodingDecl(source.getEncoding()) == null ) {
+                pushString(null, "<?xml");
+            }
             // ... else autodetect from first bytes.
         } else {
             detectEncoding();
             // Read any XML or text declaration.
             String enc = tryEncodingDecl(null);
-            if ((enc == null) && ("UTF-32" == characterEncoding)) {
-                fatal("UTF-32 was sniffed from the BOM, but there was no matching encoding declaration. The omission of explicit encoding declaration is only allowed with UTF-8 and UTF-16.");
+            if (enc == null) {
+                if ("UTF-32" == characterEncoding) {
+                    fatal("UTF-32 was sniffed from the BOM, but there was no matching encoding declaration. The omission of explicit encoding declaration is only allowed with UTF-8 and UTF-16.");
+                }
+                draconianInputStreamReader("UTF-8", is, true);
+                pushString(null, "<?xml");
             }
         }
     }
@@ -3910,14 +3918,6 @@ final class XmlParser {
                 } else {
                     return parseXMLDecl(encoding);
                 }
-            } else {
-                // <?xml-stylesheet ...?> or similar
-                pushString(null, "<?xml");
-//                unread('l');
-//                unread('m');
-//                unread('x');
-//                unread('?');
-//                unread('<');
             }
         }
         // 2006-02-03 hsivonen
@@ -4443,16 +4443,45 @@ final class XmlParser {
         readBufferPos = readBufferLength = 0;
 
         is.mark(readBuffer.length);
-        while (true) {
+        // This method has been changed by hsivonen to be less bogus. Now
+        // this method returns early if the start of the file doesn't match
+        // "<?xml "
+        for (int i = 0; ; i++) {
             ch = is.read();
             readBuffer[readBufferLength++] = (char) ch;
-            switch (ch) {
-                case (int) '>':
-                    return;
-                case -1:
-                    fatal(
-                            "file ends before end of XML or encoding declaration.",
-                            null, "?>");
+            if (ch == -1) {
+                fatal(
+                        "file ends before end of XML or encoding declaration.",
+                        null, "?>");
+                
+            }
+            if (i == 0) {
+                if (ch != '<') {
+                    return; // not an XML decl
+                }
+            } else if (i == 1) {
+                if (ch != '?') {
+                    return; // not an XML decl
+                }
+            } else if (i == 2) {
+                if (ch != 'x') {
+                    return; // not an XML decl
+                }
+            } else if (i == 3) {
+                if (ch != 'm') {
+                    return; // not an XML decl
+                }
+            } else if (i == 4) {
+                if (ch != 'l') {
+                    return; // not an XML decl
+                }
+            } else if (i == 5) {
+                if (!isWhitespace((char)ch)) {
+                    return; // not an XML decl
+                }
+            }
+            if (ch == '>') {
+                return;
             }
             if (readBuffer.length == readBufferLength) {
                 fatal("unfinished XML or encoding declaration");
