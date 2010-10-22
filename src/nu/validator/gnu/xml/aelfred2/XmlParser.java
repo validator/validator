@@ -3957,11 +3957,12 @@ final class XmlParser {
      * @see #setupDecoding
      */
     private void detectEncoding() throws SAXException, IOException {
-        byte[] signature = new byte[4];
+        byte[] signature = new byte[6];
 
-        // Read the first four bytes for
+        // Read the first six bytes for
         // autodetection.
-        is.mark(4);
+        // Use 6 bytes for detection -- hsivonen 2010-10-22
+        is.mark(6);
         is.read(signature);
         is.reset();
 
@@ -3973,12 +3974,14 @@ final class XmlParser {
             // UCS-4 must begin with "<?xml"
             // 0x00 0x00 0x00 0x3c: UCS-4, big-endian (1234)
             // "UTF-32BE"
-            draconianInputStreamReader("UTF-32BE", is, false);
+            fatal("UTF-32BE is not supported. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2010-10-22
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x3c, (byte) 0x00,
                 (byte) 0x00, (byte) 0x00)) {
             // 0x3c 0x00 0x00 0x00: UCS-4, little-endian (4321)
             // "UTF-32LE"
-            draconianInputStreamReader("UTF-32LE", is, false);
+            fatal("UTF-32LE is not supported. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2010-10-22
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x00, (byte) 0x00,
                 (byte) 0x3c, (byte) 0x00)) {
             // 0x00 0x00 0x3c 0x00: UCS-4, unusual (2143)
@@ -3992,19 +3995,13 @@ final class XmlParser {
         } else if (tryEncoding(signature, (byte) 0x00, (byte) 0x00,
                 (byte) 0xfe, (byte) 0xff)) {
             // 00 00 fe ff UCS_4_1234 (with BOM)
-            is.read();
-            is.read();
-            is.read();
-            is.read();
-            draconianInputStreamReader("UTF-32BE", is, false, "UTF-32");
+            fatal("UTF-32 is not supported. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2010-10-22
+            // hsivonen
         } else if (tryEncoding(signature, (byte) 0x00, (byte) 0x3c,
                 (byte) 0x00, (byte) 0x00)) {
             // ff fe 00 00 UCS_4_4321 (with BOM)
-            is.read();
-            is.read();
-            is.read();
-            is.read();
-            draconianInputStreamReader("UTF-32LE", is, false, "UTF-32");
+            fatal("UTF-32 is not supported. (XML processors are only required to support UTF-8 and UTF-16.)"); // 2010-10-22
+            // hsivonen
         }
         // SECOND: two byte encodings
         // note ... with 1/14/2000 errata the XML spec identifies some
@@ -4049,11 +4046,18 @@ final class XmlParser {
         //
         // FOURTH: ASCII-derived encodings, fixed and variable lengths
         //
-        else if (tryEncoding(signature, (byte) 0x3c, (byte) 0x3f, (byte) 0x78,
-                (byte) 0x6d) && prefetchASCIIEncodingDecl()) {
+        else if (signature[0] == (byte) 0x3c
+                && signature[1] == (byte) 0x3f
+                && signature[2] == (byte) 0x78
+                && signature[3] == (byte) 0x6d
+                && signature[4] == (byte) 0x6c
+                && (signature[5] == (byte) 0x20 || signature[5] == (byte) 0x0a
+                        || signature[5] == (byte) 0x0d || signature[5] == (byte) 0x09)) {
+            // Use 6 bytes for detection -- hsivonen 2010-10-22
             // ASCII derived
             // 0x3c 0x3f 0x78 0x6d: UTF-8 or other 8-bit markup (read ENCODING)
             characterEncoding = null;
+            prefetchASCIIEncodingDecl();
         } else if ((signature[0] == (byte) 0xef) && (signature[1] == (byte) 0xbb)
                 && (signature[2] == (byte) 0xbf)) {
             // 0xef 0xbb 0xbf: UTF-8 BOM (not part of document text)
@@ -4437,57 +4441,27 @@ final class XmlParser {
      * and reset(). Caller knows the first chars of the decl exist in the input
      * stream.
      */
-    private boolean prefetchASCIIEncodingDecl() throws SAXException, IOException {
+    private void prefetchASCIIEncodingDecl() throws SAXException, IOException {
         int ch;
         readBufferPos = readBufferLength = 0;
 
         is.mark(readBuffer.length);
-        // This method has been changed by hsivonen to be less bogus. Now
-        // this method returns early if the start of the file doesn't match
-        // "<?xml "
-        for (int i = 0; ; i++) {
+        while (true) {
             ch = is.read();
             readBuffer[readBufferLength++] = (char) ch;
-            if (ch == -1) {
-                fatal(
-                        "file ends before end of XML or encoding declaration.",
-                        null, "?>");
-                
-            }
-            if (i == 0) {
-                if (ch != '<') {
-                    return false; // not an XML decl
-                }
-            } else if (i == 1) {
-                if (ch != '?') {
-                    return false; // not an XML decl
-                }
-            } else if (i == 2) {
-                if (ch != 'x') {
-                    return false; // not an XML decl
-                }
-            } else if (i == 3) {
-                if (ch != 'm') {
-                    return false; // not an XML decl
-                }
-            } else if (i == 4) {
-                if (ch != 'l') {
-                    return false; // not an XML decl
-                }
-            } else if (i == 5) {
-                if (!isWhitespace((char)ch)) {
-                    return false; // not an XML decl
-                }
-            }
-            if (ch == '>') {
-                return true;
+            switch (ch) {
+                case (int) '>':
+                    return;
+                case -1:
+                    fatal(
+                            "file ends before end of XML or encoding declaration.",
+                            null, "?>");
             }
             if (readBuffer.length == readBufferLength) {
                 fatal("unfinished XML or encoding declaration");
             }
         }
     }
-
 
     /**
      * Read a chunk of data from an external input source.
