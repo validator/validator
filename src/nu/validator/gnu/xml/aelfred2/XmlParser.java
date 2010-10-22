@@ -3842,10 +3842,8 @@ final class XmlParser {
                     unread(bom);
                 }
             }
-            if (tryEncodingDecl(source.getEncoding() == null ? ""
-                    : source.getEncoding()) == null) {
-                pushString(null, "<?xml");
-            }
+            tryEncodingDecl(source.getEncoding() == null ? ""
+                    : source.getEncoding());
             return;
         }
 
@@ -3875,20 +3873,14 @@ final class XmlParser {
                     unread(bom);
                 }
             }
-            if (tryEncodingDecl(source.getEncoding()) == null ) {
-                pushString(null, "<?xml");
-            }
+            tryEncodingDecl(source.getEncoding());
             // ... else autodetect from first bytes.
         } else {
             detectEncoding();
             // Read any XML or text declaration.
             String enc = tryEncodingDecl(null);
-            if (enc == null) {
-                if ("UTF-32" == characterEncoding) {
-                    fatal("UTF-32 was sniffed from the BOM, but there was no matching encoding declaration. The omission of explicit encoding declaration is only allowed with UTF-8 and UTF-16.");
-                }
-                draconianInputStreamReader("UTF-8", is, true);
-                pushString(null, "<?xml");
+            if ((enc == null) && ("UTF-32" == characterEncoding)) {
+                fatal("UTF-32 was sniffed from the BOM, but there was no matching encoding declaration. The omission of explicit encoding declaration is only allowed with UTF-8 and UTF-16.");
             }
         }
     }
@@ -3918,6 +3910,14 @@ final class XmlParser {
                 } else {
                     return parseXMLDecl(encoding);
                 }
+            } else {
+                // <?xml-stylesheet ...?> or similar
+                pushString(null, "<?xml");
+//                unread('l');
+//                unread('m');
+//                unread('x');
+//                unread('?');
+//                unread('<');
             }
         }
         // 2006-02-03 hsivonen
@@ -4050,11 +4050,10 @@ final class XmlParser {
         // FOURTH: ASCII-derived encodings, fixed and variable lengths
         //
         else if (tryEncoding(signature, (byte) 0x3c, (byte) 0x3f, (byte) 0x78,
-                (byte) 0x6d)) {
+                (byte) 0x6d) && prefetchASCIIEncodingDecl()) {
             // ASCII derived
             // 0x3c 0x3f 0x78 0x6d: UTF-8 or other 8-bit markup (read ENCODING)
             characterEncoding = null;
-            prefetchASCIIEncodingDecl();
         } else if ((signature[0] == (byte) 0xef) && (signature[1] == (byte) 0xbb)
                 && (signature[2] == (byte) 0xbf)) {
             // 0xef 0xbb 0xbf: UTF-8 BOM (not part of document text)
@@ -4438,7 +4437,7 @@ final class XmlParser {
      * and reset(). Caller knows the first chars of the decl exist in the input
      * stream.
      */
-    private void prefetchASCIIEncodingDecl() throws SAXException, IOException {
+    private boolean prefetchASCIIEncodingDecl() throws SAXException, IOException {
         int ch;
         readBufferPos = readBufferLength = 0;
 
@@ -4457,37 +4456,38 @@ final class XmlParser {
             }
             if (i == 0) {
                 if (ch != '<') {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             } else if (i == 1) {
                 if (ch != '?') {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             } else if (i == 2) {
                 if (ch != 'x') {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             } else if (i == 3) {
                 if (ch != 'm') {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             } else if (i == 4) {
                 if (ch != 'l') {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             } else if (i == 5) {
                 if (!isWhitespace((char)ch)) {
-                    return; // not an XML decl
+                    return false; // not an XML decl
                 }
             }
             if (ch == '>') {
-                return;
+                return true;
             }
             if (readBuffer.length == readBufferLength) {
                 fatal("unfinished XML or encoding declaration");
             }
         }
     }
+
 
     /**
      * Read a chunk of data from an external input source.
