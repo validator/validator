@@ -39,7 +39,9 @@
 </target>
 
 <target name="modbuild" depends="modules,check-modbuild" unless="modbuild-ok">
-  <xslt style="build.xsl" in="modules.xml" out="modbuild.xml" force="true"/>
+  <xslt style="build.xsl" in="modules.xml" out="modbuild.xml" force="true">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
 </target>
 
 <target name="test" depends="modbuild">
@@ -72,6 +74,7 @@
 	includes="${moddir}/*/${modfile}"
 	filedirparameter="name"
 	destdir=".">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
     <regexpmapper from="mod/([-a-zA-Z0-9_]*)/mod.xml"
 		  to="mod/\1/\1.iml"
 		  handledirsep="true"/>
@@ -177,11 +180,17 @@
 
 <target name="jing-doc" depends="version">
   <xslt basedir="doc" destdir="${build.dir}" includes="derivative.xml"
-        style="doc/derivative.xsl"/>
+        style="doc/derivative.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
   <xslt basedir="doc" destdir="${build.dir}" includes="design.xml"
-        style="doc/design.xsl"/>
+        style="doc/design.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
   <xslt basedir="doc" destdir="${build.dir}" includes="nrl.xml"
-        style="doc/nrl.xsl"/>
+        style="doc/nrl.xsl">
+    <factory name="com.icl.saxon.TransformerFactoryImpl"/>
+  </xslt>
   <copy todir="${build.dir}">
     <fileset dir="doc" includes="*.html"/>
   </copy>

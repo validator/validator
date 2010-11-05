@@ -5,6 +5,7 @@
   <depends module="rng-parse"/>
   <depends lib="isorelax"/>
   <depends lib="ant"/>
+  <java5/>
   <test name="spec" type="validate" schema="eg/testSuite.rng"/>
   <compile/>
   <version package="com/thaiopensource/relaxng/util"/>
