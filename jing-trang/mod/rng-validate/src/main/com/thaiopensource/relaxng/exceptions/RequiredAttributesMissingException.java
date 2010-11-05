@@ -7,9 +7,15 @@ import com.thaiopensource.xml.util.Name;
 
 public class RequiredAttributesMissingException extends AbstractValidationException {
 
+    private String attributeLocalName;
+
     public RequiredAttributesMissingException(Locator locator,
-            Name currentElement, Name parent) {
-        super(localizer.message("required_attributes_missing", NameFormatter.format(currentElement)), locator, currentElement, parent);
+            Name currentElement, String attributeLocalName, Name parent) {
+        super(localizer.message("required_attributes_missing", NameFormatter.format(currentElement), attributeLocalName), locator, currentElement, parent);
+        this.attributeLocalName = attributeLocalName;
     }
 
+    public String getAttributeLocalName() {
+      return attributeLocalName;
+    }
 }

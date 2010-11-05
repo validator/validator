@@ -5,15 +5,19 @@ import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException
 import com.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.OutOfContextElementException;
 import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingOneOfException;
 import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingOneOfException;
 import com.thaiopensource.relaxng.exceptions.StringNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.TextNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
+import com.thaiopensource.relaxng.exceptions.UnfinishedElementOneOfException;
 import com.thaiopensource.relaxng.exceptions.UnknownElementException;
 import com.thaiopensource.relaxng.parse.sax.DtdContext;
 import com.thaiopensource.validate.Validator;
 import com.thaiopensource.xml.util.Name;
 import com.thaiopensource.xml.util.WellKnownNamespaces;
+import org.relaxng.datatype.Datatype;
 
 import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.ValidationContext2;
@@ -27,6 +31,8 @@ import org.xml.sax.SAXParseException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class PatternValidator extends DtdContext implements Validator, ContentHandler, DTDHandler, ValidationContext2 {
   private final ValidatorPatternBuilder builder;
@@ -58,6 +64,294 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     PrefixMapping getPrevious() {
       return previous;
     }
+  }
+
+    /**
+     * Record names of elements and attributes. This is a simplified version of
+     * George Bina's ModelExtractorVisitor; cf. his original at:
+     * http://code.google.com/p/jing-trang/issues/detail?id=35 While his
+     * original extracts string representations of content models from the
+     * current pattern, this simplified version just keeps a record of element
+     * and attribute names from the current pattern.
+     */
+  private static class NameRecordingVisitor implements PatternVisitor,
+    NameClassVisitor {
+
+    /**
+     * The string for recording element and attribute names.
+     */
+    private String nameRecord = null;
+
+    /**
+     * The set of attributes.
+     */
+    private Set<String> attributes = new TreeSet<String>();
+
+    /**
+     * The set of elements.
+     */
+    private Set<String> elements = new TreeSet<String>();
+
+    /**
+     * True if content model contains a choice.
+     */
+    private boolean visitedChoice;
+
+    /**
+     * Creates a model extractor visitor.
+     */
+    public NameRecordingVisitor() {
+    }
+
+    /**
+     * Gets the detected attributes.
+     * 
+     * @return The attributes set.
+     */
+    public Set<String> getAttributes() {
+      return attributes;
+    }
+
+    /**
+     * Gets the detected elements.
+     * 
+     * @return The elements set.
+     */
+    public Set<String> getElements() {
+      return elements;
+    }
+
+    /**
+     * @return True if content model contains a choice.
+     */
+    public boolean hasChoice() {
+      return visitedChoice;
+    }
+
+    /**
+     * Got an empty pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitEmpty()
+     */
+    public void visitEmpty() {
+    }
+
+    /**
+     * Got a notAllowed pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitNotAllowed()
+     */
+    public void visitNotAllowed() {
+    }
+
+    /**
+     * Got an error pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitError()
+     */
+    public void visitError() {
+    }
+
+    /**
+     * Got a group pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitGroup(com.thaiopensource.relaxng.impl.Pattern,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitGroup(Pattern p1, Pattern p2) {
+      if (p1 instanceof EmptyPattern && p2 instanceof EmptyPattern) {
+       return;
+      }
+      if (p1 instanceof EmptyPattern) {
+        p2.accept(this);
+        return;
+      }
+      if (p2 instanceof EmptyPattern) {
+        p1.accept(this);
+        return;
+      }
+      p1.accept(this);
+      p2.accept(this);
+    }
+
+    /**
+     * Got an interleave pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitInterleave(com.thaiopensource.relaxng.impl.Pattern,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitInterleave(Pattern p1, Pattern p2) {
+      if (p1 instanceof EmptyPattern && p2 instanceof EmptyPattern) {
+        return;
+      }
+      if (p1 instanceof EmptyPattern) {
+        p2.accept(this);
+        return;
+      }
+      if (p2 instanceof EmptyPattern) {
+        p1.accept(this);
+        return;
+      }
+      p1.accept(this);
+      p2.accept(this);
+    }
+
+    /**
+     * Got a choice pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitChoice(com.thaiopensource.relaxng.impl.Pattern,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitChoice(Pattern p1, Pattern p2) {
+      if (p1 instanceof EmptyPattern && p2 instanceof EmptyPattern) {
+        return;
+      }
+      p1.accept(this);
+      p2.accept(this);
+      visitedChoice = true;
+    }
+
+    /**
+     * Got an one or mode pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitOneOrMore(com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitOneOrMore(Pattern p) {
+      if (!(p instanceof EmptyPattern)) {
+        p.accept(this);
+      }
+    }
+
+    /**
+     * Got an element pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitElement(com.thaiopensource.relaxng.impl.NameClass,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitElement(NameClass nc, Pattern content) {
+      // just output the element name class, not the content.
+      nc.accept(this);
+      elements.add(nameRecord);
+    }
+
+    /**
+     * Got an attribute pattern. Here it seems we get only attribute
+     * wildcards patterns.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitAttribute(com.thaiopensource.relaxng.impl.NameClass,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitAttribute(NameClass ns, Pattern value) {
+      ns.accept(this);
+      attributes.add(nameRecord);
+    }
+
+    /**
+     * Got a data pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitData(org.relaxng.datatype.Datatype)
+     */
+    public void visitData(Datatype dt) {
+    }
+
+    /**
+     * Got a data except pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitDataExcept(org.relaxng.datatype.Datatype,
+     *      com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitDataExcept(Datatype dt, Pattern except) {
+    }
+
+    /**
+     * Got a value pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitValue(org.relaxng.datatype.Datatype,
+     *      java.lang.Object)
+     */
+    public void visitValue(Datatype dt, Object obj) {
+    }
+
+    /**
+     * Got a text pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitText()
+     */
+    public void visitText() {
+    }
+
+    /**
+     * Got a list pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.PatternVisitor#visitList(com.thaiopensource.relaxng.impl.Pattern)
+     */
+    public void visitList(Pattern p) {
+      p.accept(this);
+    }
+
+    /**
+     * Got a choice name class.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitChoice(com.thaiopensource.relaxng.impl.NameClass,
+     *      com.thaiopensource.relaxng.impl.NameClass)
+     */
+    public void visitChoice(NameClass nc1, NameClass nc2) {
+      nc1.accept(this);
+      nc2.accept(this);
+    }
+
+    /**
+     * Got a nsName name class.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitNsName(java.lang.String)
+     */
+    public void visitNsName(String ns) {
+    }
+
+    /**
+     * Got a nsName except name class.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitNsNameExcept(java.lang.String,
+     *      com.thaiopensource.relaxng.impl.NameClass)
+     */
+    public void visitNsNameExcept(String ns, NameClass nc) {
+      nc.accept(this);
+    }
+
+    /**
+     * Got an anyName nameclass.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitAnyName()
+     */
+    public void visitAnyName() {
+    }
+
+    /**
+     * Got an anyName except nameclass.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitAnyNameExcept(com.thaiopensource.relaxng.impl.NameClass)
+     */
+    public void visitAnyNameExcept(NameClass nc) {
+      nc.accept(this);
+    }
+
+    /**
+     * Got a name nameclass.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitName(com.thaiopensource.xml.util.Name)
+     */
+    public void visitName(Name name) {
+      nameRecord = name.getLocalName();
+    }
+
+    /**
+     * Got a null pattern.
+     * 
+     * @see com.thaiopensource.relaxng.impl.NameClassVisitor#visitNull()
+     */
+    public void visitNull() {
+    }
+
   }
 
   private void startCollectingCharacters() {
@@ -97,8 +391,18 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
     Name name = new Name(namespaceURI, localName);
     if (!setMemo(memo.startTagOpenDeriv(name))) {
       PatternMemo next = memo.startTagOpenRecoverDeriv(name);
-      if (!next.isNotAllowed())
-        error(new RequiredElementsMissingException(locator, name, peek()));
+      if (!next.isNotAllowed()) {
+        Pattern p = RequiredContent.getRequiredFrontierContent(builder, memo.getPattern());
+        NameRecordingVisitor nrv = new NameRecordingVisitor();
+        p.accept(nrv);
+        if (nrv.hasChoice()) {
+          error(new RequiredElementsMissingOneOfException(locator, name, nrv.getElements(), peek()));
+        } else {
+          for (String elementName : nrv.getElements()) {
+            error(new RequiredElementsMissingException(locator, name, elementName, peek()));
+          }
+        }
+      }
       else {
         next = builder.getPatternMemo(builder.makeAfter(findElement(name),
             memo.getPattern()));
@@ -130,8 +434,16 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
       }
     }
     if (!setMemo(memo.endAttributes())) {
-      // XXX should specify which attributes
-      error(new RequiredAttributesMissingException(locator, name, peek()));
+      Pattern p = RequiredContent.getRequiredAttributes(builder, memo.getPattern());
+      NameRecordingVisitor nrv = new NameRecordingVisitor();
+      p.accept(nrv);
+      if (nrv.hasChoice()) {
+        error(new RequiredAttributesMissingOneOfException(locator, name, nrv.getAttributes(), peek()));
+      } else {
+        for (String attributeLocalName : nrv.getAttributes()) {
+          error(new RequiredAttributesMissingException(locator, name, attributeLocalName, peek()));
+        }
+      }
       memo = memo.ignoreMissingAttributes();
     }
     if (memo.getPattern().getContentType() == Pattern.DATA_CONTENT_TYPE)
@@ -176,8 +488,19 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
       PatternMemo next = memo.recoverAfter();
       if (!memo.isNotAllowed()) {
         if (!next.isNotAllowed()
-            || fixAfter(memo).endTagDeriv().isNotAllowed())
-          error(new UnfinishedElementException(locator, name, peek()));
+            || fixAfter(memo).endTagDeriv().isNotAllowed()) {
+          Pattern p = RequiredContent.getRequiredContent(builder, memo.getPattern());
+          NameRecordingVisitor nrv = new NameRecordingVisitor();
+          p.accept(nrv);
+        if (nrv.hasChoice()) {
+          error(new UnfinishedElementOneOfException(locator, name, nrv.getElements(), peek()));
+        } else {
+          for (String elementName : nrv.getElements()) {
+            error(new UnfinishedElementException(locator, name, elementName, peek()));
+          }
+        }
+        }
+        
       }
       memo = next;
     }

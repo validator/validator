@@ -7,9 +7,16 @@ import com.thaiopensource.xml.util.Name;
 
 public class UnfinishedElementException extends AbstractValidationException {
 
+    private String missingElementName;
+
     public UnfinishedElementException(Locator locator,
-            Name currentElement, Name parent) {
-        super(localizer.message("unfinished_element", NameFormatter.format(currentElement)), locator, currentElement, parent);
+            Name currentElement, String missingElementName, Name parent) {
+        super(localizer.message("unfinished_element", NameFormatter.format(currentElement), missingElementName), locator, currentElement, parent);
+        this.missingElementName = missingElementName;
+    }
+
+    public String getMissingElementName() {
+      return missingElementName;
     }
 
 }
