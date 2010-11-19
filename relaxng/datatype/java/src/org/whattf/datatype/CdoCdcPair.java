@@ -95,6 +95,8 @@ public final class CdoCdcPair extends AbstractDatatype {
                     if ('>' == c) {
                         state = State.DATA;
                         continue;
+                    } else if ('-' == c) {
+                        continue;
                     } else {
                         state = State.HAS_CDO;
                         continue;
