@@ -88,6 +88,7 @@ public final class CdoCdcPair extends AbstractDatatype {
                         state = State.HAS_CDO_AND_DOUBLE_HYPHEN;
                         continue;
                     } else {
+                        state = State.HAS_CDO;
                         continue;
                     }
                 case HAS_CDO_AND_DOUBLE_HYPHEN:
