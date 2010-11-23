@@ -77,14 +77,12 @@ formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 
-downloadedDeps = 0
-
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
   ("http://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("http://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
-  ("http://download.icu-project.org/files/icu4j/4.0/icu4j-4_0.jar", "08397653119558593204474fd5a9a7e3"),
-  ("http://download.icu-project.org/files/icu4j/4.0/icu4j-charsets-4_0.jar", "5dd1d6aaffa6762e09541b3bb412d8ee"),
+  ("http://download.icu-project.org/files/icu4j/4.4.2/icu4j-4_4_2.jar", "04b27abd15a6357bdfb64ff830752b0b"),
+  ("http://download.icu-project.org/files/icu4j/4.4.2/icu4j-charsets-4_4_2.jar", "2359d6a97730d0ed23f3e17cd2a2f6d6"),
   ("http://switch.dl.sourceforge.net/sourceforge/jena/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
   ("http://dist.codehaus.org/jetty/jetty-6.1.26/jetty-6.1.26.zip", "0d9b2ae3feb2b207057358142658a11f"),
   ("http://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
@@ -111,8 +109,8 @@ runDependencyJars = [
   "commons-logging-1.1.1/commons-logging-1.1.1.jar",
   "commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar",
   "commons-logging-1.1.1/commons-logging-api-1.1.1.jar",
-  "icu4j-charsets-4_0.jar",
-  "icu4j-4_0.jar",
+  "icu4j-charsets-4_4_2.jar",
+  "icu4j-4_4_2.jar",
   "iri-0.5/lib/iri.jar",
   "jetty-6.1.26/lib/servlet-api-2.5-20081211.jar",
   "jetty-6.1.26/lib/jetty-6.1.26.jar",
@@ -630,8 +628,7 @@ def deployOverScp():
   if not deploymentTarget:
     print "No target"
     return
-  if downloadedDeps:
-    runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))  
+  runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))  
   runCmd('"%s" "%s" %s/jars.tar.gz' % (scpCmd, os.path.join(buildRoot, "jars.tar.gz"), deploymentTarget))
   emptyPath = os.path.join(buildRoot, "EMPTY")
   f = open(emptyPath, 'wb')
@@ -737,7 +734,6 @@ def zipExtract(zipArch, targetDir):
       o.close()
 
 def downloadDependency(url, md5sum):
-  downloadedDeps = 1
   dependencyDir = os.path.join(buildRoot, "dependencies")
   ensureDirExists(dependencyDir)
   path = os.path.join(dependencyDir, url[url.rfind("/") + 1:])
