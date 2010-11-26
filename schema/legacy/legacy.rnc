@@ -83,17 +83,6 @@
 
 	common.elem.phrasing |= big.elem
 
-## Struck Text: <s>
-
-	s.elem =
-		element s { s.inner & s.attrs }
-	s.attrs =
-		( common.attrs )
-	s.inner =
-		( common.inner.flow )
-
-	common.elem.phrasing |= s.elem
-
 ## Struck Text: <strike>
 
 	strike.elem =
