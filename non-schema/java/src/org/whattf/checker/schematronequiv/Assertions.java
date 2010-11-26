@@ -93,7 +93,6 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("center", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("font", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("s", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("strike", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("u", "Use CSS instead.");
