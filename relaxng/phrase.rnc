@@ -172,6 +172,19 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= b.elem
 
+## Struck Text: <s>
+
+	s.elem =
+		element s { s.inner & s.attrs }
+	s.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	s.inner =
+		( common.inner.phrasing )
+
+	common.elem.phrasing |= s.elem
+
 ## Code Fragment: <code>
 
 	code.elem =
