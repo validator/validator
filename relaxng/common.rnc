@@ -292,6 +292,9 @@ common.attrs.other =
 	common.data.date-or-time =
 		w:date-or-time
 
+	common.data.date =
+		w:date
+
 ## IRIs
 
 	common.data.uri =
