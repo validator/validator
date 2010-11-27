@@ -1133,12 +1133,6 @@
 	li.attrs &= li.attrs.type?
 	oli.attrs &= li.attrs.type?
 
-	ol.attrs.type =
-		attribute type {
-			string
-		}
-	ol.attrs &= ol.attrs.type?
-
 	ul.attrs.type =
 		attribute type {
 			string
