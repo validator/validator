@@ -86,6 +86,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	ol.attrs.start?
 		&	ol.attrs.reversed?
+		&	ol.attrs.type?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.region
 			)?
@@ -97,6 +98,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		ol.attrs.reversed =
 			attribute reversed {
 				w:string "reversed" | w:string ""
+			}
+		ol.attrs.type =
+			attribute type {
+				w:string "1" | w:string "a" | w:string "A" | w:string "i" | w:string "I" | w:string ""
 			}
 	ol.inner =
 		( oli.elem* )
