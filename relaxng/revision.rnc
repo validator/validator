@@ -10,7 +10,7 @@
 		}
 	edit.attrs.datetime =
 		attribute datetime {
-			common.data.datetime
+			common.data.datetime | common.data.date
 		}
 
 ## Inserts: <ins>
