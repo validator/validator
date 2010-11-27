@@ -271,7 +271,7 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("scrolling", new String[] { "iframe" });
         OBSOLETE_STYLE_ATTRS.put("size", new String[] { "hr" });
         OBSOLETE_STYLE_ATTRS.put("text", new String[] { "body" });
-        OBSOLETE_STYLE_ATTRS.put("type", new String[] { "li", "ol", "ul" });
+        OBSOLETE_STYLE_ATTRS.put("type", new String[] { "li", "ul" });
         OBSOLETE_STYLE_ATTRS.put("valign", new String[] { "col", "colgroup",
                 "tbody", "td", "tfoot", "th", "thead", "tr" });
         OBSOLETE_STYLE_ATTRS.put("vlink", new String[] { "body" });
