@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2010 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -53,6 +53,17 @@ public class IriRef extends AbstractDatatype {
     }
 
     private final static boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
+
+    /**
+     * The "known" Jena IRI violation codes we catch and handle specifically.
+     * Note that this enum intentionally does not hold a complete list of all
+     * the violation codes that Jena can return, and "ZZZ_DUMMY_DEFAULT" is not
+     * an actual Jena IRI violation code (it's instead added here for our own
+     * internal purposes).
+     */
+    private enum KnownViolationCode {
+        COMPATIBILITY_CHARACTER, CONTROL_CHARACTER, DNS_LABEL_DASH_START_OR_END, DOUBLE_WHITESPACE, EMPTY_SCHEME, HAS_PASSWORD, ILLEGAL_CHARACTER, ILLEGAL_PERCENT_ENCODING, IP_V4_HAS_FOUR_COMPONENTS, IP_V4_OCTET_RANGE, IP_V6_OR_FUTURE_ADDRESS_SYNTAX, NON_INITIAL_DOT_SEGMENT, NOT_DNS_NAME, PORT_SHOULD_NOT_BE_WELL_KNOWN, REQUIRED_COMPONENT_MISSING, SCHEME_MUST_START_WITH_LETTER, UNDEFINED_UNICODE_CHARACTER, UNICODE_WHITESPACE, UNREGISTERED_NONIETF_SCHEME_TREE, WHITESPACE, ZZZ_DUMMY_DEFAULT
+    }
 
     private final CharSequencePair splitScheme(CharSequence iri) {
         StringBuilder sb = new StringBuilder();
@@ -146,14 +157,92 @@ public class IriRef extends AbstractDatatype {
             }
         } catch (IRIException e) {
             Violation v = e.getViolation();
-            if (v.codeName() == "COMPATIBILITY_CHARACTER") {
-              if (WARN) {
-                throw newDatatypeException(v.codeName() + " in " + v.component() + ".", WARN);
-              } else {
-                return;
-              }
-            } else {
-              throw newDatatypeException(v.codeName() + " in " + v.component() + ".");
+            /*
+             * Violation codes that are not "known" codes get assign the
+             * dummy value so that handling of them will fall through to
+             * the default case.
+             */
+            KnownViolationCode vc = KnownViolationCode.valueOf("ZZZ_DUMMY_DEFAULT");
+            try {
+                /*
+                 * If this violation code is one of the "known" Jena IRI
+                 * violation codes we want to handle specifically, then use it
+                 * as-is.
+                 */
+                vc = KnownViolationCode.valueOf(v.codeName());
+            } catch (Exception ex) { }
+            switch (vc) {
+                case HAS_PASSWORD:
+                    if (WARN) {
+                        throw newDatatypeException(
+                                underbarStringToSentence(v.component())
+                                        + " component contains a password.",
+                                WARN);
+                    } else {
+                        return;
+                    }
+                case NON_INITIAL_DOT_SEGMENT:
+                    if (WARN) {
+                        throw newDatatypeException(
+                                "Path component contains a segment \u201C/../\u201D not at the beginning of a relative reference, or it contains a \u201C/./\u201D. These should be removed.",
+                                WARN);
+                    } else {
+                        return;
+                    }
+                case PORT_SHOULD_NOT_BE_WELL_KNOWN:
+                    if (WARN) {
+                        throw newDatatypeException(
+                                "Ports under 1024 should be accessed using the appropriate scheme name.",
+                                WARN);
+                    } else {
+                        return;
+                    }
+                case COMPATIBILITY_CHARACTER:
+                    if (WARN) {
+                        throw newDatatypeException(
+                                underbarStringToSentence(v.codeName()) + " in "
+                                        + toAsciiLowerCase(v.component())
+                                        + " component.", WARN);
+                    } else {
+                        return;
+                    }
+                case DNS_LABEL_DASH_START_OR_END:
+                    throw newDatatypeException("Host component contains a DNS name with a \u201C-\u201D (dash) character at the beginning or end.");
+                case DOUBLE_WHITESPACE:
+                case WHITESPACE:
+                    throw newDatatypeException("Whitespace in "
+                            + toAsciiLowerCase(v.component()) + " component. "
+                            + "Use \u201C%20\u201D in place of spaces.");
+                case EMPTY_SCHEME:
+                    throw newDatatypeException("Scheme component is empty.");
+                case ILLEGAL_PERCENT_ENCODING:
+                    throw newDatatypeException(underbarStringToSentence(v.component())
+                            + " component contains a percent sign that is not followed by two hexadecimal digits.");
+                case IP_V4_HAS_FOUR_COMPONENTS:
+                    throw newDatatypeException("Host component is entirely numeric but does not have four components like an IPv4 address.");
+                case IP_V4_OCTET_RANGE:
+                    throw newDatatypeException("Host component contains a number not in the range 0-255, or a number with a leading zero.");
+                case IP_V6_OR_FUTURE_ADDRESS_SYNTAX:
+                    throw newDatatypeException("Host component contains an IPv6 (or IPvFuture) syntax violation.");
+                case NOT_DNS_NAME:
+                    throw newDatatypeException("Host component did not meet the restrictions on DNS names.");
+                case REQUIRED_COMPONENT_MISSING:
+                    throw newDatatypeException("A component that is required by the scheme is missing.");
+                case SCHEME_MUST_START_WITH_LETTER:
+                    throw newDatatypeException("Scheme component must start with a letter.");
+                case UNREGISTERED_NONIETF_SCHEME_TREE:
+                    throw newDatatypeException("Scheme component has a \u201C-\u201D (dash) character, but does not start with \u201Cx-\u201D, and the prefix is not known as the prefix of an alternative tree for URI schemes.");
+                case CONTROL_CHARACTER:
+                case ILLEGAL_CHARACTER:
+                case UNDEFINED_UNICODE_CHARACTER:
+                case UNICODE_WHITESPACE:
+                    throw newDatatypeException(underbarStringToSentence(v.codeName())
+                            + " in "
+                            + toAsciiLowerCase(v.component())
+                            + " component.");
+                default:
+                    throw newDatatypeException(v.codeName() + " in "
+                            + toAsciiLowerCase(v.component()) + " component.");
             }
         } catch (IOException e) {
             throw newDatatypeException(e.getMessage());
@@ -195,6 +284,29 @@ public class IriRef extends AbstractDatatype {
 
     protected boolean isAbsolute() {
         return false;
+    }
+
+    /**
+     * Turn "FOO_BAR_BAZ" into "Foo bar baz".
+     */
+    protected static final String underbarStringToSentence(String str) {
+        if (str == null) {
+            return null;
+        }
+        char[] buf = new char[str.length()];
+        // preserve case of first character
+        buf[0] = str.charAt(0);
+        for (int i = 1; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'A' && c <= 'Z') {
+                c += 0x20;
+            } else if (c == 0x5f) {
+                // convert underbar to space
+                c = 0x20;
+            }
+            buf[i] = c;
+        }
+        return new String(buf);
     }
 
     @Override
