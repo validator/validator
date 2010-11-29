@@ -26,6 +26,7 @@ package nu.validator.messages;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -67,10 +68,13 @@ import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException
 import com.thaiopensource.relaxng.exceptions.OnlyTextNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.OutOfContextElementException;
 import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredAttributesMissingOneOfException;
 import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingException;
+import com.thaiopensource.relaxng.exceptions.RequiredElementsMissingOneOfException;
 import com.thaiopensource.relaxng.exceptions.StringNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.TextNotAllowedException;
 import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
+import com.thaiopensource.relaxng.exceptions.UnfinishedElementOneOfException;
 import com.thaiopensource.relaxng.exceptions.UnknownElementException;
 import com.thaiopensource.xml.util.Name;
 
@@ -149,7 +153,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
 
-    private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_BEFORE = "Element-specific attributes for element ".toCharArray();
+    private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_BEFORE = "Attributes for element ".toCharArray();
 
     private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_AFTER = ":".toCharArray();
 
@@ -177,6 +181,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static char[] PERIOD = ".".toCharArray();
 
+    private final static char[] COMMA  = ", ".toCharArray();
+
     private final static char[] COLON = ":".toCharArray();
 
     private final static char[] NOT_ALLOWED_ON = " not allowed on ".toCharArray();
@@ -191,11 +197,15 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     private final static char[] IN_THIS_CONTEXT_SUPPRESSING = " in this context. (Suppressing further errors from this subtree.)".toCharArray();
     
-    private final static char[] REQUIRED_ATTRIBUTES_MISSING = "Required attributes missing on ".toCharArray();
+    private final static char[] REQUIRED_ATTRIBUTES_MISSING = " is missing required attribute ".toCharArray();
+
+    private final static char[] REQUIRED_ATTRIBUTES_MISSING_ONE_OF = " is missing one or more of the following attributes: ".toCharArray();
 
     private final static char[] REQUIRED_ELEMENTS_MISSING = "Required elements missing.".toCharArray();
     
-    private final static char[] REQUIRED_CHILDREN_MISSING_FROM = "Required children missing from ".toCharArray();
+    private final static char[] REQUIRED_CHILDREN_MISSING_FROM = " is missing a required instance of child element ".toCharArray();
+    
+    private final static char[] REQUIRED_CHILDREN_MISSING_ONE_OF_FROM = " is missing a required instance of one or more of the following child elements: ".toCharArray();
     
     private final static char[] BAD_CHARACTER_CONTENT = "Bad character content ".toCharArray();
 
@@ -729,18 +739,31 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     element(messageTextHandler, ex.getParent(), false);                    
                 }
                 messageTextString(messageTextHandler, IN_THIS_CONTEXT_SUPPRESSING, false);                                                
+            } else if (e instanceof RequiredAttributesMissingOneOfException) {
+                RequiredAttributesMissingOneOfException ex = (RequiredAttributesMissingOneOfException) e;
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING_ONE_OF, false);
+                for (Iterator<String> iter = ex.getAttributeLocalNames().iterator(); iter.hasNext();) {
+                    codeString(messageTextHandler, iter.next());
+                    if (iter.hasNext()) {
+                        messageTextString(messageTextHandler, COMMA, false);
+                    }
+                }
+                messageTextString(messageTextHandler, PERIOD, false);                                                                                
             } else if (e instanceof RequiredAttributesMissingException) {
                 RequiredAttributesMissingException ex = (RequiredAttributesMissingException) e;
-                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING, false);                                                                
-                element(messageTextHandler, ex.getCurrentElement(), false);
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING, false);
+                codeString(messageTextHandler, ex.getAttributeLocalName());
                 messageTextString(messageTextHandler, PERIOD, false);                                                                                
             } else if (e instanceof RequiredElementsMissingException) {
                 RequiredElementsMissingException ex = (RequiredElementsMissingException) e;
                 if (ex.getParent() == null) {
-                    messageTextString(messageTextHandler, REQUIRED_ELEMENTS_MISSING, false);                                                                                                    
+                    messageTextString(messageTextHandler, REQUIRED_ELEMENTS_MISSING, false);
                 } else {
-                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);                                                                                                    
-                    element(messageTextHandler, ex.getParent(), false);
+                    element(messageTextHandler, ex.getParent(), true);
+                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
+                    codeString(messageTextHandler, ex.getMissingElementName());
                     messageTextString(messageTextHandler, PERIOD, false);                    
                 }
             } else if (e instanceof StringNotAllowedException) {
@@ -757,8 +780,39 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 messageTextString(messageTextHandler, IN_THIS_CONTEXT, false);                     
             } else if (e instanceof UnfinishedElementException) {
                 UnfinishedElementException ex = (UnfinishedElementException) e;
-                messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);                                                                                                    
-                element(messageTextHandler, ex.getCurrentElement(), false);
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
+                codeString(messageTextHandler, ex.getMissingElementName());
+                messageTextString(messageTextHandler, PERIOD, false);                                    
+            } else if (e instanceof UnfinishedElementOneOfException) {
+                UnfinishedElementOneOfException ex = (UnfinishedElementOneOfException) e;
+                element(messageTextHandler, ex.getCurrentElement(), true);
+                messageTextString(messageTextHandler,
+                        REQUIRED_CHILDREN_MISSING_ONE_OF_FROM, false);
+                for (Iterator<String> iter = ex.getMissingElementNames().iterator(); iter.hasNext();) {
+                    String missingElementName = iter.next();
+                    if (!("http://www.w3.org/1999/xhtml".equals(ex.getCurrentElement().getNamespaceUri()) && "frameset".equals(missingElementName))) {
+                        codeString(messageTextHandler, missingElementName);
+                        if (iter.hasNext()) {
+                            messageTextString(messageTextHandler, COMMA, false);
+                        }
+                    }
+                }
+                messageTextString(messageTextHandler, PERIOD, false);                                    
+            } else if (e instanceof RequiredElementsMissingOneOfException) {
+                RequiredElementsMissingOneOfException ex = (RequiredElementsMissingOneOfException) e;
+                element(messageTextHandler, ex.getParent(), true);
+                messageTextString(messageTextHandler,
+                        REQUIRED_CHILDREN_MISSING_ONE_OF_FROM, false);
+                for (Iterator<String> iter = ex.getMissingElementNames().iterator(); iter.hasNext();) {
+                    String missingElementName = iter.next();
+                    if (!("http://www.w3.org/1999/xhtml".equals(ex.getCurrentElement().getNamespaceUri()) && "frameset".equals(missingElementName))) {
+                        codeString(messageTextHandler, missingElementName);
+                        if (iter.hasNext()) {
+                            messageTextString(messageTextHandler, COMMA, false);
+                        }
+                    }
+                }
                 messageTextString(messageTextHandler, PERIOD, false);                                    
             } else if (e instanceof UnknownElementException) {
                 UnknownElementException ex = (UnknownElementException) e;
@@ -951,8 +1005,16 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             RequiredAttributesMissingException ex = (RequiredAttributesMissingException) e;
             Name elt = ex.getCurrentElement();
             elaborateElementSpecificAttributes(elt);
+        } else if (e instanceof RequiredAttributesMissingOneOfException) {
+            RequiredAttributesMissingOneOfException ex = (RequiredAttributesMissingOneOfException) e;
+            Name elt = ex.getCurrentElement();
+            elaborateElementSpecificAttributes(elt);
         } else if (e instanceof RequiredElementsMissingException) {
             RequiredElementsMissingException ex = (RequiredElementsMissingException) e;
+            Name elt = ex.getParent();
+            elaborateContentModel(elt);
+        } else if (e instanceof RequiredElementsMissingOneOfException) {
+            RequiredElementsMissingOneOfException ex = (RequiredElementsMissingOneOfException) e;
             Name elt = ex.getParent();
             elaborateContentModel(elt);
         } else if (e instanceof StringNotAllowedException) {
@@ -965,6 +1027,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             elaborateContentModel(elt);
         } else if (e instanceof UnfinishedElementException) {
             UnfinishedElementException ex = (UnfinishedElementException) e;
+            Name elt = ex.getCurrentElement();
+            elaborateContentModel(elt);
+        } else if (e instanceof UnfinishedElementOneOfException) {
+            UnfinishedElementOneOfException ex = (UnfinishedElementOneOfException) e;
             Name elt = ex.getCurrentElement();
             elaborateContentModel(elt);
         } else if (e instanceof UnknownElementException) {
