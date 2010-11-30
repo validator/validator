@@ -400,7 +400,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:center|h:font|h:big|h:s|h:strike|h:tt|h:u|h:basefont'>
+		<rule context='h:center|h:font|h:big|h:strike|h:tt|h:u|h:basefont'>
 			<report test='true()'>
 				The &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
@@ -529,7 +529,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:li|h:ol|h:ul'>
+		<rule context='h:li|h:ul'>
 			<report test='@type'>
 				The &#x201C;type&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
