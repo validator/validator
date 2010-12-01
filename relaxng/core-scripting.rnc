@@ -20,7 +20,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element script { script.inner.imported & script.attrs.imported }
 	script.attrs.imported =
 		(	common.attrs
-		&	script.attrs.src
+		&	script.attrs.src?
 		&	script.attrs.defer?
 		&	script.attrs.async?
 		&	script.attrs.type?

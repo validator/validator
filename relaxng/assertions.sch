@@ -261,13 +261,29 @@
 			</report>
 		</rule>
 
-		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
-			<assert test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"'>
-				A &#x201C;script&#x201D; element with a
-				&#x201C;language&#x201D; attribute whose value is &#x201C;JavaScript&#x201D; must not have a 
-				&#x201C;type&#x201D; attribute whose value is not 
+		<rule context='h:script'>
+			<report test='@language and translate(@language, "JAVSCRIPT", "javscript")="javascript"
+				and @type and not(translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript")'>
+				Element &#x201C;script&#x201D; with attribute
+				&#x201C;language&#x201D; whose value is &#x201C;JavaScript&#x201D;
+				must not have attribute &#x201C;type&#x201D; whose value is not
 				&#x201C;text/javascript&#x201D;.
-			</assert>
+			</report>
+			<report test='not(@src) and @charset'>
+				Element &#x201C;script&#x201D; must not have attribute
+				&#x201C;charset&#x201D; unless attribute &#x201C;src&#x201D; is
+				also specified.
+			</report>
+			<report test='not(@src) and @defer'>
+				Element &#x201C;script&#x201D; must not have attribute
+				&#x201C;defer&#x201D; unless attribute &#x201C;src&#x201D; is
+				also specified.
+			</report>
+			<report test='not(@src) and @async'>
+				Element &#x201C;script&#x201D; must not have attribute
+				&#x201C;async&#x201D; unless attribute &#x201C;src&#x201D; is
+				also specified.
+			</report>
 		</rule>
 
 		<rule context='h:time'>
@@ -597,7 +613,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:script[not(translate(@language, "JAVSCRIPT", "javscript")="javascript")]'>
+		<rule context='h:script[@language and not(translate(@language, "JAVSCRIPT", "javscript")="javascript")]'>
 			<report test='true()'>
 				The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete.
 				Use the &#x201C;type&#x201D; attribute instead.

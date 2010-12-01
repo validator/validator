@@ -1065,15 +1065,29 @@ public class Assertions extends Checker {
                 }
             }
 
-            // script language
-            else if ("script" == localName && languageJavaScript
-                    && typeNotTextJavaScript) {
-                err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
+            // script
+            else if ("script" == localName) {
+                // script language
+                if (languageJavaScript && typeNotTextJavaScript) {
+                    err("A \u201Cscript\u201D element with the \u201Clanguage=\"JavaScript\"\u201D attribute set must not have a \u201Ctype\u201D attribute whose value is not \u201Ctext/javascript\u201D.");
+                }
+                // src-less script
+                if (atts.getIndex("", "src") < 0) {
+                    if (atts.getIndex("", "charset") >= 0) {
+                        err("Element \u201Cscript\u201D must not have attribute \u201Ccharset\u201D unless attribute \u201Csrc\u201D is also specified.");
+                    }
+                    if (atts.getIndex("", "defer") >= 0) {
+                        err("Element \u201Cscript\u201D must not have attribute \u201Cdefer\u201D unless attribute \u201Csrc\u201D is also specified.");
+                    }
+                    if (atts.getIndex("", "async") >= 0) {
+                        err("Element \u201Cscript\u201D must not have attribute \u201Casync\u201D unless attribute \u201Csrc\u201D is also specified.");
+                    }
+                }
             }
 
             // bdo required attrs
             else if ("bdo" == localName && atts.getIndex("", "dir") < 0) {
-                err("A \u201Cbdo\u201D element must have an \u201Cdir\u201D attribute.");
+                err("Element \u201Cbdo\u201D must have attribute \u201Cdir\u201D.");
             }
 
             // lang and xml:lang for XHTML5
