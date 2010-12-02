@@ -10,7 +10,7 @@ How to download, build, and run the validator
 
    mkdir checker
    cd checker
-   svn co https://whattf.svn.cvsdude.com/build/trunk/ build
+   hg clone https://bitbucket.org/validator/build build
 
    The above steps creates a "checker" directory in which the build script
    will create other subdirectories, and downloads the build.py script
