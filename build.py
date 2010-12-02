@@ -44,7 +44,8 @@ scpCmd = 'scp'
 hgCmd = 'hg'
 
 buildRoot = '.'
-svnRoot = 'https://whattf.svn.cvsdude.com/'
+hgRoot = 'https://bitbucket.org/validator/'
+parserHgRoot = 'http://hg.mozilla.org/projects/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
@@ -762,22 +763,30 @@ def buildAll():
   buildTestHarness()
   buildValidator()
 
+def hgCloneOrUpdate(mod, baseUrl):
+  if os.path.exists(mod):
+    if os.path.exists(mod + "/.hg"):
+      runCmd('"%s" pull --update -R %s %s%s/' % (hgCmd, mod, baseUrl, mod))
+    else:
+      if os.path.exists(mod + "-old"):
+        print "The %s module has moved to hg. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
+        sys.exit(3)
+      else:
+        print "The %s module has moved to hg. Renaming the old directory to %s-old and pulling from hg." % (mod, mod)
+        os.rename(mod, mod + "-old")
+        runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
+  else:
+    runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
+
 def checkout():
   # XXX root dir
   for mod in moduleNames:
-    runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + mod + '/trunk/', mod))
+    hgCloneOrUpdate(mod, hgRoot)
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
-  if os.path.exists("htmlparser"):
-    if os.path.exists("htmlparser/.hg"):
-      runCmd('"%s" pull --update -R htmlparser http://hg.mozilla.org/projects/htmlparser/' % (hgCmd))
-    else:
-      print "The htmlparser module has moved to hg. Please back up local changes (if any) and remove the htmlparser directory."
-      sys.exit(3)
-  else:
-    runCmd('"%s" clone http://hg.mozilla.org/projects/htmlparser/ htmlparser' % (hgCmd))
+  hgCloneOrUpdate("htmlparser", parserHgRoot)
 
 def selfUpdate():
-  runCmd('"%s" co "%s" "%s"' % (svnCmd, svnRoot + 'build' + '/trunk/', 'build'))
+  hgCloneOrUpdate("build", hgRoot)
   newArgv = [sys.executable, buildScript, '--no-self-update']
   newArgv.extend(argv)
   if os.name == 'nt':
@@ -873,8 +882,10 @@ else:
       jarCmd = os.path.join(jdkBinDir, "jar")
       javacCmd = os.path.join(jdkBinDir, "javac")
       javadocCmd = os.path.join(jdkBinDir, "javadoc")
-    elif arg.startswith("--svnRoot="):
-      svnRoot = arg[10:]
+    elif arg.startswith("--hgRoot="):
+      hgRoot = arg[9:]
+    elif arg.startswith("--parserHgRoot="):
+      parserHgRoot = arg[15:]
     elif arg.startswith("--port="):
       portNumber = arg[7:]
     elif arg.startswith("--control-port="):
