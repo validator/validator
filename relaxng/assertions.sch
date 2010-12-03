@@ -248,7 +248,7 @@
 
 		<rule context='h:map[@id and @name]'>
 			<assert test='@id = @name'>
-				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have an 
+				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have
 				the same value as the &#x201C;name&#x201D; attribute.
 			</assert>
 		</rule>
