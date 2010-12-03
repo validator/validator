@@ -788,3 +788,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= keygen.elem
 
+## Selection Menu: <select>, Extensions
+
+	select.attrs &=
+		(	shared-form.attrs.autofocus? 
+		&	shared-form.attrs.required? 
+		)
