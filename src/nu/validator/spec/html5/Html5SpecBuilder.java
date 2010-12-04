@@ -63,7 +63,7 @@ public class Html5SpecBuilder implements ContentHandler {
 
     private static final Pattern CATEGORIES = Pattern.compile("^\\s*Categories\\s*");
 
-    private static final Pattern CONTEXT = Pattern.compile("^\\s*Contexts\\s+in\\s+which\\s+th(is|ese)\\s+element[s]?\\s+may\\s+be\\s+used:\\s*");
+    private static final Pattern CONTEXT = Pattern.compile("^\\s*Contexts\\s+in\\s+which\\s+th(is|ese)\\s+element[s]?\\s+can\\s+be\\s+used:\\s*");
 
     private static final Pattern CONTENT_MODEL = Pattern.compile("^\\s*Content\\s+model:\\s*$");
 
