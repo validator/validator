@@ -36,8 +36,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		shared-form.attrs.formmethod.data = 
 			( w:string "get"
 			| w:string "post"
-			| w:string "put"
-			| w:string "delete"
 			)
 
 	shared-form.attrs.formtarget = 
@@ -750,8 +748,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		# REVISIT should this be case-insensitive in conforming XHTML documents?
 		form.attrs.enctype.data |= 
 			( w:string "text/plain" )
-		form.attrs.method.data |= 
-			( w:string "put" | w:string "delete" )
 
 ## Fieldset: <fieldset>, extensions
 
