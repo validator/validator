@@ -143,6 +143,7 @@ namespace local = ""
 			                    | onprogress
 			                    | onratechange
 			                    | onreadystatechange
+			                    | onreset
 			                    | onscroll
 			                    | onseeked
 			                    | onseeking

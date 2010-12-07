@@ -139,6 +139,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onprogress?
 		&	scripting.attr.onratechange?
 		&	scripting.attr.onreadystatechange?
+		&	scripting.attr.onreset?
 		&	scripting.attr.onscroll?
 		&	scripting.attr.onseeked?
 		&	scripting.attr.onseeking?
@@ -240,6 +241,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute onratechange { string }
 	scripting.attr.onreadystatechange =
 		attribute onreadystatechange { string }
+	scripting.attr.onreset =
+		attribute onreset { string }
 	scripting.attr.onscroll =
 		attribute onscroll { string }
 	scripting.attr.onseeked =
