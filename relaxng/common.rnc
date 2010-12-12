@@ -147,7 +147,7 @@ common.attrs.i18n =
 	)
 	common.attrs.dir =
 		attribute dir {
-			w:string "ltr" | w:string "rtl"
+			w:string "ltr" | w:string "rtl" | w:string "auto"
 		}
 	# This lang definition is a hack for enviroments where
 	# the HTML5 parser maps lang to xml:lang.
