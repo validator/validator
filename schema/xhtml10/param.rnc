@@ -7,7 +7,7 @@
 # The following license refers just to those changes.
 
 # Copyright (c) 2005 Petr Nalevka
-# Copyright (c) 2007 Mozilla Foundation
+# Copyright (c) 2007-2010 Mozilla Foundation
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -35,10 +35,16 @@
 default namespace = "http://www.w3.org/1999/xhtml"
 
 param = element param { param.attlist, empty }
-# modified - bugfix - attribute name is required just in transitional
+# http://relaxed.svn.sourceforge.net/viewvc/relaxed/schema/xhtml/1.0/
+# has the name attribute made optional and has a comment saying:
+# "modified - bugfix - attribute name is required just in transitional"
+# ...but it seems like the bug here is actually in the XHTML 1.0 Strict
+# DTD, because the HTML 4.01 DTD does make the name attribute required here,
+# and the XHTML 1.1 DTD does also; so it seems likely that the XHTML 1.0
+# difference was just a copy/paste error - sideshowbarker
 param.attlist =
     id.attrib,
-    attribute name { text }?,
+    attribute name { text },
     attribute value { text }?,
     attribute valuetype { string "data" | string "ref" | string "object" }?,
     attribute type { content-type.datatype }?

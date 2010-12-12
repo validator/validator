@@ -2,7 +2,7 @@
 <!-- Mechanically extracted from RNG files which had this license: -->
 <!--
 Copyright (c) 2005 Petr Nalevka
-Copyright (c) 2007-2008 Mozilla Foundation
+Copyright (c) 2007-2010 Mozilla Foundation
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -207,12 +207,6 @@ xmlns="http://www.ascc.net/xml/schematron">
 			</report>
 		</rule>
 
-    <rule context="html:param">
-      <assert test="html:param/@name">
-             param element has a required name attribute.
-      </assert>
-    </rule>
-   
 	</pattern>
    
    
