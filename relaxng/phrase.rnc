@@ -314,6 +314,17 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= bdo.elem
 
+## Bidirectional Isolate: <bdi>
+
+	bdi.elem =
+		element bdi { bdi.inner & bdi.attrs }
+	bdi.attrs =
+		( common.attrs )
+	bdi.inner =
+		( common.inner.phrasing )
+
+	common.elem.phrasing |= bdi.elem
+
 ## Line Break: <br>
 
 	br.elem =
