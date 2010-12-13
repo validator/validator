@@ -15,7 +15,7 @@
 	<pattern name="required attributes">
 		<rule context='h:bdo[@dir]'>
 			<assert test='@dir'>
-				A &#x201C;bdo&#x201D; element must have an 
+				A &#x201C;bdo&#x201D; element must have a
 				&#x201C;dir&#x201D; attribute.
 			</assert>
 		</rule>
@@ -238,12 +238,16 @@
 			</assert>
 		</rule>
 
-		<rule context='h:input[@list]'>
-			<assert test='//h:datalist[@id = current()/@list] or 
-			              //h:select[@id = current()/@list]'>
+		<rule context='h:input'>
+			<report test='@list and not(//h:datalist[@id = current()/@list])'>
 				The &#x201C;list&#x201D; attribute of the &#x201C;input&#x201D; 
 				element must refer to a &#x201C;datalist&#x201D; element.
-			</assert>
+			</report>
+			<report test='@type = "button" and (not(@value) or @value = "")'>
+				Element &#x201C;input&#x201D; with attribute &#x201C;type&#x201D;
+				whose value is &#x201C;button&#x201D; must have non-empty attribute
+				&#x201C;value&#x201D;.
+			</report>
 		</rule>
 
 		<rule context='h:map[@id and @name]'>
