@@ -1126,7 +1126,6 @@ public class Assertions extends Checker {
             if ("input" == localName && list != null) {
                 listReferences.add(new IdrefLocator(new LocatorImpl(
                         getDocumentLocator()), list));
-
             }
 
             // input@type=button
