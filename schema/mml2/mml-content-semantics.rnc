@@ -39,7 +39,7 @@ mml.annotation-xml.qname =
           notAllowed
         mml.att-encoding.xhtml =
           attribute encoding {
-            string "application/xhtml+xml"
+            string "application/xhtml+xml" | string "text/html"
           }
     mml.annotation-xml.svg =
         element annotation-xml {
