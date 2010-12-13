@@ -1126,6 +1126,17 @@ public class Assertions extends Checker {
             if ("input" == localName && list != null) {
                 listReferences.add(new IdrefLocator(new LocatorImpl(
                         getDocumentLocator()), list));
+
+            }
+
+            // input@type=button
+            if ("input" == localName
+                    && lowerCaseLiteralEqualsIgnoreAsciiCaseString("button",
+                            atts.getValue("", "type"))) {
+                if (atts.getValue("", "value") == null
+                        || "".equals(atts.getValue("", "value"))) {
+                    err("Element \u201Cinput\u201D with attribute \u201Ctype\u201D whose value is \u201Cbutton\u201D must have non-empty attribute \u201Cvalue\u201D.");
+                }
             }
 
             // multiple selected options
