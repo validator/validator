@@ -59,7 +59,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	media.source = 
 		(	media.attrs.src
-		|	source.elem*
+		|	source.elem+
 		)
 
 	media.attrs.src =
