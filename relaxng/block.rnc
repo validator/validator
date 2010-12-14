@@ -101,7 +101,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		ol.attrs.type =
 			attribute type {
-				w:string "1" | w:string "a" | w:string "A" | w:string "i" | w:string "I" | w:string ""
+				w:string "1" | w:string "a" | w:string "A" | w:string "i" | w:string "I"
 			}
 	ol.inner =
 		( oli.elem* )
