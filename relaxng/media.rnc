@@ -101,10 +101,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 				}
 	video.inner.flow =
 		(	media.source
+		,	track.elem*
 		,	common.inner.flow
 		)
 	video.inner.phrasing =
 		(	media.source
+		,	track.elem*
 		,	common.inner.phrasing
 		)
 
@@ -123,15 +125,54 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	audio.inner.flow =
 		(	media.source
+		,	track.elem*
 		,	common.inner.flow
 		)
 	audio.inner.phrasing =
 		(	media.source
+		,	track.elem*
 		,	common.inner.phrasing
 		)
 
 	common.elem.flow |= audio.elem.flow
 	common.elem.phrasing |= audio.elem.phrasing
+
+## timed track: <track>
+#
+	track.elem =
+		element track { track.inner & track.attrs }
+
+	track.attrs =
+		(	common.attrs
+		&	track.attrs.kind?
+		&	track.attrs.src
+		&	track.attrs.charset?
+		&	track.attrs.srclang?
+		&	track.attrs.label?
+		)
+		track.attrs.kind =
+			attribute kind {
+				w:string "subtitles" | w:string "captions" | w:string "descriptions" | w:string "chapters" | w:string "metadata"
+			}
+		track.attrs.src =
+			attribute src {
+				common.data.uri
+			}
+		track.attrs.charset =
+			attribute charset {
+				common.data.charset
+			}
+		track.attrs.srclang =
+			attribute srclang {
+				common.data.langcode
+			}
+		track.attrs.label =
+			attribute label {
+				string #FIXME require non-empty value
+			}
+
+	track.inner =
+		( empty )
 
 ## Captioned Content: <figure>
 
