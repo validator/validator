@@ -1138,6 +1138,13 @@ public class Assertions extends Checker {
                 }
             }
 
+            // track
+            if ("track" == localName) {
+                if ("".equals(atts.getValue("", "label"))) {
+                    err("Attribute \u201Clabel\u201D for element \u201Ctrack\u201D must have non-empty value.");
+                }
+            }
+
             // multiple selected options
             if ("option" == localName && selected) {
                 for (Map.Entry<StackNode, Locator> entry : openSingleSelects.entrySet()) {

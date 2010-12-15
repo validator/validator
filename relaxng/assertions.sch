@@ -250,6 +250,13 @@
 			</report>
 		</rule>
 
+		<rule context='h:track'>
+			<report test='@label = ""'>
+				Attribute &#x201C;label&#x201D; for element &#x201C;track&#x201D;
+				must have a non-empty value.
+			</report>
+		</rule>
+
 		<rule context='h:map[@id and @name]'>
 			<assert test='@id = @name'>
 				The &#x201C;id&#x201D; attribute on a &#x201C;map&#x201D; element must have
