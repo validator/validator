@@ -168,7 +168,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		track.attrs.label =
 			attribute label {
-				string #FIXME require non-empty value
+				string # must be non-empty value; check is in assertions code
 			}
 
 	track.inner =
