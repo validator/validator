@@ -42,7 +42,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		source.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		source.attrs.type =
 			attribute type {
@@ -64,7 +64,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	media.attrs.src =
 		attribute src {
-			common.data.uri
+			common.data.uri.non-empty
 		}
 
 ## Video: <video>
@@ -83,7 +83,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		video.attrs.poster =
 			attribute poster {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		video.attrs.height =
 			attribute height {
@@ -156,7 +156,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		track.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		track.attrs.charset =
 			attribute charset {

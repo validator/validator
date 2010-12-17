@@ -25,7 +25,7 @@ namespace local = ""
 		)
 		img.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		img.attrs.alt =
 			attribute alt {
@@ -70,7 +70,7 @@ namespace local = ""
 		)
 		embed.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		embed.attrs.type =
 			attribute type {
@@ -229,7 +229,7 @@ namespace local = ""
 		)
 		object.attrs.data =
 			attribute data {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		object.attrs.type =
 			attribute type {
@@ -301,7 +301,7 @@ namespace local = ""
 		)
 		iframe.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		iframe.attrs.name =
 			attribute name {

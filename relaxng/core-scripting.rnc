@@ -29,7 +29,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		script.attrs.src =
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		script.attrs.defer =
 			attribute defer {

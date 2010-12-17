@@ -55,7 +55,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	html.attrs.manifest =
 		attribute manifest {
-			common.data.uri
+			common.data.uri.non-empty
 		}
 		
 	html.attrs &= html.attrs.manifest?
@@ -155,7 +155,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		command.attrs.icon =
 			attribute icon {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		command.attrs.disabled =
 			attribute disabled {

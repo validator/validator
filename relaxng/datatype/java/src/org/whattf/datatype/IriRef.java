@@ -249,6 +249,9 @@ public class IriRef extends AbstractDatatype {
         } catch (RhinoException e) {
             throw newDatatypeException(e.getMessage());
         }
+        if ("".equals(iri.toString())) {
+                throw newDatatypeException("Must be non-empty.");
+        }
         if (isAbsolute()) {
             if (iri != null && !iri.isAbsolute()) {
                 throw newDatatypeException("Not an absolute IRI.");

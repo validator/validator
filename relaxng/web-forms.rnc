@@ -280,7 +280,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.image.attrs.src = 
 			attribute src {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 	
 	input.elem |= input.image.elem

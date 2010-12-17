@@ -132,7 +132,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element link { link.inner & link.attrs }
 	link.attrs =
 		(	common.attrs
-		&	shared-hyperlink.attrs.href
+		&	link.attrs.href
 		&	shared-hyperlink.attrs.rel
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
@@ -140,6 +140,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	link.attrs.sizes?
 		#	link.attrs.title included in common.attrs
 		)
+		link.attrs.href =
+			attribute href {
+				common.data.uri.non-empty
+			}
 		link.attrs.sizes =
 			attribute sizes {
 				w:string "any" | common.data.sizes

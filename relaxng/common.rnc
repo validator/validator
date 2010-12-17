@@ -300,6 +300,9 @@ common.attrs.other =
 	common.data.uri =
 		w:string "" | w:iri-ref
 
+	common.data.uri.non-empty =
+		w:iri-ref
+
 	common.data.uris =
 		list { w:iri-ref* }
 
