@@ -1316,6 +1316,11 @@ final class XmlParser {
                     continue;
                 }
                 handler.attribute(aname, value, false);
+                handler.warn("Added the \u201C"
+                        + aname
+                        + "\u201D default attribute to the \u201C"
+                        + gi
+                        + "\u201D element as required by XML parsing rules when loading DTDs.");
             }
         }
 
