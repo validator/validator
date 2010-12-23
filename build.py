@@ -850,7 +850,7 @@ def printHelp():
   print "                                advice"
   print ""
   print "Tasks:"
-  print "  checkout -- Checks out the source from SVN"
+  print "  checkout -- Checks out the sources"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
   print "  dltests  -- Downloads the external test suite if missing"
   print "  build    -- Build the source"
