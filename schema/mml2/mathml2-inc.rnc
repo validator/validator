@@ -1,34 +1,22 @@
+# This is the Mathematical Markup Language (MathML) 2.0, an XML
+# application for describing mathematical notation and capturing
+# both its structure and content.
 # 
-# RELAX NG Schema on MathML 2.0
+# Copyright 1998-2009 W3C (MIT, ERCIM, Keio)
 # 
-# See COPYING for the status of this software.
-# Yutaka Furubayashi (Poka-Poka Dream Factory) <info@yupotan.sppd.ne.jp>
-# Modified by Henri Sivonen <hsivonen@iki.fi>
-#
+# Use and distribution of this code are permitted under the terms
+# W3C Software Notice and License
+# http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
 
-namespace math = "http://www.w3.org/1998/Math/MathML"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace m = "http://www.w3.org/1998/Math/MathML"
 
-include "mml-content-all.rnc" inherit = math
-include "mml-content-attrib.rnc" inherit = math
-include "mml-content-construct.rnc" inherit = math
-include "mml-content-leaf.rnc" inherit = math
-include "mml-content-operators.rnc" inherit = math
-include "mml-content-others.rnc" inherit = math
-include "mml-content-quantifiers.rnc" inherit = math
-include "mml-content-relations.rnc" inherit = math
-include "mml-content-semantics.rnc" inherit = math
-include "mml-content-specials.rnc" inherit = math
-include "mml-content-symbols.rnc" inherit = math
-include "mml-datatypes.rnc" inherit = math
-include "mml-framework.rnc" inherit = math
-include "mml-math.rnc" inherit = math
-include "mml-pres-action.rnc" inherit = math
-include "mml-pres-all.rnc" inherit = math
-include "mml-pres-attrib.rnc" inherit = math
-include "mml-pres-content.rnc" inherit = math
-include "mml-pres-empty.rnc" inherit = math
-include "mml-pres-layout-empty.rnc" inherit = math
-include "mml-pres-layout.rnc" inherit = math
-include "mml-pres-scripts-empty.rnc" inherit = math
-include "mml-pres-scripts.rnc" inherit = math
-include "mml-pres-tables.rnc" inherit = math
+
+## Content  MathML
+include "mathml2-content.rnc" inherit = m
+
+## Presentation MathML
+include "mathml2-presentation.rnc" inherit = m
+
+## math and semantics common to both Content and Presentation
+include "mathml2-common.rnc" inherit = m

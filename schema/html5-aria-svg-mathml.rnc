@@ -7,18 +7,24 @@ include "mml2/mathml2-inc.rnc"
 
 common.elem.phrasing |= svg
 
-common.elem.phrasing |= mml.math.qname
+common.elem.phrasing |= math
 
 SVG.foreignObject.content |=
-	(	mml.math.qname
+	(	math
 	|	html.elem
 	|	body.elem
 	|	common.inner.flow
 	)
 	
-mml.Annotation-xml.datatype.svg |= svg
+annotation-xml.model.svg |= svg
 
-mml.Annotation-xml.datatype.xhtml |=
+annotation-xml.model.xhtml |=
 	(	html.elem
 	|	common.elem.flow
 	)
+
+# in our integration, <mtext> is the only MathML "token element" that can
+# contain HTML element content; the <mi>, <mn>, <mo> and <ms> elements
+# cannot; see http://www.w3.org/Bugs/Public/show_bug.cgi?id=9859#c8 for a
+# rationale
+mtext.content |= common.elem.phrasing

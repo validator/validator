@@ -1,0 +1,128 @@
+# This is the Mathematical Markup Language (MathML) 3.0 (restricted), an XML
+# application for describing mathematical notation and capturing
+# both its structure and content.
+# 
+# With additional changes for integration into the validator.nu system.
+#
+# Copyright 1998-2010 W3C (MIT, ERCIM, Keio)
+# Copyright 2010 Mozilla Foundation
+# 
+# Use and distribution of this code are permitted under the terms
+# W3C Software Notice and License
+# http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+namespace local = ""
+# added OpenMath namespace -- mike
+namespace om = "http://www.openmath.org/OpenMath"
+default namespace ns1 = "http://www.w3.org/1998/Math/MathML"
+# added namespace for HTML5 datatype library -- mike
+datatypes w = "http://whattf.org/datatype-draft"
+
+math = element math { math.attributes, MathExpression* }
+MathExpression = semantics
+NonMathMLAtt = attribute * - (local:* | ns1:*) { xsd:string }
+CommonDeprecatedAtt = attribute other { text }?
+# changed datatype of id attr from ID to w:xml-name -- mike
+CommonAtt =
+  attribute id { w:xml-name }?,
+  attribute xref { text }?,
+  attribute class { xsd:NMTOKENS }?,
+  attribute style { xsd:string }?,
+  attribute href { xsd:anyURI }?,
+  CommonDeprecatedAtt,
+  NonMathMLAtt*
+math.attributes =
+  CommonAtt,
+  attribute display { "block" | "inline" }?,
+  attribute maxwidth { length }?,
+  attribute overflow {
+    "linebreak" | "scroll" | "elide" | "truncate" | "scale"
+  }?,
+  attribute altimg { xsd:anyURI }?,
+  attribute altimg-width { length }?,
+  attribute altimg-height { length }?,
+  attribute altimg-valign { length | "top" | "middle" | "bottom" }?,
+  attribute alttext { text }?,
+  attribute cdgroup { xsd:anyURI }?,
+  math.deprecatedattributes
+# the mathml3-restricted-presentation schema  adds additional attributes
+# to the math element, all those valid on mstyle
+math.deprecatedattributes =
+  attribute mode { xsd:string }?,
+  attribute macros { xsd:string }?
+name = attribute name { xsd:NCName }
+src = attribute src { xsd:anyURI }?
+annotation = element annotation { annotation.attributes, text }
+# changed content model of annotation-xml -- mike
+annotation-xml =
+    ( annotation-xml.xhtml
+    | annotation-xml.svg
+    | annotation-xml.mathml
+    | annotation-xml.openmath
+    )
+    annotation-xml.model = (MathExpression | anyElement)*
+    anyElement =
+      element * - ns1:* {
+        (attribute * { text }
+         | text
+         | anyElement)*
+      }
+    annotation-xml.xhtml =
+        element annotation-xml {
+            annotation-xml.model, annotation-xml.attributes, att-encoding.xhtml?
+        }
+        annotation-xml.model.xhtml = 
+          notAllowed
+        att-encoding.xhtml =
+          attribute encoding {
+            string "application/xhtml+xml" | string "text/html"
+          }
+    annotation-xml.svg =
+        element annotation-xml {
+            annotation-xml.model, annotation-xml.attributes, att-encoding.svg?
+        }
+        annotation-xml.model.svg = 
+          notAllowed
+        att-encoding.svg =
+          attribute encoding {
+            string "SVG1.1"
+          }
+    annotation-xml.mathml =
+        element annotation-xml {
+            annotation-xml.model, annotation-xml.attributes, att-encoding.mathml?
+        }
+        annotation-xml.model.mathml = 
+          math
+        att-encoding.mathml =
+          attribute encoding {
+            string "MathML" | string "MathML-Content"
+          }
+    annotation-xml.openmath =
+        element annotation-xml {
+            annotation-xml.model, annotation-xml.attributes, att-encoding.openmath?
+        }
+        annotation-xml.model.openmath = 
+          openmath.any.elem
+        att-encoding.openmath =
+          attribute encoding {
+            string "OpenMath"
+          }
+        openmath.any.elem =
+          element om:* {
+            attribute * { text }*, annotation-xml.model
+          }
+annotation.attributes = CommonAtt, name?, DefEncAtt, src?
+annotation-xml.attributes = CommonAtt, name?, src?
+DefEncAtt =
+  attribute encoding { xsd:string }?,
+  attribute definitionURL { xsd:anyURI }?
+semantics =
+  element semantics {
+    semantics.attributes, MathExpression, (annotation | annotation-xml)*
+  }
+semantics.attributes = CommonAtt, DefEncAtt, name?
+length =
+  xsd:string {
+    pattern =
+      "\s*((-?[0-9]*(\.[0-9]*)?(e[mx]|in|cm|mm|p[xtc]|%)?)|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*"
+  }

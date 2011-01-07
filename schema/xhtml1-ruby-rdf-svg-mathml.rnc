@@ -14,19 +14,25 @@ SVG.metadata.content |= rdf.elem
 
 Inline.class |= svg
 
-Inline.class |= mml.math.qname
+Inline.class |= math
 
 SVG.foreignObject.content |=
-	(	mml.math.qname
+	(	math
 	|	html
 	|	body
 	|	Block.mix*
 	)
 	
-mml.Annotation-xml.datatype.svg |= svg
+annotation-xml.model.svg |= svg
 
-mml.Annotation-xml.datatype.xhtml |=
+annotation-xml.model.xhtml |=
 	(	html
 	|	Block.class
 	|	Inline.class
 	)
+
+# in our integration, <mtext> is the only MathML "token element" that can
+# contain HTML element content; the <mi>, <mn>, <mo> and <ms> elements
+# cannot; see http://www.w3.org/Bugs/Public/show_bug.cgi?id=9859#c8 for a
+# rationale
+mtext.content |= Inline.class

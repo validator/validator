@@ -1,7 +1,30 @@
-RELAX-NG Schema on MathML 2.0
+The MathML schema files found here are modified versions of the files at:
 
-This code is released under the MIT Licence see the COPYING file.
+  http://www.w3.org/Math/RelaxNG/mathml3-restricted/
 
-Yutaka Furubayashi
+For details about those, see:
 
-Modified by Henri Sivonen (hsivonen@iki.fi)
+  http://www.w3.org/Math/RelaxNG/#mml3r
+
+Excerpt:
+
+  mathml3-restricted is a version of the schema with all element and
+  attribute names introduced at MathML3 removed (by applying the XSLT
+  stylesheet included in the directory). This makes it usable as a schema
+  for MathMl2, but benefitting from the stricter attribute typing specified
+  in the MathML3 specifcation. It differs from MathML2 in some respects
+  notably on the exact lists of attributes allowed on each element, as it
+  follows MathML3 usage, however the similarity to MathML3 helps maintance,
+  and may help users migrating from MathML2 to MathML3.
+
+The modifications made to those files were made in order to facilitate
+validation of HTML documents containing MathML. The modifications are all
+flagged with comments added to the files.
+
+The modifications were done using the following steps:
+
+  1. Download the files from http://www.w3.org/Math/RelaxNG/mathml3-restricted/
+  2. Rename the files.
+  3. Apply the patch-vnu file in this same directory.
+
+Those steps are automated in the Makefile in this same directory.

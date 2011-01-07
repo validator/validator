@@ -1,9 +1,17 @@
+# This is the Mathematical Markup Language (MathML) 3.0 (restricted), an XML
+# application for describing mathematical notation and capturing
+# both its structure and content.
 # 
-# RELAX NG Schema on MathML 2.0
-# 
-# See COPYING for the status of this software.
+# With additional changes for integration into the validator.nu system.
 #
+# Copyright 1998-2010 W3C (MIT, ERCIM, Keio)
+# Copyright 2010 Mozilla Foundation
+# 
+# Use and distribution of this code are permitted under the terms
+# W3C Software Notice and License
+# http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
 
+# moved necessary includes in mathml2-inc.rnc file and we then just include
+# that here; also, set start = math -- mike
 include "mathml2-inc.rnc"
-
-start = mml.math.qname
+start = math
