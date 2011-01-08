@@ -30,6 +30,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.RhinoException;
 import org.relaxng.datatype.DatatypeException;
 import org.whattf.io.DataUri;
@@ -135,7 +136,7 @@ public class IriRef extends AbstractDatatype {
                         reader.reset();
                     }
                     try {
-                        Context context = Context.enter();
+                        Context context = ContextFactory.getGlobal().enterContext();
                         context.setOptimizationLevel(0);
                         context.setLanguageVersion(Context.VERSION_1_6);
                         context.compileReader(reader, null, 1, null);
