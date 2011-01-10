@@ -137,7 +137,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.elem.flow |= audio.elem.flow
 	common.elem.phrasing |= audio.elem.phrasing
 
-## timed track: <track>
+## supplementary media track: <track>
 #
 	track.elem =
 		element track { track.inner & track.attrs }
@@ -146,9 +146,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	track.attrs.kind?
 		&	track.attrs.src
-		&	track.attrs.charset?
 		&	track.attrs.srclang?
 		&	track.attrs.label?
+		&	track.attrs.default?
 		)
 		track.attrs.kind =
 			attribute kind {
@@ -158,10 +158,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute src {
 				common.data.uri.non-empty
 			}
-		track.attrs.charset =
-			attribute charset {
-				common.data.charset
-			}
 		track.attrs.srclang =
 			attribute srclang {
 				common.data.langcode
@@ -169,6 +165,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		track.attrs.label =
 			attribute label {
 				string # must be non-empty value; check is in assertions code
+			}
+		track.attrs.default =
+			attribute default {
+				w:string "default" | w:string ""
 			}
 
 	track.inner =
