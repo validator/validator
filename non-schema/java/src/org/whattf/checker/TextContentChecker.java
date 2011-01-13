@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010 Mozilla Foundation
+ * Copyright (c) 2010-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -30,6 +30,8 @@ import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.datatype.CdoCdcPair;
 import org.whattf.datatype.DateOrTimeContent;
+import org.whattf.datatype.ScriptDocumentation;
+import org.whattf.datatype.Script;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -82,7 +84,13 @@ public final class TextContentChecker extends Checker {
                     return DateOrTimeContent.THE_INSTANCE.createStreamingValidator(null);
                 }
             }
-            if ("style".equals(localName)
+            if ("script".equals(localName)) {
+                if (atts.getIndex("", "src") < 0) {
+                    return Script.THE_INSTANCE.createStreamingValidator(null);
+                } else {
+                    return ScriptDocumentation.THE_INSTANCE.createStreamingValidator(null);
+                }
+            } else if ("style".equals(localName)
                     || "textarea".equals(localName)
                     || "title".equals(localName)) {
                 return CdoCdcPair.THE_INSTANCE.createStreamingValidator(null);
@@ -126,6 +134,25 @@ public final class TextContentChecker extends Checker {
                                     DateOrTimeContent.class,
                                     localName, uri);
                         } catch (ClassNotFoundException ce) {
+                        }
+                    } else if ("script".equals(localName)) {
+                        // need cast to Html5DatatypeException in order to check
+                        // what HTML5 datatype class this exception of for
+                        assert e instanceof Html5DatatypeException : "Not an Html5DatatypeException";
+                        Html5DatatypeException ex5 = (Html5DatatypeException) e;
+                        if (Script.class.equals(ex5.getDatatypeClass())) {
+                            try {
+                                errBadTextContent(e, Script.class, localName,
+                                        uri);
+                            } catch (ClassNotFoundException ce) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            try {
+                                errBadTextContent(e, ScriptDocumentation.class,
+                                        localName, uri);
+                            } catch (ClassNotFoundException ce) {
+                            }
                         }
                     } else if ("style".equals(localName)) {
                         try {

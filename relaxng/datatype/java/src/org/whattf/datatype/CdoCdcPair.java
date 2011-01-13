@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Mozilla Foundation
+ * Copyright (c) 2010-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,10 +24,11 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public final class CdoCdcPair extends AbstractDatatype {
+public class CdoCdcPair extends AbstractDatatype {
 
     private enum State {
-        DATA, LESS_THAN_SIGN, LESS_THAN_SIGN_BANG, LESS_THAN_SIGN_BANG_HYPHEN, HAS_CDO, HAS_CDO_AND_HYPHEN, HAS_CDO_AND_DOUBLE_HYPHEN
+        DATA, LESS_THAN_SIGN, LESS_THAN_SIGN_BANG, LESS_THAN_SIGN_BANG_HYPHEN,
+            HAS_CDO, HAS_CDO_AND_HYPHEN, HAS_CDO_AND_DOUBLE_HYPHEN
     }
 
     /**
@@ -35,7 +36,7 @@ public final class CdoCdcPair extends AbstractDatatype {
      */
     public static final CdoCdcPair THE_INSTANCE = new CdoCdcPair();
 
-    private CdoCdcPair() {
+    protected CdoCdcPair() {
         super();
     }
 
@@ -49,64 +50,57 @@ public final class CdoCdcPair extends AbstractDatatype {
                     if ('<' == c) {
                         state = State.LESS_THAN_SIGN;
                         continue;
-                    } else {
-                        continue;
                     }
+                    continue;
                 case LESS_THAN_SIGN:
                     if ('!' == c) {
                         state = State.LESS_THAN_SIGN_BANG;
                         continue;
-                    } else {
-                        state = State.DATA;
-                        continue;
                     }
+                    state = State.DATA;
+                    continue;
                 case LESS_THAN_SIGN_BANG:
                     if ('-' == c) {
                         state = State.LESS_THAN_SIGN_BANG_HYPHEN;
                         continue;
-                    } else {
-                        state = State.DATA;
-                        continue;
                     }
+                    state = State.DATA;
+                    continue;
                 case LESS_THAN_SIGN_BANG_HYPHEN:
                     if ('-' == c) {
                         state = State.HAS_CDO;
                         continue;
-                    } else {
-                        state = State.DATA;
-                        continue;
                     }
+                    state = State.DATA;
+                    continue;
                 case HAS_CDO:
                     if ('-' == c) {
                         state = State.HAS_CDO_AND_HYPHEN;
                         continue;
-                    } else {
-                        continue;
                     }
+                    continue;
                 case HAS_CDO_AND_HYPHEN:
                     if ('-' == c) {
                         state = State.HAS_CDO_AND_DOUBLE_HYPHEN;
                         continue;
-                    } else {
-                        state = State.HAS_CDO;
-                        continue;
                     }
+                    state = State.HAS_CDO;
+                    continue;
                 case HAS_CDO_AND_DOUBLE_HYPHEN:
                     if ('>' == c) {
                         state = State.DATA;
                         continue;
                     } else if ('-' == c) {
                         continue;
-                    } else {
-                        state = State.HAS_CDO;
-                        continue;
                     }
+                    state = State.HAS_CDO;
+                    continue;
                 default:
                     assert false : state;
             }
         }
         if (state == State.HAS_CDO) {
-            throw newDatatypeException("Content contains the character sequence \u201c<!--\u201d without "
+            throw newDatatypeException("Content contains the character sequence \u201c<!--\u201d without"
                     + " a later occurrence of the character sequence \u201c-->\u201d.");
         }
     }
