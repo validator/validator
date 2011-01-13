@@ -33,6 +33,7 @@ import java.util.Arrays;
 import org.whattf.checker.AttributeUtil;
 import org.whattf.checker.Checker;
 import org.whattf.checker.LocatorImpl;
+import org.whattf.checker.TaintableLocatorImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -489,6 +490,8 @@ public class Assertions extends Checker {
 
         private boolean labeledDescendants = false;
 
+        private boolean trackDescendants = false;
+
         /**
          * @param ancestorMask
          */
@@ -577,6 +580,25 @@ public class Assertions extends Checker {
         }
 
         /**
+         * Returns the trackDescendants.
+         * 
+         * @return the trackDescendants
+         */
+        public boolean isTrackDescendant() {
+            return trackDescendants;
+        }
+
+        /**
+         * Sets the trackDescendants.
+         * 
+         * @param trackDescendants
+         *            the trackDescendants to set
+         */
+        public void setTrackDescendants() {
+            this.trackDescendants = true;
+        }
+
+        /**
          * Returns the role.
          * 
          * @return the role
@@ -633,6 +655,8 @@ public class Assertions extends Checker {
     private Map<StackNode, Locator> openSingleSelects = new HashMap<StackNode, Locator>();
 
     private Map<StackNode, Locator> openLabels = new HashMap<StackNode, Locator>();
+
+    private Map<StackNode, TaintableLocatorImpl> openMediaElements = new HashMap<StackNode, TaintableLocatorImpl>();
 
     private Map<StackNode, Locator> openActiveDescendants = new HashMap<StackNode, Locator>();
 
@@ -721,6 +745,7 @@ public class Assertions extends Checker {
         Locator locator = null;
         openSingleSelects.remove(node);
         openLabels.remove(node);
+        openMediaElements.remove(node);
         if ((locator = openActiveDescendants.remove(node)) != null) {
             err(
                     "The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.",
@@ -741,6 +766,7 @@ public class Assertions extends Checker {
     public void reset() {
         openSingleSelects.clear();
         openLabels.clear();
+        openMediaElements.clear();
         openActiveDescendants.clear();
         contextmenuReferences.clear();
         menuIds.clear();
@@ -925,7 +951,7 @@ public class Assertions extends Checker {
                 }
             }
 
-            // Required ancestors
+            // Ancestor requirements/restrictions
             if ("area" == localName && ((ancestorMask & MAP_MASK) == 0)) {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName && ismap
@@ -959,6 +985,26 @@ public class Assertions extends Checker {
                         err("Any \u201C"
                                 + localName
                                 + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
+                    }
+                }
+            } else if ("track" == localName && atts.getIndex("", "default") >= 0) {
+                for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
+                    StackNode node = entry.getKey();
+                    TaintableLocatorImpl locator = entry.getValue();
+                    if (node.isTrackDescendant()) {
+                        err("The \u201Cdefault\u201D attribute must not occur"
+                                + " on more than one \u201Ctrack\u201D element"
+                                + " within the same \u201Caudio\u201D or"
+                                + " \u201Cvideo\u201D element.");
+                        if (!locator.isTainted()) {
+                            warn("\u201Caudio\u201D or \u201Cvideo\u201D element"
+                                    + " has more than one \u201Ctrack\u201D child"
+                                    + " element with a \u201Cdefault\u201D attribute.",
+                                    locator);
+                            locator.markTainted();
+                        }
+                    } else {
+                        node.setTrackDescendants();
                     }
                 }
             }
@@ -1246,6 +1292,8 @@ public class Assertions extends Checker {
                 openSingleSelects.put(child, getDocumentLocator());
             } else if ("label" == localName) {
                 openLabels.put(child, new LocatorImpl(getDocumentLocator()));
+            } else if ("video" == localName || "audio" == localName ) {
+                openMediaElements.put(child, new TaintableLocatorImpl(getDocumentLocator()));
             }
             push(child);
         } else {

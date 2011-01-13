@@ -36,4 +36,12 @@
       </report>
     </rule>
   </pattern>
+  <pattern name="Other warnings">
+    <rule context='h:video|h:audio'>
+      <report test='count(h:track[@default]) > 1' role='warning'>
+        &#x201C;<name/>&#x201D; element has more than one &#x201C;track&#x201D;
+        child element with a &#x201C;default&#x201D; attribute.
+      </report>
+    </rule>
+  </pattern>
 </schema>

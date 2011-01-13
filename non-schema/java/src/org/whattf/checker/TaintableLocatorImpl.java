@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Henri Sivonen
+ * Copyright (c) 2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,33 +24,20 @@ package org.whattf.checker;
 
 import org.xml.sax.Locator;
 
-public class LocatorImpl implements Locator {
+public class TaintableLocatorImpl extends LocatorImpl {
 
-    private final String systemId;
-    private final String publicId;
-    private final int column;
-    private final int line;
+    private boolean tainted;
     
-    public LocatorImpl(Locator locator) {
-        this.systemId = locator.getSystemId();
-        this.publicId = locator.getPublicId();
-        this.column = locator.getColumnNumber();
-        this.line = locator.getLineNumber();
+    public TaintableLocatorImpl(Locator locator) {
+        super(locator);
+        this.tainted = false;
     }
     
-    public int getColumnNumber() {
-        return column;
+    public void markTainted() {
+        tainted = true;
     }
 
-    public int getLineNumber() {
-        return line;
-    }
-
-    public String getPublicId() {
-        return publicId;
-    }
-
-    public String getSystemId() {
-        return systemId;
+    public boolean isTainted() {
+        return tainted;
     }
 }
