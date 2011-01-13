@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2010 Mozilla Foundation
+ * Copyright (c) 2007-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -158,6 +158,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Script.THE_INSTANCE;
         } else if ("script-documentation".equals(typeLocalName)) {
             return ScriptDocumentation.THE_INSTANCE;
+        } else if ("functionbody".equals(typeLocalName)) {
+            return FunctionBody.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

@@ -68,31 +68,31 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( common.inner.flow )
 
 	body.attrs.onafterprint =
-		attribute onafterprint { string }
+		attribute onafterprint { common.data.functionbody }
 	body.attrs.onbeforeprint =
-		attribute onbeforeprint { string }
+		attribute onbeforeprint { common.data.functionbody }
 	body.attrs.onbeforeunload =
-		attribute onbeforeunload { string }
+		attribute onbeforeunload { common.data.functionbody }
 	body.attrs.onhashchange =
-		attribute onhashchange { string }
+		attribute onhashchange { common.data.functionbody }
 	body.attrs.onmessage =
-		attribute onmessage { string }
+		attribute onmessage { common.data.functionbody }
 	body.attrs.onoffline =
-		attribute onoffline { string }
+		attribute onoffline { common.data.functionbody }
 	body.attrs.ononline =
-		attribute ononline { string }
+		attribute ononline { common.data.functionbody }
 	body.attrs.onpopstate =
-		attribute onpopstate { string }
+		attribute onpopstate { common.data.functionbody }
 	body.attrs.onredo =
-		attribute onredo { string }
+		attribute onredo { common.data.functionbody }
 	body.attrs.onresize =
-		attribute onresize { string }
+		attribute onresize { common.data.functionbody }
 	body.attrs.onstorage =
-		attribute onstorage { string }
+		attribute onstorage { common.data.functionbody }
 	body.attrs.onundo =
-		attribute onundo { string }
+		attribute onundo { common.data.functionbody }
 	body.attrs.onunload =
-		attribute onunload { string }
+		attribute onunload { common.data.functionbody }
 
 ## Document Title: <title>
 

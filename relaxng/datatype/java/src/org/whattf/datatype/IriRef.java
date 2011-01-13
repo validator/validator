@@ -139,7 +139,7 @@ public class IriRef extends AbstractDatatype {
                         Context context = ContextFactory.getGlobal().enterContext();
                         context.setOptimizationLevel(0);
                         context.setLanguageVersion(Context.VERSION_1_6);
-                        context.compileReader(reader, null, 1, null);
+                        context.compileReader(reader, null, -1, null);
                     } finally {
                         Context.exit();
                     }

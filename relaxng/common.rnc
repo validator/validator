@@ -365,6 +365,10 @@ common.attrs.other =
   common.data.zero =
     w:zero
 
+## ECMAScript FunctionBody
+  common.data.functionbody =
+    w:functionbody
+
 # #####################################################################
 ##  WF2 Module Hook                                                   #
 # #####################################################################
