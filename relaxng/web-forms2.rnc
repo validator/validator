@@ -16,7 +16,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	shared-form.attrs.formaction =
 		attribute formaction {
-			common.data.uri
+			common.data.uri.non-empty
 		}
 
 	shared-form.attrs.formenctype =

@@ -476,7 +476,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		form.attrs.action =
 			attribute action {
-				common.data.uri
+				common.data.uri.non-empty
 			}
 		form.attrs.method =
 			attribute method {
