@@ -298,7 +298,19 @@ common.attrs.other =
 ## IRIs
 
 	common.data.uri =
-		w:string "" | w:iri-ref
+		# allow either a non-empty IRI ref or zero or more HTML
+		# space characters (which are: space, tab, LF, FF, CR)
+		(	w:iri-ref
+		|	xsd:string {
+				pattern = "[ \x{0A}-\x{0D}]*"
+				# NOTE The range above incorrectly allows U+000B
+				# in addition to the HTML space characters; but
+				# that's not a problem in practice because HTML
+				# and XML parsers will both catch any U+000B
+				# and report an error for it before that pattern
+				# ever gets evaluated.
+		 	}
+		)
 
 	common.data.uri.non-empty =
 		w:iri-ref

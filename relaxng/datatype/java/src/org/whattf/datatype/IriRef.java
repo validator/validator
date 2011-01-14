@@ -68,10 +68,18 @@ public class IriRef extends AbstractDatatype {
 
     private final CharSequencePair splitScheme(CharSequence iri) {
         StringBuilder sb = new StringBuilder();
+        Boolean atSchemeBeginning = true;
         for (int i = 0; i < iri.length(); i++) {
             char c = toAsciiLowerCase(iri.charAt(i));
-            if (i == 0) {
+            if (atSchemeBeginning) {
+                // Skip past any leading characters that the HTML5 spec defines
+                // as space characters: space, tab, LF, FF, CR
+                if (' ' == c || '\t' == c || '\n' == c || '\f' == c
+                        || '\r' == c) {
+                    continue;
+                }
                 if ('a' <= c && 'z' >= c) {
+                    atSchemeBeginning = false;
                     sb.append(c);
                 } else {
                     return null;
@@ -114,12 +122,12 @@ public class IriRef extends AbstractDatatype {
             CharSequencePair pair = splitScheme(literal);
             if (pair == null) {
                 // no scheme or scheme is private
-                iri = fac.construct(literal.toString());
+                iri = fac.construct(trimHtmlSpaces(literal.toString()));
             } else {
                 CharSequence scheme = pair.getHead();
                 CharSequence tail = pair.getTail();
                 if (isWellKnown(scheme)) {
-                    iri = fac.construct(literal.toString());
+                    iri = fac.construct(trimHtmlSpaces(literal.toString()));
                 } else if ("javascript".contentEquals(scheme)) {
                     // StringBuilder sb = new StringBuilder(2 +
                     // literal.length());
@@ -128,8 +136,8 @@ public class IriRef extends AbstractDatatype {
                     iri = null; // Don't bother user with generic IRI syntax
                     Reader reader = new BufferedReader(
                             new Utf8PercentDecodingReader(new StringReader(
-                                    tail.toString()))); // XXX
-                                                        // CharSequenceReader
+                                    trimHtmlTrailingSpaces(tail.toString()))));
+                                    // XXX CharSequenceReader
                     reader.mark(1);
                     int c = reader.read();
                     if (c != 0xFEFF) {
@@ -145,21 +153,21 @@ public class IriRef extends AbstractDatatype {
                     }
                 } else if ("data".contentEquals(scheme)) {
                     data = true;
-                    iri = fac.construct(literal.toString());
+                    iri = fac.construct(trimHtmlSpaces(literal.toString()));
                 } else if (isHttpAlias(scheme)) {
                     StringBuilder sb = new StringBuilder(5 + tail.length());
                     sb.append("http:").append(tail);
-                    iri = fac.construct(sb.toString());
+                    iri = fac.construct(trimHtmlTrailingSpaces(sb.toString()));
                 } else {
                     StringBuilder sb = new StringBuilder(2 + literal.length());
                     sb.append("x-").append(literal);
-                    iri = fac.construct(sb.toString());
+                    iri = fac.construct(trimHtmlTrailingSpaces(sb.toString()));
                 }
             }
         } catch (IRIException e) {
             Violation v = e.getViolation();
             /*
-             * Violation codes that are not "known" codes get assign the
+             * Violation codes that are not "known" codes get assigned the
              * dummy value so that handling of them will fall through to
              * the default case.
              */
@@ -311,6 +319,47 @@ public class IriRef extends AbstractDatatype {
             buf[i] = c;
         }
         return new String(buf);
+    }
+
+    /**
+     * Trim any leading and trailing space characters, as defined in HTML5.
+     */
+    protected static final String trimHtmlSpaces(String str) {
+        return trimHtmlLeadingSpaces(trimHtmlTrailingSpaces(str));
+    }
+
+    /**
+     * Trim any leading space characters, as defined in HTML5.
+     * HTML space characters: space, tab, LF, FF, CR
+     */
+    protected static final String trimHtmlLeadingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length(); i > 0; --i) {
+            char c = str.charAt(str.length() - i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(str.length() - i, str.length());
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Trim any trailing space characters, as defined in HTML5.
+     * HTML space characters: space, tab, LF, FF, CR
+     */
+    protected static final String trimHtmlTrailingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length() - 1; i >= 0; --i) {
+            char c = str.charAt(i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(0, i + 1);
+            }
+        }
+        return "";
     }
 
     @Override
