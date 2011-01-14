@@ -10,6 +10,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs.contextmenu?
 		&	common.attrs.contenteditable?
 		&	common.attrs.draggable?
+		&	common.attrs.dropzone?
 		&	common.attrs.hidden?
 		&	common.attrs.spellcheck?
 		)
@@ -35,6 +36,22 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.draggable =
 		attribute draggable {
 			w:string "true" | w:string "false"
+		}
+
+## Dropzone: dropzone
+
+	common.attrs.dropzone =
+		attribute dropzone {
+			(	w:string "copy"
+			|	w:string "move"
+			|	w:string "link"
+			|	xsd:string {
+					pattern = "[sS]:.+"
+			 	}
+			|	xsd:string {
+					pattern = "[fF]:.+"
+			 	}
+			)
 		}
 
 ## Hidden Element: hidden

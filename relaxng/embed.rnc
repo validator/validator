@@ -99,6 +99,7 @@ namespace local = ""
 			                    | contextmenu 
 			                    | contenteditable 
 			                    | draggable 
+			                    | dropzone
 			                    | hidden
 			                    | onabort
 			                    | onblur
