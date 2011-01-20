@@ -46,7 +46,7 @@ public class FunctionBody extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         try {
             Reader reader = new BufferedReader((new StringReader(
-                    literal.toString())));
+                    "function(event){" + literal.toString() + "}")));
             reader.mark(1);
             try {
                 Context context = ContextFactory.getGlobal().enterContext();

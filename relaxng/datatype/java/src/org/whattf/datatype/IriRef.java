@@ -136,7 +136,8 @@ public class IriRef extends AbstractDatatype {
                     iri = null; // Don't bother user with generic IRI syntax
                     Reader reader = new BufferedReader(
                             new Utf8PercentDecodingReader(new StringReader(
-                                    trimHtmlTrailingSpaces(tail.toString()))));
+                                    trimHtmlTrailingSpaces("function(event){"
+                                            + tail.toString() + "}"))));
                                     // XXX CharSequenceReader
                     reader.mark(1);
                     int c = reader.read();
