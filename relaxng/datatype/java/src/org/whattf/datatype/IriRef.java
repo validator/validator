@@ -136,9 +136,8 @@ public class IriRef extends AbstractDatatype {
                     iri = null; // Don't bother user with generic IRI syntax
                     Reader reader = new BufferedReader(
                             new Utf8PercentDecodingReader(new StringReader(
-                                    trimHtmlTrailingSpaces("function(event){"
-                                            + tail.toString() + "}"))));
-                                    // XXX CharSequenceReader
+                                    "function(event){" + tail.toString() + "}")));
+                    // XXX CharSequenceReader
                     reader.mark(1);
                     int c = reader.read();
                     if (c != 0xFEFF) {
@@ -148,6 +147,8 @@ public class IriRef extends AbstractDatatype {
                         Context context = ContextFactory.getGlobal().enterContext();
                         context.setOptimizationLevel(0);
                         context.setLanguageVersion(Context.VERSION_1_6);
+                        // -1 for lineno arg prevents Rhino from appending
+                        // "(unnamed script#1)" to all error messages
                         context.compileReader(reader, null, -1, null);
                     } finally {
                         Context.exit();
