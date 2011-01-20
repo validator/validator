@@ -889,6 +889,17 @@ public class Assertions extends Checker {
                                     + localName
                                     + "\u201D element is obsolete. Use CSS instead.");
                         }
+                    } else if ("dropzone" == attLocal) {
+                        String[] tokens = atts.getValue(i).toString().split(
+                                "[ \\t\\n\\f\\r]+");
+                        Arrays.sort(tokens);
+                        for (int j = 0; j < tokens.length; j++) {
+                            String keyword = tokens[j];
+                            if (j > 0 && keyword.equals(tokens[j - 1])) {
+                                err("Duplicate keyword " + keyword
+                                        + ". Each keyword must be unique.");
+                            }
+                        }
                     }
                 } else if ("http://www.w3.org/XML/1998/namespace" == attUri) {
                     if ("lang" == atts.getLocalName(i)) {
