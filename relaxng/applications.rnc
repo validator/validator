@@ -42,8 +42,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.attrs.dropzone =
 		attribute dropzone {
-			# FIXME tokens must be unique; check in assertions code
-			# FIXME add new datatype instead; better error messages
 			list {
 				(	xsd:string { pattern = "[sS]:.+" }
 				|	xsd:string { pattern = "[fF]:.+" }
