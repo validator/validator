@@ -23,7 +23,8 @@
 
 import os
 import shutil
-import urllib
+import httplib
+import urllib2
 import re
 try:
   from hashlib import md5
@@ -75,6 +76,7 @@ noSelfUpdate = 0
 useLocalCopies = 0
 pageTemplate = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
+httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 
@@ -640,9 +642,15 @@ def deployOverScp():
 def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
   print url
-  f = urllib.urlopen(url)
-  data = f.read()
-  f.close()
+  completed = False
+  while not completed:
+   try:
+    f = urllib2.urlopen(url, timeout=httpTimeoutSeconds)
+    data = f.read()
+    f.close()
+    completed = True
+   except httplib.BadStatusLine, e:
+    print "received error, retrying"
   if md5sum:
     m = md5(data)
     if md5sum != m.hexdigest():
@@ -656,7 +664,7 @@ def fetchUrlTo(url, path, md5sum=None):
   f.close()
 
 def spiderApacheDirectories(baseUrl, baseDir):
-  f = urllib.urlopen(baseUrl)
+  f = urllib2.urlopen(baseUrl, timeout=httpTimeoutSeconds)
   parser = UrlExtractor(baseUrl)
   parser.feed(f.read())
   f.close()
