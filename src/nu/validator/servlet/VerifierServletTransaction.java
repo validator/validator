@@ -920,7 +920,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws SAXException
      */
     protected String successMessage() throws SAXException {
-        return "The document validates according to the specified schema(s).";
+        return "The document validates according to the specified schema(s) and to additional constraints checked by the validator.";
     }
 
     protected String failureMessage() throws SAXException {
