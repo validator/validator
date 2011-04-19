@@ -117,6 +117,20 @@ public final class Refresh extends IriRef {
                                 " instead.");
                     }
                 case EQUALS_SEEN:
+                    if (c == '"' || c == '\'') {
+                        throw newDatatypeException(
+                                "Expected an unquoted IRI reference, but saw ",
+                                c, " instead.");
+                    }
+                    if (' ' == c || '\t' == c || '\n' == c || '\f' == c
+                            || '\r' == c) {
+                        throw newDatatypeException("Expected an IRI reference, but saw whitespace instead.");
+                    }
+                    char l = literal.charAt(literal.length() - 1);
+                    if (' ' == l || '\t' == l || '\n' == l || '\f' == l
+                            || '\r' == l) {
+                        throw newDatatypeException("Trailing whitespace.");
+                    }
                     super.checkValid(literal.subSequence(i, literal.length()));
                     return;
             }
