@@ -243,7 +243,7 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] { "table", "tr", "td",
                 "th", "body" });
-        OBSOLETE_STYLE_ATTRS.put("border", new String[] { "table", "object" });
+        OBSOLETE_STYLE_ATTRS.put("border", new String[] { "object" });
         OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
@@ -997,6 +997,15 @@ public class Assertions extends Checker {
                                 + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
                     }
                 }
+            } else if ("table" == localName && atts.getIndex("", "border") >= 0) {
+                if (!("".equals(atts.getValue("", "border"))
+                    || "1".equals(atts.getValue("", "border")))) {
+                        err("The value of the \u201Cborder\u201D attribute"
+                                + " on the \u201Ctable\u201D element"
+                                + " must be either \u201C1\u201D or"
+                                + " the empty string. To regulate the"
+                                + " thickness of table borders, Use CSS instead.");
+                    }
             } else if ("track" == localName && atts.getIndex("", "default") >= 0) {
                 for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
                     StackNode node = entry.getKey();

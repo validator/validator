@@ -824,8 +824,9 @@
 				The &#x201C;bgcolor&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
-			<report test='@border'>
-				The &#x201C;border&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
+			<report test='@border and not(@border = "" or @border = "1")'>
+				The value of the &#x201C;border&#x201D; attribute on the &#x201C;<name/>&#x201D; element
+				must be either &#x201C;1&#x201D; or the empty string. To regulate the thickness of table borders, 
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes
 			</report>
 			<report test='@cellpadding'>
