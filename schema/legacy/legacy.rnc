@@ -777,12 +777,6 @@
 
 ## border attribute
 
-	table.attrs.border =
-		attribute border {
-			string
-		}
-	table.attrs &= table.attrs.border?
-
 	object.attrs.border =
 		attribute border {
 			string
