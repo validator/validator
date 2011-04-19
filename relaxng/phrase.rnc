@@ -185,6 +185,19 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= s.elem
 
+## Underline: <u>
+
+	u.elem =
+		element u { u.inner & u.attrs }
+	u.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		)
+	u.inner =
+		( common.inner.phrasing )
+
+	common.elem.phrasing |= u.elem
+
 ## Code Fragment: <code>
 
 	code.elem =

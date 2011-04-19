@@ -432,7 +432,7 @@
 			</report>
 		</rule>
 
-		<rule context='h:center|h:font|h:big|h:strike|h:tt|h:u|h:basefont'>
+		<rule context='h:center|h:font|h:big|h:strike|h:tt|h:basefont'>
 			<report test='true()'>
 				The &#x201C;<name/>&#x201D; element is obsolete.
 				Use CSS instead. http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2009 Mozilla Foundation
+ * Copyright (c) 2008-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -96,7 +96,6 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put("big", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("strike", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("tt", "Use CSS instead.");
-        OBSOLETE_ELEMENTS.put("u", "Use CSS instead.");
         OBSOLETE_ELEMENTS.put("acronym",
                 "Use the \u201Cabbr\u201D element instead.");
         OBSOLETE_ELEMENTS.put("dir", "Use the \u201Cul\u201D element instead.");
