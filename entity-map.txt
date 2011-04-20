@@ -90,7 +90,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml-special.ent	www.w3.org/TR/xhtml1/DTD/xhtml
 http://www.w3.org/TR/xhtml1/DTD/xhtml-symbol.ent	www.w3.org/TR/xhtml1/DTD/xhtml-symbol.ent
 http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd	www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
 http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd	www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd
-http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd	www.w3.org/TR/xhtml1/DTD/xhtml11.dtd
+http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd	www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd
 http://www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod	www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod
 http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd	www.w3.org/TR/xhtml11/DTD/xhtml11.dtd
 http://www.iana.org/assignments/language-subtag-registry	www.iana.org/assignments/language-subtag-registry
