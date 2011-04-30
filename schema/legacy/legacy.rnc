@@ -1099,6 +1099,14 @@
 		}
 	hr.attrs &= hr.attrs.size?
 
+## summary attribute
+
+	table.attrs.summary =
+		attribute summary {
+			string
+		}
+	table.attrs &= table.attrs.summary?
+
 ## text attribute
 
 	body.attrs.text =
