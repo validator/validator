@@ -583,6 +583,10 @@
 				The &#x201C;scheme&#x201D; attribute on the &#x201C;<name/>&#x201D; element is obsolete.
 				Use only one scheme per field, or make the scheme declaration part of the value.
 			</report>
+			<report test='translate(@http-equiv,"CONTELAGUA", "contelagua")="content-language"' role='warning'>
+				Using the &#x201C;meta&#x201D; element to specify the document-wide default language is obsolete.
+				Consider specifying the language on the root element instead.
+			</report>
 		</rule>
 
 		<rule context='h:object'>

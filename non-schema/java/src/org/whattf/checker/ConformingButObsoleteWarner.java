@@ -33,11 +33,7 @@ public class ConformingButObsoleteWarner extends Checker {
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
         if ("http://www.w3.org/1999/xhtml" == uri) {
-            if ("meta" == localName) {
-                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("content-language", atts.getValue("", "http-equiv"))) {
-                    warn("The \u201CContent-Language\u201D state is obsolete. Consider specifying the language on the root element instead.");
-                }
-            } else if ("img" == localName) {
+            if ("img" == localName) {
                 if (atts.getIndex("", "border") > -1) {
                     warn("The \u201Cborder\u201D attribute is obsolete. Consider specifying \u201Cimg { border: 0; }\u201D in CSS instead.");
                 }

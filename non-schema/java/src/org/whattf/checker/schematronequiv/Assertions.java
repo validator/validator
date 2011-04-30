@@ -1232,6 +1232,15 @@ public class Assertions extends Checker {
                     }
                 }
             }
+            if ("meta" == localName) {
+                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        "content-language", atts.getValue("", "http-equiv"))) {
+                    err("Using the \u201Cmeta\u201D element to specify the"
+                        + " document-wide default language is obsolete."
+                        + " Consider specifying the language on the root"
+                        + " element instead.");
+                }
+            }
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
