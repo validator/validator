@@ -115,9 +115,9 @@
 				Consider describing the structure of the table
 				in a &#x201C;caption&#x201D; element or
 				in a &#x201C;figure&#x201D; element containing
-				the &#x201C;table&#x201D;; or, simplify the
-				structue of the &#x201C;table&#x201D; so that
-				no description is needed.
+				the &#x201C;table&#x201D; element; or, simplify
+				the structue of the table so that no
+				description is needed.
 			</report>
 		</rule>
 	</pattern>
