@@ -79,7 +79,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	video.attrs.poster?
 		&	video.attrs.height?
 		&	video.attrs.width?
-		&	video.attrs.audio?
+		&	video.attrs.muted?
 		)
 		video.attrs.poster =
 			attribute poster {
@@ -93,12 +93,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute width {
 				common.data.integer.non-negative
 			}
-		video.attrs.audio =
-			attribute audio
-				{	list 
-					{	( w:string "muted" )?
-					}
-				}
+		video.attrs.muted =
+			attribute muted {
+				w:string "muted" | w:string ""
+			}
 	video.inner.flow =
 		(	media.source
 		,	track.elem*
