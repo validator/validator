@@ -28,13 +28,6 @@
         &#x201C;id&#x201D; attribute on the nearest container instead.
       </report>
     </rule>
-    <rule context='h:table'>
-      <report test='@summary' role='warning'>
-        The &#x201C;summary&#x201D; attribute on the &#x201C;a&#x201D; element is obsolete.
-        Consider describing the structure of complex tables in a &#x201C;caption&#x201D; element
-        or in a paragraph, and pointing to the paragraph using the &#x201C;aria-describedby&#x201D; attribute.
-      </report>
-    </rule>
   </pattern>
   <pattern name="Other warnings">
     <rule context='h:video|h:audio'>

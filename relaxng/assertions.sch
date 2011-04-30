@@ -109,6 +109,16 @@
 				The element &#x201C;table&#x201D; must not appear as a
 				descendant of the &#x201C;caption&#x201D; element.
 			</report>
+			<report test='@summary' role='warning'>
+				The &#x201C;summary&#x201D; attribute on the
+				&#x201C;table&#x201D; element is obsolete.
+				Consider describing the structure of the table
+				in a &#x201C;caption&#x201D; element or
+				in a &#x201C;figure&#x201D; element containing
+				the &#x201C;table&#x201D;; or, simplify the
+				structue of the &#x201C;table&#x201D; so that
+				no description is needed.
+			</report>
 		</rule>
 	</pattern>
 

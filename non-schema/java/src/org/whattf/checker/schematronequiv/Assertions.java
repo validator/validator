@@ -997,15 +997,26 @@ public class Assertions extends Checker {
                                 + "\u201D descendant of a \u201Clabel\u201D element with a \u201Cfor\u201D attribute must have an ID value that matches that \u201Cfor\u201D attribute.");
                     }
                 }
-            } else if ("table" == localName && atts.getIndex("", "border") >= 0) {
-                if (!("".equals(atts.getValue("", "border"))
-                    || "1".equals(atts.getValue("", "border")))) {
-                        err("The value of the \u201Cborder\u201D attribute"
-                                + " on the \u201Ctable\u201D element"
-                                + " must be either \u201C1\u201D or"
-                                + " the empty string. To regulate the"
-                                + " thickness of table borders, Use CSS instead.");
-                    }
+            } else if ("table" == localName) {
+                if (atts.getIndex("", "summary") >= 0) {
+                    err("The \u201Csummary\u201D attribute is obsolete."
+                            + " Consider describing the structure of the"
+                            + " \u201Ctable\u201D in a \u201Ccaption\u201D "
+                            + " element or in a \u201Cfigure\u201D element "
+                            + " containing the \u201Ctable\u201D; or,"
+                            + " simplify the structure of the"
+                            + " \u201Ctable\u201D so that no description"
+                            + " is needed.");
+                }
+                if (atts.getIndex("", "border") > -1
+                        && (!("".equals(atts.getValue("", "border")) || "1".equals(atts.getValue(
+                                "", "border"))))) {
+                    err("The value of the \u201Cborder\u201D attribute"
+                            + " on the \u201Ctable\u201D element"
+                            + " must be either \u201C1\u201D or"
+                            + " the empty string. To regulate the"
+                            + " thickness of table borders, Use CSS instead.");
+                }
             } else if ("track" == localName && atts.getIndex("", "default") >= 0) {
                 for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
                     StackNode node = entry.getKey();

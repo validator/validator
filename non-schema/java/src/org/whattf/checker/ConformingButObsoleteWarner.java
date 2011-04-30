@@ -52,10 +52,6 @@ public class ConformingButObsoleteWarner extends Checker {
                 if (atts.getIndex("", "name") > -1) {
                     warn("The \u201Cname\u201D attribute is obsolete. Consider putting an \u201Cid\u201D attribute on the nearest container instead.");
                 }
-            } else if ("table" == localName) {
-                if (atts.getIndex("", "summary") > -1) {
-                    warn("The \u201Csummary\u201D attribute is obsolete. Consider describing the structure of complex tables in \u201C<caption>\u201D or in a paragraph and pointing to the paragraph using the \u201Caria-describedby\u201D attribute.");
-                }
             }
         }
     }
