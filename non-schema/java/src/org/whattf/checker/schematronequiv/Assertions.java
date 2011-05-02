@@ -1552,7 +1552,7 @@ public class Assertions extends Checker {
                             stack[currentFigurePtr].setFigcaptionContentFound();
                         }
                         // for any ancestor figures of the parent figure
-                        // parent of this figcaption, the content of this
+                        // of this figcaption, the content of this
                         // figcaption counts as a text node descendant
                         for (int j = 1; j < currentFigurePtr; j++) {
                             if ("figure".equals(stack[currentFigurePtr - j].getName())) {
