@@ -281,8 +281,9 @@ public class Assertions extends Checker {
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
-            "button", "caption", "dfn", "footer", "form", "header", "label",
-            "map", "noscript", "time", "progress", "meter" };
+            "button", "caption", "dfn", "figcaption", "figure", "footer",
+            "form", "header", "label", "map", "noscript", "time", "progress",
+            "meter" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -359,6 +360,10 @@ public class Assertions extends Checker {
 
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
             | (1 << specialAncestorNumber("button"));
+
+    private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber("figcaption"));
+
+    private static final int FIGURE_MASK = (1 << specialAncestorNumber("figure"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
 
@@ -483,6 +488,8 @@ public class Assertions extends Checker {
 
         private final String forAttr;
 
+        private Set<Locator> imagesLackingAlt = new HashSet<Locator>();
+
         private boolean children = false;
 
         private boolean selectedOptions = false;
@@ -490,6 +497,16 @@ public class Assertions extends Checker {
         private boolean labeledDescendants = false;
 
         private boolean trackDescendants = false;
+
+        private boolean textNodeFound = false;
+
+        private boolean imgFound = false;
+
+        private boolean embeddedContentFound = false;
+
+        private boolean figcaptionNeeded = false;
+
+        private boolean figcaptionContentFound = false;
 
         /**
          * @param ancestorMask
@@ -623,6 +640,103 @@ public class Assertions extends Checker {
         public String getForAttr() {
             return forAttr;
         }
+
+        /**
+         * Returns the textNodeFound.
+         * 
+         * @return the textNodeFound
+         */
+        public boolean hasTextNode() {
+            return textNodeFound;
+        }
+
+        /**
+         * Sets the textNodeFound.
+         */
+        public void setTextNodeFound() {
+            this.textNodeFound = true;
+        }
+
+        /**
+         * Returns the imgFound.
+         * 
+         * @return the imgFound
+         */
+        public boolean hasImg() {
+            return imgFound;
+        }
+
+        /**
+         * Sets the imgFound.
+         */
+        public void setImgFound() {
+            this.imgFound = true;
+        }
+
+        /**
+         * Returns the embeddedContentFound.
+         * 
+         * @return the embeddedContentFound
+         */
+        public boolean hasEmbeddedContent() {
+            return embeddedContentFound;
+        }
+
+        /**
+         * Sets the embeddedContentFound.
+         */
+        public void setEmbeddedContentFound() {
+            this.embeddedContentFound = true;
+        }
+
+        /**
+         * Returns the figcaptionNeeded.
+         * 
+         * @return the figcaptionNeeded
+         */
+        public boolean needsFigcaption() {
+            return figcaptionNeeded;
+        }
+
+        /**
+         * Sets the figcaptionNeeded.
+         */
+        public void setFigcaptionNeeded() {
+            this.figcaptionNeeded = true;
+        }
+
+        /**
+         * Returns the figcaptionContentFound.
+         * 
+         * @return the figcaptionContentFound
+         */
+        public boolean hasFigcaptionContent() {
+            return figcaptionContentFound;
+        }
+
+        /**
+         * Sets the figcaptionContentFound.
+         */
+        public void setFigcaptionContentFound() {
+            this.figcaptionContentFound = true;
+        }
+
+        /**
+         * Returns the imagesLackingAlt
+         * 
+         * @return the imagesLackingAlt
+         */
+        public Set<Locator> getImagesLackingAlt() {
+            return imagesLackingAlt;
+        }
+
+        /**
+         * Adds to the imagesLackingAlt
+         */
+        public void addImageLackingAlt(Locator locator) {
+            this.imagesLackingAlt.add(locator);
+        }
+
     }
 
     private StackNode[] stack;
@@ -674,6 +788,10 @@ public class Assertions extends Checker {
     private LinkedHashSet<IdrefLocator> ariaReferences = new LinkedHashSet<IdrefLocator>();
 
     private Set<String> allIds = new HashSet<String>();
+
+    private int currentFigurePtr;
+
+    private boolean hasMetaGenerator;
 
     /**
      * @see org.whattf.checker.Checker#endDocument()
@@ -745,6 +863,17 @@ public class Assertions extends Checker {
         openSingleSelects.remove(node);
         openLabels.remove(node);
         openMediaElements.remove(node);
+        if ("http://www.w3.org/1999/xhtml" == uri) {
+            if ("figure" == localName) {
+                if ((node.needsFigcaption() && !node.hasFigcaptionContent())
+                        || node.hasTextNode() || node.hasEmbeddedContent()) {
+                    for (Locator imgLocator : node.getImagesLackingAlt()) {
+                        err("Element \u201Cimg\u201D is missing required "
+                                + "attribute \u201Calt\u201D.", imgLocator);
+                    }
+                }
+            }
+        }
         if ((locator = openActiveDescendants.remove(node)) != null) {
             err(
                     "The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.",
@@ -759,6 +888,8 @@ public class Assertions extends Checker {
         reset();
         stack = new StackNode[32];
         currentPtr = 0;
+        currentFigurePtr = -1;
+        hasMetaGenerator = false;
         stack[0] = null;
     }
 
@@ -914,6 +1045,24 @@ public class Assertions extends Checker {
                 }
             }
 
+            if ("figure" == localName) {
+                currentFigurePtr = currentPtr + 1;
+            }
+            if ((ancestorMask & FIGURE_MASK) != 0) {
+                if ("img" == localName) {
+                    if (stack[currentFigurePtr].hasImg()) {
+                        stack[currentFigurePtr].setEmbeddedContentFound();
+                    } else {
+                        stack[currentFigurePtr].setImgFound();
+                    }
+                } else if ("audio" == localName || "canvas" == localName
+                        || "embed" == localName || "iframe" == localName
+                        || "math" == localName || "object" == localName
+                        || "svg" == localName || "video" == localName) {
+                    stack[currentFigurePtr].setEmbeddedContentFound();
+                }
+            }
+
             // Obsolete elements
             if (OBSOLETE_ELEMENTS.get(localName) != null) {
                 err("The \u201C" + localName + "\u201D element is obsolete. "
@@ -964,9 +1113,31 @@ public class Assertions extends Checker {
             // Ancestor requirements/restrictions
             if ("area" == localName && ((ancestorMask & MAP_MASK) == 0)) {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
-            } else if ("img" == localName && ismap
-                    && ((ancestorMask & HREF_MASK) == 0)) {
-                err("The \u201Cimg\u201D element with the \u201Cismap\u201D attribute set must have an \u201Ca\u201D ancestor with the \u201Chref\u201D attribute.");
+            } else if ("img" == localName) {
+                String titleVal = atts.getValue("", "title");
+                // String arialabelledbyVal = atts.getValue("", "aria-labelledby");
+                // String roleVal = atts.getValue("", "role");
+                if (ismap && ((ancestorMask & HREF_MASK) == 0)) {
+                    err("The \u201Cimg\u201D element with the "
+                            + "\u201Cismap\u201D attribute set must have an "
+                            + "\u201Ca\u201D ancestor with the "
+                            + "\u201Chref\u201D attribute.");
+                }
+                if (atts.getIndex("", "alt") < 0) {
+                    if ((titleVal == null || "".equals(titleVal))
+                            // && (arialabelledbyVal == null || "".equals(arialabelledbyVal))
+                            // && (roleVal == null || !"presentation".equals(roleVal))
+                            && hasMetaGenerator == false) {
+                        if ((ancestorMask & FIGURE_MASK) == 0) {
+                            err("Element \u201Cimg\u201D is missing required "
+                                + "attribute \u201Calt\u201D.");
+                        } else {
+                            stack[currentFigurePtr].setFigcaptionNeeded();
+                            stack[currentFigurePtr].addImageLackingAlt(new LocatorImpl(
+                                    getDocumentLocator()));
+                        }
+                    }
+                }
             } else if ("input" == localName || "button" == localName
                     || "select" == localName || "textarea" == localName
                     || "keygen" == localName) {
@@ -1241,6 +1412,12 @@ public class Assertions extends Checker {
                         + " element instead.");
                 }
             }
+            if ("meta" == localName) {
+                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("generator",
+                        atts.getValue("", "name"))) {
+                    hasMetaGenerator = true;
+                }
+            }
         } else {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
@@ -1359,7 +1536,8 @@ public class Assertions extends Checker {
      */
     @Override public void characters(char[] ch, int start, int length)
             throws SAXException {
-        for (int i = start; i < length; i++) {
+        StackNode node = peek();
+        for (int i = start; i < start + length; i++) {
             char c = ch[i];
             switch (c) {
                 case ' ':
@@ -1368,7 +1546,31 @@ public class Assertions extends Checker {
                 case '\n':
                     continue;
                 default:
-                    processChildContent(peek());
+                    if ("figcaption".equals(node.name)
+                            || (node.ancestorMask & FIGCAPTION_MASK) != 0) {
+                        if ((node.ancestorMask & FIGURE_MASK) != 0) {
+                            stack[currentFigurePtr].setFigcaptionContentFound();
+                        }
+                        // for any ancestor figures of the parent figure
+                        // parent of this figcaption, the content of this
+                        // figcaption counts as a text node descendant
+                        for (int j = 1; j < currentFigurePtr; j++) {
+                            if ("figure".equals(stack[currentFigurePtr - j].getName())) {
+                                stack[currentFigurePtr - j].setTextNodeFound();
+                            }
+                        }
+                    } else if ("figure".equals(node.name)
+                            || (node.ancestorMask & FIGURE_MASK) != 0) {
+                        stack[currentFigurePtr].setTextNodeFound();
+                        // for any ancestor figures of this figure, this
+                        // also counts as a text node descendant
+                        for (int k = 1; k < currentFigurePtr; k++) {
+                            if ("figure".equals(stack[currentFigurePtr - k].getName())) {
+                                stack[currentFigurePtr - k].setTextNodeFound();
+                            }
+                        }
+                    }
+                    processChildContent(node);
                     return;
             }
         }
