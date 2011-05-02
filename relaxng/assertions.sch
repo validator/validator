@@ -13,10 +13,33 @@
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
 
 	<pattern name="required attributes">
-		<rule context='h:bdo[@dir]'>
+		<rule context='h:bdo'>
 			<assert test='@dir'>
 				A &#x201C;bdo&#x201D; element must have a
 				&#x201C;dir&#x201D; attribute.
+			</assert>
+		</rule>
+		<rule context='h:img[not(@alt)]'>
+			<assert test='(@title and not(@title = ""))
+			or //h:meta[(translate(@name,
+				"GENERATOR", "generator") = "generator")]
+			or (ancestor::h:figure
+				and (ancestor::h:figure[1]/h:figcaption
+					and not(ancestor::h:figure[1]/h:figcaption = ""))
+				and normalize-space(ancestor::h:figure[1])
+					= normalize-space(ancestor::h:figure[1]/h:figcaption)
+				and not(ancestor::h:figure[1]//*[
+					local-name() = "audio"
+					or local-name() = "canvas"
+					or local-name() = "embed"
+					or local-name() = "iframe"
+					or local-name() = "math"
+					or local-name() = "object"
+					or local-name() = "svg"
+					or local-name() = "video"])
+				and not(count(ancestor::h:figure[1]//h:img) > 1))'>
+				Element &#x201C;img&#x201D; is missing required
+				attribute &#x201C;alt&#x201D;.
 			</assert>
 		</rule>
 	</pattern>
