@@ -302,12 +302,41 @@
 			</assert>
 		</rule>
 
-		<rule context='h:select[not(@multiple)]'>
-			<report test='count(descendant::h:option[@selected]) > 1'>
+		<rule context='h:select'>
+			<report test='not(@multiple) and count(descendant::h:option[@selected]) > 1'>
 				The &#x201C;select&#x201D; element cannot have more than one 
 				selected &#x201C;option&#x201D; element descendant unless the 
 				&#x201C;multiple&#x201D; attribute is specified.
 			</report>
+			<report test='@required and not(@multiple)
+				and (not(@size)
+					or (starts-with(normalize-space(@size), "+")
+					and substring-after(@size,"+") = 1)
+					or @size = 1)
+				and not(h:option)'>
+				A &#x201C;select&#x201D; element with
+				a &#x201C;required&#x201D; attribute and without
+				a &#x201C;multiple&#x201D; attribute, and whose
+				size is &#x201C;1&#x201D;, must have a child
+				&#x201C;option&#x201D; element.
+			</report>
+		</rule>
+
+		<rule context='h:select[@required and not(@multiple)
+			and (not(@size)
+				or (starts-with(normalize-space(@size), "+")
+				and substring-after(@size,"+") = 1)
+				or @size = 1)]/h:option[1]'>
+			<assert test='(@value and @value = "")
+				or ((not(@value) or @value = "") and . = "")'>
+				The first child &#x201C;option&#x201D; element
+				of a &#x201C;select&#x201D; element with
+				a &#x201C;required&#x201D; attribute and without
+				a &#x201C;multiple&#x201D; attribute, and whose
+				size is &#x201C;1&#x201D;, must have either an
+				empty &#x201C;value&#x201D; attribute, or must
+				have no text content.
+			</assert>
 		</rule>
 
 		<rule context='h:script'>
