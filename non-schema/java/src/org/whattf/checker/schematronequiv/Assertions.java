@@ -88,6 +88,36 @@ public class Assertions extends Checker {
         return true;
     }
 
+    private static final String trimSpaces(String str) {
+        return trimLeadingSpaces(trimTrailingSpaces(str));
+    }
+
+    private static final String trimLeadingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length(); i > 0; --i) {
+            char c = str.charAt(str.length() - i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(str.length() - i, str.length());
+            }
+        }
+        return "";
+    }
+
+    private static final String trimTrailingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length() - 1; i >= 0; --i) {
+            char c = str.charAt(i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(0, i + 1);
+            }
+        }
+        return "";
+    }
+
     private static final Map<String, String> OBSOLETE_ELEMENTS = new HashMap<String, String>();
 
     static {
@@ -490,6 +520,8 @@ public class Assertions extends Checker {
 
         private Set<Locator> imagesLackingAlt = new HashSet<Locator>();
 
+        private Locator nonEmptyOption = null;
+
         private boolean children = false;
 
         private boolean selectedOptions = false;
@@ -507,6 +539,14 @@ public class Assertions extends Checker {
         private boolean figcaptionNeeded = false;
 
         private boolean figcaptionContentFound = false;
+
+        private boolean optionNeeded = false;
+
+        private boolean optionFound = false;
+
+        private boolean noValueOptionFound = false;
+
+        private boolean emptyValueOptionFound = false;
 
         /**
          * @param ancestorMask
@@ -737,6 +777,86 @@ public class Assertions extends Checker {
             this.imagesLackingAlt.add(locator);
         }
 
+        /**
+         * Returns the optionNeeded.
+         * 
+         * @return the optionNeeded
+         */
+        public boolean isOptionNeeded() {
+            return optionNeeded;
+        }
+
+        /**
+         * Sets the optionNeeded.
+         */
+        public void setOptionNeeded() {
+            this.optionNeeded = true;
+        }
+
+        /**
+         * Returns the optionFound.
+         * 
+         * @return the optionFound
+         */
+        public boolean hasOption() {
+            return optionFound;
+        }
+
+        /**
+         * Sets the optionFound.
+         */
+        public void setOptionFound() {
+            this.optionFound = true;
+        }
+
+        /**
+         * Returns the noValueOptionFound.
+         * 
+         * @return the noValueOptionFound
+         */
+        public boolean hasNoValueOption() {
+            return noValueOptionFound;
+        }
+
+        /**
+         * Sets the noValueOptionFound.
+         */
+        public void setNoValueOptionFound() {
+            this.noValueOptionFound = true;
+        }
+
+        /**
+         * Returns the emptyValueOptionFound.
+         * 
+         * @return the emptyValueOptionFound
+         */
+        public boolean hasEmptyValueOption() {
+            return emptyValueOptionFound;
+        }
+
+        /**
+         * Sets the emptyValueOptionFound.
+         */
+        public void setEmptyValueOptionFound() {
+            this.emptyValueOptionFound = true;
+        }
+
+        /**
+         * Returns the nonEmptyOption.
+         * 
+         * @return the nonEmptyOption
+         */
+        public Locator nonEmptyOptionLocator() {
+            return nonEmptyOption;
+        }
+
+        /**
+         * Sets the nonEmptyOption.
+         */
+        public void setNonEmptyOption(Locator locator) {
+            this.nonEmptyOption = locator;
+        }
+
     }
 
     private StackNode[] stack;
@@ -872,6 +992,23 @@ public class Assertions extends Checker {
                                 + "attribute \u201Calt\u201D.", imgLocator);
                     }
                 }
+            } else if ("select" == localName && node.isOptionNeeded()) {
+                if (!node.hasOption()) {
+                    err("A \u201Cselect\u201D element with a"
+                            + " \u201Crequired\u201D attribute must have a"
+                            + " child \u201Coption\u201D element.");
+                }
+                if (node.nonEmptyOptionLocator() != null) {
+                    err("The first child \u201Coption\u201D element of a"
+                            + " \u201Cselect\u201D element with a"
+                            + " \u201Crequired\u201D attribute and without a"
+                            + " \u201Cmultiple\u201D attribute, and whose size"
+                            + " is \u201C1\u201D, must have either an empty"
+                            + " \u201Cvalue\u201D attribute, or must have no"
+                            + " text content.", node.nonEmptyOptionLocator());
+                }
+            } else if ("option" == localName && !stack[currentPtr].hasOption()) {
+                stack[currentPtr].setOptionFound();
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
@@ -1060,6 +1197,18 @@ public class Assertions extends Checker {
                         || "math" == localName || "object" == localName
                         || "svg" == localName || "video" == localName) {
                     stack[currentFigurePtr].setEmbeddedContentFound();
+                }
+            }
+
+            if ("option" == localName && !parent.hasOption()) {
+                if (atts.getIndex("", "value") < 0) {
+                    parent.setNoValueOptionFound();
+                } else if (atts.getIndex("", "value") > -1
+                        && "".equals(atts.getValue("", "value"))) {
+                    parent.setEmptyValueOptionFound();
+                } else {
+                    parent.setNonEmptyOption((new LocatorImpl(
+                            getDocumentLocator())));
                 }
             }
 
@@ -1512,6 +1661,26 @@ public class Assertions extends Checker {
                 openMediaElements.put(child, new TaintableLocatorImpl(getDocumentLocator()));
             }
             push(child);
+            if ("select" == localName && atts.getIndex("", "required") > -1
+                    && atts.getIndex("", "multiple") < 0) {
+                if (atts.getIndex("", "size") > -1) {
+                    String size = trimSpaces(atts.getValue("", "size"));
+                    if (!"".equals(size)) {
+                        try {
+                            if ((size.length() > 1 && size.charAt(0) == '+' && Integer.parseInt(size.substring(1)) == 1)
+                                    || Integer.parseInt(size) == 1) {
+                                child.setOptionNeeded();
+                            } else {
+                                // do nothing
+                            }
+                        } catch (NumberFormatException e) {
+                        }
+                    }
+                } else {
+                    // default size is 1
+                    child.setOptionNeeded();
+                }
+            }
         } else {
             StackNode child = new StackNode(ancestorMask, null, role,
                     activeDescendant, forAttr);
@@ -1569,6 +1738,12 @@ public class Assertions extends Checker {
                                 stack[currentFigurePtr - k].setTextNodeFound();
                             }
                         }
+                    } else if ("option".equals(node.name)
+                            && !stack[currentPtr - 1].hasOption()
+                            && (!stack[currentPtr - 1].hasEmptyValueOption() || stack[currentPtr - 1].hasNoValueOption())
+                            && stack[currentPtr - 1].nonEmptyOptionLocator() == null) {
+                        stack[currentPtr - 1].setNonEmptyOption((new LocatorImpl(
+                                getDocumentLocator())));
                     }
                     processChildContent(node);
                     return;
