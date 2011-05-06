@@ -995,8 +995,10 @@ public class Assertions extends Checker {
             } else if ("select" == localName && node.isOptionNeeded()) {
                 if (!node.hasOption()) {
                     err("A \u201Cselect\u201D element with a"
-                            + " \u201Crequired\u201D attribute must have a"
-                            + " child \u201Coption\u201D element.");
+                            + " \u201Crequired\u201D attribute and without a"
+                            + " \u201Cmultiple\u201D attribute, and whose size"
+                            + " is \u201C1\u201D, must have a child"
+                            + " \u201Coption\u201D element.");
                 }
                 if (node.nonEmptyOptionLocator() != null) {
                     err("The first child \u201Coption\u201D element of a"
