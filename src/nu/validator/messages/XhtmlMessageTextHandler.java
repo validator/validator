@@ -45,6 +45,9 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
       MAGIC_LINKS.put("register the names as meta extensions",
           new String[] {"http://wiki.whatwg.org/wiki/MetaExtensions",
             "About registering names as meta extensions."});
+      MAGIC_LINKS.put("guidance on providing text alternatives for images",
+          new String[] {"http://www.w3.org/wiki/HTML/Usage/TextAlternatives",
+            "About providing text alternatives for images."});
     }
 
     /**
