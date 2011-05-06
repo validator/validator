@@ -38,8 +38,12 @@
 					or local-name() = "svg"
 					or local-name() = "video"])
 				and not(count(ancestor::h:figure[1]//h:img) > 1))'>
-				Element &#x201C;img&#x201D; is missing required
-				attribute &#x201C;alt&#x201D;.
+				An &#x201C;img&#x201D; element must have an
+				&#x201C;alt&#x201D; attribute, except under
+				certain conditions. For details, consult
+				consult guidance on providing text alternatives
+				for images.
+				http://www.w3.org/wiki/HTML/Usage/TextAlternatives
 			</assert>
 		</rule>
 	</pattern>
