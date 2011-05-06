@@ -988,8 +988,11 @@ public class Assertions extends Checker {
                 if ((node.needsFigcaption() && !node.hasFigcaptionContent())
                         || node.hasTextNode() || node.hasEmbeddedContent()) {
                     for (Locator imgLocator : node.getImagesLackingAlt()) {
-                        err("Element \u201Cimg\u201D is missing required "
-                                + "attribute \u201Calt\u201D.", imgLocator);
+                        err("An \u201Cimg\u201D element must have an"
+                                + " \u201Calt\u201D attribute, except under"
+                                + " certain conditions. For details, consult"
+                                + " guidance on providing text alternatives"
+                                + " for images.", imgLocator);
                     }
                 }
             } else if ("select" == localName && node.isOptionNeeded()) {
@@ -1280,8 +1283,11 @@ public class Assertions extends Checker {
                             // && (roleVal == null || !"presentation".equals(roleVal))
                             && hasMetaGenerator == false) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
-                            err("Element \u201Cimg\u201D is missing required "
-                                + "attribute \u201Calt\u201D.");
+                            err("An \u201Cimg\u201D element must have an"
+                                    + " \u201Calt\u201D attribute, except under"
+                                    + " certain conditions. For details, consult"
+                                    + " guidance on providing text alternatives"
+                                    + " for images.");
                         } else {
                             stack[currentFigurePtr].setFigcaptionNeeded();
                             stack[currentFigurePtr].addImageLackingAlt(new LocatorImpl(
