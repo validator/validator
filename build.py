@@ -25,6 +25,7 @@ import os
 import shutil
 import httplib
 import urllib2
+import socket
 import re
 try:
   from hashlib import md5
@@ -643,14 +644,18 @@ def fetchUrlTo(url, path, md5sum=None):
   # I bet there's a way to do this with more efficient IO and less memory
   print url
   completed = False
+  defaultTimeout = socket.getdefaulttimeout()
   while not completed:
    try:
-    f = urllib2.urlopen(url, timeout=httpTimeoutSeconds)
+    socket.setdefaulttimeout(httpTimeoutSeconds)
+    f = urllib2.urlopen(url)
     data = f.read()
     f.close()
     completed = True
    except httplib.BadStatusLine, e:
     print "received error, retrying"
+   finally:
+    socket.setdefaulttimeout(defaultTimeout)
   if md5sum:
     m = md5(data)
     if md5sum != m.hexdigest():
