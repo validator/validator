@@ -152,8 +152,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute sizes {
 				w:string "any" | common.data.sizes
 			}
-		link.attrs.microdata =
-			notAllowed
 	link.inner =
 		( empty )
 		
