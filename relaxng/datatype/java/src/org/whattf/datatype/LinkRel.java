@@ -37,6 +37,7 @@ public class LinkRel extends AbstractRel {
         "prefetch",
         "prev",
         "search",
+        "shortcut", // extension
         "sidebar",
         "stylesheet",
         "tag"
