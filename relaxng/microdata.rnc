@@ -34,6 +34,8 @@ common.attrs.microdata =
 
 common.attrs &= common.attrs.microdata
 
+## URL-valued Property Metadata: <link itemprop>
+
 	link.elem.phrasing =
 		element link { link.inner & link.phrasing.attrs }
 	link.phrasing.attrs =
@@ -47,7 +49,6 @@ common.attrs &= common.attrs.microdata
 		&	common.attrs.microdata.itemtype?
 		&	common.attrs.microdata.itemid?
 		&	shared-hyperlink.attrs.href
-		&	shared-hyperlink.attrs.rel
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?

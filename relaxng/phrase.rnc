@@ -48,7 +48,7 @@ datatypes w = "http://whattf.org/datatype-draft"
     }
   shared-hyperlink.attrs.rel =
     attribute rel {
-      common.data.tokens
+      w:a-rel
     }
   shared-hyperlink.attrs.hreflang =
     attribute hreflang {

@@ -160,6 +160,12 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return ScriptDocumentation.THE_INSTANCE;
         } else if ("functionbody".equals(typeLocalName)) {
             return FunctionBody.THE_INSTANCE;
+        } else if ("a-rel".equals(typeLocalName)) {
+            return ARel.THE_INSTANCE;
+        } else if ("link-rel".equals(typeLocalName)) {
+            return LinkRel.THE_INSTANCE;
+        } else if ("meta-name".equals(typeLocalName)) {
+            return MetaName.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

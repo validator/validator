@@ -133,7 +133,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	link.attrs =
 		(	common.attrs
 		&	link.attrs.href
-		&	shared-hyperlink.attrs.rel
+		&	link.attrs.rel
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
@@ -144,10 +144,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute href {
 				common.data.uri.non-empty
 			}
+		link.attrs.rel =
+			attribute rel {
+				w:link-rel
+			}
 		link.attrs.sizes =
 			attribute sizes {
 				w:string "any" | common.data.sizes
 			}
+		link.attrs.microdata =
+			notAllowed
 	link.inner =
 		( empty )
 		
@@ -206,7 +212,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		meta.name.attrs.name =
 			attribute name {
-				string
+				w:meta-name
 			}
 		meta.name.attrs.content =
 			attribute content {
