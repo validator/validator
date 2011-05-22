@@ -116,8 +116,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	scripting.attr.onended?
 		&	scripting.attr.onerror?
 		&	scripting.attr.onfocus?
-		&	scripting.attr.onformchange?
-		&	scripting.attr.onforminput?
 		&	scripting.attr.oninput?
 		&	scripting.attr.oninvalid?
 		&	scripting.attr.onkeydown?
