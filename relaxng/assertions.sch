@@ -294,7 +294,7 @@
 			<report test='@default and preceding-sibling::h:track[@default]'>
 				The &#x201C;default&#x201D; attribute must not occur on more than one
 				&#x201C;track&#x201D; element within the same &#x201C;audio&#x201D;
-				or &#x201C;video&#x201D; element.
+				element or &#x201C;video&#x201D; element.
 			</report>
 		</rule>
 
