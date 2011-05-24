@@ -24,43 +24,47 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class FloatingPointExponentPositive extends AbstractDatatype {
+public class FloatingPointExponentNonNegative extends AbstractDatatype {
 
     /**
      * The singleton instance.
      */
-    public static final FloatingPointExponentPositive THE_INSTANCE = new FloatingPointExponentPositive();
+    public static final FloatingPointExponentNonNegative THE_INSTANCE = new FloatingPointExponentNonNegative();
     
     private enum State {
-        AT_START, IN_INTEGER_PART_DIGITS_SEEN, DOT_SEEN, E_SEEN, IN_DECIMAL_PART_DIGITS_SEEN, IN_EXPONENT_SIGN_SEEN, IN_EXPONENT_DIGITS_SEEN
+        AT_START, AT_START_MINUS_SEEN, IN_INTEGER_PART_DIGITS_SEEN, IN_INTEGER_PART_DIGITS_SEEN_ZERO, DOT_SEEN, DOT_SEEN_ZERO, E_SEEN, IN_DECIMAL_PART_DIGITS_SEEN, IN_DECIMAL_PART_DIGITS_SEEN_ZERO, IN_EXPONENT_SIGN_SEEN, IN_EXPONENT_DIGITS_SEEN
         
     }
     
     /**
      * 
      */
-    private FloatingPointExponentPositive() {
+    private FloatingPointExponentNonNegative() {
         super();
     }
 
     @Override
     public void checkValid(CharSequence literal) throws DatatypeException {
         State state = State.AT_START;
-        boolean zero = true;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             switch (state) {
                 case AT_START:
                     if (c == '-') {
-                        throw newDatatypeException(i, "A positive floating point number cannot start with the minus sign.");
+                        state = State.AT_START_MINUS_SEEN;
+                        continue;
                     } else if (isAsciiDigit(c)) {
-                        if (c != '0') {
-                            zero = false;
-                        }
                         state = State.IN_INTEGER_PART_DIGITS_SEEN;
                         continue;
                     } else {
-                        throw newDatatypeException(i, "Expected a digit but saw ", c, " instead.");
+                        throw newDatatypeException(i, "Expected a minus sign or a digit but saw ", c, " instead.");
+                    }
+                case AT_START_MINUS_SEEN:
+                    if (c == '0') {
+                        state = State.IN_INTEGER_PART_DIGITS_SEEN_ZERO;
+                        continue;
+                    } else {
+                        throw newDatatypeException(i, "Expected a zero but saw ", c, " instead.");
                     }
                 case IN_INTEGER_PART_DIGITS_SEEN:
                     if (c == '.') {
@@ -70,34 +74,53 @@ public class FloatingPointExponentPositive extends AbstractDatatype {
                         state = State.E_SEEN;
                         continue;
                     } else if (isAsciiDigit(c)) {
-                        if (c != '0') {
-                            zero = false;
-                        }
                         continue;
                     } else {
                         throw newDatatypeException(i, "Expected a decimal point, \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");
                     }
+                case IN_INTEGER_PART_DIGITS_SEEN_ZERO:
+                    if (c == '.') {
+                        state = State.DOT_SEEN_ZERO;
+                        continue;
+                    } else if (c == 'e' || c == 'E') {
+                        state = State.E_SEEN;
+                        continue;
+                    } else if (c == '0') {
+                        continue;
+                    } else {
+                        throw newDatatypeException(i, "Expected a decimal point, \u201Ce\u201D, \u201CE\u201D or a zero but saw ", c, " instead.");
+                    }
                 case DOT_SEEN:
                     if (isAsciiDigit(c)) {
-                        if (c != '0') {
-                            zero = false;
-                        }
                         state = State.IN_DECIMAL_PART_DIGITS_SEEN;
                         continue;
                     } else {
                         throw newDatatypeException(i, "Expected a digit after the decimal point but saw ", c, " instead.");                        
                     }
+                case DOT_SEEN_ZERO:
+                    if (c == '0') {
+                        state = State.IN_DECIMAL_PART_DIGITS_SEEN_ZERO;
+                        continue;
+                    } else {
+                        throw newDatatypeException(i, "Expected a zero after the decimal point but saw ", c, " instead.");                        
+                    }
                 case IN_DECIMAL_PART_DIGITS_SEEN:
                     if (isAsciiDigit(c)) {
-                        if (c != '0') {
-                            zero = false;
-                        }
                         continue;
                     } else if (c == 'e' || c == 'E') {
                         state = State.E_SEEN;
                         continue;
                     } else {
                         throw newDatatypeException(i, "Expected \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");                        
+                    }
+                case IN_DECIMAL_PART_DIGITS_SEEN_ZERO:
+                    if (c == '0') {
+                        continue;
+                    } else if (c == 'e' || c == 'E') {
+                        state = State.E_SEEN;
+                        continue;
+                    } else {
+                        throw newDatatypeException(i, "Expected \u201Ce\u201D, \u201CE\u201D or a zero but saw ", c, " instead.");                        
                     }
                 case E_SEEN:
                     if (c == '-' || c == '+') {
@@ -127,25 +150,27 @@ public class FloatingPointExponentPositive extends AbstractDatatype {
         switch (state) {
             case IN_INTEGER_PART_DIGITS_SEEN:
             case IN_DECIMAL_PART_DIGITS_SEEN:
+            case IN_INTEGER_PART_DIGITS_SEEN_ZERO:
+            case IN_DECIMAL_PART_DIGITS_SEEN_ZERO:
             case IN_EXPONENT_DIGITS_SEEN:
-                if (zero) {
-                    throw newDatatypeException("Zero is not a valid positive floating point number.");                    
-                }
                 return;
             case AT_START:
-                throw newDatatypeException("The empty string is not a valid positive floating point number.");
+                throw newDatatypeException("The empty string is not a valid non-negative floating point number.");
+            case AT_START_MINUS_SEEN:
+                throw newDatatypeException("The minus sign alone is not a valid non-negative floating point number.");
             case DOT_SEEN:
-                throw newDatatypeException("A positive floating point number must not end with the decimal point.");
+            case DOT_SEEN_ZERO:
+                throw newDatatypeException("A non-negative floating point number must not end with the decimal point.");
             case E_SEEN:
-                throw newDatatypeException("A positive floating point number must not end with the exponent \u201Ce\u201D.");
+                throw newDatatypeException("A non-negative floating point number must not end with the exponent \u201Ce\u201D.");
             case IN_EXPONENT_SIGN_SEEN:
-                throw newDatatypeException("A positive floating point number must not end with only a sign in the exponent.");                
+                throw newDatatypeException("A non-negative floating point number must not end with only a sign in the exponent.");                
         }
     }
 
     @Override
     public String getName() {
-        return "positive floating point number";
+        return "non-negative floating point number";
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -70,15 +70,13 @@ public class FloatingPointExponent extends AbstractDatatype {
                     if (c == '.') {
                         state = State.DOT_SEEN;
                         continue;
-                    } else if (c == 'e') {
+                    } else if (c == 'e' || c == 'E') {
                         state = State.E_SEEN;
                         continue;
                     } else if (isAsciiDigit(c)) {
                         continue;
-                    } else if (c == 'E') {
-                        throw newDatatypeException(i, "The exponent \u201Ce\u201D must be in lower case.");                        
                     } else {
-                        throw newDatatypeException(i, "Expected a decimal point, a lower case \u201Ce\u201D or a digit but saw ", c, " instead.");
+                        throw newDatatypeException(i, "Expected a decimal point, \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");
                     }
                 case DOT_SEEN:
                     if (isAsciiDigit(c)) {
@@ -90,13 +88,11 @@ public class FloatingPointExponent extends AbstractDatatype {
                 case IN_DECIMAL_PART_DIGITS_SEEN:
                     if (isAsciiDigit(c)) {
                         continue;
-                    } else if (c == 'e') {
+                    } else if (c == 'e' || c == 'E') {
                         state = State.E_SEEN;
                         continue;
-                    } else if (c == 'E') {
-                        throw newDatatypeException(i, "The exponent \u201Ce\u201D must be in lower case.");                                                
                     } else {
-                        throw newDatatypeException(i, "Expected a lower case \u201Ce\u201D or a digit but saw ", c, " instead.");                        
+                        throw newDatatypeException(i, "Expected \u201Ce\u201D, \u201CE\u201D or a digit but saw ", c, " instead.");                        
                     }
                 case E_SEEN:
                     if (c == '-' || c == '+') {
@@ -106,7 +102,7 @@ public class FloatingPointExponent extends AbstractDatatype {
                         state = State.IN_EXPONENT_DIGITS_SEEN;
                         continue;
                     } else {
-                        throw newDatatypeException(i, "Expected a minus sign or a digit but saw ", c, " instead.");                                                
+                        throw newDatatypeException(i, "Expected a minus sign, a plus sign or a digit but saw ", c, " instead.");                                                
                     }
                 case IN_EXPONENT_SIGN_SEEN:
                     if (isAsciiDigit(c)) {
@@ -129,21 +125,21 @@ public class FloatingPointExponent extends AbstractDatatype {
             case IN_EXPONENT_DIGITS_SEEN:
                 return;
             case AT_START:
-                throw newDatatypeException("The empty string is not a valid floating point number with optional exponent.");
+                throw newDatatypeException("The empty string is not a valid floating point number.");
             case AT_START_MINUS_SEEN:
-                throw newDatatypeException("The minus sign alone is not a valid floating point number with optional exponent.");
+                throw newDatatypeException("The minus sign alone is not a valid floating point number.");
             case DOT_SEEN:
-                throw newDatatypeException("A floating point number with optional exponent must not end with the decimal point.");
+                throw newDatatypeException("A floating point number must not end with the decimal point.");
             case E_SEEN:
-                throw newDatatypeException("A floating point number with optional exponent must not end with the exponent \u201Ce\u201D.");
+                throw newDatatypeException("A floating point number must not end with the exponent \u201Ce\u201D.");
             case IN_EXPONENT_SIGN_SEEN:
-                throw newDatatypeException("A floating point number with optional exponent must not end with only a sign in the exponent.");                
+                throw newDatatypeException("A floating point number must not end with only a sign in the exponent.");                
         }
     }
 
     @Override
     public String getName() {
-        return "floating point number with optional exponent";
+        return "floating point number";
     }
 
 }
