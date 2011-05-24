@@ -168,6 +168,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return MetaName.THE_INSTANCE;
         } else if ("non-empty-string".equals(typeLocalName)) {
             return NonEmptyString.THE_INSTANCE;
+        } else if ("string-without-line-breaks".equals(typeLocalName)) {
+            return StringWithoutLineBreaks.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

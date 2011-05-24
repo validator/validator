@@ -70,7 +70,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	shared-form.attrs.placeholder = 
 		attribute placeholder {
-			string # FIXME line breaks
+			w:string-without-line-breaks
 		}
 
 ## Shared attributes for <input>
