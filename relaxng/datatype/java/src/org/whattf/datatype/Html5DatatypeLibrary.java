@@ -111,14 +111,10 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
         } else if ("integer-positive".equals(typeLocalName)) {
             return IntPositive.THE_INSTANCE;
         } else if ("float".equals(typeLocalName)) {
-            return FloatingPoint.THE_INSTANCE;
-        } else if ("float-non-negative".equals(typeLocalName)) {
-            return FloatingPointNonNegative.THE_INSTANCE;
-        } else if ("float-positive".equals(typeLocalName)) {
-            return FloatingPointPositive.THE_INSTANCE;
-        } else if ("float-exp".equals(typeLocalName)) {
             return FloatingPointExponent.THE_INSTANCE;
-        } else if ("float-exp-positive".equals(typeLocalName)) {
+        } else if ("float-non-negative".equals(typeLocalName)) {
+            return FloatingPointExponentPositive.THE_INSTANCE;
+        } else if ("float-positive".equals(typeLocalName)) {
             return FloatingPointExponentPositive.THE_INSTANCE;
         } else if ("mime-type-list".equals(typeLocalName)) {
             return MimeTypeList.THE_INSTANCE;
