@@ -70,7 +70,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	shared-form.attrs.placeholder = 
 		attribute placeholder {
-			w:string-without-line-breaks
+			form.data.stringwithoutlinebreaks
 		}
 
 ## Shared attributes for <input>
@@ -583,7 +583,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.search.attrs.value =
 			attribute value {
-				string # FIXME line breaks
+				form.data.stringwithoutlinebreaks
 			}
 		
 	input.elem |= input.search.elem
@@ -614,7 +614,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.tel.attrs.value =
 			attribute value {
-				string # FIXME line breaks
+				form.data.stringwithoutlinebreaks
 			}
 		
 	input.elem |= input.tel.elem

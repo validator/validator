@@ -67,7 +67,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.text.attrs.value =
 			attribute value {
-				string #REVISIT "nominally" free of line breaks?
+				form.data.stringwithoutlinebreaks
 			}
 		
 	input.elem = input.text.elem
@@ -92,7 +92,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.password.attrs.value =
 			attribute value {
-				string #REVISIT "nominally" free of line breaks?			
+				form.data.stringwithoutlinebreaks
 			}
 		
 	input.elem |= input.password.elem

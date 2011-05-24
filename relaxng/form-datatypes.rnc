@@ -50,3 +50,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 #		xsd:string {
 #			pattern = "#[a-fA-F0-9]{6}"
 #		}
+
+## Text without line breaks
+
+	form.data.stringwithoutlinebreaks =
+		w:string-without-line-breaks
+
