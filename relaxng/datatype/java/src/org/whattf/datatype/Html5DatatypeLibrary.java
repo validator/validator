@@ -142,8 +142,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return ParenthesisStart.THE_INSTANCE;
         } else if ("paren-end".equals(typeLocalName)) {
             return ParenthesisEnd.THE_INSTANCE;
-        } else if ("color".equals(typeLocalName)) {
-            return Color.THE_INSTANCE;
         } else if ("email-address".equals(typeLocalName)) {
             return EmailAddress.THE_INSTANCE;
         } else if ("email-address-list".equals(typeLocalName)) {
@@ -170,6 +168,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return NonEmptyString.THE_INSTANCE;
         } else if ("string-without-line-breaks".equals(typeLocalName)) {
             return StringWithoutLineBreaks.THE_INSTANCE;
+        } else if ("simple-color".equals(typeLocalName)) {
+            return SimpleColor.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

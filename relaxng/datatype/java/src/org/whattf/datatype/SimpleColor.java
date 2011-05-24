@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 Mozilla Foundation
+ * Copyright (c) 2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -24,24 +24,42 @@ package org.whattf.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Color extends AbstractDatatype {
+public class SimpleColor extends AbstractDatatype {
+
     /**
      * The singleton instance.
      */
-    public static final Color THE_INSTANCE = new Color();
+    public static final SimpleColor THE_INSTANCE = new SimpleColor();
 
-    public Color() {
+    /**
+     * Package-private constructor
+     */
+    private SimpleColor() {
         super();
     }
 
-    @Override
-    public void checkValid(CharSequence literal) throws DatatypeException {
-        // TODO Auto-generated method stub
+    @Override public void checkValid(CharSequence literal)
+            throws DatatypeException {
+        if (literal.length() != 7) {
+            throw newDatatypeException("Incorrect length for color string.");
+        }
+        char c = literal.charAt(0);
+        if (c != '#') {
+            throw newDatatypeException(0,
+                    "Color starts with incorrect character ", c,
+                    ". Expected the number sign.");
+        }
+        for (int i = 1; i < 7; i++) {
+            c = literal.charAt(i);
+            if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'))) {
+                throw newDatatypeException(0, "", c,
+                        " is not a valid hexadecimal digit.");
+            }
+        }
     }
 
-    @Override
-    public String getName() {
-        return "color";
+    @Override public String getName() {
+        return "simple color";
     }
 
 }
