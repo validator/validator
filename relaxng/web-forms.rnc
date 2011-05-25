@@ -28,7 +28,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	shared-form.attrs.maxlength = 
 		attribute maxlength {
-			common.data.integer.positive #REVISIT should this be non-negative?
+			common.data.integer.non-negative
 		}
 
 	shared-form.attrs.size = 
