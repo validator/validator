@@ -160,7 +160,7 @@ public class ContentTypeParser {
             }
             if (!wasRnc) {
                 if (isAllowHtml()) {
-                    if ("text/html".equals(type)) {
+                    if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
                         is.setType(type);
                         wasHtml = true;
                     } else if (isOnlyHtmlAllowed()) {
