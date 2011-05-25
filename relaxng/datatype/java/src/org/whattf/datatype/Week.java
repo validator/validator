@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,27 +23,37 @@
 
 package org.whattf.datatype;
 
-import java.util.Date;
-import java.util.Locale;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
 
-import com.ibm.icu.util.Calendar;
-import com.ibm.icu.util.GregorianCalendar;
-import com.ibm.icu.util.TimeZone;
-
 /**
- * This datatype shall accept strings that conform to the format specified for 
- * <a href='http://whatwg.org/specs/web-forms/current-work/#week'><code>week</code></a> 
- * inputs in Web Forms 2.0.
+ * This datatype shall accept strings that conform to the format of 
+ * <a href='http://www.whatwg.org/specs/web-apps/current-work/#valid-week-string'>valid week string</a>.
  * <p>This datatype must not accept the empty string.
  * 
  * @version $Id$
  * @author hsivonen
  */
 public final class Week extends AbstractDatatype {
+
+    /**
+     * These years in the 400-year cycle have 53 weeks. The table was computed
+     * using the formula given by Dr J R Stockton on 
+     * http://www.merlyn.demon.co.uk/weekinfo.htm and was checked to match the
+     * data on Wikipedia. However, computing the special years in years 
+     * 0...400 failed using the JS Date object. This could mean the formula
+     * is wrong, the JS Date object doesn't implement the proleptic Gregorian 
+     * calendar for past dates or that ISO weeks aren't actually cyclical.
+     */
+    private static final int[] SPECIAL_YEARS = { 4, 9, 15, 20, 26, 32, 37, 43,
+            48, 54, 60, 65, 71, 76, 82, 88, 93, 99, 105, 111, 116, 122, 128,
+            133, 139, 144, 150, 156, 161, 167, 172, 178, 184, 189, 195, 201,
+            207, 212, 218, 224, 229, 235, 240, 246, 252, 257, 263, 268, 274,
+            280, 285, 291, 296, 303, 308, 314, 320, 325, 331, 336, 342, 348,
+            353, 359, 364, 370, 376, 381, 387, 392, 398 };
 
     /**
      * The singleton instance.
@@ -75,25 +86,8 @@ public final class Week extends AbstractDatatype {
             throw newDatatypeException("Week cannot be less than 1.");
         }
         if (week == 53) {
-            // TODO still in doubt about the concurrency contract
-            // not using instance variables just in case
-
-            // Can this year have ISO week #53?
-            // Using ICU4J to find out, because the calculation is
-            // non-trivial.
-            TimeZone tz = TimeZone.getTimeZone("GMT");
-            tz.setRawOffset(0);
-            // Using fixed time zone and locale to make possible 
-            // bugs more tractable.
-            GregorianCalendar gc = new GregorianCalendar(tz, Locale.FRANCE);
-            // Say no to the Julian calendar
-            gc.setGregorianChange(new Date(Long.MIN_VALUE));
-            gc.setLenient(false);
-            gc.setFirstDayOfWeek(Calendar.MONDAY); // ISO week start
-            gc.setMinimalDaysInFirstWeek(4); // ISO week rule
-            gc.set(year, 6, 1);
-            if (gc.getActualMaximum(Calendar.WEEK_OF_YEAR) != 53) {
-                throw newDatatypeException("Week out of range.");               
+            if (Arrays.binarySearch(SPECIAL_YEARS, year % 400) < 0) {
+                throw newDatatypeException("Week out of range.");                            
             }
         } else if (week > 53) {
             throw newDatatypeException("Week out of range.");            
