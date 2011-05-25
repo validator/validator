@@ -28,6 +28,7 @@ import org.whattf.checker.DebugChecker;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UncheckedSubtreeWarner;
+import org.whattf.checker.UnsupportedFeatureChecker;
 import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.XmlPiChecker;
 import org.whattf.checker.schematronequiv.Assertions;
@@ -56,7 +57,9 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
     
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
-    
+
+    public static final CheckerSchema UNSUPPORTED_CHECKER = new CheckerSchema(PropertyMap.EMPTY, UnsupportedFeatureChecker.class);
+
     private final PropertyMap properties;
     
     private final Class<? extends Checker> klazz;

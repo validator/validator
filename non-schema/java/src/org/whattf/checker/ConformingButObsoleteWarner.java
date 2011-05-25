@@ -38,9 +38,9 @@ public class ConformingButObsoleteWarner extends Checker {
                     warn("The \u201Cborder\u201D attribute is obsolete. Consider specifying \u201Cimg { border: 0; }\u201D in CSS instead.");
                 }
             } else if ("script" == localName) {
-                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("javascript", atts.getValue("", "language"))) {
+                if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("javascript", atts.getValue("", "language"))) {
                     String type = atts.getValue("", "type");
-                    if (type == null || lowerCaseLiteralEqualsIgnoreAsciiCaseString("text/javascript", type)) {
+                    if (type == null || AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("text/javascript", type)) {
                         warn("The \u201Clanguage\u201D attribute on the \u201Cscript\u201D element is obsolete. You can safely omit it.");
                     }
                 }
@@ -50,27 +50,5 @@ public class ConformingButObsoleteWarner extends Checker {
                 }
             }
         }
-    }
-
-    private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(String lowerCaseLiteral,
-            String string) {
-        if (string == null) {
-            return false;
-        }
-        if (lowerCaseLiteral.length() != string.length()) {
-            return false;
-        }
-        for (int i = 0; i < lowerCaseLiteral.length(); i++) {
-            char c0 = lowerCaseLiteral.charAt(i);
-            char c1 = string.charAt(i);
-            if (c1 >= 'A' && c1 <= 'Z') {
-                c1 += 0x20;
-            }
-            if (c0 != c1) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
+    }    
 }
