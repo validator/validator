@@ -73,6 +73,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 			form.data.stringwithoutlinebreaks
 		}
 
+	shared-form.attrs.dirname = 
+		attribute dirname {
+			form.data.nonemptystring
+		}
+
 ## Shared attributes for <input>
 		
 	input.attrs.autocomplete = 
@@ -109,6 +114,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.pattern? 
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.placeholder?
+		&	shared-form.attrs.dirname?
 		)
 
 ## Password Field: <input type='password'>, Extensions
@@ -574,6 +580,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
+		&	shared-form.attrs.dirname?
 		&	input.search.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
@@ -675,6 +682,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.autofocus? 
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.placeholder?
+		&	shared-form.attrs.dirname?
 		&	textarea.attrs.rows?
 		&	(	(	textarea.attrs.wrap.hard 
 				&	textarea.attrs.cols

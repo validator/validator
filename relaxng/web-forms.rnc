@@ -276,7 +276,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		input.image.attrs.alt = 
 			attribute alt {
-				w:non-empty-string
+				form.data.nonemptystring
 			}
 		input.image.attrs.src = 
 			attribute src {

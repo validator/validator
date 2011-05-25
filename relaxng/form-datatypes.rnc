@@ -56,3 +56,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	form.data.stringwithoutlinebreaks =
 		w:string-without-line-breaks
 
+## Non-empty string
+
+	form.data.nonemptystring =
+		w:non-empty-string
+
