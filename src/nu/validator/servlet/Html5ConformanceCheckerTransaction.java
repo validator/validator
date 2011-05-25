@@ -100,7 +100,7 @@ public class Html5ConformanceCheckerTransaction extends
         setAllowXhtml(true);
         loadDocumentInput();
         String type = documentInput.getType();
-        if ("text/html".equals(type)) {
+        if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
             validator = validatorByDoctype(HTML5_SCHEMA);
             usingHtml = true;
             newHtmlParser();

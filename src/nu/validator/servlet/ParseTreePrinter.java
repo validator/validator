@@ -125,7 +125,7 @@ public class ParseTreePrinter {
             }
             String type = documentInput.getType();
             XMLReader parser;
-            if ("text/html".equals(type)) {
+            if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
                 writer.write("HTML parser\n\n#document\n");
                 parser = new nu.validator.htmlparser.sax.HtmlParser();
                 parser.setProperty("http://validator.nu/properties/heuristics", Heuristics.ALL);

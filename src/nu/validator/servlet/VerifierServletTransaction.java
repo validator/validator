@@ -1028,14 +1028,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 setAcceptAllKnownXmlTypes(true);
                 setAllowXhtml(true);
                 loadDocumentInput();
-                if ("text/html".equals(documentInput.getType())) {
+                String type = documentInput.getType();
+                if ("text/html".equals(type) || "text/html-sandboxed".equals(type)) {
                     if (isHtmlUnsafePreset()) {
-                        String message = "The Content-Type was \u201Ctext/html\u201D, but the chosen preset schema is not appropriate for HTML.";
+                        String message = "The Content-Type was \u201C" + type + "\u201D, but the chosen preset schema is not appropriate for HTML.";
                         SAXException se = new SAXException(message);
                         errorHandler.schemaError(se);
                         throw se;
                     }
-                    errorHandler.info("The Content-Type was \u201Ctext/html\u201D. Using the HTML parser.");
+                    errorHandler.info("The Content-Type was \u201C" + type + "\u201D. Using the HTML parser.");
                     newHtmlParser();
                     htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
                     htmlParser.setDocumentModeHandler(this);
@@ -1045,7 +1046,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                 } else {
                     errorHandler.info("The Content-Type was \u201C"
-                            + documentInput.getType()
+                            + type
                             + "\u201D. Using the XML parser (not resolving external entities).");
                     setupXmlParser();
                 }
