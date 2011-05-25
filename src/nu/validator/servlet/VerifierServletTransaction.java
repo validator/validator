@@ -233,7 +233,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
-            "http://c.validator.nu/xml-pi/" };
+            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -444,6 +444,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
             schemaMap.put("http://c.validator.nu/xml-pi/",
                     CheckerSchema.XML_PI_CHECKER);
+            schemaMap.put("http://c.validator.nu/unsupported/",
+                    CheckerSchema.UNSUPPORTED_CHECKER);
 
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
