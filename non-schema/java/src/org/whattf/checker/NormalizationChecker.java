@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -210,7 +211,7 @@ public final class NormalizationChecker extends Checker {
             if (pos == 1) {
                 // there's a single high surrogate in buf
                 if (isComposingChar(UCharacter.getCodePoint(buf[0], c))) {
-                    err("Text run starts with a composing character.");
+                    warn("Text run starts with a composing character.");
                 }
                 atStartOfRun = false;
             } else {
@@ -222,11 +223,11 @@ public final class NormalizationChecker extends Checker {
                     if (UCharacter.isHighSurrogate(c)) {
                         if (isComposingChar(UCharacter.getCodePoint(c,
                                 ch[start + 1]))) {
-                            err("Text run starts with a composing character.");
+                            warn("Text run starts with a composing character.");
                         }
                     } else {
                         if (isComposingCharOrSurrogate(c)) {
-                            err("Text run starts with a composing character.");
+                            warn("Text run starts with a composing character.");
                         }
                     }
                     atStartOfRun = false;
@@ -273,9 +274,9 @@ public final class NormalizationChecker extends Checker {
      */
     private void errAboutTextRun() throws SAXException {
         if (sourceTextMode) {
-            err("Source text is not in Unicode Normalization Form C.");
+            warn("Source text is not in Unicode Normalization Form C.");
         } else {
-            err("Text run is not in Unicode Normalization Form C.");
+            warn("Text run is not in Unicode Normalization Form C.");
         }
         alreadyComplainedAboutThisRun = true;
     }
@@ -323,14 +324,14 @@ public final class NormalizationChecker extends Checker {
         flush();
         if (!"".equals(target)) {
             if (startsWithComposingChar(target)) {
-                err("Processing instruction target starts with a composing character.");
+                warn("Processing instruction target starts with a composing character.");
             }
         }
         if (!"".equals(data)) {
             if (startsWithComposingChar(data)) {
-                err("Processing instruction data starts with a composing character.");
+                warn("Processing instruction data starts with a composing character.");
             } else if (!Normalizer.isNormalized(data, Normalizer.NFC, 0)) {
-                err("Processing instruction data in not in Unicode Normalization Form C.");
+                warn("Processing instruction data in not in Unicode Normalization Form C.");
             }
         }
     }
@@ -343,7 +344,7 @@ public final class NormalizationChecker extends Checker {
             Attributes atts) throws SAXException {
         flush();
         if (startsWithComposingChar(localName)) {
-            err("Element name \u201C " + localName
+            warn("Element name \u201C " + localName
                     + "\u201D starts with a composing character.");
         }
 
@@ -351,14 +352,14 @@ public final class NormalizationChecker extends Checker {
         for (int i = 0; i < len; i++) {
             String name = atts.getLocalName(i);
             if (startsWithComposingChar(name)) {
-                err("Attribute name \u201C " + localName
+                warn("Attribute name \u201C " + localName
                         + "\u201D starts with a composing character.");
             }
 
             String value = atts.getValue(i);
             if (!"".equals(value)) {
                 if (startsWithComposingChar(value)) {
-                    err("The value of attribute \u201C"
+                    warn("The value of attribute \u201C"
                             + atts.getLocalName(i)
                             + "\u201D"
                             + ("".equals(atts.getURI(i)) ? ""
@@ -367,7 +368,7 @@ public final class NormalizationChecker extends Checker {
                             + localName + "\u201D from namespace \u201C" + uri
                             + "\u201D starts with a composing character.");
                 } else if (!Normalizer.isNormalized(value, Normalizer.NFC, 0)) {
-                    err("The value of attribute \u201C"
+                    warn("The value of attribute \u201C"
                             + atts.getLocalName(i)
                             + "\u201D"
                             + ("".equals(atts.getURI(i)) ? ""
@@ -386,11 +387,11 @@ public final class NormalizationChecker extends Checker {
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
         if (startsWithComposingChar(prefix)) {
-            err("Namespace prefix \u201C " + prefix
+            warn("Namespace prefix \u201C " + prefix
                     + "\u201D starts with a composing character.");
         }
         if (startsWithComposingChar(uri)) {
-            err("Namespace URI \u201C " + uri
+            warn("Namespace URI \u201C " + uri
                     + "\u201D starts with a composing character.");
         }
     }
