@@ -29,10 +29,13 @@ import org.relaxng.datatype.DatatypeException;
 public class MetaName extends AbstractDatatype {
 
     private static final String[] VALID_NAMES = {
+        "apple-mobile-web-app-capable", // extension
+        "apple-mobile-web-app-status-bar-style", // extension
         "application-name",
         "author",
         "baiduspider", // extension
         "description",
+        "format-detection", // extension
         "generator",
         "googlebot", // extension
         "keywords",
