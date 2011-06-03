@@ -29,6 +29,7 @@ public class LinkRel extends AbstractRel {
     private static final String[] REGISTERED_TOKENS = {
         "alternate",
         "apple-touch-icon", // extension
+        "apple-touch-icon-precomposed", // extension
         "apple-touch-startup-image", // extension
         "author",
         "canonical", // extension
