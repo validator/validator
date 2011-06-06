@@ -27,23 +27,42 @@ import java.util.Arrays;
 public class ARel extends AbstractRel {
 
     private static final String[] REGISTERED_TOKENS = {
+        "acquaintance", // extension (Formats table)
         "alternate",
         "author",
         "bookmark",
+        "child", // extension (Formats table)
+        "co-resident", // extension (Formats table)
+        "co-worker", // extension (Formats table)
+        "colleague", // extension (Formats table)
+        "contact", // extension (Formats table)
+        "crush", // extension (Formats table)
+        "date", // extension (Formats table)
         "external",
+        "friend", // extension (Formats table)
         "help",
+        "kin", // extension (Formats table)
         "license",
+        "me", // extension (Formats table)
+        "met", // extension (Formats table)
+        "muse", // extension (Formats table)
+        "neighbor", // extension (Formats table)
         "next",
         "nofollow",
         "noreferrer",
+        "parent", // extension (Formats table)
         "pingback",
         "prefetch",
         "prev",
         "search",
+        "sibling", // extension (Formats table)
         "sidebar",
-        "tag"
+        "spouse", // extension (Formats table)
+        "sweetheart", // extension (Formats table)
+        "tag",
+        "transformation" // extension (Formats table) maybe an error?
     };
-    
+
     /**
      * The singleton instance.
      */

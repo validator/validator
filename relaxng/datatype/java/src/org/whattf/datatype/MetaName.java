@@ -37,6 +37,7 @@ public class MetaName extends AbstractDatatype {
         "description",
         "format-detection", // extension
         "generator",
+        "google-site-verification", // extension
         "googlebot", // extension
         "keywords",
         "robots", // extension

@@ -36,6 +36,7 @@ public class LinkRel extends AbstractRel {
         "help",
         "icon",
         "license",
+        "me", // extension (Formats table)
         "next",
         "openid.delegate", // extension
         "openid.server", // extension
@@ -48,9 +49,10 @@ public class LinkRel extends AbstractRel {
         "shortcut", // extension
         "sidebar",
         "stylesheet",
-        "tag"
+        // tag removed as a spec bug
+        "transformation" // extension (Formats table)
     };
-    
+        
     /**
      * The singleton instance.
      */
