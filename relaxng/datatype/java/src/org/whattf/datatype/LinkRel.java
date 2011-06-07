@@ -33,6 +33,7 @@ public class LinkRel extends AbstractRel {
         "apple-touch-startup-image", // extension
         "author",
         "canonical", // extension
+        "dns-prefetch", // extension
         "help",
         "icon",
         "license",
@@ -44,13 +45,19 @@ public class LinkRel extends AbstractRel {
         "openid2.provider", // extension
         "pingback",
         "prefetch",
+        "prerender", // extension
         "prev",
         "search",
+        "service", // extension
         "shortcut", // extension
+        "shortlink", // extension
         "sidebar",
         "stylesheet",
         // tag removed as a spec bug
-        "transformation" // extension (Formats table)
+        "timesheet", // extension
+        "transformation", // extension (Formats table)
+        "widget", // extension
+        "wlwmanifest" // extension
     };
         
     /**

@@ -60,7 +60,8 @@ public class ARel extends AbstractRel {
         "spouse", // extension (Formats table)
         "sweetheart", // extension (Formats table)
         "tag",
-        "transformation" // extension (Formats table) maybe an error?
+        "transformation", // extension (Formats table) maybe an error?
+        "widget" // extension
     };
 
     /**
