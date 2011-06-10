@@ -34,12 +34,15 @@ public class MetaName extends AbstractDatatype {
         "application-name",
         "author",
         "baiduspider", // extension
+        "csrf-param", // extension
+        "csrf-token", // extension
         "description",
         "format-detection", // extension
         "generator",
         "google-site-verification", // extension
         "googlebot", // extension
         "keywords",
+        "rating", // extension
         "robots", // extension
         "slurp", // extension
         "teoma", // extension
