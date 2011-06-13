@@ -44,6 +44,7 @@ public class LinkRel extends AbstractRel {
         "openid2.local_id", // extension
         "openid2.provider", // extension
         "p3pv1", // extension
+        "pgpkey", // extension
         "pingback",
         "prefetch",
         "prerender", // extension
