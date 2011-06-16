@@ -289,6 +289,7 @@ namespace local = ""
 	iframe.attrs =
 		(	common.attrs
 		&	iframe.attrs.src?
+		&	iframe.attrs.srcdoc?
 		&	iframe.attrs.name?
 		&	iframe.attrs.width?
 		&	iframe.attrs.height?
@@ -301,6 +302,10 @@ namespace local = ""
 		iframe.attrs.src =
 			attribute src {
 				common.data.uri.non-empty
+			}
+		iframe.attrs.srcdoc =
+			attribute srcdoc {
+				string #FIXME
 			}
 		iframe.attrs.name =
 			attribute name {
