@@ -42,10 +42,12 @@ public class MetaName extends AbstractDatatype {
         "google-site-verification", // extension
         "googlebot", // extension
         "keywords",
+        "msvalidate.01", // extension
         "rating", // extension
         "robots", // extension
         "slurp", // extension
         "teoma", // extension
+        "verify-v1", // extension
         "viewport" // extension
     };   
     
