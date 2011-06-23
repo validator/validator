@@ -36,6 +36,13 @@ public class MetaName extends AbstractDatatype {
         "baiduspider", // extension
         "csrf-param", // extension
         "csrf-token", // extension
+        "dcterms.creator", // extension
+        "dcterms.description", // extension
+        "dcterms.issued", // extension
+        "dcterms.language", // extension
+        "dcterms.modified", // extension
+        "dcterms.subject", // extension
+        "dcterms.title", // extension
         "description",
         "format-detection", // extension
         "generator",
@@ -48,8 +55,9 @@ public class MetaName extends AbstractDatatype {
         "slurp", // extension
         "teoma", // extension
         "verify-v1", // extension
-        "viewport" // extension
-    };   
+        "viewport", // extension
+        "yandex-verification" // extension
+    };
     
     /**
      * The singleton instance.

@@ -28,12 +28,17 @@ public class LinkRel extends AbstractRel {
 
     private static final String[] REGISTERED_TOKENS = {
         "alternate",
+        "appendix", // HTML4
         "apple-touch-icon", // extension
         "apple-touch-icon-precomposed", // extension
         "apple-touch-startup-image", // extension
         "author",
         "canonical", // extension
+        "chapter", // HTML4
+        "contents", // HTML4
+        "copyright", // HTML4
         "dns-prefetch", // extension
+        "glossary", // HTML4
         "help",
         "icon",
         "license",
@@ -49,14 +54,20 @@ public class LinkRel extends AbstractRel {
         "prefetch",
         "prerender", // extension
         "prev",
+        "previous", // HTML4
+        "profile", // extension
         "search",
+        "section", // HTML4
         "service", // extension
         "shortcut", // extension
         "shortlink", // extension
         "sidebar",
+        "start", // HTML4
         "stylesheet",
+        "subsection", // HTML4
         // tag removed as a spec bug
         "timesheet", // extension
+        "toc", // HTML4
         "transformation", // extension (Formats table)
         "widget", // extension
         "wlwmanifest" // extension

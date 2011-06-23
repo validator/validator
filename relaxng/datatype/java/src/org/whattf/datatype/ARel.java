@@ -29,17 +29,22 @@ public class ARel extends AbstractRel {
     private static final String[] REGISTERED_TOKENS = {
         "acquaintance", // extension (Formats table)
         "alternate",
+        "appendix", // HTML4
         "author",
         "bookmark",
+        "chapter", // HTML4
         "child", // extension (Formats table)
         "co-resident", // extension (Formats table)
         "co-worker", // extension (Formats table)
         "colleague", // extension (Formats table)
         "contact", // extension (Formats table)
+        "contents", // HTML4
+        "copyright", // HTML4
         "crush", // extension (Formats table)
         "date", // extension (Formats table)
         "external",
         "friend", // extension (Formats table)
+        "glossary", // HTML4
         "help",
         "kin", // extension (Formats table)
         "license",
@@ -54,12 +59,18 @@ public class ARel extends AbstractRel {
         "pingback",
         "prefetch",
         "prev",
+        "previous", // HTML4
+        "profile", // extension
         "search",
+        "section", // HTML4
         "sibling", // extension (Formats table)
         "sidebar",
         "spouse", // extension (Formats table)
+        "start", // HTML4
+        "subsection", // HTML4
         "sweetheart", // extension (Formats table)
         "tag",
+        "toc", // HTML4
         "transformation", // extension (Formats table) maybe an error?
         "widget" // extension
     };
