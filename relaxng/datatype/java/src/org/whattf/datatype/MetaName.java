@@ -46,16 +46,28 @@ public class MetaName extends AbstractDatatype {
         "description",
         "format-detection", // extension
         "generator",
+        "geo.placename", // extension
+        "geo.position", // extension
+        "geo.region", // extension
         "google-site-verification", // extension
         "googlebot", // extension
         "keywords",
+        "msapplication-task", // extension
         "msvalidate.01", // extension
         "rating", // extension
+        "rights-standard", // extension
         "robots", // extension
         "slurp", // extension
         "teoma", // extension
         "verify-v1", // extension
         "viewport", // extension
+        "wt.ac", // extension
+        "wt.ad", // extension
+        "wt.cg_n", // extension
+        "wt.cg_s", // extension
+        "wt.mc_id", // extension
+        "wt.sv", // extension
+        "wt.ti", // extension
         "yandex-verification" // extension
     };
     

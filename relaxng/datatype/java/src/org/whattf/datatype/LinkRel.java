@@ -41,6 +41,7 @@ public class LinkRel extends AbstractRel {
         "glossary", // HTML4
         "help",
         "icon",
+        "index", // extension
         "license",
         "me", // extension (Formats table)
         "next",
