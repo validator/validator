@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2011 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -194,7 +194,7 @@ public class DataAttributeDroppingContentHandlerWrapper implements ContentHandle
             if (c >= 'A' && c <= 'Z') {
                 errorHandler.error(new SAXParseException("\u201Cdata-*\u201D attributes must not have characters from the range \u201CA\u201D\u2026\u201CZ\u201D in the name.", locator));
             } else if (!NCName.isNCNameTrail(c)) {
-                errorHandler.error(new SAXParseException("\u201Cdata-*\u201D attribute names must be XML 1.0 4th ed. plus Namspaces NCNames.", locator));                
+                errorHandler.error(new SAXParseException("\u201Cdata-*\u201D attribute names must be XML 1.0 4th ed. plus Namespaces NCNames.", locator));                
             }
         }
     }
