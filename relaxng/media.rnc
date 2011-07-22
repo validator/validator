@@ -13,6 +13,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	media.attrs.controls?
 		&	media.attrs.loop?
 		&	media.attrs.mediagroup?
+		&	media.attrs.muted?
 		)
 		media.attrs.autoplay   =
 			attribute autoplay   {
@@ -33,6 +34,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		media.attrs.mediagroup =
 			attribute mediagroup {
 				string
+			}
+		media.attrs.muted =
+			attribute muted {
+				w:string "muted" | w:string ""
 			}
 		
 ## Source: <source>
@@ -84,7 +89,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	video.attrs.poster?
 		&	video.attrs.height?
 		&	video.attrs.width?
-		&	video.attrs.muted?
 		)
 		video.attrs.poster =
 			attribute poster {
@@ -97,10 +101,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		video.attrs.width =
 			attribute width {
 				common.data.integer.non-negative
-			}
-		video.attrs.muted =
-			attribute muted {
-				w:string "muted" | w:string ""
 			}
 	video.inner.flow =
 		(	media.source
