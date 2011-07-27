@@ -1079,6 +1079,10 @@ public class Assertions extends Checker {
             boolean usemap = false;
             boolean ismap = false;
             boolean selected = false;
+            boolean itemid = false;
+            boolean itemref = false;
+            boolean itemscope = false;
+            boolean itemtype = false;
             boolean languageJavaScript = false;
             boolean typeNotTextJavaScript = false;
             String xmlLang = null;
@@ -1133,6 +1137,14 @@ public class Assertions extends Checker {
                         selected = true;
                     } else if ("usemap" == attLocal && "input" != localName) {
                         usemap = true;
+                    } else if ("itemid" == attLocal) {
+                        itemid = true;
+                    } else if ("itemref" == attLocal) {
+                        itemref = true;
+                    } else if ("itemscope" == attLocal) {
+                        itemscope = true;
+                    } else if ("itemtype" == attLocal) {
+                        itemtype = true;
                     } else if ("language" == attLocal
                             && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "javascript", atts.getValue(i))) {
@@ -1574,6 +1586,17 @@ public class Assertions extends Checker {
                         atts.getValue("", "name"))) {
                     hasMetaGenerator = true;
                 }
+            }
+
+            // microdata
+            if (itemid && !(itemscope && itemtype)) {
+                err("The \u201Citemid\u201D attribute must not be specified on elements that do not have both an \u201Citemscope\u201D attribute and an \u201Citemtype\u201D attribute specified.");
+            }
+            if (itemref && !itemscope) {
+                err("The \u201Citemref\u201D attribute must not be specified on elements that do not have an \u201Citemscope\u201D attribute specified.");
+            }
+            if (itemtype && !itemscope) {
+                err("The \u201Citemtype\u201D attribute must not be specified on elements that do not have an \u201Citemscope\u201D attribute specified.");
             }
         } else {
             int len = atts.getLength();
