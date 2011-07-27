@@ -25,7 +25,7 @@ common.attrs.microdata =
 		}
 	common.attrs.microdata.itemtype =
 		attribute itemtype {
-			common.data.uri
+			common.data.uri.absolute
 		}
 	common.attrs.microdata.itemid =
 		attribute itemid {
