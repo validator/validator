@@ -369,9 +369,9 @@ common.attrs.other =
 	common.data.keylabellist =
 		w:keylabellist
 
-## Microdata Identifier
-  common.data.microdata-identifier =
-    w:microdata-identifier
+## Microdata Properties
+  common.data.microdata-properties =
+    list { w:microdata-property+ }
 
 ## Zero
   common.data.zero =
