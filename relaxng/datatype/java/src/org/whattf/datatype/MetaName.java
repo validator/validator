@@ -29,6 +29,7 @@ import org.relaxng.datatype.DatatypeException;
 public class MetaName extends AbstractDatatype {
 
     private static final String[] VALID_NAMES = {
+        "alexaverifyid", // extension
         "apple-mobile-web-app-capable", // extension
         "apple-mobile-web-app-status-bar-style", // extension
         "application-name",
@@ -36,6 +37,7 @@ public class MetaName extends AbstractDatatype {
         "baiduspider", // extension
         "csrf-param", // extension
         "csrf-token", // extension
+        "dc.date.issued", // extension
         "dcterms.creator", // extension
         "dcterms.description", // extension
         "dcterms.issued", // extension
@@ -44,6 +46,7 @@ public class MetaName extends AbstractDatatype {
         "dcterms.subject", // extension
         "dcterms.title", // extension
         "description",
+        "es.title", // extension
         "format-detection", // extension
         "generator",
         "geo.placename", // extension
@@ -54,6 +57,7 @@ public class MetaName extends AbstractDatatype {
         "keywords",
         "msapplication-task", // extension
         "msvalidate.01", // extension
+        "norton-safeweb-site-verification", // extension
         "rating", // extension
         "rights-standard", // extension
         "robots", // extension
@@ -68,6 +72,7 @@ public class MetaName extends AbstractDatatype {
         "wt.mc_id", // extension
         "wt.sv", // extension
         "wt.ti", // extension
+        "y_key", // extension
         "yandex-verification" // extension
     };
     
