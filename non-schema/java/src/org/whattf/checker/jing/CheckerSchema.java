@@ -25,6 +25,7 @@ package org.whattf.checker.jing;
 import org.whattf.checker.Checker;
 import org.whattf.checker.ConformingButObsoleteWarner;
 import org.whattf.checker.DebugChecker;
+import org.whattf.checker.MicrodataChecker;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.UncheckedSubtreeWarner;
@@ -59,6 +60,8 @@ public class CheckerSchema implements Schema {
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);
 
     public static final CheckerSchema UNSUPPORTED_CHECKER = new CheckerSchema(PropertyMap.EMPTY, UnsupportedFeatureChecker.class);
+
+    public static final CheckerSchema MICRODATA_CHECKER = new CheckerSchema(PropertyMap.EMPTY, MicrodataChecker.class);
 
     private final PropertyMap properties;
     
