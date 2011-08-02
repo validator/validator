@@ -65,12 +65,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	source.inner =
 		( empty )
 
-## Media Source
-
-	media.source = 
-		(	media.attrs.src
-		|	source.elem+
-		)
+## Media src attribute
 
 	media.attrs.src =
 		attribute src {
@@ -103,14 +98,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.integer.non-negative
 			}
 	video.inner.flow =
-		(	media.source
+		(	video.source
 		,	track.elem*
 		,	common.inner.flow
 		)
 	video.inner.phrasing =
-		(	media.source
+		(	video.source
 		,	track.elem*
 		,	common.inner.phrasing
+		)
+	video.source =
+		(	media.attrs.src
+		|	source.elem*
 		)
 
 	common.elem.flow |= video.elem.flow
@@ -127,14 +126,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	media.attrs
 		)
 	audio.inner.flow =
-		(	media.source
+		(	audio.source
 		,	track.elem*
 		,	common.inner.flow
 		)
 	audio.inner.phrasing =
-		(	media.source
+		(	audio.source
 		,	track.elem*
 		,	common.inner.phrasing
+		)
+	audio.source =
+		(	media.attrs.src
+		|	source.elem+
 		)
 
 	common.elem.flow |= audio.elem.flow
