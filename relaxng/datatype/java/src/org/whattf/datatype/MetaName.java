@@ -52,10 +52,31 @@ public class MetaName extends AbstractDatatype {
         "geo.placename", // extension
         "geo.position", // extension
         "geo.region", // extension
+        "globrix.bathrooms", // extension
+        "globrix.bedrooms", // extension
+        "globrix.condition", // extension
+        "globrix.features", // extension
+        "globrix.instruction", // extension
+        "globrix.latitude", // extension
+        "globrix.longitude ", // extension
+        "globrix.outsidespace", // extension
+        "globrix.parking", // extension
+        "globrix.period", // extension
+        "globrix.poa", // extension
+        "globrix.postcode", // extension
+        "globrix.price", // extension
+        "globrix.priceproximity", // extension
+        "globrix.tenure", // extension
+        "globrix.type", // extension
+        "globrix.underoffer", // extension
         "google-site-verification", // extension
         "googlebot", // extension
+        "icbm", // extension        
         "keywords",
+        "msapplication-navbutton-color", // extension
+        "msapplication-starturl", // extension
         "msapplication-task", // extension
+        "msapplication-tooltip", // extension
         "msvalidate.01", // extension
         "norton-safeweb-site-verification", // extension
         "rating", // extension
