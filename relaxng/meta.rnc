@@ -131,9 +131,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 	link.elem =
 		element link { link.inner & link.attrs }
 	link.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	common.attrs.microdata.itemref?
+		&	common.attrs.microdata.itemscope?
+		&	common.attrs.microdata.itemtype?
+		&	common.attrs.microdata.itemid?
 		&	link.attrs.href
-		&	link.attrs.rel
+		&	(	link.attrs.rel
+			|	common.attrs.microdata.itemprop
+			)
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
