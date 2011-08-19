@@ -57,6 +57,14 @@ common.attrs &= common.attrs.microdata
 		)
 	common.elem.phrasing |= link.elem.phrasing
 
+## <link> element in head, extensions
+
+link.attrs.rel-or-itemprop |= common.attrs.microdata.itemprop
+link.attrs &= common.attrs.microdata.itemref?
+link.attrs &= common.attrs.microdata.itemscope?
+link.attrs &= common.attrs.microdata.itemtype?
+link.attrs &= common.attrs.microdata.itemid?
+
 ## Property Metadata: <meta itemprop>
 
 	meta.itemprop.elem =

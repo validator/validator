@@ -135,14 +135,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.i18n
 		&	common.attrs.present
 		&	common.attrs.other
-		&	common.attrs.microdata.itemref?
-		&	common.attrs.microdata.itemscope?
-		&	common.attrs.microdata.itemtype?
-		&	common.attrs.microdata.itemid?
 		&	link.attrs.href
-		&	(	link.attrs.rel
-			|	common.attrs.microdata.itemprop
-			)
+		&	link.attrs.rel-or-itemprop
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
@@ -153,6 +147,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute href {
 				common.data.uri.non-empty
 			}
+		link.attrs.rel-or-itemprop = link.attrs.rel
 		link.attrs.rel =
 			attribute rel {
 				w:link-rel
