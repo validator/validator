@@ -136,7 +136,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.present
 		&	common.attrs.other
 		&	link.attrs.href
-		&	link.attrs.rel-or-itemprop
+		&	link.attrs.rel
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
@@ -147,7 +147,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 			attribute href {
 				common.data.uri.non-empty
 			}
-		link.attrs.rel-or-itemprop = link.attrs.rel
 		link.attrs.rel =
 			attribute rel {
 				w:link-rel
