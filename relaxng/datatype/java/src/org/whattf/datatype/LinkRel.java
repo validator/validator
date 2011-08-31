@@ -38,8 +38,10 @@ public class LinkRel extends AbstractRel {
         "contents", // HTML4
         "copyright", // HTML4
         "dns-prefetch", // extension
+        "edituri", // extension
         "glossary", // HTML4
         "help",
+        "home", // extension
         "icon",
         "index", // extension
         "license",
@@ -62,11 +64,10 @@ public class LinkRel extends AbstractRel {
         "service", // extension
         "shortcut", // extension
         "shortlink", // extension
-        "sidebar",
+        "sidebar", // extension
         "start", // HTML4
         "stylesheet",
         "subsection", // HTML4
-        // tag removed as a spec bug
         "timesheet", // extension
         "toc", // HTML4
         "transformation", // extension (Formats table)
