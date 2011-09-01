@@ -93,6 +93,7 @@ public class MetaName extends AbstractDatatype {
         "dcterms.title", // extension
         "dcterms.type", // extension
         "dcterms.valid", // extension
+        "description",
         "es.title", // extension
         "format-detection", // extension
         "generator",
