@@ -175,7 +175,7 @@ public final class SourceCode implements CharacterHandler {
             throws SAXException {
         exactErrors.add(location);
         Location start = location.step(-15);
-        Location end = location.step(6);
+        Location end = location.step(15);
         extractHandler.startSource(type, encoding);
         emitContent(start, location, extractHandler);
         extractHandler.startCharHilite(location.getLine() + 1,
