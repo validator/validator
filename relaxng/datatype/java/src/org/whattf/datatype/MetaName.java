@@ -38,6 +38,7 @@ public class MetaName extends AbstractDatatype {
         "csrf-param", // extension
         "csrf-token", // extension
         "dc.date.issued", // extension
+        "dc.language", // extension
         "dcterms.abstract", // extension
         "dcterms.accessrights", // extension
         "dcterms.accrualmethod", // extension
@@ -94,9 +95,11 @@ public class MetaName extends AbstractDatatype {
         "dcterms.type", // extension
         "dcterms.valid", // extension
         "description",
+        "designer", // extension
         "es.title", // extension
         "format-detection", // extension
         "generator",
+        "geo.country", // extension
         "geo.placename", // extension
         "geo.position", // extension
         "geo.region", // extension
@@ -120,6 +123,7 @@ public class MetaName extends AbstractDatatype {
         "google-site-verification", // extension
         "googlebot", // extension
         "icbm", // extension        
+        "itemsperpage", // extension
         "keywords",
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
@@ -130,10 +134,13 @@ public class MetaName extends AbstractDatatype {
         "publisher", //extension
         "rating", // extension
         "review_date", // extension
+        "revisit-after", // extension
         "rights-standard", // extension
         "robots", // extension
         "slurp", // extension
+        "startindex", // extension
         "teoma", // extension
+        "totalresults", // extension
         "verify-v1", // extension
         "viewport", // extension
         "wt.ac", // extension

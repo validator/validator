@@ -47,6 +47,7 @@ public class ARel extends AbstractRel {
         "glossary", // HTML4
         "help",
         "home", // extension
+        "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
         "index", // extension
         "kin", // extension (Formats table)
         "license",

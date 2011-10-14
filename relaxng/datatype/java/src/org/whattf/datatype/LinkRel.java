@@ -42,7 +42,9 @@ public class LinkRel extends AbstractRel {
         "glossary", // HTML4
         "help",
         "home", // extension
+        "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
         "icon",
+        "image_src", // extension
         "index", // extension
         "license",
         "me", // extension (Formats table)
@@ -53,7 +55,7 @@ public class LinkRel extends AbstractRel {
         "openid2.provider", // extension
         "p3pv1", // extension
         "pgpkey", // extension
-        "pingback",
+        "pingback", // extension
         "prefetch",
         "prerender", // extension
         "prev",
