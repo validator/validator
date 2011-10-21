@@ -820,6 +820,8 @@ final public class SAXDriver implements Locator2, Attributes2, XMLReader,
     }
 
     private void declarePrefix(String prefix, String uri) throws SAXException {
+        // NOTE: uri may be the empty string
+
         int index = uri.indexOf(':');
 
         // many versions of nwalsh docbook stylesheets
@@ -829,7 +831,7 @@ final public class SAXDriver implements Locator2, Attributes2, XMLReader,
         }
 
         // char [0] must be ascii alpha [RFC 2396]
-        if (!isAlpha(uri.charAt(0))) {
+        if (uri.length() != 0 && !isAlpha(uri.charAt(0))) {
             fatal("First character of the URI must be ascii alpha");
         }
 
