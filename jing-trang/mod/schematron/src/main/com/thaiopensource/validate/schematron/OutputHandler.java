@@ -63,6 +63,8 @@ class OutputHandler extends DefaultHandler {
     }
     else if (localName.equals("statement") || localName.equals("diagnostic")) {
       inMessage = true;
+      if (message.length() == 0)
+        return;
       if (message.charAt(message.length() - 1) != ' ')
         message.append(' ');
     }
