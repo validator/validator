@@ -38,9 +38,13 @@ public class LinkRel extends AbstractRel {
         "contents", // HTML4
         "copyright", // HTML4
         "dns-prefetch", // extension
+        "edituri", // extension
         "glossary", // HTML4
         "help",
+        "home", // extension
+        "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
         "icon",
+        "image_src", // extension
         "index", // extension
         "license",
         "me", // extension (Formats table)
@@ -51,7 +55,7 @@ public class LinkRel extends AbstractRel {
         "openid2.provider", // extension
         "p3pv1", // extension
         "pgpkey", // extension
-        "pingback",
+        "pingback", // extension
         "prefetch",
         "prerender", // extension
         "prev",
@@ -62,11 +66,10 @@ public class LinkRel extends AbstractRel {
         "service", // extension
         "shortcut", // extension
         "shortlink", // extension
-        "sidebar",
+        "sidebar", // extension
         "start", // HTML4
         "stylesheet",
         "subsection", // HTML4
-        // tag removed as a spec bug
         "timesheet", // extension
         "toc", // HTML4
         "transformation", // extension (Formats table)

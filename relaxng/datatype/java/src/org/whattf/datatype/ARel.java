@@ -42,10 +42,12 @@ public class ARel extends AbstractRel {
         "copyright", // HTML4
         "crush", // extension (Formats table)
         "date", // extension (Formats table)
-        "external",
+        "external", // extension
         "friend", // extension (Formats table)
         "glossary", // HTML4
         "help",
+        "home", // extension
+        "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
         "index", // extension
         "kin", // extension (Formats table)
         "license",
@@ -57,7 +59,6 @@ public class ARel extends AbstractRel {
         "nofollow",
         "noreferrer",
         "parent", // extension (Formats table)
-        "pingback",
         "prefetch",
         "prev",
         "previous", // HTML4
@@ -65,7 +66,7 @@ public class ARel extends AbstractRel {
         "search",
         "section", // HTML4
         "sibling", // extension (Formats table)
-        "sidebar",
+        "sidebar", // extension
         "spouse", // extension (Formats table)
         "start", // HTML4
         "subsection", // HTML4
