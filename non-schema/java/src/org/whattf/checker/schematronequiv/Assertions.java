@@ -311,7 +311,7 @@ public class Assertions extends Checker {
     }
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
-            "button", "caption", "dfn", "figcaption", "figure", "footer",
+            "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "time", "progress",
             "meter" };
 
@@ -360,6 +360,20 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("address", "header");
         registerProhibitedAncestor("header", "footer");
         registerProhibitedAncestor("footer", "footer");
+        registerProhibitedAncestor("dt", "header");
+        registerProhibitedAncestor("dt", "footer");
+        registerProhibitedAncestor("dt", "article");
+        registerProhibitedAncestor("dt", "aside");
+        registerProhibitedAncestor("dt", "nav");
+        registerProhibitedAncestor("dt", "section");
+        registerProhibitedAncestor("dt", "h1");
+        registerProhibitedAncestor("dt", "h2");
+        registerProhibitedAncestor("dt", "h2");
+        registerProhibitedAncestor("dt", "h3");
+        registerProhibitedAncestor("dt", "h4");
+        registerProhibitedAncestor("dt", "h5");
+        registerProhibitedAncestor("dt", "h6");
+        registerProhibitedAncestor("dt", "hgroup");
         registerProhibitedAncestor("address", "footer");
         registerProhibitedAncestor("address", "h1");
         registerProhibitedAncestor("address", "h2");

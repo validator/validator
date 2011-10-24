@@ -154,7 +154,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	dt.inner =
-		( common.inner.phrasing )
+		( common.inner.flow )
 
 ## Definition Description: <dd>
 
