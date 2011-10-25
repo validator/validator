@@ -312,8 +312,8 @@ public class Assertions extends Checker {
 
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
-            "form", "header", "label", "map", "noscript", "time", "progress",
-            "meter" };
+            "form", "header", "label", "map", "noscript", "th", "time",
+            "progress", "meter" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -374,6 +374,20 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("dt", "h5");
         registerProhibitedAncestor("dt", "h6");
         registerProhibitedAncestor("dt", "hgroup");
+        registerProhibitedAncestor("th", "header");
+        registerProhibitedAncestor("th", "footer");
+        registerProhibitedAncestor("th", "article");
+        registerProhibitedAncestor("th", "aside");
+        registerProhibitedAncestor("th", "nav");
+        registerProhibitedAncestor("th", "section");
+        registerProhibitedAncestor("th", "h1");
+        registerProhibitedAncestor("th", "h2");
+        registerProhibitedAncestor("th", "h2");
+        registerProhibitedAncestor("th", "h3");
+        registerProhibitedAncestor("th", "h4");
+        registerProhibitedAncestor("th", "h5");
+        registerProhibitedAncestor("th", "h6");
+        registerProhibitedAncestor("th", "hgroup");
         registerProhibitedAncestor("address", "footer");
         registerProhibitedAncestor("address", "h1");
         registerProhibitedAncestor("address", "h2");
