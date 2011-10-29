@@ -42,6 +42,7 @@ public class ARel extends AbstractRel {
         "copyright", // HTML4
         "crush", // extension (Formats table)
         "date", // extension (Formats table)
+        "disclosure", // extension
         "external", // extension
         "friend", // extension (Formats table)
         "glossary", // HTML4
