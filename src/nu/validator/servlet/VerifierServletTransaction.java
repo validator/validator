@@ -197,7 +197,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final char[] SERVICE_TITLE = (System.getProperty(
             "nu.validator.servlet.service-name", "Validator.nu") + " ").toCharArray();
 
-    private static final char[] VERSION = "3".toCharArray();
+    private static final char[] VERSION = "Living Validator".toCharArray();
 
     private static final char[] RESULTS_TITLE = "Validation results".toCharArray();
 
