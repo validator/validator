@@ -82,7 +82,7 @@ connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 
 dependencyPackages = [
-  ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.3.zip", "c30c769e07339390862907504ff4b300"),
+  ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
   ("http://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("http://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
   ("http://download.icu-project.org/files/icu4j/4.4.2/icu4j-4_4_2.jar", "04b27abd15a6357bdfb64ff830752b0b"),
@@ -108,7 +108,7 @@ dependencyPackages = [
 # can't just autodiscover all jars. Hence, an explicit list.
 
 runDependencyJars = [
-  "commons-codec-1.3/commons-codec-1.3.jar",
+  "commons-codec-1.4/commons-codec-1.4.jar",
   "commons-httpclient-3.1/commons-httpclient-3.1.jar",
   "commons-logging-1.1.1/commons-logging-1.1.1.jar",
   "commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar",
