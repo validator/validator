@@ -58,7 +58,7 @@ public class Html5ConformanceCheckerTransaction extends
     private static final char[] SERVICE_TITLE = (System.getProperty(
             "nu.validator.servlet.service-name", "Validator.nu") + " (X)HTML5 Validator ").toCharArray();
 
-    private static final char[] TECHNOLOGY_PREVIEW = "(Highly Experimental)".toCharArray();
+    private static final char[] TECHNOLOGY_PREVIEW = "(Living Validator)".toCharArray();
 
     private static final char[] RESULTS_TITLE = "(X)HTML5 validation results".toCharArray();
 
