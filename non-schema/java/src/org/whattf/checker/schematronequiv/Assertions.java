@@ -445,6 +445,9 @@ public class Assertions extends Checker {
         registerRequiredParentRole("menu", "menuitem");
         registerRequiredParentRole("menu", "menuitemcheckbox");
         registerRequiredParentRole("menu", "menuitemradio");
+        registerRequiredParentRole("menubar", "menuitem");
+        registerRequiredParentRole("menubar", "menuitemcheckbox");
+        registerRequiredParentRole("menubar", "menuitemradio");
         registerRequiredParentRole("tablist", "tab");
         registerRequiredParentRole("tree", "treeitem");
         registerRequiredParentRole("list", "listitem");
@@ -477,6 +480,9 @@ public class Assertions extends Checker {
         registerAllowedChildRole("menu", "menuitem");
         registerAllowedChildRole("menu", "menuitemcheckbox");
         registerAllowedChildRole("menu", "menuitemradio");
+        registerAllowedChildRole("menubar", "menuitem");
+        registerAllowedChildRole("menubar", "menuitemcheckbox");
+        registerAllowedChildRole("menubar", "menuitemradio");
         registerAllowedChildRole("tree", "treeitem");
         registerAllowedChildRole("list", "listitem");
         registerAllowedChildRole("radiogroup", "radio");
