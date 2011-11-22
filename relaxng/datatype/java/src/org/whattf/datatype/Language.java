@@ -26,6 +26,8 @@ package org.whattf.datatype;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -289,9 +291,7 @@ public final class Language extends AbstractDatatype {
                                     + preferredValueByLanguageMap.get(literal)
                                     + "\u201D instead.", WARN);
                 }
-                if (!hasGoodPrefix(subtags, i)) {
-                    throw newDatatypeException("Variant ", subtag, " lacks required prefix.");
-                }
+                checkForValidPrefix(subtag, subtags, i);
             } else {
                 throw newDatatypeException("The subtag ", subtag,
                         " does not match the format for any permissible subtag type.");
@@ -305,21 +305,50 @@ public final class Language extends AbstractDatatype {
         }
     }
 
-    private boolean hasGoodPrefix(String[] subtags, int i) {
+    private void checkForValidPrefix(String subtag, String[] subtags, int i)
+            throws DatatypeException {
         String variant = subtags[i];
         int index = Arrays.binarySearch(variants, variant);
         assert index >= 0;
         String[][] prefixes = prefixesByVariant[index];
         if (prefixes.length == 0) {
-            return true;
+            return;
         }
+        List<String> recommendedPrefixes = new ArrayList<String>();
         for (int j = 0; j < prefixes.length; j++) {
             String[] prefix = prefixes[j];
+            for (int k = 0; k < prefix.length; k++) {
+                String prefixComponent = prefix[k];
+                if (!subtagsContainPrefixComponent(prefixComponent, subtags, i)) {
+                    recommendedPrefixes.add(prefixComponent);
+                }
+            }
             if (prefixMatches(prefix, subtags, i)) {
-                return true;
+                return;
             }
         }
-        return false;
+        if (recommendedPrefixes.size() == 0) {
+            return;
+        }
+        int count = recommendedPrefixes.size();
+        StringBuilder sb = new StringBuilder();
+        if (recommendedPrefixes.size() > 1) {
+            sb.append(" one of ");
+        }
+        for (String prefix : recommendedPrefixes) {
+            if (count != recommendedPrefixes.size()) {
+                sb.append(", ");
+                if (count == 1) {
+                    sb.append(" or ");
+                }
+            }
+            sb.append("\u201C");
+            sb.append(prefix);
+            sb.append('\u201D');
+            count--;
+        }
+        throw newDatatypeException("Variant ", subtag,
+                " lacks recommended prefix. Use " + sb + " instead.");
     }
 
     private boolean prefixMatches(String[] prefix, String[] subtags, int limit) {
