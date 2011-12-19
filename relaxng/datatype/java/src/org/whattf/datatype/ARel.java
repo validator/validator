@@ -27,6 +27,7 @@ import java.util.Arrays;
 public class ARel extends AbstractRel {
 
     private static final String[] REGISTERED_TOKENS = {
+        "#voverlay", // extension
         "acquaintance", // extension (Formats table)
         "alternate",
         "appendix", // HTML4

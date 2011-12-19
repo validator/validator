@@ -69,6 +69,7 @@ public class LinkRel extends AbstractRel {
         "sidebar", // extension
         "start", // HTML4
         "stylesheet",
+        "stylesheet/less", // extension
         "subsection", // HTML4
         "timesheet", // extension
         "toc", // HTML4

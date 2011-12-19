@@ -97,6 +97,7 @@ public class MetaName extends AbstractDatatype {
         "description",
         "designer", // extension
         "es.title", // extension
+        "essaydirectory", // extension
         "format-detection", // extension
         "generator",
         "geo.country", // extension
@@ -122,9 +123,12 @@ public class MetaName extends AbstractDatatype {
         "globrix.underoffer", // extension
         "google-site-verification", // extension
         "googlebot", // extension
+        "handheldfriendly", // extension
         "icbm", // extension        
         "itemsperpage", // extension
         "keywords",
+        "meta_date", // extension
+        "mobileoptimized", // extension
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
