@@ -133,6 +133,7 @@ public class MetaName extends AbstractDatatype {
         "msapplication-starturl", // extension
         "msapplication-task", // extension
         "msapplication-tooltip", // extension
+        "msapplication-window", // extension
         "msvalidate.01", // extension
         "norton-safeweb-site-verification", // extension
         "publisher", //extension
