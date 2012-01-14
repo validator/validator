@@ -510,7 +510,6 @@ namespace local = ""
 			&	shared-hyperlink.attrs.href
 			)?
 		&	shared-hyperlink.attrs.target?
-		&	shared-hyperlink.attrs.ping?
 		&	shared-hyperlink.attrs.rel?
 		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.hreflang?
