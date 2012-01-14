@@ -42,10 +42,6 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "cite") > -1) {
                 warn("The \u201Ccite\u201D attribute on the \u201Cq\u201D element is not supported by browsers yet.");
             }
-        } else if ("a" == localName) {
-            if (atts.getIndex("", "ping") > -1) {
-                warn("The \u201Cping\u201D attribute on the \u201Ca\u201D element is not supported by browsers yet.");
-            }
         } else if ("area" == localName) {
             if (atts.getIndex("", "ping") > -1) {
                 warn("The \u201Cping\u201D attribute on the \u201Carea\u201D element is not supported by browsers yet.");
