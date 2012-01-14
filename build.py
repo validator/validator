@@ -46,7 +46,7 @@ scpCmd = 'scp'
 hgCmd = 'hg'
 
 buildRoot = '.'
-hgRoot = 'https://bitbucket.org/validator/'
+hgRoot = 'http://dvcs.w3.org/hg/'
 parserHgRoot = 'http://hg.mozilla.org/projects/'
 portNumber = '8888'
 controlPort = None
