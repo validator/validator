@@ -347,7 +347,6 @@ include "web-forms2.rnc"
 include "applications.rnc"
 include "data.rnc"
 include "legacy.rnc"
-include "microdata.rnc"
 include "meta.rnc" {
 		html.inner =
 			(	head.elem
