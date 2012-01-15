@@ -154,6 +154,7 @@ http://s.validator.nu/html5/aria.rnc	schema/html5/aria.rnc
 http://s.validator.nu/html5/block.rnc	schema/html5/block.rnc
 http://s.validator.nu/html5/common.rnc	schema/html5/common.rnc
 http://s.validator.nu/html5/microdata.rnc	schema/html5/microdata.rnc
+http://s.validator.nu/html5/rdfa-lite.rnc	schema/html5/rdfa-lite.rnc
 http://s.validator.nu/html5/core-scripting.rnc	schema/html5/core-scripting.rnc
 http://s.validator.nu/html5/data.rnc	schema/html5/data.rnc
 http://s.validator.nu/html5/embed.rnc	schema/html5/embed.rnc
@@ -162,7 +163,7 @@ http://s.validator.nu/html5/form-datatypes.rnc	schema/html5/form-datatypes.rnc
 http://s.validator.nu/html5/html5core.rnc	schema/html5/html5core.rnc
 http://s.validator.nu/html5/html5exclusions.rnc	schema/html5/html5exclusions.rnc
 http://s.validator.nu/html5/html5full.rnc	schema/html5/html5full.rnc
-http://s.validator.nu/html5/html5full-microdata.rnc	schema/html5/html5full-microdata.rnc
+http://s.validator.nu/html5/html5full-microdata-rdfa.rnc	schema/html5/html5full-microdata-rdfa.rnc
 http://s.validator.nu/html5/media.rnc	schema/html5/media.rnc
 http://s.validator.nu/html5/meta.rnc	schema/html5/meta.rnc
 http://s.validator.nu/html5/phrase.rnc	schema/html5/phrase.rnc
@@ -182,7 +183,7 @@ http://s.validator.nu/html5/xhtml5core-plus-web-forms2.rnc	schema/html5/xhtml5co
 http://s.validator.nu/html5/xhtml5core.rnc	schema/html5/xhtml5core.rnc
 http://s.validator.nu/html5/xhtml5full-html.rnc	schema/html5/xhtml5full-html.rnc
 http://s.validator.nu/html5/xhtml5full-xhtml.rnc	schema/html5/xhtml5full-xhtml.rnc
-http://s.validator.nu/html5/xhtml5full-xhtml-microdata.rnc	schema/html5/xhtml5full-xhtml-microdata.rnc
+http://s.validator.nu/html5/xhtml5full-xhtml-microdata-rdfa.rnc	schema/html5/xhtml5full-xhtml-microdata-rdfa.rnc
 http://s.validator.nu/xhtml10/applet.rnc	schema/xhtml10/applet.rnc
 http://s.validator.nu/xhtml10/attribs.rnc	schema/xhtml10/attribs.rnc
 http://s.validator.nu/xhtml10/base.rnc	schema/xhtml10/base.rnc
@@ -280,6 +281,7 @@ http://dev.w3.org/html5/s/html5/aria.rnc	schema/html5/aria.rnc
 http://dev.w3.org/html5/s/html5/block.rnc	schema/html5/block.rnc
 http://dev.w3.org/html5/s/html5/common.rnc	schema/html5/common.rnc
 http://dev.w3.org/html5/s/html5/microdata.rnc	schema/html5/microdata.rnc
+http://dev.w3.org/html5/s/html5/rdfa-lite.rnc	schema/html5/rdfa-lite.rnc
 http://dev.w3.org/html5/s/html5/core-scripting.rnc	schema/html5/core-scripting.rnc
 http://dev.w3.org/html5/s/html5/data.rnc	schema/html5/data.rnc
 http://dev.w3.org/html5/s/html5/embed.rnc	schema/html5/embed.rnc
@@ -289,6 +291,7 @@ http://dev.w3.org/html5/s/html5/html5core.rnc	schema/html5/html5core.rnc
 http://dev.w3.org/html5/s/html5/html5exclusions.rnc	schema/html5/html5exclusions.rnc
 http://dev.w3.org/html5/s/html5/html5full.rnc	schema/html5/html5full.rnc
 http://dev.w3.org/html5/s/html5/html5full-microdata.rnc	schema/html5/html5full-microdata.rnc
+http://dev.w3.org/html5/s/html5/html5full-microdata-rdfa.rnc	schema/html5/html5full-microdata-rdfa.rnc
 http://dev.w3.org/html5/s/html5/media.rnc	schema/html5/media.rnc
 http://dev.w3.org/html5/s/html5/meta.rnc	schema/html5/meta.rnc
 http://dev.w3.org/html5/s/html5/phrase.rnc	schema/html5/phrase.rnc
@@ -309,6 +312,7 @@ http://dev.w3.org/html5/s/html5/xhtml5core.rnc	schema/html5/xhtml5core.rnc
 http://dev.w3.org/html5/s/html5/xhtml5full-html.rnc	schema/html5/xhtml5full-html.rnc
 http://dev.w3.org/html5/s/html5/xhtml5full-xhtml.rnc	schema/html5/xhtml5full-xhtml.rnc
 http://dev.w3.org/html5/s/html5/xhtml5full-xhtml-microdata.rnc	schema/html5/xhtml5full-xhtml-microdata.rnc
+http://dev.w3.org/html5/s/html5/xhtml5full-xhtml-microdata-rdfa.rnc	schema/html5/xhtml5full-xhtml-microdata-rdfa.rnc
 http://dev.w3.org/html5/s/xhtml10/applet.rnc	schema/xhtml10/applet.rnc
 http://dev.w3.org/html5/s/xhtml10/attribs.rnc	schema/xhtml10/attribs.rnc
 http://dev.w3.org/html5/s/xhtml10/base.rnc	schema/xhtml10/base.rnc
@@ -351,8 +355,8 @@ http://dev.w3.org/html5/s/xhtml10/xhtml.sch	schema/xhtml10/xhtml.sch
 http://dev.w3.org/html5/s/inkscape/inkscape.rnc	schema/inkscape/inkscape.rnc
 http://dev.w3.org/html5/s/xml.rnc	schema/xhtml5-aria-rdf-svg-mathml.rnc
 http://dev.w3.org/html5/s/html.rnc	schema/html5-aria-svg-mathml.rnc
-http://dev.w3.org/html5/s/xml-microdata.rnc	schema/xhtml5-aria-rdf-svg-mathml-microdata.rnc
-http://dev.w3.org/html5/s/html-microdata.rnc	schema/html5-aria-svg-mathml-microdata.rnc
+http://dev.w3.org/html5/s/xml-microdata-rdfalite.rnc	schema/xhtml5-aria-rdf-svg-mathml-microdata-rdfa.rnc
+http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc	schema/html5-aria-svg-mathml-microdata-rdfa.rnc
 http://s.validator.nu/svg-xhtml5-aria-mathml.rnc	schema/svg-xhtml5-aria-rdf-mathml.rnc
 http://s.validator.nu/xhtml1-ruby-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc
 http://dev.w3.org/html5/s/svg-xhtml5-aria-mathml.rnc	schema/svg-xhtml5-aria-rdf-mathml.rnc

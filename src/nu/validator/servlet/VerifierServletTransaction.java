@@ -499,13 +499,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static boolean isDataAttributeDroppingSchema(String key) {
         return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
-                || "http://s.validator.nu/html5/html5full-microdata.rnc".equals(key)
+                || "http://s.validator.nu/html5/html5full-microdata-rdfa.rnc".equals(key)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml-microdata.rnc".equals(key)
+                || "http://s.validator.nu/html5/xhtml5full-xhtml-microdata-rdfa.rnc".equals(key)
                 || "http://dev.w3.org/html5/s/xml.rnc".equals(key)
                 || "http://dev.w3.org/html5/s/html.rnc".equals(key)
-                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(key)
-                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(key));
+                || "http://dev.w3.org/html5/s/xml-microdata-rdfalite.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc".equals(key));
     }
 
     private static boolean isXmlLangAllowingSchema(String key) {
@@ -515,8 +515,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/html5/xhtml5full-xhtml-microdata.rnc".equals(key)
                 || "http://dev.w3.org/html5/s/xml.rnc".equals(key)
                 || "http://dev.w3.org/html5/s/html.rnc".equals(key)
-                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(key)
-                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(key));
+                || "http://dev.w3.org/html5/s/xml-microdata-rdfalite.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc".equals(key));
     }
     
     private static boolean isCheckerUrl(String url) {
@@ -793,9 +793,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-microdata.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-microdata-rdfa.rnc")
                 || schemaUrls.startsWith("http://dev.w3.org/html5/s/html.rnc")
-                || schemaUrls.startsWith("http://dev.w3.org/html5/s/html-microdata.rnc"));
+                || schemaUrls.startsWith("http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc"));
 
     }
 
@@ -1204,13 +1204,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://s.validator.nu/html5/html5full-microdata.rnc".equals(url)
+        if ("http://s.validator.nu/html5/html5full-microdata-rdfa.rnc".equals(url)
                 || "http://dev.w3.org/html5/s/xml.rnc".equals(url)
-                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(url)
+                || "http://dev.w3.org/html5/s/xml-microdata-rdfalite.rnc".equals(url)
                 || "http://s.validator.nu/html5/html5full.rnc".equals(url)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
                 || "http://dev.w3.org/html5/s/html.rnc".equals(url)
-                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(url)) {
+                || "http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = resolveSchema(url, jingPropertyMap);

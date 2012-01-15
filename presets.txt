@@ -1,7 +1,7 @@
 3	-	HTML5	http://dev.w3.org/html5/s/html.rnc http://dev.w3.org/html5/s/assertions.sch http://dev.w3.org/html5/c/all/
-3	-	HTML5+Microdata	http://dev.w3.org/html5/s/html-microdata.rnc http://dev.w3.org/html5/s/assertions.sch http://dev.w3.org/html5/c/all/ http://dev.w3.org/html5/c/microdata/
+3	-	HTML5+Microdata+RDFaLite	http://dev.w3.org/html5/s/html-microdata-rdfalite.rnc http://dev.w3.org/html5/s/assertions.sch http://dev.w3.org/html5/c/all/ http://dev.w3.org/html5/c/microdata/
 7	http://www.w3.org/1999/xhtml	XHTML5	http://dev.w3.org/html5/s/xml.rnc http://dev.w3.org/html5/s/assertions.sch http://dev.w3.org/html5/c/all/ http://dev.w3.org/html5/c/microdata/
-7	http://www.w3.org/1999/xhtml	XHTML5+Microdata	http://dev.w3.org/html5/s/xml-microdata.rnc http://dev.w3.org/html5/s/assertions.sch http://c.validator.nu/all/ http://dev.w3.org/html5/c/all/ http://dev.w3.org/html5/c/microdata/
+7	http://www.w3.org/1999/xhtml	XHTML5+Microdata+RDFaLite	http://dev.w3.org/html5/s/xml-microdata-rdfalite.rnc http://dev.w3.org/html5/s/assertions.sch http://c.validator.nu/all/ http://dev.w3.org/html5/c/all/ http://dev.w3.org/html5/c/microdata/
 2	-	HTML 4.01 Strict (not parsed as SGML) + IRI / XHTML 1.0 Strict + IRI	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 1	-	HTML 4.01 Transitional (not parsed as SGML) + IRI / XHTML 1.0 Transitional + IRI	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
 -1	-	HTML 4.01 Frameset (not parsed as SGML) + IRI / XHTML 1.0 Frameset + IRI	http://s.validator.nu/xhtml10/xhtml-frameset.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
