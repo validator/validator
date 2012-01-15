@@ -274,7 +274,7 @@ http://dev.w3.org/html5/s/svg11/svg11.rnc	schema/svg11/svg11.rnc
 http://dev.w3.org/html5/s/svg11/svg11-basic-inc.rnc	schema/svg11/svg11-basic-inc.rnc
 http://dev.w3.org/html5/s/svg11/svg11-tiny-inc.rnc	schema/svg11/svg11-tiny-inc.rnc
 http://dev.w3.org/html5/s/svg11/svg11-inc.rnc	schema/svg11/svg11-inc.rnc
-http://dev.w3.org/html5/s/html5/assertions.sch	schema/html5/assertions.sch
+http://dev.w3.org/html5/s/assertions.sch	schema/html5/assertions.sch
 http://dev.w3.org/html5/s/html5/applications.rnc	schema/html5/applications.rnc
 http://dev.w3.org/html5/s/html5/aria.rnc	schema/html5/aria.rnc
 http://dev.w3.org/html5/s/html5/block.rnc	schema/html5/block.rnc

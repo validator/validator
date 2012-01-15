@@ -438,7 +438,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.USEMAP_CHECKER);
             schemaMap.put("http://c.validator.nu/unchecked/",
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
-            schemaMap.put("http://s.validator.nu/html5/assertions.sch",
+            schemaMap.put("http://dev.w3.org/html5/s/assertions.sch",
                     CheckerSchema.ASSERTION_SCH);
             schemaMap.put("http://c.validator.nu/obsolete/",
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
