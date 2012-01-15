@@ -194,6 +194,11 @@ namespace local = ""
 			                    | itemid
 			                    | name
 			                    | align
+			                    | about
+			                    | prefix
+			                    | property
+			                    | typeof
+			                    | vocab
 			                    ) 
 			{
 				string
