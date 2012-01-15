@@ -314,12 +314,12 @@ def buildSchemaDrivers():
   legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
-  buildSchemaDriverHtml5Aria(schemaDir)
+  buildSchemaDriverHtml5Microdata(schemaDir)
   buildSchemaDriverXhtmlCore(schemaDir)
   buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
   buildSchemaDriverXhtml5html(schemaDir)
   buildSchemaDriverXhtml5xhtml(schemaDir)
-  buildSchemaDriverXhtml5Aria(schemaDir)
+  buildSchemaDriverXhtml5Microdata(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
   shutil.copy(legacyRnc, schemaDir)
 
@@ -347,6 +347,7 @@ include "web-forms2.rnc"
 include "applications.rnc"
 include "data.rnc"
 include "legacy.rnc"
+include "aria.rnc"
 include "meta.rnc" {
 		html.inner =
 			(	head.elem
@@ -407,8 +408,8 @@ include "common.rnc" {
 		nonRoundtrippable = notAllowed
 }
 '''
-schemaDriverHtml5Aria = '''\
-include "aria.rnc"
+schemaDriverHtml5Microdata = '''\
+include "microdata.rnc"
 '''
 
 def openDriver(schemaDir, driverName, sourceName=""):
@@ -438,9 +439,9 @@ def buildSchemaDriverHtml5(schemaDir):
   f.write(schemaDriverHtml5)
   f.close()
 
-def buildSchemaDriverHtml5Aria(schemaDir):
-  f = openDriver(schemaDir, "html5full-aria.rnc", "html5full.rnc")
-  f.write(schemaDriverHtml5Aria)
+def buildSchemaDriverHtml5Microdata(schemaDir):
+  f = openDriver(schemaDir, "html5full-microdata.rnc", "html5full.rnc")
+  f.write(schemaDriverHtml5Microdata)
   f.close()
 
 ################################
@@ -475,9 +476,9 @@ def buildSchemaDriverXhtml5xhtml(schemaDir):
   f.write(schemaDriverHtml5)
   f.close()
 
-def buildSchemaDriverXhtml5Aria(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-aria.rnc", "xhtml5full-xhtml.rnc")
-  f.write(schemaDriverHtml5Aria)
+def buildSchemaDriverXhtml5Microdata(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata.rnc", "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverHtml5Microdata)
   f.close()
 
 #################################################################
