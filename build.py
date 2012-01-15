@@ -314,12 +314,12 @@ def buildSchemaDrivers():
   legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
-  buildSchemaDriverHtml5Microdata(schemaDir)
+  buildSchemaDriverHtml5MicrodataRDFa(schemaDir)
   buildSchemaDriverXhtmlCore(schemaDir)
   buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
   buildSchemaDriverXhtml5html(schemaDir)
   buildSchemaDriverXhtml5xhtml(schemaDir)
-  buildSchemaDriverXhtml5Microdata(schemaDir)
+  buildSchemaDriverXhtml5MicrodataRDFa(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
   shutil.copy(legacyRnc, schemaDir)
 
@@ -408,8 +408,9 @@ include "common.rnc" {
 		nonRoundtrippable = notAllowed
 }
 '''
-schemaDriverHtml5Microdata = '''\
+schemaDriverHtml5MicrodataRDFa = '''\
 include "microdata.rnc"
+include "rdfa-lite.rnc"
 '''
 
 def openDriver(schemaDir, driverName, sourceName=""):
@@ -439,9 +440,9 @@ def buildSchemaDriverHtml5(schemaDir):
   f.write(schemaDriverHtml5)
   f.close()
 
-def buildSchemaDriverHtml5Microdata(schemaDir):
-  f = openDriver(schemaDir, "html5full-microdata.rnc", "html5full.rnc")
-  f.write(schemaDriverHtml5Microdata)
+def buildSchemaDriverHtml5MicrodataRDFa(schemaDir):
+  f = openDriver(schemaDir, "html5full-microdata-rdfa.rnc", "html5full.rnc")
+  f.write(schemaDriverHtml5MicrodataRDFa)
   f.close()
 
 ################################
@@ -476,9 +477,9 @@ def buildSchemaDriverXhtml5xhtml(schemaDir):
   f.write(schemaDriverHtml5)
   f.close()
 
-def buildSchemaDriverXhtml5Microdata(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata.rnc", "xhtml5full-xhtml.rnc")
-  f.write(schemaDriverHtml5Microdata)
+def buildSchemaDriverXhtml5MicrodataRDFa(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata-rdfa.rnc", "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverHtml5MicrodataRDFa)
   f.close()
 
 #################################################################
