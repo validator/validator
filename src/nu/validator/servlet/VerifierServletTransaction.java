@@ -233,8 +233,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
-            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
-            "http://c.validator.nu/microdata/" };
+            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -447,7 +446,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.XML_PI_CHECKER);
             schemaMap.put("http://c.validator.nu/unsupported/",
                     CheckerSchema.UNSUPPORTED_CHECKER);
-            schemaMap.put("http://c.validator.nu/microdata/",
+            schemaMap.put("http://dev.w3.org/html5/c/microdata/",
                     CheckerSchema.MICRODATA_CHECKER);
 
             for (int i = 0; i < presetUrls.length; i++) {
@@ -500,24 +499,35 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static boolean isDataAttributeDroppingSchema(String key) {
         return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
-                || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
+                || "http://s.validator.nu/html5/html5full-microdata.rnc".equals(key)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
+                || "http://s.validator.nu/html5/xhtml5full-xhtml-microdata.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/xml.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(key));
     }
 
     private static boolean isXmlLangAllowingSchema(String key) {
         return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
-                || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
+                || "http://s.validator.nu/html5/html5full-microdata.rnc".equals(key)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
+                || "http://s.validator.nu/html5/xhtml5full-xhtml-microdata.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/xml.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(key)
+                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(key));
     }
     
     private static boolean isCheckerUrl(String url) {
         if ("http://c.validator.nu/all/".equals(url)
+                || "http://dev.w3.org/html5/c/all/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
             return true;
         } else if ("http://c.validator.nu/all-html4/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+            return true;
+        } else if ("http://dev.w3.org/html5/c/microdata/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
@@ -783,7 +793,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-aria.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5-aria-svg-mathml.rnc"));
+                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-microdata.rnc")
+                || schemaUrls.startsWith("http://dev.w3.org/html5/s/html.rnc")
+                || schemaUrls.startsWith("http://dev.w3.org/html5/s/html-microdata.rnc"));
 
     }
 
@@ -1138,6 +1150,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         for (int i = schemas.length - 1; i > -1; i--) {
             String url = schemas[i];
             if ("http://c.validator.nu/all/".equals(url)
+                    || "http://dev.w3.org/html5/c/all/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS.length; j++) {
                     v = combineValidatorByUrl(v, ALL_CHECKERS[j]);
@@ -1191,11 +1204,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://s.validator.nu/html5/html5full-aria.rnc".equals(url)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(url)
+        if ("http://s.validator.nu/html5/html5full-microdata.rnc".equals(url)
+                || "http://dev.w3.org/html5/s/xml.rnc".equals(url)
+                || "http://dev.w3.org/html5/s/xml-microdata.rnc".equals(url)
                 || "http://s.validator.nu/html5/html5full.rnc".equals(url)
                 || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
-                || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(url)) {
+                || "http://dev.w3.org/html5/s/html.rnc".equals(url)
+                || "http://dev.w3.org/html5/s/html-microdata.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = resolveSchema(url, jingPropertyMap);
