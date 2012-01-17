@@ -1,7 +1,7 @@
 namespace svg = "http://www.w3.org/2000/svg"
 namespace math = "http://www.w3.org/1998/Math/MathML"
 
-include "html5/html5full-microdata.rnc"
+include "html5/html5full-rdfalite-no-microdata.rnc"
 include "svg11/svg11-inc.rnc"
 include "mml2/mathml2-inc.rnc"
 
