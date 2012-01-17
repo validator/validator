@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2009 Mozilla Foundation
+# Copyright (c) 2008-2012 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -46,7 +46,7 @@ scpCmd = 'scp'
 hgCmd = 'hg'
 
 buildRoot = '.'
-hgRoot = 'http://dvcs.w3.org/hg/'
+hgRoot = 'https://bitbucket.org/validator/'
 parserHgRoot = 'http://hg.mozilla.org/projects/'
 portNumber = '8888'
 controlPort = None
@@ -80,6 +80,7 @@ formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
+w3cBranding = 0
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
@@ -313,22 +314,25 @@ def buildSchemaDrivers():
   schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
   legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
+  buildSchemaDriverHtml5NoMicrodata(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
-  buildSchemaDriverHtml5Microdata(schemaDir)
-  buildSchemaDriverHtml5RDFa(schemaDir)
-  buildSchemaDriverHtml5MicrodataRDFa(schemaDir)
+  buildSchemaDriverHtml5RDFaLite(schemaDir)
+  buildSchemaDriverHtml5RDFaLiteNoMicrodata(schemaDir)
   buildSchemaDriverXhtmlCore(schemaDir)
   buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
+  buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir)
+  buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir)
   buildSchemaDriverXhtml5html(schemaDir)
   buildSchemaDriverXhtml5xhtml(schemaDir)
-  buildSchemaDriverXhtml5Microdata(schemaDir)
-  buildSchemaDriverXhtml5RDFa(schemaDir)
-  buildSchemaDriverXhtml5MicrodataRDFa(schemaDir)
+  buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir)
+  buildSchemaDriverXhtml5xhtmlRDFaLiteNoMicrodata(schemaDir)
+  buildSchemaDriverXhtml5htmlRDFaLite(schemaDir)
+  buildSchemaDriverXhtml5htmlRDFaLiteNoMicrodata(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
   shutil.copy(legacyRnc, schemaDir)
 
 #################################################################
-# start of data and functions for building schema drivers
+# data and functions for building schema drivers
 #################################################################
 
 schemaDriverBase = '''\
@@ -340,7 +344,7 @@ include "revision.rnc"
 include "embed.rnc"
 include "core-scripting.rnc"
 '''
-schemaDriverHtml5 = '''\
+schemaDriverHtml5NoMicrodata = '''\
 include "structural.rnc"
 include "ruby.rnc"
 include "media.rnc"
@@ -415,11 +419,7 @@ include "common.rnc" {
 schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
 '''
-schemaDriverHtml5RDFa = '''\
-include "rdfa-lite.rnc"
-'''
-schemaDriverHtml5MicrodataRDFa = '''\
-include "microdata.rnc"
+schemaDriverHtml5RDFaLite = '''\
 include "rdfa-lite.rnc"
 '''
 
@@ -442,27 +442,27 @@ def buildSchemaDriverHtmlCore(schemaDir):
   f.write(schemaDriverMeta)
   f.close()
 
-def buildSchemaDriverHtml5(schemaDir):
-  f = openDriver(schemaDir, "html5full.rnc")
+def buildSchemaDriverHtml5NoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "html5full-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Html5)
   f.write(schemaDriverBase)
-  f.write(schemaDriverHtml5)
+  f.write(schemaDriverHtml5NoMicrodata)
   f.close()
 
-def buildSchemaDriverHtml5Microdata(schemaDir):
-  f = openDriver(schemaDir, "html5full-microdata.rnc", "html5full.rnc")
+def buildSchemaDriverHtml5(schemaDir):
+  f = openDriver(schemaDir, "html5full.rnc", "html5full-no-microdata.rnc")
   f.write(schemaDriverHtml5Microdata)
   f.close()
 
-def buildSchemaDriverHtml5RDFa(schemaDir):
-  f = openDriver(schemaDir, "html5full-rdfa.rnc", "html5full.rnc")
-  f.write(schemaDriverHtml5RDFa)
+def buildSchemaDriverHtml5RDFaLite(schemaDir):
+  f = openDriver(schemaDir, "html5full-rdfalite.rnc", "html5full.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
-def buildSchemaDriverHtml5MicrodataRDFa(schemaDir):
-  f = openDriver(schemaDir, "html5full-microdata-rdfa.rnc", "html5full.rnc")
-  f.write(schemaDriverHtml5MicrodataRDFa)
+def buildSchemaDriverHtml5RDFaLiteNoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "html5full-rdfalite-no-microdata.rnc", "html5full-no-microdata.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
 ################################
@@ -481,35 +481,50 @@ def buildSchemaDriverXhtmlCorePlusWf2(schemaDir):
   f.write(schemaDriverPlusWebForms2)
   f.close()
 
-def buildSchemaDriverXhtml5html(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-html.rnc")
+def buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Xhtml5html)
   f.write(schemaDriverBase)
-  f.write(schemaDriverHtml5)
+  f.write(schemaDriverHtml5NoMicrodata)
   f.close()
 
-def buildSchemaDriverXhtml5xhtml(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml.rnc")
+def buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Xhtml5xhtml)
   f.write(schemaDriverBase)
-  f.write(schemaDriverHtml5)
+  f.write(schemaDriverHtml5NoMicrodata)
   f.close()
 
-def buildSchemaDriverXhtml5Microdata(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata.rnc", "xhtml5full-xhtml.rnc")
+def buildSchemaDriverXhtml5xhtml(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml.rnc", "xhtml5full-xhtml-no-microdata.rnc")
   f.write(schemaDriverHtml5Microdata)
   f.close()
 
-def buildSchemaDriverXhtml5RDFa(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-rdfa.rnc", "xhtml5full-xhtml.rnc")
-  f.write(schemaDriverHtml5RDFa)
+def buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-rdfalite.rnc", "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
-def buildSchemaDriverXhtml5MicrodataRDFa(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata-rdfa.rnc", "xhtml5full-xhtml.rnc")
-  f.write(schemaDriverHtml5MicrodataRDFa)
+def buildSchemaDriverXhtml5xhtmlRDFaLiteNoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata-rdfalite.rnc", "xhtml5full-xhtml-no-microdata.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
+  f.close()
+
+def buildSchemaDriverXhtml5html(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html.rnc", "xhtml5full-html-no-microdata.rnc")
+  f.write(schemaDriverHtml5Microdata)
+  f.close()
+
+def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html-rdfalite.rnc", "xhtml5full-html.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
+  f.close()
+
+def buildSchemaDriverXhtml5htmlRDFaLiteNoMicrodata(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html-rdfalite-no-microdata.rnc", "xhtml5full-html-no-microdata.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
 #################################################################
@@ -726,12 +741,16 @@ def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
   
 def prepareLocalEntityJar():
+  if w3cBranding:
+    prefix = "w3c-"
+  else:
+    prefix = ""
   filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
-  shutil.copyfile(os.path.join(buildRoot, "validator", "presets.txt"), os.path.join(filesDir, "presets"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", prefix + "presets.txt"), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", prefix + "html5.html"), os.path.join(filesDir, "html5spec"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
@@ -992,6 +1011,8 @@ else:
       connectionTimeoutSeconds = int(arg[21:]);
     elif arg.startswith("--socket-timeout="):
       socketTimeoutSeconds = int(arg[17:]);
+    elif arg.startswith("--w3cbranding="):
+      w3cBranding = int(arg[14:]);
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
