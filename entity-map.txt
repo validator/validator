@@ -225,3 +225,11 @@ http://s.validator.nu/xhtml5.rnc	schema/xhtml5.rnc
 http://s.validator.nu/html5.rnc	schema/html5.rnc
 http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc	schema/svg-xhtml5-rdf-mathml.rnc
 http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc
+http://s.validator.nu/w3c-xhtml5.rnc	schema/xhtml5.rnc
+http://s.validator.nu/w3c-html5.rnc	schema/html5.rnc
+http://s.validator.nu/w3c-xhtml5-microdata.rnc	schema/xhtml5-microdata.rnc
+http://s.validator.nu/w3c-xhtml5-rdfalite.rnc	schema/xhtml5-rdfalite.rnc
+http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc	schema/xhtml5--microdata-rdfalite.rnc
+http://s.validator.nu/w3c-html5-microdata.rnc	schema/html5-microdata.rnc
+http://s.validator.nu/w3c-html5-rdfalite.rnc	schema/html5-rdfalite.rnc
+http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc	schema/html5-microdata-rdfalite.rnc
