@@ -15,6 +15,7 @@ else
 	args="--no-self-update run"
 fi
 python build/build.py \
+  --hgRoot=http://dvcs.w3.org/hg/ \
   --heap=512 \
   --connection-timeout=3 \
   --socket-timeout=3 \
