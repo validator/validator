@@ -7,7 +7,7 @@
 
 common.attrs.rdfa.about =
 	attribute about {
-		string
+		common.data.uri
 	}
 
 ## RDFa prefix
@@ -35,7 +35,7 @@ common.attrs.rdfa.typeof =
 
 common.attrs.rdfa.vocab =
 	attribute vocab {
-		string
+		common.data.uri.absolute
 	}
 
 common.attrs &=
