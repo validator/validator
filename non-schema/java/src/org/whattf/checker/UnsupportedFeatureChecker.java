@@ -11,6 +11,8 @@ public class UnsupportedFeatureChecker extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String qName, Attributes atts) throws SAXException {
+        Boolean w3cBranding = "0".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? false
+            : true;
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
@@ -42,8 +44,12 @@ public class UnsupportedFeatureChecker extends Checker {
             if (atts.getIndex("", "cite") > -1) {
                 warn("The \u201Ccite\u201D attribute on the \u201Cq\u201D element is not supported by browsers yet.");
             }
+        } else if ("a" == localName) {
+            if (atts.getIndex("", "ping") > -1 && !w3cBranding) {
+                warn("The \u201Cping\u201D attribute on the \u201Ca\u201D element is not supported by browsers yet.");
+            }
         } else if ("area" == localName) {
-            if (atts.getIndex("", "ping") > -1) {
+            if (atts.getIndex("", "ping") > -1 && !w3cBranding) {
                 warn("The \u201Cping\u201D attribute on the \u201Carea\u201D element is not supported by browsers yet.");
             }
         } else if ("video" == localName) {

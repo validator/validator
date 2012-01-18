@@ -29,6 +29,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	## XML features that can't be serialized as HTML
 	nonHTMLizable = empty
 
+## features that are not part of the W3C HTML spec
+	nonW3C = empty
+
 # #####################################################################
 ##  Wildcards                                                         #
 # #####################################################################
