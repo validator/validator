@@ -1,6 +1,3 @@
-This is a fork of the validator.nu sources that is used for
-the W3C Nu Markup Validation Service.
-
 ---------------------------------------------------------------------------
 How to download, build, and run the validator
 ---------------------------------------------------------------------------
@@ -13,7 +10,7 @@ How to download, build, and run the validator
 
    mkdir checker
    cd checker
-   hg clone http://dvcs.w3.org/hg/build build
+   hg clone https://bitbucket.org/validator/build build
 
    The above steps creates a "checker" directory in which the build script
    will create other subdirectories, and downloads the build.py script

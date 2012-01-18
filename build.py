@@ -398,14 +398,12 @@ include "common.rnc" {
 		v5only = empty
 		nonHTMLizable = notAllowed
 		nonRoundtrippable = notAllowed
-}
 '''
 schemaDriverToggle_Xhtml5xhtml = '''\
 include "common.rnc" {
 		XMLonly = empty
 		HTMLonly = notAllowed
 		v5only = empty
-}
 '''
 schemaDriverToggle_Xhtml5html = '''\
 include "common.rnc" {
@@ -414,7 +412,6 @@ include "common.rnc" {
 		v5only = empty
 		nonHTMLizable = notAllowed
 		nonRoundtrippable = notAllowed
-}
 '''
 schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
@@ -432,6 +429,11 @@ def openDriver(schemaDir, driverName, sourceName=""):
   f = open(os.path.join(schemaDir, driverName),"a")
   return f
 
+def writeW3CToggle(f):
+  if w3cBranding:
+    f.write("\t\tnonW3C = notAllowed\n")
+  f.write("}\n")
+
 ################################
 # HTML schema drivers
 ################################
@@ -446,6 +448,7 @@ def buildSchemaDriverHtml5NoMicrodata(schemaDir):
   f = openDriver(schemaDir, "html5full-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Html5)
+  writeW3CToggle(f)
   f.write(schemaDriverBase)
   f.write(schemaDriverHtml5NoMicrodata)
   f.close()
@@ -485,6 +488,7 @@ def buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-html-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Xhtml5html)
+  writeW3CToggle(f)
   f.write(schemaDriverBase)
   f.write(schemaDriverHtml5NoMicrodata)
   f.close()
@@ -493,6 +497,7 @@ def buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-xhtml-no-microdata.rnc")
   f.write(schemaDriverNamespace)
   f.write(schemaDriverToggle_Xhtml5xhtml)
+  writeW3CToggle(f)
   f.write(schemaDriverBase)
   f.write(schemaDriverHtml5NoMicrodata)
   f.close()
@@ -618,6 +623,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
+    '-Dnu.validator.servlet.w3cbranding=%d' % w3cBranding,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
     '-Dnu.validator.servlet.host.html5=' + html5Host,
