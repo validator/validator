@@ -508,7 +508,7 @@ def buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir):
   f.close()
 
 def buildSchemaDriverXhtml5xhtmlRDFaLiteNoMicrodata(schemaDir):
-  f = openDriver(schemaDir, "xhtml5full-xhtml-microdata-rdfalite.rnc", "xhtml5full-xhtml-no-microdata.rnc")
+  f = openDriver(schemaDir, "xhtml5full-xhtml-rdfalite-no-microdata.rnc", "xhtml5full-xhtml-no-microdata.rnc")
   f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
