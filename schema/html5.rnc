@@ -15,7 +15,7 @@ SVG.foreignObject.content |=
 	|	body.elem
 	|	common.inner.flow
 	)
-	
+
 annotation-xml.model.svg |= svg
 
 annotation-xml.model.xhtml |=
