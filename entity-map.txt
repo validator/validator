@@ -232,7 +232,7 @@ http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc	schema/html5-rdfalite.rnc
 http://s.validator.nu/w3c-xhtml5.rnc	schema/xhtml5-no-microdata.rnc
 http://s.validator.nu/w3c-xhtml5-microdata.rnc	schema/xhtml5.rnc
 http://s.validator.nu/w3c-xhtml5-rdfalite.rnc	schema/xhtml5-rdfalite-no-microdata.rnc
-http://s.validator.nu/w3c-xhtml5-rdfalite-no-microdata.rnc	schema/xhtml5-rdfalite.rnc
+http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc	schema/xhtml5-rdfalite.rnc
 http://s.validator.nu/html5/microdata.rnc	schema/html5/microdata.rnc
 http://s.validator.nu/html5/rdfa-lite.rnc	schema/html5/rdfa-lite.rnc
 http://s.validator.nu/html5/html5full-no-microdata.rnc	schema/html5/html5full-no-microdata.rnc
@@ -243,4 +243,4 @@ http://s.validator.nu/html5/xhtml5full-html-rdfalite-no-microdata.rnc	schema/htm
 http://s.validator.nu/html5/xhtml5full-html-rdfalite.rnc	schema/html5/xhtml5full-html-rdfalite.rnc
 http://s.validator.nu/html5/xhtml5full-xhtml-no-microdata.rnc	schema/html5/xhtml5full-xhtml-no-microdata.rnc
 http://s.validator.nu/html5/xhtml5full-xhtml-rdfalite-no-microdata.rnc	schema/html5/xhtml5full-xhtml-rdfalite-no-microdata.rnc
-http://s.validator.nu/html5/xhtml5full-xhtml-rdfalite	schema/html5/xhtml5full-xhtml-rdfalite.rnc
+http://s.validator.nu/html5/xhtml5full-xhtml-rdfalite.rnc	schema/html5/xhtml5full-xhtml-rdfalite.rnc
