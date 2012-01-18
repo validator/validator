@@ -11,8 +11,8 @@ public class UnsupportedFeatureChecker extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String qName, Attributes atts) throws SAXException {
-        Boolean w3cBranding = "0".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? false
-            : true;
+        boolean w3cBranding = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? true
+            : false;
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
