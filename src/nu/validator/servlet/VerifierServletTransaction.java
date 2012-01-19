@@ -1173,8 +1173,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     v = combineValidatorByUrl(v, ALL_CHECKERS_HTML4[j]);
                 }
             } else if ("http://c.validator.nu/base/".equals(url)) {
-                for (int j = 0; j < ALL_CHECKERS_BASE.length; j++) {
-                    v = combineValidatorByUrl(v, ALL_CHECKERS_BASE[j]);
+                for (int j = 0; j < BASE_CHECKERS.length; j++) {
+                    v = combineValidatorByUrl(v, BASE_CHECKERS[j]);
                 }
             } else {
                 v = combineValidatorByUrl(v, url);
