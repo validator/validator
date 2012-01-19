@@ -220,10 +220,7 @@ function isHtmlCompatiblePreset(preset) {
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5/html5full.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5/html5full-aria.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5/html5full-aria-rdfa.rnc") == 0 ||
-        preset.indexOf("http://s.validator.nu/html5-aria-svg-mathml.rnc") == 0)
+	preset.indexOf("http://s.validator.nu/html5.rnc") == 0)
 }
 
 function parserChanged() {
