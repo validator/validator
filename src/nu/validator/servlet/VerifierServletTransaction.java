@@ -233,6 +233,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/text-content/",
             "http://c.validator.nu/unchecked/",
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
+            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
+            "http://c.validator.nu/microdata/" };
+
+    // for W3C-branded HTML validation without Microdata checking
+    private static final String[] BASE_CHECKERS = {
+            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/text-content/",
+            "http://c.validator.nu/unchecked/",
+            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
@@ -530,7 +539,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } else if ("http://c.validator.nu/all-html4/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
             return true;
-        } else if ("http://c.validator.nu/microdata/".equals(url)) {
+        } else if ("http://c.validator.nu/base/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
@@ -1162,6 +1171,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
                     v = combineValidatorByUrl(v, ALL_CHECKERS_HTML4[j]);
+                }
+            } else if ("http://c.validator.nu/base/".equals(url)) {
+                for (int j = 0; j < ALL_CHECKERS_BASE.length; j++) {
+                    v = combineValidatorByUrl(v, ALL_CHECKERS_BASE[j]);
                 }
             } else {
                 v = combineValidatorByUrl(v, url);
