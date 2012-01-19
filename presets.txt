@@ -1,7 +1,7 @@
-3	-	HTML5	http://s.validator.nu/html5.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+3	-	HTML5	http://s.validator.nu/html5/html5full.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 2	-	HTML 4.01 Strict + IRI / XHTML 1.0 Strict + IRI	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 1	-	HTML 4.01 Transitional + IRI / XHTML 1.0 Transitional + IRI	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/xhtml10/xhtml.sch  http://c.validator.nu/all-html4/
 -1	-	HTML 4.01 Frameset + IRI / XHTML 1.0 Frameset + IRI	http://s.validator.nu/xhtml10/xhtml-frameset.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
-7	http://www.w3.org/1999/xhtml	XHTML5	http://s.validator.nu/xhtml5.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+7	http://www.w3.org/1999/xhtml	XHTML5	http://s.validator.nu/html5/xhtml5full.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
 -1	-	XHTML 1.0 Strict + Ruby + SVG 1.1 + MathML 2.0 + IRI	http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc http://s.validator.nu/xhtml10/xhtml.sch http://c.validator.nu/all-html4/
 -1	http://www.w3.org/2000/svg	SVG 1.1 + IRI + XHTML5 + MathML 2.0	http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/

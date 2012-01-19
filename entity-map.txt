@@ -223,8 +223,8 @@ http://s.validator.nu/xhtml10/xhtml.sch	schema/xhtml10/xhtml.sch
 http://s.validator.nu/inkscape/inkscape.rnc	schema/inkscape/inkscape.rnc
 http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc	schema/svg-xhtml5-rdf-mathml.rnc
 http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc
-http://s.validator.nu/html5.rnc	schema/html5.rnc
-http://s.validator.nu/xhtml5.rnc	schema/xhtml5.rnc
+http://s.validator.nu/html5/html5full.rnc	schema/html5.rnc
+http://s.validator.nu/html5/xhtml5full.rnc	schema/xhtml5.rnc
 http://s.validator.nu/w3c-html5.rnc	schema/html5-no-microdata.rnc
 http://s.validator.nu/w3c-html5-microdata.rnc	schema/html5.rnc
 http://s.validator.nu/w3c-html5-rdfalite.rnc	schema/html5-rdfalite-no-microdata.rnc
