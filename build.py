@@ -1017,8 +1017,8 @@ else:
       connectionTimeoutSeconds = int(arg[21:]);
     elif arg.startswith("--socket-timeout="):
       socketTimeoutSeconds = int(arg[17:]);
-    elif arg.startswith("--w3cbranding="):
-      w3cBranding = int(arg[14:]);
+    elif arg == '--w3cbranding':
+      w3cBranding = 1
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
