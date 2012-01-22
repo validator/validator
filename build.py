@@ -832,10 +832,16 @@ def buildAll():
   buildTestHarness()
   buildValidator()
 
-def hgCloneOrUpdate(mod, baseUrl):
-  if os.path.exists(mod):
-    if os.path.exists(mod + "/.hg"):
-      runCmd('"%s" pull --update -R %s %s%s/' % (hgCmd, mod, baseUrl, mod))
+def hgCloneOrUpdate(*args):
+  mod = args[0]
+  baseUrl = args[1]
+  if len(args) == 3:
+    dirname = args[2]
+  else:
+    dirname = mod
+  if os.path.exists(dirname):
+    if os.path.exists(dirname + "/.hg"):
+      runCmd('"%s" pull --update -R %s %s%s/' % (hgCmd, dirname, baseUrl, mod))
     else:
       if os.path.exists(mod + "-old"):
         print "The %s module has moved to hg. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
@@ -845,12 +851,14 @@ def hgCloneOrUpdate(mod, baseUrl):
         os.rename(mod, mod + "-old")
         runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
   else:
-    runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
+    runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, dirname))
 
 def checkout():
   # XXX root dir
   for mod in moduleNames:
     hgCloneOrUpdate(mod, hgRoot)
+  if w3cBranding:
+    hgCloneOrUpdate("nu-validator-site", "https://dvcs.w3.org/hg/", "about")
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   hgCloneOrUpdate("htmlparser", parserHgRoot)
 
