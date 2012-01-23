@@ -220,7 +220,8 @@ function isHtmlCompatiblePreset(preset) {
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-frameset.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-strict.rnc") == 0 ||
 	preset.indexOf("http://s.validator.nu/xhtml10/xhtml-transitional.rnc") == 0 ||
-	preset.indexOf("http://s.validator.nu/html5.rnc") == 0)
+	preset.indexOf("http://s.validator.nu/html5.rnc") == 0 ||
+	preset.indexOf("http://s.validator.nu/html5-rdfalite.rnc") == 0)
 }
 
 function parserChanged() {
