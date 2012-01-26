@@ -65,6 +65,8 @@ public class VerifierServlet extends HttpServlet {
     
     static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
     
+    static final String ABOUT_PATH = System.getProperty("nu.validator.servlet.path.about", "./validator/site/");
+
     private static final byte[] GENERIC_ROBOTS_TXT;
     
     private static final byte[] HTML5_ROBOTS_TXT;
@@ -75,6 +77,8 @@ public class VerifierServlet extends HttpServlet {
 
     private static final byte[] SCRIPT_JS;
 
+    private static final byte[] ICON_PNG;
+
     static {
         try {
             GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
@@ -84,8 +88,9 @@ public class VerifierServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            STYLE_CSS = readFileFromPathIntoByteArray("./validator/site/style.css");
-            SCRIPT_JS = readFileFromPathIntoByteArray("./validator/site/script.js");
+            STYLE_CSS = readFileFromPathIntoByteArray(ABOUT_PATH + "style.css");
+            SCRIPT_JS = readFileFromPathIntoByteArray(ABOUT_PATH + "script.js");
+            ICON_PNG = readFileFromPathIntoByteArray(ABOUT_PATH + "icon.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -188,6 +193,17 @@ public class VerifierServlet extends HttpServlet {
             response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
             OutputStream out = response.getOutputStream();
             out.write(scriptJs);
+            out.flush();
+            out.close();
+            return;
+        } else if ("/icon.png".equals(request.getPathInfo())) {
+            String serverName = request.getServerName();
+            byte[] iconPng = ICON_PNG;
+            response.setContentType("image/png");
+            response.setContentLength(iconPng.length);
+            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(iconPng);
             out.flush();
             out.close();
             return;
