@@ -23,7 +23,10 @@
 
 package nu.validator.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -68,12 +71,22 @@ public class VerifierServlet extends HttpServlet {
 
     private static final byte[] PARSETREE_ROBOTS_TXT;
 
+    private static final byte[] STYLE_CSS;
+
+    private static final byte[] SCRIPT_JS;
+
     static {
         try {
             GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
             HTML5_ROBOTS_TXT = buildRobotsTxt(HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH, PARSETREE_HOST, PARSETREE_PATH);
             PARSETREE_ROBOTS_TXT = buildRobotsTxt(PARSETREE_HOST, PARSETREE_PATH, HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH);
         } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            STYLE_CSS = readFileFromPathIntoByteArray("./validator/site/style.css");
+            SCRIPT_JS = readFileFromPathIntoByteArray("./validator/site/script.js");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         PrudentHttpEntityResolver.setParams(
@@ -108,6 +121,28 @@ public class VerifierServlet extends HttpServlet {
         return builder.toString().getBytes("UTF-8");
     }
     
+    private static byte[] readFileFromPathIntoByteArray(String path)
+            throws IOException {
+        File file = new File(path);
+        byte[] buffer = new byte[(int) file.length()];
+        InputStream ios = null;
+        try {
+            ios = new FileInputStream(file);
+            if (ios.read(buffer) == -1) {
+                throw new IOException(
+                        "Unexpected end of file reached while reading " + path);
+            }
+        } finally {
+            try {
+                if (ios != null) {
+                    ios.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+        return buffer;
+    }
+
     /**
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
@@ -131,6 +166,28 @@ public class VerifierServlet extends HttpServlet {
             response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
             OutputStream out = response.getOutputStream();
             out.write(robotsTxt);
+            out.flush();
+            out.close();
+            return;
+        } else if ("/style.css".equals(request.getPathInfo())) {
+            String serverName = request.getServerName();
+            byte[] styleCss = STYLE_CSS;
+            response.setContentType("text/css; charset=utf-8");
+            response.setContentLength(styleCss.length);
+            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(styleCss);
+            out.flush();
+            out.close();
+            return;
+        } else if ("/script.js".equals(request.getPathInfo())) {
+            String serverName = request.getServerName();
+            byte[] scriptJs = SCRIPT_JS;
+            response.setContentType("text/javascript; charset=utf-8");
+            response.setContentLength(scriptJs.length);
+            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(scriptJs);
             out.flush();
             out.close();
             return;
