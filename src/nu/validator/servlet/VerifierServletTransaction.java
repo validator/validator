@@ -289,15 +289,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     
     private final static String STYLE_SHEET = System.getProperty(
             "nu.validator.servlet.style-sheet",
-            "http://about.validator.nu/style.css");
+            "style.css");
 
     private final static String ICON = System.getProperty(
             "nu.validator.servlet.icon",
-            "http://about.validator.nu/icon.png");
+            "icon.png");
     
     private final static String SCRIPT = System.getProperty(
             "nu.validator.servlet.script",
-            "http://about.validator.nu/script.js");
+            "script.js");
 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));

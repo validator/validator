@@ -65,7 +65,7 @@ public class VerifierServlet extends HttpServlet {
     
     static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
     
-    static final String ABOUT_PATH = System.getProperty("nu.validator.servlet.path.about", "./validator/site/");
+    static final boolean W3C_BRANDING = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding"));
 
     private static final byte[] GENERIC_ROBOTS_TXT;
     
@@ -79,7 +79,15 @@ public class VerifierServlet extends HttpServlet {
 
     private static final byte[] ICON_PNG;
 
+    private static final byte[] W3C_PNG;
+
+    private static final byte[] VNU_PNG;
+
+    private static final byte[] HTML_PNG;
+
     static {
+        String aboutPath = System.getProperty(
+                "nu.validator.servlet.path.about", "./validator/site/");
         try {
             GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
             HTML5_ROBOTS_TXT = buildRobotsTxt(HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH, PARSETREE_HOST, PARSETREE_PATH);
@@ -88,9 +96,16 @@ public class VerifierServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            STYLE_CSS = readFileFromPathIntoByteArray(ABOUT_PATH + "style.css");
-            SCRIPT_JS = readFileFromPathIntoByteArray(ABOUT_PATH + "script.js");
-            ICON_PNG = readFileFromPathIntoByteArray(ABOUT_PATH + "icon.png");
+            STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
+            SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
+            ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
+            if (W3C_BRANDING) {
+                W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
+                VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
+                HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
+            } else {
+                W3C_PNG = VNU_PNG = HTML_PNG = null;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,7 +148,7 @@ public class VerifierServlet extends HttpServlet {
         InputStream ios = null;
         try {
             ios = new FileInputStream(file);
-            if (ios.read(buffer) == -1) {
+            if (ios.read(buffer) != buffer.length) {
                 throw new IOException(
                         "Unexpected end of file reached while reading " + path);
             }
@@ -143,9 +158,27 @@ public class VerifierServlet extends HttpServlet {
                     ios.close();
                 }
             } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         return buffer;
+    }
+
+    private void writeResponse(byte[] buffer, String type,
+            HttpServletResponse response) throws IOException {
+        try {
+            response.setContentType(type);
+            response.setContentLength(buffer.length);
+            response.setDateHeader("Expires",
+                    System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(buffer);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return;
     }
 
     /**
@@ -166,46 +199,25 @@ public class VerifierServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            response.setContentType("text/plain; charset=utf-8");
-            response.setContentLength(robotsTxt.length);
-            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(robotsTxt);
-            out.flush();
-            out.close();
+            writeResponse(robotsTxt, "text/plain; charset=utf-8", response);
             return;
         } else if ("/style.css".equals(request.getPathInfo())) {
-            String serverName = request.getServerName();
-            byte[] styleCss = STYLE_CSS;
-            response.setContentType("text/css; charset=utf-8");
-            response.setContentLength(styleCss.length);
-            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(styleCss);
-            out.flush();
-            out.close();
+            writeResponse(STYLE_CSS, "text/css; charset=utf-8", response);
             return;
         } else if ("/script.js".equals(request.getPathInfo())) {
-            String serverName = request.getServerName();
-            byte[] scriptJs = SCRIPT_JS;
-            response.setContentType("text/javascript; charset=utf-8");
-            response.setContentLength(scriptJs.length);
-            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(scriptJs);
-            out.flush();
-            out.close();
+            writeResponse(SCRIPT_JS, "text/javascript charset=utf-8", response);
             return;
         } else if ("/icon.png".equals(request.getPathInfo())) {
-            String serverName = request.getServerName();
-            byte[] iconPng = ICON_PNG;
-            response.setContentType("image/png");
-            response.setContentLength(iconPng.length);
-            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(iconPng);
-            out.flush();
-            out.close();
+            writeResponse(ICON_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/w3c.png".equals(request.getPathInfo())) {
+            writeResponse(W3C_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/vnu.png".equals(request.getPathInfo())) {
+            writeResponse(VNU_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/html.png".equals(request.getPathInfo())) {
+            writeResponse(HTML_PNG, "image/png", response);
             return;
         }
         doPost(request, response);
