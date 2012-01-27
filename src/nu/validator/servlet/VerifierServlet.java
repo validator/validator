@@ -23,7 +23,10 @@
 
 package nu.validator.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -62,18 +65,48 @@ public class VerifierServlet extends HttpServlet {
     
     static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
     
+    static final boolean W3C_BRANDING = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding"));
+
     private static final byte[] GENERIC_ROBOTS_TXT;
     
     private static final byte[] HTML5_ROBOTS_TXT;
 
     private static final byte[] PARSETREE_ROBOTS_TXT;
 
+    private static final byte[] STYLE_CSS;
+
+    private static final byte[] SCRIPT_JS;
+
+    private static final byte[] ICON_PNG;
+
+    private static final byte[] W3C_PNG;
+
+    private static final byte[] VNU_PNG;
+
+    private static final byte[] HTML_PNG;
+
     static {
+        String aboutPath = System.getProperty(
+                "nu.validator.servlet.path.about", "./validator/site/");
         try {
             GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
             HTML5_ROBOTS_TXT = buildRobotsTxt(HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH, PARSETREE_HOST, PARSETREE_PATH);
             PARSETREE_ROBOTS_TXT = buildRobotsTxt(PARSETREE_HOST, PARSETREE_PATH, HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH);
         } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
+            SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
+            ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
+            if (W3C_BRANDING) {
+                W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
+                VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
+                HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
+            } else {
+                W3C_PNG = VNU_PNG = HTML_PNG = null;
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         PrudentHttpEntityResolver.setParams(
@@ -108,6 +141,46 @@ public class VerifierServlet extends HttpServlet {
         return builder.toString().getBytes("UTF-8");
     }
     
+    private static byte[] readFileFromPathIntoByteArray(String path)
+            throws IOException {
+        File file = new File(path);
+        byte[] buffer = new byte[(int) file.length()];
+        InputStream ios = null;
+        try {
+            ios = new FileInputStream(file);
+            if (ios.read(buffer) != buffer.length) {
+                throw new IOException(
+                        "Unexpected end of file reached while reading " + path);
+            }
+        } finally {
+            try {
+                if (ios != null) {
+                    ios.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return buffer;
+    }
+
+    private void writeResponse(byte[] buffer, String type,
+            HttpServletResponse response) throws IOException {
+        try {
+            response.setContentType(type);
+            response.setContentLength(buffer.length);
+            response.setDateHeader("Expires",
+                    System.currentTimeMillis() + 43200000); // 12 hours
+            OutputStream out = response.getOutputStream();
+            out.write(buffer);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return;
+    }
+
     /**
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
@@ -126,13 +199,25 @@ public class VerifierServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            response.setContentType("text/plain; charset=utf-8");
-            response.setContentLength(robotsTxt.length);
-            response.setDateHeader("Expires", System.currentTimeMillis() + 43200000); // 12 hours
-            OutputStream out = response.getOutputStream();
-            out.write(robotsTxt);
-            out.flush();
-            out.close();
+            writeResponse(robotsTxt, "text/plain; charset=utf-8", response);
+            return;
+        } else if ("/style.css".equals(request.getPathInfo())) {
+            writeResponse(STYLE_CSS, "text/css; charset=utf-8", response);
+            return;
+        } else if ("/script.js".equals(request.getPathInfo())) {
+            writeResponse(SCRIPT_JS, "text/javascript charset=utf-8", response);
+            return;
+        } else if ("/icon.png".equals(request.getPathInfo())) {
+            writeResponse(ICON_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/w3c.png".equals(request.getPathInfo())) {
+            writeResponse(W3C_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/vnu.png".equals(request.getPathInfo())) {
+            writeResponse(VNU_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/html.png".equals(request.getPathInfo())) {
+            writeResponse(HTML_PNG, "image/png", response);
             return;
         }
         doPost(request, response);
