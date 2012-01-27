@@ -912,12 +912,14 @@ def printHelp():
   print "                                Sets the URL for charset registry"
   print "  --about=http://about.validator.nu/"
   print "                                Sets the URL for the about page"
-  print "  --stylesheet=http://about.validator.nu/style.css"
+  print "  --stylesheet=style.css"
   print "                                Sets the URL for the style sheet"
-  print "                                Defaults to --about= plus style.css"
-  print "  --script=http://about.validator.nu/script.js"
-  print "                                Sets the URL for the style sheet"
-  print "                                Defaults to --about= plus script.js"
+  print "                                Defaults to just style.css relative to"
+  print "                                the validator URL"
+  print "  --script=script.js"
+  print "                                Sets the URL for the script"
+  print "                                Defaults to just script.js relative to"
+  print "                                the validator URL"
   print "  --microsyntax=http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"
   print "                                Sets the URL for microformat"
   print "                                descriptions"
@@ -1064,11 +1066,11 @@ else:
     elif arg == 'script':
       if noSelfUpdate:
         if not stylesheet:
-          stylesheet = aboutPage + 'style.css'
+          stylesheet = 'style.css'
         if not script:
-          script = aboutPage + 'script.js'
+          script = 'script.js'
         if not icon:
-          icon = aboutPage + 'icon.png'
+          icon = 'icon.png'
         generateRunScript()
       else:
         selfUpdate()
@@ -1080,11 +1082,11 @@ else:
     elif arg == 'run':
       if noSelfUpdate:
         if not stylesheet:
-          stylesheet = aboutPage + 'style.css'
+          stylesheet = 'style.css'
         if not script:
-          script = aboutPage + 'script.js'
+          script = 'script.js'
         if not icon:
-          icon = aboutPage + 'icon.png'
+          icon = 'icon.png'
         if useLocalCopies:
           ianaLang = 'file:local-entities/www.iana.org/assignments/language-subtag-registry'
           ianaCharset = 'file:local-entities/www.iana.org/assignments/character-sets'
@@ -1103,11 +1105,11 @@ else:
         buildAll()
         runTests()
         if not stylesheet:
-          stylesheet = aboutPage + 'style.css'
+          stylesheet = 'style.css'
         if not script:
-          script = aboutPage + 'script.js'
+          script = 'script.js'
         if not icon:
-          icon = aboutPage + 'icon.png'
+          icon = 'icon.png'
         runValidator()
       else:
         selfUpdate()
