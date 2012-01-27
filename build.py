@@ -58,6 +58,7 @@ html5specLoad = 'file:validator/spec/html5.html'
 ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
 ianaCharset = 'http://www.iana.org/assignments/character-sets'
 aboutPage = 'http://about.validator.nu/'
+aboutPath = 'validator/site/'
 microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
 altAdvice = 'http://wiki.whatwg.org/wiki/Validator.nu_alt_advice'
 icon = None
@@ -631,6 +632,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
+    '-Dnu.validator.servlet.path.about=' + os.path.join(buildRoot, aboutPath),
   ]
 
   if usePromiscuousSsl:
@@ -978,6 +980,8 @@ else:
       ianaCharset = arg[15:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
+    elif arg.startswith("--about-path="):
+      aboutPath = arg[13:]
     elif arg.startswith("--microsyntax="):
       microsyntax = arg[14:]
     elif arg.startswith("--alt-advice="):
