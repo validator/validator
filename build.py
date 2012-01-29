@@ -418,7 +418,7 @@ schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
 '''
 schemaDriverHtml5RDFaLite = '''\
-include "rdfa-lite.rnc"
+include "rdfa.rnc"
 '''
 
 def openDriver(schemaDir, driverName, sourceName=""):
