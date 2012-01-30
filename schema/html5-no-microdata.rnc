@@ -1,2 +1,2 @@
-include "html5/html5full-no-microdata.rnc"
 include "html5-svg-mathml.rnc"
+include "html5/html5full-no-microdata.rnc"
