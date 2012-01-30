@@ -1,14 +1,8 @@
 namespace svg = "http://www.w3.org/2000/svg"
 namespace math = "http://www.w3.org/1998/Math/MathML"
-namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 
 include "svg11/svg11-inc.rnc"
-include "inkscape/inkscape.rnc"
 include "mml2/mathml2-inc.rnc"
-include "rdf/rdf.rnc"
-
-common.elem.metadata |= rdf.elem
-SVG.metadata.content |= rdf.elem
 
 common.elem.phrasing |= svg
 
@@ -33,6 +27,3 @@ annotation-xml.model.xhtml |=
 # cannot; see http://www.w3.org/Bugs/Public/show_bug.cgi?id=9859#c8 for a
 # rationale
 mtext.content |= common.elem.phrasing
-
-nonRDFaLite = notAllowed
-include "html5/xhtml5full-xhtml-rdfa.rnc"
