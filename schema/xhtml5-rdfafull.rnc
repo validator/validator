@@ -34,5 +34,5 @@ annotation-xml.model.xhtml |=
 # rationale
 mtext.content |= common.elem.phrasing
 
-nonRDFaLite = notAllowed
-include "html5/xhtml5full-xhtml-rdfalite.rnc"
+nonRDFaLite = empty
+include "html5/xhtml5full-xhtml-rdfa.rnc"
