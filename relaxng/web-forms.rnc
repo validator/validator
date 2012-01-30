@@ -261,7 +261,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	input.image.elem = 
 		element input { input.image.attrs }
 	input.image.attrs = 
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	common-form.attrs
 		&	input.image.attrs.type
 		&	input.image.attrs.alt 

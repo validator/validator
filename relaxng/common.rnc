@@ -32,6 +32,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 ## features that are not part of the W3C HTML spec
 	nonW3C = empty
 
+## RDFa features that are not part of the RDFa Lite
+	nonRDFaLite = empty
+
 # #####################################################################
 ##  Wildcards                                                         #
 # #####################################################################

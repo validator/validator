@@ -1,5 +1,5 @@
 # ##################################################################### 
-##  RELAX NG Schema for HTML 5: RDFa Lite                             #
+##  RELAX NG Schema for HTML 5: RDFa 1.1 and RDFa Lite 1.1            #
 # #####################################################################
 
 common.attrs.rdfa &=
@@ -8,6 +8,14 @@ common.attrs.rdfa &=
 	&	common.attrs.rdfa.property?
 	&	common.attrs.rdfa.typeof?
 	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.content?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.href?
+	&	common.attrs.rdfa.rel?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.rev?
+	&	common.attrs.rdfa.src?
+	&	common.attrs.rdfa.inlist?
 	)
 	common.attrs.rdfa.about =
 		attribute about {
@@ -29,9 +37,110 @@ common.attrs.rdfa &=
 		attribute vocab {
 			common.data.uri.absolute
 		}
+	common.attrs.rdfa.content =
+		attribute content {
+			string
+		} & nonRDFaLite
+	common.attrs.rdfa.datatype =
+		attribute datatype {
+			string
+		} & nonRDFaLite
+	common.attrs.rdfa.href =
+		attribute href {
+			common.data.uri.absolute
+		} & nonRDFaLite
+	common.attrs.rdfa.rel =
+		attribute rel {
+			string
+		} & nonRDFaLite
+	common.attrs.rdfa.resource =
+		attribute resource {
+			string
+		} & nonRDFaLite
+	common.attrs.rdfa.rev =
+		attribute rev {
+			string
+		} & nonRDFaLite
+	common.attrs.rdfa.src =
+		attribute src {
+			common.data.uri.absolute
+		} & nonRDFaLite
+	common.attrs.rdfa.inlist =
+		attribute inlist {
+			string
+		} & nonRDFaLite
+
+common.attrs.rdfa.no-href-rel &=
+	(	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.prefix?
+	&	common.attrs.rdfa.property?
+	&	common.attrs.rdfa.typeof?
+	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.content?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.rev?
+	&	common.attrs.rdfa.src?
+	&	common.attrs.rdfa.inlist?
+	)
+common.attrs.rdfa.no-href-rel-rev &=
+	(	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.prefix?
+	&	common.attrs.rdfa.property?
+	&	common.attrs.rdfa.typeof?
+	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.content?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.src?
+	&	common.attrs.rdfa.inlist?
+	)
+common.attrs.rdfa.no-content &=
+	(	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.prefix?
+	&	common.attrs.rdfa.property?
+	&	common.attrs.rdfa.typeof?
+	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.href?
+	&	common.attrs.rdfa.rel?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.rev?
+	&	common.attrs.rdfa.src?
+	&	common.attrs.rdfa.inlist?
+	)
+common.attrs.rdfa.no-src &=
+	(	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.prefix?
+	&	common.attrs.rdfa.property?
+	&	common.attrs.rdfa.typeof?
+	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.content?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.href?
+	&	common.attrs.rdfa.rel?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.rev?
+	&	common.attrs.rdfa.inlist?
+	)
 
 	common.attrs &= common.attrs.rdfa
-	link.attrs &= common.attrs.rdfa
+
+	a.attrs &= common.attrs.rdfa.no-href-rel-rev
+	area.attrs &= common.attrs.rdfa.no-href-rel
+	base.attrs &= common.attrs.rdfa.no-href-rel
+	link.attrs &= common.attrs.rdfa.no-href-rel-rev
+
+	audio.attrs &= common.attrs.rdfa.no-src
+	embed.attrs &= common.attrs.rdfa.no-src
+	frame.attrs &= common.attrs.rdfa.no-src
+	iframe.attrs &= common.attrs.rdfa.no-src
+	img.attrs &= common.attrs.rdfa.no-src
+	input.image.attrs &= common.attrs.rdfa.no-src
+	script.attrs.imported &= common.attrs.rdfa.no-src
+	source.attrs &= common.attrs.rdfa.no-src
+	track.attrs &= common.attrs.rdfa.no-src
+	video.attrs &= common.attrs.rdfa.no-src
 
 ## RDFa metadata: <meta property>
 
@@ -42,7 +151,7 @@ common.attrs.rdfa &=
 		&	common.attrs.i18n
 		&	common.attrs.present
 		&	common.attrs.other
-		&	common.attrs.rdfa
+		&	common.attrs.rdfa.no-content
 		&	meta.rdfa.attrs.content
 		)
 		meta.rdfa.attrs.content =

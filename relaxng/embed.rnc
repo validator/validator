@@ -13,7 +13,10 @@ namespace local = ""
 	img.elem =
 		element img { img.inner & img.attrs }
 	img.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	img.attrs.src
 		&	img.attrs.alt?
 		&	img.attrs.height?
@@ -61,7 +64,10 @@ namespace local = ""
 	embed.elem =
 		element embed { embed.inner & embed.attrs }
 	embed.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	embed.attrs.src?
 		&	embed.attrs.type?
 		&	embed.attrs.height?
@@ -199,6 +205,13 @@ namespace local = ""
 			                    | property
 			                    | typeof
 			                    | vocab
+			                    | content
+			                    | datatype
+			                    | href
+			                    | rel
+			                    | resource
+			                    | rev
+			                    | inlist
 			                    ) 
 			{
 				string
@@ -292,7 +305,10 @@ namespace local = ""
 	iframe.elem =
 		element iframe { iframe.inner & iframe.attrs }
 	iframe.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	iframe.attrs.src?
 		&	iframe.attrs.srcdoc?
 		&	iframe.attrs.name?
@@ -510,7 +526,10 @@ namespace local = ""
 	area.elem =
 		element area { area.inner & area.attrs }
 	area.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	(	area.attrs.alt
 			&	shared-hyperlink.attrs.href
 			)?

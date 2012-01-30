@@ -11,8 +11,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 	a.elem.flow =
 		element a { a.inner.flow & a.attrs }
 	a.attrs =
-		(	common.attrs
-		& a.attrs.name?
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	a.attrs.name?
 		&	shared-hyperlink.attrs.href?
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.rel?

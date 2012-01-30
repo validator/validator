@@ -108,7 +108,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	base.elem =
 		element base { base.inner & base.attrs }
 	base.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	(	(	base.attrs.href
 				&	base.attrs.target?
 				)
