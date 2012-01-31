@@ -14,10 +14,11 @@ common.data.rdfa.safecurie =
 common.data.rdfa.curie =
 	xsd:string {
 		pattern = "(([\i-[:]][\c-[:]]*)?:)?.+"
+		minLength = "1"
 	}
 common.data.rdfa.term =
 	xsd:string {
-		pattern = "[\i-[:]][\\\c-[:]]*"
+		pattern = "[\i-[:]][/\c-[:]]*"
 	}
 
 # #####################################################################
