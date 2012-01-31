@@ -2,6 +2,28 @@
 ##  RELAX NG Schema for HTML 5: RDFa 1.1 and RDFa Lite 1.1            #
 # #####################################################################
 
+# #####################################################################
+##  RDFa Datatypes                                                    #
+# #####################################################################
+
+common.data.rdfa.safecurie =
+	xsd:string {
+		pattern = "\[(([\i-[:]][\c-[:]]*)?:)?.+\]"
+		minLength = "3"
+	}
+common.data.rdfa.curie =
+	xsd:string {
+		pattern = "(([\i-[:]][\c-[:]]*)?:)?.+"
+	}
+common.data.rdfa.term =
+	xsd:string {
+		pattern = "[\i-[:]][\\\c-[:]]*"
+	}
+
+# #####################################################################
+##  RDFa Attributes                                                   #
+# #####################################################################
+
 common.attrs.rdfa &=
 	(	common.attrs.rdfa.about?
 	&	common.attrs.rdfa.prefix?
@@ -19,19 +41,34 @@ common.attrs.rdfa &=
 	)
 	common.attrs.rdfa.about =
 		attribute about {
-			common.data.uri
+			(	common.data.rdfa.safecurie
+			|	common.data.rdfa.curie
+			|	common.data.uri
+			)
 		}
 	common.attrs.rdfa.prefix =
 		attribute prefix {
-			string
+			xsd:string {
+				pattern = "([\i-[:]][\c-[:]]*: [^ ]+)( [\i-[:]][\c-[:]]*: [^ ]+)*"
+			}
 		}
 	common.attrs.rdfa.property =
 		attribute property {
-			string
+			list {
+				(	common.data.rdfa.term
+				|	common.data.rdfa.curie
+				|	common.data.uri.absolute
+				)+
+			}
 		}
 	common.attrs.rdfa.typeof =
 		attribute typeof {
-			string
+			list {
+				(	common.data.rdfa.term
+				|	common.data.rdfa.curie
+				|	common.data.uri.absolute
+				)+
+			}
 		}
 	common.attrs.rdfa.vocab =
 		attribute vocab {
@@ -43,7 +80,10 @@ common.attrs.rdfa &=
 		} & nonRDFaLite
 	common.attrs.rdfa.datatype =
 		attribute datatype {
-			string
+			(	common.data.rdfa.term
+			|	common.data.rdfa.curie
+			|	common.data.uri.absolute
+			)
 		} & nonRDFaLite
 	common.attrs.rdfa.href =
 		attribute href {
@@ -51,15 +91,28 @@ common.attrs.rdfa &=
 		} & nonRDFaLite
 	common.attrs.rdfa.rel =
 		attribute rel {
-			string
+			list {
+				(	common.data.rdfa.term
+				|	common.data.rdfa.curie
+				|	common.data.uri.absolute
+				)+
+			}
 		} & nonRDFaLite
 	common.attrs.rdfa.resource =
 		attribute resource {
-			string
+			(	common.data.rdfa.safecurie
+			|	common.data.rdfa.curie
+			|	common.data.uri
+			)
 		} & nonRDFaLite
 	common.attrs.rdfa.rev =
 		attribute rev {
-			string
+			list {
+				(	common.data.rdfa.term
+				|	common.data.rdfa.curie
+				|	common.data.uri.absolute
+				)+
+			}
 		} & nonRDFaLite
 	common.attrs.rdfa.src =
 		attribute src {
@@ -124,39 +177,37 @@ common.attrs.rdfa.no-src &=
 	&	common.attrs.rdfa.inlist?
 	)
 
-	common.attrs &= common.attrs.rdfa
+common.attrs &= common.attrs.rdfa
 
-	a.attrs &= common.attrs.rdfa.no-href-rel-rev
-	area.attrs &= common.attrs.rdfa.no-href-rel
-	base.attrs &= common.attrs.rdfa.no-href-rel
-	link.attrs &= common.attrs.rdfa.no-href-rel-rev
+a.attrs &= common.attrs.rdfa.no-href-rel-rev
+area.attrs &= common.attrs.rdfa.no-href-rel
+base.attrs &= common.attrs.rdfa.no-href-rel
+link.attrs &= common.attrs.rdfa.no-href-rel-rev
 
-	audio.attrs &= common.attrs.rdfa.no-src
-	embed.attrs &= common.attrs.rdfa.no-src
-	frame.attrs &= common.attrs.rdfa.no-src
-	iframe.attrs &= common.attrs.rdfa.no-src
-	img.attrs &= common.attrs.rdfa.no-src
-	input.image.attrs &= common.attrs.rdfa.no-src
-	script.attrs.imported &= common.attrs.rdfa.no-src
-	source.attrs &= common.attrs.rdfa.no-src
-	track.attrs &= common.attrs.rdfa.no-src
-	video.attrs &= common.attrs.rdfa.no-src
+audio.attrs &= common.attrs.rdfa.no-src
+embed.attrs &= common.attrs.rdfa.no-src
+frame.attrs &= common.attrs.rdfa.no-src
+iframe.attrs &= common.attrs.rdfa.no-src
+img.attrs &= common.attrs.rdfa.no-src
+input.image.attrs &= common.attrs.rdfa.no-src
+script.attrs.imported &= common.attrs.rdfa.no-src
+source.attrs &= common.attrs.rdfa.no-src
+track.attrs &= common.attrs.rdfa.no-src
+video.attrs &= common.attrs.rdfa.no-src
 
-## RDFa metadata: <meta property>
-
-	meta.property.elem =
-		element meta { meta.inner & meta.property.attrs }
-	meta.property.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
-		&	common.attrs.rdfa.no-content
-		&	meta.rdfa.attrs.content
-		)
-		meta.rdfa.attrs.content =
-			attribute content {
-				string
-			}
+meta.property.elem =
+	element meta { meta.inner & meta.property.attrs }
+meta.property.attrs =
+	(	common.attrs.basic
+	&	common.attrs.i18n
+	&	common.attrs.present
+	&	common.attrs.other
+	&	common.attrs.rdfa.no-content
+	&	meta.rdfa.attrs.content
+	)
+	meta.rdfa.attrs.content =
+		attribute content {
+			string
+		}
 
 	common.elem.metadata |= meta.property.elem
