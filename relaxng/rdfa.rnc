@@ -8,12 +8,12 @@
 
 common.data.rdfa.safecurie =
 	xsd:string {
-		pattern = "\[(([\i-[:]][\c-[:]]*)?:)?.+\]"
+		pattern = "\[(([\i-[:]][\c-[:]]*)?:)?[^\s]+\]"
 		minLength = "3"
 	}
 common.data.rdfa.curie =
 	xsd:string {
-		pattern = "(([\i-[:]][\c-[:]]*)?:)?.+"
+		pattern = "(([\i-[:]][\c-[:]]*)?:)?[^\s]+"
 		minLength = "1"
 	}
 common.data.rdfa.term =
@@ -149,20 +149,6 @@ common.attrs.rdfa.no-href-rel-rev &=
 	&	common.attrs.rdfa.src?
 	&	common.attrs.rdfa.inlist?
 	)
-common.attrs.rdfa.no-content &=
-	(	common.attrs.rdfa.about?
-	&	common.attrs.rdfa.prefix?
-	&	common.attrs.rdfa.property?
-	&	common.attrs.rdfa.typeof?
-	&	common.attrs.rdfa.vocab?
-	&	common.attrs.rdfa.datatype?
-	&	common.attrs.rdfa.href?
-	&	common.attrs.rdfa.rel?
-	&	common.attrs.rdfa.resource?
-	&	common.attrs.rdfa.rev?
-	&	common.attrs.rdfa.src?
-	&	common.attrs.rdfa.inlist?
-	)
 common.attrs.rdfa.no-src &=
 	(	common.attrs.rdfa.about?
 	&	common.attrs.rdfa.prefix?
@@ -196,19 +182,10 @@ source.attrs &= common.attrs.rdfa.no-src
 track.attrs &= common.attrs.rdfa.no-src
 video.attrs &= common.attrs.rdfa.no-src
 
-meta.property.elem =
-	element meta { meta.inner & meta.property.attrs }
-meta.property.attrs =
-	(	common.attrs.basic
-	&	common.attrs.i18n
-	&	common.attrs.present
-	&	common.attrs.other
-	&	common.attrs.rdfa.no-content
-	&	meta.rdfa.attrs.content
-	)
-	meta.rdfa.attrs.content =
-		attribute content {
-			string
-		}
+meta.rdfa.elem =
+	element meta { meta.inner & meta.rdfa.attrs }
+meta.rdfa.attrs = common.attrs
 
-	common.elem.metadata |= meta.property.elem
+common.elem.metadata |= meta.rdfa.elem
+common.elem.phrasing |= meta.rdfa.elem
+common.elem.phrasing |= link.elem
