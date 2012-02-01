@@ -457,6 +457,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNSUPPORTED_CHECKER);
             schemaMap.put("http://c.validator.nu/microdata/",
                     CheckerSchema.MICRODATA_CHECKER);
+            schemaMap.put("http://c.validator.nu/rdfalite/",
+                    CheckerSchema.RDFALITE_CHECKER);
 
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
@@ -540,6 +542,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
             return true;
         } else if ("http://c.validator.nu/base/".equals(url)) {
+            return true;
+        } else if ("http://c.validator.nu/rdfalite/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
