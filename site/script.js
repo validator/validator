@@ -50,6 +50,7 @@ function reboot() {
 	updateFragmentIdHilite()
 	window.setInterval(emulateHashChanged, 50)
 	initGrouping()
+	injectHyperlinks()
 }
 
 function installDynamicStyle() {
@@ -448,6 +449,30 @@ function buildGrouped(ol) {
 	}
 	
 	return rv
+}
+
+function injectHyperlinks() {
+	var errors = document.getElementsByClassName("error")
+	// We may later also want to inject links in some warnings.
+	// var warnings = document.getElementsByClassName("warning")
+	linkify(errors, "Use CSS instead",
+		"http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes",
+		"About using CSS instead of presentational elements and attributes.")
+	linkify(errors, "register the names as meta extensions",
+		"http://wiki.whatwg.org/wiki/MetaExtensions",
+		"About registering names as meta extensions.")
+	linkify(errors, "guidance on providing text alternatives for images",
+		"http://www.w3.org/wiki/HTML/Usage/TextAlternatives",
+		"About providing text alternatives for images.")
+	}
+
+function linkify(messages, text, target, title) {
+	if (!messages) return
+	for (var i = 0; i < messages.length; ++i) {
+		messages[i].firstChild.lastChild.innerHTML =
+		messages[i].firstChild.lastChild.innerHTML.replace(text,
+		"<a href='" + target + "' title='" + title + "'>" + text + "</a>");
+	}
 }
 
 function reflow(element) {
