@@ -51,12 +51,13 @@ public class RdfaLiteChecker extends Checker {
         int len = atts.getLength();
         for (int i = 0; i < len; i++) {
             String att = atts.getLocalName(i);
-            if ("content" == att || "datatype" == att || "resource" == att
-                    || "inlist" == att) {
+            if ("datatype" == att || "resource" == att || "inlist" == att) {
                 warn("RDFa Core attribute \u201C"
                         + att
                         + "\u201D is only allowed in HTML + RDFa 1.1 documents,"
                         + " not in HTML + RDFa 1.1 Lite documents." + guidance);
+            } else if ("content" == att && "meta" != localName) {
+                warnNonRDFaLite(localName, att);
             } else if ("href" == att && "a" != localName && "area" != localName
                     && "link" != localName && "base" != localName) {
                 warnNonRDFaLite(localName, att);
