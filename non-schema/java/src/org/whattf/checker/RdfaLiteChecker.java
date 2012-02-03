@@ -27,14 +27,14 @@ import org.xml.sax.SAXException;
 
 public class RdfaLiteChecker extends Checker {
 
-    private String guidance = " Consider checking against the HTML5 + RDFa 1.1 schema instead.";
+    private String GUIDANCE = " Consider checking against the HTML5 + RDFa 1.1 schema instead.";
 
     private void warnNonRDFaLite(String localName, String att)
             throws SAXException {
         warn("RDFa Core attribute \u201C" + att
                 + "\u201D is only allowed on the \u201C" + localName
                 + "\u201D element in HTML5 + RDFa 1.1 documents,"
-                + " not in HTML5 + RDFa 1.1 Lite documents." + guidance);
+                + " not in HTML5 + RDFa 1.1 Lite documents." + GUIDANCE);
     }
 
     /**
@@ -55,7 +55,7 @@ public class RdfaLiteChecker extends Checker {
                 warn("RDFa Core attribute \u201C"
                         + att
                         + "\u201D is only allowed in HTML + RDFa 1.1 documents,"
-                        + " not in HTML + RDFa 1.1 Lite documents." + guidance);
+                        + " not in HTML + RDFa 1.1 Lite documents." + GUIDANCE);
             } else if ("content" == att && "meta" != localName) {
                 warnNonRDFaLite(localName, att);
             } else if ("href" == att && "a" != localName && "area" != localName
