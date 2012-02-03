@@ -85,6 +85,8 @@ public class VerifierServlet extends HttpServlet {
 
     private static final byte[] HTML_PNG;
 
+    private static final byte[] ABOUT_HTML;
+
     static {
         String aboutPath = System.getProperty(
                 "nu.validator.servlet.path.about", "./validator/site/");
@@ -103,8 +105,9 @@ public class VerifierServlet extends HttpServlet {
                 W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
                 VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
                 HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
+                ABOUT_HTML = readFileFromPathIntoByteArray(aboutPath + "about.html");
             } else {
-                W3C_PNG = VNU_PNG = HTML_PNG = null;
+                W3C_PNG = VNU_PNG = HTML_PNG = ABOUT_HTML = null;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -218,6 +221,9 @@ public class VerifierServlet extends HttpServlet {
             return;
         } else if (W3C_BRANDING && "/html.png".equals(request.getPathInfo())) {
             writeResponse(HTML_PNG, "image/png", response);
+            return;
+        } else if (W3C_BRANDING && "/about.html".equals(request.getPathInfo())) {
+            writeResponse(ABOUT_HTML, "text/html; charset=utf-8", response);
             return;
         }
         doPost(request, response);
