@@ -265,8 +265,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "open" | w:string ""
 			}
 	details.inner =
-		(	summary.elem?
-		,	common.inner.flow 
+		(	summary.elem
+		,	common.inner.flow
 		)
 	
 	common.elem.flow |= details.elem
