@@ -190,11 +190,15 @@ link.rdfa.attrs =
 	&	common.attrs.other
 	&	(
 			(	common.attrs.rdfa.property
-			&	link.attrs.rel?
+			&	(	link.attrs.rel?
+				|	common.attrs.rdfa.rel?
+				)
 			)
 			|
 			(	common.attrs.rdfa.property?
-			&	link.attrs.rel
+			&	(	link.attrs.rel?
+				|	common.attrs.rdfa.rel?
+				)
 			)
 		)
 	&	link.attrs.href
