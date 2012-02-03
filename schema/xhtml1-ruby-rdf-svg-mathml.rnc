@@ -22,7 +22,7 @@ SVG.foreignObject.content |=
 	|	body
 	|	Block.mix*
 	)
-	
+
 annotation-xml.model.svg |= svg
 
 annotation-xml.model.xhtml |=

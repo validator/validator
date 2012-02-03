@@ -22,10 +22,6 @@
 
 package nu.validator.messages;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.Map;
-import java.util.Iterator;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
 
@@ -36,20 +32,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
     private final AttributesImpl attrs = new AttributesImpl();
     
     private final XhtmlSaxEmitter emitter;
-
-    private static final Map<String, String[]> MAGIC_LINKS = new HashMap<String, String[]>();
-    static {
-      MAGIC_LINKS.put("Use CSS instead",
-          new String[] {"http://wiki.whatwg.org/wiki/Presentational_elements_and_attributes",
-            "About using CSS instead of presentational elements and attributes."});
-      MAGIC_LINKS.put("register the names as meta extensions",
-          new String[] {"http://wiki.whatwg.org/wiki/MetaExtensions",
-            "About registering names as meta extensions."});
-      MAGIC_LINKS.put("guidance on providing text alternatives for images",
-          new String[] {"http://www.w3.org/wiki/HTML/Usage/TextAlternatives",
-            "About providing text alternatives for images."});
-    }
-
+    
     /**
      * @param emitter
      */
@@ -59,33 +42,7 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
 
     public void characters(char[] ch, int start, int length)
             throws SAXException {
-        String str = new String(ch);
-        Map<Integer, String> linkText = new TreeMap<Integer, String>();
-        int index;
-        for (Map.Entry<String, String[]> entry : MAGIC_LINKS.entrySet()) {
-          index = str.indexOf(entry.getKey());
-          if (index != -1) {
-            linkText.put(index,entry.getKey());
-          }
-        }
-        if (!linkText.isEmpty()) {
-          Iterator entries = linkText.entrySet().iterator();
-          int position = start;
-          for (Map.Entry<Integer, String> entry : linkText.entrySet()) {
-            int linkstart = entry.getKey();
-            String text = entry.getValue();
-            emitter.characters(ch, position, linkstart - position - start);
-            startLink(MAGIC_LINKS.get(text)[0], MAGIC_LINKS.get(text)[1]);
-            emitter.characters(ch, linkstart, text.length());
-            endLink();
-            position = linkstart+text.length();
-          }
-          if (position < length) {
-            emitter.characters(ch, position, length - position);
-          }
-        } else {
-          emitter.characters(ch, start, length);
-        }
+        emitter.characters(ch, start, length);
     }
 
     public void endCode() throws SAXException {

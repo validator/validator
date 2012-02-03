@@ -220,7 +220,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	frame.elem =
 		element frame { empty & frame.attrs }
 	frame.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	frame.attrs.longdesc?
 		&	frame.attrs.name?
 		&	frame.attrs.src?

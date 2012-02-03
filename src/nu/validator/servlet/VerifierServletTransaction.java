@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2010 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -236,6 +236,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
             "http://c.validator.nu/microdata/" };
 
+    // for W3C-branded HTML validation without Microdata checking
+    private static final String[] BASE_CHECKERS = {
+            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
+            "http://c.validator.nu/text-content/",
+            "http://c.validator.nu/unchecked/",
+            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
+            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/" };
+
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
             "http://c.validator.nu/unchecked/", "http://c.validator.nu/usemap/" };
@@ -449,6 +457,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNSUPPORTED_CHECKER);
             schemaMap.put("http://c.validator.nu/microdata/",
                     CheckerSchema.MICRODATA_CHECKER);
+            schemaMap.put("http://c.validator.nu/rdfalite/",
+                    CheckerSchema.RDFALITE_CHECKER);
 
             for (int i = 0; i < presetUrls.length; i++) {
                 String[] urls1 = SPACE.split(presetUrls[i]);
@@ -499,17 +509,29 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     private static boolean isDataAttributeDroppingSchema(String key) {
-        return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
-                || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
+        return ("http://s.validator.nu/xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfa.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfa.rnc".equals(key));
     }
 
     private static boolean isXmlLangAllowingSchema(String key) {
-        return ("http://s.validator.nu/html5/html5full.rnc".equals(key)
-                || "http://s.validator.nu/html5/html5full-aria.rnc".equals(key)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(key)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(key) || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(key));
+        return ("http://s.validator.nu/xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfa.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfa.rnc".equals(key));
     }
     
     private static boolean isCheckerUrl(String url) {
@@ -518,6 +540,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return true;
         } else if ("http://c.validator.nu/all-html4/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
+            return true;
+        } else if ("http://c.validator.nu/base/".equals(url)) {
+            return true;
+        } else if ("http://c.validator.nu/rdfalite/".equals(url)) {
             return true;
         }
         for (int i = 0; i < ALL_CHECKERS.length; i++) {
@@ -782,8 +808,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-strict.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full.rnc")
-                || schemaUrls.startsWith("http://s.validator.nu/html5/html5full-aria.rnc") || schemaUrls.startsWith("http://s.validator.nu/html5-aria-svg-mathml.rnc"));
+                || schemaUrls.startsWith("http://s.validator.nu/html5.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/html5-rdfalite.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/w3c-html5.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/w3c-html5-microdata-rdfa.rnc"));
 
     }
 
@@ -1147,6 +1176,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
                     v = combineValidatorByUrl(v, ALL_CHECKERS_HTML4[j]);
                 }
+            } else if ("http://c.validator.nu/base/".equals(url)) {
+                for (int j = 0; j < BASE_CHECKERS.length; j++) {
+                    v = combineValidatorByUrl(v, BASE_CHECKERS[j]);
+                }
             } else {
                 v = combineValidatorByUrl(v, url);
             }
@@ -1191,11 +1224,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             return null;
         }
         loadedValidatorUrls.add(url);
-        if ("http://s.validator.nu/html5/html5full-aria.rnc".equals(url)
-                || "http://s.validator.nu/xhtml5-aria-rdf-svg-mathml.rnc".equals(url)
-                || "http://s.validator.nu/html5/html5full.rnc".equals(url)
-                || "http://s.validator.nu/html5/xhtml5full-xhtml.rnc".equals(url)
-                || "http://s.validator.nu/html5-aria-svg-mathml.rnc".equals(url)) {
+        if ("http://s.validator.nu/xhtml5.rnc".equals(url)
+                || "http://s.validator.nu/html5.rnc".equals(url)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(url)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(url)
+                || "http://s.validator.nu/w3c-xhtml5.rnc".equals(url)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc".equals(url)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfa.rnc".equals(url)
+                || "http://s.validator.nu/w3c-html5.rnc".equals(url)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc".equals(url)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfa.rnc".equals(url)) {
             errorHandler.setSpec(html5spec);
         }
         Schema sch = resolveSchema(url, jingPropertyMap);
