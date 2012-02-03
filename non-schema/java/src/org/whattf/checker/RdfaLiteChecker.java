@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 public class RdfaLiteChecker extends Checker {
 
-    private String GUIDANCE = " Consider checking against the HTML5 + RDFa 1.1 schema instead.";
+    private static final String GUIDANCE = " Consider checking against the HTML5 + RDFa 1.1 schema instead.";
 
     private void warnNonRDFaLite(String localName, String att)
             throws SAXException {
