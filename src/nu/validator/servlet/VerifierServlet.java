@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -208,7 +208,7 @@ public class VerifierServlet extends HttpServlet {
             writeResponse(STYLE_CSS, "text/css; charset=utf-8", response);
             return;
         } else if ("/script.js".equals(request.getPathInfo())) {
-            writeResponse(SCRIPT_JS, "text/javascript charset=utf-8", response);
+            writeResponse(SCRIPT_JS, "text/javascript; charset=utf-8", response);
             return;
         } else if ("/icon.png".equals(request.getPathInfo())) {
             writeResponse(ICON_PNG, "image/png", response);
