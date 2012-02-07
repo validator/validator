@@ -435,6 +435,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.attrs.step.float? 
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
+		&	shared-form.attrs.placeholder?
 		&	input.number.attrs.value? 
 		&	common.attrs.aria.implicit.input?
 		)	
