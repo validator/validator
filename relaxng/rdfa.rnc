@@ -188,17 +188,16 @@ link.rdfa.attrs =
 	&	common.attrs.i18n
 	&	common.attrs.present
 	&	common.attrs.other
-	&	(
-			(	common.attrs.rdfa.property
-			&	(	link.attrs.rel?
-				|	common.attrs.rdfa.rel?
-				)
+	&	(	(	common.attrs.rdfa.property
+				&	(	link.attrs.rel
+					|	common.attrs.rdfa.rel
+					)?
 			)
 			|
 			(	common.attrs.rdfa.property?
-			&	(	link.attrs.rel?
-				|	common.attrs.rdfa.rel?
-				)
+				&	(	link.attrs.rel
+					|	common.attrs.rdfa.rel
+					)
 			)
 		)
 	&	link.attrs.href
