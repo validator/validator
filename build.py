@@ -654,6 +654,9 @@ def createTarball():
     "zcf",
     os.path.join(buildRoot, "jars.tar.gz"),
     os.path.join(buildRoot, "run-validator.sh"),
+    os.path.join(buildRoot, "validator", "site", "style.css"),
+    os.path.join(buildRoot, "validator", "site", "script.js"),
+    os.path.join(buildRoot, "validator", "site", "icon.png"),
   ] + ownJarList()
   runCmd('"%s" %s' %(tarCmd, " ".join(args)))
 
