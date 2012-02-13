@@ -16,7 +16,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 					(	time.attrs.datetime.dateonly?
 					|	time.attrs.datetime.tz?
 					)
-				&	time.attrs.pubdate
 				)
 			)
 		)
@@ -31,10 +30,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		time.attrs.datetime.tz =
 			attribute datetime {
 				common.data.datetime
-			}
-		time.attrs.pubdate =
-			attribute pubdate {
-				w:string "pubdate" | w:string ""
 			}
 	time.inner =
 		( common.inner.phrasing ) #Cannot enforce textContent format here
