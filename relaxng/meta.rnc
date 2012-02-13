@@ -58,10 +58,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	body.attrs.onoffline?
 		&	body.attrs.ononline?
 		&	body.attrs.onpopstate?
-		&	body.attrs.onredo?
 		&	body.attrs.onresize?
 		&	body.attrs.onstorage?
-		&	body.attrs.onundo?
 		&	body.attrs.onunload?
 		)
 	body.inner =
