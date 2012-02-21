@@ -34,6 +34,10 @@ common.attrs.microdata =
 
 common.attrs &= common.attrs.microdata
 
+a.attrs &= common.attrs.microdata
+area.attrs &= common.attrs.microdata
+base.attrs &= common.attrs.microdata
+
 ## URL-valued Property Metadata: <link itemprop>
 
 	link.elem.phrasing =

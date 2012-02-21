@@ -45,10 +45,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	source.elem =
 		element source { source.inner & source.attrs }
 	source.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	source.attrs.src
 		&	source.attrs.type?
 		&	source.attrs.media?
@@ -87,10 +84,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	video.elem.phrasing =
 		element video { video.inner.phrasing & video.attrs }
 	video.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	media.attrs
 		&	video.attrs.poster?
 		&	video.attrs.height?
@@ -129,10 +123,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	audio.elem.phrasing =
 		element audio { audio.inner.phrasing & audio.attrs }
 	audio.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	media.attrs
 		)
 	audio.inner.flow =
@@ -155,10 +146,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element track { track.inner & track.attrs }
 
 	track.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	track.attrs.kind?
 		&	track.attrs.src
 		&	track.attrs.srclang?

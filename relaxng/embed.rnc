@@ -13,10 +13,7 @@ namespace local = ""
 	img.elem =
 		element img { img.inner & img.attrs }
 	img.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	img.attrs.src
 		&	img.attrs.alt?
 		&	img.attrs.height?
@@ -64,10 +61,7 @@ namespace local = ""
 	embed.elem =
 		element embed { embed.inner & embed.attrs }
 	embed.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	embed.attrs.src?
 		&	embed.attrs.type?
 		&	embed.attrs.height?
@@ -305,10 +299,7 @@ namespace local = ""
 	iframe.elem =
 		element iframe { iframe.inner & iframe.attrs }
 	iframe.attrs =
-		(	common.attrs.basic
-		&	common.attrs.i18n
-		&	common.attrs.present
-		&	common.attrs.other
+		(	common.attrs
 		&	iframe.attrs.src?
 		&	iframe.attrs.srcdoc?
 		&	iframe.attrs.name?
