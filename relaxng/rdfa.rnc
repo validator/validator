@@ -33,7 +33,6 @@ common.attrs.rdfa &=
 	&	common.attrs.rdfa.vocab?
 	&	common.attrs.rdfa.content?
 	&	common.attrs.rdfa.datatype?
-	&	common.attrs.rdfa.href?
 	&	common.attrs.rdfa.rel?
 	&	common.attrs.rdfa.resource?
 	&	common.attrs.rdfa.rev?
@@ -85,10 +84,6 @@ common.attrs.rdfa &=
 			|	common.data.uri.absolute
 			)
 		} & nonRDFaLite
-	common.attrs.rdfa.href =
-		attribute href {
-			common.data.uri.absolute
-		} & nonRDFaLite
 	common.attrs.rdfa.rel =
 		attribute rel {
 			list {
@@ -119,7 +114,7 @@ common.attrs.rdfa &=
 			string
 		} & nonRDFaLite
 
-common.attrs.rdfa.no-href-rel &=
+common.attrs.rdfa.no-rel &=
 	(	common.attrs.rdfa.about?
 	&	common.attrs.rdfa.prefix?
 	&	common.attrs.rdfa.property?
@@ -131,7 +126,7 @@ common.attrs.rdfa.no-href-rel &=
 	&	common.attrs.rdfa.rev?
 	&	common.attrs.rdfa.inlist?
 	)
-common.attrs.rdfa.no-href-rel-rev &=
+common.attrs.rdfa.no-rel-rev &=
 	(	common.attrs.rdfa.about?
 	&	common.attrs.rdfa.prefix?
 	&	common.attrs.rdfa.property?
@@ -145,9 +140,9 @@ common.attrs.rdfa.no-href-rel-rev &=
 
 common.attrs &= common.attrs.rdfa
 
-a.attrs &= common.attrs.rdfa.no-href-rel-rev
-area.attrs &= common.attrs.rdfa.no-href-rel
-base.attrs &= common.attrs.rdfa.no-href-rel
+a.attrs &= common.attrs.rdfa.no-rel-rev
+area.attrs &= common.attrs.rdfa.no-rel
+base.attrs &= common.attrs.rdfa.no-rel
 
 link.rdfa.elem =
 	element link { link.inner & link.rdfa.attrs }
