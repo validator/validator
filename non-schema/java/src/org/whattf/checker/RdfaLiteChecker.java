@@ -32,9 +32,9 @@ public class RdfaLiteChecker extends Checker {
     private void warnNonRDFaLite(String localName, String att)
             throws SAXException {
         warn("RDFa Core attribute \u201C" + att
-                + "\u201D is only allowed on the \u201C" + localName
-                + "\u201D element in HTML5 + RDFa 1.1 documents,"
-                + " not in HTML5 + RDFa 1.1 Lite documents." + GUIDANCE);
+                + "\u201D is not allowed on the \u201C" + localName
+                + "\u201D element in HTML5 + RDFa 1.1 Lite documents."
+                + GUIDANCE);
     }
 
     /**
@@ -51,24 +51,16 @@ public class RdfaLiteChecker extends Checker {
         int len = atts.getLength();
         for (int i = 0; i < len; i++) {
             String att = atts.getLocalName(i);
-            if ("datatype" == att || "resource" == att || "inlist" == att) {
+            if ("datatype" == att || "resource" == att || "inlist" == att
+                    || "rev" == att) {
                 warn("RDFa Core attribute \u201C"
                         + att
-                        + "\u201D is only allowed in HTML + RDFa 1.1 documents,"
-                        + " not in HTML + RDFa 1.1 Lite documents." + GUIDANCE);
+                        + "\u201D is not allowed in HTML5 + RDFa 1.1 Lite documents."
+                        + GUIDANCE);
             } else if ("content" == att && "meta" != localName) {
                 warnNonRDFaLite(localName, att);
-            } else if ("href" == att && "a" != localName && "area" != localName
-                    && "link" != localName && "base" != localName) {
-                warnNonRDFaLite(localName, att);
-            } else if (("rel" == att || "rev" == att) && "a" != localName
+            } else if (("rel" == att) && "a" != localName
                     && "area" != localName && "link" != localName) {
-                warnNonRDFaLite(localName, att);
-            } else if ("src" == att && "audio" != localName
-                    && "embed" != localName && "iframe" != localName
-                    && "img" != localName && "input" != localName
-                    && "script" != localName && "source" != localName
-                    && "track" != localName && "video" != localName) {
                 warnNonRDFaLite(localName, att);
             }
         }
