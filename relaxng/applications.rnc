@@ -43,8 +43,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	common.attrs.dropzone =
 		attribute dropzone {
 			list {
-				(	xsd:string { pattern = "[sS]:.+" }
-				|	xsd:string { pattern = "[fF]:.+" }
+				(	xsd:string { pattern = "[sS][tT][rR][iI][nN][gG]:.+" }
+				|	xsd:string { pattern = "[fF][iI][lL][eE]:.+" }
 				)*
 				,
 				(	w:string "copy"
@@ -52,8 +52,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 				|	w:string "link"
 				)?
 				,
-				(	xsd:string { pattern = "[sS]:.+" }
-				|	xsd:string { pattern = "[fF]:.+" }
+				(	xsd:string { pattern = "[sS][tT][rR][iI][nN][gG]:.+" }
+				|	xsd:string { pattern = "[fF][iI][lL][eE]:.+" }
 				)*
 			}
 		}
