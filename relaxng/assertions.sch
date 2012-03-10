@@ -1,13 +1,29 @@
 <?xml version="1.0"?>
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!-- RELAX NG Schema for HTML 5: Schematron Assertions             -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Schematron assertions for HTML5                                         -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  <!-- To validate an (X)HTML5 document, you must first validate   -->
-  <!-- against the appropriate RELAX NG schema for the (X)HTML5    -->
-  <!-- flavor and then also validate against this schema.          -->
+Copyright (c) 2005-2007 Elika J. Etemad (fantasai) and Henri Sivonen (hsivonen)
+Copyright (c) 2007-2012 Mozilla Foundation
 
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <schema xmlns='http://www.ascc.net/xml/schematron'>
 	<ns prefix='h' uri='http://www.w3.org/1999/xhtml'/>
@@ -1174,6 +1190,38 @@
 				The &#x201C;aria-owns&#x201D; attribute must point to an element in the 
 				same document.
 			</assert>
+		</rule>
+	</pattern>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!--                               Warnings                                  -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<pattern name="Warnings for HTML5 attributes that are obsolete but conforming">
+		<rule context='h:img'>
+			<report test='@border' role='warning'>
+				The &#x201C;border&#x201D; attribute on the &#x201C;img&#x201D; element is obsolete.
+				Consider specifying &#x201C;img { border: 0; }&#x201C; in CSS instead.
+			</report>
+		</rule>
+		<rule context='h:script[translate(@language, "JAVSCRIPT", "javscript")="javascript"]'>
+			<report test='not(@type) or translate(@type, "EXJAVSCRIPT", "exjavscript")="text/javascript"' role='warning'>
+				The &#x201C;language&#x201D; attribute on the &#x201C;script&#x201D; element is obsolete. You can safely omit it.
+			</report>
+		</rule>
+		<rule context='h:a'>
+			<report test='@name' role='warning'>
+				The &#x201C;name&#x201D; attribute on the &#x201C;a&#x201D; element is obsolete. Consider putting an
+				&#x201C;id&#x201D; attribute on the nearest container instead.
+			</report>
+		</rule>
+	</pattern>
+
+	<pattern name="Other warnings">
+		<rule context='h:video|h:audio'>
+			<report test='count(h:track[@default]) > 1' role='warning'>
+				&#x201C;<name/>&#x201D; element has more than one &#x201C;track&#x201D;
+				child element with a &#x201C;default&#x201D; attribute.
+			</report>
 		</rule>
 	</pattern>
 
