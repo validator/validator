@@ -606,6 +606,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
+    '-Dnu.validator.servlet.use-local-copies=%d' % useLocalCopies,
     '-Dnu.validator.servlet.w3cbranding=%d' % w3cBranding,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
@@ -726,7 +727,12 @@ def downloadLocalEntities():
       url, path = line.strip().split("\t")
       if not path.startswith("schema/"):
         if not os.path.exists(os.path.join(buildRoot, "local-entities", path)):
-          fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
+          if url.startswith("http://www.w3.org/"):
+            removeIfDirExists(os.path.join(buildRoot, "local-entities", "www.w3.org"))
+            zipExtract(os.path.join(buildRoot, "nu-validator-site", "www.w3.org.zip"),
+                os.path.join(buildRoot, "local-entities"))
+          else:
+            fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
   finally:
     f.close()
 
@@ -838,8 +844,7 @@ def checkout():
   # XXX root dir
   for mod in moduleNames:
     hgCloneOrUpdate(mod, hgRoot)
-  if w3cBranding:
-    hgCloneOrUpdate("nu-validator-site", "https://dvcs.w3.org/hg/")
+  hgCloneOrUpdate("nu-validator-site", "https://dvcs.w3.org/hg/")
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   hgCloneOrUpdate("htmlparser", parserHgRoot)
 
