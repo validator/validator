@@ -4,12 +4,15 @@ How to download, build, and run the validator
 1. First, set the JAVA_HOME environment variable properly.
 
    export JAVA_HOME=/usr/lib/jvm/java-6-openjdk on Ubuntu or
+
    export JAVA_HTML=/Library/Java/Home on Mac OS X.
 
 2. Create a validator workspace.
 
    mkdir checker
+
    cd checker
+
    hg clone https://bitbucket.org/validator/build build
 
    The above steps creates a "checker" directory in which the build script
@@ -19,6 +22,7 @@ How to download, build, and run the validator
 3. Run the build script.
 
    python build/build.py all
+
    python build/build.py all
 
    Yes, the last line is there twice intentionally. Running the script
