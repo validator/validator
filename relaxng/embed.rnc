@@ -517,7 +517,10 @@ namespace local = ""
 	area.elem =
 		element area { area.inner & area.attrs }
 	area.attrs =
-		(	common.attrs
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
 		&	(	area.attrs.alt
 			&	shared-hyperlink.attrs.href
 			)?
