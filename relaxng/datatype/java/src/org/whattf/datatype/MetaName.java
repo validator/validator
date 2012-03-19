@@ -138,6 +138,7 @@ public class MetaName extends AbstractDatatype {
         "norton-safeweb-site-verification", // extension
         "publisher", //extension
         "rating", // extension
+        "referrer", // extension
         "review_date", // extension
         "revisit-after", // extension
         "rights-standard", // extension
