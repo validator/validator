@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -65,16 +65,19 @@ public class Html5AttributeDatatypeBuilder implements ContentHandler {
 
     private Map<Class, DocumentFragment> adviceByClass = new HashMap<Class, DocumentFragment>();
 
-    public static Map<Class, DocumentFragment> parseSyntaxDescriptions(InputSource in) throws IOException, SAXException {
+    public static Map<Class, DocumentFragment> parseSyntaxDescriptions() throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         Html5AttributeDatatypeBuilder handler = new Html5AttributeDatatypeBuilder();
         parser.setContentHandler(handler);
+        InputSource in = new InputSource(
+                Html5AttributeDatatypeBuilder.class.getClassLoader().getResourceAsStream(
+                        "nu/validator/localentities/files/wiki_whatwg_org_wiki_MicrosyntaxDescriptions"));
         parser.parse(in);
         return handler.getAdvice();
     }
     
     public static void main(String[] args) throws IOException, SAXException {
-        parseSyntaxDescriptions(new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions")));
+        parseSyntaxDescriptions();
     }
     
     private Html5AttributeDatatypeBuilder() {

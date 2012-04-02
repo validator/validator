@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -56,7 +56,11 @@ public class Main {
             "nu.validator.servlet.max-file-size", "2097152"));
     
     public static void main(String[] args) throws Exception {
-        PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
+        if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
+            PropertyConfigurator.configure(Main.class.getClassLoader().getSystemResource("nu/validator/localentities/files/log4j.properties"));
+        } else {
+            PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
+        }
         Server server = new Server();
         QueuedThreadPool pool = new QueuedThreadPool();
         pool.setMaxThreads(100);

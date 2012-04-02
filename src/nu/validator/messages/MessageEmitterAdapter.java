@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -132,11 +132,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     
     static {
         try {
-            InputSource in = new InputSource(System.getProperty("nu.validator.spec.microsyntax-descriptions", "http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"));
-            HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions(in));
-            
-            in = new InputSource(System.getProperty("nu.validator.spec.alt-advice", "http://wiki.whatwg.org/wiki/Validator.nu_alt_advice"));
-            List<DocumentFragment> list = ImageReportAdviceBuilder.parseAltAdvice(in);
+            HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions());
+            List<DocumentFragment> list = ImageReportAdviceBuilder.parseAltAdvice();
             IMAGE_REPORT_GENERAL = list.get(0);
             NO_ALT_NO_LINK_ADVICE = list.get(1);
             NO_ALT_LINK_ADVICE = list.get(2);

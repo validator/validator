@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2010 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -61,19 +61,20 @@ public class ImageReportAdviceBuilder implements ContentHandler {
 
     private final List<DocumentFragment> fragments = new LinkedList<DocumentFragment>();
 
-    public static List<DocumentFragment> parseAltAdvice(InputSource in)
+    public static List<DocumentFragment> parseAltAdvice()
             throws IOException, SAXException {
         HtmlParser parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
         ImageReportAdviceBuilder handler = new ImageReportAdviceBuilder();
         parser.setContentHandler(handler);
+        InputSource in = new InputSource(
+                ImageReportAdviceBuilder.class.getClassLoader().getResourceAsStream(
+                        "nu/validator/localentities/files/wiki_whatwg_org_wiki_Validator_nu_alt_advice"));
         parser.parse(in);
         return handler.getFragments();
     }
 
     public static void main(String[] args) throws IOException, SAXException {
-        parseAltAdvice(new InputSource(System.getProperty(
-                "nu.validator.spec.alt-advice",
-                "http://wiki.whatwg.org/wiki/Validator.nu_alt_advice")));
+        parseAltAdvice();
     }
 
     private ImageReportAdviceBuilder() {

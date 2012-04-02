@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
@@ -98,16 +99,35 @@ public class VerifierServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
-            SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
-            ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
             if (W3C_BRANDING) {
-                W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
-                VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
-                HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
-                ABOUT_HTML = readFileFromPathIntoByteArray(aboutPath + "about.html");
+                if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
+                    STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/style.css");
+                    SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/script.js");
+                    ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/icon.png");
+                    W3C_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/w3c.png");
+                    VNU_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/vnu.png");
+                    HTML_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/html.png");
+                    ABOUT_HTML = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/about.html");
+                } else {
+                    STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
+                    SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
+                    ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
+                    W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
+                    VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
+                    HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
+                    ABOUT_HTML = readFileFromPathIntoByteArray(aboutPath + "about.html");
+                }
             } else {
                 W3C_PNG = VNU_PNG = HTML_PNG = ABOUT_HTML = null;
+                if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
+                    STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/style.css");
+                    SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/script.js");
+                    ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/icon.png");
+                } else {
+                    STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
+                    SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
+                    ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -165,6 +185,23 @@ public class VerifierServlet extends HttpServlet {
             }
         }
         return buffer;
+    }
+
+    private static byte[] readFromClassLoaderIntoByteArray(String name)
+            throws IOException {
+        InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(
+                name);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            for (int b = ios.read(); b != -1; b = ios.read()) {
+                baos.write(b);
+            }
+            ios.close();
+            baos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return baos.toByteArray();
     }
 
     private void writeResponse(byte[] buffer, String type,
