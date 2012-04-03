@@ -55,7 +55,8 @@ public class Html5SpecBuilder implements ContentHandler {
             "http://www.whatwg.org/specs/web-apps/current-work/");
 
     private static final String SPEC_LOAD_URI = System.getProperty(
-            "nu.validator.spec.html5-load", "file:validator/spec/html5.html");
+            "nu.validator.spec.html5-load",
+            "http://www.whatwg.org/specs/web-apps/current-work/");
 
     private static final Pattern THE = Pattern.compile("^.*The.*$", Pattern.DOTALL);
 
