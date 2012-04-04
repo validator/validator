@@ -54,13 +54,9 @@ useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '128'
 html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
-html5specLoad = 'file:validator/spec/html5.html'
-ianaLang = 'http://www.iana.org/assignments/language-subtag-registry'
-ianaCharset = 'http://www.iana.org/assignments/character-sets'
+html5specLoad = 'http://www.whatwg.org/specs/web-apps/current-work/'
 aboutPage = 'http://about.validator.nu/'
 aboutPath = 'validator/site/'
-microsyntax = 'http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
-altAdvice = 'http://wiki.whatwg.org/wiki/Validator.nu_alt_advice'
 icon = None
 stylesheet = None
 script = None
@@ -592,15 +588,11 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
-    '-Dorg.whattf.datatype.lang-registry=' + ianaLang,
-    '-Dorg.whattf.datatype.charset-registry=' + ianaCharset,
     '-Dorg.whattf.datatype.warn=true',
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.style-sheet=' + stylesheet,
     '-Dnu.validator.servlet.icon=' + icon,
     '-Dnu.validator.servlet.script=' + script,
-    '-Dnu.validator.spec.microsyntax-descriptions=' + microsyntax,
-    '-Dnu.validator.spec.alt-advice=' + altAdvice,
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
@@ -748,8 +740,23 @@ def prepareLocalEntityJar():
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
+  w3cFilesDir = os.path.join(filesDir, "w3c")
+  if os.path.exists(w3cFilesDir):
+    shutil.rmtree(w3cFilesDir)
+  os.makedirs(w3cFilesDir)
   shutil.copyfile(os.path.join(buildRoot, "validator", prefix + "presets.txt"), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", prefix + "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "style.css"), os.path.join(filesDir, "style.css"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "script.js"), os.path.join(filesDir, "script.js"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "icon.png"), os.path.join(w3cFilesDir, "icon.png"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "w3c.png"), os.path.join(w3cFilesDir, "w3c.png"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "vnu.png"), os.path.join(w3cFilesDir, "vnu.png"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "html.png"), os.path.join(w3cFilesDir, "html.png"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "about.html"), os.path.join(w3cFilesDir, "about.html"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
@@ -894,12 +901,8 @@ def printHelp():
   print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
-  print "  --html5load=file:validator/spec/html5.html"
+  print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the load URL of the HTML5 spec"
-  print "  --iana-lang=http://www.iana.org/assignments/language-subtag-registry"
-  print "                                Sets the URL for language tag registry"
-  print "  --iana-charset=http://www.iana.org/assignments/character-sets"
-  print "                                Sets the URL for charset registry"
   print "  --about=http://about.validator.nu/"
   print "                                Sets the URL for the about page"
   print "  --stylesheet=style.css"
@@ -910,12 +913,6 @@ def printHelp():
   print "                                Sets the URL for the script"
   print "                                Defaults to just script.js relative to"
   print "                                the validator URL"
-  print "  --microsyntax=http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions"
-  print "                                Sets the URL for microformat"
-  print "                                descriptions"
-  print "  --alt-advice=http://wiki.whatwg.org/wiki/Validator.nu_alt_advice"
-  print "                                Sets the URL for alt attribute"
-  print "                                advice"
   print ""
   print "Tasks:"
   print "  checkout -- Checks out the sources"
@@ -966,18 +963,11 @@ else:
       html5specLink = arg[12:]
     elif arg.startswith("--html5load="):
       html5specLoad = arg[12:]
-    elif arg.startswith("--iana-lang="):
-      ianaLang = arg[12:]
-    elif arg.startswith("--iana-charset="):
       ianaCharset = arg[15:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
     elif arg.startswith("--about-path="):
       aboutPath = arg[13:]
-    elif arg.startswith("--microsyntax="):
-      microsyntax = arg[14:]
-    elif arg.startswith("--alt-advice="):
-      altAdvice = arg[13:]
     elif arg.startswith("--stylesheet="):
       stylesheet = arg[13:]
     elif arg.startswith("--icon="):
@@ -1077,11 +1067,6 @@ else:
           script = 'script.js'
         if not icon:
           icon = 'icon.png'
-        if useLocalCopies:
-          ianaLang = 'file:local-entities/www.iana.org/assignments/language-subtag-registry'
-          ianaCharset = 'file:local-entities/www.iana.org/assignments/character-sets'
-          microsyntax = 'file:local-entities/wiki.whatwg.org/wiki/MicrosyntaxDescriptions'
-          altAdvice = 'file:local-entities/wiki.whatwg.org/wiki/Validator.nu_alt_advice'
         runValidator()
       else:
         selfUpdate()
