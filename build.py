@@ -71,7 +71,6 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
-useLocalCopies = 0
 pageTemplate = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
 w3cPageTemplate = os.path.join("nu-validator-site", "w3cPageEmitter.xml")
@@ -591,6 +590,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-XX:ThreadStackSize=2048',
     '-classpath',
     classPath,
+    '-Dnu.validator.servlet.read-local-log4j-properties=1',
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
@@ -604,7 +604,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
-    '-Dnu.validator.servlet.use-local-copies=%d' % useLocalCopies,
     '-Dnu.validator.servlet.w3cbranding=%d' % w3cBranding,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
@@ -1005,7 +1004,6 @@ else:
     elif arg == '--no-self-update':
       noSelfUpdate = 1
     elif arg == '--local':
-      useLocalCopies = 1
       noSelfUpdate = 1
     elif arg.startswith("--connection-timeout="):
       connectionTimeoutSeconds = int(arg[21:]);
