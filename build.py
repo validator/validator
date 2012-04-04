@@ -74,6 +74,8 @@ noSelfUpdate = 0
 useLocalCopies = 0
 pageTemplate = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
+w3cPageTemplate = os.path.join("nu-validator-site", "w3cPageEmitter.xml")
+w3cFormTemplate = os.path.join("nu-validator-site", "w3cFormEmitter.xml")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
@@ -539,8 +541,12 @@ def buildValidator():
   ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
   pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
   formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
+  w3cPageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "W3CPageEmitter.java")
+  w3cFormEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "W3CFormEmitter.java")
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplate, formEmitter))
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, w3cPageTemplate, w3cPageEmitter))
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, w3cFormTemplate, w3cFormEmitter))
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
