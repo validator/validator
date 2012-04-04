@@ -25,7 +25,6 @@ package org.whattf.datatype.data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -53,11 +52,11 @@ public class CharsetData {
 
     public CharsetData() throws IOException {
         super();
-        URL url = new URL(System.getProperty(
-                "org.whattf.datatype.charset-registry",
-                "http://www.iana.org/assignments/character-sets"));
         in = new BufferedReader(
-                new InputStreamReader(url.openStream(), "UTF-8"));
+                new InputStreamReader(
+                        CharsetData.class.getClassLoader().getResourceAsStream(
+                                "nu/validator/localentities/files/www_iana_org_assignments_character_sets"),
+                        "UTF-8"));
         consumeRegistry();
         preferred = preferredSet.toArray(EMPTY_STRING_ARRAY);
     }
