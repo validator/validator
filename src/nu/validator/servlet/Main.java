@@ -56,8 +56,8 @@ public class Main {
             "nu.validator.servlet.max-file-size", "2097152"));
     
     public static void main(String[] args) throws Exception {
-        if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
-            PropertyConfigurator.configure(Main.class.getClassLoader().getSystemResource("nu/validator/localentities/files/log4j.properties"));
+        if (!"1".equals(System.getProperty("nu.validator.servlet.read-local-log4j-properties"))) {
+            PropertyConfigurator.configure(Main.class.getClassLoader().getResource("nu/validator/localentities/files/log4j.properties"));
         } else {
             PropertyConfigurator.configure(System.getProperty("nu.validator.servlet.log4j-properties", "log4j.properties"));
         }
@@ -77,7 +77,7 @@ public class Main {
             }
         } else {
             connector = new SocketConnector();
-            int port = Integer.parseInt(args[0]);
+            int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
             connector.setPort(port);
             if (args.length > 1) {
                 stopPort = Integer.parseInt(args[1]);

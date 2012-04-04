@@ -23,8 +23,6 @@
 
 package nu.validator.servlet;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -89,8 +87,6 @@ public class VerifierServlet extends HttpServlet {
     private static final byte[] ABOUT_HTML;
 
     static {
-        String aboutPath = System.getProperty(
-                "nu.validator.servlet.path.about", "./validator/site/");
         try {
             GENERIC_ROBOTS_TXT = buildRobotsTxt(GENERIC_HOST, GENERIC_PATH, HTML5_HOST, HTML5_PATH, PARSETREE_HOST, PARSETREE_PATH);
             HTML5_ROBOTS_TXT = buildRobotsTxt(HTML5_HOST, HTML5_PATH, GENERIC_HOST, GENERIC_PATH, PARSETREE_HOST, PARSETREE_PATH);
@@ -100,34 +96,18 @@ public class VerifierServlet extends HttpServlet {
         }
         try {
             if (W3C_BRANDING) {
-                if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
-                    STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/style.css");
-                    SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/script.js");
-                    ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/icon.png");
-                    W3C_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/w3c.png");
-                    VNU_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/vnu.png");
-                    HTML_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/html.png");
-                    ABOUT_HTML = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/about.html");
-                } else {
-                    STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
-                    SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
-                    ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
-                    W3C_PNG = readFileFromPathIntoByteArray(aboutPath + "w3c.png");
-                    VNU_PNG = readFileFromPathIntoByteArray(aboutPath + "vnu.png");
-                    HTML_PNG = readFileFromPathIntoByteArray(aboutPath + "html.png");
-                    ABOUT_HTML = readFileFromPathIntoByteArray(aboutPath + "about.html");
-                }
+                STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/style.css");
+                SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/script.js");
+                ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/icon.png");
+                W3C_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/w3c.png");
+                VNU_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/vnu.png");
+                HTML_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/html.png");
+                ABOUT_HTML = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/about.html");
             } else {
                 W3C_PNG = VNU_PNG = HTML_PNG = ABOUT_HTML = null;
-                if ("1".equals(System.getProperty("nu.validator.servlet.use-local-copies"))) {
-                    STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/style.css");
-                    SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/script.js");
-                    ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/icon.png");
-                } else {
-                    STYLE_CSS = readFileFromPathIntoByteArray(aboutPath + "style.css");
-                    SCRIPT_JS = readFileFromPathIntoByteArray(aboutPath + "script.js");
-                    ICON_PNG = readFileFromPathIntoByteArray(aboutPath + "icon.png");
-                }
+                STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/style.css");
+                SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/script.js");
+                ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/icon.png");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -164,29 +144,6 @@ public class VerifierServlet extends HttpServlet {
         return builder.toString().getBytes("UTF-8");
     }
     
-    private static byte[] readFileFromPathIntoByteArray(String path)
-            throws IOException {
-        File file = new File(path);
-        byte[] buffer = new byte[(int) file.length()];
-        InputStream ios = null;
-        try {
-            ios = new FileInputStream(file);
-            if (ios.read(buffer) != buffer.length) {
-                throw new IOException(
-                        "Unexpected end of file reached while reading " + path);
-            }
-        } finally {
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return buffer;
-    }
-
     private static byte[] readFromClassLoaderIntoByteArray(String name)
             throws IOException {
         InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(
