@@ -5,4 +5,6 @@ classes
 dist
 src/nu/validator/servlet/FormEmitter.java
 src/nu/validator/servlet/PageEmitter.java
+src/nu/validator/servlet/W3CFormEmitter.java
+src/nu/validator/servlet/W3CPageEmitter.java
 src/nu/validator/localentities/files/

@@ -302,6 +302,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
 
+    private static final boolean W3C_BRANDING = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding"));
+
     private String schemaUrls = null;
 
     protected Validator validator = null;
@@ -717,7 +719,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 errorHandler = new MessageEmitterAdapter(sourceCode,
                         showSource, imageCollector, lineOffset,
                         new XhtmlMessageEmitter(contentHandler));
-                PageEmitter.emit(contentHandler, this);
+                if (W3C_BRANDING) {
+                    W3CPageEmitter.emit(contentHandler, this);
+                } else {
+                    PageEmitter.emit(contentHandler, this);
+                }
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
@@ -1353,7 +1359,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws SAXException
      */
     protected void emitFormContent() throws SAXException {
-        FormEmitter.emit(contentHandler, this);
+        if (W3C_BRANDING) {
+            W3CFormEmitter.emit(contentHandler, this);
+        } else {
+            FormEmitter.emit(contentHandler, this);
+        }
     }
 
     void emitSchemaField() throws SAXException {
