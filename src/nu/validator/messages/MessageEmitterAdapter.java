@@ -418,6 +418,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#info(java.lang.String)
      */
     public void info(String str) throws SAXException {
+        if (emitter instanceof GnuMessageEmitter) return;
         message(MessageType.INFO, new Exception(str), null, -1, -1, false);
     }
 
