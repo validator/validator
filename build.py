@@ -877,6 +877,7 @@ def runTests():
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
+                                                "validator",
                                                 "test-harness"])
                               + jingJarPath())
   runCmd('"%s" -classpath %s org.whattf.syntax.Driver' % (javaCmd, classPath))
