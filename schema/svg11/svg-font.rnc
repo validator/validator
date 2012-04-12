@@ -24,13 +24,14 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 ##   
 [ xml:lang = "en" ]
 grammar {
-    include "svg-basic-font.rnc"
+    include "svg-basic-font.rnc" {
+        SVG.font-face.extra.class &= definition-src?
+    }
     a:documentation [
         "\x{a}" ~
         "    font-face: Font Face Element\x{a}" ~
         "  "
     ]
-    SVG.font-face.extra.class &= definition-src?
     a:documentation [ "\x{a}" ~ "    glyph: Glyph Element\x{a}" ~ "  " ]
     SVG.glyph.class |=
         SVG.Animation.class
