@@ -989,7 +989,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (e instanceof ImpossibleAttributeIgnoredException) {
             ImpossibleAttributeIgnoredException ex = (ImpossibleAttributeIgnoredException) e;
             Name elt = ex.getCurrentElement();
-            elaborateElementSpecificAttributes(elt);
+            elaborateElementSpecificAttributes(elt, ex.getAttributeName());
         } else if (e instanceof OnlyTextNotAllowedException) {
             OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
             Name elt = ex.getCurrentElement();
@@ -1127,13 +1127,24 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @throws SAXException
      */
     private void elaborateElementSpecificAttributes(Name elt) throws SAXException {
+       this.elaborateElementSpecificAttributes(elt, null);
+    }
+
+    private void elaborateElementSpecificAttributes(Name elt, Name attribute) throws SAXException {
         DocumentFragment dds = spec.elementSpecificAttributesDescription(elt);
         if (dds != null) {
             ContentHandler ch = emitter.startElaboration();
             if (ch != null) {
                 TreeParser treeParser = new TreeParser(ch, null);
                 XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
-                xhtmlSaxEmitter.startElement("dl");
+                if ("input".equals(elt.getLocalName())) {
+                    attributesImpl.clear();
+                    attributesImpl.addAttribute("class", "inputattrs");
+                    attributesImpl.addAttribute("data-bad-attribute-name", attribute.getLocalName());
+                    xhtmlSaxEmitter.startElement("dl", attributesImpl);
+                } else {
+                    xhtmlSaxEmitter.startElement("dl");
+                }
                 emitElementSpecificAttributesDt(xhtmlSaxEmitter, elt);
                 treeParser.parse(dds);
                 xhtmlSaxEmitter.endElement("dl");

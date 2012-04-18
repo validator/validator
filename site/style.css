@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -288,6 +288,47 @@ th.alt, th.location {
 	vertical-align: bottom;
 }
 
+dd code ~ span {
+	color: #666;
+}
+
+dl.inputattrs {
+	display: table;
+}
+
+dl.inputattrs dt {
+	display: table-caption;
+}
+
+dl.inputattrs dd {
+	display: table-row;
+}
+
+dl.inputattrs > dd > a,
+dl.inputattrs .inputattrname,
+dl.inputattrs .inputattrtypes {
+	display: table-cell;
+	padding-top: 2px;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	word-wrap: normal;
+}
+
+dl.inputattrs .inputattrtypes {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.inputattrtypes > a {
+	color: #666;
+}
+
+dl.inputattrs .highlight {
+	background-color: #FFC;
+	padding-bottom: 2px;
+	font-weight: normal;
+	color: #666;
+}
 
 *[irrelevant], .irrelevant {
   display: none;

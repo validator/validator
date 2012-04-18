@@ -25,6 +25,7 @@ package nu.validator.spec.html5;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,6 +71,84 @@ public class Html5SpecBuilder implements ContentHandler {
 
     private static final Pattern ATTRIBUTES = Pattern.compile("^\\s*Content\\s+attributes:?\\s*$");
 
+    private static final Map<String, String[]> validInputTypesByAttributeName = new TreeMap<String, String[]>();
+
+    static {
+        validInputTypesByAttributeName.put("accept", new String[] { "file" });
+        validInputTypesByAttributeName.put("alt", new String[] { "image" });
+        validInputTypesByAttributeName.put("autocomplete", new String[] {
+                "text", "search", "url", "tel", "e-mail", "password", "datetime",
+                "date", "month", "week", "time", "datetime-local", "number",
+                "range", "color" });
+        validInputTypesByAttributeName.put("checked", new String[] { "checkbox", "radio" });
+        validInputTypesByAttributeName.put("dirname", new String[] { "text", "search" });
+        validInputTypesByAttributeName.put("formaction", new String[] { "submit", "image" });
+        validInputTypesByAttributeName.put("formenctype", new String[] { "submit", "image" });
+        validInputTypesByAttributeName.put("formmethod", new String[] { "submit", "image" });
+        validInputTypesByAttributeName.put("formnovalidate", new String[] { "submit", "image" });
+        validInputTypesByAttributeName.put("formtarget", new String[] { "submit", "image" });
+        validInputTypesByAttributeName.put("height", new String[] { "image" });
+        validInputTypesByAttributeName.put("list", new String[] { "text",
+                "search", "url", "tel", "e-mail", "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "range", "color" });
+        validInputTypesByAttributeName.put("max", new String[] { "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("maxlength", new String[] { "text", "search", "url",
+                "tel", "e-mail", "password" });
+        validInputTypesByAttributeName.put("min", new String[] { "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("multiple", new String[] { "email", "file" });
+        validInputTypesByAttributeName.put("pattern", new String[] { "text", "search", "url",
+                "tel", "e-mail", "password" });
+        validInputTypesByAttributeName.put("placeholder", new String[] { "text", "search", "url",
+                "tel", "e-mail", "password", "number" });
+        validInputTypesByAttributeName.put("readonly", new String[] {
+                "text", "search", "url", "tel", "e-mail", "password", "datetime",
+                "date", "month", "week", "time", "datetime-local", "number" });
+        validInputTypesByAttributeName.put("required", new String[] {
+                "text", "search", "url", "tel", "e-mail", "password", "datetime",
+                "date", "month", "week", "time", "datetime-local", "number",
+                "checkbox", "radio", "file" });
+        validInputTypesByAttributeName.put("size", new String[] { "text", "search", "url", "tel",
+                "e-mail", "password" });
+        validInputTypesByAttributeName.put("src", new String[] { "image" });
+        validInputTypesByAttributeName.put("step", new String[] { "datetime", "date", "month",
+                "week", "time", "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("width", new String[] { "image" });
+    }
+
+    private static final Map<String, String> fragmentIdByInputType = new TreeMap<String, String>();
+
+    static {
+        fragmentIdByInputType.put("hidden", "#hidden-state-type-hidden");
+        fragmentIdByInputType.put("text",
+                "#text-type-text-state-and-search-state-type-search");
+        fragmentIdByInputType.put("search",
+                "#text-type-text-state-and-search-state-type-search");
+        fragmentIdByInputType.put("url", "#url-state-type-url");
+        fragmentIdByInputType.put("tel", "#telephone-state-type-tel");
+        fragmentIdByInputType.put("email", "#e-mail-state-type-email");
+        fragmentIdByInputType.put("password", "#password-state-type-password");
+        fragmentIdByInputType.put("datetime",
+                "#date-and-time-state-type-datetime");
+        fragmentIdByInputType.put("date", "#date-state-type-date");
+        fragmentIdByInputType.put("month", "#month-state-type-month");
+        fragmentIdByInputType.put("week", "#week-state-type-week");
+        fragmentIdByInputType.put("time", "#time-state-type-time");
+        fragmentIdByInputType.put("datetime-local",
+                "#local-date-and-time-state-type-datetime-local");
+        fragmentIdByInputType.put("number", "#number-state-type-number");
+        fragmentIdByInputType.put("range", "#range-state-type-range");
+        fragmentIdByInputType.put("color", "#color-state-type-color");
+        fragmentIdByInputType.put("checkbox", "#checkbox-state-type-checkbox");
+        fragmentIdByInputType.put("radio", "#radio-button-state-type-radio");
+        fragmentIdByInputType.put("file", "#file-upload-state-type-file");
+        fragmentIdByInputType.put("submit", "#submit-button-state-type-submit");
+        fragmentIdByInputType.put("image", "#image-button-state-type-image");
+        fragmentIdByInputType.put("reset", "#reset-button-state-type-reset");
+        fragmentIdByInputType.put("button", "#button-state-type-button");
+    }
+
     private enum State {
         AWAITING_HEADING, IN_H4, IN_CODE_IN_H4, AWAITING_ELEMENT_DL, IN_ELEMENT_DL_START, IN_CATEGORIES_DT, CAPTURING_CATEGORIES_DDS, IN_CONTEXT_DT, CAPTURING_CONTEXT_DDS, IN_CONTENT_MODEL_DT, CAPTURING_CONTENT_MODEL_DDS, IN_ATTRIBUTES_DT, CAPTURING_ATTRIBUTES_DDS
     }
@@ -85,6 +164,8 @@ public class Html5SpecBuilder implements ContentHandler {
     private StringBuilder nameText = new StringBuilder();
 
     private StringBuilder referenceText = new StringBuilder();
+
+    private StringBuilder attributeText = new StringBuilder();
 
     private TreeBuilder fragmentBuilder;
 
@@ -188,6 +269,9 @@ public class Html5SpecBuilder implements ContentHandler {
                     ignoreTextNodes = false;
                 } else {
                     fragmentBuilder.characters(ch, start, length);
+                    if (state == State.CAPTURING_ATTRIBUTES_DDS) {
+                        attributeText.append(ch, start, length);
+                    }
                 }
                 break;
         }
@@ -317,6 +401,13 @@ public class Html5SpecBuilder implements ContentHandler {
                             "Malformed spec: Did not see following dt when capturing dds.", locator);
                 }
                 captureDepth--;
+                String attributeName = attributeText.toString().trim();
+                if (state == State.CAPTURING_ATTRIBUTES_DDS
+                        && "input".equals(currentName.getLocalName())
+                        && "dd".equals(localName)) {
+                    listInputTypesForAttribute(attributeName, fragmentBuilder);
+                    attributeText.setLength(0);
+                }
                 fragmentBuilder.endElement(uri, localName, qName);
                 break;
         }
@@ -434,6 +525,14 @@ public class Html5SpecBuilder implements ContentHandler {
                         attributesImpl.addAttribute("href", href);
                         fragmentBuilder.startElement(uri, localName, qName,
                                 attributesImpl);
+                    } else if (state == State.CAPTURING_ATTRIBUTES_DDS
+                            && "input".equals(currentName.getLocalName())
+                            && "code".equals(localName)
+                            ) {
+                        AttributesImpl attributesImpl = new AttributesImpl();
+                        attributesImpl.addAttribute("class", "inputattrname");
+                        fragmentBuilder.startElement(uri, localName, qName,
+                                attributesImpl);
                     } else {
                         fragmentBuilder.startElement(uri, localName, qName,
                                 EmptyAttributes.EMPTY_ATTRIBUTES);
@@ -445,6 +544,66 @@ public class Html5SpecBuilder implements ContentHandler {
 
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
+    }
+
+    private void listInputTypesForAttribute(String attributeName,
+            TreeBuilder fragmentBuilder) throws SAXException {
+        if (validInputTypesByAttributeName.containsKey(attributeName)
+                || "value".equals(attributeName)) {
+            addText(" ");
+            AttributesImpl attributesImpl = new AttributesImpl();
+            attributesImpl.addAttribute("class", "inputattrtypes " + attributeName);
+            fragmentBuilder.startElement(NS, "span", "span", attributesImpl);
+            addText("when ");
+            fragmentBuilder.startElement(NS, "code", "code", EmptyAttributes.EMPTY_ATTRIBUTES);
+            addText("type");
+            fragmentBuilder.endElement(NS, "code", "code");
+            addText(" is ");
+            if ("value".equals(attributeName)) {
+                addText("not ");
+                addHyperlink("file", SPEC_LINK_URI
+                        + fragmentIdByInputType.get("file"));
+                addText(" or ");
+                addHyperlink("image", SPEC_LINK_URI
+                        + fragmentIdByInputType.get("image"));
+            } else {
+                String[] typeNames = validInputTypesByAttributeName.get(attributeName);
+                int typeCount = typeNames.length;
+                for (int i = 0; i < typeCount; i++) {
+                    String typeName = typeNames[i];
+                    if (i > 0) {
+                        addText(" ");
+                    }
+                    if (typeCount > 1 && i == typeCount - 1) {
+                        addText("or ");
+                    }
+                    addHyperlink(typeName, SPEC_LINK_URI
+                            + fragmentIdByInputType.get(typeName));
+                    if (i < typeCount - 1 && typeCount > 2) {
+                        addText(",");
+                    }
+                }
+            }
+            fragmentBuilder.endElement(NS, "span", "span");
+        } else {
+            AttributesImpl attributesImpl = new AttributesImpl();
+            attributesImpl.addAttribute("class", "inputattrtypes");
+            fragmentBuilder.startElement(NS, "span", "span", attributesImpl);
+            fragmentBuilder.endElement(NS, "span", "span");
+        }
+    }
+
+    private void addText(String text) throws SAXException {
+        char[] ch = text.toCharArray();
+        fragmentBuilder.characters(ch, 0, ch.length);
+    }
+
+    private void addHyperlink(String text, String href) throws SAXException {
+        AttributesImpl attributesImpl = new AttributesImpl();
+        attributesImpl.addAttribute("href", href);
+        fragmentBuilder.startElement(NS, "a", "a", attributesImpl);
+        addText(text);
+        fragmentBuilder.endElement(NS, "a", "a");
     }
 
 }

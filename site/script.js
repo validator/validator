@@ -50,6 +50,7 @@ function reboot() {
 	updateFragmentIdHilite()
 	window.setInterval(emulateHashChanged, 50)
 	initGrouping()
+	highlightBadInputAttributes()
 }
 
 function installDynamicStyle() {
@@ -141,6 +142,22 @@ function createOption(text, value) {
 	var tn = document.createTextNode(text)
 	rv.appendChild(tn)
 	return rv
+}
+
+function highlightBadInputAttributes() {
+	var inputAttrs = document.getElementsByClassName("inputattrs"),
+	badAttributeName,
+	elementToHighlight,
+	bold
+	for (var i = 0; i < inputAttrs.length; i++) {
+		badAttributeName = inputAttrs[i].dataset.badAttributeName
+		elementToHighlight = inputAttrs[i].getElementsByClassName(badAttributeName)[0]
+		bold = document.createElement("b")
+		bold.className = elementToHighlight.className + " highlight"
+		bold.innerHTML = elementToHighlight.innerHTML
+		elementToHighlight.parentNode.appendChild(bold)
+		elementToHighlight.parentNode.removeChild(elementToHighlight)
+	}
 }
 
 function schemaChanged() {
