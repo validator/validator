@@ -153,10 +153,10 @@ function highlightBadInputAttributes() {
 		badAttributeName = inputAttrs[i].dataset.badAttributeName
 		elementToHighlight = inputAttrs[i].getElementsByClassName(badAttributeName)[0]
 		bold = document.createElement("b")
-		bold.className = elementToHighlight.className + " highlight"
-		bold.innerHTML = elementToHighlight.innerHTML
 		elementToHighlight.parentNode.appendChild(bold)
-		elementToHighlight.parentNode.removeChild(elementToHighlight)
+		bold.className = elementToHighlight.className + " highlight"
+		elementToHighlight.removeAttribute("class")
+		bold.appendChild(elementToHighlight)
 	}
 }
 
