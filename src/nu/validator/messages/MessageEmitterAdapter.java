@@ -1140,7 +1140,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 if ("input".equals(elt.getLocalName())) {
                     attributesImpl.clear();
                     attributesImpl.addAttribute("class", "inputattrs");
-                    attributesImpl.addAttribute("data-bad-attribute-name", attribute.getLocalName());
+                    if (attribute != null) {
+                        attributesImpl.addAttribute("data-bad-attribute-name",
+                                attribute.getLocalName());
+                    }
                     xhtmlSaxEmitter.startElement("dl", attributesImpl);
                 } else {
                     xhtmlSaxEmitter.startElement("dl");
