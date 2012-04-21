@@ -56,16 +56,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element ul { ul.inner & ul.attrs }
 	ul.attrs =
 		(	common.attrs
-		&	(	(	aria.directory
-				|	aria.list
-				|	aria.listbox
-				|	aria.menu
-				|	aria.menubar
-				|	aria.tablist
-				|	aria.toolbar
-				|	aria.tree
-				)
-				|	common.attrs.aria.implicit.region
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
 			)?
 		)
 	ul.inner =
@@ -95,16 +87,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	ol.attrs.start?
 		&	ol.attrs.reversed?
 		&	ol.attrs.type?
-		&	(	(	aria.directory
-				|	aria.list
-				|	aria.listbox
-				|	aria.menu
-				|	aria.menubar
-				|	aria.tablist
-				|	aria.toolbar
-				|	aria.tree
-				)
-				|	common.attrs.aria.implicit.region
+		&	(	common.attrs.aria
+			|	common.attrs.aria.implicit.region
 			)?
 		)
 		ol.attrs.start =
