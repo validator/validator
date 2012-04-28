@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Set;
 
 import nu.validator.io.SystemIdIOException;
@@ -57,7 +58,6 @@ import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -130,6 +130,123 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final static DocumentFragment IMAGE_REPORT_FATAL;
     
+    private static final String SPEC_LINK_URI = System.getProperty(
+            "nu.validator.spec.html5-link",
+            "http://www.whatwg.org/specs/web-apps/current-work/");
+
+    private static final Map<String, String[]> validInputTypesByAttributeName = new TreeMap<String, String[]>();
+
+    static {
+        validInputTypesByAttributeName.put("accept", new String[] {
+                "#attr-input-accept", "file" });
+        validInputTypesByAttributeName.put("alt", new String[] {
+                "#attr-input-alt", "image" });
+        validInputTypesByAttributeName.put("autocomplete", new String[] {
+                "#attr-input-autocomplete", "text", "search", "url", "tel",
+                "e-mail", "password", "datetime", "date", "month", "week",
+                "time", "datetime-local", "number", "range", "color" });
+        validInputTypesByAttributeName.put("autofocus",
+                new String[] { "#attr-fe-autofocus" });
+        validInputTypesByAttributeName.put("checked", new String[] {
+                "#attr-input-checked", "checkbox", "radio" });
+        validInputTypesByAttributeName.put("dirname", new String[] {
+                "#attr-input-dirname", "text", "search" });
+        validInputTypesByAttributeName.put("disabled",
+                new String[] { "#attr-fe-disabled" });
+        validInputTypesByAttributeName.put("form",
+                new String[] { "#attr-fae-form" });
+        validInputTypesByAttributeName.put("formaction", new String[] {
+                "#attr-fs-formaction", "submit", "image" });
+        validInputTypesByAttributeName.put("formenctype", new String[] {
+                "#attr-fs-formenctype", "submit", "image" });
+        validInputTypesByAttributeName.put("formmethod", new String[] {
+                "#attr-fs-formmethod", "submit", "image" });
+        validInputTypesByAttributeName.put("formnovalidate", new String[] {
+                "#attr-fs-formnovalidate", "submit", "image" });
+        validInputTypesByAttributeName.put("formtarget", new String[] {
+                "#attr-fs-formtarget", "submit", "image" });
+        validInputTypesByAttributeName.put("height", new String[] {
+                "#attr-dim-height", "image" });
+        validInputTypesByAttributeName.put("list", new String[] {
+                "#attr-input-list", "text", "search", "url", "tel", "e-mail",
+                "datetime", "date", "month", "week", "time", "datetime-local",
+                "number", "range", "color" });
+        validInputTypesByAttributeName.put("max", new String[] {
+                "#attr-input-max", "datetime", "date", "month", "week", "time",
+                "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("maxlength", new String[] {
+                "#attr-input-maxlength", "text", "search", "url", "tel",
+                "e-mail", "password" });
+        validInputTypesByAttributeName.put("min", new String[] {
+                "#attr-input-min", "datetime", "date", "month", "week", "time",
+                "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("multiple", new String[] {
+                "#attr-input-multiple", "email", "file" });
+        validInputTypesByAttributeName.put("name",
+                new String[] { "#attr-fe-name" });
+        validInputTypesByAttributeName.put("pattern", new String[] {
+                "#attr-input-pattern", "text", "search", "url", "tel",
+                "e-mail", "password" });
+        validInputTypesByAttributeName.put("placeholder", new String[] {
+                "#attr-input-placeholder", "text", "search", "url", "tel",
+                "e-mail", "password", "number" });
+        validInputTypesByAttributeName.put("readonly", new String[] {
+                "#attr-input-readonly", "text", "search", "url", "tel",
+                "e-mail", "password", "datetime", "date", "month", "week",
+                "time", "datetime-local", "number" });
+        validInputTypesByAttributeName.put("required",
+                new String[] { "#attr-input-required", "text", "search", "url",
+                        "tel", "e-mail", "password", "datetime", "date",
+                        "month", "week", "time", "datetime-local", "number",
+                        "checkbox", "radio", "file" });
+        validInputTypesByAttributeName.put("size", new String[] {
+                "#attr-input-size", "text", "search", "url", "tel", "e-mail",
+                "password" });
+        validInputTypesByAttributeName.put("src", new String[] {
+                "#attr-input-src", "image" });
+        validInputTypesByAttributeName.put("step", new String[] {
+                "#attr-input-step", "datetime", "date", "month", "week",
+                "time", "datetime-local", "number", "range", });
+        validInputTypesByAttributeName.put("type",
+                new String[] { "#attr-input-type" });
+        validInputTypesByAttributeName.put("value",
+                new String[] { "#attr-input-value" });
+        validInputTypesByAttributeName.put("width", new String[] {
+                "#attr-dim-width", "image" });
+    }
+
+    private static final Map<String, String> fragmentIdByInputType = new TreeMap<String, String>();
+
+    static {
+        fragmentIdByInputType.put("hidden", "#hidden-state-type-hidden");
+        fragmentIdByInputType.put("text",
+                "#text-type-text-state-and-search-state-type-search");
+        fragmentIdByInputType.put("search",
+                "#text-type-text-state-and-search-state-type-search");
+        fragmentIdByInputType.put("url", "#url-state-type-url");
+        fragmentIdByInputType.put("tel", "#telephone-state-type-tel");
+        fragmentIdByInputType.put("email", "#e-mail-state-type-email");
+        fragmentIdByInputType.put("password", "#password-state-type-password");
+        fragmentIdByInputType.put("datetime",
+                "#date-and-time-state-type-datetime");
+        fragmentIdByInputType.put("date", "#date-state-type-date");
+        fragmentIdByInputType.put("month", "#month-state-type-month");
+        fragmentIdByInputType.put("week", "#week-state-type-week");
+        fragmentIdByInputType.put("time", "#time-state-type-time");
+        fragmentIdByInputType.put("datetime-local",
+                "#local-date-and-time-state-type-datetime-local");
+        fragmentIdByInputType.put("number", "#number-state-type-number");
+        fragmentIdByInputType.put("range", "#range-state-type-range");
+        fragmentIdByInputType.put("color", "#color-state-type-color");
+        fragmentIdByInputType.put("checkbox", "#checkbox-state-type-checkbox");
+        fragmentIdByInputType.put("radio", "#radio-button-state-type-radio");
+        fragmentIdByInputType.put("file", "#file-upload-state-type-file");
+        fragmentIdByInputType.put("submit", "#submit-button-state-type-submit");
+        fragmentIdByInputType.put("image", "#image-button-state-type-image");
+        fragmentIdByInputType.put("reset", "#reset-button-state-type-reset");
+        fragmentIdByInputType.put("button", "#button-state-type-button");
+    }
+
     static {
         try {
             HTML5_DATATYPE_ADVICE.putAll(Html5AttributeDatatypeBuilder.parseSyntaxDescriptions());
@@ -1130,29 +1247,29 @@ public final class MessageEmitterAdapter implements ErrorHandler {
        this.elaborateElementSpecificAttributes(elt, null);
     }
 
-    private void elaborateElementSpecificAttributes(Name elt, Name attribute) throws SAXException {
-        DocumentFragment dds = spec.elementSpecificAttributesDescription(elt);
-        if (dds != null) {
+    private void elaborateElementSpecificAttributes(Name elt, Name attribute)
+            throws SAXException {
+        if ("input".equals(elt.getLocalName())) {
             ContentHandler ch = emitter.startElaboration();
             if (ch != null) {
-                TreeParser treeParser = new TreeParser(ch, null);
                 XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
-                if ("input".equals(elt.getLocalName())) {
-                    attributesImpl.clear();
-                    attributesImpl.addAttribute("class", "inputattrs");
-                    if (attribute != null) {
-                        attributesImpl.addAttribute("data-bad-attribute-name",
-                                attribute.getLocalName());
-                    }
-                    xhtmlSaxEmitter.startElement("dl", attributesImpl);
-                } else {
-                    xhtmlSaxEmitter.startElement("dl");
-                }
-                emitElementSpecificAttributesDt(xhtmlSaxEmitter, elt);
-                treeParser.parse(dds);
-                xhtmlSaxEmitter.endElement("dl");
+                elaborateInputAttributes(xhtmlSaxEmitter, elt, attribute);
             }
             emitter.endElaboration();
+        } else {
+            DocumentFragment dds = spec.elementSpecificAttributesDescription(elt);
+            if (dds != null) {
+                ContentHandler ch = emitter.startElaboration();
+                if (ch != null) {
+                    TreeParser treeParser = new TreeParser(ch, null);
+                    XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
+                    xhtmlSaxEmitter.startElement("dl");
+                    emitElementSpecificAttributesDt(xhtmlSaxEmitter, elt);
+                    treeParser.parse(dds);
+                    xhtmlSaxEmitter.endElement("dl");
+                }
+                emitter.endElaboration();
+            }
         }
     }
 
@@ -1194,6 +1311,108 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (url != null) {
             xhtmlSaxEmitter.endElement("a");
         }
+    }
+
+    private void elaborateInputAttributes(XhtmlSaxEmitter xhtmlSaxEmitter,
+            Name elt, Name badAttribute) throws SAXException {
+        attributesImpl.clear();
+        attributesImpl.addAttribute("class", "inputattrs");
+        xhtmlSaxEmitter.startElement("dl", attributesImpl);
+        emitElementSpecificAttributesDt(xhtmlSaxEmitter, elt);
+        xhtmlSaxEmitter.startElement("dd");
+        attributesImpl.clear();
+        addHyperlink(xhtmlSaxEmitter, "Global attributes", SPEC_LINK_URI
+                + "#global-attributes");
+        attributesImpl.addAttribute("class", "inputattrtypes");
+        xhtmlSaxEmitter.startElement("span", attributesImpl);
+        xhtmlSaxEmitter.endElement("span");
+        xhtmlSaxEmitter.endElement("dd");
+        for (Map.Entry<String, String[]> entry : validInputTypesByAttributeName.entrySet()) {
+            String attributeName = entry.getKey();
+            xhtmlSaxEmitter.startElement("dd");
+            attributesImpl.clear();
+            attributesImpl.addAttribute("class", "inputattrname");
+            xhtmlSaxEmitter.startElement("code", attributesImpl);
+            attributesImpl.clear();
+            attributesImpl.addAttribute("href", SPEC_LINK_URI
+                    + entry.getValue()[0]);
+            xhtmlSaxEmitter.startElement("a", attributesImpl);
+            addText(xhtmlSaxEmitter, attributeName);
+            xhtmlSaxEmitter.endElement("a");
+            xhtmlSaxEmitter.endElement("code");
+            attributesImpl.addAttribute("class", "inputattrtypes");
+            if (attributeName.equals(badAttribute.getLocalName())) {
+                listInputTypesForAttribute(xhtmlSaxEmitter, attributeName, true);
+            } else {
+                listInputTypesForAttribute(xhtmlSaxEmitter, attributeName,
+                        false);
+            }
+            xhtmlSaxEmitter.endElement("dd");
+        }
+        xhtmlSaxEmitter.endElement("dl");
+    }
+
+    private void listInputTypesForAttribute(XhtmlSaxEmitter xhtmlSaxEmitter,
+            String attributeName, boolean bad) throws SAXException {
+        String[] typeNames = validInputTypesByAttributeName.get(attributeName);
+        int typeCount = typeNames.length;
+        String wrapper = (bad? "b" : "span");
+        String highlight = (bad? " highlight" : "");
+        if (typeCount > 1 || "value".equals(attributeName)) {
+            addText(xhtmlSaxEmitter, " ");
+            AttributesImpl attributesImpl = new AttributesImpl();
+            attributesImpl.addAttribute("class", "inputattrtypes" + highlight);
+            xhtmlSaxEmitter.startElement(wrapper, attributesImpl);
+            addText(xhtmlSaxEmitter, "when ");
+            xhtmlSaxEmitter.startElement("code");
+            addText(xhtmlSaxEmitter, "type");
+            xhtmlSaxEmitter.endElement("code", "code");
+            addText(xhtmlSaxEmitter, " is ");
+            if ("value".equals(attributeName)) {
+                addText(xhtmlSaxEmitter, "not ");
+                addHyperlink(xhtmlSaxEmitter, "file", SPEC_LINK_URI
+                        + fragmentIdByInputType.get("file"));
+                addText(xhtmlSaxEmitter, " or ");
+                addHyperlink(xhtmlSaxEmitter, "image", SPEC_LINK_URI
+                        + fragmentIdByInputType.get("image"));
+            } else {
+                for (int i = 1; i < typeCount; i++) {
+                    String typeName = typeNames[i];
+                    if (i > 1) {
+                        addText(xhtmlSaxEmitter, " ");
+                    }
+                    if (typeCount > 2 && i == typeCount - 1) {
+                        addText(xhtmlSaxEmitter, "or ");
+                    }
+                    addHyperlink(xhtmlSaxEmitter, typeName, SPEC_LINK_URI
+                            + fragmentIdByInputType.get(typeName));
+                    if (i < typeCount - 1 && typeCount > 3) {
+                        addText(xhtmlSaxEmitter, ",");
+                    }
+                }
+            }
+            xhtmlSaxEmitter.endElement(wrapper);
+        } else {
+            AttributesImpl attributesImpl = new AttributesImpl();
+            attributesImpl.addAttribute("class", "inputattrtypes");
+            xhtmlSaxEmitter.startElement("span", attributesImpl);
+            xhtmlSaxEmitter.endElement("span");
+        }
+    }
+
+    private void addText(XhtmlSaxEmitter xhtmlSaxEmitter, String text)
+            throws SAXException {
+        char[] ch = text.toCharArray();
+        xhtmlSaxEmitter.characters(ch, 0, ch.length);
+    }
+
+    private void addHyperlink(XhtmlSaxEmitter xhtmlSaxEmitter, String text,
+            String href) throws SAXException {
+        AttributesImpl attributesImpl = new AttributesImpl();
+        attributesImpl.addAttribute("href", href);
+        xhtmlSaxEmitter.startElement("a", attributesImpl);
+        addText(xhtmlSaxEmitter, text);
+        xhtmlSaxEmitter.endElement("a");
     }
 
     private final class ExactErrorHandler implements ErrorHandler {
