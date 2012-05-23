@@ -85,7 +85,7 @@ diff -u mathml3-common.rnc mathml3-common.rnc
 +          math
 +        att-encoding.mathml =
 +          attribute encoding {
-+            string "MathML" | string "MathML-Content"
++            string "MathML" | string "MathML-Content" | string "MathML-Presentation"
 +          }
 +    annotation-xml.openmath =
 +        element annotation-xml {
@@ -95,7 +95,7 @@ diff -u mathml3-common.rnc mathml3-common.rnc
 +          openmath.any.elem
 +        att-encoding.openmath =
 +          attribute encoding {
-+            string "OpenMath"
++            string "OpenMath" | string "application/openmath+xml"
 +          }
 +        openmath.any.elem =
 +          element om:* {
@@ -112,7 +112,7 @@ diff -u mathml3-common.rnc mathml3-common.rnc
                          DefEncAtt,
                          src?
  
-+annotation-xml.attributes = CommonAtt, name?, src?
++annotation-xml.attributes = CommonAtt, cd?, name?, src?
 +
  DefEncAtt = attribute encoding {xsd:string}?,
              attribute definitionURL {xsd:anyURI}?

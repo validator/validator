@@ -105,7 +105,7 @@ annotation-xml =
           math
         att-encoding.mathml =
           attribute encoding {
-            string "MathML" | string "MathML-Content"
+            string "MathML" | string "MathML-Content" | string "MathML-Presentation"
           }
     annotation-xml.openmath =
         element annotation-xml {
@@ -115,7 +115,7 @@ annotation-xml =
           openmath.any.elem
         att-encoding.openmath =
           attribute encoding {
-            string "OpenMath"
+            string "OpenMath" | string "application/openmath+xml"
           }
         openmath.any.elem =
           element om:* {
@@ -128,7 +128,7 @@ annotation.attributes = CommonAtt,
                         DefEncAtt,
                         src?
 
-annotation-xml.attributes = CommonAtt, name?, src?
+annotation-xml.attributes = CommonAtt, cd?, name?, src?
 
 DefEncAtt = attribute encoding {xsd:string}?,
             attribute definitionURL {xsd:anyURI}?
