@@ -1,6 +1,6 @@
 diff -u mathml3-common.rnc mathml3-common.rnc
---- mathml3-common.rnc	2012-05-14 19:38:56.000000000 +0900
-+++ mathml3-common.rnc	2012-05-14 19:10:08.000000000 +0900
+--- mathml3-common.rnc.orig	2012-05-23 11:54:19.000000000 +0900
++++ mathml3-common.rnc	2012-05-24 11:24:13.000000000 +0900
 @@ -2,8 +2,12 @@
  #     application for describing mathematical notation and capturing
  #     both its structure and content.
@@ -15,20 +15,18 @@ diff -u mathml3-common.rnc mathml3-common.rnc
  #     Use and distribution of this code are permitted under the terms
  #     W3C Software Notice and License
  #     http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
-@@ -11,8 +15,10 @@
+@@ -11,8 +15,8 @@
  
  default namespace m = "http://www.w3.org/1998/Math/MathML"
  namespace local = ""
 -
 -start = math
-+# added OpenMath namespace -- mike
-+namespace om = "http://www.openmath.org/OpenMath"
 +# added namespace for HTML5 datatype library -- mike
 +datatypes w = "http://whattf.org/datatype-draft"
  
  math = element math {math.attributes,MathExpression*}
  MathExpression = semantics
-@@ -21,7 +27,8 @@
+@@ -21,7 +25,8 @@
  
  CommonDeprecatedAtt = attribute other {text}?
  
@@ -38,7 +36,7 @@ diff -u mathml3-common.rnc mathml3-common.rnc
              attribute xref {text}?,
              attribute class {xsd:NMTOKENS}?,
              attribute style {xsd:string}?,
-@@ -56,18 +63,73 @@
+@@ -56,18 +61,58 @@
  
  annotation = element annotation {annotation.attributes,text}
                       
@@ -48,7 +46,6 @@ diff -u mathml3-common.rnc mathml3-common.rnc
 +    ( annotation-xml.xhtml
 +    | annotation-xml.svg
 +    | annotation-xml.mathml
-+    | annotation-xml.openmath
 +    )
 +    annotation-xml.model = (MathExpression | anyElement)*
 +    anyElement =
@@ -86,20 +83,6 @@ diff -u mathml3-common.rnc mathml3-common.rnc
 +        att-encoding.mathml =
 +          attribute encoding {
 +            string "MathML" | string "MathML-Content" | string "MathML-Presentation"
-+          }
-+    annotation-xml.openmath =
-+        element annotation-xml {
-+            annotation-xml.model, annotation-xml.attributes, att-encoding.openmath?
-+        }
-+        annotation-xml.model.openmath = 
-+          openmath.any.elem
-+        att-encoding.openmath =
-+          attribute encoding {
-+            string "OpenMath" | string "application/openmath+xml"
-+          }
-+        openmath.any.elem =
-+          element om:* {
-+            attribute * { text }*, annotation-xml.model
 +          }
  
 -anyElement =  element (* - m:*) {(attribute * {text}|text| anyElement)*}

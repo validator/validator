@@ -15,8 +15,6 @@
 
 default namespace m = "http://www.w3.org/1998/Math/MathML"
 namespace local = ""
-# added OpenMath namespace -- mike
-namespace om = "http://www.openmath.org/OpenMath"
 # added namespace for HTML5 datatype library -- mike
 datatypes w = "http://whattf.org/datatype-draft"
 
@@ -68,7 +66,6 @@ annotation-xml =
     ( annotation-xml.xhtml
     | annotation-xml.svg
     | annotation-xml.mathml
-    | annotation-xml.openmath
     )
     annotation-xml.model = (MathExpression | anyElement)*
     anyElement =
@@ -106,20 +103,6 @@ annotation-xml =
         att-encoding.mathml =
           attribute encoding {
             string "MathML" | string "MathML-Content" | string "MathML-Presentation"
-          }
-    annotation-xml.openmath =
-        element annotation-xml {
-            annotation-xml.model, annotation-xml.attributes, att-encoding.openmath?
-        }
-        annotation-xml.model.openmath = 
-          openmath.any.elem
-        att-encoding.openmath =
-          attribute encoding {
-            string "OpenMath" | string "application/openmath+xml"
-          }
-        openmath.any.elem =
-          element om:* {
-            attribute * { text }*, annotation-xml.model
           }
 
 annotation.attributes = CommonAtt,
