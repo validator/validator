@@ -1341,7 +1341,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             xhtmlSaxEmitter.endElement("a");
             xhtmlSaxEmitter.endElement("code");
             attributesImpl.addAttribute("class", "inputattrtypes");
-            if (attributeName.equals(badAttribute.getLocalName())) {
+            if (badAttribute != null && attributeName.equals(badAttribute.getLocalName())) {
                 listInputTypesForAttribute(xhtmlSaxEmitter, attributeName, true);
             } else {
                 listInputTypesForAttribute(xhtmlSaxEmitter, attributeName,
