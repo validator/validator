@@ -34,8 +34,8 @@ import org.xml.sax.SAXParseException;
 
 public class ContentTypeParser {
 
-    private static final Pattern CHARSET = Pattern.compile("^\\s*charset\\s*=\\s*(\\S+)\\s*$");
-    
+    private static final Pattern CHARSET = Pattern.compile("^\\s*charset\\s*=\\s*(?:\"([^\"\\s]+)\")|([^\"\\s]+)\\s*$");
+
     private final ErrorHandler errorHandler;
 
     private boolean laxContentType;
@@ -209,7 +209,11 @@ public class ContentTypeParser {
             for (int i = 1; i < params.length; i++) {
                 Matcher matcher = CHARSET.matcher(params[i]);
                 if (matcher.matches()) {
-                    charset = matcher.group(1);
+                    if (matcher.start(1) != -1) {
+                        charset = matcher.group(1);
+                    } else {
+                        charset = matcher.group(2);
+                    }
                     break;
                 }
             }
