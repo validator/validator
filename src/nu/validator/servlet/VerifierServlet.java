@@ -219,6 +219,9 @@ public class VerifierServlet extends HttpServlet {
         } else if (W3C_BRANDING && "/about.html".equals(request.getPathInfo())) {
             writeResponse(ABOUT_HTML, "text/html; charset=utf-8", response);
             return;
+        } else if (Statistics.STATISTICS != null && "/stats.html".equals(request.getPathInfo())) {
+            Statistics.STATISTICS.writeToResponse(response);
+            return;
         }
         doPost(request, response);
     }

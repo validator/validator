@@ -356,6 +356,12 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     protected ImageCollector imageCollector;
 
+    private boolean externalSchema = false;
+    
+    private boolean externalSchematron = false;
+
+    private String schemaListForStats = null;
+
     static {
         try {
             log4j.debug("Starting static initializer.");
@@ -949,9 +955,141 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     "Oops. That was not supposed to happen. A bug manifested itself in the application internals. Unable to continue. Sorry. The admin was notified.");
         } finally {
             errorHandler.end(successMessage(), failureMessage());
+            gatherStatistics();
         }
         if (isHtmlOrXhtml) {
             StatsEmitter.emit(contentHandler, this);
+        }
+    }
+
+    private void gatherStatistics() {
+        Statistics stats = Statistics.STATISTICS;
+        if (stats == null) {
+            return;
+        }
+        synchronized (stats) {
+            stats.incrementTotal();
+            if (charsetOverride != null) {
+                stats.incrementField(Statistics.Field.CUSTOM_ENC);
+            }
+            switch (parser) {
+                case HTML401_STRICT:
+                case HTML401_TRANSITIONAL:
+                    stats.incrementField(Statistics.Field.PARSER_HTML4);
+                    break;
+                case XML_EXTERNAL_ENTITIES_NO_VALIDATION:
+                    stats.incrementField(Statistics.Field.PARSER_XML_EXTERNAL);
+                    break;
+            }
+            if (!filteredNamespaces.isEmpty()) {
+                stats.incrementField(Statistics.Field.XMLNS_FILTER);
+            }
+            if (laxType) {
+                stats.incrementField(Statistics.Field.LAX_TYPE);
+            }
+            if (imageCollector != null) {
+                stats.incrementField(Statistics.Field.IMAGE_REPORT);
+            }
+            if (showSource) {
+                stats.incrementField(Statistics.Field.SHOW_SOURCE);
+            }
+            if (methodIsGet) {
+                stats.incrementField(Statistics.Field.INPUT_GET);
+            } else { // POST
+                stats.incrementField(Statistics.Field.INPUT_POST);
+            }
+            if (htmlParser != null) {
+                stats.incrementField(Statistics.Field.INPUT_HTML);                
+            }
+            if (xmlParser != null) {
+                stats.incrementField(Statistics.Field.INPUT_XML);                                
+            }
+            switch (outputFormat) {
+                case GNU:
+                    stats.incrementField(Statistics.Field.OUTPUT_GNU);
+                    break;
+                case HTML:
+                    stats.incrementField(Statistics.Field.OUTPUT_HTML);
+                    break;
+                case JSON:
+                    stats.incrementField(Statistics.Field.OUTPUT_JSON);
+                    break;
+                case TEXT:
+                    stats.incrementField(Statistics.Field.OUTPUT_TEXT);
+                    break;
+                case XHTML:
+                    stats.incrementField(Statistics.Field.OUTPUT_XHTML);
+                    break;
+                case XML:
+                    stats.incrementField(Statistics.Field.OUTPUT_XML);
+                    break;
+            }
+            if (schemaListForStats == null) {
+                stats.incrementField(Statistics.Field.LOGIC_ERROR);
+            } else {
+                boolean preset = false;
+                for (int i = 0; i < presetUrls.length; i++) {
+                    if (presetUrls[i].equals(schemaListForStats)) {
+                        preset = true;
+                        if (externalSchema || externalSchematron) {
+                            stats.incrementField(Statistics.Field.LOGIC_ERROR);
+                        } else {
+                            stats.incrementField(Statistics.Field.PRESET_SCHEMA);
+                            /*
+                             * XXX WARNING WARNING: These mappings are correct
+                             * for the Validator.nu preset file. Might be bogus
+                             * for W3C presets!
+                             */
+                            switch (i) {
+                                case 0:
+                                case 5:
+                                    stats.incrementField(Statistics.Field.HTML5_SCHEMA);
+                                    break;
+                                case 1:
+                                case 6:
+                                    stats.incrementField(Statistics.Field.HTML5_RDFA_LITE_SCHEMA);
+                                    break;
+                                case 2:
+                                    stats.incrementField(Statistics.Field.HTML4_STRICT_SCHEMA);
+                                    break;
+                                case 3:
+                                    stats.incrementField(Statistics.Field.HTML4_TRANSITIONAL_SCHEMA);
+                                    break;
+                                case 4:
+                                    stats.incrementField(Statistics.Field.HTML4_FRAMESET_SCHEMA);
+                                    break;
+                                case 7:
+                                    stats.incrementField(Statistics.Field.XHTML1_COMPOUND_SCHEMA);
+                                    break;
+                                case 8:
+                                    stats.incrementField(Statistics.Field.SVG_SCHEMA);
+                                    break;
+                                default:
+                                    stats.incrementField(Statistics.Field.LOGIC_ERROR);
+                                    break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (!preset && !externalSchema) {
+                    stats.incrementField(Statistics.Field.BUILT_IN_NON_PRESET);
+                }
+            }
+            if ("".equals(schemaUrls)) {
+                stats.incrementField(Statistics.Field.AUTO_SCHEMA);
+                if (externalSchema) {
+                    stats.incrementField(Statistics.Field.LOGIC_ERROR);
+                }
+            } else if (externalSchema) {
+                if (externalSchematron) {
+                    stats.incrementField(Statistics.Field.EXTERNAL_SCHEMA_SCHEMATRON);
+                } else {
+                    stats.incrementField(Statistics.Field.EXTERNAL_SCHEMA_NON_SCHEMATRON);
+                }
+            } else if (externalSchematron) {
+                stats.incrementField(Statistics.Field.LOGIC_ERROR);
+            }
         }
     }
 
@@ -1168,6 +1306,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     private Validator validatorByUrls(String schemaList) throws SAXException,
             IOException, IncorrectSchemaException {
+        schemaListForStats  = schemaList;
+        
         Validator v = null;
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
@@ -1269,6 +1409,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         }
 
+        externalSchema  = true;
+        
         TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
                 null, url);
         SchemaReader sr = null;
@@ -1278,6 +1420,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             sr = new AutoSchemaReader();
         }
         Schema sch = sr.createSchema(schemaInput, options);
+        
+        if (Statistics.STATISTICS != null && "com.thaiopensource.validate.schematron.SchemaImpl".equals(sch.getClass().getName())) {
+            externalSchematron  = true;
+        }
+        
         return sch;
     }
 
