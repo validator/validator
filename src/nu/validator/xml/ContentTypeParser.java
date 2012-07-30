@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -34,7 +34,54 @@ import org.xml.sax.SAXParseException;
 
 public class ContentTypeParser {
 
-    private static final Pattern CHARSET = Pattern.compile("^\\s*charset\\s*=\\s*(?:\"([^\"\\s]+)\")|([^\"\\s]+)\\s*$");
+    private final boolean hasCharset(String param, int offset) {
+      char c = param.charAt(offset);
+      if (c != 'C' && c != 'c') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'H' && c != 'h') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'A' && c != 'a') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'R' && c != 'r') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'S' && c != 's') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'E' && c != 'e') {
+          return false;
+      }
+      offset++;
+      c = param.charAt(offset);
+      if (c != 'T' && c != 't') {
+          return false;
+      }
+      return true;
+    }
+
+    private final void malformedContentTypeError(String contentType, String reason)
+        throws SAXException {
+        if (errorHandler != null) {
+            errorHandler.error(new SAXParseException(
+                    "Document served with malformed Content-Type header: "
+                    + "  \u201c" + contentType + "\u201d. "
+                    + reason,
+                    null, null, -1, -1));
+        }
+    }
 
     private final ErrorHandler errorHandler;
 
@@ -206,15 +253,134 @@ public class ContentTypeParser {
                 }
             }
             String charset = null;
+            char c;
+            boolean quoted = false;
+            StringBuilder sb = new StringBuilder();
             for (int i = 1; i < params.length; i++) {
-                Matcher matcher = CHARSET.matcher(params[i]);
-                if (matcher.matches()) {
-                    if (matcher.start(1) != -1) {
-                        charset = matcher.group(1);
-                    } else {
-                        charset = matcher.group(2);
+                String param = params[i];
+                int offset;
+                beforeCharset: for (offset = 0; offset < param.length(); offset++) {
+                    c = param.charAt(offset);
+                    switch (c) {
+                        case ' ':
+                        case '\t':
+                        case '\n':
+                        case '\u000C':
+                        case '\r':
+                            continue;
+                        case 'c':
+                        case 'C':
+                            break beforeCharset;
+                        default:
                     }
-                    break;
+                }
+                inCharset: if (hasCharset(param, offset)) {
+                    offset += 7;
+                    c = param.charAt(offset);
+                    switch (c) {
+                        case '=':
+                            offset++;
+                            break;
+                        case ' ':
+                        case '\t':
+                        case '\n':
+                        case '\u000C':
+                        case '\r':
+                            malformedContentTypeError(contentType,
+                                "Whitespace is not allowed before the \u201c=\u201d sign in the \u201ccharset\u201d parameter.");
+                            break inCharset;
+                        default:
+                            malformedContentTypeError(contentType,
+                                "Expected an \u201c=\u201d sign but saw \u201c" + c + "\u201d instead.");
+                            break inCharset;
+                    }
+                    c = param.charAt(offset);
+                    switch (c) {
+                        case '"':
+                            offset++;
+                            quoted = true;
+                            break;
+                        case ' ':
+                        case '\t':
+                        case '\n':
+                        case '\u000C':
+                        case '\r':
+                            malformedContentTypeError(contentType,
+                                "Whitespace is not allowed after the \u201c=\u201d sign in the parameter value.");
+                            break inCharset;
+                        default:
+                            break;
+                    }
+                    inEncodingName: for (int j = offset; j < param.length(); j++) {
+                        c = param.charAt(j);
+                        switch (c) {
+                            case '"':
+                                if (!quoted) {
+                                    malformedContentTypeError(contentType,
+                                        "Unmatched \u201c\"\u201d character in \u201ccharset\u201d parameter.");
+                                    break inCharset;
+                                }
+                                break inEncodingName;
+                            case ' ':
+                            case '\t':
+                            case '\n':
+                            case '\u000C':
+                            case '\r':
+                                break inEncodingName;
+                            default:
+                        }
+                        if (!((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')
+                                || (c >= 'a' && c <= 'z') || c == '-' || c == '!'
+                                || c == '#' || c == '$' || c == '%' || c == '&'
+                                || c == '\'' || c == '+' || c == '_' || c == '`'
+                                || c == '{' || c == '}' || c == '~' || c == '^')) {
+                            malformedContentTypeError(contentType,
+                                "The character \u201c" + c + "\u201d is not a valid character in an encoding name.");
+                            break inCharset;
+                        }
+                        offset++;
+                        sb.append(c);
+                    }
+                    if (quoted) {
+                        if ( '"' == param.charAt(offset)) {
+                            offset++;
+                        } else {
+                            malformedContentTypeError(contentType,
+                                "Unmatched \u201c\"\u201d character in \u201ccharset\u201d parameter.");
+                            break inCharset;
+                        }
+                    }
+                    if (param.length() > offset) {
+                        for (int k = offset + 1; k < param.length(); k++) {
+                            c = param.charAt(k);
+                            switch (c) {
+                                case ' ':
+                                case '\t':
+                                case '\n':
+                                case '\u000C':
+                                case '\r':
+                                    offset++;
+                                    continue;
+                                default:
+                                    malformedContentTypeError(contentType,
+                                        "Only whitespace is allowed after the encoding name in the \u201ccharset\u201d parameter. "
+                                        + "Found \u201c" + c + "\u201d instead.");
+                                    break inCharset;
+                            }
+                        }
+                    }
+                    if (sb.length() == 0) {
+                        malformedContentTypeError(contentType,
+                            "The empty string is not a valid encoding name.");
+                    }
+                }
+                if (sb.length() > 0) {
+                    if ('\'' == sb.charAt(0) && '\'' == sb.charAt(sb.length() - 1)) {
+                        malformedContentTypeError(contentType,
+                            "Single-quoted encoding names are not allowed in the \u201ccharset\u201d parameter.");
+                    } else {
+                        charset = sb.toString();
+                    }
                 }
             }
             if (charset != null) {
