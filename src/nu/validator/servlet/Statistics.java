@@ -23,6 +23,7 @@
 package nu.validator.servlet;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -213,7 +214,11 @@ public class Statistics {
     }
 
     private void characters(ContentHandler ch, double d) throws SAXException {
-        characters(ch, Double.toString(d));
+        // Let's just create a new DecimalFormat each time to avoid the 
+        // complexity of recycling an instance correctly without threading
+        // hazards.
+        DecimalFormat df = new DecimalFormat("#,###,##0.000000");
+        characters(ch, df.format(d));
     }
 
     private void characters(ContentHandler ch, long l) throws SAXException {
