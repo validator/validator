@@ -79,6 +79,7 @@ httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 w3cBranding = 0
+statistics = 0
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
@@ -605,6 +606,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.w3cbranding=%d' % w3cBranding,
+    '-Dnu.validator.servlet.statistics=%d' % statistics,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
     '-Dnu.validator.servlet.host.html5=' + html5Host,
@@ -1012,6 +1014,8 @@ else:
       socketTimeoutSeconds = int(arg[17:]);
     elif arg == '--w3cbranding':
       w3cBranding = 1
+    elif arg == '--statistics':
+      statistics = 1
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
