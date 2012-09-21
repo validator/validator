@@ -34,42 +34,22 @@ import org.xml.sax.SAXParseException;
 
 public class ContentTypeParser {
 
+    private static final char[] CHARSET = { 'c', 'h', 'a', 'r', 's', 'e', 't' };
+    
     private final boolean hasCharset(String param, int offset) {
-      char c = param.charAt(offset);
-      if (c != 'C' && c != 'c') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'H' && c != 'h') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'A' && c != 'a') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'R' && c != 'r') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'S' && c != 's') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'E' && c != 'e') {
-          return false;
-      }
-      offset++;
-      c = param.charAt(offset);
-      if (c != 'T' && c != 't') {
-          return false;
-      }
-      return true;
+        if (param.length() - offset < 7) {
+            return false;
+        }
+        for (int i = 0; i < 7; i++) {
+            char c = param.charAt(offset + i);
+            if (c >= 'A' && c <= 'Z') {
+                c += 0x20;
+            }
+            if (c != CHARSET[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private final void malformedContentTypeError(String contentType, String reason)
