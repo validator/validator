@@ -94,6 +94,7 @@ namespace local = ""
 			                    | title 
 			                    | dir 
 			                    | lang 
+			                    | translate 
 			                    | style 
 			                    | tabindex 
 			                    | contextmenu 

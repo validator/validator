@@ -147,6 +147,7 @@ common.attrs.basic =
 common.attrs.i18n =
 	(	common.attrs.dir?
 	&	common.attrs.language?
+	&	common.attrs.translate?
 	)
 	common.attrs.dir =
 		attribute dir {
@@ -179,6 +180,10 @@ common.attrs.i18n =
 #		attribute xml:lang {
 #			common.data.langcode
 #		} & XMLonly
+	common.attrs.translate =
+		attribute translate {
+			w:string "yes" | w:string "no"
+		}
 
 common.attrs.present =
 	(	common.attrs.style?
