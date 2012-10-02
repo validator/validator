@@ -57,6 +57,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	body.attrs.onmessage?
 		&	body.attrs.onoffline?
 		&	body.attrs.ononline?
+		&	body.attrs.onpagehide?
+		&	body.attrs.onpageshow?
 		&	body.attrs.onpopstate?
 		&	body.attrs.onresize?
 		&	body.attrs.onstorage?
@@ -81,6 +83,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		attribute ononline { common.data.functionbody }
 	body.attrs.onpopstate =
 		attribute onpopstate { common.data.functionbody }
+	body.attrs.onpagehide =
+		attribute onpagehide { common.data.functionbody }
+	body.attrs.onpageshow =
+		attribute onpageshow { common.data.functionbody }
 	body.attrs.onredo =
 		attribute onredo { common.data.functionbody }
 	body.attrs.onresize =
