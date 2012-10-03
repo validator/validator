@@ -1,0 +1,138 @@
+namespace local = ""
+
+include "html5-svg-mathml.rnc"
+include "html5/html5full.rnc"
+{
+  embed.attrs.other = # REVISIT common.attrs
+			attribute local:* - ( src 
+			                    | type 
+			                    | height 
+			                    | width 
+			                    | id 
+			                    | class
+			                    | title 
+			                    | dir 
+			                    | lang 
+			                    | style 
+			                    | tabindex 
+			                    | contextmenu 
+			                    | contenteditable 
+			                    | draggable 
+			                    | dropzone
+			                    | hidden
+			                    | onabort
+			                    | onblur
+			                    | oncanplay
+			                    | oncanplaythrough
+			                    | onchange
+			                    | onclick
+			                    | oncontextmenu
+			                    | ondblclick
+			                    | ondrag
+			                    | ondragend
+			                    | ondragenter
+			                    | ondragleave
+			                    | ondragover
+			                    | ondragstart
+			                    | ondrop
+			                    | ondurationchange
+			                    | onemptied
+			                    | onended
+			                    | onerror
+			                    | onfocus
+			                    | oninput
+			                    | oninvalid
+			                    | onkeydown
+			                    | onkeypress
+			                    | onkeyup
+			                    | onload
+			                    | onloadeddata
+			                    | onloadedmetadata
+			                    | onloadstart
+			                    | onmousedown
+			                    | onmousemove
+			                    | onmouseout
+			                    | onmouseover
+			                    | onmouseup
+			                    | onmousewheel
+			                    | onpause
+			                    | onplay
+			                    | onplaying
+			                    | onprogress
+			                    | onratechange
+			                    | onreadystatechange
+			                    | onreset
+			                    | onscroll
+			                    | onseeked
+			                    | onseeking
+			                    | onselect
+			                    | onshow
+			                    | onstalled
+			                    | onsubmit
+			                    | onsuspend
+			                    | ontimeupdate
+			                    | onvolumechange
+			                    | onwaiting
+			                    | onafterprint
+			                    | onbeforeprint
+			                    | onbeforeunload
+			                    | onhashchange
+			                    | onmessage
+			                    | onoffline
+			                    | ononline
+			                    | onpopstate
+			                    | onredo
+			                    | onresize
+			                    | onstorage
+			                    | onundo
+			                    | onunload
+			                    | role
+			                    | aria-atomic
+			                    | aria-busy
+			                    | aria-controls
+			                    | aria-describedby
+			                    | aria-disabled
+			                    | aria-dropeffect
+			                    | aria-flowto
+			                    | aria-grabbed
+			                    | aria-haspopup
+			                    | aria-hidden
+			                    | aria-invalid
+			                    | aria-label
+			                    | aria-labelledby
+			                    | aria-live
+			                    | aria-owns
+			                    | aria-relevant
+			                    | aria-required	
+			                    | spellcheck
+			                    | accesskey
+			                    | itemref
+			                    | itemprop
+			                    | itemscope
+			                    | itemtype
+			                    | itemid
+			                    | name
+			                    | align
+			                    | about
+			                    | prefix
+			                    | property
+			                    | typeof
+			                    | vocab
+			                    | content
+			                    | datatype
+			                    | href
+			                    | rel
+			                    | resource
+			                    | rev
+			                    | inlist
+			                    | translate
+			                    | its-loc-note | its-loc-note-type | its-loc-note-ref | its-term-info-ref | its-term | its-within-text | its-domain-mapping | its-entity-type-source-ref | its-entity-type-ref | its-disambig-type | its-disambig-source-ref | its-disambig-ident-ref | its-locale-filter-list | its-loc-quality-issues-ref | its-loc-quality-issue-type | its-loc-quality-issue-comment | its-loc-quality-issue-severity | its-loc-quality-issue-profile-ref | its-loc-quality-precis-score | its-loc-quality-prcecis-vote | its-loc-quality-precis-threshold | its-loc-quality-precis-profile-ref | its-allowed-characters | its-storage-size | its-storage-encoding
+			                    ) 
+			{
+				string
+			}
+
+}
+include "its20-html5.rnc"
+
+common.attrs &= its-html-attributes

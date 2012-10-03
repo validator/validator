@@ -519,6 +519,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static boolean isDataAttributeDroppingSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/html5-its.rnc".equals(key)
                 || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
                 || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
                 || "http://s.validator.nu/w3c-xhtml5.rnc".equals(key)
@@ -532,6 +533,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static boolean isXmlLangAllowingSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/html5-its.rnc".equals(key)
                 || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
                 || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
                 || "http://s.validator.nu/w3c-xhtml5.rnc".equals(key)
@@ -821,6 +823,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-transitional.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/xhtml10/xhtml-frameset.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/html5.rnc")
+                || schemaUrls.startsWith("http://s.validator.nu/html5-its.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/html5-rdfalite.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/w3c-html5.rnc")
                 || schemaUrls.startsWith("http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc")
@@ -1372,6 +1375,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         loadedValidatorUrls.add(url);
         if ("http://s.validator.nu/xhtml5.rnc".equals(url)
                 || "http://s.validator.nu/html5.rnc".equals(url)
+                || "http://s.validator.nu/html5-its.rnc".equals(url)
                 || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(url)
                 || "http://s.validator.nu/html5-rdfalite.rnc".equals(url)
                 || "http://s.validator.nu/w3c-xhtml5.rnc".equals(url)

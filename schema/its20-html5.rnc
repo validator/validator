@@ -1,0 +1,74 @@
+include "its20-types.rnc"
+
+its-attribute.locNote.html = attribute its-loc-note { its-locNote.type }
+
+its-attribute.locNoteType.html = attribute its-loc-note-type { its-locNoteType.type }
+
+its-attribute.locNoteRef.html = attribute its-loc-note-ref { its-locNoteRef.type }
+
+its-attribute.termInfoRef.html = attribute its-term-info-ref { its-termInfoRef.type }
+
+its-attribute.term.html = attribute its-term { its-term.type }
+
+its-attribute-withinText.html = attribute its-within-text { its-withinText.type }
+
+its-attribute.domainMapping.html = attribute its-domain-mapping { its-domainMapping.type }
+
+its-attribute.entityTypeSourceRef.html = attribute its-entity-type-source-ref { its-entityTypeSourceRef.type }
+
+its-attribute.entityTypeRef.html = attribute its-entity-type-ref { its-entityTypeRef.type }
+
+its-attribute.disambigType.html = attribute its-disambig-type { its-disambigType.type }
+
+its-attribute.disambigSourceRef.html = attribute its-disambig-source-ref { its-disambigSourceRef.type }
+
+its-attribute.disambigIdentRef.html = attribute its-disambig-ident-ref { its-disambigIdentRef.type }
+
+its-attribute.localeFilterList.html = attribute its-locale-filter-list { its-localeFilterList.type }
+
+its-attribute.locQualityIssuesRef.html = attribute its-loc-quality-issues-ref { its-locQualityIssuesRef.type }
+
+its-attribute.locQualityIssueType.html = attribute its-loc-quality-issue-type { its-locQualityIssueType.type } 
+
+its-attribute.locQualityIssueComment.html = attribute its-loc-quality-issue-comment { its-locQualityIssueComment.type }
+
+its-attribute.locQualityIssueSeverity.html = attribute its-loc-quality-issue-severity { its-locQualityIssueSeverity.type }
+
+its-attribute.locQualityIssueProfileRef.html = attribute its-loc-quality-issue-profile-ref { its-locQualityIssueProfileRef.type }
+
+its-attribute.locQualityPrecisScore.html = attribute its-loc-quality-precis-score { its-locQualityPrecisScore.type }
+
+its-attribute.locQualityPrecisVote.html = attribute its-loc-quality-prcecis-vote { its-locQualityPrecisVote.type }
+
+its-attribute.locQualityPrecisThreshold.html = attribute its-loc-quality-precis-threshold { its-locQualityPrecisThreshold.type }
+
+its-attribute.locQualityPrecisProfileRef.html = attribute its-loc-quality-precis-profile-ref { its-locQualityPrecisProfileRef.type }
+
+its-attribute.allowedCharacters.html = attribute its-allowed-characters { its-allowedCharacters.type }
+
+its-attribute.storageSize.html = attribute its-storage-size { its-storageSize.type }
+
+its-attribute.storageEncoding.html = attribute its-storage-encoding { its-storageEncoding.type }
+
+its-html-attributes =
+  ((its-attribute.locNote.html | its-attribute.locNoteRef.html), its-attribute.locNoteType.html?)? &
+  (its-attribute.term.html, its-attribute.termInfoRef.html?)? &
+  its-attribute-withinText.html? &
+  its-attribute.entityTypeSourceRef.html? &
+  its-attribute.entityTypeRef.html? &
+  its-attribute.disambigType.html? &
+  its-attribute.disambigSourceRef.html? &
+  its-attribute.disambigIdentRef.html? &
+  its-attribute.localeFilterList.html? &
+  (its-attribute.locQualityIssuesRef.html
+  | 
+  ((its-attribute.locQualityIssueType.html | its-attribute.locQualityIssueComment.html | (its-attribute.locQualityIssueType.html & its-attribute.locQualityIssueComment.html)) & 
+    its-attribute.locQualityIssueSeverity.html? &
+  its-attribute.locQualityIssueProfileRef.html?
+  )
+  )? &
+  ((its-attribute.locQualityPrecisScore.html | its-attribute.locQualityPrecisVote.html), its-attribute.locQualityPrecisThreshold.html?, its-attribute.locQualityPrecisProfileRef.html?)? &
+  its-attribute.allowedCharacters.html? &
+  (its-attribute.storageSize.html, its-attribute.storageEncoding.html?)?
+
+# FIXME: RNC implementation of locQualityIssues element
