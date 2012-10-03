@@ -46,6 +46,7 @@ public class LinkRel extends AbstractRel {
         "icon",
         "image_src", // extension
         "index", // extension
+        "its-rules", // extension
         "license",
         "me", // extension (Formats table)
         "next",
