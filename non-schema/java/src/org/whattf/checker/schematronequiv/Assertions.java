@@ -1090,6 +1090,8 @@ public class Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
+        boolean w3cBranding = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? true
+            : false;
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;
@@ -1324,7 +1326,7 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
-                    if ((titleVal == null || "".equals(titleVal))
+                    if (w3cBranding || (titleVal == null || "".equals(titleVal))
                             // && (arialabelledbyVal == null || "".equals(arialabelledbyVal))
                             // && (roleVal == null || !"presentation".equals(roleVal))
                             && hasMetaGenerator == false) {
