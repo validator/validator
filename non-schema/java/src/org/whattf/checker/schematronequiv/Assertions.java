@@ -945,8 +945,6 @@ public class Assertions extends Checker {
 
     private int currentFigurePtr;
 
-    private boolean hasMetaGenerator;
-
     /**
      * @see org.whattf.checker.Checker#endDocument()
      */
@@ -1065,7 +1063,6 @@ public class Assertions extends Checker {
         stack = new StackNode[32];
         currentPtr = 0;
         currentFigurePtr = -1;
-        hasMetaGenerator = false;
         stack[0] = null;
     }
 
@@ -1317,8 +1314,6 @@ public class Assertions extends Checker {
                 err("The \u201Carea\u201D element must have a \u201Cmap\u201D ancestor.");
             } else if ("img" == localName) {
                 String titleVal = atts.getValue("", "title");
-                // String arialabelledbyVal = atts.getValue("", "aria-labelledby");
-                // String roleVal = atts.getValue("", "role");
                 if (ismap && ((ancestorMask & HREF_MASK) == 0)) {
                     err("The \u201Cimg\u201D element with the "
                             + "\u201Cismap\u201D attribute set must have an "
@@ -1326,10 +1321,7 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
-                    if (w3cBranding || (titleVal == null || "".equals(titleVal))
-                            // && (arialabelledbyVal == null || "".equals(arialabelledbyVal))
-                            // && (roleVal == null || !"presentation".equals(roleVal))
-                            && hasMetaGenerator == false) {
+                    if (w3cBranding || (titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
                                     + " \u201Calt\u201D attribute, except under"
@@ -1615,12 +1607,6 @@ public class Assertions extends Checker {
                         + " document-wide default language is obsolete."
                         + " Consider specifying the language on the root"
                         + " element instead.");
-                }
-            }
-            if ("meta" == localName) {
-                if (lowerCaseLiteralEqualsIgnoreAsciiCaseString("generator",
-                        atts.getValue("", "name"))) {
-                    hasMetaGenerator = true;
                 }
             }
 
