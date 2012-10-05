@@ -47,31 +47,42 @@ common.attrs.rdfa &=
 		}
 	common.attrs.rdfa.prefix =
 		attribute prefix {
-			xsd:string {
-				pattern = "([\i-[:]][\c-[:]]*: [^ ]+)( [\i-[:]][\c-[:]]*: [^ ]+)*"
-			}
+			(
+				xsd:string {
+					pattern = "([\i-[:]][\c-[:]]*: [^ ]+)( [\i-[:]][\c-[:]]*: [^ ]+)*"
+				}
+				|	string ""
+			)
 		}
 	common.attrs.rdfa.property =
 		attribute property {
-			list {
-				(	common.data.rdfa.term
-				|	common.data.rdfa.curie
-				|	common.data.uri.absolute
-				)+
-			}
+			(
+				list {
+					(	common.data.rdfa.term
+					|	common.data.rdfa.curie
+					|	common.data.uri.absolute
+					)+
+				}
+			|	string ""
+			)
 		}
 	common.attrs.rdfa.typeof =
 		attribute typeof {
+			(
 			list {
 				(	common.data.rdfa.term
 				|	common.data.rdfa.curie
 				|	common.data.uri.absolute
 				)+
 			}
+			|	string ""
+			)
 		}
 	common.attrs.rdfa.vocab =
 		attribute vocab {
-			common.data.uri.absolute
+			(	common.data.uri.absolute
+			|	string ""
+			)
 		}
 	common.attrs.rdfa.content =
 		attribute content {
@@ -82,16 +93,20 @@ common.attrs.rdfa &=
 			(	common.data.rdfa.term
 			|	common.data.rdfa.curie
 			|	common.data.uri.absolute
+			|	string ""
 			)
 		} & nonRDFaLite
 	common.attrs.rdfa.rel =
 		attribute rel {
-			list {
-				(	common.data.rdfa.term
-				|	common.data.rdfa.curie
-				|	common.data.uri.absolute
-				)+
-			}
+			(
+				list {
+					(	common.data.rdfa.term
+					|	common.data.rdfa.curie
+					|	common.data.uri.absolute
+					)+
+				}
+				|	string ""
+			)
 		} & nonRDFaLite
 	common.attrs.rdfa.resource =
 		attribute resource {
@@ -102,12 +117,15 @@ common.attrs.rdfa &=
 		} & nonRDFaLite
 	common.attrs.rdfa.rev =
 		attribute rev {
-			list {
-				(	common.data.rdfa.term
-				|	common.data.rdfa.curie
-				|	common.data.uri.absolute
-				)+
-			}
+			(
+				list {
+					(	common.data.rdfa.term
+					|	common.data.rdfa.curie
+					|	common.data.uri.absolute
+					)+
+				}
+				|	string ""
+			)
 		} & nonRDFaLite
 	common.attrs.rdfa.inlist =
 		attribute inlist {
