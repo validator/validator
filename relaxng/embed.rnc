@@ -142,7 +142,6 @@ namespace local = ""
 			                    | onplaying
 			                    | onprogress
 			                    | onratechange
-			                    | onreadystatechange
 			                    | onreset
 			                    | onscroll
 			                    | onseeked
