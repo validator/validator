@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010 Mozilla Foundation
+ * Copyright (c) 2010-2012 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -48,6 +48,24 @@ abstract class AbstractDatetime extends AbstractDatatype {
         super();
     }
 
+    private void checkMonth(String year, String month)
+            throws DatatypeException {
+        checkMonth(Integer.parseInt(year), Integer.parseInt(month));
+    }
+
+    private void checkMonth(int year, int month)
+            throws DatatypeException {
+        if (year < 1) {
+            throw newDatatypeException("Year cannot be less than 1.");
+        }
+        if (month < 1) {
+            throw newDatatypeException("Month cannot be less than 1.");
+        }
+        if (month > 12) {
+            throw newDatatypeException("Month cannot be greater than 12.");
+        }
+    }
+
     private void checkDate(String year, String month, String day)
             throws DatatypeException {
         checkDate(Integer.parseInt(year), Integer.parseInt(month),
@@ -80,6 +98,42 @@ abstract class AbstractDatetime extends AbstractDatatype {
         return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
     }
 
+    private void checkYearlessDate(String month, String day)
+            throws DatatypeException {
+        checkYearlessDate(Integer.parseInt(month), Integer.parseInt(day));
+    }
+
+    private void checkYearlessDate(int month, int day)
+            throws DatatypeException {
+        if (month < 1) {
+            throw newDatatypeException("Month cannot be less than 1.");
+        }
+        if (month > 12) {
+            throw newDatatypeException("Month cannot be greater than 12.");
+        }
+        if (day < 1) {
+            throw newDatatypeException("Day cannot be less than 1.");
+        }
+    }
+
+    private void checkWeek(String year, String week)
+            throws DatatypeException {
+        checkWeek(Integer.parseInt(year), Integer.parseInt(week));
+    }
+
+    private void checkWeek(int year, int week)
+            throws DatatypeException {
+        if (year < 1) {
+            throw newDatatypeException("Year cannot be less than 1.");
+        }
+        if (week< 1) {
+            throw newDatatypeException("Week cannot be less than 1.");
+        }
+        if (week > 53) {
+            throw newDatatypeException("Week cannot be greater than 53.");
+        }
+    }
+
     protected final void checkHour(String hour) throws DatatypeException {
         checkHour(Integer.parseInt(hour));
     }
@@ -110,6 +164,12 @@ abstract class AbstractDatetime extends AbstractDatatype {
         }
     }
 
+    protected final void checkMilliSecond(String millisecond) throws DatatypeException {
+        if (millisecond.length() > 3) {
+            throw newDatatypeException("A fraction of a second must be one, two, or three digits.");
+        }
+    }
+
     private void checkTzd(String hours, String minutes) throws DatatypeException {
         if (hours.charAt(0) == '+') {
             hours = hours.substring(1);
@@ -130,72 +190,128 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     public void checkValid(CharSequence literal)
             throws DatatypeException {
+        String year;
+        String month;
+        String day;
+        String hour;
+        String minute;
+        String seconds;
+        String milliseconds;
+        String tzdHours;
+        String tzdMinutes;
         Matcher m = getPattern().matcher(literal);
         if (m.matches()) {
-//            int count = m.groupCount();
-//            checkDate(m.group(1), m.group(2), m.group(3));
-//            if (count > 3) {
-//                checkHour(m.group(4));
-//                checkMinute(m.group(5));
-//                String seconds = m.group(6);
-//                if (seconds != null) {
-//                    checkSecond(seconds);
-//                }
-//                if (count > 6) {
-//                    String tzdHours = m.group(7);
-//                    if (tzdHours != null) {
-//                        checkTzd(tzdHours, m.group(8));
-//                    }
-//                }
-//            }
-            int count = m.groupCount();
-            String year = m.group(1);
-            String month = m.group(2);
-            String day = m.group(3);
+            // valid month string
+            year = m.group(1);
+            month = m.group(2);
             if (year != null) {
-                checkDate(year, month, day);                
-            }
-            if (count == 3) {
+                checkMonth(year, month);
                 return;
             }
-            String hour = m.group(4);
-            String minute = m.group(5);
+            // valid date string
+            year = m.group(3);
+            month = m.group(4);
+            day = m.group(5);
+            if (year != null) {
+                checkDate(year, month, day);
+                return;
+            }
+            // valid yearless date string
+            month = m.group(6);
+            day = m.group(7);
+            if (year != null) {
+                checkYearlessDate(month, day);
+                return;
+            }
+            // valid time string
+            hour = m.group(8);
+            minute = m.group(9);
+            seconds = m.group(10);
+            milliseconds = m.group(11);
             if (hour != null) {
                 checkHour(hour);
                 checkMinute(minute);
-            }
-            String seconds = m.group(6);
-            if (seconds != null) {
-                checkSecond(seconds);
-            }
-            if (count == 6) {
+                if (seconds != null) {
+                    checkSecond(seconds);
+                }
+                if (milliseconds != null) {
+                    checkMilliSecond(milliseconds);
+                }
                 return;
             }
-            String tzdHours = m.group(7);
-            String tzdMinutes = m.group(8);
-            if (tzdHours != null) {
-                checkTzd(tzdHours, tzdMinutes);
-            }
-            if (count == 8) {
-                return;
-            }
-            hour = m.group(9);
-            minute = m.group(10);
-            if (hour != null) {
+            // valid local date and time string
+            year = m.group(12);
+            month = m.group(13);
+            day = m.group(14);
+            hour = m.group(15);
+            minute = m.group(16);
+            seconds = m.group(17);
+            milliseconds = m.group(18);
+            if (year != null) {
+                checkDate(year, month, day);
                 checkHour(hour);
                 checkMinute(minute);
-            }
-            seconds = m.group(11);
-            if (seconds != null) {
-                checkSecond(seconds);
-            }
-            if (count == 11) {
+                if (seconds != null) {
+                    checkSecond(seconds);
+                }
+                if (milliseconds != null) {
+                    checkMilliSecond(milliseconds);
+                }
                 return;
             }
-            tzdHours = m.group(12);
-            tzdMinutes = m.group(13);
+            // valid time-zone offset string
+            tzdHours = m.group(19);
+            tzdMinutes = m.group(20);
             if (tzdHours != null) {
                 checkTzd(tzdHours, tzdMinutes);
+                return;
+            }
+            // valid global date and time string
+            year = m.group(21);
+            month = m.group(22);
+            day = m.group(23);
+            hour = m.group(24);
+            minute = m.group(25);
+            seconds = m.group(26);
+            milliseconds = m.group(27);
+            tzdHours = m.group(28);
+            tzdMinutes = m.group(29);
+            if (year != null) {
+                checkDate(year, month, day);
+                checkHour(hour);
+                checkMinute(minute);
+                if (seconds != null) {
+                    checkSecond(seconds);
+                }
+                if (milliseconds != null) {
+                    checkMilliSecond(milliseconds);
+                }
+                if (tzdHours != null) {
+                    checkTzd(tzdHours, tzdMinutes);
+                }
+                return;
+            }
+            // valid week string
+            year = m.group(30);
+            String week = m.group(31);
+            if (year != null) {
+                checkWeek(year, week);
+            }
+            //  valid year (valid non-negative integer)
+            year = m.group(32);
+            if (year != null && Integer.parseInt(year) < 1) {
+                throw newDatatypeException("Year cannot be less than 1.");
+            }
+            // valid duration string
+            milliseconds = m.group(33);
+            if (milliseconds != null) {
+                checkMilliSecond(milliseconds);
+                return;
+            }
+            milliseconds = m.group(34);
+            if (milliseconds != null) {
+                checkMilliSecond(milliseconds);
+                return;
             }
         } else {
             throw newDatatypeException(

@@ -76,8 +76,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return DatetimeTz.THE_INSTANCE;
         } else if ("date-or-time".equals(typeLocalName)) {
             return DateOrTime.THE_INSTANCE;
-        } else if ("date-or-time-content".equals(typeLocalName)) {
-            return DateOrTimeContent.THE_INSTANCE;
         } else if ("date".equals(typeLocalName)) {
             return Date.THE_INSTANCE;
         } else if ("month".equals(typeLocalName)) {
@@ -166,6 +164,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return StringWithoutLineBreaks.THE_INSTANCE;
         } else if ("simple-color".equals(typeLocalName)) {
             return SimpleColor.THE_INSTANCE;
+        } else if ("time-datetime".equals(typeLocalName)) {
+            return TimeDatetime.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

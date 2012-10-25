@@ -10,18 +10,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element time { time.inner & time.attrs }
 	time.attrs =
 		(	common.attrs
-		&	(	time.attrs.datetime?
-				|
-				(
-					(	time.attrs.datetime.dateonly?
-					|	time.attrs.datetime.tz?
-					)
-				)
-			)
+		&	time.attrs.datetime?
 		)
 		time.attrs.datetime =
 			attribute datetime {
-				common.data.date-or-time #REVISIT check format
+				common.data.time-datetime
 			}
 		time.attrs.datetime.dateonly =
 			attribute datetime {

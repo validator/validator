@@ -29,7 +29,7 @@ import org.relaxng.datatype.DatatypeException;
 import org.relaxng.datatype.DatatypeStreamingValidator;
 import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.datatype.CdoCdcPair;
-import org.whattf.datatype.DateOrTimeContent;
+import org.whattf.datatype.TimeDatetime;
 import org.whattf.datatype.ScriptDocumentation;
 import org.whattf.datatype.Script;
 import org.xml.sax.Attributes;
@@ -81,7 +81,7 @@ public final class TextContentChecker extends Checker {
         if ("http://www.w3.org/1999/xhtml".equals(uri)) {
             if ("time".equals(localName)) {
                 if (atts.getIndex("", "datetime") < 0) {
-                    return DateOrTimeContent.THE_INSTANCE.createStreamingValidator(null);
+                    return TimeDatetime.THE_INSTANCE.createStreamingValidator(null);
                 }
             }
             if ("script".equals(localName)) {
@@ -131,7 +131,7 @@ public final class TextContentChecker extends Checker {
                     if ("time".equals(localName)) {
                         try {
                             errBadTextContent(e,
-                                    DateOrTimeContent.class,
+                                    TimeDatetime.class,
                                     localName, uri);
                         } catch (ClassNotFoundException ce) {
                         }
