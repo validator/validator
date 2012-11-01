@@ -4,7 +4,6 @@ mathml3-common.rnc \
 mathml3-content.rnc \
 mathml3-presentation.rnc \
 mathml3-strict-content.rnc \
-mathml3-strict.rnc \
 mathml3.rnc
 CURL=curl
 CURLFLAGS=-s
