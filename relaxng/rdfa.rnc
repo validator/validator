@@ -38,13 +38,6 @@ common.attrs.rdfa &=
 	&	common.attrs.rdfa.rev?
 	&	common.attrs.rdfa.inlist?
 	)
-	common.attrs.rdfa.about =
-		attribute about {
-			(	common.data.rdfa.safecurie
-			|	common.data.rdfa.curie
-			|	common.data.uri
-			)
-		}
 	common.attrs.rdfa.prefix =
 		attribute prefix {
 			(
@@ -66,6 +59,13 @@ common.attrs.rdfa &=
 			|	string ""
 			)
 		}
+	common.attrs.rdfa.resource =
+		attribute resource {
+			(	common.data.rdfa.safecurie
+			|	common.data.rdfa.curie
+			|	common.data.uri
+			)
+		}
 	common.attrs.rdfa.typeof =
 		attribute typeof {
 			(
@@ -84,6 +84,13 @@ common.attrs.rdfa &=
 			|	string ""
 			)
 		}
+	common.attrs.rdfa.about =
+		attribute about {
+			(	common.data.rdfa.safecurie
+			|	common.data.rdfa.curie
+			|	common.data.uri
+			)
+		} & nonRDFaLite
 	common.attrs.rdfa.content =
 		attribute content {
 			string
@@ -106,13 +113,6 @@ common.attrs.rdfa &=
 					)+
 				}
 				|	string ""
-			)
-		} & nonRDFaLite
-	common.attrs.rdfa.resource =
-		attribute resource {
-			(	common.data.rdfa.safecurie
-			|	common.data.rdfa.curie
-			|	common.data.uri
 			)
 		} & nonRDFaLite
 	common.attrs.rdfa.rev =

@@ -51,7 +51,7 @@ public class RdfaLiteChecker extends Checker {
         int len = atts.getLength();
         for (int i = 0; i < len; i++) {
             String att = atts.getLocalName(i);
-            if ("datatype" == att || "resource" == att || "inlist" == att
+            if ("datatype" == att || "about" == att || "inlist" == att
                     || "rev" == att) {
                 warn("RDFa Core attribute \u201C"
                         + att
