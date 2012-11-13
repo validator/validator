@@ -70,11 +70,13 @@ public class Statistics {
                 "XMLNS filter set"), LAX_TYPE(
                 "Being lax about HTTP content type"), IMAGE_REPORT(
                 "Image report"), SHOW_SOURCE("Show source"), INPUT_GET(
-                "GET-based input"), INPUT_POST("POST-based input"), OUTPUT_HTML(
-                "HTML output"), OUTPUT_XHTML("XHTML output"), OUTPUT_XML(
-                "XML output"), OUTPUT_JSON("JSON output"), OUTPUT_GNU(
-                "GNU output"), OUTPUT_TEXT("Text output"), INPUT_HTML(
-                "HTML input"), INPUT_XML("XML input");
+                "GET-based input"), INPUT_POST("POST-based input"), INPUT_TEXT_FIELD(
+                "\u2514 Text-field input"), INPUT_FILE_UPLOAD(
+                "\u2514 File-upload input"), INPUT_ENTITY_BODY(
+                "\u2514 Entity-body input"), OUTPUT_HTML("HTML output"), OUTPUT_XHTML(
+                "XHTML output"), OUTPUT_XML("XML output"), OUTPUT_JSON(
+                "JSON output"), OUTPUT_GNU("GNU output"), OUTPUT_TEXT(
+                "Text output"), INPUT_HTML("HTML input"), INPUT_XML("XML input");
 
         Field(String description) {
             this.description = description;
