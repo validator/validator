@@ -1,4 +1,4 @@
-include "its20-types.rnc"
+include "its20-html5-types.rnc"
 
 its-attribute.locNote.html = attribute its-loc-note { its-locNote.type }
 
@@ -10,21 +10,53 @@ its-attribute.termInfoRef.html = attribute its-term-info-ref { its-termInfoRef.t
 
 its-attribute.term.html = attribute its-term { its-term.type }
 
-its-attribute-withinText.html = attribute its-within-text { its-withinText.type }
+its-attribute.termConfidence.html = attribute its-term-confidence { its-termConfidence.type }
+
+its-attribute.withinText.html = attribute its-within-text { its-withinText.type }
 
 its-attribute.domainMapping.html = attribute its-domain-mapping { its-domainMapping.type }
 
-its-attribute.entityTypeSourceRef.html = attribute its-entity-type-source-ref { its-entityTypeSourceRef.type }
+its-attribute.disambigGranularity.html = attribute its-disambig-granularity { its-disambigGranularity.type } 
 
-its-attribute.entityTypeRef.html = attribute its-entity-type-ref { its-entityTypeRef.type }
+its-attribute.disambigConfidence.html = attribute its-disambig-confidence { its-disambigConfidence.type }
 
-its-attribute.disambigType.html = attribute its-disambig-type { its-disambigType.type }
+its-attribute.disambigClassRef.html = attribute its-disambig-class-ref { its-disambigClassRef.type }
 
-its-attribute.disambigSourceRef.html = attribute its-disambig-source-ref { its-disambigSourceRef.type }
+its-attribute.disambigIdent.html = attribute its-disambig-ident { its-disambigIdent.type }
 
 its-attribute.disambigIdentRef.html = attribute its-disambig-ident-ref { its-disambigIdentRef.type }
 
+its-attribute.disambigSource.html = attribute its-disambig-source { its-disambigSource.type }
+
 its-attribute.localeFilterList.html = attribute its-locale-filter-list { its-localeFilterList.type }
+
+its-attribute.person.html = attribute its-person { its-person.type }
+
+its-attribute.personRef.html = attribute its-person-ref { its-personRef.type }
+
+its-attribute.org.html = attribute its-org { its-org.type }
+
+its-attribute.orgRef.html = attribute its-org-ref { its-orgRef.type }
+
+its-attribute.tool.html = attribute its-tool { its-tool.type }
+
+its-attribute.toolRef.html = attribute its-tool-ref { its-toolRef.type }
+
+its-attribute.revPerson.html = attribute its-rev-person { its-revPerson.type }
+
+its-attribute.revPersonRef.html = attribute its-rev-person-ref { its-revPersonRef.type }
+
+its-attribute.revOrg.html = attribute its-rev-org { its-revOrg.type }
+
+its-attribute.revOrgRef.html = attribute its-rev-org-ref { its-revOrgRef.type }
+
+its-attribute.revTool.html = attribute its-rev-tool { its-revTool.type }
+
+its-attribute.revToolRef.html = attribute its-rev-tool-ref { its-revToolRef.type }
+
+its-attribute.provRef.html = attribute its-prov-ref { its-provRef.type }
+
+its-attribute.provenanceRecordsRef.html = attribute its-provenance-records-ref { its-provenanceRecordsRef.type }
 
 its-attribute.locQualityIssuesRef.html = attribute its-loc-quality-issues-ref { its-locQualityIssuesRef.type }
 
@@ -36,13 +68,19 @@ its-attribute.locQualityIssueSeverity.html = attribute its-loc-quality-issue-sev
 
 its-attribute.locQualityIssueProfileRef.html = attribute its-loc-quality-issue-profile-ref { its-locQualityIssueProfileRef.type }
 
-its-attribute.locQualityPrecisScore.html = attribute its-loc-quality-precis-score { its-locQualityPrecisScore.type }
+its-attribute.locQualityIssueEnabled.html = attribute its-loc-quality-issue-enabled { its-locQualityIssueEnabled.type }
 
-its-attribute.locQualityPrecisVote.html = attribute its-loc-quality-prcecis-vote { its-locQualityPrecisVote.type }
+its-attribute.locQualityRatingScore.html = attribute its-loc-quality-rating-score { its-locQualityRatingScore.type }
 
-its-attribute.locQualityPrecisThreshold.html = attribute its-loc-quality-precis-threshold { its-locQualityPrecisThreshold.type }
+its-attribute.locQualityRatingVote.html = attribute its-loc-quality-rating-vote { its-locQualityRatingVote.type }
 
-its-attribute.locQualityPrecisProfileRef.html = attribute its-loc-quality-precis-profile-ref { its-locQualityPrecisProfileRef.type }
+its-attribute.locQualityRatingScoreThreshold.html = attribute its-loc-quality-rating-score-threshold { its-locQualityRatingScoreThreshold.type }
+
+its-attribute.locQualityRatingVoteThreshold.html = attribute its-loc-quality-rating-vote-threshold { its-locQualityRatingVoteThreshold.type }
+
+its-attribute.locQualityRatingProfileRef.html = attribute its-loc-quality-rating-profile-ref { its-locQualityRatingProfileRef.type }
+
+its-attribute.mtConfidence.html = attribute its-mt-confidence { its-mtConfidence.type }
 
 its-attribute.allowedCharacters.html = attribute its-allowed-characters { its-allowedCharacters.type }
 
@@ -50,25 +88,36 @@ its-attribute.storageSize.html = attribute its-storage-size { its-storageSize.ty
 
 its-attribute.storageEncoding.html = attribute its-storage-encoding { its-storageEncoding.type }
 
+its-attribute.lineBreakType.html = attribute its-line-break-type { its-lineBreakType.type }
+
+its-attribute.annotatorsRef.html = attribute its-annotators-ref { its-annotatorsRef.type }
+
 its-html-attributes =
   ((its-attribute.locNote.html | its-attribute.locNoteRef.html), its-attribute.locNoteType.html?)? &
-  (its-attribute.term.html, its-attribute.termInfoRef.html?)? &
-  its-attribute-withinText.html? &
-  its-attribute.entityTypeSourceRef.html? &
-  its-attribute.entityTypeRef.html? &
-  its-attribute.disambigType.html? &
-  its-attribute.disambigSourceRef.html? &
-  its-attribute.disambigIdentRef.html? &
+  (its-attribute.term.html, its-attribute.termInfoRef.html?, its-attribute.termConfidence.html?)? &
+  its-attribute.withinText.html? &
+  its-attribute.disambigConfidence.html? &
+  its-attribute.disambigGranularity.html? &
+  its-attribute.disambigClassRef.html? &
+  ((its-attribute.disambigSource.html, its-attribute.disambigIdent.html) | its-attribute.disambigIdentRef.html)? &
   its-attribute.localeFilterList.html? &
+  ((
+   (its-attribute.person.html | its-attribute.personRef.html )? &
+   (its-attribute.org.html | its-attribute.orgRef.html )? &
+   (its-attribute.tool.html | its-attribute.toolRef.html )? &
+   (its-attribute.revPerson.html | its-attribute.revPersonRef.html )? &
+   (its-attribute.revOrg.html | its-attribute.revOrgRef.html )? &
+   (its-attribute.revTool.html | its-attribute.revToolRef.html )? &
+    its-attribute.provRef.html?)
+   | its-attribute.provenanceRecordsRef.html)? &
   (its-attribute.locQualityIssuesRef.html
   | 
-  ((its-attribute.locQualityIssueType.html | its-attribute.locQualityIssueComment.html | (its-attribute.locQualityIssueType.html & its-attribute.locQualityIssueComment.html)) & 
-    its-attribute.locQualityIssueSeverity.html? &
-  its-attribute.locQualityIssueProfileRef.html?
-  )
+  (its-attribute.locQualityIssueType.html? & its-attribute.locQualityIssueComment.html? & its-attribute.locQualityIssueSeverity.html? & its-attribute.locQualityIssueProfileRef.html? & its-attribute.locQualityIssueEnabled.html?)
   )? &
-  ((its-attribute.locQualityPrecisScore.html | its-attribute.locQualityPrecisVote.html), its-attribute.locQualityPrecisThreshold.html?, its-attribute.locQualityPrecisProfileRef.html?)? &
+  (((its-attribute.locQualityRatingScore.html, its-attribute.locQualityRatingScoreThreshold.html?) | (its-attribute.locQualityRatingVote.html, its-attribute.locQualityRatingVoteThreshold.html?)), its-attribute.locQualityRatingProfileRef.html?)? &
+  its-attribute.mtConfidence.html? &
   its-attribute.allowedCharacters.html? &
-  (its-attribute.storageSize.html, its-attribute.storageEncoding.html?)?
+  (its-attribute.storageSize.html, its-attribute.storageEncoding.html, its-attribute.lineBreakType.html?)? &
+  its-attribute.annotatorsRef.html?
 
-# FIXME: RNC implementation of locQualityIssues element
+# FIXME: Find way how to validate stand-off markup inside <script>

@@ -1,0 +1,135 @@
+datatypes w = "http://whattf.org/datatype-draft"
+
+its-confidence.type = xsd:decimal { minInclusive = "0" maxInclusive = "1" }
+
+its-locNote.type = string
+
+## The type of localization note
+its-locNoteType.type =
+    ## Localization note is an alert
+    w:string "alert"
+    | 
+    ## Localization note is a description
+    w:string "description"
+
+its-locNoteRef.type = xsd:anyURI
+
+its-termInfoRef.type = xsd:anyURI
+
+## Indicates a term locally
+its-term.type =
+    ## The value 'yes' means that this is a term
+    w:string "yes"
+    | 
+    ## The value 'no' means that this is not a term
+    w:string "no"
+
+its-termConfidence.type = its-confidence.type
+
+## States whether current context is regarded as "within text"
+its-withinText.type =
+    ## The element and its content are part of the flow of its parent element
+    w:string "yes"
+    | 
+    ## The element splits the text flow of its parent element and its content is an independent text flow
+    w:string "no"
+    | 
+    ## The element is part of the flow of its parent element, its content is an independent flow
+    w:string "nested"
+
+## A comma separated list of mappings between values in the content
+## and workflow specific values. The values may contain spaces; in
+## that case they MUST be delimited by quotation marks.
+its-domainMapping.type = string
+
+its-disambigGranularity.type =
+  w:string "lexical-concept" 
+  | 
+  w:string "ontology-concept"
+  | 
+  w:string "entity"
+
+its-disambigConfidence.type = its-confidence.type
+
+its-disambigClassRef.type = xsd:anyURI
+
+its-disambigIdentRef.type = xsd:anyURI
+
+its-disambigIdent.type = string
+
+its-disambigSource.type = string
+
+its-localeFilterList.type = string
+
+its-person.type = string
+
+its-personRef.type = xsd:anyURI
+
+its-org.type = string
+
+its-orgRef.type = xsd:anyURI
+
+its-tool.type = string
+
+its-toolRef.type = xsd:anyURI
+
+its-revPerson.type = string
+
+its-revPersonRef.type = xsd:anyURI
+
+its-revOrg.type = string
+
+its-revOrgRef.type = xsd:anyURI
+
+its-revTool.type = string
+
+its-revToolRef.type = xsd:anyURI
+
+its-provRef.type = list { xsd:anyURI+ }
+
+its-provenanceRecordsRef.type = xsd:anyURI
+
+its-idValue.type = string
+
+its-space.type = "default" | "preserve"
+
+its-locQualityIssuesRef.type = xsd:anyURI
+
+its-locQualityIssueType.type = w:string "terminology" | w:string "mistranslation" |
+  w:string "omission" | w:string "untranslated" | w:string "addition" | w:string "duplication" |
+  w:string "inconsistency" | w:string "grammar" | w:string "legal" | w:string "register" |
+  w:string "locale-specific-content" | w:string "locale-violation" | w:string "style" |
+  w:string "characters" | w:string "misspelling" | w:string "typographical" | w:string "formatting" |
+  w:string "inconsistent-entities" | w:string "numbers" | w:string "markup" | w:string "pattern-problem" |
+  w:string "whitespace" | w:string "internationalization" | w:string "length" | w:string "uncategorized" |
+  w:string "other"
+
+its-locQualityIssueComment.type = string
+
+its-locQualityIssueSeverity.type =  xsd:decimal { minInclusive = "0" maxInclusive = "100" } 
+
+its-locQualityIssueProfileRef.type = xsd:anyURI
+
+its-locQualityIssueEnabled.type = w:string "yes" | w:string "no"
+
+its-locQualityRatingScore.type = xsd:decimal { minInclusive = "0" maxInclusive = "100" } 
+
+its-locQualityRatingVote.type = xsd:integer
+
+its-locQualityRatingScoreThreshold.type = xsd:decimal { minInclusive = "0" maxInclusive = "100" }
+
+its-locQualityRatingVoteThreshold.type = xsd:integer
+
+its-locQualityRatingProfileRef.type = xsd:anyURI
+
+its-mtConfidence.type = its-confidence.type
+
+its-allowedCharacters.type = string
+
+its-storageSize.type = xsd:nonNegativeInteger
+
+its-storageEncoding.type = string
+
+its-lineBreakType.type = w:string "cr" | w:string "lr" | w:string "crlf" | w:string "nel"
+
+its-annotatorsRef.type = string
