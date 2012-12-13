@@ -117,7 +117,7 @@ public class ImageReportAdviceBuilder implements ContentHandler {
                         depth++;
                         treeBuilder.startElement(uri, localName, qName, ai);
                     }
-                } else if (depth == 0 && NS == uri && "div" == localName
+                } else if (NS == uri && "div" == localName
                         && ("printfooter".equals(atts.getValue("", "class")))) {
                     fragments.add((DocumentFragment) treeBuilder.getRoot());
                     treeBuilder = null;
@@ -171,6 +171,9 @@ public class ImageReportAdviceBuilder implements ContentHandler {
 
     public void characters(char[] ch, int start, int length)
             throws SAXException {
+        if (depth < 0) {
+            return;
+        }
         switch (state) {
             case IN_PROSE:
                 treeBuilder.characters(ch, start, length);

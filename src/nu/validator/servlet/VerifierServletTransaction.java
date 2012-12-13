@@ -1000,6 +1000,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 stats.incrementField(Statistics.Field.INPUT_GET);
             } else { // POST
                 stats.incrementField(Statistics.Field.INPUT_POST);
+                Object inputType = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
+                if ("textarea".equals(inputType)) {
+                    stats.incrementField(Statistics.Field.INPUT_TEXT_FIELD);
+                } else if ("file".equals(inputType)) {
+                    stats.incrementField(Statistics.Field.INPUT_FILE_UPLOAD);
+                } else {
+                    stats.incrementField(Statistics.Field.INPUT_ENTITY_BODY);
+                }
             }
             if (htmlParser != null) {
                 stats.incrementField(Statistics.Field.INPUT_HTML);                
