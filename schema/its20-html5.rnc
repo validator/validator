@@ -117,7 +117,7 @@ its-html-attributes =
   (((its-attribute.locQualityRatingScore.html, its-attribute.locQualityRatingScoreThreshold.html?) | (its-attribute.locQualityRatingVote.html, its-attribute.locQualityRatingVoteThreshold.html?)), its-attribute.locQualityRatingProfileRef.html?)? &
   its-attribute.mtConfidence.html? &
   its-attribute.allowedCharacters.html? &
-  (its-attribute.storageSize.html, its-attribute.storageEncoding.html, its-attribute.lineBreakType.html?)? &
+  (its-attribute.storageSize.html, its-attribute.storageEncoding.html?, its-attribute.lineBreakType.html?)? &
   its-attribute.annotatorsRef.html?
 
 # FIXME: Find way how to validate stand-off markup inside <script>
