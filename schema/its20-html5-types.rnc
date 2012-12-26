@@ -33,9 +33,9 @@ its-locNoteType.type =
     ## Localization note is a description
     w:string "description"
 
-its-locNoteRef.type = xsd:anyURI
+its-locNoteRef.type = w:iri-ref
 
-its-termInfoRef.type = xsd:anyURI
+its-termInfoRef.type = w:iri-ref
 
 ## Indicates a term locally
 its-term.type =
@@ -72,9 +72,9 @@ its-disambigGranularity.type =
 
 its-disambigConfidence.type = its-confidence.type
 
-its-disambigClassRef.type = xsd:anyURI
+its-disambigClassRef.type = w:iri-ref
 
-its-disambigIdentRef.type = xsd:anyURI
+its-disambigIdentRef.type = w:iri-ref
 
 its-disambigIdent.type = string
 
@@ -84,37 +84,37 @@ its-localeFilterList.type = string
 
 its-person.type = string
 
-its-personRef.type = xsd:anyURI
+its-personRef.type = w:iri-ref
 
 its-org.type = string
 
-its-orgRef.type = xsd:anyURI
+its-orgRef.type = w:iri-ref
 
 its-tool.type = string
 
-its-toolRef.type = xsd:anyURI
+its-toolRef.type = w:iri-ref
 
 its-revPerson.type = string
 
-its-revPersonRef.type = xsd:anyURI
+its-revPersonRef.type = w:iri-ref
 
 its-revOrg.type = string
 
-its-revOrgRef.type = xsd:anyURI
+its-revOrgRef.type = w:iri-ref
 
 its-revTool.type = string
 
-its-revToolRef.type = xsd:anyURI
+its-revToolRef.type = w:iri-ref
 
-its-provRef.type = list { xsd:anyURI+ }
+its-provRef.type = list { w:iri-ref+ }
 
-its-provenanceRecordsRef.type = xsd:anyURI
+its-provenanceRecordsRef.type = w:iri-ref
 
 its-idValue.type = string
 
 its-space.type = "default" | "preserve"
 
-its-locQualityIssuesRef.type = xsd:anyURI
+its-locQualityIssuesRef.type = w:iri-ref
 
 its-locQualityIssueType.type = w:string "terminology" | w:string "mistranslation" |
   w:string "omission" | w:string "untranslated" | w:string "addition" | w:string "duplication" |
@@ -129,7 +129,7 @@ its-locQualityIssueComment.type = string
 
 its-locQualityIssueSeverity.type =  xsd:decimal { minInclusive = "0" maxInclusive = "100" } 
 
-its-locQualityIssueProfileRef.type = xsd:anyURI
+its-locQualityIssueProfileRef.type = w:iri-ref
 
 its-locQualityIssueEnabled.type = w:string "yes" | w:string "no"
 
@@ -141,7 +141,7 @@ its-locQualityRatingScoreThreshold.type = xsd:decimal { minInclusive = "0" maxIn
 
 its-locQualityRatingVoteThreshold.type = xsd:integer
 
-its-locQualityRatingProfileRef.type = xsd:anyURI
+its-locQualityRatingProfileRef.type = w:iri-ref
 
 its-mtConfidence.type = its-confidence.type
 
