@@ -206,6 +206,52 @@ namespace local = ""
 			                    | resource
 			                    | rev
 			                    | inlist
+			                    | its-loc-note
+                                            | its-loc-note-type
+                                            | its-loc-note-ref
+                                            | its-term-info-ref
+                                            | its-term
+                                            | its-term-confidence
+                                            | its-within-text
+                                            | its-domain-mapping
+                                            | its-disambig-granularity
+                                            | its-disambig-confidence
+                                            | its-disambig-class-ref
+                                            | its-disambig-ident
+                                            | its-disambig-ident-ref
+                                            | its-disambig-source
+                                            | its-locale-filter-list
+                                            | its-person
+                                            | its-person-ref
+                                            | its-org
+                                            | its-org-ref
+                                            | its-tool
+                                            | its-tool-ref
+                                            | its-rev-person
+                                            | its-rev-person-ref
+                                            | its-rev-org
+                                            | its-rev-org-ref
+                                            | its-rev-tool
+                                            | its-rev-tool-ref
+                                            | its-prov-ref
+                                            | its-provenance-records-ref
+                                            | its-loc-quality-issues-ref
+                                            | its-loc-quality-issue-type
+                                            | its-loc-quality-issue-comment
+                                            | its-loc-quality-issue-severity
+                                            | its-loc-quality-issue-profile-ref
+                                            | its-loc-quality-issue-enabled
+                                            | its-loc-quality-rating-score
+                                            | its-loc-quality-rating-vote
+                                            | its-loc-quality-rating-score-threshold
+                                            | its-loc-quality-rating-vote-threshold
+                                            | its-loc-quality-rating-profile-ref
+                                            | its-mt-confidence
+                                            | its-allowed-characters
+                                            | its-storage-size
+                                            | its-storage-encoding
+                                            | its-line-break-type
+                                            | its-annotators-ref
 			                    ) 
 			{
 				string
