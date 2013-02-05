@@ -58,7 +58,14 @@ abstract class AbstractRel extends AbstractDatatype {
         }
         tokensSeen.add(token);
         if (!isRegistered(token)) {
-            throw newDatatypeException(i - 1, "The string ", token, " is not a registered keyword or absolute URL.");
+            try {
+                Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
+                Iri iri = (Iri) dl.createDatatype("iri");
+                iri.checkValid(token);
+            } catch (DatatypeException e) {
+                throw newDatatypeException(i - 1, "The string ", token,
+                        " is not a registered keyword or absolute URL.");
+            }
         }
     }
 

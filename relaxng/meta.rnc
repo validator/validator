@@ -156,7 +156,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		link.attrs.rel =
 			attribute rel {
-				w:link-rel | common.data.uri.absolute
+				w:link-rel
 			}
 		link.attrs.sizes =
 			attribute sizes {
