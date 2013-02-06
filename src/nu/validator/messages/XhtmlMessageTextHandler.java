@@ -35,6 +35,15 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
 
     private final AttributesImpl attrs = new AttributesImpl();
     
+    private static final AttributesImpl LINE_BREAK_ATTRS = new AttributesImpl();
+
+    private static final char[] NEWLINE_SUBSTITUTE = { '\u21A9' };
+
+    static {
+        LINE_BREAK_ATTRS.addAttribute("class", "lf");
+        LINE_BREAK_ATTRS.addAttribute("title", "Line break");
+    }
+
     private final XhtmlSaxEmitter emitter;
 
     private static final Map<String, String[]> MAGIC_LINKS = new HashMap<String, String[]>();
@@ -81,10 +90,33 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
             position = linkstart+text.length();
           }
           if (position < length) {
-            emitter.characters(ch, position, length - position);
+            characterz(ch, position, length - position);
           }
         } else {
-          emitter.characters(ch, start, length);
+          characterz(ch, start, length);
+        }
+    }
+
+    private void characterz(char[] ch, int start, int length)
+            throws SAXException {
+        int end = start + length;
+        for (int i = start; i < end; i++) {
+            char c = ch[i];
+            switch (c) {
+                case '\n':
+                case '\r':
+                    if (start < i) {
+                        emitter.characters(ch, start, i - start);
+                    }
+                    start = i + 1;
+                    emitter.startElement("span", LINE_BREAK_ATTRS);
+                    emitter.characters(NEWLINE_SUBSTITUTE);
+                    emitter.endElement("span");
+                    break;
+            }
+        }
+        if (start < end) {
+            emitter.characters(ch, start, end - start);
         }
     }
 

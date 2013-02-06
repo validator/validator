@@ -829,7 +829,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             if (e instanceof BadAttributeValueException) {
                 BadAttributeValueException ex = (BadAttributeValueException) e;
                 messageTextString(messageTextHandler, BAD_VALUE, false);
-                codeString(messageTextHandler, ex.getAttributeValue());
+                if (ex.getAttributeValue().length() < 200) {
+                    codeString(messageTextHandler, ex.getAttributeValue());
+                }
                 messageTextString(messageTextHandler, FOR, false);
                 attribute(messageTextHandler, ex.getAttributeName(), ex.getCurrentElement(), false);
                 messageTextString(messageTextHandler, ON, false);
