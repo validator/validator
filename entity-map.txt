@@ -94,7 +94,6 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd	www.w3.org/TR/xhtml1/DTD/xht
 http://www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod	www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod
 http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd	www.w3.org/TR/xhtml11/DTD/xhtml11.dtd
 http://www.iana.org/assignments/language-subtag-registry	www.iana.org/assignments/language-subtag-registry
-http://www.iana.org/assignments/character-sets	www.iana.org/assignments/character-sets
 http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions	wiki.whatwg.org/wiki/MicrosyntaxDescriptions
 http://wiki.whatwg.org/wiki/Validator.nu_alt_advice	wiki.whatwg.org/wiki/Validator.nu_alt_advice
 http://s.validator.nu/mml3/mathml3.rnc	schema/mml3/mathml3.rnc
