@@ -55,7 +55,7 @@ public class CharsetData {
         in = new BufferedReader(
                 new InputStreamReader(
                         CharsetData.class.getClassLoader().getResourceAsStream(
-                                "nu/validator/localentities/files/www_iana_org_assignments_character_sets"),
+                                "nu/validator/localentities/files/character-sets"),
                         "UTF-8"));
         consumeRegistry();
         preferred = preferredSet.toArray(EMPTY_STRING_ARRAY);
