@@ -720,6 +720,8 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
+  if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/character-sets")):
+    removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/character-sets"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
@@ -757,6 +759,7 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "style.css"), os.path.join(filesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "script.js"), os.path.join(filesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "character-sets"), os.path.join(filesDir, "character-sets"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "icon.png"), os.path.join(w3cFilesDir, "icon.png"))
