@@ -103,3 +103,17 @@
 
 	common.elem.flow |= footer.elem
 
+## main content: <main>
+
+	main.elem =
+		element main { main.inner & main.attrs }
+	main.attrs =
+		(	common.attrs
+		&	(	common.attrs.aria.implicit.region
+		  	|	common.attrs.aria.landmark.main
+		  	)?
+		)
+	main.inner =
+		( common.inner.flow )
+
+	common.elem.flow |= main.elem
