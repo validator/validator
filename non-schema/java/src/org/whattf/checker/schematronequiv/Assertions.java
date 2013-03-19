@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2011 Mozilla Foundation
+ * Copyright (c) 2008-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -313,7 +313,7 @@ public class Assertions extends Checker {
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
-            "progress", "meter" };
+            "progress", "meter", "article", "aside", "nav" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -414,6 +414,11 @@ public class Assertions extends Checker {
         registerProhibitedAncestor("a", "label");
         registerProhibitedAncestor("button", "label");
         registerProhibitedAncestor("caption", "table");
+        registerProhibitedAncestor("article", "main");
+        registerProhibitedAncestor("aside", "main");
+        registerProhibitedAncestor("header", "main");
+        registerProhibitedAncestor("footer", "main");
+        registerProhibitedAncestor("nav", "main");
     }
 
     private static final int A_BUTTON_MASK = (1 << specialAncestorNumber("a"))
@@ -945,6 +950,8 @@ public class Assertions extends Checker {
 
     private int currentFigurePtr;
 
+    private boolean hasMain;
+
     /**
      * @see org.whattf.checker.Checker#endDocument()
      */
@@ -1064,6 +1071,7 @@ public class Assertions extends Checker {
         currentPtr = 0;
         currentFigurePtr = -1;
         stack[0] = null;
+        hasMain = false;
     }
 
     public void reset() {
@@ -1405,6 +1413,12 @@ public class Assertions extends Checker {
                         node.setTrackDescendants();
                     }
                 }
+            } else if ("main" == localName) {
+                if (hasMain) {
+                    err("A document must not include more than one"
+                            + " \u201Cmain\u201D element.");
+                }
+                hasMain = true;
             }
 
             // progress
