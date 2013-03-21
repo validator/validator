@@ -40,6 +40,9 @@ import org.xml.sax.SAXException;
 
 public class Assertions extends Checker {
 
+    private static boolean w3cBranding = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? true
+            : false;
+
     private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
             String lowerCaseLiteral, String string) {
         if (string == null) {
@@ -163,7 +166,10 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
-        OBSOLETE_ATTRIBUTES.put("longdesc", new String[] { "img", "iframe" });
+        if (!w3cBranding) {
+            OBSOLETE_ATTRIBUTES.put("longdesc",
+                    new String[] { "img", "iframe" });
+        }
         OBSOLETE_ATTRIBUTES.put("methods", new String[] { "link", "a" });
         OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed", "option" });
         OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
@@ -221,8 +227,10 @@ public class Assertions extends Checker {
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("language",
                 "Use the \u201Ctype\u201D attribute instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
-                "Use a regular \u201Ca\u201D element to link to the description.");
+        if (!w3cBranding) {
+            OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
+                    "Use a regular \u201Ca\u201D element to link to the description.");
+        }
         OBSOLETE_ATTRIBUTES_MSG.put("methods",
                 "Use the HTTP OPTIONS feature instead.");
         OBSOLETE_ATTRIBUTES_MSG.put("name",
@@ -1095,8 +1103,6 @@ public class Assertions extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String name, Attributes atts) throws SAXException {
-        boolean w3cBranding = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? true
-            : false;
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;

@@ -20,6 +20,7 @@ namespace local = ""
 		&	img.attrs.width?
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
+		&	img.attrs.longdesc?
 		& img.attrs.border? # obsolete
 		&	common.attrs.aria?
 		)
@@ -46,6 +47,10 @@ namespace local = ""
 		img.attrs.ismap =
 			attribute ismap {
 				w:string "ismap" | w:string ""
+			}
+		img.attrs.longdesc =
+			attribute longdesc {
+				common.data.uri
 			}
 		img.attrs.border =
 			attribute border {
