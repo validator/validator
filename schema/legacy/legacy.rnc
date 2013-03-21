@@ -404,12 +404,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## longdesc attribute
 
-	img.attrs.longdesc =
-		attribute longdesc {
-			string
-		}
-	img.attrs &= img.attrs.longdesc?
-
 	iframe.attrs.longdesc =
 		attribute longdesc {
 			string
