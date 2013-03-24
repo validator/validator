@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -116,7 +116,7 @@ public class VerifierServlet extends HttpServlet {
             Integer.parseInt(System.getProperty("nu.validator.servlet.connection-timeout","5000")),
             Integer.parseInt(System.getProperty("nu.validator.servlet.socket-timeout","5000")),
             100);
-        PrudentHttpEntityResolver.setUserAgent("Validator.nu/LV");
+        PrudentHttpEntityResolver.setUserAgent(System.getProperty("nu.validator.servlet.user-agent","Validator.nu/LV"));
         // force some class loading
         new VerifierServletTransaction(null, null);
         new MessageEmitterAdapter(null, false, null, 0, null);
