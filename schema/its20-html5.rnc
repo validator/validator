@@ -37,19 +37,19 @@ its-attribute.withinText.html = attribute its-within-text { its-withinText.type 
 
 its-attribute.domainMapping.html = attribute its-domain-mapping { its-domainMapping.type }
 
-its-attribute.disambigGranularity.html = attribute its-disambig-granularity { its-disambigGranularity.type } 
+its-attribute.taConfidence.html = attribute its-ta-confidence { its-taConfidence.type }
 
-its-attribute.disambigConfidence.html = attribute its-disambig-confidence { its-disambigConfidence.type }
+its-attribute.taClassRef.html = attribute its-ta-class-ref { its-taClassRef.type }
 
-its-attribute.disambigClassRef.html = attribute its-disambig-class-ref { its-disambigClassRef.type }
+its-attribute.taIdent.html = attribute its-ta-ident { its-taIdent.type }
 
-its-attribute.disambigIdent.html = attribute its-disambig-ident { its-disambigIdent.type }
+its-attribute.taIdentRef.html = attribute its-ta-ident-ref { its-taIdentRef.type }
 
-its-attribute.disambigIdentRef.html = attribute its-disambig-ident-ref { its-disambigIdentRef.type }
-
-its-attribute.disambigSource.html = attribute its-disambig-source { its-disambigSource.type }
+its-attribute.taSource.html = attribute its-ta-source { its-taSource.type }
 
 its-attribute.localeFilterList.html = attribute its-locale-filter-list { its-localeFilterList.type }
+
+its-attribute.localeFilterType.html = attribute its-locale-filter-type { its-localeFilterType.type }
 
 its-attribute.person.html = attribute its-person { its-person.type }
 
@@ -117,11 +117,10 @@ its-html-attributes =
   ((its-attribute.locNote.html | its-attribute.locNoteRef.html), its-attribute.locNoteType.html?)? &
   (its-attribute.term.html, its-attribute.termInfoRef.html?, its-attribute.termConfidence.html?)? &
   its-attribute.withinText.html? &
-  its-attribute.disambigConfidence.html? &
-  its-attribute.disambigGranularity.html? &
-  its-attribute.disambigClassRef.html? &
-  ((its-attribute.disambigSource.html, its-attribute.disambigIdent.html) | its-attribute.disambigIdentRef.html)? &
-  its-attribute.localeFilterList.html? &
+  its-attribute.taConfidence.html? &
+  its-attribute.taClassRef.html? &
+  ((its-attribute.taSource.html, its-attribute.taIdent.html) | its-attribute.taIdentRef.html)? &
+  (its-attribute.localeFilterList.html, its-attribute.localeFilterType.html?)? &
   ((
    (its-attribute.person.html | its-attribute.personRef.html )? &
    (its-attribute.org.html | its-attribute.orgRef.html )? &
