@@ -214,13 +214,13 @@ namespace local = ""
                                             | its-term-confidence
                                             | its-within-text
                                             | its-domain-mapping
-                                            | its-disambig-granularity
-                                            | its-disambig-confidence
-                                            | its-disambig-class-ref
-                                            | its-disambig-ident
-                                            | its-disambig-ident-ref
-                                            | its-disambig-source
+                                            | its-ta-confidence
+                                            | its-ta-class-ref
+                                            | its-ta-ident
+                                            | its-ta-ident-ref
+                                            | its-ta-source
                                             | its-locale-filter-list
+                                            | its-locale-filter-type
                                             | its-person
                                             | its-person-ref
                                             | its-org
