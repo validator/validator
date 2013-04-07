@@ -353,6 +353,7 @@ namespace local = ""
 		&	iframe.attrs.height?
 		&	iframe.attrs.sandbox?
 		&	iframe.attrs.seamless?
+		&	iframe.attrs.allowfullscreen?
 		&	(	common.attrs.aria
 			|	common.attrs.aria.implicit.region
 			)?
@@ -528,6 +529,10 @@ namespace local = ""
 					,	( w:string "allow-top-navigation" )?
 					}
 				} & v5only
+		iframe.attrs.allowfullscreen =
+			attribute allowfullscreen {
+				w:string "allowfullscreen" | w:string ""
+			} & v5only
 	iframe.inner =
 		( text )
 
