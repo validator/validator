@@ -406,7 +406,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	img.attrs.longdesc =
 		attribute longdesc {
-			common.data.uri
+			common.data.uri.non-empty
 		}
 	img.attrs &= img.attrs.longdesc?
 
