@@ -23,6 +23,9 @@
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 	ins.inner.flow =
 		( common.inner.flow )
@@ -42,6 +45,9 @@
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 	del.inner.flow =
 		( common.inner.flow )

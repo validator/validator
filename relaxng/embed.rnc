@@ -15,12 +15,12 @@ namespace local = ""
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
-		&	img.attrs.alt?
+		&	img.attrs.alt? # ARIA: if alt empty, only allowed role value is "presentation"; check in assertions
 		&	img.attrs.height?
 		&	img.attrs.width?
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
-		& img.attrs.border? # obsolete
+		&	img.attrs.border? # obsolete
 		&	common.attrs.aria?
 		)
 		img.attrs.src =
@@ -67,6 +67,11 @@ namespace local = ""
 		&	embed.attrs.height?
 		&	embed.attrs.width?
 		&	embed.attrs.other*
+		&	(	common.attrs.aria.role.application
+			|	common.attrs.aria.role.document
+			|	common.attrs.aria.role.img
+                	|	common.attrs.aria.role.presentation
+			)?
 		)
 		embed.attrs.src =
 			attribute src {
@@ -174,6 +179,7 @@ namespace local = ""
 			                    | aria-describedby
 			                    | aria-disabled
 			                    | aria-dropeffect
+			                    | aria-expanded
 			                    | aria-flowto
 			                    | aria-grabbed
 			                    | aria-haspopup
@@ -184,7 +190,7 @@ namespace local = ""
 			                    | aria-live
 			                    | aria-owns
 			                    | aria-relevant
-			                    | aria-required	
+			                    | aria-required
 			                    | spellcheck
 			                    | accesskey
 			                    | itemref
@@ -282,7 +288,11 @@ namespace local = ""
 		&	object.attrs.usemap?
 		&	object.attrs.name?
 		&	common-form.attrs.form?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.region
+		        |	common.attrs.aria.role.application
+			|	common.attrs.aria.role.document
+			|	common.attrs.aria.role.img
+			)?
 		)
 		object.attrs.data =
 			attribute data {
@@ -328,6 +338,9 @@ namespace local = ""
 		(	common.attrs
 		&	param.attrs.name
 		&	param.attrs.value
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		param.attrs.name =
 			attribute name {
@@ -354,8 +367,10 @@ namespace local = ""
 		&	iframe.attrs.sandbox?
 		&	iframe.attrs.seamless?
 		&	iframe.attrs.allowfullscreen?
-		&	(	common.attrs.aria
-			|	common.attrs.aria.implicit.region
+		&	(	common.attrs.aria.implicit.region
+			|	common.attrs.aria.role.application
+			|	common.attrs.aria.role.document
+			|	common.attrs.aria.role.img
 			)?
 		)
 		iframe.attrs.src =
@@ -550,6 +565,9 @@ namespace local = ""
 	map.attrs =
 		(	common.attrs
 		&	map.attrs.name
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		) # REVISIT make id required in Schematron
 		map.attrs.name =
 			attribute name {
@@ -582,6 +600,10 @@ namespace local = ""
 		&	shared-hyperlink.attrs.hreflang?
 		&	shared-hyperlink.attrs.type?
 		&	area.attrs.shape?
+		&	(	common.attrs.aria.role.link
+			|	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		area.attrs.alt =
 			attribute alt {

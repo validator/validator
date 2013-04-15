@@ -11,6 +11,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 	time.attrs =
 		(	common.attrs
 		&	time.attrs.datetime?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		time.attrs.datetime =
 			attribute datetime {
@@ -41,6 +44,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	meter.attrs.high?
 		&	meter.attrs.max?
 		&	meter.attrs.optimum?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		meter.attrs.value =
 			attribute value {

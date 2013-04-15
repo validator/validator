@@ -1664,7 +1664,9 @@ public class Assertions extends Checker {
 
         // ARIA required parents
         Set<String> requiredParents = REQUIRED_ROLE_PARENT_BY_CHILD.get(role);
-        if (requiredParents != null) {
+        if (requiredParents != null && !"presentation".equals(parentRole)
+               && !"tbody".equals(localName) && !"tfoot".equals(localName)
+               && !"thead".equals(localName)) {
             if (!requiredParents.contains(parentRole)) {
                 err("An element with \u201Crole=" + role + "\u201D requires "
                         + renderRoleSet(requiredParents) + " on the parent.");
@@ -1673,10 +1675,13 @@ public class Assertions extends Checker {
 
         // ARIA only allowed children
         Set<String> allowedChildren = ALLOWED_CHILD_ROLE_BY_PARENT.get(parentRole);
-        if (allowedChildren != null) {
+        if (allowedChildren != null && !"presentation".equals(parentRole) && !"presentation".equals(role)
+               && !"tbody".equals(localName) && !"tfoot".equals(localName)
+               && !"thead".equals(localName)) {
             if (!allowedChildren.contains(role)) {
                 err("Only elements with "
                         + renderRoleSet(allowedChildren)
+                        + " or \u201Crole=presentation\u201D"
                         + " are allowed as children of an element with \u201Crole="
                         + parentRole + "\u201D.");
             }
