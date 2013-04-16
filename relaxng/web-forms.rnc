@@ -54,6 +54,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.text.attrs.type?
 		&	shared-form.attrs.maxlength? 
+		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.size?
 		&	input.text.attrs.value? 
 		&	(	common.attrs.aria
