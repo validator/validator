@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -457,6 +457,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
             schemaMap.put("http://s.validator.nu/html5/assertions.sch",
                     CheckerSchema.ASSERTION_SCH);
+            schemaMap.put("http://s.validator.nu/html4/assertions.sch",
+                    CheckerSchema.HTML4ASSERTION_SCH);
             schemaMap.put("http://c.validator.nu/obsolete/",
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
             schemaMap.put("http://c.validator.nu/xml-pi/",
