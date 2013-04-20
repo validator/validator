@@ -1064,8 +1064,11 @@ public class Assertions extends Checker {
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
-            err(
-                    "The \u201Caria-activedescendant\u201D attribute must refer to a descendant element.",
+            warn(
+                    "Attribute \u201Caria-activedescendant\u201D value should "
+                    + "either refer to a descendant element, or should "
+                    + "be accompanied by attribute \u201Caria-owns\u201D "
+                    + "that includes the same value.",
                     locator);
         }
     }
@@ -1106,8 +1109,10 @@ public class Assertions extends Checker {
         Set<String> ids = new HashSet<String>();
         String role = null;
         String activeDescendant = null;
+        String owns = null;
         String forAttr = null;
         boolean href = false;
+        boolean activeDescendantInAriaOwns = false;
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -1167,6 +1172,8 @@ public class Assertions extends Checker {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal) {
                         activeDescendant = atts.getValue(i);
+                    } else if ("aria-owns" == attLocal) {
+                        owns = atts.getValue(i);
                     } else if ("list" == attLocal) {
                         list = atts.getValue(i);
                     } else if ("lang" == attLocal) {
@@ -1655,6 +1662,8 @@ public class Assertions extends Checker {
                         role = atts.getValue(i);
                     } else if ("aria-activedescendant" == attLocal) {
                         activeDescendant = atts.getValue(i);
+                    } else if ("aria-owns" == attLocal) {
+                        owns = atts.getValue(i);
                     }
                 }
             }
@@ -1709,6 +1718,21 @@ public class Assertions extends Checker {
         }
         allIds.addAll(ids);
 
+        // aria-activedescendant in aria-owns
+        if (activeDescendant != null && !"".equals(activeDescendant)) {
+            String activeDescendantVal = atts.getValue("",
+                    "aria-activedescendant");
+            if (owns != null && !"".equals(owns)) {
+                String[] tokens = AttributeUtil.split(owns);
+                for (int i = 0; i < tokens.length; i++) {
+                    String token = tokens[i];
+                    if (token.equals(activeDescendantVal)) {
+                        activeDescendantInAriaOwns = true;
+                        break;
+                    }
+                }
+            }
+        }
         // activedescendant
         for (Iterator<Map.Entry<StackNode, Locator>> iterator = openActiveDescendants.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry<StackNode, Locator> entry = iterator.next();
@@ -1727,7 +1751,7 @@ public class Assertions extends Checker {
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);
-            if (activeDescendant != null) {
+            if (activeDescendant != null && !activeDescendantInAriaOwns) {
                 openActiveDescendants.put(child, new LocatorImpl(
                         getDocumentLocator()));
             }
