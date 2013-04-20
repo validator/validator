@@ -85,7 +85,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element li { li.inner & li.attrs }
 	li.attrs =
 		(	common.attrs 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 	li.inner =
 		( common.inner.flow )
@@ -136,7 +136,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	oli.attrs =
 		(	common.attrs
 		&	oli.attrs.value?
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		oli.attrs.value =
 			attribute value {
