@@ -141,6 +141,22 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put(
                 "noframes",
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
+        if (w3cBranding) {
+        OBSOLETE_ELEMENTS.put(
+                "hgroup",
+                "To mark up subheadings, consider either just putting the "
+                + "subheading into a \u201Cp\u201D element after the "
+                + "\u201Ch1\u201D-\u201Ch6\u201D element containing the "
+                + "main heading, or else putting the subheading directly "
+                + "within the \u201Ch1\u201D-\u201Ch6\u201D element "
+                + "containing the main heading, but separated from the main "
+                + "heading by punctuation and/or within, for example, a "
+                + "\u201Cspan class=\"subheading\"\u201D element with "
+                + "differentiated styling. "
+                + "To group headings and subheadings, alternative titles, "
+                + "or taglines, consider using the \u201Cheader\u201D or "
+                + "\u201Cdiv\u201D elements.");
+    }
     }
 
     private static final Map<String, String[]> OBSOLETE_ATTRIBUTES = new HashMap<String, String[]>();
