@@ -481,6 +481,8 @@ public class Assertions extends Checker {
         registerRequiredParentRole("tree", "treeitem");
         registerRequiredParentRole("list", "listitem");
         registerRequiredParentRole("row", "gridcell");
+        registerRequiredParentRole("row", "columnheader");
+        registerRequiredParentRole("row", "rowheader");
     }
 
     private static final Set<String> MUST_NOT_DANGLE_IDREFS = new HashSet<String>();
@@ -517,6 +519,8 @@ public class Assertions extends Checker {
         registerAllowedChildRole("radiogroup", "radio");
         registerAllowedChildRole("tablist", "tab");
         registerAllowedChildRole("row", "gridcell");
+        registerAllowedChildRole("row", "columnheader");
+        registerAllowedChildRole("row", "rowheader");
     }
 
     private class IdrefLocator {
