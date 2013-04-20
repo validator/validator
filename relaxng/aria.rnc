@@ -568,6 +568,17 @@ common.attrs.aria.implicit.listitem |=
 	common.attrs.aria |= aria.document
 	common.attrs.aria.landmark.document |= aria.document
 
+## form
+	aria.form =
+		(	aria.role.form
+		&	aria.state.expanded?
+		)
+		aria.role.form =
+			attribute role { string "form" }
+
+	common.attrs.aria |= aria.form
+	common.attrs.aria.landmark.form |= aria.form
+
 ## grid
 	aria.grid =
 		(	aria.role.grid
