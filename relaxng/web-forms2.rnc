@@ -206,13 +206,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.datetime.attrs.max? 
 		&	input.attrs.step.float? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.datetime.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.datetime.attrs.type = 
 			attribute type {
@@ -248,13 +244,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.datetime-local.attrs.max? 
 		&	input.attrs.step.float? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.datetime-local.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.datetime-local.attrs.type = 
 			attribute type {
@@ -290,13 +282,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.date.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.date.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.date.attrs.type = 
 			attribute type {
@@ -332,13 +320,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.month.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.month.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.month.attrs.type = 
 			attribute type {
@@ -374,13 +358,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.time.attrs.max? 
 		&	input.attrs.step.float? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.time.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.time.attrs.type = 
 			attribute type {
@@ -416,13 +396,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.week.attrs.max? 
 		&	input.attrs.step.integer? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	input.week.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.week.attrs.type = 
 			attribute type {
@@ -458,15 +434,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.number.attrs.max? 
 		&	input.attrs.step.float? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.placeholder?
 		&	input.number.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.spinbutton
-			)?
+		&	common.attrs.aria
 		)	
 		input.number.attrs.type = 
 			attribute type {
@@ -502,11 +473,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.range.attrs.max? 
 		&	input.attrs.step.float? 
 		&	input.range.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.slider
-			)?
+		&	common.attrs.aria
 		)	
 		input.range.attrs.type = 
 			attribute type {
@@ -549,12 +516,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			|	input.email.attrs.value.single?
 			)?
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.textbox
-			|	common.attrs.aria.role.combobox
-			)?
+		&	common.attrs.aria
 		)	
 		input.email.attrs.type = 
 			attribute type {
@@ -589,12 +551,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.url.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.textbox
-			|	common.attrs.aria.role.combobox
-			)?
+		&	common.attrs.aria
 		)	
 		input.url.attrs.type = 
 			attribute type {
@@ -621,17 +578,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.maxlength? 
 		&	shared-form.attrs.pattern? 
 		&	shared-form.attrs.readonly? 
-		&	common.attrs.aria.prop.readonly?
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	shared-form.attrs.dirname?
 		&	input.search.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.combobox
-			)?
+		&	common.attrs.aria
 		)	
 		input.search.attrs.type = 
 			attribute type {
@@ -662,12 +614,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.tel.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			|	common.attrs.aria.role.textbox
-			|	common.attrs.aria.role.combobox
-			)?
+		&	common.attrs.aria
 		)	
 		input.tel.attrs.type = 
 			attribute type {
@@ -692,10 +639,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.color.attrs.value? 
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
-			|	common.attrs.aria.role.menuitem
-			)?
+		&	common.attrs.aria
 		)	
 		input.color.attrs.type = 
 			attribute type {
