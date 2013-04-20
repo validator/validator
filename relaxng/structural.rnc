@@ -22,6 +22,9 @@
 			|	common.attrs.aria.role.search
 			|	common.attrs.aria.role.status
 			|	common.attrs.aria.role.presentation
+			|	common.attrs.aria.landmark.application
+			|	common.attrs.aria.landmark.document
+			|	common.attrs.aria.landmark.search
 			)?
 		)
 	section.inner =
