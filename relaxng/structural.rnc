@@ -11,10 +11,8 @@
 		&	(	common.attrs.aria.implicit.region
 			|	common.attrs.aria.role.alert
 			|	common.attrs.aria.role.alertdialog
-			|	common.attrs.aria.role.application
 			|	common.attrs.aria.role.contentinfo
 			|	common.attrs.aria.role.dialog
-			|	common.attrs.aria.role.document
 			|	common.attrs.aria.role.log
 			|	common.attrs.aria.role.main
 			|	common.attrs.aria.role.marquee

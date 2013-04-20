@@ -31,7 +31,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 				|	common.attrs.aria.role.menuitemradio
 				|	common.attrs.aria.role.tab
 				|	common.attrs.aria.role.treeitem
-				|	common.attrs.aria.role.presentation
 				)
 				|	common.attrs.aria.implicit.link
 			)?

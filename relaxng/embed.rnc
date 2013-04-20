@@ -67,10 +67,9 @@ namespace local = ""
 		&	embed.attrs.height?
 		&	embed.attrs.width?
 		&	embed.attrs.other*
-		&	(	common.attrs.aria.role.application
-			|	common.attrs.aria.role.document
+		&	(	common.attrs.aria.landmark.application
+			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
-                	|	common.attrs.aria.role.presentation
 			)?
 		)
 		embed.attrs.src =
@@ -289,8 +288,8 @@ namespace local = ""
 		&	object.attrs.name?
 		&	common-form.attrs.form?
 		&	(	common.attrs.aria.implicit.region
-		        |	common.attrs.aria.role.application
-			|	common.attrs.aria.role.document
+			|	common.attrs.aria.landmark.application
+			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
 			)?
 		)
@@ -368,8 +367,8 @@ namespace local = ""
 		&	iframe.attrs.seamless?
 		&	iframe.attrs.allowfullscreen?
 		&	(	common.attrs.aria.implicit.region
-			|	common.attrs.aria.role.application
-			|	common.attrs.aria.role.document
+			|	common.attrs.aria.landmark.application
+			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
 			)?
 		)
