@@ -208,7 +208,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.datetime.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.datetime.attrs.type = 
 			attribute type {
@@ -246,7 +246,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.datetime-local.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.datetime-local.attrs.type = 
 			attribute type {
@@ -284,7 +284,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.date.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.date.attrs.type = 
 			attribute type {
@@ -322,7 +322,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.month.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.month.attrs.type = 
 			attribute type {
@@ -360,7 +360,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.time.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.time.attrs.type = 
 			attribute type {
@@ -398,7 +398,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.required? 
 		&	input.week.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.week.attrs.type = 
 			attribute type {
@@ -437,7 +437,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.placeholder?
 		&	input.number.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.number.attrs.type = 
 			attribute type {
@@ -473,7 +473,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.range.attrs.max? 
 		&	input.attrs.step.float? 
 		&	input.range.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.range.attrs.type = 
 			attribute type {
@@ -516,7 +516,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			|	input.email.attrs.value.single?
 			)?
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.email.attrs.type = 
 			attribute type {
@@ -551,7 +551,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.url.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.url.attrs.type = 
 			attribute type {
@@ -583,7 +583,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.placeholder?
 		&	shared-form.attrs.dirname?
 		&	input.search.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.search.attrs.type = 
 			attribute type {
@@ -614,7 +614,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.tel.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.tel.attrs.type = 
 			attribute type {
@@ -639,7 +639,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.autofocus? 
 		&	input.attrs.list? 
 		&	input.color.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)	
 		input.color.attrs.type = 
 			attribute type {
@@ -661,7 +661,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.name?
 		&	common-form.attrs.form?
 		&	output.attrs.for?
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		output.attrs.for = 
 			attribute for {

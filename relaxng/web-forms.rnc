@@ -57,7 +57,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.size?
 		&	input.text.attrs.value? 
-		&	(	common.attrs.aria
+		&	(	common.attrs.aria?
 			|	common.attrs.aria.implicit.input
 			)?
 		)		
@@ -84,7 +84,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.size?
 		&	input.password.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.password.attrs.type = 
 			attribute type {
@@ -107,7 +107,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.checkbox.attrs.type
 		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.checkbox.attrs.type = 
 			attribute type {
@@ -184,7 +184,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.submit.attrs.type
 		&	input.submit.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.submit.attrs.type = 
 			attribute type {
@@ -206,7 +206,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.reset.attrs.type
 		&	input.reset.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.reset.attrs.type = 
 			attribute type {
@@ -229,7 +229,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.file.attrs.type
 		&	input.file.attrs.accept?
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.file.attrs.type = 
 			attribute type {
@@ -251,7 +251,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.hidden.attrs.type
 		&	input.hidden.attrs.value? 
-		&	common.attrs.aria
+		&	common.attrs.aria?
 		)
 		input.hidden.attrs.type = 
 			attribute type {
@@ -519,7 +519,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
 		&	form.attrs.accept-charset?
-		&	(	common.attrs.aria
+		&	(	common.attrs.aria?
 			|	common.attrs.aria.implicit.region
 			)?
 		)
@@ -556,7 +556,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element fieldset { fieldset.inner & fieldset.attrs }
 	fieldset.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria
+		&	(	common.attrs.aria?
 			|	common.attrs.aria.implicit.region
 			)?
 		)	
