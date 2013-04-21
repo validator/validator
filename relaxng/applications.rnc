@@ -107,6 +107,22 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 	common.elem.phrasing |= progress.elem
 
+## Dialog box, inspector, or window: <dialog>
+	dialog.elem =
+		element dialog { dialog.inner & dialog.attrs }
+	dialog.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		&	dialog.attrs.open?
+		)
+		dialog.attrs.open =
+			attribute open {
+				w:string "open" | w:string ""
+			}
+	dialog.inner =
+		( common.inner.flow )
+	common.elem.flow |= dialog.elem
+
 ## Command with an associated action: <command type='command'>
 
 	command.command.elem =
