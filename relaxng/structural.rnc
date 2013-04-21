@@ -17,7 +17,6 @@
 			|	common.attrs.aria.role.main
 			|	common.attrs.aria.role.marquee
 			|	common.attrs.aria.role.region
-			|	common.attrs.aria.role.search
 			|	common.attrs.aria.role.status
 			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.landmark.application
