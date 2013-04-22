@@ -288,7 +288,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 				common.data.integer.non-negative
 			}
 	canvas.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	canvas.inner.phrasing =
 		( common.inner.phrasing )
 	

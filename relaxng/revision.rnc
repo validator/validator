@@ -28,7 +28,7 @@
 			)?
 		)
 	ins.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	ins.inner.phrasing =
 		( common.inner.phrasing )
 
@@ -50,7 +50,7 @@
 			)?
 		)
 	del.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	del.inner.phrasing =
 		( common.inner.phrasing )
 

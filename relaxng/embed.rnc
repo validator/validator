@@ -319,7 +319,7 @@ namespace local = ""
 			}
 	object.inner.flow =
 		(	param.elem*
-		,	common.inner.flow
+		,	common.inner.transparent.flow
 		)
 	object.inner.phrasing =
 		(	param.elem*
@@ -573,7 +573,7 @@ namespace local = ""
 				common.data.name
 			}
 	map.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	map.inner.phrasing =
 		( common.inner.phrasing )
 

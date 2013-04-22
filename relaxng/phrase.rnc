@@ -42,7 +42,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	a.inner.phrasing =
 		( common.inner.phrasing )
 	a.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 
 	common.elem.phrasing |= a.elem.phrasing
 	common.elem.flow |= a.elem.flow

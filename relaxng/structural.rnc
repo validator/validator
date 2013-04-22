@@ -25,9 +25,7 @@
 			)?
 		)
 	section.inner =
-		(	style.elem.scoped*
-		,	common.inner.flow 
-		)
+		( common.inner.flow )
 
 	common.elem.flow |= section.elem
 

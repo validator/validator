@@ -202,9 +202,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	div.inner =
-		(	style.elem.scoped*
-		,	common.inner.flow 
-		)
+		( common.inner.flow )
 
 	common.elem.flow |= div.elem
 
