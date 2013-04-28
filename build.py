@@ -722,8 +722,8 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/character-sets")):
-    removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/character-sets"))
+  if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry")):
+    removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
