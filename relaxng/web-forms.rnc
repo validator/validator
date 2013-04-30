@@ -107,7 +107,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.checkbox.attrs.type
 		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.role.checkbox
+			|	common.attrs.aria.role.menuitemcheckbox
+			)?
 		)
 		input.checkbox.attrs.type = 
 			attribute type {
