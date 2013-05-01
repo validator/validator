@@ -242,7 +242,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		menu.attrs.type =
 			attribute type {
-				w:string "toolbar" | w:string "context"
+				w:string "toolbar" | w:string "popup"
 			}
 		menu.attrs.label =
 			attribute label {
