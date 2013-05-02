@@ -117,9 +117,9 @@ its-html-attributes =
   ((its-attribute.locNote.html | its-attribute.locNoteRef.html), its-attribute.locNoteType.html?)? &
   (its-attribute.term.html, its-attribute.termInfoRef.html?, its-attribute.termConfidence.html?)? &
   its-attribute.withinText.html? &
-  its-attribute.taConfidence.html? &
-  its-attribute.taClassRef.html? &
-  ((its-attribute.taSource.html, its-attribute.taIdent.html) | its-attribute.taIdentRef.html)? &
+  (its-attribute.taConfidence.html? &
+   (its-attribute.taClassRef.html |
+   ((its-attribute.taSource.html, its-attribute.taIdent.html) | its-attribute.taIdentRef.html))+) &
   (its-attribute.localeFilterList.html, its-attribute.localeFilterType.html?)? &
   ((
    (its-attribute.person.html | its-attribute.personRef.html )? &
@@ -132,7 +132,7 @@ its-html-attributes =
    | its-attribute.provenanceRecordsRef.html)? &
   (its-attribute.locQualityIssuesRef.html
   | 
-  (its-attribute.locQualityIssueType.html? & its-attribute.locQualityIssueComment.html? & its-attribute.locQualityIssueSeverity.html? & its-attribute.locQualityIssueProfileRef.html? & its-attribute.locQualityIssueEnabled.html?)
+  ((its-attribute.locQualityIssueType.html | its-attribute.locQualityIssueComment.html)+ & its-attribute.locQualityIssueSeverity.html? & its-attribute.locQualityIssueProfileRef.html? & its-attribute.locQualityIssueEnabled.html?)
   )? &
   (((its-attribute.locQualityRatingScore.html, its-attribute.locQualityRatingScoreThreshold.html?) | (its-attribute.locQualityRatingVote.html, its-attribute.locQualityRatingVoteThreshold.html?)), its-attribute.locQualityRatingProfileRef.html?)? &
   its-attribute.mtConfidence.html? &
