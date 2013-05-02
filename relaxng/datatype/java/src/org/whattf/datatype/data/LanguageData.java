@@ -114,7 +114,7 @@ public class LanguageData {
         in = new BufferedReader(
                 new InputStreamReader(
                         LanguageData.class.getClassLoader().getResourceAsStream(
-                                "nu/validator/localentities/files/www_iana_org_assignments_language_subtag_registry"),
+                                "nu/validator/localentities/files/language-subtag-registry"),
                         "UTF-8"));
         consumeRegistry();
         prepareArrays();

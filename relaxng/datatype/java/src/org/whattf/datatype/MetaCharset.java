@@ -37,20 +37,6 @@ public class MetaCharset extends AbstractDatatype {
      */
     public static final MetaCharset THE_INSTANCE = new MetaCharset();
 
-    private static String[] preferred = null;
-
-    private static Map<String, String> nameByAliasMap = new HashMap<String, String>();
-
-    static {
-        try {
-            CharsetData data = new CharsetData();
-            preferred = data.getPreferred();
-            nameByAliasMap = data.getNameByAliasMap();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     // private static final Pattern THE_PATTERN =
     // Pattern.compile("^[tT][eE][xX][tT]/[hH][tT][mM][lL]; ?[cC][hH][aA][rR][sS][eE][tT]=[0-9a-zA-Z!#$%&'+_`{}~^-]+$");
 
@@ -109,20 +95,16 @@ public class MetaCharset extends AbstractDatatype {
             }
         }
         String encodingName = lower.substring(offset);
-        if (!isPreferred(encodingName)) {
-            String preferred = nameByAliasMap.get(encodingName);
-            if (preferred == null) {
+        if ("replacement".equals(encodingName) || !CharsetData.isPreferred(encodingName)) {
+            String preferred = CharsetData.preferredForLabel(encodingName);
+            if (preferred == null || "replacement".equals(preferred)) {
                 throw newDatatypeException("\u201c" + encodingName
                         + "\u201d is not a valid character encoding name.");
             }
             throw newDatatypeException("\u201c" + encodingName
-                    + "\u201d is not a preferred MIME name." + " Use \u201C"
-                    + preferred + "\u201D instead.");
+                    + "\u201d is not a preferred encoding name." + " The preferred label for this encoding is \u201C"
+                    + preferred + "\u201D.");
         }
-    }
-
-    private boolean isPreferred(String encodingName) {
-        return Arrays.binarySearch(preferred, encodingName) > -1;
     }
 
     @Override public String getName() {

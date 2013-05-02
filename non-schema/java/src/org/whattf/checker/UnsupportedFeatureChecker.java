@@ -26,16 +26,14 @@ public class UnsupportedFeatureChecker extends Checker {
             warn("The \u201Cmenu\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("command" == localName) {
             warn("The \u201Ccommand\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
+        } else if ("dialog" == localName) {
+            warn("The \u201Cdialog\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("details" == localName) {
             warn("The \u201Cdetails\u201D element is not supported properly by browsers yet. It would probably be better to wait for implementations.");
         } else if ("track" == localName) {
             warn("The \u201Ctrack\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("bdi" == localName) {
             warn("The \u201Cbdi\u201D element is not supported by browsers yet.");
-        } else if ("style" == localName) {
-            if (atts.getIndex("", "scoped") > -1) {
-                warn("The \u201Cscoped\u201D attribute on the \u201Cstyle\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
         } else if ("blockquote" == localName) {
             if (atts.getIndex("", "cite") > -1) {
                 warn("The \u201Ccite\u201D attribute on the \u201Cblockquote\u201D element is not supported by browsers yet.");

@@ -100,7 +100,11 @@ public class MetaName extends AbstractDatatype {
         "essaydirectory", // extension
         "format-detection", // extension
         "generator",
+        "geo.a1", // extension
+        "geo.a2", // extension
+        "geo.a3", // extension
         "geo.country", // extension
+        "geo.lmk", // extension
         "geo.placename", // extension
         "geo.position", // extension
         "geo.region", // extension

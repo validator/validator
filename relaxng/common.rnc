@@ -89,8 +89,15 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Prose Content
 
+	common.inner.transparent.flow =
+		( text & common.elem.flow* )
+
 	common.inner.flow =
-		( text & common.elem.flow* ) # REVISIT <style scoped>
+		(	style.elem.scoped?,
+			(	text
+			&	common.elem.flow*
+			)
+		)
 
 # #####################################################################
 ##  Common Attributes                                                 #
@@ -403,6 +410,50 @@ common-form.attrs.form = ( notAllowed )
 # #####################################################################
 
 common.attrs.aria = ( notAllowed )
+common.attrs.aria.role.alert = ( notAllowed )
+common.attrs.aria.role.alertdialog = ( notAllowed )
+common.attrs.aria.role.application = ( notAllowed )
+common.attrs.aria.role.article = ( notAllowed )
+common.attrs.aria.role.banner = ( notAllowed )
+common.attrs.aria.role.button = ( notAllowed )
+common.attrs.aria.role.checkbox = ( notAllowed )
+common.attrs.aria.role.combobox = ( notAllowed )
+common.attrs.aria.role.complementary = ( notAllowed )
+common.attrs.aria.role.contentinfo = ( notAllowed )
+common.attrs.aria.role.dialog = ( notAllowed )
+common.attrs.aria.role.directory = ( notAllowed )
+common.attrs.aria.role.document = ( notAllowed )
+common.attrs.aria.role.heading = ( notAllowed )
+common.attrs.aria.role.img = ( notAllowed )
+common.attrs.aria.role.link = ( notAllowed )
+common.attrs.aria.role.list = ( notAllowed )
+common.attrs.aria.role.listitem = ( notAllowed )
+common.attrs.aria.role.log = ( notAllowed )
+common.attrs.aria.role.listbox = ( notAllowed )
+common.attrs.aria.role.main = ( notAllowed )
+common.attrs.aria.role.marquee = ( notAllowed )
+common.attrs.aria.role.menu = ( notAllowed )
+common.attrs.aria.role.menubar = ( notAllowed )
+common.attrs.aria.role.menuitem = ( notAllowed )
+common.attrs.aria.role.menuitemcheckbox = ( notAllowed )
+common.attrs.aria.role.menuitemradio = ( notAllowed )
+common.attrs.aria.role.note = ( notAllowed )
+common.attrs.aria.role.option = ( notAllowed )
+common.attrs.aria.role.presentation = ( notAllowed )
+common.attrs.aria.role.progressbar = ( notAllowed )
+common.attrs.aria.role.radio = ( notAllowed )
+common.attrs.aria.role.region = ( notAllowed )
+common.attrs.aria.role.search = ( notAllowed )
+common.attrs.aria.role.separator = ( notAllowed )
+common.attrs.aria.role.slider = ( notAllowed )
+common.attrs.aria.role.spinbutton = ( notAllowed )
+common.attrs.aria.role.status = ( notAllowed )
+common.attrs.aria.role.tab = ( notAllowed )
+common.attrs.aria.role.tablist = ( notAllowed )
+common.attrs.aria.role.textbox = ( notAllowed )
+common.attrs.aria.role.toolbar = ( notAllowed )
+common.attrs.aria.role.tree = ( notAllowed )
+common.attrs.aria.role.treeitem = ( notAllowed )
 common.attrs.aria.implicit.button = ( notAllowed )
 common.attrs.aria.implicit.input = ( notAllowed )
 common.attrs.aria.implicit.region = ( notAllowed )
@@ -413,6 +464,7 @@ common.attrs.aria.implicit.link = ( notAllowed )
 common.attrs.aria.implicit.listitem = ( notAllowed )
 common.attrs.aria.implicit.img = ( notAllowed )
 common.attrs.aria.implicit.select = ( notAllowed )
+common.attrs.aria.prop.readonly = ( notAllowed )
 common.attrs.aria.landmark.application = ( notAllowed )
 common.attrs.aria.landmark.banner = ( notAllowed )
 common.attrs.aria.landmark.complementary = ( notAllowed )

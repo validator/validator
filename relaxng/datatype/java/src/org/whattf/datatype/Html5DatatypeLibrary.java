@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2007-2011 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -166,6 +166,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return SimpleColor.THE_INSTANCE;
         } else if ("time-datetime".equals(typeLocalName)) {
             return TimeDatetime.THE_INSTANCE;
+        } else if ("svg-pathdata".equals(typeLocalName)) {
+            return new SvgPathData();
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

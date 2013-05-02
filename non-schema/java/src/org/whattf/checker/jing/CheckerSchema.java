@@ -34,6 +34,7 @@ import org.whattf.checker.UnsupportedFeatureChecker;
 import org.whattf.checker.UsemapChecker;
 import org.whattf.checker.XmlPiChecker;
 import org.whattf.checker.schematronequiv.Assertions;
+import org.whattf.checker.schematronequiv.Html4Assertions;
 import org.whattf.checker.table.TableChecker;
 
 import com.thaiopensource.util.PropertyMap;
@@ -56,6 +57,8 @@ public class CheckerSchema implements Schema {
 
     public static final CheckerSchema ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Assertions.class);
     
+    public static final CheckerSchema HTML4ASSERTION_SCH = new CheckerSchema(PropertyMap.EMPTY, Html4Assertions.class);
+
     public static final CheckerSchema CONFORMING_BUT_OBSOLETE_WARNER = new CheckerSchema(PropertyMap.EMPTY, ConformingButObsoleteWarner.class);
     
     public static final CheckerSchema XML_PI_CHECKER = new CheckerSchema(PropertyMap.EMPTY, XmlPiChecker.class);

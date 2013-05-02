@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -26,7 +27,8 @@ import java.util.Comparator;
 
 /**
  * Compares cells first by their <code>bottom</code> field and then by their 
- * <code>left</code> field. The cells can never be equal.
+ * <code>left</code> field. The cells can never be equal unless they are the
+ * same object.
  * 
  * @version $Id$
  * @author hsivonen
@@ -44,13 +46,29 @@ final class VerticalCellComparator implements Comparator<Cell> {
             return -1;
         } else if (cell0.getBottom() > cell1.getBottom()) {
             return 1;
+        } else if (cell0 == cell1) {
+            return 0;
         } else {
             if (cell0.getLeft() < cell1.getLeft()) {
                 return -1;
             } else if (cell0.getLeft() > cell1.getLeft()) {
                 return 1;
             } else {
-                throw new IllegalStateException("Two cells in effect cannot start on the same column, so this should never happen!");
+                throw new IllegalStateException(
+                        "Two cells in effect cannot start on the same column, so this should never happen!!\n"
+                                + "cell0 from line "
+                                + cell0.getLineNumber()
+                                + ", bottom="
+                                + cell0.getBottom()
+                                + ", left="
+                                + cell0.getLeft()
+                                + "\n"
+                                + "cell1 from line "
+                                + cell1.getLineNumber()
+                                + ", bottom="
+                                + cell1.getBottom()
+                                + ", left="
+                                + cell1.getLeft());
             }
         }
     }

@@ -23,9 +23,10 @@
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
+		&	common.attrs.aria?
 		)
 	ins.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	ins.inner.phrasing =
 		( common.inner.phrasing )
 
@@ -42,9 +43,10 @@
 		(	common.attrs
 		&	edit.attrs.cite?
 		&	edit.attrs.datetime?
+		&	common.attrs.aria?
 		)
 	del.inner.flow =
-		( common.inner.flow )
+		( common.inner.transparent.flow )
 	del.inner.phrasing =
 		( common.inner.phrasing )
 

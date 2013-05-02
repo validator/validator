@@ -42,7 +42,7 @@ common.attrs.rdfa &=
 		attribute prefix {
 			(
 				xsd:string {
-					pattern = "([\i-[:]][\c-[:]]*: [^ ]+)( [\i-[:]][\c-[:]]*: [^ ]+)*"
+					pattern = "([\i-[:]][\c-[:]]*: [^ ]+)(\s+[\i-[:]][\c-[:]]*: [^ ]+)*"
 				}
 				|	string ""
 			)
@@ -171,9 +171,11 @@ a.attrs &= common.attrs.rdfa.no-rel-rev
 area.attrs &= common.attrs.rdfa.no-rel
 base.attrs &= common.attrs.rdfa.no-rel
 
-link.rdfa.elem =
-	element link { link.inner & link.rdfa.attrs }
-link.rdfa.attrs =
+link.rdfa.elem.metadata =
+	element link { link.inner & link.rdfa.attrs.metadata }
+link.rdfa.elem.phrasing =
+	element link { link.inner & link.rdfa.attrs.phrasing }
+link.rdfa.attrs.metadata =
 	(	common.attrs.basic
 	&	common.attrs.i18n
 	&	common.attrs.present
@@ -206,8 +208,33 @@ link.rdfa.attrs =
 	&	link.attrs.sizes?
 	#	link.attrs.title included in common.attrs
 	)
-	common.elem.metadata |= link.rdfa.elem
-	common.elem.phrasing |= link.rdfa.elem
+link.rdfa.attrs.phrasing =
+	(	common.attrs.basic
+	&	common.attrs.i18n
+	&	common.attrs.present
+	&	common.attrs.other
+	&	common.attrs.rdfa.property
+	&	(	link.attrs.rel
+		|	common.attrs.rdfa.rel
+		)?
+	&	link.attrs.href
+	&	common.attrs.rdfa.about?
+	&	common.attrs.rdfa.prefix?
+	&	common.attrs.rdfa.typeof?
+	&	common.attrs.rdfa.vocab?
+	&	common.attrs.rdfa.content?
+	&	common.attrs.rdfa.datatype?
+	&	common.attrs.rdfa.resource?
+	&	common.attrs.rdfa.rev?
+	&	common.attrs.rdfa.inlist?
+	&	shared-hyperlink.attrs.hreflang?
+	&	shared-hyperlink.attrs.media?
+	&	shared-hyperlink.attrs.type?
+	&	link.attrs.sizes?
+	#	link.attrs.title included in common.attrs
+	)
+	common.elem.metadata |= link.rdfa.elem.metadata
+	common.elem.phrasing |= link.rdfa.elem.phrasing
 
 meta.name.attrs.name |= common.attrs.rdfa.property
 meta.name.attrs &= common.attrs.rdfa.no-content-noproperty

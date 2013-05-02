@@ -49,6 +49,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	source.attrs.src
 		&	source.attrs.type?
 		&	source.attrs.media?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		source.attrs.src =
 			attribute src {
@@ -89,6 +92,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	video.attrs.poster?
 		&	video.attrs.height?
 		&	video.attrs.width?
+		&	common.attrs.aria.landmark.application?
 		)
 		video.attrs.poster =
 			attribute poster {
@@ -105,7 +109,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	video.inner.flow =
 		(	media.source
 		,	track.elem*
-		,	common.inner.flow
+		,	common.inner.transparent.flow
 		)
 	video.inner.phrasing =
 		(	media.source
@@ -125,11 +129,12 @@ datatypes w = "http://whattf.org/datatype-draft"
 	audio.attrs =
 		(	common.attrs
 		&	media.attrs
+		&	common.attrs.aria.landmark.application?
 		)
 	audio.inner.flow =
 		(	media.source
 		,	track.elem*
-		,	common.inner.flow
+		,	common.inner.transparent.flow
 		)
 	audio.inner.phrasing =
 		(	media.source
@@ -152,6 +157,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	track.attrs.srclang?
 		&	track.attrs.label?
 		&	track.attrs.default?
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
 		)
 		track.attrs.kind =
 			attribute kind {
@@ -183,10 +191,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element figure { figure.inner & figure.attrs }
 	figure.attrs =
 		(	common.attrs
-		&	common.attrs.aria.implicit.img?
+		&	common.attrs.aria?
 		)
 	figure.inner =
-		(	( figcaption.elem, common.inner.flow )
+		(	( figcaption.elem?, common.inner.flow )
 		|	( common.inner.flow, figcaption.elem? )
 		)
 
@@ -197,6 +205,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 	figcaption.elem =
 		element figcaption { figcaption.inner & figcaption.attrs }
 	figcaption.attrs =
-		( common.attrs )
+		(	common.attrs
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
+		)
 	figcaption.inner =
 		( common.inner.flow )

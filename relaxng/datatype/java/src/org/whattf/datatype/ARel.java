@@ -65,6 +65,7 @@ public class ARel extends AbstractRel {
         "prev",
         "previous", // HTML4
         "profile", // extension
+        "publisher", // extension (Google Plus)
         "search",
         "section", // HTML4
         "sibling", // extension (Formats table)
