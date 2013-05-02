@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -64,6 +65,7 @@ import nu.validator.messages.TooManyErrorsException;
 import nu.validator.messages.XhtmlMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.servlet.imagereview.ImageCollector;
+import nu.validator.servlet.OutlineBuildingXMLReaderWrapper.Section;
 import nu.validator.source.SourceCode;
 import nu.validator.spec.Spec;
 import nu.validator.spec.html5.Html5SpecBuilder;
@@ -340,7 +342,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private SourceCode sourceCode = new SourceCode();
 
+    private Deque<Section> outline;
+
     private boolean showSource;
+
+    private boolean showOutline;
 
     private BaseUriTracker baseUriTracker = null;
 
@@ -457,6 +463,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     CheckerSchema.UNCHECKED_SUBTREE_WARNER);
             schemaMap.put("http://s.validator.nu/html5/assertions.sch",
                     CheckerSchema.ASSERTION_SCH);
+            schemaMap.put("http://s.validator.nu/html4/assertions.sch",
+                    CheckerSchema.HTML4ASSERTION_SCH);
             schemaMap.put("http://c.validator.nu/obsolete/",
                     CheckerSchema.CONFORMING_BUT_OBSOLETE_WARNER);
             schemaMap.put("http://c.validator.nu/xml-pi/",
@@ -675,6 +683,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         setup();
 
         showSource = (request.getParameter("showsource") != null);
+        showOutline = (request.getParameter("showoutline") != null);
         if (request.getParameter("showimagereport") != null) {
             imageCollector = new ImageCollector(sourceCode);
         }
@@ -929,7 +938,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
                 documentInput.setEncoding(charsetOverride);
             }
-            reader.parse(documentInput);
+            if (showOutline) {
+                reader = new OutlineBuildingXMLReaderWrapper(reader, request);
+                reader.parse(documentInput);
+                outline = (Deque<Section>) request.getAttribute("http://validator.nu/properties/document-outline");
+            } else {
+                reader.parse(documentInput);
+            }
         } catch (TooManyErrorsException e) {
             log4j.debug("TooManyErrorsException", e);
             errorHandler.fatalError(e);
@@ -961,6 +976,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             gatherStatistics();
         }
         if (isHtmlOrXhtml) {
+            XhtmlOutlineEmitter outlineEmitter = new XhtmlOutlineEmitter(
+                    contentHandler, outline);
+            outlineEmitter.emit();
             StatsEmitter.emit(contentHandler, this);
         }
     }
@@ -995,6 +1013,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
             if (showSource) {
                 stats.incrementField(Statistics.Field.SHOW_SOURCE);
+            }
+            if (showOutline) {
+                stats.incrementField(Statistics.Field.SHOW_OUTLINE);
             }
             if (methodIsGet) {
                 stats.incrementField(Statistics.Field.INPUT_GET);
@@ -1642,6 +1663,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     void emitShowSourceField() throws SAXException {
         emitter.checkbox("showsource", "yes", showSource);
+    }
+
+    /**
+     * @throws SAXException
+     *
+     */
+    void emitShowOutlineField() throws SAXException {
+        emitter.checkbox("showoutline", "yes", showOutline);
     }
 
     /**

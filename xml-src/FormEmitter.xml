@@ -72,6 +72,13 @@
 						?> Show Source</label
 					></td
 				></tr
+				><tr title="Display an outline of the input document."
+					><th></th
+					><td
+						><label for='showoutline'><?SaxCompiler-code t.emitShowOutlineField();
+						?> Show Outline</label
+					></td
+				></tr
 				><tr
 					><th></th
 					><td

@@ -69,9 +69,9 @@ public class Statistics {
                 "Parser set to explicit HTML4 mode"), XMLNS_FILTER(
                 "XMLNS filter set"), LAX_TYPE(
                 "Being lax about HTTP content type"), IMAGE_REPORT(
-                "Image report"), SHOW_SOURCE("Show source"), INPUT_GET(
-                "GET-based input"), INPUT_POST("POST-based input"), INPUT_TEXT_FIELD(
-                "\u2514 Text-field input"), INPUT_FILE_UPLOAD(
+                "Image report"), SHOW_SOURCE("Show source"), SHOW_OUTLINE(
+                "Show outline"), INPUT_GET("GET-based input"), INPUT_POST(
+                "POST-based input"), INPUT_TEXT_FIELD("\u2514 Text-field input"), INPUT_FILE_UPLOAD(
                 "\u2514 File-upload input"), INPUT_ENTITY_BODY(
                 "\u2514 Entity-body input"), OUTPUT_HTML("HTML output"), OUTPUT_XHTML(
                 "XHTML output"), OUTPUT_XML("XML output"), OUTPUT_JSON(

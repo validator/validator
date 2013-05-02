@@ -93,8 +93,6 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd	www.w3.org/TR/xhtml1/DTD
 http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd	www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd
 http://www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod	www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod
 http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd	www.w3.org/TR/xhtml11/DTD/xhtml11.dtd
-http://www.iana.org/assignments/language-subtag-registry	www.iana.org/assignments/language-subtag-registry
-http://www.iana.org/assignments/character-sets	www.iana.org/assignments/character-sets
 http://wiki.whatwg.org/wiki/MicrosyntaxDescriptions	wiki.whatwg.org/wiki/MicrosyntaxDescriptions
 http://wiki.whatwg.org/wiki/Validator.nu_alt_advice	wiki.whatwg.org/wiki/Validator.nu_alt_advice
 http://s.validator.nu/mml3/mathml3.rnc	schema/mml3/mathml3.rnc
@@ -148,6 +146,7 @@ http://s.validator.nu/svg11/svg11.rnc	schema/svg11/svg11.rnc
 http://s.validator.nu/svg11/svg11-basic-inc.rnc	schema/svg11/svg11-basic-inc.rnc
 http://s.validator.nu/svg11/svg11-tiny-inc.rnc	schema/svg11/svg11-tiny-inc.rnc
 http://s.validator.nu/svg11/svg11-inc.rnc	schema/svg11/svg11-inc.rnc
+http://s.validator.nu/html4/assertions.sch	schema/html4/assertions.sch
 http://s.validator.nu/html5/assertions.sch	schema/html5/assertions.sch
 http://s.validator.nu/html5/applications.rnc	schema/html5/applications.rnc
 http://s.validator.nu/html5/aria.rnc	schema/html5/aria.rnc
@@ -214,12 +213,10 @@ http://s.validator.nu/xhtml10/style.rnc	schema/xhtml10/style.rnc
 http://s.validator.nu/xhtml10/table.rnc	schema/xhtml10/table.rnc
 http://s.validator.nu/xhtml10/target.rnc	schema/xhtml10/target.rnc
 http://s.validator.nu/xhtml10/text.rnc	schema/xhtml10/text.rnc
-http://s.validator.nu/xhtml10/wcag.sch	schema/xhtml10/wcag.sch
 http://s.validator.nu/xhtml10/xhtml-basic.rnc	schema/xhtml10/xhtml-basic.rnc
 http://s.validator.nu/xhtml10/xhtml-frameset.rnc	schema/xhtml10/xhtml-frameset.rnc
 http://s.validator.nu/xhtml10/xhtml-strict.rnc	schema/xhtml10/xhtml-strict.rnc
 http://s.validator.nu/xhtml10/xhtml-transitional.rnc	schema/xhtml10/xhtml-transitional.rnc
-http://s.validator.nu/xhtml10/xhtml.sch	schema/xhtml10/xhtml.sch
 http://s.validator.nu/inkscape/inkscape.rnc	schema/inkscape/inkscape.rnc
 http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc	schema/svg-xhtml5-rdf-mathml.rnc
 http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-mathml.rnc
