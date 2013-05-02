@@ -348,3 +348,52 @@ dl.inputattrs .highlight {
 
 	}
 }
+
+#outline h2 {
+  margin-bottom: 0;
+}
+
+#outline .heading {
+  color: #BF4F00;
+  font-weight: bold;
+}
+
+#outline ol {
+  margin-top: 0;
+  padding-top: 3px;
+}
+
+#outline li {
+  padding: 3px 0 3px 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+}
+
+#outline li li {
+  list-style: none;
+}
+
+#outline li:first-child::before {
+  position: absolute;
+  top: 0;
+  height: 0.6em;
+  left: -0.75em;
+  width: 0.5em;
+  border-color: #bbb;
+  border-style: none none solid solid;
+  content: '';
+  border-width: 0.1em;
+}
+
+#outline li:not(:last-child)::after {
+  position: absolute;
+  top: 0;
+  bottom: -0.6em;
+  left: -0.75em;
+  width: 0.5em;
+  border-color: #bbb;
+  border-style: none none solid solid;
+  content: '';
+  border-width: 0.1em;
+}
