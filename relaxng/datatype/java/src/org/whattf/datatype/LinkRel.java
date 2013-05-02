@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -37,6 +37,7 @@ public class LinkRel extends AbstractRel {
         "chapter", // HTML4
         "contents", // HTML4
         "copyright", // HTML4
+        "discussion", // extension
         "dns-prefetch", // extension
         "edituri", // extension
         "glossary", // HTML4
@@ -46,6 +47,7 @@ public class LinkRel extends AbstractRel {
         "icon",
         "image_src", // extension
         "index", // extension
+        "issues", // extension
         "its-rules", // extension
         "license",
         "me", // extension (Formats table)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -44,6 +44,7 @@ public class ARel extends AbstractRel {
         "crush", // extension (Formats table)
         "date", // extension (Formats table)
         "disclosure", // extension
+        "discussion", // extension
         "external", // extension
         "friend", // extension (Formats table)
         "glossary", // HTML4
@@ -51,6 +52,7 @@ public class ARel extends AbstractRel {
         "home", // extension
         "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
         "index", // extension
+        "issues", // extension
         "kin", // extension (Formats table)
         "license",
         "me", // extension (Formats table)
