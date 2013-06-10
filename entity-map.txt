@@ -230,7 +230,7 @@ http://s.validator.nu/html5-rdfalite.rnc	schema/html5-rdfalite.rnc
 http://s.validator.nu/xhtml5.rnc	schema/xhtml5.rnc
 http://s.validator.nu/xhtml5-rdfalite.rnc	schema/xhtml5-rdfalite.rnc
 http://s.validator.nu/w3c-html5.rnc	schema/html5-no-microdata.rnc
-http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc	schema/html5-rdfalite.rnc
+http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc	schema/html5-rdfalite-w3c.rnc
 http://s.validator.nu/w3c-html5-microdata-rdfa.rnc	schema/html5-rdfafull.rnc
 http://s.validator.nu/w3c-xhtml5.rnc	schema/xhtml5-no-microdata.rnc
 http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc	schema/xhtml5-rdfalite.rnc
