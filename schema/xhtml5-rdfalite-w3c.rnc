@@ -1,4 +1,5 @@
+nonRDFaLite = notAllowed
 include "xhtml5-svg-mathml.rnc"
 include "its20-html5.rnc"
-include "html5/xhtml5full-xhtml-no-microdata.rnc"
+include "html5/xhtml5full-xhtml-rdfa.rnc"
 common.attrs &= its-html-attributes
