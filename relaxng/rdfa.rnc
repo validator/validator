@@ -236,5 +236,5 @@ link.rdfa.attrs.phrasing =
 	common.elem.metadata |= link.rdfa.elem.metadata
 	common.elem.phrasing |= link.rdfa.elem.phrasing
 
-meta.name.attrs.name |= common.attrs.rdfa.property
+meta.name.attrs.name &= common.attrs.rdfa.property?
 meta.name.attrs &= common.attrs.rdfa.no-content-noproperty
