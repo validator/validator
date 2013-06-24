@@ -189,7 +189,7 @@ common.attrs.i18n =
 #		} & XMLonly
 	common.attrs.translate =
 		attribute translate {
-			w:string "yes" | w:string "no"
+			w:string "" | w:string "yes" | w:string "no"
 		}
 
 common.attrs.present =
