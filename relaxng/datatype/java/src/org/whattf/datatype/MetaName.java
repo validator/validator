@@ -147,6 +147,7 @@ public class MetaName extends AbstractDatatype {
         "revisit-after", // extension
         "rights-standard", // extension
         "robots", // extension
+        "skype_toolbar", // extension
         "slurp", // extension
         "startindex", // extension
         "teoma", // extension
