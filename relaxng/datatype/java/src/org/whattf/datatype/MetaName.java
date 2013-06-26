@@ -136,6 +136,8 @@ public class MetaName extends AbstractDatatype {
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
+        "msapplication-tilecolor", // extension
+        "msapplication-tileimage", // extension
         "msapplication-tooltip", // extension
         "msapplication-window", // extension
         "msvalidate.01", // extension
@@ -165,6 +167,7 @@ public class MetaName extends AbstractDatatype {
         "wt.cg_n", // extension
         "wt.cg_s", // extension
         "wt.mc_id", // extension
+        "wt.si_p", // extension
         "wt.sv", // extension
         "wt.ti", // extension
         "y_key", // extension
