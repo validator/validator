@@ -44,7 +44,7 @@ grammar {
             | string "inherit"
         }?
     SVG.visibility.attrib =
-        attribute visibility { string "visible" | string "hidden" | string "inherit" }?
+        attribute visibility { string "visible" | string "hidden" | string "collapse" | string "inherit" }?
     SVG.Graphics.extra.attrib = empty
     SVG.Graphics.attrib &=
         SVG.display.attrib,
