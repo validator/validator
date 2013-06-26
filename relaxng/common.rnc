@@ -93,7 +93,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( text & common.elem.flow* )
 
 	common.inner.flow =
-		(	style.elem.scoped?,
+		(	style.elem.scoped*,
 			(	text
 			&	common.elem.flow*
 			)
