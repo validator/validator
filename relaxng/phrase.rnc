@@ -16,6 +16,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.present
 		&	common.attrs.other
 		&	a.attrs.name?
+		&	shared-hyperlink.attrs.download?
 		&	shared-hyperlink.attrs.href?
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.rel?
@@ -49,6 +50,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Shared hyperlink attributes
 
+  shared-hyperlink.attrs.download =
+    attribute download {
+      string
+    }
   shared-hyperlink.attrs.href =
     attribute href {
       common.data.uri
