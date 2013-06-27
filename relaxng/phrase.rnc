@@ -21,7 +21,6 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-hyperlink.attrs.target?
 		&	shared-hyperlink.attrs.rel?
 		&	shared-hyperlink.attrs.hreflang?
-		&	shared-hyperlink.attrs.media?
 		&	shared-hyperlink.attrs.type?
 		&	shared-hyperlink.attrs.ping?
 		&	(	(	common.attrs.aria.role.button
