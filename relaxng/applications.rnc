@@ -230,33 +230,36 @@ datatypes w = "http://whattf.org/datatype-draft"
 		( command.elem & nonHTMLizable )
 	common.elem.phrasing |= command.elem
 
-## Menu: <menu>
+## Toolbar: <menu type=toolbar>
 
-	menu.elem =
-		element menu { menu.inner & menu.attrs }
-	menu.attrs =
+	menu.toolbar.elem =
+		element menu { menu.toolbar.inner & menu.toolbar.attrs }
+	menu.toolbar.attrs =
 		(	common.attrs
-		&	menu.attrs.type?
-		&	menu.attrs.label?
-		&	common.attrs.aria? # some roles only allowed if type is "toolbar" state; check in assertions
+		&	menu.toolbar.attrs.type?
+		&	(	(	common.attrs.aria.role.directory
+				|	common.attrs.aria.role.list
+				|	common.attrs.aria.role.listbox
+				|	common.attrs.aria.role.menu
+				|	common.attrs.aria.role.menubar
+				|	common.attrs.aria.role.tablist
+				|	common.attrs.aria.role.toolbar
+				|	common.attrs.aria.role.tree
+				|	common.attrs.aria.role.presentation
+				)
+			)?
 		)
-		menu.attrs.type =
+		menu.toolbar.attrs.type =
 			attribute type {
-				w:string "toolbar" | w:string "popup"
+				w:string "toolbar"
 			}
-		menu.attrs.label =
-			attribute label {
-				string
-			}
-	menu.inner =
+	menu.toolbar.inner =
 		(	mli.elem*
 		|	common.inner.flow
 		)
+	menu.elem |= menu.toolbar.elem
 	
-	common.elem.flow |= menu.elem
-	# REVISIT allow nested menus
-
-## Menu Item: <li>
+## Toolbar item: <li>
 
 	mli.elem =
 		element li { mli.inner & mli.attrs }
@@ -274,7 +277,157 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	mli.inner =
 		( common.inner.flow )
-	
+
+## Popup menu: <menu type=popup>
+
+	menu.popup.elem =
+		element menu { menu.popup.inner & menu.popup.attrs }
+	menu.popup.attrs =
+		(	common.attrs
+		&	menu.popup.attrs.type?
+		&	menu.attrs.label?
+		&	common.attrs.aria?
+		)
+		menu.popup.attrs.type =
+			attribute type {
+				w:string "popup"
+			}
+		menu.attrs.label =
+			attribute label {
+				string
+			}
+	menu.popup.inner =
+		(	menuitem.elem
+		|	hr.elem
+		|	menu.popup.elem
+		#|	template.elem
+		)*
+	menu.elem |= menu.popup.elem
+
+## Ambiguous menu: <menu> (with no "type" attribute)
+	menu.ambiguous.elem =
+		element menu { menu.ambiguous.inner & menu.ambiguous.attrs }
+	menu.ambiguous.attrs =
+		(	common.attrs
+		&	menu.attrs.label?
+		&	common.attrs.aria?
+		)
+	menu.ambiguous.inner =
+		(
+                	(	menuitem.elem
+			|	hr.elem
+			|	menu.ambiguous.elem
+			#|	template.elem
+			)*
+		|	(	mli.elem*
+			|	common.inner.flow
+			)
+		)
+	menu.elem |= menu.ambiguous.elem
+
+	common.elem.flow |= menu.elem
+	# REVISIT allow nested menus
+
+## Explicit command in popup menu: <menuitem type=command>
+	menuitem.explicit.command.elem =
+		element menuitem { menuitem.inner & menuitem.explicit.command.attrs }
+	menuitem.explicit.command.attrs =
+		(	common.attrs
+		&	menuitem.explicit.command.attrs.type?
+		&	menuitem.attrs.label?
+		&	menuitem.attrs.icon?
+		&	menuitem.attrs.disabled?
+		&	menuitem.attrs.default?
+		&	common.attrs.aria?
+		)
+		menuitem.explicit.command.attrs.type =
+			attribute type {
+				w:string "command"
+			}
+		menuitem.attrs.label =
+			attribute label {
+				w:non-empty-string
+			}
+		menuitem.attrs.icon =
+			attribute icon {
+				common.data.uri.non-empty
+			}
+		menuitem.attrs.disabled =
+			attribute disabled {
+				w:string "" | w:string "disabled"
+			}
+		menuitem.attrs.default =
+			attribute default {
+				w:string "" | w:string "default"
+			}
+	menuitem.elem |= menuitem.explicit.command.elem
+
+## Checkbox in popup menu: <menuitem type=checkbox>
+	menuitem.checkbox.elem =
+		element menuitem { menuitem.inner & menuitem.checkbox.attrs }
+	menuitem.checkbox.attrs =
+		(	common.attrs
+		&	menuitem.checkbox.attrs.type
+		&	menuitem.attrs.label?
+		&	menuitem.attrs.icon?
+		&	menuitem.attrs.disabled?
+		&	menuitem.attrs.checked?
+		&	menuitem.attrs.radiogroup?
+		&	menuitem.attrs.default?
+		&	common.attrs.aria?
+		)
+		menuitem.checkbox.attrs.type =
+			attribute type {
+				w:string "checkbox"
+			}
+		menuitem.attrs.checked =
+			attribute checked {
+				w:string "checked" | w:string ""
+			}
+		menuitem.attrs.radiogroup =
+			attribute radiogroup {
+				string
+			}
+	menuitem.elem |= menuitem.checkbox.elem
+
+## Radio button in popup menu: <menuitem type=radio>
+	menuitem.radio.elem =
+		element menuitem { menuitem.inner & menuitem.radio.attrs }
+	menuitem.radio.attrs =
+		(	common.attrs
+		&	menuitem.radio.attrs.type
+		&	menuitem.attrs.label?
+		&	menuitem.attrs.icon?
+		&	menuitem.attrs.disabled?
+		&	menuitem.attrs.checked?
+		&	menuitem.attrs.radiogroup?
+		&	menuitem.attrs.default?
+		&	common.attrs.aria?
+		)
+		menuitem.radio.attrs.type =
+			attribute type {
+				w:string "radio"
+			}
+	menuitem.elem |= menuitem.radio.elem
+
+## Indirect command in popup menu: <menuitem command>
+	menuitem.indirect.command.elem =
+		element menuitem { menuitem.inner & menuitem.indirect.command.attrs }
+	menuitem.indirect.command.attrs =
+		(	common.attrs
+		&	menuitem.attrs.default?
+		&	menuitem.attrs.command
+		&	common.attrs.aria?
+		)
+		menuitem.attrs.command =
+			attribute command {
+				common.data.idref
+			}
+	menuitem.elem |= menuitem.indirect.command.elem
+
+	menuitem.inner =
+		( empty )
+
 ## Canvas for Dynamic Graphics: <canvas>
 
 	canvas.elem.flow =
