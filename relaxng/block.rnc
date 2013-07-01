@@ -75,7 +75,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 			)?
 		)
 	ul.inner =
-		( li.elem* )
+		(	li.elem*
+		&	template.elem*
+		)
 
 	common.elem.flow |= ul.elem
 
@@ -133,7 +135,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				w:string "1" | w:string "a" | w:string "A" | w:string "i" | w:string "I"
 			}
 	ol.inner =
-		( oli.elem* )
+		(	oli.elem*
+		&	template.elem*
+		)
 
 	common.elem.flow |= ol.elem
 
@@ -175,6 +179,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	(	dt.elem+
 			,	dd.elem+
 			)*
+		|	template.elem
+		|	(	(	template.elem
+				|	dt.elem
+				)
+			,	(	template.elem*
+				&	dt.elem*
+				&	dd.elem*
+				)
+			,	(	template.elem
+				|	dd.elem
+				)
+			)
 		)
 
 	common.elem.flow |= dl.elem

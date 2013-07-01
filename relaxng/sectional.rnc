@@ -126,6 +126,7 @@
 		|	h4.elem
 		|	h5.elem
 		|	h6.elem
+		|	template.elem
 		)+
 
 	common.elem.flow |= hgroup.elem

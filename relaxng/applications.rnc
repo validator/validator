@@ -297,11 +297,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 				string
 			}
 	menu.popup.inner =
-		(	menuitem.elem
-		|	hr.elem
-		|	menu.popup.elem
-		#|	template.elem
-		)*
+		(	menuitem.elem*
+		&	hr.elem*
+		&	menu.popup.elem*
+		&	template.elem*
+		)
 	menu.elem |= menu.popup.elem
 
 ## Ambiguous menu: <menu> (with no "type" attribute)
@@ -313,12 +313,11 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	menu.ambiguous.inner =
-		(
-                	(	menuitem.elem
-			|	hr.elem
-			|	menu.ambiguous.elem
-			#|	template.elem
-			)*
+		(	(	menuitem.elem*
+			&	hr.elem*
+			&	menu.ambiguous.elem*
+			&	template.elem*
+			)
 		|	(	mli.elem*
 			|	common.inner.flow
 			)

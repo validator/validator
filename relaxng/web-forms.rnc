@@ -391,7 +391,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				string
 			}
 	optgroup.inner =
-		( option.elem* )
+		(	option.elem*
+		&	template.elem*
+		)
 
 ## Selection Menu: <select>
 
@@ -419,6 +421,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	select.inner =
 		(	optgroup.elem*
 		&	option.elem*
+		&	template.elem*
 		)
 
 	common.elem.phrasing |= select.elem
