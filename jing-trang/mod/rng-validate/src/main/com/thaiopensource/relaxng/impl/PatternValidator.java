@@ -397,10 +397,12 @@ public class PatternValidator extends DtdContext implements Validator, ContentHa
         p.accept(nrv);
         if (nrv.hasChoice()) {
           error(new RequiredElementsMissingOneOfException(locator, name, nrv.getElements(), peek()));
-        } else {
+        } else if (nrv.getElements().size() > 0) {
           for (String elementName : nrv.getElements()) {
             error(new RequiredElementsMissingException(locator, name, elementName, peek()));
           }
+        } else {
+           error(new RequiredElementsMissingException(locator, name, null, peek()));
         }
       }
       else {
