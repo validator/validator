@@ -64,6 +64,8 @@ public class LinkRel extends AbstractRel {
         "prev",
         "previous", // HTML4
         "profile", // extension
+        "schema.dc", // extension
+        "schema.dcterms", // extension
         "search",
         "section", // HTML4
         "service", // extension
