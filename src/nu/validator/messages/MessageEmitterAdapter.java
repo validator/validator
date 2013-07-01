@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -317,6 +317,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private final static char[] REQUIRED_ELEMENTS_MISSING = "Required elements missing.".toCharArray();
     
+    private final static char[] IS_MISSING_A_REQUIRED_CHILD = " is missing a required child element".toCharArray();
+
     private final static char[] REQUIRED_CHILDREN_MISSING_FROM = " is missing a required instance of child element ".toCharArray();
     
     private final static char[] REQUIRED_CHILDREN_MISSING_ONE_OF_FROM = " is missing a required instance of one or more of the following child elements: ".toCharArray();
@@ -879,8 +881,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     messageTextString(messageTextHandler, REQUIRED_ELEMENTS_MISSING, false);
                 } else {
                     element(messageTextHandler, ex.getParent(), true);
-                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
-                    codeString(messageTextHandler, ex.getMissingElementName());
+                    if (ex.getMissingElementName() == null) {
+                        messageTextString(messageTextHandler, IS_MISSING_A_REQUIRED_CHILD, false);
+                    } else {
+                        messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
+                        codeString(messageTextHandler, ex.getMissingElementName());
+                    }
                     messageTextString(messageTextHandler, PERIOD, false);                    
                 }
             } else if (e instanceof StringNotAllowedException) {
@@ -898,8 +904,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             } else if (e instanceof UnfinishedElementException) {
                 UnfinishedElementException ex = (UnfinishedElementException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
-                messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
-                codeString(messageTextHandler, ex.getMissingElementName());
+                if (ex.getMissingElementName() == null) {
+                    messageTextString(messageTextHandler, IS_MISSING_A_REQUIRED_CHILD, false);
+                } else {
+                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
+                    codeString(messageTextHandler, ex.getMissingElementName());
+                }
                 messageTextString(messageTextHandler, PERIOD, false);                                    
             } else if (e instanceof UnfinishedElementOneOfException) {
                 UnfinishedElementOneOfException ex = (UnfinishedElementOneOfException) e;
