@@ -172,6 +172,7 @@ http://s.validator.nu/html5/sectional.rnc	schema/html5/sectional.rnc
 http://s.validator.nu/html5/structural.rnc	schema/html5/structural.rnc
 http://s.validator.nu/html5/tables.rnc	schema/html5/tables.rnc
 http://s.validator.nu/html5/tests/id.rnc	schema/html5/tests/id.rnc
+http://s.validator.nu/html5/web-components.rnc	schema/html5/web-components.rnc
 http://s.validator.nu/html5/web-forms-scripting.rnc	schema/html5/web-forms-scripting.rnc
 http://s.validator.nu/html5/web-forms.rnc	schema/html5/web-forms.rnc
 http://s.validator.nu/html5/web-forms2-scripting.rnc	schema/html5/web-forms2-scripting.rnc
