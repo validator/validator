@@ -236,5 +236,25 @@ link.rdfa.attrs.phrasing =
 	common.elem.metadata |= link.rdfa.elem.metadata
 	common.elem.phrasing |= link.rdfa.elem.phrasing
 
-meta.name.attrs.name &= common.attrs.rdfa.property?
+	meta.rdfa.name.elem =
+		element meta { meta.inner & meta.rdfa.name.attrs }
+	meta.rdfa.name.attrs =
+		(	common.attrs.basic
+		&	common.attrs.i18n
+		&	common.attrs.present
+		&	common.attrs.other
+		&	(	meta.name.attrs.name
+			|	common.attrs.rdfa.property
+			|	(	meta.name.attrs.name
+				&	common.attrs.rdfa.property
+				)
+			)
+		&	meta.name.attrs.content
+		&	(	common.attrs.aria.role.presentation
+			|	common.attrs.aria.role.menuitem
+			)?
+		)
+	common.elem.metadata |= meta.rdfa.name.elem
+
+meta.rdfa.name.attrs &= common.attrs.rdfa.no-content-noproperty
 meta.name.attrs &= common.attrs.rdfa.no-content-noproperty
