@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2012 Mozilla Foundation
+# Copyright (c) 2008-2013 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -417,12 +417,12 @@ schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
 '''
 schemaDriverHtml5RDFa = '''\
-nonRDFaLite = empty
 include "rdfa.rnc"
 '''
 schemaDriverHtml5RDFaLite = '''\
-nonRDFaLite = notAllowed
-include "rdfa.rnc"
+include "rdfa.rnc" {
+		nonRDFaLite = notAllowed
+}
 '''
 
 def openDriver(schemaDir, driverName, sourceName=""):
