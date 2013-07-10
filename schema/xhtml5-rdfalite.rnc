@@ -1,3 +1,2 @@
-nonRDFaLite = notAllowed
 include "xhtml5-svg-mathml.rnc"
-include "html5/xhtml5full-xhtml-rdfa.rnc"
+include "html5/xhtml5full-xhtml-rdfalite.rnc"
