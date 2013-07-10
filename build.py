@@ -317,6 +317,7 @@ def buildSchemaDrivers():
   buildSchemaDriverHtml5NoMicrodata(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
   buildSchemaDriverHtml5RDFa(schemaDir)
+  buildSchemaDriverHtml5RDFaLite(schemaDir)
   buildSchemaDriverXhtmlCore(schemaDir)
   buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
   buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir)
@@ -324,7 +325,8 @@ def buildSchemaDrivers():
   buildSchemaDriverXhtml5html(schemaDir)
   buildSchemaDriverXhtml5xhtml(schemaDir)
   buildSchemaDriverXhtml5xhtmlRDFa(schemaDir)
-  buildSchemaDriverXhtml5htmlRDFa(schemaDir)
+  buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir)
+  buildSchemaDriverXhtml5htmlRDFaLite(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
   shutil.copy(legacyRnc, schemaDir)
 
@@ -415,6 +417,11 @@ schemaDriverHtml5Microdata = '''\
 include "microdata.rnc"
 '''
 schemaDriverHtml5RDFa = '''\
+nonRDFaLite = empty
+include "rdfa.rnc"
+'''
+schemaDriverHtml5RDFaLite = '''\
+nonRDFaLite = notAllowed
 include "rdfa.rnc"
 '''
 
@@ -460,6 +467,10 @@ def buildSchemaDriverHtml5RDFa(schemaDir):
   f = openDriver(schemaDir, "html5full-rdfa.rnc", "html5full.rnc")
   f.write(schemaDriverHtml5RDFa)
   f.close()
+def buildSchemaDriverHtml5RDFaLite(schemaDir):
+  f = openDriver(schemaDir, "html5full-rdfalite.rnc", "html5full.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
+  f.close()
 
 ################################
 # XHTML schema drivers
@@ -504,6 +515,10 @@ def buildSchemaDriverXhtml5xhtmlRDFa(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-xhtml-rdfa.rnc", "xhtml5full-xhtml.rnc")
   f.write(schemaDriverHtml5RDFa)
   f.close()
+def buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-xhtml-rdfalite.rnc", "xhtml5full-xhtml.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
+  f.close()
 
 def buildSchemaDriverXhtml5html(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-html.rnc", "xhtml5full-html-no-microdata.rnc")
@@ -513,6 +528,10 @@ def buildSchemaDriverXhtml5html(schemaDir):
 def buildSchemaDriverXhtml5htmlRDFa(schemaDir):
   f = openDriver(schemaDir, "xhtml5full-html-rdfa.rnc", "xhtml5full-html.rnc")
   f.write(schemaDriverHtml5RDFa)
+  f.close()
+def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
+  f = openDriver(schemaDir, "xhtml5full-html-rdfalite.rnc", "xhtml5full-html.rnc")
+  f.write(schemaDriverHtml5RDFaLite)
   f.close()
 
 #################################################################
