@@ -57,10 +57,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly?
 		&	shared-form.attrs.size?
 		&	input.text.attrs.value? 
-		&	(	common.attrs.aria?
-			|	common.attrs.aria.implicit.input
-			)?
-		)		
+		&	common.attrs.aria?
+		)
 		input.text.attrs.type = 
 			attribute type {
 				w:string "text"
@@ -107,7 +105,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.checkbox.attrs.type
 		&	input.attrs.checked? 
 		&	input.checkbox.attrs.value? 
-		&	(	common.attrs.aria.role.checkbox
+		&	(	common.attrs.aria.implicit.checkbox
+			|	common.attrs.aria.role.checkbox
 			|	common.attrs.aria.role.menuitemcheckbox
 			)?
 		)
@@ -132,7 +131,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.radio.attrs.type
 		&	input.attrs.checked? 
 		&	input.radio.attrs.value? 
-		&	(	common.attrs.aria.role.radio
+		&	(	common.attrs.aria.implicit.radio
+			|	common.attrs.aria.role.radio
 			|	common.attrs.aria.role.menuitemradio
 			)?
 		)
@@ -311,8 +311,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	shared-form.attrs.readonly?
 		&	textarea.attrs.rows-and-cols-wf1
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.presentation
+		&	(	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.menuitem
 			|	common.attrs.aria.role.textbox
 			)?
@@ -352,8 +351,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	option.attrs.selected?
 		&	option.attrs.label?
 		&	option.attrs.value?
-		&	(	common.attrs.aria.implicit.input
-			|	common.attrs.aria.role.option
+		&	(	common.attrs.aria.role.option
 			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.menuitemradio
 			|	common.attrs.aria.role.menuitemcheckbox
@@ -523,9 +521,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	form.attrs.enctype?
 		&	common-form.attrs.name?
 		&	form.attrs.accept-charset?
-		&	(	common.attrs.aria?
-			|	common.attrs.aria.implicit.region
-			)?
+		&	common.attrs.aria?
 		)
 		form.attrs.action =
 			attribute action {
@@ -560,9 +556,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element fieldset { fieldset.inner & fieldset.attrs }
 	fieldset.attrs =
 		(	common.attrs
-		&	(	common.attrs.aria?
-			|	common.attrs.aria.implicit.region
-			)?
+		&	common.attrs.aria?
 		)	
 	fieldset.inner =
 		(	legend.elem? #REVISIT should this be required?
@@ -578,8 +572,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	label.attrs =
 		(	common.attrs
 		&	label.attrs.for?
-		&	(	common.attrs.aria.implicit.region
-			|	common.attrs.aria.role.presentation
+		&	(	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.menuitem
 			)?
 		)

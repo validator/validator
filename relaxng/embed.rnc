@@ -21,7 +21,9 @@ namespace local = ""
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
 		&	img.attrs.border? # obsolete
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.img
+			|	common.attrs.aria
+			)?
 		)
 		img.attrs.src =
 			attribute src {
@@ -287,8 +289,7 @@ namespace local = ""
 		&	object.attrs.usemap?
 		&	object.attrs.name?
 		&	common-form.attrs.form?
-		&	(	common.attrs.aria.implicit.region
-			|	common.attrs.aria.landmark.application
+		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
 			)?
@@ -366,8 +367,7 @@ namespace local = ""
 		&	iframe.attrs.sandbox?
 		&	iframe.attrs.seamless?
 		&	iframe.attrs.allowfullscreen?
-		&	(	common.attrs.aria.implicit.region
-			|	common.attrs.aria.landmark.application
+		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
 			)?

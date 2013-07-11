@@ -113,7 +113,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 	dialog.attrs =
 		(	common.attrs
 		&	dialog.attrs.open?
-		&	(	common.attrs.aria.role.alert
+		&	(	common.attrs.aria.implicit.dialog
+			|	common.attrs.aria.role.alert
 			|	common.attrs.aria.role.alertdialog
 			|	common.attrs.aria.role.contentinfo
 			|	common.attrs.aria.role.dialog
@@ -237,16 +238,16 @@ datatypes w = "http://whattf.org/datatype-draft"
 	menu.toolbar.attrs =
 		(	common.attrs
 		&	menu.toolbar.attrs.type?
-		&	(	(	common.attrs.aria.role.directory
-				|	common.attrs.aria.role.list
-				|	common.attrs.aria.role.listbox
-				|	common.attrs.aria.role.menu
-				|	common.attrs.aria.role.menubar
-				|	common.attrs.aria.role.tablist
-				|	common.attrs.aria.role.toolbar
-				|	common.attrs.aria.role.tree
-				|	common.attrs.aria.role.presentation
-				)
+		&	(	common.attrs.aria.implicit.toolbar
+			|	common.attrs.aria.role.directory
+			|	common.attrs.aria.role.list
+			|	common.attrs.aria.role.listbox
+			|	common.attrs.aria.role.menu
+			|	common.attrs.aria.role.menubar
+			|	common.attrs.aria.role.tablist
+			|	common.attrs.aria.role.toolbar
+			|	common.attrs.aria.role.tree
+			|	common.attrs.aria.role.presentation
 			)?
 		)
 		menu.toolbar.attrs.type =
@@ -462,7 +463,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 	details.attrs =
 		(	common.attrs
 		&	details.attrs.open?
-		&	(	common.attrs.aria.implicit.region # aria-expanded must be true if open attr present; check by assertions
+		&	(	common.attrs.aria.implicit.group # aria-expanded must be true if open attr present; check by assertions
 			|	common.attrs.aria.role.alertdialog
 			|	common.attrs.aria.role.banner
 			|	common.attrs.aria.role.button

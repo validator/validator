@@ -24,68 +24,76 @@ aria.global =
 	&	aria.prop.live?
 	&	aria.prop.owns?
 	&	aria.prop.relevant?
-	&	aria.prop.required?
 	)
 
 common.attrs.other &= aria.global?
 
 ## States and Properties for Native Roles
 
-# common.attrs.aria.implicit.button |=
-#	(	aria.prop.controls?
-#	)
-
-# common.attrs.aria.implicit.input |=
-#	(	aria.prop.controls?
-#	&	aria.state.invalid?
-#	&	aria.prop.required?
-#	)
-
-common.attrs.aria.implicit.region |=
+common.attrs.aria.implicit.button |=
 	(	aria.state.expanded?
-#	&	aria.prop.level?
+	&	aria.state.pressed?
 	)
+
+common.attrs.aria.implicit.checkbox |=
+	(	aria.state.checked? )
+
+common.attrs.aria.implicit.dialog |=
+	(	aria.state.expanded? )
+
+common.attrs.aria.implicit.document |=
+	(	aria.state.expanded? )
 
 common.attrs.aria.implicit.group |=
 	(	aria.state.expanded?
 	&	aria.prop.activedescendant?
 	)
 
-common.attrs.aria.implicit.th |=
-	(	aria.prop.sort?
+common.attrs.aria.implicit.heading |=
+	(	aria.state.expanded?
 	&	aria.prop.level?
+	)
+
+common.attrs.aria.implicit.img |=
+	(	aria.state.expanded? )
+
+common.attrs.aria.implicit.link |=
+	(	aria.state.expanded? )
+
+common.attrs.aria.implicit.listitem |=
+	(	aria.prop.level?
+	&	aria.prop.posinset?
+	&	aria.prop.setsize?
 	&	aria.state.expanded?
-	&	aria.prop.readonly?
+	)
+
+common.attrs.aria.implicit.radio |=
+	(	aria.prop.posinset?
+	&	aria.prop.setsize?
+	&	aria.state.checked?
 	&	aria.state.selected?
 	)
 
-# common.attrs.aria.implicit.structure |=
-#	(	aria.prop.atomic?
-#	&	aria.state.busy?
-#	&	aria.prop.channel?
-#	&	aria.prop.live?
-#	&	aria.prop.relevant?
-#	)
-
-# common.attrs.aria.implicit.link |=
-#		(	aria.prop.controls?
-#	&	aria.state.disabled?
-#	)
-
-common.attrs.aria.implicit.listitem |=
-		(	aria.prop.posinset?
-	&	aria.prop.setsize?
-#	&	aria.prop.atomic?
+common.attrs.aria.implicit.toolbar |=
+	(	aria.state.expanded?
+	&	aria.prop.activedescendant?
 	)
 
-# common.attrs.aria.implicit.img |=
-#		(	aria.prop.atomic?
-#	&	aria.state.busy?
-#	&	aria.prop.channel?
-#	&	aria.prop.controls?
-#	&	aria.prop.live?
-#	&	aria.prop.relevant?
-#	)
+common.attrs.aria.implicit.columnheader |=
+	(	aria.prop.sort?
+	&	aria.prop.readonly?
+	&	aria.prop.required?
+	&	aria.state.selected?
+	&	aria.state.expanded?
+	)
+
+common.attrs.aria.implicit.rowheader |=
+	(	aria.prop.sort?
+	&	aria.prop.readonly?
+	&	aria.prop.required?
+	&	aria.state.selected?
+	&	aria.state.expanded?
+	)
 
 #common.attrs.aria.implicit.select |=
 #		(	aria.state.invalid?
@@ -97,6 +105,39 @@ common.attrs.aria.implicit.listitem |=
 #	&	aria.prop.live?
 #	&	aria.prop.relevant?
 #	)
+
+# section
+#   |
+#   |_ region
+#        |
+#        |_ article
+#        |
+#        |_ landmark
+#        |     |_ banner
+#        |     |_ complementary
+#        |     |_ contentinfo
+#        |     |_ main
+#        |     |_ navigation
+#        |
+#        |_ list
+#        |
+#        |_ status
+
+common.attrs.aria.implicit.section |=
+	( aria.state.expanded? )
+
+common.attrs.aria.implicit.region |= common.attrs.aria.implicit.section
+
+common.attrs.aria.implicit.article |= common.attrs.aria.implicit.region
+common.attrs.aria.implicit.landmark |= common.attrs.aria.implicit.region
+common.attrs.aria.implicit.list |= common.attrs.aria.implicit.region
+common.attrs.aria.implicit.status |= common.attrs.aria.implicit.region
+
+common.attrs.aria.implicit.banner |= common.attrs.aria.implicit.landmark
+common.attrs.aria.implicit.complementary |= common.attrs.aria.implicit.landmark
+common.attrs.aria.implicit.contentinfo |= common.attrs.aria.implicit.landmark
+common.attrs.aria.implicit.main |= common.attrs.aria.implicit.landmark
+common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 
 # #####################################################################
 ## States

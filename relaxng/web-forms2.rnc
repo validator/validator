@@ -661,7 +661,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs.name?
 		&	common-form.attrs.form?
 		&	output.attrs.for?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.status
+			|	common.attrs.aria
+			)?
 		)
 		output.attrs.for = 
 			attribute for {
