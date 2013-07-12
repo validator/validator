@@ -556,8 +556,10 @@ datatypes w = "http://whattf.org/datatype-draft"
 		element fieldset { fieldset.inner & fieldset.attrs }
 	fieldset.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
-		)	
+		&	(	common.attrs.aria.implicit.group
+			|	common.attrs.aria
+			)?
+		)
 	fieldset.inner =
 		(	legend.elem? #REVISIT should this be required?
 		,	common.inner.flow
