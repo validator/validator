@@ -232,7 +232,7 @@ def runJavac(sourceDir, classDir, classPath):
   else:
     f.write("\n".join(sourceFiles))
   f.close()
-  runCmd('"%s" -g -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
+  runCmd('"%s" -encoding UTF-8 -g -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
 		% (javacCmd, classPath, sourceDir, classDir, "@temp-javac-list"))
   removeIfExists("temp-javac-list")
 
