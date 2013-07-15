@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -41,7 +41,7 @@ public class NonEmptyString extends AbstractDatatype {
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
         if (literal.length() == 0) {
-            throw newDatatypeException("String was empty.");
+            throw newDatatypeException("Must not be empty.");
         }
     }
 

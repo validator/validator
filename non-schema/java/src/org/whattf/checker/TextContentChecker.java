@@ -54,7 +54,7 @@ public final class TextContentChecker extends Checker {
      * tail.
      */
     private final LinkedList<DatatypeStreamingValidator> stack = new LinkedList<DatatypeStreamingValidator>();
-    private boolean isEmpty;
+    private boolean inEmptyTitleOrOption = false;
 
     /**
      * Constructor.
@@ -105,7 +105,7 @@ public final class TextContentChecker extends Checker {
      */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
-        isEmpty = false;
+        inEmptyTitleOrOption = false;
         for (DatatypeStreamingValidator dsv : stack) {
             if (dsv != null) {
                 dsv.addCharacters(ch, start, length);
@@ -119,9 +119,13 @@ public final class TextContentChecker extends Checker {
      */
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (isEmpty && "http://www.w3.org/1999/xhtml".equals(uri)
+        if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
                 && "title".equals(localName)) {
             err("Element \u201Ctitle\u201d must not be empty.");
+        } else if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
+                && "option".equals(localName)) {
+            err("Element \u201Coption\u201d without "
+                    + "attribute \u201clabel\u201d must not be empty.");
         }
         DatatypeStreamingValidator dsv = stack.removeLast();
         if (dsv != null) {
@@ -223,7 +227,11 @@ public final class TextContentChecker extends Checker {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         stack.addLast(streamingValidatorFor(uri, localName, atts));
-        isEmpty = true;
+        if ("http://www.w3.org/1999/xhtml".equals(uri)
+                && ("title".equals(localName))
+                || ("option".equals(localName) && atts.getIndex("", "label") < 0)) {
+            inEmptyTitleOrOption = true;
+        }
     }
 
     /**

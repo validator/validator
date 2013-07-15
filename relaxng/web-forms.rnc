@@ -363,7 +363,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 		option.attrs.label =
 			attribute label {
-				string
+				form.data.nonemptystring
 			}		
 		option.attrs.value =
 			attribute value {
