@@ -122,10 +122,12 @@ public final class TextContentChecker extends Checker {
         if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
                 && "title".equals(localName)) {
             err("Element \u201Ctitle\u201d must not be empty.");
+            inEmptyTitleOrOption = false;
         } else if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
                 && "option".equals(localName)) {
             err("Element \u201Coption\u201d without "
                     + "attribute \u201clabel\u201d must not be empty.");
+            inEmptyTitleOrOption = false;
         }
         DatatypeStreamingValidator dsv = stack.removeLast();
         if (dsv != null) {
