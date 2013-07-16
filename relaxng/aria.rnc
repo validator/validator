@@ -69,16 +69,18 @@ common.attrs.aria.implicit.img |=
 common.attrs.aria.implicit.link |=
 	(	aria.state.expanded? )
 
+common.attrs.aria.implicit.listbox |=
+	(	aria.prop.multiselectable?
+	&	aria.prop.required?
+	&	aria.prop.activedescendant?
+	&	aria.state.expanded?
+	)
+
 common.attrs.aria.implicit.listitem |=
 	(	aria.prop.level?
 	&	aria.prop.posinset?
 	&	aria.prop.setsize?
 	&	aria.state.expanded?
-	)
-
-common.attrs.aria.implicit.listbox |=
-	(	aria.prop.multiselectable?
-	&	aria.prop.required?
 	)
 
 common.attrs.aria.implicit.option |=
@@ -560,6 +562,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## button
 	aria.button =
 		(	aria.role.button
+		&	aria.state.expanded?
 		&	aria.state.pressed? # not inherited
 		)
 		aria.role.button = 
@@ -596,6 +599,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.combobox
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded #required!
+		&	aria.prop.autocomplete?
+		&	aria.prop.required?
 		)
 		aria.role.combobox = 
 			attribute role { string "combobox" }
@@ -743,6 +748,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## link
 	aria.link =
 		(	aria.role.link
+		&	aria.state.expanded?
 		)
 		aria.role.link = 
 			attribute role { string "link" }
@@ -765,6 +771,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	aria.listbox =
 		(	aria.role.listbox
 		&	aria.prop.multiselectable? # not inherited
+		&	aria.prop.required?
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
 		)
@@ -881,6 +888,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.menuitemradio
 		&	aria.state.checked #required
 		&	aria.state.selected?
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
 		)
 		aria.role.menuitemradio = 
 			attribute role { string "menuitemradio" }
@@ -915,6 +924,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.option
 		&	aria.state.checked? # not inherited
 		&	aria.state.selected? # not inherited
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
 		)
 		aria.role.option = 
 			attribute role { string "option" }
@@ -953,6 +964,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.radio
 		&	aria.state.checked #required!
 		&	aria.state.selected?
+		&	aria.prop.posinset?
+		&	aria.prop.setsize?
 		)
 		aria.role.radio = 
 			attribute role { string "radio" }
@@ -1048,11 +1061,10 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## spinbutton
 	aria.spinbutton =
 		(	aria.role.spinbutton
-		&	aria.prop.activedescendant?
 		&	aria.prop.valuemax
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
-		&	aria.prop.valuetext
+		&	aria.prop.valuetext?
 		)
 		aria.role.spinbutton = 
 			attribute role { string "spinbutton" }
@@ -1063,7 +1075,6 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## status
 	aria.status =
 		(	aria.role.status
-		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
 		)
 		aria.role.status = 
