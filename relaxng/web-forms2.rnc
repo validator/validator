@@ -437,7 +437,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.required? 
 		&	shared-form.attrs.placeholder?
 		&	input.number.attrs.value? 
-		&	common.attrs.aria?
+		&	common.attrs.aria.implicit.spinbutton?
 		)	
 		input.number.attrs.type = 
 			attribute type {
@@ -473,7 +473,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.range.attrs.max? 
 		&	input.attrs.step.float? 
 		&	input.range.attrs.value? 
-		&	common.attrs.aria?
+		&	common.attrs.aria.implicit.slider?
 		)	
 		input.range.attrs.type = 
 			attribute type {
@@ -516,7 +516,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 				)
 			|	input.email.attrs.value.single?
 			)?
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.textbox
+			|	common.attrs.aria.implicit.combobox
+			)?
 		)	
 		input.email.attrs.type = 
 			attribute type {
@@ -551,7 +553,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.url.attrs.value? 
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.textbox
+			|	common.attrs.aria.implicit.combobox
+			)?
 		)	
 		input.url.attrs.type = 
 			attribute type {
@@ -583,7 +587,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.placeholder?
 		&	shared-form.attrs.dirname?
 		&	input.search.attrs.value? 
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.textbox
+			|	common.attrs.aria.implicit.combobox
+			)?
 		)	
 		input.search.attrs.type = 
 			attribute type {
@@ -614,7 +620,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.size?
 		&	shared-form.attrs.placeholder?
 		&	input.tel.attrs.value? 
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.textbox
+			|	common.attrs.aria.implicit.combobox
+			)?
 		)	
 		input.tel.attrs.type = 
 			attribute type {

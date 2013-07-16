@@ -89,7 +89,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	common.attrs
 		&	progress.attrs.value?
 		&	progress.attrs.max?
-		&	(	common.attrs.aria.role.progressbar
+		&	(	common.attrs.aria.implicit.progressbar
+			|	common.attrs.aria.role.progressbar
 			|	common.attrs.aria.role.presentation
 			|	common.attrs.aria.role.menuitem
 			)?

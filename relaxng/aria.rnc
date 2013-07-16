@@ -40,6 +40,13 @@ common.attrs.aria.implicit.button |=
 common.attrs.aria.implicit.checkbox |=
 	(	aria.state.checked? )
 
+common.attrs.aria.implicit.combobox |=
+	(	aria.state.expanded?
+	&	aria.prop.autocomplete?
+	&	aria.prop.required?
+	&	aria.prop.activedescendant?
+	)
+
 common.attrs.aria.implicit.dialog |=
 	(	aria.state.expanded? )
 
@@ -69,11 +76,54 @@ common.attrs.aria.implicit.listitem |=
 	&	aria.state.expanded?
 	)
 
+common.attrs.aria.implicit.listbox |=
+	(	aria.prop.multiselectable?
+	&	aria.prop.required?
+	)
+
+common.attrs.aria.implicit.option |=
+	(	aria.prop.posinset?
+	&	aria.prop.setsize?
+	&	aria.state.checked?
+	&	aria.state.selected?
+	)
+
+common.attrs.aria.implicit.progressbar |=
+	(	aria.prop.valuemax?
+	&	aria.prop.valuemin?
+	&	aria.prop.valuenow?
+	&	aria.prop.valuetext?
+	)
+
 common.attrs.aria.implicit.radio |=
 	(	aria.prop.posinset?
 	&	aria.prop.setsize?
 	&	aria.state.checked?
 	&	aria.state.selected?
+	)
+
+common.attrs.aria.implicit.slider |=
+	(	aria.prop.valuemax?
+	&	aria.prop.valuemin?
+	&	aria.prop.valuenow?
+	&	aria.prop.valuetext?
+	&	aria.prop.orientation?
+	)
+
+common.attrs.aria.implicit.spinbutton |=
+	(	aria.prop.valuemax?
+	&	aria.prop.valuemin?
+	&	aria.prop.valuenow?
+	&	aria.prop.valuetext?
+	&	aria.prop.required?
+	)
+
+common.attrs.aria.implicit.textbox |=
+	(	aria.prop.activedescendant?
+	&	aria.prop.autocomplete?
+	&	aria.prop.multiline?
+	&	aria.prop.readonly?
+	&	aria.prop.required?
 	)
 
 common.attrs.aria.implicit.toolbar |=
@@ -339,6 +389,13 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			{	string "true"
 			|	string "false" #default
 			}	
+
+## orientation
+	aria.prop.orientation =
+		attribute aria-orientation
+			{	string "vertical"
+			|	string "horizontal" #default
+			}
 
 ## owns
 	aria.prop.owns =
@@ -979,7 +1036,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.valuemax
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
-		&	aria.prop.valuetext
+		&	aria.prop.valuetext?
+		&	aria.prop.orientation
 		)
 		aria.role.slider = 
 			attribute role { string "slider" }
@@ -1051,9 +1109,11 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 ## textbox
 	aria.textbox =
 		(	aria.role.textbox
+		&	aria.prop.activedescendant?
 		&	aria.prop.autocomplete? # not inherited
 		&	aria.prop.multiline? # not inherited
 		&	aria.prop.readonly? # not inherited
+		&	aria.prop.required?
 		)
 		aria.role.textbox = 
 			attribute role { string "textbox" }
