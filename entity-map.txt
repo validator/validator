@@ -224,6 +224,8 @@ http://s.validator.nu/xhtml1-ruby-rdf-svg-mathml.rnc	schema/xhtml1-ruby-rdf-svg-
 http://s.validator.nu/html5.rnc	schema/html5.rnc
 http://s.validator.nu/its20-html5.rnc	schema/its20-html5.rnc
 http://s.validator.nu/its20-html5-types.rnc	schema/its20-html5-types.rnc
+http://s.validator.nu/html5/its20-html5.rnc	schema/html5/its20-html5.rnc
+http://s.validator.nu/html5/its20-html5-types.rnc	schema/html5/its20-html5-types.rnc
 http://s.validator.nu/html5-its.rnc	schema/html5-its.rnc
 http://s.validator.nu/html5-svg-mathml.rnc	schema/html5-svg-mathml.rnc
 http://s.validator.nu/xhtml5-svg-mathml.rnc	schema/xhtml5-svg-mathml.rnc
