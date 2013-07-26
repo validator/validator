@@ -313,6 +313,8 @@ def buildNonSchema():
 def buildSchemaDrivers():
   schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
   legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
+  itsRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "its20-html5.rnc"))
+  itsTypesRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "its20-html5-types.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5NoMicrodata(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
@@ -328,7 +330,11 @@ def buildSchemaDrivers():
   buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir)
   buildSchemaDriverXhtml5htmlRDFaLite(schemaDir)
   removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
+  removeIfExists(os.path.join(schemaDir, "its20-html5.rnc"))
+  removeIfExists(os.path.join(schemaDir, "its20-html5-types.rnc"))
   shutil.copy(legacyRnc, schemaDir)
+  shutil.copy(itsRnc, schemaDir)
+  shutil.copy(itsTypesRnc, schemaDir)
 
 #################################################################
 # data and functions for building schema drivers
@@ -456,6 +462,10 @@ def buildSchemaDriverHtml5NoMicrodata(schemaDir):
   writeW3CToggle(f)
   f.write(schemaDriverBase)
   f.write(schemaDriverHtml5NoMicrodata)
+  # For W3C service, HTML5 checking always includes ITS2 support
+  if w3cBranding:
+    f.write('include "its20-html5.rnc"\n')
+    f.write('common.attrs &= its-html-attributes\n')
   f.close()
 
 def buildSchemaDriverHtml5(schemaDir):
