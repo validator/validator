@@ -908,6 +908,7 @@ def selfUpdate():
 
 
 def runTests():
+  props = "-Dorg.whattf.datatype.warn=true"
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -917,7 +918,7 @@ def runTests():
                                                 "validator",
                                                 "test-harness"])
                               + jingJarPath())
-  runCmd('"%s" -classpath %s org.whattf.syntax.Driver' % (javaCmd, classPath))
+  runCmd('"%s" -classpath %s %s org.whattf.syntax.Driver' % (javaCmd, classPath, props))
 
 def splitHostSpec(spec):
   index = spec.find('/')
