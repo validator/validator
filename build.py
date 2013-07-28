@@ -103,6 +103,7 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
+  ("https://github.com/sideshowbarker/ITS-2.0-Testsuite/archive/master.zip", "e0c5e74009fac868e62fd92baab985ee"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -854,6 +855,13 @@ def downloadDependency(url, md5sum):
     if path.endswith(".zip"):
       zipExtract(path, dependencyDir)
 
+def addTestCases():
+  testCaseDir = os.path.join(os.path.join(buildRoot, "syntax", "relaxng", "tests"))
+  testSourcesITS = os.path.join(os.path.join(buildRoot, "dependencies", "ITS-2.0-Testsuite-master", "its2.0", "inputdata"))
+  testDestITS = os.path.join(testCaseDir, "html-its")
+  removeIfDirExists(testDestITS)
+  shutil.copytree(testSourcesITS, testDestITS)
+
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
     downloadDependency(url, md5sum)
@@ -1103,6 +1111,7 @@ else:
         selfUpdate()
     elif arg == 'test':
       if noSelfUpdate:
+        addTestCases()
         runTests()
       else:
         selfUpdate()
@@ -1125,6 +1134,7 @@ else:
         downloadOperaSuite()
         prepareLocalEntityJar()
         buildAll()
+        addTestCases()
         runTests()
         if not stylesheet:
           stylesheet = 'style.css'
