@@ -190,7 +190,6 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("name", new String[] { "img", "embed", "option" });
         OBSOLETE_ATTRIBUTES.put("nohref", new String[] { "area" });
         OBSOLETE_ATTRIBUTES.put("profile", new String[] { "head" });
-        OBSOLETE_ATTRIBUTES.put("rev", new String[] { "link", "a" });
         OBSOLETE_ATTRIBUTES.put("scheme", new String[] { "meta" });
         OBSOLETE_ATTRIBUTES.put("scope", new String[] { "td" });
         OBSOLETE_ATTRIBUTES.put("shape", new String[] { "a" });
@@ -256,9 +255,6 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES_MSG.put(
                 "profile",
                 "To declare which \u201Cmeta\u201D terms are used in the document, instead register the names as meta extensions. To trigger specific UA behaviors, use a \u201Clink\u201D element instead.");
-        OBSOLETE_ATTRIBUTES_MSG.put(
-                "rev",
-                "Use the \u201Crel\u201D attribute instead, with a term having the opposite meaning.");
         OBSOLETE_ATTRIBUTES_MSG.put(
                 "scheme",
                 "Use only one scheme per field, or make the scheme declaration part of the value.");
@@ -1223,6 +1219,12 @@ public class Assertions extends Checker {
                             && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
                                     "javascript", atts.getValue(i))) {
                         languageJavaScript = true;
+                    } else if ("rev" == attLocal
+                            && !("1".equals(System.getProperty("nu.validator.schema.rev-allowed")))) {
+                        err("The \u201Crev\u201D attribute on the \u201C"
+                                + localName + "\u201D element is obsolete. "
+                                + "Use the \u201Crel\u201D attribute instead, "
+                                + "with a term having the opposite meaning.");
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && "ol" != localName && "ul" != localName
                             && "li" != localName) {
