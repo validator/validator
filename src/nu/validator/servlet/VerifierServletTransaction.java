@@ -884,7 +884,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             reader.setErrorHandler(errorHandler);
             contentType = documentInput.getType();
             sourceCode.initialize(documentInput);
-            if (validator == null) {
+            if (validator == null && !W3C_BRANDING) {
                 checkNormalization = true;
             }
             if (checkNormalization) {
