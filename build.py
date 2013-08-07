@@ -775,10 +775,6 @@ def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
   
 def prepareLocalEntityJar():
-  if w3cBranding:
-    prefix = "w3c-"
-  else:
-    prefix = ""
   filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
@@ -787,13 +783,15 @@ def prepareLocalEntityJar():
   if os.path.exists(w3cFilesDir):
     shutil.rmtree(w3cFilesDir)
   os.makedirs(w3cFilesDir)
-  shutil.copyfile(os.path.join(buildRoot, "validator", prefix + "presets.txt"), os.path.join(filesDir, "presets"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", prefix + "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "presets.txt"), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "style.css"), os.path.join(filesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "script.js"), os.path.join(filesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
+  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "w3c-presets.txt"), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "icon.png"), os.path.join(w3cFilesDir, "icon.png"))
