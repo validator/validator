@@ -103,7 +103,8 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
-  ("https://github.com/sideshowbarker/ITS-2.0-Testsuite/archive/master.zip", "e0c5e74009fac868e62fd92baab985ee"),
+  ("https://github.com/sideshowbarker/ITS-2.0-Testsuite/archive/html-its-testsuite.zip", "c3102260c6e1ec5395c3086760a6f6aa"),
+  ("https://github.com/sideshowbarker/html-rdfa-testsuite/archive/html-rdfa-testsuite.zip", "76570717cc120a3b1d8dbe28c399d3f7"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -857,10 +858,18 @@ def downloadDependency(url, md5sum):
 
 def addTestCases():
   testCaseDir = os.path.join(os.path.join(buildRoot, "syntax", "relaxng", "tests"))
-  testSourcesITS = os.path.join(os.path.join(buildRoot, "dependencies", "ITS-2.0-Testsuite-master", "its2.0", "inputdata"))
+  testSourcesITS = os.path.join(os.path.join(buildRoot, "dependencies", "ITS-2.0-Testsuite-html-its-testsuite", "its2.0", "inputdata"))
   testDestITS = os.path.join(testCaseDir, "html-its")
   removeIfDirExists(testDestITS)
   shutil.copytree(testSourcesITS, testDestITS)
+  testSourcesRDFa = os.path.join(os.path.join(buildRoot, "dependencies", "html-rdfa-testsuite-html-rdfa-testsuite", "html-rdfa"))
+  testDestRDFa = os.path.join(testCaseDir, "html-rdfa")
+  removeIfDirExists(testDestRDFa)
+  shutil.copytree(testSourcesRDFa, testDestRDFa)
+  testSourcesRDFaLite = os.path.join(os.path.join(buildRoot, "dependencies", "html-rdfa-testsuite-html-rdfa-testsuite", "html-rdfalite"))
+  testDestRDFaLite = os.path.join(testCaseDir, "html-rdfalite")
+  removeIfDirExists(testDestRDFaLite)
+  shutil.copytree(testSourcesRDFaLite, testDestRDFaLite)
 
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
