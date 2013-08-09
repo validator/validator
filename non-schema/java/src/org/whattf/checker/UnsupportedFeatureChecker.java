@@ -33,11 +33,11 @@ public class UnsupportedFeatureChecker extends Checker {
         } else if ("bdi" == localName) {
             warn("The \u201Cbdi\u201D element is not supported by browsers yet.");
         } else if ("blockquote" == localName) {
-            if (atts.getIndex("", "cite") > -1 && !w3cBranding) {
+            if (atts.getIndex("", "cite") > -1) {
                 warn("The \u201Ccite\u201D attribute on the \u201Cblockquote\u201D element is not supported by browsers yet.");
             }
         } else if ("q" == localName) {
-            if (atts.getIndex("", "cite") > -1 && !w3cBranding) {
+            if (atts.getIndex("", "cite") > -1) {
                 warn("The \u201Ccite\u201D attribute on the \u201Cq\u201D element is not supported by browsers yet.");
             }
         } else if ("a" == localName) {
