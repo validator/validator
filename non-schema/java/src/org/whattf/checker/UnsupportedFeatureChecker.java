@@ -24,8 +24,6 @@ public class UnsupportedFeatureChecker extends Checker {
         }
         if ("menu" == localName) {
             warn("The \u201Cmenu\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-        } else if ("command" == localName) {
-            warn("The \u201Ccommand\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("dialog" == localName) {
             warn("The \u201Cdialog\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("details" == localName) {
