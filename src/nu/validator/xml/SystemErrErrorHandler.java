@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
+ * Copyright (c) 2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -49,25 +50,31 @@ public class SystemErrErrorHandler implements ErrorHandler {
         }
     }
     
-    /**
-     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
-     */
-    public void warning(SAXParseException e) throws SAXException {
+    private void emitMessage(SAXParseException e, String messageType)
+            throws SAXException {
         try {
-            out.write("Warning:\n");
-            out.write(e.getMessage());
-            out.write("\nFile: ");
             String systemId = e.getSystemId();
-            out.write((systemId == null) ? "Unknown" : systemId);
-            out.write("\nLine: ");
+            out.write((systemId == null) ? "" : '\"' + systemId + '\"');
+            out.write(":");
             out.write(Integer.toString(e.getLineNumber()));
-            out.write(" Col: ");
+            out.write(":");
             out.write(Integer.toString(e.getColumnNumber()));
-            out.write("\n\n");
+            out.write(": ");
+            out.write(messageType);
+            out.write(": ");
+            out.write(e.getMessage());
+            out.write("\n");
             out.flush();
         } catch (IOException e1) {
             throw new SAXException(e1);
         }
+    }
+
+    /**
+     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
+     */
+    public void warning(SAXParseException e) throws SAXException {
+        emitMessage(e, "warning");
     }
 
     /**
@@ -75,21 +82,7 @@ public class SystemErrErrorHandler implements ErrorHandler {
      */
     public void error(SAXParseException e) throws SAXException {
         inError = true;
-        try {
-            out.write("Error:\n");
-            out.write(e.getMessage());
-            out.write("\nFile: ");
-            String systemId = e.getSystemId();
-            out.write((systemId == null) ? "Unknown" : systemId);
-            out.write("\nLine: ");
-            out.write(Integer.toString(e.getLineNumber()));
-            out.write(" Col: ");
-            out.write(Integer.toString(e.getColumnNumber()));
-            out.write("\n\n");
-            out.flush();
-        } catch (IOException e1) {
-            throw new SAXException(e1);
-        }
+        emitMessage(e, "error");
     }
 
     /**
@@ -97,21 +90,7 @@ public class SystemErrErrorHandler implements ErrorHandler {
      */
     public void fatalError(SAXParseException e) throws SAXException {
         inError = true;
-        try {
-            out.write("Fatal Error:\n");
-            out.write(e.getMessage());
-            out.write("\nFile: ");
-            String systemId = e.getSystemId();
-            out.write((systemId == null) ? "Unknown" : systemId);
-            out.write("\nLine: ");
-            out.write(Integer.toString(e.getLineNumber()));
-            out.write(" Col: ");
-            out.write(Integer.toString(e.getColumnNumber()));
-            out.write("\n\n");
-            out.flush();
-        } catch (IOException e1) {
-            throw new SAXException(e1);
-        }
+        emitMessage(e, "fatal error");
     }
 
     /**
