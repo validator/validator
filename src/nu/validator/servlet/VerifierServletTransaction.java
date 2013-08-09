@@ -1382,9 +1382,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     private Validator combineValidatorByUrl(Validator val, String url)
             throws SAXException, IOException, IncorrectSchemaException {
-        if (W3C_BRANDING && "http://c.validator.nu/nfc/".equals(url)) {
-            return val; // FIXME review W3C problem
-        }
+        // if (W3C_BRANDING && "http://c.validator.nu/nfc/".equals(url)) {
+            // return val; // FIXME review W3C problem
+        // }
         if (!"".equals(url)) {
             Validator v = validatorByUrl(url);
             if (val == null) {
