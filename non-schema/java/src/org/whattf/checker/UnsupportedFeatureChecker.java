@@ -88,19 +88,19 @@ public class UnsupportedFeatureChecker extends Checker {
             }
             String type = atts.getValue("", "type");
             if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("datetime", type)) {
-                warn("The \u201Cdatetime\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Cdatetime\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("date", type)) {
-                warn("The \u201Cdate\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Cdate\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("month", type)) {
-                warn("The \u201Cmonth\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Cmonth\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("week", type)) {
-                warn("The \u201Cweek\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Cweek\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("time", type)) {
-                warn("The \u201Ctime\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Ctime\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("datetime-local", type)) {
-                warn("The \u201Cdatetime-local\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Cdatetime-local\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             } else if (AttributeUtil.lowerCaseLiteralEqualsIgnoreAsciiCaseString("color", type)) {
-                warn("The \u201Ccolor\u201D input type is so far supported properly only by Opera. Please be sure to test your page in Opera.");
+                warn("The \u201Ccolor\u201D input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.");
             }
         }
     }
