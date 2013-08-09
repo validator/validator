@@ -158,6 +158,9 @@ public final class MultipartFormDataFilter implements Filter {
                         if (fileName != null) {
                             putParam(params, fileItemStream.getFieldName(),
                                     fileName);
+                            request.setAttribute(
+                                    "nu.validator.servlet.MultipartFormDataFilter.filename",
+                                    fileName);
                             Matcher m = EXTENSION.matcher(fileName);
                             if (m.matches()) {
                                 contentType = EXTENSION_TO_TYPE.get(m.group(1));

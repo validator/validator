@@ -1506,6 +1506,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             if (document != null && document.length() > 0) {
                 emitter.characters(FOR);
                 emitter.characters(scrub(shortenDataUri(document)));
+            } else if (request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
+                emitter.characters(FOR);
+                emitter.characters("uploaded file "
+                        + scrub(request.getAttribute(
+                                "nu.validator.servlet.MultipartFormDataFilter.filename").toString()));
             }
         } else {
             emitter.characters(SERVICE_TITLE);
