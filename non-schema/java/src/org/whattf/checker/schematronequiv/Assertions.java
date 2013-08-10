@@ -475,6 +475,7 @@ public class Assertions extends Checker {
         registerRequiredParentRole("menubar", "menuitemradio");
         registerRequiredParentRole("tablist", "tab");
         registerRequiredParentRole("tree", "treeitem");
+        registerRequiredParentRole("group", "treeitem");
         registerRequiredParentRole("list", "listitem");
         registerRequiredParentRole("row", "gridcell");
         registerRequiredParentRole("row", "columnheader");
