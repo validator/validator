@@ -1084,8 +1084,7 @@ public class Assertions extends Checker {
             warn(
                     "Attribute \u201Caria-activedescendant\u201D value should "
                     + "either refer to a descendant element, or should "
-                    + "be accompanied by attribute \u201Caria-owns\u201D "
-                    + "that includes the same value.",
+                    + "be accompanied by attribute \u201Caria-owns\u201D.",
                     locator);
         }
     }
@@ -1129,7 +1128,7 @@ public class Assertions extends Checker {
         String owns = null;
         String forAttr = null;
         boolean href = false;
-        boolean activeDescendantInAriaOwns = false;
+        boolean activeDescendantWithAriaOwns = false;
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -1741,19 +1740,20 @@ public class Assertions extends Checker {
         }
         allIds.addAll(ids);
 
-        // aria-activedescendant in aria-owns
+        // aria-activedescendant accompanied by aria-owns
         if (activeDescendant != null && !"".equals(activeDescendant)) {
-            String activeDescendantVal = atts.getValue("",
-                    "aria-activedescendant");
+            // String activeDescendantVal = atts.getValue("",
+                    // "aria-activedescendant");
             if (owns != null && !"".equals(owns)) {
-                String[] tokens = AttributeUtil.split(owns);
-                for (int i = 0; i < tokens.length; i++) {
-                    String token = tokens[i];
-                    if (token.equals(activeDescendantVal)) {
-                        activeDescendantInAriaOwns = true;
-                        break;
-                    }
-                }
+                activeDescendantWithAriaOwns = true;
+                // String[] tokens = AttributeUtil.split(owns);
+                // for (int i = 0; i < tokens.length; i++) {
+                    // String token = tokens[i];
+                    // if (token.equals(activeDescendantVal)) {
+                        // activeDescendantWithAriaOwns = true;
+                        // break;
+                    // }
+                // }
             }
         }
         // activedescendant
@@ -1774,7 +1774,7 @@ public class Assertions extends Checker {
             }
             StackNode child = new StackNode(ancestorMask, localName, role,
                     activeDescendant, forAttr);
-            if (activeDescendant != null && !activeDescendantInAriaOwns) {
+            if (activeDescendant != null && !activeDescendantWithAriaOwns) {
                 openActiveDescendants.put(child, new LocatorImpl(
                         getDocumentLocator()));
             }
