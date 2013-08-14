@@ -504,34 +504,6 @@ public class Assertions extends Checker {
         MUST_NOT_DANGLE_IDREFS.add("aria-owns");
     }
 
-    private static final Map<String, Set<String>> ALLOWED_CHILD_ROLE_BY_PARENT = new HashMap<String, Set<String>>();
-
-    private static void registerAllowedChildRole(String parent, String child) {
-        Set<String> children = ALLOWED_CHILD_ROLE_BY_PARENT.get(parent);
-        if (children == null) {
-            children = new HashSet<String>();
-        }
-        children.add(child);
-        ALLOWED_CHILD_ROLE_BY_PARENT.put(parent, children);
-    }
-
-    static {
-        registerAllowedChildRole("listbox", "option");
-        registerAllowedChildRole("menu", "menuitem");
-        registerAllowedChildRole("menu", "menuitemcheckbox");
-        registerAllowedChildRole("menu", "menuitemradio");
-        registerAllowedChildRole("menubar", "menuitem");
-        registerAllowedChildRole("menubar", "menuitemcheckbox");
-        registerAllowedChildRole("menubar", "menuitemradio");
-        registerAllowedChildRole("tree", "treeitem");
-        registerAllowedChildRole("list", "listitem");
-        registerAllowedChildRole("radiogroup", "radio");
-        registerAllowedChildRole("tablist", "tab");
-        registerAllowedChildRole("row", "gridcell");
-        registerAllowedChildRole("row", "columnheader");
-        registerAllowedChildRole("row", "rowheader");
-    }
-
     private class IdrefLocator {
         private final Locator locator;
 
@@ -1777,20 +1749,6 @@ public class Assertions extends Checker {
                 } else {
                     errContainedInOrOwnedBy(role, getDocumentLocator());
                 }
-            }
-        }
-
-        // ARIA only allowed children
-        Set<String> allowedChildren = ALLOWED_CHILD_ROLE_BY_PARENT.get(parentRole);
-        if (allowedChildren != null && !"presentation".equals(parentRole) && !"presentation".equals(role)
-               && !"tbody".equals(localName) && !"tfoot".equals(localName)
-               && !"thead".equals(localName)) {
-            if (!allowedChildren.contains(role)) {
-                err("Only elements with "
-                        + renderRoleSet(allowedChildren)
-                        + " or \u201Crole=presentation\u201D"
-                        + " are allowed as children of an element with \u201Crole="
-                        + parentRole + "\u201D.");
             }
         }
 
