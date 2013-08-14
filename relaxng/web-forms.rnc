@@ -59,6 +59,8 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	input.text.attrs.value? 
 		&	(	common.attrs.aria.implicit.textbox
 			|	common.attrs.aria.implicit.combobox
+			|	common.attrs.aria.role.textbox
+			|	common.attrs.aria.role.combobox
 			)?
 		)
 		input.text.attrs.type = 
@@ -84,7 +86,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	shared-form.attrs.readonly? 
 		&	shared-form.attrs.size?
 		&	input.password.attrs.value? 
-		&	common.attrs.aria.implicit.textbox?
+		&	(	common.attrs.aria.implicit.textbox
+			|	common.attrs.aria.role.textbox
+			)?
 		)
 		input.password.attrs.type = 
 			attribute type {
@@ -188,7 +192,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.submit.attrs.type
 		&	input.submit.attrs.value? 
-		&	common.attrs.aria?
+		&	(	common.attrs.aria.implicit.button
+			|	common.attrs.aria.role.button
+			)?
 		)
 		input.submit.attrs.type = 
 			attribute type {
@@ -210,7 +216,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common-form.attrs
 		&	input.reset.attrs.type
 		&	input.reset.attrs.value? 
-		&	common.attrs.aria.implicit.button?
+		&	(	common.attrs.aria.implicit.button
+			|	common.attrs.aria.role.button
+			)?
 		)
 		input.reset.attrs.type = 
 			attribute type {
