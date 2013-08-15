@@ -12,7 +12,7 @@ public class RequiredElementsMissingException extends AbstractValidationExceptio
     public RequiredElementsMissingException(Locator locator,
             Name currentElement, String missingElementName, Name parent) {
         // XXX can parent ever be null with this error?
-        super(parent == null ? localizer.message("required_elements_missing", NameFormatter.format(currentElement), missingElementName) : localizer.message("required_elements_missing_parent", NameFormatter.format(parent), missingElementName), locator, currentElement, parent);
+        super(parent == null ? localizer.message(missingElementName == null ? "required_elements_missing_noname" : "required_elements_missing", NameFormatter.format(currentElement), missingElementName) : localizer.message(missingElementName == null ? "required_elements_missing_noname" : "required_elements_missing", NameFormatter.format(parent), missingElementName), locator, currentElement, parent);
         this.missingElementName = missingElementName;
     }
 

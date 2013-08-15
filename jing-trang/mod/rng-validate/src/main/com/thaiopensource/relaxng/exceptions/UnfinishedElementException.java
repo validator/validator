@@ -11,7 +11,7 @@ public class UnfinishedElementException extends AbstractValidationException {
 
     public UnfinishedElementException(Locator locator,
             Name currentElement, String missingElementName, Name parent) {
-        super(localizer.message("unfinished_element", NameFormatter.format(currentElement), missingElementName), locator, currentElement, parent);
+        super(localizer.message(missingElementName == null ? "unfinished_element_noname" : "unfinished_element", NameFormatter.format(currentElement), missingElementName), locator, currentElement, parent);
         this.missingElementName = missingElementName;
     }
 
