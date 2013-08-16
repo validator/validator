@@ -7,9 +7,10 @@ public class NameFormatter {
   public static String format(Name name) {
     String localName = name.getLocalName();
     String namespaceUri = name.getNamespaceUri();
-    if (namespaceUri.equals(""))
-      return SchemaBuilderImpl.localizer.message("name_absent_namespace", localName);
-    else
-      return SchemaBuilderImpl.localizer.message("name_with_namespace", namespaceUri, localName);
+    return SchemaBuilderImpl.localizer.message("name_absent_namespace", localName);
+    // if (namespaceUri.equals(""))
+      // return SchemaBuilderImpl.localizer.message("name_absent_namespace", localName);
+    // else
+      // return SchemaBuilderImpl.localizer.message("name_with_namespace", namespaceUri, localName);
   }
 }
