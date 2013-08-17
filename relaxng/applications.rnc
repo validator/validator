@@ -303,7 +303,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	menuitem.elem*
 		&	hr.elem*
 		&	menu.popup.elem*
-		&	template.elem*
+		&	common.elem.script-supporting*
 		)
 	menu.elem |= menu.popup.elem
 
@@ -319,7 +319,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		(	(	menuitem.elem*
 			&	hr.elem*
 			&	menu.ambiguous.elem*
-			&	template.elem*
+			&	common.elem.script-supporting*
 			)
 		|	(	mli.elem*
 			|	common.inner.flow

@@ -406,10 +406,10 @@ common.attrs.other =
 common-form.attrs.form = ( notAllowed )
 
 # #####################################################################
-##  Template element
+##  Script-supporting elements
 # #####################################################################
 
-template.elem = ( notAllowed )
+common.elem.script-supporting = ( notAllowed )
 
 # #####################################################################
 ##  ARIA Module Hooks                                                 #

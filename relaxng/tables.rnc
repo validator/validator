@@ -59,18 +59,18 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	table.inner =
 		(	caption.elem?
-		,	template.elem*
+		,	common.elem.script-supporting*
 		,	colgroup.elem*
-		,	template.elem*
+		,	common.elem.script-supporting*
 		,	thead.elem?
-		,	template.elem*
+		,	common.elem.script-supporting*
 		,	(	(	tfoot.elem
-				,	template.elem*
+				,	common.elem.script-supporting*
 				,	( tbody.elem* | tr.elem+ )
-				,	template.elem*
+				,	common.elem.script-supporting*
 				)
 			|	(	( tbody.elem* | tr.elem+ )
-				,	template.elem*
+				,	common.elem.script-supporting*
 				,	tfoot.elem?
 				)
 			)
@@ -110,7 +110,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			}
 	colgroup.inner =
 		(	(	col.elem*
-			&	template.elem*
+			&	common.elem.script-supporting*
 			)
 			|	colgroup.attrs.span?
 		)
@@ -145,7 +145,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	thead.inner =
 		(	tr.elem*
-		&	template.elem*
+		&	common.elem.script-supporting*
 		)
 
 ## Table Footer Row Group
@@ -160,7 +160,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	tfoot.inner =
 		(	tr.elem*
-		&	template.elem*
+		&	common.elem.script-supporting*
 		)
 
 ## Table Row Group
@@ -175,7 +175,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	tbody.inner =
 		(	tr.elem*
-		&	template.elem*
+		&	common.elem.script-supporting*
 		)
 
 # #####################################################################

@@ -120,13 +120,14 @@
 			)?
 		)
 	hgroup.inner =
-		(	h1.elem
-		|	h2.elem
-		|	h3.elem
-		|	h4.elem
-		|	h5.elem
-		|	h6.elem
-		|	template.elem
+		(	(	h1.elem
+			|	h2.elem
+			|	h3.elem
+			|	h4.elem
+			|	h5.elem
+			|	h6.elem
+			)
+			&	common.elem.script-supporting*
 		)+
 
 	common.elem.flow |= hgroup.elem

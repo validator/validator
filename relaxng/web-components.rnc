@@ -6,7 +6,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 
 ## Templates: <template>
 
-	template.elem |=
+	template.elem =
 		element template { template.inner & template.attrs }
 	template.attrs =
 		( common.attrs )
@@ -37,3 +37,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 	common.elem.metadata |= template.elem
 	common.elem.phrasing |= template.elem
+	common.elem.script-supporting |= template.elem
+
+# also allow <script> wherever <template> is allowed
+	common.elem.script-supporting |= script.elem
