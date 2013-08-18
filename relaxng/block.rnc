@@ -177,13 +177,14 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	dl.inner =
-		(	(	dt.elem
-			&	common.elem.script-supporting*
-			)+
-		,
-			(	dd.elem
-			&	common.elem.script-supporting*
-			)+
+		(	(	(	dt.elem
+				&	common.elem.script-supporting*
+				)+
+			,
+				(	dd.elem
+				&	common.elem.script-supporting*
+				)+
+			)*
 		)
 
 	common.elem.flow |= dl.elem

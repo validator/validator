@@ -190,7 +190,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	common.attrs.aria?
 		)
 	tr.inner =
-		( ( td.elem | th.elem | template.elem )* )
+		( ( td.elem | th.elem | common.elem.script-supporting )* )
 
 ## Common Table Cell Attributes
 
