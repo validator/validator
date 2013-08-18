@@ -858,16 +858,17 @@ def addTestCases():
   testCaseDir = os.path.join(os.path.join(buildRoot, "syntax", "relaxng", "tests"))
   testSourcesITS = os.path.join(os.path.join(buildRoot, "dependencies", "ITS-2.0-Testsuite-html-its-testsuite", "its2.0", "inputdata"))
   testDestITS = os.path.join(testCaseDir, "html-its")
-  removeIfDirExists(testDestITS)
-  shutil.copytree(testSourcesITS, testDestITS)
   testSourcesRDFa = os.path.join(os.path.join(buildRoot, "dependencies", "html-rdfa-testsuite-html-rdfa-testsuite", "html-rdfa"))
   testDestRDFa = os.path.join(testCaseDir, "html-rdfa")
-  removeIfDirExists(testDestRDFa)
-  shutil.copytree(testSourcesRDFa, testDestRDFa)
   testSourcesRDFaLite = os.path.join(os.path.join(buildRoot, "dependencies", "html-rdfa-testsuite-html-rdfa-testsuite", "html-rdfalite"))
   testDestRDFaLite = os.path.join(testCaseDir, "html-rdfalite")
+  removeIfDirExists(testDestITS)
+  removeIfDirExists(testDestRDFa)
   removeIfDirExists(testDestRDFaLite)
-  shutil.copytree(testSourcesRDFaLite, testDestRDFaLite)
+  if w3cBranding:
+    shutil.copytree(testSourcesITS, testDestITS)
+    shutil.copytree(testSourcesRDFa, testDestRDFa)
+    shutil.copytree(testSourcesRDFaLite, testDestRDFaLite)
 
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
