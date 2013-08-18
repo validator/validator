@@ -110,7 +110,7 @@
 ## Heading Group: <hgroup>
 
 	hgroup.elem =
-		element hgroup { hgroup.inner & hgroup.attrs }
+		element hgroup { hgroup.inner & hgroup.attrs } & nonW3C
 	hgroup.attrs =
 		(	common.attrs
 		&	(	common.attrs.aria.implicit.heading
