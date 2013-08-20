@@ -234,7 +234,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 				,	( string "execute" )?
 				}
 			|	list 
-				{	( string "reference" )
+				{	( string "link" )
 				,	( string "execute" )?
 				}
 			|	list 
@@ -247,7 +247,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 				}
 			|	list 
 				{	( string "execute" )
-				,	( string "reference" )
+				,	( string "link" )
 				}
 			}
 
@@ -580,6 +580,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "checkbox" }
 	
 	common.attrs.aria |= aria.checkbox
+	common.attrs.aria.role.checkbox |= aria.checkbox
 
 # columnheader
 	aria.columnheader =
@@ -588,6 +589,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.readonly? # not inherited
 		&	aria.state.selected? # not inherited
 		&	aria.state.expanded?
+		&	aria.prop.required?
 		)
 		aria.role.columnheader = 
 			attribute role { string "columnheader" }
@@ -705,6 +707,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.readonly? # not inherited
 		&	aria.state.selected? # not inherited
 		&	aria.state.expanded?
+		&	aria.prop.required?
 		)
 		aria.role.gridcell = 
 			attribute role { string "gridcell" }
@@ -978,6 +981,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.radiogroup
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
+		&	aria.prop.required?
 		)
 		aria.role.radiogroup = 
 			attribute role { string "radiogroup" }
@@ -1008,6 +1012,17 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	
 	common.attrs.aria |= aria.row
 
+## rowgroup
+	aria.rowgroup =
+		(	aria.role.rowgroup
+		&	aria.prop.activedescendant?
+		&	aria.state.expanded?
+		)
+		aria.role.rowgroup =
+			attribute role { string "rowgroup" }
+
+	common.attrs.aria |= aria.rowgroup
+
 # rowheader
 	aria.rowheader =
 		(	aria.role.rowheader
@@ -1015,11 +1030,26 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.readonly? # not inherited
 		&	aria.state.selected? # not inherited
 		&	aria.state.expanded?
+		&	aria.prop.required?
 		)
 		aria.role.rowheader = 
 			attribute role { string "rowheader" }
 	
 	common.attrs.aria |= aria.rowheader
+
+## scrollbar
+	aria.scrollbar =
+		(	aria.role.scrollbar
+		&	aria.prop.orientation
+		&	aria.prop.valuemax
+		&	aria.prop.valuemin
+		&	aria.prop.valuenow
+		&	aria.prop.valuetext?
+		)
+		aria.role.scrollbar =
+			attribute role { string "scrollbar" }
+
+	common.attrs.aria |= aria.scrollbar
 
 ## search
 	aria.search =
@@ -1036,6 +1066,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 	aria.separator =
 		(	aria.role.separator
 		&	aria.state.expanded?
+		&	aria.prop.orientation?
 		)
 		aria.role.separator = 
 			attribute role { string "separator" }
@@ -1050,7 +1081,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
-		&	aria.prop.orientation
+		&	aria.prop.orientation?
 		)
 		aria.role.slider = 
 			attribute role { string "slider" }
@@ -1065,6 +1096,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.valuemin
 		&	aria.prop.valuenow
 		&	aria.prop.valuetext?
+		&	aria.prop.required?
 		)
 		aria.role.spinbutton = 
 			attribute role { string "spinbutton" }
@@ -1100,6 +1132,8 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		(	aria.role.tablist
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
+		&	aria.prop.level?
+		&	aria.prop.multiselectable?
 		)
 		aria.role.tablist = 
 			attribute role { string "tablist" }
@@ -1171,6 +1205,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.multiselectable? # not inherited
 		&	aria.prop.activedescendant?
 		&	aria.state.expanded?
+		&	aria.prop.required?
 		)
 		aria.role.tree = 
 			attribute role { string "tree" }
@@ -1186,6 +1221,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 		&	aria.prop.level?
 		&	aria.prop.multiselectable?
 		&	aria.prop.readonly?
+		&	aria.prop.required?
 		)
 		aria.role.treegrid = 
 			attribute role { string "treegrid" }
