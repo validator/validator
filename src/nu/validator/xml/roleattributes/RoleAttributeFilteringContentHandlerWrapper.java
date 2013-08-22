@@ -248,7 +248,7 @@ public class RoleAttributeFilteringContentHandlerWrapper implements
             errorHandler.error(new SAXParseException("Discarding superfluous"
                     + renderTokenList(superfluousTokens)
                     + " from value of attribute \u201Crole\u201D."
-                    + " Browsers only process the first token found that is a "
+                    + " Browsers only process the first token found that is a"
                     + " defined ARIA non-abstract role.", locator));
 
         }
