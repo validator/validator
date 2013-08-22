@@ -86,6 +86,7 @@ import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.xml.XhtmlSaxEmitter;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
+import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 
 import org.whattf.checker.XmlPiChecker;
 
@@ -503,6 +504,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (isXmlLangAllowingSchema(u)) {
                     s = new XmlLangAttributeDroppingSchemaWrapper(s);
                 }
+                if (isRoleAttributeFilteringSchema(u)) {
+                    s = new RoleAttributeFilteringSchemaWrapper(s);
+                }
                 preloadedSchemas[i] = s;
                 i++;
             }
@@ -552,6 +556,20 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/w3c-html5-microdata-rdfa.rnc".equals(key));
     }
     
+    private static boolean isRoleAttributeFilteringSchema(String key) {
+        return ("http://s.validator.nu/xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/html5.rnc".equals(key)
+                || "http://s.validator.nu/html5-its.rnc".equals(key)
+                || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/html5-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-xhtml5-microdata-rdfa.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfalite.rnc".equals(key)
+                || "http://s.validator.nu/w3c-html5-microdata-rdfa.rnc".equals(key));
+    }
+
     private static boolean isCheckerUrl(String url) {
         if ("http://c.validator.nu/all/".equals(url)
                 || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
