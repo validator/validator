@@ -104,7 +104,7 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
   ("https://github.com/sideshowbarker/ITS-2.0-Testsuite/archive/html-its-testsuite.zip", "c3102260c6e1ec5395c3086760a6f6aa"),
-  ("https://github.com/sideshowbarker/html-rdfa-testsuite/archive/html-rdfa-testsuite.zip", "76570717cc120a3b1d8dbe28c399d3f7"),
+  ("https://github.com/sideshowbarker/html-rdfa-testsuite/archive/html-rdfa-testsuite.zip", "2381f1cfabad8e23bab4800d1bfacca4"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
