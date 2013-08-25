@@ -42,12 +42,12 @@ public class SimpleCommandLineValidator {
 
     private static SimpleValidator validator;
 
-    private static SystemErrErrorHandler errorHandler = new SystemErrErrorHandler();
+    private static SystemErrErrorHandler errorHandler;
 
     private static boolean verbose;
 
     public static void main(String[] args) throws SAXException, Exception {
-        // default schemaUrl; use -s option to override
+        errorHandler = new SystemErrErrorHandler();
         String schemaUrl = "http://s.validator.nu/html5-all.rnc";
         verbose = false;
         boolean hasFileArgs = false;

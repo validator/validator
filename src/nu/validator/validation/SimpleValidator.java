@@ -81,7 +81,7 @@ public class SimpleValidator {
 
     private Validator validator;
 
-    private SystemErrErrorHandler errorHandler = new SystemErrErrorHandler();
+    private SystemErrErrorHandler errorHandler;
 
     private HtmlParser htmlParser = null;
 
@@ -108,6 +108,7 @@ public class SimpleValidator {
     }
 
     public SimpleValidator() {
+        this.errorHandler = new SystemErrErrorHandler();
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
@@ -128,14 +129,14 @@ public class SimpleValidator {
             schema = new DataAttributeDroppingSchemaWrapper(schema);
             schema = new XmlLangAttributeDroppingSchemaWrapper(schema);
             schema = new RoleAttributeFilteringSchemaWrapper(schema);
-            this.mainSchema = schema;
             this.hasHtml5Schema = true;
+            if ("http://s.validator.nu/html5-all.rnc".equals(schemaUrl)) {
+                System.setProperty("nu.validator.schema.rev-allowed", "1");
+            } else {
+                System.setProperty("nu.validator.schema.rev-allowed", "0");
+            }
         }
-        if ("http://s.validator.nu/html5-all.rnc".equals(schemaUrl)) {
-            System.setProperty("nu.validator.schema.rev-allowed", "1");
-        } else {
-            System.setProperty("nu.validator.schema.rev-allowed", "0");
-        }
+        this.mainSchema = schema;
     }
 
     public void setUpParser(ErrorHandler eh) throws SAXException {
@@ -200,6 +201,7 @@ public class SimpleValidator {
      */
     public void checkXmlInputSource(InputSource is) throws IOException,
             SAXException {
+        validator.reset();
         checkAsXML(is);
     }
 
@@ -229,6 +231,10 @@ public class SimpleValidator {
         checkAsXML(is);
     }
 
+    /* *
+     * 
+     * for Web documents
+     */
     public void checkHttpURL(URL url) throws IOException, SAXException {
         String address = url.toString();
         validator.reset();
