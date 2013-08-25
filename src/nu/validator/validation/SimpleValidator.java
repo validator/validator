@@ -29,8 +29,10 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
-import nu.validator.htmlparser.sax.HtmlParser;
+import nu.validator.htmlparser.common.DoctypeExpectation;
+import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
+import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
@@ -81,7 +83,7 @@ public class SimpleValidator {
 
     private SystemErrErrorHandler errorHandler = new SystemErrErrorHandler();
 
-    private HtmlParser htmlParser = new HtmlParser();
+    private HtmlParser htmlParser = null;
 
     private XMLReader xmlParser;
 
@@ -157,6 +159,17 @@ public class SimpleValidator {
                     new TextContentChecker(), jingPropertyMap));
         }
 
+        htmlParser = new HtmlParser();
+        htmlParser.setCommentPolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setContentSpacePolicy(XmlViolationPolicy.ALTER_INFOSET);
+        htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+        htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
+        htmlParser.setMappingLangToXmlLang(true);
+        htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
+        htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
+        htmlParser.setHeuristics(Heuristics.ALL);
         htmlParser.setContentHandler(validator.getContentHandler());
         htmlParser.setErrorHandler(eh);
         htmlParser.setFeature(
@@ -173,17 +186,16 @@ public class SimpleValidator {
 
     public void checkFile(File file, boolean asUTF8, boolean asHTML)
             throws IOException, SAXException {
-        String name = file.toURI().toURL().toString();
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
-        is.setSystemId(name);
+        is.setSystemId(file.toURI().toURL().toString());
         if (asUTF8) {
             is.setEncoding("UTF-8");
         }
         if (asHTML) {
-            checkAsHTML(is, name);
+            checkAsHTML(is);
         } else {
-            checkAsXML(is, name);
+            checkAsXML(is);
         }
     }
 
@@ -193,7 +205,7 @@ public class SimpleValidator {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         String contentType = connection.getContentType();
         try {
-            TypedInputSource is = new TypedInputSource(url.openStream());
+            InputSource is = new InputSource(url.openStream());
             is.setSystemId(address);
             for (String param : contentType.replace(" ", "").split(";")) {
                 if (param.startsWith("charset=")) {
@@ -202,9 +214,9 @@ public class SimpleValidator {
                 }
             }
             if (connection.getContentType().startsWith("text/html")) {
-                checkAsHTML(is, address);
+                checkAsHTML(is);
             } else {
-                checkAsXML(is, address);
+                checkAsXML(is);
             }
         } catch (IOException e) {
             errorHandler.warning(new SAXParseException(e.toString(), null,
@@ -212,23 +224,19 @@ public class SimpleValidator {
         }
     }
 
-    private void checkAsHTML(InputSource is, String name) throws IOException,
+    private void checkAsHTML(InputSource is) throws IOException,
             SAXException {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
-            errorHandler.error(new SAXParseException(e.toString(), null, name,
-                    -1, -1));
         }
     }
 
-    private void checkAsXML(InputSource is, String name) throws IOException,
+    private void checkAsXML(InputSource is) throws IOException,
             SAXException {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
-            errorHandler.error(new SAXParseException(e.toString(), null, name,
-                    -1, -1));
         }
     }
 }

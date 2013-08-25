@@ -138,7 +138,7 @@ public class SimpleCommandLineValidator {
             if (verbose) {
                 errorHandler.warning(new SAXParseException(
                         "File was not checked. Files must have a .html,"
-                                + ".xhtml, .htm, or .xht extension.", null,
+                                + " .xhtml, .htm, or .xht extension.", null,
                         file.toURI().toURL().toString(), -1, -1));
             }
         }
