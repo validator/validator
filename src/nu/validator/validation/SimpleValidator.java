@@ -129,7 +129,7 @@ public class SimpleValidator {
             this.mainSchema = schema;
             this.hasHtml5Schema = true;
         }
-        if ("http://s.validator.nu/html5/html5full-rdfa.rnc".equals(schemaUrl)) {
+        if ("http://s.validator.nu/html5-all.rnc".equals(schemaUrl)) {
             System.setProperty("nu.validator.schema.rev-allowed", "1");
         } else {
             System.setProperty("nu.validator.schema.rev-allowed", "0");
@@ -173,26 +173,28 @@ public class SimpleValidator {
 
     public void checkFile(File file, boolean asUTF8, boolean asHTML)
             throws IOException, SAXException {
+        String name = file.toURI().toURL().toString();
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
-        is.setSystemId(file.toURI().toURL().toString());
+        is.setSystemId(name);
         if (asUTF8) {
             is.setEncoding("UTF-8");
         }
         if (asHTML) {
-            htmlParser.parse(is);
+            checkAsHTML(is, name);
         } else {
-            xmlParser.parse(is);
+            checkAsXML(is, name);
         }
     }
 
     public void checkHttpURL(URL url) throws IOException, SAXException {
+        String address = url.toString();
         validator.reset();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         String contentType = connection.getContentType();
         try {
             TypedInputSource is = new TypedInputSource(url.openStream());
-            is.setSystemId(url.toString());
+            is.setSystemId(address);
             for (String param : contentType.replace(" ", "").split(";")) {
                 if (param.startsWith("charset=")) {
                     is.setEncoding(param.split("=", 2)[1]);
@@ -200,15 +202,37 @@ public class SimpleValidator {
                 }
             }
             if (connection.getContentType().startsWith("text/html")) {
-                htmlParser.parse(is);
+                checkAsHTML(is, address);
             } else {
-                xmlParser.parse(is);
+                checkAsXML(is, address);
             }
         } catch (IOException e) {
             errorHandler.warning(new SAXParseException(String.format(
-                    "%s. Skipping validation.", e.toString()), null,
-                    url.toString(), -1, -1));
+                    "%s. Skipping validation.", e.toString()), null, address,
+                    -1, -1));
             return;
+        }
+    }
+
+    private void checkAsHTML(InputSource is, String name) throws IOException,
+            SAXException {
+        try {
+            htmlParser.parse(is);
+        } catch (SAXParseException e) {
+            errorHandler.warning(new SAXParseException(String.format(
+                    "%s. Skipping validation.", e.toString()), null, name, -1,
+                    -1));
+        }
+    }
+
+    private void checkAsXML(InputSource is, String name) throws IOException,
+            SAXException {
+        try {
+            xmlParser.parse(is);
+        } catch (SAXParseException e) {
+            errorHandler.warning(new SAXParseException(String.format(
+                    "%s. Skipping validation.", e.toString()), null, name, -1,
+                    -1));
         }
     }
 }
