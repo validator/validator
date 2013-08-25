@@ -130,10 +130,10 @@ public class SimpleCommandLineValidator {
             return;
         } else if (isHtml(file)) {
             emitFilename(path);
-            validator.checkFile(file, true, true);
+            validator.checkHtmlFile(file, true);
         } else if (isXhtml(file)) {
             emitFilename(path);
-            validator.checkFile(file, false, false);
+            validator.checkXmlFile(file);
         } else {
             if (verbose) {
                 errorHandler.warning(new SAXParseException(

@@ -184,19 +184,49 @@ public class SimpleValidator {
         htmlParser.setMappingLangToXmlLang(true);
     }
 
-    public void checkFile(File file, boolean asUTF8, boolean asHTML)
-            throws IOException, SAXException {
+    /* *
+     * 
+     * for text/html HTML documents
+     */
+    public void checkHtmlInputSource(InputSource is) throws IOException,
+            SAXException {
+        validator.reset();
+        checkAsHTML(is);
+    }
+
+    /* *
+     * 
+     * for XHTML documents or other XML documents
+     */
+    public void checkXmlInputSource(InputSource is) throws IOException,
+            SAXException {
+        checkAsXML(is);
+    }
+
+    /* *
+     * 
+     * for text/html HTML documents
+     */
+    public void checkHtmlFile(File file, boolean asUTF8) throws IOException,
+            SAXException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
         if (asUTF8) {
             is.setEncoding("UTF-8");
         }
-        if (asHTML) {
-            checkAsHTML(is);
-        } else {
-            checkAsXML(is);
-        }
+        checkAsHTML(is);
+    }
+
+    /* *
+     * 
+     * for XHTML documents or other XML documents
+     */
+    public void checkXmlFile(File file) throws IOException, SAXException {
+        validator.reset();
+        InputSource is = new InputSource(new FileInputStream(file));
+        is.setSystemId(file.toURI().toURL().toString());
+        checkAsXML(is);
     }
 
     public void checkHttpURL(URL url) throws IOException, SAXException {
