@@ -224,16 +224,14 @@ public class SimpleValidator {
         }
     }
 
-    private void checkAsHTML(InputSource is) throws IOException,
-            SAXException {
+    private void checkAsHTML(InputSource is) throws IOException, SAXException {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
         }
     }
 
-    private void checkAsXML(InputSource is) throws IOException,
-            SAXException {
+    private void checkAsXML(InputSource is) throws IOException, SAXException {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
