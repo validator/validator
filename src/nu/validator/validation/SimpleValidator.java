@@ -207,10 +207,8 @@ public class SimpleValidator {
                 checkAsXML(is, address);
             }
         } catch (IOException e) {
-            errorHandler.warning(new SAXParseException(String.format(
-                    "%s. Skipping validation.", e.toString()), null, address,
-                    -1, -1));
-            return;
+            errorHandler.warning(new SAXParseException(e.toString(), null,
+                    address, -1, -1));
         }
     }
 
@@ -219,9 +217,8 @@ public class SimpleValidator {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
-            errorHandler.warning(new SAXParseException(String.format(
-                    "%s. Skipping validation.", e.toString()), null, name, -1,
-                    -1));
+            errorHandler.error(new SAXParseException(e.toString(), null, name,
+                    -1, -1));
         }
     }
 
@@ -230,9 +227,8 @@ public class SimpleValidator {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
-            errorHandler.warning(new SAXParseException(String.format(
-                    "%s. Skipping validation.", e.toString()), null, name, -1,
-                    -1));
+            errorHandler.error(new SAXParseException(e.toString(), null, name,
+                    -1, -1));
         }
     }
 }

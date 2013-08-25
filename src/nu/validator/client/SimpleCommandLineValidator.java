@@ -75,7 +75,6 @@ public class SimpleCommandLineValidator {
                 files.add(new File(args[i]));
             }
             validator = new SimpleValidator();
-            System.out.println("schema: " + schemaUrl);
             validateFilesAgainstSchema(files, schemaUrl);
         }
     }
