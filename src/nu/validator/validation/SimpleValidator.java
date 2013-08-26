@@ -39,7 +39,6 @@ import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.NullEntityResolver;
-import nu.validator.xml.SystemErrErrorHandler;
 import nu.validator.xml.TypedInputSource;
 
 import org.whattf.checker.NormalizationChecker;
@@ -80,19 +79,12 @@ public class SimpleValidator {
 
     private Validator validator;
 
-    private SystemErrErrorHandler errorHandler;
-
     private HtmlParser htmlParser = null;
 
     private XMLReader xmlParser;
 
-    /* *
-     * Retrieves a Schema instance from the set of known schemas in the local
-     * entity cache packaged with the validator code.
-     * 
-     * @param schemaUrl a string representing a URL for a known schema
-     */
-    private Schema schemaByUrl(String schemaUrl) throws Exception {
+    private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
+            throws Exception, SchemaReadException {
         PropertyMapBuilder pmb = new PropertyMapBuilder();
         pmb.put(ValidateProperty.ERROR_HANDLER, errorHandler);
         pmb.put(ValidateProperty.ENTITY_RESOLVER, entityResolver);
@@ -101,40 +93,48 @@ public class SimpleValidator {
         RngProperty.CHECK_ID_IDREF.add(pmb);
         PropertyMap jingPropertyMap = pmb.toPropertyMap();
 
-        TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
-                null, schemaUrl);
-        SchemaReader sr;
-        if ("application/relax-ng-compact-syntax".equals(schemaInput.getType())) {
-            sr = CompactSchemaReader.getInstance();
-        } else {
-            sr = new AutoSchemaReader();
+        try {
+            TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
+                    null, schemaUrl);
+            SchemaReader sr;
+            if ("application/relax-ng-compact-syntax".equals(schemaInput.getType())) {
+                sr = CompactSchemaReader.getInstance();
+            } else {
+                sr = new AutoSchemaReader();
+            }
+            return sr.createSchema(schemaInput, jingPropertyMap);
+        } catch (ClassCastException e) {
+            throw new SchemaReadException(String.format(
+                    "Failed to resolve schema URL \"%s\".", schemaUrl));
         }
-        return sr.createSchema(schemaInput, jingPropertyMap);
     }
 
     public SimpleValidator() {
-        this.errorHandler = new SystemErrErrorHandler();
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
     }
 
     /* *
-     * Prepares the main RelaxNG schema to use for document validation.
+     * Prepares the main RelaxNG schema to use for document validation, by
+     * retrieving a serialized schema instance from the copies of known
+     * http://s.validator.nu/* schemas in the local entity cache packaged with
+     * the validator code and creating a Schema instance from it. Also checks
+     * for resolution of secondary schemas.
      * 
-     * @param schemaUrl a string representing a URL for a known schema
+     * @param schemaUrl an http://s.validator.nu/* URL
+     * 
+     * @throws SchemaReadException if retrieval of any schema fails
      */
-    public void setUpMainSchema(String schemaUrl) throws SAXException,
-            Exception {
-        Schema schema = schemaByUrl(schemaUrl);
+    public void setUpMainSchema(String schemaUrl, ErrorHandler errorHandler)
+            throws SAXException, Exception, SchemaReadException {
+        Schema schema = schemaByUrl(schemaUrl, errorHandler);
         if (schemaUrl.contains("html5")) {
             try {
                 assertionSchema = CheckerSchema.ASSERTION_SCH;
             } catch (Exception e) {
-                errorHandler.fatalError(new SAXParseException(
-                        "Reading schema failed. Terminating.", null));
-                e.printStackTrace();
-                System.exit(-1);
+                throw new SchemaReadException(
+                        "Failed to retrieve secondary schema.");
             }
             schema = new DataAttributeDroppingSchemaWrapper(schema);
             schema = new XmlLangAttributeDroppingSchemaWrapper(schema);
@@ -222,128 +222,124 @@ public class SimpleValidator {
     /* *
      * Checks an InputSource as a text/html HTML document.
      * 
-     * @return true if parsed successfully; false if fatal parse error
+     * @throws DocParseException if a fatal parse error was encountered
      */
-    public boolean checkHtmlInputSource(InputSource is) throws IOException,
-            SAXException {
+    public void checkHtmlInputSource(InputSource is) throws IOException,
+            SAXException, DocParseException {
         validator.reset();
-        if (checkAsHTML(is)) {
-            return true;
-        }
-        return false;
+        checkAsHTML(is);
     }
 
     /* *
      * Checks an InputSource as an XHTML/XML document.
      * 
-     * @return true if parsed successfully; false if fatal parse error
+     * @throws DocParseException if a fatal parse error was encountered
      */
-    public boolean checkXmlInputSource(InputSource is) throws IOException,
-            SAXException {
+    public void checkXmlInputSource(InputSource is) throws IOException,
+            SAXException, DocParseException {
         validator.reset();
-        if (checkAsXML(is)) {
-            return true;
-        }
-        return false;
+        checkAsXML(is);
     }
 
     /* *
      * Checks text/html HTML document.
      * 
-     * @return true if parsed successfully; false if fatal parse error
+     * @throws DocParseException if a fatal parse error was encountered
      */
-    public boolean checkHtmlFile(File file, boolean asUTF8) throws IOException,
-            SAXException {
+    public void checkHtmlFile(File file, boolean asUTF8) throws IOException,
+            SAXException, DocParseException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
         if (asUTF8) {
             is.setEncoding("UTF-8");
         }
-        if (checkAsHTML(is)) {
-            return true;
-        }
-        return false;
+        checkAsHTML(is);
     }
 
     /* *
      * Checks an XHTML document or other XML document.
      * 
-     * @return true if parsed successfully; false if fatal parse error
+     * @throws DocParseException if a fatal parse error was encountered
      */
-    public boolean checkXmlFile(File file) throws IOException, SAXException {
+    public void checkXmlFile(File file) throws IOException, SAXException,
+            DocParseException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
-        if (checkAsXML(is)) {
-            return true;
-        }
-        return false;
+        checkAsXML(is);
     }
 
     /* *
      * Checks a Web document.
      * 
-     * @return true if parsed successfully; false if fatal parse error
+     * @throws IOException if loading of the URL fails for some reason
+     * @throws DocParseException if a fatal parse error was encountered
      */
-    public boolean checkHttpURL(URL url) throws IOException, SAXException {
+    public void checkHttpURL(URL url) throws IOException, SAXException,
+            DocParseException {
         String address = url.toString();
         validator.reset();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         String contentType = connection.getContentType();
-        try {
-            InputSource is = new InputSource(url.openStream());
-            is.setSystemId(address);
-            for (String param : contentType.replace(" ", "").split(";")) {
-                if (param.startsWith("charset=")) {
-                    is.setEncoding(param.split("=", 2)[1]);
-                    break;
-                }
+        InputSource is = new InputSource(url.openStream());
+        is.setSystemId(address);
+        for (String param : contentType.replace(" ", "").split(";")) {
+            if (param.startsWith("charset=")) {
+                is.setEncoding(param.split("=", 2)[1]);
+                break;
             }
-            if (connection.getContentType().startsWith("text/html")) {
-                if (checkAsHTML(is)) {
-                    return true;
-                }
-                return false;
-            } else {
-                if (checkAsXML(is)) {
-                    return true;
-                }
-                return false;
-            }
-        } catch (IOException e) {
-            errorHandler.error(new SAXParseException(e.toString(), null,
-                    address, -1, -1));
-            return false;
+        }
+        if (connection.getContentType().startsWith("text/html")) {
+            checkAsHTML(is);
+        } else {
+            checkAsXML(is);
         }
     }
 
     /* *
      * Parses a document with the text/html parser and validates it.
-     * 
-     * @return true if parsed successfully; false if fatal parse error
      */
-    private boolean checkAsHTML(InputSource is) throws IOException,
-            SAXException {
+    private void checkAsHTML(InputSource is) throws IOException, SAXException,
+            DocParseException {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
-            return false;
+            throw new DocParseException();
         }
-        return true;
     }
 
     /* *
      * Parses a document with the XML parser and validates it.
-     * 
-     * @return true if parsed successfully; false if fatal parse error
      */
-    private boolean checkAsXML(InputSource is) throws IOException, SAXException {
+    private void checkAsXML(InputSource is) throws IOException, SAXException,
+            DocParseException {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
-            return false;
+            throw new DocParseException();
         }
-        return true;
+    }
+
+    @SuppressWarnings("serial") public class SchemaReadException extends
+            Exception {
+
+        public SchemaReadException() {
+        }
+
+        public SchemaReadException(String message) {
+            super(message);
+        }
+    }
+
+    @SuppressWarnings("serial") public class DocParseException extends
+            Exception {
+
+        public DocParseException() {
+        }
+
+        public DocParseException(String message) {
+            super(message);
+        }
     }
 }

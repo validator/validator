@@ -38,6 +38,9 @@ import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.servlet.imagereview.ImageCollector;
 import nu.validator.source.SourceCode;
 import nu.validator.validation.SimpleValidator;
+import nu.validator.validation.SimpleValidator.DocParseException;
+import nu.validator.validation.SimpleValidator.SchemaReadException;
+import nu.validator.xml.SystemErrErrorHandler;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -87,7 +90,7 @@ public class SimpleCommandLineValidator {
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
-            return;
+            System.exit(-1);
         }
         for (int i = 0; i < args.length; i++) {
             if (!args[i].startsWith("--")) {
@@ -128,7 +131,7 @@ public class SimpleCommandLineValidator {
             } else if ("json".equals(outFormat)) {
                 outputFormat = OutputFormat.JSON;
             } else {
-                System.err.printf("error: Unsupported output format \"%s\"."
+                System.err.printf("Error: Unsupported output format \"%s\"."
                         + " Must be \"gnu\", \"xml\", \"json\","
                         + " or \"text\".\n", outFormat);
                 System.exit(-1);
@@ -142,12 +145,21 @@ public class SimpleCommandLineValidator {
             validator = new SimpleValidator();
             setErrorHandler();
             validateFilesAgainstSchema(files, schemaUrl);
+        } else {
+            System.err.printf("\nError: No documents specified.\n");
+            usage();
+            System.exit(-1);
         }
     }
 
     private static void validateFilesAgainstSchema(List<File> files,
             String schemaUrl) throws SAXException, Exception {
-        validator.setUpMainSchema(schemaUrl);
+        try {
+            validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
+        } catch (SchemaReadException e) {
+            System.out.println(e.getMessage() + " Terminating.");
+            System.exit(-1);
+        }
         validator.setUpValidatorAndParsers(errorHandler, loadEntities);
         errorHandler.start(null);
         checkFiles(files);
@@ -185,13 +197,23 @@ public class SimpleCommandLineValidator {
         if (path.matches("^http:/[^/].+$")) {
             path = "http://" + path.substring(path.indexOf("/") + 1);
             emitFilename(path);
-            if (!validator.checkHttpURL(new URL(path))) {
+            try {
+                validator.checkHttpURL(new URL(path));
+            } catch (IOException e) {
+                errorHandler.error(new SAXParseException(e.toString(), null,
+                        path, -1, -1));
+            } catch (DocParseException e) {
                 endDueToFatalError(path);
             }
         } else if (path.matches("^https:/[^/].+$")) {
             path = "https://" + path.substring(path.indexOf("/") + 1);
             emitFilename(path);
-            if (!validator.checkHttpURL(new URL(path))) {
+            try {
+                validator.checkHttpURL(new URL(path));
+            } catch (IOException e) {
+                errorHandler.error(new SAXParseException(e.toString(), null,
+                        path, -1, -1));
+            } catch (DocParseException e) {
                 endDueToFatalError(path);
             }
         } else if (!file.exists()) {
@@ -202,17 +224,23 @@ public class SimpleCommandLineValidator {
             return;
         } else if (isHtml(file)) {
             emitFilename(path);
-            if (!validator.checkHtmlFile(file, true)) {
+            try {
+                validator.checkHtmlFile(file, true);
+            } catch (DocParseException e) {
                 endDueToFatalError(path);
             }
         } else if (isXhtml(file)) {
             emitFilename(path);
             if (forceHTML) {
-                if (!validator.checkHtmlFile(file, true)) {
+                try {
+                    validator.checkHtmlFile(file, true);
+                } catch (DocParseException e) {
                     endDueToFatalError(path);
                 }
             } else {
-                if (!validator.checkXmlFile(file)) {
+                try {
+                    validator.checkXmlFile(file);
+                } catch (DocParseException e) {
                     endDueToFatalError(path);
                 }
             }
@@ -293,11 +321,17 @@ public class SimpleCommandLineValidator {
 
     private static void usage() {
         System.out.println("");
-        System.out.println("To validate one or more files from the command line:");
+        System.out.println("Usage:");
+        System.out.println("");
+        System.out.println("  java -jar vnu.jar [--verbose] [--html]");
+        System.out.println("      [--format gnu|xml|json|text]");
+        System.out.println("      [--entities] [--schema URL] FILES");
+        System.out.println("");
+        System.out.println("To validate one or more documents from the command line:");
         System.out.println("");
         System.out.println("  java -jar vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...");
         System.out.println("");
-        System.out.println("To validate all HTML files in a particular directory:");
+        System.out.println("To validate all HTML documents in a particular directory:");
         System.out.println("");
         System.out.println("  java -jar vnu.jar some-directory-name/");
         System.out.println("");
@@ -305,11 +339,13 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("  java -jar vnu.jar http://example.com/foo");
         System.out.println("");
+        System.out.println("Other usage:");
+        System.out.println("");
         System.out.println("To start the validator as an HTTP service on port 8888:");
         System.out.println("");
         System.out.println("  java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");
-        System.out.println("To validate one or more files with a running instance of the validator HTTP service:");
+        System.out.println("To validate one or more documents with a running instance of the validator HTTP service:");
         System.out.println("");
         System.out.println("  java -cp vnu.jar nu.validator.client.HttpClient FILE.html FILE2.html...");
     }
