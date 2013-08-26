@@ -24,12 +24,20 @@ package nu.validator.client;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import nu.validator.htmlparser.sax.XmlSerializer;
+import nu.validator.messages.GnuMessageEmitter;
+import nu.validator.messages.JsonMessageEmitter;
+import nu.validator.messages.MessageEmitterAdapter;
+import nu.validator.messages.TextMessageEmitter;
+import nu.validator.messages.XmlMessageEmitter;
+import nu.validator.servlet.imagereview.ImageCollector;
+import nu.validator.source.SourceCode;
 import nu.validator.validation.SimpleValidator;
-import nu.validator.xml.SystemErrErrorHandler;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -42,14 +50,39 @@ public class SimpleCommandLineValidator {
 
     private static SimpleValidator validator;
 
-    private static SystemErrErrorHandler errorHandler;
+    private static OutputStream out;
+
+    private static MessageEmitterAdapter errorHandler;
 
     private static boolean verbose;
 
+    private static boolean errorsOnly;
+
+    private static boolean loadEntities;
+
+    private static boolean forceHTML;
+
+    private static boolean asciiQuotes;
+
+    private static int lineOffset;
+
+    private static enum OutputFormat {
+        HTML, XHTML, TEXT, XML, JSON, RELAXED, SOAP, UNICORN, GNU
+    }
+
+    private static OutputFormat outputFormat;
+
     public static void main(String[] args) throws SAXException, Exception {
-        errorHandler = new SystemErrErrorHandler();
-        String schemaUrl = "http://s.validator.nu/html5-all.rnc";
+        out = System.err;
+        errorsOnly = false;
+        forceHTML = false;
+        loadEntities = false;
+        lineOffset = 0;
+        asciiQuotes = false;
         verbose = false;
+
+        String outFormat = null;
+        String schemaUrl = null;
         boolean hasFileArgs = false;
         int fileArgsStart = 0;
         if (args.length == 0) {
@@ -57,16 +90,48 @@ public class SimpleCommandLineValidator {
             return;
         }
         for (int i = 0; i < args.length; i++) {
-            if (!args[i].startsWith("-")) {
+            if (!args[i].startsWith("--")) {
                 hasFileArgs = true;
                 fileArgsStart = i;
                 break;
             } else {
-                if ("-v".equals(args[i])) {
+                if ("--verbose".equals(args[i])) {
                     verbose = true;
-                } else if ("-s".equals(args[i])) {
+                } else if ("--format".equals(args[i])) {
+                    outFormat = args[++i];
+                } else if ("--html".equals(args[i])) {
+                    forceHTML = true;
+                } else if ("--entities".equals(args[i])) {
+                    loadEntities = true;
+                } else if ("--schema".equals(args[i])) {
                     schemaUrl = args[++i];
+                    if (!schemaUrl.startsWith("http:")) {
+                        System.err.println("error: The \"--schema\" option"
+                                + " requires a URL for a schema.");
+                        System.exit(-1);
+                    }
                 }
+            }
+        }
+        if (schemaUrl == null) {
+            schemaUrl = "http://s.validator.nu/html5-all.rnc";
+        }
+        if (outFormat == null) {
+            outputFormat = OutputFormat.GNU;
+        } else {
+            if ("text".equals(outFormat)) {
+                outputFormat = OutputFormat.TEXT;
+            } else if ("gnu".equals(outFormat)) {
+                outputFormat = OutputFormat.GNU;
+            } else if ("xml".equals(outFormat)) {
+                outputFormat = OutputFormat.XML;
+            } else if ("json".equals(outFormat)) {
+                outputFormat = OutputFormat.JSON;
+            } else {
+                System.err.printf("error: Unsupported output format \"%s\"."
+                        + " Must be \"gnu\", \"xml\", \"json\","
+                        + " or \"text\".\n", outFormat);
+                System.exit(-1);
             }
         }
         if (hasFileArgs) {
@@ -75,21 +140,24 @@ public class SimpleCommandLineValidator {
                 files.add(new File(args[i]));
             }
             validator = new SimpleValidator();
+            setErrorHandler();
             validateFilesAgainstSchema(files, schemaUrl);
         }
     }
 
     private static void validateFilesAgainstSchema(List<File> files,
             String schemaUrl) throws SAXException, Exception {
-        validator.setUpSchema(schemaUrl);
-        validator.setUpParser(errorHandler);
+        validator.setUpMainSchema(schemaUrl);
+        validator.setUpValidatorAndParsers(errorHandler, loadEntities);
+        errorHandler.start(null);
         checkFiles(files);
+        errorHandler.end("Document checking completed. No errors found.",
+                "Document checking completed.");
     }
 
     private static void checkFiles(List<File> files) throws SAXException,
             IOException {
         for (File file : files) {
-            errorHandler.reset();
             if (file.isDirectory()) {
                 recurseDirectory(file);
             } else {
@@ -117,11 +185,15 @@ public class SimpleCommandLineValidator {
         if (path.matches("^http:/[^/].+$")) {
             path = "http://" + path.substring(path.indexOf("/") + 1);
             emitFilename(path);
-            validator.checkHttpURL(new URL(path));
+            if (!validator.checkHttpURL(new URL(path))) {
+                endDueToFatalError(path);
+            }
         } else if (path.matches("^https:/[^/].+$")) {
             path = "https://" + path.substring(path.indexOf("/") + 1);
             emitFilename(path);
-            validator.checkHttpURL(new URL(path));
+            if (!validator.checkHttpURL(new URL(path))) {
+                endDueToFatalError(path);
+            }
         } else if (!file.exists()) {
             if (verbose) {
                 errorHandler.warning(new SAXParseException("File not found.",
@@ -130,10 +202,20 @@ public class SimpleCommandLineValidator {
             return;
         } else if (isHtml(file)) {
             emitFilename(path);
-            validator.checkHtmlFile(file, true);
+            if (!validator.checkHtmlFile(file, true)) {
+                endDueToFatalError(path);
+            }
         } else if (isXhtml(file)) {
             emitFilename(path);
-            validator.checkXmlFile(file);
+            if (forceHTML) {
+                if (!validator.checkHtmlFile(file, true)) {
+                    endDueToFatalError(path);
+                }
+            } else {
+                if (!validator.checkXmlFile(file)) {
+                    endDueToFatalError(path);
+                }
+            }
         } else {
             if (verbose) {
                 errorHandler.warning(new SAXParseException(
@@ -158,6 +240,55 @@ public class SimpleCommandLineValidator {
         if (verbose) {
             System.out.println(name);
         }
+    }
+
+    private static void setErrorHandler() {
+        SourceCode sourceCode = new SourceCode();
+        ImageCollector imageCollector = new ImageCollector(sourceCode);
+        boolean showSource = false;
+        if (outputFormat == OutputFormat.TEXT) {
+            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    imageCollector, lineOffset, new TextMessageEmitter(out,
+                            asciiQuotes));
+        } else if (outputFormat == OutputFormat.GNU) {
+            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    imageCollector, lineOffset, new GnuMessageEmitter(out,
+                            asciiQuotes));
+        } else if (outputFormat == OutputFormat.XML) {
+            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    imageCollector, lineOffset, new XmlMessageEmitter(
+                            new XmlSerializer(out)));
+        } else if (outputFormat == OutputFormat.JSON) {
+            String callback = null;
+            errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
+                    imageCollector, lineOffset, new JsonMessageEmitter(
+                            new nu.validator.json.Serializer(out), callback));
+        } else {
+            throw new RuntimeException("Bug. Should be unreachable.");
+        }
+        errorHandler.setErrorsOnly(errorsOnly);
+    }
+
+    private static void endDueToFatalError(String documentName)
+            throws SAXException, IOException {
+        // If we end up here it's almost certainly because either the HTML
+        // parser or XML parser ran into a fatal parse error. And for error
+        // handling we're using the MessageEmitter mechanism, and the
+        // MessageEmitter code is basically built around the use case of
+        // validating only one document at a time (rather than doing batch
+        // validation of multiple document). So once the MessageEmitter hits a
+        // fatal error in one document, it sorta assumes its job is done, and
+        // becomes usable for reporting errors from any more documents. So the
+        // only thing we can do at this point is to end and emit a message
+        // saying there was a fatal error, along with the name of the document
+        // that had the fatal error (hopefully the right name, though
+        // unfortunately there may be some cases where it might not be...)
+        errorHandler.end("", "");
+        System.out.print(String.format("%s"
+                + "\n\nDocument checking stopped prematurely."
+                + "\nThere was a fatal error."
+                + " Fix the error and recheck your document(s).\n",
+                documentName));
     }
 
     private static void usage() {

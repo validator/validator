@@ -66,7 +66,6 @@ import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 
 /**
- * 
  * Simple validation interface.
  */
 public class SimpleValidator {
@@ -87,6 +86,12 @@ public class SimpleValidator {
 
     private XMLReader xmlParser;
 
+    /* *
+     * Retrieves a Schema instance from the set of known schemas in the local
+     * entity cache packaged with the validator code.
+     * 
+     * @param schemaUrl a string representing a URL for a known schema
+     */
     private Schema schemaByUrl(String schemaUrl) throws Exception {
         PropertyMapBuilder pmb = new PropertyMapBuilder();
         pmb.put(ValidateProperty.ERROR_HANDLER, errorHandler);
@@ -112,17 +117,22 @@ public class SimpleValidator {
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
-        this.xmlParser = new IdFilter(new SAXDriver());
     }
 
-    public void setUpSchema(String schemaUrl) throws SAXException, Exception {
+    /* *
+     * Prepares the main RelaxNG schema to use for document validation.
+     * 
+     * @param schemaUrl a string representing a URL for a known schema
+     */
+    public void setUpMainSchema(String schemaUrl) throws SAXException,
+            Exception {
         Schema schema = schemaByUrl(schemaUrl);
         if (schemaUrl.contains("html5")) {
             try {
                 assertionSchema = CheckerSchema.ASSERTION_SCH;
             } catch (Exception e) {
                 errorHandler.fatalError(new SAXParseException(
-                        "error: Reading schema failed. Terminating.", null));
+                        "Reading schema failed. Terminating.", null));
                 e.printStackTrace();
                 System.exit(-1);
             }
@@ -139,9 +149,20 @@ public class SimpleValidator {
         this.mainSchema = schema;
     }
 
-    public void setUpParser(ErrorHandler eh) throws SAXException {
+    /* *
+     * Prepares a Validator instance along with HTML and XML parsers, and then
+     * attaches the Validator instance and supplied ErrorHandler instance to the
+     * parsers so that the ErrorHandler is used for processing of all document-
+     * validation problems reported.
+     * 
+     * @param docValidationErrHandler error handler for doc-validation reporting
+     * 
+     * @param loadExternalEnts whether XML parser should load remote DTDs, etc.
+     */
+    public void setUpValidatorAndParsers(ErrorHandler docValidationErrHandler,
+            boolean loadExternalEnts) throws SAXException {
         PropertyMapBuilder pmb = new PropertyMapBuilder();
-        pmb.put(ValidateProperty.ERROR_HANDLER, eh);
+        pmb.put(ValidateProperty.ERROR_HANDLER, docValidationErrHandler);
         pmb.put(ValidateProperty.XML_READER_CREATOR,
                 new Jaxp11XMLReaderCreator());
         RngProperty.CHECK_ID_IDREF.add(pmb);
@@ -172,44 +193,66 @@ public class SimpleValidator {
         htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
         htmlParser.setHeuristics(Heuristics.ALL);
         htmlParser.setContentHandler(validator.getContentHandler());
-        htmlParser.setErrorHandler(eh);
+        htmlParser.setErrorHandler(docValidationErrHandler);
+        htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
+        htmlParser.setMappingLangToXmlLang(true);
         htmlParser.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
                 true);
+
+        xmlParser = new IdFilter(new SAXDriver());
         xmlParser.setContentHandler(validator.getContentHandler());
-        xmlParser.setErrorHandler(eh);
+        xmlParser.setErrorHandler(docValidationErrHandler);
         xmlParser.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
                 true);
-        htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
-        htmlParser.setMappingLangToXmlLang(true);
+        if (loadExternalEnts) {
+            xmlParser.setEntityResolver(entityResolver);
+        } else {
+            xmlParser.setFeature(
+                    "http://xml.org/sax/features/external-general-entities",
+                    false);
+            xmlParser.setFeature(
+                    "http://xml.org/sax/features/external-parameter-entities",
+                    false);
+            xmlParser.setEntityResolver(new NullEntityResolver());
+        }
     }
 
     /* *
+     * Checks an InputSource as a text/html HTML document.
      * 
-     * for text/html HTML documents
+     * @return true if parsed successfully; false if fatal parse error
      */
-    public void checkHtmlInputSource(InputSource is) throws IOException,
+    public boolean checkHtmlInputSource(InputSource is) throws IOException,
             SAXException {
         validator.reset();
-        checkAsHTML(is);
+        if (checkAsHTML(is)) {
+            return true;
+        }
+        return false;
     }
 
     /* *
+     * Checks an InputSource as an XHTML/XML document.
      * 
-     * for XHTML documents or other XML documents
+     * @return true if parsed successfully; false if fatal parse error
      */
-    public void checkXmlInputSource(InputSource is) throws IOException,
+    public boolean checkXmlInputSource(InputSource is) throws IOException,
             SAXException {
         validator.reset();
-        checkAsXML(is);
+        if (checkAsXML(is)) {
+            return true;
+        }
+        return false;
     }
 
     /* *
+     * Checks text/html HTML document.
      * 
-     * for text/html HTML documents
+     * @return true if parsed successfully; false if fatal parse error
      */
-    public void checkHtmlFile(File file, boolean asUTF8) throws IOException,
+    public boolean checkHtmlFile(File file, boolean asUTF8) throws IOException,
             SAXException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
@@ -217,25 +260,33 @@ public class SimpleValidator {
         if (asUTF8) {
             is.setEncoding("UTF-8");
         }
-        checkAsHTML(is);
+        if (checkAsHTML(is)) {
+            return true;
+        }
+        return false;
     }
 
     /* *
+     * Checks an XHTML document or other XML document.
      * 
-     * for XHTML documents or other XML documents
+     * @return true if parsed successfully; false if fatal parse error
      */
-    public void checkXmlFile(File file) throws IOException, SAXException {
+    public boolean checkXmlFile(File file) throws IOException, SAXException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
-        checkAsXML(is);
+        if (checkAsXML(is)) {
+            return true;
+        }
+        return false;
     }
 
     /* *
+     * Checks a Web document.
      * 
-     * for Web documents
+     * @return true if parsed successfully; false if fatal parse error
      */
-    public void checkHttpURL(URL url) throws IOException, SAXException {
+    public boolean checkHttpURL(URL url) throws IOException, SAXException {
         String address = url.toString();
         validator.reset();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -250,27 +301,49 @@ public class SimpleValidator {
                 }
             }
             if (connection.getContentType().startsWith("text/html")) {
-                checkAsHTML(is);
+                if (checkAsHTML(is)) {
+                    return true;
+                }
+                return false;
             } else {
-                checkAsXML(is);
+                if (checkAsXML(is)) {
+                    return true;
+                }
+                return false;
             }
         } catch (IOException e) {
-            errorHandler.warning(new SAXParseException(e.toString(), null,
+            errorHandler.error(new SAXParseException(e.toString(), null,
                     address, -1, -1));
+            return false;
         }
     }
 
-    private void checkAsHTML(InputSource is) throws IOException, SAXException {
+    /* *
+     * Parses a document with the text/html parser and validates it.
+     * 
+     * @return true if parsed successfully; false if fatal parse error
+     */
+    private boolean checkAsHTML(InputSource is) throws IOException,
+            SAXException {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
+            return false;
         }
+        return true;
     }
 
-    private void checkAsXML(InputSource is) throws IOException, SAXException {
+    /* *
+     * Parses a document with the XML parser and validates it.
+     * 
+     * @return true if parsed successfully; false if fatal parse error
+     */
+    private boolean checkAsXML(InputSource is) throws IOException, SAXException {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
+            return false;
         }
+        return true;
     }
 }
