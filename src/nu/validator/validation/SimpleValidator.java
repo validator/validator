@@ -124,6 +124,8 @@ public class SimpleValidator {
      * 
      * @param schemaUrl an http://s.validator.nu/* URL
      * 
+     * @param errorHandler error handler for schema-error reporting
+     * 
      * @throws SchemaReadException if retrieval of any schema fails
      */
     public void setUpMainSchema(String schemaUrl, ErrorHandler errorHandler)
@@ -221,33 +223,27 @@ public class SimpleValidator {
 
     /* *
      * Checks an InputSource as a text/html HTML document.
-     * 
-     * @throws DocParseException if a fatal parse error was encountered
      */
     public void checkHtmlInputSource(InputSource is) throws IOException,
-            SAXException, DocParseException {
+            SAXException {
         validator.reset();
         checkAsHTML(is);
     }
 
     /* *
      * Checks an InputSource as an XHTML/XML document.
-     * 
-     * @throws DocParseException if a fatal parse error was encountered
      */
     public void checkXmlInputSource(InputSource is) throws IOException,
-            SAXException, DocParseException {
+            SAXException {
         validator.reset();
         checkAsXML(is);
     }
 
     /* *
-     * Checks text/html HTML document.
-     * 
-     * @throws DocParseException if a fatal parse error was encountered
+     * Checks a text/html HTML document.
      */
     public void checkHtmlFile(File file, boolean asUTF8) throws IOException,
-            SAXException, DocParseException {
+            SAXException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
@@ -259,11 +255,8 @@ public class SimpleValidator {
 
     /* *
      * Checks an XHTML document or other XML document.
-     * 
-     * @throws DocParseException if a fatal parse error was encountered
      */
-    public void checkXmlFile(File file) throws IOException, SAXException,
-            DocParseException {
+    public void checkXmlFile(File file) throws IOException, SAXException {
         validator.reset();
         InputSource is = new InputSource(new FileInputStream(file));
         is.setSystemId(file.toURI().toURL().toString());
@@ -274,10 +267,8 @@ public class SimpleValidator {
      * Checks a Web document.
      * 
      * @throws IOException if loading of the URL fails for some reason
-     * @throws DocParseException if a fatal parse error was encountered
      */
-    public void checkHttpURL(URL url) throws IOException, SAXException,
-            DocParseException {
+    public void checkHttpURL(URL url) throws IOException, SAXException {
         String address = url.toString();
         validator.reset();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -300,24 +291,20 @@ public class SimpleValidator {
     /* *
      * Parses a document with the text/html parser and validates it.
      */
-    private void checkAsHTML(InputSource is) throws IOException, SAXException,
-            DocParseException {
+    private void checkAsHTML(InputSource is) throws IOException, SAXException {
         try {
             htmlParser.parse(is);
         } catch (SAXParseException e) {
-            throw new DocParseException();
         }
     }
 
     /* *
      * Parses a document with the XML parser and validates it.
      */
-    private void checkAsXML(InputSource is) throws IOException, SAXException,
-            DocParseException {
+    private void checkAsXML(InputSource is) throws IOException, SAXException {
         try {
             xmlParser.parse(is);
         } catch (SAXParseException e) {
-            throw new DocParseException();
         }
     }
 
@@ -332,14 +319,4 @@ public class SimpleValidator {
         }
     }
 
-    @SuppressWarnings("serial") public class DocParseException extends
-            Exception {
-
-        public DocParseException() {
-        }
-
-        public DocParseException(String message) {
-            super(message);
-        }
-    }
 }

@@ -38,7 +38,6 @@ import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.servlet.imagereview.ImageCollector;
 import nu.validator.source.SourceCode;
 import nu.validator.validation.SimpleValidator;
-import nu.validator.validation.SimpleValidator.DocParseException;
 import nu.validator.validation.SimpleValidator.SchemaReadException;
 import nu.validator.xml.SystemErrErrorHandler;
 
@@ -202,8 +201,6 @@ public class SimpleCommandLineValidator {
             } catch (IOException e) {
                 errorHandler.error(new SAXParseException(e.toString(), null,
                         path, -1, -1));
-            } catch (DocParseException e) {
-                endDueToFatalError(path);
             }
         } else if (path.matches("^https:/[^/].+$")) {
             path = "https://" + path.substring(path.indexOf("/") + 1);
@@ -213,8 +210,6 @@ public class SimpleCommandLineValidator {
             } catch (IOException e) {
                 errorHandler.error(new SAXParseException(e.toString(), null,
                         path, -1, -1));
-            } catch (DocParseException e) {
-                endDueToFatalError(path);
             }
         } else if (!file.exists()) {
             if (verbose) {
@@ -224,25 +219,13 @@ public class SimpleCommandLineValidator {
             return;
         } else if (isHtml(file)) {
             emitFilename(path);
-            try {
                 validator.checkHtmlFile(file, true);
-            } catch (DocParseException e) {
-                endDueToFatalError(path);
-            }
         } else if (isXhtml(file)) {
             emitFilename(path);
             if (forceHTML) {
-                try {
                     validator.checkHtmlFile(file, true);
-                } catch (DocParseException e) {
-                    endDueToFatalError(path);
-                }
             } else {
-                try {
                     validator.checkXmlFile(file);
-                } catch (DocParseException e) {
-                    endDueToFatalError(path);
-                }
             }
         } else {
             if (verbose) {
@@ -276,47 +259,25 @@ public class SimpleCommandLineValidator {
         boolean showSource = false;
         if (outputFormat == OutputFormat.TEXT) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, new TextMessageEmitter(out,
+                    imageCollector, lineOffset, true, new TextMessageEmitter(out,
                             asciiQuotes));
         } else if (outputFormat == OutputFormat.GNU) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, new GnuMessageEmitter(out,
+                    imageCollector, lineOffset, true, new GnuMessageEmitter(out,
                             asciiQuotes));
         } else if (outputFormat == OutputFormat.XML) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, new XmlMessageEmitter(
+                    imageCollector, lineOffset, true, new XmlMessageEmitter(
                             new XmlSerializer(out)));
         } else if (outputFormat == OutputFormat.JSON) {
             String callback = null;
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, new JsonMessageEmitter(
+                    imageCollector, lineOffset, true, new JsonMessageEmitter(
                             new nu.validator.json.Serializer(out), callback));
         } else {
             throw new RuntimeException("Bug. Should be unreachable.");
         }
         errorHandler.setErrorsOnly(errorsOnly);
-    }
-
-    private static void endDueToFatalError(String documentName)
-            throws SAXException, IOException {
-        // If we end up here it's almost certainly because either the HTML
-        // parser or XML parser ran into a fatal parse error. And for error
-        // handling we're using the MessageEmitter mechanism, and the
-        // MessageEmitter code is basically built around the use case of
-        // validating only one document at a time (rather than doing batch
-        // validation of multiple document). So once the MessageEmitter hits a
-        // fatal error in one document, it sorta assumes its job is done, and
-        // becomes usable for reporting errors from any more documents. So the
-        // only thing we can do at this point is to end and emit a message
-        // saying there was a fatal error, along with the name of the document
-        // that had the fatal error (hopefully the right name, though
-        // unfortunately there may be some cases where it might not be...)
-        errorHandler.end("", "");
-        System.out.print(String.format("%s"
-                + "\n\nDocument checking stopped prematurely."
-                + "\nThere was a fatal error."
-                + " Fix the error and recheck your document(s).\n",
-                documentName));
     }
 
     private static void usage() {
