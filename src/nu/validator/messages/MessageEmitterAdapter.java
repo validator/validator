@@ -349,6 +349,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private int fatalErrors = 0;
 
+    private final boolean batchMode;
+
     private int nonDocumentErrors = 0;
 
     private final SourceCode sourceCode;
@@ -394,12 +396,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void throwIfTooManyMessages() throws SAXException {
-        if (warnings + errors > 1000) {
+        if (!batchMode && (warnings + errors > 1000)) {
             throw new TooManyErrorsException("Too many messages.");
         }
     }
     
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector, int lineOffset,
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector, int lineOffset, boolean batchMode,
             MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
@@ -407,6 +409,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         this.exactErrorHandler = new ExactErrorHandler(this);
         this.showSource = showSource;
         this.lineOffset = lineOffset;
+        this.batchMode = batchMode;
         this.imageCollector = imageCollector;
     }
 
@@ -448,7 +451,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     private void warning(SAXParseException e, boolean exact)
             throws SAXException {
-        if (fatalErrors > 0 || nonDocumentErrors > 0) {
+        if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
         this.warnings++;
@@ -468,7 +471,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @throws SAXException
      */
     private void error(SAXParseException e, boolean exact) throws SAXException {
-        if (fatalErrors > 0 || nonDocumentErrors > 0) {
+        if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
         if (e instanceof BadAttributeValueException) {
@@ -521,7 +524,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      */
     private void fatalError(SAXParseException e, boolean exact)
             throws SAXException {
-        if (fatalErrors > 0 || nonDocumentErrors > 0) {
+        if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
         this.fatalErrors++;

@@ -740,7 +740,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
                 emitter = new XhtmlSaxEmitter(contentHandler);
                 errorHandler = new MessageEmitterAdapter(sourceCode,
-                        showSource, imageCollector, lineOffset,
+                        showSource, imageCollector, lineOffset, false,
                         new XhtmlMessageEmitter(contentHandler));
                 if (W3C_BRANDING) {
                     W3CPageEmitter.emit(contentHandler, this);
@@ -751,17 +751,17 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset,
+                            showSource, null, lineOffset, false,
                             new TextMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.GNU) {
                     response.setContentType("text/plain; charset=utf-8");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset,
+                            showSource, null, lineOffset, false,
                             new GnuMessageEmitter(out, asciiQuotes));
                 } else if (outputFormat == OutputFormat.XML) {
                     response.setContentType("application/xml");
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset,
+                            showSource, null, lineOffset, false,
                             new XmlMessageEmitter(new XmlSerializer(out)));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
@@ -770,7 +770,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         response.setContentType("application/javascript");
                     }
                     errorHandler = new MessageEmitterAdapter(sourceCode,
-                            showSource, null, lineOffset,
+                            showSource, null, lineOffset, false,
                             new JsonMessageEmitter(
                                     new nu.validator.json.Serializer(out),
                                     callback));
