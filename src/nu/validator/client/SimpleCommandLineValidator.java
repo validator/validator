@@ -37,8 +37,8 @@ import nu.validator.messages.TextMessageEmitter;
 import nu.validator.messages.XmlMessageEmitter;
 import nu.validator.servlet.imagereview.ImageCollector;
 import nu.validator.source.SourceCode;
-import nu.validator.validation.SimpleValidator;
-import nu.validator.validation.SimpleValidator.SchemaReadException;
+import nu.validator.validation.SimpleDocumentValidator;
+import nu.validator.validation.SimpleDocumentValidator.SchemaReadException;
 import nu.validator.xml.SystemErrErrorHandler;
 
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ import org.xml.sax.SAXParseException;
  */
 public class SimpleCommandLineValidator {
 
-    private static SimpleValidator validator;
+    private static SimpleDocumentValidator validator;
 
     private static OutputStream out;
 
@@ -141,7 +141,7 @@ public class SimpleCommandLineValidator {
             for (int i = fileArgsStart; i < args.length; i++) {
                 files.add(new File(args[i]));
             }
-            validator = new SimpleValidator();
+            validator = new SimpleDocumentValidator();
             setErrorHandler();
             validateFilesAgainstSchema(files, schemaUrl);
         } else {

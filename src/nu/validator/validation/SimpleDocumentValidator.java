@@ -67,7 +67,7 @@ import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
 /**
  * Simple validation interface.
  */
-public class SimpleValidator {
+public class SimpleDocumentValidator {
 
     private LocalCacheEntityResolver entityResolver;
 
@@ -109,7 +109,7 @@ public class SimpleValidator {
         }
     }
 
-    public SimpleValidator() {
+    public SimpleDocumentValidator() {
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
