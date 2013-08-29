@@ -83,6 +83,7 @@ public class SimpleCommandLineValidator {
         asciiQuotes = false;
         verbose = false;
 
+        String version = "20130829-1";
         String outFormat = null;
         String schemaUrl = null;
         boolean hasFileArgs = false;
@@ -101,6 +102,9 @@ public class SimpleCommandLineValidator {
                     verbose = true;
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
+                } else if ("--version".equals(args[i])) {
+                    System.out.println(version);
+                    System.exit(0);
                 } else if ("--html".equals(args[i])) {
                     forceHTML = true;
                 } else if ("--entities".equals(args[i])) {
@@ -219,13 +223,13 @@ public class SimpleCommandLineValidator {
             return;
         } else if (isHtml(file)) {
             emitFilename(path);
-                validator.checkHtmlFile(file, true);
+            validator.checkHtmlFile(file, true);
         } else if (isXhtml(file)) {
             emitFilename(path);
             if (forceHTML) {
-                    validator.checkHtmlFile(file, true);
+                validator.checkHtmlFile(file, true);
             } else {
-                    validator.checkXmlFile(file);
+                validator.checkXmlFile(file);
             }
         } else {
             if (verbose) {
@@ -259,12 +263,12 @@ public class SimpleCommandLineValidator {
         boolean showSource = false;
         if (outputFormat == OutputFormat.TEXT) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new TextMessageEmitter(out,
-                            asciiQuotes));
+                    imageCollector, lineOffset, true, new TextMessageEmitter(
+                            out, asciiQuotes));
         } else if (outputFormat == OutputFormat.GNU) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
-                    imageCollector, lineOffset, true, new GnuMessageEmitter(out,
-                            asciiQuotes));
+                    imageCollector, lineOffset, true, new GnuMessageEmitter(
+                            out, asciiQuotes));
         } else if (outputFormat == OutputFormat.XML) {
             errorHandler = new MessageEmitterAdapter(sourceCode, showSource,
                     imageCollector, lineOffset, true, new XmlMessageEmitter(
@@ -284,9 +288,8 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("  java -jar vnu.jar [--verbose] [--html]");
-        System.out.println("      [--format gnu|xml|json|text]");
-        System.out.println("      [--entities] [--schema URL] FILES");
+        System.out.println("  java -jar vnu.jar [--html] [--entities] [--schema URL]");
+        System.out.println("      [--format gnu|xml|json|text] [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("To validate one or more documents from the command line:");
         System.out.println("");
@@ -306,8 +309,9 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("  java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");
-        System.out.println("To validate one or more documents with a running instance of the validator HTTP service:");
+        System.out.println("To validate one or more documents with a running instance of");
+        System.out.println("the validator HTTP service:");
         System.out.println("");
-        System.out.println("  java -cp vnu.jar nu.validator.client.HttpClient FILE.html FILE2.html...");
+        System.out.println("  java -cp vnu.jar nu.validator.client.HttpClient FILE.html...");
     }
 }
