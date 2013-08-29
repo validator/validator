@@ -597,7 +597,8 @@ def buildTestHarness():
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2"])
+                                                "hs-aelfred2",
+                                                "validator"])
                               + jingJarPath())
   buildModule(
     os.path.join(buildRoot, "syntax", "relaxng", "tests", "jdriver"), 
@@ -682,6 +683,28 @@ def runValidator():
   ensureDirExists(os.path.join(buildRoot, "logs"))
   args = getRunArgs(str(int(heapSize) * 1024))
   execCmd(javaCmd, args)
+
+def createDist():
+  distDir = (os.path.join(buildRoot, "build", "vnu"))
+  removeIfDirExists(distDir)
+  os.mkdir(distDir)
+  antRoot = os.path.join(buildRoot, "jing-trang", "lib")
+  antJar= os.path.join(antRoot, "ant.jar")
+  antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
+  classPath = os.pathsep.join([antJar, antLauncherJar])
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s'
+    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
+  version = subprocess.check_output([javaCmd, "-jar", os.path.join(distDir, "vnu.jar"), "--version"]).rstrip()
+  os.chdir("build")
+  distroFile = os.path.join("vnu-" + version + ".zip")
+  removeIfExists(distroFile)
+  zf = zipfile.ZipFile(distroFile, "w")
+  for dirname, subdirs, files in os.walk("vnu"):
+    zf.write(dirname)
+    for filename in files:
+      zf.write(os.path.join(dirname, filename))
+  zf.close()
+  os.chdir("..")
 
 def createTarball():
   args = [
@@ -982,6 +1005,7 @@ def printHelp():
   print "  test     -- Run tests"
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
+  print "  dist     -- Create a release distribution"
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
@@ -1088,6 +1112,11 @@ else:
     elif arg == 'build':
       if noSelfUpdate:
         buildAll()
+      else:
+        selfUpdate()
+    elif arg == 'dist':
+      if noSelfUpdate:
+        createDist()
       else:
         selfUpdate()
     elif arg == 'localent':
