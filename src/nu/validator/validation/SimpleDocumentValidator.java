@@ -160,9 +160,11 @@ public class SimpleDocumentValidator {
      * @param docValidationErrHandler error handler for doc-validation reporting
      * 
      * @param loadExternalEnts whether XML parser should load remote DTDs, etc.
+     * 
+     * @param noStream whether HTML parser should buffer instead of streaming
      */
     public void setUpValidatorAndParsers(ErrorHandler docValidationErrHandler,
-            boolean loadExternalEnts) throws SAXException {
+            boolean noStream, boolean loadExternalEnts) throws SAXException {
         PropertyMapBuilder pmb = new PropertyMapBuilder();
         pmb.put(ValidateProperty.ERROR_HANDLER, docValidationErrHandler);
         pmb.put(ValidateProperty.XML_READER_CREATOR,
@@ -188,7 +190,6 @@ public class SimpleDocumentValidator {
         htmlParser.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setContentSpacePolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setNamePolicy(XmlViolationPolicy.ALLOW);
-        htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         htmlParser.setXmlnsPolicy(XmlViolationPolicy.ALTER_INFOSET);
         htmlParser.setMappingLangToXmlLang(true);
         htmlParser.setHtml4ModeCompatibleWithXhtml1Schemata(true);
@@ -201,6 +202,9 @@ public class SimpleDocumentValidator {
         htmlParser.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
                 true);
+        if (!noStream) {
+            htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
+        }
 
         xmlParser = new IdFilter(new SAXDriver());
         xmlParser.setContentHandler(validator.getContentHandler());

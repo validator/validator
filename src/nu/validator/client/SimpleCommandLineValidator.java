@@ -62,6 +62,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean loadEntities;
 
+    private static boolean noStream;
+
     private static boolean forceHTML;
 
     private static boolean asciiQuotes;
@@ -79,6 +81,7 @@ public class SimpleCommandLineValidator {
         errorsOnly = false;
         forceHTML = false;
         loadEntities = false;
+        noStream = false;
         lineOffset = 0;
         asciiQuotes = false;
         verbose = false;
@@ -109,6 +112,8 @@ public class SimpleCommandLineValidator {
                     forceHTML = true;
                 } else if ("--entities".equals(args[i])) {
                     loadEntities = true;
+                } else if ("--no-stream".equals(args[i])) {
+                    noStream = true;
                 } else if ("--schema".equals(args[i])) {
                     schemaUrl = args[++i];
                     if (!schemaUrl.startsWith("http:")) {
@@ -163,7 +168,7 @@ public class SimpleCommandLineValidator {
             System.out.println(e.getMessage() + " Terminating.");
             System.exit(-1);
         }
-        validator.setUpValidatorAndParsers(errorHandler, loadEntities);
+        validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
         errorHandler.start(null);
         checkFiles(files);
         errorHandler.end("Document checking completed. No errors found.",
@@ -288,8 +293,8 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("  java -jar vnu.jar [--html] [--entities] [--schema URL]");
-        System.out.println("      [--format gnu|xml|json|text] [--verbose] [--version] FILES");
+        System.out.println("  java -jar vnu.jar [--help] [--html] [--entities] [--schema URL]");
+        System.out.println("      [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("To validate one or more documents from the command line:");
         System.out.println("");
