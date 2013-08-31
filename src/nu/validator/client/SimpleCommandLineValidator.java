@@ -41,6 +41,7 @@ import nu.validator.validation.SimpleDocumentValidator;
 import nu.validator.validation.SimpleDocumentValidator.SchemaReadException;
 import nu.validator.xml.SystemErrErrorHandler;
 
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -90,13 +91,17 @@ public class SimpleCommandLineValidator {
         String outFormat = null;
         String schemaUrl = null;
         boolean hasFileArgs = false;
+        boolean readFromStdIn = false;
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
             System.exit(-1);
         }
         for (int i = 0; i < args.length; i++) {
-            if (!args[i].startsWith("--")) {
+            if (args[i].equals("-")) {
+                readFromStdIn = true;
+                break;
+            } else if (!args[i].startsWith("--")) {
                 hasFileArgs = true;
                 fileArgsStart = i;
                 break;
@@ -145,7 +150,12 @@ public class SimpleCommandLineValidator {
                 System.exit(-1);
             }
         }
-        if (hasFileArgs) {
+        if (readFromStdIn) {
+            InputSource is = new InputSource(System.in);
+            validator = new SimpleDocumentValidator();
+            setErrorHandler();
+            validateInputSourceAgainstSchema(is, schemaUrl);
+        } else if (hasFileArgs) {
             List<File> files = new ArrayList<File>();
             for (int i = fileArgsStart; i < args.length; i++) {
                 files.add(new File(args[i]));
@@ -171,6 +181,21 @@ public class SimpleCommandLineValidator {
         validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
         errorHandler.start(null);
         checkFiles(files);
+        errorHandler.end("Document checking completed. No errors found.",
+                "Document checking completed.");
+    }
+
+    private static void validateInputSourceAgainstSchema(InputSource is,
+            String schemaUrl) throws SAXException, Exception {
+        try {
+            validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
+        } catch (SchemaReadException e) {
+            System.out.println(e.getMessage() + " Terminating.");
+            System.exit(-1);
+        }
+        validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
+        errorHandler.start(null);
+        validator.checkHtmlInputSource(is);
         errorHandler.end("Document checking completed. No errors found.",
                 "Document checking completed.");
     }

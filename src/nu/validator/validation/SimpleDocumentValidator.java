@@ -231,6 +231,7 @@ public class SimpleDocumentValidator {
     public void checkHtmlInputSource(InputSource is) throws IOException,
             SAXException {
         validator.reset();
+        is.setEncoding("UTF-8");
         checkAsHTML(is);
     }
 
