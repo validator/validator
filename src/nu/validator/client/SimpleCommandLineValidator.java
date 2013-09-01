@@ -88,7 +88,7 @@ public class SimpleCommandLineValidator {
         asciiQuotes = false;
         verbose = false;
 
-        String version = "20130829-1";
+        String version = "20130901";
         String outFormat = null;
         String schemaUrl = null;
         boolean hasFileArgs = false;
@@ -328,7 +328,7 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.client.HttpClient FILES");
         System.out.println("");
-        System.out.println("For detailed help, use \"java -jar vnu.jar --help\" or see:");
+        System.out.println("For detailed usage information, use \"java -jar vnu.jar --help\" or see:");
         System.out.println("");
         System.out.println("  http://validator.github.io/");
         System.out.println("");

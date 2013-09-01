@@ -19,7 +19,7 @@ of HTML documents by invoking it like this:
       java -jar ~/vnu.jar [--help] [--html] [--entities] [--schema URL]
         [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES
 
-To validate one or more documents from the command line:
+To validate one or more HTML documents from the command line:
 
       java -jar ~/vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
 
@@ -46,7 +46,7 @@ executable provides the following options:
 
 #### --entities
 
-    Specifies that the XML parser must not load remote/external entities (such
+    Specifies that the XML parser should not load remote/external entities (such
     as DTDs) from the Internet.
 
     default: [unset; the XML parser will attempt to load external entities]
@@ -64,12 +64,24 @@ executable provides the following options:
 
    [2]: http://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out
 
+#### --help
+
+    Shows detailed usage information.
+
 #### --html
 
-    Specifies that all documents must be parsed by the HTML parser as text/html
-    (otherwise, *.xhtml documents are parsed by the XML parser).
+    Specifies that all documents should be parsed by the HTML parser as
+    text/html (otherwise, *.xhtml documents are parsed by the XML parser).
 
     default: [unset; *.xhtml documents are parsed by the XML parser]
+
+#### --no-stream
+
+    Specifies that all documents parsed by the HTML parser will be parsed in
+    buffered mode instead of streaming mode (causes some parse errors to be
+    treated as non-fatal document errors instead of as fatal document errors).
+
+    default: [unset; non-streamable parse errors cause fatal document errors]
 
 #### --schema _URL_
 
@@ -80,18 +92,18 @@ executable provides the following options:
 
 #### --verbose
 
-    Specifies that the validator output should be "verbose". Currently this just
-    means that the names of files being validated are written to stdout.
+    Specifies that the validator output should be "verbose". (Currently this
+    just means that the names of files being validated are written to stdout.)
 
     default: [unset; output is not verbose]
 
 #### --version
 
-    Shows validator version number.
+    Shows the vnu.jar version number.
 
-For details on using the `vnu.jar` validator to provide validation of HTML
-documents over the Web (in a Web browser, as an HTTP service), see [Using
-vnu.jar for Web-based validation][3].
+For details on using the `vnu.jar` validator to provide a service for
+browser-based validation of HTML documents over the Web, see [Using vnu.jar for
+Web-based validation][3].
 
    [3]: http://validator.github.io/web-based-usage.html
 
