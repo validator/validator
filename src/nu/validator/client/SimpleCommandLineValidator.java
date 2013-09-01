@@ -23,6 +23,7 @@
 package nu.validator.client;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -112,6 +113,9 @@ public class SimpleCommandLineValidator {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {
                     System.out.println(version);
+                    System.exit(0);
+                } else if ("--help".equals(args[i])) {
+                    help();
                     System.exit(0);
                 } else if ("--html".equals(args[i])) {
                     forceHTML = true;
@@ -315,33 +319,33 @@ public class SimpleCommandLineValidator {
     }
 
     private static void usage() {
-        System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("  java -jar vnu.jar [--help] [--html] [--entities] [--schema URL]");
-        System.out.println("      [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES");
+        System.out.println("    java -jar vnu.jar [--help] [--html] [--entities] [--schema URL]");
+        System.out.println("        [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES");
         System.out.println("");
-        System.out.println("To validate one or more documents from the command line:");
+        System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");
-        System.out.println("  java -jar vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...");
+        System.out.println("    java -cp vnu.jar nu.validator.client.HttpClient FILES");
         System.out.println("");
-        System.out.println("To validate all HTML documents in a particular directory:");
+        System.out.println("For detailed help, use \"java -jar vnu.jar --help\" or see:");
         System.out.println("");
-        System.out.println("  java -jar vnu.jar some-directory-name/");
+        System.out.println("  http://validator.github.io/");
         System.out.println("");
-        System.out.println("To validate a Web document:");
-        System.out.println("");
-        System.out.println("  java -jar vnu.jar http://example.com/foo");
-        System.out.println("");
-        System.out.println("Other usage:");
-        System.out.println("");
-        System.out.println("To start the validator as an HTTP service on port 8888:");
-        System.out.println("");
-        System.out.println("  java -cp vnu.jar nu.validator.servlet.Main 8888");
-        System.out.println("");
-        System.out.println("To validate one or more documents with a running instance of");
-        System.out.println("the validator HTTP service:");
-        System.out.println("");
-        System.out.println("  java -cp vnu.jar nu.validator.client.HttpClient FILE.html...");
+        System.out.println("To read from stdin, use \"-\" as the filename, like this: \"java -jar vnu.jar - \".");
+    }
+
+    private static void help() {
+        InputStream help = SimpleCommandLineValidator.class.getClassLoader().getResourceAsStream(
+                "nu/validator/localentities/files/cli-help");
+        try {
+            System.out.println("");
+            for (int b = help.read(); b != -1; b = help.read()) {
+                System.out.write(b);
+            }
+            help.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
