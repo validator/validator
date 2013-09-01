@@ -695,6 +695,10 @@ def createDist():
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
   version = subprocess.check_output([javaCmd, "-jar", os.path.join(distDir, "vnu.jar"), "--version"]).rstrip()
+  readmeHtml = "https://raw.github.com/validator/validator.github.io/master/index.html"
+  readmeMarkdown = "https://raw.github.com/validator/validator.github.io/master/README.md"
+  fetchUrlTo(readmeHtml, os.path.join(distDir, "index.html"))
+  fetchUrlTo(readmeMarkdown, os.path.join(distDir, "README.md"))
   os.chdir("build")
   distroFile = os.path.join("vnu-" + version + ".zip")
   removeIfExists(distroFile)
@@ -814,6 +818,7 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "script.js"), os.path.join(filesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "w3c-presets.txt"), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))

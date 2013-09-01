@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="clean">
     <delete file="./vnu/vnu.jar"/>
   </target>
-  <target name="dist" depends="jar, credits, readme"/>
+  <target name="dist" depends="jar, credits"/>
   <target name="jar">
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
@@ -1142,36 +1142,6 @@ Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
 
 ***************************************************************************
-</echo>
-  </target>
-  <target name="readme">
-    <echo file="./vnu/README" append="true">Usage:
-
-  java -jar vnu.jar [--html] [--entities] [--schema URL]
-      [--format gnu|xml|json|text] [--verbose] [--version] FILES
-
-To validate one or more documents from the command line:
-
-  java -jar vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
-
-To validate all HTML documents in a particular directory:
-
-  java -jar vnu.jar some-directory-name/
-
-To validate a Web document:
-
-  java -jar vnu.jar http://example.com/foo
-
-Other usage:
-
-To start the validator as an HTTP service on port 8888:
-
-  java -cp vnu.jar nu.validator.servlet.Main 8888
-
-To validate one or more documents with a running instance of
-the validator HTTP service:
-
-  java -cp vnu.jar nu.validator.client.HttpClient FILE.html...
 </echo>
   </target>
 </project>
