@@ -46,19 +46,19 @@ public class KeyLabelList extends AbstractDatatype {
           String label = keylabels[i];
           if (i > 0 && label.equals(keylabels[i-1])) {
             throw newDatatypeException(
-                "Duplicate key label ",label,". Each key label must be unique.");
+                "Duplicate key label. Each key label must be unique.");
           }
           if (label.length() == 2) {
             char[] chars = label.toCharArray();
             if (!(UCharacter.isHighSurrogate(chars[0])
                   && UCharacter.isLowSurrogate(chars[1]))) {
               throw newDatatypeException(
-                  "Key label ",label," has multiple characters. Each key label must be a single character.");
+                  "Key label has multiple characters. Each key label must be a single character.");
             }
           }
           if (label.length() > 2) {
             throw newDatatypeException(
-                "Key label ",label," has multiple characters. Each key label must be a single character.");
+                "Key label has multiple characters. Each key label must be a single character.");
           }
         }
       }
