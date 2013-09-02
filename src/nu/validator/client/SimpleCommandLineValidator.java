@@ -228,50 +228,55 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void checkHtmlFile(File file) throws IOException,
-            SAXException {
-        String path = file.getPath();
-        if (path.matches("^http:/[^/].+$")) {
-            path = "http://" + path.substring(path.indexOf("/") + 1);
-            emitFilename(path);
-            try {
-                validator.checkHttpURL(new URL(path));
-            } catch (IOException e) {
-                errorHandler.error(new SAXParseException(e.toString(), null,
-                        path, -1, -1));
-            }
-        } else if (path.matches("^https:/[^/].+$")) {
-            path = "https://" + path.substring(path.indexOf("/") + 1);
-            emitFilename(path);
-            try {
-                validator.checkHttpURL(new URL(path));
-            } catch (IOException e) {
-                errorHandler.error(new SAXParseException(e.toString(), null,
-                        path, -1, -1));
-            }
-        } else if (!file.exists()) {
-            if (verbose) {
-                errorHandler.warning(new SAXParseException("File not found.",
-                        null, file.toURI().toURL().toString(), -1, -1));
-            }
-            return;
-        } else if (isHtml(file)) {
-            emitFilename(path);
-            validator.checkHtmlFile(file, true);
-        } else if (isXhtml(file)) {
-            emitFilename(path);
-            if (forceHTML) {
+    private static void checkHtmlFile(File file) throws IOException {
+        try {
+            String path = file.getPath();
+            if (path.matches("^http:/[^/].+$")) {
+                path = "http://" + path.substring(path.indexOf("/") + 1);
+                emitFilename(path);
+                try {
+                    validator.checkHttpURL(new URL(path));
+                } catch (IOException e) {
+                    errorHandler.error(new SAXParseException(e.toString(),
+                            null, path, -1, -1));
+                }
+            } else if (path.matches("^https:/[^/].+$")) {
+                path = "https://" + path.substring(path.indexOf("/") + 1);
+                emitFilename(path);
+                try {
+                    validator.checkHttpURL(new URL(path));
+                } catch (IOException e) {
+                    errorHandler.error(new SAXParseException(e.toString(),
+                            null, path, -1, -1));
+                }
+            } else if (!file.exists()) {
+                if (verbose) {
+                    errorHandler.warning(new SAXParseException(
+                            "File not found.", null,
+                            file.toURI().toURL().toString(), -1, -1));
+                }
+                return;
+            } else if (isHtml(file)) {
+                emitFilename(path);
                 validator.checkHtmlFile(file, true);
+            } else if (isXhtml(file)) {
+                emitFilename(path);
+                if (forceHTML) {
+                    validator.checkHtmlFile(file, true);
+                } else {
+                    validator.checkXmlFile(file);
+                }
             } else {
-                validator.checkXmlFile(file);
+                if (verbose) {
+                    errorHandler.warning(new SAXParseException(
+                            "File was not checked. Files must have a .html,"
+                                    + " .xhtml, .htm, or .xht extension.",
+                            null, file.toURI().toURL().toString(), -1, -1));
+                }
             }
-        } else {
-            if (verbose) {
-                errorHandler.warning(new SAXParseException(
-                        "File was not checked. Files must have a .html,"
-                                + " .xhtml, .htm, or .xht extension.", null,
-                        file.toURI().toURL().toString(), -1, -1));
-            }
+        } catch (SAXException e) {
+            System.err.printf("\"%s\": warning: %s\n",
+                    file.toURI().toURL().toString(), e.getMessage());
         }
     }
 
