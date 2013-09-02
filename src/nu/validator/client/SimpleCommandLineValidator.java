@@ -109,6 +109,8 @@ public class SimpleCommandLineValidator {
             } else {
                 if ("--verbose".equals(args[i])) {
                     verbose = true;
+                } else if ("--errors-only".equals(args[i])) {
+                    errorsOnly = true;
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {
@@ -269,14 +271,16 @@ public class SimpleCommandLineValidator {
             } else {
                 if (verbose) {
                     errorHandler.warning(new SAXParseException(
-                            "File was not checked. Files must have a .html,"
+                            "File was not checked. Files must have .html,"
                                     + " .xhtml, .htm, or .xht extension.",
                             null, file.toURI().toURL().toString(), -1, -1));
                 }
             }
         } catch (SAXException e) {
-            System.err.printf("\"%s\": warning: %s\n",
-                    file.toURI().toURL().toString(), e.getMessage());
+            if (!errorsOnly) {
+                System.err.printf("\"%s\":-1:-1: warning: %s\n",
+                        file.toURI().toURL().toString(), e.getMessage());
+            }
         }
     }
 
@@ -326,8 +330,9 @@ public class SimpleCommandLineValidator {
     private static void usage() {
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("    java -jar vnu.jar [--help] [--html] [--entities] [--schema URL]");
-        System.out.println("        [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES");
+        System.out.println("    java -jar vnu.jar [--entities] [--errors-only] [--no-stream]");
+        System.out.println("         [--format gnu|xml|json|text] [--help] [--html] [--schema URL]");
+        System.out.println("         [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");

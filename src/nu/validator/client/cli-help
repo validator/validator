@@ -9,15 +9,14 @@ github. The following are instructions on how to use it to validate documents.
 **Note:** In the instructions, replace _"~/vnu.jar"_ with the actual path to the
 `vnu.jar` file on your system.
 
-Usage · Options
-
 ## Usage
 
 You can use the `vnu.jar` validator as an executable for command-line validation
 of HTML documents by invoking it like this:
 
-      java -jar ~/vnu.jar [--help] [--html] [--entities] [--schema URL]
-        [--format gnu|xml|json|text] [--no-stream] [--verbose] [--version] FILES
+      java -jar ~/vnu.jar [--entities] [--errors-only] [--no-stream]
+           [--format gnu|xml|json|text] [--help] [--html] [--schema URL]
+           [--verbose] [--version] FILES
 
 To validate one or more HTML documents from the command line:
 
@@ -50,6 +49,13 @@ executable provides the following options:
     as DTDs) from the Internet.
 
     default: [unset; the XML parser will attempt to load external entities]
+
+#### --errors-only
+
+    Specifies that only error-level messages and non-document-error messages are
+    reported.
+
+    default: [unset; all message reported, including info- and warning-level]
 
 #### --format _format_
 
