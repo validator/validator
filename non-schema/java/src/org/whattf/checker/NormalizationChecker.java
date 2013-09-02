@@ -154,6 +154,10 @@ public final class NormalizationChecker extends Checker {
                 first32 = UCharacter.getCodePoint(first, second);
             } catch (StringIndexOutOfBoundsException e) {
                 throw new SAXException("Malformed UTF-16!");
+            } catch (IllegalArgumentException e) {
+                // com.ibm.icu.lang.UCharacter.getCodePoint throws
+                // IllegalArgumentException if illegal surrogates found
+                throw new SAXException(e.getMessage());
             }
         } else {
             first32 = first;
