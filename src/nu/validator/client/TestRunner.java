@@ -1,10 +1,26 @@
 /*
- * This file is part of the RELAX NG schemas far (X)HTML5. 
- * Please see the file named LICENSE in the relaxng directory for 
- * license details.
+ * Copyright (c) 2013 Mozilla Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
  */
 
-package org.whattf.syntax;
+package nu.validator.client;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,12 +37,7 @@ import org.xml.sax.SAXException;
 
 import com.thaiopensource.xml.sax.CountingErrorHandler;
 
-/**
- * 
- * @version $Id$
- * @author hsivonen
- */
-public class Driver {
+public class TestRunner {
 
     private SimpleDocumentValidator validator;
 
@@ -47,7 +58,7 @@ public class Driver {
     /**
      * @param basePath
      */
-    public Driver(boolean verbose) throws IOException {
+    public TestRunner(boolean verbose) throws IOException {
         this.errorHandler = new SystemErrErrorHandler();
         this.countingErrorHandler = new CountingErrorHandler();
         this.verbose = verbose;
@@ -260,8 +271,8 @@ public class Driver {
      */
     public static void main(String[] args) throws SAXException, Exception {
         boolean verbose = ((args.length == 1) && "-v".equals(args[0]));
-        Driver d = new Driver(verbose);
-        if (d.runTestSuite()) {
+        TestRunner tr = new TestRunner(verbose);
+        if (tr.runTestSuite()) {
             System.exit(0);
         } else {
             System.exit(-1);
