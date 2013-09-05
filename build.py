@@ -49,6 +49,7 @@ gitCmd = 'git'
 buildRoot = '.'
 hgRoot = 'https://bitbucket.org/validator/'
 parserHgRoot = 'http://hg.mozilla.org/projects/'
+gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
@@ -917,18 +918,33 @@ def hgCloneOrUpdate(mod, baseUrl):
   else:
     runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
 
+def gitCloneOrUpdate(mod, baseUrl):
+  if os.path.exists(mod):
+    if os.path.exists(mod + "/.git"):
+      runCmd('"%s" --git-dir="%s" pull' % (gitCmd, os.path.join(mod, ".git")))
+    else:
+      if os.path.exists(mod + "-old"):
+        print "The %s module has moved to github. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
+        sys.exit(3)
+      else:
+        print "The %s module has moved to github. Renaming the old directory to %s-old and pulling from github." % (mod, mod)
+        os.rename(mod, mod + "-old")
+        runCmd('"%s" clone %s%s.git' % (gitCmd, baseUrl, mod))
+  else:
+    runCmd('"%s" clone %s%s.git' % (gitCmd, baseUrl, mod))
+
 def checkout():
   # XXX root dir
   for mod in moduleNames:
     hgCloneOrUpdate(mod, hgRoot)
-  hgCloneOrUpdate("nu-validator-site", "https://dvcs.w3.org/hg/")
+  gitCloneOrUpdate("nu-validator-site", gitRoot)
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   hgCloneOrUpdate("htmlparser", parserHgRoot)
   testsRemote = "https://github.com/w3c/web-platform-tests.git"
   testsBranch = "conformance-checkers"
   testsGitDir = os.path.join("tests", ".git")
   if os.path.exists(testsGitDir):
-    runCmd('"%s" --git-dir %s pull' % (gitCmd, testsGitDir))
+    runCmd('"%s" --git-dir "%s" pull' % (gitCmd, testsGitDir))
   else:
     runCmd('"%s" clone --single-branch --branch %s %s tests' % (gitCmd, testsBranch, testsRemote))
 
