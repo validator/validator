@@ -724,6 +724,7 @@ common.attrs.aria.implicit.navigation |= common.attrs.aria.implicit.landmark
 			attribute role { string "group" }
 	
 	common.attrs.aria |= aria.group
+	common.attrs.aria.role.group |= aria.group
 
 ## heading
 	aria.heading =
