@@ -105,7 +105,6 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
-  ("https://github.com/sideshowbarker/ITS-2.0-Testsuite/archive/html-its-testsuite.zip", "c3102260c6e1ec5395c3086760a6f6aa"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -593,19 +592,6 @@ def buildValidator():
     "validator", 
     classPath)
 
-def buildTestHarness():
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", 
-                                                "io-xml-util",
-                                                "htmlparser",
-                                                "hs-aelfred2",
-                                                "validator"])
-                              + jingJarPath())
-  buildModule(
-    os.path.join(buildRoot, "syntax", "relaxng", "tests", "jdriver"), 
-    "test-harness", 
-    classPath)
-
 def ownJarList():
   return jarNamesToPaths(["non-schema", 
                           "io-xml-util",
@@ -900,7 +886,6 @@ def buildAll():
   buildHtmlParser()
   buildUtil()
   buildXmlParser()
-  buildTestHarness()
   buildValidator()
 
 def hgCloneOrUpdate(mod, baseUrl):
@@ -921,7 +906,9 @@ def hgCloneOrUpdate(mod, baseUrl):
 def gitCloneOrUpdate(mod, baseUrl):
   if os.path.exists(mod):
     if os.path.exists(mod + "/.git"):
-      runCmd('"%s" --git-dir="%s" pull' % (gitCmd, os.path.join(mod, ".git")))
+      os.chdir(mod)
+      runCmd('"%s" pull' % gitCmd)
+      os.chdir("..")
     else:
       if os.path.exists(mod + "-old"):
         print "The %s module has moved to github. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
@@ -942,9 +929,11 @@ def checkout():
   hgCloneOrUpdate("htmlparser", parserHgRoot)
   testsRemote = "https://github.com/w3c/web-platform-tests.git"
   testsBranch = "conformance-checkers"
-  testsGitDir = os.path.join("tests", ".git")
-  if os.path.exists(testsGitDir):
-    runCmd('"%s" --git-dir "%s" pull' % (gitCmd, testsGitDir))
+  testsDir = "tests"
+  if os.path.exists(testsDir):
+    os.chdir(testsDir)
+    runCmd('"%s" pull' % gitCmd)
+    os.chdir("..")
   else:
     runCmd('"%s" clone --single-branch --branch %s %s tests' % (gitCmd, testsBranch, testsRemote))
 
@@ -957,19 +946,17 @@ def selfUpdate():
   else:
     os.execv(sys.executable, newArgv)  
 
-
 def runTests():
-  props = "-Dorg.whattf.datatype.warn=true"
+  schemaMap = os.path.join("tests", "vnu-map.json")
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes",
-                                                "validator",
-                                                "test-harness"])
+                                                "validator"])
                               + jingJarPath())
-  runCmd('"%s" -classpath %s %s org.whattf.syntax.Driver' % (javaCmd, classPath, props))
+  runCmd('"%s" -classpath %s nu.validator.client.TestRunner %s' % (javaCmd, classPath, schemaMap))
 
 def splitHostSpec(spec):
   index = spec.find('/')
