@@ -23,12 +23,17 @@
 package nu.validator.client;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.mortbay.util.ajax.JSON;
 
 import nu.validator.validation.SimpleDocumentValidator;
 import nu.validator.xml.SystemErrErrorHandler;
@@ -41,8 +46,6 @@ public class TestRunner {
 
     private SimpleDocumentValidator validator;
 
-    private static final String PATH = "syntax/relaxng/tests/";
-
     private PrintWriter err;
 
     private PrintWriter out;
@@ -53,15 +56,14 @@ public class TestRunner {
 
     private boolean failed = false;
 
-    private boolean verbose;
+    private static boolean verbose;
 
     /**
      * @param basePath
      */
-    public TestRunner(boolean verbose) throws IOException {
+    public TestRunner() throws IOException {
         this.errorHandler = new SystemErrErrorHandler();
         this.countingErrorHandler = new CountingErrorHandler();
-        this.verbose = verbose;
         validator = new SimpleDocumentValidator();
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -238,20 +240,15 @@ public class TestRunner {
         }
     }
 
-    public boolean runTestSuite() throws SAXException, Exception {
-        checkTestDirectoryAgainstSchema(new File(PATH
-                + "html5core-plus-web-forms2/"),
-                "http://s.validator.nu/html5/xhtml5core-plus-web-forms2.rnc");
-        checkTestDirectoryAgainstSchema(new File(PATH + "html/"),
-                "http://s.validator.nu/html5-all.rnc");
-        checkTestDirectoryAgainstSchema(new File(PATH + "xhtml/"),
-                "http://s.validator.nu/xhtml5-all.rnc");
-        checkTestDirectoryAgainstSchema(new File(PATH + "html-its/"),
-                "http://s.validator.nu/html5-all.rnc");
-        checkTestDirectoryAgainstSchema(new File(PATH + "html-rdfa/"),
-                "http://s.validator.nu/html5-all.rnc");
-        checkTestDirectoryAgainstSchema(new File(PATH + "html-rdfalite/"),
-                "http://s.validator.nu/html5-rdfalite.rnc");
+    public boolean runTestSuite(HashMap<String, String> schemaMap)
+            throws SAXException, Exception {
+        String directory;
+        String schemaUrl;
+        for (Map.Entry<String, String> entry : schemaMap.entrySet()) {
+            directory = entry.getKey();
+            schemaUrl = entry.getValue();
+            checkTestDirectoryAgainstSchema(new File(directory), schemaUrl);
+        }
 
         if (verbose) {
             if (failed) {
@@ -265,17 +262,51 @@ public class TestRunner {
         return !failed;
     }
 
-    /**
-     * @param args
-     * @throws SAXException
-     */
     public static void main(String[] args) throws SAXException, Exception {
-        boolean verbose = ((args.length == 1) && "-v".equals(args[0]));
-        TestRunner tr = new TestRunner(verbose);
-        if (tr.runTestSuite()) {
-            System.exit(0);
-        } else {
+        verbose = false;
+        String filename = null;
+        System.setProperty("org.whattf.datatype.warn", "true");
+        if (args.length == 0) {
+            System.out.println("\nError: no validation-map JSON file specified.");
+            usage();
             System.exit(-1);
         }
+        for (int i = 0; i < args.length; i++) {
+            if ("--verbose".equals(args[i])) {
+                verbose = true;
+            } else if ("--errors-only".equals(args[i])) {
+                System.setProperty("org.whattf.datatype.warn", "false");
+            } else if (args[i].startsWith("--")) {
+                System.out.println(String.format(
+                        "\nError: There is no option \"%s\".", args[i]));
+                usage();
+                System.exit(-1);
+            } else {
+                filename = args[i];
+            }
+        }
+        if (filename != null) {
+            TestRunner tr = new TestRunner();
+            FileReader fr = new FileReader(filename);
+            HashMap<String, String> schemaMap = (HashMap<String, String>) JSON.parse(fr);
+            if (tr.runTestSuite(schemaMap)) {
+                System.exit(0);
+            } else {
+                System.exit(-1);
+            }
+        } else {
+            System.out.println("\nError: no validation-map JSON file specified.");
+            usage();
+            System.exit(-1);
+        }
+    }
+
+    private static void usage() {
+        System.out.println("\nUsage:");
+        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--verbose] MAP.json");
+        System.out.println("\n...where MAP.json is a \"validation map\" containing name/value pairs");
+        System.out.println("pairs in which the name is a directory name and the value is an");
+        System.out.println("http://s.validator.nu/* schema URL; for example:");
+        System.out.println("\n    \"html-foo\": \"http://s.validator.nu/html5-all.rnc\"");
     }
 }
