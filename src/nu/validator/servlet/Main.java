@@ -117,8 +117,10 @@ public class Main {
             serverSocket.close();
         } else {
             server.start();
-            System.in.read();            
-            server.stop();
+            // FIXME: the following prevent the validator from being able
+            // run properly as a daemon; make the behavior configurable?
+            // System.in.read();
+            // server.stop();
         }
     }
 }
