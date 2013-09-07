@@ -88,7 +88,7 @@ public class SimpleCommandLineValidator {
         asciiQuotes = false;
         verbose = false;
 
-        String version = "20130901";
+        String version = "dev (built from source)";
         String outFormat = null;
         String schemaUrl = null;
         boolean hasFileArgs = false;
