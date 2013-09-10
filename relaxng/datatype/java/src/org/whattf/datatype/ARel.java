@@ -33,6 +33,7 @@ public class ARel extends AbstractRel {
         "appendix", // HTML4
         "author",
         "bookmark",
+        "category", // extension
         "chapter", // HTML4
         "child", // extension (Formats table)
         "co-resident", // extension (Formats table)

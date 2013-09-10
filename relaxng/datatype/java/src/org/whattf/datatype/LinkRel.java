@@ -34,6 +34,7 @@ public class LinkRel extends AbstractRel {
         "apple-touch-startup-image", // extension
         "author",
         "canonical", // extension
+        "category", // extension
         "chapter", // HTML4
         "contents", // HTML4
         "copyright", // HTML4
