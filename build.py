@@ -927,15 +927,15 @@ def checkout():
   gitCloneOrUpdate("nu-validator-site", gitRoot)
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   hgCloneOrUpdate("htmlparser", parserHgRoot)
-  testsRemote = "https://github.com/w3c/web-platform-tests.git"
+  testsRemote = "https://github.com/validator/tests.git"
   testsBranch = "conformance-checkers"
   testsDir = "tests"
   if os.path.exists(testsDir):
     os.chdir(testsDir)
-    runCmd('"%s" pull' % gitCmd)
+    runCmd('"%s" pull %s %s' % (gitCmd, testsRemote, testsBranch))
     os.chdir("..")
   else:
-    runCmd('"%s" clone --single-branch --branch %s %s tests' % (gitCmd, testsBranch, testsRemote))
+    runCmd('"%s" clone %s %s' % (gitCmd, testsRemote, testsDir))
 
 def selfUpdate():
   hgCloneOrUpdate("build", hgRoot)
