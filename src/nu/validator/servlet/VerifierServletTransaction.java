@@ -765,9 +765,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                             new XmlMessageEmitter(new XmlSerializer(out)));
                 } else if (outputFormat == OutputFormat.JSON) {
                     if (callback == null) {
-                        response.setContentType("application/json");
+                        response.setContentType("application/json; charset=utf-8");
                     } else {
-                        response.setContentType("application/javascript");
+                        response.setContentType("application/javascript; charset=utf-8");
                     }
                     errorHandler = new MessageEmitterAdapter(sourceCode,
                             showSource, null, lineOffset, false,
