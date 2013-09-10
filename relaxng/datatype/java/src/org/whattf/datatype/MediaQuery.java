@@ -272,8 +272,8 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a letter or whitespace but saw \u201C"
-                                        + c + "\u201D instead.");
+                                "Expected whitespace or \u201Cand\u201D but saw"
+                                        + " \u201C" + c + "\u201D instead.");
                     }
                 case IN_AND:
                     if ('a' <= c && 'z' >= c) {
