@@ -947,7 +947,8 @@ def selfUpdate():
     os.execv(sys.executable, newArgv)  
 
 def runTests():
-  schemaMap = os.path.join("tests", "vnu-map.json")
+  args = "--default-map"
+  className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -956,7 +957,7 @@ def runTests():
                                                 "html5-datatypes",
                                                 "validator"])
                               + jingJarPath())
-  runCmd('"%s" -classpath %s nu.validator.client.TestRunner %s' % (javaCmd, classPath, schemaMap))
+  runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args))
 
 def splitHostSpec(spec):
   index = spec.find('/')
