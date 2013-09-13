@@ -41,11 +41,18 @@ import nu.validator.xml.IdFilter;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.TypedInputSource;
 
-import org.whattf.checker.NormalizationChecker;
-import org.whattf.checker.TextContentChecker;
 import org.whattf.checker.jing.CheckerSchema;
 import org.whattf.checker.jing.CheckerValidator;
 import org.whattf.checker.table.TableChecker;
+import org.whattf.checker.ConformingButObsoleteWarner;
+import org.whattf.checker.MicrodataChecker;
+import org.whattf.checker.NormalizationChecker;
+import org.whattf.checker.TextContentChecker;
+import org.whattf.checker.UncheckedSubtreeWarner;
+import org.whattf.checker.UnsupportedFeatureChecker;
+import org.whattf.checker.UsemapChecker;
+import org.whattf.checker.XmlPiChecker;
+
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -180,9 +187,21 @@ public class SimpleDocumentValidator {
             validator = new CombineValidator(validator, new CheckerValidator(
                     new TableChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
+                    new ConformingButObsoleteWarner(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new MicrodataChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
                     new NormalizationChecker(), jingPropertyMap));
             validator = new CombineValidator(validator, new CheckerValidator(
                     new TextContentChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new UncheckedSubtreeWarner(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new UnsupportedFeatureChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new UsemapChecker(), jingPropertyMap));
+            validator = new CombineValidator(validator, new CheckerValidator(
+                    new XmlPiChecker(), jingPropertyMap));
         }
 
         htmlParser = new HtmlParser();
