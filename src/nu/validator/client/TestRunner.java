@@ -33,16 +33,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import org.mortbay.util.ajax.JSON;
 
+import org.relaxng.datatype.DatatypeException;
+import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
+
+import org.whattf.datatype.Html5DatatypeException;
+
 import nu.validator.validation.SimpleDocumentValidator;
-import nu.validator.xml.SystemErrErrorHandler;
 
-import org.xml.sax.SAXException;
+public class TestRunner implements ErrorHandler {
 
-import com.thaiopensource.xml.sax.CountingErrorHandler;
+    private boolean inError = false;
 
-public class TestRunner {
+    private boolean emitMessages = false;
+
+    private boolean exceptionIsWarning = false;
+
+    private Exception exception = null;
 
     private SimpleDocumentValidator validator;
 
@@ -50,20 +62,28 @@ public class TestRunner {
 
     private PrintWriter out;
 
-    private SystemErrErrorHandler errorHandler;
-
-    private CountingErrorHandler countingErrorHandler;
-
     private boolean failed = false;
 
     private static boolean verbose;
 
-    /**
-     * @param basePath
-     */
+    private static final HashMap<String, String> DEFAULT_VALIDATION_MAP = new HashMap<String, String>();
+
+    static {
+        DEFAULT_VALIDATION_MAP.put("tests/html",
+                "http://s.validator.nu/html5-all.rnc");
+        DEFAULT_VALIDATION_MAP.put("tests/html-aria",
+                "http://s.validator.nu/html5-all.rnc");
+        DEFAULT_VALIDATION_MAP.put("tests/html-its",
+                "http://s.validator.nu/html5-all.rnc");
+        DEFAULT_VALIDATION_MAP.put("tests/html-rdfa",
+                "http://s.validator.nu/html5-all.rnc");
+        DEFAULT_VALIDATION_MAP.put("tests/html-rdfalite",
+                "http://s.validator.nu/html5-rdfalite.rnc");
+        DEFAULT_VALIDATION_MAP.put("tests/xhtml",
+                "http://s.validator.nu/xhtml5-all.rnc");
+    }
+
     public TestRunner() throws IOException {
-        this.errorHandler = new SystemErrErrorHandler();
-        this.countingErrorHandler = new CountingErrorHandler();
         validator = new SimpleDocumentValidator();
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -134,7 +154,8 @@ public class TestRunner {
 
     private void checkFiles(List<File> files) {
         for (File file : files) {
-            errorHandler.reset();
+            reset();
+            emitMessages = true;
             try {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
@@ -144,7 +165,7 @@ public class TestRunner {
             } catch (IOException e) {
             } catch (SAXException e) {
             }
-            if (errorHandler.isInError()) {
+            if (inError) {
                 failed = true;
             }
         }
@@ -152,7 +173,7 @@ public class TestRunner {
 
     private void checkInvalidFiles(List<File> files) {
         for (File file : files) {
-            countingErrorHandler.reset();
+            reset();
             try {
                 if (file.isDirectory()) {
                     recurseDirectory(file);
@@ -162,12 +183,61 @@ public class TestRunner {
             } catch (IOException e) {
             } catch (SAXException e) {
             }
-            if (!countingErrorHandler.getHadErrorOrFatalError()) {
+            if (!inError) {
                 failed = true;
                 try {
                     err.println(String.format(
-                            "\"%s\": error: Document was supposed to be"
-                                    + " invalid but was not.",
+                            "\"%s\": error: Expected an error but did not"
+                                    + " encounter any.",
+                            file.toURI().toURL().toString()));
+                    err.flush();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private void checkHasWarningFiles(List<File> files) {
+        for (File file : files) {
+            reset();
+            try {
+                if (file.isDirectory()) {
+                    recurseDirectory(file);
+                } else {
+                    checkHtmlFile(file);
+                }
+            } catch (IOException e) {
+            } catch (SAXException e) {
+            }
+            if (inError) {
+                failed = true;
+                try {
+                    err.println(String.format(
+                            "\"%s\": error: Expected a warning but encountered"
+                                    + " an error first.",
+                            file.toURI().toURL().toString()));
+                    err.flush();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (!exceptionIsWarning) {
+                try {
+                    err.println(String.format(
+                            "\"%s\": error: Expected a warning but did not"
+                                    + " encounter any.",
+                            file.toURI().toURL().toString()));
+                    err.flush();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (inError) {
+                failed = true;
+                try {
+                    err.println(String.format(
+                            "\"%s\": error: Expected a warning only but"
+                                    + " encountered at least one error.",
                             file.toURI().toURL().toString()));
                     err.flush();
                 } catch (MalformedURLException e) {
@@ -183,7 +253,7 @@ public class TestRunner {
 
     private void checkTestDirectoryAgainstSchema(File directory,
             String schemaUrl) throws SAXException, Exception {
-        validator.setUpMainSchema(schemaUrl, errorHandler);
+        validator.setUpMainSchema(schemaUrl, this);
         checkTestFiles(directory, State.EXPECTING_ANYTHING);
     }
 
@@ -192,6 +262,7 @@ public class TestRunner {
         File[] files = directory.listFiles();
         List<File> validFiles = new ArrayList<File>();
         List<File> invalidFiles = new ArrayList<File>();
+        List<File> hasWarningFiles = new ArrayList<File>();
         if (files == null) {
             if (verbose) {
                 try {
@@ -224,27 +295,32 @@ public class TestRunner {
                     validFiles.add(file);
                 } else if (file.getPath().indexOf("novalid") > 0) {
                     invalidFiles.add(file);
+                } else if (file.getPath().indexOf("haswarn") > 0) {
+                    hasWarningFiles.add(file);
                 } else {
                     validFiles.add(file);
                 }
             }
         }
         if (validFiles.size() > 0) {
-            validator.setUpValidatorAndParsers(errorHandler, false, false);
+            validator.setUpValidatorAndParsers(this, false, false);
             checkFiles(validFiles);
         }
         if (invalidFiles.size() > 0) {
-            validator.setUpValidatorAndParsers(countingErrorHandler, false,
-                    false);
+            validator.setUpValidatorAndParsers(this, false, false);
             checkInvalidFiles(invalidFiles);
+        }
+        if (hasWarningFiles.size() > 0) {
+            validator.setUpValidatorAndParsers(this, false, false);
+            checkHasWarningFiles(hasWarningFiles);
         }
     }
 
-    public boolean runTestSuite(HashMap<String, String> schemaMap)
+    public boolean runTestSuite(HashMap<String, String> validationMap)
             throws SAXException, Exception {
         String directory;
         String schemaUrl;
-        for (Map.Entry<String, String> entry : schemaMap.entrySet()) {
+        for (Map.Entry<String, String> entry : validationMap.entrySet()) {
             directory = entry.getKey();
             schemaUrl = entry.getValue();
             checkTestDirectoryAgainstSchema(new File(directory), schemaUrl);
@@ -262,40 +338,108 @@ public class TestRunner {
         return !failed;
     }
 
+    private void emitMessage(SAXParseException e, String messageType) {
+        String systemId = e.getSystemId();
+        err.write((systemId == null) ? "" : '\"' + systemId + '\"');
+        err.write(":");
+        err.write(Integer.toString(e.getLineNumber()));
+        err.write(":");
+        err.write(Integer.toString(e.getColumnNumber()));
+        err.write(": ");
+        err.write(messageType);
+        err.write(": ");
+        err.write(e.getMessage());
+        err.write("\n");
+        err.flush();
+    }
+
+    public void warning(SAXParseException e) throws SAXException {
+        if (emitMessages) {
+            emitMessage(e, "warning");
+        } else if (exception == null) {
+            exception = e;
+            exceptionIsWarning = true;
+        }
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        if (emitMessages) {
+            emitMessage(e, "error");
+        } else if (exception == null) {
+            exception = e;
+            if (e instanceof BadAttributeValueException) {
+                BadAttributeValueException ex = (BadAttributeValueException) e;
+                Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+                for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+                    DatatypeException dex = entry.getValue();
+                    if (dex instanceof Html5DatatypeException) {
+                        Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                        if (ex5.isWarning()) {
+                            exceptionIsWarning = true;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        inError = true;
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        inError = true;
+        if (emitMessages) {
+            emitMessage(e, "fatal error");
+            return;
+        } else if (exception == null) {
+            exception = e;
+        }
+    }
+
+    public void reset() {
+        exception = null;
+        inError = false;
+        emitMessages = false;
+        exceptionIsWarning = false;
+    }
+
     public static void main(String[] args) throws SAXException, Exception {
         verbose = false;
-        String filename = null;
+        HashMap<String, String> validationMap = null;
         System.setProperty("org.whattf.datatype.warn", "true");
-        if (args.length == 0) {
-            System.out.println("\nError: no validation-map JSON file specified.");
-            usage();
-            System.exit(-1);
-        }
         for (int i = 0; i < args.length; i++) {
             if ("--verbose".equals(args[i])) {
                 verbose = true;
             } else if ("--errors-only".equals(args[i])) {
                 System.setProperty("org.whattf.datatype.warn", "false");
+            } else if ("--default-map".equals(args[i])) {
+                validationMap = DEFAULT_VALIDATION_MAP;
             } else if (args[i].startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", args[i]));
                 usage();
                 System.exit(-1);
             } else {
-                filename = args[i];
+                if (args[i].endsWith(".json")) {
+                    FileReader fr = new FileReader(args[i]);
+                    validationMap = (HashMap<String, String>) JSON.parse(fr);
+                } else {
+                    System.out.println("\nError: You must specify a .json"
+                            + " filename for validation mapping.");
+                    usage();
+                    System.exit(-1);
+                }
             }
         }
-        if (filename != null) {
+        if (validationMap != null) {
             TestRunner tr = new TestRunner();
-            FileReader fr = new FileReader(filename);
-            HashMap<String, String> schemaMap = (HashMap<String, String>) JSON.parse(fr);
-            if (tr.runTestSuite(schemaMap)) {
+            if (tr.runTestSuite(validationMap)) {
                 System.exit(0);
             } else {
                 System.exit(-1);
             }
         } else {
-            System.out.println("\nError: no validation-map JSON file specified.");
+            System.out.println("\nError: You must specify a .json"
+                    + " filename for validation mapping.");
             usage();
             System.exit(-1);
         }
