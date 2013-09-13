@@ -147,12 +147,12 @@ public abstract class AbstractDatatype implements Datatype {
 
     /**
      * Checks if a UTF-16 code unit represents a whitespace character (U+0020, 
-     * U+0009, U+000D or U+000A).
+     * U+0009, U+000C, U+000D or U+000A).
      * @param c the code unit
      * @return <code>true</code> if whitespace, <code>false</code> otherwise
      */
     protected final boolean isWhitespace(char c) {
-        return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+        return c == ' ' || c == '\t' || c == '\f' || c == '\n' || c == '\r';
     }
     
     protected final boolean isAsciiDigit(char c) {
