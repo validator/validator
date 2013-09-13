@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2010 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -599,7 +599,9 @@ public class MediaQuery extends AbstractDatatype {
                                                     + c + "\u201D instead.");
                                 }
                             case RATIO:
-                                if (c == '/') {
+                                if (isWhitespace(c)) {
+                                    continue;
+                                } else if (c == '/') {
                                     if (zero) {
                                         throw newDatatypeException(offset + i,
                                                 "Expected non-zero positive integer in ratio value.");
@@ -609,7 +611,8 @@ public class MediaQuery extends AbstractDatatype {
                                     continue;
                                 } else {
                                     throw newDatatypeException(offset + i,
-                                            "Expected a digit or \u201C/\u201D for"
+                                            "Expected a digit, whitespace or"
+                                                    + " \u201C/\u201D for "
                                                     + feature
                                                     + " value but saw \u201C"
                                                     + c + "\u201D instead.");
@@ -707,7 +710,9 @@ public class MediaQuery extends AbstractDatatype {
                     }
                 case RATIO_SECOND_INTEGER_START:
                     valueExpectation = ValueType.NONZEROINTEGER;
-                    if ('1' <= c && '9' >= c) {
+                    if (isWhitespace(c)) {
+                        continue;
+                    } else if ('1' <= c && '9' >= c) {
                         zero = false;
                         state = State.IN_VALUE_DIGITS;
                         continue;
@@ -720,8 +725,9 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else {
                         throw newDatatypeException(offset + i,
-                                "Expected a digit or a plus sign for "
-                                        + feature + " value but saw \u201C" + c
+                                "Expected a digit, whitespace or a plus sign"
+                                        + " for " + feature
+                                        + " value but saw \u201C" + c
                                         + "\u201D instead.");
                     }
                 case AFTER_CLOSE_PAREN:
