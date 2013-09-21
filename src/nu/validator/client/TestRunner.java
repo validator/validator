@@ -22,14 +22,17 @@
 
 package nu.validator.client;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,28 +65,20 @@ public class TestRunner implements ErrorHandler {
 
     private PrintWriter out;
 
+    private String schema = "http://s.validator.nu/html5-all.rnc";
+
     private boolean failed = false;
+
+    private static boolean writeMessages;
 
     private static boolean verbose;
 
-    private static final HashMap<String, String> DEFAULT_VALIDATION_MAP = new HashMap<String, String>();
+    private String baseDir = null;
 
-    static {
-        DEFAULT_VALIDATION_MAP.put("tests/html",
-                "http://s.validator.nu/html5-all.rnc");
-        DEFAULT_VALIDATION_MAP.put("tests/html-aria",
-                "http://s.validator.nu/html5-all.rnc");
-        DEFAULT_VALIDATION_MAP.put("tests/html-its",
-                "http://s.validator.nu/html5-all.rnc");
-        DEFAULT_VALIDATION_MAP.put("tests/html-rdfa",
-                "http://s.validator.nu/html5-all.rnc");
-        DEFAULT_VALIDATION_MAP.put("tests/html-rdfalite",
-                "http://s.validator.nu/html5-rdfalite.rnc");
-        DEFAULT_VALIDATION_MAP.put("tests/xhtml",
-                "http://s.validator.nu/xhtml5-all.rnc");
-    }
+    private Map<String, String> messages;
 
     public TestRunner() throws IOException {
+        messages = new LinkedHashMap<String, String>();
         validator = new SimpleDocumentValidator();
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -171,7 +166,19 @@ public class TestRunner implements ErrorHandler {
         }
     }
 
-    private void checkInvalidFiles(List<File> files) {
+    private boolean messageMatches(String testFilename) {
+        // p{C} = Other = Control+Format+Private_Use+Surrogate+Unassigned
+        // http://www.regular-expressions.info/unicode.html#category
+        // http://www.unicode.org/reports/tr18/#General_Category_Property
+        String messageReported = exception.getMessage().replaceAll("\\p{C}",
+                "?");
+        String messageExpected = messages.get(testFilename).replaceAll(
+                "\\p{C}", "?");
+        return messageReported.equals(messageExpected);
+    }
+
+    private void checkInvalidFiles(List<File> files) throws SAXException {
+        String testFilename;
         for (File file : files) {
             reset();
             try {
@@ -182,6 +189,34 @@ public class TestRunner implements ErrorHandler {
                 }
             } catch (IOException e) {
             } catch (SAXException e) {
+            }
+            if (exception != null) {
+                testFilename = file.getAbsolutePath().substring(
+                        baseDir.length() + 1);
+                if (writeMessages) {
+                    messages.put(testFilename, exception.getMessage());
+                } else if (messages.get(testFilename) == null) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": warning: No expected message in"
+                                        + " messages file.",
+                                file.toURI().toURL().toString()));
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (!messageMatches(testFilename)) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": error: Expected \"%s\""
+                                        + " but instead encountered \"%s\".",
+                                file.toURI().toURL().toString(),
+                                messages.get(testFilename),
+                                exception.getMessage()));
+                        err.flush();
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
             if (!inError) {
                 failed = true;
@@ -199,6 +234,7 @@ public class TestRunner implements ErrorHandler {
     }
 
     private void checkHasWarningFiles(List<File> files) {
+        String testFilename;
         for (File file : files) {
             reset();
             try {
@@ -209,6 +245,34 @@ public class TestRunner implements ErrorHandler {
                 }
             } catch (IOException e) {
             } catch (SAXException e) {
+            }
+            if (exception != null) {
+                testFilename = file.getAbsolutePath().substring(
+                        baseDir.length() + 1);
+                if (writeMessages) {
+                    messages.put(testFilename, exception.getMessage());
+                } else if (messages.get(testFilename) == null) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": warning: No expected message in"
+                                        + " messages file.",
+                                file.toURI().toURL().toString()));
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (!messageMatches(testFilename)) {
+                    try {
+                        err.println(String.format(
+                                "\"%s\": error: Expected \"%s\""
+                                        + " but instead encountered \"%s\".",
+                                file.toURI().toURL().toString(),
+                                messages.get(testFilename),
+                                exception.getMessage()));
+                        err.flush();
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
             if (inError) {
                 failed = true;
@@ -258,7 +322,7 @@ public class TestRunner implements ErrorHandler {
     }
 
     private void checkTestFiles(File directory, State state)
-            throws SAXException {
+            throws SAXException, IOException {
         File[] files = directory.listFiles();
         List<File> validFiles = new ArrayList<File>();
         List<File> invalidFiles = new ArrayList<File>();
@@ -314,18 +378,37 @@ public class TestRunner implements ErrorHandler {
             validator.setUpValidatorAndParsers(this, false, false);
             checkHasWarningFiles(hasWarningFiles);
         }
+        if (writeMessages) {
+            File messagesFile = new File(baseDir + "/messages.json");
+            FileWriter fw = new FileWriter(messagesFile.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(JSON.toString(messages));
+            bw.close();
+        }
     }
 
-    public boolean runTestSuite(HashMap<String, String> validationMap)
-            throws SAXException, Exception {
-        String directory;
-        String schemaUrl;
-        for (Map.Entry<String, String> entry : validationMap.entrySet()) {
-            directory = entry.getKey();
-            schemaUrl = entry.getValue();
-            checkTestDirectoryAgainstSchema(new File(directory), schemaUrl);
+    public boolean runTestSuite(File messagesFile) throws SAXException,
+            Exception {
+        if (messagesFile != null) {
+            baseDir = messagesFile.getAbsoluteFile().getParent();
+            FileReader fr = new FileReader(messagesFile);
+            messages = (HashMap<String, String>) JSON.parse(fr);
+        } else {
+            baseDir = System.getProperty("user.dir");
         }
-
+        for (File directory : new File(baseDir).listFiles()) {
+            if (directory.isDirectory()) {
+                if (directory.getName().contains("rdfalite")) {
+                    checkTestDirectoryAgainstSchema(directory,
+                            "http://s.validator.nu/html5-rdfalite.rnc");
+                } else if (directory.getName().contains("xhtml")) {
+                    checkTestDirectoryAgainstSchema(directory,
+                            "http://s.validator.nu/xhtml5-all.rnc");
+                } else {
+                    checkTestDirectoryAgainstSchema(directory, schema);
+                }
+            }
+        }
         if (verbose) {
             if (failed) {
                 out.println("Failure!");
@@ -404,15 +487,15 @@ public class TestRunner implements ErrorHandler {
 
     public static void main(String[] args) throws SAXException, Exception {
         verbose = false;
-        HashMap<String, String> validationMap = null;
+        String messagesFilename = null;
         System.setProperty("org.whattf.datatype.warn", "true");
         for (int i = 0; i < args.length; i++) {
             if ("--verbose".equals(args[i])) {
                 verbose = true;
             } else if ("--errors-only".equals(args[i])) {
                 System.setProperty("org.whattf.datatype.warn", "false");
-            } else if ("--default-map".equals(args[i])) {
-                validationMap = DEFAULT_VALIDATION_MAP;
+            } else if ("--write-messages".equals(args[i])) {
+                writeMessages = true;
             } else if (args[i].startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", args[i]));
@@ -420,8 +503,7 @@ public class TestRunner implements ErrorHandler {
                 System.exit(-1);
             } else {
                 if (args[i].endsWith(".json")) {
-                    FileReader fr = new FileReader(args[i]);
-                    validationMap = (HashMap<String, String>) JSON.parse(fr);
+                    messagesFilename = args[i];
                 } else {
                     System.out.println("\nError: You must specify a .json"
                             + " filename for validation mapping.");
@@ -430,12 +512,23 @@ public class TestRunner implements ErrorHandler {
                 }
             }
         }
-        if (validationMap != null) {
-            TestRunner tr = new TestRunner();
-            if (tr.runTestSuite(validationMap)) {
-                System.exit(0);
-            } else {
+        if (messagesFilename != null) {
+            File messagesFile = new File(messagesFilename);
+            if (!messagesFile.exists()) {
+                System.out.println("\nError: \"" + messagesFilename
+                        + "\" file not found.");
                 System.exit(-1);
+            } else if (!messagesFile.isFile()) {
+                System.out.println("\nError: \"" + messagesFilename
+                        + "\" is not a file.");
+                System.exit(-1);
+            } else {
+                TestRunner tr = new TestRunner();
+                if (tr.runTestSuite(messagesFile)) {
+                    System.exit(0);
+                } else {
+                    System.exit(-1);
+                }
             }
         } else {
             System.out.println("\nError: You must specify a .json"
@@ -447,10 +540,10 @@ public class TestRunner implements ErrorHandler {
 
     private static void usage() {
         System.out.println("\nUsage:");
-        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--verbose] MAP.json");
-        System.out.println("\n...where MAP.json is a \"validation map\" containing name/value pairs");
-        System.out.println("pairs in which the name is a directory name and the value is an");
-        System.out.println("http://s.validator.nu/* schema URL; for example:");
+        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--verbose] [MANIFEST.json]");
+        System.out.println("\n...where MANIFEST.json contains name/value pairs in which the name is a");
+        System.out.println(" pathname of a file to check and the value is the first error message or");
+        System.out.println(" warning message the validator is expected to report when checking that file.");
         System.out.println("\n    \"html-foo\": \"http://s.validator.nu/html5-all.rnc\"");
     }
 }
