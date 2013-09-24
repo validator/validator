@@ -146,6 +146,6 @@ its-storageSize.type = xsd:nonNegativeInteger
 
 its-storageEncoding.type = string
 
-its-lineBreakType.type = w:string "cr" | w:string "lr" | w:string "crlf" | w:string "nel"
+its-lineBreakType.type = w:string "cr" | w:string "lf" | w:string "crlf"
 
 its-annotatorsRef.type = string
