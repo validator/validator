@@ -24,8 +24,9 @@ package nu.validator.client;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -57,6 +58,8 @@ public class TestRunner implements ErrorHandler {
 
     private boolean exceptionIsWarning = false;
 
+    private boolean expectingError = false;
+
     private Exception exception = null;
 
     private SimpleDocumentValidator validator;
@@ -69,16 +72,20 @@ public class TestRunner implements ErrorHandler {
 
     private boolean failed = false;
 
+    private static File messagesFile;
+
     private static boolean writeMessages;
 
     private static boolean verbose;
 
     private String baseDir = null;
 
-    private Map<String, String> messages;
+    private Map<String, String> expectedMessages;
+
+    private Map<String, String> reportedMessages;
 
     public TestRunner() throws IOException {
-        messages = new LinkedHashMap<String, String>();
+        reportedMessages = new LinkedHashMap<String, String>();
         validator = new SimpleDocumentValidator();
         try {
             this.err = new PrintWriter(new OutputStreamWriter(System.err,
@@ -172,13 +179,14 @@ public class TestRunner implements ErrorHandler {
         // http://www.unicode.org/reports/tr18/#General_Category_Property
         String messageReported = exception.getMessage().replaceAll("\\p{C}",
                 "?");
-        String messageExpected = messages.get(testFilename).replaceAll(
+        String messageExpected = expectedMessages.get(testFilename).replaceAll(
                 "\\p{C}", "?");
         return messageReported.equals(messageExpected);
     }
 
     private void checkInvalidFiles(List<File> files) throws SAXException {
         String testFilename;
+        expectingError = true;
         for (File file : files) {
             reset();
             try {
@@ -194,23 +202,26 @@ public class TestRunner implements ErrorHandler {
                 testFilename = file.getAbsolutePath().substring(
                         baseDir.length() + 1);
                 if (writeMessages) {
-                    messages.put(testFilename, exception.getMessage());
-                } else if (messages.get(testFilename) == null) {
+                    reportedMessages.put(testFilename, exception.getMessage());
+                } else if (expectedMessages != null
+                        && expectedMessages.get(testFilename) == null) {
                     try {
                         err.println(String.format(
                                 "\"%s\": warning: No expected message in"
                                         + " messages file.",
                                 file.toURI().toURL().toString()));
+                        err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
                     }
-                } else if (!messageMatches(testFilename)) {
+                } else if (expectedMessages != null
+                        && !messageMatches(testFilename)) {
                     try {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
                                 file.toURI().toURL().toString(),
-                                messages.get(testFilename),
+                                expectedMessages.get(testFilename),
                                 exception.getMessage()));
                         err.flush();
                     } catch (MalformedURLException e) {
@@ -235,6 +246,7 @@ public class TestRunner implements ErrorHandler {
 
     private void checkHasWarningFiles(List<File> files) {
         String testFilename;
+        expectingError = false;
         for (File file : files) {
             reset();
             try {
@@ -250,23 +262,26 @@ public class TestRunner implements ErrorHandler {
                 testFilename = file.getAbsolutePath().substring(
                         baseDir.length() + 1);
                 if (writeMessages) {
-                    messages.put(testFilename, exception.getMessage());
-                } else if (messages.get(testFilename) == null) {
+                    reportedMessages.put(testFilename, exception.getMessage());
+                } else if (expectedMessages != null
+                        && expectedMessages.get(testFilename) == null) {
                     try {
                         err.println(String.format(
                                 "\"%s\": warning: No expected message in"
                                         + " messages file.",
                                 file.toURI().toURL().toString()));
+                        err.flush();
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
                     }
-                } else if (!messageMatches(testFilename)) {
+                } else if (expectedMessages != null
+                        && !messageMatches(testFilename)) {
                     try {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
                                         + " but instead encountered \"%s\".",
                                 file.toURI().toURL().toString(),
-                                messages.get(testFilename),
+                                expectedMessages.get(testFilename),
                                 exception.getMessage()));
                         err.flush();
                     } catch (MalformedURLException e) {
@@ -379,20 +394,20 @@ public class TestRunner implements ErrorHandler {
             checkHasWarningFiles(hasWarningFiles);
         }
         if (writeMessages) {
-            File messagesFile = new File(baseDir + "/messages.json");
-            FileWriter fw = new FileWriter(messagesFile.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(JSON.toString(messages));
+            OutputStreamWriter out = new OutputStreamWriter(
+                    new FileOutputStream(messagesFile), "utf-8");
+            BufferedWriter bw = new BufferedWriter(out);
+            bw.write(JSON.toString(reportedMessages));
             bw.close();
         }
     }
 
-    public boolean runTestSuite(File messagesFile) throws SAXException,
-            Exception {
+    public boolean runTestSuite() throws SAXException, Exception {
         if (messagesFile != null) {
             baseDir = messagesFile.getAbsoluteFile().getParent();
-            FileReader fr = new FileReader(messagesFile);
-            messages = (HashMap<String, String>) JSON.parse(fr);
+            FileInputStream fis = new FileInputStream(messagesFile);
+            InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
+            expectedMessages = (HashMap<String, String>) JSON.parse(reader);
         } else {
             baseDir = System.getProperty("user.dir");
         }
@@ -439,7 +454,7 @@ public class TestRunner implements ErrorHandler {
     public void warning(SAXParseException e) throws SAXException {
         if (emitMessages) {
             emitMessage(e, "warning");
-        } else if (exception == null) {
+        } else if (exception == null && !expectingError) {
             exception = e;
             exceptionIsWarning = true;
         }
@@ -505,15 +520,15 @@ public class TestRunner implements ErrorHandler {
                 if (args[i].endsWith(".json")) {
                     messagesFilename = args[i];
                 } else {
-                    System.out.println("\nError: You must specify a .json"
-                            + " filename for validation mapping.");
+                    System.out.println("\nError: Expected the name of a messages"
+                            + " file with a .json extension.");
                     usage();
                     System.exit(-1);
                 }
             }
         }
         if (messagesFilename != null) {
-            File messagesFile = new File(messagesFilename);
+            messagesFile = new File(messagesFilename);
             if (!messagesFile.exists()) {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" file not found.");
@@ -522,28 +537,28 @@ public class TestRunner implements ErrorHandler {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" is not a file.");
                 System.exit(-1);
-            } else {
-                TestRunner tr = new TestRunner();
-                if (tr.runTestSuite(messagesFile)) {
-                    System.exit(0);
-                } else {
-                    System.exit(-1);
-                }
             }
-        } else {
-            System.out.println("\nError: You must specify a .json"
-                    + " filename for validation mapping.");
+        } else if (writeMessages) {
+            System.out.println("\nError: Expected the name of a messages"
+                    + " file with a .json extension.");
             usage();
+            System.exit(-1);
+        }
+        TestRunner tr = new TestRunner();
+        if (tr.runTestSuite()) {
+            System.exit(0);
+        } else {
             System.exit(-1);
         }
     }
 
     private static void usage() {
         System.out.println("\nUsage:");
-        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--verbose] [MANIFEST.json]");
-        System.out.println("\n...where MANIFEST.json contains name/value pairs in which the name is a");
-        System.out.println(" pathname of a file to check and the value is the first error message or");
-        System.out.println(" warning message the validator is expected to report when checking that file.");
-        System.out.println("\n    \"html-foo\": \"http://s.validator.nu/html5-all.rnc\"");
+        System.out.println("\n    java nu.validator.client.TestRunner [--errors-only] [--write-messages]");
+        System.out.println("          [--verbose] [MESSAGES.json]");
+        System.out.println("\n...where the MESSAGES.json file contains name/value pairs in which the name is");
+        System.out.println("a pathname of a document to check and the value is the first error message or");
+        System.out.println("warning message the validator is expected to report when checking that document.");
+        System.out.println("Use the --write-messages option to create the file.");
     }
 }
