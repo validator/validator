@@ -947,7 +947,7 @@ def selfUpdate():
     os.execv(sys.executable, newArgv)  
 
 def runTests():
-  args = "--default-map"
+  args = "tests/messages.json"
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
