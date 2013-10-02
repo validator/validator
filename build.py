@@ -609,6 +609,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-XX:-DontCompileHugeMethods',
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
+    '-Xss512k',
     '-XX:ThreadStackSize=2048',
     '-classpath',
     classPath,
