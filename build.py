@@ -929,7 +929,7 @@ def checkout():
   runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
   hgCloneOrUpdate("htmlparser", parserHgRoot)
   testsRemote = "https://github.com/validator/tests.git"
-  testsBranch = "conformance-checkers"
+  testsBranch = "master"
   testsDir = "tests"
   if os.path.exists(testsDir):
     os.chdir(testsDir)
