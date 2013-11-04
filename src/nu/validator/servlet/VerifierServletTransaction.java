@@ -819,6 +819,16 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         laxType = (request.getParameter("laxtype") != null);
     }
 
+    private boolean useHtml5Schema() {
+        if ("".equals(schemaUrls)) {
+            return false;
+        }
+        return (schemaUrls.contains("http://s.validator.nu/html5.rnc")
+                || schemaUrls.contains("http://s.validator.nu/html5-all.rnc")
+                || schemaUrls.contains("http://s.validator.nu/html5-its.rnc")
+                || schemaUrls.contains("http://s.validator.nu/html5-rdfalite.rnc"));
+    }
+
     private boolean isHtmlUnsafePreset() {
         if ("".equals(schemaUrls)) {
             return false;
@@ -1250,7 +1260,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     }
                     errorHandler.info("The Content-Type was \u201C" + type + "\u201D. Using the HTML parser.");
                     newHtmlParser();
-                    htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
+                    if (useHtml5Schema()) {
+                        htmlParser.setDoctypeExpectation(DoctypeExpectation.HTML);
+                    } else {
+                        htmlParser.setDoctypeExpectation(DoctypeExpectation.AUTO);
+                    }
                     htmlParser.setDocumentModeHandler(this);
                     reader = htmlParser;
                     if (validator != null) {
