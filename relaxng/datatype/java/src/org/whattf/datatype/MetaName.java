@@ -99,6 +99,7 @@ public class MetaName extends AbstractDatatype {
         "es.title", // extension
         "essaydirectory", // extension
         "format-detection", // extension
+        "fragment", // extension
         "generator",
         "geo.a1", // extension
         "geo.a2", // extension
