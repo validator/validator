@@ -295,7 +295,6 @@ public class VerifierServlet extends HttpServlet {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "content-type");
             if (isOptions) {
-                response.setHeader("Access-Control-Policy-Path", GENERIC_PATH);
                 sendOptions(request, response);
             } else {
                 new VerifierServletTransaction(request, response).service();
