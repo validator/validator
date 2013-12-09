@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2013 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -507,44 +507,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     }
 
     private String buildAccept() {
-        Set<String> types = new TreeSet<String>();
-        if (isAllowRnc()) {
-            types.add("application/relax-ng-compact-syntax");
-        }
-        if (isAllowHtml()) {
-            types.add("text/html; q=0.9");
-        }
-        if (isAllowXhtml()) {
-            types.add("application/xhtml+xml");
-            types.add("application/xml; q=0.5");
-        }
-        if (isAcceptAllKnownXmlTypes()) {
-            types.add("application/xhtml+xml");
-            // types.add("application/atom+xml");
-            types.add("image/svg+xml");
-            types.add("application/docbook+xml");
-            types.add("application/xml; q=0.5");
-            types.add("text/xml; q=0.3");
-            types.add("*/*; q=0.1");
-        }
-        if (isAllowGenericXml()) {
-            types.add("application/xml; q=0.5");
-            types.add("text/xml; q=0.3");
-            types.add("*/*; q=0.1");
-        }
-        StringBuilder buf = new StringBuilder();
-        for (Iterator<String> iter = types.iterator(); iter.hasNext();) {
-            String str = iter.next();
-            buf.append(str);
-            buf.append(", ");
-        }
-        for (int i = 0; i < 2; i++) {
-            int len = buf.length();
-            if (len > 0) {
-                buf.deleteCharAt(len - 1);
-            }
-        }
-        return buf.toString();
+        return "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
     }
 
     /**
