@@ -293,6 +293,7 @@ public class VerifierServlet extends HttpServlet {
                 response.setHeader("Location", "http://html5.validator.nu/" + (queryString == null ? "" : "?" + queryString));
         } else if (hostMatch(GENERIC_HOST, serverName) && GENERIC_PATH.equals(pathInfo)) {
             response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Headers", "content-type");
             if (isOptions) {
                 response.setHeader("Access-Control-Policy-Path", GENERIC_PATH);
                 sendOptions(request, response);
@@ -301,6 +302,7 @@ public class VerifierServlet extends HttpServlet {
             }        
         } else if (hostMatch(HTML5_HOST, serverName) && HTML5_PATH.equals(pathInfo)) {
             response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Headers", "content-type");
             if (isOptions) {
                 sendOptions(request, response);
             } else {
