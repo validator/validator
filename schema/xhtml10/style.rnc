@@ -37,9 +37,9 @@ default namespace = "http://www.w3.org/1999/xhtml"
 # disambiguate from SVG -- hsivonen
 style.xhtml = element style { style.attlist, text }
 style.attlist =
+    xml.space.attrib,
     title.attrib,
     I18n.attrib,
     attribute type { content-type.datatype },
     attribute media { media-desc.datatype }?
-# ,    attribute xml:space { string "preserve" }? # zapped -- hsivonen
 head.content &= style.xhtml*

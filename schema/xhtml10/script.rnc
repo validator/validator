@@ -37,11 +37,11 @@ default namespace = "http://www.w3.org/1999/xhtml"
 # disambiguate from SVG -- hsivonen
 script.xhtml = element script { script.attlist, text }
 script.attlist =
+    xml.space.attrib,
     attribute charset { charset.datatype }?,
     attribute type { content-type.datatype },
     attribute src { uri.datatype }?,
     attribute defer { string "defer" }?
-#  ,  attribute xml:space { string "preserve" }?  # zapped -- hsivonen
 noscript = element noscript { noscript.attlist, Block.model }
 noscript.attlist = Common.attrib
 head.content &= script.xhtml*
