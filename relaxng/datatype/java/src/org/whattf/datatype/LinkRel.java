@@ -77,6 +77,7 @@ public class LinkRel extends AbstractRel {
         "stylesheet",
         "stylesheet/less", // extension
         "subsection", // HTML4
+        "syndication", // extension
         "timesheet", // extension
         "toc", // HTML4
         "transformation", // extension (Formats table)
