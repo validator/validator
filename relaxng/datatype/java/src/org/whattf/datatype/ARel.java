@@ -77,6 +77,7 @@ public class ARel extends AbstractRel {
         "start", // HTML4
         "subsection", // HTML4
         "sweetheart", // extension (Formats table)
+        "syndication", // extension
         "tag",
         "toc", // HTML4
         "transformation", // extension (Formats table) maybe an error?

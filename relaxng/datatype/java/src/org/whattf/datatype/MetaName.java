@@ -154,7 +154,6 @@ public class MetaName extends AbstractDatatype {
         "skype_toolbar", // extension
         "slurp", // extension
         "startindex", // extension
-        "syndication", // extension
         "teoma", // extension
         "twitter:card", // extension
         "twitter:creator", // extension
