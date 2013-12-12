@@ -133,6 +133,7 @@ public class MetaName extends AbstractDatatype {
         "itemsperpage", // extension
         "keywords",
         "meta_date", // extension
+        "mobile-web-app-capable", // extension
         "mobileoptimized", // extension
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
