@@ -96,7 +96,6 @@ public class MetaName extends AbstractDatatype {
         "dcterms.valid", // extension
         "description",
         "designer", // extension
-        "es.title", // extension
         "essaydirectory", // extension
         "format-detection", // extension
         "fragment", // extension
@@ -128,13 +127,10 @@ public class MetaName extends AbstractDatatype {
         "globrix.underoffer", // extension
         "google-site-verification", // extension
         "googlebot", // extension
-        "handheldfriendly", // extension
         "icbm", // extension        
         "itemsperpage", // extension
         "keywords",
-        "meta_date", // extension
         "mobile-web-app-capable", // extension
-        "mobileoptimized", // extension
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
@@ -144,10 +140,8 @@ public class MetaName extends AbstractDatatype {
         "msapplication-window", // extension
         "msvalidate.01", // extension
         "norton-safeweb-site-verification", // extension
-        "publisher", //extension
         "rating", // extension
         "referrer", // extension
-        "review_date", // extension
         "revisit-after", // extension
         "rights-standard", // extension
         "robots", // extension
