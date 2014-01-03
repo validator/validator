@@ -149,15 +149,33 @@ public class MetaName extends AbstractDatatype {
         "slurp", // extension
         "startindex", // extension
         "teoma", // extension
+        "twitter:app:country ", // extension
+        "twitter:app:id:googleplay", // extension
+        "twitter:app:id:ipad ", // extension
+        "twitter:app:id:iphone", // extension
+        "twitter:app:url:googleplay", // extension
+        "twitter:app:url:ipad", // extension
+        "twitter:app:url:iphone", // extension
         "twitter:card", // extension
         "twitter:creator", // extension
+        "twitter:creator:id", // extension
         "twitter:description", // extension
+        "twitter:domain", // extension
         "twitter:image", // extension
+        "twitter:image0", // extension
+        "twitter:image1", // extension
+        "twitter:image2", // extension
+        "twitter:image3", // extension
+        "twitter:image:height", // extension
+        "twitter:image:src", // extension
+        "twitter:image:width", // extension
         "twitter:site", // extension
+        "twitter:site:id", // extension
         "twitter:title", // extension
         "twitter:url", // extension
         "verify-v1", // extension
         "viewport", // extension
+        "wot-verification", // extension
         "wt.ac", // extension
         "wt.ad", // extension
         "wt.cg_n", // extension
