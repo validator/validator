@@ -35,6 +35,9 @@ public class MetaName extends AbstractDatatype {
         "application-name",
         "author",
         "baiduspider", // extension
+        "bug.component", // extension
+        "bug.product", // extension
+        "bug.short_desc", // extension
         "csrf-param", // extension
         "csrf-token", // extension
         "dc.date.issued", // extension
