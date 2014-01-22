@@ -67,14 +67,8 @@ public class UnsupportedFeatureChecker extends Checker {
                 warn("The \u201Ccrossorigin\u201D attribute on the \u201Cimg\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
             }
         } else if ("iframe" == localName) {
-            if (atts.getIndex("", "srcdoc") > -1) {
-                warn("The \u201Csrcdoc\u201D attribute on the \u201Ciframe\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
             if (atts.getIndex("", "seamless") > -1) {
                 warn("The \u201Cseamless\u201D attribute on the \u201Ciframe\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
-            if (atts.getIndex("", "sandbox") > -1) {
-                warn("The \u201Csandbox\u201D attribute on the \u201Ciframe\u201D element is only supported by Chrome so far. Please be sure to test your page in Chrome.");
             }
         } else if ("textarea" == localName) {
             if (atts.getIndex("", "dirname") > -1) {
