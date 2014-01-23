@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Vadim Zaslawski, Ontos AG
- * Copyright (c) 2012 Mozilla Foundation
+ * Copyright (c) 2012-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -600,9 +600,12 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (contentHandler == null) {
             return;
         }
-        request.setAttribute("http://validator.nu/properties/document-outline",
-                (Deque<Section>) currentOutlinee.outline);
-        setOutline(currentOutlinee.outline);
+        if (currentOutlinee != null) {
+            request.setAttribute(
+                    "http://validator.nu/properties/document-outline",
+                    (Deque<Section>) currentOutlinee.outline);
+            setOutline(currentOutlinee.outline);
+        }
         contentHandler.endDocument();
     }
 
