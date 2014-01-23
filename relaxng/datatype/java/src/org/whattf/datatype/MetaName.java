@@ -134,6 +134,7 @@ public class MetaName extends AbstractDatatype {
         "itemsperpage", // extension
         "keywords",
         "mobile-web-app-capable", // extension
+        "msapplication-config", // extension
         "msapplication-navbutton-color", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
@@ -151,6 +152,7 @@ public class MetaName extends AbstractDatatype {
         "skype_toolbar", // extension
         "slurp", // extension
         "startindex", // extension
+        "startver", // extension
         "teoma", // extension
         "twitter:app:country ", // extension
         "twitter:app:id:googleplay", // extension
