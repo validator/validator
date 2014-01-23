@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2011-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -29,6 +29,23 @@ import org.relaxng.datatype.DatatypeException;
 public class MetaName extends AbstractDatatype {
 
     private static final String[] VALID_NAMES = {
+        "AGLSTERMS.act", // extension
+        "AGLSTERMS.accessibility", // extension
+        "AGLSTERMS.accessMode", // extension
+        "AGLSTERMS.aggregationLevel", // extension
+        "AGLSTERMS.availability", // extension
+        "AGLSTERMS.case", // extension
+        "AGLSTERMS.category", // extension
+        "AGLSTERMS.dateLicensed", // extension
+        "AGLSTERMS.documentType", // extension
+        "AGLSTERMS.function", // extension
+        "AGLSTERMS.isBasisFor", // extension
+        "AGLSTERMS.isBasedOn", // extension
+        "AGLSTERMS.jurisdiction", // extension
+        "AGLSTERMS.mandate", // extension
+        "AGLSTERMS.protectiveMarking", // extension
+        "AGLSTERMS.regulation", // extension
+        "AGLSTERMS.serviceType", // extension
         "alexaverifyid", // extension
         "apple-mobile-web-app-capable", // extension
         "apple-mobile-web-app-status-bar-style", // extension
