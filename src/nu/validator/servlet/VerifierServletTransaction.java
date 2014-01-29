@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006 Henri Sivonen
- * Copyright (c) 2007-2013 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -202,7 +202,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] VERSION = "Living Validator".toCharArray();
 
-    private static final char[] RESULTS_TITLE = "Validation results".toCharArray();
+    private static final char[] RESULTS_TITLE = (System.getProperty(
+            "nu.validator.servlet.results-title", "Validation results")).toCharArray();
 
     private static final char[] FOR = " for ".toCharArray();
 
@@ -1400,9 +1401,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     private Validator combineValidatorByUrl(Validator val, String url)
             throws SAXException, IOException, IncorrectSchemaException {
-        // if (W3C_BRANDING && "http://c.validator.nu/nfc/".equals(url)) {
-            // return val; // FIXME review W3C problem
-        // }
         if (!"".equals(url)) {
             Validator v = validatorByUrl(url);
             if (val == null) {
@@ -1517,14 +1515,15 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     void emitTitle(boolean markupAllowed) throws SAXException {
         if (willValidate()) {
             emitter.characters(RESULTS_TITLE);
+            emitter.characters(FOR);
             if (document != null && document.length() > 0) {
-                emitter.characters(FOR);
                 emitter.characters(scrub(shortenDataUri(document)));
             } else if (request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.filename") != null) {
-                emitter.characters(FOR);
                 emitter.characters("uploaded file "
                         + scrub(request.getAttribute(
                                 "nu.validator.servlet.MultipartFormDataFilter.filename").toString()));
+            } else {
+                emitter.characters("contents of text-input area");
             }
         } else {
             emitter.characters(SERVICE_TITLE);
