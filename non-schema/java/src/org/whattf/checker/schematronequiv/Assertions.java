@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Mozilla Foundation
+ * Copyright (c) 2008-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -293,7 +293,7 @@ public class Assertions extends Checker {
         OBSOLETE_STYLE_ATTRS.put("background", new String[] { "body" });
         OBSOLETE_STYLE_ATTRS.put("bgcolor", new String[] { "table", "tr", "td",
                 "th", "body" });
-        OBSOLETE_STYLE_ATTRS.put("border", new String[] { "object" });
+        OBSOLETE_STYLE_ATTRS.put("border", new String[] { "object", "table" });
         OBSOLETE_STYLE_ATTRS.put("cellpadding", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("cellspacing", new String[] { "table" });
         OBSOLETE_STYLE_ATTRS.put("char", new String[] { "col", "colgroup",
@@ -1444,15 +1444,6 @@ public class Assertions extends Checker {
                             + " simplify the structure of the"
                             + " \u201Ctable\u201D so that no description"
                             + " is needed.");
-                }
-                if (atts.getIndex("", "border") > -1
-                        && (!("".equals(atts.getValue("", "border")) || "1".equals(atts.getValue(
-                                "", "border"))))) {
-                    err("The value of the \u201Cborder\u201D attribute"
-                            + " on the \u201Ctable\u201D element"
-                            + " must be either \u201C1\u201D or"
-                            + " the empty string. To regulate the"
-                            + " thickness of table borders, Use CSS instead.");
                 }
             } else if ("track" == localName && atts.getIndex("", "default") >= 0) {
                 for (Map.Entry<StackNode, TaintableLocatorImpl> entry : openMediaElements.entrySet()) {
