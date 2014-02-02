@@ -150,6 +150,7 @@ public class MetaName extends AbstractDatatype {
         "icbm", // extension        
         "itemsperpage", // extension
         "keywords",
+        "meta_date", // extension
         "mobile-web-app-capable", // extension
         "msapplication-config", // extension
         "msapplication-navbutton-color", // extension
@@ -163,6 +164,7 @@ public class MetaName extends AbstractDatatype {
         "norton-safeweb-site-verification", // extension
         "rating", // extension
         "referrer", // extension
+        "review_date", // extension
         "revisit-after", // extension
         "rights-standard", // extension
         "robots", // extension
