@@ -29,23 +29,23 @@ import org.relaxng.datatype.DatatypeException;
 public class MetaName extends AbstractDatatype {
 
     private static final String[] VALID_NAMES = {
-        "AGLSTERMS.act", // extension
-        "AGLSTERMS.accessibility", // extension
-        "AGLSTERMS.accessMode", // extension
-        "AGLSTERMS.aggregationLevel", // extension
-        "AGLSTERMS.availability", // extension
-        "AGLSTERMS.case", // extension
-        "AGLSTERMS.category", // extension
-        "AGLSTERMS.dateLicensed", // extension
-        "AGLSTERMS.documentType", // extension
-        "AGLSTERMS.function", // extension
-        "AGLSTERMS.isBasisFor", // extension
-        "AGLSTERMS.isBasedOn", // extension
-        "AGLSTERMS.jurisdiction", // extension
-        "AGLSTERMS.mandate", // extension
-        "AGLSTERMS.protectiveMarking", // extension
-        "AGLSTERMS.regulation", // extension
-        "AGLSTERMS.serviceType", // extension
+        "aglsterms.act", // extension
+        "aglsterms.accessibility", // extension
+        "aglsterms.accessmode", // extension
+        "aglsterms.aggregationlevel", // extension
+        "aglsterms.availability", // extension
+        "aglsterms.case", // extension
+        "aglsterms.category", // extension
+        "aglsterms.datelicensed", // extension
+        "aglsterms.documenttype", // extension
+        "aglsterms.function", // extension
+        "aglsterms.isbasisfor", // extension
+        "aglsterms.isbasedon", // extension
+        "aglsterms.jurisdiction", // extension
+        "aglsterms.mandate", // extension
+        "aglsterms.protectivemarking", // extension
+        "aglsterms.regulation", // extension
+        "aglsterms.servicetype", // extension
         "alexaverifyid", // extension
         "apple-mobile-web-app-capable", // extension
         "apple-mobile-web-app-status-bar-style", // extension
@@ -209,7 +209,12 @@ public class MetaName extends AbstractDatatype {
         "wt.sv", // extension
         "wt.ti", // extension
         "y_key", // extension
-        "yandex-verification" // extension
+        "yandex-verification", // extension
+        "zoomcategory", // extension
+        "zoomimage", // extension
+        "zoompageboost", // extension
+        "zoomtitle", // extension
+        "zoomwords" // extension
     };
     
     /**
