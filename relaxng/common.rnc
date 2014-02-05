@@ -113,9 +113,7 @@ common.attrs =
 	)
 
 common.attrs.basic =
-	(	(	common.attrs.id
-		|	common.attrs.xml-id
-		)? # REVISIT assuming only either one is allowed
+	(	common.attrs.id?
 	&	common.attrs.class?
 	&	common.attrs.title?
 	&	common.attrs.base?
@@ -125,10 +123,6 @@ common.attrs.basic =
 		attribute id {
 			common.data.id
 		}
-	common.attrs.xml-id =
-		attribute xml:id {
-			xsd:NCName
-		} & XMLonly
 	common.attrs.class =
 		attribute class {
 			common.data.tokens
