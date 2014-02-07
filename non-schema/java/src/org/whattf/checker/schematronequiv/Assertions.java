@@ -971,6 +971,19 @@ public class Assertions extends Checker {
                 locator);
     }
 
+    private final void errObsoleteAttribute(String attribute, String element,
+            String suggestion) throws SAXException {
+        err("The \u201C" + attribute + "\u201D attribute on the \u201C"
+                + element + "\u201D element is obsolete." + suggestion);
+    }
+
+    private final void warnPresentationalAttribute(String attribute,
+            String element, String suggestion) throws SAXException {
+        warn("The \u201C" + attribute + "\u201D attribute on the \u201C"
+                + element + "\u201D element is presentational markup."
+                + " Consider using CSS instead.");
+    }
+
     private boolean currentElementHasRequiredAncestorRole(
             Set<String> requiredAncestorRoles) {
         for (String role : requiredAncestorRoles) {
@@ -1247,10 +1260,11 @@ public class Assertions extends Checker {
                         languageJavaScript = true;
                     } else if ("rev" == attLocal
                             && !("1".equals(System.getProperty("nu.validator.schema.rev-allowed")))) {
-                        err("The \u201Crev\u201D attribute on the \u201C"
-                                + localName + "\u201D element is obsolete. "
-                                + "Use the \u201Crel\u201D attribute instead, "
-                                + "with a term having the opposite meaning.");
+                        errObsoleteAttribute(
+                                "rev",
+                                localName,
+                                " Use the \u201Crel\u201D attribute instead,"
+                                        + " with a term having the opposite meaning.");
                     } else if (OBSOLETE_ATTRIBUTES.containsKey(attLocal)
                             && "ol" != localName && "ul" != localName
                             && "li" != localName) {
@@ -1260,20 +1274,14 @@ public class Assertions extends Checker {
                             String suggestion = OBSOLETE_ATTRIBUTES_MSG.containsKey(attLocal) ? " "
                                     + OBSOLETE_ATTRIBUTES_MSG.get(attLocal)
                                     : "";
-                            err("The \u201C" + attLocal
-                                    + "\u201D attribute on the \u201C"
-                                    + localName + "\u201D element is obsolete."
-                                    + suggestion);
+                            errObsoleteAttribute(attLocal, localName, suggestion);
                         }
                     } else if (OBSOLETE_STYLE_ATTRS.containsKey(attLocal)) {
                         String[] elementNames = OBSOLETE_STYLE_ATTRS.get(attLocal);
                         Arrays.sort(elementNames);
                         if (Arrays.binarySearch(elementNames, localName) >= 0) {
-                            err("The \u201C"
-                                    + attLocal
-                                    + "\u201D attribute on the \u201C"
-                                    + localName
-                                    + "\u201D element is obsolete. Use CSS instead.");
+                            errObsoleteAttribute(attLocal, localName,
+                                    " Use CSS instead.");
                         }
                     } else if ("dropzone" == attLocal) {
                         String[] tokens = atts.getValue(i).toString().split(
@@ -1436,8 +1444,8 @@ public class Assertions extends Checker {
                 }
             } else if ("table" == localName) {
                 if (atts.getIndex("", "summary") >= 0) {
-                    err("The \u201Csummary\u201D attribute is obsolete."
-                            + " Consider describing the structure of the"
+                    errObsoleteAttribute("summary", "table",
+                            " Consider describing the structure of the"
                             + " \u201Ctable\u201D in a \u201Ccaption\u201D "
                             + " element or in a \u201Cfigure\u201D element "
                             + " containing the \u201Ctable\u201D; or,"
