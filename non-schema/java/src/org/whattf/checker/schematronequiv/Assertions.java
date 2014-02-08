@@ -978,10 +978,10 @@ public class Assertions extends Checker {
     }
 
     private final void warnPresentationalAttribute(String attribute,
-            String element) throws SAXException {
+            String element, String suggestion) throws SAXException {
         warn("The \u201C" + attribute + "\u201D attribute on the \u201C"
                 + element + "\u201D element is presentational markup."
-                + " Consider using CSS instead.");
+                + suggestion);
     }
 
     private boolean currentElementHasRequiredAncestorRole(
