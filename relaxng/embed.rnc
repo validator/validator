@@ -548,7 +548,7 @@ namespace local = ""
 				w:string "allowfullscreen" | w:string ""
 			} & v5only
 	iframe.inner =
-		( text )
+		( ( text & HTMLonly ) | empty )
 
 	common.elem.phrasing |= iframe.elem
 
