@@ -157,9 +157,9 @@ public class MetaName extends AbstractDatatype {
         "mobile-web-app-capable", // extension
         "msapplication-config", // extension
         "msapplication-navbutton-color", // extension
-        "msapplication-square70x70logo", // extension
         "msapplication-square150x150logo", // extension
         "msapplication-square310x310logo", // extension
+        "msapplication-square70x70logo", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
         "msapplication-tilecolor", // extension
