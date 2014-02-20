@@ -169,6 +169,7 @@ public class MetaName extends AbstractDatatype {
         "msapplication-window", // extension
         "msvalidate.01", // extension
         "norton-safeweb-site-verification", // extension
+        "p:domain_verify", // extension
         "rating", // extension
         "referrer", // extension
         "review_date", // extension
