@@ -201,13 +201,7 @@ public class IriRef extends AbstractDatatype {
                         return;
                     }
                 case PORT_SHOULD_NOT_BE_WELL_KNOWN:
-                    if (WARN) {
-                        throw newDatatypeException(
-                                "Ports under 1024 should be accessed using the appropriate scheme name.",
-                                WARN);
-                    } else {
-                        return;
-                    }
+                    return; // not a useful warning case
                 case COMPATIBILITY_CHARACTER:
                     if (WARN) {
                         throw newDatatypeException(
