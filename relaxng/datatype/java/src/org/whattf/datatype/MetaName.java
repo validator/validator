@@ -52,6 +52,9 @@ public class MetaName extends AbstractDatatype {
         "application-name",
         "author",
         "baiduspider", // extension
+        "bitcoin", // extension
+        "blazerr-support-identifier", // extension
+        "blazerr-support-id-noncookies", // extension
         "bug.component", // extension
         "bug.product", // extension
         "bug.short_desc", // extension
@@ -147,18 +150,22 @@ public class MetaName extends AbstractDatatype {
         "globrix.underoffer", // extension
         "google-site-verification", // extension
         "googlebot", // extension
-        "icbm", // extension        
+        "icbm", // extension
         "itemsperpage", // extension
         "keywords",
         "meta_date", // extension
         "mobile-web-app-capable", // extension
         "msapplication-config", // extension
         "msapplication-navbutton-color", // extension
+        "msapplication-square70x70logo", // extension
+        "msapplication-square150x150logo", // extension
+        "msapplication-square310x310logo", // extension
         "msapplication-starturl", // extension
         "msapplication-task", // extension
         "msapplication-tilecolor", // extension
         "msapplication-tileimage", // extension
         "msapplication-tooltip", // extension
+        "msapplication-wide310x150logo", // extension
         "msapplication-window", // extension
         "msvalidate.01", // extension
         "norton-safeweb-site-verification", // extension
@@ -216,12 +223,12 @@ public class MetaName extends AbstractDatatype {
         "zoomtitle", // extension
         "zoomwords" // extension
     };
-    
+
     /**
      * The singleton instance.
      */
     public static final MetaName THE_INSTANCE = new MetaName();
-    
+
     /**
      * Package-private constructor
      */
