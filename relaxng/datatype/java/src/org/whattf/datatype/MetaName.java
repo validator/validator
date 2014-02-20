@@ -53,8 +53,11 @@ public class MetaName extends AbstractDatatype {
         "author",
         "baiduspider", // extension
         "bitcoin", // extension
-        "blazerr-support-identifier", // extension
+        "blazerr-secure", // extension
+        "blazerr-seo", // extension
+        "blazerr-ssl", // extension
         "blazerr-support-id-noncookies", // extension
+        "blazerr-support-identifier", // extension
         "bug.component", // extension
         "bug.product", // extension
         "bug.short_desc", // extension
