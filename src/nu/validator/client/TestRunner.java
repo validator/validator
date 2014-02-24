@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Mozilla Foundation
+ * Copyright (c) 2013-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -501,6 +501,10 @@ public class TestRunner implements ErrorHandler {
     }
 
     public static void main(String[] args) throws SAXException, Exception {
+        if (args.length < 1) {
+            usage();
+            System.exit(0);
+        }
         verbose = false;
         String messagesFilename = null;
         System.setProperty("org.whattf.datatype.warn", "true");
