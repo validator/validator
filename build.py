@@ -58,7 +58,6 @@ heapSize = '128'
 html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'http://www.whatwg.org/specs/web-apps/current-work/'
 aboutPage = 'http://about.validator.nu/'
-aboutPath = 'validator/site/'
 userAgent = 'Validator.nu/LV'
 icon = None
 stylesheet = None
@@ -75,9 +74,12 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
-pageTemplate = os.path.join("validator", "xml-src", "PageEmitter.xml")
-formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
-presets = os.path.join("validator", "presets.txt")
+pageTemplateFile = os.path.join("validator", "xml-src", "PageEmitter.xml")
+formTemplateFile = os.path.join("validator", "xml-src", "FormEmitter.xml")
+presetsFile = os.path.join("validator", "presets.txt")
+aboutFile = os.path.join("validator", "site", "about.html")
+stylesheetFile = os.path.join("validator", "site", "style.css")
+scriptFile = os.path.join("validator", "site", "script.js")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
@@ -574,8 +576,8 @@ def buildValidator():
   ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
   pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
   formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplate, pageEmitter))
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplate, formEmitter))
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplateFile, pageEmitter))
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplateFile, formEmitter))
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
                                                 "io-xml-util",
@@ -634,7 +636,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
-    '-Dnu.validator.servlet.path.about=' + os.path.join(buildRoot, aboutPath),
   ]
 
   if usePromiscuousSsl:
@@ -785,32 +786,22 @@ def downloadLocalEntities():
 
 def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
-  
+
 def prepareLocalEntityJar():
   filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
-  w3cFilesDir = os.path.join(filesDir, "w3c")
-  if os.path.exists(w3cFilesDir):
-    shutil.rmtree(w3cFilesDir)
-  os.makedirs(w3cFilesDir)
-  shutil.copyfile(os.path.join(buildRoot, presets), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
+  shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
+  shutil.copyfile(os.path.join(buildRoot, scriptFile), os.path.join(filesDir, "script.js"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "style.css"), os.path.join(filesDir, "style.css"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "script.js"), os.path.join(filesDir, "script.js"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "icon.png"), os.path.join(w3cFilesDir, "icon.png"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "w3c.png"), os.path.join(w3cFilesDir, "w3c.png"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "vnu.png"), os.path.join(w3cFilesDir, "vnu.png"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "html.png"), os.path.join(w3cFilesDir, "html.png"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "about.html"), os.path.join(w3cFilesDir, "about.html"))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
@@ -828,7 +819,7 @@ def prepareLocalEntityJar():
       if os.path.exists(entPath):
         o.write("%s\t%s\n" % (url, safeName))
         shutil.copyfile(entPath, safePath)
-        
+
   finally:
     f.close()
     o.close()
@@ -1047,14 +1038,12 @@ else:
       ianaCharset = arg[15:]
     elif arg.startswith("--about="):
       aboutPage = arg[8:]
-    elif arg.startswith("--user-agent="):
-      userAgent = arg[13:]
-    elif arg.startswith("--about-path="):
-      aboutPath = arg[13:]
     elif arg.startswith("--stylesheet="):
       stylesheet = arg[13:]
     elif arg.startswith("--icon="):
       icon = arg[7:]
+    elif arg.startswith("--user-agent="):
+      userAgent = arg[13:]
     elif arg.startswith("--scp-target="):
       deploymentTarget = arg[13:]
     elif arg.startswith("--script="):
@@ -1070,11 +1059,17 @@ else:
     elif arg.startswith("--parsetreepath="):
       (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
     elif arg.startswith("--page-template="):
-      pageTemplate = arg[16:]
+      pageTemplateFile = arg[16:]
     elif arg.startswith("--form-template="):
-      formTemplate = arg[16:]
-    elif arg.startswith("--presets="):
-      presets = arg[10:]
+      formTemplateFile = arg[16:]
+    elif arg.startswith("--presets-file="):
+      presetsFile = arg[15:]
+    elif arg.startswith("--about-file="):
+      aboutFile = arg[13:]
+    elif arg.startswith("--stylesheet-file="):
+      stylesheetFile = arg[18:]
+    elif arg.startswith("--script-file="):
+      scriptFile = arg[14:]
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
