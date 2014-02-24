@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2013 Mozilla Foundation
+# Copyright (c) 2008-2014 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a 
 # copy of this software and associated documentation files (the "Software"), 
@@ -64,6 +64,7 @@ icon = None
 stylesheet = None
 script = None
 serviceName = 'Validator.nu'
+resultsTitle = 'Validation results'
 maxFileSize = 7168
 usePromiscuousSsl = 0
 genericHost = ''
@@ -617,6 +618,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.servlet.service-name=' + serviceName,
+    '-Dnu.validator.servlet.results-title=' + resultsTitle,
     '-Dorg.whattf.datatype.warn=true',
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.user-agent=' + userAgent,
@@ -1065,6 +1067,8 @@ else:
       script = arg[9:]
     elif arg.startswith("--name="):
       serviceName = arg[7:]
+    elif arg.startswith("--results-title="):
+      resultsTitle = arg[16:]
     elif arg.startswith("--genericpath="):
       (genericHost, genericPath) = splitHostSpec(arg[14:])
     elif arg.startswith("--html5path="):
