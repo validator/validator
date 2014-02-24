@@ -77,6 +77,7 @@ deploymentTarget = None
 noSelfUpdate = 0
 pageTemplate = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplate = os.path.join("validator", "xml-src", "FormEmitter.xml")
+presets = os.path.join("validator", "presets.txt")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
@@ -794,7 +795,7 @@ def prepareLocalEntityJar():
   if os.path.exists(w3cFilesDir):
     shutil.rmtree(w3cFilesDir)
   os.makedirs(w3cFilesDir)
-  shutil.copyfile(os.path.join(buildRoot, "validator", "presets.txt"), os.path.join(filesDir, "presets"))
+  shutil.copyfile(os.path.join(buildRoot, presets), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
@@ -803,7 +804,6 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
-  shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "w3c-presets.txt"), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "style.css"), os.path.join(w3cFilesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "script.js"), os.path.join(w3cFilesDir, "script.js"))
   shutil.copyfile(os.path.join(buildRoot, "nu-validator-site", "icon.png"), os.path.join(w3cFilesDir, "icon.png"))
@@ -1073,6 +1073,8 @@ else:
       pageTemplate = arg[16:]
     elif arg.startswith("--form-template="):
       formTemplate = arg[16:]
+    elif arg.startswith("--presets="):
+      presets = arg[10:]
     elif arg == '--ajp=on':
       useAjp = 1
     elif arg == '--ajp=off':
