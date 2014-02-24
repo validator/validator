@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2013 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -51,23 +51,21 @@ public class VerifierServlet extends HttpServlet {
     private static final long serialVersionUID = 7811043632732680935L;
 
     private static final Logger log4j = Logger.getLogger(VerifierServlet.class);
-    
+
     static final String GENERIC_HOST = System.getProperty("nu.validator.servlet.host.generic", "");
-    
-    static final String HTML5_HOST = System.getProperty("nu.validator.servlet.host.html5", "");    
-    
-    static final String PARSETREE_HOST = System.getProperty("nu.validator.servlet.host.parsetree", "");     
-    
+
+    static final String HTML5_HOST = System.getProperty("nu.validator.servlet.host.html5", "");
+
+    static final String PARSETREE_HOST = System.getProperty("nu.validator.servlet.host.parsetree", "");
+
     static final String GENERIC_PATH = System.getProperty("nu.validator.servlet.path.generic", "/");
-    
-    static final String HTML5_PATH = System.getProperty("nu.validator.servlet.path.html5", "/html5/");    
-    
-    static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");     
-    
-    static final boolean W3C_BRANDING = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding"));
+
+    static final String HTML5_PATH = System.getProperty("nu.validator.servlet.path.html5", "/html5/");
+
+    static final String PARSETREE_PATH = System.getProperty("nu.validator.servlet.path.parsetree", "/parsetree/");
 
     private static final byte[] GENERIC_ROBOTS_TXT;
-    
+
     private static final byte[] HTML5_ROBOTS_TXT;
 
     private static final byte[] PARSETREE_ROBOTS_TXT;
@@ -77,12 +75,6 @@ public class VerifierServlet extends HttpServlet {
     private static final byte[] SCRIPT_JS;
 
     private static final byte[] ICON_PNG;
-
-    private static final byte[] W3C_PNG;
-
-    private static final byte[] VNU_PNG;
-
-    private static final byte[] HTML_PNG;
 
     private static final byte[] ABOUT_HTML;
 
@@ -95,20 +87,10 @@ public class VerifierServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         try {
-            if (W3C_BRANDING) {
-                STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/style.css");
-                SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/script.js");
-                ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/icon.png");
-                W3C_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/w3c.png");
-                VNU_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/vnu.png");
-                HTML_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/html.png");
-                ABOUT_HTML = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/w3c/about.html");
-            } else {
-                W3C_PNG = VNU_PNG = HTML_PNG = ABOUT_HTML = null;
-                STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/style.css");
-                SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/script.js");
-                ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/icon.png");
-            }
+            STYLE_CSS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/style.css");
+            SCRIPT_JS = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/script.js");
+            ICON_PNG = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/icon.png");
+            ABOUT_HTML = readFromClassLoaderIntoByteArray("nu/validator/localentities/files/about.html");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -134,16 +116,16 @@ public class VerifierServlet extends HttpServlet {
         if (primaryHost.equals(secondaryHost)) {
             builder.append("Disallow: ");
             builder.append(secondaryPath);
-            builder.append("?\n");            
+            builder.append("?\n");
         }
         if (primaryHost.equals(tertiaryHost)) {
             builder.append("Disallow: ");
             builder.append(tertiaryPath);
-            builder.append("?\n");            
+            builder.append("?\n");
         }
         return builder.toString().getBytes("UTF-8");
     }
-    
+
     private static byte[] readFromClassLoaderIntoByteArray(String name)
             throws IOException {
         InputStream ios = VerifierServlet.class.getClassLoader().getResourceAsStream(
@@ -207,16 +189,7 @@ public class VerifierServlet extends HttpServlet {
         } else if ("/icon.png".equals(request.getPathInfo())) {
             writeResponse(ICON_PNG, "image/png", response);
             return;
-        } else if (W3C_BRANDING && "/w3c.png".equals(request.getPathInfo())) {
-            writeResponse(W3C_PNG, "image/png", response);
-            return;
-        } else if (W3C_BRANDING && "/vnu.png".equals(request.getPathInfo())) {
-            writeResponse(VNU_PNG, "image/png", response);
-            return;
-        } else if (W3C_BRANDING && "/html.png".equals(request.getPathInfo())) {
-            writeResponse(HTML_PNG, "image/png", response);
-            return;
-        } else if (W3C_BRANDING && "/about.html".equals(request.getPathInfo())) {
+        } else if ("/about.html".equals(request.getPathInfo())) {
             writeResponse(ABOUT_HTML, "text/html; charset=utf-8", response);
             return;
         } else if (Statistics.STATISTICS != null && "/stats.html".equals(request.getPathInfo())) {
@@ -286,7 +259,7 @@ public class VerifierServlet extends HttpServlet {
         log4j.debug("pathInfo: " + pathInfo);
         log4j.debug("serverName: " + serverName);
         boolean isOptions = "OPTIONS".equals(request.getMethod());
- 
+
         if ("validator.nu".equals(serverName) && "/html5/".equals(pathInfo)) {
                 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
                 String queryString = request.getQueryString();
@@ -298,7 +271,7 @@ public class VerifierServlet extends HttpServlet {
                 sendOptions(request, response);
             } else {
                 new VerifierServletTransaction(request, response).service();
-            }        
+            }
         } else if (hostMatch(HTML5_HOST, serverName) && HTML5_PATH.equals(pathInfo)) {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "content-type");
@@ -312,7 +285,7 @@ public class VerifierServlet extends HttpServlet {
                 sendGetOnlyOptions(request, response);
             } else {
                 new ParseTreePrinter(request, response).service();
-            }        
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

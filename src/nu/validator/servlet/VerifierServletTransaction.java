@@ -209,8 +209,8 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     private static final char[] ABOUT_THIS_SERVICE = "About this Service".toCharArray();
 
-    private static final char[] SIMPLE_UI = "Simplified Interface".toCharArray();    
-    
+    private static final char[] SIMPLE_UI = "Simplified Interface".toCharArray();
+
     private static Spec html5spec;
 
     private static int[] presetDoctypes;
@@ -239,14 +239,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
             "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/",
             "http://c.validator.nu/microdata/" };
-
-    // for W3C-branded HTML validation without Microdata checking
-    private static final String[] BASE_CHECKERS = {
-            "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
-            "http://c.validator.nu/text-content/",
-            "http://c.validator.nu/unchecked/",
-            "http://c.validator.nu/usemap/", "http://c.validator.nu/obsolete/",
-            "http://c.validator.nu/xml-pi/", "http://c.validator.nu/unsupported/" };
 
     private static final String[] ALL_CHECKERS_HTML4 = {
             "http://c.validator.nu/table/", "http://c.validator.nu/nfc/",
@@ -290,7 +282,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             "nu.validator.servlet.about-page", "http://about.validator.nu/");
 
     private final static String HTML5_FACET = "http://" + VerifierServlet.HTML5_HOST + VerifierServlet.HTML5_PATH;
-    
+
     private final static String STYLE_SHEET = System.getProperty(
             "nu.validator.servlet.style-sheet",
             "style.css");
@@ -298,15 +290,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private final static String ICON = System.getProperty(
             "nu.validator.servlet.icon",
             "icon.png");
-    
+
     private final static String SCRIPT = System.getProperty(
             "nu.validator.servlet.script",
             "script.js");
 
     private static final long SIZE_LIMIT = Integer.parseInt(System.getProperty(
             "nu.validator.servlet.max-file-size", "2097152"));
-
-    private static final boolean W3C_BRANDING = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding"));
 
     private String schemaUrls = null;
 
@@ -365,7 +355,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     protected ImageCollector imageCollector;
 
     private boolean externalSchema = false;
-    
+
     private boolean externalSchematron = false;
 
     private String schemaListForStats = null;
@@ -548,7 +538,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 || "http://s.validator.nu/xhtml5-rdfalite.rnc".equals(key)
                 || "http://s.validator.nu/html5-rdfalite.rnc".equals(key));
     }
-    
+
     private static boolean isRoleAttributeFilteringSchema(String key) {
         return ("http://s.validator.nu/xhtml5.rnc".equals(key)
                 || "http://s.validator.nu/html5.rnc".equals(key)
@@ -608,7 +598,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         } catch (NoSuchMethodError e) {
             log4j.debug("Vintage Servlet API doesn't support setCharacterEncoding().", e);
         }
-        
+
         if (!methodIsGet) {
             postContentType = request.getContentType();
             if (postContentType == null) {
@@ -743,11 +733,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 errorHandler = new MessageEmitterAdapter(sourceCode,
                         showSource, imageCollector, lineOffset, false,
                         new XhtmlMessageEmitter(contentHandler));
-                if (W3C_BRANDING) {
-                    W3CPageEmitter.emit(contentHandler, this);
-                } else {
-                    PageEmitter.emit(contentHandler, this);
-                }
+                PageEmitter.emit(contentHandler, this);
             } else {
                 if (outputFormat == OutputFormat.TEXT) {
                     response.setContentType("text/plain; charset=utf-8");
@@ -1046,10 +1032,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                 }
             }
             if (htmlParser != null) {
-                stats.incrementField(Statistics.Field.INPUT_HTML);                
+                stats.incrementField(Statistics.Field.INPUT_HTML);
             }
             if (xmlParser != null) {
-                stats.incrementField(Statistics.Field.INPUT_XML);                                
+                stats.incrementField(Statistics.Field.INPUT_XML);
             }
             switch (outputFormat) {
                 case GNU:
@@ -1083,9 +1069,10 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                         } else {
                             stats.incrementField(Statistics.Field.PRESET_SCHEMA);
                             /*
-                             * XXX WARNING WARNING: These mappings are correct
-                             * for the Validator.nu preset file. Might be bogus
-                             * for W3C presets!
+                             * XXX WARNING WARNING: These mappings correspond to
+                             * values in the presets.txt file in the validator
+                             * source repo. They might be bogus if a custom
+                             * presets file is used instead.
                              */
                             switch (i) {
                                 case 0:
@@ -1359,7 +1346,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             IOException, IncorrectSchemaException {
         System.setProperty("nu.validator.schema.rev-allowed", "0");
         schemaListForStats  = schemaList;
-        
         Validator v = null;
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
@@ -1376,10 +1362,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
                     || "http://hsivonen.iki.fi/checkers/all-html4/".equals(url)) {
                 for (int j = 0; j < ALL_CHECKERS_HTML4.length; j++) {
                     v = combineValidatorByUrl(v, ALL_CHECKERS_HTML4[j]);
-                }
-            } else if ("http://c.validator.nu/base/".equals(url)) {
-                for (int j = 0; j < BASE_CHECKERS.length; j++) {
-                    v = combineValidatorByUrl(v, BASE_CHECKERS[j]);
                 }
             } else {
                 v = combineValidatorByUrl(v, url);
@@ -1462,7 +1444,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
 
         externalSchema  = true;
-        
+
         TypedInputSource schemaInput = (TypedInputSource) entityResolver.resolveEntity(
                 null, url);
         SchemaReader sr = null;
@@ -1472,11 +1454,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             sr = new AutoSchemaReader();
         }
         Schema sch = sr.createSchema(schemaInput, options);
-        
+
         if (Statistics.STATISTICS != null && "com.thaiopensource.validate.schematron.SchemaImpl".equals(sch.getClass().getName())) {
             externalSchematron  = true;
         }
-        
+
         return sch;
     }
 
@@ -1564,11 +1546,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      * @throws SAXException
      */
     protected void emitFormContent() throws SAXException {
-        if (W3C_BRANDING) {
-            W3CFormEmitter.emit(contentHandler, this);
-        } else {
-            FormEmitter.emit(contentHandler, this);
-        }
+        FormEmitter.emit(contentHandler, this);
     }
 
     void emitSchemaField() throws SAXException {
@@ -1601,7 +1579,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         }
         Object att = request.getAttribute("nu.validator.servlet.MultipartFormDataFilter.type");
         if (att != null) {
-            attrs.addAttribute("class", att.toString());            
+            attrs.addAttribute("class", att.toString());
         }
         emitter.startElement("input", attrs);
         emitter.endElement("input");
@@ -1942,7 +1920,7 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.startElement("link", attrs);
         emitter.endElement("link");
     }
-    
+
     void emitScript() throws SAXException {
         attrs.clear();
         attrs.addAttribute("src", SCRIPT);
@@ -1957,13 +1935,13 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
         emitter.characters(ABOUT_THIS_SERVICE);
         emitter.endElement("a");
     }
-    
+
     void emitOtherFacetLink() throws SAXException {
         attrs.clear();
         attrs.addAttribute("href", HTML5_FACET);
         emitter.startElement("a", attrs);
         emitter.characters(SIMPLE_UI);
-        emitter.endElement("a");   
+        emitter.endElement("a");
     }
 
     void emitNsfilterField() throws SAXException {
