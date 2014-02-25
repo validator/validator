@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
 
 public class Assertions extends Checker {
 
-    private static boolean w3cBranding = "1".equals(System.getProperty("nu.validator.servlet.w3cbranding")) ? true
+    private static boolean followW3Cspec = "1".equals(System.getProperty("nu.validator.servlet.follow-w3c-spec")) ? true
             : false;
 
     private static boolean lowerCaseLiteralEqualsIgnoreAsciiCaseString(
@@ -141,7 +141,7 @@ public class Assertions extends Checker {
         OBSOLETE_ELEMENTS.put(
                 "noframes",
                 "Use the \u201Ciframe\u201D element and CSS instead, or use server-side includes.");
-        if (w3cBranding) {
+        if (followW3Cspec) {
             OBSOLETE_ELEMENTS.put(
                     "hgroup",
                     "To mark up subheadings, consider either just putting the "
@@ -182,7 +182,7 @@ public class Assertions extends Checker {
         OBSOLETE_ATTRIBUTES.put("event", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("for", new String[] { "script" });
         OBSOLETE_ATTRIBUTES.put("language", new String[] { "script" });
-        if (!w3cBranding) {
+        if (!followW3Cspec) {
             OBSOLETE_ATTRIBUTES.put("longdesc",
                     new String[] { "img", "iframe" });
         }
@@ -242,7 +242,7 @@ public class Assertions extends Checker {
                 "Repeat the \u201Cobject\u201D element completely each time the resource is to be reused.");
         OBSOLETE_ATTRIBUTES_MSG.put("language",
                 "Use the \u201Ctype\u201D attribute instead.");
-        if (!w3cBranding) {
+        if (!followW3Cspec) {
             OBSOLETE_ATTRIBUTES_MSG.put("longdesc",
                     "Use a regular \u201Ca\u201D element to link to the description.");
         }
@@ -1397,7 +1397,7 @@ public class Assertions extends Checker {
                             + "\u201Chref\u201D attribute.");
                 }
                 if (atts.getIndex("", "alt") < 0) {
-                    if (w3cBranding || (titleVal == null || "".equals(titleVal))) {
+                    if (followW3Cspec || (titleVal == null || "".equals(titleVal))) {
                         if ((ancestorMask & FIGURE_MASK) == 0) {
                             err("An \u201Cimg\u201D element must have an"
                                     + " \u201Calt\u201D attribute, except under"
@@ -1453,7 +1453,7 @@ public class Assertions extends Checker {
                             + " is needed.");
                 }
                 if (atts.getIndex("", "border") > -1) {
-                    if (w3cBranding) {
+                    if (followW3Cspec) {
                         if (atts.getIndex("", "border") > -1
                                 && (!("".equals(atts.getValue("", "border")) || "1".equals(atts.getValue(
                                         "", "border"))))) {
