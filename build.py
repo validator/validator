@@ -83,7 +83,7 @@ scriptFile = os.path.join("validator", "site", "script.js")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
-w3cBranding = 0
+followW3Cspec = 0
 statistics = 0
 
 dependencyPackages = [
@@ -445,7 +445,7 @@ def openDriver(schemaDir, driverName, sourceName=""):
   return f
 
 def writeW3CToggle(f):
-  if w3cBranding:
+  if followW3Cspec:
     f.write("\t\tnonW3C = notAllowed\n")
   f.write("}\n")
 
@@ -466,8 +466,8 @@ def buildSchemaDriverHtml5NoMicrodata(schemaDir):
   writeW3CToggle(f)
   f.write(schemaDriverBase)
   f.write(schemaDriverHtml5NoMicrodata)
-  # For W3C service, HTML5 checking always includes ITS2 support
-  if w3cBranding:
+  # For W3C case, make HTML5 checking always include ITS2 support
+  if followW3Cspec:
     f.write('include "its20-html5.rnc"\n')
     f.write('common.attrs &= its-html-attributes\n')
   f.close()
@@ -627,7 +627,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
-    '-Dnu.validator.servlet.w3cbranding=%d' % w3cBranding,
+    '-Dnu.validator.servlet.follow-w3c-spec=%d' % followW3Cspec,
     '-Dnu.validator.servlet.statistics=%d' % statistics,
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
@@ -1094,8 +1094,8 @@ else:
       connectionTimeoutSeconds = int(arg[21:]);
     elif arg.startswith("--socket-timeout="):
       socketTimeoutSeconds = int(arg[17:]);
-    elif arg == '--w3cbranding':
-      w3cBranding = 1
+    elif arg == '--follow-w3c-spec':
+      followW3Cspec = 1
     elif arg == '--statistics':
       statistics = 1
     elif arg == '--help':
