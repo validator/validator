@@ -35,6 +35,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -197,13 +198,11 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
 
     protected static final int XHTML5_SCHEMA = 7;
 
-    private static final char[] SERVICE_TITLE = (System.getProperty(
-            "nu.validator.servlet.service-name", "Validator.nu") + " ").toCharArray();
+    private static final char[] SERVICE_TITLE;
 
     private static final char[] VERSION = "Living Validator".toCharArray();
 
-    private static final char[] RESULTS_TITLE = (System.getProperty(
-            "nu.validator.servlet.results-title", "Validation results")).toCharArray();
+    private static final char[] RESULTS_TITLE;
 
     private static final char[] FOR = " for ".toCharArray();
 
@@ -371,6 +370,20 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             List<String> namespaces = new LinkedList<String>();
             List<String> labels = new LinkedList<String>();
             List<String> urls = new LinkedList<String>();
+            Properties props = new Properties();
+
+            log4j.debug("Reading miscellaneous properties.");
+
+            props.load(VerifierServlet.class.getClassLoader().getResourceAsStream(
+                    "nu/validator/localentities/files/misc.properties"));
+            SERVICE_TITLE = (System.getProperty(
+                    "nu.validator.servlet.service-name",
+                    props.getProperty("nu.validator.servlet.service-name",
+                            "Validator.nu")) + " ").toCharArray();
+            RESULTS_TITLE = (System.getProperty(
+                    "nu.validator.servlet.results-title", props.getProperty(
+                            "nu.validator.servlet.results-title",
+                            "Validation results"))).toCharArray();
 
             log4j.debug("Starting to loop over config file lines.");
 
@@ -1509,7 +1522,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
             }
         } else {
             emitter.characters(SERVICE_TITLE);
-            if (markupAllowed && System.getProperty("nu.validator.servlet.service-name", "Validator.nu").equals("Validator.nu")) {
+            if (markupAllowed
+                    && System.getProperty("nu.validator.servlet.service-name",
+                            "").equals("Validator.nu")) {
                 emitter.startElement("span");
                 emitter.characters(VERSION);
                 emitter.endElement("span");
