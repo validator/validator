@@ -787,11 +787,19 @@ def downloadLocalEntities():
 def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
 
+def preparePropertiesFile():
+  filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
+  f = open(os.path.join(filesDir, "misc.properties"), 'w')
+  f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
+  f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
+  f.close
+
 def prepareLocalEntityJar():
   filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
+  preparePropertiesFile()
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
