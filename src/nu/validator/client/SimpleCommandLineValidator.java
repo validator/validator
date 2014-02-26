@@ -332,8 +332,8 @@ public class SimpleCommandLineValidator {
     private static void usage() {
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("    java -jar vnu.jar [--entities] [--errors-only] [--no-stream]");
-        System.out.println("         [--format gnu|xml|json|text] [--help] [--html] [--schema URL]");
+        System.out.println("    java -jar vnu.jar [--errors-only] [--no-stream]");
+        System.out.println("         [--format gnu|xml|json|text] [--help] [--html]");
         System.out.println("         [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
