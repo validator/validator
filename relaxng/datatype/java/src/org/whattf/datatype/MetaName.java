@@ -153,11 +153,13 @@ public class MetaName extends AbstractDatatype {
         "globrix.underoffer", // extension
         "google-site-verification", // extension
         "googlebot", // extension
+        "handheldfriendly", // extension
         "icbm", // extension
         "itemsperpage", // extension
         "keywords",
         "meta_date", // extension
         "mobile-web-app-capable", // extension
+        "mobileoptimized", // extension
         "msapplication-config", // extension
         "msapplication-navbutton-color", // extension
         "msapplication-square150x150logo", // extension
