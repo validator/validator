@@ -49,6 +49,7 @@ public class MetaName extends AbstractDatatype {
         "alexaverifyid", // extension
         "apple-mobile-web-app-capable", // extension
         "apple-mobile-web-app-status-bar-style", // extension
+        "apple-mobile-web-app-title", // extension
         "application-name",
         "author",
         "baiduspider", // extension
