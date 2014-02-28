@@ -74,6 +74,7 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
+metaExtensions = os.path.join("local-entities", "meta-extensions")
 pageTemplateFile = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplateFile = os.path.join("validator", "xml-src", "FormEmitter.xml")
 presetsFile = os.path.join("validator", "presets.txt")
@@ -769,6 +770,7 @@ def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
   if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry")):
     removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
+  fetchUrlTo("http://help.whatwg.org/meta-extensions/", os.path.join(buildRoot, metaExtensions))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
@@ -800,6 +802,8 @@ def prepareLocalEntityJar():
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
   preparePropertiesFile()
+  shutil.copyfile(os.path.join(buildRoot, metaExtensions), os.path.join(filesDir, "meta-extensions"))
+  shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
