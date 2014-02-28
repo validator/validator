@@ -34,9 +34,17 @@ public class MetaName extends AbstractDatatype {
     private static final HashSet<String> registeredMetaNames = new HashSet<String>();
 
     static {
+        // Standard metadata names from the spec
+        registeredMetaNames.add("application-name");
+        registeredMetaNames.add("author");
+        registeredMetaNames.add("description");
+        registeredMetaNames.add("generator");
+        registeredMetaNames.add("keywords");
+
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 MetaName.class.getClassLoader().getResourceAsStream(
                         "nu/validator/localentities/files/meta-extensions")));
+        // Read in registered metadata names from cached copy of the registry
         try {
             String read = br.readLine();
             while (read != null) {
