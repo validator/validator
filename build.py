@@ -770,6 +770,8 @@ def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
   if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry")):
     removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
+  if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")):
+    removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions"))
   fetchUrlTo("http://help.whatwg.org/meta-extensions/", os.path.join(buildRoot, metaExtensions))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
