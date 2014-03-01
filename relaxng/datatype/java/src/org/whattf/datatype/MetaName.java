@@ -48,7 +48,7 @@ public class MetaName extends AbstractDatatype {
         try {
             String read = br.readLine();
             while (read != null) {
-                registeredMetaNames.add(br.readLine());
+                registeredMetaNames.add(read);
                 read = br.readLine();
             }
         } catch (IOException e) {
