@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -47,8 +48,12 @@ public final class DatetimeTz extends AbstractDatetime {
 
     /**
      * The rexexp for this datatype.
+     * See the capturing groups in the "valid global date and time string" check
+     * in AbstractDatetime#checkValid; those are groups 21 to 29, so we lead
+     * with 20 dummy capturing groups here to force the right number of
+     * capturing groups.
      */
-    private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})[T ]([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.[0-9]{1,3})?)?(?:Z|(?:([+-][0-9]{2}):?([0-9]{2})))$");
+    private static final Pattern THE_PATTERN = Pattern.compile("^(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}(.){0}([0-9]{4,})-([0-9]{2})-([0-9]{2})[T ]([0-9]{2}):([0-9]{2})(?::([0-9]{2})(?:\\.([0-9]+))?)?(?:Z|(?:([+-][0-9]{2}):?([0-9]{2})))$");
 
     /**
      * Constructor.

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
- * Copyright (c) 2010-2012 Mozilla Foundation
+ * Copyright (c) 2010-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -47,6 +47,8 @@ abstract class AbstractDatetime extends AbstractDatatype {
     AbstractDatetime() {
         super();
     }
+
+    private final static boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
 
     private void checkMonth(String year, String month)
             throws DatatypeException {
@@ -184,8 +186,20 @@ abstract class AbstractDatetime extends AbstractDatatype {
         if (minutes > 59) {
             throw newDatatypeException("Minutes out of range in time zone designator.");
         }
+        if (WARN) {
+            if (hours < -12 || hours > 14) {
+                throw newDatatypeException(
+                        "Hours in time zone designator should be from \u201C-12:00\u201d to \u201d+14:00\u201d",
+                        WARN);
+            }
+            if (minutes != 00 && minutes != 30 && minutes != 45) {
+                throw newDatatypeException(
+                        "Minutes in time zone designator should be either \u201c00\u201d, \u201c30\u201d, or \u201c45\u201d.",
+                        WARN);
+            }
+        }
     }
-        
+
     protected abstract Pattern getPattern();
 
     public void checkValid(CharSequence literal)

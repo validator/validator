@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2006 Henri Sivonen
+ * Copyright (c) 2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -34,24 +35,28 @@ import java.util.regex.Pattern;
  * @author hsivonen
  */
 public final class Date extends AbstractDatetime {
-    
+
     /**
      * The singleton instance.
      */
     public static final Date THE_INSTANCE = new Date();
-    
+
     /**
      * The rexexp for this datatype.
+     * See the capturing groups in the "valid date string" check in
+     * AbstractDatetime#checkValid; those are groups 3, 4, and 5, so we lead
+     * with 2 dummy capturing groups here to force the right number of capturing
+     * groups.
      */
-    private static final Pattern THE_PATTERN = Pattern.compile("^([0-9]{4,})-([0-9]{2})-([0-9]{2})$");
+    private static final Pattern THE_PATTERN = Pattern.compile("^(.){0}(.){0}([0-9]{4,})-([0-9]{2})-([0-9]{2})$");
 
     /**
      * Constructor.
      */
     private Date() {
         super();
-    }    
-    
+    }
+
     /**
      * Returns the regexp for this datatype.
      * 
