@@ -13,7 +13,7 @@ How to download, build, and run the validator
 
    cd checker
 
-   hg clone https://bitbucket.org/validator/build build
+   git clone https://github.com/validator/build.git build
 
    The above steps creates a "checker" directory in which the build script
    will create other subdirectories, and downloads the build.py script
@@ -32,9 +32,9 @@ The above will download, build and run the system at http://localhost:8888/.
 For other options, please run python build/build.py --help instead.
 
 Please note that the dependencies are big. The script will spend time
-downloading stuff. The script requires Python, Mercurial, Subversion and
-JDK 5 or later (JDK 6 and Hardy’s OpenJDK work). (Tested on Mac OS X and
-Ubuntu with the openjdk-6-jdk package.)
+downloading stuff. The script requires Python, Git, and JDK 5 or later
+(JDK 6 and Hardy’s OpenJDK work). (Tested on Mac OS X and Ubuntu with the
+openjdk-6-jdk package.)
 
 Note: The script wants to see a Sun-compatible jar executable. Debian
 fastjar will not work.

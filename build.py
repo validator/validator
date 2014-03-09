@@ -40,15 +40,11 @@ javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
-svnCmd = 'svn'
 tarCmd = 'tar'
 scpCmd = 'scp'
-hgCmd = 'hg'
 gitCmd = 'git'
 
 buildRoot = '.'
-hgRoot = 'https://bitbucket.org/validator/'
-parserHgRoot = 'http://hg.mozilla.org/projects/'
 gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
@@ -153,6 +149,10 @@ moduleNames = [
   "util",
   "xmlparser",
   "validator",
+  "jing-trang",
+  "htmlparser",
+  "nu-validator-site",
+  "tests",
 ]
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
@@ -890,26 +890,11 @@ def buildAll():
   buildXmlParser()
   buildValidator()
 
-def hgCloneOrUpdate(mod, baseUrl):
-  if os.path.exists(mod):
-    if os.path.exists(mod + "/.hg"):
-      runCmd('"%s" pull --update -R %s %s%s/' % (hgCmd, mod, baseUrl, mod))
-    else:
-      if os.path.exists(mod + "-old"):
-        print "The %s module has moved to hg. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
-        sys.exit(3)
-      else:
-        print "The %s module has moved to hg. Renaming the old directory to %s-old and pulling from hg." % (mod, mod)
-        os.rename(mod, mod + "-old")
-        runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
-  else:
-    runCmd('"%s" clone %s%s/ %s' % (hgCmd, baseUrl, mod, mod))
-
 def gitCloneOrUpdate(mod, baseUrl):
   if os.path.exists(mod):
     if os.path.exists(mod + "/.git"):
       os.chdir(mod)
-      runCmd('"%s" pull' % gitCmd)
+      runCmd('"%s" pull -q %s%s.git' % (gitCmd, baseUrl, mod))
       os.chdir("..")
     else:
       if os.path.exists(mod + "-old"):
@@ -925,22 +910,10 @@ def gitCloneOrUpdate(mod, baseUrl):
 def checkout():
   # XXX root dir
   for mod in moduleNames:
-    hgCloneOrUpdate(mod, hgRoot)
-  gitCloneOrUpdate("nu-validator-site", gitRoot)
-  runCmd('"%s" co http://jing-trang.googlecode.com/svn/branches/validator-nu jing-trang' % (svnCmd))
-  hgCloneOrUpdate("htmlparser", parserHgRoot)
-  testsRemote = "https://github.com/validator/tests.git"
-  testsBranch = "master"
-  testsDir = "tests"
-  if os.path.exists(testsDir):
-    os.chdir(testsDir)
-    runCmd('"%s" pull %s %s' % (gitCmd, testsRemote, testsBranch))
-    os.chdir("..")
-  else:
-    runCmd('"%s" clone %s %s' % (gitCmd, testsRemote, testsDir))
+    gitCloneOrUpdate(mod, gitRoot)
 
 def selfUpdate():
-  hgCloneOrUpdate("build", hgRoot)
+  gitCloneOrUpdate("build", gitRoot)
   newArgv = [sys.executable, buildScript, '--no-self-update']
   newArgv.extend(argv)
   if os.name == 'nt':
@@ -969,7 +942,7 @@ def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
   print ""
   print "Options:"
-  print "  --svn=/usr/bin/svn         -- Sets the path to the svn binary"
+  print "  --git=/usr/bin/git         -- Sets the path to the git binary"
   print "  --java=/usr/bin/java       -- Sets the path to the java binary"
   print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
   print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
@@ -1015,10 +988,8 @@ if len(argv) == 0:
   printHelp()
 else:
   for arg in argv:
-    if arg.startswith("--svn="):
-      svnCmd = arg[6:]
-    elif arg.startswith("--hg="):
-      hgCmd = arg[5:]
+    if arg.startswith("--git="):
+      gitCmd = arg[6:]
     elif arg.startswith("--java="):
       javaCmd = arg[7:]
     elif arg.startswith("--jar="):
@@ -1033,10 +1004,8 @@ else:
       jarCmd = os.path.join(jdkBinDir, "jar")
       javacCmd = os.path.join(jdkBinDir, "javac")
       javadocCmd = os.path.join(jdkBinDir, "javadoc")
-    elif arg.startswith("--hgRoot="):
-      hgRoot = arg[9:]
-    elif arg.startswith("--parserHgRoot="):
-      parserHgRoot = arg[15:]
+    elif arg.startswith("--gitRoot="):
+      gitRoot = arg[10:]
     elif arg.startswith("--port="):
       portNumber = arg[7:]
     elif arg.startswith("--control-port="):
