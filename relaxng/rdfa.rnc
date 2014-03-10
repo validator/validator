@@ -9,12 +9,12 @@ nonRDFaLite = empty
 
 common.data.rdfa.safecurie =
 	xsd:string {
-		pattern = "\[(([\i-[:]][\c-[:]]*)?:)?[^\s]+\]"
+		pattern = "\[(([\i-[:]][\c-[:]]*)?:)[^\s]+\]"
 		minLength = "3"
 	}
 common.data.rdfa.curie =
 	xsd:string {
-		pattern = "(([\i-[:]][\c-[:]]*)?:)?[^\s]+"
+		pattern = "(([\i-[:]][\c-[:]]*)?:)[^\s]+"
 		minLength = "1"
 	}
 common.data.rdfa.term =
@@ -116,6 +116,17 @@ common.attrs.rdfa &=
 				|	string ""
 			)
 		} & nonRDFaLite
+	common.attrs.rdfa.a-and-link-rel =
+		attribute rel {
+			(
+				list {
+					(	common.data.rdfa.curie
+					|	common.data.uri.absolute
+					)+
+				}
+				|	string ""
+			)
+		} & nonRDFaLite
 	common.attrs.rdfa.rev =
 		attribute rev {
 			(
@@ -169,6 +180,7 @@ common.attrs.rdfa.no-content-noproperty &=
 common.attrs &= common.attrs.rdfa
 
 a.attrs &= common.attrs.rdfa.no-rel-rev
+shared-hyperlink.attrs.rel |= common.attrs.rdfa.a-and-link-rel
 area.attrs &= common.attrs.rdfa.no-rel
 base.attrs &= common.attrs.rdfa.no-rel
 
@@ -183,13 +195,13 @@ link.rdfa.attrs.metadata =
 	&	common.attrs.other
 	&	(	(	common.attrs.rdfa.property
 				&	(	link.attrs.rel
-					|	common.attrs.rdfa.rel
+					|	common.attrs.rdfa.a-and-link-rel
 					)?
 			)
 			|
 			(	common.attrs.rdfa.property?
 				&	(	link.attrs.rel
-					|	common.attrs.rdfa.rel
+					|	common.attrs.rdfa.a-and-link-rel
 					)
 			)
 		)
@@ -216,7 +228,7 @@ link.rdfa.attrs.phrasing =
 	&	common.attrs.other
 	&	common.attrs.rdfa.property
 	&	(	link.attrs.rel
-		|	common.attrs.rdfa.rel
+		|	common.attrs.rdfa.a-and-link-rel
 		)?
 	&	(	(	common.attrs.rdfa.resource
 			&	link.attrs.href?
