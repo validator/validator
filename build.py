@@ -894,7 +894,7 @@ def gitCloneOrUpdate(mod, baseUrl):
   if os.path.exists(mod):
     if os.path.exists(mod + "/.git"):
       os.chdir(mod)
-      runCmd('"%s" pull -q %s%s.git' % (gitCmd, baseUrl, mod))
+      runCmd('"%s" pull -q -r %s%s.git master' % (gitCmd, baseUrl, mod))
       os.chdir("..")
     else:
       if os.path.exists(mod + "-old"):
