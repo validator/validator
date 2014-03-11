@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2008 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 
-import com.hp.hpl.jena.iri.IRI;
-import com.hp.hpl.jena.iri.IRIFactory;
+import io.mola.galimatias.URL;
+import io.mola.galimatias.GalimatiasParseException;
 
 public class DataUri {
 
@@ -40,29 +40,32 @@ public class DataUri {
                 && (uri.charAt(3) == 'a' || uri.charAt(3) == 'A')
                 && (uri.charAt(4) == ':');
     }
-    
+
     private enum State {
         AT_START, IN_SUPERTYPE, AT_SUBTYPE_START, IN_SUBTYPE, SEMICOLON_SEEN, WS_BEFORE_SEMICOLON, IN_PARAM_NAME, EQUALS_SEEN, IN_QUOTED_STRING, IN_UNQUOTED_STRING, IN_QUOTED_PAIR, CLOSE_QUOTE_SEEN
     }
-    
+
     private String contentType;
-    
+
     private InputStream inputStream;
-    
+
     /**
      * @throws IOException, MalformedURLException
      * 
      */
-    protected void init(IRI uri) throws IOException, MalformedURLException {
-        if (!uri.getScheme().equals("data")) {
+    protected void init(URL url) throws IOException, MalformedURLException {
+        if (!url.scheme().equals("data")) {
             throw new IllegalArgumentException("The input did not start with data:.");
         }
 
-        if (uri.getRawFragment() != null) {
-            throw new MalformedURLException("Fragment is not allowed for data: URIs according to RFC 2397. But if strictly comply with RFC 3986, ignore this error.");
+        if (url.fragment() != null) {
+            throw new MalformedURLException(
+                    "Fragment is not allowed for data: URIs according to RFC 2397."
+                            + " But if strictly complying with the URL standard,"
+                            + " ignore this error.");
         }
 
-        InputStream is = new PercentDecodingReaderInputStream(new StringReader(uri.getRawPath()));
+        InputStream is = new PercentDecodingReaderInputStream(new StringReader(url.schemeData()));
         StringBuilder sb = new StringBuilder();
         State state = State.AT_START;
         int i = 0; // string counter
@@ -72,7 +75,8 @@ public class DataUri {
                 throw new MalformedURLException("Premature end of URI.");
             }
             if (b >= 0x80) {
-                throw new MalformedURLException("Non-ASCII character in MIME type part of the data URI.");                
+                throw new MalformedURLException(
+                        "Non-ASCII character in MIME type part of the data URI.");
             }
             char c = (char) b;
             sb.append(c);
@@ -248,26 +252,20 @@ public class DataUri {
 
     }
 
-    /**
-     * @throws IOException, MalformedURLException
-     * 
-     */
-    public DataUri(String uri) throws IOException, MalformedURLException {
-        IRIFactory fac = new IRIFactory();
-        fac.shouldViolation(true, false);
-        fac.securityViolation(true, false);
-        fac.dnsViolation(true, false);
-        fac.mintingViolation(false, false);
-        fac.useSpecificationIRI(true);
-        init(fac.construct(uri));
+    public DataUri(String url) throws IOException {
+        try {
+            init(URL.parse(url));
+        } catch (GalimatiasParseException e) {
+            throw new MalformedURLException(e.getMessage());
+        }
     }
 
     /**
      * @throws IOException, MalformedURLException
      * 
      */
-    public DataUri(IRI uri) throws IOException, MalformedURLException {
-        init(uri);
+    public DataUri(URL url) throws IOException, MalformedURLException {
+        init(url);
     }
 
     private IOException newDatatypeException(int i, String head, char c, String tail) {
