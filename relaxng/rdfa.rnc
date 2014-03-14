@@ -9,12 +9,12 @@ nonRDFaLite = empty
 
 common.data.rdfa.safecurie =
 	xsd:string {
-		pattern = "\[(([\i-[:]][\c-[:]]*)?:)[^\s]+\]"
-		minLength = "3"
+		pattern = "\[(([\i-[:]][\c-[:]]*)?:?)[^\s]*\]"
+		minLength = "2"
 	}
 common.data.rdfa.curie =
 	xsd:string {
-		pattern = "(([\i-[:]][\c-[:]]*)?:)[^\s]+"
+		pattern = "(([\i-[:]][\c-[:]]*)?:)[^\s]*"
 		minLength = "1"
 	}
 common.data.rdfa.term =
