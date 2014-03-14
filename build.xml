@@ -39,6 +39,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/icu4j-4_4_2.jar"/>
       <zipfileset src="../dependencies/icu4j-charsets-4_4_2.jar"/>
       <zipfileset src="../dependencies/iri-0.5/lib/iri.jar"/>
+      <zipfileset src="../dependencies/galimatias-0.0.2.jar"/>
       <zipfileset src="../dependencies/isorelax.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
@@ -199,6 +200,14 @@ property of their respective owners.
     <concat destfile="./vnu/CREDITS" append="true">
       <file file="../dependencies/iri-0.5/copyright.txt"/>
     </concat>
+    <echo file="./vnu/CREDITS" append="true">
+***************************************************************************
+</echo>
+<echo file="./vnu/CREDITS" append="true"
+  >galimatias URL parsing and normalization library
+
+Copyright (c) 2013 Santiago M. Mola &lt;santi@mola.io>
+</echo>
     <echo file="./vnu/CREDITS" append="true">
 ***************************************************************************
 </echo>

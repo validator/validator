@@ -104,6 +104,7 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
+  ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.0.3/galimatias-0.0.3.jar", "e47c0557d7f72f16ebdc5e5093ae5ea9"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -131,6 +132,7 @@ runDependencyJars = [
   "isorelax.jar",
   "mozilla/intl/chardet/java/dist/lib/chardet.jar",
   "saxon9.jar",
+  "galimatias-0.0.3.jar",
 ]
 
 buildOnlyDependencyJars = [
