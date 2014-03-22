@@ -71,6 +71,9 @@ public class MetaName extends AbstractDatatype {
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
         String token = toAsciiLowerCase(literal);
+        if ("".equals(literal)) {
+            throw newDatatypeException("The empty string is not a valid keyword.");
+        }
         if (!registeredMetaNames.contains(token)) {
             throw newDatatypeException("Keyword ", token, " is not registered.");
         }
