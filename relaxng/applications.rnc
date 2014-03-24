@@ -377,6 +377,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 			|	common.attrs.aria.role.combobox
 			|	common.attrs.aria.role.dialog
 			|	common.attrs.aria.role.directory
+			|	common.attrs.aria.role.group
 			|	common.attrs.aria.role.heading
 			|	common.attrs.aria.role.img
 			|	common.attrs.aria.role.link
