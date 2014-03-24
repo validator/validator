@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Mozilla Foundation
+ * Copyright (c) 2013-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,73 +22,52 @@
 
 package org.whattf.datatype;
 
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.HashSet;
 
 public class ARel extends AbstractRel {
 
-    private static final String[] REGISTERED_TOKENS = {
-        "#voverlay", // extension
-        "acquaintance", // extension (Formats table)
-        "alternate",
-        "appendix", // HTML4
-        "author",
-        "bookmark",
-        "category", // extension
-        "chapter", // HTML4
-        "child", // extension (Formats table)
-        "co-resident", // extension (Formats table)
-        "co-worker", // extension (Formats table)
-        "colleague", // extension (Formats table)
-        "contact", // extension (Formats table)
-        "contents", // HTML4
-        "copyright", // HTML4
-        "crush", // extension (Formats table)
-        "date", // extension (Formats table)
-        "disclosure", // extension
-        "discussion", // extension
-        "external", // extension
-        "friend", // extension (Formats table)
-        "glossary", // HTML4
-        "help",
-        "home", // extension
-        "http://docs.oasis-open.org/ns/cmis/link/200908/acl", // extension
-        "index", // extension
-        "issues", // extension
-        "kin", // extension (Formats table)
-        "license",
-        "me", // extension (Formats table)
-        "met", // extension (Formats table)
-        "muse", // extension (Formats table)
-        "neighbor", // extension (Formats table)
-        "next",
-        "nofollow",
-        "noreferrer",
-        "parent", // extension (Formats table)
-        "prefetch",
-        "prev",
-        "previous", // HTML4
-        "profile", // extension
-        "publisher", // extension (Google Plus)
-        "search",
-        "section", // HTML4
-        "sibling", // extension (Formats table)
-        "sidebar", // extension
-        "spouse", // extension (Formats table)
-        "start", // HTML4
-        "subsection", // HTML4
-        "sweetheart", // extension (Formats table)
-        "syndication", // extension
-        "tag",
-        "toc", // HTML4
-        "transformation", // extension (Formats table) maybe an error?
-        "widget" // extension
+    private static final HashSet<String> registeredValues = new HashSet<String>();
+
+    static {
+        // Standard rel values for <a> and <area> from the spec
+        registeredValues.add("alternate");
+        registeredValues.add("author");
+        registeredValues.add("bookmark");
+        registeredValues.add("external");
+        registeredValues.add("help");
+        registeredValues.add("license");
+        registeredValues.add("next");
+        registeredValues.add("nofollow");
+        registeredValues.add("noreferrer");
+        registeredValues.add("prefetch");
+        registeredValues.add("prev");
+        registeredValues.add("search");
+        registeredValues.add("sidebar");
+        registeredValues.add("tag");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                MetaName.class.getClassLoader().getResourceAsStream(
+                        "nu/validator/localentities/files/a-rel-extensions")));
+        // Read in registered rel values from cached copy of the registry
+        try {
+            String read = br.readLine();
+            while (read != null) {
+                registeredValues.add(read);
+                read = br.readLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     };
 
     /**
      * The singleton instance.
      */
     public static final ARel THE_INSTANCE = new ARel();
-    
+
     /**
      * Package-private constructor
      */
@@ -97,7 +76,7 @@ public class ARel extends AbstractRel {
     }
 
     @Override protected boolean isRegistered(String token) {
-        return Arrays.binarySearch(REGISTERED_TOKENS, token) >= 0;
+        return registeredValues.contains(token);
     }
 
     @Override public String getName() {

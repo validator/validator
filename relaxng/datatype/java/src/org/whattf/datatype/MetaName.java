@@ -43,7 +43,7 @@ public class MetaName extends AbstractDatatype {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 MetaName.class.getClassLoader().getResourceAsStream(
-                        "nu/validator/localentities/files/meta-extensions")));
+                        "nu/validator/localentities/files/meta-name-extensions")));
         // Read in registered metadata names from cached copy of the registry
         try {
             String read = br.readLine();

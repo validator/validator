@@ -97,7 +97,8 @@ public class IriRef extends AbstractDatatype {
             if (pair == null) {
                 // no scheme or scheme is private
                 if (isAbsolute()) {
-                    throw newDatatypeException("Not an absolute URL.");
+                    throw newDatatypeException("The string \u201c" + literal
+                            + "\u201d is not an absolute URL.");
                 } else {
                     // in this case, doc's actual base URL isn't relevant,
                     // so just use http://example.org/foo/bar as base

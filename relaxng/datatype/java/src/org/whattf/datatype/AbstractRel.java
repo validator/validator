@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Mozilla Foundation
+ * Copyright (c) 2011-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -42,7 +42,7 @@ abstract class AbstractRel extends AbstractDatatype {
             if (isWhitespace(c) && builder.length() > 0) {
                 checkToken(builder, i, tokensSeen);
                 builder.setLength(0);
-            } else {
+            } else if (!isWhitespace(c)) {
                 builder.append(toAsciiLowerCase(c));
             }
         }
@@ -64,7 +64,7 @@ abstract class AbstractRel extends AbstractDatatype {
                 iri.checkValid(token);
             } catch (DatatypeException e) {
                 throw newDatatypeException(i - 1, "The string ", token,
-                        " is not a registered keyword or absolute URL.");
+                        " is not a registered keyword.");
             }
         }
     }
