@@ -70,7 +70,9 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 noSelfUpdate = 0
-metaExtensions = os.path.join("local-entities", "meta-extensions")
+metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
+linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
+aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
 pageTemplateFile = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplateFile = os.path.join("validator", "xml-src", "FormEmitter.xml")
 presetsFile = os.path.join("validator", "presets.txt")
@@ -774,7 +776,9 @@ def downloadLocalEntities():
     removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
   if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")):
     removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions"))
-  fetchUrlTo("http://help.whatwg.org/meta-extensions/", os.path.join(buildRoot, metaExtensions))
+  fetchUrlTo("http://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
+  fetchUrlTo("http://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
+  fetchUrlTo("http://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
@@ -806,7 +810,9 @@ def prepareLocalEntityJar():
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
   preparePropertiesFile()
-  shutil.copyfile(os.path.join(buildRoot, metaExtensions), os.path.join(filesDir, "meta-extensions"))
+  shutil.copyfile(os.path.join(buildRoot, metaNameExtensions), os.path.join(filesDir, "meta-name-extensions"))
+  shutil.copyfile(os.path.join(buildRoot, linkRelExtensions), os.path.join(filesDir, "link-rel-extensions"))
+  shutil.copyfile(os.path.join(buildRoot, aRelExtensions), os.path.join(filesDir, "a-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
