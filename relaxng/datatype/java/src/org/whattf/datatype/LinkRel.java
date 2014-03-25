@@ -44,6 +44,7 @@ public class LinkRel extends AbstractRel {
         registeredValues.add("prev");
         registeredValues.add("prev");
         registeredValues.add("search");
+        registeredValues.add("shortcut");
         registeredValues.add("stylesheet");
 
         BufferedReader br = new BufferedReader(
