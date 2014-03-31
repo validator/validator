@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/icu4j-4_4_2.jar"/>
       <zipfileset src="../dependencies/icu4j-charsets-4_4_2.jar"/>
       <zipfileset src="../dependencies/iri-0.5/lib/iri.jar"/>
-      <zipfileset src="../dependencies/galimatias-0.0.2.jar"/>
+      <zipfileset src="../dependencies/galimatias-0.0.3.jar"/>
       <zipfileset src="../dependencies/isorelax.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
