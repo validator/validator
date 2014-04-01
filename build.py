@@ -719,6 +719,18 @@ def createDepTarball():
   ] + dependencyJarPaths(runDependencyJars)
   runCmd('"%s" %s' %(tarCmd, " ".join(args)))
 
+
+def createWar():
+  warDir = (os.path.join(buildRoot, "build", "vnu", "war"))
+  removeIfDirExists(warDir)
+  os.mkdir(warDir)
+  antRoot = os.path.join(buildRoot, "jing-trang", "lib")
+  antJar= os.path.join(antRoot, "ant.jar")
+  antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
+  classPath = os.pathsep.join([antJar, antLauncherJar])
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s'
+    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
+
 def deployOverScp():
   if not deploymentTarget:
     print "No target"
@@ -989,6 +1001,7 @@ def printHelp():
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
   print "  dist     -- Create a release distribution"
+  print "  war      -- Create a WAR file containing a release distribution"
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
@@ -1104,6 +1117,11 @@ else:
     elif arg == 'dist':
       if noSelfUpdate:
         createDist()
+      else:
+        selfUpdate()
+    elif arg == 'war':
+      if noSelfUpdate:
+        createWar()
       else:
         selfUpdate()
     elif arg == 'localent':
