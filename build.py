@@ -728,7 +728,7 @@ def createWar():
   antJar= os.path.join(antRoot, "ant.jar")
   antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s'
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s war'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
 
 def deployOverScp():
