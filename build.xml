@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/icu4j-4_4_2.jar"/>
       <zipfileset src="../dependencies/icu4j-charsets-4_4_2.jar"/>
       <zipfileset src="../dependencies/iri-0.5/lib/iri.jar"/>
-      <zipfileset src="../dependencies/galimatias-0.0.2.jar"/>
+      <zipfileset src="../dependencies/galimatias-0.0.3.jar"/>
       <zipfileset src="../dependencies/isorelax.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
@@ -59,6 +59,122 @@ DEALINGS IN THE SOFTWARE.
         <provider classname="org.whattf.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </jar>
+  </target>
+  <target name="war" depends="dist">
+    <echo file="./vnu/war/web.xml" append="false"
+><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+    <display-name>validator.nu</display-name>
+    <description>Mark-up validation service</description>
+
+    <filter>
+        <filter-name>gzip-filter</filter-name>
+        <filter-class>org.mortbay.servlet.GzipFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>gzip-filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>inbound-size-limit-filter</filter-name>
+        <filter-class>nu.validator.servletfilter.InboundSizeLimitFilter</filter-class>
+    </filter>    
+    <filter-mapping>
+        <filter-name>inbound-size-limit-filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>   
+        
+    <filter>
+        <filter-name>inbound-gzip-filter</filter-name>
+        <filter-class>nu.validator.servletfilter.InboundGzipFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>inbound-gzip-filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>multipart-form-data-filter</filter-name>
+        <filter-class>nu.validator.servlet.MultipartFormDataFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>multipart-form-data-filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>validator</servlet-name>
+        <servlet-class>nu.validator.servlet.VerifierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>validator</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+]]></echo>
+    <echo file="./vnu/war/log4j.xml" append="false"
+><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>
+    </layout>
+  </appender>
+
+  <root>
+    <priority value ="info" />
+    <appender-ref ref="console" />
+  </root>
+
+</log4j:configuration>
+]]></echo>
+    <unzip dest="./vnu/war/classes">
+      <fileset dir="../jars">
+        <include name="*.jar"/>
+      </fileset>
+    </unzip>
+    <copy todir="./vnu/war/lib">
+      <fileset file="../jing-trang/build/jing.jar"/>
+      <fileset file="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
+      <fileset file="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
+      <fileset file="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
+      <fileset file="../dependencies/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
+      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
+      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
+      <fileset file="../dependencies/icu4j-4_4_2.jar"/>
+      <fileset file="../dependencies/icu4j-charsets-4_4_2.jar"/>
+      <fileset file="../dependencies/iri-0.5/lib/iri.jar"/>
+      <fileset file="../dependencies/galimatias-0.0.3.jar"/>
+      <fileset file="../dependencies/isorelax.jar"/>
+      <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
+      <fileset file="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
+      <fileset file="../dependencies/rhino1_7R1/js.jar"/>
+      <fileset file="../dependencies/saxon9.jar"/>
+      <fileset file="../dependencies/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
+      <fileset file="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
+      <fileset file="../dependencies/xerces-2_9_1/xml-apis.jar"/>
+    </copy>
+    <war destfile="./vnu/vnu.war" webxml="./vnu/war/web.xml">
+      <lib dir="./vnu/war/lib"/>
+      <classes dir="./vnu/war/classes">
+        <exclude name="**/*.java"/>
+      </classes>
+      <classes file="./vnu/war/log4j.xml"/>
+      <service type="org.relaxng.datatype.DatatypeLibraryFactory">
+        <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+        <provider classname="org.whattf.datatype.Html5DatatypeLibraryFactory"/>
+      </service>      
+    </war>
+    <delete dir="./vnu/war"></delete>
   </target>
   <target name="credits">
     <echo file="./vnu/CREDITS" append="true"
