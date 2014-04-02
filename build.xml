@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2013 Mozilla Foundation
+Copyright (c) 2013-2014 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -83,12 +83,12 @@ DEALINGS IN THE SOFTWARE.
     <filter>
         <filter-name>inbound-size-limit-filter</filter-name>
         <filter-class>nu.validator.servletfilter.InboundSizeLimitFilter</filter-class>
-    </filter>    
+    </filter>
     <filter-mapping>
         <filter-name>inbound-size-limit-filter</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>   
-        
+    </filter-mapping>
+
     <filter>
         <filter-name>inbound-gzip-filter</filter-name>
         <filter-class>nu.validator.servletfilter.InboundGzipFilter</filter-class>
@@ -172,7 +172,7 @@ DEALINGS IN THE SOFTWARE.
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
         <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
         <provider classname="org.whattf.datatype.Html5DatatypeLibraryFactory"/>
-      </service>      
+      </service>
     </war>
     <delete dir="./vnu/war"></delete>
   </target>
