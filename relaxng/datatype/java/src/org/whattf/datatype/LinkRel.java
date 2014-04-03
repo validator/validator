@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.HashSet;
 
+import org.relaxng.datatype.DatatypeException;
+
 public class LinkRel extends AbstractRel {
 
     private static final HashSet<String> registeredValues = new HashSet<String>();
@@ -75,8 +77,20 @@ public class LinkRel extends AbstractRel {
         super();
     }
 
-    @Override protected boolean isRegistered(String token) {
-        return registeredValues.contains(token);
+    @Override protected boolean isRegistered(CharSequence literal, String token)
+            throws DatatypeException {
+        if ("shortcut".equals(token)) {
+            if ("shortcut icon".equals(toAsciiLowerCase(literal))) {
+                return true;
+            } else {
+                throw new DatatypeException("If the \u201cshortcut\u201d"
+                        + " keyword is present, the \u201crel\u201d"
+                        + " attribute's entire value must be"
+                        + " \u201cshortcut icon\u201d.");
+            }
+        } else {
+            return registeredValues.contains(token);
+        }
     }
 
     @Override public String getName() {

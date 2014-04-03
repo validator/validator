@@ -40,24 +40,25 @@ abstract class AbstractRel extends AbstractDatatype {
         for (int i = 0; i < len; i++) {
             char c = literal.charAt(i);
             if (isWhitespace(c) && builder.length() > 0) {
-                checkToken(builder, i, tokensSeen);
+                checkToken(literal, builder, i, tokensSeen);
                 builder.setLength(0);
             } else if (!isWhitespace(c)) {
                 builder.append(toAsciiLowerCase(c));
             }
         }
         if (builder.length() > 0) {
-            checkToken(builder, len, tokensSeen);
+            checkToken(literal, builder, len, tokensSeen);
         }
     }
 
-    private void checkToken(StringBuilder builder, int i, Set<String> tokensSeen) throws DatatypeException {
+    private void checkToken(CharSequence literal, StringBuilder builder, int i,
+            Set<String> tokensSeen) throws DatatypeException {
         String token = builder.toString();
         if (tokensSeen.contains(token)) {
             throw newDatatypeException(i - 1, "Duplicate keyword ", token, ".");
         }
         tokensSeen.add(token);
-        if (!isRegistered(token)) {
+        if (!isRegistered(literal, token)) {
             try {
                 Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
                 Iri iri = (Iri) dl.createDatatype("iri");
@@ -69,6 +70,7 @@ abstract class AbstractRel extends AbstractDatatype {
         }
     }
 
-    protected abstract boolean isRegistered(String token);
+    protected abstract boolean isRegistered(CharSequence literal, String token)
+            throws DatatypeException;
 
 }

@@ -75,7 +75,7 @@ public class ARel extends AbstractRel {
         super();
     }
 
-    @Override protected boolean isRegistered(String token) {
+    @Override protected boolean isRegistered(CharSequence literal, String token) {
         return registeredValues.contains(token);
     }
 
