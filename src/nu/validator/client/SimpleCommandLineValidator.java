@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Mozilla Foundation
+ * Copyright (c) 2013-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -161,16 +161,18 @@ public class SimpleCommandLineValidator {
         if (readFromStdIn) {
             InputSource is = new InputSource(System.in);
             validator = new SimpleDocumentValidator();
-            setErrorHandler();
-            validateInputSourceAgainstSchema(is, schemaUrl);
+            setup(schemaUrl);
+            validator.checkHtmlInputSource(is);
+            end();
         } else if (hasFileArgs) {
             List<File> files = new ArrayList<File>();
             for (int i = fileArgsStart; i < args.length; i++) {
                 files.add(new File(args[i]));
             }
             validator = new SimpleDocumentValidator();
-            setErrorHandler();
-            validateFilesAgainstSchema(files, schemaUrl);
+            setup(schemaUrl);
+            checkFiles(files);
+            end();
         } else {
             System.err.printf("\nError: No documents specified.\n");
             usage();
@@ -178,32 +180,27 @@ public class SimpleCommandLineValidator {
         }
     }
 
-    private static void validateFilesAgainstSchema(List<File> files,
-            String schemaUrl) throws SAXException, Exception {
+    private static void setup(String schemaUrl) throws SAXException, Exception {
+        setErrorHandler();
         try {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
             System.out.println(e.getMessage() + " Terminating.");
             System.exit(-1);
+        } catch (StackOverflowError e) {
+            System.out.println("StackOverflowError"
+                    + " while evaluating HTML schema.");
+            System.out.println("The checker requires a java thread stack size"
+                    + " of at least 512k.");
+            System.out.println("Consider invoking java with the -Xss"
+                    + " option. For example:");
+            System.out.println("\n  java -Xss512k -jar ~/vnu.jar FILE.html");
+            System.exit(-1);
         }
         validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
-        errorHandler.start(null);
-        checkFiles(files);
-        errorHandler.end("Document checking completed. No errors found.",
-                "Document checking completed.");
     }
 
-    private static void validateInputSourceAgainstSchema(InputSource is,
-            String schemaUrl) throws SAXException, Exception {
-        try {
-            validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
-        } catch (SchemaReadException e) {
-            System.out.println(e.getMessage() + " Terminating.");
-            System.exit(-1);
-        }
-        validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
-        errorHandler.start(null);
-        validator.checkHtmlInputSource(is);
+    private static void end() throws SAXException {
         errorHandler.end("Document checking completed. No errors found.",
                 "Document checking completed.");
     }
