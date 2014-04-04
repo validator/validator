@@ -24,7 +24,6 @@ package org.whattf.datatype;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
@@ -65,13 +64,7 @@ abstract class AbstractRel extends AbstractDatatype {
         if (!isRegistered(literal, token)) {
             if ("1".equals(System.getProperty("nu.validator.schema.rdfa-full"))) {
                 if (!CURIE.matcher(token).matches()) {
-                    try {
-                        Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
-                        Iri iri = (Iri) dl.createDatatype("iri");
-                        iri.checkValid(token);
-                    } catch (DatatypeException e) {
-                        errNotRegistered(i - 1, token);
-                    }
+                    errNotRegistered(i - 1, token);
                 }
             } else {
                 errNotRegistered(i - 1, token);
