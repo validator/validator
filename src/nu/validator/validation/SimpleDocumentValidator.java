@@ -150,9 +150,9 @@ public class SimpleDocumentValidator {
             schema = new RoleAttributeFilteringSchemaWrapper(schema);
             this.hasHtml5Schema = true;
             if ("http://s.validator.nu/html5-all.rnc".equals(schemaUrl)) {
-                System.setProperty("nu.validator.schema.rev-allowed", "1");
+                System.setProperty("nu.validator.schema.rdfa-full", "1");
             } else {
-                System.setProperty("nu.validator.schema.rev-allowed", "0");
+                System.setProperty("nu.validator.schema.rdfa-full", "0");
             }
         }
         this.mainSchema = schema;

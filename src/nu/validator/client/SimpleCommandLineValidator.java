@@ -138,7 +138,7 @@ public class SimpleCommandLineValidator {
             }
         }
         if (schemaUrl == null) {
-            schemaUrl = "http://s.validator.nu/html5-all.rnc";
+            schemaUrl = "http://s.validator.nu/html5-rdfalite.rnc";
         }
         if (outFormat == null) {
             outputFormat = OutputFormat.GNU;

@@ -1357,14 +1357,14 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
      */
     private Validator validatorByUrls(String schemaList) throws SAXException,
             IOException, IncorrectSchemaException {
-        System.setProperty("nu.validator.schema.rev-allowed", "0");
+        System.setProperty("nu.validator.schema.rdfa-full", "0");
         schemaListForStats  = schemaList;
         Validator v = null;
         String[] schemas = SPACE.split(schemaList);
         for (int i = schemas.length - 1; i > -1; i--) {
             String url = schemas[i];
             if ("http://s.validator.nu/html5-all.rnc".equals(url)) {
-                System.setProperty("nu.validator.schema.rev-allowed", "1");
+                System.setProperty("nu.validator.schema.rdfa-full", "1");
             }
             if ("http://c.validator.nu/all/".equals(url)
                     || "http://hsivonen.iki.fi/checkers/all/".equals(url)) {
