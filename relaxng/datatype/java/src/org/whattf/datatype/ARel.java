@@ -80,7 +80,7 @@ public class ARel extends AbstractRel {
     }
 
     @Override public String getName() {
-        return "link type valid for <a> and <area>";
+        return "rel value for <a> and <area>";
     }
 
 }

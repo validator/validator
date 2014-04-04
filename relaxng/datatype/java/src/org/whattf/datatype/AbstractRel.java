@@ -24,10 +24,14 @@ package org.whattf.datatype;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.relaxng.datatype.DatatypeException;
 
 abstract class AbstractRel extends AbstractDatatype {
+
+    private static final Pattern CURIE = Pattern.compile("(([[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]][[-.0-9:A-Z_a-z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]]*)?:)[^ ]*");
 
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
@@ -59,15 +63,26 @@ abstract class AbstractRel extends AbstractDatatype {
         }
         tokensSeen.add(token);
         if (!isRegistered(literal, token)) {
-            try {
-                Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
-                Iri iri = (Iri) dl.createDatatype("iri");
-                iri.checkValid(token);
-            } catch (DatatypeException e) {
-                throw newDatatypeException(i - 1, "The string ", token,
-                        " is not a registered keyword.");
+            if ("1".equals(System.getProperty("nu.validator.schema.rdfa-full"))) {
+                if (!CURIE.matcher(token).matches()) {
+                    try {
+                        Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
+                        Iri iri = (Iri) dl.createDatatype("iri");
+                        iri.checkValid(token);
+                    } catch (DatatypeException e) {
+                        errNotRegistered(i - 1, token);
+                    }
+                }
+            } else {
+                errNotRegistered(i - 1, token);
             }
         }
+    }
+
+    private void errNotRegistered(int position, String token)
+            throws DatatypeException {
+        throw newDatatypeException(position, "The string ", token,
+                " is not a registered keyword.");
     }
 
     protected abstract boolean isRegistered(CharSequence literal, String token)

@@ -46,7 +46,6 @@ public class LinkRel extends AbstractRel {
         registeredValues.add("prev");
         registeredValues.add("prev");
         registeredValues.add("search");
-        registeredValues.add("shortcut");
         registeredValues.add("stylesheet");
 
         BufferedReader br = new BufferedReader(
@@ -94,7 +93,7 @@ public class LinkRel extends AbstractRel {
     }
 
     @Override public String getName() {
-        return "link type valid for <link>";
+        return "rel value for <link>";
     }
 
 }
