@@ -80,7 +80,7 @@ public class ARel extends AbstractRel {
     }
 
     @Override public String getName() {
-        return "rel value for <a> and <area>";
+        return "list of link-type keywords";
     }
 
 }

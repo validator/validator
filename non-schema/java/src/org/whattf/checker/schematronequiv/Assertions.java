@@ -1258,7 +1258,7 @@ public class Assertions extends Checker {
                                     "javascript", atts.getValue(i))) {
                         languageJavaScript = true;
                     } else if ("rev" == attLocal
-                            && !("1".equals(System.getProperty("nu.validator.schema.rev-allowed")))) {
+                            && !("1".equals(System.getProperty("nu.validator.schema.rdfa-full")))) {
                         errObsoleteAttribute(
                                 "rev",
                                 localName,

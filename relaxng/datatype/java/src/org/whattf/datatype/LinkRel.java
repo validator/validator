@@ -93,7 +93,7 @@ public class LinkRel extends AbstractRel {
     }
 
     @Override public String getName() {
-        return "rel value for <link>";
+        return "list of link-type keywords";
     }
 
 }
