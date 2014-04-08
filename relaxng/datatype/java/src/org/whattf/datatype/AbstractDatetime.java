@@ -55,11 +55,17 @@ abstract class AbstractDatetime extends AbstractDatatype {
         checkMonth(Integer.parseInt(year), Integer.parseInt(month));
     }
 
-    private void checkMonth(int year, int month)
-            throws DatatypeException {
+    private void checkYear(int year) throws DatatypeException {
         if (year < 1) {
             throw newDatatypeException("Year cannot be less than 1.");
+        } else if (WARN && (year < 1000 || year > 3000)) {
+            throw newDatatypeException("Year may be mistyped.", WARN);
         }
+    }
+
+    private void checkMonth(int year, int month)
+            throws DatatypeException {
+        checkYear(year);
         if (month < 1) {
             throw newDatatypeException("Month cannot be less than 1.");
         }
@@ -76,9 +82,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkDate(int year, int month, int day)
             throws DatatypeException {
-        if (year < 1) {
-            throw newDatatypeException("Year cannot be less than 1.");
-        }
+        checkYear(year);
         if (month < 1) {
             throw newDatatypeException("Month cannot be less than 1.");
         }
@@ -125,9 +129,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkWeek(int year, int week)
             throws DatatypeException {
-        if (year < 1) {
-            throw newDatatypeException("Year cannot be less than 1.");
-        }
+        checkYear(year);
         if (week< 1) {
             throw newDatatypeException("Week cannot be less than 1.");
         }
@@ -233,7 +235,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
             // valid yearless date string
             month = m.group(6);
             day = m.group(7);
-            if (year != null) {
+            if (month != null) {
                 checkYearlessDate(month, day);
                 return;
             }
@@ -313,8 +315,8 @@ abstract class AbstractDatetime extends AbstractDatatype {
             }
             //  valid year (valid non-negative integer)
             year = m.group(32);
-            if (year != null && Integer.parseInt(year) < 1) {
-                throw newDatatypeException("Year cannot be less than 1.");
+            if (year != null) {
+                checkYear(Integer.parseInt(year));
             }
             // valid duration string
             milliseconds = m.group(33);
