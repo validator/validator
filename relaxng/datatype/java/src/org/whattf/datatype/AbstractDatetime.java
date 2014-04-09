@@ -58,7 +58,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
     private void checkYear(int year) throws DatatypeException {
         if (year < 1) {
             throw newDatatypeException("Year cannot be less than 1.");
-        } else if (WARN && (year < 1000 || year > 3000)) {
+        } else if (WARN && (year < 1000 || year >= 3000)) {
             throw newDatatypeException("Year may be mistyped.", WARN);
         }
     }
