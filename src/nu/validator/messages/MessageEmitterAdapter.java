@@ -280,6 +280,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final static char[] CONTEXT_AFTER = " may be used:".toCharArray();
 
     private final static char[] BAD_VALUE = "Bad value ".toCharArray();
+
+    private final static char[] POTENTIALLY_BAD_VALUE = "Potentially bad value ".toCharArray();
     
     private final static char[] FOR = " for ".toCharArray();
 
@@ -833,7 +835,23 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (messageTextHandler != null) {
             if (e instanceof BadAttributeValueException) {
                 BadAttributeValueException ex = (BadAttributeValueException) e;
-                messageTextString(messageTextHandler, BAD_VALUE, false);
+                boolean isWarning = false;
+                Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+                for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+                    DatatypeException dex = entry.getValue();
+                    if (dex instanceof Html5DatatypeException) {
+                        Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                        if (ex5.isWarning()) {
+                            isWarning = true;
+                        }
+                    }
+                }
+                if (isWarning) {
+                    messageTextString(messageTextHandler,
+                            POTENTIALLY_BAD_VALUE, false);
+                } else {
+                    messageTextString(messageTextHandler, BAD_VALUE, false);
+                }
                 if (ex.getAttributeValue().length() < 200) {
                     codeString(messageTextHandler, ex.getAttributeValue());
                 }
