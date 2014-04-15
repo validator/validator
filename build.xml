@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/icu4j-4_4_2.jar"/>
       <zipfileset src="../dependencies/icu4j-charsets-4_4_2.jar"/>
       <zipfileset src="../dependencies/iri-0.5/lib/iri.jar"/>
-      <zipfileset src="../dependencies/galimatias-0.0.3.jar"/>
+      <zipfileset src="../dependencies/galimatias-0.0.4.jar"/>
       <zipfileset src="../dependencies/isorelax.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
@@ -153,7 +153,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/icu4j-4_4_2.jar"/>
       <fileset file="../dependencies/icu4j-charsets-4_4_2.jar"/>
       <fileset file="../dependencies/iri-0.5/lib/iri.jar"/>
-      <fileset file="../dependencies/galimatias-0.0.3.jar"/>
+      <fileset file="../dependencies/galimatias-0.0.4.jar"/>
       <fileset file="../dependencies/isorelax.jar"/>
       <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
       <fileset file="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
