@@ -53,7 +53,8 @@ public class IriRef extends AbstractDatatype {
         super();
     }
 
-    private final CharSequencePair splitScheme(CharSequence iri) {
+    private final CharSequencePair splitScheme(CharSequence iri)
+            throws DatatypeException {
         StringBuilder sb = new StringBuilder();
         Boolean atSchemeBeginning = true;
         for (int i = 0; i < iri.length(); i++) {
@@ -69,7 +70,7 @@ public class IriRef extends AbstractDatatype {
                     atSchemeBeginning = false;
                     sb.append(c);
                 } else {
-                    return null;
+                    throw newDatatypeException("Scheme must start with alpha character.");
                 }
             } else {
                 if (('a' <= c && 'z' >= c) || ('0' <= c && '9' >= c)
@@ -80,7 +81,7 @@ public class IriRef extends AbstractDatatype {
                     return new CharSequencePair(sb, iri.subSequence(i + 1,
                             iri.length()));
                 } else {
-                    return null;
+                    throw newDatatypeException("Illegal character in scheme.");
                 }
             }
         }
