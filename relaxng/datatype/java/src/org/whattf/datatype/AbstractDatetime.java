@@ -65,13 +65,13 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkMonth(int year, int month)
             throws DatatypeException {
-        checkYear(year);
         if (month < 1) {
             throw newDatatypeException("Month cannot be less than 1.");
         }
         if (month > 12) {
             throw newDatatypeException("Month cannot be greater than 12.");
         }
+        checkYear(year);
     }
 
     private void checkDate(String year, String month, String day)
@@ -82,7 +82,6 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkDate(int year, int month, int day)
             throws DatatypeException {
-        checkYear(year);
         if (month < 1) {
             throw newDatatypeException("Month cannot be less than 1.");
         }
@@ -97,6 +96,7 @@ abstract class AbstractDatetime extends AbstractDatatype {
                 throw newDatatypeException("Day out of range.");
             }
         }
+        checkYear(year);
 
     }
 
@@ -129,13 +129,13 @@ abstract class AbstractDatetime extends AbstractDatatype {
 
     private void checkWeek(int year, int week)
             throws DatatypeException {
-        checkYear(year);
         if (week< 1) {
             throw newDatatypeException("Week cannot be less than 1.");
         }
         if (week > 53) {
             throw newDatatypeException("Week cannot be greater than 53.");
         }
+        checkYear(year);
     }
 
     protected final void checkHour(String hour) throws DatatypeException {
