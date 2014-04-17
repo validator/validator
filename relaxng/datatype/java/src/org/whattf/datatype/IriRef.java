@@ -89,6 +89,9 @@ public class IriRef extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
+        if ("".equals(trimHtmlSpaces(literal.toString()))) {
+            throw newDatatypeException("Must be non-empty.");
+        }
         URL url = null;
         URLParsingSettings settings = URLParsingSettings.create().withErrorHandler(
                 StrictErrorHandler.getInstance());
@@ -158,9 +161,6 @@ public class IriRef extends AbstractDatatype {
             throw newDatatypeException(e.getMessage());
         }
         if (url != null) {
-            if ("".equals(url.toString())) {
-                    throw newDatatypeException("Must be non-empty.");
-            }
             if (data) {
                 try {
                     DataUri dataUri = new DataUri(url);
@@ -191,6 +191,47 @@ public class IriRef extends AbstractDatatype {
 
     protected boolean isAbsolute() {
         return false;
+    }
+
+    /**
+     * Trim any leading and trailing space characters, as defined in HTML5.
+     */
+    protected static final String trimHtmlSpaces(String str) {
+        return trimHtmlLeadingSpaces(trimHtmlTrailingSpaces(str));
+    }
+
+    /**
+     * Trim any leading space characters, as defined in HTML5.
+     * HTML space characters: space, tab, LF, FF, CR
+     */
+    protected static final String trimHtmlLeadingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length(); i > 0; --i) {
+            char c = str.charAt(str.length() - i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(str.length() - i, str.length());
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Trim any trailing space characters, as defined in HTML5.
+     * HTML space characters: space, tab, LF, FF, CR
+     */
+    protected static final String trimHtmlTrailingSpaces(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (int i = str.length() - 1; i >= 0; --i) {
+            char c = str.charAt(i);
+            if (!(' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c)) {
+                return str.substring(0, i + 1);
+            }
+        }
+        return "";
     }
 
     @Override
