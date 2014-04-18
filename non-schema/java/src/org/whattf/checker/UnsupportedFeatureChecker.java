@@ -28,8 +28,6 @@ public class UnsupportedFeatureChecker extends Checker {
             warn("The \u201Cdialog\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("details" == localName) {
             warn("The \u201Cdetails\u201D element is not supported properly by browsers yet. It would probably be better to wait for implementations.");
-        } else if ("track" == localName) {
-            warn("The \u201Ctrack\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
         } else if ("bdi" == localName) {
             warn("The \u201Cbdi\u201D element is not supported by browsers yet.");
         } else if ("a" == localName) {
