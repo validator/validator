@@ -72,7 +72,7 @@ public class IriRef extends AbstractDatatype {
                     atSchemeBeginning = false;
                     sb.append(c);
                 } else {
-                    throw newDatatypeException("Scheme must start with alpha character.");
+                    return null;
                 }
             } else {
                 if (('a' <= c && 'z' >= c) || ('0' <= c && '9' >= c)
@@ -83,7 +83,7 @@ public class IriRef extends AbstractDatatype {
                     return new CharSequencePair(sb, iri.subSequence(i + 1,
                             iri.length()));
                 } else {
-                    throw newDatatypeException("Illegal character in scheme.");
+                    return null;
                 }
             }
         }
@@ -199,17 +199,10 @@ public class IriRef extends AbstractDatatype {
         return false;
     }
 
-    /**
-     * Trim any leading and trailing space characters, as defined in HTML5.
-     */
     protected static final String trimHtmlSpaces(String str) {
         return trimHtmlLeadingSpaces(trimHtmlTrailingSpaces(str));
     }
 
-    /**
-     * Trim any leading space characters, as defined in HTML5.
-     * HTML space characters: space, tab, LF, FF, CR
-     */
     protected static final String trimHtmlLeadingSpaces(String str) {
         if (str == null) {
             return null;
@@ -223,10 +216,6 @@ public class IriRef extends AbstractDatatype {
         return "";
     }
 
-    /**
-     * Trim any trailing space characters, as defined in HTML5.
-     * HTML space characters: space, tab, LF, FF, CR
-     */
     protected static final String trimHtmlTrailingSpaces(String str) {
         if (str == null) {
             return null;
