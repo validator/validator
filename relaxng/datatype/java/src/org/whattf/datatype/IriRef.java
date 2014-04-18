@@ -53,6 +53,8 @@ public class IriRef extends AbstractDatatype {
         super();
     }
 
+    private final static boolean WARN = System.getProperty("org.whattf.datatype.warn","").equals("true") ? true : false;
+
     private final CharSequencePair splitScheme(CharSequence iri)
             throws DatatypeException {
         StringBuilder sb = new StringBuilder();
@@ -172,7 +174,11 @@ public class IriRef extends AbstractDatatype {
                     throw newDatatypeException(e.getIndex(), e.getHead(),
                             e.getLiteral(), e.getTail());
                 } catch (IOException e) {
-                    throw newDatatypeException(e.getMessage());
+                    String msg = e.getMessage();
+                    if (WARN
+                            && "Fragment is not allowed for data: URIs according to RFC 2397.".equals(msg)) {
+                        throw newDatatypeException(msg, WARN);
+                    }
                 }
             }
         }
