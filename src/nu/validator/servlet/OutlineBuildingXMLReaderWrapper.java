@@ -227,7 +227,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
     // the top of the stack is either a heading content element or an element
     // with a hidden attribute
-    private boolean isHeadingContentOrHiddenElement;
+    private boolean inHeadingContentOrHiddenElement;
 
     private boolean needHeading;
 
@@ -296,7 +296,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         int depth = currentWalkDepth--;
 
-        if (isHeadingContentOrHiddenElement) {
+        if (inHeadingContentOrHiddenElement) {
             // When exiting an element, if that element is the element at the
             // top of the stack
             // Note: The element being exited is a heading content element or an
@@ -306,7 +306,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             if (topElement.equals(depth, localName)) {
                 // Pop that element from the stack.
                 stack.pop();
-                isHeadingContentOrHiddenElement = false;
+                inHeadingContentOrHiddenElement = false;
 
                 inElement = AssociatedElement.NONE;
 
@@ -438,7 +438,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         // If the top of the stack is a heading content element or an element
         // with a hidden attribute
-        if (isHeadingContentOrHiddenElement) {
+        if (inHeadingContentOrHiddenElement) {
             if ("img".equals(localName) && atts.getIndex("", "alt") >= 0) {
                 currentSection.getHeadingTextBuilder().append(
                         atts.getValue("", "alt"));
@@ -454,7 +454,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // algorithm to skip that element and any descendants of the
             // element.)
             stack.push(new Element(currentWalkDepth, localName));
-            isHeadingContentOrHiddenElement = true;
+            inHeadingContentOrHiddenElement = true;
             contentHandler.startElement(uri, localName, qName, atts);
             return;
         }
@@ -577,7 +577,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // (This causes the algorithm to skip any descendants of the
             // element.)
             stack.push(new Element(currentWalkDepth, localName));
-            isHeadingContentOrHiddenElement = true;
+            inHeadingContentOrHiddenElement = true;
         }
         contentHandler.startElement(uri, localName, qName, atts);
     }
