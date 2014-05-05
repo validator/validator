@@ -439,6 +439,10 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // If the top of the stack is a heading content element or an element
         // with a hidden attribute
         if (isHeadingContentOrHiddenElement) {
+            if ("img".equals(localName) && atts.getIndex("", "alt") >= 0) {
+                currentSection.getHeadingTextBuilder().append(
+                        atts.getValue("", "alt"));
+            }
             // Do nothing.
             contentHandler.startElement(uri, localName, qName, atts);
             return;
