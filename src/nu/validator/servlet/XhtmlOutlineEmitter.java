@@ -76,6 +76,8 @@ public class XhtmlOutlineEmitter {
                 emitter.startElementWithClass("span", "heading");
                 emitter.characters(headingText.toString().toCharArray());
                 emitter.endElement("span");
+            } else if (section.hasEmptyHeading()) {
+                emitter.characters(("[" + section.getElementName() + " element with empty heading]").toCharArray());
             } else if ("h1".equals(section.getElementName())
                     || "h2".equals(section.getElementName())
                     || "h3".equals(section.getElementName())

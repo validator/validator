@@ -100,13 +100,21 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         // the local name of element
         final private String name;
 
+        // whether the element is hidden
+        final private boolean hidden;
+
         // the outline for a sectioning content element or a sectioning root
         // element consists of a list of one or more potentially nested sections
         final private Deque<Section> outline = new LinkedList<Section>();
 
-        public Element(int depth, String name) {
+        public Element(int depth, String name, boolean hidden) {
             this.depth = depth;
             this.name = name;
+            this.hidden = hidden;
+        }
+
+        public boolean isHidden() {
+            return hidden;
         }
 
         public boolean equals(int depth, String name) {
@@ -144,6 +152,12 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         // we generate an "implied heading" for some sections that lack headings
         private boolean hasImpliedHeading;
+
+        // Generating a special kind of implied heading specifically for
+        // the "empty heading" case (e.g., empty <h1></h1> descendant) as
+        // opposed to the "no heading" case (no h1-h6 descendants at all)
+        // isn't required by the spec, but it's nonetheless useful.
+        private boolean hasEmptyHeading;
 
         // MAX_VALUE for an implied heading, 1-6 for a heading content element
         private int headingRank = Integer.MAX_VALUE;
@@ -209,14 +223,15 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         public void createImpliedHeading() {
             hasImpliedHeading = true;
         }
-    }
 
-    // for ContentHandler.characters()
-    private enum AssociatedElement {
-        NONE, HEADING_CONTENT_ELEMENT, NODE
-    }
+        public void createEmptyHeading() {
+            hasEmptyHeading = true;
+        }
 
-    private AssociatedElement inElement = AssociatedElement.NONE;
+        public boolean hasEmptyHeading() {
+            return hasEmptyHeading;
+        }
+    }
 
     // tracks the depth of walk through the DOM
     private int currentWalkDepth;
@@ -225,16 +240,34 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
     // a sectioning content element or a sectioning root element
     private Element currentOutlinee;
 
-    // the top of the stack is either a heading content element or an element
-    // with a hidden attribute
+    // A stack (not defined in the spec) to hold all open elements. We just
+    // use this stack for the purpose of checking whether there are any
+    // open elements at all with a "hidden" attribute -- including elements
+    // that may be descendants of heading-content elements (which per the
+    // spec never end up on the outline stack).
+    private Deque<Element> elementStack = new LinkedList<Element>();
+
+    private boolean inHiddenSubtree() {
+        for (Element element : elementStack) {
+            if (element.isHidden()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // A stack, defined in the spec, to which we only add open
+    // heading-content elements and elements with a "hidden" attribute that
+    // are ancestors to heading-content elements.
+    private Deque<Element> outlineStack = new LinkedList<Element>();
+
+    // The top of the outline stack defined in the spec is always either a
+    // heading content element or an element with a hidden attribute.
     private boolean inHeadingContentOrHiddenElement;
 
     private boolean needHeading;
 
     private boolean skipHeading;
-
-    // a stack to hold elements, which is used to handle nesting
-    private Deque<Element> stack = new LinkedList<Element>();
 
     // holds a pointer to a section, so that elements in the DOM can all be
     // associated with a section
@@ -267,11 +300,8 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             return;
         }
 
-        switch (inElement) {
-            case HEADING_CONTENT_ELEMENT:
-                currentSection.getHeadingTextBuilder().append(ch, start, length);
-                break;
-            case NODE:
+        if (inHeadingContentOrHiddenElement && !inHiddenSubtree()) {
+            currentSection.getHeadingTextBuilder().append(ch, start, length);
         }
         contentHandler.characters(ch, start, length);
     }
@@ -285,6 +315,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (contentHandler == null) {
             return;
         }
+        elementStack.pop();
         if ("hgroup".equals(localName)) {
             needHeading = false;
             skipHeading = false;
@@ -301,20 +332,25 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // top of the stack
             // Note: The element being exited is a heading content element or an
             // element with a hidden attribute.
-            Element topElement = stack.peek();
+            Element topElement = outlineStack.peek();
             assert topElement != null;
             if (topElement.equals(depth, localName)) {
                 // Pop that element from the stack.
-                stack.pop();
+                outlineStack.pop();
                 inHeadingContentOrHiddenElement = false;
 
-                inElement = AssociatedElement.NONE;
-
-                StringBuilder headingTextBuilder = currentSection.getHeadingTextBuilder();
-                String heading = excerpt(whitespacePattern.matcher(
-                        headingTextBuilder).replaceAll(" ").trim(), MAX_EXCERPT);
-                headingTextBuilder.setLength(0);
-                headingTextBuilder.append(heading);
+                if (currentSection != null) {
+                    StringBuilder headingTextBuilder = currentSection.getHeadingTextBuilder();
+                    String heading = excerpt(
+                            whitespacePattern.matcher(headingTextBuilder).replaceAll(
+                                    " ").trim(), MAX_EXCERPT);
+                    headingTextBuilder.setLength(0);
+                    if (heading.length() > 0) {
+                        headingTextBuilder.append(heading);
+                    } else {
+                        currentSection.createEmptyHeading();
+                    }
+                }
             }
 
             // If the top of the stack is a heading content element or an
@@ -327,7 +363,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         if (Arrays.binarySearch(SECTIONING_CONTENT_ELEMENTS, localName) > -1) {
             // When exiting a sectioning content element, if the stack is not
             // empty
-            if (!stack.isEmpty()) {
+            if (!outlineStack.isEmpty()) {
                 // If the current section has no heading,
                 if (currentSection != null && !currentSection.hasHeading()) {
                     // create an implied heading and let that be the heading for
@@ -339,7 +375,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
                 // Pop the top element from the stack, and let the current
                 // outlinee be that element.
-                currentOutlinee = stack.pop();
+                currentOutlinee = outlineStack.pop();
 
                 // Let current section be the last section in the outline of the
                 // current outlinee element.
@@ -357,7 +393,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             }
         } else if (Arrays.binarySearch(SECTIONING_ROOT_ELEMENTS, localName) > -1) {
             // When exiting a sectioning root element, if the stack is not empty
-            if (!stack.isEmpty()) {
+            if (!outlineStack.isEmpty()) {
                 // Run these steps:
 
                 // If the current section has no heading,
@@ -369,7 +405,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
                 // Pop the top element from the stack, and let the current
                 // outlinee be that element.
-                currentOutlinee = stack.pop();
+                currentOutlinee = outlineStack.pop();
 
                 // Let current section be the last section in the outline of the
                 // current outlinee element.
@@ -436,10 +472,14 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
 
         ++currentWalkDepth;
 
+        boolean hidden = atts.getIndex("", "hidden") >= 0;
+        elementStack.push(new Element(currentWalkDepth, localName, hidden));
+
         // If the top of the stack is a heading content element or an element
         // with a hidden attribute
         if (inHeadingContentOrHiddenElement) {
-            if ("img".equals(localName) && atts.getIndex("", "alt") >= 0) {
+            if (!inHiddenSubtree() && "img".equals(localName)
+                    && atts.getIndex("", "alt") >= 0) {
                 currentSection.getHeadingTextBuilder().append(
                         atts.getValue("", "alt"));
             }
@@ -449,11 +489,11 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
         }
 
         // When entering an element with a hidden attribute
-        if (atts.getIndex("", "hidden") >= 0) {
+        if (hidden) {
             // Push the element being entered onto the stack. (This causes the
             // algorithm to skip that element and any descendants of the
             // element.)
-            stack.push(new Element(currentWalkDepth, localName));
+            outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
             contentHandler.startElement(uri, localName, qName, atts);
             return;
@@ -473,11 +513,11 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
                 }
                 // If current outlinee is not null, push current outlinee onto
                 // the stack.
-                stack.push(currentOutlinee);
+                outlineStack.push(currentOutlinee);
             }
 
             // Let current outlinee be the element that is being entered.
-            currentOutlinee = new Element(currentWalkDepth, localName);
+            currentOutlinee = new Element(currentWalkDepth, localName, hidden);
 
             // Let current section be a newly created section for the current
             // outlinee element.
@@ -516,7 +556,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // section.
             if (currentSection != null && !currentSection.hasHeading()) {
                 currentSection.setHeadingRank(rank);
-                inElement = AssociatedElement.HEADING_CONTENT_ELEMENT;
             }
             // Otherwise, if the element being entered has a rank equal to
             // or higher than the heading of the last section of the
@@ -534,7 +573,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
                 // Let the element being entered be the new heading for the
                 // current section.
                 currentSection.setHeadingRank(rank);
-                inElement = AssociatedElement.HEADING_CONTENT_ELEMENT;
             }
             // Otherwise, run these substeps:
             else {
@@ -558,7 +596,6 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
                         // Let the element being entered be the new heading for
                         // the current section.
                         currentSection.setHeadingRank(rank);
-                        inElement = AssociatedElement.HEADING_CONTENT_ELEMENT;
 
                         // Abort these substeps.
                         break;
@@ -576,7 +613,7 @@ public final class OutlineBuildingXMLReaderWrapper implements XMLReader,
             // Push the element being entered onto the stack.
             // (This causes the algorithm to skip any descendants of the
             // element.)
-            stack.push(new Element(currentWalkDepth, localName));
+            outlineStack.push(new Element(currentWalkDepth, localName, hidden));
             inHeadingContentOrHiddenElement = true;
         }
         contentHandler.startElement(uri, localName, qName, atts);
