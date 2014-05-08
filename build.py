@@ -1043,11 +1043,10 @@ def printHelp():
   print "Tasks:"
   print "  checkout -- Checks out the sources"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
-  print "  dltests  -- Downloads the external test suite if missing"
   print "  build    -- Build the source"
   print "  test     -- Run tests"
   print "  run      -- Run the system"
-  print "  all      -- checkout dldeps dltests build test run"
+  print "  all      -- checkout dldeps build test run"
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
 
@@ -1150,8 +1149,6 @@ else:
         downloadLocalEntities()
       else:
         selfUpdate()
-#    elif arg == 'dltests':
-#      downloadOperaSuite()
     elif arg == 'checkout':
       if noSelfUpdate:
         checkout()
