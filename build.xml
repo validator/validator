@@ -20,12 +20,17 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-validator" basedir="." default="build">
-  <target name="build" depends="clean, dist"/>
+  <target name="build" depends="jar"/>
   <target name="clean">
     <delete file="./vnu/vnu.jar"/>
+    <delete file="./vnu/vnu.war"/>
   </target>
   <target name="dist" depends="jar, credits"/>
-  <target name="jar">
+  <target name="version">
+    <echo file="./vnu/VERSION" append="true"
+>dev</echo>
+  </target>
+  <target name="jar" depends="clean, version, credits">
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
@@ -60,7 +65,7 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="war" depends="dist">
+  <target name="war" depends="clean, version, credits">
     <echo file="./vnu/war/web.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"

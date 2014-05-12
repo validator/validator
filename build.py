@@ -675,23 +675,26 @@ def runValidator():
   args = getRunArgs(str(int(heapSize) * 1024))
   execCmd(javaCmd, args)
 
-def createDist():
+def createDistZip(distType):
   distDir = (os.path.join(buildRoot, "build", "vnu"))
   removeIfDirExists(distDir)
   os.mkdir(distDir)
+  if (distType == "war"):
+    os.mkdir(os.path.join(distDir, "war"))
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
   antJar= os.path.join(antRoot, "ant.jar")
   antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s'
-    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
-  version = subprocess.check_output([javaCmd, "-jar", os.path.join(distDir, "vnu.jar"), "--version"]).rstrip()
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
+    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
+  f = open(os.path.join(distDir, "VERSION"), "r")
+  version = f.read()
   readmeHtml = "https://raw.github.com/validator/validator.github.io/master/index.html"
   readmeMarkdown = "https://raw.github.com/validator/validator.github.io/master/README.md"
   fetchUrlTo(readmeHtml, os.path.join(distDir, "index.html"))
   fetchUrlTo(readmeMarkdown, os.path.join(distDir, "README.md"))
   os.chdir("build")
-  distroFile = os.path.join("vnu-" + version + ".zip")
+  distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
   zf = zipfile.ZipFile(distroFile, "w")
   for dirname, subdirs, files in os.walk("vnu"):
@@ -1114,14 +1117,14 @@ else:
         buildAll()
       else:
         selfUpdate()
-    elif arg == 'dist':
+    elif arg == 'jar':
       if noSelfUpdate:
-        createDist()
+        createDistZip('jar')
       else:
         selfUpdate()
     elif arg == 'war':
       if noSelfUpdate:
-        createWar()
+        createDistZip('war')
       else:
         selfUpdate()
     elif arg == 'localent':
