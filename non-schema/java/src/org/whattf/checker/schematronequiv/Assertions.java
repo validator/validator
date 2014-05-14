@@ -1130,8 +1130,7 @@ public class Assertions extends Checker {
             } else if (("h1" == localName || "h2" == localName
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
-                    && !node.hasTextNode()
-                    && !node.hasImg()) {
+                    && !node.hasTextNode() && !node.hasImg()) {
                 warn("Empty heading.");
             } else if ("option" == localName && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
