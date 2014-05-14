@@ -1112,6 +1112,11 @@ public class Assertions extends Checker {
                             + " \u201Cvalue\u201D attribute, or must have no"
                             + " text content.", node.nonEmptyOptionLocator());
                 }
+            } else if (("h1" == localName || "h2" == localName
+                    || "h3" == localName || "h4" == localName
+                    || "h5" == localName || "h6" == localName)
+                    && !node.hasTextNode()) {
+                warn("Empty heading.");
             } else if ("option" == localName && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
             }
@@ -1903,6 +1908,10 @@ public class Assertions extends Checker {
                                 stack[currentFigurePtr - k].setTextNodeFound();
                             }
                         }
+                    } else if ("h1".equals(node.name) || "h2".equals(node.name)
+                            || "h3".equals(node.name) || "h4".equals(node.name)
+                            || "h5".equals(node.name) || "h6".equals(node.name)) {
+                        node.setTextNodeFound();
                     } else if ("option".equals(node.name)
                             && !stack[currentPtr - 1].hasOption()
                             && (!stack[currentPtr - 1].hasEmptyValueOption() || stack[currentPtr - 1].hasNoValueOption())
