@@ -332,8 +332,8 @@ public class Assertions extends Checker {
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
-            "progress", "meter", "article", "aside", "nav", "h1", "h2", "h3",
-            "h4", "h5", "h6" };
+            "progress", "meter", "article", "section", "aside", "nav", "h1",
+            "h2", "h3", "h4", "h5", "h6" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -459,6 +459,10 @@ public class Assertions extends Checker {
     private static final int H5_MASK = (1 << specialAncestorNumber("h5"));
 
     private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
+
+    private static final int SECTION_MASK = (1 << specialAncestorNumber("section"));
+
+    private static final int ARTICLE_MASK = (1 << specialAncestorNumber("article"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
 
@@ -599,6 +603,8 @@ public class Assertions extends Checker {
         private boolean figcaptionNeeded = false;
 
         private boolean figcaptionContentFound = false;
+
+        private boolean headingFound = false;
 
         private boolean optionNeeded = false;
 
@@ -822,6 +828,22 @@ public class Assertions extends Checker {
         }
 
         /**
+         * Returns the headingFound.
+         *
+         * @return the headingFound
+         */
+        public boolean hasHeading() {
+            return headingFound;
+        }
+
+        /**
+         * Sets the headingFound.
+         */
+        public void setHeadingFound() {
+            this.headingFound = true;
+        }
+
+        /**
          * Returns the imagesLackingAlt
          * 
          * @return the imagesLackingAlt
@@ -975,6 +997,10 @@ public class Assertions extends Checker {
 
     private int currentHeadingPtr;
 
+    private int currentSectionPtr;
+
+    private int currentArticlePtr;
+
     private boolean hasMain;
 
     private final void errContainedInOrOwnedBy(String role, Locator locator)
@@ -1127,6 +1153,10 @@ public class Assertions extends Checker {
                             + " \u201Cvalue\u201D attribute, or must have no"
                             + " text content.", node.nonEmptyOptionLocator());
                 }
+            } else if ("section" == localName && !node.hasHeading()) {
+                warn("Section lacks heading.");
+            } else if ("article" == localName && !node.hasHeading()) {
+                warn("Article lacks heading.");
             } else if (("h1" == localName || "h2" == localName
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
@@ -1154,6 +1184,8 @@ public class Assertions extends Checker {
         currentPtr = 0;
         currentFigurePtr = -1;
         currentHeadingPtr = -1;
+        currentSectionPtr = -1;
+        currentArticlePtr = -1;
         stack[0] = null;
         hasMain = false;
     }
@@ -1347,10 +1379,21 @@ public class Assertions extends Checker {
                 }
             }
 
+            if ("section" == localName) {
+                currentSectionPtr = currentPtr + 1;
+            } else if ("article" == localName) {
+                currentArticlePtr = currentPtr + 1;
+            }
             if ("h1" == localName || "h2" == localName || "h3" == localName
                     || "h4" == localName || "h5" == localName
                     || "h6" == localName) {
                 currentHeadingPtr = currentPtr + 1;
+                if ((ancestorMask & SECTION_MASK) != 0) {
+                    stack[currentSectionPtr].setHeadingFound();
+                }
+                if ((ancestorMask & ARTICLE_MASK) != 0) {
+                    stack[currentArticlePtr].setHeadingFound();
+                }
             }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
                     || (ancestorMask & H3_MASK) != 0
