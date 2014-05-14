@@ -332,7 +332,8 @@ public class Assertions extends Checker {
     private static final String[] SPECIAL_ANCESTORS = { "a", "address",
             "button", "caption", "dfn", "dt", "figcaption", "figure", "footer",
             "form", "header", "label", "map", "noscript", "th", "time",
-            "progress", "meter", "article", "aside", "nav" };
+            "progress", "meter", "article", "aside", "nav", "h1", "h2", "h3",
+            "h4", "h5", "h6" };
 
     private static int specialAncestorNumber(String name) {
         for (int i = 0; i < SPECIAL_ANCESTORS.length; i++) {
@@ -446,6 +447,18 @@ public class Assertions extends Checker {
     private static final int FIGCAPTION_MASK = (1 << specialAncestorNumber("figcaption"));
 
     private static final int FIGURE_MASK = (1 << specialAncestorNumber("figure"));
+
+    private static final int H1_MASK = (1 << specialAncestorNumber("h1"));
+
+    private static final int H2_MASK = (1 << specialAncestorNumber("h2"));
+
+    private static final int H3_MASK = (1 << specialAncestorNumber("h3"));
+
+    private static final int H4_MASK = (1 << specialAncestorNumber("h4"));
+
+    private static final int H5_MASK = (1 << specialAncestorNumber("h5"));
+
+    private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
 
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
 
@@ -960,6 +973,8 @@ public class Assertions extends Checker {
 
     private int currentFigurePtr;
 
+    private int currentHeadingPtr;
+
     private boolean hasMain;
 
     private final void errContainedInOrOwnedBy(String role, Locator locator)
@@ -1115,7 +1130,8 @@ public class Assertions extends Checker {
             } else if (("h1" == localName || "h2" == localName
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
-                    && !node.hasTextNode()) {
+                    && !node.hasTextNode()
+                    && !node.hasImg()) {
                 warn("Empty heading.");
             } else if ("option" == localName && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
@@ -1138,6 +1154,7 @@ public class Assertions extends Checker {
         stack = new StackNode[32];
         currentPtr = 0;
         currentFigurePtr = -1;
+        currentHeadingPtr = -1;
         stack[0] = null;
         hasMain = false;
     }
@@ -1329,6 +1346,20 @@ public class Assertions extends Checker {
                         || "svg" == localName || "video" == localName) {
                     stack[currentFigurePtr].setEmbeddedContentFound();
                 }
+            }
+
+            if ("h1" == localName || "h2" == localName || "h3" == localName
+                    || "h4" == localName || "h5" == localName
+                    || "h6" == localName) {
+                currentHeadingPtr = currentPtr + 1;
+            }
+            if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
+                    || (ancestorMask & H3_MASK) != 0
+                    || (ancestorMask & H4_MASK) != 0
+                    || (ancestorMask & H5_MASK) != 0 || (ancestorMask & H6_MASK) != 0)
+                    && ("img" == localName && atts.getIndex("", "alt") > -1 && !"".equals(atts.getValue(
+                            "", "alt")))) {
+                stack[currentHeadingPtr].setImgFound();
             }
 
             if ("option" == localName && !parent.hasOption()) {
