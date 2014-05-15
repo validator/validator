@@ -1417,8 +1417,9 @@ public class Assertions extends Checker {
                     || (ancestorMask & H3_MASK) != 0
                     || (ancestorMask & H4_MASK) != 0
                     || (ancestorMask & H5_MASK) != 0 || (ancestorMask & H6_MASK) != 0)
-                    && ("img" == localName && atts.getIndex("", "alt") > -1 && !"".equals(atts.getValue(
-                            "", "alt")))) {
+                    && "img" == localName
+                    && atts.getIndex("", "alt") > -1
+                    && !"".equals(atts.getValue("", "alt"))) {
                 stack[currentHeadingPtr].setImgFound();
             }
 
