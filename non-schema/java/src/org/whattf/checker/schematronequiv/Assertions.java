@@ -1179,7 +1179,7 @@ public class Assertions extends Checker {
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
                     && !node.hasTextNode() && !node.hasImg()) {
-                warn("Empty heading.");
+                warn("Empty heading.", node.locator());
             } else if ("option" == localName && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
             }
@@ -2002,8 +2002,14 @@ public class Assertions extends Checker {
                         }
                     } else if ("h1".equals(node.name) || "h2".equals(node.name)
                             || "h3".equals(node.name) || "h4".equals(node.name)
-                            || "h5".equals(node.name) || "h6".equals(node.name)) {
-                        node.setTextNodeFound();
+                            || "h5".equals(node.name) || "h6".equals(node.name)
+                            || (node.ancestorMask & H1_MASK) != 0
+                            || (node.ancestorMask & H2_MASK) != 0
+                            || (node.ancestorMask & H3_MASK) != 0
+                            || (node.ancestorMask & H4_MASK) != 0
+                            || (node.ancestorMask & H5_MASK) != 0
+                            || (node.ancestorMask & H6_MASK) != 0) {
+                        stack[currentHeadingPtr].setTextNodeFound();
                     } else if ("option".equals(node.name)
                             && !stack[currentPtr - 1].hasOption()
                             && (!stack[currentPtr - 1].hasEmptyValueOption() || stack[currentPtr - 1].hasNoValueOption())
