@@ -586,6 +586,8 @@ public class Assertions extends Checker {
 
         private Locator nonEmptyOption = null;
 
+        private Locator locator = null;
+
         private boolean children = false;
 
         private boolean selectedOptions = false;
@@ -939,6 +941,22 @@ public class Assertions extends Checker {
             this.nonEmptyOption = locator;
         }
 
+        /**
+         * Returns the locator.
+         *
+         * @return the locator
+         */
+        public Locator locator() {
+            return locator;
+        }
+
+        /**
+         * Sets the locator.
+         */
+        public void setLocator(Locator locator) {
+            this.locator = locator;
+        }
+
     }
 
     private StackNode[] stack;
@@ -1154,9 +1172,9 @@ public class Assertions extends Checker {
                             + " text content.", node.nonEmptyOptionLocator());
                 }
             } else if ("section" == localName && !node.hasHeading()) {
-                warn("Section lacks heading.");
+                warn("Section lacks heading.", node.locator());
             } else if ("article" == localName && !node.hasHeading()) {
-                warn("Article lacks heading.");
+                warn("Article lacks heading.", node.locator());
             } else if (("h1" == localName || "h2" == localName
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
@@ -1933,7 +1951,8 @@ public class Assertions extends Checker {
             }
             push(child);
         }
-
+        stack[currentPtr].setLocator(new LocatorImpl(
+                getDocumentLocator()));
     }
 
     private void processChildContent(StackNode parent) throws SAXException {
