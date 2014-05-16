@@ -460,10 +460,6 @@ public class Assertions extends Checker {
 
     private static final int H6_MASK = (1 << specialAncestorNumber("h6"));
 
-    private static final int SECTION_MASK = (1 << specialAncestorNumber("section"));
-
-    private static final int ARTICLE_MASK = (1 << specialAncestorNumber("article"));
-
     private static final int MAP_MASK = (1 << specialAncestorNumber("map"));
 
     private static final int HREF_MASK = (1 << 30);
@@ -1015,9 +1011,7 @@ public class Assertions extends Checker {
 
     private int currentHeadingPtr;
 
-    private int currentSectionPtr;
-
-    private int currentArticlePtr;
+    private int currentSectioningElementPtr;
 
     private boolean hasMain;
 
@@ -1183,6 +1177,10 @@ public class Assertions extends Checker {
             } else if ("option" == localName && !stack[currentPtr].hasOption()) {
                 stack[currentPtr].setOptionFound();
             }
+            if ("article" == localName || "aside" == localName
+                    || "nav" == localName || "section" == localName) {
+                currentSectioningElementPtr = -1;
+            }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
             warn(
@@ -1202,8 +1200,7 @@ public class Assertions extends Checker {
         currentPtr = 0;
         currentFigurePtr = -1;
         currentHeadingPtr = -1;
-        currentSectionPtr = -1;
-        currentArticlePtr = -1;
+        currentSectioningElementPtr = -1;
         stack[0] = null;
         hasMain = false;
     }
@@ -1397,20 +1394,16 @@ public class Assertions extends Checker {
                 }
             }
 
-            if ("section" == localName) {
-                currentSectionPtr = currentPtr + 1;
-            } else if ("article" == localName) {
-                currentArticlePtr = currentPtr + 1;
+            if ("article" == localName || "aside" == localName
+                    || "nav" == localName || "section" == localName) {
+                currentSectioningElementPtr = currentPtr + 1;
             }
             if ("h1" == localName || "h2" == localName || "h3" == localName
                     || "h4" == localName || "h5" == localName
                     || "h6" == localName) {
                 currentHeadingPtr = currentPtr + 1;
-                if ((ancestorMask & SECTION_MASK) != 0) {
-                    stack[currentSectionPtr].setHeadingFound();
-                }
-                if ((ancestorMask & ARTICLE_MASK) != 0) {
-                    stack[currentArticlePtr].setHeadingFound();
+                if (currentSectioningElementPtr > -1) {
+                    stack[currentSectioningElementPtr].setHeadingFound();
                 }
             }
             if (((ancestorMask & H1_MASK) != 0 || (ancestorMask & H2_MASK) != 0
