@@ -1587,7 +1587,7 @@ public class Assertions extends Checker {
                             + " \u201Cmain\u201D element.");
                 }
                 hasMain = true;
-            } else if ("h1" == localName) {
+            } else if ("h1" == localName && currentSectioningElementPtr > -1) {
                 if (hasH1) {
                     warn("Consider using \u201Ch1\u201D elements as top-level"
                             + " headings only (all \u201Ch1\u201D elements are"
