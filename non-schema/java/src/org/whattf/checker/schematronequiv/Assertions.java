@@ -1589,10 +1589,10 @@ public class Assertions extends Checker {
                 hasMain = true;
             } else if ("h1" == localName) {
                 if (hasH1) {
-                    warn("Consider using at most only one \u201Ch1\u201D"
-                            + " element per document (many screen readers"
-                            + " and other tools treat all \u201Ch1\u201D"
-                            + " elements as page headers).");
+                    warn("Consider using \u201Ch1\u201D elements as top-level"
+                            + " headings only (all \u201Ch1\u201D elements are"
+                            + " treated as top-level headings by many screen"
+                            + " readers and other tools).");
                 }
                 hasH1 = true;
             }
