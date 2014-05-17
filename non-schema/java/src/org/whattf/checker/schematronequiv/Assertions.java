@@ -1015,6 +1015,8 @@ public class Assertions extends Checker {
 
     private boolean hasMain;
 
+    private boolean hasH1;
+
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
         err("An element with \u201Crole=" + role + "\u201D"
@@ -1203,6 +1205,7 @@ public class Assertions extends Checker {
         currentSectioningElementPtr = -1;
         stack[0] = null;
         hasMain = false;
+        hasH1 = false;
     }
 
     public void reset() {
@@ -1584,6 +1587,14 @@ public class Assertions extends Checker {
                             + " \u201Cmain\u201D element.");
                 }
                 hasMain = true;
+            } else if ("h1" == localName) {
+                if (hasH1) {
+                    warn("Consider using at most only one \u201Ch1\u201D"
+                            + " element per document (many screen readers"
+                            + " and other tools treat all \u201Ch1\u201D"
+                            + " elements as page headers).");
+                }
+                hasH1 = true;
             }
 
             // progress
