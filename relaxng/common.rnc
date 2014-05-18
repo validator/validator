@@ -385,6 +385,10 @@ common.attrs.other =
 	common.data.image.candidate.strings =
 		string
 
+## List of Image Candidate Strings (width descriptor required)
+	common.data.image.candidate.strings.width.required =
+		string
+
 ## List of Source Sizes
 	common.data.source.size.list =
 		string
