@@ -58,6 +58,24 @@ namespace local = ""
 
 	common.elem.phrasing |= img.elem
 
+## Image with multiple sources: <picture>
+
+	picture.elem =
+		element picture { picture.inner & picture.attrs }
+		& v5only
+	picture.attrs =
+		( common.attrs )
+	picture.inner =
+		(	(	source.elem*
+			&	common.elem.script-supporting*
+			),
+			(	img.elem
+			&	common.elem.script-supporting*
+			)
+		)
+
+	common.elem.phrasing |= picture.elem
+
 ## Plug-ins: <embed>
 
 	embed.elem =
