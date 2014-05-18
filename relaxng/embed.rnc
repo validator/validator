@@ -15,6 +15,8 @@ namespace local = ""
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
+		&	img.attrs.srcset?
+		&	img.attrs.sizes?
 		&	img.attrs.alt? # ARIA: if alt empty, only allowed role value is "presentation"; check in assertions
 		&	img.attrs.height?
 		&	img.attrs.width?
@@ -28,6 +30,14 @@ namespace local = ""
 		img.attrs.src =
 			attribute src {
 				common.data.uri.non-empty
+			}
+		img.attrs.srcset =
+			attribute srcset {
+				common.data.image.candidate.strings
+			}
+		img.attrs.sizes =
+			attribute sizes {
+				common.data.source.size.list
 			}
 		img.attrs.alt =
 			attribute alt {
@@ -98,7 +108,7 @@ namespace local = ""
 			}
 		source.picture.attrs.srcset =
 			attribute srcset {
-				common.data.image.candidate.list
+				common.data.image.candidate.strings
 			}
 		source.picture.attrs.type =
 			attribute type {

@@ -382,7 +382,7 @@ common.attrs.other =
 		w:keylabellist
 
 ## List of Image Candidate Strings
-	common.data.image.candidate.list =
+	common.data.image.candidate.strings =
 		string
 
 ## List of Source Sizes
