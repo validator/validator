@@ -1168,9 +1168,15 @@ public class Assertions extends Checker {
                             + " text content.", node.nonEmptyOptionLocator());
                 }
             } else if ("section" == localName && !node.hasHeading()) {
-                warn("Section lacks heading.", node.locator());
+                warn("Section lacks heading. Consider using"
+                        + " \u201ch2\u201d-\u201ch6\u201d elements to add"
+                        + " identifying headings to all sections.",
+                        node.locator());
             } else if ("article" == localName && !node.hasHeading()) {
-                warn("Article lacks heading.", node.locator());
+                warn("Article lacks heading. Consider using"
+                        + " \u201ch2\u201d-\u201ch6\u201d elements to add"
+                        + " identifying headings to all articles.",
+                        node.locator());
             } else if (("h1" == localName || "h2" == localName
                     || "h3" == localName || "h4" == localName
                     || "h5" == localName || "h6" == localName)
