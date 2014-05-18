@@ -66,7 +66,7 @@ namespace local = ""
 	picture.attrs =
 		( common.attrs )
 	picture.inner =
-		(	(	source.elem*
+		(	(	source.picture.elem*
 			&	common.elem.script-supporting*
 			),
 			(	img.elem
@@ -75,6 +75,37 @@ namespace local = ""
 		)
 
 	common.elem.phrasing |= picture.elem
+
+## Picture source: <source srcset>
+
+	source.picture.elem =
+		element source { source.picture.inner & source.picture.attrs }
+	source.picture.attrs =
+		(	common.attrs
+		&	common.attrs.aria?
+		&	source.picture.attrs.media?
+		&	source.picture.attrs.sizes?
+		&	source.picture.attrs.srcset
+		&	source.picture.attrs.type?
+		)
+		source.picture.attrs.media =
+			attribute media {
+				common.data.mediaquery
+			}
+		source.picture.attrs.sizes =
+			attribute sizes {
+				common.data.source.size.list
+			}
+		source.picture.attrs.srcset =
+			attribute srcset {
+				common.data.image.candidate.list
+			}
+		source.picture.attrs.type =
+			attribute type {
+				common.data.mimetype
+			}
+	source.picture.inner =
+		( empty )
 
 ## Plug-ins: <embed>
 

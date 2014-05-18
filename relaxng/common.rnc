@@ -381,6 +381,14 @@ common.attrs.other =
 	common.data.keylabellist =
 		w:keylabellist
 
+## List of Image Candidate Strings
+	common.data.image.candidate.list =
+		string
+
+## List of Source Sizes
+	common.data.source.size.list =
+		string
+
 ## Microdata Properties
   common.data.microdata-properties =
     list { w:microdata-property+ }
