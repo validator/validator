@@ -34,11 +34,11 @@ namespace local = ""
 		img.attrs.srcset =
 			attribute srcset {
 				common.data.image.candidate.strings
-			}
+			} & v5only
 		img.attrs.sizes =
 			attribute sizes {
 				common.data.source.size.list
-			}
+			} & v5only
 		img.attrs.alt =
 			attribute alt {
 				text
