@@ -391,7 +391,7 @@ common.attrs.other =
 
 ## List of Source Sizes
 	common.data.source.size.list =
-		string
+		w:source-size-list
 
 ## Microdata Properties
   common.data.microdata-properties =
