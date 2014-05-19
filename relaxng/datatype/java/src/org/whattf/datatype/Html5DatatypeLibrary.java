@@ -170,6 +170,10 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return new SvgPathData();
         } else if ("source-size-list".equals(typeLocalName)) {
             return new SourceSizeList();
+        } else if ("image-candidate-strings".equals(typeLocalName)) {
+            return new ImageCandidateStrings();
+        } else if ("image-candidate-strings-width-required".equals(typeLocalName)) {
+            return new ImageCandidateStringsWidthRequired();
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

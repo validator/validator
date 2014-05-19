@@ -383,11 +383,11 @@ common.attrs.other =
 
 ## List of Image Candidate Strings
 	common.data.image.candidate.strings =
-		string
+		w:image-candidate-strings
 
 ## List of Image Candidate Strings (width descriptor required)
 	common.data.image.candidate.strings.width.required =
-		string
+		w:image-candidate-strings-width-required
 
 ## List of Source Sizes
 	common.data.source.size.list =
