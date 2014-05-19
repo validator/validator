@@ -370,6 +370,7 @@ namespace local = ""
 		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
+			|	common.attrs.aria.role.presentation
 			)?
 		)
 		iframe.attrs.src =
