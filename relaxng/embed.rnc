@@ -72,6 +72,7 @@ namespace local = ""
 		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
+			|	common.attrs.aria.role.presentation
 			)?
 		)
 		embed.attrs.src =
@@ -292,6 +293,7 @@ namespace local = ""
 		&	(	common.attrs.aria.landmark.application
 			|	common.attrs.aria.landmark.document
 			|	common.attrs.aria.role.img
+			|	common.attrs.aria.role.presentation
 			)?
 		)
 		object.attrs.data =
