@@ -516,6 +516,11 @@ public class Assertions extends Checker {
         MUST_NOT_DANGLE_IDREFS.add("aria-owns");
     }
 
+    private static final String h1WarningMessage = "Consider using the"
+            + " \u201Ch1\u201D element as a top-level heading only (all"
+            + " \u201Ch1\u201D elements are treated as top-level headings"
+            + " by many screen readers and other tools).";
+
     private class IdrefLocator {
         private final Locator locator;
 
@@ -959,6 +964,8 @@ public class Assertions extends Checker {
 
     private int currentPtr;
 
+    private int currentSectioningDepth;
+
     public Assertions() {
         super();
     }
@@ -1015,7 +1022,9 @@ public class Assertions extends Checker {
 
     private boolean hasMain;
 
-    private boolean hasH1;
+    private boolean hasTopLevelH1;
+
+    private Set<Locator> secondLevelH1s = new HashSet<Locator>();
 
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
@@ -1110,6 +1119,12 @@ public class Assertions extends Checker {
             }
         }
 
+        if (hasTopLevelH1) {
+            for (Locator locator : secondLevelH1s) {
+                warn(h1WarningMessage, locator);
+            }
+        }
+
         reset();
         stack = null;
     }
@@ -1188,6 +1203,7 @@ public class Assertions extends Checker {
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
                 currentSectioningElementPtr = -1;
+                currentSectioningDepth--;
             }
         }
         if ((locator = openActiveDescendants.remove(node)) != null) {
@@ -1209,9 +1225,10 @@ public class Assertions extends Checker {
         currentFigurePtr = -1;
         currentHeadingPtr = -1;
         currentSectioningElementPtr = -1;
+        currentSectioningDepth = 0;
         stack[0] = null;
         hasMain = false;
-        hasH1 = false;
+        hasTopLevelH1 = false;
     }
 
     public void reset() {
@@ -1406,6 +1423,7 @@ public class Assertions extends Checker {
             if ("article" == localName || "aside" == localName
                     || "nav" == localName || "section" == localName) {
                 currentSectioningElementPtr = currentPtr + 1;
+                currentSectioningDepth++;
             }
             if ("h1" == localName || "h2" == localName || "h3" == localName
                     || "h4" == localName || "h5" == localName
@@ -1594,13 +1612,13 @@ public class Assertions extends Checker {
                 }
                 hasMain = true;
             } else if ("h1" == localName) {
-                if (hasH1 && currentSectioningElementPtr > -1) {
-                    warn("Consider using \u201Ch1\u201D elements as top-level"
-                            + " headings only (all \u201Ch1\u201D elements are"
-                            + " treated as top-level headings by many screen"
-                            + " readers and other tools).");
+                if (currentSectioningDepth > 1) {
+                    warn(h1WarningMessage);
+                } else if (currentSectioningDepth == 1) {
+                    secondLevelH1s.add(new LocatorImpl(getDocumentLocator()));
+                } else {
+                    hasTopLevelH1 = true;
                 }
-                hasH1 = true;
             }
 
             // progress
