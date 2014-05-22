@@ -48,7 +48,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
     }
 
     @Override public String getName() {
-        return "list of image candidate strings";
+        return "image candidate strings";
     }
 
 }
