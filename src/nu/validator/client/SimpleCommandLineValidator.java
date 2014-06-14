@@ -182,6 +182,7 @@ public class SimpleCommandLineValidator {
 
     private static void setup(String schemaUrl) throws SAXException, Exception {
         setErrorHandler();
+        errorHandler.setHtml(true);
         try {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
@@ -271,7 +272,7 @@ public class SimpleCommandLineValidator {
                 if (verbose) {
                     errorHandler.warning(new SAXParseException(
                             "File was not checked. Files must have .html,"
-                                    + " .xhtml, .htm, or .xht extension.",
+                                    + " .xhtml, .htm, or .xht extensions.",
                             null, file.toURI().toURL().toString(), -1, -1));
                 }
             }
