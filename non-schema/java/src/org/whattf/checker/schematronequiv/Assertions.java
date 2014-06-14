@@ -34,6 +34,15 @@ import org.whattf.checker.AttributeUtil;
 import org.whattf.checker.Checker;
 import org.whattf.checker.LocatorImpl;
 import org.whattf.checker.TaintableLocatorImpl;
+import org.whattf.checker.VnuBadAttrValueException;
+
+import org.whattf.datatype.Html5DatatypeException;
+import org.whattf.datatype.ImageCandidateStringsWidthRequired;
+import org.whattf.datatype.ImageCandidateStrings;
+import org.whattf.datatype.IriRef;
+
+import org.relaxng.datatype.DatatypeException;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -1381,6 +1390,42 @@ public class Assertions extends Checker {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
                         ids.add(attVal);
+                    }
+                }
+            }
+
+            if ("img".equals(localName) || "source".equals(localName)) {
+                if (atts.getIndex("", "srcset") > -1) {
+                    String srcsetVal = atts.getValue("", "srcset");
+                    try {
+                        if (atts.getIndex("", "sizes") > -1) {
+                            ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(srcsetVal);
+                        } else {
+                            ImageCandidateStrings.THE_INSTANCE.checkValid(srcsetVal);
+                        }
+                    } catch (DatatypeException e) {
+                        Class<?> datatypeClass = ImageCandidateStrings.class;
+                        if (atts.getIndex("", "sizes") > -1) {
+                            datatypeClass = ImageCandidateStringsWidthRequired.class;
+                        }
+                        try {
+                            if (getErrorHandler() != null) {
+                                String msg = e.getMessage();
+                                if (e instanceof Html5DatatypeException) {
+                                    Html5DatatypeException ex5 = (Html5DatatypeException) e;
+                                    if (!ex5.getDatatypeClass().equals(
+                                            IriRef.class)) {
+                                        msg = msg.substring(msg.indexOf(": ") + 2);
+                                    }
+                                }
+                                VnuBadAttrValueException ex = new VnuBadAttrValueException(
+                                        localName, uri, "srcset", srcsetVal,
+                                        msg, getDocumentLocator(),
+                                        datatypeClass, false);
+                                getErrorHandler().error(ex);
+                            }
+                        } catch (ClassNotFoundException ce) {
+                        }
                     }
                 }
             }
