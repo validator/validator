@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2013 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -54,6 +54,7 @@ import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
 import org.whattf.checker.NormalizationChecker;
 import org.whattf.checker.DatatypeMismatchException;
+import org.whattf.checker.VnuBadAttrValueException;
 import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.io.DataUri;
 import org.xml.sax.ContentHandler;
@@ -492,6 +493,23 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             }
           }
         }
+        if (e instanceof VnuBadAttrValueException) {
+            VnuBadAttrValueException ex = (VnuBadAttrValueException) e;
+            Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+            for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+                DatatypeException dex = entry.getValue();
+                if (dex instanceof Html5DatatypeException) {
+                    Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                    if (ex5.isWarning()) {
+                        this.warnings++;
+                        throwIfTooManyMessages();
+                        messageFromSAXParseException(MessageType.WARNING, e,
+                                exact);
+                        return;
+                    }
+                }
+            }
+        }
         if (e instanceof DatatypeMismatchException) {
           DatatypeMismatchException ex = (DatatypeMismatchException) e;
           Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
@@ -816,6 +834,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (message instanceof AbstractValidationException) {
             AbstractValidationException ave = (AbstractValidationException) message;
             rngMessageText(ave);
+        } else if (message instanceof VnuBadAttrValueException) {
+            VnuBadAttrValueException e = (VnuBadAttrValueException) message;
+            vnuBadAttrValueMessageText(e);
+            emitter.endText();
         } else {
             String msg = message.getMessage();
             if (msg != null) {
@@ -825,6 +847,39 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 }
                 emitter.endText();
             }
+        }
+    }
+
+    private void vnuBadAttrValueMessageText(VnuBadAttrValueException e)
+            throws SAXException {
+        MessageTextHandler messageTextHandler = emitter.startText();
+        if (messageTextHandler != null) {
+            boolean isWarning = false;
+            Map<String, DatatypeException> datatypeErrors = e.getExceptions();
+            for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
+                DatatypeException dex = entry.getValue();
+                if (dex instanceof Html5DatatypeException) {
+                    Html5DatatypeException ex5 = (Html5DatatypeException) dex;
+                    if (ex5.isWarning()) {
+                        isWarning = true;
+                    }
+                }
+            }
+            if (isWarning) {
+                messageTextString(messageTextHandler, POTENTIALLY_BAD_VALUE,
+                        false);
+            } else {
+                messageTextString(messageTextHandler, BAD_VALUE, false);
+            }
+            if (e.getAttributeValue().length() < 200) {
+                codeString(messageTextHandler, e.getAttributeValue());
+            }
+            messageTextString(messageTextHandler, FOR, false);
+            attribute(messageTextHandler, e.getAttributeName(),
+                    e.getCurrentElement(), false);
+            messageTextString(messageTextHandler, ON, false);
+            element(messageTextHandler, e.getCurrentElement(), false);
+            emitDatatypeErrors(messageTextHandler, e.getExceptions());
         }
     }
 
@@ -1132,6 +1187,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     @SuppressWarnings("unchecked")
     private void elaboration(Exception e) throws SAXException {
         if (!(e instanceof AbstractValidationException
+                || e instanceof VnuBadAttrValueException
               || e instanceof DatatypeMismatchException)) {
             return;
         }
@@ -1187,6 +1243,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             elaborateContentModel(elt);
         } else if (e instanceof BadAttributeValueException) {
             BadAttributeValueException ex = (BadAttributeValueException) e;
+            Map<String, DatatypeException> map = ex.getExceptions();
+            elaborateDatatypes(map);
+        } else if (e instanceof VnuBadAttrValueException) {
+            VnuBadAttrValueException ex = (VnuBadAttrValueException) e;
             Map<String, DatatypeException> map = ex.getExceptions();
             elaborateDatatypes(map);
         } else if (e instanceof DatatypeMismatchException) {
