@@ -169,11 +169,11 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
         } else if ("svg-pathdata".equals(typeLocalName)) {
             return new SvgPathData();
         } else if ("source-size-list".equals(typeLocalName)) {
-            return new SourceSizeList();
+            return SourceSizeList.THE_INSTANCE;
         } else if ("image-candidate-strings".equals(typeLocalName)) {
-            return new ImageCandidateStrings();
+            return ImageCandidateStrings.THE_INSTANCE;
         } else if ("image-candidate-strings-width-required".equals(typeLocalName)) {
-            return new ImageCandidateStringsWidthRequired();
+            return ImageCandidateStringsWidthRequired.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
