@@ -22,6 +22,8 @@
 
 package org.whattf.datatype;
 
+import java.util.List;
+
 import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
@@ -40,7 +42,8 @@ public class SourceSizeList extends AbstractDatatype {
 
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
-        throw newDatatypeException("Please check the value manually.", WARN);
+        for (CharSequenceWithOffset unparsedSize : split(literal, ',')) {
+        }
     }
 
     @Override public String getName() {
