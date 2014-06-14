@@ -41,6 +41,6 @@ public class Iri extends IriRef {
 
     @Override
     public String getName() {
-        return "absolute IRI";
+        return "absolute URL";
     }
 }

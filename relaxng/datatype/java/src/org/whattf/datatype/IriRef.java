@@ -231,7 +231,7 @@ public class IriRef extends AbstractDatatype {
 
     @Override
     public String getName() {
-        return "IRI reference";
+        return "URL";
     }
 
     private class CharSequencePair {
