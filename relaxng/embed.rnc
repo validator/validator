@@ -15,11 +15,8 @@ namespace local = ""
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
-		&	(	img.attrs.srcset?
-			|	(	img.attrs.srcset.width.required?
-				&	img.attrs.sizes
-				)
-			)
+		&	img.attrs.sizes?
+		&	img.attrs.srcset?
 		&	img.attrs.alt? # ARIA: if alt empty, only allowed role value is "presentation"; check in assertions
 		&	img.attrs.height?
 		&	img.attrs.width?
@@ -34,13 +31,9 @@ namespace local = ""
 			attribute src {
 				common.data.uri.non-empty
 			}
-		img.attrs.srcset.width.required =
-			attribute srcset {
-				common.data.image.candidate.strings.width.required
-			} & v5only
 		img.attrs.srcset =
 			attribute srcset {
-				common.data.image.candidate.strings
+				string
 			} & v5only
 		img.attrs.sizes =
 			attribute sizes {
@@ -101,29 +94,22 @@ namespace local = ""
 		(	common.attrs
 		&	common.attrs.aria?
 		&	source.picture.attrs.media?
-		&	(	source.picture.attrs.srcset?
-			|	(	source.picture.attrs.srcset.width.required?
-				&	source.picture.attrs.sizes
-				)
-			)
+		&	source.picture.attrs.srcset?
+		&	source.picture.attrs.sizes?
 		&	source.picture.attrs.type?
 		)
 		source.picture.attrs.media =
 			attribute media {
 				common.data.mediaquery
 			}
+		source.picture.attrs.srcset =
+			attribute srcset {
+				string
+			} & v5only
 		source.picture.attrs.sizes =
 			attribute sizes {
 				common.data.source.size.list
-			}
-		source.picture.attrs.srcset =
-			attribute srcset {
-				common.data.image.candidate.strings
-			}
-		source.picture.attrs.srcset.width.required =
-			attribute srcset {
-				common.data.image.candidate.strings.width.required
-			}
+			} & v5only
 		source.picture.attrs.type =
 			attribute type {
 				common.data.mimetype
