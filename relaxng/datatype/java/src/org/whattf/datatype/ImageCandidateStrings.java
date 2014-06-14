@@ -26,6 +26,10 @@ import org.relaxng.datatype.DatatypeException;
 
 public class ImageCandidateStrings extends AbstractDatatype {
 
+    private enum State {
+        SPLITTING_LOOP, URL, DESCRIPTOR
+    }
+
     /**
      * The singleton instance.
      */
@@ -35,12 +39,88 @@ public class ImageCandidateStrings extends AbstractDatatype {
         super();
     }
 
-    private final static boolean WARN = System.getProperty(
-            "org.whattf.datatype.warn", "").equals("true") ? true : false;
-
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
-        throw newDatatypeException("Please check the value manually.", WARN);
+        if (literal.length() == 0) {
+            err("Must contain one or more image candidate strings.");
+        }
+        boolean lacksURL = true;
+        int position = 0;
+        State state = State.SPLITTING_LOOP;
+        for (int i = 0; i < literal.length(); i++) {
+            char c = literal.charAt(i);
+            switch (state) {
+                case SPLITTING_LOOP:
+                    if (isWhitespace(c)) {
+                        position = i + 1;
+                        continue;
+                    } else if (',' == c) {
+                        if (lacksURL) {
+                            err("Found empty image candidate string.");
+                        }
+                        commaHandler(literal.subSequence(position, i + 1));
+                        lacksURL = true;
+                        position = i + 1;
+                        continue;
+                    }
+                    // fall through
+                case URL:
+                    lacksURL = false;
+                    if (i == literal.length() - 1 || isWhitespace(c)) {
+                        int end = isWhitespace(c) ? i : i + 1;
+                        CharSequence url = literal.subSequence(position, end);
+                        position = end;
+                        state = State.DESCRIPTOR;
+                        if (endsWithComma(url)) {
+                            lacksURL = true;
+                            position = i + 1;
+                            state = State.SPLITTING_LOOP;
+                        }
+                        continue;
+                    } else {
+                        state = State.URL;
+                        continue;
+                    }
+                case DESCRIPTOR:
+                    position = i + 1;
+                    if (',' == c) {
+                        lacksURL = true;
+                        state = State.SPLITTING_LOOP;
+                        continue;
+                    } else {
+                        continue;
+                    }
+            }
+        }
+        if (lacksURL) {
+            err("Found empty image candidate string.");
+        }
+    }
+
+    private int commaHandler(CharSequence cs) throws DatatypeException {
+        if (',' != cs.charAt(cs.length() - 1)) {
+            return cs.length();
+        }
+        for (int i = cs.length() - 2; i > 0; i--) {
+            if (',' != cs.charAt(i)) {
+                break;
+            }
+            err("Found empty image candidate string.");
+        }
+        return cs.length() - 1;
+    }
+
+    private boolean endsWithComma(CharSequence cs) throws DatatypeException {
+        int end = commaHandler(cs);
+        Html5DatatypeLibrary dl = new Html5DatatypeLibrary();
+        IriRef url = (IriRef) dl.createDatatype("iri-ref");
+        System.out.println(cs.subSequence(0, end));
+        url.checkValid(cs.subSequence(0, end));
+        return end == cs.length() - 1;
+    }
+
+    private void err(String message) throws DatatypeException {
+        throw newDatatypeException(message);
     }
 
     protected boolean widthRequired() {
