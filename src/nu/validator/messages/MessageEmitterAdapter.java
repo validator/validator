@@ -477,25 +477,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if ((!batchMode && fatalErrors > 0) || nonDocumentErrors > 0) {
             return;
         }
+        Map<String, DatatypeException> datatypeErrors = null;
         if (e instanceof BadAttributeValueException) {
-          BadAttributeValueException ex = (BadAttributeValueException) e;
-          Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
-          for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
-            DatatypeException dex = entry.getValue();
-            if (dex instanceof Html5DatatypeException) {
-              Html5DatatypeException ex5 = (Html5DatatypeException) dex;
-              if (ex5.isWarning()) {
-                this.warnings++;
-                throwIfTooManyMessages();
-                messageFromSAXParseException(MessageType.WARNING, e, exact);
-                return;
-              }
-            }
-          }
+            datatypeErrors = ((BadAttributeValueException) e).getExceptions();
         }
         if (e instanceof VnuBadAttrValueException) {
-            VnuBadAttrValueException ex = (VnuBadAttrValueException) e;
-            Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
+            datatypeErrors = ((VnuBadAttrValueException) e).getExceptions();
+        }
+        if (e instanceof DatatypeMismatchException) {
+            datatypeErrors = ((DatatypeMismatchException) e).getExceptions();
+        }
+        if (datatypeErrors != null) {
             for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
                 DatatypeException dex = entry.getValue();
                 if (dex instanceof Html5DatatypeException) {
@@ -509,22 +501,6 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     }
                 }
             }
-        }
-        if (e instanceof DatatypeMismatchException) {
-          DatatypeMismatchException ex = (DatatypeMismatchException) e;
-          Map<String, DatatypeException> datatypeErrors = ex.getExceptions();
-          for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
-            DatatypeException dex = entry.getValue();
-            if (dex instanceof Html5DatatypeException) {
-              Html5DatatypeException ex5 = (Html5DatatypeException) dex;
-              if (ex5.isWarning()) {
-                this.warnings++;
-                throwIfTooManyMessages();
-                messageFromSAXParseException(MessageType.WARNING, e, exact);
-                return;
-              }
-            }
-          }
         }
         this.errors++;
         throwIfTooManyMessages();
@@ -837,7 +813,6 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         } else if (message instanceof VnuBadAttrValueException) {
             VnuBadAttrValueException e = (VnuBadAttrValueException) message;
             vnuBadAttrValueMessageText(e);
-            emitter.endText();
         } else {
             String msg = message.getMessage();
             if (msg != null) {
@@ -881,6 +856,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             element(messageTextHandler, e.getCurrentElement(), false);
             emitDatatypeErrors(messageTextHandler, e.getExceptions());
         }
+        emitter.endText();
     }
 
     @SuppressWarnings("unchecked")
@@ -1188,7 +1164,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private void elaboration(Exception e) throws SAXException {
         if (!(e instanceof AbstractValidationException
                 || e instanceof VnuBadAttrValueException
-              || e instanceof DatatypeMismatchException)) {
+                || e instanceof DatatypeMismatchException)) {
             return;
         }
 
