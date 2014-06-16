@@ -174,6 +174,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return ImageCandidateStrings.THE_INSTANCE;
         } else if ("image-candidate-strings-width-required".equals(typeLocalName)) {
             return ImageCandidateStringsWidthRequired.THE_INSTANCE;
+        } else if ("image-candidate-url".equals(typeLocalName)) {
+            return ImageCandidateURL.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }
