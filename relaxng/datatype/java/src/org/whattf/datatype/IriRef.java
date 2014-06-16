@@ -91,6 +91,10 @@ public class IriRef extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
+        String messagePrologue = "";
+        if (reportValue()) {
+            messagePrologue = "\u201c" + String.valueOf(literal) + "\u201d: ";
+        }
         if ("".equals(trimHtmlSpaces(literal.toString()))) {
             throw newDatatypeException("Must be non-empty.");
         }
@@ -156,11 +160,11 @@ public class IriRef extends AbstractDatatype {
                 }
             }
         } catch (GalimatiasParseException e) {
-            throw newDatatypeException(e.getMessage() + ".");
+            throw newDatatypeException(messagePrologue + e.getMessage() + ".");
         } catch (IOException e) {
-            throw newDatatypeException(e.getMessage());
+            throw newDatatypeException(messagePrologue + e.getMessage());
         } catch (RhinoException e) {
-            throw newDatatypeException(e.getMessage());
+            throw newDatatypeException(messagePrologue + e.getMessage());
         }
         if (url != null) {
             if (data) {
@@ -196,6 +200,10 @@ public class IriRef extends AbstractDatatype {
     }
 
     protected boolean isAbsolute() {
+        return false;
+    }
+
+    protected boolean reportValue() {
         return false;
     }
 
