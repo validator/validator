@@ -92,8 +92,18 @@ public class IriRef extends AbstractDatatype {
 
     public void checkValid(CharSequence literal) throws DatatypeException {
         String messagePrologue = "";
+        int length = literal.length();
+        int LIMIT = 50;
         if (reportValue()) {
-            messagePrologue = "\u201c" + String.valueOf(literal) + "\u201d: ";
+            if (length < LIMIT) {
+                messagePrologue = "\u201c" + String.valueOf(literal) + "\u201d: ";
+            } else {
+                StringBuilder sb = new StringBuilder(LIMIT + 1);
+                sb.append(literal, 0, LIMIT / 2);
+                sb.append('\u2026');
+                sb.append(literal, length - LIMIT / 2, length);
+                messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
+            }
         }
         if ("".equals(trimHtmlSpaces(literal.toString()))) {
             throw newDatatypeException("Must be non-empty.");
@@ -181,7 +191,9 @@ public class IriRef extends AbstractDatatype {
                     String msg = e.getMessage();
                     if (WARN
                             && "Fragment is not allowed for data: URIs according to RFC 2397.".equals(msg)) {
-                        throw newDatatypeException(msg, WARN);
+                        throw newDatatypeException(messagePrologue + msg, WARN);
+                    } else {
+                        throw newDatatypeException(messagePrologue + msg);
                     }
                 }
             }
