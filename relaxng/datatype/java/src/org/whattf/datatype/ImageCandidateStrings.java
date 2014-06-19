@@ -35,7 +35,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private static final int EXTRACT_LIMIT = 15;
 
-    private static final float DEFAULT_DENSITY = (float) 1;
+    private static final float ONE = (float) 1;
 
     private static final ImageCandidateURL IC_URL = ImageCandidateURL.THE_INSTANCE;
 
@@ -238,11 +238,10 @@ public class ImageCandidateStrings extends AbstractDatatype {
     private List<Float> adjustDenses(List<String> urls, List<Float> denses,
             int ix) throws DatatypeException {
         if (denses.size() == ix) {
-            if (denses.indexOf(DEFAULT_DENSITY) != -1) {
-                errSameDensity(urls.get(ix),
-                        urls.get(denses.indexOf(DEFAULT_DENSITY)));
+            if (denses.indexOf(ONE) != -1) {
+                errSameDensity(urls.get(ix), urls.get(denses.indexOf(ONE)));
             }
-            denses.add(DEFAULT_DENSITY);
+            denses.add(ONE);
         }
         return denses;
     }
