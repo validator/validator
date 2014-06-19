@@ -30,10 +30,12 @@ import org.relaxng.datatype.DatatypeException;
 public class ImageCandidateStrings extends AbstractDatatype {
 
     private static enum State {
-        SPLITTING_LOOP, URL, DESCRIPTORS
+        SPLITTING_LOOP, URL, COLLECTING_DESCRIPTOR_TOKENS, AFTER_TOKEN
     }
 
     private static final int EXTRACT_LIMIT = 15;
+
+    private static final float DEFAULT_DENSITY = (float) 1;
 
     private static final ImageCandidateURL IC_URL = ImageCandidateURL.THE_INSTANCE;
 
@@ -50,11 +52,14 @@ public class ImageCandidateStrings extends AbstractDatatype {
         }
         List<CharSequence> urls = new ArrayList<CharSequence>();
         List<Integer> widths = new ArrayList<Integer>();
-        List<Integer> densities = new ArrayList<Integer>();
+        List<Float> densities = new ArrayList<Float>();
+        StringBuilder token = new StringBuilder();
+        CharSequence extract;
         boolean eof = false;
         boolean waitingForCandidate = true;
         int position = 0;
         int start = 0;
+        int ix = 0;
         State state = State.SPLITTING_LOOP;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
@@ -83,41 +88,96 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     if (eof || isWhitespace(c)) {
                         int end = isWhitespace(c) ? i : i + 1;
                         CharSequence url = literal.subSequence(position, end);
-                        position = end;
-                        state = State.DESCRIPTORS;
+                        state = State.COLLECTING_DESCRIPTOR_TOKENS;
                         if (endsWithComma(url)) {
                             url = url.subSequence(0, url.length() - 1);
-                            position = i + 1;
                             waitingForCandidate = true;
                             state = State.SPLITTING_LOOP;
                         }
                         if (eof || waitingForCandidate) {
-                            if (densities.indexOf(1) != -1) {
-                                errSameDensity(url,
-                                        urls.get(densities.indexOf(1)));
-                            }
                             widths.add(null);
-                            densities.add(1);
+                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
+                                errSameDensity(
+                                        url,
+                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
+                            }
+                            densities.add(DEFAULT_DENSITY);
+                            ix++;
                         }
                         IC_URL.checkValid(url);
                         urls.add(url);
+                        token.setLength(0);
                         continue;
                     } else {
                         state = State.URL;
                         continue;
                     }
-                case DESCRIPTORS:
-                    position = i + 1;
-                    if (i == literal.length() || ',' == c) {
-                      // add width
-                      // add density
-                    }
-                    if (',' == c) {
+                case COLLECTING_DESCRIPTOR_TOKENS: // spec calls this "Start"
+                    extract = literal.subSequence(position, i + 1);
+                    if (isWhitespace(c)) {
+                        checkToken(token, extract, urls, widths, densities, ix);
+                        token.setLength(0);
+                        state = State.AFTER_TOKEN;
+                        continue;
+                    } else if (',' == c) {
+                        checkToken(token, extract, urls, widths, densities, ix);
+                        if (widths.size() == ix) {
+                            widths.add(null);
+                        }
+                        if (densities.size() == ix) {
+                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
+                                errSameDensity(
+                                        urls.get(ix),
+                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
+                            }
+                            densities.add(DEFAULT_DENSITY);
+                        }
+                        ix++;
                         waitingForCandidate = true;
                         state = State.SPLITTING_LOOP;
                         continue;
+                    } else if (eof) {
+                        token.append(c);
+                        checkToken(token, extract, urls, widths, densities, ix);
+                        if (widths.size() == ix) {
+                            widths.add(null);
+                        }
+                        if (densities.size() == ix) {
+                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
+                                errSameDensity(
+                                        urls.get(ix),
+                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
+                            }
+                            densities.add(DEFAULT_DENSITY);
+                        }
+                        break;
                     } else {
+                        token.append(c);
                         continue;
+                    }
+                case AFTER_TOKEN:
+                    extract = literal.subSequence(position, i + 1);
+                    if (isWhitespace(c)) {
+                        if (eof) {
+                            checkToken(token, extract, urls, widths, densities,
+                                    ix);
+                            if (widths.size() == ix) {
+                                widths.add(null);
+                            }
+                            if (densities.size() == ix) {
+                                if (densities.indexOf(DEFAULT_DENSITY) != -1) {
+                                    errSameDensity(
+                                            urls.get(ix),
+                                            urls.get(densities.indexOf(DEFAULT_DENSITY)));
+                                }
+                                densities.add(DEFAULT_DENSITY);
+                            }
+                            break;
+                        }
+                        continue;
+                    } else {
+                        i--;
+                        state = State.COLLECTING_DESCRIPTOR_TOKENS;
                     }
             }
         }
@@ -144,23 +204,102 @@ public class ImageCandidateStrings extends AbstractDatatype {
         return end == cs.length() - 1;
     }
 
+    private void checkToken(StringBuilder token, CharSequence cs,
+            List<CharSequence> urls, List<Integer> widths,
+            List<Float> densities, int ix) throws DatatypeException {
+        if (token.length() > 0) {
+            if (widths.size() > ix || densities.size() > ix) {
+                errExtraDescriptor(token, cs);
+            }
+            char last = token.charAt(token.length() - 1);
+            if (!('w' == last || 'x' == last)) {
+                err("Expected a number followed by \u201cw\u201d or"
+                        + " \u201cx\u201d but found \u201c" + token
+                        + "\u201d at \u201c" + extract(cs) + "\u201d.");
+            }
+            String number = token.subSequence(0, token.length() - 1).toString();
+            if ('-' == token.charAt(0)) {
+                err("Expected a positive number but found \u201c" + number
+                        + "\u201d at \u201c" + extract(cs) + "\u201d.");
+            }
+            if ('w' == last) {
+                try {
+                    int width = Integer.parseInt(number, 10);
+                    if (width < 0) {
+                        errNegativeNumber(number, cs);
+                    }
+                    if (!widths.isEmpty() && widths.contains(width)) {
+                        errSameWidth(urls.get(ix),
+                                urls.get(widths.indexOf(width)));
+                    }
+                    widths.add(width);
+                    densities.add(null);
+                } catch (NumberFormatException e) {
+                    err("Expected an integer but found \u201c" + number
+                            + "\u201d at \u201c" + extract(cs) + "\u201d");
+                }
+            }
+            if ('x' == last) {
+                try {
+                    float density = Float.parseFloat(number);
+                    if (density < 0) {
+                        errNegativeNumber(number, cs);
+                    }
+                    if (!densities.isEmpty() && densities.contains(density)) {
+                        errSameDensity(urls.get(ix),
+                                urls.get(densities.indexOf(density)));
+                    }
+                    densities.add(density);
+                    widths.add(null);
+                } catch (NumberFormatException e) {
+                    err("Expected a floating-point number but found \u201c"
+                            + number + "\u201d at \u201c" + extract(cs)
+                            + "\u201d");
+                }
+            }
+        }
+    }
+
     private void err(String message) throws DatatypeException {
         throw newDatatypeException(message);
     }
 
-    private void errEmpty(CharSequence extract) throws DatatypeException {
-        int len = extract.length();
-        if (len > EXTRACT_LIMIT) {
-            extract = "\u2026" + extract.subSequence(len - EXTRACT_LIMIT, len);
-        }
-        err("Empty image-candidate string at \u201c" + extract + "\u201d.");
+    private void errEmpty(CharSequence cs) throws DatatypeException {
+        err("Empty image-candidate string at \u201c" + extract(cs) + "\u201d.");
+    }
+
+    private void errSameWidth(CharSequence url1, CharSequence url2)
+            throws DatatypeException {
+        err("Width for image \u201c" + extract(url1)
+                + "\u201d is identical to width for image \u201c"
+                + extract(url2) + "\u201d.");
     }
 
     private void errSameDensity(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Density for image \u201c" + url1
-                + "\u201d is identical to density for image \u201c" + url2
-                + "\u201d.");
+        err("Density for image \u201c" + extract(url1)
+                + "\u201d is identical to density for image \u201c"
+                + extract(url2) + "\u201d.");
+    }
+
+    private void errExtraDescriptor(StringBuilder token, CharSequence cs)
+            throws DatatypeException {
+        err("Image candidate string has extraneous descriptor \u201c" + token
+                + "\u201d at \u201c" + extract(cs) + "\u201d");
+    }
+
+    private void errNegativeNumber(String number, CharSequence cs)
+            throws DatatypeException {
+        err("Negative number \u201c" + number
+                + "\u201d in descriptor at \u201c" + extract(cs) + "\u201d");
+    }
+
+    private CharSequence extract(CharSequence extract) {
+        int len = extract.length();
+        if (len > EXTRACT_LIMIT) {
+            extract = "\u2026" + extract.subSequence(len - EXTRACT_LIMIT, len);
+        }
+        return extract;
     }
 
     protected boolean widthRequired() {
