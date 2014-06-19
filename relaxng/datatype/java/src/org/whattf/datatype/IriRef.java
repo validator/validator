@@ -96,7 +96,7 @@ public class IriRef extends AbstractDatatype {
         int LIMIT = 50;
         if (reportValue()) {
             if (length < LIMIT) {
-                messagePrologue = "\u201c" + String.valueOf(literal) + "\u201d: ";
+                messagePrologue = "\u201c" + literal + "\u201d: ";
             } else {
                 StringBuilder sb = new StringBuilder(LIMIT + 1);
                 sb.append(literal, 0, LIMIT / 2);
