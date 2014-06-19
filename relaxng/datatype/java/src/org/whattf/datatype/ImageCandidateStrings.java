@@ -50,15 +50,14 @@ public class ImageCandidateStrings extends AbstractDatatype {
         if (literal.length() == 0) {
             err("Must contain one or more image candidate strings.");
         }
-        List<CharSequence> urls = new ArrayList<CharSequence>();
+        List<String> urls = new ArrayList<String>();
         List<Integer> widths = new ArrayList<Integer>();
-        List<Float> densities = new ArrayList<Float>();
+        List<Float> denses = new ArrayList<Float>();
+        StringBuilder url = new StringBuilder();
         StringBuilder token = new StringBuilder();
         CharSequence extract;
         boolean eof = false;
         boolean waitingForCandidate = true;
-        int position = 0;
-        int start = 0;
         int ix = 0;
         State state = State.SPLITTING_LOOP;
         for (int i = 0; i < literal.length(); i++) {
@@ -67,111 +66,79 @@ public class ImageCandidateStrings extends AbstractDatatype {
             switch (state) {
                 case SPLITTING_LOOP:
                     if (isWhitespace(c)) {
-                        position = i + 1;
                         continue;
                     } else if (',' == c) {
                         if (urls.isEmpty()) {
                             err("Starts with empty image-candidate string.");
                         }
                         if (waitingForCandidate) {
-                            errEmpty(literal.subSequence(start, i + 1));
+                            errEmpty(literal.subSequence(0, i + 1));
                         }
-                        commaHandler(literal.subSequence(start, i + 1));
+                        commaHandler(literal.subSequence(0, i + 1));
                         waitingForCandidate = true;
-                        position = i + 1;
+                        url.setLength(0);
                         continue;
                     }
-                    start = position;
                     // fall through
                 case URL:
                     waitingForCandidate = false;
                     if (eof || isWhitespace(c)) {
-                        int end = isWhitespace(c) ? i : i + 1;
-                        CharSequence url = literal.subSequence(position, end);
+                        if (!isWhitespace(c)) {
+                            url.append(c);
+                        }
                         state = State.COLLECTING_DESCRIPTOR_TOKENS;
                         if (endsWithComma(url)) {
-                            url = url.subSequence(0, url.length() - 1);
+                            url.deleteCharAt(url.length() - 1);
                             waitingForCandidate = true;
                             state = State.SPLITTING_LOOP;
                         }
+                        IC_URL.checkValid(url);
+                        urls.add(url.toString());
+                        url.setLength(0);
+                        token.setLength(0);
                         if (eof || waitingForCandidate) {
-                            widths.add(null);
-                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
-                                errSameDensity(
-                                        url,
-                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
-                            }
-                            densities.add(DEFAULT_DENSITY);
+                            widths = adjustWidths(widths, ix);
+                            denses = adjustDenses(urls, denses, ix);
                             ix++;
                         }
-                        IC_URL.checkValid(url);
-                        urls.add(url);
-                        token.setLength(0);
                         continue;
                     } else {
+                        url.append(c);
                         state = State.URL;
                         continue;
                     }
-                case COLLECTING_DESCRIPTOR_TOKENS: // spec calls this "Start"
-                    extract = literal.subSequence(position, i + 1);
+                case COLLECTING_DESCRIPTOR_TOKENS: // spec labels this "Start"
+                    extract = literal.subSequence(0, i + 1);
                     if (isWhitespace(c)) {
-                        checkToken(token, extract, urls, widths, densities, ix);
+                        checkToken(token, extract, urls, widths, denses, ix);
                         token.setLength(0);
                         state = State.AFTER_TOKEN;
                         continue;
                     } else if (',' == c) {
-                        checkToken(token, extract, urls, widths, densities, ix);
-                        if (widths.size() == ix) {
-                            widths.add(null);
-                        }
-                        if (densities.size() == ix) {
-                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
-                                errSameDensity(
-                                        urls.get(ix),
-                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
-                            }
-                            densities.add(DEFAULT_DENSITY);
-                        }
+                        checkToken(token, extract, urls, widths, denses, ix);
+                        widths = adjustWidths(widths, ix);
+                        denses = adjustDenses(urls, denses, ix);
                         ix++;
                         waitingForCandidate = true;
                         state = State.SPLITTING_LOOP;
                         continue;
                     } else if (eof) {
                         token.append(c);
-                        checkToken(token, extract, urls, widths, densities, ix);
-                        if (widths.size() == ix) {
-                            widths.add(null);
-                        }
-                        if (densities.size() == ix) {
-                            if (densities.indexOf(DEFAULT_DENSITY) != -1) {
-                                errSameDensity(
-                                        urls.get(ix),
-                                        urls.get(densities.indexOf(DEFAULT_DENSITY)));
-                            }
-                            densities.add(DEFAULT_DENSITY);
-                        }
+                        checkToken(token, extract, urls, widths, denses, ix);
+                        widths = adjustWidths(widths, ix);
+                        denses = adjustDenses(urls, denses, ix);
                         break;
                     } else {
                         token.append(c);
                         continue;
                     }
                 case AFTER_TOKEN:
-                    extract = literal.subSequence(position, i + 1);
+                    extract = literal.subSequence(0, i + 1);
                     if (isWhitespace(c)) {
                         if (eof) {
-                            checkToken(token, extract, urls, widths, densities,
-                                    ix);
-                            if (widths.size() == ix) {
-                                widths.add(null);
-                            }
-                            if (densities.size() == ix) {
-                                if (densities.indexOf(DEFAULT_DENSITY) != -1) {
-                                    errSameDensity(
-                                            urls.get(ix),
-                                            urls.get(densities.indexOf(DEFAULT_DENSITY)));
-                                }
-                                densities.add(DEFAULT_DENSITY);
-                            }
+                            checkToken(token, extract, urls, widths, denses, ix);
+                            widths = adjustWidths(widths, ix);
+                            denses = adjustDenses(urls, denses, ix);
                             break;
                         }
                         continue;
@@ -205,10 +172,10 @@ public class ImageCandidateStrings extends AbstractDatatype {
     }
 
     private void checkToken(StringBuilder token, CharSequence cs,
-            List<CharSequence> urls, List<Integer> widths,
-            List<Float> densities, int ix) throws DatatypeException {
+            List<String> urls, List<Integer> widths, List<Float> denses, int ix)
+            throws DatatypeException {
         if (token.length() > 0) {
-            if (widths.size() > ix || densities.size() > ix) {
+            if (widths.size() > ix || denses.size() > ix) {
                 errExtraDescriptor(token, cs);
             }
             char last = token.charAt(token.length() - 1);
@@ -233,7 +200,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                                 urls.get(widths.indexOf(width)));
                     }
                     widths.add(width);
-                    densities.add(null);
+                    denses.add(null);
                 } catch (NumberFormatException e) {
                     err("Expected an integer but found \u201c" + number
                             + "\u201d at \u201c" + extract(cs) + "\u201d");
@@ -245,11 +212,11 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     if (density < 0) {
                         errNegativeNumber(number, cs);
                     }
-                    if (!densities.isEmpty() && densities.contains(density)) {
+                    if (!denses.isEmpty() && denses.contains(density)) {
                         errSameDensity(urls.get(ix),
-                                urls.get(densities.indexOf(density)));
+                                urls.get(denses.indexOf(density)));
                     }
-                    densities.add(density);
+                    denses.add(density);
                     widths.add(null);
                 } catch (NumberFormatException e) {
                     err("Expected a floating-point number but found \u201c"
@@ -258,6 +225,26 @@ public class ImageCandidateStrings extends AbstractDatatype {
                 }
             }
         }
+    }
+
+    private List<Integer> adjustWidths(List<Integer> widths, int ix)
+            throws DatatypeException {
+        if (widths.size() == ix) {
+            widths.add(null);
+        }
+        return widths;
+    }
+
+    private List<Float> adjustDenses(List<String> urls, List<Float> denses,
+            int ix) throws DatatypeException {
+        if (denses.size() == ix) {
+            if (denses.indexOf(DEFAULT_DENSITY) != -1) {
+                errSameDensity(urls.get(ix),
+                        urls.get(denses.indexOf(DEFAULT_DENSITY)));
+            }
+            denses.add(DEFAULT_DENSITY);
+        }
+        return denses;
     }
 
     private void err(String message) throws DatatypeException {
