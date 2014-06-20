@@ -243,10 +243,10 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private List<Integer> adjustWidths(List<String> urls, List<Integer> widths,
             int ix) throws DatatypeException {
-        if (widths.size() == ix) {
+        if (widths.size() == ix || widths.get(ix) == NO_WIDTH) {
             if (widthRequired()) {
                 errNoWidth(urls.get(ix), null);
-            } else {
+            } else if (widths.size() == ix) {
                 widths.add(NO_WIDTH);
             }
         }
