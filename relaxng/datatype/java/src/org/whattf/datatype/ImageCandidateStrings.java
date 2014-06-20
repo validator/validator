@@ -23,6 +23,7 @@
 package org.whattf.datatype;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
@@ -36,6 +37,10 @@ public class ImageCandidateStrings extends AbstractDatatype {
     private static final int CLIP_LIMIT = 15;
 
     private static final int ELIDE_LIMIT = 50;
+
+    private static final int NO_WIDTH = -1;
+
+    private static final float NO_DENSITY = (float) -1;
 
     private static final float ONE = (float) 1;
 
@@ -149,6 +154,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     }
             }
         }
+        checkWidths(widths, urls);
         if (waitingForCandidate) {
             err("Ends with empty image-candidate string.");
         }
@@ -200,9 +206,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
                                 urls.get(widths.indexOf(width)));
                     }
                     widths.add(width);
-                    denses.add(null);
+                    denses.add(NO_DENSITY);
                 } catch (NumberFormatException e) {
-                    System.out.println(e.getMessage());
                     err("Expected integer but found " + code(num) + " at "
                             + clip(extract) + ".");
                 }
@@ -218,12 +223,21 @@ public class ImageCandidateStrings extends AbstractDatatype {
                                 urls.get(denses.indexOf(density)));
                     }
                     denses.add(density);
-                    widths.add(null);
+                    widths.add(NO_WIDTH);
                 } catch (NumberFormatException e) {
-                    err("Expected floating-point number but found "
-                            + code(num) + " at " + clip(extract) + ".");
+                    err("Expected floating-point number but found " + code(num)
+                            + " at " + clip(extract) + ".");
                 }
             }
+        }
+    }
+
+    private void checkWidths(List<Integer> widths, List<String> urls)
+            throws DatatypeException {
+        if (widths.contains(NO_WIDTH)
+                && Collections.frequency(widths, NO_WIDTH) != widths.size()) {
+            errNoWidth(urls.get(widths.indexOf(NO_WIDTH)),
+                    urls.get(widths.indexOf(Collections.max(widths))));
         }
     }
 
@@ -233,7 +247,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
             if (widthRequired()) {
                 errNoWidth(urls.get(ix), null);
             } else {
-                widths.add(null);
+                widths.add(NO_WIDTH);
             }
         }
         return widths;
@@ -286,14 +300,12 @@ public class ImageCandidateStrings extends AbstractDatatype {
             throws DatatypeException {
         String msg = "No width specified for image " + elide(url1) + ".";
         if (url2 == null) {
-            msg += " (When the " + code("sizes") + " attribute"
-                    + " is present, all image candidate strings must"
-                    + " specify a width.)";
+            msg += " (When the " + code("sizes") + " attribute is present";
         } else {
-            msg += " (Because image " + clip(url2) + " specifies"
-                    + " a width, all image candidate strings must"
-                    + " specify a width.)";
+            msg += " (Because one or more image candidate strings specify a"
+                    + " width (e.g., the string for image " + elide(url2) + ")";
         }
+        msg += ", all image candidate strings must specify a width.)";
         err(msg);
     }
 
