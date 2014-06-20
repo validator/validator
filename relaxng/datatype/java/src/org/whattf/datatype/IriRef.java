@@ -44,6 +44,8 @@ import io.mola.galimatias.StrictErrorHandler;
 
 public class IriRef extends AbstractDatatype {
 
+    private static final int ELIDE_LIMIT = 50;
+
     /**
      * The singleton instance.
      */
@@ -93,15 +95,14 @@ public class IriRef extends AbstractDatatype {
     public void checkValid(CharSequence literal) throws DatatypeException {
         String messagePrologue = "";
         int length = literal.length();
-        int LIMIT = 50;
         if (reportValue()) {
-            if (length < LIMIT) {
+            if (length < ELIDE_LIMIT) {
                 messagePrologue = "\u201c" + literal + "\u201d: ";
             } else {
-                StringBuilder sb = new StringBuilder(LIMIT + 1);
-                sb.append(literal, 0, LIMIT / 2);
+                StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
+                sb.append(literal, 0, ELIDE_LIMIT / 2);
                 sb.append('\u2026');
-                sb.append(literal, length - LIMIT / 2, length);
+                sb.append(literal, length - ELIDE_LIMIT / 2, length);
                 messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
             }
         }
