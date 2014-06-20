@@ -185,15 +185,17 @@ public class ImageCandidateStrings extends AbstractDatatype {
             if (widths.size() > ix || denses.size() > ix) {
                 errExtraDescriptor(tok, extract);
             }
+            char first = tok.charAt(0);
             char last = tok.charAt(tok.length() - 1);
             if (!('w' == last || 'x' == last)) {
-                err("Expected a number followed by " + code("w") + " or "
-                        + code("x") + " but found " + code(tok) + " at "
-                        + clip(extract) + ".");
+                errNotSupportedFormat(tok, extract);
             }
             String num = tok.subSequence(0, tok.length() - 1).toString();
-            if ('-' == tok.charAt(0)) {
+            if ('-' == first) {
                 errNotNumberGreaterThanZero(num, extract);
+            }
+            if ('+' == first) {
+                errLeadingPlusSign(num, extract);
             }
             if ('w' == last) {
                 try {
@@ -208,11 +210,16 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     widths.add(width);
                     denses.add(NO_DENSITY);
                 } catch (NumberFormatException e) {
-                    err("Expected integer but found " + code(num) + " at "
-                            + clip(extract) + ".");
+                    errNotInteger(num, extract);
                 }
             }
             if ('x' == last) {
+                if ("Infinity".equals(num) || "NaN".equals(num)) {
+                    errNotFloatingPointNumber(num, extract);
+                }
+                if ('.' == first) {
+                    errLeadingDot(num, extract);
+                }
                 try {
                     float density = Float.parseFloat(num);
                     if (density <= 0) {
@@ -225,8 +232,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     denses.add(density);
                     widths.add(NO_WIDTH);
                 } catch (NumberFormatException e) {
-                    err("Expected floating-point number but found " + code(num)
-                            + " at " + clip(extract) + ".");
+                    errNotFloatingPointNumber(num, extract);
                 }
             }
         }
@@ -272,6 +278,50 @@ public class ImageCandidateStrings extends AbstractDatatype {
         err("Empty image-candidate string at " + clip(extract) + ".");
     }
 
+    private void errExtraDescriptor(CharSequence tok, CharSequence extract)
+            throws DatatypeException {
+        err("Expected single descriptor but found extraneous descriptor "
+                + code(tok) + " at " + clip(extract) + ".");
+    }
+
+    private void errNotSupportedFormat(CharSequence tok, CharSequence extract)
+            throws DatatypeException {
+        err("Expected number followed by " + code("w") + " or " + code("x")
+                + " but found " + code(tok) + " at " + clip(extract) + ".");
+    }
+
+    private void errNotInteger(String num, CharSequence extract)
+            throws DatatypeException {
+        err("Expected integer but found " + code(num) + " at " + clip(extract)
+                + ".");
+    }
+
+    private void errNotFloatingPointNumber(String num, CharSequence extract)
+            throws DatatypeException {
+        err("Expected floating-point number but found " + code(num) + " at "
+                + clip(extract) + ".");
+    }
+
+    private void errNotNumberGreaterThanZero(CharSequence num,
+            CharSequence extract) throws DatatypeException {
+        err("Expected number greater than zero but found " + code(num) + " at "
+                + clip(extract) + ".");
+    }
+
+    private void errLeadingPlusSign(CharSequence num, CharSequence extract)
+            throws DatatypeException {
+        err("Expected number without leading plus sign but found " + code(num)
+                + " at " + clip(extract) + ".");
+    }
+
+    private void errLeadingDot(CharSequence num, CharSequence extract)
+            throws DatatypeException {
+        err("Expected number without leading dot but found " + code(num)
+                + " at " + clip(extract) + "."
+                + " (Floating-point numbers less than one should begin with "
+                + code("0.") + " (e.g., " + code("0.5") + ")).");
+    }
+
     private void errSameWidth(CharSequence url1, CharSequence url2)
             throws DatatypeException {
         err("Width for image " + elide(url1)
@@ -282,18 +332,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
             throws DatatypeException {
         err("Density for image " + elide(url1)
                 + " is identical to density for image " + elide(url2) + ".");
-    }
-
-    private void errExtraDescriptor(CharSequence tok, CharSequence extract)
-            throws DatatypeException {
-        err("Image candidate string has extraneous descriptor " + code(tok)
-                + " at " + clip(extract) + ".");
-    }
-
-    private void errNotNumberGreaterThanZero(CharSequence num,
-            CharSequence extract) throws DatatypeException {
-        err("Expected number greater than zero in descriptor at "
-                + clip(extract) + " but found " + code(num) + ".");
     }
 
     private void errNoWidth(CharSequence url1, CharSequence url2)
