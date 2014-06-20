@@ -35,6 +35,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private static final int EXTRACT_LIMIT = 15;
 
+    private static final int URL_LIMIT = 50;
+
     private static final float ONE = (float) 1;
 
     private static final ImageCandidateURL IC_URL = ImageCandidateURL.THE_INSTANCE;
@@ -97,7 +99,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         url.setLength(0);
                         token.setLength(0);
                         if (eof || waitingForCandidate) {
-                            widths = adjustWidths(widths, ix);
+                            widths = adjustWidths(urls, widths, ix);
                             denses = adjustDenses(urls, denses, ix);
                             ix++;
                         }
@@ -116,7 +118,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         continue;
                     } else if (',' == c) {
                         checkToken(token, extract, urls, widths, denses, ix);
-                        widths = adjustWidths(widths, ix);
+                        widths = adjustWidths(urls, widths, ix);
                         denses = adjustDenses(urls, denses, ix);
                         ix++;
                         waitingForCandidate = true;
@@ -125,7 +127,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     } else if (eof) {
                         token.append(c);
                         checkToken(token, extract, urls, widths, denses, ix);
-                        widths = adjustWidths(widths, ix);
+                        widths = adjustWidths(urls, widths, ix);
                         denses = adjustDenses(urls, denses, ix);
                         break;
                     } else {
@@ -137,7 +139,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     if (isWhitespace(c)) {
                         if (eof) {
                             checkToken(token, extract, urls, widths, denses, ix);
-                            widths = adjustWidths(widths, ix);
+                            widths = adjustWidths(urls, widths, ix);
                             denses = adjustDenses(urls, denses, ix);
                             break;
                         }
@@ -181,13 +183,13 @@ public class ImageCandidateStrings extends AbstractDatatype {
             char last = token.charAt(token.length() - 1);
             if (!('w' == last || 'x' == last)) {
                 err("Expected a number followed by \u201cw\u201d or"
-                        + " \u201cx\u201d but found \u201c" + token
-                        + "\u201d at \u201c" + extract(cs) + "\u201d.");
+                        + " \u201cx\u201d but found " + code(token) + " at "
+                        + extract(cs) + ".");
             }
             String number = token.subSequence(0, token.length() - 1).toString();
             if ('-' == token.charAt(0)) {
-                err("Expected a positive number but found \u201c" + number
-                        + "\u201d at \u201c" + extract(cs) + "\u201d.");
+                err("Expected a positive number but found " + code(number)
+                        + " at " + extract(cs) + ".");
             }
             if ('w' == last) {
                 try {
@@ -202,8 +204,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     widths.add(width);
                     denses.add(null);
                 } catch (NumberFormatException e) {
-                    err("Expected an integer but found \u201c" + number
-                            + "\u201d at \u201c" + extract(cs) + "\u201d");
+                    err("Expected an integer but found " + code(number)
+                            + " at " + extract(cs) + ".");
                 }
             }
             if ('x' == last) {
@@ -219,18 +221,24 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     denses.add(density);
                     widths.add(null);
                 } catch (NumberFormatException e) {
-                    err("Expected a floating-point number but found \u201c"
-                            + number + "\u201d at \u201c" + extract(cs)
-                            + "\u201d");
+                    err("Expected a floating-point number but found "
+                            + code(number) + " at " + extract(cs) + ".");
                 }
             }
         }
     }
 
-    private List<Integer> adjustWidths(List<Integer> widths, int ix)
-            throws DatatypeException {
+    private List<Integer> adjustWidths(List<String> urls, List<Integer> widths,
+            int ix) throws DatatypeException {
         if (widths.size() == ix) {
-            widths.add(null);
+            if (widthRequired()) {
+                err("No width specified for image " + urltrim(urls.get(ix))
+                        + ". (When the \u201csizes\u201d attribute"
+                        + " is present, all image candidate strings must"
+                        + " specify a width.)");
+            } else {
+                widths.add(null);
+            }
         }
         return widths;
     }
@@ -251,33 +259,31 @@ public class ImageCandidateStrings extends AbstractDatatype {
     }
 
     private void errEmpty(CharSequence cs) throws DatatypeException {
-        err("Empty image-candidate string at \u201c" + extract(cs) + "\u201d.");
+        err("Empty image-candidate string at " + extract(cs) + ".");
     }
 
     private void errSameWidth(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Width for image \u201c" + extract(url1)
-                + "\u201d is identical to width for image \u201c"
-                + extract(url2) + "\u201d.");
+        err("Width for image " + urltrim(url1)
+                + " is identical to width for image " + urltrim(url2) + ".");
     }
 
     private void errSameDensity(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Density for image \u201c" + extract(url1)
-                + "\u201d is identical to density for image \u201c"
-                + extract(url2) + "\u201d.");
+        err("Density for image " + urltrim(url1)
+                + " is identical to density for image " + urltrim(url2) + ".");
     }
 
     private void errExtraDescriptor(StringBuilder token, CharSequence cs)
             throws DatatypeException {
-        err("Image candidate string has extraneous descriptor \u201c" + token
-                + "\u201d at \u201c" + extract(cs) + "\u201d");
+        err("Image candidate string has extraneous descriptor " + code(token)
+                + " at " + extract(cs) + ".");
     }
 
     private void errNegativeNumber(String number, CharSequence cs)
             throws DatatypeException {
-        err("Negative number \u201c" + number
-                + "\u201d in descriptor at \u201c" + extract(cs) + "\u201d");
+        err("Negative number " + code(number) + " in descriptor at "
+                + extract(cs) + ".");
     }
 
     private CharSequence extract(CharSequence extract) {
@@ -285,7 +291,24 @@ public class ImageCandidateStrings extends AbstractDatatype {
         if (len > EXTRACT_LIMIT) {
             extract = "\u2026" + extract.subSequence(len - EXTRACT_LIMIT, len);
         }
-        return extract;
+        return code(extract);
+    }
+
+    private CharSequence code(CharSequence literal) {
+        return "\u201c" + literal + "\u201d";
+    }
+
+    private CharSequence urltrim(CharSequence url) {
+        int length = url.length();
+        if (length < URL_LIMIT) {
+            return code(url);
+        } else {
+            StringBuilder sb = new StringBuilder(URL_LIMIT + 1);
+            sb.append(url, 0, URL_LIMIT / 2);
+            sb.append('\u2026');
+            sb.append(url, length - URL_LIMIT / 2, length);
+            return code(sb);
+        }
     }
 
     protected boolean widthRequired() {
