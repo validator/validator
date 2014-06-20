@@ -33,9 +33,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
         SPLITTING_LOOP, URL, COLLECTING_DESCRIPTOR_TOKENS, AFTER_TOKEN
     }
 
-    private static final int EXTRACT_LIMIT = 15;
+    private static final int CLIP_LIMIT = 15;
 
-    private static final int URL_LIMIT = 50;
+    private static final int ELIDE_LIMIT = 50;
 
     private static final float ONE = (float) 1;
 
@@ -56,14 +56,15 @@ public class ImageCandidateStrings extends AbstractDatatype {
         List<Integer> widths = new ArrayList<Integer>();
         List<Float> denses = new ArrayList<Float>();
         StringBuilder url = new StringBuilder();
-        StringBuilder token = new StringBuilder();
-        CharSequence extract;
+        StringBuilder tok = new StringBuilder();
+        StringBuilder extract = new StringBuilder();
         boolean eof = false;
         boolean waitingForCandidate = true;
         int ix = 0;
         State state = State.SPLITTING_LOOP;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
+            extract.append(c);
             eof = i == literal.length() - 1;
             switch (state) {
                 case SPLITTING_LOOP:
@@ -74,9 +75,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
                             err("Starts with empty image-candidate string.");
                         }
                         if (waitingForCandidate) {
-                            errEmpty(literal.subSequence(0, i + 1));
+                            errEmpty(extract);
                         }
-                        commaHandler(literal.subSequence(0, i + 1));
+                        commaHandler(extract);
                         waitingForCandidate = true;
                         url.setLength(0);
                         continue;
@@ -97,7 +98,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         IC_URL.checkValid(url);
                         urls.add(url.toString());
                         url.setLength(0);
-                        token.setLength(0);
+                        tok.setLength(0);
                         if (eof || waitingForCandidate) {
                             widths = adjustWidths(urls, widths, ix);
                             denses = adjustDenses(urls, denses, ix);
@@ -110,14 +111,13 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         continue;
                     }
                 case COLLECTING_DESCRIPTOR_TOKENS: // spec labels this "Start"
-                    extract = literal.subSequence(0, i + 1);
                     if (isWhitespace(c)) {
-                        checkToken(token, extract, urls, widths, denses, ix);
-                        token.setLength(0);
+                        checkToken(tok, extract, urls, widths, denses, ix);
+                        tok.setLength(0);
                         state = State.AFTER_TOKEN;
                         continue;
                     } else if (',' == c) {
-                        checkToken(token, extract, urls, widths, denses, ix);
+                        checkToken(tok, extract, urls, widths, denses, ix);
                         widths = adjustWidths(urls, widths, ix);
                         denses = adjustDenses(urls, denses, ix);
                         ix++;
@@ -125,20 +125,19 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         state = State.SPLITTING_LOOP;
                         continue;
                     } else if (eof) {
-                        token.append(c);
-                        checkToken(token, extract, urls, widths, denses, ix);
+                        tok.append(c);
+                        checkToken(tok, extract, urls, widths, denses, ix);
                         widths = adjustWidths(urls, widths, ix);
                         denses = adjustDenses(urls, denses, ix);
                         break;
                     } else {
-                        token.append(c);
+                        tok.append(c);
                         continue;
                     }
                 case AFTER_TOKEN:
-                    extract = literal.subSequence(0, i + 1);
                     if (isWhitespace(c)) {
                         if (eof) {
-                            checkToken(token, extract, urls, widths, denses, ix);
+                            checkToken(tok, extract, urls, widths, denses, ix);
                             widths = adjustWidths(urls, widths, ix);
                             denses = adjustDenses(urls, denses, ix);
                             break;
@@ -173,29 +172,28 @@ public class ImageCandidateStrings extends AbstractDatatype {
         return end == cs.length() - 1;
     }
 
-    private void checkToken(StringBuilder token, CharSequence cs,
+    private void checkToken(StringBuilder tok, CharSequence extract,
             List<String> urls, List<Integer> widths, List<Float> denses, int ix)
             throws DatatypeException {
-        if (token.length() > 0) {
+        if (tok.length() > 0) {
             if (widths.size() > ix || denses.size() > ix) {
-                errExtraDescriptor(token, cs);
+                errExtraDescriptor(tok, extract);
             }
-            char last = token.charAt(token.length() - 1);
+            char last = tok.charAt(tok.length() - 1);
             if (!('w' == last || 'x' == last)) {
-                err("Expected a number followed by \u201cw\u201d or"
-                        + " \u201cx\u201d but found " + code(token) + " at "
-                        + extract(cs) + ".");
+                err("Expected a number followed by " + code("w") + " or "
+                        + code("x") + " but found " + code(tok) + " at "
+                        + clip(extract) + ".");
             }
-            String number = token.subSequence(0, token.length() - 1).toString();
-            if ('-' == token.charAt(0)) {
-                err("Expected a positive number but found " + code(number)
-                        + " at " + extract(cs) + ".");
+            String num = tok.subSequence(0, tok.length() - 1).toString();
+            if ('-' == tok.charAt(0)) {
+                errNotNumberGreaterThanZero(num, extract);
             }
             if ('w' == last) {
                 try {
-                    int width = Integer.parseInt(number, 10);
-                    if (width < 0) {
-                        errNegativeNumber(number, cs);
+                    int width = Integer.parseInt(num, 10);
+                    if (width <= 0) {
+                        errNotNumberGreaterThanZero(num, extract);
                     }
                     if (!widths.isEmpty() && widths.contains(width)) {
                         errSameWidth(urls.get(ix),
@@ -204,15 +202,16 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     widths.add(width);
                     denses.add(null);
                 } catch (NumberFormatException e) {
-                    err("Expected an integer but found " + code(number)
-                            + " at " + extract(cs) + ".");
+                    System.out.println(e.getMessage());
+                    err("Expected integer but found " + code(num) + " at "
+                            + clip(extract) + ".");
                 }
             }
             if ('x' == last) {
                 try {
-                    float density = Float.parseFloat(number);
-                    if (density < 0) {
-                        errNegativeNumber(number, cs);
+                    float density = Float.parseFloat(num);
+                    if (density <= 0) {
+                        errNotNumberGreaterThanZero(num, extract);
                     }
                     if (!denses.isEmpty() && denses.contains(density)) {
                         errSameDensity(urls.get(ix),
@@ -221,8 +220,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     denses.add(density);
                     widths.add(null);
                 } catch (NumberFormatException e) {
-                    err("Expected a floating-point number but found "
-                            + code(number) + " at " + extract(cs) + ".");
+                    err("Expected floating-point number but found "
+                            + code(num) + " at " + clip(extract) + ".");
                 }
             }
         }
@@ -232,10 +231,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
             int ix) throws DatatypeException {
         if (widths.size() == ix) {
             if (widthRequired()) {
-                err("No width specified for image " + urltrim(urls.get(ix))
-                        + ". (When the \u201csizes\u201d attribute"
-                        + " is present, all image candidate strings must"
-                        + " specify a width.)");
+                errNoWidth(urls.get(ix), null);
             } else {
                 widths.add(null);
             }
@@ -258,57 +254,72 @@ public class ImageCandidateStrings extends AbstractDatatype {
         throw newDatatypeException(message);
     }
 
-    private void errEmpty(CharSequence cs) throws DatatypeException {
-        err("Empty image-candidate string at " + extract(cs) + ".");
+    private void errEmpty(CharSequence extract) throws DatatypeException {
+        err("Empty image-candidate string at " + clip(extract) + ".");
     }
 
     private void errSameWidth(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Width for image " + urltrim(url1)
-                + " is identical to width for image " + urltrim(url2) + ".");
+        err("Width for image " + elide(url1)
+                + " is identical to width for image " + elide(url2) + ".");
     }
 
     private void errSameDensity(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Density for image " + urltrim(url1)
-                + " is identical to density for image " + urltrim(url2) + ".");
+        err("Density for image " + elide(url1)
+                + " is identical to density for image " + elide(url2) + ".");
     }
 
-    private void errExtraDescriptor(StringBuilder token, CharSequence cs)
+    private void errExtraDescriptor(CharSequence tok, CharSequence extract)
             throws DatatypeException {
-        err("Image candidate string has extraneous descriptor " + code(token)
-                + " at " + extract(cs) + ".");
+        err("Image candidate string has extraneous descriptor " + code(tok)
+                + " at " + clip(extract) + ".");
     }
 
-    private void errNegativeNumber(String number, CharSequence cs)
+    private void errNotNumberGreaterThanZero(CharSequence num,
+            CharSequence extract) throws DatatypeException {
+        err("Expected number greater than zero in descriptor at "
+                + clip(extract) + " but found " + code(num) + ".");
+    }
+
+    private void errNoWidth(CharSequence url1, CharSequence url2)
             throws DatatypeException {
-        err("Negative number " + code(number) + " in descriptor at "
-                + extract(cs) + ".");
-    }
-
-    private CharSequence extract(CharSequence extract) {
-        int len = extract.length();
-        if (len > EXTRACT_LIMIT) {
-            extract = "\u2026" + extract.subSequence(len - EXTRACT_LIMIT, len);
-        }
-        return code(extract);
-    }
-
-    private CharSequence code(CharSequence literal) {
-        return "\u201c" + literal + "\u201d";
-    }
-
-    private CharSequence urltrim(CharSequence url) {
-        int length = url.length();
-        if (length < URL_LIMIT) {
-            return code(url);
+        String msg = "No width specified for image " + elide(url1) + ".";
+        if (url2 == null) {
+            msg += " (When the " + code("sizes") + " attribute"
+                    + " is present, all image candidate strings must"
+                    + " specify a width.)";
         } else {
-            StringBuilder sb = new StringBuilder(URL_LIMIT + 1);
-            sb.append(url, 0, URL_LIMIT / 2);
+            msg += " (Because image " + clip(url2) + " specifies"
+                    + " a width, all image candidate strings must"
+                    + " specify a width.)";
+        }
+        err(msg);
+    }
+
+    private CharSequence clip(CharSequence cs) {
+        int len = cs.length();
+        if (len > CLIP_LIMIT) {
+            cs = "\u2026" + cs.subSequence(len - CLIP_LIMIT, len);
+        }
+        return code(cs);
+    }
+
+    private CharSequence elide(CharSequence cs) {
+        int len = cs.length();
+        if (len < ELIDE_LIMIT) {
+            return code(cs);
+        } else {
+            StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
+            sb.append(cs, 0, ELIDE_LIMIT / 2);
             sb.append('\u2026');
-            sb.append(url, length - URL_LIMIT / 2, length);
+            sb.append(cs, len - ELIDE_LIMIT / 2, len);
             return code(sb);
         }
+    }
+
+    private CharSequence code(CharSequence cs) {
+        return "\u201c" + cs + "\u201d";
     }
 
     protected boolean widthRequired() {
