@@ -1437,8 +1437,8 @@ public class Assertions extends Checker {
                         for (Map.Entry<Locator, Map<String, String>> entry : siblingSources.entrySet()) {
                             Locator locator = entry.getKey();
                             Map<String, String> sourceAtts = entry.getValue();
-                            if (sourceAtts.get("media") == null
-                                    && sourceAtts.get("type") == null) {
+                            String media = sourceAtts.get("media");
+                            if (media == null && sourceAtts.get("type") == null) {
                                 err("A \u201csource\u201d element that has a"
                                         + " following sibling"
                                         + " \u201csource\u201d element or"
@@ -1449,6 +1449,12 @@ public class Assertions extends Checker {
                                         + " \u201ctype\u201d attribute.",
                                         locator);
                                 siblingSources.remove(locator);
+                            } else if (media != null
+                                    && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                            "all", trimSpaces(media))) {
+                                err("Value of \u201cmedia\u201d attribute here"
+                                        + " must not be \u201call\u201d.",
+                                        locator);
                             }
                         }
                     }
