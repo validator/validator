@@ -105,11 +105,11 @@ namespace local = ""
 		source.picture.attrs.srcset =
 			attribute srcset {
 				string
-			} & v5only
+			}
 		source.picture.attrs.sizes =
 			attribute sizes {
 				common.data.source.size.list
-			} & v5only
+			}
 		source.picture.attrs.type =
 			attribute type {
 				common.data.mimetype
