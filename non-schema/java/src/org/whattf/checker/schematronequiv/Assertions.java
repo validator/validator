@@ -22,6 +22,7 @@
 
 package org.whattf.checker.schematronequiv;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1026,6 +1027,8 @@ public class Assertions extends Checker {
 
     private boolean hasH1;
 
+    private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<Locator, Map<String, String>>();
+
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
         err("An element with \u201Crole=" + role + "\u201D"
@@ -1159,6 +1162,8 @@ public class Assertions extends Checker {
                                 + " for images.", imgLocator);
                     }
                 }
+            } else if ("picture" == localName) {
+                siblingSources.clear();
             } else if ("select" == localName && node.isOptionNeeded()) {
                 if (!node.hasOption()) {
                     err("A \u201Cselect\u201D element with a"
@@ -1238,6 +1243,7 @@ public class Assertions extends Checker {
         listIds.clear();
         ariaReferences.clear();
         allIds.clear();
+        siblingSources.clear();
     }
 
     /**
@@ -1427,7 +1433,35 @@ public class Assertions extends Checker {
                         } catch (ClassNotFoundException ce) {
                         }
                     }
+                    if (!siblingSources.isEmpty()) {
+                        for (Map.Entry<Locator, Map<String, String>> entry : siblingSources.entrySet()) {
+                            Locator locator = entry.getKey();
+                            Map<String, String> sourceAtts = entry.getValue();
+                            if (sourceAtts.get("media") == null
+                                    && sourceAtts.get("type") == null) {
+                                err("A \u201csource\u201d element that has a"
+                                        + " following sibling"
+                                        + " \u201csource\u201d element or"
+                                        + " \u201cimg\u201d element with a"
+                                        + " \u201csrcset\u201d attribute"
+                                        + " must have a"
+                                        + " \u201cmedia\u201d attribute and/or"
+                                        + " \u201ctype\u201d attribute.",
+                                        locator);
+                                siblingSources.remove(locator);
+                            }
+                        }
+                    }
                 }
+            }
+
+            if ("source".equals(localName)) {
+                Map<String, String> sourceAtts = new HashMap<String, String>();
+                for (int i = 0; i < atts.getLength(); i++) {
+                    sourceAtts.put(atts.getLocalName(i), atts.getValue(i));
+                }
+                siblingSources.put((new LocatorImpl(getDocumentLocator())),
+                        sourceAtts);
             }
 
             if ("figure" == localName) {
