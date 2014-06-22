@@ -21,6 +21,7 @@ namespace local = ""
 		&	img.attrs.usemap?
 		&	img.attrs.ismap?
 		&	img.attrs.border? # obsolete
+		&	embedded.content.attrs.crossorigin?
 		&	(	common.attrs.aria.implicit.img
 			|	common.attrs.aria
 			)?
@@ -658,3 +659,10 @@ namespace local = ""
 		( empty )
 
 	common.elem.phrasing |= area.elem
+
+## Attributes Common to Embedded Content
+
+		embedded.content.attrs.crossorigin =
+			attribute crossorigin {
+				w:string "anonymous" | w:string "use-credentials" | w:string ""
+			} & v5only

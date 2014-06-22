@@ -39,22 +39,12 @@ public class UnsupportedFeatureChecker extends Checker {
                 warn("The \u201Cping\u201D attribute on the \u201Carea\u201D element is not supported by browsers yet.");
             }
         } else if ("video" == localName) {
-            if (atts.getIndex("", "crossorigin") > -1) {
-                warn("The \u201Ccrossorigin\u201D attribute on the \u201Cvideo\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
             if (atts.getIndex("", "mediagroup") > -1) {
                 warn("The \u201Cmediagroup\u201D attribute on the \u201Cvideo\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
             }
         } else if ("audio" == localName) {
-            if (atts.getIndex("", "crossorigin") > -1) {
-                warn("The \u201Ccrossorigin\u201D attribute on the \u201Caudio\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
             if (atts.getIndex("", "mediagroup") > -1) {
                 warn("The \u201Cmediagroup\u201D attribute on the \u201Caudio\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
-            }
-        } else if ("img" == localName) {
-            if (atts.getIndex("", "crossorigin") > -1) {
-                warn("The \u201Ccrossorigin\u201D attribute on the \u201Cimg\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
             }
         } else if ("iframe" == localName) {
             if (atts.getIndex("", "seamless") > -1) {

@@ -14,6 +14,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	media.attrs.loop?
 		&	media.attrs.mediagroup?
 		&	media.attrs.muted?
+		&	embedded.content.attrs.crossorigin?
 		)
 		media.attrs.autoplay   =
 			attribute autoplay   {
