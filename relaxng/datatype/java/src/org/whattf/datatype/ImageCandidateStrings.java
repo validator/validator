@@ -105,8 +105,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         url.setLength(0);
                         tok.setLength(0);
                         if (eof || waitingForCandidate) {
-                            widths = adjustWidths(urls, widths, ix);
-                            denses = adjustDenses(urls, denses, ix);
+                            adjustWidths(urls, widths, ix);
+                            adjustDenses(urls, denses, ix);
                             ix++;
                         }
                         continue;
@@ -123,8 +123,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         continue;
                     } else if (',' == c) {
                         checkToken(tok, extract, urls, widths, denses, ix);
-                        widths = adjustWidths(urls, widths, ix);
-                        denses = adjustDenses(urls, denses, ix);
                         ix++;
                         waitingForCandidate = true;
                         state = State.SPLITTING_LOOP;
@@ -132,8 +130,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     } else if (eof) {
                         tok.append(c);
                         checkToken(tok, extract, urls, widths, denses, ix);
-                        widths = adjustWidths(urls, widths, ix);
-                        denses = adjustDenses(urls, denses, ix);
                         break;
                     } else {
                         tok.append(c);
@@ -143,8 +139,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
                     if (isWhitespace(c)) {
                         if (eof) {
                             checkToken(tok, extract, urls, widths, denses, ix);
-                            widths = adjustWidths(urls, widths, ix);
-                            denses = adjustDenses(urls, denses, ix);
                             break;
                         }
                         continue;
@@ -247,7 +241,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
         }
     }
 
-    private List<Integer> adjustWidths(List<String> urls, List<Integer> widths,
+    private void adjustWidths(List<String> urls, List<Integer> widths,
             int ix) throws DatatypeException {
         if (widths.size() == ix || widths.get(ix) == NO_WIDTH) {
             if (widthRequired()) {
@@ -256,10 +250,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
                 widths.add(NO_WIDTH);
             }
         }
-        return widths;
     }
 
-    private List<Float> adjustDenses(List<String> urls, List<Float> denses,
+    private void adjustDenses(List<String> urls, List<Float> denses,
             int ix) throws DatatypeException {
         if (denses.size() == ix) {
             if (denses.indexOf(ONE) != -1) {
@@ -267,7 +260,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
             }
             denses.add(ONE);
         }
-        return denses;
     }
 
     private void err(String message) throws DatatypeException {
