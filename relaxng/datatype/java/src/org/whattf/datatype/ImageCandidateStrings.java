@@ -31,7 +31,7 @@ import org.relaxng.datatype.DatatypeException;
 public class ImageCandidateStrings extends AbstractDatatype {
 
     private static enum State {
-        SPLITTING_LOOP, URL, COLLECTING_DESCRIPTOR_TOKENS, AFTER_TOKEN
+        SPLITTING_LOOP, URL, COLLECTING_DESCRIPTOR_TOKENS, IN_PARENS, AFTER_TOKEN
     }
 
     private static final int CLIP_LIMIT = 15;
@@ -127,10 +127,28 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         waitingForCandidate = true;
                         state = State.SPLITTING_LOOP;
                         continue;
+                    } else if ('(' == c) {
+                        tok.append(c);
+                        state = State.IN_PARENS;
+                        continue;
                     } else if (eof) {
                         tok.append(c);
                         checkToken(tok, extract, urls, widths, denses, ix);
                         break;
+                    } else {
+                        tok.append(c);
+                        continue;
+                    }
+                case IN_PARENS:
+                    if (')' == c) {
+                        tok.append(c);
+                        if (eof) {
+                            checkToken(tok, extract, urls, widths, denses, ix);
+                            break;
+                        }
+                        state = State.COLLECTING_DESCRIPTOR_TOKENS;
+                    } else if (eof) {
+                        errNoRightParen(tok, extract);
                     } else {
                         tok.append(c);
                         continue;
@@ -309,6 +327,12 @@ public class ImageCandidateStrings extends AbstractDatatype {
             CharSequence extract) throws DatatypeException {
         err("Expected number greater than zero but found " + code(num) + " at "
                 + clip(extract) + ".");
+    }
+
+    private void errNoRightParen(CharSequence tok, CharSequence extract)
+            throws DatatypeException {
+        err("Expected right parenthesis character but found " + code(tok)
+                + " at " + clip(extract) + ".");
     }
 
     private void errLeadingPlusSign(CharSequence num, CharSequence extract)
