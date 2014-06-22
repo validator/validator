@@ -1458,6 +1458,10 @@ public class Assertions extends Checker {
                             }
                         }
                     }
+                } else if (atts.getIndex("", "sizes") > -1) {
+                    err("The \u201csizes\u201d attribute may be specified"
+                            + " only if the \u201csrcset\u201d attribute is"
+                            + " also present.");
                 }
             }
 

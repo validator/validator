@@ -37,9 +37,6 @@ public class SourceSizeList extends AbstractDatatype {
         super();
     }
 
-    private final static boolean WARN = System.getProperty(
-            "org.whattf.datatype.warn", "").equals("true") ? true : false;
-
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
         for (CharSequenceWithOffset unparsedSize : split(literal, ',')) {

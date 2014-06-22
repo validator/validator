@@ -15,8 +15,8 @@ namespace local = ""
 	img.attrs =
 		(	common.attrs
 		&	img.attrs.src
-		&	img.attrs.sizes?
 		&	img.attrs.srcset?
+		&	img.attrs.sizes?
 		&	img.attrs.alt? # ARIA: if alt empty, only allowed role value is "presentation"; check in assertions
 		&	img.attrs.height?
 		&	img.attrs.width?
