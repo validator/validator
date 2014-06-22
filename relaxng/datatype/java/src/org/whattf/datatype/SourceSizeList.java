@@ -22,8 +22,6 @@
 
 package org.whattf.datatype;
 
-import java.util.List;
-
 import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
@@ -39,7 +37,39 @@ public class SourceSizeList extends AbstractDatatype {
 
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
-        for (CharSequenceWithOffset unparsedSize : split(literal, ',')) {
+        int offset = 0;
+        StringBuilder unparsedSize = new StringBuilder();
+        StringBuilder extract = new StringBuilder();
+        for (int i = 0; i < literal.length(); i++) {
+            char c = literal.charAt(i);
+            extract.append(c);
+            if (',' == c) {
+                unparsedSize.append(literal.subSequence(offset, i));
+                checkSize(unparsedSize, extract);
+                unparsedSize.setLength(0);
+                offset = i + 1;
+            }
+        }
+        unparsedSize.append(literal.subSequence(offset, literal.length()));
+        checkSize(unparsedSize, extract);
+    }
+
+    private void checkSize(StringBuilder unparsedSize, StringBuilder extract) {
+        trimTrailingWhitespace(unparsedSize);
+        if (unparsedSize.length() == 0) {
+            // error empty
+            return;
+        }
+    }
+
+    private void trimTrailingWhitespace(StringBuilder sb) {
+        for (int i = sb.length(); i > 0; i--) {
+            char c = sb.charAt(i - 1);
+            if (' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c) {
+                sb.setLength(i - 1);
+            } else {
+                return;
+            }
         }
     }
 
