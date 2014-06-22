@@ -144,6 +144,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
                         continue;
                     } else {
                         i--;
+                        extract.setLength(extract.length() - 1);
                         state = State.COLLECTING_DESCRIPTOR_TOKENS;
                     }
             }
@@ -181,6 +182,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
             }
             char first = tok.charAt(0);
             char last = tok.charAt(tok.length() - 1);
+            if (!('w' == last) && widthRequired()) {
+                errNotWidthDescriptor(tok, extract);
+            }
             if (!('w' == last || 'x' == last)) {
                 errNotSupportedFormat(tok, extract);
             }
@@ -241,8 +245,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
         }
     }
 
-    private void adjustWidths(List<String> urls, List<Integer> widths,
-            int ix) throws DatatypeException {
+    private void adjustWidths(List<String> urls, List<Integer> widths, int ix)
+            throws DatatypeException {
         if (widths.size() == ix || widths.get(ix) == NO_WIDTH) {
             if (widthRequired()) {
                 errNoWidth(urls.get(ix), null);
@@ -252,8 +256,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
         }
     }
 
-    private void adjustDenses(List<String> urls, List<Float> denses,
-            int ix) throws DatatypeException {
+    private void adjustDenses(List<String> urls, List<Float> denses, int ix)
+            throws DatatypeException {
         if (denses.size() == ix) {
             if (denses.indexOf(ONE) != -1) {
                 errSameDensity(urls.get(ix), urls.get(denses.indexOf(ONE)));
@@ -274,6 +278,13 @@ public class ImageCandidateStrings extends AbstractDatatype {
             throws DatatypeException {
         err("Expected single descriptor but found extraneous descriptor "
                 + code(tok) + " at " + clip(extract) + ".");
+    }
+
+    private void errNotWidthDescriptor(CharSequence tok, CharSequence extract)
+            throws DatatypeException {
+        err("Expected width descriptor but found " + code(tok) + " at "
+                + clip(extract) + "." + whenSizesIsPresent
+                + allMustSpecifyWidth);
     }
 
     private void errNotSupportedFormat(CharSequence tok, CharSequence extract)
@@ -330,14 +341,20 @@ public class ImageCandidateStrings extends AbstractDatatype {
             throws DatatypeException {
         String msg = "No width specified for image " + elide(url1) + ".";
         if (url2 == null) {
-            msg += " (When the " + code("sizes") + " attribute is present";
+            msg += whenSizesIsPresent;
         } else {
             msg += " (Because one or more image candidate strings specify a"
                     + " width (e.g., the string for image " + elide(url2) + ")";
         }
-        msg += ", all image candidate strings must specify a width.)";
+        msg += allMustSpecifyWidth;
         err(msg);
     }
+
+    private String whenSizesIsPresent = " (When the " + code("sizes")
+            + " attribute is present";
+
+    private String allMustSpecifyWidth = ", all image candidate strings must "
+            + " specify a width.)";
 
     private CharSequence clip(CharSequence cs) {
         int len = cs.length();
