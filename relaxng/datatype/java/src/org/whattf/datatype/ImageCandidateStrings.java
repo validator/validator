@@ -46,6 +46,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private static final ImageCandidateURL IC_URL = ImageCandidateURL.THE_INSTANCE;
 
+    private static final FloatingPointExponentPositive FLOAT = FloatingPointExponentPositive.THE_INSTANCE;
+
     public static final ImageCandidateStrings THE_INSTANCE = new ImageCandidateStrings();
 
     protected ImageCandidateStrings() {
@@ -230,17 +232,9 @@ public class ImageCandidateStrings extends AbstractDatatype {
                 }
             }
             if ('x' == last) {
-                if ("Infinity".equals(num) || "NaN".equals(num)) {
-                    errNotFloatingPointNumber(num, extract);
-                }
-                if ('.' == first) {
-                    errLeadingDot(num, extract);
-                }
                 try {
+                    FLOAT.checkValid(num);
                     float density = Float.parseFloat(num);
-                    if (density <= 0) {
-                        errNotNumberGreaterThanZero(num, extract);
-                    }
                     if (!denses.isEmpty() && denses.contains(density)) {
                         errSameDensity(urls.get(ix),
                                 urls.get(denses.indexOf(density)));
@@ -339,14 +333,6 @@ public class ImageCandidateStrings extends AbstractDatatype {
             throws DatatypeException {
         err("Expected number without leading plus sign but found " + code(num)
                 + " at " + clip(extract) + ".");
-    }
-
-    private void errLeadingDot(CharSequence num, CharSequence extract)
-            throws DatatypeException {
-        err("Expected number without leading dot but found " + code(num)
-                + " at " + clip(extract) + "."
-                + " (Floating-point numbers less than one should begin with "
-                + code("0.") + " (e.g., " + code("0.5") + ")).");
     }
 
     private void errSameWidth(CharSequence url1, CharSequence url2)
