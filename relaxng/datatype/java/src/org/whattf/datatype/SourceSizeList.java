@@ -22,13 +22,45 @@
 
 package org.whattf.datatype;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
 
-    /**
-     * The singleton instance.
-     */
+    private static final int CLIP_LIMIT = 15;
+
+    private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
+
+    private static final StringBuilder VALID_UNITS = new StringBuilder();
+
+    static {
+        /* font-relative lengths */
+        LENGTH_UNITS.add("em");
+        LENGTH_UNITS.add("ex");
+        LENGTH_UNITS.add("ch");
+        LENGTH_UNITS.add("rem");
+        /* viewport-percentage lengths */
+        LENGTH_UNITS.add("vw");
+        LENGTH_UNITS.add("vh");
+        LENGTH_UNITS.add("vmin");
+        LENGTH_UNITS.add("vmax");
+        /* absolute lengths */
+        LENGTH_UNITS.add("cm");
+        LENGTH_UNITS.add("mm");
+        LENGTH_UNITS.add("q");
+        LENGTH_UNITS.add("in");
+        LENGTH_UNITS.add("pc");
+        LENGTH_UNITS.add("pt");
+        LENGTH_UNITS.add("px");
+
+        for (CharSequence units : LENGTH_UNITS) {
+            VALID_UNITS.append(" \u201c" + units + "\u201d,");
+        }
+        VALID_UNITS.setLength(VALID_UNITS.length() - 1);
+    }
+
     public static final SourceSizeList THE_INSTANCE = new SourceSizeList();
 
     protected SourceSizeList() {
@@ -37,7 +69,11 @@ public class SourceSizeList extends AbstractDatatype {
 
     @Override public void checkValid(CharSequence literal)
             throws DatatypeException {
+        if (literal.length() == 0) {
+            err("Must not be empty.");
+        }
         int offset = 0;
+        boolean isFirst = true;
         StringBuilder unparsedSize = new StringBuilder();
         StringBuilder extract = new StringBuilder();
         for (int i = 0; i < literal.length(); i++) {
@@ -45,27 +81,102 @@ public class SourceSizeList extends AbstractDatatype {
             extract.append(c);
             if (',' == c) {
                 unparsedSize.append(literal.subSequence(offset, i));
-                checkSize(unparsedSize, extract);
+                checkSize(unparsedSize, extract, isFirst, false);
+                isFirst = false;
                 unparsedSize.setLength(0);
                 offset = i + 1;
             }
         }
         unparsedSize.append(literal.subSequence(offset, literal.length()));
-        checkSize(unparsedSize, extract);
+        checkSize(unparsedSize, extract, isFirst, true);
     }
 
-    private void checkSize(StringBuilder unparsedSize, StringBuilder extract) {
-        trimTrailingWhitespace(unparsedSize);
+    private void checkSize(StringBuilder unparsedSize, StringBuilder extract,
+            boolean isFirst, boolean isLast) throws DatatypeException {
+        String size;
+        trimWhitespace(unparsedSize);
         if (unparsedSize.length() == 0) {
-            // error empty
+            errEmpty(isFirst, isLast, extract);
             return;
         }
+        if (')' == unparsedSize.charAt(unparsedSize.length() - 1)) {
+            checkCalc(unparsedSize, extract, isLast);
+            return;
+        }
+        int sizeValueStart = lastSpaceIndex(unparsedSize);
+        if (!isLast && sizeValueStart == 0) {
+            errNoMediaCondition(unparsedSize, extract);
+        }
+        size = unparsedSize.substring(lastSpaceIndex(unparsedSize),
+                unparsedSize.length());
+        if ('-' == size.charAt(0)) {
+            errNotPositive(size, extract);
+        }
+        if ("0".equals(size) || "+0".equals(size)) {
+            return;
+        }
+        String units = getUnits(size);
+        String num = size.substring(0, size.length() - units.length());
+        try {
+            Float.parseFloat(num);
+        } catch (NumberFormatException e) {
+            errNotNumber(num, extract);
+        }
+        if (!LENGTH_UNITS.contains(units)) {
+            errNotUnits(units, extract);
+        }
+        unparsedSize.setLength(sizeValueStart);
+        trimTrailingWhitespace(unparsedSize);
+    }
+
+    private void checkCalc(StringBuilder sb, CharSequence extract,
+            boolean isLast) throws DatatypeException {
+        int firstParenPosition = sb.length() - 1;
+        int unMatchedParenCount = 1;
+        while (unMatchedParenCount > 0) {
+            char c = sb.charAt(--firstParenPosition);
+            if ('(' == c) {
+                unMatchedParenCount--;
+            } else if (')' == c) {
+                unMatchedParenCount++;
+            }
+        }
+        int CALC_START = firstParenPosition - "calc".length(); // readability
+        boolean hasCalc = CALC_START > -1
+                && "calc".equals(toAsciiLowerCase(sb.subSequence(CALC_START,
+                        firstParenPosition)));
+        boolean startsWithCalc = hasCalc && CALC_START == 0;
+        boolean hasWhitespaceThenCalc = hasCalc && CALC_START > 0
+                && isWhitespace(sb.charAt(CALC_START - 1));
+        if (!isLast && startsWithCalc) {
+            errNoMediaCondition(sb, extract);
+        }
+        if (startsWithCalc || hasWhitespaceThenCalc) {
+            sb.setLength(CALC_START);
+            trimTrailingWhitespace(sb);
+        } else {
+            errNotNumber(sb, extract);
+        }
+    }
+
+    private int lastSpaceIndex(StringBuilder sb) {
+        for (int i = sb.length(); i > 0; i--) {
+            char c = sb.charAt(i - 1);
+            if (isWhitespace(c)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private void trimWhitespace(StringBuilder sb) {
+        trimTrailingWhitespace(sb);
+        trimLeadingWhitespace(sb);
     }
 
     private void trimTrailingWhitespace(StringBuilder sb) {
         for (int i = sb.length(); i > 0; i--) {
-            char c = sb.charAt(i - 1);
-            if (' ' == c || '\t' == c || '\n' == c || '\f' == c || '\r' == c) {
+            if (isWhitespace(sb.charAt(i - 1))) {
                 sb.setLength(i - 1);
             } else {
                 return;
@@ -73,8 +184,85 @@ public class SourceSizeList extends AbstractDatatype {
         }
     }
 
+    private void trimLeadingWhitespace(StringBuilder sb) {
+        for (int i = 0; i < sb.length(); i++) {
+            if (!isWhitespace(sb.charAt(i))) {
+                sb.delete(0, i);
+                return;
+            }
+        }
+    }
+
+    private String getUnits(String val) {
+        for (int i = val.length(); i > 0; i--) {
+            char c = val.charAt(i - 1);
+            if ((c >= '0' && c <= '9')) {
+                return val.substring(i, val.length());
+            }
+        }
+        return "";
+    }
+
+    private void err(String message) throws DatatypeException {
+        throw newDatatypeException(message);
+    }
+
+    private void errEmpty(boolean isFirst, boolean isLast, CharSequence extract)
+            throws DatatypeException {
+        if (isFirst) {
+            if (isLast) {
+                err("Must contain one or more source sizes.");
+            } else {
+                err("Starts with empty source size.");
+            }
+        } else {
+            err("Empty source size at " + clip(extract) + ".");
+        }
+    }
+
+    private void errNoMediaCondition(CharSequence sourceSize,
+            CharSequence extract) throws DatatypeException {
+        err("Expected media condition before " + code(sourceSize) + " at "
+                + clip(extract) + ".");
+    }
+
+    private void errNotPositive(CharSequence size, CharSequence extract)
+            throws DatatypeException {
+        err("Expected positive size value but found " + code(size) + " at "
+                + clip(extract) + ".");
+    }
+
+    private void errNotNumber(CharSequence num, CharSequence extract)
+            throws DatatypeException {
+        err("Expected number but found " + code(num) + " at " + clip(extract)
+                + ".");
+    }
+
+    private void errNotUnits(CharSequence units, StringBuilder extract)
+            throws DatatypeException {
+        String msg = "Expected units (one of" + VALID_UNITS + ") but found ";
+        if ("".equals(units)) {
+            msg += "no units";
+        } else {
+            msg += code(units);
+        }
+        msg += " at " + clip(extract) + ".";
+        err(msg);
+    }
+
+    private CharSequence clip(CharSequence cs) {
+        int len = cs.length();
+        if (len > CLIP_LIMIT) {
+            cs = "\u2026" + cs.subSequence(len - CLIP_LIMIT, len);
+        }
+        return code(cs);
+    }
+
+    private CharSequence code(CharSequence cs) {
+        return "\u201c" + cs + "\u201d";
+    }
+
     @Override public String getName() {
         return "source size list";
     }
-
 }
