@@ -233,7 +233,11 @@ public class ImageCandidateStrings extends AbstractDatatype {
             }
             if ('x' == last) {
                 try {
-                    FLOAT.checkValid(num);
+                    try {
+                        FLOAT.checkValid(num);
+                    } catch (DatatypeException e) {
+                        errFromOtherDatatype(e.getMessage(), extract);
+                    }
                     float density = Float.parseFloat(num);
                     if (!denses.isEmpty() && denses.contains(density)) {
                         errSameDensity(urls.get(ix),
@@ -280,6 +284,11 @@ public class ImageCandidateStrings extends AbstractDatatype {
 
     private void err(String message) throws DatatypeException {
         throw newDatatypeException(message);
+    }
+
+    private void errFromOtherDatatype(CharSequence msg, CharSequence extract)
+            throws DatatypeException {
+        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract) + ".");
     }
 
     private void errEmpty(CharSequence extract) throws DatatypeException {
