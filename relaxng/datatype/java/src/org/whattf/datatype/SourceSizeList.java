@@ -29,7 +29,7 @@ import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
 
-    private static final int CLIP_LIMIT = 15;
+    private static final int CLIP_LIMIT = 25;
 
     private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
 
@@ -60,6 +60,10 @@ public class SourceSizeList extends AbstractDatatype {
         }
         VALID_UNITS.setLength(VALID_UNITS.length() - 1);
     }
+
+    private static final FloatingPointExponentPositive FLOAT = FloatingPointExponentPositive.THE_INSTANCE;
+
+    private static final MediaQuery MQ = MediaQuery.THE_INSTANCE;
 
     public static final SourceSizeList THE_INSTANCE = new SourceSizeList();
 
@@ -118,7 +122,10 @@ public class SourceSizeList extends AbstractDatatype {
         String units = getUnits(size);
         String num = size.substring(0, size.length() - units.length());
         try {
+            FLOAT.checkValid(num);
             Float.parseFloat(num);
+        } catch (DatatypeException e) {
+            errFromOtherDatatype(e.getMessage(), extract);
         } catch (NumberFormatException e) {
             errNotNumber(num, extract);
         }
@@ -127,6 +134,11 @@ public class SourceSizeList extends AbstractDatatype {
         }
         unparsedSize.setLength(sizeValueStart);
         trimTrailingWhitespace(unparsedSize);
+        try {
+            MQ.checkValid(unparsedSize);
+        } catch (DatatypeException e) {
+            errFromOtherDatatype(e.getMessage(), extract);
+        }
     }
 
     private void checkCalc(StringBuilder sb, CharSequence extract,
@@ -205,6 +217,11 @@ public class SourceSizeList extends AbstractDatatype {
 
     private void err(String message) throws DatatypeException {
         throw newDatatypeException(message);
+    }
+
+    private void errFromOtherDatatype(CharSequence msg, CharSequence extract)
+            throws DatatypeException {
+        err(msg.subSequence(0, msg.length() - 1) + " at " + clip(extract) + ".");
     }
 
     private void errEmpty(boolean isFirst, boolean isLast, CharSequence extract)
