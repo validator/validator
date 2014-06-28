@@ -108,9 +108,6 @@ public class SourceSizeList extends AbstractDatatype {
             return;
         }
         int sizeValueStart = lastSpaceIndex(unparsedSize);
-        if (!isLast && sizeValueStart == 0) {
-            errNoMediaCondition(unparsedSize, extract);
-        }
         size = unparsedSize.substring(lastSpaceIndex(unparsedSize),
                 unparsedSize.length());
         if ('-' == size.charAt(0)) {
@@ -134,6 +131,12 @@ public class SourceSizeList extends AbstractDatatype {
         }
         unparsedSize.setLength(sizeValueStart);
         trimTrailingWhitespace(unparsedSize);
+        if (unparsedSize.length() == 0) {
+            if (!isLast) {
+                errNoMediaCondition(unparsedSize, extract);
+            }
+            return;
+        }
         try {
             MQ.checkValid(unparsedSize);
         } catch (DatatypeException e) {
