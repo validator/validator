@@ -43,7 +43,7 @@ public class MediaQuery extends AbstractDatatype {
             "org.whattf.datatype.warn", "").equals("true") ? true : false;
 
     private enum State {
-        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
+        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_TYPE_OR_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
     }
 
     private enum ValueType {
@@ -211,8 +211,11 @@ public class MediaQuery extends AbstractDatatype {
                     } else if (isWhitespace(c)) {
                         String kw = sb.toString();
                         sb.setLength(0);
-                        if ("only".equals(kw) || "not".equals(kw)) {
+                        if ("only".equals(kw)) {
                             state = State.WS_BEFORE_MEDIA_TYPE;
+                            continue;
+                        } else if ("not".equals(kw)) {
+                            state = State.WS_BEFORE_MEDIA_TYPE_OR_MEDIA_FEATURE;
                             continue;
                         } else {
                             throw newDatatypeException(offset + i,
@@ -235,6 +238,22 @@ public class MediaQuery extends AbstractDatatype {
                         throw newDatatypeException(offset + i,
                                 "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
+                    }
+                case WS_BEFORE_MEDIA_TYPE_OR_MEDIA_FEATURE:
+                    if (isWhitespace(c)) {
+                        continue;
+                    } else if ('(' == c) {
+                        state = State.OPEN_PAREN_SEEN;
+                        continue;
+                    } else if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        state = State.IN_MEDIA_TYPE;
+                        continue;
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected \u201C(\u201D or letter or"
+                                        + " whitespace but saw \u201C" + c
+                                        + "\u201D instead.");
                     }
                 case IN_MEDIA_TYPE:
                     if (('a' <= c && 'z' >= c) || c == '-') {
