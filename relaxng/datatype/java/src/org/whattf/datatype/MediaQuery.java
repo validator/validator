@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -43,7 +43,7 @@ public class MediaQuery extends AbstractDatatype {
             "org.whattf.datatype.warn", "").equals("true") ? true : false;
 
     private enum State {
-        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_TYPE_OR_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
+        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_TYPE_OR_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, BEFORE_CALC_OPEN_PAREN, IN_CALC, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
     }
 
     private enum ValueType {
@@ -173,6 +173,7 @@ public class MediaQuery extends AbstractDatatype {
 
     private List<String> checkQuery(CharSequence query, int offset,
             List<String> warnings) throws DatatypeException {
+        int unmatchedCalcParen = -1;
         boolean containsAural = false;
         boolean zero = true;
         String type = null;
@@ -437,6 +438,9 @@ public class MediaQuery extends AbstractDatatype {
                                         && valueExpectation == ValueType.LENGTH) {
                                     state = State.IN_VALUE_DIGITS_AFTER_DOT;
                                     continue;
+                                } else if ('c' == c) {
+                                    state = State.BEFORE_CALC_OPEN_PAREN;
+                                    continue;
                                 } else if (valueExpectation == ValueType.LENGTH) {
                                     throw newDatatypeException(offset + i,
                                             "Expected a digit, a dot or a plus sign but saw \u201C"
@@ -639,6 +643,43 @@ public class MediaQuery extends AbstractDatatype {
                             default:
                                 throw new RuntimeException("Impossible state.");
                         }
+                    }
+                case BEFORE_CALC_OPEN_PAREN:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if ('(' == c) {
+                        unmatchedCalcParen = 1;
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if ("alc".equals(kw)) {
+                            state = State.IN_CALC;
+                            continue;
+                        } else {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201ccalc\u201d but saw \u201C"
+                                            + kw + "\u201D instead.");
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected \u201ccalc\u201d but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
+                case IN_CALC:
+                    if (')' == c) {
+                        if (unmatchedCalcParen == 1) {
+                            unmatchedCalcParen = -1;
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            unmatchedCalcParen--;
+                            continue;
+                        }
+                    } else if ('(' == c) {
+                      unmatchedCalcParen++;
+                      continue;
+                    } else {
+                      continue;
                     }
                 case IN_VALUE_DIGITS_AFTER_DOT:
                     if ('0' == c) {
