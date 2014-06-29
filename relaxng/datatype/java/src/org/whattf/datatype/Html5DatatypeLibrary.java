@@ -94,6 +94,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Language.THE_INSTANCE;
         } else if ("media-query".equals(typeLocalName)) {
             return MediaQuery.THE_INSTANCE;
+        } else if ("media-condition".equals(typeLocalName)) {
+            return MediaCondition.THE_INSTANCE;
         } else if ("mime-type".equals(typeLocalName)) {
             return MimeType.THE_INSTANCE;
         } else if ("browsing-context".equals(typeLocalName)) {

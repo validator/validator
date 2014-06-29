@@ -63,7 +63,7 @@ public class SourceSizeList extends AbstractDatatype {
 
     private static final CssNumberToken CSS_NUMBER_TOKEN = CssNumberToken.THE_INSTANCE;
 
-    private static final MediaQuery MQ = MediaQuery.THE_INSTANCE;
+    private static final MediaCondition MEDIA_CONDITION = MediaCondition.THE_INSTANCE;
 
     public static final SourceSizeList THE_INSTANCE = new SourceSizeList();
 
@@ -144,7 +144,7 @@ public class SourceSizeList extends AbstractDatatype {
             return;
         }
         try {
-            MQ.checkValid(unparsedSize);
+            MEDIA_CONDITION.checkValid(unparsedSize);
         } catch (DatatypeException e) {
             errFromOtherDatatype(e.getMessage(), extract);
         }
