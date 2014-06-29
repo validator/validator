@@ -61,7 +61,7 @@ public class SourceSizeList extends AbstractDatatype {
         VALID_UNITS.setLength(VALID_UNITS.length() - 1);
     }
 
-    private static final FloatingPointExponentPositive FLOAT = FloatingPointExponentPositive.THE_INSTANCE;
+    private static final CssNumberToken CSS_NUMBER_TOKEN = CssNumberToken.THE_INSTANCE;
 
     private static final MediaQuery MQ = MediaQuery.THE_INSTANCE;
 
@@ -110,21 +110,27 @@ public class SourceSizeList extends AbstractDatatype {
         int sizeValueStart = lastSpaceIndex(unparsedSize);
         size = unparsedSize.substring(lastSpaceIndex(unparsedSize),
                 unparsedSize.length());
-        if ('-' == size.charAt(0)) {
-            errNotPositive(size, extract);
-        }
-        if ("0".equals(size) || "+0".equals(size)) {
-            return;
+        try {
+            if (Float.parseFloat(size) == 0) {
+                return;
+            }
+        } catch (NumberFormatException e) {
         }
         String units = getUnits(size);
         String num = size.substring(0, size.length() - units.length());
+        boolean sizeIsLessThanZero = false;
         try {
-            FLOAT.checkValid(num);
-            Float.parseFloat(num);
+            CSS_NUMBER_TOKEN.checkValid(num);
+            if (Float.parseFloat(num) < 0) {
+                sizeIsLessThanZero = true;
+            }
         } catch (DatatypeException e) {
             errFromOtherDatatype(e.getMessage(), extract);
         } catch (NumberFormatException e) {
             errNotNumber(num, extract);
+        }
+        if (sizeIsLessThanZero) {
+            errNotPositive(size, extract);
         }
         if (!LENGTH_UNITS.contains(units)) {
             errNotUnits(units, extract);

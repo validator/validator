@@ -114,6 +114,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return FloatingPointExponentNonNegative.THE_INSTANCE;
         } else if ("float-positive".equals(typeLocalName)) {
             return FloatingPointExponentPositive.THE_INSTANCE;
+        } else if ("css-number-token".equals(typeLocalName)) {
+            return CssNumberToken.THE_INSTANCE;
         } else if ("mime-type-list".equals(typeLocalName)) {
             return MimeTypeList.THE_INSTANCE;
         } else if ("circle".equals(typeLocalName)) {
