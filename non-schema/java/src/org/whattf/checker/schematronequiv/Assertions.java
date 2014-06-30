@@ -37,7 +37,6 @@ import org.whattf.checker.LocatorImpl;
 import org.whattf.checker.TaintableLocatorImpl;
 import org.whattf.checker.VnuBadAttrValueException;
 
-import org.whattf.datatype.FloatingPointExponentPositive;
 import org.whattf.datatype.Html5DatatypeException;
 import org.whattf.datatype.ImageCandidateStringsWidthRequired;
 import org.whattf.datatype.ImageCandidateStrings;
@@ -1421,9 +1420,7 @@ public class Assertions extends Checker {
                                 if (e instanceof Html5DatatypeException) {
                                     Html5DatatypeException ex5 = (Html5DatatypeException) e;
                                     if (!ex5.getDatatypeClass().equals(
-                                            ImageCandidateURL.class)
-                                            && !ex5.getDatatypeClass().equals(
-                                                    FloatingPointExponentPositive.class)) {
+                                            ImageCandidateURL.class)) {
                                         msg = msg.substring(msg.indexOf(": ") + 2);
                                     }
                                 }
