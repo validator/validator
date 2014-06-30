@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013 Mozilla Foundation
+ * Copyright (c) 2007-2014 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -43,7 +43,7 @@ public class MediaQuery extends AbstractDatatype {
             "org.whattf.datatype.warn", "").equals("true") ? true : false;
 
     private enum State {
-        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
+        INITIAL_WS, OPEN_PAREN_SEEN, IN_ONLY_OR_NOT, IN_MEDIA_TYPE, IN_MEDIA_FEATURE, WS_BEFORE_MEDIA_TYPE, WS_BEFORE_MEDIA_FEATURE, WS_BEFORE_AND, IN_AND, WS_BEFORE_EXPRESSION, WS_BEFORE_COLON, WS_BEFORE_VALUE, IN_VALUE_DIGITS, BEFORE_CALC_OPEN_PAREN, IN_CALC, IN_VALUE_SCAN, IN_VALUE_ORIENTATION, WS_BEFORE_CLOSE_PAREN, IN_VALUE_UNIT, IN_VALUE_DIGITS_AFTER_DOT, RATIO_SECOND_INTEGER_START, IN_VALUE_BEFORE_DIGITS, IN_VALUE_DIGITS_AFTER_DOT_TRAIL, AFTER_CLOSE_PAREN, IN_VALUE_ONEORZERO
     }
 
     private enum ValueType {
@@ -150,7 +150,7 @@ public class MediaQuery extends AbstractDatatype {
 
     private static final String scanWarning = "The media feature \u201cscan\u201d is applicable only to the media type \u201ctv\u201d. ";
 
-    private MediaQuery() {
+    protected MediaQuery() {
         super();
     }
 
@@ -173,6 +173,7 @@ public class MediaQuery extends AbstractDatatype {
 
     private List<String> checkQuery(CharSequence query, int offset,
             List<String> warnings) throws DatatypeException {
+        int unmatchedCalcParen = -1;
         boolean containsAural = false;
         boolean zero = true;
         String type = null;
@@ -211,8 +212,21 @@ public class MediaQuery extends AbstractDatatype {
                     } else if (isWhitespace(c)) {
                         String kw = sb.toString();
                         sb.setLength(0);
-                        if ("only".equals(kw) || "not".equals(kw)) {
+                        if ("only".equals(kw)) {
+                            if (isMediaCondition()) {
+                                throw newDatatypeException(offset + i,
+                                        "Expected a CSS media condition (not a"
+                                                + " CSS media type) but saw"
+                                                + " \u201Conly\u201D instead.");
+                            }
                             state = State.WS_BEFORE_MEDIA_TYPE;
+                            continue;
+                        } else if ("not".equals(kw)) {
+                            if (isMediaCondition()) {
+                                state = State.WS_BEFORE_MEDIA_FEATURE;
+                            } else {
+                                state = State.WS_BEFORE_MEDIA_TYPE;
+                            }
                             continue;
                         } else {
                             throw newDatatypeException(offset + i,
@@ -236,6 +250,22 @@ public class MediaQuery extends AbstractDatatype {
                                 "Expected a letter or whitespace but saw \u201C"
                                         + c + "\u201D instead.");
                     }
+                case WS_BEFORE_MEDIA_FEATURE:
+                    if (isWhitespace(c)) {
+                        continue;
+                    } else if ('(' == c) {
+                        state = State.OPEN_PAREN_SEEN;
+                        continue;
+                    } else if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        state = State.IN_MEDIA_TYPE;
+                        continue;
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected \u201C(\u201D or"
+                                        + " whitespace but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
                 case IN_MEDIA_TYPE:
                     if (('a' <= c && 'z' >= c) || c == '-') {
                         sb.append(c);
@@ -247,6 +277,9 @@ public class MediaQuery extends AbstractDatatype {
                          */
                         type = sb.toString();
                         sb.setLength(0);
+                        if (isMediaCondition()) {
+                            errNotMediaCondition(type);
+                        }
                         if (isMediaType(type)) {
                             if ("aural".equals(type)) {
                                 containsAural = true;
@@ -325,14 +358,18 @@ public class MediaQuery extends AbstractDatatype {
                     } else if (c == ')') {
                         String kw = sb.toString();
                         sb.setLength(0);
-                        checkApplicability(offset + i, kw, type, warnings);
+                        if (!isMediaCondition()) {
+                            checkApplicability(offset + i, kw, type, warnings);
+                        }
                         checkIfValueRequired(offset + i, kw);
                         state = State.AFTER_CLOSE_PAREN;
                         continue;
                     } else if (isWhitespace(c) || c == ':') {
                         String kw = sb.toString();
                         sb.setLength(0);
-                        checkApplicability(offset + i, kw, type, warnings);
+                        if (!isMediaCondition()) {
+                            checkApplicability(offset + i, kw, type, warnings);
+                        }
                         feature = kw;
                         valueExpectation = valueExpectationFor(kw);
                         if (valueExpectation != null) {
@@ -417,6 +454,9 @@ public class MediaQuery extends AbstractDatatype {
                                 } else if ('.' == c
                                         && valueExpectation == ValueType.LENGTH) {
                                     state = State.IN_VALUE_DIGITS_AFTER_DOT;
+                                    continue;
+                                } else if ('c' == c) {
+                                    state = State.BEFORE_CALC_OPEN_PAREN;
                                     continue;
                                 } else if (valueExpectation == ValueType.LENGTH) {
                                     throw newDatatypeException(offset + i,
@@ -621,6 +661,43 @@ public class MediaQuery extends AbstractDatatype {
                                 throw new RuntimeException("Impossible state.");
                         }
                     }
+                case BEFORE_CALC_OPEN_PAREN:
+                    if ('a' <= c && 'z' >= c) {
+                        sb.append(c);
+                        continue;
+                    } else if ('(' == c) {
+                        unmatchedCalcParen = 1;
+                        String kw = sb.toString();
+                        sb.setLength(0);
+                        if ("alc".equals(kw)) {
+                            state = State.IN_CALC;
+                            continue;
+                        } else {
+                            throw newDatatypeException(offset + i,
+                                    "Expected \u201ccalc\u201d but saw \u201C"
+                                            + kw + "\u201D instead.");
+                        }
+                    } else {
+                        throw newDatatypeException(offset + i,
+                                "Expected \u201ccalc\u201d but saw \u201C" + c
+                                        + "\u201D instead.");
+                    }
+                case IN_CALC:
+                    if (')' == c) {
+                        if (unmatchedCalcParen == 1) {
+                            unmatchedCalcParen = -1;
+                            state = State.WS_BEFORE_CLOSE_PAREN;
+                            continue;
+                        } else {
+                            unmatchedCalcParen--;
+                            continue;
+                        }
+                    } else if ('(' == c) {
+                      unmatchedCalcParen++;
+                      continue;
+                    } else {
+                      continue;
+                    }
                 case IN_VALUE_DIGITS_AFTER_DOT:
                     if ('0' == c) {
                         state = State.IN_VALUE_DIGITS_AFTER_DOT_TRAIL;
@@ -762,6 +839,9 @@ public class MediaQuery extends AbstractDatatype {
             case IN_MEDIA_TYPE:
                 String kw = sb.toString();
                 sb.setLength(0);
+                if (isMediaCondition()) {
+                    errNotMediaCondition(kw);
+                }
                 if (isMediaType(kw)) {
                     if ("aural".equals(kw) && WARN) {
                         warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
@@ -832,6 +912,16 @@ public class MediaQuery extends AbstractDatatype {
         }
     }
 
+    private void errNotMediaCondition(String type) throws DatatypeException {
+        if (isMediaType(type)) {
+            throw newDatatypeException("Expected a CSS media condition but saw"
+                    + " CSS media type ", type, " instead.");
+        } else {
+            throw newDatatypeException("Expected a CSS media condition but saw"
+                    + " ", type, " instead.");
+        }
+    }
+
     private void checkIfValueRequired(int index, String feature)
             throws DatatypeException {
         if (feature.startsWith("min-") || feature.startsWith("max-")) {
@@ -839,6 +929,10 @@ public class MediaQuery extends AbstractDatatype {
                     "Expected a value for the media feature \u201C" + feature
                             + "\u201D.");
         }
+    }
+
+    protected boolean isMediaCondition() {
+        return false;
     }
 
     @Override public String getName() {

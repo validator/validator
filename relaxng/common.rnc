@@ -381,6 +381,10 @@ common.attrs.other =
 	common.data.keylabellist =
 		w:keylabellist
 
+## List of Source Sizes
+	common.data.source.size.list =
+		w:source-size-list
+
 ## Microdata Properties
   common.data.microdata-properties =
     list { w:microdata-property+ }

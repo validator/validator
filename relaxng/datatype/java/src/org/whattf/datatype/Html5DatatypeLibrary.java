@@ -94,6 +94,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return Language.THE_INSTANCE;
         } else if ("media-query".equals(typeLocalName)) {
             return MediaQuery.THE_INSTANCE;
+        } else if ("media-condition".equals(typeLocalName)) {
+            return MediaCondition.THE_INSTANCE;
         } else if ("mime-type".equals(typeLocalName)) {
             return MimeType.THE_INSTANCE;
         } else if ("browsing-context".equals(typeLocalName)) {
@@ -114,6 +116,8 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return FloatingPointExponentNonNegative.THE_INSTANCE;
         } else if ("float-positive".equals(typeLocalName)) {
             return FloatingPointExponentPositive.THE_INSTANCE;
+        } else if ("css-number-token".equals(typeLocalName)) {
+            return CssNumberToken.THE_INSTANCE;
         } else if ("mime-type-list".equals(typeLocalName)) {
             return MimeTypeList.THE_INSTANCE;
         } else if ("circle".equals(typeLocalName)) {
@@ -168,6 +172,14 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return TimeDatetime.THE_INSTANCE;
         } else if ("svg-pathdata".equals(typeLocalName)) {
             return new SvgPathData();
+        } else if ("source-size-list".equals(typeLocalName)) {
+            return SourceSizeList.THE_INSTANCE;
+        } else if ("image-candidate-strings".equals(typeLocalName)) {
+            return ImageCandidateStrings.THE_INSTANCE;
+        } else if ("image-candidate-strings-width-required".equals(typeLocalName)) {
+            return ImageCandidateStringsWidthRequired.THE_INSTANCE;
+        } else if ("image-candidate-url".equals(typeLocalName)) {
+            return ImageCandidateURL.THE_INSTANCE;
         }
         throw new DatatypeException("Unknown local name for datatype: " + typeLocalName);
     }

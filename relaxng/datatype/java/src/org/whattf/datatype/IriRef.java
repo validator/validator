@@ -44,6 +44,8 @@ import io.mola.galimatias.StrictErrorHandler;
 
 public class IriRef extends AbstractDatatype {
 
+    private static final int ELIDE_LIMIT = 50;
+
     /**
      * The singleton instance.
      */
@@ -91,6 +93,19 @@ public class IriRef extends AbstractDatatype {
     }
 
     public void checkValid(CharSequence literal) throws DatatypeException {
+        String messagePrologue = "";
+        int length = literal.length();
+        if (reportValue()) {
+            if (length < ELIDE_LIMIT) {
+                messagePrologue = "\u201c" + literal + "\u201d: ";
+            } else {
+                StringBuilder sb = new StringBuilder(ELIDE_LIMIT + 1);
+                sb.append(literal, 0, ELIDE_LIMIT / 2);
+                sb.append('\u2026');
+                sb.append(literal, length - ELIDE_LIMIT / 2, length);
+                messagePrologue = "\u201c" + sb.toString() + "\u201d: ";
+            }
+        }
         if ("".equals(trimHtmlSpaces(literal.toString()))) {
             throw newDatatypeException("Must be non-empty.");
         }
@@ -156,11 +171,11 @@ public class IriRef extends AbstractDatatype {
                 }
             }
         } catch (GalimatiasParseException e) {
-            throw newDatatypeException(e.getMessage() + ".");
+            throw newDatatypeException(messagePrologue + e.getMessage() + ".");
         } catch (IOException e) {
-            throw newDatatypeException(e.getMessage());
+            throw newDatatypeException(messagePrologue + e.getMessage());
         } catch (RhinoException e) {
-            throw newDatatypeException(e.getMessage());
+            throw newDatatypeException(messagePrologue + e.getMessage());
         }
         if (url != null) {
             if (data) {
@@ -177,7 +192,9 @@ public class IriRef extends AbstractDatatype {
                     String msg = e.getMessage();
                     if (WARN
                             && "Fragment is not allowed for data: URIs according to RFC 2397.".equals(msg)) {
-                        throw newDatatypeException(msg, WARN);
+                        throw newDatatypeException(messagePrologue + msg, WARN);
+                    } else {
+                        throw newDatatypeException(messagePrologue + msg);
                     }
                 }
             }
@@ -196,6 +213,10 @@ public class IriRef extends AbstractDatatype {
     }
 
     protected boolean isAbsolute() {
+        return false;
+    }
+
+    protected boolean reportValue() {
         return false;
     }
 
@@ -231,7 +252,7 @@ public class IriRef extends AbstractDatatype {
 
     @Override
     public String getName() {
-        return "IRI reference";
+        return "URL";
     }
 
     private class CharSequencePair {

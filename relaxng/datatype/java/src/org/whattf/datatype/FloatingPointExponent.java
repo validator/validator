@@ -30,16 +30,16 @@ public class FloatingPointExponent extends AbstractDatatype {
      * The singleton instance.
      */
     public static final FloatingPointExponent THE_INSTANCE = new FloatingPointExponent();
-    
+
     private enum State {
-        AT_START, AT_START_MINUS_SEEN, IN_INTEGER_PART_DIGITS_SEEN, DOT_SEEN, E_SEEN, IN_DECIMAL_PART_DIGITS_SEEN, IN_EXPONENT_SIGN_SEEN, IN_EXPONENT_DIGITS_SEEN
-        
+        AT_START, AT_START_MINUS_SEEN, AT_START_PLUS_SEEN, IN_INTEGER_PART_DIGITS_SEEN, DOT_SEEN, E_SEEN, IN_DECIMAL_PART_DIGITS_SEEN, IN_EXPONENT_SIGN_SEEN, IN_EXPONENT_DIGITS_SEEN
+
     }
-    
+
     /**
-     * 
+     *
      */
-    private FloatingPointExponent() {
+    protected FloatingPointExponent() {
         super();
     }
 
@@ -53,6 +53,12 @@ public class FloatingPointExponent extends AbstractDatatype {
                     if (c == '-') {
                         state = State.AT_START_MINUS_SEEN;
                         continue;
+                    } else if (isCSS() && c == '+') {
+                        state = State.AT_START_PLUS_SEEN;
+                        continue;
+                    } else if (isCSS() && c == '.') {
+                        state = State.DOT_SEEN;
+                        continue;
                     } else if (isAsciiDigit(c)) {
                         state = State.IN_INTEGER_PART_DIGITS_SEEN;
                         continue;
@@ -60,6 +66,13 @@ public class FloatingPointExponent extends AbstractDatatype {
                         throw newDatatypeException(i, "Expected a minus sign or a digit but saw ", c, " instead.");
                     }
                 case AT_START_MINUS_SEEN:
+                    if (isAsciiDigit(c)) {
+                        state = State.IN_INTEGER_PART_DIGITS_SEEN;
+                        continue;
+                    } else {
+                        throw newDatatypeException(i, "Expected a digit but saw ", c, " instead.");
+                    }
+                case AT_START_PLUS_SEEN:
                     if (isAsciiDigit(c)) {
                         state = State.IN_INTEGER_PART_DIGITS_SEEN;
                         continue;
@@ -125,16 +138,28 @@ public class FloatingPointExponent extends AbstractDatatype {
             case IN_EXPONENT_DIGITS_SEEN:
                 return;
             case AT_START:
-                throw newDatatypeException("The empty string is not a valid floating point number.");
+                throw newDatatypeException("The empty string is not a valid "
+                        + getName() + ".");
             case AT_START_MINUS_SEEN:
-                throw newDatatypeException("The minus sign alone is not a valid floating point number.");
+                throw newDatatypeException("The minus sign alone is not a valid "
+                        + getName() + ".");
+            case AT_START_PLUS_SEEN:
+                throw newDatatypeException("The plus sign alone is not a valid "
+                        + getName() + ".");
             case DOT_SEEN:
-                throw newDatatypeException("A floating point number must not end with the decimal point.");
+                throw newDatatypeException("A " + getName()
+                        + " must not end with the decimal point.");
             case E_SEEN:
-                throw newDatatypeException("A floating point number must not end with the exponent \u201Ce\u201D.");
+                throw newDatatypeException("A " + getName()
+                        + " must not end with the exponent \u201Ce\u201D.");
             case IN_EXPONENT_SIGN_SEEN:
-                throw newDatatypeException("A floating point number must not end with only a sign in the exponent.");                
+                throw newDatatypeException("A " + getName()
+                        + " must not end with only a sign in the exponent.");
         }
+    }
+
+    protected boolean isCSS() {
+        return false;
     }
 
     @Override

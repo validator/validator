@@ -22,6 +22,7 @@
 
 package org.whattf.checker.schematronequiv;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,6 +35,15 @@ import org.whattf.checker.AttributeUtil;
 import org.whattf.checker.Checker;
 import org.whattf.checker.LocatorImpl;
 import org.whattf.checker.TaintableLocatorImpl;
+import org.whattf.checker.VnuBadAttrValueException;
+
+import org.whattf.datatype.Html5DatatypeException;
+import org.whattf.datatype.ImageCandidateStringsWidthRequired;
+import org.whattf.datatype.ImageCandidateStrings;
+import org.whattf.datatype.ImageCandidateURL;
+
+import org.relaxng.datatype.DatatypeException;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -1026,6 +1036,8 @@ public class Assertions extends Checker {
 
     private Set<Locator> secondLevelH1s = new HashSet<Locator>();
 
+    private Map<Locator, Map<String, String>> siblingSources = new ConcurrentHashMap<Locator, Map<String, String>>();
+
     private final void errContainedInOrOwnedBy(String role, Locator locator)
             throws SAXException {
         err("An element with \u201Crole=" + role + "\u201D"
@@ -1165,6 +1177,8 @@ public class Assertions extends Checker {
                                 + " for images.", imgLocator);
                     }
                 }
+            } else if ("picture" == localName) {
+                siblingSources.clear();
             } else if ("select" == localName && node.isOptionNeeded()) {
                 if (!node.hasOption()) {
                     err("A \u201Cselect\u201D element with a"
@@ -1246,6 +1260,7 @@ public class Assertions extends Checker {
         listIds.clear();
         ariaReferences.clear();
         allIds.clear();
+        siblingSources.clear();
     }
 
     /**
@@ -1400,6 +1415,80 @@ public class Assertions extends Checker {
                         ids.add(attVal);
                     }
                 }
+            }
+
+            if ("img".equals(localName) || "source".equals(localName)) {
+                if (atts.getIndex("", "srcset") > -1) {
+                    String srcsetVal = atts.getValue("", "srcset");
+                    try {
+                        if (atts.getIndex("", "sizes") > -1) {
+                            ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(srcsetVal);
+                        } else {
+                            ImageCandidateStrings.THE_INSTANCE.checkValid(srcsetVal);
+                        }
+                    } catch (DatatypeException e) {
+                        Class<?> datatypeClass = ImageCandidateStrings.class;
+                        if (atts.getIndex("", "sizes") > -1) {
+                            datatypeClass = ImageCandidateStringsWidthRequired.class;
+                        }
+                        try {
+                            if (getErrorHandler() != null) {
+                                String msg = e.getMessage();
+                                if (e instanceof Html5DatatypeException) {
+                                    Html5DatatypeException ex5 = (Html5DatatypeException) e;
+                                    if (!ex5.getDatatypeClass().equals(
+                                            ImageCandidateURL.class)) {
+                                        msg = msg.substring(msg.indexOf(": ") + 2);
+                                    }
+                                }
+                                VnuBadAttrValueException ex = new VnuBadAttrValueException(
+                                        localName, uri, "srcset", srcsetVal,
+                                        msg, getDocumentLocator(),
+                                        datatypeClass, false);
+                                getErrorHandler().error(ex);
+                            }
+                        } catch (ClassNotFoundException ce) {
+                        }
+                    }
+                    if (!siblingSources.isEmpty()) {
+                        for (Map.Entry<Locator, Map<String, String>> entry : siblingSources.entrySet()) {
+                            Locator locator = entry.getKey();
+                            Map<String, String> sourceAtts = entry.getValue();
+                            String media = sourceAtts.get("media");
+                            if (media == null && sourceAtts.get("type") == null) {
+                                err("A \u201csource\u201d element that has a"
+                                        + " following sibling"
+                                        + " \u201csource\u201d element or"
+                                        + " \u201cimg\u201d element with a"
+                                        + " \u201csrcset\u201d attribute"
+                                        + " must have a"
+                                        + " \u201cmedia\u201d attribute and/or"
+                                        + " \u201ctype\u201d attribute.",
+                                        locator);
+                                siblingSources.remove(locator);
+                            } else if (media != null
+                                    && lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                            "all", trimSpaces(media))) {
+                                err("Value of \u201cmedia\u201d attribute here"
+                                        + " must not be \u201call\u201d.",
+                                        locator);
+                            }
+                        }
+                    }
+                } else if (atts.getIndex("", "sizes") > -1) {
+                    err("The \u201csizes\u201d attribute may be specified"
+                            + " only if the \u201csrcset\u201d attribute is"
+                            + " also present.");
+                }
+            }
+
+            if ("source".equals(localName)) {
+                Map<String, String> sourceAtts = new HashMap<String, String>();
+                for (int i = 0; i < atts.getLength(); i++) {
+                    sourceAtts.put(atts.getLocalName(i), atts.getValue(i));
+                }
+                siblingSources.put((new LocatorImpl(getDocumentLocator())),
+                        sourceAtts);
             }
 
             if ("figure" == localName) {
