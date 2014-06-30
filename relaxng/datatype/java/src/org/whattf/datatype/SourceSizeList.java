@@ -29,6 +29,10 @@ import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
 
+    private static enum State {
+        IN_SIZE, AFTER_SLASH, IN_COMMENT, IN_COMMENT_AFTER_ASTERISK
+    }
+
     private static final int CLIP_LIMIT = 25;
 
     private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
@@ -85,6 +89,7 @@ public class SourceSizeList extends AbstractDatatype {
             extract.append(c);
             if (',' == c) {
                 unparsedSize.append(literal.subSequence(offset, i));
+                unparsedSize = removeComments(unparsedSize);
                 checkSize(unparsedSize, extract, isFirst, false);
                 isFirst = false;
                 unparsedSize.setLength(0);
@@ -92,6 +97,7 @@ public class SourceSizeList extends AbstractDatatype {
             }
         }
         unparsedSize.append(literal.subSequence(offset, literal.length()));
+        unparsedSize = removeComments(unparsedSize);
         checkSize(unparsedSize, extract, isFirst, true);
     }
 
@@ -178,6 +184,52 @@ public class SourceSizeList extends AbstractDatatype {
         } else {
             errNotNumber(sb, extract);
         }
+    }
+
+    private StringBuilder removeComments(StringBuilder sb) {
+        if (sb.indexOf("/*") == -1) {
+            return sb;
+        }
+        StringBuilder sb2 = new StringBuilder();
+        State state = State.IN_SIZE;
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.charAt(i);
+            switch (state) {
+                case IN_SIZE:
+                    if ('/' == sb.charAt(i)) {
+                        sb2.append('/');
+                        state = State.AFTER_SLASH;
+                        continue;
+                    } else {
+                        sb2.append(c);
+                        continue;
+                    }
+                case AFTER_SLASH:
+                    if ('*' == sb.charAt(i)) {
+                        sb2.setLength(sb2.length() - 1);
+                        state = State.IN_COMMENT;
+                        continue;
+                    } else {
+                        sb2.append(c);
+                        continue;
+                    }
+                case IN_COMMENT:
+                    if ('*' == sb.charAt(i)) {
+                        state = State.IN_COMMENT_AFTER_ASTERISK;
+                        continue;
+                    } else {
+                        continue;
+                    }
+                case IN_COMMENT_AFTER_ASTERISK:
+                    if ('/' == sb.charAt(i)) {
+                        state = State.IN_SIZE;
+                        continue;
+                    } else {
+                        continue;
+                    }
+            }
+        }
+        return sb2;
     }
 
     private int lastSpaceIndex(StringBuilder sb) {
