@@ -197,12 +197,6 @@ public class MediaQuery extends AbstractDatatype {
                         continue;
                     } else if ('a' <= c && 'z' >= c) {
                         sb.append(c);
-                        if (isMediaCondition()) {
-                            throw newDatatypeException(offset + i,
-                                    "Expected \u201C(\u201D or"
-                                            + " whitespace but saw \u201C" + c
-                                            + "\u201D instead.");
-                        }
                         state = State.IN_MEDIA_TYPE;
                         continue;
                     } else {
@@ -221,8 +215,8 @@ public class MediaQuery extends AbstractDatatype {
                         if ("only".equals(kw)) {
                             if (isMediaCondition()) {
                                 throw newDatatypeException(offset + i,
-                                        "Expected a CSS media feature (not a CSS"
-                                                + " media type) but saw"
+                                        "Expected a CSS media condition (not a"
+                                                + " CSS media type) but saw"
                                                 + " \u201Conly\u201D instead.");
                             }
                             state = State.WS_BEFORE_MEDIA_TYPE;
@@ -248,12 +242,6 @@ public class MediaQuery extends AbstractDatatype {
                     if (isWhitespace(c)) {
                         continue;
                     } else if ('a' <= c && 'z' >= c) {
-                        if (isMediaCondition()) {
-                            throw newDatatypeException(offset + i,
-                                    "Expected \u201C(\u201D or"
-                                            + " whitespace but saw \u201C" + c
-                                            + "\u201D instead.");
-                        }
                         sb.append(c);
                         state = State.IN_MEDIA_TYPE;
                         continue;
@@ -269,12 +257,6 @@ public class MediaQuery extends AbstractDatatype {
                         state = State.OPEN_PAREN_SEEN;
                         continue;
                     } else if ('a' <= c && 'z' >= c) {
-                        if (isMediaCondition()) {
-                            throw newDatatypeException(offset + i,
-                                    "Expected \u201C(\u201D or"
-                                            + " whitespace but saw \u201C" + c
-                                            + "\u201D instead.");
-                        }
                         sb.append(c);
                         state = State.IN_MEDIA_TYPE;
                         continue;
@@ -295,6 +277,9 @@ public class MediaQuery extends AbstractDatatype {
                          */
                         type = sb.toString();
                         sb.setLength(0);
+                        if (isMediaCondition()) {
+                            errNotMediaCondition(type);
+                        }
                         if (isMediaType(type)) {
                             if ("aural".equals(type)) {
                                 containsAural = true;
@@ -854,6 +839,9 @@ public class MediaQuery extends AbstractDatatype {
             case IN_MEDIA_TYPE:
                 String kw = sb.toString();
                 sb.setLength(0);
+                if (isMediaCondition()) {
+                    errNotMediaCondition(kw);
+                }
                 if (isMediaType(kw)) {
                     if ("aural".equals(kw) && WARN) {
                         warnings.add("The media type \u201caural\u201d is deprecated. Use \u201cspeech\u201d instead. ");
@@ -921,6 +909,16 @@ public class MediaQuery extends AbstractDatatype {
                 return warnings;
             default:
                 return warnings;
+        }
+    }
+
+    private void errNotMediaCondition(String type) throws DatatypeException {
+        if (isMediaType(type)) {
+            throw newDatatypeException("Expected a CSS media condition but saw"
+                    + " CSS media type ", type, " instead.");
+        } else {
+            throw newDatatypeException("Expected a CSS media condition but saw"
+                    + " ", type, " instead.");
         }
     }
 
