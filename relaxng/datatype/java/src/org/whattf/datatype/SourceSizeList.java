@@ -89,7 +89,7 @@ public class SourceSizeList extends AbstractDatatype {
             extract.append(c);
             if (',' == c) {
                 unparsedSize.append(literal.subSequence(offset, i));
-                unparsedSize = removeComments(unparsedSize);
+                unparsedSize = removeComments(unparsedSize, extract);
                 checkSize(unparsedSize, extract, isFirst, false);
                 isFirst = false;
                 unparsedSize.setLength(0);
@@ -97,7 +97,7 @@ public class SourceSizeList extends AbstractDatatype {
             }
         }
         unparsedSize.append(literal.subSequence(offset, literal.length()));
-        unparsedSize = removeComments(unparsedSize);
+        unparsedSize = removeComments(unparsedSize, extract);
         checkSize(unparsedSize, extract, isFirst, true);
     }
 
@@ -161,6 +161,9 @@ public class SourceSizeList extends AbstractDatatype {
         int firstParenPosition = sb.length() - 1;
         int unMatchedParenCount = 1;
         while (unMatchedParenCount > 0) {
+            if (firstParenPosition == 0) {
+                errMismatchedParens(sb, extract);
+            }
             char c = sb.charAt(--firstParenPosition);
             if ('(' == c) {
                 unMatchedParenCount--;
@@ -186,7 +189,8 @@ public class SourceSizeList extends AbstractDatatype {
         }
     }
 
-    private StringBuilder removeComments(StringBuilder sb) {
+    private StringBuilder removeComments(StringBuilder sb, CharSequence extract)
+            throws DatatypeException {
         if (sb.indexOf("/*") == -1) {
             return sb;
         }
@@ -228,6 +232,11 @@ public class SourceSizeList extends AbstractDatatype {
                         continue;
                     }
             }
+        }
+        if (state == State.IN_COMMENT
+                || state == State.IN_COMMENT_AFTER_ASTERISK) {
+            trimWhitespace(sb);
+            errUnclosedComment(sb, extract);
         }
         return sb2;
     }
@@ -326,6 +335,16 @@ public class SourceSizeList extends AbstractDatatype {
         }
         msg += " at " + clip(extract) + ".";
         err(msg);
+    }
+
+    private void errMismatchedParens(CharSequence cs, CharSequence extract)
+            throws DatatypeException {
+        err("Mismatched parentheses in " + clip(extract) + ".");
+    }
+
+    private void errUnclosedComment(CharSequence cs, CharSequence extract)
+            throws DatatypeException {
+        err("Unclosed comment in " + code(cs) + " at " + clip(extract) + ".");
     }
 
     private CharSequence clip(CharSequence cs) {
