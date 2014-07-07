@@ -22,9 +22,11 @@
 
 package org.whattf.datatype;
 
+import java.text.ParseException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.whattf.datatype.tools.CssParser;
 import org.relaxng.datatype.DatatypeException;
 
 public class SourceSizeList extends AbstractDatatype {
@@ -38,6 +40,8 @@ public class SourceSizeList extends AbstractDatatype {
     private static final Set<String> LENGTH_UNITS = new LinkedHashSet<String>();
 
     private static final StringBuilder VALID_UNITS = new StringBuilder();
+
+    private static CssParser cssParser = new CssParser();
 
     static {
         /* font-relative lengths */
@@ -108,6 +112,12 @@ public class SourceSizeList extends AbstractDatatype {
         if (unparsedSize.length() == 0) {
             errEmpty(isFirst, isLast, extract);
             return;
+        }
+        try {
+            cssParser.tokenize(unparsedSize.toString());
+            cssParser.parse("@media " + unparsedSize.toString() + " {}");
+        } catch (ParseException e) {
+            errCssParseError(e.getMessage(), unparsedSize, extract);
         }
         if (')' == unparsedSize.charAt(unparsedSize.length() - 1)) {
             checkCalc(unparsedSize, extract, isLast);
@@ -287,6 +297,11 @@ public class SourceSizeList extends AbstractDatatype {
 
     private void err(String message) throws DatatypeException {
         throw newDatatypeException(message);
+    }
+
+    private void errCssParseError(CharSequence msg, CharSequence sourceSize,
+            CharSequence extract) throws DatatypeException {
+        err(msg + " while parsing " + code(sourceSize) + " at " + clip(extract));
     }
 
     private void errFromOtherDatatype(CharSequence msg, CharSequence extract)
