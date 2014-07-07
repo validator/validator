@@ -136,7 +136,7 @@ runDependencyJars = [
   "isorelax.jar",
   "mozilla/intl/chardet/java/dist/lib/chardet.jar",
   "saxon9.jar",
-  "galimatias-0.0.4.jar",
+  "galimatias-0.1.0.jar",
 ]
 
 buildOnlyDependencyJars = [
