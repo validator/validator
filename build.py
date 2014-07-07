@@ -106,7 +106,7 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
-  ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.0.4/galimatias-0.0.4.jar", "5492f3e0c3bcf761437feac2cbf5791b"),
+  ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/tokenizer.js", "731705f1bb5cf2aaf74b4e590759f026"),
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/parser.js", "a6cab081aa2320ea0c3d49fa99a44a33"),
 ]
