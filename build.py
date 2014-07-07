@@ -96,7 +96,7 @@ dependencyPackages = [
   ("http://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
   ("http://archive.apache.org/dist/xerces/j/Xerces-J-bin.2.9.1.zip", "a0e07ede1c3bd5231fe15eae24032b2e"),
   ("http://ftp.mozilla.org/pub/mozilla.org/js/rhino1_7R1.zip", "613eed8201d37be201805e5048ebb0c3"),
-  ("http://download.berlios.de/jsontools/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
+  ("http://sunet.dl.sourceforge.net/project/jsontools.berlios/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
   ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("http://www.slf4j.org/dist/slf4j-1.5.2.zip", "00ff08232a9959af3c7101b88ec456a7"),
