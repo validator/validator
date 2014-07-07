@@ -107,6 +107,8 @@ dependencyPackages = [
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
   ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.0.4/galimatias-0.0.4.jar", "5492f3e0c3bcf761437feac2cbf5791b"),
+  ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/tokenizer.js", "731705f1bb5cf2aaf74b4e590759f026"),
+  ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/parser.js", "a6cab081aa2320ea0c3d49fa99a44a33"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -825,6 +827,7 @@ def prepareLocalEntityJar():
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
   preparePropertiesFile()
+  createCssParserJS(filesDir)
   shutil.copyfile(os.path.join(buildRoot, metaNameExtensions), os.path.join(filesDir, "meta-name-extensions"))
   shutil.copyfile(os.path.join(buildRoot, linkRelExtensions), os.path.join(filesDir, "link-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, aRelExtensions), os.path.join(filesDir, "a-rel-extensions"))
@@ -860,6 +863,25 @@ def prepareLocalEntityJar():
   finally:
     f.close()
     o.close()
+
+def createCssParserJS(filesDir):
+  t = open(os.path.join(buildRoot, "dependencies", "tokenizer.js"), 'r')
+  p = open(os.path.join(buildRoot, "dependencies", "parser.js"), 'r')
+  o = open(os.path.join(filesDir, "css-parser-js"),'wb')
+  shutil.copyfileobj(t, o)
+  shutil.copyfileobj(p, o)
+  t.close
+  p.close
+  consoleLogForRhino = '''\
+  var console = {
+    log: function (msg) {
+      throw msg;
+      return true;
+    }
+  }
+  '''
+  o.write(consoleLogForRhino)
+  o.close
 
 def downloadOperaSuite():
   return
