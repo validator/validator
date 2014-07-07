@@ -832,7 +832,6 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, linkRelExtensions), os.path.join(filesDir, "link-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, aRelExtensions), os.path.join(filesDir, "a-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
-  shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, scriptFile), os.path.join(filesDir, "script.js"))
