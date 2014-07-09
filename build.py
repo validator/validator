@@ -966,7 +966,10 @@ def selfUpdate():
     os.execv(sys.executable, newArgv)  
 
 def runTests():
-  args = "tests/messages.json"
+  if followW3Cspec:
+    args = "tests/messages.json"
+  else:
+    args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths() 
                               + jarNamesToPaths(["non-schema", 
