@@ -74,6 +74,8 @@ public class TestRunner implements ErrorHandler {
 
     private static File messagesFile;
 
+    private static String[] ignoreList;
+
     private static boolean writeMessages;
 
     private static boolean verbose;
@@ -99,6 +101,18 @@ public class TestRunner implements ErrorHandler {
     }
 
     private void checkHtmlFile(File file) throws IOException, SAXException {
+        String testFilename = file.getAbsolutePath().substring(
+                baseDir.length() + 1);
+        for (String dirName : ignoreList) {
+            if (testFilename.startsWith(dirName)) {
+                if (verbose) {
+                    out.println("Ignoring file: "
+                            + file.toURI().toURL().toString());
+                    out.flush();
+                }
+                return;
+            }
+        }
         if (!file.exists()) {
             if (verbose) {
                 out.println(String.format("\"%s\": warning: File not found.",
@@ -515,6 +529,8 @@ public class TestRunner implements ErrorHandler {
                 System.setProperty("org.whattf.datatype.warn", "false");
             } else if ("--write-messages".equals(args[i])) {
                 writeMessages = true;
+            } else if (args[i].startsWith("--ignore=")) {
+                ignoreList = args[i].substring(9, args[i].length()).split(",");
             } else if (args[i].startsWith("--")) {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", args[i]));
