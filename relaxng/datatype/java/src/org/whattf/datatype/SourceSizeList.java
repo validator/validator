@@ -86,27 +86,33 @@ public class SourceSizeList extends AbstractDatatype {
         }
         int offset = 0;
         boolean isFirst = true;
+        String currentChunk;
         StringBuilder unparsedSize = new StringBuilder();
         StringBuilder extract = new StringBuilder();
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
             extract.append(c);
             if (',' == c) {
-                unparsedSize.append(literal.subSequence(offset, i));
+                currentChunk = literal.subSequence(offset, i).toString();
+                checkForInvalidComments(currentChunk, extract);
+                unparsedSize.append(currentChunk);
                 unparsedSize = removeComments(unparsedSize, extract);
-                checkSize(unparsedSize, extract, isFirst, false);
+                checkSize(unparsedSize, literal, extract, isFirst, false);
                 isFirst = false;
                 unparsedSize.setLength(0);
                 offset = i + 1;
             }
         }
-        unparsedSize.append(literal.subSequence(offset, literal.length()));
+        currentChunk = literal.subSequence(offset, literal.length()).toString();
+        checkForInvalidComments(currentChunk, extract);
+        unparsedSize.append(currentChunk);
         unparsedSize = removeComments(unparsedSize, extract);
-        checkSize(unparsedSize, extract, isFirst, true);
+        checkSize(unparsedSize, literal, extract, isFirst, true);
     }
 
-    private void checkSize(StringBuilder unparsedSize, StringBuilder extract,
-            boolean isFirst, boolean isLast) throws DatatypeException {
+    private void checkSize(StringBuilder unparsedSize, CharSequence literal,
+            StringBuilder extract, boolean isFirst, boolean isLast)
+            throws DatatypeException {
         String size;
         trimWhitespace(unparsedSize);
         if (unparsedSize.length() == 0) {
@@ -196,6 +202,21 @@ public class SourceSizeList extends AbstractDatatype {
             trimTrailingWhitespace(sb);
         } else {
             errNotNumber(sb, extract);
+        }
+    }
+
+    private void checkForInvalidComments(String currentChunk,
+            StringBuilder extract) throws DatatypeException {
+        if (currentChunk.contains("+/")) {
+            errNotNumber("+/", extract);
+        }
+        if (currentChunk.contains("-/")) {
+            errNotNumber("-/", extract);
+        }
+        for (String units : LENGTH_UNITS) {
+            if (currentChunk.contains("/" + units)) {
+                errNotUnits("/" + units, extract);
+            }
         }
     }
 
