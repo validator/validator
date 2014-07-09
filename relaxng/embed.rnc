@@ -93,7 +93,6 @@ namespace local = ""
 		element source { source.picture.inner & source.picture.attrs }
 	source.picture.attrs =
 		(	common.attrs
-		&	common.attrs.aria?
 		&	source.picture.attrs.media?
 		&	source.picture.attrs.srcset
 		&	source.picture.attrs.sizes?
