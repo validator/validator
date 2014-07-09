@@ -74,7 +74,7 @@ public class TestRunner implements ErrorHandler {
 
     private static File messagesFile;
 
-    private static String[] ignoreList;
+    private static String[] ignoreList = null;
 
     private static boolean writeMessages;
 
@@ -103,14 +103,16 @@ public class TestRunner implements ErrorHandler {
     private void checkHtmlFile(File file) throws IOException, SAXException {
         String testFilename = file.getAbsolutePath().substring(
                 baseDir.length() + 1);
-        for (String dirName : ignoreList) {
-            if (testFilename.startsWith(dirName)) {
-                if (verbose) {
-                    out.println("Ignoring file: "
-                            + file.toURI().toURL().toString());
-                    out.flush();
+        if (ignoreList != null) {
+            for (String dirName : ignoreList) {
+                if (testFilename.startsWith(dirName)) {
+                    if (verbose) {
+                        out.println("Ignoring file: "
+                                + file.toURI().toURL().toString());
+                        out.flush();
+                    }
+                    return;
                 }
-                return;
             }
         }
         if (!file.exists()) {
