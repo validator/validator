@@ -109,6 +109,7 @@ dependencyPackages = [
   ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/tokenizer.js", "731705f1bb5cf2aaf74b4e590759f026"),
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/parser.js", "a6cab081aa2320ea0c3d49fa99a44a33"),
+  ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so 
@@ -869,9 +870,11 @@ def prepareLocalEntityJar():
 def createCssParserJS(filesDir):
   t = open(os.path.join(buildRoot, "dependencies", "tokenizer.js"), 'r')
   p = open(os.path.join(buildRoot, "dependencies", "parser.js"), 'r')
+  j = open(os.path.join(buildRoot, "dependencies", "json.js"), 'r')
   o = open(os.path.join(filesDir, "css-parser-js"),'wb')
   shutil.copyfileobj(t, o)
   shutil.copyfileobj(p, o)
+  shutil.copyfileobj(j, o)
   t.close
   p.close
   consoleLogForRhino = '''\
