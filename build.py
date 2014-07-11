@@ -666,7 +666,10 @@ def generateRunScript():
     f.write("HEAP=$((HEAP-%d))\n" % (int(heapSize[1:]) * 1024))
   else:
     f.write("HEAP=%d\n" % (int(heapSize) * 1024))
-  f.write(" ".join([javaCmd,] + args))
+  # Quick hack to strike a balance between shell variable expansions
+  # having to be unquoted and command line switches that take
+  # human-readable string potentially containing spaces.
+  f.write(" ".join([javaCmd,] + map(lambda x: "'{0}'".format(x) if " " in x else x, args)))
   if controlPort:
     f.write(" <&- 1>/dev/null 2>&1 &")
   f.write("\n")
