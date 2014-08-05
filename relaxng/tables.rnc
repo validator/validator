@@ -236,7 +236,9 @@ datatypes w = "http://whattf.org/datatype-draft"
 		&	tables.attrs.scope?
 		&	tables.attrs.headers?
 #		&	tables.attrs.alignment
-		&	common.attrs.aria?
+		&	(	common.attrs.aria?
+			|	common.attrs.aria.implicit.column-or-row-header
+			)
 		)
 	th.inner =
 		( common.inner.flow )
