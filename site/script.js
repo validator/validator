@@ -1,4 +1,9 @@
 /*
+ * @source: https://github.com/validator/validator/blob/master/site/script.js
+ *
+ * @licstart  The following is the entire license notice for the JavaScript
+ * code in this file.
+ *
  * Copyright (c) 2005-2007 Henri Sivonen
  * Copyright (c) 2007-2010 Mozilla Foundation
  * Copyright (c) 2007 Simon Pieters
@@ -20,6 +25,10 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
+ *
+ * @licend  The above is the entire license notice for the JavaScript code
+ * in this file.
+ *
  */
 var hasDuplicateMessages = false
 var currentOl = null
