@@ -30,14 +30,6 @@ public class UnsupportedFeatureChecker extends Checker {
             warn("The \u201Cdetails\u201D element is not supported properly by browsers yet. It would probably be better to wait for implementations.");
         } else if ("bdi" == localName) {
             warn("The \u201Cbdi\u201D element is not supported by browsers yet.");
-        } else if ("a" == localName) {
-            if (atts.getIndex("", "ping") > -1 && !followW3Cspec) {
-                warn("The \u201Cping\u201D attribute on the \u201Ca\u201D element is not supported by browsers yet.");
-            }
-        } else if ("area" == localName) {
-            if (atts.getIndex("", "ping") > -1 && !followW3Cspec) {
-                warn("The \u201Cping\u201D attribute on the \u201Carea\u201D element is not supported by browsers yet.");
-            }
         } else if ("video" == localName) {
             if (atts.getIndex("", "mediagroup") > -1) {
                 warn("The \u201Cmediagroup\u201D attribute on the \u201Cvideo\u201D element is not supported by browsers yet. It would probably be better to wait for implementations.");
