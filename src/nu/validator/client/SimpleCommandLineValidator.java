@@ -97,7 +97,7 @@ public class SimpleCommandLineValidator {
         int fileArgsStart = 0;
         if (args.length == 0) {
             usage();
-            System.exit(-1);
+            System.exit(1);
         }
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-")) {
@@ -132,7 +132,7 @@ public class SimpleCommandLineValidator {
                     if (!schemaUrl.startsWith("http:")) {
                         System.err.println("error: The \"--schema\" option"
                                 + " requires a URL for a schema.");
-                        System.exit(-1);
+                        System.exit(1);
                     }
                 }
             }
@@ -155,7 +155,7 @@ public class SimpleCommandLineValidator {
                 System.err.printf("Error: Unsupported output format \"%s\"."
                         + " Must be \"gnu\", \"xml\", \"json\","
                         + " or \"text\".\n", outFormat);
-                System.exit(-1);
+                System.exit(1);
             }
         }
         if (readFromStdIn) {
@@ -176,7 +176,7 @@ public class SimpleCommandLineValidator {
         } else {
             System.err.printf("\nError: No documents specified.\n");
             usage();
-            System.exit(-1);
+            System.exit(1);
         }
     }
 
@@ -187,7 +187,7 @@ public class SimpleCommandLineValidator {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
             System.out.println(e.getMessage() + " Terminating.");
-            System.exit(-1);
+            System.exit(1);
         } catch (StackOverflowError e) {
             System.out.println("StackOverflowError"
                     + " while evaluating HTML schema.");
@@ -196,7 +196,7 @@ public class SimpleCommandLineValidator {
             System.out.println("Consider invoking java with the -Xss"
                     + " option. For example:");
             System.out.println("\n  java -Xss512k -jar ~/vnu.jar FILE.html");
-            System.exit(-1);
+            System.exit(1);
         }
         validator.setUpValidatorAndParsers(errorHandler, noStream, loadEntities);
     }
@@ -204,6 +204,9 @@ public class SimpleCommandLineValidator {
     private static void end() throws SAXException {
         errorHandler.end("Document checking completed. No errors found.",
                 "Document checking completed.");
+        if (errorHandler.getErrors() > 0 || errorHandler.getFatalErrors() > 0) {
+            System.exit(1);
+        }
     }
 
     private static void checkFiles(List<File> files) throws SAXException,
