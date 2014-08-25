@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="dist" depends="jar, credits"/>
   <target name="version">
     <echo file="./vnu/VERSION" append="true"
->dev</echo>
+>20140819</echo>
   </target>
   <target name="jar" depends="clean, version, credits">
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
@@ -155,8 +155,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
       <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
       <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
-      <fileset file="../dependencies/icu4j-4_4_2.jar"/>
-      <fileset file="../dependencies/icu4j-charsets-4_4_2.jar"/>
+      <fileset file="../dependencies/icu4j-53_1.jar"/>
+      <fileset file="../dependencies/icu4j-charset-53_1.jar"/>
       <fileset file="../dependencies/iri-0.5/lib/iri.jar"/>
       <fileset file="../dependencies/galimatias-0.1.0.jar"/>
       <fileset file="../dependencies/isorelax.jar"/>
