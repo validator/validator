@@ -697,8 +697,10 @@ def createDistZip(distType):
   version = f.read()
   readmeHtml = "https://raw.github.com/validator/validator.github.io/master/index.html"
   readmeMarkdown = "https://raw.github.com/validator/validator.github.io/master/README.md"
+  changelog = "https://raw.github.com/validator/validator.github.io/master/CHANGELOG.md"
   fetchUrlTo(readmeHtml, os.path.join(distDir, "index.html"))
   fetchUrlTo(readmeMarkdown, os.path.join(distDir, "README.md"))
+  fetchUrlTo(changelog, os.path.join(distDir, "CHANGELOG.md"))
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
