@@ -183,6 +183,7 @@ public class SimpleCommandLineValidator {
     private static void setup(String schemaUrl) throws SAXException, Exception {
         setErrorHandler();
         errorHandler.setHtml(true);
+        errorHandler.start(null);
         try {
             validator.setUpMainSchema(schemaUrl, new SystemErrErrorHandler());
         } catch (SchemaReadException e) {
