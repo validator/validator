@@ -105,6 +105,7 @@ public class XmlMessageEmitter extends MessageEmitter {
     @Override
     public void endMessages() throws SAXException {
         emitter.endElement("messages");
+        emitter.characters("\n");
         contentHandler.endPrefixMapping("");
         contentHandler.endPrefixMapping("h");
         contentHandler.endDocument();
