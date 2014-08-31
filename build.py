@@ -710,19 +710,20 @@ def createDistZip(distType):
     for filename in files:
       zf.write(os.path.join(dirname, filename))
   zf.close()
+  os.chdir("..")
   if (distType == "jar"):
     testJar(distDir);
-  os.chdir("..")
 
 def testJar(distDir):
   testUrl = "https://raw.githubusercontent.com/validator/tests/master/html/elements/a/href-isvalid.html"
   testFile = os.path.join(distDir, "test.html")
   fetchUrlTo(testUrl, testFile)
-  runCmd('"%s" -jar %s %s' % (javaCmd, os.path.join("vnu", "vnu.jar"), testFile))
+  runCmd('"%s" -jar %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), testFile))
   formats = ["xml","json","text"]
   for _format in formats:
-    runCmd('"%s" -jar %s --format %s %s' % (javaCmd, os.path.join("vnu", "vnu.jar"), _format, testFile))
+    runCmd('"%s" -jar %s --format %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), _format, testFile))
   removeIfExists(testFile)
+  runCmd('"%s" -jar %s --version' % (javaCmd, os.path.join(distDir, "vnu.jar")))
 
 def createTarball():
   args = [
