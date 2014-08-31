@@ -217,7 +217,6 @@ public class TextMessageEmitter extends MessageEmitter {
                 writer.write('\n');
             }
             maybeEmitLocation();
-            writer.write('\n');
         } catch (IOException e) {
             throw new SAXException(e.getMessage(), e);
         }
