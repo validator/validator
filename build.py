@@ -1048,7 +1048,7 @@ def printHelp():
   print "  test     -- Run tests"
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps dltests build test run"
-  print "  dist     -- Create a release distribution"
+  print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
 
 buildScript = sys.argv[0]
