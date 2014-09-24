@@ -1012,9 +1012,13 @@ public class Assertions extends Checker {
 
     private LinkedHashSet<IdrefLocator> formControlReferences = new LinkedHashSet<IdrefLocator>();
 
+    private LinkedHashSet<IdrefLocator> formElementReferences = new LinkedHashSet<IdrefLocator>();
+
     private LinkedHashSet<IdrefLocator> needsAriaOwner = new LinkedHashSet<IdrefLocator>();
 
     private Set<String> formControlIds = new HashSet<String>();
+
+    private Set<String> formElementIds = new HashSet<String>();
 
     private LinkedHashSet<IdrefLocator> listReferences = new LinkedHashSet<IdrefLocator>();
 
@@ -1089,6 +1093,14 @@ public class Assertions extends Checker {
             if (!formControlIds.contains(idrefLocator.getIdref())) {
                 err(
                         "The \u201Cfor\u201D attribute of the \u201Clabel\u201D element must refer to a form control.",
+                        idrefLocator.getLocator());
+            }
+        }
+
+        // references to IDs from form attributes
+        for (IdrefLocator idrefLocator : formElementReferences) {
+            if (!formElementIds.contains(idrefLocator.getIdref())) {
+                err("The \u201Cform\u201D attribute must refer to a form element.",
                         idrefLocator.getLocator());
             }
         }
@@ -1255,7 +1267,9 @@ public class Assertions extends Checker {
         ariaOwnsIdsByRole.clear();
         needsAriaOwner.clear();
         formControlReferences.clear();
+        formElementReferences.clear();
         formControlIds.clear();
+        formElementIds.clear();
         listReferences.clear();
         listIds.clear();
         ariaReferences.clear();
@@ -1879,10 +1893,27 @@ public class Assertions extends Checker {
                             getDocumentLocator()), forVal));
                 }
             }
+
+            if ("form" == localName) {
+                formElementIds.addAll(ids);
+            }
+
             if (("input" == localName && !hidden) || "textarea" == localName
                     || "select" == localName || "button" == localName
                     || "keygen" == localName || "output" == localName) {
                 formControlIds.addAll(ids);
+            }
+
+            if ("button" == localName || "fieldset" == localName
+                    || ("input" == localName && !hidden)
+                    || "keygen" == localName || "label" == localName
+                    || "object" == localName || "output" == localName
+                    || "select" == localName || "textarea" == localName) {
+                String formVal = atts.getValue("", "form");
+                if (formVal != null) {
+                    formElementReferences.add(new IdrefLocator(
+                            new LocatorImpl(getDocumentLocator()), formVal));
+                }
             }
 
             // input list
