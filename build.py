@@ -838,7 +838,7 @@ def preparePropertiesFile():
   f = open(os.path.join(filesDir, "misc.properties"), 'w')
   f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
   f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
-  f.close
+  f.close()
 
 def prepareLocalEntityJar():
   filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
@@ -890,8 +890,8 @@ def createCssParserJS(filesDir):
   shutil.copyfileobj(t, o)
   shutil.copyfileobj(p, o)
   shutil.copyfileobj(j, o)
-  t.close
-  p.close
+  t.close()
+  p.close()
   consoleLogForRhino = '''\
   var console = {
     log: function (msg) {
@@ -901,7 +901,7 @@ def createCssParserJS(filesDir):
   }
   '''
   o.write(consoleLogForRhino)
-  o.close
+  o.close()
 
 def downloadOperaSuite():
   return
