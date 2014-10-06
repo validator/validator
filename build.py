@@ -685,7 +685,7 @@ def createDistZip(distType):
   distDir = (os.path.join(buildRoot, "build", "vnu"))
   removeIfDirExists(distDir)
   os.mkdir(distDir)
-  if (distType == "war"):
+  if distType == "war":
     os.mkdir(os.path.join(distDir, "war"))
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
   antJar = os.path.join(antRoot, "ant.jar")
@@ -711,7 +711,7 @@ def createDistZip(distType):
       zf.write(os.path.join(dirname, filename))
   zf.close()
   os.chdir("..")
-  if (distType == "jar"):
+  if distType == "jar":
     testJar(distDir)
 
 def testJar(distDir):
