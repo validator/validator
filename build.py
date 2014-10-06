@@ -101,8 +101,8 @@ dependencyPackages = [
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("http://www.slf4j.org/dist/slf4j-1.5.2.zip", "00ff08232a9959af3c7101b88ec456a7"),
   ("http://archive.apache.org/dist/commons/fileupload/binaries/commons-fileupload-1.2.1-bin.zip", "975100c3f74604c0c22f68629874f868"),
-  ("http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.zip" , "ac30ce5b07b0018d65203fbc680968f5"),
-  ("http://switch.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip" , "10381903828d30e36252910679fcbab6"),
+  ("http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.zip", "ac30ce5b07b0018d65203fbc680968f5"),
+  ("http://switch.dl.sourceforge.net/sourceforge/iso-relax/isorelax.20041111.zip", "10381903828d30e36252910679fcbab6"),
   ("http://switch.dl.sourceforge.net/sourceforge/junit/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
   ("http://switch.dl.sourceforge.net/sourceforge/jchardet/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("http://switch.dl.sourceforge.net/sourceforge/saxon/saxonb9-1-0-2j.zip", "9e649eec59103593fb75befaa28e1f3d"),
@@ -449,7 +449,7 @@ def openDriver(schemaDir, driverName, sourceName=""):
     # if we have a file sourceName, copy it so that we can later
     # just append additions to the copy
     shutil.copyfile(os.path.join(schemaDir, sourceName), os.path.join(schemaDir, driverName))
-  f = open(os.path.join(schemaDir, driverName),"a")
+  f = open(os.path.join(schemaDir, driverName), "a")
   return f
 
 def writeW3CToggle(f):
@@ -581,7 +581,7 @@ def buildJing():
   os.chdir("..")
 
 def buildValidator():
-  ioJar  = os.path.join("util", "dist", "io-xml-util.jar")
+  ioJar = os.path.join("util", "dist", "io-xml-util.jar")
   pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
   formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplateFile, pageEmitter))
@@ -688,7 +688,7 @@ def createDistZip(distType):
   if (distType == "war"):
     os.mkdir(os.path.join(distDir, "war"))
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
-  antJar= os.path.join(antRoot, "ant.jar")
+  antJar = os.path.join(antRoot, "ant.jar")
   antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
@@ -719,7 +719,7 @@ def testJar(distDir):
   testFile = os.path.join(distDir, "test.html")
   fetchUrlTo(testUrl, testFile)
   runCmd('"%s" -jar %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), testFile))
-  formats = ["xml","json","text"]
+  formats = ["xml", "json", "text"]
   for _format in formats:
     runCmd('"%s" -jar %s --format %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), _format, testFile))
   removeIfExists(testFile)
@@ -749,7 +749,7 @@ def createWar():
   removeIfDirExists(warDir)
   os.mkdir(warDir)
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
-  antJar= os.path.join(antRoot, "ant.jar")
+  antJar = os.path.join(antRoot, "ant.jar")
   antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s war'
@@ -886,7 +886,7 @@ def createCssParserJS(filesDir):
   t = open(os.path.join(buildRoot, "dependencies", "tokenizer.js"), 'r')
   p = open(os.path.join(buildRoot, "dependencies", "parser.js"), 'r')
   j = open(os.path.join(buildRoot, "dependencies", "json.js"), 'r')
-  o = open(os.path.join(filesDir, "css-parser-js"),'wb')
+  o = open(os.path.join(filesDir, "css-parser-js"), 'wb')
   shutil.copyfileobj(t, o)
   shutil.copyfileobj(p, o)
   shutil.copyfileobj(j, o)
