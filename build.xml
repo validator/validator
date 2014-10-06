@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.
     <delete file="./vnu/vnu.jar"/>
     <delete file="./vnu/vnu.war"/>
   </target>
-  <target name="dist" depends="jar, credits"/>
+  <target name="dist" depends="jar, license"/>
   <target name="version">
     <echo file="./vnu/VERSION" append="true"
 >dev</echo>
   </target>
-  <target name="jar" depends="clean, version, credits">
+  <target name="jar" depends="clean, version, license">
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
@@ -65,7 +65,7 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="war" depends="clean, version, credits">
+  <target name="war" depends="clean, version, license">
     <echo file="./vnu/war/web.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -181,10 +181,10 @@ DEALINGS IN THE SOFTWARE.
     </war>
     <delete dir="./vnu/war"></delete>
   </target>
-  <target name="credits">
-    <echo file="./vnu/CREDITS" append="true"
+  <target name="license">
+    <echo file="./vnu/LICENSE" append="true"
 >---------------------------------------------------------------------------
-CREDITS
+LICENSE
 ---------------------------------------------------------------------------
 The first-party source code provided by the vnu.jar file is available under
 the following license.
@@ -212,66 +212,66 @@ DEALINGS IN THE SOFTWARE.
 
 The remaining third-party code is available under one of a variety of other
 licenses, as listed below.</echo>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 
 ***************************************************************************
 jing
 
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../jing-trang/copying.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/apache-log4j-1.2.15/NOTICE"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/apache-log4j-1.2.15/LICENSE"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/commons-codec-1.4/NOTICE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
 
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/commons-fileupload-1.2.1/NOTICE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
 
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/commons-httpclient-3.1/NOTICE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
 
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/commons-logging-1.1.1/NOTICE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
 
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
 >icu4j
 
 ICU License - ICU 1.8.1 and later
@@ -314,25 +314,25 @@ property of their respective owners.
 
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >Jena IRI Library
 
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/iri-0.5/copyright.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >galimatias URL parsing and normalization library
 
 Copyright (c) 2013-2014 Santiago M. Mola &lt;santi@mola.io>
 </echo>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >ISO RELAX
 
 Copyright (c) 2001-2002, SourceForge ISO-RELAX Project (ASAMI Tomoharu,
@@ -356,16 +356,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 </echo>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/jetty-6.1.26/NOTICE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >jchardet (java port of mozilla's automatic charset detection algorithm)
 
 The Original Code is mozilla.org code.
@@ -846,7 +846,7 @@ EXHIBIT A -Mozilla Public License.
 
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >Rhino: JavaScript for Java
 
 Distributed under the MPL 1.1 license.
@@ -870,7 +870,7 @@ Contributor(s):
 
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >The Saxon XSLT Processor
 
 The Original Code is all Saxon modules labelled with a notice referring to
@@ -1253,20 +1253,20 @@ specific language governing rights and limitations under the License.
 
 ***************************************************************************
 </echo>
-<echo file="./vnu/CREDITS" append="true"
+<echo file="./vnu/LICENSE" append="true"
   >Simple Logging Facade for Java (SLF4J)
 
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/slf4j-1.5.2/LICENSE.txt"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 ***************************************************************************
 </echo>
-    <concat destfile="./vnu/CREDITS" append="true">
+    <concat destfile="./vnu/LICENSE" append="true">
       <file file="../dependencies/xerces-2_9_1/NOTICE"/>
     </concat>
-    <echo file="./vnu/CREDITS" append="true">
+    <echo file="./vnu/LICENSE" append="true">
 
 Distributed under the Apache License version 2.0.
 See full text above and at http://www.apache.org/licenses/LICENSE-2.0.html
