@@ -215,16 +215,16 @@ def findFilesWithExtension(directory, extension):
   rv = []
   ext = '.' + extension
   for root, dirs, files in os.walk(directory):
-    for file in files:
-      if file.endswith(ext):
-        rv.append(os.path.join(root, file))
+    for filename in files:
+      if filename.endswith(ext):
+        rv.append(os.path.join(root, filename))
   return rv
 
 def findFiles(directory):
   rv = []
   for root, dirs, files in os.walk(directory):
-    for file in files:
-      candidate = os.path.join(root, file)
+    for filename in files:
+      candidate = os.path.join(root, filename)
       if candidate.find("/.svn") == -1:
         rv.append(candidate)
   return rv
@@ -917,12 +917,12 @@ def downloadOperaSuite():
 def zipExtract(zipArch, targetDir):
   z = zipfile.ZipFile(zipArch)
   for name in z.namelist():
-    file = os.path.join(targetDir, name)
+    filepath = os.path.join(targetDir, name)
     # is this portable to Windows?
     if not name.endswith('/'):
-      head, tail = os.path.split(file)
+      head, tail = os.path.split(filepath)
       ensureDirExists(head)
-      o = open(file, 'wb')
+      o = open(filepath, 'wb')
       o.write(z.read(name))
       o.flush()
       o.close()
