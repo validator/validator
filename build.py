@@ -3,22 +3,22 @@
 # Copyright (c) 2007 Henri Sivonen
 # Copyright (c) 2008-2014 Mozilla Foundation
 #
-# Permission is hereby granted, free of charge, to any person obtaining a 
-# copy of this software and associated documentation files (the "Software"), 
-# to deal in the Software without restriction, including without limitation 
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-# and/or sell copies of the Software, and to permit persons to whom the 
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
 # Software is furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in 
+# The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
 import os
@@ -112,7 +112,7 @@ dependencyPackages = [
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
 ]
 
-# Unfortunately, the packages contain old versions of certain libs, so 
+# Unfortunately, the packages contain old versions of certain libs, so
 # can't just autodiscover all jars. Hence, an explicit list.
 
 runDependencyJars = [
@@ -172,15 +172,15 @@ class UrlExtractor(SGMLParser):
     self.baseUrl = baseUrl
     self.leaves = []
     self.directories = []
-    
+
   def start_a(self, attrs):
     for name, value in attrs:
       if name == "href":
         if directoryPat.match(value):
           self.directories.append(self.baseUrl + value)
         if leafPat.match(value):
-          self.leaves.append(self.baseUrl + value)    
-    
+          self.leaves.append(self.baseUrl + value)
+
 def runCmd(cmd):
   print cmd
   if os.name == 'nt' and cmd[:1] == '"':
@@ -213,7 +213,7 @@ def ensureDirExists(dirPath):
 
 def findFilesWithExtension(directory, extension):
   rv = []
-  ext = '.' + extension 
+  ext = '.' + extension
   for root, dirs, files in os.walk(directory):
     for file in files:
       if file.endswith(ext):
@@ -259,8 +259,8 @@ def copyFiles(sourceDir, classDir):
 
 def runJar(classDir, jarFile, sourceDir):
   classFiles = findFiles(classDir)
-  classList = map(lambda x: 
-                    "-C " + classDir + " " + x[len(classDir)+1:] + "", 
+  classList = map(lambda x:
+                    "-C " + classDir + " " + x[len(classDir)+1:] + "",
                   classFiles)
   f = open("temp-jar-list", "w")
   if os.name == 'nt':
@@ -268,7 +268,7 @@ def runJar(classDir, jarFile, sourceDir):
   else:
     f.write("\n".join(classList))
   f.close()
-  runCmd('"%s" cf "%s" %s' 
+  runCmd('"%s" cf "%s" %s'
     % (jarCmd, jarFile, "@temp-jar-list"))
   removeIfExists("temp-jar-list")
 
@@ -301,25 +301,25 @@ def buildUtil():
                               + jarNamesToPaths(["html5-datatypes", "htmlparser"])
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "util"), 
-    "io-xml-util", 
+    os.path.join(buildRoot, "util"),
+    "io-xml-util",
     classPath)
 
 def buildDatatypeLibrary():
-  classPath = os.pathsep.join(dependencyJarPaths() 
+  classPath = os.pathsep.join(dependencyJarPaths()
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"), 
-    "html5-datatypes", 
+    os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"),
+    "html5-datatypes",
     classPath)
 
 def buildNonSchema():
-  classPath = os.pathsep.join(dependencyJarPaths() 
+  classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["html5-datatypes",])
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "syntax", "non-schema", "java"), 
-    "non-schema", 
+    os.path.join(buildRoot, "syntax", "non-schema", "java"),
+    "non-schema",
     classPath)
 
 def buildSchemaDrivers():
@@ -561,18 +561,18 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 #################################################################
 
 def buildXmlParser():
-  classPath = os.pathsep.join(dependencyJarPaths() 
+  classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["htmlparser", "io-xml-util"]))
   buildModule(
-    os.path.join(buildRoot, "xmlparser"), 
-    "hs-aelfred2", 
+    os.path.join(buildRoot, "xmlparser"),
+    "hs-aelfred2",
     classPath)
 
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths())
   buildModule(
-    os.path.join(buildRoot, "htmlparser"), 
-    "htmlparser", 
+    os.path.join(buildRoot, "htmlparser"),
+    "htmlparser",
     classPath)
 
 def buildJing():
@@ -586,20 +586,20 @@ def buildValidator():
   formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplateFile, pageEmitter))
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplateFile, formEmitter))
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", 
+  classPath = os.pathsep.join(dependencyJarPaths()
+                              + jarNamesToPaths(["non-schema",
                                                 "io-xml-util",
                                                 "htmlparser",
                                                 "hs-aelfred2",
                                                 "html5-datatypes"])
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "validator"), 
-    "validator", 
+    os.path.join(buildRoot, "validator"),
+    "validator",
     classPath)
 
 def ownJarList():
-  return jarNamesToPaths(["non-schema", 
+  return jarNamesToPaths(["non-schema",
                           "io-xml-util",
                           "htmlparser",
                           "hs-aelfred2",
@@ -647,17 +647,17 @@ def getRunArgs(heap="$((HEAP))"):
   ]
 
   if usePromiscuousSsl:
-    args.append('-Dnu.validator.xml.promiscuous-ssl=true')  
+    args.append('-Dnu.validator.xml.promiscuous-ssl=true')
 
   args.append('nu.validator.servlet.Main')
-  
+
   if useAjp:
     args.append('ajp')
   args.append(portNumber)
   if controlPort:
     args.append(controlPort)
   return args
-  
+
 def generateRunScript():
   args = getRunArgs()
   f = open(os.path.join(buildRoot, "run-validator.sh"), 'wb')
@@ -674,7 +674,7 @@ def generateRunScript():
   if controlPort:
     f.write(" <&- 1>/dev/null 2>&1 &")
   f.write("\n")
-  f.close()  
+  f.close()
 
 def runValidator():
   ensureDirExists(os.path.join(buildRoot, "logs"))
@@ -759,12 +759,12 @@ def deployOverScp():
   if not deploymentTarget:
     print "No target"
     return
-  runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))  
+  runCmd('"%s" "%s" %s/deps.tar.gz' % (scpCmd, os.path.join(buildRoot, "deps.tar.gz"), deploymentTarget))
   runCmd('"%s" "%s" %s/jars.tar.gz' % (scpCmd, os.path.join(buildRoot, "jars.tar.gz"), deploymentTarget))
   emptyPath = os.path.join(buildRoot, "EMPTY")
   f = open(emptyPath, 'wb')
   f.close()
-  runCmd('"%s" "%s" %s/DEPLOY' % (scpCmd, emptyPath, deploymentTarget))  
+  runCmd('"%s" "%s" %s/DEPLOY' % (scpCmd, emptyPath, deploymentTarget))
   os.remove(emptyPath)
 
 def fetchUrlTo(url, path, md5sum=None):
@@ -984,7 +984,7 @@ def selfUpdate():
   if os.name == 'nt':
     sys.exit(subprocess.call(newArgv))
   else:
-    os.execv(sys.executable, newArgv)  
+    os.execv(sys.executable, newArgv)
 
 def runTests():
   if followW3Cspec:
@@ -992,8 +992,8 @@ def runTests():
   else:
     args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
-  classPath = os.pathsep.join(dependencyJarPaths() 
-                              + jarNamesToPaths(["non-schema", 
+  classPath = os.pathsep.join(dependencyJarPaths()
+                              + jarNamesToPaths(["non-schema",
                                                 "io-xml-util",
                                                 "htmlparser",
                                                 "hs-aelfred2",
