@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="dist" depends="jar, credits"/>
   <target name="version">
     <echo file="./vnu/VERSION" append="true"
->20140819</echo>
+>dev</echo>
   </target>
   <target name="jar" depends="clean, version, credits">
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">

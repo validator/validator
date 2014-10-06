@@ -51,8 +51,8 @@ controlPort = None
 useAjp = 0
 log4jProps = 'validator/log4j.properties'
 heapSize = '128'
-html5specLink = 'http://www.whatwg.org/specs/web-apps/current-work/'
-html5specLoad = 'http://www.whatwg.org/specs/web-apps/current-work/'
+html5specLink = 'https://www.whatwg.org/specs/web-apps/current-work/'
+html5specLoad = 'https://www.whatwg.org/specs/web-apps/current-work/'
 aboutPage = 'http://about.validator.nu/'
 userAgent = 'Validator.nu/LV'
 icon = None
@@ -812,9 +812,9 @@ def downloadLocalEntities():
     removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
   if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")):
     removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions"))
-  fetchUrlTo("http://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
-  fetchUrlTo("http://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
-  fetchUrlTo("http://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
+  fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
+  fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
+  fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
   f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
   try:
     for line in f:
