@@ -712,7 +712,7 @@ def createDistZip(distType):
   zf.close()
   os.chdir("..")
   if (distType == "jar"):
-    testJar(distDir);
+    testJar(distDir)
 
 def testJar(distDir):
   testUrl = "https://raw.githubusercontent.com/validator/tests/master/html/elements/a/href-isvalid.html"
@@ -1134,9 +1134,9 @@ else:
     elif arg == '--local':
       noSelfUpdate = 1
     elif arg.startswith("--connection-timeout="):
-      connectionTimeoutSeconds = int(arg[21:]);
+      connectionTimeoutSeconds = int(arg[21:])
     elif arg.startswith("--socket-timeout="):
-      socketTimeoutSeconds = int(arg[17:]);
+      socketTimeoutSeconds = int(arg[17:])
     elif arg == '--follow-w3c-spec':
       followW3Cspec = 1
     elif arg == '--statistics':
