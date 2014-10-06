@@ -1,20 +1,43 @@
-# How to use the vnu.jar markup checker
+# The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/b6xEQs)](http://goo.gl/ehNisw)
 
-The `vnu.jar` application is a portable standalone version of the validator.nu
-markup checker. The [latest vnu.jar release][1] is available from the
-`validator` project at github. The following are instructions on how to use it
-to check the markup of documents.
+The Nu Markup Checker (v.Nu) is a name for the backend of
+[html5.validator.nu][1], [validator.w3.org/nu][2], and the HTML5 facet of the
+legacy [W3C Validator][3]. Its source code is available from [a set of github
+repositories][4]. The checker is released as two separate packages:
 
-   [1]: https://github.com/validator/validator.github.io/releases
+   [1]: http://html5.validator.nu
+   [2]: http://validator.w3.org/nu/
+   [3]: http://validator.w3.org
+   [4]: https://github.com/validator/
 
-**Note:** In the instructions, replace _"~/vnu.jar"_ with the actual path to the
-`vnu.jar` file on your system.
+  * `vnu.jar` is a portable standalone version for [batch-checking documents
+  from the command line][5] and from other scripts/apps, or for [deploying the
+  checker as a self-contained service][6]
 
-Alternatively, there’s also now a [Grunt plugin for HTML validation][2] that
-uses `vnu.jar` as its backend. You can install that plugin with `npm install
-grunt-html --save-dev`.
+  * `vnu.war` is for [deploying the checker service through a servlet container
+  such as Tomcat][7]
 
-   [2]: https://github.com/jzaefferer/grunt-html
+   [5]: http://validator.github.io/#usage
+   [6]: http://validator.github.io/service.html#standalone
+   [7]: http://validator.github.io/service.html#servlet
+
+To use the Nu Markup Checker on your own, [get the latest release][8] and see
+the **Usage** section below— or alternatively, consider automating your HTML
+checking with a frontend such as:
+
+   [8]: https://github.com/validator/validator.github.io/releases/latest
+
+  * [Grunt plugin for HTML validation][9]
+
+  * [HTML5 Validator Integration for Travis CI][10] (auto-check documents pushed
+  to a github repo)
+
+  * [LMVTFY: Let Me Validate That For You][11] (auto-check HTML of
+  JSFiddle/JSBin etc. links in github issue comments)
+
+   [9]: https://github.com/jzaefferer/grunt-html
+   [10]: https://github.com/svenkreiss/html5validator
+   [11]: https://github.com/cvrebert/lmvtfy/
 
 ## Usage
 
@@ -25,9 +48,17 @@ checking of HTML documents by invoking it like this:
            [--format gnu|xml|json|text] [--help] [--html] [--verbose]
            [--version] FILES
 
+**Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
+the file on your system.
+
 To check one or more HTML documents from the command line:
 
       java -jar ~/vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
+
+**Note:** If you get a `StackOverflowError` error when using the vnu.jar file,
+try adjusting the thread stack size by providing the `-Xss` option to java:
+
+      java -Xss512k -jar ~/vnu.jar FILE.html...
 
 To check all HTML documents in a particular directory:
 
@@ -66,9 +97,9 @@ executable provides the following options:
     possible values: "gnu", "xml", "json", "text"
 
     see also:
-    [http://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out][3]
+    [wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out][12]
 
-   [3]: http://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out
+   [12]: https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out
 
 #### --help
 
@@ -100,9 +131,8 @@ executable provides the following options:
 
     Shows the vnu.jar version number.
 
-For details on using the `vnu.jar` markup checker to provide a service for
-browser-based checking of HTML documents over the Web, see [Using vnu.jar for
-Web-based markup checking][4].
+To provide browser-based checking of documents over the Web, see [Web-based
+checking with vnu.war or vnu.jar][13].
 
-   [4]: http://validator.github.io/service.html
+   [13]: http://validator.github.io/service.html
 
