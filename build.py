@@ -230,7 +230,7 @@ def findFiles(directory):
   return rv
 
 def jarNamesToPaths(names):
-  return map(lambda x: os.path.join(buildRoot, "jars", x + ".jar"), names)
+  return [os.path.join(buildRoot, "jars", name + ".jar") for name in names]
 
 def jingJarPath():
   return [os.path.join("jing-trang", "build", "jing.jar"),]
@@ -259,9 +259,9 @@ def copyFiles(sourceDir, classDir):
 
 def runJar(classDir, jarFile, sourceDir):
   classFiles = findFiles(classDir)
-  classList = map(lambda x:
-                    "-C " + classDir + " " + x[len(classDir)+1:] + "",
-                  classFiles)
+  classList = ["-C " + classDir + " " + x[len(classDir)+1:] + ""
+               for x in
+               classFiles]
   f = open("temp-jar-list", "w")
   if os.name == 'nt':
     f.write("\r\n".join(classList))
@@ -291,7 +291,7 @@ def dependencyJarPaths(depList=dependencyJars):
   dependencyDir = os.path.join(buildRoot, "dependencies")
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
-  pathList = map(lambda x: os.path.join(dependencyDir, x), depList)
+  pathList = [os.path.join(dependencyDir, dep) for dep in depList]
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
@@ -670,7 +670,7 @@ def generateRunScript():
   # Quick hack to strike a balance between shell variable expansions
   # having to be unquoted and command line switches that take
   # human-readable string potentially containing spaces.
-  f.write(" ".join([javaCmd,] + map(lambda x: "'{0}'".format(x) if " " in x else x, args)))
+  f.write(" ".join([javaCmd,] + [("'{0}'".format(x) if " " in x else x) for x in args]))
   if controlPort:
     f.write(" <&- 1>/dev/null 2>&1 &")
   f.write("\n")
