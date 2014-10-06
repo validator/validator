@@ -1,7 +1,7 @@
 [![Build Status](http://goo.gl/PUJvE8)](http://goo.gl/05BtCD)
----------------------------------------------------------------------------
-How to download, build, and run the validator
----------------------------------------------------------------------------
+
+# How to download, build, and run the validator
+
 1. First, set the JAVA_HOME environment variable properly.
 
    export JAVA_HOME=/usr/lib/jvm/java-6-openjdk on Ubuntu or
@@ -40,9 +40,8 @@ openjdk-6-jdk package.)
 Note: The script wants to see a Sun-compatible jar executable. Debian
 fastjar will not work.
 
----------------------------------------------------------------------------
-Deployment
----------------------------------------------------------------------------
+# Deployment
+
 The above example starts a standalone HTTP server with debug messages
 printed to the console. To use AJP13 instead, use --ajp=on. A log4j
 configuration for deployment can be given using the --log4j= option. There
