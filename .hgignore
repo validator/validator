@@ -1,8 +1,0 @@
-.classpath
-.project
-eclipse-classes
-classes
-dist
-src/nu/validator/servlet/FormEmitter.java
-src/nu/validator/servlet/PageEmitter.java
-src/nu/validator/localentities/files/
