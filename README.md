@@ -1,6 +1,6 @@
 [![Build Status](http://goo.gl/q852Kn)](http://goo.gl/EWWeWZ)
 
-# Server/client code for the v.nu markup checker
+## Server/client code for the v.nu markup checker
 
 * `src/nu/validator`
   * `client` - various clients; e.g., `SimpleCommandLineValidator`
