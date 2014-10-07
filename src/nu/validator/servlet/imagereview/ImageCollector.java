@@ -73,6 +73,9 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
     public void reset() {
     }
 
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
     }
