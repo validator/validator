@@ -73,7 +73,10 @@ public class TokensToSax implements TokenHandler {
         this.contentHandler = contentHandler;
         this.lexicalHandler = null;
     }
-    
+
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] buf, int start, int length)
             throws SAXException {
         if (phase == PHASE_CONTENT) {

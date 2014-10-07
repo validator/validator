@@ -66,6 +66,10 @@ final class Line {
         return offset;
     }
 
+    /**
+     * @see java.lang.StringBuffer#append(char[], int, int)
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     void characters(char[] ch, int start, int length) {
         int newBufferLength = bufferLength + length;
         if (offset + newBufferLength > buffer.length) {

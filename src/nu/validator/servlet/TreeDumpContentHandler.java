@@ -67,6 +67,9 @@ public class TreeDumpContentHandler implements ContentHandler, LexicalHandler {
         }
     }
 
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         try {

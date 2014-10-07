@@ -26,6 +26,12 @@ import org.xml.sax.SAXException;
 
 public interface MessageTextHandler {
 
+    /**
+     * Append a string consisting of the characters from ch[start] thru ch[start+length-1] inclusive to the message
+     * text.
+     * @see java.lang.StringBuffer#append(char[], int, int)
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length) throws SAXException;
 
     public void startCode() throws SAXException;

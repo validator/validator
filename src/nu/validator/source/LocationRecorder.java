@@ -58,6 +58,9 @@ final class LocationRecorder implements ContentHandler, LexicalHandler {
         }
     }
 
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         addLocatorLocation();
     }

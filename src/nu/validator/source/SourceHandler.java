@@ -33,7 +33,13 @@ public interface SourceHandler {
     public void setLineErrors(SortedSet<Integer> oneBasedLineErrors) throws SAXException;
     
     public void endSource() throws SAXException;
-    
+
+    /**
+     * Append a string consisting of the characters from ch[start] thru ch[start+length-1] inclusive to the source
+     * text.
+     * @see java.lang.StringBuffer#append(char[], int, int)
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length) throws SAXException;
     
     public void newLine() throws SAXException;

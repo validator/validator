@@ -100,6 +100,10 @@ public final class SourceCode implements CharacterHandler {
         }
     }
 
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     * @see java.lang.StringBuffer#append(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         int s = start;

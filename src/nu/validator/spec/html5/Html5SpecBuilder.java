@@ -139,6 +139,9 @@ public class Html5SpecBuilder implements ContentHandler {
         super();
     }
 
+    /**
+     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+     */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         switch (state) {
