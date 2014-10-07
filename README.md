@@ -6,7 +6,7 @@
 
    export JAVA_HOME=/usr/lib/jvm/java-6-openjdk on Ubuntu or
 
-   export JAVA_HTML=/Library/Java/Home on Mac OS X.
+   export JAVA_HOME=/Library/Java/Home on Mac OS X.
 
 2. Create a validator workspace.
 
