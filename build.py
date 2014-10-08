@@ -695,9 +695,10 @@ def createDistZip(distType):
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
   f = open(os.path.join(distDir, "VERSION"), "r")
   version = f.read()
-  shutil.copy("validator/index.html", distDir)
-  shutil.copy("validator/README.md", distDir)
-  shutil.copy("validator/CHANGELOG.md", distDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "index.html"), distDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "README.md"), distDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "CHANGELOG.md"), distDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "LICENSE"), distDir)
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
@@ -712,9 +713,7 @@ def createDistZip(distType):
     testJar(distDir)
 
 def testJar(distDir):
-  testUrl = "https://raw.githubusercontent.com/validator/tests/master/html/elements/a/href-isvalid.html"
-  testFile = os.path.join(distDir, "test.html")
-  fetchUrlTo(testUrl, testFile)
+  testFile = os.path.join(buildRoot, "validator", "index.html")
   runCmd('"%s" -jar %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), testFile))
   formats = ["xml", "json", "text"]
   for _format in formats:
