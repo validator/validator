@@ -29,12 +29,11 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
      python ./build/build.py all; python ./build/build.py all
 ```
 
-**Important:** Yes, you need to run the build script twice the very first
-time you build— to work around some known issues that cause the build to
-fail the first time during startup when you build from scratch in a fresh
-working directory.  For subsequent builds, you only need to run the build
-script once.  Also note that the first time you run it, the build script
-will spend a lot of time downloading a bunch of dependencies (~300MB).
+**Important:** Yes, you must run the script twice the very first time you build— to work
+around known issues that cause the build to fail at startup when run from scratch in a
+fresh working directory. For subsequent builds, you only need run the build script once.
+Also note that the first time you run it, the build script will spend a lot of time
+downloading a bunch of dependencies (~300MB).
 
 The steps above will build, test, and run the checker such that you can open
 http://localhost:8888/ in a Web browser to use the checker Web UI.
