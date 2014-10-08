@@ -32,7 +32,6 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
    you build— to work around some known issues that cause the build to fail the first
    time during startup when you build from scratch in a fresh working directory.
    For subsequent builds, you only need to run the build script once.
-
    Also note that the first time you run it, the build script will spend a
    lot of time downloading a bunch of dependencies (~300MB).
 
