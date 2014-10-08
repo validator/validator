@@ -1,4 +1,4 @@
-# The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/b6xEQs)](http://goo.gl/ehNisw)
+# The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/q852Kn)](http://goo.gl/EWWeWZ)
 
 The Nu Markup Checker (v.Nu) is a name for the backend of
 [html5.validator.nu][1], [validator.w3.org/nu][2], and the HTML5 facet of the

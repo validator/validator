@@ -5,7 +5,7 @@ FMT=fmt
 FMTFLAGS=-80
 EXPAND=expand
 EXPANDFLAGS=
-BUILDSTATUS=\[\!\[Build Status\]\(http://goo.gl/b6xEQs\)\]\(http://goo.gl/ehNisw)
+BUILDSTATUS=\[\!\[Build Status\]\(http://goo.gl/q852Kn\)\]\(http://goo.gl/EWWeWZ)
 
 all: ../README.md
 
