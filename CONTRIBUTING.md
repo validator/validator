@@ -25,19 +25,16 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
    * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
 3. Create a working directory:
-```
-     git clone https://github.com/validator/validator.git
-```
+
+        git clone https://github.com/validator/validator.git
 
 4. Change into your working directory:
-```
-     cd validator
-```
+
+        cd validator
 
 5. Start the build script:
-```
-     python ./build/build.py all; python ./build/build.py all
-```
+
+        python ./build/build.py all; python ./build/build.py all
 
 **Important:** Yes, you must run the script twice the first time you build— to work
 around known issues that cause it to fail to complete when run from scratch in a fresh
