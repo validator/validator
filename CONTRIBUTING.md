@@ -30,8 +30,8 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 ```
 
 **Important:** Yes, you must run the script twice the first time you build— to work
-around known issues that cause the build to fail at startup when run from scratch in a
-fresh working directory. For subsequent builds, you only need run the build script once.
+around known issues that cause it to fail to complete when run from scratch in a fresh
+working directory. For subsequent builds, you only need run the build script once.
 Also note that the first time you run it, the script will spend a lot of time
 downloading ~300MB of dependencies.
 
