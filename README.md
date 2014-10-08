@@ -9,7 +9,7 @@ released as two separate packages:
    [1]: http://html5.validator.nu
    [2]: http://validator.w3.org/nu/
    [3]: http://validator.w3.org
-   [4]: https://github.com/validator/
+   [4]: https://github.com/validator/validator
    [5]: http://goo.gl/Zch7OD
 
   * `vnu.jar` is a portable standalone version for [batch-checking documents
