@@ -57,7 +57,6 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
-
 * `sample` - sample validation-client scripts (Python) for, e.g., batch checking
 * `schema` - RelaxNG schema-driver files + SVG & MathML RelaxNG schemas
 * `site` - JavaScript & CSS for the checker Web UI + “About” page HTML source
