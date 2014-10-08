@@ -1,0 +1,516 @@
+<!doctype html><html><head><meta charset=utf-8>
+<title>The Nu Markup Checker (v.Nu)</title>
+<style>
+html {
+  background: #DDE5D9 url(data:image/gif;base64,R0lGODlhBAAEAIAAANra2v///yH5BAAAAAAALAAAAAAEAAQAAAIFTGB4xlcAOw==) repeat 0 0;
+  font-family: "Lucida Sans Unicode", "Lucida Sans", verdana, arial, helvetica;
+}
+body {
+  border: solid 1px #CED4CA;
+  background-color: #FFF;
+  padding: 4px 25px 4px 25px;
+  margin: 20px 20% 20px 20px;
+  line-height: 1.75;
+}
+h1 {
+  font-size: 36px;
+  font-weight: normal;
+  color: #0B5B9D;
+  vertical-align: top;
+  margin-bottom: 0px;
+}
+h2 {
+  font-size: 28px;
+  font-weight: normal;
+  color: #0B5B9D;
+  vertical-align: top;
+  margin-bottom: 0px;
+  margin-top: 24px;
+}
+h3 {
+  font-size: 22px;
+  font-weight: normal;
+  color: #0B5B9D;
+  vertical-align: top;
+  margin-bottom: 0px;
+  margin-top: 32px;
+}
+h4 {
+  font-size: 20px;
+  font-weight: normal;
+  color: #0B5B9D;
+  vertical-align: top;
+  margin-bottom: 0px;
+  margin-top: 22px;
+}
+a {
+  text-decoration: none;
+  color: #0B5B9D;
+  padding: 2px;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #0B5B9D;
+  color: white;
+}
+a:active {
+  text-decoration: none;
+  background-color: white;
+  color: black;
+}
+h1 a:hover {
+  background-color: inherit;
+  color: white;
+}
+.set, .note {
+  background-color: ivory;
+  padding: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 32px;
+  padding-left: 32px;
+  border: 1px solid #ccc;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 6px;
+}
+.note {
+  background-color: rgb(241, 255, 240);
+}
+.note p {
+  margin-top: 8px;
+}
+code {
+  background-color: #F8F8F8;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 6px;
+}
+pre {
+  background-color: #F8F8F8;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  margin-right: 15%;
+  margin-top: 6px;
+  line-height: 1.2
+}
+pre.aligned {
+  margin-left: 40px;
+}
+.java-class, .java-property, .option-value {
+  background-color: yellow;
+  padding: 2px 6px;
+}
+.arg {
+  color: green;
+}
+.links {
+  text-align: center;
+}
+a b {
+  font-weight: normal;
+}
+</style>
+</head>
+<body>
+  <h1>The Nu Markup Checker (v.Nu)</h1>
+
+    <p>
+    The Nu Markup Checker (v.Nu) is a name for the backend of
+    <a href="http://html5.validator.nu">html5.validator.nu</a>,
+    <a href="http://validator.w3.org/nu/">validator.w3.org/nu</a>,
+    and the HTML5 facet of the legacy
+    <a href="http://validator.w3.org">W3C Validator</a>.
+
+    Its source code is available from
+    <a href="https://github.com/validator/">a set of github repositories</a>.
+    The checker is released as two separate packages:
+    <ul>
+    <li><code>vnu.jar</code> is a portable standalone version for
+    <a href="http://validator.github.io/#usage">batch-checking documents from the command line</a>
+    and from other scripts/apps, or for
+    <a href="http://validator.github.io/service.html#standalone">deploying the checker as a self-contained service</a>
+    <li><code>vnu.war</code> is for
+    <a href="http://validator.github.io/service.html#servlet">deploying the checker service through a servlet container such as Tomcat</a>
+    </ul>
+
+    <p>
+    To use the Nu Markup Checker on your own,
+    <a href="https://github.com/validator/validator.github.io/releases/latest">get the latest release</a>
+    and see the <a href="#usage"><b>Usage</b> section</a> below—
+    or alternatively, consider automating your HTML checking with a frontend such as:
+<ul>
+<li>
+<a href="https://github.com/jzaefferer/grunt-html">Grunt plugin for HTML validation</a>
+<li>
+<a href="https://github.com/svenkreiss/html5validator">HTML5 Validator Integration for Travis CI</a>
+(auto-check documents pushed to a github repo)
+<li>
+<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a>
+(auto-check HTML of JSFiddle/JSBin etc. links in github issue comments)
+</ul>
+
+<p class=links>
+<a href="#usage">Usage</a> ·
+<a href="#options">Options</a> ·
+<a href="#web-based-checking">Web-based checking</a>
+
+  <div class=set>
+  <section id=usage>
+  <h2>Usage</h2>
+
+<p>You can use the <code>vnu.jar</code> markup checker as an executable for
+command-line checking of HTML documents by invoking it like this:
+<pre>
+  java -jar ~/vnu.jar [--errors-only] [--no-stream]
+       [--format gnu|xml|json|text] [--help] [--html]
+       [--verbose] [--version] FILES
+</pre>
+
+<p class=note><b>Note:</b> In these instructions, replace
+<var>"~/vnu.jar"</var> with the actual path to the file on your system.
+
+<p>To check one or more HTML documents from the command line:
+<pre>
+  java -jar ~/vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
+</pre>
+
+<div class=note>
+<p><b>Note:</b> If you get a <code>StackOverflowError</code>
+error when using the vnu.jar file, try adjusting the thread stack size by
+providing the <code>-Xss</code> option to java:</p>
+
+<pre>
+  java <span class="option-value">-Xss512k</span> -jar ~/vnu.jar FILE.html...
+</pre>
+
+</div>
+
+<p>To check all HTML documents in a particular directory:
+<pre>
+  java -jar ~/vnu.jar some-directory-name/
+</pre>
+
+<p>To check a Web document:
+<pre>
+  java -jar ~/vnu.jar <var>URL</var>
+
+  example: java -jar ~/vnu.jar http://example.com/foo
+</pre>
+
+<p>To check standard input:
+<pre>
+  java -jar ~/vnu.jar -
+
+  example: echo '&lt;!doctype html>&lt;title>...' | java -jar ~/vnu.jar -
+</pre>
+
+<h3 id="options">Options</h3>
+<p>When used from the command line as described in this section, the
+<code>vnu.jar</code> executable provides the following options:
+
+<h4 id="errors-only">--errors-only</h4>
+<pre>
+Specifies that only error-level messages and non-document-error messages
+are reported (so that warnings and info messages are not reported).
+
+default: [unset; all message reported, including warnings & info messages]
+</pre>
+
+<h4 id="format">--format <var>format</var></h4>
+<pre>
+Specifies the output format for reporting the results.
+
+default: <span class=option-value>"gnu"</span>
+
+possible values: <span class=option-value>"gnu"</span>, <span class=option-value>"xml"</span>, <span class=option-value>"json"</span>, <span class=option-value>"text"</span>
+
+see also: <a href="https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out">wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out</a>
+</pre>
+
+<h4 id="help">--help</h4>
+<pre>
+Shows detailed usage information.
+</pre>
+
+<h4 id="html">--html</h4>
+<pre>
+Forces all documents to be parsed by the HTML parser, as text/html
+(otherwise, *.xhtml documents are parsed using an XML parser).
+
+default: [unset; *.xhtml documents are parsed using an XML parser]
+</pre>
+
+<h4 id="no-stream">--no-stream</h4>
+<pre>
+Forces all documents to be be parsed in buffered mode instead of streaming
+mode (causes some parse errors to be treated as non-fatal document errors
+instead of as fatal document errors).
+
+default: [unset; non-streamable parse errors cause fatal document errors]
+</pre>
+
+<h4 id="verbose">--verbose</h4>
+<pre>
+Specifies "verbose" output. (Currently this just means that the names of
+files being checked are written to stdout.)
+
+default: [unset; output is not verbose]
+</pre>
+
+<h4 id="version">--version</h4>
+<pre>
+Shows the <code>vnu.jar</code> version number.
+</pre>
+</section>
+</div>
+
+<h2 id="web-based-checking">Web-based checking with vnu.war or vnu.jar</h2>
+
+  <p>The Nu Markup Checker— along with being usable as
+  <a href="http://validator.github.io/validator/#usage">a standalone command-line client</a>—
+  can be run as an HTTP service, similar to
+  <a href="http://html5.validator.nu/">html5.validator.nu</a>
+  and
+  <a href="http://validator.w3.org/nu/">validator.w3.org/nu</a>,
+  for browser-based checking of HTML documents over
+  the Web.
+  To that end, the checker is released as two separate packages:
+  <ul>
+  <li><code>vnu.jar</code> for
+  <a href="#standalone">deploying the checker as a simple self-contained service</a>
+  <li><code>vnu.war</code> for
+  <a href="#servlet">deploying the checker to a servlet container such as Tomcat</a>
+  </ul>
+  <p>
+  Both deployments expose a REST API that enables checking of HTML
+  documents from other clients, not just web browsers. And the
+  <code>vnu.jar</code> package also includes
+  <a href="#http-client">a simple HTTP client</a> that enables you to
+  either send documents to a locally-running instance of the checker HTTP
+  service— for fast command-line checking— or to any remote instance of the
+  checker HTTP service running anywhere on the Web.
+  <p>
+  The
+  <a href="https://github.com/validator/validator.github.io/releases/latest" >latest releases of the vnu.jar and vnu.war packages</a>
+  are available from the <code>validator</code> project at github.
+  The following are detailed instructions on using them.
+
+<p class=note><b>Note:</b> Replace
+<var>"~/vnu.jar"</var> or <var>"~/vnu.war"</var> below
+with the actual paths to those files on your system.
+
+<p class=links>
+<a href="#standalone">Standalone</a> ·
+<a href="#servlet">Servlet</a> ·
+<a href="#http-client">Client</a> ·
+<a href="#http-client-options">Options</a>
+
+  <div class=set>
+  <section id=standalone>
+    <h3>Standalone web server</h3>
+    <p>To run the markup checker as a standalone service (using a built-in
+    Jetty server), open a new terminal window and invoke <code>vnu.jar</code>
+    like this:
+
+<pre>
+  java -cp ~/vnu.jar <span class=java-class>nu.validator.servlet.Main</span> <span class=arg>8888</span>
+</pre>
+
+    <p>Then open
+    <a href="http://localhost:8888">http://localhost:8888</a>
+    in a browser. (To have the markup checker listen on a different port,
+    replace <code class=arg>8888</code> with the port number.)
+
+    <p>You’ll see a form similar to
+    <a href="http://validator.w3.org/nu/">validator.w3.org/nu</a>
+    that allows you to enter the URL of an HTML document and have the
+    results for that document displayed in the browser.
+
+<div class=note>
+<p><b>Note:</b> If you get a <code>StackOverflowError</code>
+error when using the vnu.jar file, try adjusting the thread stack size by
+providing the <code>-Xss</code> option to java:
+
+<pre>
+  java <span class="option-value">-Xss512k</span> -cp ~/vnu.jar nu.validator.servlet.Main 8888
+</pre>
+
+</div>
+  </section>
+  <section id=servlet>   
+    <h3>Deployment to servlet container</h3>
+    <p>To run the markup checker inside of an existing servlet container
+    such as Apache Tomcat you will need to deploy the <code>vnu.war</code>
+    file to that server following its documentation.
+    For example, on Apache Tomcat you could do this using
+    the <a href="http://tomcat.apache.org/tomcat-8.0-doc/manager-howto.html">Manager</a> application or simply by copying the file to
+    the <code>webapps</code> directory
+    (since that is the default <code>appBase</code> setting).
+	Typically you would see a message similar to the following
+	in the <code>catalina.out</code> log file.
+<pre>
+May 7, 2014 4:42:04 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
+</pre>
+
+    <p>Assuming your servlet container is configured to receive HTTP
+    requests sent to <code>localhost</code> on port <code>80</code>
+    and the context root of this application is <code>vnu</code>
+    (often the default behavior is to use the WAR file's filename
+    as the context root unless one is explicitly specified)
+    you should be able to access the application by connecting
+    to <a href="http://localhost/vnu/">http://localhost/vnu/</a>.
+
+<div class=note>
+<p>
+	<b>Note:</b> You may want to customize the <code>/WEB-INF/web.xml</code>
+	file inside the WAR file (you can use any ZIP-handling program)
+	to modify the servlet filter configuration.
+	For example, if you wanted to disable gzip decompression you
+	could comment out that filter like this:
+	
+	<pre>
+&lt;!--
+  &lt;filter>
+      &lt;filter-name>gzip-filter&lt;/filter-name>
+      &lt;filter-class>org.mortbay.servlet.GzipFilter&lt;/filter-class>
+  &lt;/filter>
+  &lt;filter-mapping>
+      &lt;filter-name>gzip-filter&lt;/filter-name>
+      &lt;url-pattern>*&lt;/url-pattern>
+  &lt;/filter-mapping>
+--></pre>
+</div>
+
+  </section>
+  <section id=http-client>
+  <h3>HTTP client (for fast command-line checking)</h3>
+
+    <p>You can also use <code>vnu.jar</code> from the command line to
+    either send documents to a locally-running instance of the checker HTTP
+    service— for fast command-line checking— or to a remote instance
+    anywhere on the Web.
+    <p>
+    To check documents locally, do this:
+    <ol>
+      <li>Start up the checker as a local HTTP service, as described in the
+      <a href="#standalone">Standalone web server</a>
+      section.
+      <li>Open a new terminal window and invoke <code>vnu.jar</code> like this:
+
+<pre>
+  java -cp ~/vnu.jar <span class=java-class>nu.validator.client.HttpClient</span> FILE.html...
+</pre>
+</ol>
+     To send documents to an instance of the checker on the Web, such as
+     <a href="http://html5.validator.nu/">html5.validator.nu/</a>,
+     use the
+     <a href="#nuvalidatorclienthost">nu.validator.client.host</a>
+     and
+     <a href="#nuvalidatorclientport">nu.validator.client.port</a>
+     options, like this:
+<pre class=aligned>
+  java -cp ~/vnu.jar <span class=java-property>-Dnu.validator.client.port=80</span> \
+     <span class=java-property>-Dnu.validator.client.host=html5.validator.nu</span> \
+     nu.validator.client.HttpClient FILE.html...
+</pre>
+
+    <p>Other options are documented below.
+
+    <h3 id="http-client-options">HTTP client options</h3>
+
+    <p>When using <code>vnu.jar</code> for sending documents to an instance
+    of the checker HTTP service for checking, you can set Java system
+    properties to control configuration options for the checker behavior.
+
+    <p>For example, you can suppress warning-level messages and only
+    show error-level ones by setting the value of the
+    <code>nu.validator.client.level</code> system property to
+    <code>error</code>, like this:
+
+<pre class=aligned>
+   java <span class=java-property>-Dnu.validator.client.level=error</span>\
+       -cp ~/vnu.jar nu.validator.client.HttpClient FILE.html...
+</pre>
+
+    <p>Most of the properties listed below map to the validator.nu common input
+    parameters documented at
+    <a href="https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters"
+      >wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters</a>.
+
+<h4 id="nuvalidatorclienthost">nu.validator.client.host</h4>
+<pre>
+Specifies the hostname of the checker for the client to connect to.
+
+default: <span class=option-value>"127.0.0.1"</span>
+</pre>
+
+<h4 id="nuvalidatorclientport">nu.validator.client.port</h4>
+<pre>
+Specifies the hostname of the checker for the client to connect to.
+
+default: <span class=option-value>"8888"</span>
+
+example: java -Dnu.validator.client.port=8080 -jar ~/vnu.jar FILE.html
+</pre>
+
+<h4 id="nuvalidatorclientlevel">nu.validator.client.level</h4>
+<pre>
+Specifies the severity level of messages to report; to
+suppress warning-level messages, and only show error-level ones, set
+this property to "error".
+
+default: [unset]
+
+possible values: <span class=option-value>"error"</span>
+
+example: java -Dnu.validator.client.level=error -jar ~/vnu.jar FILE.html
+</pre>
+
+<h4 id="nuvalidatorclientparser">nu.validator.client.parser</h4>
+<pre>
+Specifies which parser to use.
+
+default: <span class=option-value>"html"</span>; or, for *.xhtml input files, <span class=option-value>"xml"</span>
+
+possible values: see <a href="https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#parser">wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#parser</a>
+</pre>
+
+<h4 id="nuvalidatorclientcharset">nu.validator.client.charset</h4>
+<pre>
+Specifies the encoding of the input document.
+
+default: [unset]
+</pre>
+
+<h4 id="nuvalidatorclientcontent-type">nu.validator.client.content-type</h4>
+<pre>
+Specifies the content-type of the input document.
+
+default: <span class=option-value>"text/html"</span>; or, for *.xhtml files, <span class=option-value>"application/xhtml+xml"</span>
+</pre>
+
+<h4 id="nuvalidatorclientout">nu.validator.client.out</h4>
+<pre>
+Specifies the output format for messages.
+
+default: "gnu"
+
+possible values: see <a href="https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out">wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out</a>
+</pre>
+
+<h4 id="nuvalidatorclientasciiquotes">nu.validator.client.asciiquotes</h4>
+<pre>
+Specifies whether ASCII quotation marks are substituted for Unicode
+smart quotation marks in messages.
+
+default: "yes"
+
+possible values: "yes" or "no"
+</pre>
+
+  </section>
+</div>
