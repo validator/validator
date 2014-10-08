@@ -26,13 +26,13 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
 3. Start the build script (from the parent directory of your working directory):
 
-       python ./build/build.py all
-       python ./build/build.py all
+    python ./build/build.py all
+    python ./build/build.py all
 
    **Important:** Yes, you need to run the build script twice the very first time
    you build— to work around some known issues that cause the build to fail the first
    time during startup when you build from scratch in a fresh working directory.
-   For subsquent builds, you only need to run the build script once.
+   For subsequent builds, you only need to run the build script once.
 
    Also note that first time you run it, the build script will spend quite
    a bit of time downloading a bunch of dependencies (~300MB).
