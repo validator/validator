@@ -26,7 +26,7 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
 3. Start the build script (from the parent directory of your working directory):
 
-   `  python ./build/build.py all; python ./build/build.py all`
+     `python ./build/build.py all; python ./build/build.py all`
 
    **Important:** Yes, you need to run the build script twice the very first time
    you build— to work around some known issues that cause the build to fail the first
