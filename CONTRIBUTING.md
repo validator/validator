@@ -38,7 +38,7 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
    **Important:** Yes, you must run the script twice the first time you build— to work
    around known issues that cause it to fail to complete when run from scratch in a
-   fresh working directory. For subsequent builds, you only need run it once. Also note
+   fresh working directory. For subsequent builds you only have to run it once. And note
    that the first time you run it, it will need time to download ~300MB of dependencies.
 
 The steps above will build, test, and run the checker such that you can open
