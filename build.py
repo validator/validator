@@ -695,12 +695,9 @@ def createDistZip(distType):
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
   f = open(os.path.join(distDir, "VERSION"), "r")
   version = f.read()
-  readmeHtml = "https://raw.github.com/validator/validator.github.io/master/index.html"
-  readmeMarkdown = "https://raw.github.com/validator/validator.github.io/master/README.md"
-  changelog = "https://raw.github.com/validator/validator.github.io/master/CHANGELOG.md"
-  fetchUrlTo(readmeHtml, os.path.join(distDir, "index.html"))
-  fetchUrlTo(readmeMarkdown, os.path.join(distDir, "README.md"))
-  fetchUrlTo(changelog, os.path.join(distDir, "CHANGELOG.md"))
+  shutil.copy("validator/index.html", distDir)
+  shutil.copy("validator/README.md", distDir)
+  shutil.copy("validator/CHANGELOG.md", distDir)
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
