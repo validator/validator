@@ -24,7 +24,17 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
    * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (Ubuntu)
    * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
-3. Start the build script:
+3. Create a working directory:
+```
+     git clone https://github.com/validator/validator.git
+```
+
+4. Change into your working directory:
+```
+     cd validator
+```
+
+5. Start the build script:
 ```
      python ./build/build.py all; python ./build/build.py all
 ```
