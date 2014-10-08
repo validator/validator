@@ -33,8 +33,8 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
    time during startup when you build from scratch in a fresh working directory.
    For subsequent builds, you only need to run the build script once.
 
-   Also note that first time you run it, the build script will spend quite
-   a bit of time downloading a bunch of dependencies (~300MB).
+   Also note that the first time you run it, the build script will spend a
+   lot of time downloading a bunch of dependencies (~300MB).
 
 The steps above will build, test, and run the checker such that you can open
 http://localhost:8888/ in a Web browser to use the checker Web UI.
