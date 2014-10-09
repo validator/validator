@@ -688,7 +688,7 @@ def checkService():
   url = "http://localhost:%s/%s" % (portNumber, query)
   args = getRunArgs(str(int(heapSize) * 1024))
   daemon = subprocess.Popen([javaCmd,] + args)
-  time.sleep(5)
+  time.sleep(10)
   print "Checking %s" % url
   try:
     print urllib2.urlopen(url).read()
@@ -698,7 +698,7 @@ def checkService():
   except urllib2.URLError as e:
     print e.reason
     sys.exit(1)
-  time.sleep(2)
+  time.sleep(5)
   daemon.terminate()
 
 def createDistZip(distType):
