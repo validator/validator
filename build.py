@@ -46,6 +46,7 @@ scpCmd = 'scp'
 gitCmd = 'git'
 
 buildRoot = '.'
+vnuDir = (os.path.join(buildRoot, "build", "vnu"))
 gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
@@ -85,7 +86,7 @@ connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 followW3Cspec = 0
 statistics = 0
-minimalDoc = '<!doctype+html><meta+charset=utf-8><title>test</title>'
+miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
@@ -188,7 +189,7 @@ def runCmd(cmd):
   if os.name == 'nt' and cmd[:1] == '"':
     subprocess.call(cmd)
   else:
-    os.system(cmd)
+    return os.system(cmd)
 
 def execCmd(cmd, args):
   print "%s %s" % (cmd, " ".join(args))
@@ -684,7 +685,8 @@ def runValidator():
   execCmd(javaCmd, args)
 
 def checkService():
-  query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % minimalDoc
+  doc= miniDoc.replace(" ", "%20")
+  query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % doc
   url = "http://localhost:%s/%s" % (portNumber, query)
   args = getRunArgs(str(int(heapSize) * 1024))
   daemon = subprocess.Popen([javaCmd,] + args)
@@ -702,23 +704,22 @@ def checkService():
   daemon.terminate()
 
 def createDistZip(distType):
-  distDir = (os.path.join(buildRoot, "build", "vnu"))
-  removeIfDirExists(distDir)
-  os.mkdir(distDir)
+  removeIfDirExists(vnuDir)
+  os.mkdir(vnuDir)
   if distType == "war":
-    os.mkdir(os.path.join(distDir, "war"))
+    os.mkdir(os.path.join(vnuDir, "war"))
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
   antJar = os.path.join(antRoot, "ant.jar")
   antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
-  f = open(os.path.join(distDir, "VERSION"), "r")
+  f = open(os.path.join(vnuDir, "VERSION"), "r")
   version = f.read()
-  shutil.copy(os.path.join(buildRoot, "validator", "index.html"), distDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "README.md"), distDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "CHANGELOG.md"), distDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "LICENSE"), distDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "index.html"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "README.md"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "CHANGELOG.md"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "validator", "LICENSE"), vnuDir)
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
@@ -730,16 +731,19 @@ def createDistZip(distType):
   zf.close()
   os.chdir("..")
   if distType == "jar":
-    testJar(distDir)
+    checkJar()
 
-def testJar(distDir):
-  testFile = os.path.join(buildRoot, "validator", "index.html")
-  runCmd('"%s" -jar %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), testFile))
-  formats = ["xml", "json", "text"]
+def checkJar():
+  vnu = os.path.join(vnuDir, "vnu.jar")
+  formats = ["gnu", "xml", "json", "text"]
   for _format in formats:
-    runCmd('"%s" -jar %s --format %s %s' % (javaCmd, os.path.join(distDir, "vnu.jar"), _format, testFile))
-  removeIfExists(testFile)
-  runCmd('"%s" -jar %s --version' % (javaCmd, os.path.join(distDir, "vnu.jar")))
+    if runCmd('echo \'%s\' | "%s" -jar %s --format %s -' % (miniDoc, javaCmd, vnu, _format)):
+      sys.exit(1)
+  # to also make sure it works even w/o --format value given; returns gnu output
+  if runCmd('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
+    sys.exit(1)
+  if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
+    sys.exit(1)
 
 def createTarball():
   args = [
@@ -1066,6 +1070,7 @@ def printHelp():
   print "  all      -- checkout dldeps build test run"
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
+  print "  checkjar -- Run tests with the build jar file"
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
@@ -1179,6 +1184,11 @@ else:
     elif arg == 'jar':
       if noSelfUpdate:
         createDistZip('jar')
+      else:
+        selfUpdate()
+    elif arg == 'checkjar':
+      if noSelfUpdate:
+        checkJar();
       else:
         selfUpdate()
     elif arg == 'war':
