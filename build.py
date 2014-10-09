@@ -35,6 +35,7 @@ import zipfile
 import sys
 from sgmllib import SGMLParser
 import subprocess
+import time
 
 javacCmd = 'javac'
 jarCmd = 'jar'
@@ -84,6 +85,7 @@ connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 followW3Cspec = 0
 statistics = 0
+minimalDoc = '<!doctype+html><meta+charset=utf-8><ttle>test</title>'
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
@@ -681,6 +683,24 @@ def runValidator():
   args = getRunArgs(str(int(heapSize) * 1024))
   execCmd(javaCmd, args)
 
+def checkService():
+  query = "?out=gnu&doc=data:text/html;charset=utf-8,%s" % minimalDoc
+  url = "http://localhost:%s/%s" % (portNumber, query)
+  args = getRunArgs(str(int(heapSize) * 1024))
+  daemon = subprocess.Popen([javaCmd,] + args)
+  time.sleep(5)
+  print "Checking %s" % url
+  try:
+    print urllib2.urlopen(url).read()
+  except urllib2.HTTPError as e:
+    print e.reason
+    sys.exit(1)
+  except urllib2.URLError as e:
+    print e.reason
+    sys.exit(1)
+  time.sleep(2)
+  daemon.terminate()
+
 def createDistZip(distType):
   distDir = (os.path.join(buildRoot, "build", "vnu"))
   removeIfDirExists(distDir)
@@ -1040,7 +1060,8 @@ def printHelp():
   print "  checkout -- Checks out the sources"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
   print "  build    -- Build the source"
-  print "  test     -- Run tests"
+  print "  test     -- Run regression tests"
+  print "  check    -- Perform self-test of the system"
   print "  run      -- Run the system"
   print "  all      -- checkout dldeps build test run"
   print "  jar      -- Create a JAR file containing a release distribution"
@@ -1195,6 +1216,17 @@ else:
     elif arg == 'test':
       if noSelfUpdate:
         runTests()
+      else:
+        selfUpdate()
+    elif arg == 'check':
+      if noSelfUpdate:
+        if not stylesheet:
+          stylesheet = 'style.css'
+        if not script:
+          script = 'script.js'
+        if not icon:
+          icon = 'icon.png'
+        checkService()
       else:
         selfUpdate()
     elif arg == 'run':
