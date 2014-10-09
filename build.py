@@ -85,7 +85,7 @@ connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
 followW3Cspec = 0
 statistics = 0
-minimalDoc = '<!doctype+html><meta+charset=utf-8><ttle>test</title>'
+minimalDoc = '<!doctype+html><meta+charset=utf-8><title>test</title>'
 
 dependencyPackages = [
   ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
