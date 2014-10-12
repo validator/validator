@@ -52,6 +52,10 @@ import org.xml.sax.SAXParseException;
  */
 public class SimpleCommandLineValidator {
 
+    private static Package pkg = SimpleCommandLineValidator.class.getPackage();
+
+    private static String version = pkg.getImplementationVersion();
+
     private static SimpleDocumentValidator validator;
 
     private static OutputStream out;
@@ -89,7 +93,6 @@ public class SimpleCommandLineValidator {
         asciiQuotes = false;
         verbose = false;
 
-        String version = "dev";
         String outFormat = null;
         String schemaUrl = null;
         boolean hasFileArgs = false;
@@ -116,7 +119,11 @@ public class SimpleCommandLineValidator {
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {
-                    System.out.println(version);
+                    if (version != null) {
+                        System.out.println(version);
+                    } else {
+                        System.out.println("[uknown version]");
+                    }
                     System.exit(0);
                 } else if ("--help".equals(args[i])) {
                     help();
