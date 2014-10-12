@@ -1012,7 +1012,7 @@ def selfUpdate():
 
 def runTests():
   if followW3Cspec:
-    args = "tests/messages.json"
+    args = "--ignore=hgroup tests/messages.json"
   else:
     args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
