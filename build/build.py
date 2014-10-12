@@ -51,7 +51,7 @@ gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
-log4jProps = 'validator/resources/log4j.properties'
+log4jProps = 'resources/log4j.properties'
 heapSize = '128'
 html5specLink = 'https://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'https://www.whatwg.org/specs/web-apps/current-work/'
@@ -71,16 +71,17 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
-noSelfUpdate = 0
+syntaxDescs = os.path.join("local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")
+altAdvice = os.path.join("local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice")
 metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
 linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
 aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
-pageTemplateFile = os.path.join("validator", "xml-src", "PageEmitter.xml")
-formTemplateFile = os.path.join("validator", "xml-src", "FormEmitter.xml")
-presetsFile = os.path.join("validator", "resources", "presets.txt")
-aboutFile = os.path.join("validator", "site", "about.html")
-stylesheetFile = os.path.join("validator", "site", "style.css")
-scriptFile = os.path.join("validator", "site", "script.js")
+pageTemplateFile = os.path.join("xml-src", "PageEmitter.xml")
+formTemplateFile = os.path.join("xml-src", "FormEmitter.xml")
+presetsFile = os.path.join("resources", "presets.txt")
+aboutFile = os.path.join("site", "about.html")
+stylesheetFile = os.path.join("site", "style.css")
+scriptFile = os.path.join("site", "script.js")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
@@ -113,6 +114,7 @@ dependencyPackages = [
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/tokenizer.js", "731705f1bb5cf2aaf74b4e590759f026"),
   ("https://raw.githubusercontent.com/tabatkins/css-parser/9c82592afb4cbbde79048ae61ba6da2566489b73/parser.js", "a6cab081aa2320ea0c3d49fa99a44a33"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
+  ("https://github.com/validator/validator/releases/download/legacy-resources/www.w3.org.zip", "167efbb410689e028129142aa3cf77ba"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so
@@ -153,17 +155,6 @@ buildOnlyDependencyJars = [
 ]
 
 dependencyJars = runDependencyJars + buildOnlyDependencyJars
-
-moduleNames = [
-  "syntax",
-  "util",
-  "xmlparser",
-  "validator",
-  "jing-trang",
-  "htmlparser",
-  "nu-validator-site",
-  "tests",
-]
 
 javaSafeNamePat = re.compile(r'[^a-zA-Z0-9]')
 directoryPat = re.compile(r'^[a-zA-Z0-9_-]+/$')
@@ -327,9 +318,9 @@ def buildNonSchema():
 
 def buildSchemaDrivers():
   schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
-  legacyRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "legacy", "legacy.rnc"))
-  itsRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "its20-html5.rnc"))
-  itsTypesRnc = os.path.join(os.path.join(buildRoot, "validator", "schema", "its20-html5-types.rnc"))
+  legacyRnc = os.path.join(os.path.join(buildRoot, "schema", "legacy", "legacy.rnc"))
+  itsRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5.rnc"))
+  itsTypesRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5-types.rnc"))
   buildSchemaDriverHtmlCore(schemaDir)
   buildSchemaDriverHtml5NoMicrodata(schemaDir)
   buildSchemaDriverHtml5(schemaDir)
@@ -585,8 +576,8 @@ def buildJing():
 
 def buildValidator():
   ioJar = os.path.join("util", "dist", "io-xml-util.jar")
-  pageEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "PageEmitter.java")
-  formEmitter = os.path.join("validator", "src", "nu", "validator", "servlet", "FormEmitter.java")
+  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
+  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplateFile, pageEmitter))
   runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplateFile, formEmitter))
   classPath = os.pathsep.join(dependencyJarPaths()
@@ -597,7 +588,7 @@ def buildValidator():
                                                 "html5-datatypes"])
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "validator"),
+    os.path.join(buildRoot, "."),
     "validator",
     classPath)
 
@@ -720,10 +711,10 @@ def createDistZip(distType):
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
-  shutil.copy(os.path.join(buildRoot, "validator", "index.html"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "README.md"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "CHANGELOG.md"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "validator", "LICENSE"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "index.html"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "README.md"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "LICENSE"), vnuDir)
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
@@ -754,9 +745,9 @@ def createTarball():
     "zcf",
     os.path.join(buildRoot, "jars.tar.gz"),
     os.path.join(buildRoot, "run-validator.sh"),
-    os.path.join(buildRoot, "validator", "site", "style.css"),
-    os.path.join(buildRoot, "validator", "site", "script.js"),
-    os.path.join(buildRoot, "validator", "site", "icon.png"),
+    os.path.join(buildRoot, "site", "style.css"),
+    os.path.join(buildRoot, "site", "script.js"),
+    os.path.join(buildRoot, "site", "icon.png"),
   ] + ownJarList()
   runCmd('"%s" %s' %(tarCmd, " ".join(args)))
 
@@ -836,36 +827,29 @@ def downloadLocalEntities():
     removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
   if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")):
     removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions"))
+  if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice")):
+    removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice"))
+  fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescs))
+  fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, altAdvice))
   fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
-  f = open(os.path.join(buildRoot, "validator", "resources", "entity-map.txt"))
-  try:
-    for line in f:
-      url, path = line.strip().split("\t")
-      if not path.startswith("schema/"):
-        if not os.path.exists(os.path.join(buildRoot, "local-entities", path)):
-          if url.startswith("http://www.w3.org/"):
-            removeIfDirExists(os.path.join(buildRoot, "local-entities", "www.w3.org"))
-            zipExtract(os.path.join(buildRoot, "nu-validator-site", "www.w3.org.zip"),
-                os.path.join(buildRoot, "local-entities"))
-          else:
-            fetchUrlTo(url, os.path.join(buildRoot, "local-entities", path))
-  finally:
-    f.close()
+  dtds = os.path.join(buildRoot, "local-entities", "www.w3.org")
+  removeIfDirExists(dtds)
+  shutil.copytree(os.path.join(buildRoot, "dependencies", "www.w3.org"), dtds)
 
 def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
 
 def preparePropertiesFile():
-  filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
+  filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
   f = open(os.path.join(filesDir, "misc.properties"), 'w')
   f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
   f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
   f.close()
 
 def prepareLocalEntityJar():
-  filesDir = os.path.join(buildRoot, "validator", "src", "nu", "validator", "localentities", "files")
+  filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
   if os.path.exists(filesDir):
     shutil.rmtree(filesDir)
   os.makedirs(filesDir)
@@ -878,13 +862,13 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
   shutil.copyfile(os.path.join(buildRoot, scriptFile), os.path.join(filesDir, "script.js"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
-  f = open(os.path.join(buildRoot, "validator", "resources", "entity-map.txt"))
+  shutil.copyfile(os.path.join(buildRoot, "site", "icon.png"), os.path.join(filesDir, "icon.png"))
+  shutil.copyfile(os.path.join(buildRoot, "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
+  shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
+  shutil.copyfile(os.path.join(buildRoot, "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
+  shutil.copyfile(os.path.join(buildRoot, "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
+  f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
     for line in f:
@@ -893,7 +877,7 @@ def prepareLocalEntityJar():
       if path.startswith("schema/html5/"):
         entPath = os.path.join(buildRoot, "syntax", "relaxng", path[13:])
       elif path.startswith("schema/"):
-        entPath = os.path.join(buildRoot, "validator", path)
+        entPath = os.path.join(buildRoot, path)
       else:
         entPath = os.path.join(buildRoot, "local-entities", path)
       safeName = localPathToJarCompatName(path)
@@ -979,37 +963,6 @@ def buildAll():
   buildXmlParser()
   buildValidator()
 
-def gitCloneOrUpdate(mod, baseUrl):
-  if os.path.exists(mod):
-    if os.path.exists(mod + "/.git"):
-      os.chdir(mod)
-      runCmd('"%s" pull -q -r %s%s.git master' % (gitCmd, baseUrl, mod))
-      os.chdir("..")
-    else:
-      if os.path.exists(mod + "-old"):
-        print "The %s module has moved to github. Can't proceed automatically, because %s-old exists. Please remove it." % (mod, mod)
-        sys.exit(3)
-      else:
-        print "The %s module has moved to github. Renaming the old directory to %s-old and pulling from github." % (mod, mod)
-        os.rename(mod, mod + "-old")
-        runCmd('"%s" clone %s%s.git' % (gitCmd, baseUrl, mod))
-  else:
-    runCmd('"%s" clone %s%s.git' % (gitCmd, baseUrl, mod))
-
-def checkout():
-  # XXX root dir
-  for mod in moduleNames:
-    gitCloneOrUpdate(mod, gitRoot)
-
-def selfUpdate():
-  gitCloneOrUpdate("build", gitRoot)
-  newArgv = [sys.executable, buildScript, '--no-self-update']
-  newArgv.extend(argv)
-  if os.name == 'nt':
-    sys.exit(subprocess.call(newArgv))
-  else:
-    os.execv(sys.executable, newArgv)
-
 def runTests():
   if followW3Cspec:
     args = "--ignore=hgroup tests/messages.json"
@@ -1065,13 +1018,12 @@ def printHelp():
   print "                                the validator URL"
   print ""
   print "Tasks:"
-  print "  checkout -- Checks out the sources"
   print "  dldeps   -- Downloads missing dependency libraries and entities"
   print "  build    -- Build the source"
   print "  test     -- Run regression tests"
   print "  check    -- Perform self-test of the system"
   print "  run      -- Run the system"
-  print "  all      -- checkout dldeps build test run"
+  print "  all      -- dldeps build test run"
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
   print "  checkjar -- Run tests with the build jar file"
@@ -1155,10 +1107,6 @@ else:
       usePromiscuousSsl = 1
     elif arg == '--promiscuous-ssl=off':
       usePromiscuousSsl = 0
-    elif arg == '--no-self-update':
-      noSelfUpdate = 1
-    elif arg == '--local':
-      noSelfUpdate = 1
     elif arg.startswith("--connection-timeout="):
       connectionTimeoutSeconds = int(arg[21:])
     elif arg.startswith("--socket-timeout="):
@@ -1170,107 +1118,62 @@ else:
     elif arg == '--help':
       printHelp()
     elif arg == 'dldeps':
-      if noSelfUpdate:
-        downloadDependencies()
-        downloadLocalEntities()
-      else:
-        selfUpdate()
-    elif arg == 'checkout':
-      if noSelfUpdate:
-        checkout()
-      else:
-        selfUpdate()
+      downloadDependencies()
+      downloadLocalEntities()
     elif arg == 'build':
-      if noSelfUpdate:
-        buildAll()
-      else:
-        selfUpdate()
+      buildAll()
     elif arg == 'jar':
-      if noSelfUpdate:
-        createDistZip('jar')
-      else:
-        selfUpdate()
+      createDistZip('jar')
     elif arg == 'checkjar':
-      if noSelfUpdate:
-        checkJar();
-      else:
-        selfUpdate()
+      checkJar();
     elif arg == 'war':
-      if noSelfUpdate:
-        createDistZip('war')
-      else:
-        selfUpdate()
+      createDistZip('war')
     elif arg == 'localent':
-      if noSelfUpdate:
-        prepareLocalEntityJar()
-      else:
-        selfUpdate()
+      prepareLocalEntityJar()
     elif arg == 'deploy':
-      if noSelfUpdate:
-        deployOverScp()
-      else:
-        selfUpdate()
+      deployOverScp()
     elif arg == 'tar':
-      if noSelfUpdate:
-        createTarball()
-        createDepTarball()
-      else:
-        selfUpdate()
+      createTarball()
+      createDepTarball()
     elif arg == 'script':
-      if noSelfUpdate:
-        if not stylesheet:
-          stylesheet = 'style.css'
-        if not script:
-          script = 'script.js'
-        if not icon:
-          icon = 'icon.png'
-        generateRunScript()
-      else:
-        selfUpdate()
+      if not stylesheet:
+        stylesheet = 'style.css'
+      if not script:
+        script = 'script.js'
+      if not icon:
+        icon = 'icon.png'
+      generateRunScript()
     elif arg == 'test':
-      if noSelfUpdate:
-        runTests()
-      else:
-        selfUpdate()
+      runTests()
     elif arg == 'check':
-      if noSelfUpdate:
-        if not stylesheet:
-          stylesheet = 'style.css'
-        if not script:
-          script = 'script.js'
-        if not icon:
-          icon = 'icon.png'
-        checkService()
-      else:
-        selfUpdate()
+      if not stylesheet:
+        stylesheet = 'style.css'
+      if not script:
+        script = 'script.js'
+      if not icon:
+        icon = 'icon.png'
+      checkService()
     elif arg == 'run':
-      if noSelfUpdate:
-        if not stylesheet:
-          stylesheet = 'style.css'
-        if not script:
-          script = 'script.js'
-        if not icon:
-          icon = 'icon.png'
-        runValidator()
-      else:
-        selfUpdate()
+      if not stylesheet:
+        stylesheet = 'style.css'
+      if not script:
+        script = 'script.js'
+      if not icon:
+        icon = 'icon.png'
+      runValidator()
     elif arg == 'all':
-      if noSelfUpdate:
-        checkout()
-        downloadDependencies()
-        downloadLocalEntities()
-        downloadOperaSuite()
-        prepareLocalEntityJar()
-        buildAll()
-        runTests()
-        if not stylesheet:
-          stylesheet = 'style.css'
-        if not script:
-          script = 'script.js'
-        if not icon:
-          icon = 'icon.png'
-        runValidator()
-      else:
-        selfUpdate()
+      downloadDependencies()
+      downloadLocalEntities()
+      downloadOperaSuite()
+      prepareLocalEntityJar()
+      buildAll()
+      runTests()
+      if not stylesheet:
+        stylesheet = 'style.css'
+      if not script:
+        script = 'script.js'
+      if not icon:
+        icon = 'icon.png'
+      runValidator()
     else:
       print "Unknown option %s." % arg
