@@ -690,7 +690,7 @@ def checkService():
   url = "http://localhost:%s/%s" % (portNumber, query)
   args = getRunArgs(str(int(heapSize) * 1024))
   daemon = subprocess.Popen([javaCmd,] + args)
-  time.sleep(10)
+  time.sleep(15)
   print "Checking %s" % url
   try:
     print urllib2.urlopen(url).read()
