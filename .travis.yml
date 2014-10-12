@@ -6,6 +6,6 @@ script:
   - python ./build/build.py dldeps
   - python ./build/build.py build; python ./build/build.py build
   - python ./build/build.py check
-  - python ./build/build.py jar
+  - echo "test" | python ./build/build.py jar
   - python ./build/build.py test
   - java -jar ./build/vnu/vnu.jar ./build/vnu/index.html
