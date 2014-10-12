@@ -47,7 +47,6 @@ gitCmd = 'git'
 
 buildRoot = '.'
 vnuDir = (os.path.join(buildRoot, "build", "vnu"))
-gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
@@ -944,6 +943,9 @@ def downloadDependency(url, md5sum):
     if path.endswith(".zip"):
       zipExtract(path, dependencyDir)
 
+def updateSubmodules():
+  runCmd('"%s" submodule update --init' % gitCmd)
+
 def downloadDependencies():
   for url, md5sum in dependencyPackages:
     downloadDependency(url, md5sum)
@@ -1018,12 +1020,13 @@ def printHelp():
   print "                                the validator URL"
   print ""
   print "Tasks:"
-  print "  dldeps   -- Downloads missing dependency libraries and entities"
+  print "  update   -- Update git submodules"
+  print "  dldeps   -- Download missing dependency libraries and entities"
   print "  build    -- Build the source"
   print "  test     -- Run regression tests"
   print "  check    -- Perform self-test of the system"
   print "  run      -- Run the system"
-  print "  all      -- dldeps build test run"
+  print "  all      -- update dldeps build test run"
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
   print "  checkjar -- Run tests with the build jar file"
@@ -1050,8 +1053,6 @@ else:
       jarCmd = os.path.join(jdkBinDir, "jar")
       javacCmd = os.path.join(jdkBinDir, "javac")
       javadocCmd = os.path.join(jdkBinDir, "javadoc")
-    elif arg.startswith("--gitRoot="):
-      gitRoot = arg[10:]
     elif arg.startswith("--port="):
       portNumber = arg[7:]
     elif arg.startswith("--control-port="):
@@ -1117,6 +1118,8 @@ else:
       statistics = 1
     elif arg == '--help':
       printHelp()
+    elif arg == 'update':
+      updateSubmodules()
     elif arg == 'dldeps':
       downloadDependencies()
       downloadLocalEntities()
@@ -1162,6 +1165,7 @@ else:
         icon = 'icon.png'
       runValidator()
     elif arg == 'all':
+      updateSubmodules()
       downloadDependencies()
       downloadLocalEntities()
       downloadOperaSuite()
