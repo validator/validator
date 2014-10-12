@@ -51,7 +51,7 @@ gitRoot = 'https://github.com/validator/'
 portNumber = '8888'
 controlPort = None
 useAjp = 0
-log4jProps = 'validator/log4j.properties'
+log4jProps = 'validator/resources/log4j.properties'
 heapSize = '128'
 html5specLink = 'https://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'https://www.whatwg.org/specs/web-apps/current-work/'
@@ -77,7 +77,7 @@ linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
 aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
 pageTemplateFile = os.path.join("validator", "xml-src", "PageEmitter.xml")
 formTemplateFile = os.path.join("validator", "xml-src", "FormEmitter.xml")
-presetsFile = os.path.join("validator", "presets.txt")
+presetsFile = os.path.join("validator", "resources", "presets.txt")
 aboutFile = os.path.join("validator", "site", "about.html")
 stylesheetFile = os.path.join("validator", "site", "style.css")
 scriptFile = os.path.join("validator", "site", "script.js")
@@ -839,7 +839,7 @@ def downloadLocalEntities():
   fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
-  f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
+  f = open(os.path.join(buildRoot, "validator", "resources", "entity-map.txt"))
   try:
     for line in f:
       url, path = line.strip().split("\t")
@@ -881,10 +881,10 @@ def prepareLocalEntityJar():
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "icon.png"), os.path.join(filesDir, "icon.png"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
-  shutil.copyfile(os.path.join(buildRoot, "validator", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
+  shutil.copyfile(os.path.join(buildRoot, "validator", "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "site", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
   shutil.copyfile(os.path.join(buildRoot, "validator", "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
-  f = open(os.path.join(buildRoot, "validator", "entity-map.txt"))
+  f = open(os.path.join(buildRoot, "validator", "resources", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:
     for line in f:
