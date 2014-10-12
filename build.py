@@ -706,6 +706,12 @@ def checkService():
 def createDistZip(distType):
   removeIfDirExists(vnuDir)
   os.mkdir(vnuDir)
+  print "Waiting for version number on stdin..."
+  version = sys.stdin.read().rstrip()
+  print "Building vnu-%s.jar" % version
+  f = open(os.path.join(vnuDir, "VERSION"), "w")
+  f.write(version)
+  f.close()
   if distType == "war":
     os.mkdir(os.path.join(vnuDir, "war"))
   antRoot = os.path.join(buildRoot, "jing-trang", "lib")
@@ -714,8 +720,6 @@ def createDistZip(distType):
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
-  f = open(os.path.join(vnuDir, "VERSION"), "r")
-  version = f.read()
   shutil.copy(os.path.join(buildRoot, "validator", "index.html"), vnuDir)
   shutil.copy(os.path.join(buildRoot, "validator", "README.md"), vnuDir)
   shutil.copy(os.path.join(buildRoot, "validator", "CHANGELOG.md"), vnuDir)
