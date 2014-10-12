@@ -1,17 +1,11 @@
 language: java
 
-env:
-  global:
-    - HOSTFLAG=-Dnu.validator.client.host=html5.validator.nu
-    - PORTFLAG=-Dnu.validator.client.port=80
-    - FILES=validator/index.html
-
 script:
   - git clone https://github.com/validator/build.git build
-  - python build/build.py checkout
-  - python build/build.py dldeps
-  - python build/build.py build; python build/build.py build
-  - python build/build.py test
-  - python build/build.py jar
-  - java -jar build/vnu/vnu.jar "$FILES"
-  - java -cp build/vnu/vnu.jar "$HOSTFLAG" "$PORTFLAG" nu.validator.client.HttpClient "$FILES"
+  - python ./build/build.py checkout
+  - python ./build/build.py dldeps
+  - python ./build/build.py build; python ./build/build.py build
+  - python ./build/build.py check
+  - echo "test" | python ./build/build.py jar
+  - python ./build/build.py test
+  - java -jar ./build/vnu/vnu.jar ./build/vnu/index.html
