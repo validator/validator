@@ -101,14 +101,15 @@ public class TestRunner implements ErrorHandler {
     }
 
     private void checkHtmlFile(File file) throws IOException, SAXException {
-        String testFilename = file.getAbsolutePath().substring(
+        String testPathname = file.getAbsolutePath().substring(
                 baseDir.length() + 1);
         if (ignoreList != null) {
-            for (String dirName : ignoreList) {
-                if (testFilename.startsWith(dirName)) {
+            for (String substring : ignoreList) {
+                if (testPathname.contains(substring)) {
                     if (verbose) {
-                        out.println("Ignoring file: "
-                                + file.toURI().toURL().toString());
+                        out.println(String.format(
+                                "\"%s\": warning: File ignored.",
+                                file.toURI().toURL().toString()));
                         out.flush();
                     }
                     return;
@@ -465,6 +466,7 @@ public class TestRunner implements ErrorHandler {
         err.write(e.getMessage());
         err.write("\n");
         err.flush();
+        System.exit(1);
     }
 
     public void warning(SAXParseException e) throws SAXException {
@@ -537,7 +539,7 @@ public class TestRunner implements ErrorHandler {
                 System.out.println(String.format(
                         "\nError: There is no option \"%s\".", args[i]));
                 usage();
-                System.exit(-1);
+                System.exit(1);
             } else {
                 if (args[i].endsWith(".json")) {
                     messagesFilename = args[i];
@@ -545,7 +547,7 @@ public class TestRunner implements ErrorHandler {
                     System.out.println("\nError: Expected the name of a messages"
                             + " file with a .json extension.");
                     usage();
-                    System.exit(-1);
+                    System.exit(1);
                 }
             }
         }
@@ -554,23 +556,23 @@ public class TestRunner implements ErrorHandler {
             if (!messagesFile.exists()) {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" file not found.");
-                System.exit(-1);
+                System.exit(1);
             } else if (!messagesFile.isFile()) {
                 System.out.println("\nError: \"" + messagesFilename
                         + "\" is not a file.");
-                System.exit(-1);
+                System.exit(1);
             }
         } else if (writeMessages) {
             System.out.println("\nError: Expected the name of a messages"
                     + " file with a .json extension.");
             usage();
-            System.exit(-1);
+            System.exit(1);
         }
         TestRunner tr = new TestRunner();
         if (tr.runTestSuite()) {
             System.exit(0);
         } else {
-            System.exit(-1);
+            System.exit(1);
         }
     }
 
