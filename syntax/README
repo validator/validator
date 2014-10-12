@@ -1,0 +1,34 @@
+syntax.whatwg.org directory plan
+
+This document lays out the plan for present and future syntax definitions,
+given as a URI hierarchy. All files for a given syntax definition are in
+one directory. This means a lot of duplication of things like the entity
+definitions, but it will help with revision-tracking and packaging.
+
+The general plan is as follows:
+  - the first-level directory specifies the format
+  - the second-level directory gives the language/combination
+    (language version increments are reflected at this level;
+     not sure yet exactly how)
+  - each directory must have a README detailing what it is
+    combination syntax files must state the equivalent versions of
+    all stand-alone components
+
+The maintainer of this system is fantasai <http://fantasai.inkedblade.net/contact>.
+
+syntax.whatwg.org/
+  |
+  |--relaxng/ - RELAX NG schema for (X)HTML5 with Schematron refinements
+  |    |         
+  |    |
+  |    |--datatype/ - The datatype library used in the RELAX NG schema
+  |    |
+  |    |
+  |    |--tests/ - Unit tests for the schema *and* the non-schema-based 
+  |                checker (for now)
+  |
+  |
+  |--non-schema/ - Non-schema-language-based checkers that complement the 
+                   RELAX NG schema
+
+.
