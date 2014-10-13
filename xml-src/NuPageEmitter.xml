@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-package nu.validator.servlet?>
+<?SaxCompiler-class PageEmitter?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang='en'
+	><head
+		><?SaxCompiler-code t.emitIcon(); ?><?SaxCompiler-code t.emitStyle(); ?><title
+		><?SaxCompiler-code t.emitTitle(false); ?> - Nu Markup Checker</title
+	></head
+	><body
+		><div id="banner"
+			><h1 id="title"
+				><a href="."><span>Nu Markup Checker</span></a></h1
+		></div
+		><p class="disclaimer">This is an experimental checker and its behavior remains subject to change</p
+		><h2 id="top"><?SaxCompiler-code t.emitTitle(true); ?></h2><?SaxCompiler-code t.emitForm(); t.emitScript(); ?><div id="results"
+		><?SaxCompiler-code t.validate(); ?></div
+		><hr></hr
+		><div id="about"><p
+                    ><a href="about.html">About this checker</a> • <a href="about.html#issues">Report an issue</a></p
+		></div
+	></body
+></html>

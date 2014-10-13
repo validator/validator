@@ -1,0 +1,6 @@
+3	-	HTML with SVG 1.1, MathML 3.0, RDFa 1.1, and ITS 2.0 support	http://s.validator.nu/html5-all.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+7	http://www.w3.org/1999/xhtml	XHTML with SVG 1.1, MathML 3.0, RDFa 1.1, and ITS 2.0 support	http://s.validator.nu/xhtml5-all.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/
+2	-	HTML 4.01 or XHTML 1.0, Strict	http://s.validator.nu/xhtml10/xhtml-strict.rnc http://s.validator.nu/html4/assertions.sch http://c.validator.nu/all-html4/
+1	-	HTML 4.01 or XHTML 1.0, Transitional	http://s.validator.nu/xhtml10/xhtml-transitional.rnc http://s.validator.nu/html4/assertions.sch http://c.validator.nu/all-html4/
+-1	-	HTML 4.01 or XHTML 1.0, Frameset	http://s.validator.nu/xhtml10/xhtml-frameset.rnc http://s.validator.nu/html4/assertions.sch http://c.validator.nu/all-html4/
+-1	http://www.w3.org/2000/svg	SVG 1.1 + XHTML + MathML 3.0	http://s.validator.nu/svg-xhtml5-rdf-mathml.rnc http://s.validator.nu/html5/assertions.sch http://c.validator.nu/all/

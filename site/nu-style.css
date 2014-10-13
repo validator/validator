@@ -1,0 +1,776 @@
+/*
+ * Copyright (c) 2005, 2006, 2007 Henri Sivonen
+ * Copyright (c) 2007-2014 Mozilla Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a 
+ * copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation 
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the 
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * DEALINGS IN THE SOFTWARE.
+ */
+
+html, body, h1, div#banner, div#banner a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 100%;
+	font-family: sans-serif;
+	vertical-align: baseline;
+	background-color: white;
+	color: #1f2126;
+	line-height: 1;
+	text-align: left;
+}
+
+a img {
+	border: 0;
+}
+
+abbr[title], acronym[title], span[title], strong[title] {
+	border-bottom: thin dotted;
+	cursor: help;
+}
+
+acronym:hover, abbr:hover {
+	cursor: help;
+}
+
+body {
+	padding-bottom: 6em;
+	min-width: 40em; /* for the tabs, mostly */
+}
+
+h3 {
+	font-family: sans-serif;
+	color: #690;
+	background-color: white;
+	font-size: 1.1em;
+	border-bottom: 1px dotted #aaaa77;
+	text-decoration: none;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+textarea {
+	width: 98.5%;
+}
+
+label {
+	font-size: 0.9em;
+	padding-left: .2em;
+	padding-right: .2em;
+}
+
+h1#title {
+	font-family: "Myriad Web", "Myriad Pro", "Gill Sans", Helvetica, Arial, Sans-Serif;
+	background-color: #365D95;
+	color: #fdfdfd;
+	font-size: 1.6em;
+	padding: 0.430em;
+	border-radius: 6px;
+}
+h1#title a, h1#title a img {
+	background-color: #365D95;
+}
+
+h1#title a:link, h1#title a:hover, h1#title a:visited, h1#title a:active {
+	color: #fdfdfd !important;
+	text-decoration: none;
+}
+
+h1#title img {
+	vertical-align: middle;
+	margin-right: 0.7em;
+}
+
+div#banner {
+	margin: 1.5em 2em;
+}
+
+fieldset {
+	background: #EAEBEE;
+}
+
+legend {
+	font-size: 1.1em;
+	padding: 1em 0 0.23em;
+}
+
+legend a:link, legend a:visited, legend a:hover, legend a:active {
+	text-decoration: none;
+}
+
+div, p, li, h2 {
+	font-family: sans-serif;
+}
+
+h2 {
+	font-size: 16px;
+}
+
+h2#top {
+	margin-left: 3%
+}
+
+th, td {
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin: 0px;
+}
+
+hr {
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+div#banner {
+	margin-left: 3%;
+	margin-right: 3%;
+	margin-bottom: 18px
+}
+
+div#results,
+div#about {
+	font: caption;
+	margin-top: 30px;
+	padding-left: 3%;
+	margin-right: 3%;
+}
+
+div#about {
+	margin-bottom: 12px;
+}
+
+p.disclaimer {
+	font: caption;
+	margin-left: 3%;
+	margin-right: 3%;
+	color: #aaa;
+}
+
+.alert {
+	color: black;
+	background-color: yellow
+}
+
+body {
+	font-family: sans-serif;
+	font-size: inherit;
+	margin: 0;
+}
+
+form {
+	font-family: inherit;
+	font-size: inherit;
+	font: caption;
+	background-color: #ffffff;
+	margin-bottom: .5em;
+	padding: 3%;
+	padding-top: 0;
+	padding-bottom: 0;
+	vertical-align: inherit;
+}
+
+legend {
+	font: inherit;
+	vertical-align: inherit;
+	padding: 0;
+}
+
+fieldset {
+	font: caption;
+	font-family: inherit;
+	font-size: inherit;
+	padding: 0.5% 1.5% 0.5% 1.5%;
+	border: 1px dotted #666666;
+	margin: 0;
+	background-color: #ffffff;
+	vertical-align: inherit;
+}
+
+label {
+	font: caption;
+	vertical-align: baseline;
+	padding: 0px;
+}
+
+select {
+	vertical-align: baseline;
+}
+
+textarea {
+	font: caption;
+	font-size: .85em;
+	border: 1px solid;
+	margin: 2px 2px 2px 2px;
+	padding: 2px;
+}
+
+#inputregion {
+	margin-top: 12px;
+}
+
+#inputlabel {
+	margin-left: 2px;
+}
+
+#doc {
+	width: 99%;
+	padding-left: 4px;
+	padding-top: 2px;
+	margin-left: 2px;
+	margin-top: 2px;
+}
+
+#doc[type="file"] {
+	padding: 0px;
+	width: initial;
+}
+
+#docselect {
+	margin-left: 3px;
+}
+
+table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+fieldset td, fieldset th {
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+}
+
+tr:first-child td, tr:first-child th {
+  vertical-align: top;
+}
+
+fieldset th {
+	padding-left: 0;
+	padding-right: 0.4em;
+	text-align: right;
+	width: 8em;
+	font-weight: inherit;
+}
+
+fieldset td {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+textarea, #doc[type="url"] {
+	font-family: Monaco, Consolas, Andale Mono, monospace;
+}
+
+.stats {
+	font-size: 0.85em;	
+}
+
+.success {
+	padding: 0.5em;
+	border: double 6px purple;
+}
+
+.failure {
+	padding: 0.5em;
+	border: double 6px purple;
+}
+
+ol {
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	padding-left: 2.5em;
+	padding-right: 2.5em;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+li {
+	margin: 0;
+	padding: 0.5em;
+}
+
+li ol {
+	padding-right: 0;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+}
+
+li li {
+	padding-right: 0;
+	padding-bottom: 0.2em;
+	padding-top: 0.2em;
+}
+
+.info {
+	color: black;
+	background-color: #CCFFFF;
+}
+
+.warning {
+	color: black;
+	background-color: #FFFFCC;
+}
+
+.error {
+	color: black;
+	background-color: #FFCCCC;
+}
+
+.io, .fatal, .schema {
+	color: black;
+	background-color: #FF9999;
+}
+
+.internal {
+	color: black;
+	background-color: #FF6666;
+}
+
+
+hr {
+	border-top: 1px dotted #666666;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	height: 0;
+}
+
+p {
+	margin: 0.5em 0 0.5em 0;
+}
+
+li p {
+	margin: 0;
+}
+
+.stats {
+	margin-top: 0.75em;
+}
+
+.lf {
+	color: #222222;
+}
+
+.extract {
+	overflow: hidden;
+	max-height: 5.5em;
+}
+
+.extract b, .source b {
+	color: black;
+	background-color: #FF6666;
+}
+
+ol.source li {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+ol.source b, ol.source .b {
+	color: black;
+	background-color: #FFFFCC;
+	font-weight: bold;
+}
+
+code {
+	white-space: pre;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -hp-pre-wrap;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.error p,
+.info p,
+.warning p,
+.error dd,
+.info dd,
+.warning dd {
+	line-height: 1.8;
+}
+
+.error p code {
+	border: 1px dashed #999;
+	background-color: #fdd;
+	padding: 2px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.warning code {
+	border: 1px dashed #999;
+	background-color: #ffd;
+	padding: 2px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.extract code {
+	background-color: inherit;
+	border: none;
+	padding: none;
+}
+
+dl {
+	margin-top: 0.5em;
+	margin-bottom: 0;
+}
+
+dd {
+	margin-left: 1.5em;
+	padding-left: 0;
+	margin-top: 2px;
+}
+
+table.imagereview {
+	width: 100%;
+	table-layout: auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+col.img {
+	width: 180px;
+}
+
+col.alt {
+	color: black;
+	background-color: #FFFFCC;
+}
+
+td.alt span {
+	color: black;
+	background-color: #FFFFAA;	
+}
+
+.imagereview th {
+	font-weight: bold;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+.imagereview td {
+	vertical-align: middle;
+}
+
+td.img {
+	padding-right: 0.5em;
+	padding-left: 0;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+	text-align: right;
+}
+
+img {
+	max-height: 180px;
+	max-width: 180px;
+	-ms-interpolation-mode: bicubic;
+}
+
+th.img {
+	padding-right: 0.5em;
+	padding-left: 0;
+	padding-top: 0;
+	padding-bottom: 0.5em;	
+	vertical-align: bottom;
+	text-align: right;
+}
+
+td.alt, td.location {
+	text-align: left;
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+}
+
+th.alt, th.location {
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+	padding-top: 0;
+	padding-bottom: 0.5em;
+	vertical-align: bottom;
+}
+
+
+*[irrelevent], .irrelevant {
+	display: none;
+}
+
+/* "(required)" text in spec advice */
+dd code ~ span {
+	color: #666;
+}
+
+dl.inputattrs {
+	display: table;
+}
+
+dl.inputattrs dt {
+	display: table-caption;
+}
+
+dl.inputattrs dd {
+	display: table-row;
+}
+
+dl.inputattrs .inputattrname,
+dl.inputattrs .inputattrtypes,
+dl.inputattrs > dd > a {
+	display: table-cell;
+	padding-top: 2px;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+}
+
+dl.inputattrs .inputattrtypes {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.inputattrtypes > a {
+	color: #666;
+}
+
+dl.inputattrs .highlight {
+	background-color: #FFC;
+	padding-bottom: 2px;
+	font-weight: normal;
+	color: #666;
+}
+
+@media all and (max-width: 24em) {
+	body {
+		padding: 3px;
+	}
+	table, thead, tfoot, tbody, tr, th, td {
+		display: block;
+		width: 100%;
+	}
+	th {
+		text-align: left;
+		padding-bottom: 0;
+
+	}
+}
+
+.checkboxes label {
+	margin-right: 20px;
+}
+
+#xnote {
+	color: #aaa;
+	margin-left: 2px;
+	margin-top: 6px;
+}
+
+#outline h2 {
+	margin-bottom: 0;
+}
+
+#outline .heading {
+	color: #BF4F00;
+	font-weight: bold;
+}
+
+#outline ol {
+	margin-top: 0;
+	padding-top: 3px;
+}
+
+#outline li {
+	padding: 3px 0 3px 0;
+	margin: 0;
+	list-style: none;
+	position: relative;
+}
+
+#outline li li {
+	list-style: none;
+}
+
+#outline li:first-child::before {
+	position: absolute;
+	top: 0;
+	height: 0.6em;
+	left: -0.75em;
+	width: 0.5em;
+	border-color: #bbb;
+	border-style: none none solid solid;
+	content: '';
+	border-width: 0.1em;
+}
+
+#outline li:not(:last-child)::after {
+	position: absolute;
+	top: 0;
+	bottom: -0.6em;
+	left: -0.75em;
+	width: 0.5em;
+	border-color: #bbb;
+	border-style: none none solid solid;
+	content: '';
+	border-width: 0.1em;
+}
+
+#results .hidden {
+	display: none;
+}
+
+#filters {
+	margin-left: 3%;
+	margin-right: 3%;
+	margin-bottom: 1em;
+	padding: 4px;
+	padding-bottom: 0.5em;
+}
+
+#filters button {
+	min-height: 18px;
+}
+
+#filters .filtercount {
+	font: caption;
+	font-style: italic;
+	padding-left: 4px;
+	padding-top: 6px;
+}
+
+#filters.expanded {
+	background-color: #FFFFCC;
+	-o-transition: all .8s ease-out;
+	-moz-transition: all .8s ease-out;
+	-ms-transition: all .8s ease-out;
+	-webkit-transition: all .8s ease-out;
+	opacity: 1;
+	visibility: visible;
+}
+
+#filters.unexpanded {
+	-o-transition: all .8s ease-out;
+	-moz-transition: all .8s ease-out;
+	-ms-transition: all .8s ease-out;
+	-webkit-transition: all .8s ease-out;
+}
+
+#filters h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#filters fieldset {
+	margin: 1em;
+	font: caption;
+}
+
+#filters fieldset.hidden {
+	-o-transition: all .8s ease-out;
+	-moz-transition: all .8s ease-out;
+	-ms-transition: all .8s ease-out;
+	-webkit-transition: all .8s ease-out;
+	opacity: 0;
+	visibility: hidden;
+	height: 0;
+	margin: -45px;
+}
+
+#filters fieldset.unhidden {
+	background-color: #FFFFCC;
+	-o-transition: all .8s ease-out;
+	-moz-transition: all .8s ease-out;
+	-ms-transition: all .8s ease-out;
+	-webkit-transition: all .8s ease-out;
+	opacity: 1;
+	visibility: visible;
+}
+
+#filters fieldset legend {
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+#filters fieldset legend a {
+	font-weight: normal;
+}
+
+#filters input {
+	position: absolute;
+	top: 2px;
+	left: 0;
+}
+
+#filters ol {
+	counter-reset: item;
+	margin: 0;
+	padding: 0 0 0 40px;
+}
+
+#filters ol ol {
+	margin-top: 6px;
+}
+
+#filters li {
+	list-style-type: none;
+	padding: 0 0 0 25px;
+	margin: 6px 0 0;
+	position: relative;
+	line-height: 1.8;
+}
+
+#filters li li {
+	margin: 0;
+}
+
+#filters li:before {
+	content: counters(item, ".") " ";
+	counter-increment: item;
+	width: 40px;
+	position: absolute;
+	top: 0;
+	left: -50px;
+	text-align: right;
+	color: #777;
+}
+
+#filters fieldset label {
+	font-family: sans-serif;
+}
+
+#filters code {
+	background: #6F6;
+	white-space: pre;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -hp-pre-wrap;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	border: 1px dashed #999;
+	background-color: #ffd;
+	padding: 2px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+#filters .hide, #filters .show {
+	color: blue;
+}

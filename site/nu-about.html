@@ -1,0 +1,153 @@
+<!doctype html>
+<title>About the Nu Markup Checker</title>
+<meta charset=utf-8>
+<style>
+html, body, h1, div#banner, div#banner a {
+	font-weight: normal;
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-size: 100%;
+}
+
+strong {
+	color: rgb(54, 93, 149);
+}
+
+a img {
+	border: 0;
+}
+
+h1#title {
+	font-family: "Myriad Web", "Myriad Pro", "Gill Sans", Helvetica, Arial, Sans-Serif;
+	background-color: #365D95;
+	color: #fdfdfd;
+	font-size: 1.6em;
+	padding: 0.430em;
+	line-height: 1;
+	border-radius: 6px;
+}
+
+h1#title a, h1#title a img {
+  background-color: #365D95;
+}
+
+h1#title a:link, h1#title a:hover, h1#title a:visited, h1#title a:active {
+  color: #fdfdfd !important;
+  text-decoration: none;
+}
+
+h1#title img {
+	vertical-align: middle;
+	margin-right: 0.7em;
+}
+
+div#banner {
+	margin: 1.5em 2em;
+}
+
+div, p, li, h2 {
+	font-family: sans-serif;
+}
+
+h2 {
+	font-size: 120%;
+	color: rgb(54, 93, 149);
+}
+
+img#w3clogo {
+	margin-right: 6px !important;
+}
+
+img#html5-logo {
+  margin-top: 12px;
+}
+
+div#banner {
+	margin-left: 3%;
+	margin-right: 3%;
+	margin-bottom: 18px
+}
+
+body > p, body > ul {
+	margin-right: 3%;
+	margin-left: 3%;
+}
+
+section {
+	margin-top: 0px;
+	padding-left: 3%;
+	margin-right: 3%;
+	margin-bottom: 12px;
+}
+
+section:last-child {
+  margin-bottom: 700px;
+}
+
+body {
+	font-family: sans-serif;
+	font-size: inherit;
+	margin: 0;
+}
+
+</style>
+<div id="banner"><h1 id="title"><a href="."><span>Nu Markup Checker</span></a></h1></div>
+
+<p>The Nu Markup Checker (v.Nu) checks the markup of HTML documents.
+
+<p>The Nu Markup Checker is an experimental tool and its behavior remains
+subject to change. In particular, because new types of error checks
+continue to be actively added to the checker, there is no guarantee
+provided that if the checker reports zero errors for a particular document
+at one point in time, it will report zero errors for that same document at
+some later point in time.
+
+<p>The Nu Markup Checker should not be used as a means to attempt to
+unilaterally enforce pass/fail conformance of documents to any particular
+specifications; it is intended solely as a checker, not as a pass/fail
+certification mechanism.
+
+<p>
+To run your own copy of the Nu Markup Checker,
+<a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
+and read the following instructions on how you can use it both for:
+<ul>
+<li><a href="#web-based-checking">web-based checking of documents</a>
+<li><a href="#usage">batch-checking of documents from the command line and from other scripts/apps</a>
+</ul>
+<p>
+Alternatively, consider automating your HTML checking with a frontend such as:
+
+<ul>
+<li>
+<a href="https://github.com/jzaefferer/grunt-html">Grunt plugin for HTML validation</a>
+<li>
+<a href="https://github.com/svenkreiss/html5validator">HTML5 Validator Integration for Travis CI</a>
+(auto-check documents pushed to a github repo)
+<li>
+<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a>
+(auto-check HTML of JSFiddle/JSBin etc. links in github issue comments)
+</ul>
+
+<section id=issues>
+<h2>Reporting issues</h2>
+<p>
+If you find any bugs, want to request a new feature, or have a question
+about the Nu Markup Checker, please
+<a href="https://github.com/validator/validator/issues">report an issue</a>
+or send an e-mail message to
+<a href="mailto:www-validator@w3.org">www-validator@w3.org</a>.
+</section>
+
+<section id=extras>
+<h2>Extras</h2>
+<p>
+<a href="http://www.paciellogroup.com/blog/author/admin/">Steve Faulkner</a>
+has created a
+<a href="http://www.paciellogroup.com/blog/2012/02/wcag-2-0-parsing-error-bookmarklet/">WCAG 2.0 parsing error bookmarklet</a>
+that you can use in conjunction with the Nu Markup Checker. It filters the
+messages emitted by the checker to show only those messages that are
+relevant to checking the
+<a href="http://www.w3.org/TR/WCAG20/#ensure-compat-parses">guidelines in section 4.1.1: Parsing</a>
+of the
+<a href="http://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines (WCAG) 2.0 specification</a>.
+</section>

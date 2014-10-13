@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?SaxCompiler-omitRoot ?>
+<?SaxCompiler-package nu.validator.servlet?>
+<?SaxCompiler-class FormEmitter?>
+<?SaxCompiler-args nu.validator.servlet.VerifierServletTransaction t?>
+<form xmlns="http://www.w3.org/1999/xhtml"
+	><fieldset
+		><legend>Checker Input</legend
+		><p class="checkboxes"
+			><label title="Display the markup source of the input document." for='showsource'
+			><?SaxCompiler-code t.emitShowSourceField();
+			?>Show source</label
+			><label title="Display an outline of the input document." for='showoutline'
+			><?SaxCompiler-code t.emitShowOutlineField();
+			?>Show outline</label
+			><label title="Display a report about the textual alternatives for images." for='showimagereport'
+			><?SaxCompiler-code t.emitShowImageReportField();
+			?>Show image report</label
+		></p
+		><div id="inputregion"
+			><label id="inputlabel" for="doc">Document URL:</label
+			><?SaxCompiler-code t.emitDocField();
+		?></div
+		><p
+			><input value="Check" type="submit" id="submit"></input
+		></p
+	></fieldset
+></form
+>
