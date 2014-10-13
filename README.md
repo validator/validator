@@ -21,7 +21,7 @@ released as two separate packages:
 
    [6]: http://validator.github.io/validator/#usage
    [7]: http://validator.github.io/validator/#standalone
-   [8]: http://validator.github.io/valdiator/#servlet
+   [8]: http://validator.github.io/validator/#servlet
 
 To use the Nu Markup Checker on your own, [get the latest release][9] and see
 the **Usage** and **Web-based checking** sections below— or alternatively,
