@@ -1,5 +1,9 @@
+.classpath
+.project
+.settings/
 classes/
 dependencies/
+eclipse-classes/
 dist/
 jars/
 local-entities/
