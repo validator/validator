@@ -56,6 +56,7 @@ behavior of the script, as well as build-target names you can call separately; e
 If you’d like to contribute a bug fix or feature enhancement but aren’t sure where in
 the code to get started, here’s a brief annotated overview of the repository contents:
 
+* `build` - scripts for building, testing, and running the checker
 * `htmlparser` - (submodule) HTML parser
 * `jing-trang` - (submodule) RelaxNG engine
 * `research-src` - (unmaintained) experiments
