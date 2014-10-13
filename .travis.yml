@@ -7,3 +7,4 @@ script:
   - echo "test" | python ./build/build.py jar
   - python ./build/build.py test
   - java -jar ./build/vnu/vnu.jar ./build/vnu/index.html
+  - java -jar ./build/vnu/vnu.jar ./site/nu-about.html
