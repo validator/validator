@@ -521,3 +521,51 @@ possible values: "yes" or "no"
 
   </section>
 </div>
+<section id="build-instructions">
+<h2>Build instructions</h2>
+<p>
+Follow the steps below to build, test, and run the checker such that you can open
+<code>http://localhost:8888/</code> in a Web browser to use the checker Web UI.
+
+<div class=set>
+<ol>
+<li>Make sure you have git, python, and JDK 5 or later installed.
+
+<li>Set the <code>JAVA_HOME</code> environment variable:
+<ul>
+<li><code>export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64</code> (Ubuntu)
+<li><code>export JAVA_HOME=$(/usr/libexec/java_home)</code> (Mac OS X)
+</ul>
+
+<li>Create a working directory:
+<pre>git clone https://github.com/validator/validator.git</pre>
+
+<li>Change into your working directory:
+<pre>cd validator</pre>
+
+<li>Start the build script:
+<pre>python ./build/build.py all; python ./build/build.py all</pre>
+
+<p class=note><b>Important:</b>
+   Yes, you must run the script twice the first time you build— to work
+   around known issues that cause it to fail to complete when run from scratch in a
+   fresh working directory. For subsequent builds you only have to run it once. And note
+   that the first time you run it, it will need time to download ~300MB of dependencies.
+</li>
+</ol>
+
+<p>
+The steps above will build, test, and run the checker such that you can open
+<code>http://localhost:8888/</code> in a Web browser to use the checker Web UI.
+
+<p>
+Use <code>python ./build/build.py --help</code> to see command-line options for controlling the
+behavior of the script, as well as build-target names you can call separately; e.g.:
+
+<ul>
+<li><code>python ./build/build.py build</code> (to build only)
+<li><code>python ./build/build.py build test</code> (to build and test)
+<li><code>python ./build/build.py run</code> (to run only)
+</ul>
+</section>
+</div>
