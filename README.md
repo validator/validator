@@ -10,7 +10,7 @@ released as two separate packages:
    [2]: http://validator.w3.org/nu/
    [3]: http://validator.w3.org
    [4]: https://github.com/validator/validator
-   [5]: http://goo.gl/Zch7OD
+   [5]: http://validator.github.io/validator/#build-instructions
 
   * `vnu.jar` is a portable standalone version for [batch-checking documents
   from the command line][6] and from other scripts/apps, or for [deploying the
