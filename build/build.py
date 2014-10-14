@@ -1109,6 +1109,10 @@ else:
       usePromiscuousSsl = 1
     elif arg == '--promiscuous-ssl=off':
       usePromiscuousSsl = 0
+    elif arg == '--no-self-update':
+      pass
+    elif arg == '--local':
+      pass
     elif arg.startswith("--connection-timeout="):
       connectionTimeoutSeconds = int(arg[21:])
     elif arg.startswith("--socket-timeout="):
@@ -1124,6 +1128,8 @@ else:
     elif arg == 'dldeps':
       downloadDependencies()
       downloadLocalEntities()
+    elif arg == 'checkout':
+      pass
     elif arg == 'build':
       buildAll()
     elif arg == 'jar':
