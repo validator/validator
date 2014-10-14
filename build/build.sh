@@ -2,7 +2,7 @@
 if [ "$1" != "" ]; then
   args=$@;
 else
-  args="build dist";
+  args="run";
 fi
 ./build/build.py \
   --connection-timeout=15 \

@@ -3,8 +3,6 @@
 .settings/
 classes/
 dependencies/
-eclipse-classes/
-dist/
 jars/
 local-entities/
 src/nu/validator/localentities/files/
