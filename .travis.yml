@@ -2,7 +2,7 @@ language: java
 
 script:
   - python ./build/build.py dldeps
-  - python ./build/build.py build; python ./build/build.py build
+  - python ./build/build.py build
   - python ./build/build.py check
   - echo "test" | python ./build/build.py jar
   - python ./build/build.py test
