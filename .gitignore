@@ -3,6 +3,7 @@
 .settings/
 classes/
 dependencies/
+dist/
 jars/
 local-entities/
 src/nu/validator/localentities/files/
