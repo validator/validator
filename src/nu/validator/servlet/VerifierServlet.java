@@ -100,7 +100,6 @@ public class VerifierServlet extends HttpServlet {
             100);
         PrudentHttpEntityResolver.setUserAgent(System.getProperty("nu.validator.servlet.user-agent","Validator.nu/LV"));
         // force some class loading
-        new VerifierServletTransaction(null, null);
         new MessageEmitterAdapter(null, false, null, 0, false, null);
     }
 
