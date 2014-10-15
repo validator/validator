@@ -21,8 +21,7 @@ http://localhost:8888/ in a Web browser to use the checker Web UI.
 
 2. Set the `JAVA_HOME` environment variable:
 
-        export JAVA_HOME=**/PATH/TO/JDK/ON/YOUR/SYSTEM**
-
+        export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@
 
    For example:
 
