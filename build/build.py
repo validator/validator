@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # Copyright (c) 2007 Henri Sivonen
 # Copyright (c) 2008-2014 Mozilla Foundation
