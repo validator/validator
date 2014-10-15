@@ -1031,6 +1031,8 @@ def printHelp():
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
   print "  checkjar -- Run tests with the build jar file"
+#  print "  script   -- Make run-validator.sh script for starting the system"
+  print "  script   -- Make run-validator.sh script for running the system"
 
 buildScript = sys.argv[0]
 argv = sys.argv[1:]
