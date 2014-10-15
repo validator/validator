@@ -10,7 +10,7 @@ released as two separate packages:
    [2]: http://validator.w3.org/nu/
    [3]: http://validator.w3.org
    [4]: https://github.com/validator/validator
-   [5]: http://validator.github.io/validator/#build-instructions
+   [5]: https://validator.github.io/validator/#build-instructions
 
   * `vnu.jar` is a portable standalone version for [batch-checking documents
   from the command line][6] and from other scripts/apps, or for [deploying the
@@ -19,9 +19,9 @@ released as two separate packages:
   * `vnu.war` is for [deploying the checker service through a servlet container
   such as Tomcat][8]
 
-   [6]: http://validator.github.io/validator/#usage
-   [7]: http://validator.github.io/validator/#standalone
-   [8]: http://validator.github.io/validator/#servlet
+   [6]: https://validator.github.io/validator/#usage
+   [7]: https://validator.github.io/validator/#standalone
+   [8]: https://validator.github.io/validator/#servlet
 
 To use the Nu Markup Checker on your own, [get the latest release][9] and see
 the **Usage** and **Web-based checking** sections below— or alternatively,
@@ -137,7 +137,7 @@ client][13]— can be run as an HTTP service, similar to [html5.validator.nu][14
 and [validator.w3.org/nu][15], for browser-based checking of HTML documents over
 the Web. To that end, the checker is released as two separate packages:
 
-   [13]: http://validator.github.io/validator/#usage
+   [13]: https://validator.github.io/validator/#usage
    [14]: http://html5.validator.nu/
    [15]: http://validator.w3.org/nu/
 
