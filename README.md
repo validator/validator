@@ -343,6 +343,8 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
     export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@
 
+For example:
+
     * `export JAVA_HOME=/usr/lib/jvm/java-6-openjdk` (older Ubuntu)
 
     * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (newer Ubuntu)

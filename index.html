@@ -112,6 +112,10 @@ pre.aligned {
 a b {
   font-weight: normal;
 }
+li > ul {
+  padding-top: 6px;
+  padding-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -537,6 +541,7 @@ Follow the steps below to build, test, and run the checker such that you can ope
 
 <li>Set the <code>JAVA_HOME</code> environment variable:
 <pre>export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@</pre>
+For example:
 <ul>
 <li><code>export JAVA_HOME=/usr/lib/jvm/java-6-openjdk</code> (older Ubuntu)
 <li><code>export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64</code> (newer Ubuntu)
