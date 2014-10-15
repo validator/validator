@@ -341,7 +341,11 @@ open `http://localhost:8888/` in a Web browser to use the checker Web UI.
 
   2. Set the `JAVA_HOME` environment variable:
 
-    * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (Ubuntu)
+    export JAVA_HOME=@@/PATH/TO/JDK/ON/YOUR/SYSTEM@@
+
+    * `export JAVA_HOME=/usr/lib/jvm/java-6-openjdk` (older Ubuntu)
+
+    * `export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64` (newer Ubuntu)
 
     * `export JAVA_HOME=$(/usr/libexec/java_home)` (Mac OS X)
 
