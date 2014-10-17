@@ -1,3 +1,8 @@
+# dev
+  - dropped the error for meta[http-equiv=X-UA-Compatible]
+  - added version info to jar manifest file
+  - make nu.validator.client.TestRunner exit non-zero for test failures
+
 # 06 October 2014
   - brought reporting of bad IDs in `form` attr into compliance with spec
     (see https://github.com/validator/validator.github.io/issues/8
