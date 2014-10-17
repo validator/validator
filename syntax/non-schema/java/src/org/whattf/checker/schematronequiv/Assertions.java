@@ -1957,6 +1957,15 @@ public class Assertions extends Checker {
                         + " document-wide default language is obsolete."
                         + " Consider specifying the language on the root"
                         + " element instead.");
+                } else if (lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                        "x-ua-compatible", atts.getValue("", "http-equiv"))
+                        && !lowerCaseLiteralEqualsIgnoreAsciiCaseString(
+                                "ie=edge", atts.getValue("", "content"))) {
+                    err("A \u201Cmeta\u201D element with an"
+                            + " \u201Chttp-equiv\u201D attribute whose value is"
+                            + " \u201CX-UA-Compatible\u201D" + " must have a"
+                            + " \u201Ccontent\u201D attribute with the value"
+                            + " \u201CIE=edge\u201D.");
                 }
             }
 
