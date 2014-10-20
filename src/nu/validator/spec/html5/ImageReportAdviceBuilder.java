@@ -68,7 +68,7 @@ public class ImageReportAdviceBuilder implements ContentHandler {
         parser.setContentHandler(handler);
         InputSource in = new InputSource(
                 ImageReportAdviceBuilder.class.getClassLoader().getResourceAsStream(
-                        "nu/validator/localentities/files/wiki_whatwg_org_wiki_Validator_nu_alt_advice"));
+                        "nu/validator/localentities/files/vnu-alt-advice"));
         parser.parse(in);
         return handler.getFragments();
     }

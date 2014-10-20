@@ -70,8 +70,8 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
-syntaxDescs = os.path.join("local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")
-altAdvice = os.path.join("local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice")
+syntaxDescriptions = os.path.join("local-entities", "syntax-descriptions")
+vnuAltAdvice = os.path.join("local-entities", "vnu-alt-advice")
 metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
 linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
 aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
@@ -822,14 +822,10 @@ def spiderApacheDirectories(baseUrl, baseDir):
 
 def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  if os.path.isfile(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry")):
-    removeIfExists(os.path.join(buildRoot, "local-entities", "www.iana.org/assignments/language-subtag-registry"))
-  if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions")):
-    removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/MicrosyntaxDescriptions"))
-  if os.path.isfile(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice")):
-    removeIfExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org/wiki/Validator.nu_alt_advice"))
-  fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescs))
-  fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, altAdvice))
+  removeIfDirExists(os.path.join(buildRoot, "local-entities", "www.iana.org"))
+  removeIfDirExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org"))
+  fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescriptions))
+  fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, vnuAltAdvice))
   fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
@@ -854,6 +850,8 @@ def prepareLocalEntityJar():
   os.makedirs(filesDir)
   preparePropertiesFile()
   createCssParserJS(filesDir)
+  shutil.copyfile(os.path.join(buildRoot, syntaxDescriptions), os.path.join(filesDir, "syntax-descriptions"))
+  shutil.copyfile(os.path.join(buildRoot, vnuAltAdvice), os.path.join(filesDir, "vnu-alt-advice"))
   shutil.copyfile(os.path.join(buildRoot, metaNameExtensions), os.path.join(filesDir, "meta-name-extensions"))
   shutil.copyfile(os.path.join(buildRoot, linkRelExtensions), os.path.join(filesDir, "link-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, aRelExtensions), os.path.join(filesDir, "a-rel-extensions"))

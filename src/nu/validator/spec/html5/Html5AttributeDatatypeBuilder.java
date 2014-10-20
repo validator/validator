@@ -71,7 +71,7 @@ public class Html5AttributeDatatypeBuilder implements ContentHandler {
         parser.setContentHandler(handler);
         InputSource in = new InputSource(
                 Html5AttributeDatatypeBuilder.class.getClassLoader().getResourceAsStream(
-                        "nu/validator/localentities/files/wiki_whatwg_org_wiki_MicrosyntaxDescriptions"));
+                        "nu/validator/localentities/files/syntax-descriptions"));
         parser.parse(in);
         return handler.getAdvice();
     }
