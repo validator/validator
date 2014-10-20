@@ -70,6 +70,7 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
+subtagRegistry = os.path.join("local-entities", "subtag-registry")
 syntaxDescriptions = os.path.join("local-entities", "syntax-descriptions")
 vnuAltAdvice = os.path.join("local-entities", "vnu-alt-advice")
 metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
@@ -824,6 +825,7 @@ def downloadLocalEntities():
   ensureDirExists(os.path.join(buildRoot, "local-entities"))
   removeIfDirExists(os.path.join(buildRoot, "local-entities", "www.iana.org"))
   removeIfDirExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org"))
+  fetchUrlTo("https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry", os.path.join(buildRoot, subtagRegistry))
   fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescriptions))
   fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, vnuAltAdvice))
   fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
@@ -850,6 +852,7 @@ def prepareLocalEntityJar():
   os.makedirs(filesDir)
   preparePropertiesFile()
   createCssParserJS(filesDir)
+  shutil.copyfile(os.path.join(buildRoot, subtagRegistry), os.path.join(filesDir, "subtag-registry"))
   shutil.copyfile(os.path.join(buildRoot, syntaxDescriptions), os.path.join(filesDir, "syntax-descriptions"))
   shutil.copyfile(os.path.join(buildRoot, vnuAltAdvice), os.path.join(filesDir, "vnu-alt-advice"))
   shutil.copyfile(os.path.join(buildRoot, metaNameExtensions), os.path.join(filesDir, "meta-name-extensions"))
@@ -864,7 +867,6 @@ def prepareLocalEntityJar():
   if followW3Cspec:
     shutil.copyfile(os.path.join(buildRoot, "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
-  shutil.copyfile(os.path.join(buildRoot, "resources", "language-subtag-registry"), os.path.join(filesDir, "language-subtag-registry"))
   shutil.copyfile(os.path.join(buildRoot, "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
   f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
