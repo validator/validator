@@ -4,7 +4,7 @@ script:
   - python ./build/build.py dldeps
   - python ./build/build.py build; python ./build/build.py build
   - python ./build/build.py check
-  - echo "test" | python ./build/build.py jar
   - python ./build/build.py test
+  - echo "test" | python ./build/build.py jar
   - java -jar ./build/vnu/vnu.jar ./build/vnu/index.html
   - java -jar ./build/vnu/vnu.jar ./site/nu-about.html
