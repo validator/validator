@@ -1,4 +1,5 @@
 # dev
+  - added initial (liberal) support for ARIA in SVG
   - dropped the error for meta[http-equiv=X-UA-Compatible]
   - added version info to jar manifest file
   - make nu.validator.client.TestRunner exit non-zero for test failures
