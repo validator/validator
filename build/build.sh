@@ -7,6 +7,7 @@ fi
 ./build/build.py \
   --connection-timeout=15 \
   --socket-timeout=15 \
+  --promiscuous-ssl=on \
   --name="Ready to check" \
   --results-title="Showing results" \
   --page-template="xml-src/NuPageEmitter.xml" \
