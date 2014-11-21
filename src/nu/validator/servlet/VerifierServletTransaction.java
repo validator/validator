@@ -278,9 +278,9 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     private static Schema[] preloadedSchemas;
 
     private final static String ABOUT_PAGE = System.getProperty(
-            "nu.validator.servlet.about-page", "http://about.validator.nu/");
+            "nu.validator.servlet.about-page", "https://about.validator.nu/");
 
-    private final static String HTML5_FACET = "http://" + VerifierServlet.HTML5_HOST + VerifierServlet.HTML5_PATH;
+    private final static String HTML5_FACET = (VerifierServlet.HTML5_HOST.isEmpty() ? "" : ("//" + VerifierServlet.HTML5_HOST)) + VerifierServlet.HTML5_PATH;
 
     private final static String STYLE_SHEET = System.getProperty(
             "nu.validator.servlet.style-sheet",

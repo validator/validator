@@ -51,7 +51,7 @@ public class Html5ConformanceCheckerTransaction extends
         return true;
     }
     
-    private final static String GENERIC_FACET = "http://" + VerifierServlet.GENERIC_HOST + VerifierServlet.GENERIC_PATH;
+    private final static String GENERIC_FACET = (VerifierServlet.GENERIC_HOST.isEmpty() ? "" : ("//" + VerifierServlet.GENERIC_HOST)) + VerifierServlet.GENERIC_PATH;
 
     private static final char[] GENERIC_UI = "More options".toCharArray();    
     

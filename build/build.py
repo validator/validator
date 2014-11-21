@@ -54,7 +54,7 @@ log4jProps = 'resources/log4j.properties'
 heapSize = '128'
 html5specLink = 'https://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'https://www.whatwg.org/specs/web-apps/current-work/'
-aboutPage = 'http://about.validator.nu/'
+aboutPage = 'https://about.validator.nu/'
 userAgent = 'Validator.nu/LV'
 icon = None
 stylesheet = None
@@ -1009,7 +1009,7 @@ def printHelp():
   print "                                Sets the link URL of the HTML5 spec"
   print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the load URL of the HTML5 spec"
-  print "  --about=http://about.validator.nu/"
+  print "  --about=https://about.validator.nu/"
   print "                                Sets the URL for the about page"
   print "  --stylesheet=style.css"
   print "                                Sets the URL for the style sheet"
