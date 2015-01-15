@@ -274,11 +274,11 @@ public class PrudentHttpEntityResolver implements EntityResolver {
             }
 
             Header xuac = m.getResponseHeader("X-UA-Compatible");
-            if (xuac != null) {
+            if (xuac != null && !"ie=edge".equalsIgnoreCase(xuac.getValue().trim())) {
                 SAXParseException spe = new SAXParseException(
-                        "X-UA-Compatible is a browser-specific HTTP header.",
+                        "X-UA-Compatible HTTP header must have the value \u201CIE=edge\u201D.",
                         publicId, systemId, -1, -1);
-                errorHandler.warning(spe);
+                errorHandler.fatalError(spe);
             }
 
             final GetMethod meth = m;
