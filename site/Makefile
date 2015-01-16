@@ -22,4 +22,5 @@ all: ../README.md
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/ +(\[[0-9]+\]:)\s+/\n   $$1 /g' \
 	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/(\n\n\n)+/\n\n/g' \
 	    | $(PERL) $(PERLFLAGS) -pe 's|(# The Nu Markup Checker \(v.Nu\))|$$1 $(BUILDSTATUS)|g' \
+	    | $(PERL) $(PERLFLAGS) -pe 'undef $$/; s/\s+(\[1\]:)\s+/\n   $$1 /' \
 	    | $(EXPAND) $(EXPANDFLAGS) > $@
