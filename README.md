@@ -1,5 +1,7 @@
 # The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/q852Kn)](http://goo.gl/EWWeWZ)
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/validator/validator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The Nu Markup Checker (v.Nu) is a name for the backend of
 [html5.validator.nu][1], [validator.w3.org/nu][2], and the HTML5 facet of the
 legacy [W3C Validator][3]. Its [source code is available][4], as are
