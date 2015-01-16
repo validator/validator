@@ -1,7 +1,6 @@
 # The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/q852Kn)](http://goo.gl/EWWeWZ) [![Nu Markup Checker chat room][1]][2]
 
-   [1]: https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg
-
+   [1]: http://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
 
 The Nu Markup Checker (v.Nu) is a name for the backend of
