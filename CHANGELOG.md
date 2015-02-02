@@ -1,8 +1,12 @@
 # dev
+  - made SVG `<style>` not require the `type` attribute
   - added initial (liberal) support for ARIA in SVG
-  - dropped the error for meta[http-equiv=X-UA-Compatible]
+  - dropped error for `X-UA-Compatible: IE=Edge` HTTP header. Thx @zcorpan
+  - dropped error for `meta[http-equiv=X-UA-Compatible][content=IE=Edge]`
   - added version info to jar manifest file
-  - make nu.validator.client.TestRunner exit non-zero for test failures
+  - made nu.validator.client.TestRunner exit non-zero for test failures
+  - made build script explicitly request Python2. Thx @kurosawa-takeshi
+  - code cleanup to build script and some Java sources. Thx @cvrebert
 
 # 06 October 2014
   - brought reporting of bad IDs in `form` attr into compliance with spec
