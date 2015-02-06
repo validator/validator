@@ -1,4 +1,4 @@
-# dev
+# 07 February 2015
   - made SVG `<style>` not require the `type` attribute
   - added initial (liberal) support for ARIA in SVG
   - dropped error for `X-UA-Compatible: IE=Edge` HTTP header. Thx @zcorpan
