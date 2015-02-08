@@ -983,7 +983,8 @@ def runTests():
                                                 "html5-datatypes",
                                                 "validator"])
                               + jingJarPath())
-  runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args))
+  if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
+    sys.exit(1)
 
 def splitHostSpec(spec):
   index = spec.find('/')
