@@ -37,6 +37,7 @@ from sgmllib import SGMLParser
 import subprocess
 import time
 
+javaVersion = ''
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
@@ -239,8 +240,18 @@ def runJavac(sourceDir, classDir, classPath):
   else:
     f.write("\n".join(sourceFiles))
   f.close()
-  runCmd('"%s" -encoding UTF-8 -g -nowarn -classpath "%s" -sourcepath "%s" -d "%s" %s'\
-      % (javacCmd, classPath, sourceDir, classDir, "@temp-javac-list"))
+  args = [
+    '-g',
+    '-nowarn',
+    '-classpath "%s"' % classPath,
+    '-sourcepath "%s"' % sourceDir,
+    '-d "%s"' % classDir,
+    '-encoding UTF-8',
+  ]
+  if javaVersion != "":
+    args.append('-target ' + javaVersion)
+    args.append('-source ' + javaVersion)
+  runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list'))
   removeIfExists("temp-javac-list")
 
 def copyFiles(sourceDir, classDir):
@@ -1009,6 +1020,7 @@ def printHelp():
   print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
   print "  --heap=64                  -- Sets the Java heap size in MB"
   print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
+  print "  --javaversion=N.N          -- Sets the Java VM version to build for"
   print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
@@ -1071,6 +1083,8 @@ else:
       heapSize = arg[7:]
     elif arg.startswith("--stacksize="):
       stackSize = arg[12:]
+    elif arg.startswith("--javaversion="):
+      javaVersion = arg[14:]
     elif arg.startswith("--html5link="):
       html5specLink = arg[12:]
     elif arg.startswith("--html5load="):
