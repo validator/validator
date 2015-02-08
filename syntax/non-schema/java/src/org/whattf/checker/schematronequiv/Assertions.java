@@ -1290,6 +1290,8 @@ public class Assertions extends Checker {
         String forAttr = null;
         boolean href = false;
         boolean activeDescendantWithAriaOwns = false;
+        // see org.whattf.datatype.ImageCandidateStrings
+        System.setProperty("nu.validator.checker.imageCandidateString.hasWidth", "0");
 
         StackNode parent = peek();
         int ancestorMask = 0;
@@ -1439,6 +1441,16 @@ public class Assertions extends Checker {
                             ImageCandidateStringsWidthRequired.THE_INSTANCE.checkValid(srcsetVal);
                         } else {
                             ImageCandidateStrings.THE_INSTANCE.checkValid(srcsetVal);
+                        }
+                        // see org.whattf.datatype.ImageCandidateStrings
+                        if ("1".equals(System.getProperty("nu.validator.checker.imageCandidateString.hasWidth"))) {
+                            if (atts.getIndex("", "sizes") < 0) {
+                                err("When the \u201csrcset\u201d attribute has"
+                                        + " any image candidate string with a"
+                                        + " width descriptor, the"
+                                        + " \u201csizes\u201d attribute"
+                                        + " must also be present.");
+                            }
                         }
                     } catch (DatatypeException e) {
                         Class<?> datatypeClass = ImageCandidateStrings.class;

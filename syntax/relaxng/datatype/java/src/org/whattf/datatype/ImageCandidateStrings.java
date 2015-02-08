@@ -216,6 +216,8 @@ public class ImageCandidateStrings extends AbstractDatatype {
                 errLeadingPlusSign(num, extract);
             }
             if ('w' == last) {
+                // see org.whattf.checker.schematronequiv.Assertions
+                System.setProperty("nu.validator.checker.imageCandidateString.hasWidth", "1");
                 try {
                     int width = Integer.parseInt(num, 10);
                     if (width <= 0) {
@@ -372,7 +374,7 @@ public class ImageCandidateStrings extends AbstractDatatype {
     private String whenSizesIsPresent = " (When the " + code("sizes")
             + " attribute is present";
 
-    private String allMustSpecifyWidth = ", all image candidate strings must "
+    private String allMustSpecifyWidth = ", all image candidate strings must"
             + " specify a width.)";
 
     private CharSequence clip(CharSequence cs) {
