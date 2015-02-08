@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 
 # Copyright (c) 2007 Henri Sivonen
-# Copyright (c) 2008-2014 Mozilla Foundation
+# Copyright (c) 2008-2015 Mozilla Foundation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -52,6 +52,7 @@ controlPort = None
 useAjp = 0
 log4jProps = 'resources/log4j.properties'
 heapSize = '128'
+stackSize = ''
 html5specLink = 'https://www.whatwg.org/specs/web-apps/current-work/'
 html5specLoad = 'https://www.whatwg.org/specs/web-apps/current-work/'
 aboutPage = 'https://about.validator.nu/'
@@ -609,8 +610,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-XX:-DontCompileHugeMethods',
     '-Xms%sk' % heap,
     '-Xmx%sk' % heap,
-    '-Xss512k',
-    '-XX:ThreadStackSize=2048',
     '-classpath',
     classPath,
     '-Dnu.validator.servlet.read-local-log4j-properties=1',
@@ -639,6 +638,10 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
   ]
+
+  if stackSize != "":
+    args.append('-Xss' + stackSize + 'k')
+    args.append('-XX:ThreadStackSize=' + stackSize + 'k')
 
   if usePromiscuousSsl:
     args.append('-Dnu.validator.xml.promiscuous-ssl=true')
@@ -1003,7 +1006,8 @@ def printHelp():
   print "                                (necessary for daemonizing)"
   print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
-  print "  --heap=64                  -- Sets the heap size in MB"
+  print "  --heap=64                  -- Sets the Java heap size in MB"
+  print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
   print "  --name=Validator.nu        -- Sets the service name"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
@@ -1064,6 +1068,8 @@ else:
       log4jProps = arg[8:]
     elif arg.startswith("--heap="):
       heapSize = arg[7:]
+    elif arg.startswith("--stacksize="):
+      stackSize = arg[12:]
     elif arg.startswith("--html5link="):
       html5specLink = arg[12:]
     elif arg.startswith("--html5load="):
