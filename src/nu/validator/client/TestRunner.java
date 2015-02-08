@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -205,12 +206,15 @@ public class TestRunner implements ErrorHandler {
                 "?");
         String messageExpected = expectedMessages.get(testFilename).replaceAll(
                 "\\p{C}", "?");
-        // FIXME: The following replaceAlls are hacks to work around the
-        // fact that in Java 8, parts of error messages reported for bad
-        // values of the ins/del dateime attribute don't always get emitted
-        // in the same order than they do in Java 7 and earlier.
-        messageExpected = messageExpected.replaceAll("(Bad datetime with timezone: .+) (Bad date: .+)", "$2 $1");
-        messageReported = messageReported.replaceAll("(Bad datetime with timezone: .+) (Bad date: .+)", "$2 $1");
+        // FIXME: The string replacements below are a hack to "normalize"
+        // error messages reported for bad values of the ins/del datetime
+        // attribute, to work around the fact that in Java 8, parts of
+        // those error messages don't always get emitted in the same order
+        // that they do in Java 7 and earlier.
+        Pattern p;
+        p = Pattern.compile("(Bad datetime with timezone: .+) (Bad date: .+)");
+        messageExpected = p.matcher(messageExpected).replaceAll("$2 $1");
+        messageReported = p.matcher(messageReported).replaceAll("$2 $1");
         return messageReported.equals(messageExpected);
     }
 
