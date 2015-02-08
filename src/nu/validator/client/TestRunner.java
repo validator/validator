@@ -238,6 +238,7 @@ public class TestRunner implements ErrorHandler {
                     }
                 } else if (expectedMessages != null
                         && !messageMatches(testFilename)) {
+                    failed = true;
                     try {
                         err.println(String.format(
                                 "\"%s\": error: Expected \"%s\""
@@ -471,7 +472,6 @@ public class TestRunner implements ErrorHandler {
         err.write(e.getMessage());
         err.write("\n");
         err.flush();
-        System.exit(1);
     }
 
     public void warning(SAXParseException e) throws SAXException {
