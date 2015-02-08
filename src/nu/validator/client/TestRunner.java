@@ -183,6 +183,12 @@ public class TestRunner implements ErrorHandler {
                 "?");
         String messageExpected = expectedMessages.get(testFilename).replaceAll(
                 "\\p{C}", "?");
+        // FIXME: The following replaceAlls are hacks to work around the
+        // fact that in Java 8, parts of error messages reported for bad
+        // values of the ins/del dateime attribute don't always get emitted
+        // in the same order than they do in Java 7 and earlier.
+        messageExpected = messageExpected.replaceAll("(Bad datetime with timezone: .+) (Bad date: .+)", "$2 $1");
+        messageReported = messageReported.replaceAll("(Bad datetime with timezone: .+) (Bad date: .+)", "$2 $1");
         return messageReported.equals(messageExpected);
     }
 
