@@ -156,8 +156,30 @@ public class TestRunner implements ErrorHandler {
         }
     }
 
-    private void checkFiles(List<File> files) {
+    private boolean isIgnorable(File file) throws IOException {
+        String testPathname = file.getAbsolutePath().substring(
+                baseDir.length() + 1);
+        if (ignoreList != null) {
+            for (String substring : ignoreList) {
+                if (testPathname.contains(substring)) {
+                    if (verbose) {
+                        out.println(String.format(
+                                "\"%s\": warning: File ignored.",
+                                file.toURI().toURL().toString()));
+                        out.flush();
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void checkFiles(List<File> files) throws IOException {
         for (File file : files) {
+            if (isIgnorable(file)) {
+                continue;
+            }
             reset();
             emitMessages = true;
             try {
@@ -192,11 +214,13 @@ public class TestRunner implements ErrorHandler {
         return messageReported.equals(messageExpected);
     }
 
-    private void checkInvalidFiles(List<File> files) throws IOException,
-            SAXException {
+    private void checkInvalidFiles(List<File> files) throws IOException {
         String testFilename;
         expectingError = true;
         for (File file : files) {
+            if (isIgnorable(file)) {
+                continue;
+            }
             reset();
             try {
                 if (file.isDirectory()) {
@@ -210,19 +234,6 @@ public class TestRunner implements ErrorHandler {
             if (exception != null) {
                 testFilename = file.getAbsolutePath().substring(
                         baseDir.length() + 1);
-                if (ignoreList != null) {
-                    for (String substring : ignoreList) {
-                        if (testFilename.contains(substring)) {
-                            if (verbose) {
-                                out.println(String.format(
-                                        "\"%s\": warning: File ignored.",
-                                        file.toURI().toURL().toString()));
-                                out.flush();
-                            }
-                            return;
-                        }
-                    }
-                }
                 if (writeMessages) {
                     reportedMessages.put(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
@@ -267,10 +278,13 @@ public class TestRunner implements ErrorHandler {
         }
     }
 
-    private void checkHasWarningFiles(List<File> files) {
+    private void checkHasWarningFiles(List<File> files) throws IOException {
         String testFilename;
         expectingError = false;
         for (File file : files) {
+            if (isIgnorable(file)) {
+                continue;
+            }
             reset();
             try {
                 if (file.isDirectory()) {
