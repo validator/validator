@@ -101,21 +101,6 @@ public class TestRunner implements ErrorHandler {
     }
 
     private void checkHtmlFile(File file) throws IOException, SAXException {
-        String testPathname = file.getAbsolutePath().substring(
-                baseDir.length() + 1);
-        if (ignoreList != null) {
-            for (String substring : ignoreList) {
-                if (testPathname.contains(substring)) {
-                    if (verbose) {
-                        out.println(String.format(
-                                "\"%s\": warning: File ignored.",
-                                file.toURI().toURL().toString()));
-                        out.flush();
-                    }
-                    return;
-                }
-            }
-        }
         if (!file.exists()) {
             if (verbose) {
                 out.println(String.format("\"%s\": warning: File not found.",
@@ -201,7 +186,8 @@ public class TestRunner implements ErrorHandler {
         return messageReported.equals(messageExpected);
     }
 
-    private void checkInvalidFiles(List<File> files) throws SAXException {
+    private void checkInvalidFiles(List<File> files) throws IOException,
+            SAXException {
         String testFilename;
         expectingError = true;
         for (File file : files) {
@@ -218,6 +204,19 @@ public class TestRunner implements ErrorHandler {
             if (exception != null) {
                 testFilename = file.getAbsolutePath().substring(
                         baseDir.length() + 1);
+                if (ignoreList != null) {
+                    for (String substring : ignoreList) {
+                        if (testFilename.contains(substring)) {
+                            if (verbose) {
+                                out.println(String.format(
+                                        "\"%s\": warning: File ignored.",
+                                        file.toURI().toURL().toString()));
+                                out.flush();
+                            }
+                            return;
+                        }
+                    }
+                }
                 if (writeMessages) {
                     reportedMessages.put(testFilename, exception.getMessage());
                 } else if (expectedMessages != null
