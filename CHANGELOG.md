@@ -1,3 +1,8 @@
+# dev
+  - added check for "`sizes` attr required when `srcset` specifies width"
+  - added `--javaversion` option to build script (to build for older VMs)
+  - made refinements to TestRunner
+
 # 07 February 2015
   - made SVG `<style>` not require the `type` attribute
   - added initial (liberal) support for ARIA in SVG
