@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -525,8 +525,13 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         this.fatalErrors++;
         Exception wrapped = e.getException();
+        String systemId = null;
+        if (wrapped instanceof SystemIdIOException) {
+            SystemIdIOException siie = (SystemIdIOException) wrapped;
+            systemId = siie.getSystemId();
+        }
         if (wrapped instanceof IOException) {
-            message(MessageType.IO, wrapped, null, -1, -1, false);
+            message(MessageType.IO, wrapped, systemId, -1, -1, false);
         } else {
             messageFromSAXParseException(MessageType.FATAL, e, exact);
         }

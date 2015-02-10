@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -22,6 +22,8 @@
  */
 
 package nu.validator.xml;
+
+import nu.validator.io.SystemIdIOException;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -207,8 +209,8 @@ public class ContentTypeParser {
                             String msg = "Non-HTML Content-Type: \u201C" + type
                                     + "\u201D.";
                             SAXParseException spe = new SAXParseException(msg,
-                                    publicId, baseUri, -1, -1, new IOException(
-                                            msg));
+                                    publicId, baseUri, -1, -1,
+                                    new SystemIdIOException(baseUri, msg));
                             if (errorHandler != null) {
                                 errorHandler.fatalError(spe);
                             }
@@ -222,7 +224,8 @@ public class ContentTypeParser {
                         String msg = "Non-XML Content-Type: \u201C" + type
                                 + "\u201D.";
                         SAXParseException spe = new SAXParseException(msg,
-                                publicId, baseUri, -1, -1, new IOException(msg));
+                                publicId, baseUri, -1, -1,
+                                new SystemIdIOException(baseUri, msg));
                         if (errorHandler != null) {
                             errorHandler.fatalError(spe);
                         }
