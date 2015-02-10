@@ -4,6 +4,10 @@ By contributing to this project, you agree to license your contributions under
 [an MIT license](https://github.com/validator/validator/blob/master/LICENSE) and
 to waive any requirement to include an additional copyright notice.
 
+To record a grant of license for contributions to the project, please visit the
+[project CLAHub page](https://www.clahub.com/agreements/validator/validator)
+and complete the steps on the page.
+
 ## Questions or problems?
 
 Along with using the [project issue tracker][1] you can get help in real time on
