@@ -156,6 +156,17 @@ public class ContentTypeParser {
                         is.getPublicId(), is.getSystemId(), -1, -1));
             }
             return laxOk;
+        } else if (!typeOk && !laxContentType && errorHandler != null) {
+            String msg = "Non-RNC Content-Type: \u201C" + type + "\u201D."
+                    + " (application/relax-ng-compact-syntax"
+                    + " is the registered type.)";
+            SAXParseException spe = new SAXParseException(msg,
+                    is.getPublicId(), is.getSystemId(), -1, -1,
+                    new SystemIdIOException(is.getSystemId(), msg));
+            if (errorHandler != null) {
+                errorHandler.fatalError(spe);
+            }
+            throw spe;
         } else {
             return typeOk;
         }
