@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -75,6 +75,7 @@ public final class MultipartFormDataFilter implements Filter {
         EXTENSION_TO_TYPE.put("xsl", "application/xml");
         EXTENSION_TO_TYPE.put("xml", "application/xml");
         EXTENSION_TO_TYPE.put("dbk", "application/xml");
+        EXTENSION_TO_TYPE.put("csl", "application/xml");
     }
 
     private static String utf8ByteStreamToString(InputStream stream)
