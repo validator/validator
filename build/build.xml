@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2013-2014 Mozilla Foundation
+Copyright (c) 2013-2015 Mozilla Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -31,6 +31,8 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
+      <zipfileset src="../jing-trang/lib/isorelax.jar"/>
+      <zipfileset src="../jing-trang/lib/saxon9.jar"/>
       <zipfileset src="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
       <zipfileset src="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
       <zipfileset src="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
@@ -42,14 +44,12 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/icu4j-charset-53_1.jar"/>
       <zipfileset src="../dependencies/iri-0.5/lib/iri.jar"/>
       <zipfileset src="../dependencies/galimatias-0.1.0.jar"/>
-      <zipfileset src="../dependencies/isorelax.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
       <zipfileset src="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
       <zipfileset src="../dependencies/rhino1_7R1/js.jar"/>
-      <zipfileset src="../dependencies/saxon9.jar"/>
       <zipfileset src="../dependencies/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
       <zipfileset src="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
       <zipfileset src="../dependencies/xerces-2_9_1/xml-apis.jar"/>
@@ -148,6 +148,8 @@ DEALINGS IN THE SOFTWARE.
     </unzip>
     <copy todir="./vnu/war/lib">
       <fileset file="../jing-trang/build/jing.jar"/>
+      <fileset file="../jing-trang/lib/isorelax.jar"/>
+      <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
       <fileset file="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
       <fileset file="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
@@ -159,11 +161,9 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/icu4j-charset-53_1.jar"/>
       <fileset file="../dependencies/iri-0.5/lib/iri.jar"/>
       <fileset file="../dependencies/galimatias-0.1.0.jar"/>
-      <fileset file="../dependencies/isorelax.jar"/>
       <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
       <fileset file="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
       <fileset file="../dependencies/rhino1_7R1/js.jar"/>
-      <fileset file="../dependencies/saxon9.jar"/>
       <fileset file="../dependencies/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
       <fileset file="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
       <fileset file="../dependencies/xerces-2_9_1/xml-apis.jar"/>
