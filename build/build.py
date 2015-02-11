@@ -711,7 +711,7 @@ def createDistZip(distType):
   os.mkdir(vnuDir)
   print "Waiting for version number on stdin..."
   version = sys.stdin.read().rstrip()
-  print "Building vnu-%s.jar" % version
+  print "Building vnu-%s.%s" % (version, distType)
   f = open(os.path.join(vnuDir, "VERSION"), "w")
   f.write(version)
   f.close()
