@@ -188,7 +188,7 @@ command-line checking of HTML documents by invoking it like this:
 <p class=note><b>Note:</b> In these instructions, replace
 <var>"~/vnu.jar"</var> with the actual path to the file on your system.
 
-<p>To check one or more HTML documents from the command line:
+<p>To check one or more documents from the command line:
 <pre>
   java -jar ~/vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
 </pre>
@@ -204,7 +204,7 @@ providing the <code>-Xss</code> option to java:</p>
 
 </div>
 
-<p>To check all HTML documents in a particular directory:
+<p>To check all documents in a particular directory:
 <pre>
   java -jar ~/vnu.jar some-directory-name/
 </pre>
@@ -251,12 +251,18 @@ https://wiki.whatwg.org/wiki/Validator.nu_Common_Input_Parameters#out
 Shows detailed usage information.
 </pre>
 
+<h4 id="skip-non-html">--skip-non-html</h4>
+<pre>
+Skip documents that don’t have *.html, *.htm, *.xhtml, or *.xht extensions.
+
+default: [unset; all documents found are checked, regardless of extension]
+</pre>
+
 <h4 id="html">--html</h4>
 <pre>
-Forces all documents to be parsed by the HTML parser, as text/html
-(otherwise, *.xhtml documents are parsed using an XML parser).
+Force any *.xhtml or *.xht documents to be parsed using an XML parser.
 
-default: [unset; *.xhtml documents are parsed using an XML parser]
+default: [unset; XML parser is used for *.xhtml and *.xht documents]
 </pre>
 
 <h4 id="no-stream">--no-stream</h4>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Mozilla Foundation
+ * Copyright (c) 2013-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -70,6 +70,8 @@ public class SimpleCommandLineValidator {
 
     private static boolean noStream;
 
+    private static boolean skipNonHTML;
+
     private static boolean forceHTML;
 
     private static boolean asciiQuotes;
@@ -86,6 +88,7 @@ public class SimpleCommandLineValidator {
         out = System.err;
         System.setProperty("org.whattf.datatype.warn", "true");
         errorsOnly = false;
+        skipNonHTML= false;
         forceHTML = false;
         loadEntities = false;
         noStream = false;
@@ -128,6 +131,8 @@ public class SimpleCommandLineValidator {
                 } else if ("--help".equals(args[i])) {
                     help();
                     System.exit(0);
+                } else if ("--skip-non-html".equals(args[i])) {
+                    skipNonHTML = true;
                 } else if ("--html".equals(args[i])) {
                     forceHTML = true;
                 } else if ("--entities".equals(args[i])) {
@@ -230,13 +235,15 @@ public class SimpleCommandLineValidator {
 
     private static void recurseDirectory(File directory) throws SAXException,
             IOException {
-        File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            if (file.isDirectory()) {
-                recurseDirectory(file);
-            } else {
-                checkHtmlFile(file);
+        if (directory.canRead()) {
+            File[] files = directory.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                if (file.isDirectory()) {
+                    recurseDirectory(file);
+                } else {
+                    checkHtmlFile(file);
+                }
             }
         }
     }
@@ -302,7 +309,7 @@ public class SimpleCommandLineValidator {
 
     private static boolean isHtml(File file) {
         String name = file.getName();
-        return (name.endsWith(".html") || name.endsWith(".htm"));
+        return (name.endsWith(".html") || name.endsWith(".htm") || !skipNonHTML);
     }
 
     private static void emitFilename(String name) {

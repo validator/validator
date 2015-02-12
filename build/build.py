@@ -879,7 +879,7 @@ def prepareLocalEntityJar():
   if followW3Cspec:
     shutil.copyfile(os.path.join(buildRoot, "spec", "w3c-html5.html"), os.path.join(filesDir, "html5spec"))
   shutil.copyfile(os.path.join(buildRoot, "resources", "log4j.properties"), os.path.join(filesDir, "log4j.properties"))
-  shutil.copyfile(os.path.join(buildRoot, "src", "nu", "validator", "client", "cli-help"), os.path.join(filesDir, "cli-help"))
+  shutil.copyfile(os.path.join(buildRoot, "README.md"), os.path.join(filesDir, "cli-help"))
   f = open(os.path.join(buildRoot, "resources", "entity-map.txt"))
   o = open(os.path.join(filesDir, "entitymap"), 'wb')
   try:

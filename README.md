@@ -59,7 +59,7 @@ checking of HTML documents by invoking it like this:
 **Note:** In these instructions, replace _"~/vnu.jar"_ with the actual path to
 the file on your system.
 
-To check one or more HTML documents from the command line:
+To check one or more documents from the command line:
 
       java -jar ~/vnu.jar FILE.html FILE2.html FILE3.HTML FILE4.html...
 
@@ -68,7 +68,7 @@ try adjusting the thread stack size by providing the `-Xss` option to java:
 
       java -Xss512k -jar ~/vnu.jar FILE.html...
 
-To check all HTML documents in a particular directory:
+To check all documents in a particular directory:
 
       java -jar ~/vnu.jar some-directory-name/
 
@@ -110,12 +110,17 @@ executable provides the following options:
 
     Shows detailed usage information.
 
+#### --skip-non-html
+
+    Skip documents that don’t have *.html, *.htm, *.xhtml, or *.xht extensions.
+
+    default: [unset; all documents found are checked, regardless of extension]
+
 #### --html
 
-    Forces all documents to be parsed by the HTML parser, as text/html
-    (otherwise, *.xhtml documents are parsed using an XML parser).
+    Force any *.xhtml or *.xht documents to be parsed using an XML parser.
 
-    default: [unset; *.xhtml documents are parsed using an XML parser]
+    default: [unset; XML parser is used for *.xhtml and *.xht documents]
 
 #### --no-stream
 
