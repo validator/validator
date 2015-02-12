@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf-8>
-<title>The Nu Markup Checker (v.Nu)</title>
+<title>The Nu HTML Checker (v.Nu)</title>
 <link href="site/icon.png" rel="icon">
 <style>
 html {
@@ -120,12 +120,12 @@ li > ul {
 </style>
 </head>
 <body>
-  <h1>The Nu Markup Checker (v.Nu)
+  <h1>The Nu HTML Checker (v.Nu)
     <a href="https://gitter.im/validator/validator"
-    ><img src="http://goo.gl/1kHqwI" alt="Nu Markup Checker chat room"></a>
+    ><img src="http://goo.gl/1kHqwI" alt="Nu HTML Checker chat room"></a>
   </h1>
     <p>
-    The Nu Markup Checker (v.Nu) is a name for the backend of
+    The Nu HTML Checker (v.Nu) is a name for the backend of
     <a href="http://html5.validator.nu">html5.validator.nu</a>,
     <a href="http://validator.w3.org/nu/">validator.w3.org/nu</a>,
     and the HTML5 facet of the legacy
@@ -147,7 +147,7 @@ li > ul {
     </ul>
 
     <p>
-    To use the Nu Markup Checker on your own,
+    To use the Nu HTML Checker on your own,
     <a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
     and see the
     <a href="#usage"><b>Usage</b></a>
@@ -177,8 +177,8 @@ li > ul {
   <section id=usage>
   <h2>Usage</h2>
 
-<p>You can use the <code>vnu.jar</code> markup checker as an executable for
-command-line checking of HTML documents by invoking it like this:
+<p>You can use the <code>vnu.jar</code> HTML checker as an executable for
+command-line checking of documents by invoking it like this:
 <pre>
   java -jar ~/vnu.jar [--errors-only] [--no-stream]
        [--format gnu|xml|json|text] [--help] [--html]
@@ -291,7 +291,7 @@ Shows the <code>vnu.jar</code> version number.
 
 <h2 id="web-based-checking">Web-based checking with vnu.war or vnu.jar</h2>
 
-  <p>The Nu Markup Checker— along with being usable as
+  <p>The Nu HTML Checker— along with being usable as
   <a href="https://validator.github.io/validator/#usage">a standalone command-line client</a>—
   can be run as an HTTP service, similar to
   <a href="http://html5.validator.nu/">html5.validator.nu</a>
@@ -333,7 +333,7 @@ with the actual paths to those files on your system.
   <div class=set>
   <section id=standalone>
     <h3>Standalone web server</h3>
-    <p>To run the markup checker as a standalone service (using a built-in
+    <p>To run the checker as a standalone service (using a built-in
     Jetty server), open a new terminal window and invoke <code>vnu.jar</code>
     like this:
 
@@ -343,7 +343,7 @@ with the actual paths to those files on your system.
 
     <p>Then open
     <a href="http://localhost:8888">http://localhost:8888</a>
-    in a browser. (To have the markup checker listen on a different port,
+    in a browser. (To have the checker listen on a different port,
     replace <code class=arg>8888</code> with the port number.)
 
     <p>You’ll see a form similar to
@@ -364,7 +364,7 @@ providing the <code>-Xss</code> option to java:
   </section>
   <section id=servlet>   
     <h3>Deployment to servlet container</h3>
-    <p>To run the markup checker inside of an existing servlet container
+    <p>To run the checker inside of an existing servlet container
     such as Apache Tomcat you will need to deploy the <code>vnu.war</code>
     file to that server following its documentation.
     For example, on Apache Tomcat you could do this using
