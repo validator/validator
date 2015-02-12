@@ -1,13 +1,12 @@
-# The Nu Markup Checker (v.Nu) [![Build Status](http://goo.gl/q852Kn)](http://goo.gl/EWWeWZ) [![Nu Markup Checker chat room][1]][2]
+# The Nu HTML Checker (v.Nu) [![Nu HTML Checker chat room][1]][2]
 
    [1]: http://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
 
-The Nu Markup Checker (v.Nu) is a name for the backend of
-[html5.validator.nu][3], [validator.w3.org/nu][4], and the HTML5 facet of the
-legacy [W3C Validator][5]. Its [source code is available][6], as are
-[instructions on how to build, test, and run the code][7]. The checker is
-released as two separate packages:
+The Nu HTML Checker (v.Nu) is a name for the backend of [html5.validator.nu][3],
+[validator.w3.org/nu][4], and the HTML5 facet of the legacy [W3C Validator][5].
+Its [source code is available][6], as are [instructions on how to build, test,
+and run the code][7]. The checker is released as two separate packages:
 
    [3]: http://html5.validator.nu
    [4]: http://validator.w3.org/nu/
@@ -26,9 +25,9 @@ released as two separate packages:
    [9]: https://validator.github.io/validator/#standalone
    [10]: https://validator.github.io/validator/#servlet
 
-To use the Nu Markup Checker on your own, [get the latest release][11] and see
-the **Usage** and **Web-based checking** sections below— or alternatively,
-consider automating your HTML checking with a frontend such as:
+To use the Nu HTML Checker on your own, [get the latest release][11] and see the
+**Usage** and **Web-based checking** sections below— or alternatively, consider
+automating your HTML checking with a frontend such as:
 
    [11]: https://github.com/validator/validator/releases/latest
 
@@ -49,8 +48,8 @@ consider automating your HTML checking with a frontend such as:
 
 ## Usage
 
-You can use the `vnu.jar` markup checker as an executable for command-line
-checking of HTML documents by invoking it like this:
+You can use the `vnu.jar` HTML checker as an executable for command-line
+checking of documents by invoking it like this:
 
       java -jar ~/vnu.jar [--errors-only] [--no-stream]
            [--format gnu|xml|json|text] [--help] [--html] [--verbose]
@@ -143,7 +142,7 @@ executable provides the following options:
 
 ## Web-based checking with vnu.war or vnu.jar
 
-The Nu Markup Checker— along with being usable as [a standalone command-line
+The Nu HTML Checker— along with being usable as [a standalone command-line
 client][16]— can be run as an HTTP service, similar to [html5.validator.nu][17]
 and [validator.w3.org/nu][18], for browser-based checking of HTML documents over
 the Web. To that end, the checker is released as two separate packages:
@@ -173,13 +172,13 @@ those files on your system.
 
 ### Standalone web server
 
-To run the markup checker as a standalone service (using a built-in Jetty
-server), open a new terminal window and invoke `vnu.jar` like this:
+To run the checker as a standalone service (using a built-in Jetty server), open
+a new terminal window and invoke `vnu.jar` like this:
 
       java -cp ~/vnu.jar nu.validator.servlet.Main 8888
 
-Then open [http://localhost:8888][20] in a browser. (To have the markup checker
-listen on a different port, replace `8888` with the port number.)
+Then open [http://localhost:8888][20] in a browser. (To have the checker listen
+on a different port, replace `8888` with the port number.)
 
    [20]: http://localhost:8888
 
@@ -196,8 +195,8 @@ try adjusting the thread stack size by providing the `-Xss` option to java:
 
 ### Deployment to servlet container
 
-To run the markup checker inside of an existing servlet container such as Apache
-Tomcat you will need to deploy the `vnu.war` file to that server following its
+To run the checker inside of an existing servlet container such as Apache Tomcat
+you will need to deploy the `vnu.war` file to that server following its
 documentation. For example, on Apache Tomcat you could do this using the
 [Manager][22] application or simply by copying the file to the `webapps`
 directory (since that is the default `appBase` setting). Typically you would see
