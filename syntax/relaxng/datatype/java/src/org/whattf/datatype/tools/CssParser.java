@@ -41,6 +41,8 @@ public class CssParser {
 
     private static Function ruleParser;
 
+    private static Function componentValueParser;
+
     static {
         try {
             BufferedReader br = new BufferedReader(
@@ -55,6 +57,7 @@ public class CssParser {
             context.evaluateReader(scope, br, null, -1, null);
             tokenizer = (Function) scope.get("tokenize", scope);
             ruleParser = (Function) scope.get("parseARule", scope);
+            componentValueParser = (Function) scope.get("parseAComponentValue", scope);
         } catch (IOException e) {
         }
     }
@@ -80,6 +83,19 @@ public class CssParser {
             return (String) Context.jsToJava(ruleParser.call(context, scope, scope,
                     new Object[] { tokenizer.call(context, scope, scope,
                             new Object[] { cs }) }), String.class);
+        } catch (JavaScriptException e) {
+            throw new ParseException(e.details(), -1);
+        }
+    }
+
+    public String parseAComponentValue(CharSequence cs) throws ParseException {
+        try {
+            Context context = ContextFactory.getGlobal().enterContext();
+            context.setOptimizationLevel(0);
+            context.setLanguageVersion(Context.VERSION_1_6);
+            return (String) Context.jsToJava(componentValueParser.call(context,
+                    scope, scope, new Object[] { tokenizer.call(context, scope,
+                            scope, new Object[] { cs }) }), String.class);
         } catch (JavaScriptException e) {
             throw new ParseException(e.details(), -1);
         }
