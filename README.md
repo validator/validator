@@ -71,6 +71,11 @@ To check all documents in a particular directory:
 
       java -jar ~/vnu.jar some-directory-name/
 
+To check all documents in a particular directory, skipping any documents whose
+names don’t end with the extensions `.html`, `.htm`, `.xhtml`, or `.xht`:
+
+      java -jar ~/vnu.jar --skip-non-html some-directory-name/
+
 To check a Web document:
 
       java -jar ~/vnu.jar _URL_

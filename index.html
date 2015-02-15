@@ -209,6 +209,13 @@ providing the <code>-Xss</code> option to java:</p>
   java -jar ~/vnu.jar some-directory-name/
 </pre>
 
+<p>To check all documents in a particular directory, skipping any documents
+whose names don’t end with the extensions <code>.html</code>,
+<code>.htm</code>, <code>.xhtml</code>, or <code>.xht</code>:
+<pre>
+  java -jar ~/vnu.jar <span class="option-value">--skip-non-html</span> some-directory-name/
+</pre>
+
 <p>To check a Web document:
 <pre>
   java -jar ~/vnu.jar <var>URL</var>
