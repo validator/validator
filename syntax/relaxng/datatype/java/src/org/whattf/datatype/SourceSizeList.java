@@ -125,7 +125,8 @@ public class SourceSizeList extends AbstractDatatype {
                 cssParser.parseARule("@media " + unparsedSize.toString()
                         + " {}");
             } else {
-                cssParser.parseAComponentValue(unparsedSize.toString());
+                cssParser.parseARule(".foo { width: " + unparsedSize.toString()
+                        + " }");
             }
         } catch (ParseException e) {
             errCssParseError(e.getMessage(), unparsedSize, extract);
