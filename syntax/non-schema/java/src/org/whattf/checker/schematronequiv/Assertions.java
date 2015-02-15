@@ -1476,7 +1476,8 @@ public class Assertions extends Checker {
                         } catch (ClassNotFoundException ce) {
                         }
                     }
-                    if (!siblingSources.isEmpty()) {
+                    if ("picture".equals(parentName)
+                            && !siblingSources.isEmpty()) {
                         for (Map.Entry<Locator, Map<String, String>> entry : siblingSources.entrySet()) {
                             Locator locator = entry.getKey();
                             Map<String, String> sourceAtts = entry.getValue();
@@ -1508,7 +1509,7 @@ public class Assertions extends Checker {
                 }
             }
 
-            if ("source".equals(localName)) {
+            if ("picture".equals(parentName) && "source".equals(localName)) {
                 Map<String, String> sourceAtts = new HashMap<String, String>();
                 for (int i = 0; i < atts.getLength(); i++) {
                     sourceAtts.put(atts.getLocalName(i), atts.getValue(i));
