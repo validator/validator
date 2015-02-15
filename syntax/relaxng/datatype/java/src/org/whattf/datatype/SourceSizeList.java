@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Mozilla Foundation
+ * Copyright (c) 2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -121,7 +121,13 @@ public class SourceSizeList extends AbstractDatatype {
         }
         try {
             cssParser.tokenize(unparsedSize.toString());
-            cssParser.parse("@media " + unparsedSize.toString() + " {}");
+            if ('(' == unparsedSize.codePointAt(0)) {
+                cssParser.parseARule("@media " + unparsedSize.toString()
+                        + " {}");
+            } else {
+                cssParser.parseARule("@media all { " + unparsedSize.toString()
+                        + " }");
+            }
         } catch (ParseException e) {
             errCssParseError(e.getMessage(), unparsedSize, extract);
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Mozilla Foundation
+ * Copyright (c) 2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -39,14 +39,14 @@ public class CssParser {
 
     private static Function tokenizer;
 
-    private static Function parser;
+    private static Function ruleParser;
 
     static {
         try {
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(
                             CssParser.class.getClassLoader().getResourceAsStream(
-                                    "nu/validator/localentities/files/css-parser-js")));
+                                    "nu/validator/localentities/files/parse-css-js")));
             br.mark(1);
             Context context = ContextFactory.getGlobal().enterContext();
             context.setOptimizationLevel(0);
@@ -54,7 +54,7 @@ public class CssParser {
             scope = context.initStandardObjects();
             context.evaluateReader(scope, br, null, -1, null);
             tokenizer = (Function) scope.get("tokenize", scope);
-            parser = (Function) scope.get("parse", scope);
+            ruleParser = (Function) scope.get("parseARule", scope);
         } catch (IOException e) {
         }
     }
@@ -72,12 +72,12 @@ public class CssParser {
         }
     }
 
-    public String parse(CharSequence cs) throws ParseException {
+    public String parseARule(CharSequence cs) throws ParseException {
         try {
             Context context = ContextFactory.getGlobal().enterContext();
             context.setOptimizationLevel(0);
             context.setLanguageVersion(Context.VERSION_1_6);
-            return (String) Context.jsToJava(parser.call(context, scope, scope,
+            return (String) Context.jsToJava(ruleParser.call(context, scope, scope,
                     new Object[] { tokenizer.call(context, scope, scope,
                             new Object[] { cs }) }), String.class);
         } catch (JavaScriptException e) {
