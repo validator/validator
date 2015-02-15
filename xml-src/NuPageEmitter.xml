@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang='en'
 	><head
 		><?SaxCompiler-code t.emitIcon(); ?><?SaxCompiler-code t.emitStyle(); ?><title
-		><?SaxCompiler-code t.emitTitle(false); ?> - Nu Markup Checker</title
+		><?SaxCompiler-code t.emitTitle(false); ?> - Nu HTML Checker</title
 	></head
 	><body
 		><div id="banner"
 			><h1 id="title"
-				><a href="."><span>Nu Markup Checker</span></a></h1
+				><a href="."><span>Nu HTML Checker</span></a></h1
 		></div
 		><p class="disclaimer">This is an experimental checker and its behavior remains subject to change</p
 		><h2 id="top"><?SaxCompiler-code t.emitTitle(true); ?></h2><?SaxCompiler-code t.emitForm(); t.emitScript(); ?><div id="results"
