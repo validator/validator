@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -134,6 +134,12 @@ public class MediaQuery extends AbstractDatatype {
         FEATURES_TO_VALUE_TYPES.put("grid", ValueType.ONEORZERO);
     }
 
+    private static final Map<String, ValueType> NONSTANDARD_FEATURES_TO_VALUE_TYPES = new HashMap<String, ValueType>();
+
+    static {
+        NONSTANDARD_FEATURES_TO_VALUE_TYPES.put("-webkit-min-device-pixel-ratio", ValueType.INTEGER);
+    }
+
     private static final String[] visualFeatures = { "aspect-ratio", "color",
             "color-index", "device-aspect-ratio", "max-aspect-ratio",
             "max-color", "max-color-index", "max-device-aspect-ratio",
@@ -173,6 +179,7 @@ public class MediaQuery extends AbstractDatatype {
 
     private List<String> checkQuery(CharSequence query, int offset,
             List<String> warnings) throws DatatypeException {
+        int unmatchedParen = -1;
         int unmatchedCalcParen = -1;
         boolean containsAural = false;
         boolean zero = true;
@@ -342,7 +349,10 @@ public class MediaQuery extends AbstractDatatype {
                 case OPEN_PAREN_SEEN:
                     if (isWhitespace(c)) {
                         continue;
-                    } else if ('a' <= c && 'z' >= c) {
+                    } else if ('(' == c) {
+                        unmatchedParen++;
+                        continue;
+                    } else if ('-' == c || ('a' <= c && 'z' >= c)) {
                         sb.append(c);
                         state = State.IN_MEDIA_FEATURE;
                         continue;
@@ -371,7 +381,8 @@ public class MediaQuery extends AbstractDatatype {
                             checkApplicability(offset + i, kw, type, warnings);
                         }
                         feature = kw;
-                        valueExpectation = valueExpectationFor(kw);
+                        valueExpectation = valueExpectationFor(kw) != null ? valueExpectationFor(kw)
+                                : nonstandardValueExpectationFor(kw);
                         if (valueExpectation != null) {
                             if (c == ':') {
                                 state = State.WS_BEFORE_VALUE;
@@ -811,6 +822,13 @@ public class MediaQuery extends AbstractDatatype {
                     if (isWhitespace(c)) {
                         state = State.WS_BEFORE_AND;
                         continue;
+                    } else if (')' == c) {
+                        if (unmatchedParen == 1) {
+                            unmatchedParen = -1;
+                        } else {
+                            unmatchedParen--;
+                        }
+                        continue;
                     } else {
                         throw newDatatypeException(offset + i,
                                 "Expected whitespace but saw \u201C" + c
@@ -855,12 +873,20 @@ public class MediaQuery extends AbstractDatatype {
         }
     }
 
+    private boolean isNonstandardMediaFeature(String feature) {
+        return NONSTANDARD_FEATURES_TO_VALUE_TYPES.containsKey(feature);
+    }
+
     private boolean isMediaFeature(String feature) {
         return FEATURES_TO_VALUE_TYPES.containsKey(feature);
     }
 
     private ValueType valueExpectationFor(String feature) {
         return FEATURES_TO_VALUE_TYPES.get(feature);
+    }
+
+    private ValueType nonstandardValueExpectationFor(String feature) {
+        return NONSTANDARD_FEATURES_TO_VALUE_TYPES.get(feature);
     }
 
     private boolean isMediaType(String type) {
