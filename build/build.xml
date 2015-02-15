@@ -49,7 +49,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
       <zipfileset src="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
-      <zipfileset src="../dependencies/rhino1_7R1/js.jar"/>
+      <zipfileset src="../dependencies/rhino1_7R5/js.jar"/>
       <zipfileset src="../dependencies/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
       <zipfileset src="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
       <zipfileset src="../dependencies/xerces-2_9_1/xml-apis.jar"/>
@@ -163,7 +163,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/galimatias-0.1.0.jar"/>
       <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
       <fileset file="../dependencies/mozilla/intl/chardet/java/dist/lib/chardet.jar"/>
-      <fileset file="../dependencies/rhino1_7R1/js.jar"/>
+      <fileset file="../dependencies/rhino1_7R5/js.jar"/>
       <fileset file="../dependencies/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
       <fileset file="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
       <fileset file="../dependencies/xerces-2_9_1/xml-apis.jar"/>
