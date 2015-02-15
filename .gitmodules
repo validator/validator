@@ -1,9 +1,9 @@
+[submodule "htmlparser"]
+	path = htmlparser
+	url = https://github.com/validator/htmlparser.git
 [submodule "jing-trang"]
 	path = jing-trang
 	url = https://github.com/validator/jing-trang.git
 [submodule "tests"]
 	path = tests
 	url = https://github.com/validator/tests.git
-[submodule "htmlparser"]
-	path = htmlparser
-	url = git@github.com:validator/htmlparser.git
