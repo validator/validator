@@ -1,7 +1,21 @@
-# dev
-  - added check for "`sizes` attr required when `srcset` specifies width"
+# 16 Feburary 2015
+  - added new "`sizes` attr required when `srcset` specifies width" check
+  - added `--skip-non-html` option to CLI; http://goo.gl/sKjRD5
+    This change alters the default CLI handling of non-HTML files.
+    Before the CLI by default skipped any documents without .html, .htm,
+    .xhtml, or .xht extensions; instead now by default all documents that
+    are found are checked, regardless of extension. The `--skip-non-html`
+    option provides the old default behavior: it causes the checker to skip
+    any files without .html, .htm, .xhtml, or .xht extensions.
   - added `--javaversion` option to build script (to build for older VMs)
-  - made refinements to TestRunner
+  - added `--stacksize` option to build script & removed harcoded stack size
+  - fixed several bugs in `sizes` checking
+  - fixed position reporting of bad character refs in `title` & `textarea`
+  - fixed ARIA checking to allow li[role=separator] and time[role=timer]
+  - refined content-type check to treat `.csl` uploads as application/xml
+  - refined "unexpected content-type" error msg to include URL of document
+  - refined a few things in TestRunner
+  - updated Rhino dependency to rhino1_7R5
 
 # 07 February 2015
   - made SVG `<style>` not require the `type` attribute
