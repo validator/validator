@@ -2,10 +2,10 @@
   - added new "`sizes` attr required when `srcset` specifies width" check
   - added `--skip-non-html` option to CLI; http://goo.gl/sKjRD5
     This change alters the default CLI handling of non-HTML files.
-    Before the CLI by default skipped any documents without .html, .htm,
-    .xhtml, or .xht extensions; instead now by default all documents that
-    are found are checked, regardless of extension. The `--skip-non-html`
-    option provides the old default behavior: it causes the checker to skip
+    Before the CLI by default skipped any files without .html, .htm,
+    .xhtml, or .xht extensions; instead now by default all files
+    found are checked, regardless of extension. The `--skip-non-html`
+    option provides the old default behavior: it make the checker skip
     any files without .html, .htm, .xhtml, or .xht extensions.
   - added `--javaversion` option to build script (to build for older VMs)
   - added `--stacksize` option to build script & removed harcoded stack size
