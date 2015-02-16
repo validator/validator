@@ -1,6 +1,6 @@
 # The Nu HTML Checker (v.Nu) [![Nu HTML Checker chat room][1]][2]
 
-   [1]: http://goo.gl/1kHqwI
+   [1]: https://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
 
 The Nu HTML Checker (v.Nu) is a name for the backend of [html5.validator.nu][3],
@@ -8,8 +8,8 @@ The Nu HTML Checker (v.Nu) is a name for the backend of [html5.validator.nu][3],
 Its [source code is available][6], as are [instructions on how to build, test,
 and run the code][7]. The checker is released as two separate packages:
 
-   [3]: http://html5.validator.nu
-   [4]: http://validator.w3.org/nu/
+   [3]: https://html5.validator.nu
+   [4]: https://validator.w3.org/nu/
    [5]: http://validator.w3.org
    [6]: https://github.com/validator/validator
    [7]: https://validator.github.io/validator/#build-instructions
@@ -26,7 +26,7 @@ and run the code][7]. The checker is released as two separate packages:
    [10]: https://validator.github.io/validator/#servlet
 
 To use the Nu HTML Checker on your own, [get the latest release][11] and see the
-**Usage** and **Web-based checking** sections below— or alternatively, consider
+**Usage** and **Web-based checking** sections belowーor alternatively, consider
 automating your HTML checking with a frontend such as:
 
    [11]: https://github.com/validator/validator/releases/latest
@@ -122,7 +122,7 @@ executable provides the following options:
 
 #### --html
 
-    Force any *.xhtml or *.xht documents to be parsed using an XML parser.
+    Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
     default: [unset; XML parser is used for *.xhtml and *.xht documents]
 
@@ -147,13 +147,13 @@ executable provides the following options:
 
 ## Web-based checking with vnu.war or vnu.jar
 
-The Nu HTML Checker— along with being usable as [a standalone command-line
-client][16]— can be run as an HTTP service, similar to [html5.validator.nu][17]
+The Nu HTML Checkerーalong with being usable as [a standalone command-line
+client][16]ーcan be run as an HTTP service, similar to [html5.validator.nu][17]
 and [validator.w3.org/nu][18], for browser-based checking of HTML documents over
 the Web. To that end, the checker is released as two separate packages:
 
    [16]: https://validator.github.io/validator/#usage
-   [17]: http://html5.validator.nu/
+   [17]: https://html5.validator.nu/
    [18]: http://validator.w3.org/nu/
 
   * `vnu.jar` for deploying the checker as a simple self-contained service
@@ -162,8 +162,8 @@ the Web. To that end, the checker is released as two separate packages:
 Both deployments expose a REST API that enables checking of HTML documents from
 other clients, not just web browsers. And the `vnu.jar` package also includes a
 simple HTTP client that enables you to either send documents to a
-locally-running instance of the checker HTTP service— for fast command-line
-checking— or to any remote instance of the checker HTTP service running anywhere
+locally-running instance of the checker HTTP serviceーfor fast command-line
+checkingーor to any remote instance of the checker HTTP service running anywhere
 on the Web.
 
 The [latest releases of the vnu.jar and vnu.war packages][19] are available from
@@ -237,8 +237,8 @@ could comment out that filter like this:
 ### HTTP client (for fast command-line checking)
 
 You can also use `vnu.jar` from the command line to either send documents to a
-locally-running instance of the checker HTTP service— for fast command-line
-checking— or to a remote instance anywhere on the Web.
+locally-running instance of the checker HTTP serviceーfor fast command-line
+checkingーor to a remote instance anywhere on the Web.
 
 To check documents locally, do this:
 
@@ -378,7 +378,7 @@ For example:
 
     python ./build/build.py all; python ./build/build.py all
 
-**Important:** Yes, you must run the script twice the first time you build— to
+**Important:** Yes, you must run the script twice the first time you buildーto
 work around known issues that cause it to fail to complete when run from scratch
 in a fresh working directory. For subsequent builds you only have to run it
 once. And note that the first time you run it, it will need time to download

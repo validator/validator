@@ -153,7 +153,7 @@ li > ul {
     <a href="#usage"><b>Usage</b></a>
     and
     <a href="#web-based-checking"><b>Web-based checking</b></a>
-    sections below— or alternatively, consider automating your HTML
+    sections belowーor alternatively, consider automating your HTML
     checking with a frontend such as:
 <ul>
 <li>
@@ -267,7 +267,7 @@ default: [unset; all documents found are checked, regardless of extension]
 
 <h4 id="html">--html</h4>
 <pre>
-Force any *.xhtml or *.xht documents to be parsed using an XML parser.
+Forces any *.xhtml or *.xht documents to be parsed using the HTML parser.
 
 default: [unset; XML parser is used for *.xhtml and *.xht documents]
 </pre>
@@ -298,9 +298,9 @@ Shows the <code>vnu.jar</code> version number.
 
 <h2 id="web-based-checking">Web-based checking with vnu.war or vnu.jar</h2>
 
-  <p>The Nu HTML Checker— along with being usable as
-  <a href="https://validator.github.io/validator/#usage">a standalone command-line client</a>—
-  can be run as an HTTP service, similar to
+  <p>The Nu HTML Checkerーalong with being usable as
+  <a href="https://validator.github.io/validator/#usage">a standalone command-line client</a>ーcan
+  be run as an HTTP service, similar to
   <a href="https://html5.validator.nu/">html5.validator.nu</a>
   and
   <a href="http://validator.w3.org/nu/">validator.w3.org/nu</a>,
@@ -319,7 +319,7 @@ Shows the <code>vnu.jar</code> version number.
   <code>vnu.jar</code> package also includes
   <a href="#http-client">a simple HTTP client</a> that enables you to
   either send documents to a locally-running instance of the checker HTTP
-  service— for fast command-line checking— or to any remote instance of the
+  serviceーfor fast command-line checkingーor to any remote instance of the
   checker HTTP service running anywhere on the Web.
   <p>
   The
@@ -420,7 +420,7 @@ INFO: Deploying web application archive /var/lib/tomcat7/webapps/vnu.war
 
     <p>You can also use <code>vnu.jar</code> from the command line to
     either send documents to a locally-running instance of the checker HTTP
-    service— for fast command-line checking— or to a remote instance
+    serviceーfor fast command-line checkingーor to a remote instance
     anywhere on the Web.
     <p>
     To check documents locally, do this:
@@ -576,7 +576,7 @@ For example:
 <pre>python ./build/build.py all; python ./build/build.py all</pre>
 
 <p class=note><b>Important:</b>
-   Yes, you must run the script twice the first time you build— to work
+   Yes, you must run the script twice the first time you buildーto work
    around known issues that cause it to fail to complete when run from scratch in a
    fresh working directory. For subsequent builds you only have to run it once. And note
    that the first time you run it, it will need time to download ~300MB of dependencies.
