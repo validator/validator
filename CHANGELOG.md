@@ -1,4 +1,4 @@
-# 16 Feburary 2015
+# 16 February 2015
   - added new "`sizes` attr required when `srcset` specifies width" check
   - added `--skip-non-html` option to CLI; http://goo.gl/sKjRD5
     This change alters the default CLI handling of non-HTML files.
