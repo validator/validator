@@ -14,7 +14,7 @@
   - added `--stacksize` option to build script & removed harcoded stack size
   - fixed several bugs in `sizes` checking
   - fixed position reporting of bad character refs in `title` & `textarea`
-  - fixed ARIA checking to allow li[role=separator] and time[role=timer]
+  - fixed ARIA checking to allow `li[role=separator]` & `time[role=timer]`
   - refined content-type check to treat `.csl` uploads as application/xml
   - refined "unexpected content-type" error msg to include URL of document
   - refined a few things in TestRunner
