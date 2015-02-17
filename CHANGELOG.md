@@ -7,7 +7,10 @@
     found are checked, regardless of extension. The `--skip-non-html`
     option provides the old default behavior: it make the checker skip
     any files without .html, .htm, .xhtml, or .xht extensions.
-  - added `--javaversion` option to build script (to build for older VMs)
+  - added `--javaversion` option to build script and changed default build
+    behavior to now generate vnu.jar/vnu.war builds that can run in Java6
+    VMs (as well as in any newer VMs). To generate a vnu.jar/vnu.war build
+    with a newer/different VM target, use, e.g., `--javaversion=1.8`.
   - added `--stacksize` option to build script & removed harcoded stack size
   - fixed several bugs in `sizes` checking
   - fixed position reporting of bad character refs in `title` & `textarea`
