@@ -8,3 +8,6 @@ script:
   - echo "test" | python ./build/build.py jar
   - java -jar ./build/vnu/vnu.jar ./build/vnu/index.html
   - java -jar ./build/vnu/vnu.jar ./site/nu-about.html
+  - jar xf ./build/vnu/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 50.0"
+  - echo "test" | python ./build/build.py war
+  - jar xf ./build/vnu/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 50.0"
