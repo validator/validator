@@ -37,7 +37,7 @@ from sgmllib import SGMLParser
 import subprocess
 import time
 
-javaVersion = ''
+javaVersion = '1.6'
 javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
