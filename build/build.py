@@ -204,22 +204,26 @@ def ensureDirExists(dirPath):
   if not os.path.exists(dirPath):
     os.makedirs(dirPath)
 
-def findFilesWithExtension(directory, extension):
+def findFilesWithExtension(directory, extension, subtrees=None):
+  subtrees = subtrees if subtrees else [directory]
   rv = []
   ext = '.' + extension
   for root, dirs, files in os.walk(directory):
     for filename in files:
-      if filename.endswith(ext):
-        rv.append(os.path.join(root, filename))
+      for subtree in subtrees:
+        if subtree in root and filename.endswith(ext):
+          rv.append(os.path.join(root, filename))
   return rv
 
-def findFiles(directory):
+def findFiles(directory, subtrees=None):
+  subtrees = subtrees if subtrees else [directory]
   rv = []
   for root, dirs, files in os.walk(directory):
     for filename in files:
-      candidate = os.path.join(root, filename)
-      if candidate.find("/.svn") == -1:
-        rv.append(candidate)
+      for subtree in subtrees:
+        candidate = os.path.join(root, filename)
+        if subtree in root and candidate.find("/.svn") == -1:
+          rv.append(candidate)
   return rv
 
 def jarNamesToPaths(names):
@@ -228,9 +232,9 @@ def jarNamesToPaths(names):
 def jingJarPath():
   return [os.path.join("jing-trang", "build", "jing.jar"),]
 
-def runJavac(sourceDir, classDir, classPath):
+def runJavac(sourceDir, classDir, classPath, subtrees):
   ensureDirExists(classDir)
-  sourceFiles = findFilesWithExtension(sourceDir, "java")
+  sourceFiles = findFilesWithExtension(sourceDir, "java", subtrees)
   f = open("temp-javac-list", "w")
   if os.name == 'nt':
     f.write("\r\n".join(sourceFiles))
@@ -252,8 +256,8 @@ def runJavac(sourceDir, classDir, classPath):
     sys.exit(1)
   removeIfExists("temp-javac-list")
 
-def copyFiles(sourceDir, classDir):
-  files = findFiles(sourceDir)
+def copyFiles(sourceDir, classDir, subtrees):
+  files = findFiles(sourceDir, subtrees)
   for f in files:
     destFile = os.path.join(classDir, f[len(sourceDir)+1:])
     head, tail = os.path.split(destFile)
@@ -261,8 +265,13 @@ def copyFiles(sourceDir, classDir):
       os.makedirs(head)
     shutil.copyfile(f, destFile)
 
-def runJar(classDir, jarFile, sourceDir):
-  classFiles = findFiles(classDir)
+def runJar(classDir, jarFile, sourceDir, subtrees):
+  classFiles = []
+  if "html5-datatypes" in jarFile:
+    shutil.copytree(os.path.join(buildRoot, "src", "META-INF"), os.path.join(classDir, "META-INF"))
+    classFiles.append(os.path.join(classDir, "META-INF", "services", "org.relaxng.datatype.DatatypeLibraryFactory"))
+  for file in findFiles(classDir, subtrees):
+    classFiles.append(file)
   classList = ["-C " + classDir + " " + x[len(classDir)+1:] + ""
                for x in
                classFiles]
@@ -276,7 +285,8 @@ def runJar(classDir, jarFile, sourceDir):
     % (jarCmd, jarFile, "@temp-jar-list"))
   removeIfExists("temp-jar-list")
 
-def buildModule(rootDir, jarName, classPath):
+def buildModule(rootDir, jarName, classPath, subtrees=None):
+  subtrees = subtrees if subtrees else [rootDir]
   sourceDir = os.path.join(rootDir, "src")
   classDir = os.path.join(rootDir, "classes")
   distDir = os.path.join(rootDir, "dist")
@@ -285,9 +295,9 @@ def buildModule(rootDir, jarName, classPath):
   removeIfDirExists(classDir)
   ensureDirExists(classDir)
   ensureDirExists(distDir)
-  runJavac(sourceDir, classDir, classPath)
-  copyFiles(sourceDir, classDir)
-  runJar(classDir, jarFile, sourceDir)
+  runJavac(sourceDir, classDir, classPath, subtrees)
+  copyFiles(sourceDir, classDir, subtrees)
+  runJar(classDir, jarFile, sourceDir, subtrees)
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
 
@@ -304,18 +314,20 @@ def buildDatatypeLibrary():
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "syntax", "relaxng", "datatype", "java"),
+    buildRoot,
     "html5-datatypes",
-    classPath)
+    classPath,
+    [os.path.join("org", "whattf", "datatype"), os.path.join("org", "whattf", "io")])
 
 def buildNonSchema():
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["html5-datatypes",])
                               + jingJarPath())
   buildModule(
-    os.path.join(buildRoot, "syntax", "non-schema", "java"),
+    buildRoot,
     "non-schema",
-    classPath)
+    classPath,
+    [os.path.join("org", "whattf", "checker")])
 
 def buildSchemaDrivers():
   schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
@@ -598,9 +610,10 @@ def buildValidator():
                               + jingJarPath())
   buildEmitters();
   buildModule(
-    os.path.join(buildRoot, "."),
+    buildRoot,
     "validator",
-    classPath)
+    classPath,
+    [os.path.join("nu", "validator")])
 
 def ownJarList():
   return jarNamesToPaths(["non-schema",

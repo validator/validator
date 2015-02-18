@@ -83,9 +83,12 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
   * `security` - `PromiscuousX509TrustManager`
   * `servlet` - core service logic; `VerifierServletTransaction`, etc.
-  * `servletfilter` - `InboundGzipFilter`, `InboundSizeLimitFilter`, etc.
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
-  * `xml` - variety of utility code
+  * `xml` - utility code of various kinds
+* `src/org/whattf`
+  * `checker` - non-schema checkers; `TableChecker`, `schematronequiv/Assertions`, …
+  * `datatype` - HTML datatype library (checking microsyntax of attribute values)
+  * `io` - utility code used by HTML datatype library and other parts of the checker
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker
