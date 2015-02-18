@@ -248,7 +248,8 @@ def runJavac(sourceDir, classDir, classPath):
   if javaVersion != "":
     args.append('-target ' + javaVersion)
     args.append('-source ' + javaVersion)
-  runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list'))
+  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), '@temp-javac-list')):
+    sys.exit(1)
   removeIfExists("temp-javac-list")
 
 def copyFiles(sourceDir, classDir):
@@ -570,6 +571,7 @@ def buildEmitters():
   compilerFile = os.path.join(buildRoot, "src", "nu", "validator", "xml", "SaxCompiler.java")
   compilerClass = "nu.validator.xml.SaxCompiler"
   classDir = os.path.join(buildRoot, "classes")
+  ensureDirExists(classDir)
   args = [
     '-g',
     '-nowarn',
@@ -579,11 +581,14 @@ def buildEmitters():
   if javaVersion != "":
     args.append('-target ' + javaVersion)
     args.append('-source ' + javaVersion)
-  runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile))
+  if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile)):
+    sys.exit(1)
   pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
   formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
-  runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter))
-  runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter))
+  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter)):
+    sys.exit(1)
+  if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter)):
+    sys.exit(1)
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
