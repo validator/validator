@@ -68,11 +68,9 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `build` - scripts for building, testing, and running the checker
 * `htmlparser` - (submodule) HTML parser
 * `jing-trang` - (submodule) RelaxNG engine
-* `research-src` - (unmaintained) experiments
-* `resources` - catalogs used in fetching certain resources from local cache, etc.
+* `resources` - config files, caching-related catalogs, and some example code
 * `schema` - RelaxNG schema-driver files + SVG & MathML RelaxNG schemas
-* `site` - JavaScript & CSS for the checker Web UI + “About” page HTML source
-* `spec` - HTML spec copies (used for emitting spec excerpts in validation messages)
+* `site` - JS & CSS for the checker Web UI + code for generating the Web UI HTML
 * `syntax` - RelaxNG HTML schemas, HTML datatype library, & non-schema checker code
 * `src/nu/validator`
   * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
@@ -82,8 +80,6 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
-* `test-harness` - (unmaintained) script (Python) for "full-stack" checker testing
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker
 * `util` - library of utility code used in other parts of the checker sources
-* `xml-src` - templates used for building HTML source of checker Web UI
 * `xmlparser` - XML parser

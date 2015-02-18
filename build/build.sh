@@ -10,8 +10,8 @@ fi
   --promiscuous-ssl=on \
   --name="Ready to check" \
   --results-title="Showing results" \
-  --page-template="xml-src/NuPageEmitter.xml" \
-  --form-template="xml-src/NuFormEmitter.xml" \
+  --page-template="site/NuPageEmitter.xml" \
+  --form-template="site/NuFormEmitter.xml" \
   --about-file="site/nu-about.html" \
   --script-file="site/nu-script.js" \
   --stylesheet-file="site/nu-style.css" \
