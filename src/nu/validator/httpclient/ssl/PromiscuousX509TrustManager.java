@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.security;
+package nu.validator.httpclient.ssl;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
