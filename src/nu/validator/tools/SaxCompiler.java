@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -30,8 +30,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import javax.xml.parsers.SAXParserFactory;
-
-import nu.validator.java.StringLiteralUtil;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -104,7 +102,7 @@ public class SaxCompiler implements ContentHandler {
             }
             w.write("}\n");
             w.write("private static final char[] __chars__ = ");
-            w.write(StringLiteralUtil.charArrayLiteral(sb));
+            w.write(charArrayLiteral(sb));
             w.write(";\n}\n");
             w.flush();
             w.close();
@@ -122,9 +120,9 @@ public class SaxCompiler implements ContentHandler {
         ensureState();
         try {
             w.write("contentHandler.startPrefixMapping(");
-            w.write(StringLiteralUtil.stringLiteral(arg0));
+            w.write(stringLiteral(arg0));
             w.write(", ");
-            w.write(StringLiteralUtil.stringLiteral(arg1));
+            w.write(stringLiteral(arg1));
             w.write(");\n");
         } catch (IOException e) {
             throw new SAXException(e);
@@ -137,7 +135,7 @@ public class SaxCompiler implements ContentHandler {
     public void endPrefixMapping(String arg0) throws SAXException {
         try {
             w.write("contentHandler.endPrefixMapping(");
-            w.write(StringLiteralUtil.stringLiteral(arg0));
+            w.write(stringLiteral(arg0));
             w.write(");\n");
         } catch (IOException e) {
             throw new SAXException(e);
@@ -159,23 +157,23 @@ public class SaxCompiler implements ContentHandler {
             w.write("__attrs__.clear();\n");
             for (int i = 0; i < attrs.getLength(); i++) {
                 w.write("__attrs__.addAttribute(");
-                w.write(StringLiteralUtil.stringLiteral(attrs.getURI(i)));
+                w.write(stringLiteral(attrs.getURI(i)));
                 w.write(", ");
-                w.write(StringLiteralUtil.stringLiteral(attrs.getLocalName(i)));
+                w.write(stringLiteral(attrs.getLocalName(i)));
                 w.write(", ");
-                w.write(StringLiteralUtil.stringLiteral(attrs.getQName(i)));
+                w.write(stringLiteral(attrs.getQName(i)));
                 w.write(", ");
-                w.write(StringLiteralUtil.stringLiteral(attrs.getType(i)));
+                w.write(stringLiteral(attrs.getType(i)));
                 w.write(", ");
-                w.write(StringLiteralUtil.stringLiteral(attrs.getValue(i)));
+                w.write(stringLiteral(attrs.getValue(i)));
                 w.write(");\n");
             }
             w.write("contentHandler.startElement(");
-            w.write(StringLiteralUtil.stringLiteral(arg0));
+            w.write(stringLiteral(arg0));
             w.write(", ");
-            w.write(StringLiteralUtil.stringLiteral(arg1));
+            w.write(stringLiteral(arg1));
             w.write(", ");
-            w.write(StringLiteralUtil.stringLiteral(arg2));
+            w.write(stringLiteral(arg2));
             w.write(", __attrs__);\n");
         } catch (IOException e) {
             throw new SAXException(e);
@@ -194,11 +192,11 @@ public class SaxCompiler implements ContentHandler {
         level--;
         try {
             w.write("contentHandler.endElement(");
-            w.write(StringLiteralUtil.stringLiteral(arg0));
+            w.write(stringLiteral(arg0));
             w.write(", ");
-            w.write(StringLiteralUtil.stringLiteral(arg1));
+            w.write(stringLiteral(arg1));
             w.write(", ");
-            w.write(StringLiteralUtil.stringLiteral(arg2));
+            w.write(stringLiteral(arg2));
             w.write(");\n");
         } catch (IOException e) {
             throw new SAXException(e);
@@ -269,9 +267,9 @@ public class SaxCompiler implements ContentHandler {
             } else {
                 ensureState();
                 w.write("contentHandler.processingInstruction(");
-                w.write(StringLiteralUtil.stringLiteral(target));
+                w.write(stringLiteral(target));
                 w.write(", ");
-                w.write(StringLiteralUtil.stringLiteral(data));
+                w.write(stringLiteral(data));
                 w.write(");\n");
             }
         } catch (IOException e) {
@@ -323,6 +321,77 @@ public class SaxCompiler implements ContentHandler {
         } else if (state != 3) {
             throw new SAXException("Illegal state.");
         }
+    }
+
+    private static String unquotedCharLiteral(char c) {
+        // http://java.sun.com/docs/books/jls/second_edition/html/lexical.doc.html#101089
+        switch (c) {
+            case '\b':
+                return "\\b";
+            case '\t':
+                return "\\t";
+            case '\n':
+                return "\\n";
+            case '\f':
+                return "\\f";
+            case '\r':
+                return "\\r";
+            case '\"':
+                return "\\\"";
+            case '\'':
+                return "\\\'";
+            case '\\':
+                return "\\\\";
+            default:
+                if (c >= ' ' && c <= '~') {
+                    return "" + c;
+                } else {
+                    String hex = Integer.toHexString((int) c);
+                    switch (hex.length()) {
+                        case 1:
+                            return "\\u000" + hex;
+                        case 2:
+                            return "\\u00" + hex;
+                        case 3:
+                            return "\\u0" + hex;
+                        default:
+                            return "\\u" + hex;
+                    }
+                }
+        }
+    }
+
+    private static String stringLiteral(CharSequence cs) {
+        if (cs == null) {
+            return "null";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('\"');
+        int len = cs.length();
+        for (int i = 0; i < len; i++) {
+            sb.append(unquotedCharLiteral(cs.charAt(i)));
+        }
+        sb.append('\"');
+        return sb.toString();
+    }
+
+    private static String charArrayLiteral(CharSequence cs) {
+        if (cs == null) {
+            return "null";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        int len = cs.length();
+        for (int i = 0; i < len; i++) {
+            sb.append(" \'");
+            sb.append(unquotedCharLiteral(cs.charAt(i)));
+            sb.append("\',");
+        }
+        if (sb.length() > 1) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        sb.append(" }");
+        return sb.toString();
     }
 
     public static void main(String[] args) {

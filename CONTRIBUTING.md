@@ -78,7 +78,6 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `gnu/xml/aelfred2` - processing XML (XML parser)
   * `httpclient/ssl` - enabling the `promiscuous-ssl` option (to skip cert checks)
   * `io` - handling particular I/O cases (utility code)
-  * `java` - working with string literals (utility code)
   * `json` - processing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
