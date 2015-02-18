@@ -70,18 +70,17 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `jing-trang` - (submodule) RelaxNG engine
 * `resources` - config files, caching-related catalogs, and some example code
 * `schema` - RelaxNG schema-driver files + SVG & MathML RelaxNG schemas
-* `site` - JS & CSS for the checker Web UI + code for generating the Web UI HTML
+* `site` - JS & CSS for the checker frontend + code for generating the frontend HTML
 * `syntax` - RelaxNG HTML schemas, HTML datatype library, & non-schema checker code
 * `src/nu/validator`
   * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
-  * `collections` - sorting collections (utility code)
+  * `collections` - sorting of collections (utility code)
   * `gnu/xml/aelfred2` - processing XML (XML parser)
   * `httpclient/ssl` - enabling the `promiscuous-ssl` option (to skip cert checks)
   * `io` - handling particular I/O cases (utility code)
   * `json` - processing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
-  * `security` - `PromiscuousX509TrustManager`
   * `servlet` - core service logic; `VerifierServletTransaction`, etc.
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
