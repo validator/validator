@@ -70,7 +70,6 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `jing-trang` - (submodule) RelaxNG engine
 * `research-src` - (unmaintained) experiments
 * `resources` - catalogs used in fetching certain resources from local cache, etc.
-* `sample` - (unmaintained) sample client scripts (Python) for, e.g., batch checking
 * `schema` - RelaxNG schema-driver files + SVG & MathML RelaxNG schemas
 * `site` - JavaScript & CSS for the checker Web UI + “About” page HTML source
 * `spec` - HTML spec copies (used for emitting spec excerpts in validation messages)
