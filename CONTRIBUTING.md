@@ -74,12 +74,20 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `syntax` - RelaxNG HTML schemas, HTML datatype library, & non-schema checker code
 * `src/nu/validator`
   * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
+  * `collections` - sorting collections (utility code)
+  * `gnu/xml/aelfred2` - processing XML (XML parser)
+  * `httpclient/ssl` - enabling the `promiscuous-ssl` option (to skip cert checks)
+  * `io` - handling particular I/O cases (utility code)
+  * `java` - working with string literals (utility code)
+  * `json` - processing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
+  * `security` - `PromiscuousX509TrustManager`
   * `servlet` - core service logic; `VerifierServletTransaction`, etc.
+  * `servletfilter` - `InboundGzipFilter`, `InboundSizeLimitFilter`, etc.
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
+  * `tools` - generating Java HMTL emitter code from page templates; `SAXCompiler`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
+  * `xml` - variety of utility code, including filtering of HTML `data-*`attributes
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker
-* `util` - library of utility code used in other parts of the checker sources
-* `xmlparser` - XML parser

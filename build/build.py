@@ -299,15 +299,6 @@ def dependencyJarPaths(depList=dependencyJars):
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
 
-def buildUtil():
-  classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["html5-datatypes", "htmlparser"])
-                              + jingJarPath())
-  buildModule(
-    os.path.join(buildRoot, "util"),
-    "io-xml-util",
-    classPath)
-
 def buildDatatypeLibrary():
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jingJarPath())
@@ -563,14 +554,6 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 # end of data and functions for building schema drivers
 #################################################################
 
-def buildXmlParser():
-  classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["htmlparser", "io-xml-util"]))
-  buildModule(
-    os.path.join(buildRoot, "xmlparser"),
-    "hs-aelfred2",
-    classPath)
-
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths())
   buildModule(
@@ -584,16 +567,9 @@ def buildJing():
   os.chdir("..")
 
 def buildValidator():
-  ioJar = os.path.join("util", "dist", "io-xml-util.jar")
-  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
-  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, pageTemplateFile, pageEmitter))
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, ioJar, formTemplateFile, formEmitter))
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["non-schema",
-                                                "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2",
                                                 "html5-datatypes"])
                               + jingJarPath())
   buildModule(
@@ -601,11 +577,17 @@ def buildValidator():
     "validator",
     classPath)
 
+def buildEmitters():
+  validatorJar = os.path.join("jars", "validator.jar");
+  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
+  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, validatorJar, pageTemplateFile, pageEmitter))
+  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, validatorJar, formTemplateFile, formEmitter))
+  buildValidator()
+
 def ownJarList():
   return jarNamesToPaths(["non-schema",
-                          "io-xml-util",
                           "htmlparser",
-                          "hs-aelfred2",
                           "html5-datatypes",
                           "validator"]) + jingJarPath()
 
@@ -971,9 +953,8 @@ def buildAll():
   buildNonSchema()
   buildSchemaDrivers()
   buildHtmlParser()
-  buildUtil()
-  buildXmlParser()
   buildValidator()
+  buildEmitters()
 
 def runTests():
   if followW3Cspec:
@@ -983,9 +964,7 @@ def runTests():
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["non-schema",
-                                                "io-xml-util",
                                                 "htmlparser",
-                                                "hs-aelfred2",
                                                 "html5-datatypes",
                                                 "validator"])
                               + jingJarPath())
