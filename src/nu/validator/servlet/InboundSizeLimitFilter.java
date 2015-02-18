@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.servletfilter;
+package nu.validator.servlet;
 
 import java.io.IOException;
 

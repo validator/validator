@@ -87,7 +87,7 @@ DEALINGS IN THE SOFTWARE.
 
     <filter>
         <filter-name>inbound-size-limit-filter</filter-name>
-        <filter-class>nu.validator.servletfilter.InboundSizeLimitFilter</filter-class>
+        <filter-class>nu.validator.servlet.InboundSizeLimitFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>inbound-size-limit-filter</filter-name>
@@ -96,7 +96,7 @@ DEALINGS IN THE SOFTWARE.
 
     <filter>
         <filter-name>inbound-gzip-filter</filter-name>
-        <filter-class>nu.validator.servletfilter.InboundGzipFilter</filter-class>
+        <filter-class>nu.validator.servlet.InboundGzipFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>inbound-gzip-filter</filter-name>

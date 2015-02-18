@@ -31,9 +31,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import nu.validator.servletfilter.InboundGzipFilter;
-import nu.validator.servletfilter.InboundSizeLimitFilter;
-
 import org.apache.log4j.PropertyConfigurator;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Handler;
