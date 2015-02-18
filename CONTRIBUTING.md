@@ -85,8 +85,7 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `servlet` - core service logic; `VerifierServletTransaction`, etc.
   * `servletfilter` - `InboundGzipFilter`, `InboundSizeLimitFilter`, etc.
   * `source` - handling/emitting "show source" output; `SourceHandler` & `SourceCode`
-  * `tools` - generating Java HMTL emitter code from page templates; `SAXCompiler`
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
-  * `xml` - variety of utility code, including filtering of HTML `data-*`attributes
+  * `xml` - variety of utility code
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker

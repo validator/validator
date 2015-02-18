@@ -21,7 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package nu.validator.tools;
+package nu.validator.xml;
 
 import java.net.URL;
 import java.io.FileOutputStream;

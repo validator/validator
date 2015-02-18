@@ -78,8 +78,8 @@ vnuAltAdvice = os.path.join("local-entities", "vnu-alt-advice")
 metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
 linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
 aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
-pageTemplateFile = os.path.join("site", "PageEmitter.xml")
-formTemplateFile = os.path.join("site", "FormEmitter.xml")
+pageTemplate = os.path.join("site", "PageEmitter.xml")
+formTemplate = os.path.join("site", "FormEmitter.xml")
 presetsFile = os.path.join("resources", "presets.txt")
 aboutFile = os.path.join("site", "about.html")
 stylesheetFile = os.path.join("site", "style.css")
@@ -566,24 +566,36 @@ def buildJing():
   runCmd(os.path.join(".", "ant"))
   os.chdir("..")
 
+def buildEmitters():
+  compilerFile = os.path.join(buildRoot, "src", "nu", "validator", "xml", "SaxCompiler.java")
+  compilerClass = "nu.validator.xml.SaxCompiler"
+  classDir = os.path.join(buildRoot, "classes")
+  args = [
+    '-g',
+    '-nowarn',
+    '-d "%s"' % classDir,
+    '-encoding UTF-8',
+  ]
+  if javaVersion != "":
+    args.append('-target ' + javaVersion)
+    args.append('-source ' + javaVersion)
+  runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile))
+  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
+  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
+  runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter))
+  runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter))
+
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["non-schema",
                                                 "htmlparser",
                                                 "html5-datatypes"])
                               + jingJarPath())
+  buildEmitters();
   buildModule(
     os.path.join(buildRoot, "."),
     "validator",
     classPath)
-
-def buildEmitters():
-  validatorJar = os.path.join("jars", "validator.jar");
-  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
-  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, validatorJar, pageTemplateFile, pageEmitter))
-  runCmd('"%s" -classpath %s nu.validator.tools.SaxCompiler %s %s' % (javaCmd, validatorJar, formTemplateFile, formEmitter))
-  buildValidator()
 
 def ownJarList():
   return jarNamesToPaths(["non-schema",
@@ -954,7 +966,6 @@ def buildAll():
   buildSchemaDrivers()
   buildHtmlParser()
   buildValidator()
-  buildEmitters()
 
 def runTests():
   if followW3Cspec:
@@ -1087,9 +1098,9 @@ else:
     elif arg.startswith("--parsetreepath="):
       (parsetreeHost, parsetreePath) = splitHostSpec(arg[16:])
     elif arg.startswith("--page-template="):
-      pageTemplateFile = arg[16:]
+      pageTemplate = arg[16:]
     elif arg.startswith("--form-template="):
-      formTemplateFile = arg[16:]
+      formTemplate = arg[16:]
     elif arg.startswith("--presets-file="):
       presetsFile = arg[15:]
     elif arg.startswith("--about-file="):
