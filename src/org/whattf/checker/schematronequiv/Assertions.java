@@ -1839,6 +1839,20 @@ public class Assertions extends Checker {
                 }
             }
 
+            else if ("object" == localName) {
+                if (atts.getIndex("", "typemustmatch") >= 0) {
+                    if ((atts.getIndex("", "data") < 0)
+                            || (atts.getIndex("", "type") < 0)) {
+                        {
+                            err("Element \u201Cobject\u201D must not have"
+                                    + " attribute \u201Ctypemustmatch\u201D unless"
+                                    + " both attribute \u201Cdata\u201D"
+                                    + " and attribute \u201Csrc\u201D are also specified.");
+                        }
+                    }
+                }
+            }
+
             // script
             else if ("script" == localName) {
                 // script language
