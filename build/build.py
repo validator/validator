@@ -394,6 +394,26 @@ coreSchemaDriverFiles = [
   "xhtml5.rnc"
 ]
 
+htmlSchemaDriverFiles = [
+  "html5core.rnc",
+  "html5full-no-microdata.rnc",
+  "html5full-rdfa.rnc",
+  "html5full-rdfalite.rnc",
+  "html5full.rnc",
+  "its20-html5-types.rnc",
+  "its20-html5.rnc",
+  "legacy.rnc",
+  "xhtml5core-plus-web-forms2.rnc",
+  "xhtml5core.rnc",
+  "xhtml5full-html-no-microdata.rnc",
+  "xhtml5full-html-rdfalite.rnc",
+  "xhtml5full-html.rnc",
+  "xhtml5full-xhtml-no-microdata.rnc",
+  "xhtml5full-xhtml-rdfa.rnc",
+  "xhtml5full-xhtml-rdfalite.rnc",
+  "xhtml5full-xhtml.rnc"
+]
+
 schemaDriverBase = '''\
 start = html.elem
 include "phrase.rnc"
@@ -947,10 +967,13 @@ def prepareLocalEntityJar():
   finally:
     f.close()
     o.close()
+  schemaDir = os.path.join(buildRoot, "schema")
   for file in coreSchemaDriverFiles:
-    removeIfExists(os.path.join(buildRoot, "schema", file))
-  removeIfDirExists(os.path.join(buildRoot, "schema", "xhtml10"))
-  removeIfDirExists(os.path.join(buildRoot, "schema", "rdf"))
+    removeIfExists(os.path.join(schemaDir, file))
+  for file in htmlSchemaDriverFiles:
+    removeIfExists(os.path.join(schemaDir, "html5", file))
+  removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
+  removeIfDirExists(os.path.join(schemaDir, "rdf"))
 
 def createCssParserJS(filesDir):
   p = open(os.path.join(buildRoot, "dependencies", "parse-css.js"), 'r')
