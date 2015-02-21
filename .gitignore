@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings/
+build/vnu
 classes/
 dependencies/
 dist/
