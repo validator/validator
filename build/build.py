@@ -194,10 +194,12 @@ def execCmd(cmd, args):
 
 def removeIfExists(filePath):
   if os.path.exists(filePath):
+    print "Removing %s" % filePath
     os.unlink(filePath)
 
 def removeIfDirExists(dirPath):
   if os.path.exists(dirPath):
+    print "Removing %s" % dirPath
     shutil.rmtree(dirPath)
 
 def ensureDirExists(dirPath):
@@ -330,34 +332,60 @@ def buildNonSchema():
     [os.path.join("org", "whattf", "checker")])
 
 def buildSchemaDrivers():
-  schemaDir = os.path.join(buildRoot, "schema", "html5")
-  legacyRnc = os.path.join(os.path.join(buildRoot, "schema", "legacy", "legacy.rnc"))
-  itsRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5.rnc"))
-  itsTypesRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5-types.rnc"))
-  buildSchemaDriverHtmlCore(schemaDir)
-  buildSchemaDriverHtml5NoMicrodata(schemaDir)
-  buildSchemaDriverHtml5(schemaDir)
-  buildSchemaDriverHtml5RDFa(schemaDir)
-  buildSchemaDriverHtml5RDFaLite(schemaDir)
-  buildSchemaDriverXhtmlCore(schemaDir)
-  buildSchemaDriverXhtmlCorePlusWf2(schemaDir)
-  buildSchemaDriverXhtml5xhtmlNoMicrodata(schemaDir)
-  buildSchemaDriverXhtml5htmlNoMicrodata(schemaDir)
-  buildSchemaDriverXhtml5html(schemaDir)
-  buildSchemaDriverXhtml5xhtml(schemaDir)
-  buildSchemaDriverXhtml5xhtmlRDFa(schemaDir)
-  buildSchemaDriverXhtml5xhtmlRDFaLite(schemaDir)
-  buildSchemaDriverXhtml5htmlRDFaLite(schemaDir)
-  removeIfExists(os.path.join(schemaDir, "legacy.rnc"))
-  removeIfExists(os.path.join(schemaDir, "its20-html5.rnc"))
-  removeIfExists(os.path.join(schemaDir, "its20-html5-types.rnc"))
-  shutil.copy(legacyRnc, schemaDir)
-  shutil.copy(itsRnc, schemaDir)
-  shutil.copy(itsTypesRnc, schemaDir)
+  baseDir = os.path.join(buildRoot, "schema")
+  html5Dir = os.path.join(baseDir, "html5")
+  legacyRnc = os.path.join(os.path.join(baseDir, ".drivers", "legacy.rnc"))
+  itsRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5.rnc"))
+  itsTypesRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5-types.rnc"))
+  buildSchemaDriverHtmlCore(html5Dir)
+  buildSchemaDriverHtml5NoMicrodata(html5Dir)
+  buildSchemaDriverHtml5(html5Dir)
+  buildSchemaDriverHtml5RDFa(html5Dir)
+  buildSchemaDriverHtml5RDFaLite(html5Dir)
+  buildSchemaDriverXhtmlCore(html5Dir)
+  buildSchemaDriverXhtmlCorePlusWf2(html5Dir)
+  buildSchemaDriverXhtml5xhtmlNoMicrodata(html5Dir)
+  buildSchemaDriverXhtml5htmlNoMicrodata(html5Dir)
+  buildSchemaDriverXhtml5html(html5Dir)
+  buildSchemaDriverXhtml5xhtml(html5Dir)
+  buildSchemaDriverXhtml5xhtmlRDFa(html5Dir)
+  buildSchemaDriverXhtml5xhtmlRDFaLite(html5Dir)
+  buildSchemaDriverXhtml5htmlRDFaLite(html5Dir)
+  for file in coreSchemaDriverFiles:
+    print "Copying %s to %s" % (os.path.join(baseDir, ".drivers", file), os.path.join(baseDir, file))
+    shutil.copy(os.path.join(baseDir, ".drivers", file), baseDir)
+  rdfDir = os.path.join(baseDir, "rdf")
+  os.mkdir(rdfDir)
+  print "Copying %s to %s/rdf.rnc" % (os.path.join(baseDir, ".drivers", "rdf.rnc"), rdfDir)
+  shutil.copy(os.path.join(baseDir, ".drivers", "rdf.rnc"), rdfDir)
+  removeIfExists(os.path.join(html5Dir, "legacy.rnc"))
+  removeIfExists(os.path.join(html5Dir, "its20-html5.rnc"))
+  removeIfExists(os.path.join(html5Dir, "its20-html5-types.rnc"))
+  shutil.copy(legacyRnc, html5Dir)
+  shutil.copy(itsRnc, html5Dir)
+  shutil.copy(itsTypesRnc, html5Dir)
 
 #################################################################
 # data and functions for building schema drivers
 #################################################################
+
+coreSchemaDriverFiles = [
+  "html5-all.rnc",
+  "html5-its.rnc",
+  "html5-no-microdata.rnc",
+  "html5-rdfalite-w3c.rnc",
+  "html5-rdfalite.rnc",
+  "html5-svg-mathml.rnc",
+  "html5.rnc",
+  "svg-xhtml5-rdf-mathml.rnc",
+  "xhtml1-ruby-rdf-svg-mathml.rnc",
+  "xhtml5-all.rnc",
+  "xhtml5-no-microdata.rnc",
+  "xhtml5-rdfalite-w3c.rnc",
+  "xhtml5-rdfalite.rnc",
+  "xhtml5-svg-mathml.rnc",
+  "xhtml5.rnc"
+]
 
 schemaDriverBase = '''\
 start = html.elem
@@ -912,6 +940,9 @@ def prepareLocalEntityJar():
   finally:
     f.close()
     o.close()
+  for file in coreSchemaDriverFiles:
+    removeIfExists(os.path.join(buildRoot, "schema", file))
+  removeIfDirExists(os.path.join(buildRoot, "schema", "rdf"))
 
 def createCssParserJS(filesDir):
   p = open(os.path.join(buildRoot, "dependencies", "parse-css.js"), 'r')
@@ -977,11 +1008,11 @@ def buildAll():
     print "Error: The JAVA_HOME environment variable is not set."
     print "Set the JAVA_HOME environment variable to the pathname of the directory where your JDK is installed."
     sys.exit(1)
-  prepareLocalEntityJar()
   buildJing()
   buildDatatypeLibrary()
   buildNonSchema()
   buildSchemaDrivers()
+  prepareLocalEntityJar()
   buildHtmlParser()
   buildValidator()
 
