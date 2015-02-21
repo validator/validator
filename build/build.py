@@ -92,27 +92,22 @@ statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
-  ("http://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
-  ("http://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
-  ("http://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
   ("http://download.icu-project.org/files/icu4j/53.1/icu4j-53_1.jar", "4d481ce010c1a786af2b79552778a3fc"),
   ("http://download.icu-project.org/files/icu4j/53.1/icu4j-charset-53_1.jar", "00d47513129425040dcfbfcf40da5fea"),
-  ("https://github.com/validator/validator/releases/download/dependencies/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
   ("http://dist.codehaus.org/jetty/jetty-6.1.26/jetty-6.1.26.zip", "0d9b2ae3feb2b207057358142658a11f"),
-  ("http://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
-  ("http://archive.apache.org/dist/xerces/j/Xerces-J-bin.2.9.1.zip", "a0e07ede1c3bd5231fe15eae24032b2e"),
-  ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
-  ("http://central.maven.org/maven2/com/sdicons/jsontools/jsontools-core/1.5/jsontools-core-1.5.jar", "1f242910350f28d1ac4014928075becd"),
-  ("http://hsivonen.iki.fi/code/antlr.jar", "9d2e9848c52204275c72d9d6e79f307c"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
-  ("http://www.slf4j.org/dist/slf4j-1.5.2.zip", "00ff08232a9959af3c7101b88ec456a7"),
-  ("http://archive.apache.org/dist/commons/fileupload/binaries/commons-fileupload-1.2.1-bin.zip", "975100c3f74604c0c22f68629874f868"),
-  ("http://archive.apache.org/dist/ant/binaries/apache-ant-1.7.0-bin.zip", "ac30ce5b07b0018d65203fbc680968f5"),
-  ("http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar", "f852bbb2bbe0471cef8e5b833cb36078"),
-  ("https://github.com/validator/validator/releases/download/dependencies/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
-  ("http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
+  ("https://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
+  ("https://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
+  ("https://archive.apache.org/dist/commons/fileupload/binaries/commons-fileupload-1.2.1-bin.zip", "975100c3f74604c0c22f68629874f868"),
+  ("https://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
+  ("https://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
+  ("https://archive.apache.org/dist/xerces/j/Xerces-J-bin.2.9.1.zip", "a0e07ede1c3bd5231fe15eae24032b2e"),
+  ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
+  ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
+  ("https://github.com/validator/validator/releases/download/dependencies/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
+  ("https://github.com/validator/validator/releases/download/dependencies/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
   ("https://github.com/validator/validator/releases/download/dependencies/www.w3.org.zip", "167efbb410689e028129142aa3cf77ba"),
 ]
 
@@ -136,7 +131,6 @@ runDependencyJars = [
   "rhino1_7R5/js.jar",
   "xerces-2_9_1/xercesImpl.jar",
   "xerces-2_9_1/xml-apis.jar",
-  "slf4j-1.5.2/slf4j-log4j12-1.5.2.jar",
   "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
   "jing-trang/lib/isorelax.jar",
   "mozilla/intl/chardet/java/dist/lib/chardet.jar",
@@ -145,12 +139,7 @@ runDependencyJars = [
 ]
 
 buildOnlyDependencyJars = [
-  "jsontools-core-1.5.jar",
-  "antlr.jar",
-  "xom-1.1.jar",
-  "junit-4.4.jar",
-  "apache-ant-1.7.0/lib/ant.jar",
-  "apache-ant-1.7.0/lib/ant-launcher.jar",
+  "xom-1.1.jar"
 ]
 
 dependencyJars = runDependencyJars + buildOnlyDependencyJars
