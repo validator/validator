@@ -334,7 +334,8 @@ def buildNonSchema():
 def buildSchemaDrivers():
   baseDir = os.path.join(buildRoot, "schema")
   html5Dir = os.path.join(baseDir, "html5")
-  legacyRnc = os.path.join(os.path.join(baseDir, ".drivers", "legacy.rnc"))
+  driversDir = os.path.join(baseDir, ".drivers")
+  legacyRnc = os.path.join(driversDir, "legacy.rnc")
   itsRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5.rnc"))
   itsTypesRnc = os.path.join(os.path.join(baseDir, "its2/its20-html5-types.rnc"))
   buildSchemaDriverHtmlCore(html5Dir)
@@ -352,12 +353,18 @@ def buildSchemaDrivers():
   buildSchemaDriverXhtml5xhtmlRDFaLite(html5Dir)
   buildSchemaDriverXhtml5htmlRDFaLite(html5Dir)
   for file in coreSchemaDriverFiles:
-    print "Copying %s to %s" % (os.path.join(baseDir, ".drivers", file), os.path.join(baseDir, file))
-    shutil.copy(os.path.join(baseDir, ".drivers", file), baseDir)
+    print "Copying %s to %s" % (os.path.join(driversDir, file), os.path.join(baseDir, file))
+    shutil.copy(os.path.join(driversDir, file), baseDir)
+  xhtmlSourceDir = os.path.join(driversDir, "xhtml10")
+  xhtmlTargetDir = os.path.join(baseDir, "xhtml10")
+  removeIfDirExists(xhtmlTargetDir)
+  shutil.copytree(xhtmlSourceDir, xhtmlTargetDir)
+  print "Copying %s to %s" % (xhtmlSourceDir, xhtmlTargetDir)
   rdfDir = os.path.join(baseDir, "rdf")
+  removeIfDirExists(rdfDir)
   os.mkdir(rdfDir)
-  print "Copying %s to %s/rdf.rnc" % (os.path.join(baseDir, ".drivers", "rdf.rnc"), rdfDir)
-  shutil.copy(os.path.join(baseDir, ".drivers", "rdf.rnc"), rdfDir)
+  print "Copying %s to %s/rdf.rnc" % (os.path.join(driversDir, "rdf.rnc"), rdfDir)
+  shutil.copy(os.path.join(driversDir, "rdf.rnc"), rdfDir)
   removeIfExists(os.path.join(html5Dir, "legacy.rnc"))
   removeIfExists(os.path.join(html5Dir, "its20-html5.rnc"))
   removeIfExists(os.path.join(html5Dir, "its20-html5-types.rnc"))
@@ -942,6 +949,7 @@ def prepareLocalEntityJar():
     o.close()
   for file in coreSchemaDriverFiles:
     removeIfExists(os.path.join(buildRoot, "schema", file))
+  removeIfDirExists(os.path.join(buildRoot, "schema", "xhtml10"))
   removeIfDirExists(os.path.join(buildRoot, "schema", "rdf"))
 
 def createCssParserJS(filesDir):
