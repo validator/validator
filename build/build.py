@@ -330,7 +330,7 @@ def buildNonSchema():
     [os.path.join("org", "whattf", "checker")])
 
 def buildSchemaDrivers():
-  schemaDir = os.path.join(buildRoot, "syntax", "relaxng")
+  schemaDir = os.path.join(buildRoot, "schema", "html5")
   legacyRnc = os.path.join(os.path.join(buildRoot, "schema", "legacy", "legacy.rnc"))
   itsRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5.rnc"))
   itsTypesRnc = os.path.join(os.path.join(buildRoot, "schema", "its20-html5-types.rnc"))
@@ -898,7 +898,7 @@ def prepareLocalEntityJar():
       url, path = line.strip().split("\t")
       entPath = None
       if path.startswith("schema/html5/"):
-        entPath = os.path.join(buildRoot, "syntax", "relaxng", path[13:])
+        entPath = os.path.join(buildRoot, "schema", "html5", path[13:])
       elif path.startswith("schema/"):
         entPath = os.path.join(buildRoot, path)
       else:

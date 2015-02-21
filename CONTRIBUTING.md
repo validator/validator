@@ -69,9 +69,8 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `htmlparser` - (submodule) HTML parser
 * `jing-trang` - (submodule) RelaxNG engine
 * `resources` - config files, caching-related catalogs, and some example code
-* `schema` - RelaxNG schema-driver files + SVG & MathML RelaxNG schemas
+* `schema` - HTML+SVG+MathML RelaxNG schemas (used with jing in the checker backend)
 * `site` - JS & CSS for the checker frontend + code for generating the frontend HTML
-* `syntax` - RelaxNG HTML schemas, HTML datatype library, & non-schema checker code
 * `src/nu/validator`
   * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
   * `collections` - sorting of collections (utility code)
