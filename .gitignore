@@ -2,6 +2,8 @@
 .project
 .settings/
 build/vnu
+build/vnu*.jar.zip
+build/vnu*.war.zip
 classes/
 dependencies/
 dist/
