@@ -108,7 +108,6 @@ dependencyPackages = [
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
   ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
   ("https://github.com/validator/validator/releases/download/dependencies/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
-  ("https://github.com/validator/validator/releases/download/dependencies/www.w3.org.zip", "167efbb410689e028129142aa3cf77ba"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so
@@ -898,9 +897,6 @@ def downloadLocalEntities():
   fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
   fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
-  dtds = os.path.join(buildRoot, "local-entities", "www.w3.org")
-  removeIfDirExists(dtds)
-  shutil.copytree(os.path.join(buildRoot, "dependencies", "www.w3.org"), dtds)
 
 def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
@@ -914,9 +910,6 @@ def preparePropertiesFile():
 
 def prepareLocalEntityJar():
   filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
-  if os.path.exists(filesDir):
-    shutil.rmtree(filesDir)
-  os.makedirs(filesDir)
   preparePropertiesFile()
   createCssParserJS(filesDir)
   shutil.copyfile(os.path.join(buildRoot, subtagRegistry), os.path.join(filesDir, "subtag-registry"))

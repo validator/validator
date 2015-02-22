@@ -1,0 +1,179 @@
+<!-- relaxng.dtd
+
+     Based on grammar in section 3 of RELAX NG 1.0 (3 December 2001), which
+     made this very easy to put together. While entity declarations such as
+     those for param, start, and define may look redundant, I wanted this to
+     reflect the BNF grammar as closely as possible.
+     
+     12/05/01 Bob DuCharme. Use at your own risk, no warrantee expressed or
+     implied, etc.
+
+     Last updated 12/31/01. 
+     See http://www.snee.com/xml/relaxng/dtdChangeList.html for changes.
+     
+     CL 2003-12-05
+     Added xml:lang to common attrs
+
+     Tested with:
+
+     - RELAX NG schema for RELAX NG, App A of spec:
+       http://www.oasis-open.org/committees/relax-ng/spec-20011203.html#IDA5MCS
+
+     - RELAX NG schema for RELAX NG at
+       http://thaiopensource.com/relaxng/relaxng.rng
+
+     - XSLT schema at http://thaiopensource.com/relaxng/xslt.rng
+
+     - testSuite.rng from http://thaiopensource.com/relaxng/testSuite.zip
+
+ -->
+<!ENTITY % extensionAtts "">
+<!ENTITY % extensionPattern "">
+<!-- Add | before each one, e.g. "| x | y" -->
+<!ENTITY % extensionGrammarContent "">
+<!-- Add | before each one -->
+<!ENTITY % commonAtts "datatypeLibrary CDATA #IMPLIED
+                       ns CDATA #IMPLIED
+                       xml:lang CDATA #IMPLIED
+                       xmlns CDATA #FIXED 'http://relaxng.org/ns/structure/1.0'
+                       %extensionAtts;">
+<!-- Declare all nonterminals in grammar as parameter entities. -->
+<!ENTITY % pattern "element | attribute | group | interleave | choice |
+                     optional | zeroOrMore | oneOrMore | list | mixed |
+                     ref | parentRef | empty | text | value | data |
+                     notAllowed | externalRef | grammar %extensionPattern;">
+<!ENTITY % param "param">
+<!ENTITY % exceptPattern "except">
+<!ENTITY % start "start">
+<!ENTITY % define "define">
+<!ENTITY % grammarContent "%start; | %define; |
+                           div | include %extensionGrammarContent;">
+<!ENTITY % includeContent "%start; | %define; | div %extensionGrammarContent;">
+<!ENTITY % method "choice | interleave">
+<!-- "| choice" not in the following; See change notes. -->
+<!ENTITY % nameClass "name | anyName | nsName">
+<!ENTITY % exceptNameClass "except">
+<!ELEMENT element ((%nameClass;)?, (%pattern;)+)>
+<!ATTLIST element
+  name NMTOKEN #IMPLIED
+  %commonAtts; 
+>
+<!ELEMENT attribute ((%nameClass;)?, (%pattern;)?)>
+<!ATTLIST attribute
+  name NMTOKEN #IMPLIED
+  %commonAtts; 
+>
+<!ELEMENT group (%pattern;)+>
+<!ATTLIST group
+  %commonAtts; 
+>
+<!ELEMENT interleave (%pattern;)+>
+<!ATTLIST interleave
+  %commonAtts; 
+>
+<!ELEMENT choice (%nameClass; | %pattern;)+>
+<!ATTLIST choice
+  %commonAtts; 
+>
+<!ELEMENT optional (%pattern;)+>
+<!ATTLIST optional
+  %commonAtts; 
+>
+<!ELEMENT zeroOrMore (%pattern;)+>
+<!ATTLIST zeroOrMore
+  %commonAtts; 
+>
+<!ELEMENT oneOrMore (%pattern;)+>
+<!ATTLIST oneOrMore
+  %commonAtts; 
+>
+<!ELEMENT list (%pattern;)+>
+<!ATTLIST list
+  %commonAtts; 
+>
+<!ELEMENT mixed (%pattern;)+>
+<!ATTLIST mixed
+  %commonAtts; 
+>
+<!ELEMENT ref EMPTY>
+<!ATTLIST ref
+  name NMTOKEN #REQUIRED
+  %commonAtts; 
+>
+<!ELEMENT parentRef EMPTY>
+<!ATTLIST parentRef
+  name NMTOKEN #REQUIRED
+  %commonAtts; 
+>
+<!ELEMENT empty EMPTY>
+<!ATTLIST empty
+  %commonAtts; 
+>
+<!ELEMENT text EMPTY>
+<!ATTLIST text
+  %commonAtts; 
+>
+<!ELEMENT value (#PCDATA)>
+<!ATTLIST value
+  type NMTOKEN #IMPLIED
+  %commonAtts; 
+>
+<!ELEMENT data ((%param;)*, (%exceptPattern;)?)>
+<!ATTLIST data
+  type NMTOKEN #REQUIRED
+  %commonAtts; 
+>
+<!ELEMENT notAllowed EMPTY>
+<!ATTLIST notAllowed
+  %commonAtts; 
+>
+<!ELEMENT externalRef EMPTY>
+<!ATTLIST externalRef
+  href CDATA #REQUIRED
+  %commonAtts; 
+>
+<!ELEMENT grammar (%grammarContent;)*>
+<!ATTLIST grammar
+  %commonAtts; 
+>
+<!ELEMENT param (#PCDATA)>
+<!ATTLIST param
+  name NMTOKEN #REQUIRED
+>
+<!ELEMENT except (%nameClass; | %pattern;)+>
+<!ATTLIST except
+  %commonAtts; 
+>
+<!ELEMENT div (%grammarContent;)*>
+<!ATTLIST div
+  %commonAtts; 
+>
+<!ELEMENT include (%includeContent;)*>
+<!ATTLIST include
+  href CDATA #REQUIRED
+  %commonAtts; 
+>
+<!ELEMENT start (%pattern;)>
+<!ATTLIST start
+  combine (%method;) #IMPLIED
+  %commonAtts; 
+>
+<!ELEMENT define (%pattern;)+>
+<!ATTLIST define
+  name NMTOKEN #REQUIRED
+  combine (%method;) #IMPLIED
+  %commonAtts; 
+>
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name
+  %commonAtts; 
+>
+<!ELEMENT anyName (%exceptNameClass;)?>
+<!ATTLIST anyName
+  %commonAtts; 
+>
+<!ELEMENT nsName (%exceptNameClass;)?>
+<!ATTLIST nsName
+  %commonAtts; 
+>
+<!-- eof for relaxng.dtd -->
