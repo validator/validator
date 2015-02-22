@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -23,7 +23,6 @@
 package nu.validator.xml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.whattf.io.DataUri;
 import org.xml.sax.EntityResolver;
@@ -32,9 +31,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.hp.hpl.jena.iri.IRI;
-import com.hp.hpl.jena.iri.IRIException;
-import com.hp.hpl.jena.iri.IRIFactory;
+import io.mola.galimatias.URL;
+import io.mola.galimatias.GalimatiasParseException;
 
 public class DataUriEntityResolver implements EntityResolver {
 
@@ -54,8 +52,6 @@ public class DataUriEntityResolver implements EntityResolver {
 
     private boolean allowGenericXml = true;
 
-    private final IRIFactory iriFactory;
-
     private final ContentTypeParser contentTypeParser;
     
     /**
@@ -65,9 +61,6 @@ public class DataUriEntityResolver implements EntityResolver {
             ErrorHandler errorHandler) {
         this.laxContentType = laxContentType;
         this.errorHandler = errorHandler;
-        this.iriFactory = new IRIFactory();
-        this.iriFactory.useSpecificationXMLSystemID(true);
-        this.iriFactory.useSchemeSpecificRules("data", true);
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
                 this.acceptAllKnownXmlTypes, this.allowGenericXml);
@@ -81,10 +74,10 @@ public class DataUriEntityResolver implements EntityResolver {
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {
         if (DataUri.startsWithData(systemId)) {
-            IRI iri;
+            URL url;
             try {
-                iri = iriFactory.construct(systemId);
-            } catch (IRIException e) {
+                url = URL.parse(systemId);
+            } catch (GalimatiasParseException e) {
                 IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
                         publicId, systemId, -1, -1, ioe);
@@ -93,17 +86,7 @@ public class DataUriEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-            try {
-                systemId = iri.toASCIIString();
-            } catch (MalformedURLException e) {
-                IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
-                SAXParseException spe = new SAXParseException(e.getMessage(),
-                        publicId, systemId, -1, -1, ioe);
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
-            }
+            systemId = url.toString();
             DataUri du = new DataUri(systemId);
             TypedInputSource is = contentTypeParser.buildTypedInputSource(systemId, publicId,
                     du.getContentType());

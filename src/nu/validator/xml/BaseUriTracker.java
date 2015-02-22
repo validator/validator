@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Mozilla Foundation
+ * Copyright (c) 2008-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -32,8 +32,8 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import com.hp.hpl.jena.iri.IRI;
-import com.hp.hpl.jena.iri.IRIFactory;
+import io.mola.galimatias.URL;
+import io.mola.galimatias.GalimatiasParseException;
 
 public class BaseUriTracker implements ContentHandler, UriLangContext {
 
@@ -42,7 +42,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     }
 
     private class Node {
-        public URI currentAbsolute; // not null
+        public URL currentAbsolute; // not null
 
         public String originalRelative; // null if no xml:base
 
@@ -56,7 +56,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
          * @param currentAbsolute
          * @param originalRelative
          */
-        public Node(URI currentAbsolute, String originalRelative, String lang,
+        public Node(URL currentAbsolute, String originalRelative, String lang,
                 boolean langSpecified, boolean rtl) {
             this.currentAbsolute = currentAbsolute;
             this.originalRelative = originalRelative;
@@ -67,8 +67,6 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     }
 
     private LinkedList<Node> stack = new LinkedList<Node>();
-
-    private final IRIFactory iriFactory;
 
     private boolean baseSeen = false;
 
@@ -111,26 +109,14 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
     }
 
     public BaseUriTracker(String systemId, String contentLanguage) {
-        this.iriFactory = new IRIFactory();
-        this.iriFactory.shouldViolation(false, false);
-        this.iriFactory.securityViolation(false, false);
-        this.iriFactory.dnsViolation(false, false);
-        this.iriFactory.mintingViolation(false, false);
-        this.iriFactory.useSpecificationIRI(false);
-        this.iriFactory.useSchemeSpecificRules("http", false);
-        this.iriFactory.useSchemeSpecificRules("https", false);
-        this.iriFactory.useSchemeSpecificRules("ftp", false);
-        this.iriFactory.useSchemeSpecificRules("data", false);
 
-        URI uri = null;
+        URL url = null;
         try {
-            IRI iri = iriFactory.construct(systemId);
-            uri = new URI(iri.toASCIIString());
-            if (!uri.isAbsolute()) {
-                uri = null;
-            }
+            url = URL.parse(systemId);
+        } catch (GalimatiasParseException e) {
+            url = null;
         } catch (Exception e) {
-            uri = null;
+            url = null;
         }
 
         String lang = "";
@@ -145,8 +131,8 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
             } catch (DatatypeException e) {
             }
         }
-        stack.add(new Node(uri, null, lang, langSpecified, false));
-        stack.add(new Node(uri, null, lang, false, false)); // base/content-language placeholder        
+        stack.add(new Node(url, null, lang, langSpecified, false));
+        stack.add(new Node(url, null, lang, false, false)); // base/content-language placeholder
     }
 
     private Node peek() {
@@ -172,7 +158,7 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         }
 
         Node curr = peek();
-        URI base = curr.currentAbsolute;
+        URL base = curr.currentAbsolute;
         if (!langSpecified) {
             lang = curr.lang;
         }
@@ -192,19 +178,19 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
         if (relative == null) {
             stack.addLast(new Node(base, null, lang, langSpecified, rtl));
         } else {
-            URI newBase;
+            URL newBase;
             String ascii = null;
             try {
-                IRI relIri = iriFactory.construct(relative);
-                ascii = relIri.toASCIIString();
                 if (base != null) {
-                    newBase = base.resolve(ascii);
-                    if (!newBase.isAbsolute()) {
+                    try {
+                        newBase = base.resolve(relative);
+                    } catch (GalimatiasParseException e) {
                         newBase = base;
                     }
                 } else {
-                    newBase = new URI(ascii);
-                    if (!newBase.isAbsolute()) {
+                    try {
+                        newBase = URL.parse((new URI(ascii)).toString());
+                    } catch (GalimatiasParseException e) {
                         newBase = null;
                     }
                 }
@@ -297,23 +283,22 @@ public class BaseUriTracker implements ContentHandler, UriLangContext {
      */
     public String toAbsoluteUriWithCurrentBase(String uri) {
         try {
-            IRI relIri = iriFactory.construct(uri);
+            URL relUrl = URL.parse(uri);
             String ascii;
-            ascii = relIri.toASCIIString();
+            ascii = relUrl.toString();
 
-            URI base = stack.getLast().currentAbsolute;
-            URI rv;
-            if (base == null) {
-                rv = new URI(ascii);
-            } else {
-                rv = base.resolve(ascii);
-
-            }
-            if (rv.isAbsolute()) {
-                return rv.toASCIIString();
-            } else {
+            URL base = stack.getLast().currentAbsolute;
+            URL rv;
+            try {
+                if (base == null) {
+                    rv = URL.parse(ascii);
+                } else {
+                    rv = base.resolve(ascii);
+                }
+            } catch (GalimatiasParseException e) {
                 return null;
             }
+            return rv.toString();
         } catch (Exception e) {
             return null;
         }

@@ -25,10 +25,6 @@ package nu.validator.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
 import nu.validator.httpclient.ssl.PromiscuousSSLProtocolSocketFactory;
@@ -54,9 +50,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.hp.hpl.jena.iri.IRI;
-import com.hp.hpl.jena.iri.IRIException;
-import com.hp.hpl.jena.iri.IRIFactory;
+import io.mola.galimatias.URL;
+import io.mola.galimatias.GalimatiasParseException;
 
 /**
  * @version $Id: PrudentHttpEntityResolver.java,v 1.1 2005/01/08 08:11:26
@@ -91,8 +86,6 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     private boolean acceptAllKnownXmlTypes = false;
 
     private boolean allowGenericXml = true;
-
-    private final IRIFactory iriFactory;
 
     private final ContentTypeParser contentTypeParser;
 
@@ -144,10 +137,6 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         this.requestsLeft = maxRequests;
         this.laxContentType = laxContentType;
         this.errorHandler = errorHandler;
-        this.iriFactory = new IRIFactory();
-        this.iriFactory.useSpecificationXMLSystemID(true);
-        this.iriFactory.useSchemeSpecificRules("http", true);
-        this.iriFactory.useSchemeSpecificRules("https", true);
         this.contentTypeParser = new ContentTypeParser(errorHandler,
                 laxContentType, this.allowRnc, this.allowHtml, this.allowXhtml,
                 this.acceptAllKnownXmlTypes, this.allowGenericXml);
@@ -169,10 +158,10 @@ public class PrudentHttpEntityResolver implements EntityResolver {
         }
         GetMethod m = null;
         try {
-            IRI iri;
+            URL url;
             try {
-                iri = iriFactory.construct(systemId);
-            } catch (IRIException e) {
+                url = URL.parse(systemId);
+            } catch (GalimatiasParseException e) {
                 IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
                 SAXParseException spe = new SAXParseException(e.getMessage(),
                         publicId, systemId, -1, -1, ioe);
@@ -181,16 +170,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-            if (!iri.isAbsolute()) {
-                SAXParseException spe = new SAXParseException(
-                        "Not an absolute URI.", publicId, systemId, -1, -1,
-                        new IOException("Not an absolute URI."));
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
-            }
-            String scheme = iri.getScheme();
+            String scheme = url.scheme();
             if (!("http".equals(scheme) || "https".equals(scheme))) {
                 String msg = "Unsupported URI scheme: \u201C" + scheme
                         + "\u201D.";
@@ -201,17 +181,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
                 }
                 throw spe;
             }
-            try {
-                systemId = iri.toASCIIString();
-            } catch (MalformedURLException e) {
-                IOException ioe = (IOException) new IOException(e.getMessage()).initCause(e);
-                SAXParseException spe = new SAXParseException(e.getMessage(),
-                        publicId, systemId, -1, -1, ioe);
-                if (errorHandler != null) {
-                    errorHandler.fatalError(spe);
-                }
-                throw spe;
-            }
+            systemId = url.toString();
             try {
                 m = new GetMethod(systemId);
             } catch (IllegalArgumentException e) {

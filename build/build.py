@@ -107,7 +107,6 @@ dependencyPackages = [
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
   ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
-  ("https://github.com/validator/validator/releases/download/dependencies/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
 ]
 
 # Unfortunately, the packages contain old versions of certain libs, so
@@ -121,7 +120,6 @@ runDependencyJars = [
   "commons-logging-1.1.1/commons-logging-api-1.1.1.jar",
   "icu4j-charset-53_1.jar",
   "icu4j-53_1.jar",
-  "iri-0.5/lib/iri.jar",
   "jetty-6.1.26/lib/servlet-api-2.5-20081211.jar",
   "jetty-6.1.26/lib/jetty-6.1.26.jar",
   "jetty-6.1.26/lib/jetty-util-6.1.26.jar",
