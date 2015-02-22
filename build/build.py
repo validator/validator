@@ -103,10 +103,10 @@ dependencyPackages = [
   ("https://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
   ("https://archive.apache.org/dist/xerces/j/Xerces-J-bin.2.9.1.zip", "a0e07ede1c3bd5231fe15eae24032b2e"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
+  ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
   ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
-  ("https://github.com/validator/validator/releases/download/dependencies/chardet.zip", "4091d24451ee9a840933bce34b9e3a55"),
   ("https://github.com/validator/validator/releases/download/dependencies/iri-0.5.zip", "87b0069e689c22ba2a2b50f4d200caca"),
   ("https://github.com/validator/validator/releases/download/dependencies/www.w3.org.zip", "167efbb410689e028129142aa3cf77ba"),
 ]
@@ -133,7 +133,7 @@ runDependencyJars = [
   "xerces-2_9_1/xml-apis.jar",
   "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
   "jing-trang/lib/isorelax.jar",
-  "mozilla/intl/chardet/java/dist/lib/chardet.jar",
+  "jchardet-1.0.jar",
   "jing-trang/lib/saxon9.jar",
   "galimatias-0.1.0.jar",
 ]
