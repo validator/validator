@@ -288,6 +288,8 @@ def buildModule(rootDir, jarName, classPath, subtrees=None):
   runJar(classDir, jarFile, sourceDir, subtrees)
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
+  removeIfDirExists(classDir)
+  removeIfDirExists(distDir)
 
 def dependencyJarPaths(depList=dependencyJars):
   dependencyDir = os.path.join(buildRoot, "dependencies")
@@ -642,6 +644,7 @@ def buildEmitters():
     sys.exit(1)
   if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter)):
     sys.exit(1)
+  removeIfDirExists(classDir)
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
@@ -943,7 +946,6 @@ def prepareLocalEntityJar():
       if os.path.exists(entPath):
         o.write("%s\t%s\n" % (url, safeName))
         shutil.copyfile(entPath, safePath)
-
   finally:
     f.close()
     o.close()
@@ -954,6 +956,7 @@ def prepareLocalEntityJar():
     removeIfExists(os.path.join(schemaDir, "html5", file))
   removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
   removeIfDirExists(os.path.join(schemaDir, "rdf"))
+  removeIfDirExists(os.path.join(buildRoot, "local-entities"))
 
 def createCssParserJS(filesDir):
   p = open(os.path.join(buildRoot, "dependencies", "parse-css.js"), 'r')
