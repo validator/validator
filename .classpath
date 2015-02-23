@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="lib" path="jars/validator.jar"/>
+	<classpathentry kind="lib" path="jars/htmlparser.jar"/>
+	<classpathentry kind="lib" path="jars/non-schema.jar"/>
+	<classpathentry kind="lib" path="dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/galimatias-0.1.0.jar"/>
+	<classpathentry kind="lib" path="dependencies/icu4j-53_1.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
+	<classpathentry kind="lib" path="dependencies/rhino1_7R5/js.jar"/>
+	<classpathentry kind="lib" path="jing-trang/build/jing.jar"/>
+</classpath>
