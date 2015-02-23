@@ -873,10 +873,6 @@ public class MediaQuery extends AbstractDatatype {
         }
     }
 
-    private boolean isNonstandardMediaFeature(String feature) {
-        return NONSTANDARD_FEATURES_TO_VALUE_TYPES.containsKey(feature);
-    }
-
     private boolean isMediaFeature(String feature) {
         return FEATURES_TO_VALUE_TYPES.containsKey(feature);
     }

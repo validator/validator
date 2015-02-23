@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * 
+ *
  * Simple command-line validator for HTML/XHTML files.
  */
 public class SimpleCommandLineValidator {
@@ -88,7 +88,7 @@ public class SimpleCommandLineValidator {
         out = System.err;
         System.setProperty("org.whattf.datatype.warn", "true");
         errorsOnly = false;
-        skipNonHTML= false;
+        skipNonHTML = false;
         forceHTML = false;
         loadEntities = false;
         noStream = false;

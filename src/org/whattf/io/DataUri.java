@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2014 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -70,9 +70,11 @@ public class DataUri {
         for (;;i++) {
             int b = is.read();
             if (b == -1) {
+                is.close();
                 throw new MalformedURLException("Premature end of URI.");
             }
             if (b >= 0x80) {
+                is.close();
                 throw new MalformedURLException(
                         "Non-ASCII character in MIME type part of the data URI.");
             }
