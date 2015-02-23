@@ -72,12 +72,13 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
-subtagRegistry = os.path.join("local-entities", "subtag-registry")
-syntaxDescriptions = os.path.join("local-entities", "syntax-descriptions")
-vnuAltAdvice = os.path.join("local-entities", "vnu-alt-advice")
-metaNameExtensions = os.path.join("local-entities", "meta-name-extensions")
-linkRelExtensions = os.path.join("local-entities", "link-rel-extensions")
-aRelExtensions = os.path.join("local-entities", "a-rel-extensions")
+filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
+subtagRegistry = os.path.join(filesDir, "subtag-registry")
+syntaxDescriptions = os.path.join(filesDir, "syntax-descriptions")
+vnuAltAdvice = os.path.join(filesDir, "vnu-alt-advice")
+metaNameExtensions = os.path.join(filesDir, "meta-name-extensions")
+linkRelExtensions = os.path.join(filesDir, "link-rel-extensions")
+aRelExtensions = os.path.join(filesDir, "a-rel-extensions")
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
 presetsFile = os.path.join("resources", "presets.txt")
@@ -889,9 +890,8 @@ def spiderApacheDirectories(baseUrl, baseDir):
     spiderApacheDirectories(directory, baseDir)
 
 def downloadLocalEntities():
-  ensureDirExists(os.path.join(buildRoot, "local-entities"))
-  removeIfDirExists(os.path.join(buildRoot, "local-entities", "www.iana.org"))
-  removeIfDirExists(os.path.join(buildRoot, "local-entities", "wiki.whatwg.org"))
+  ensureDirExists(filesDir)
+  removeIfDirExists(os.path.join(buildRoot, "local-entities"))
   fetchUrlTo("https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry", os.path.join(buildRoot, subtagRegistry))
   fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescriptions))
   fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, vnuAltAdvice))
@@ -903,22 +903,15 @@ def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
 
 def preparePropertiesFile():
-  filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
   f = open(os.path.join(filesDir, "misc.properties"), 'w')
   f.write("nu.validator.servlet.service-name=%s\n" % serviceName)
   f.write("nu.validator.servlet.results-title=%s\n" % resultsTitle)
   f.close()
 
 def prepareLocalEntityJar():
-  filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
+  ensureDirExists(filesDir)
   preparePropertiesFile()
   createCssParserJS(filesDir)
-  shutil.copyfile(os.path.join(buildRoot, subtagRegistry), os.path.join(filesDir, "subtag-registry"))
-  shutil.copyfile(os.path.join(buildRoot, syntaxDescriptions), os.path.join(filesDir, "syntax-descriptions"))
-  shutil.copyfile(os.path.join(buildRoot, vnuAltAdvice), os.path.join(filesDir, "vnu-alt-advice"))
-  shutil.copyfile(os.path.join(buildRoot, metaNameExtensions), os.path.join(filesDir, "meta-name-extensions"))
-  shutil.copyfile(os.path.join(buildRoot, linkRelExtensions), os.path.join(filesDir, "link-rel-extensions"))
-  shutil.copyfile(os.path.join(buildRoot, aRelExtensions), os.path.join(filesDir, "a-rel-extensions"))
   shutil.copyfile(os.path.join(buildRoot, presetsFile), os.path.join(filesDir, "presets"))
   shutil.copyfile(os.path.join(buildRoot, aboutFile), os.path.join(filesDir, "about.html"))
   shutil.copyfile(os.path.join(buildRoot, stylesheetFile), os.path.join(filesDir, "style.css"))
@@ -934,13 +927,11 @@ def prepareLocalEntityJar():
   try:
     for line in f:
       url, path = line.strip().split("\t")
-      entPath = None
+      entPath = ""
       if path.startswith("schema/html5/"):
         entPath = os.path.join(buildRoot, "schema", "html5", path[13:])
       elif path.startswith("schema/"):
         entPath = os.path.join(buildRoot, path)
-      else:
-        entPath = os.path.join(buildRoot, "local-entities", path)
       safeName = localPathToJarCompatName(path)
       safePath = os.path.join(filesDir, safeName)
       if os.path.exists(entPath):
@@ -956,7 +947,6 @@ def prepareLocalEntityJar():
     removeIfExists(os.path.join(schemaDir, "html5", file))
   removeIfDirExists(os.path.join(schemaDir, "xhtml10"))
   removeIfDirExists(os.path.join(schemaDir, "rdf"))
-  removeIfDirExists(os.path.join(buildRoot, "local-entities"))
 
 def createCssParserJS(filesDir):
   p = open(os.path.join(buildRoot, "dependencies", "parse-css.js"), 'r')
