@@ -73,12 +73,6 @@ html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
 filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
-subtagRegistry = os.path.join(filesDir, "subtag-registry")
-syntaxDescriptions = os.path.join(filesDir, "syntax-descriptions")
-vnuAltAdvice = os.path.join(filesDir, "vnu-alt-advice")
-metaNameExtensions = os.path.join(filesDir, "meta-name-extensions")
-linkRelExtensions = os.path.join(filesDir, "link-rel-extensions")
-aRelExtensions = os.path.join(filesDir, "a-rel-extensions")
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
 presetsFile = os.path.join("resources", "presets.txt")
@@ -890,14 +884,18 @@ def spiderApacheDirectories(baseUrl, baseDir):
     spiderApacheDirectories(directory, baseDir)
 
 def downloadLocalEntities():
-  ensureDirExists(filesDir)
   removeIfDirExists(os.path.join(buildRoot, "local-entities"))
-  fetchUrlTo("https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry", os.path.join(buildRoot, subtagRegistry))
-  fetchUrlTo("https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions", os.path.join(buildRoot, syntaxDescriptions))
-  fetchUrlTo("https://wiki.whatwg.org/wiki/Validator.nu_alt_advice", os.path.join(buildRoot, vnuAltAdvice))
-  fetchUrlTo("https://help.whatwg.org/extensions/meta-name/", os.path.join(buildRoot, metaNameExtensions))
-  fetchUrlTo("https://help.whatwg.org/extensions/link-rel/", os.path.join(buildRoot, linkRelExtensions))
-  fetchUrlTo("https://help.whatwg.org/extensions/a-rel/", os.path.join(buildRoot, aRelExtensions))
+  fileMap = {
+    "subtag-registry": "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry",
+    "syntax-descriptions": "https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions",
+    "vnu-alt-advice": "https://wiki.whatwg.org/wiki/Validator.nu_alt_advice",
+    "meta-name-extensions": "https://help.whatwg.org/extensions/meta-name/",
+    "link-rel-extensions": "https://help.whatwg.org/extensions/link-rel/",
+    "a-rel-extensions": "https://help.whatwg.org/extensions/a-rel/",
+  }
+  ensureDirExists(filesDir)
+  for filename in fileMap:
+    fetchUrlTo(fileMap[filename], os.path.join(filesDir, filename))
 
 def localPathToJarCompatName(path):
   return javaSafeNamePat.sub('_', path)
