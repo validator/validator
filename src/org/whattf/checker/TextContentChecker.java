@@ -105,7 +105,18 @@ public final class TextContentChecker extends Checker {
      */
     public void characters(char[] ch, int start, int length)
             throws SAXException {
-        inEmptyTitleOrOption = false;
+        for (int i = start; i < start + length; i++) {
+            char c = ch[i];
+            switch (c) {
+                case ' ':
+                case '\t':
+                case '\r':
+                case '\n':
+                    continue;
+                default:
+                    inEmptyTitleOrOption = false;
+            }
+        }
         for (DatatypeStreamingValidator dsv : stack) {
             if (dsv != null) {
                 dsv.addCharacters(ch, start, length);
