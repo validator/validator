@@ -696,6 +696,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
+    '-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl',
   ]
 
   if stackSize != "":
