@@ -33,7 +33,7 @@ automating your HTML checking with a frontend such as:
 
   * [Grunt plugin for HTML validation][12]
 
-  * [gulp plugin for HTML validation][13]
+  * [Gulp plugin for HTML validation][13]
 
   * [HTML5 Validator Integration for Travis CI][14] (auto-check documents pushed
   to a github repo)

@@ -93,8 +93,7 @@ body {
 <div id="banner"><h1 id="title"><a href="."><span>Nu HTML Checker</span></a></h1></div>
 
 <p>The Nu HTML Checker (v.Nu) checks HTML documents.
-
-<p>The Nu HTML Checker is an experimental tool and its behavior remains
+It is an experimental tool and its behavior remains
 subject to change. In particular, because new types of error checks
 continue to be actively added to the checker, there is no guarantee
 provided that if the checker reports zero errors for a particular document
@@ -106,42 +105,10 @@ unilaterally enforce pass/fail conformance of documents to any particular
 specifications; it is intended solely as a checker, not as a pass/fail
 certification mechanism.
 
-<p>
-To run your own copy of the Nu HTML Checker,
-<a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
-and read the following instructions on how you can use it both for:
-<ul>
-<li><a href="http://validator.github.io/validator/#web-based-checking">web-based checking of documents</a>
-<li><a href="http://validator.github.io/validator/#usage">batch-checking of documents from the command line and from other scripts/apps</a>
-</ul>
-<p>
-Alternatively, consider automating your HTML checking with a frontend such as:
-
-<ul>
-<li>
-<a href="https://github.com/jzaefferer/grunt-html">Grunt plugin for HTML validation</a>
-<li>
-<a href="https://github.com/svenkreiss/html5validator">HTML5 Validator Integration for Travis CI</a>
-(auto-check documents pushed to a github repo)
-<li>
-<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a>
-(auto-check HTML of JSFiddle/JSBin etc. links in github issue comments)
-</ul>
-
-<section id=issues>
-<h2>Reporting issues</h2>
-<p>
-If you find any bugs, want to request a new feature, or have a question
-about the Nu HTML Checker, please
-<a href="https://github.com/validator/validator/issues">report an issue</a>
-or send an e-mail message to
-<a href="mailto:www-validator@w3.org">www-validator@w3.org</a>.
-</section>
-
 <section id=extras>
 <h2>Extras</h2>
 <p>
-<a href="http://www.paciellogroup.com/blog/author/admin/">Steve Faulkner</a>
+<a href="https://twitter.com/stevefaulkner">Steve Faulkner</a>
 has created the following bookmarklets you can use in conjunction with the Nu HTML Checker.
 <ul>
 <li>
@@ -153,4 +120,74 @@ has created the following bookmarklets you can use in conjunction with the Nu HT
 filters checker results to just show messages relevant to
 <a href="http://www.paciellogroup.com/blog/2012/02/wcag-2-0-parsing-error-bookmarklet/">requirements in the WCAG 2.0 spec</a>
 </ul>
+</section>
+
+<section id=issues>
+<h2>Reporting issues</h2>
+<p>
+To report bugs, request new features, or ask questions, please
+<a href="https://github.com/validator/validator/issues">raise an issue</a>
+or send mail to
+<a href="mailto:www-validator@w3.org">www-validator@w3.org</a>.
+</section>
+
+<section id=run-your-own-copy>
+<h2>How to to run your own copy of the Nu HTML Checker</h2>
+<p>
+To run your own copy of the Nu HTML Checker,
+<a href="https://github.com/validator/validator/releases/latest">get the latest release</a>
+and read the following instructions on how you can use it both for:
+<ul>
+<li><a href="http://validator.github.io/validator/#web-based-checking">web-based checking of documents</a>
+<li><a href="http://validator.github.io/validator/#usage">batch-checking of documents from the command line and from other scripts/apps</a>
+</ul>
+<p>
+Alternatively, consider automating your HTML checking with a frontend such as:
+<ul>
+<li>
+<a href="https://github.com/jzaefferer/grunt-html">Grunt plugin for HTML validation</a>
+<li>
+<a href="https://github.com/watilde/gulp-html">Gulp plugin for HTML validation</a>
+<li>
+<a href="https://github.com/svenkreiss/html5validator">HTML5 Validator Integration for Travis CI</a>
+(auto-check documents pushed to a github repo)
+<li>
+<a href="https://github.com/cvrebert/lmvtfy/">LMVTFY: Let Me Validate That For You</a>
+(auto-check HTML of JSFiddle/JSBin etc. links in github issue comments)
+</ul>
+</section>
+
+<section id=why-validate>
+<h2>Why validate?</h2>
+<p>The core reason to run your HTML documents through a conformance checker
+is simple: To catch unintended mistakes—mistakes you might have otherwise
+missed—so that you can fix them.
+<p>
+Beyond that, some document-conformance requirements (validity rules) in the
+HTML spec are there to help you and the users of your documents avoid
+certain kinds of potential problems. To explain the rationale behind those
+requirements, the HTML spec contains these two sections:
+<ul>
+<li>
+<a href="http://www.w3.org/TR/html/introduction.html#syntax-errors">rationale for syntax-level errors</a>
+<li>
+<a href="http://www.w3.org/TR/html/introduction.html#restrictions-on-content-models-and-on-attribute-values">rationale for restrictions on content models and on attribute values</a>
+</ul>
+<p>
+To summarize what’s stated in those two sections:
+<ul>
+<li>
+There are some markup cases defined as errors because they are potential
+problems for accessibility, usability, interoperability, security, or
+maintainability—or because they can result in poor performance, or that
+might cause your
+scripts to fail in ways that are hard to troubleshoot.
+<li>
+Along with those, some markup cases are defined as errors because they can
+cause you to run into potential problems in HTML parsing and error-handling
+behavior—so that, say, you’d end up with some unintuitive, unexpected
+result in the DOM.
+</ul>
+<p>
+Validating your documents alerts you to those potential problems.
 </section>
