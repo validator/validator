@@ -107,22 +107,22 @@ dependencyPackages = [
 # can't just autodiscover all jars. Hence, an explicit list.
 
 runDependencyJars = [
+  "apache-log4j-1.2.15/log4j-1.2.15.jar",
   "commons-codec-1.4/commons-codec-1.4.jar",
+  "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
   "commons-httpclient-3.1/commons-httpclient-3.1.jar",
   "commons-logging-1.1.1/commons-logging-1.1.1.jar",
   "commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar",
   "commons-logging-1.1.1/commons-logging-api-1.1.1.jar",
+  "galimatias-0.1.0.jar",
   "icu4j-charset-53_1.jar",
   "icu4j-53_1.jar",
+  "jchardet-1.0.jar",
   "jetty-6.1.26/lib/servlet-api-2.5-20081211.jar",
   "jetty-6.1.26/lib/jetty-6.1.26.jar",
   "jetty-6.1.26/lib/jetty-util-6.1.26.jar",
   "jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar",
-  "apache-log4j-1.2.15/log4j-1.2.15.jar",
   "rhino1_7R5/js.jar",
-  "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
-  "jchardet-1.0.jar",
-  "galimatias-0.1.0.jar",
 ]
 
 buildOnlyDependencyJars = [

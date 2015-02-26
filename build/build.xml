@@ -31,7 +31,6 @@ DEALINGS IN THE SOFTWARE.
     <jar destfile="./vnu/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
-      <zipfileset src="../jing-trang/lib/isorelax.jar"/>
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
       <zipfileset src="../jing-trang/lib/xercesImpl.jar"/>
       <zipfileset src="../jing-trang/lib/xml-apis.jar"/>
@@ -146,7 +145,6 @@ DEALINGS IN THE SOFTWARE.
     </unzip>
     <copy todir="./vnu/war/lib">
       <fileset file="../jing-trang/build/jing.jar"/>
-      <fileset file="../jing-trang/lib/isorelax.jar"/>
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../jing-trang/lib/xercesImpl.jar"/>
       <fileset file="../jing-trang/lib/xml-apis.jar"/>
