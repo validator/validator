@@ -96,7 +96,6 @@ dependencyPackages = [
   ("https://archive.apache.org/dist/commons/fileupload/binaries/commons-fileupload-1.2.1-bin.zip", "975100c3f74604c0c22f68629874f868"),
   ("https://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("https://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
-  ("https://archive.apache.org/dist/xerces/j/Xerces-J-bin.2.9.1.zip", "a0e07ede1c3bd5231fe15eae24032b2e"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
@@ -121,8 +120,6 @@ runDependencyJars = [
   "jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar",
   "apache-log4j-1.2.15/log4j-1.2.15.jar",
   "rhino1_7R5/js.jar",
-  "xerces-2_9_1/xercesImpl.jar",
-  "xerces-2_9_1/xml-apis.jar",
   "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
   "jchardet-1.0.jar",
   "galimatias-0.1.0.jar",
@@ -289,7 +286,8 @@ def dependencyJarPaths(depList=dependencyJars):
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
   pathList = [os.path.join(dependencyDir, dep) for dep in depList]
-  pathList += [ os.path.join(buildRoot, "jing-trang", "lib", "saxon9.jar") ]
+  for jar in ["saxon9.jar", "xercesImpl.jar", "xml-apis.jar"]:
+    pathList += [ os.path.join(buildRoot, "jing-trang", "lib", jar) ]
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList

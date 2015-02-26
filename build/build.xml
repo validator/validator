@@ -33,6 +33,8 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../jing-trang/build/jing.jar"/>
       <zipfileset src="../jing-trang/lib/isorelax.jar"/>
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
+      <zipfileset src="../jing-trang/lib/xercesImpl.jar"/>
+      <zipfileset src="../jing-trang/lib/xml-apis.jar"/>
       <zipfileset src="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
       <zipfileset src="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
       <zipfileset src="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
@@ -49,8 +51,6 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
       <zipfileset src="../dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
       <zipfileset src="../dependencies/rhino1_7R5/js.jar"/>
-      <zipfileset src="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
-      <zipfileset src="../dependencies/xerces-2_9_1/xml-apis.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
@@ -148,6 +148,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../jing-trang/build/jing.jar"/>
       <fileset file="../jing-trang/lib/isorelax.jar"/>
       <fileset file="../jing-trang/lib/saxon9.jar"/>
+      <fileset file="../jing-trang/lib/xercesImpl.jar"/>
+      <fileset file="../jing-trang/lib/xml-apis.jar"/>
       <fileset file="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
       <fileset file="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
       <fileset file="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
@@ -161,8 +163,6 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/jchardet-1.0.jar"/>
       <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
       <fileset file="../dependencies/rhino1_7R5/js.jar"/>
-      <fileset file="../dependencies/xerces-2_9_1/xercesImpl.jar"/>
-      <fileset file="../dependencies/xerces-2_9_1/xml-apis.jar"/>
     </copy>
     <war destfile="./vnu/vnu.war" webxml="./vnu/war/web.xml">
       <lib dir="./vnu/war/lib"/>
