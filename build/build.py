@@ -124,9 +124,7 @@ runDependencyJars = [
   "xerces-2_9_1/xercesImpl.jar",
   "xerces-2_9_1/xml-apis.jar",
   "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
-  "jing-trang/lib/isorelax.jar",
   "jchardet-1.0.jar",
-  "jing-trang/lib/saxon9.jar",
   "galimatias-0.1.0.jar",
 ]
 
@@ -291,6 +289,7 @@ def dependencyJarPaths(depList=dependencyJars):
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
   pathList = [os.path.join(dependencyDir, dep) for dep in depList]
+  pathList += [ os.path.join(buildRoot, "jing-trang", "lib", "saxon9.jar") ]
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
@@ -696,7 +695,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
-    '-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl',
   ]
 
   if stackSize != "":
