@@ -166,6 +166,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             "nu.validator.spec.html5-link",
             "http://www.whatwg.org/specs/web-apps/current-work/");
 
+    private static final long MAX_MESSAGES = Integer.parseInt(System.getProperty(
+            "nu.validator.messages.limit", "1000"));
+
     private static final Map<String, String[]> validInputTypesByAttributeName = new TreeMap<String, String[]>();
 
     static {
@@ -430,7 +433,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void throwIfTooManyMessages() throws SAXException {
-        if (!batchMode && (warnings + errors > 1000)) {
+        if (!batchMode && (warnings + errors > MAX_MESSAGES)) {
             throw new TooManyErrorsException("Too many messages.");
         }
     }

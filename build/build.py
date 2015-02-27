@@ -63,6 +63,7 @@ stylesheet = None
 script = None
 serviceName = 'Validator.nu'
 resultsTitle = 'Validation results'
+messagesLimit=1000
 maxFileSize = 8192
 usePromiscuousSsl = 0
 genericHost = ''
@@ -668,6 +669,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Xmx%sk' % heap,
     '-classpath',
     classPath,
+    '-Dnu.validator.messages.limit=' + messagesLimit,
     '-Dnu.validator.servlet.read-local-log4j-properties=1',
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
@@ -1055,6 +1057,10 @@ def printHelp():
   print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
   print "  --javaversion=N.N          -- Sets the Java VM version to build for"
   print "  --name=Validator.nu        -- Sets the service name"
+  print "  --messages-limit=1000"
+  print "                                Sets the limit on the maximum number"
+  print "                                of error+warning messages to report"
+  print "                                for any document before stopping"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
   print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
@@ -1139,6 +1145,8 @@ else:
       serviceName = arg[7:]
     elif arg.startswith("--results-title="):
       resultsTitle = arg[16:]
+    elif arg.startswith("--messages-limit="):
+      messagesLimit = arg[17:]
     elif arg.startswith("--genericpath="):
       (genericHost, genericPath) = splitHostSpec(arg[14:])
     elif arg.startswith("--html5path="):
