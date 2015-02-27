@@ -669,7 +669,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Xmx%sk' % heap,
     '-classpath',
     classPath,
-    '-Dnu.validator.messages.limit=' + messagesLimit,
+    '-Dnu.validator.messages.limit=%d' % messagesLimit,
     '-Dnu.validator.servlet.read-local-log4j-properties=1',
     '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
     '-Dnu.validator.servlet.version=3',
@@ -1146,7 +1146,7 @@ else:
     elif arg.startswith("--results-title="):
       resultsTitle = arg[16:]
     elif arg.startswith("--messages-limit="):
-      messagesLimit = arg[17:]
+      messagesLimit = int(arg[17:])
     elif arg.startswith("--genericpath="):
       (genericHost, genericPath) = splitHostSpec(arg[14:])
     elif arg.startswith("--html5path="):
