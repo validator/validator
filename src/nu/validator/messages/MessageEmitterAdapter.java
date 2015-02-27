@@ -2,22 +2,22 @@
  * Copyright (c) 2005, 2006, 2007 Henri Sivonen
  * Copyright (c) 2007-2015 Mozilla Foundation
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
 
@@ -82,43 +82,74 @@ import com.thaiopensource.xml.util.Name;
 public final class MessageEmitterAdapter implements ErrorHandler {
 
     private static final Logger log4j = Logger.getLogger(MessageEmitterAdapter.class);
-    
+
     private final static Map<String, char[]> WELL_KNOWN_NAMESPACES = new HashMap<String, char[]>();
-    
+
     static {
         WELL_KNOWN_NAMESPACES.put("", "unnamespaced".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xhtml", "XHTML".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2000/svg", "SVG".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1998/Math/MathML", "MathML".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2005/Atom", "Atom".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xlink", "XLink".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://docbook.org/ns/docbook", "DocBook".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://relaxng.org/ns/structure/1.0", "RELAX NG".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/XML/1998/namespace", "XML".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/XSL/Transform", "XSLT".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/ns/xbl", "XBL2".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "XUL".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "RDF".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://purl.org/dc/elements/1.1/", "Dublin Core".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2001/XMLSchema-instance", "XML Schema Instance".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2002/06/xhtml2/", "XHTML2".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.ascc.net/xml/schematron", "Schematron".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron", "ISO Schematron".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.inkscape.org/namespaces/inkscape", "Inkscape".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd", "Sodipodi".toCharArray());
-        WELL_KNOWN_NAMESPACES.put("http://www.openmath.org/OpenMath", "OpenMath".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/", "Adobe SVG Viewer 3.0 extension".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeIllustrator/10.0/", "Adobe Illustrator 10.0".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("adobe:ns:meta/", "XMP Container".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/xap/1.0/", "XMP".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/pdf/1.3/", "Adobe PDF 1.3".toCharArray());  
-        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/tiff/1.0/", "Adobe TIFF".toCharArray());  
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xhtml",
+                "XHTML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2000/svg",
+                "SVG".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1998/Math/MathML",
+                "MathML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2005/Atom",
+                "Atom".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/xlink",
+                "XLink".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://docbook.org/ns/docbook",
+                "DocBook".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://relaxng.org/ns/structure/1.0",
+                "RELAX NG".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/XML/1998/namespace",
+                "XML".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/1999/XSL/Transform",
+                "XSLT".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/ns/xbl",
+                "XBL2".toCharArray());
+        WELL_KNOWN_NAMESPACES.put(
+                "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+                "XUL".toCharArray());
+        WELL_KNOWN_NAMESPACES.put(
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+                "RDF".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://purl.org/dc/elements/1.1/",
+                "Dublin Core".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2001/XMLSchema-instance",
+                "XML Schema Instance".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.w3.org/2002/06/xhtml2/",
+                "XHTML2".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.ascc.net/xml/schematron",
+                "Schematron".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://purl.oclc.org/dsdl/schematron",
+                "ISO Schematron".toCharArray());
+        WELL_KNOWN_NAMESPACES.put(
+                "http://www.inkscape.org/namespaces/inkscape",
+                "Inkscape".toCharArray());
+        WELL_KNOWN_NAMESPACES.put(
+                "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd",
+                "Sodipodi".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://www.openmath.org/OpenMath",
+                "OpenMath".toCharArray());
+        WELL_KNOWN_NAMESPACES.put(
+                "http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/",
+                "Adobe SVG Viewer 3.0 extension".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/AdobeIllustrator/10.0/",
+                "Adobe Illustrator 10.0".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("adobe:ns:meta/",
+                "XMP Container".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/xap/1.0/",
+                "XMP".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/pdf/1.3/",
+                "Adobe PDF 1.3".toCharArray());
+        WELL_KNOWN_NAMESPACES.put("http://ns.adobe.com/tiff/1.0/",
+                "Adobe TIFF".toCharArray());
     }
-    
+
     private final static Map<Class, DocumentFragment> HTML5_DATATYPE_ADVICE = new HashMap<Class, DocumentFragment>();
-    
+
     private final static DocumentFragment IMAGE_REPORT_GENERAL;
-    
+
     private final static DocumentFragment IMAGE_REPORT_EMPTY;
 
     private final static DocumentFragment NO_ALT_NO_LINK_ADVICE;
@@ -130,7 +161,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final static DocumentFragment HAS_ALT_ADVICE;
 
     private final static DocumentFragment IMAGE_REPORT_FATAL;
-    
+
     private static final String SPEC_LINK_URI = System.getProperty(
             "nu.validator.spec.html5-link",
             "http://www.whatwg.org/specs/web-apps/current-work/");
@@ -265,7 +296,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             throw new RuntimeException(e);
         }
     }
-    
+
     private final static char[] INDETERMINATE_MESSAGE = "The result cannot be determined due to a non-document-error.".toCharArray();
 
     private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_BEFORE = "Attributes for element ".toCharArray();
@@ -273,65 +304,65 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final static char[] ELEMENT_SPECIFIC_ATTRIBUTES_AFTER = ":".toCharArray();
 
     private final static char[] CONTENT_MODEL_BEFORE = "Content model for element ".toCharArray();
-    
+
     private final static char[] CONTENT_MODEL_AFTER = ":".toCharArray();
 
     private final static char[] CONTEXT_BEFORE = "Contexts in which element ".toCharArray();
-    
+
     private final static char[] CONTEXT_AFTER = " may be used:".toCharArray();
 
     private final static char[] BAD_VALUE = "Bad value ".toCharArray();
 
     private final static char[] POTENTIALLY_BAD_VALUE = "Potentially bad value ".toCharArray();
-    
+
     private final static char[] FOR = " for ".toCharArray();
 
     private final static char[] ATTRIBUTE = "attribute ".toCharArray();
 
     private final static char[] FROM_NAMESPACE = " from namespace ".toCharArray();
-    
+
     private final static char[] SPACE = " ".toCharArray();
-    
+
     private final static char[] ON = " on ".toCharArray();
 
     private final static char[] ELEMENT = "element ".toCharArray();
-    
+
     private final static char[] PERIOD = ".".toCharArray();
 
-    private final static char[] COMMA  = ", ".toCharArray();
+    private final static char[] COMMA = ", ".toCharArray();
 
     private final static char[] COLON = ":".toCharArray();
 
     private final static char[] NOT_ALLOWED_ON = " not allowed on ".toCharArray();
-    
+
     private final static char[] AT_THIS_POINT = " at this point.".toCharArray();
 
     private final static char[] ONLY_TEXT = " is not allowed to have content that consists solely of text.".toCharArray();
-    
+
     private final static char[] NOT_ALLOWED = " not allowed".toCharArray();
 
     private final static char[] AS_CHILD_OF = " as child of ".toCharArray();
-    
+
     private final static char[] IN_THIS_CONTEXT_SUPPRESSING = " in this context. (Suppressing further errors from this subtree.)".toCharArray();
-    
+
     private final static char[] REQUIRED_ATTRIBUTES_MISSING = " is missing required attribute ".toCharArray();
 
     private final static char[] REQUIRED_ATTRIBUTES_MISSING_ONE_OF = " is missing one or more of the following attributes: ".toCharArray();
 
     private final static char[] REQUIRED_ELEMENTS_MISSING = "Required elements missing.".toCharArray();
-    
+
     private final static char[] IS_MISSING_A_REQUIRED_CHILD = " is missing a required child element".toCharArray();
 
     private final static char[] REQUIRED_CHILDREN_MISSING_FROM = " is missing a required instance of child element ".toCharArray();
-    
+
     private final static char[] REQUIRED_CHILDREN_MISSING_ONE_OF_FROM = " is missing a required instance of one or more of the following child elements: ".toCharArray();
-    
+
     private final static char[] BAD_CHARACTER_CONTENT = "Bad character content ".toCharArray();
 
     private final static char[] IN_THIS_CONTEXT = " in this context.".toCharArray();
-    
+
     private final static char[] TEXT_NOT_ALLOWED_IN = "Text not allowed in ".toCharArray();
-    
+
     private final static char[] UNKNOWN = "Unknown ".toCharArray();
 
     private static final char[] NO_ALT_NO_LINK_HEADING = "No textual alternative available, not linked".toCharArray();
@@ -341,10 +372,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private static final char[] EMPTY_ALT = "Empty textual alternative\u2014Omitted from non-graphical presentation".toCharArray();
 
     private static final char[] HAS_ALT = "Images with textual alternative".toCharArray();
-    
+
     private final AttributesImpl attributesImpl = new AttributesImpl();
-    
-    private final char[] oneChar = {'\u0000'};
+
+    private final char[] oneChar = { '\u0000' };
 
     private int warnings = 0;
 
@@ -363,17 +394,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     private final ExactErrorHandler exactErrorHandler;
 
     private final boolean showSource;
-    
+
     private final ImageCollector imageCollector;
-    
+
     private final int lineOffset;
 
     private Spec spec = EmptySpec.THE_INSTANCE;
-    
+
     private boolean html = false;
 
     private boolean loggingOk = false;
-    
+
     private boolean errorsOnly = false;
 
     protected static String scrub(String s) throws SAXException {
@@ -386,7 +417,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
         return Normalizer.normalize(s, Normalizer.NFC, 0);
     }
-    
+
     private StringBuilder zapLf(StringBuilder builder) {
         int len = builder.length();
         for (int i = 0; i < len; i++) {
@@ -403,8 +434,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             throw new TooManyErrorsException("Too many messages.");
         }
     }
-    
-    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource, ImageCollector imageCollector, int lineOffset, boolean batchMode,
+
+    public MessageEmitterAdapter(SourceCode sourceCode, boolean showSource,
+            ImageCollector imageCollector, int lineOffset, boolean batchMode,
             MessageEmitter messageEmitter) {
         super();
         this.sourceCode = sourceCode;
@@ -541,7 +573,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @see nu.validator.servlet.InfoErrorHandler#info(java.lang.String)
      */
     public void info(String str) throws SAXException {
-        if (emitter instanceof GnuMessageEmitter) return;
+        if (emitter instanceof GnuMessageEmitter)
+            return;
         message(MessageType.INFO, new Exception(str), null, -1, -1, false);
     }
 
@@ -622,18 +655,19 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             boolean fatal = false;
             if (getFatalErrors() > 0) {
                 fatal = true;
-                instruction = IMAGE_REPORT_FATAL;            
+                instruction = IMAGE_REPORT_FATAL;
             } else if (imageCollector.isEmpty()) {
                 instruction = IMAGE_REPORT_EMPTY;
             }
-            
-            ImageReviewHandler imageReviewHandler = emitter.startImageReview(instruction, fatal);
+
+            ImageReviewHandler imageReviewHandler = emitter.startImageReview(
+                    instruction, fatal);
             if (imageReviewHandler != null && !fatal) {
                 emitImageReview(imageReviewHandler);
             }
             emitter.endImageReview();
         }
-        
+
         if (showSource) {
             SourceHandler sourceHandler = emitter.startFullSource(lineOffset);
             if (sourceHandler != null) {
@@ -644,7 +678,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         emitter.endMessages();
     }
 
-    private void emitImageReview(ImageReviewHandler imageReviewHandler) throws SAXException {
+    private void emitImageReview(ImageReviewHandler imageReviewHandler)
+            throws SAXException {
         List<Image> noAltNoLink = new LinkedList<Image>();
         List<Image> noAltLink = new LinkedList<Image>();
         List<Image> emptyAlt = new LinkedList<Image>();
@@ -664,30 +699,36 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 hasAlt.add(image);
             }
         }
-        
-        emitImageList(imageReviewHandler, noAltLink, NO_ALT_LINK_HEADING, NO_ALT_LINK_ADVICE, false);
-        emitImageList(imageReviewHandler, noAltNoLink, NO_ALT_NO_LINK_HEADING, NO_ALT_NO_LINK_ADVICE, false);
-        emitImageList(imageReviewHandler, emptyAlt, EMPTY_ALT, EMPTY_ALT_ADVICE, false);
+
+        emitImageList(imageReviewHandler, noAltLink, NO_ALT_LINK_HEADING,
+                NO_ALT_LINK_ADVICE, false);
+        emitImageList(imageReviewHandler, noAltNoLink, NO_ALT_NO_LINK_HEADING,
+                NO_ALT_NO_LINK_ADVICE, false);
+        emitImageList(imageReviewHandler, emptyAlt, EMPTY_ALT,
+                EMPTY_ALT_ADVICE, false);
         emitImageList(imageReviewHandler, hasAlt, HAS_ALT, HAS_ALT_ADVICE, true);
     }
 
     private void emitImageList(ImageReviewHandler imageReviewHandler,
-            List<Image> list, char[] heading, DocumentFragment instruction, boolean hasAlt) throws SAXException {
+            List<Image> list, char[] heading, DocumentFragment instruction,
+            boolean hasAlt) throws SAXException {
         if (!list.isEmpty()) {
             imageReviewHandler.startImageGroup(heading, instruction, hasAlt);
             for (Image image : list) {
                 String systemId = image.getSystemId();
                 int oneBasedLine = image.getLineNumber();
                 int oneBasedColumn = image.getColumnNumber();
-                Location rangeLast = sourceCode.newLocatorLocation(oneBasedLine,
-                        oneBasedColumn);
+                Location rangeLast = sourceCode.newLocatorLocation(
+                        oneBasedLine, oneBasedColumn);
                 if (sourceCode.isWithinKnownSource(rangeLast)) {
                     Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
-                    imageReviewHandler.image(image, hasAlt, systemId, rangeStart.getLine() + 1,
-                            rangeStart.getColumn() + 1, oneBasedLine, oneBasedColumn); 
+                    imageReviewHandler.image(image, hasAlt, systemId,
+                            rangeStart.getLine() + 1,
+                            rangeStart.getColumn() + 1, oneBasedLine,
+                            oneBasedColumn);
                 } else {
-                    imageReviewHandler.image(image, hasAlt, systemId, -1,
-                            -1, -1, -1);                     
+                    imageReviewHandler.image(image, hasAlt, systemId, -1, -1,
+                            -1, -1);
                 }
             }
             imageReviewHandler.endImageGroup();
@@ -762,8 +803,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     private void messageWithExact(MessageType type, Exception message,
             int oneBasedLine, int oneBasedColumn) throws SAXException {
-        startMessage(type, null, oneBasedLine, oneBasedColumn,
-                oneBasedLine, oneBasedColumn, true);
+        startMessage(type, null, oneBasedLine, oneBasedColumn, oneBasedLine,
+                oneBasedColumn, true);
         messageText(message);
         Location location = sourceCode.newLocatorLocation(oneBasedLine,
                 oneBasedColumn);
@@ -785,8 +826,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         if (!sourceCode.isWithinKnownSource(oneBasedLine)) {
             throw new RuntimeException("Bug. Line out of range!");
         }
-        startMessage(type, null, oneBasedLine, -1, oneBasedLine, -1,
-                false);
+        startMessage(type, null, oneBasedLine, -1, oneBasedLine, -1, false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
         if (sourceHandler != null) {
@@ -864,9 +904,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         emitter.endText();
     }
 
-    @SuppressWarnings("unchecked")
-    private void rngMessageText(AbstractValidationException e)
-            throws SAXException {
+    @SuppressWarnings("unchecked") private void rngMessageText(
+            AbstractValidationException e) throws SAXException {
         MessageTextHandler messageTextHandler = emitter.startText();
         if (messageTextHandler != null) {
             if (e instanceof BadAttributeValueException) {
@@ -892,82 +931,95 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     codeString(messageTextHandler, ex.getAttributeValue());
                 }
                 messageTextString(messageTextHandler, FOR, false);
-                attribute(messageTextHandler, ex.getAttributeName(), ex.getCurrentElement(), false);
+                attribute(messageTextHandler, ex.getAttributeName(),
+                        ex.getCurrentElement(), false);
                 messageTextString(messageTextHandler, ON, false);
                 element(messageTextHandler, ex.getCurrentElement(), false);
                 emitDatatypeErrors(messageTextHandler, ex.getExceptions());
             } else if (e instanceof ImpossibleAttributeIgnoredException) {
                 ImpossibleAttributeIgnoredException ex = (ImpossibleAttributeIgnoredException) e;
-                attribute(messageTextHandler, ex.getAttributeName(), ex.getCurrentElement(), true);
+                attribute(messageTextHandler, ex.getAttributeName(),
+                        ex.getCurrentElement(), true);
                 messageTextString(messageTextHandler, NOT_ALLOWED_ON, false);
                 element(messageTextHandler, ex.getCurrentElement(), false);
-                messageTextString(messageTextHandler, AT_THIS_POINT, false);                
+                messageTextString(messageTextHandler, AT_THIS_POINT, false);
             } else if (e instanceof OnlyTextNotAllowedException) {
                 OnlyTextNotAllowedException ex = (OnlyTextNotAllowedException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
-                messageTextString(messageTextHandler, ONLY_TEXT, false);                                
+                messageTextString(messageTextHandler, ONLY_TEXT, false);
             } else if (e instanceof OutOfContextElementException) {
                 OutOfContextElementException ex = (OutOfContextElementException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
-                messageTextString(messageTextHandler, NOT_ALLOWED, false);                                
+                messageTextString(messageTextHandler, NOT_ALLOWED, false);
                 if (ex.getParent() != null) {
-                    messageTextString(messageTextHandler, AS_CHILD_OF, false);                                
-                    element(messageTextHandler, ex.getParent(), false);                    
+                    messageTextString(messageTextHandler, AS_CHILD_OF, false);
+                    element(messageTextHandler, ex.getParent(), false);
                 }
-                messageTextString(messageTextHandler, IN_THIS_CONTEXT_SUPPRESSING, false);                                                
+                messageTextString(messageTextHandler,
+                        IN_THIS_CONTEXT_SUPPRESSING, false);
             } else if (e instanceof RequiredAttributesMissingOneOfException) {
                 RequiredAttributesMissingOneOfException ex = (RequiredAttributesMissingOneOfException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
-                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING_ONE_OF, false);
+                messageTextString(messageTextHandler,
+                        REQUIRED_ATTRIBUTES_MISSING_ONE_OF, false);
                 for (Iterator<String> iter = ex.getAttributeLocalNames().iterator(); iter.hasNext();) {
                     codeString(messageTextHandler, iter.next());
                     if (iter.hasNext()) {
                         messageTextString(messageTextHandler, COMMA, false);
                     }
                 }
-                messageTextString(messageTextHandler, PERIOD, false);                                                                                
+                messageTextString(messageTextHandler, PERIOD, false);
             } else if (e instanceof RequiredAttributesMissingException) {
                 RequiredAttributesMissingException ex = (RequiredAttributesMissingException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
-                messageTextString(messageTextHandler, REQUIRED_ATTRIBUTES_MISSING, false);
+                messageTextString(messageTextHandler,
+                        REQUIRED_ATTRIBUTES_MISSING, false);
                 codeString(messageTextHandler, ex.getAttributeLocalName());
-                messageTextString(messageTextHandler, PERIOD, false);                                                                                
+                messageTextString(messageTextHandler, PERIOD, false);
             } else if (e instanceof RequiredElementsMissingException) {
                 RequiredElementsMissingException ex = (RequiredElementsMissingException) e;
                 if (ex.getParent() == null) {
-                    messageTextString(messageTextHandler, REQUIRED_ELEMENTS_MISSING, false);
+                    messageTextString(messageTextHandler,
+                            REQUIRED_ELEMENTS_MISSING, false);
                 } else {
                     element(messageTextHandler, ex.getParent(), true);
                     if (ex.getMissingElementName() == null) {
-                        messageTextString(messageTextHandler, IS_MISSING_A_REQUIRED_CHILD, false);
+                        messageTextString(messageTextHandler,
+                                IS_MISSING_A_REQUIRED_CHILD, false);
                     } else {
-                        messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
-                        codeString(messageTextHandler, ex.getMissingElementName());
+                        messageTextString(messageTextHandler,
+                                REQUIRED_CHILDREN_MISSING_FROM, false);
+                        codeString(messageTextHandler,
+                                ex.getMissingElementName());
                     }
-                    messageTextString(messageTextHandler, PERIOD, false);                    
+                    messageTextString(messageTextHandler, PERIOD, false);
                 }
             } else if (e instanceof StringNotAllowedException) {
                 StringNotAllowedException ex = (StringNotAllowedException) e;
-                messageTextString(messageTextHandler, BAD_CHARACTER_CONTENT, false);     
+                messageTextString(messageTextHandler, BAD_CHARACTER_CONTENT,
+                        false);
                 codeString(messageTextHandler, ex.getValue());
-                messageTextString(messageTextHandler, FOR, false);                     
+                messageTextString(messageTextHandler, FOR, false);
                 element(messageTextHandler, ex.getCurrentElement(), false);
                 emitDatatypeErrors(messageTextHandler, ex.getExceptions());
             } else if (e instanceof TextNotAllowedException) {
                 TextNotAllowedException ex = (TextNotAllowedException) e;
-                messageTextString(messageTextHandler, TEXT_NOT_ALLOWED_IN, false);     
+                messageTextString(messageTextHandler, TEXT_NOT_ALLOWED_IN,
+                        false);
                 element(messageTextHandler, ex.getCurrentElement(), false);
-                messageTextString(messageTextHandler, IN_THIS_CONTEXT, false);                     
+                messageTextString(messageTextHandler, IN_THIS_CONTEXT, false);
             } else if (e instanceof UnfinishedElementException) {
                 UnfinishedElementException ex = (UnfinishedElementException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
                 if (ex.getMissingElementName() == null) {
-                    messageTextString(messageTextHandler, IS_MISSING_A_REQUIRED_CHILD, false);
+                    messageTextString(messageTextHandler,
+                            IS_MISSING_A_REQUIRED_CHILD, false);
                 } else {
-                    messageTextString(messageTextHandler, REQUIRED_CHILDREN_MISSING_FROM, false);
+                    messageTextString(messageTextHandler,
+                            REQUIRED_CHILDREN_MISSING_FROM, false);
                     codeString(messageTextHandler, ex.getMissingElementName());
                 }
-                messageTextString(messageTextHandler, PERIOD, false);                                    
+                messageTextString(messageTextHandler, PERIOD, false);
             } else if (e instanceof UnfinishedElementOneOfException) {
                 UnfinishedElementOneOfException ex = (UnfinishedElementOneOfException) e;
                 element(messageTextHandler, ex.getCurrentElement(), true);
@@ -982,7 +1034,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                         }
                     }
                 }
-                messageTextString(messageTextHandler, PERIOD, false);                                    
+                messageTextString(messageTextHandler, PERIOD, false);
             } else if (e instanceof RequiredElementsMissingOneOfException) {
                 RequiredElementsMissingOneOfException ex = (RequiredElementsMissingOneOfException) e;
                 element(messageTextHandler, ex.getParent(), true);
@@ -997,17 +1049,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                         }
                     }
                 }
-                messageTextString(messageTextHandler, PERIOD, false);                                    
+                messageTextString(messageTextHandler, PERIOD, false);
             } else if (e instanceof UnknownElementException) {
                 UnknownElementException ex = (UnknownElementException) e;
-                messageTextString(messageTextHandler, UNKNOWN, false);                                                
+                messageTextString(messageTextHandler, UNKNOWN, false);
                 element(messageTextHandler, ex.getCurrentElement(), false);
-                messageTextString(messageTextHandler, NOT_ALLOWED, false);                                
+                messageTextString(messageTextHandler, NOT_ALLOWED, false);
                 if (ex.getParent() != null) {
-                    messageTextString(messageTextHandler, AS_CHILD_OF, false);                                
-                    element(messageTextHandler, ex.getParent(), false);                    
+                    messageTextString(messageTextHandler, AS_CHILD_OF, false);
+                    element(messageTextHandler, ex.getParent(), false);
                 }
-                messageTextString(messageTextHandler, PERIOD, false);                                                    
+                messageTextString(messageTextHandler, PERIOD, false);
             }
         }
         emitter.endText();
@@ -1018,11 +1070,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @param datatypeErrors
      * @throws SAXException
      */
-    private void emitDatatypeErrors(MessageTextHandler messageTextHandler, Map<String, DatatypeException> datatypeErrors) throws SAXException {
+    private void emitDatatypeErrors(MessageTextHandler messageTextHandler,
+            Map<String, DatatypeException> datatypeErrors) throws SAXException {
         if (datatypeErrors.isEmpty()) {
-            messageTextString(messageTextHandler, PERIOD, false);                    
+            messageTextString(messageTextHandler, PERIOD, false);
         } else {
-            messageTextString(messageTextHandler, COLON, false);                    
+            messageTextString(messageTextHandler, COLON, false);
             for (Map.Entry<String, DatatypeException> entry : datatypeErrors.entrySet()) {
                 messageTextString(messageTextHandler, SPACE, false);
                 DatatypeException ex = entry.getValue();
@@ -1032,46 +1085,57 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                     for (int i = 0; i < segments.length; i++) {
                         String segment = segments[i];
                         if (i % 2 == 0) {
-                            emitStringWithQurlyQuotes(messageTextHandler, segment);                            
+                            emitStringWithQurlyQuotes(messageTextHandler,
+                                    segment);
                         } else {
                             String scrubbed = scrub(segment);
                             messageTextHandler.startCode();
-                            messageTextHandler.characters(scrubbed.toCharArray(), 0, scrubbed.length());
+                            messageTextHandler.characters(
+                                    scrubbed.toCharArray(), 0,
+                                    scrubbed.length());
                             messageTextHandler.endCode();
                         }
                     }
                 } else {
-                    emitStringWithQurlyQuotes(messageTextHandler, ex.getMessage());
+                    emitStringWithQurlyQuotes(messageTextHandler,
+                            ex.getMessage());
                 }
             }
         }
     }
 
-    private void element(MessageTextHandler messageTextHandler, Name element, boolean atSentenceStart) throws SAXException {
+    private void element(MessageTextHandler messageTextHandler, Name element,
+            boolean atSentenceStart) throws SAXException {
         if (html) {
             messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
-            linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));
+            linkedCodeString(messageTextHandler, element.getLocalName(),
+                    spec.elementLink(element));
         } else {
             String ns = element.getNamespaceUri();
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
                 if (loggingOk) {
-                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(
+                            ns));
                 }
                 messageTextString(messageTextHandler, ELEMENT, atSentenceStart);
-                linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));
+                linkedCodeString(messageTextHandler, element.getLocalName(),
+                        spec.elementLink(element));
                 messageTextString(messageTextHandler, FROM_NAMESPACE, false);
                 codeString(messageTextHandler, ns);
             } else {
-                messageTextString(messageTextHandler, humanReadable, atSentenceStart);
+                messageTextString(messageTextHandler, humanReadable,
+                        atSentenceStart);
                 messageTextString(messageTextHandler, SPACE, false);
                 messageTextString(messageTextHandler, ELEMENT, false);
-                linkedCodeString(messageTextHandler, element.getLocalName(), spec.elementLink(element));                
+                linkedCodeString(messageTextHandler, element.getLocalName(),
+                        spec.elementLink(element));
             }
         }
     }
 
-    private void linkedCodeString(MessageTextHandler messageTextHandler, String str, String url) throws SAXException {
+    private void linkedCodeString(MessageTextHandler messageTextHandler,
+            String str, String url) throws SAXException {
         if (url != null) {
             messageTextHandler.startLink(url, null);
         }
@@ -1082,26 +1146,32 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     }
 
-    private void attribute(MessageTextHandler messageTextHandler, Name attributeName, Name elementName, boolean atSentenceStart) throws SAXException {
+    private void attribute(MessageTextHandler messageTextHandler,
+            Name attributeName, Name elementName, boolean atSentenceStart)
+            throws SAXException {
         String ns = attributeName.getNamespaceUri();
         if (html || "".equals(ns)) {
             messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
             codeString(messageTextHandler, attributeName.getLocalName());
         } else if ("http://www.w3.org/XML/1998/namespace".equals(ns)) {
             messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
-            codeString(messageTextHandler, "xml:" + attributeName.getLocalName());            
+            codeString(messageTextHandler,
+                    "xml:" + attributeName.getLocalName());
         } else {
             char[] humanReadable = WELL_KNOWN_NAMESPACES.get(ns);
             if (humanReadable == null) {
                 if (loggingOk) {
-                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(ns));
+                    log4j.info(new StringBuilder().append("UNKNOWN_NS:\t").append(
+                            ns));
                 }
-                messageTextString(messageTextHandler, ATTRIBUTE, atSentenceStart);
+                messageTextString(messageTextHandler, ATTRIBUTE,
+                        atSentenceStart);
                 codeString(messageTextHandler, attributeName.getLocalName());
                 messageTextString(messageTextHandler, FROM_NAMESPACE, false);
-                codeString(messageTextHandler, ns);                
+                codeString(messageTextHandler, ns);
             } else {
-                messageTextString(messageTextHandler, humanReadable, atSentenceStart);
+                messageTextString(messageTextHandler, humanReadable,
+                        atSentenceStart);
                 messageTextString(messageTextHandler, SPACE, false);
                 messageTextString(messageTextHandler, ATTRIBUTE, false);
                 codeString(messageTextHandler, attributeName.getLocalName());
@@ -1109,26 +1179,29 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    private void codeString(MessageTextHandler messageTextHandler, String str) throws SAXException {
+    private void codeString(MessageTextHandler messageTextHandler, String str)
+            throws SAXException {
         messageTextHandler.startCode();
         messageTextHandler.characters(str.toCharArray(), 0, str.length());
         messageTextHandler.endCode();
     }
 
-    private void messageTextString(MessageTextHandler messageTextHandler, char[] ch, boolean capitalize) throws SAXException {
+    private void messageTextString(MessageTextHandler messageTextHandler,
+            char[] ch, boolean capitalize) throws SAXException {
         if (capitalize && ch[0] >= 'a' && ch[0] <= 'z') {
             oneChar[0] = (char) (ch[0] - 0x20);
             messageTextHandler.characters(oneChar, 0, 1);
             if (ch.length > 1) {
-                messageTextHandler.characters(ch, 1, ch.length - 1);                
+                messageTextHandler.characters(ch, 1, ch.length - 1);
             }
         } else {
             messageTextHandler.characters(ch, 0, ch.length);
         }
     }
 
-    private void emitStringWithQurlyQuotes(MessageTextHandler messageTextHandler,
-            String message) throws SAXException {
+    private void emitStringWithQurlyQuotes(
+            MessageTextHandler messageTextHandler, String message)
+            throws SAXException {
         if (message == null) {
             message = "";
         }
@@ -1165,11 +1238,10 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private void elaboration(Exception e) throws SAXException {
+    @SuppressWarnings("unchecked") private void elaboration(Exception e)
+            throws SAXException {
         if (!(e instanceof AbstractValidationException
-                || e instanceof VnuBadAttrValueException
-                || e instanceof DatatypeMismatchException)) {
+                || e instanceof VnuBadAttrValueException || e instanceof DatatypeMismatchException)) {
             return;
         }
 
@@ -1241,14 +1313,15 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    private void elaborateDatatypes(Map<String, DatatypeException> map) throws SAXException {
+    private void elaborateDatatypes(Map<String, DatatypeException> map)
+            throws SAXException {
         Set<DocumentFragment> fragments = new HashSet<DocumentFragment>();
         for (Map.Entry<String, DatatypeException> entry : map.entrySet()) {
             DatatypeException ex = entry.getValue();
             if (ex instanceof Html5DatatypeException) {
                 Html5DatatypeException ex5 = (Html5DatatypeException) ex;
                 DocumentFragment fragment = HTML5_DATATYPE_ADVICE.get(ex5.getDatatypeClass());
-                if (fragment != null) { 
+                if (fragment != null) {
                     fragments.add(fragment);
                 }
             }
@@ -1258,14 +1331,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             if (ch != null) {
                 TreeParser treeParser = new TreeParser(ch, null);
                 XhtmlSaxEmitter xhtmlSaxEmitter = new XhtmlSaxEmitter(ch);
-                xhtmlSaxEmitter.startElement("dl");                
+                xhtmlSaxEmitter.startElement("dl");
                 for (DocumentFragment fragment : fragments) {
                     treeParser.parse(fragment);
                 }
                 xhtmlSaxEmitter.endElement("dl");
             }
             emitter.endElaboration();
-            
+
         }
     }
 
@@ -1312,13 +1385,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             emitter.endElaboration();
         }
     }
-    
+
     /**
      * @param elt
      * @throws SAXException
      */
-    private void elaborateElementSpecificAttributes(Name elt) throws SAXException {
-       this.elaborateElementSpecificAttributes(elt, null);
+    private void elaborateElementSpecificAttributes(Name elt)
+            throws SAXException {
+        this.elaborateElementSpecificAttributes(elt, null);
     }
 
     private void elaborateElementSpecificAttributes(Name elt, Name attribute)
@@ -1347,7 +1421,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    private void emitElementSpecificAttributesDt(XhtmlSaxEmitter xhtmlSaxEmitter, Name elt) throws SAXException {
+    private void emitElementSpecificAttributesDt(
+            XhtmlSaxEmitter xhtmlSaxEmitter, Name elt) throws SAXException {
         xhtmlSaxEmitter.startElement("dt");
         xhtmlSaxEmitter.characters(ELEMENT_SPECIFIC_ATTRIBUTES_BEFORE);
         emitLinkifiedLocalName(xhtmlSaxEmitter, elt);
@@ -1355,16 +1430,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         xhtmlSaxEmitter.endElement("dt");
     }
 
-    private void emitContextDt(XhtmlSaxEmitter xhtmlSaxEmitter, Name elt) throws SAXException {
+    private void emitContextDt(XhtmlSaxEmitter xhtmlSaxEmitter, Name elt)
+            throws SAXException {
         xhtmlSaxEmitter.startElement("dt");
         xhtmlSaxEmitter.characters(CONTEXT_BEFORE);
         emitLinkifiedLocalName(xhtmlSaxEmitter, elt);
         xhtmlSaxEmitter.characters(CONTEXT_AFTER);
         xhtmlSaxEmitter.endElement("dt");
     }
-    
-    private void emitContentModelDt(
-            XhtmlSaxEmitter xhtmlSaxEmitter, Name elt) throws SAXException {
+
+    private void emitContentModelDt(XhtmlSaxEmitter xhtmlSaxEmitter, Name elt)
+            throws SAXException {
         xhtmlSaxEmitter.startElement("dt");
         xhtmlSaxEmitter.characters(CONTENT_MODEL_BEFORE);
         emitLinkifiedLocalName(xhtmlSaxEmitter, elt);
@@ -1372,7 +1448,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         xhtmlSaxEmitter.endElement("dt");
     }
 
-    private void emitLinkifiedLocalName(XhtmlSaxEmitter xhtmlSaxEmitter, Name elt) throws SAXException {
+    private void emitLinkifiedLocalName(XhtmlSaxEmitter xhtmlSaxEmitter,
+            Name elt) throws SAXException {
         String url = spec.elementLink(elt);
         if (url != null) {
             attributesImpl.clear();
@@ -1408,14 +1485,15 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             attributesImpl.addAttribute("class", "inputattrname");
             xhtmlSaxEmitter.startElement("code", attributesImpl);
             attributesImpl.clear();
-            attributesImpl.addAttribute("href", SPEC_LINK_URI
-                    + entry.getValue()[0]);
+            attributesImpl.addAttribute("href",
+                    SPEC_LINK_URI + entry.getValue()[0]);
             xhtmlSaxEmitter.startElement("a", attributesImpl);
             addText(xhtmlSaxEmitter, attributeName);
             xhtmlSaxEmitter.endElement("a");
             xhtmlSaxEmitter.endElement("code");
             attributesImpl.addAttribute("class", "inputattrtypes");
-            if (badAttribute != null && attributeName.equals(badAttribute.getLocalName())) {
+            if (badAttribute != null
+                    && attributeName.equals(badAttribute.getLocalName())) {
                 listInputTypesForAttribute(xhtmlSaxEmitter, attributeName, true);
             } else {
                 listInputTypesForAttribute(xhtmlSaxEmitter, attributeName,
@@ -1430,8 +1508,8 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             String attributeName, boolean bad) throws SAXException {
         String[] typeNames = validInputTypesByAttributeName.get(attributeName);
         int typeCount = typeNames.length;
-        String wrapper = (bad? "b" : "span");
-        String highlight = (bad? " highlight" : "");
+        String wrapper = (bad ? "b" : "span");
+        String highlight = (bad ? " highlight" : "");
         if (typeCount > 1 || "value".equals(attributeName)) {
             addText(xhtmlSaxEmitter, " ");
             AttributesImpl attributesImpl = new AttributesImpl();
@@ -1516,7 +1594,7 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     /**
      * Returns the exactErrorHandler.
-     * 
+     *
      * @return the exactErrorHandler
      */
     public ErrorHandler getExactErrorHandler() {
@@ -1525,8 +1603,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     /**
      * Sets the spec.
-     * 
-     * @param spec the spec to set
+     *
+     * @param spec
+     *            the spec to set
      */
     public void setSpec(Spec spec) {
         this.spec = spec;
@@ -1534,8 +1613,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     /**
      * Sets the html.
-     * 
-     * @param html the html to set
+     *
+     * @param html
+     *            the html to set
      */
     public void setHtml(boolean html) {
         this.html = html;
@@ -1547,8 +1627,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
 
     /**
      * Sets the errorsOnly.
-     * 
-     * @param errorsOnly the errorsOnly to set
+     *
+     * @param errorsOnly
+     *            the errorsOnly to set
      */
     public void setErrorsOnly(boolean errorsOnly) {
         this.errorsOnly = errorsOnly;
@@ -1571,14 +1652,16 @@ public final class MessageEmitterAdapter implements ErrorHandler {
      * @param oneBasedLastColumn
      * @param exact
      * @throws SAXException
-     * @see nu.validator.messages.MessageEmitter#startMessage(nu.validator.messages.types.MessageType, java.lang.String, int, int, int, int, boolean)
+     * @see nu.validator.messages.MessageEmitter#startMessage(nu.validator.messages.types.MessageType,
+     *      java.lang.String, int, int, int, int, boolean)
      */
     public void startMessage(MessageType type, String systemId,
             int oneBasedFirstLine, int oneBasedFirstColumn,
             int oneBasedLastLine, int oneBasedLastColumn, boolean exact)
             throws SAXException {
-        emitter.startMessage(type, systemId, (oneBasedFirstLine == -1) ? -1 : oneBasedFirstLine + lineOffset,
-                oneBasedFirstColumn, (oneBasedLastLine == -1) ? -1 : oneBasedLastLine + lineOffset, oneBasedLastColumn,
-                exact);
+        emitter.startMessage(type, systemId, (oneBasedFirstLine == -1) ? -1
+                : oneBasedFirstLine + lineOffset, oneBasedFirstColumn,
+                (oneBasedLastLine == -1) ? -1 : oneBasedLastLine + lineOffset,
+                oneBasedLastColumn, exact);
     }
 }
