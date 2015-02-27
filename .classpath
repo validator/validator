@@ -14,10 +14,12 @@
 	<classpathentry kind="lib" path="dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
 	<classpathentry kind="lib" path="dependencies/galimatias-0.1.0.jar"/>
 	<classpathentry kind="lib" path="dependencies/icu4j-53_1.jar"/>
-	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
-	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
-	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
-	<classpathentry kind="lib" path="dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
+	<classpathentry kind="lib" path="dependencies/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-server-9.2.9.v20150224.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-servlet-9.2.9.v20150224.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-servlets-9.2.9.v20150224.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-util-9.2.9.v20150224.jar"/>
+	<classpathentry kind="lib" path="dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
 	<classpathentry kind="lib" path="dependencies/rhino1_7R5/js.jar"/>
 	<classpathentry kind="lib" path="jing-trang/build/jing.jar"/>
 </classpath>

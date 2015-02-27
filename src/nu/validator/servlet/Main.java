@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005 Henri Sivonen
- * Copyright (c) 2007-2012 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -29,18 +29,21 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Handler;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.ajp.Ajp13SocketConnector;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.FilterHolder;
-import org.mortbay.jetty.servlet.ServletHolder;
-import org.mortbay.servlet.GzipFilter;
-import org.mortbay.thread.QueuedThreadPool;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.servlets.GzipFilter;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 /**
  * @version $Id$
@@ -59,41 +62,34 @@ public class Main {
             PropertyConfigurator.configure(System.getProperty(
                     "nu.validator.servlet.log4j-properties", "log4j.properties"));
         }
-        Server server = new Server();
-        QueuedThreadPool pool = new QueuedThreadPool();
-        pool.setMaxThreads(100);
-        server.setThreadPool(pool);
-        Connector connector;
+
+        ServletContextHandler contextHandler = new ServletContextHandler();
+        contextHandler.setContextPath("/");
+        contextHandler.addFilter(new FilterHolder(new GzipFilter()), "/*",
+                EnumSet.of(DispatcherType.REQUEST));
+        contextHandler.addFilter(new FilterHolder(new InboundSizeLimitFilter(
+                SIZE_LIMIT)), "/*", EnumSet.of(DispatcherType.REQUEST));
+        contextHandler.addFilter(new FilterHolder(new InboundGzipFilter()),
+                "/*", EnumSet.of(DispatcherType.REQUEST));
+        contextHandler.addFilter(
+                new FilterHolder(new MultipartFormDataFilter()), "/*",
+                EnumSet.of(DispatcherType.REQUEST));
+        contextHandler.addServlet(new ServletHolder(new VerifierServlet()),
+                "/*");
+
+        Server server = new Server(new QueuedThreadPool(100));
+        server.setHandler(contextHandler);
+
+        ServerConnector serverConnector = new ServerConnector(server,
+                new HttpConnectionFactory(new HttpConfiguration()));
+        int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
+        serverConnector.setPort(port);
+        server.setConnectors(new Connector[] { serverConnector });
+
         int stopPort = -1;
-        if (args.length > 0 && "ajp".equals(args[0])) {
-            connector = new Ajp13SocketConnector();
-            int port = Integer.parseInt(args[1]);
-            connector.setPort(port);
-            connector.setHost("127.0.0.1");
-            if (args.length > 2) {
-                stopPort = Integer.parseInt(args[2]);
-            }
-        } else {
-            connector = new SocketConnector();
-            int port = args.length > 0 ? Integer.parseInt(args[0]) : 8888;
-            connector.setPort(port);
-            if (args.length > 1) {
-                stopPort = Integer.parseInt(args[1]);
-            }
+        if (args.length > 1) {
+            stopPort = Integer.parseInt(args[1]);
         }
-        server.addConnector(connector);
-
-        Context context = new Context(server, "/");
-        context.addFilter(new FilterHolder(new GzipFilter()), "/*",
-                Handler.REQUEST);
-        context.addFilter(new FilterHolder(new InboundSizeLimitFilter(
-                SIZE_LIMIT)), "/*", Handler.REQUEST);
-        context.addFilter(new FilterHolder(new InboundGzipFilter()), "/*",
-                Handler.REQUEST);
-        context.addFilter(new FilterHolder(new MultipartFormDataFilter()),
-                "/*", Handler.REQUEST);
-        context.addServlet(new ServletHolder(new VerifierServlet()), "/*");
-
         if (stopPort != -1) {
             try {
                 Socket clientSocket = new Socket(
@@ -120,10 +116,6 @@ public class Main {
             serverSocket.close();
         } else {
             server.start();
-            // FIXME: the following prevent the validator from being able
-            // run properly as a daemon; make the behavior configurable?
-            // System.in.read();
-            // server.stop();
         }
     }
 }

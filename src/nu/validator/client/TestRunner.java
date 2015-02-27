@@ -42,7 +42,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import org.mortbay.util.ajax.JSON;
+import org.eclipse.jetty.util.ajax.JSON;
 
 import org.relaxng.datatype.DatatypeException;
 import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;

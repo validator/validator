@@ -44,11 +44,15 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/galimatias-0.1.0.jar"/>
       <zipfileset src="../dependencies/icu4j-53_1.jar"/>
       <zipfileset src="../dependencies/icu4j-charset-53_1.jar"/>
-      <zipfileset src="../dependencies/jchardet-1.0.jar"/>
-      <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-6.1.26.jar"/>
-      <zipfileset src="../dependencies/jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar"/>
-      <zipfileset src="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/>
-      <zipfileset src="../dependencies/jetty-6.1.26/lib/servlet-api-2.5-20081211.jar"/>
+      <zipfileset src="../dependencies/javax.servlet-api-3.1.0.jar"/>
+      <zipfileset src="../dependencies/jetty-http-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-io-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-security-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-server-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-servlet-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-util-9.2.9.v20150224.jar"/>
+      <zipfileset src="../dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/rhino1_7R5/js.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
@@ -75,7 +79,7 @@ DEALINGS IN THE SOFTWARE.
 
     <filter>
         <filter-name>gzip-filter</filter-name>
-        <filter-class>org.mortbay.servlet.GzipFilter</filter-class>
+        <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>gzip-filter</filter-name>
@@ -159,7 +163,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/icu4j-53_1.jar"/>
       <fileset file="../dependencies/icu4j-charset-53_1.jar"/>
       <fileset file="../dependencies/jchardet-1.0.jar"/>
-      <fileset file="../dependencies/jetty-6.1.26/lib/jetty-util-6.1.26.jar"/> <!-- for GzipFilter -->
+      <fileset file="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/> <!-- for GzipFilter -->
       <fileset file="../dependencies/rhino1_7R5/js.jar"/>
     </copy>
     <war destfile="./vnu/vnu.war" webxml="./vnu/war/web.xml">

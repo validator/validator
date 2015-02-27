@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Mozilla Foundation
+ * Copyright (c) 2007-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -25,6 +25,7 @@ package nu.validator.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 
 public final class DelegatingServletInputStream extends ServletInputStream {
@@ -140,6 +141,26 @@ public final class DelegatingServletInputStream extends ServletInputStream {
      */
     public String toString() {
         return delegate.toString();
+    }
+
+    /**
+     * @return
+     */
+    @Override public boolean isFinished() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override public boolean isReady() {
+        return false;
+    }
+
+    /**
+     * @param arg0
+     */
+    @Override public void setReadListener(ReadListener arg0) {
     }
 
 }

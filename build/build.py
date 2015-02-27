@@ -50,7 +50,6 @@ buildRoot = '.'
 vnuDir = (os.path.join(buildRoot, "build", "vnu"))
 portNumber = '8888'
 controlPort = None
-useAjp = 0
 log4jProps = 'resources/log4j.properties'
 heapSize = '128'
 stackSize = ''
@@ -90,7 +89,6 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 dependencyPackages = [
   ("http://download.icu-project.org/files/icu4j/53.1/icu4j-53_1.jar", "4d481ce010c1a786af2b79552778a3fc"),
   ("http://download.icu-project.org/files/icu4j/53.1/icu4j-charset-53_1.jar", "00d47513129425040dcfbfcf40da5fea"),
-  ("http://dist.codehaus.org/jetty/jetty-6.1.26/jetty-6.1.26.zip", "0d9b2ae3feb2b207057358142658a11f"),
   ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
   ("https://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
   ("https://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
@@ -98,7 +96,16 @@ dependencyPackages = [
   ("https://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
   ("https://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
+  ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/9.2.9.v20150224/jetty-security-9.2.9.v20150224.jar", "2bad0336376b71a5ec81bc3150b898a0"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.2.9.v20150224/jetty-server-9.2.9.v20150224.jar", "c8a746bc320459d16e8769485950cae1"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/9.2.9.v20150224/jetty-servlet-9.2.9.v20150224.jar", "b9686811e977ab4c0cc43cc5e0996c02"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.9.v20150224/jetty-servlets-9.2.9.v20150224.jar", "5ec4c25b552df1f7b6785b7b5bbbd54c"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),
+  ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
   ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
@@ -118,11 +125,16 @@ runDependencyJars = [
   "galimatias-0.1.0.jar",
   "icu4j-charset-53_1.jar",
   "icu4j-53_1.jar",
+  "javax.servlet-api-3.1.0.jar",
   "jchardet-1.0.jar",
-  "jetty-6.1.26/lib/servlet-api-2.5-20081211.jar",
-  "jetty-6.1.26/lib/jetty-6.1.26.jar",
-  "jetty-6.1.26/lib/jetty-util-6.1.26.jar",
-  "jetty-6.1.26/lib/ext/jetty-ajp-6.1.26.jar",
+  "jetty-http-9.2.9.v20150224.jar",
+  "jetty-io-9.2.9.v20150224.jar",
+  "jetty-security-9.2.9.v20150224.jar",
+  "jetty-server-9.2.9.v20150224.jar",
+  "jetty-servlet-9.2.9.v20150224.jar",
+  "jetty-servlets-9.2.9.v20150224.jar",
+  "jetty-util-9.2.9.v20150224.jar",
+  "jetty-util-ajax-9.2.9.v20150224.jar",
   "rhino1_7R5/js.jar",
 ]
 
@@ -706,8 +718,6 @@ def getRunArgs(heap="$((HEAP))"):
 
   args.append('nu.validator.servlet.Main')
 
-  if useAjp:
-    args.append('ajp')
   args.append(portNumber)
   if controlPort:
     args.append(controlPort)
@@ -1042,7 +1052,6 @@ def printHelp():
   print "Options:"
   print "  --about=https://about.validator.nu/"
   print "                                Sets the URL for the about page"
-  print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print "  --control-port=-1"
   print "                                Sets the server control port number"
   print "                                (necessary for daemonizing)"
@@ -1168,10 +1177,6 @@ else:
       stylesheetFile = arg[18:]
     elif arg.startswith("--script-file="):
       scriptFile = arg[14:]
-    elif arg == '--ajp=on':
-      useAjp = 1
-    elif arg == '--ajp=off':
-      useAjp = 0
     elif arg == '--promiscuous-ssl=on':
       usePromiscuousSsl = 1
     elif arg == '--promiscuous-ssl=off':
