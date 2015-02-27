@@ -670,31 +670,31 @@ def getRunArgs(heap="$((HEAP))"):
     '-classpath',
     classPath,
     '-Dnu.validator.messages.limit=%d' % messagesLimit,
-    '-Dnu.validator.servlet.read-local-log4j-properties=1',
-    '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
-    '-Dnu.validator.servlet.version=3',
-    '-Dnu.validator.servlet.service-name=' + serviceName,
-    '-Dnu.validator.servlet.results-title=' + resultsTitle,
-    '-Dorg.whattf.datatype.warn=true',
     '-Dnu.validator.servlet.about-page=' + aboutPage,
-    '-Dnu.validator.servlet.user-agent=' + userAgent,
-    '-Dnu.validator.servlet.style-sheet=' + stylesheet,
-    '-Dnu.validator.servlet.icon=' + icon,
-    '-Dnu.validator.servlet.script=' + script,
-    '-Dnu.validator.spec.html5-load=' + html5specLoad,
-    '-Dnu.validator.spec.html5-link=' + html5specLink,
-    '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
-    '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
     '-Dnu.validator.servlet.follow-w3c-spec=%d' % followW3Cspec,
-    '-Dnu.validator.servlet.statistics=%d' % statistics,
-    '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.host.generic=' + genericHost,
     '-Dnu.validator.servlet.host.html5=' + html5Host,
     '-Dnu.validator.servlet.host.parsetree=' + parsetreeHost,
+    '-Dnu.validator.servlet.icon=' + icon,
+    '-Dnu.validator.servlet.log4j-properties=' + log4jProps,
+    '-Dnu.validator.servlet.max-file-size=%d' % (maxFileSize * 1024),
     '-Dnu.validator.servlet.path.generic=' + genericPath,
     '-Dnu.validator.servlet.path.html5=' + html5Path,
     '-Dnu.validator.servlet.path.parsetree=' + parsetreePath,
+    '-Dnu.validator.servlet.service-name=' + serviceName,
+    '-Dnu.validator.servlet.read-local-log4j-properties=1',
+    '-Dnu.validator.servlet.results-title=' + resultsTitle,
+    '-Dnu.validator.servlet.script=' + script,
+    '-Dnu.validator.servlet.socket-timeout=%d' % (socketTimeoutSeconds * 1000),
+    '-Dnu.validator.servlet.statistics=%d' % statistics,
+    '-Dnu.validator.servlet.style-sheet=' + stylesheet,
+    '-Dnu.validator.servlet.user-agent=' + userAgent,
+    '-Dnu.validator.servlet.version=3',
+    '-Dnu.validator.spec.html5-load=' + html5specLoad,
+    '-Dnu.validator.spec.html5-link=' + html5specLink,
+    '-Dorg.whattf.datatype.warn=true',
+    '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
   ]
 
   if stackSize != "":
@@ -1040,40 +1040,42 @@ def printHelp():
   print "Usage: python build/build.py [options] [tasks]"
   print ""
   print "Options:"
-  print "  --git=/usr/bin/git         -- Sets the path to the git binary"
-  print "  --java=/usr/bin/java       -- Sets the path to the java binary"
-  print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
-  print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
-  print "  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary"
-  print "  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools"
-  print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
-  print "  --port=8888                -- Sets the server port number"
+  print "  --about=https://about.validator.nu/"
+  print "                                Sets the URL for the about page"
+  print "  --ajp=on                   -- Use AJP13 instead of HTTP"
   print "  --control-port=-1"
   print "                                Sets the server control port number"
   print "                                (necessary for daemonizing)"
-  print "  --ajp=on                   -- Use AJP13 instead of HTTP"
-  print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
+  print "  --git=/usr/bin/git         -- Sets the path to the git binary"
   print "  --heap=64                  -- Sets the Java heap size in MB"
-  print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
-  print "  --javaversion=N.N          -- Sets the Java VM version to build for"
-  print "  --name=Validator.nu        -- Sets the service name"
-  print "  --messages-limit=1000"
-  print "                                Sets the limit on the maximum number"
-  print "                                of error+warning messages to report"
-  print "                                for any document before stopping"
   print "  --html5link=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the link URL of the HTML5 spec"
   print "  --html5load=http://www.whatwg.org/specs/web-apps/current-work/"
   print "                                Sets the load URL of the HTML5 spec"
-  print "  --about=https://about.validator.nu/"
-  print "                                Sets the URL for the about page"
-  print "  --stylesheet=style.css"
-  print "                                Sets the URL for the style sheet"
-  print "                                Defaults to just style.css relative to"
-  print "                                the validator URL"
+  print "  --java=/usr/bin/java       -- Sets the path to the java binary"
+  print "  --jar=/usr/bin/jar         -- Sets the path to the jar binary"
+  print "  --javac=/usr/bin/javac     -- Sets the path to the javac binary"
+  print "  --javadoc=/usr/bin/javadoc -- Sets the path to the javadoc binary"
+  print "  --javaversion=N.N          -- Sets the Java VM version to build for"
+  print "  --jdk-bin=/j2se/bin        -- Sets the paths for all JDK tools"
+  print "  --log4j=log4j.properties   -- Sets the path to log4 configuration"
+  print "  --messages-limit=1000"
+  print "                                Sets the limit on the maximum number"
+  print "                                of error+warning messages to report"
+  print "                                for any document before stopping"
+  print "  --name=Validator.nu        -- Sets the service name"
+  print "  --port=8888                -- Sets the server port number"
+  print "  --promiscuous-ssl=on       -- Don't check SSL/TLS certificate trust chain"
+  print "  --results-title=Validation results"
+  print "                                Sets the title to show on the results page"
   print "  --script=script.js"
   print "                                Sets the URL for the script"
   print "                                Defaults to just script.js relative to"
+  print "                                the validator URL"
+  print "  --stacksize=NN             -- Sets the Java thread stack size in KB"
+  print "  --stylesheet=style.css"
+  print "                                Sets the URL for the style sheet"
+  print "                                Defaults to just style.css relative to"
   print "                                the validator URL"
   print ""
   print "Tasks:"
