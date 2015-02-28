@@ -86,7 +86,7 @@ public class SimpleCommandLineValidator {
 
     public static void main(String[] args) throws SAXException, Exception {
         out = System.err;
-        System.setProperty("org.whattf.datatype.warn", "true");
+        System.setProperty("nu.validator.datatype.warn", "true");
         errorsOnly = false;
         skipNonHTML = false;
         forceHTML = false;
@@ -118,7 +118,7 @@ public class SimpleCommandLineValidator {
                     verbose = true;
                 } else if ("--errors-only".equals(args[i])) {
                     errorsOnly = true;
-                    System.setProperty("org.whattf.datatype.warn", "false");
+                    System.setProperty("nu.validator.datatype.warn", "false");
                 } else if ("--format".equals(args[i])) {
                     outFormat = args[++i];
                 } else if ("--version".equals(args[i])) {

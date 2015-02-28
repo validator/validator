@@ -47,7 +47,7 @@ import org.eclipse.jetty.util.ajax.JSON;
 import org.relaxng.datatype.DatatypeException;
 import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
 
-import org.whattf.datatype.Html5DatatypeException;
+import nu.validator.datatype.Html5DatatypeException;
 
 import nu.validator.validation.SimpleDocumentValidator;
 
@@ -548,12 +548,12 @@ public class TestRunner implements ErrorHandler {
         }
         verbose = false;
         String messagesFilename = null;
-        System.setProperty("org.whattf.datatype.warn", "true");
+        System.setProperty("nu.validator.datatype.warn", "true");
         for (int i = 0; i < args.length; i++) {
             if ("--verbose".equals(args[i])) {
                 verbose = true;
             } else if ("--errors-only".equals(args[i])) {
-                System.setProperty("org.whattf.datatype.warn", "false");
+                System.setProperty("nu.validator.datatype.warn", "false");
             } else if ("--write-messages".equals(args[i])) {
                 writeMessages = true;
             } else if (args[i].startsWith("--ignore=")) {

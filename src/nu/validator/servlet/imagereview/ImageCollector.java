@@ -29,7 +29,7 @@ import java.util.List;
 import nu.validator.source.SourceCode;
 import nu.validator.xml.UriLangContext;
 
-import org.whattf.checker.AttributeUtil;
+import nu.validator.checker.AttributeUtil;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;

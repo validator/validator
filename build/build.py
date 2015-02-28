@@ -72,7 +72,8 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
-filesDir = os.path.join(buildRoot, "src", "nu", "validator", "localentities", "files")
+vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
+filesDir = os.path.join(vnuSrc, "localentities", "files")
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
 presetsFile = os.path.join("resources", "presets.txt")
@@ -194,26 +195,22 @@ def ensureDirExists(dirPath):
   if not os.path.exists(dirPath):
     os.makedirs(dirPath)
 
-def findFilesWithExtension(directory, extension, subtrees=None):
-  subtrees = subtrees if subtrees else [directory]
+def findFilesWithExtension(directory, extension):
   rv = []
   ext = '.' + extension
   for root, dirs, files in os.walk(directory):
     for filename in files:
-      for subtree in subtrees:
-        if subtree in root and filename.endswith(ext):
-          rv.append(os.path.join(root, filename))
+      if filename.endswith(ext):
+        rv.append(os.path.join(root, filename))
   return rv
 
-def findFiles(directory, subtrees=None):
-  subtrees = subtrees if subtrees else [directory]
+def findFiles(directory):
   rv = []
   for root, dirs, files in os.walk(directory):
     for filename in files:
-      for subtree in subtrees:
-        candidate = os.path.join(root, filename)
-        if subtree in root and candidate.find("/.svn") == -1:
-          rv.append(candidate)
+      candidate = os.path.join(root, filename)
+      if candidate.find("/.svn") == -1:
+        rv.append(candidate)
   return rv
 
 def jarNamesToPaths(names):
@@ -222,9 +219,9 @@ def jarNamesToPaths(names):
 def jingJarPath():
   return [os.path.join("jing-trang", "build", "jing.jar"),]
 
-def runJavac(sourceDir, classDir, classPath, subtrees):
+def runJavac(sourceDir, classDir, classPath):
   ensureDirExists(classDir)
-  sourceFiles = findFilesWithExtension(sourceDir, "java", subtrees)
+  sourceFiles = findFilesWithExtension(sourceDir, "java")
   f = open("temp-javac-list", "w")
   if os.name == 'nt':
     f.write("\r\n".join(sourceFiles))
@@ -246,8 +243,8 @@ def runJavac(sourceDir, classDir, classPath, subtrees):
     sys.exit(1)
   removeIfExists("temp-javac-list")
 
-def copyFiles(sourceDir, classDir, subtrees):
-  files = findFiles(sourceDir, subtrees)
+def copyFiles(sourceDir, classDir):
+  files = findFiles(sourceDir)
   for f in files:
     destFile = os.path.join(classDir, f[len(sourceDir)+1:])
     head, tail = os.path.split(destFile)
@@ -255,12 +252,9 @@ def copyFiles(sourceDir, classDir, subtrees):
       os.makedirs(head)
     shutil.copyfile(f, destFile)
 
-def runJar(classDir, jarFile, sourceDir, subtrees):
+def runJar(classDir, jarFile, sourceDir):
   classFiles = []
-  if "html5-datatypes" in jarFile:
-    shutil.copytree(os.path.join(buildRoot, "src", "META-INF"), os.path.join(classDir, "META-INF"))
-    classFiles.append(os.path.join(classDir, "META-INF", "services", "org.relaxng.datatype.DatatypeLibraryFactory"))
-  for file in findFiles(classDir, subtrees):
+  for file in findFiles(classDir):
     classFiles.append(file)
   classList = ["-C " + classDir + " " + x[len(classDir)+1:] + ""
                for x in
@@ -275,8 +269,7 @@ def runJar(classDir, jarFile, sourceDir, subtrees):
     % (jarCmd, jarFile, "@temp-jar-list"))
   removeIfExists("temp-jar-list")
 
-def buildModule(rootDir, jarName, classPath, subtrees=None):
-  subtrees = subtrees if subtrees else [rootDir]
+def buildModule(rootDir, jarName, classPath):
   sourceDir = os.path.join(rootDir, "src")
   classDir = os.path.join(rootDir, "classes")
   distDir = os.path.join(rootDir, "dist")
@@ -285,9 +278,9 @@ def buildModule(rootDir, jarName, classPath, subtrees=None):
   removeIfDirExists(classDir)
   ensureDirExists(classDir)
   ensureDirExists(distDir)
-  runJavac(sourceDir, classDir, classPath, subtrees)
-  copyFiles(sourceDir, classDir, subtrees)
-  runJar(classDir, jarFile, sourceDir, subtrees)
+  runJavac(sourceDir, classDir, classPath)
+  copyFiles(sourceDir, classDir)
+  runJar(classDir, jarFile, sourceDir)
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
   removeIfDirExists(classDir)
@@ -303,25 +296,6 @@ def dependencyJarPaths(depList=dependencyJars):
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
-
-def buildDatatypeLibrary():
-  classPath = os.pathsep.join(dependencyJarPaths()
-                              + jingJarPath())
-  buildModule(
-    buildRoot,
-    "html5-datatypes",
-    classPath,
-    [os.path.join("org", "whattf", "datatype"), os.path.join("org", "whattf", "io")])
-
-def buildNonSchema():
-  classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["html5-datatypes",])
-                              + jingJarPath())
-  buildModule(
-    buildRoot,
-    "non-schema",
-    classPath,
-    [os.path.join("org", "whattf", "checker")])
 
 def buildSchemaDrivers():
   baseDir = os.path.join(buildRoot, "schema")
@@ -616,10 +590,7 @@ def buildSchemaDriverXhtml5htmlRDFaLite(schemaDir):
 
 def buildHtmlParser():
   classPath = os.pathsep.join(dependencyJarPaths())
-  buildModule(
-    os.path.join(buildRoot, "htmlparser"),
-    "htmlparser",
-    classPath)
+  buildModule( os.path.join(buildRoot, "htmlparser"), "htmlparser", classPath)
 
 def buildJing():
   os.chdir("jing-trang")
@@ -627,7 +598,7 @@ def buildJing():
   os.chdir("..")
 
 def buildEmitters():
-  compilerFile = os.path.join(buildRoot, "src", "nu", "validator", "xml", "SaxCompiler.java")
+  compilerFile = os.path.join(vnuSrc, "xml", "SaxCompiler.java")
   compilerClass = "nu.validator.xml.SaxCompiler"
   classDir = os.path.join(buildRoot, "classes")
   ensureDirExists(classDir)
@@ -642,8 +613,8 @@ def buildEmitters():
     args.append('-source ' + javaVersion)
   if runCmd('"%s" %s %s' % (javacCmd, " ".join(args), compilerFile)):
     sys.exit(1)
-  pageEmitter = os.path.join("src", "nu", "validator", "servlet", "PageEmitter.java")
-  formEmitter = os.path.join("src", "nu", "validator", "servlet", "FormEmitter.java")
+  pageEmitter = os.path.join(vnuSrc, "servlet", "PageEmitter.java")
+  formEmitter = os.path.join(vnuSrc, "servlet", "FormEmitter.java")
   if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, pageTemplate, pageEmitter)):
     sys.exit(1)
   if runCmd('"%s" -cp %s %s %s %s' % (javaCmd, classDir, compilerClass, formTemplate, formEmitter)):
@@ -652,22 +623,13 @@ def buildEmitters():
 
 def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["non-schema",
-                                                "htmlparser",
-                                                "html5-datatypes"])
+                              + jarNamesToPaths(["htmlparser"])
                               + jingJarPath())
   buildEmitters();
-  buildModule(
-    buildRoot,
-    "validator",
-    classPath,
-    [os.path.join("nu", "validator")])
+  buildModule(buildRoot, "validator", classPath)
 
 def ownJarList():
-  return jarNamesToPaths(["non-schema",
-                          "htmlparser",
-                          "html5-datatypes",
-                          "validator"]) + jingJarPath()
+  return jarNamesToPaths(["htmlparser", "validator"]) + jingJarPath()
 
 def buildRunJarPathList():
   return dependencyJarPaths(runDependencyJars)  + ownJarList()
@@ -680,6 +642,7 @@ def getRunArgs(heap="$((HEAP))"):
     '-Xmx%sk' % heap,
     '-classpath',
     classPath,
+    '-Dnu.validator.datatype.warn=true',
     '-Dnu.validator.messages.limit=%d' % messagesLimit,
     '-Dnu.validator.servlet.about-page=' + aboutPage,
     '-Dnu.validator.servlet.connection-timeout=%d' % (connectionTimeoutSeconds * 1000),
@@ -704,7 +667,6 @@ def getRunArgs(heap="$((HEAP))"):
     '-Dnu.validator.servlet.version=3',
     '-Dnu.validator.spec.html5-load=' + html5specLoad,
     '-Dnu.validator.spec.html5-link=' + html5specLink,
-    '-Dorg.whattf.datatype.warn=true',
     '-Dorg.mortbay.http.HttpRequest.maxFormContentSize=%d' % (maxFileSize * 1024),
   ]
 
@@ -1019,8 +981,6 @@ def buildAll():
     print "Set the JAVA_HOME environment variable to the pathname of the directory where your JDK is installed."
     sys.exit(1)
   buildJing()
-  buildDatatypeLibrary()
-  buildNonSchema()
   buildSchemaDrivers()
   prepareLocalEntityJar()
   buildHtmlParser()
@@ -1033,10 +993,7 @@ def runTests():
     args = "--ignore=html-its tests/messages.json"
   className = "nu.validator.client.TestRunner"
   classPath = os.pathsep.join(dependencyJarPaths()
-                              + jarNamesToPaths(["non-schema",
-                                                "htmlparser",
-                                                "html5-datatypes",
-                                                "validator"])
+                              + jarNamesToPaths(["htmlparser", "validator"])
                               + jingJarPath())
   if runCmd('"%s" -classpath %s %s %s' % (javaCmd, classPath, className, args)):
     sys.exit(1)

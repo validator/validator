@@ -36,8 +36,8 @@ import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.EmptyAttributes;
 
 import org.relaxng.datatype.DatatypeException;
-import org.whattf.datatype.AbstractDatatype;
-import org.whattf.datatype.Html5DatatypeLibrary;
+import nu.validator.datatype.AbstractDatatype;
+import nu.validator.datatype.Html5DatatypeLibrary;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;

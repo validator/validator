@@ -26,7 +26,7 @@ import java.net.URI;
 import java.util.LinkedList;
 
 import org.relaxng.datatype.DatatypeException;
-import org.whattf.datatype.Language;
+import nu.validator.datatype.Language;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;

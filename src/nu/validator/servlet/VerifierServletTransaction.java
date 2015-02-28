@@ -89,11 +89,11 @@ import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 
-import org.whattf.checker.XmlPiChecker;
+import nu.validator.checker.XmlPiChecker;
 
 import org.apache.log4j.Logger;
-import org.whattf.checker.jing.CheckerSchema;
-import org.whattf.io.DataUri;
+import nu.validator.checker.jing.CheckerSchema;
+import nu.validator.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;

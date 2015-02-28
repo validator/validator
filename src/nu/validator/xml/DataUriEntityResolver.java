@@ -24,7 +24,7 @@ package nu.validator.xml;
 
 import java.io.IOException;
 
-import org.whattf.io.DataUri;
+import nu.validator.io.DataUri;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;

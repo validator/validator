@@ -72,12 +72,14 @@ the code to get started, here’s a brief annotated overview of the repository c
 * `schema` - HTML+SVG+MathML RelaxNG schemas (used with jing in the checker backend)
 * `site` - JS & CSS for the checker frontend + code for generating the frontend HTML
 * `src/nu/validator`
+  * `checker` - non-schema checkers; `TableChecker`, `schematronequiv/Assertions`, …
   * `client` - various clients; e.g., `SimpleCommandLineValidator`, `TestRunner`
   * `collections` - sorting of collections (utility code)
+  * `datatype` - checking microsyntax of attribute values (datatype library)
   * `gnu/xml/aelfred2` - processing XML (XML parser)
   * `httpclient/ssl` - enabling the `promiscuous-ssl` option (to skip cert checks)
-  * `io` - handling particular I/O cases (utility code)
-  * `json` - processing JSON (utility code)
+  * `io` - variety of \*InputStream classes, `DataUri`, related exception classes
+  * `json` - SAX-inspired streaming interface for writing JSON (utility code)
   * `localentities` - fetching resources from local cache; `LocalCacheEntityResolver`
   * `messages` - handling/emitting validation messages; `MessageEmitterAdapter`, etc.
   * `servlet` - core service logic; `VerifierServletTransaction`, etc.
@@ -85,8 +87,4 @@ the code to get started, here’s a brief annotated overview of the repository c
   * `spec` - parsing the HTML spec & emitting spec excerpts in validation messages
   * `validation` - entry point for 3rd-party code to use; `SimpleDocumentValidator`
   * `xml` - utility code of various kinds
-* `src/org/whattf`
-  * `checker` - non-schema checkers; `TableChecker`, `schematronequiv/Assertions`, …
-  * `datatype` - HTML datatype library (checking microsyntax of attribute values)
-  * `io` - utility code used by HTML datatype library and other parts of the checker
 * `tests` - (submodule) valid/invalid HTML docs for (regression) testing the checker

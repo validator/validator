@@ -52,11 +52,11 @@ import nu.validator.xml.XhtmlSaxEmitter;
 
 import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
-import org.whattf.checker.NormalizationChecker;
-import org.whattf.checker.DatatypeMismatchException;
-import org.whattf.checker.VnuBadAttrValueException;
-import org.whattf.datatype.Html5DatatypeException;
-import org.whattf.io.DataUri;
+import nu.validator.checker.NormalizationChecker;
+import nu.validator.checker.DatatypeMismatchException;
+import nu.validator.checker.VnuBadAttrValueException;
+import nu.validator.datatype.Html5DatatypeException;
+import nu.validator.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

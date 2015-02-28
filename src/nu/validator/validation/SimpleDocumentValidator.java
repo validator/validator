@@ -41,17 +41,17 @@ import nu.validator.xml.IdFilter;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.TypedInputSource;
 
-import org.whattf.checker.jing.CheckerSchema;
-import org.whattf.checker.jing.CheckerValidator;
-import org.whattf.checker.table.TableChecker;
-import org.whattf.checker.ConformingButObsoleteWarner;
-import org.whattf.checker.MicrodataChecker;
-import org.whattf.checker.NormalizationChecker;
-import org.whattf.checker.TextContentChecker;
-import org.whattf.checker.UncheckedSubtreeWarner;
-import org.whattf.checker.UnsupportedFeatureChecker;
-import org.whattf.checker.UsemapChecker;
-import org.whattf.checker.XmlPiChecker;
+import nu.validator.checker.jing.CheckerSchema;
+import nu.validator.checker.jing.CheckerValidator;
+import nu.validator.checker.table.TableChecker;
+import nu.validator.checker.ConformingButObsoleteWarner;
+import nu.validator.checker.MicrodataChecker;
+import nu.validator.checker.NormalizationChecker;
+import nu.validator.checker.TextContentChecker;
+import nu.validator.checker.UncheckedSubtreeWarner;
+import nu.validator.checker.UnsupportedFeatureChecker;
+import nu.validator.checker.UsemapChecker;
+import nu.validator.checker.XmlPiChecker;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;

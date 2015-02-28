@@ -25,7 +25,7 @@ package nu.validator.servlet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.whattf.checker.AttributeUtil;
+import nu.validator.checker.AttributeUtil;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
