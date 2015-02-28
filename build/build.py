@@ -87,16 +87,17 @@ statistics = 0
 miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
-  ("http://download.icu-project.org/files/icu4j/53.1/icu4j-53_1.jar", "4d481ce010c1a786af2b79552778a3fc"),
-  ("http://download.icu-project.org/files/icu4j/53.1/icu4j-charset-53_1.jar", "00d47513129425040dcfbfcf40da5fea"),
-  ("http://www.cafeconleche.org/XOM/xom-1.1.jar", "6b5e76db86d7ae32a451ffdb6fce0764"),
-  ("https://archive.apache.org/dist/commons/codec/binaries/commons-codec-1.4-bin.zip", "749bcf44779f95eb02d6cd7b9234bdaf"),
-  ("https://archive.apache.org/dist/commons/logging/binaries/commons-logging-1.1.1-bin.zip", "f88520ed791673aed6cc4591bc058b55"),
-  ("https://archive.apache.org/dist/commons/fileupload/binaries/commons-fileupload-1.2.1-bin.zip", "975100c3f74604c0c22f68629874f868"),
-  ("https://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/commons-httpclient-3.1.zip", "1752a2dc65e2fb03d4e762a8e7a1db49"),
-  ("https://archive.apache.org/dist/logging/log4j/1.2.15/apache-log4j-1.2.15.zip", "5b0d27be24d6ac384215b6e269d3e352"),
+  ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),
+  ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar", "75615356605c8128013da9e3ac62a249"),
+  ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),
+  ("https://repo1.maven.org/maven2/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar", "8ad8c9229ef2d59ab9f59f7050e846a5"),
+  ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),
+  ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),
+  ("https://repo1.maven.org/maven2/commons-logging/commons-logging-adapters/1.1/commons-logging-adapters-1.1.jar", "efab4a460e39b4e20fa3ee2b8a24d70c"),
+  ("https://repo1.maven.org/maven2/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar", "4374238076ab08e60e0d296234480837"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
+  ("https://repo1.maven.org/maven2/log4j/log4j/1.2.15/log4j-1.2.15.jar", "4d4609998fbc124ce6f0d1d48fca2614"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),
@@ -106,25 +107,22 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/9.2.9.v20150224/jetty-servlets-9.2.9.v20150224.jar", "5ec4c25b552df1f7b6785b7b5bbbd54c"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.2.9.v20150224/jetty-util-9.2.9.v20150224.jar", "cb039d6b03c838ea90748469fe928d60"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util-ajax/9.2.9.v20150224/jetty-util-ajax-9.2.9.v20150224.jar", "e3f16ce949fa5103975a1c056d2cc9cb"),
+  ("https://repo1.maven.org/maven2/org/mozilla/rhino/1.7R5/rhino-1.7R5.jar", "515233bd8a534c0468f6e397fc6b1925"),
+  ("https://repo1.maven.org/maven2/xom/xom/1.2.5/xom-1.2.5.jar", "91b16b5b53ae0804671a57dbf7623fad"),
   ("https://raw.githubusercontent.com/tabatkins/parse-css/91f2450b4b009d79569125674898b9aea0cb6a3b/parse-css.js", "278e875a4d4fa2d95480f28a6d5808be"),
   ("https://raw.githubusercontent.com/douglascrockford/JSON-js/3d7767b6b1f3da363c625ff54e63bbf20e9e83ac/json.js", "f508cbf66725dc438c780334f6849e6f"),
-  ("https://github.com/mozilla/rhino/releases/download/Rhino1_7R5_RELEASE/rhino1_7R5.zip", "e6a5d95f6949dbaa4e97a94bdfb7e1eb"),
 ]
 
-# Unfortunately, the packages contain old versions of certain libs, so
-# can't just autodiscover all jars. Hence, an explicit list.
-
 runDependencyJars = [
-  "apache-log4j-1.2.15/log4j-1.2.15.jar",
-  "commons-codec-1.4/commons-codec-1.4.jar",
-  "commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar",
-  "commons-httpclient-3.1/commons-httpclient-3.1.jar",
-  "commons-logging-1.1.1/commons-logging-1.1.1.jar",
-  "commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar",
-  "commons-logging-1.1.1/commons-logging-api-1.1.1.jar",
+  "commons-codec-1.9.jar",
+  "commons-fileupload-1.3.1.jar",
+  "commons-httpclient-3.1.jar",
+  "commons-io-2.4.jar",
+  "commons-logging-1.2.jar",
+  "commons-logging-adapters-1.1.jar",
+  "commons-logging-api-1.1.jar",
   "galimatias-0.1.0.jar",
-  "icu4j-charset-53_1.jar",
-  "icu4j-53_1.jar",
+  "icu4j-54.1.1.jar",
   "javax.servlet-api-3.1.0.jar",
   "jchardet-1.0.jar",
   "jetty-http-9.2.9.v20150224.jar",
@@ -135,11 +133,12 @@ runDependencyJars = [
   "jetty-servlets-9.2.9.v20150224.jar",
   "jetty-util-9.2.9.v20150224.jar",
   "jetty-util-ajax-9.2.9.v20150224.jar",
-  "rhino1_7R5/js.jar",
+  "log4j-1.2.15.jar",
+  "rhino-1.7R5.jar",
 ]
 
 buildOnlyDependencyJars = [
-  "xom-1.1.jar"
+  "xom-1.2.5.jar"
 ]
 
 dependencyJars = runDependencyJars + buildOnlyDependencyJars

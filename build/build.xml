@@ -34,17 +34,17 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
       <zipfileset src="../jing-trang/lib/xercesImpl.jar"/>
       <zipfileset src="../jing-trang/lib/xml-apis.jar"/>
-      <zipfileset src="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
-      <zipfileset src="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
-      <zipfileset src="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
-      <zipfileset src="../dependencies/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
-      <zipfileset src="../dependencies/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
-      <zipfileset src="../dependencies/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
-      <zipfileset src="../dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
+      <zipfileset src="../dependencies/commons-codec-1.9.jar"/>
+      <zipfileset src="../dependencies/commons-fileupload-1.3.1.jar"/>
+      <zipfileset src="../dependencies/commons-httpclient-3.1.jar"/>
+      <zipfileset src="../dependencies/commons-io-2.4.jar"/>
+      <zipfileset src="../dependencies/commons-logging-1.2.jar"/>
+      <zipfileset src="../dependencies/commons-logging-adapters-1.1.jar"/>
+      <zipfileset src="../dependencies/commons-logging-api-1.1.jar"/>
       <zipfileset src="../dependencies/galimatias-0.1.0.jar"/>
-      <zipfileset src="../dependencies/icu4j-53_1.jar"/>
-      <zipfileset src="../dependencies/icu4j-charset-53_1.jar"/>
+      <zipfileset src="../dependencies/icu4j-54.1.1.jar"/>
       <zipfileset src="../dependencies/javax.servlet-api-3.1.0.jar"/>
+      <zipfileset src="../dependencies/jchardet-1.0.jar"/>
       <zipfileset src="../dependencies/jetty-http-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-io-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-security-9.2.9.v20150224.jar"/>
@@ -53,7 +53,8 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-util-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
-      <zipfileset src="../dependencies/rhino1_7R5/js.jar"/>
+      <zipfileset src="../dependencies/log4j-1.2.15.jar"/>
+      <zipfileset src="../dependencies/rhino-1.7R5.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
@@ -152,19 +153,21 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../jing-trang/lib/xercesImpl.jar"/>
       <fileset file="../jing-trang/lib/xml-apis.jar"/>
-      <fileset file="../dependencies/apache-log4j-1.2.15/log4j-1.2.15.jar"/>
-      <fileset file="../dependencies/commons-codec-1.4/commons-codec-1.4.jar"/>
-      <fileset file="../dependencies/commons-fileupload-1.2.1/lib/commons-fileupload-1.2.1.jar"/>
-      <fileset file="../dependencies/commons-httpclient-3.1/commons-httpclient-3.1.jar"/>
-      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
-      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
-      <fileset file="../dependencies/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
+      <fileset file="../dependencies/commons-codec-1.9.jar"/>
+      <fileset file="../dependencies/commons-fileupload-1.3.1.jar"/>
+      <fileset file="../dependencies/commons-httpclient-3.1.jar"/>
+      <fileset file="../dependencies/commons-io-2.4.jar"/>
+      <fileset file="../dependencies/commons-logging-1.2.jar"/>
+      <fileset file="../dependencies/commons-logging-adapters-1.1.jar"/>
+      <fileset file="../dependencies/commons-logging-api-1.1.jar"/>
       <fileset file="../dependencies/galimatias-0.1.0.jar"/>
-      <fileset file="../dependencies/icu4j-53_1.jar"/>
-      <fileset file="../dependencies/icu4j-charset-53_1.jar"/>
+      <fileset file="../dependencies/icu4j-54.1.1.jar"/>
       <fileset file="../dependencies/jchardet-1.0.jar"/>
-      <fileset file="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/> <!-- for GzipFilter -->
-      <fileset file="../dependencies/rhino1_7R5/js.jar"/>
+      <fileset file="../dependencies/jetty-http-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
+      <fileset file="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/> <!-- GzipFilter provider -->
+      <fileset file="../dependencies/jetty-util-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
+      <fileset file="../dependencies/log4j-1.2.15.jar"/>
+      <fileset file="../dependencies/rhino-1.7R5.jar"/>
     </copy>
     <war destfile="./vnu/vnu.war" webxml="./vnu/war/web.xml">
       <lib dir="./vnu/war/lib"/>
