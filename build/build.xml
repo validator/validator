@@ -19,16 +19,91 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 -->
-<project name="html5-validator" basedir="." default="build">
-  <loadfile property="version" srcfile="./vnu/VERSION"/>
+<project name="html5-validator" basedir="." default="build"
+  xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+  <property name="dist" location="dist" />
+  <loadfile property="version" srcfile="VERSION"/>
+  <property name="groupId" value="nu.validator" />
+  <property name="artifactId" value="validator" />
+  <property name="version" value="${version}" />
+  <property name="src" location="../src" />
+  <property name="htmlparser-src" location="../htmlparser/src" />
+  <property name="jing-datatype-src" location="../jing-trang/mod/datatype/src/main" />
+  <property name="jing-relaxg-validate-src" location="../jing-trang/mod/rng-validate/src/main" />
+  <property name="jing-relaxg-parse-src" location="../jing-trang/mod/rng-parse/src/main" />
+  <property name="jing-util-src" location="../jing-trang/mod/util/src/main" />
+  <property name="jing-validate-src" location="../jing-trang/mod/validate/src/main" />
+  <property name="validator-jar" value="${dist}/${artifactId}-${version}.jar" />
+  <property name="javadoc-jar" value="${dist}/${artifactId}-${version}-javadoc.jar" />
+  <property name="sources-jar" value="${dist}/${artifactId}-${version}-sources.jar" />
+  <property name="bundle-jar" value="${artifactId}-${version}-bundle.jar" />
+  <property environment="env"/>
+  <artifact:pom
+    id="pom"
+    groupId="nu.validator.validator"
+    artifactId="validator"
+    version="${version}"
+    name="The Nu HTML Checker"
+    description="An HTML-checking library (used by https://html5.validator.nu and the HTML5 facet of the W3C Validator)"
+    url="https://validator.github.io/validator/"
+    packaging="jar">
+    <license
+      name="The MIT License"
+      distribution="repo"
+      url="https://raw.githubusercontent.com/validator/validator/master/LICENSE"/>
+    <scm
+      connection="scm:git:git://github.com/validator/validator.git"
+      developerConnection="scm:git:git://github.com/validator/validator.git"
+      url="https://github.com/validator/validator"/>
+    <issueManagement
+      system="GitHub Issues"
+      url="https://github.com/validator/validator/issues"/>
+    <ciManagement
+      system="Travis CI"
+      url="https://travis-ci.org/validator/validator"/>
+    <developer
+      name="Henri Sivonen"
+      id="hsivonen"
+      email="hsivonen@iki.fi"
+      url="https://hsivonen.iki.fi/"/>
+    <developer
+      name="Michael[tm] Smith"
+      id="sideshowbarker"
+      email="mike@w3.org"
+      url="https://people.w3.org/mike/"/>
+    <dependency groupId="com.ibm.icu" artifactId="icu4j" version="54.1.1"/>
+    <dependency groupId="commons-codec" artifactId="commons-codec" version="1.9"/>
+    <dependency groupId="commons-fileupload" artifactId="commons-fileupload" version="1.3.1"/>
+    <dependency groupId="commons-httpclient" artifactId="commons-httpclient" version="3.1"/>
+    <dependency groupId="commons-io" artifactId="commons-io" version="2.4"/>
+    <dependency groupId="commons-logging" artifactId="commons-logging" version="1.2"/>
+    <dependency groupId="commons-logging" artifactId="commons-logging-adapters" version="1.1"/>
+    <dependency groupId="commons-logging" artifactId="commons-logging-api" version="1.1"/>
+    <dependency groupId="io.mola.galimatias" artifactId="galimatias" version="0.1.0"/>
+    <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
+    <dependency groupId="javax.servlet" artifactId="javax.servlet-api" version="3.1.0"/>
+    <dependency groupId="log4j" artifactId="log4j" version="1.2.15"/>
+    <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
+    <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0"/>
+    <dependency groupId="org.apache.maven" artifactId="maven-ant-tasks" version="2.1.3"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-security" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-server" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-servlets" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="9.2.9.v20150224"/>
+    <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="9.2.9.v20150224"/>
+    <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
+    <dependency groupId="xml-apis" artifactId="xml-apis" version="2.0.2"/>
+    <dependency groupId="xom" artifactId="xom" version="1.2.5"/>
+  </artifact:pom>
   <target name="build" depends="jar"/>
   <target name="clean">
-    <delete file="./vnu/vnu.jar"/>
-    <delete file="./vnu/vnu.war"/>
+    <delete dir="${dist}"/>
   </target>
-  <target name="dist" depends="jar"/>
   <target name="jar" depends="clean">
-    <jar destfile="./vnu/vnu.jar" duplicate="preserve">
+    <copy file="VERSION" todir="${dist}"/>
+    <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
@@ -63,12 +138,13 @@ DEALINGS IN THE SOFTWARE.
       </manifest>
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
         <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
-        <provider classname="org.whattf.datatype.Html5DatatypeLibraryFactory"/>
+        <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </jar>
   </target>
   <target name="war" depends="clean">
-    <echo file="./vnu/war/web.xml" append="false"
+    <copy file="VERSION" todir="${dist}"/>
+    <echo file="${dist}/war/web.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -124,7 +200,7 @@ DEALINGS IN THE SOFTWARE.
     </servlet-mapping>
 </web-app>
 ]]></echo>
-    <echo file="./vnu/war/log4j.xml" append="false"
+    <echo file="${dist}/war/log4j.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
@@ -143,12 +219,12 @@ DEALINGS IN THE SOFTWARE.
 
 </log4j:configuration>
 ]]></echo>
-    <unzip dest="./vnu/war/classes">
+    <unzip dest="${dist}/war/classes">
       <fileset dir="../jars">
         <include name="*.jar"/>
       </fileset>
     </unzip>
-    <copy todir="./vnu/war/lib">
+    <copy todir="${dist}/war/lib">
       <fileset file="../jing-trang/build/jing.jar"/>
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../jing-trang/lib/xercesImpl.jar"/>
@@ -169,17 +245,65 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/log4j-1.2.15.jar"/>
       <fileset file="../dependencies/rhino-1.7R5.jar"/>
     </copy>
-    <war destfile="./vnu/vnu.war" webxml="./vnu/war/web.xml">
-      <lib dir="./vnu/war/lib"/>
-      <classes dir="./vnu/war/classes">
+    <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
+      <lib dir="${dist}/war/lib"/>
+      <classes dir="${dist}/war/classes">
         <exclude name="**/*.java"/>
       </classes>
-      <classes file="./vnu/war/log4j.xml"/>
+      <classes file="${dist}/war/log4j.xml"/>
       <service type="org.relaxng.datatype.DatatypeLibraryFactory">
         <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
-        <provider classname="org.whattf.datatype.Html5DatatypeLibraryFactory"/>
+        <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
       </service>
     </war>
-    <delete dir="./vnu/war"></delete>
+    <delete dir="${dist}/war"></delete>
+  </target>
+  <target name="${javadoc-jar}">
+    <property name="javadoc-dir" value="${dist}/javadoc" />
+    <javadoc destdir="${javadoc-dir}"
+      additionalparam="-Xdoclint:none,-reference -quiet">
+      <fileset dir="${src}"/>
+      <fileset dir="${htmlparser-src}"/>
+      <fileset dir="${jing-datatype-src}"/>
+      <fileset dir="${jing-relaxg-validate-src}"/>
+      <fileset dir="${jing-relaxg-parse-src}"/>
+      <fileset dir="${jing-util-src}"/>
+      <fileset dir="${jing-validate-src}"/>
+    </javadoc>
+    <jar destfile="${javadoc-jar}">
+      <fileset dir="${javadoc-dir}" />
+    </jar>
+    <delete dir="${javadoc-dir}"/>
+  </target>
+  <target name="${sources-jar}">
+    <jar destfile="${sources-jar}">
+      <fileset dir="${src}"/>
+      <fileset dir="${htmlparser-src}"/>
+      <fileset dir="${jing-datatype-src}"/>
+      <fileset dir="${jing-relaxg-validate-src}"/>
+      <fileset dir="${jing-relaxg-parse-src}"/>
+      <fileset dir="${jing-util-src}"/>
+      <fileset dir="${jing-validate-src}"/>
+    </jar>
+  </target>
+  <target name="artifacts" depends="clean, ${javadoc-jar}, ${sources-jar}">
+    <artifact:writepom pomRefId="pom" file="${dist}/validator-${version}.pom"/>
+    <jar destfile="${validator-jar}" duplicate="preserve">
+      <zipfileset src="../jars/validator.jar"/>
+      <zipfileset src="../jars/htmlparser.jar"/>
+      <zipfileset src="../jing-trang/build/jing.jar"/>
+      <manifest>
+        <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="http://validator.github.io/validator/"/>
+      </manifest>
+      <service type="org.relaxng.datatype.DatatypeLibraryFactory">
+        <provider classname="com.thaiopensource.datatype.xsd.DatatypeLibraryFactoryImpl"/>
+        <provider classname="nu.validator.datatype.Html5DatatypeLibraryFactory"/>
+      </service>
+    </jar>
+  </target>
+  <target name="bundle">
+    <jar basedir="${dist}" destfile="${bundle-jar}"/>
   </target>
 </project>

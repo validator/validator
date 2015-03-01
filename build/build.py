@@ -45,9 +45,23 @@ javadocCmd = 'javadoc'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
+gpgCmd = 'gpg'
 
 buildRoot = '.'
-vnuDir = (os.path.join(buildRoot, "build", "vnu"))
+antRoot = os.path.join(buildRoot, "jing-trang", "lib")
+antJar = os.path.join(antRoot, "ant.jar")
+antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
+distDir = os.path.join(buildRoot, "build", "dist")
+dependencyDir = os.path.join(buildRoot, "dependencies")
+vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
+filesDir = os.path.join(vnuSrc, "localentities", "files")
+pageTemplate = os.path.join("site", "PageEmitter.xml")
+formTemplate = os.path.join("site", "FormEmitter.xml")
+presetsFile = os.path.join("resources", "presets.txt")
+aboutFile = os.path.join("site", "about.html")
+stylesheetFile = os.path.join("site", "style.css")
+scriptFile = os.path.join("site", "script.js")
+
 portNumber = '8888'
 controlPort = None
 log4jProps = 'resources/log4j.properties'
@@ -72,14 +86,6 @@ genericPath = '/'
 html5Path = '/html5/'
 parsetreePath = '/parsetree/'
 deploymentTarget = None
-vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
-filesDir = os.path.join(vnuSrc, "localentities", "files")
-pageTemplate = os.path.join("site", "PageEmitter.xml")
-formTemplate = os.path.join("site", "FormEmitter.xml")
-presetsFile = os.path.join("resources", "presets.txt")
-aboutFile = os.path.join("site", "about.html")
-stylesheetFile = os.path.join("site", "style.css")
-scriptFile = os.path.join("site", "script.js")
 httpTimeoutSeconds = 120
 connectionTimeoutSeconds = 5
 socketTimeoutSeconds = 5
@@ -272,26 +278,25 @@ def runJar(classDir, jarFile, sourceDir):
 def buildModule(rootDir, jarName, classPath):
   sourceDir = os.path.join(rootDir, "src")
   classDir = os.path.join(rootDir, "classes")
-  distDir = os.path.join(rootDir, "dist")
-  jarFile = os.path.join(distDir, jarName + ".jar")
+  jarsDir = os.path.join(rootDir, "dist")
+  jarFile = os.path.join(jarsDir, jarName + ".jar")
   removeIfExists(jarFile)
   removeIfDirExists(classDir)
   ensureDirExists(classDir)
-  ensureDirExists(distDir)
+  ensureDirExists(jarsDir)
   runJavac(sourceDir, classDir, classPath)
   copyFiles(sourceDir, classDir)
   runJar(classDir, jarFile, sourceDir)
   ensureDirExists(os.path.join(buildRoot, "jars"))
   shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
   removeIfDirExists(classDir)
-  removeIfDirExists(distDir)
+  removeIfDirExists(jarsDir)
 
 def dependencyJarPaths(depList=dependencyJars):
-  dependencyDir = os.path.join(buildRoot, "dependencies")
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
   pathList = [os.path.join(dependencyDir, dep) for dep in depList]
-  for jar in ["saxon9.jar", "xercesImpl.jar", "xml-apis.jar"]:
+  for jar in ["saxon9.jar", "xercesImpl.jar", "xml-apis.jar", "isorelax.jar"]:
     pathList += [ os.path.join(buildRoot, "jing-trang", "lib", jar) ]
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
@@ -625,7 +630,7 @@ def buildValidator():
   classPath = os.pathsep.join(dependencyJarPaths()
                               + jarNamesToPaths(["htmlparser"])
                               + jingJarPath())
-  buildEmitters();
+  buildEmitters()
   buildModule(buildRoot, "validator", classPath)
 
 def ownJarList():
@@ -726,27 +731,42 @@ def checkService():
   time.sleep(5)
   daemon.terminate()
 
-def createDistZip(distType):
-  removeIfDirExists(vnuDir)
-  os.mkdir(vnuDir)
-  print "Waiting for version number on stdin..."
-  version = sys.stdin.read().rstrip()
-  print "Building vnu-%s.%s.zip" % (version, distType)
-  f = open(os.path.join(vnuDir, "VERSION"), "w")
+def writeVersion(version):
+  f = open(os.path.join("build", "VERSION"), "w")
   f.write(version)
   f.close()
+
+def createBundle():
+  print "Waiting for version number on stdin..."
+  version = sys.stdin.read().rstrip()
+  print "Building %s/validator-%s-bundle.jar" % (distDir, version)
+  writeVersion(version)
+  classPath = os.pathsep.join([
+    os.pathsep.join(dependencyJarPaths()),
+    antJar, antLauncherJar])
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s artifacts'
+    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
+  for filename in findFiles(os.path.join(buildRoot, "build", "dist")):
+    runCmd('"%s" -ab %s' % (gpgCmd, filename))
+  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s bundle'
+    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
+
+def createDistZip(distType):
+  removeIfDirExists(distDir)
+  os.mkdir(distDir)
+  print "Waiting for version number on stdin..."
+  version = sys.stdin.read().rstrip()
+  print "Building %s/vnu-%s.%s.zip" % (distDir, version, distType)
+  writeVersion(version)
   if distType == "war":
-    os.mkdir(os.path.join(vnuDir, "war"))
-  antRoot = os.path.join(buildRoot, "jing-trang", "lib")
-  antJar = os.path.join(antRoot, "ant.jar")
-  antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
+    os.mkdir(os.path.join(distDir, "war"))
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
-  shutil.copy(os.path.join(buildRoot, "index.html"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "README.md"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), vnuDir)
-  shutil.copy(os.path.join(buildRoot, "LICENSE"), vnuDir)
+  shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
+  shutil.copy(os.path.join(buildRoot, "README.md"), distDir)
+  shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), distDir)
+  shutil.copy(os.path.join(buildRoot, "LICENSE"), distDir)
   os.chdir("build")
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
@@ -761,7 +781,7 @@ def createDistZip(distType):
     checkJar()
 
 def checkJar():
-  vnu = os.path.join(vnuDir, "vnu.jar")
+  vnu = os.path.join(distDir, "vnu.jar")
   formats = ["gnu", "xml", "json", "text"]
   for _format in formats:
     if runCmd('echo \'%s\' | "%s" -jar %s --format %s -' % (miniDoc, javaCmd, vnu, _format)):
@@ -790,14 +810,10 @@ def createDepTarball():
   ] + dependencyJarPaths(runDependencyJars)
   runCmd('"%s" %s' %(tarCmd, " ".join(args)))
 
-
 def createWar():
   warDir = (os.path.join(buildRoot, "build", "vnu", "war"))
   removeIfDirExists(warDir)
   os.mkdir(warDir)
-  antRoot = os.path.join(buildRoot, "jing-trang", "lib")
-  antJar = os.path.join(antRoot, "ant.jar")
-  antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
   classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s war'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
@@ -917,8 +933,8 @@ def prepareLocalEntityJar():
   removeIfDirExists(os.path.join(schemaDir, "rdf"))
 
 def createCssParserJS(filesDir):
-  p = open(os.path.join(buildRoot, "dependencies", "parse-css.js"), 'r')
-  j = open(os.path.join(buildRoot, "dependencies", "json.js"), 'r')
+  p = open(os.path.join(dependencyDir, "parse-css.js"), 'r')
+  j = open(os.path.join(dependencyDir, "json.js"), 'r')
   o = open(os.path.join(filesDir, "parse-css-js"), 'wb')
   shutil.copyfileobj(p, o)
   shutil.copyfileobj(j, o)
@@ -960,7 +976,6 @@ def zipExtract(zipArch, targetDir):
       o.close()
 
 def downloadDependency(url, md5sum):
-  dependencyDir = os.path.join(buildRoot, "dependencies")
   ensureDirExists(dependencyDir)
   path = os.path.join(dependencyDir, url[url.rfind("/") + 1:])
   if not os.path.exists(path):
@@ -1055,7 +1070,6 @@ def printHelp():
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
   print "  checkjar -- Run tests with the build jar file"
-#  print "  script   -- Make run-validator.sh script for starting the system"
   print "  script   -- Make run-validator.sh script for running the system"
 
 buildScript = sys.argv[0]
@@ -1160,10 +1174,12 @@ else:
       pass
     elif arg == 'build':
       buildAll()
+    elif arg == 'bundle':
+      createBundle()
     elif arg == 'jar':
       createDistZip('jar')
     elif arg == 'checkjar':
-      checkJar();
+      checkJar()
     elif arg == 'war':
       createDistZip('war')
     elif arg == 'localent':

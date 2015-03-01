@@ -1,9 +1,12 @@
 .project
-build/vnu
+build/dist
 build/vnu*.jar.zip
 build/vnu*.war.zip
+build/validator*.jar
+build/VERSION
 classes/
 dependencies/
+extras/
 dist/
 jars/
 local-entities/
