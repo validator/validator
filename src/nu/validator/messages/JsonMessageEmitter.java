@@ -138,7 +138,7 @@ public class JsonMessageEmitter extends MessageEmitter {
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startFullSource()
+     * @see nu.validator.messages.MessageEmitter#startFullSource(int)
      */
     @Override
     public SourceHandler startFullSource(int lineOffset) throws SAXException {
@@ -148,7 +148,7 @@ public class JsonMessageEmitter extends MessageEmitter {
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
+     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String, boolean)
      */
     @Override
     public void startMessages(String documentUri, boolean willShowSource) throws SAXException {

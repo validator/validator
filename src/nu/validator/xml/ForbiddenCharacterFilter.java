@@ -35,7 +35,6 @@ public class ForbiddenCharacterFilter extends ContentHandlerFilter {
 
     /**
      * @param contentHandler
-     * @param errorHandler
      */
     public ForbiddenCharacterFilter(ContentHandler contentHandler) {
         super(contentHandler, null);

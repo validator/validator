@@ -52,7 +52,6 @@ public final class Pattern extends AbstractDatatype {
     /**
      * Checks that the value compiles as an anchored JavaScript regular expression.
      * @param literal the value
-     * @param context ignored
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */

@@ -55,9 +55,6 @@ public class LocalCacheEntityResolver implements EntityResolver {
     private boolean allowRnc = false;
 
     /**
-     * The map must be safe for concurrent reads.
-     * 
-     * @param pathMap
      * @param delegate
      */
     public LocalCacheEntityResolver(EntityResolver delegate) {

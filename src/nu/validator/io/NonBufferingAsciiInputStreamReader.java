@@ -35,7 +35,7 @@ public class NonBufferingAsciiInputStreamReader extends Reader {
     private InputStream stream;
     
     /**
-     * @param arg0
+     * @param stream
      */
     public NonBufferingAsciiInputStreamReader(InputStream stream) {
         this.stream = stream;

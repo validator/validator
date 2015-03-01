@@ -63,6 +63,7 @@ import javax.net.ssl.TrustManager;
  *
  * <p>
  * Example of using custom protocol socket factory for a specific host:
+ * </p>
  *     <pre>
  *     Protocol easyhttps = new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443);
  *
@@ -72,9 +73,9 @@ import javax.net.ssl.TrustManager;
  *     GetMethod httpget = new GetMethod("/");
  *     client.executeMethod(httpget);
  *     </pre>
- * </p>
  * <p>
  * Example of using custom protocol socket factory per default instead of the standard one:
+ * </p>
  *     <pre>
  *     Protocol easyhttps = new Protocol("https", new PromiscuousSSLProtocolSocketFactory(), 443);
  *     Protocol.registerProtocol("https", easyhttps);
@@ -83,7 +84,6 @@ import javax.net.ssl.TrustManager;
  *     GetMethod httpget = new GetMethod("https://localhost/");
  *     client.executeMethod(httpget);
  *     </pre>
- * </p>
  * 
  * @author <a href="mailto:oleg -at- ural.ru">Oleg Kalnichevski</a>
  * 
@@ -150,21 +150,21 @@ public class PromiscuousSSLProtocolSocketFactory implements SecureProtocolSocket
     /**
      * Attempts to get a new socket connection to the given host within the given time limit.
      * <p>
-     * To circumvent the limitations of older JREs that do not support connect timeout a 
-     * controller thread is executed. The controller thread attempts to create a new socket 
-     * within the given limit of time. If socket constructor does not return until the 
+     * To circumvent the limitations of older JREs that do not support connect timeout a
+     * controller thread is executed. The controller thread attempts to create a new socket
+     * within the given limit of time. If socket constructor does not return until the
      * timeout expires, the controller terminates and throws an {@link ConnectTimeoutException}
      * </p>
-     *  
+     *
      * @param host the host name/IP
      * @param port the port on the host
-     * @param clientHost the local host name/IP to bind the socket to
-     * @param clientPort the port on the local machine
+     * @param localAddress the local host name/IP to bind the socket to
+     * @param localPort the port on the local machine
      * @param params {@link HttpConnectionParams Http connection parameters}
-     * 
      * @return Socket a new socket
-     * 
+     *
      * @throws IOException if an I/O error occurs while creating the socket
+     * @throws ConnectTimeoutException
      * @throws UnknownHostException if the IP address of the host cannot be
      * determined
      */

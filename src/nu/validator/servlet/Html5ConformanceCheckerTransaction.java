@@ -121,7 +121,7 @@ public class Html5ConformanceCheckerTransaction extends
     }
 
     /**
-     * @see nu.validator.servlet.VerifierServletTransaction#setupAndStartEmission()
+     * @see nu.validator.servlet.VerifierServletTransaction#setup()
      */
     protected void setup() throws ServletException {
         // No-op
@@ -170,13 +170,6 @@ public class Html5ConformanceCheckerTransaction extends
      */
     protected void emitFormContent() throws SAXException {
         Html5FormEmitter.emit(contentHandler, this);
-    }
-
-    /**
-     * @see nu.validator.servlet.VerifierServletTransaction#doctype(int)
-     */
-    public void doctype(int doctype) throws SAXException {
-        // No-op
     }
 
     void maybeEmitNsfilterField() throws SAXException {

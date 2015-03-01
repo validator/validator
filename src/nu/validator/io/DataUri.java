@@ -50,8 +50,9 @@ public class DataUri {
     private InputStream inputStream;
 
     /**
-     * @throws IOException, MalformedURLException
-     * 
+     * @param url
+     * @throws MalformedURLException
+     * @throws IOException
      */
     protected void init(URL url) throws IOException, MalformedURLException {
         if (!url.scheme().equals("data")) {
@@ -261,8 +262,9 @@ public class DataUri {
     }
 
     /**
-     * @throws IOException, MalformedURLException
-     * 
+     * @param url
+     * @throws MalformedURLException
+     * @throws IOException
      */
     public DataUri(URL url) throws IOException, MalformedURLException {
         init(url);

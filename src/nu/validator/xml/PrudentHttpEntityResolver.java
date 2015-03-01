@@ -127,9 +127,9 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     }
 
     /**
-     * @param connectionTimeout
-     * @param socketTimeout
      * @param sizeLimit
+     * @param laxContentType
+     * @param errorHandler
      */
     public PrudentHttpEntityResolver(long sizeLimit, boolean laxContentType,
             ErrorHandler errorHandler) {
@@ -413,7 +413,7 @@ public class PrudentHttpEntityResolver implements EntityResolver {
     }
 
     /**
-     * @param b
+     * @param allowHtml
      */
     public void setAllowHtml(boolean allowHtml) {
         this.allowHtml = allowHtml;

@@ -572,18 +572,12 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#info(java.lang.String)
-     */
     public void info(String str) throws SAXException {
         if (emitter instanceof GnuMessageEmitter)
             return;
         message(MessageType.INFO, new Exception(str), null, -1, -1, false);
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#ioError(java.io.IOException)
-     */
     public void ioError(IOException e) throws SAXException {
         this.nonDocumentErrors++;
         String systemId = null;
@@ -594,27 +588,17 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         message(MessageType.IO, e, systemId, -1, -1, false);
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#internalError(java.lang.Throwable,
-     *      java.lang.String)
-     */
     public void internalError(Throwable e, String message) throws SAXException {
         this.nonDocumentErrors++;
         message(MessageType.INTERNAL, new Exception(message), null, -1, -1,
                 false);
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#schemaError(java.lang.Exception)
-     */
     public void schemaError(Exception e) throws SAXException {
         this.nonDocumentErrors++;
         message(MessageType.SCHEMA, e, null, -1, -1, false);
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#start()
-     */
     public void start(String documentUri) throws SAXException {
         emitter.startMessages(scrub(shortenDataUri(documentUri)), showSource);
     }
@@ -627,9 +611,6 @@ public final class MessageEmitterAdapter implements ErrorHandler {
         }
     }
 
-    /**
-     * @see nu.validator.servlet.InfoErrorHandler#end()
-     */
     public void end(String successMessage, String failureMessage)
             throws SAXException {
         ResultHandler resultHandler = emitter.startResult();

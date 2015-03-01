@@ -51,8 +51,7 @@ public class ImageCollector implements Validator, ContentHandler, Iterable<Image
     private Locator locator = null;
     
     /**
-     * @param sourceCode 
-     * @param context
+     * @param sourceCode
      */
     public ImageCollector(SourceCode sourceCode) {
         this.sourceCode = sourceCode;

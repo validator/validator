@@ -163,7 +163,7 @@ public class WiretapXMLReaderWrapper implements XMLReader {
     }
 
     /**
-     * @param arg0
+     * @param contentHandler
      * @see org.xml.sax.XMLReader#setContentHandler(org.xml.sax.ContentHandler)
      */
     public void setContentHandler(ContentHandler contentHandler) {

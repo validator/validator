@@ -297,7 +297,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
+     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String, boolean)
      */
     @Override
     public void startMessages(String documentUri, @SuppressWarnings("hiding")
@@ -399,7 +399,7 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startImageReview()
+     * @see nu.validator.messages.MessageEmitter#startImageReview(DocumentFragment, boolean)
      */
     @Override
     public ImageReviewHandler startImageReview(DocumentFragment instruction, boolean fatal) throws SAXException {

@@ -116,7 +116,7 @@ public class DataUriEntityResolver implements EntityResolver {
     }
 
     /**
-     * @param b
+     * @param allowHtml
      */
     public void setAllowHtml(boolean allowHtml) {
         this.allowHtml = allowHtml;

@@ -190,7 +190,7 @@ public class TextMessageEmitter extends MessageEmitter {
     }
 
     /**
-     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String)
+     * @see nu.validator.messages.MessageEmitter#startMessages(java.lang.String, boolean)
      */
     @Override
     public void startMessages(String documentUri, boolean willShowSource) throws SAXException {

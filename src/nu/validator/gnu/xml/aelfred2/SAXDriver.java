@@ -287,9 +287,8 @@ final public class SAXDriver implements Locator2, Attributes2, XMLReader,
 
     /**
      * <b>SAX1, SAX2</b>: Set the entity resolver for this parser.
-     * 
-     * @param handler
-     *            The object to receive entity events.
+     *
+     * @param resolver
      */
     public void setEntityResolver(EntityResolver resolver) {
         if (resolver instanceof EntityResolver2) {

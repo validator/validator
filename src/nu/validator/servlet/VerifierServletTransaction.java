@@ -1311,8 +1311,6 @@ class VerifierServletTransaction implements DocumentModeHandler, SchemaResolver 
     }
 
     /**
-     * @param entityResolver2
-     * @return
      * @throws SAXNotRecognizedException
      * @throws SAXNotSupportedException
      */

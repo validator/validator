@@ -53,11 +53,14 @@ public class DatatypeMismatchException extends SAXParseException {
     final boolean warning;
 
     /**
-     * @param className
-     *            the name of a nu.validator.datatype datatype class
+     * @param message
+     * @param locator
+     * @param datatypeClass
      * @param warning
-     *            true if should be handled eas warning, false if as error
-     * 
+     *            true if should be handled as warning, false if as error
+     * @throws ClassNotFoundException
+     * @throws SAXException
+     *
      */
     public DatatypeMismatchException(String message, Locator locator,
             Class<?> datatypeClass, boolean warning) throws SAXException,

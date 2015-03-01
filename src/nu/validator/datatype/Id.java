@@ -48,7 +48,6 @@ public class Id extends AbstractDatatype {
     /**
      * Checks that the value is a proper HTML5 id.
      * @param literal the value
-     * @param context ignored
      * @throws DatatypeException if the value isn't valid
      * @see org.relaxng.datatype.Datatype#checkValid(java.lang.String, org.relaxng.datatype.ValidationContext)
      */
