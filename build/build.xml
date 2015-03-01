@@ -85,6 +85,7 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="war" depends="clean">
     <copy file="VERSION" todir="${dist}"/>
+    <mkdir dir="${dist}/war" />
     <echo file="${dist}/war/web.xml" append="false"
 ><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
