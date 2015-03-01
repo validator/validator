@@ -758,9 +758,11 @@ def createDistZip(distType):
   version = sys.stdin.read().rstrip()
   print "Building %s/vnu-%s.%s.zip" % (distDir, version, distType)
   writeVersion(version)
+  classPath = os.pathsep.join([
+    os.pathsep.join(dependencyJarPaths()),
+    antJar, antLauncherJar])
   if distType == "war":
     os.mkdir(os.path.join(distDir, "war"))
-  classPath = os.pathsep.join([antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
   shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
@@ -814,7 +816,9 @@ def createWar():
   warDir = (os.path.join(buildRoot, "build", "vnu", "war"))
   removeIfDirExists(warDir)
   os.mkdir(warDir)
-  classPath = os.pathsep.join([antJar, antLauncherJar])
+  classPath = os.pathsep.join([
+    os.pathsep.join(dependencyJarPaths()),
+    antJar, antLauncherJar])
   runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s war'
     % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
 
