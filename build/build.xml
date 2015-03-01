@@ -22,8 +22,8 @@ DEALINGS IN THE SOFTWARE.
 <project name="html5-validator" basedir="." default="build"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <property name="dist" location="dist" />
-  <property name="version" location="dev" />
   <loadfile property="version" srcfile="VERSION" failonerror="false" />
+  <property name="version" location="dev" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
   <property name="version" value="${version}" />
@@ -201,7 +201,7 @@ DEALINGS IN THE SOFTWARE.
     </war>
     <delete dir="${dist}/war"></delete>
   </target>
-  <target name="${javadoc-jar}">
+  <target name="javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}"
       additionalparam="-Xdoclint:none,-reference -quiet">
@@ -218,7 +218,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
     <delete dir="${javadoc-dir}"/>
   </target>
-  <target name="${sources-jar}">
+  <target name="sources-jar">
     <jar destfile="${sources-jar}">
       <fileset dir="${src}"/>
       <fileset dir="${htmlparser-src}"/>
@@ -229,7 +229,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset dir="${jing-validate-src}"/>
     </jar>
   </target>
-  <target name="artifacts" depends="clean, ${javadoc-jar}, ${sources-jar}">
+  <target name="artifacts" depends="clean, javadoc-jar, sources-jar">
     <artifact:pom
       id="pom"
       groupId="nu.validator.validator"
