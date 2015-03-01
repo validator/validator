@@ -22,7 +22,8 @@ DEALINGS IN THE SOFTWARE.
 <project name="html5-validator" basedir="." default="build"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <property name="dist" location="dist" />
-  <loadfile property="version" srcfile="VERSION"/>
+  <property name="version" location="dev" />
+  <loadfile property="version" srcfile="VERSION" failonerror="false" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
   <property name="version" value="${version}" />
@@ -43,7 +44,7 @@ DEALINGS IN THE SOFTWARE.
     <delete dir="${dist}"/>
   </target>
   <target name="jar" depends="clean">
-    <copy file="VERSION" todir="${dist}"/>
+    <copy file="VERSION" todir="${dist}" failonerror="false" />
     <jar destfile="${dist}/vnu.jar" duplicate="preserve">
       <zipgroupfileset dir="../jars" includes="*.jar"/>
       <zipfileset src="../jing-trang/build/jing.jar"/>
