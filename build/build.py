@@ -1071,6 +1071,7 @@ def printHelp():
   print "  check    -- Perform self-test of the system"
   print "  run      -- Run the system"
   print "  all      -- update dldeps build test run"
+  print "  bundle   -- Create a Maven release bundle"
   print "  jar      -- Create a JAR file containing a release distribution"
   print "  war      -- Create a WAR file containing a release distribution"
   print "  checkjar -- Run tests with the build jar file"
