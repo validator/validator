@@ -286,7 +286,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="9.2.9.v20150224"/>
       <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
-      <dependency groupId="xml-apis" artifactId="xml-apis" version="2.0.2"/>
+      <dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
       <dependency groupId="xom" artifactId="xom" version="1.2.5"/>
     </artifact:pom>
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version}.pom"/>
