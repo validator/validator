@@ -70,7 +70,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-util-9.2.9.v20150224.jar"/>
       <zipfileset src="../dependencies/jetty-util-ajax-9.2.9.v20150224.jar"/>
-      <zipfileset src="../dependencies/log4j-1.2.15.jar"/>
+      <zipfileset src="../dependencies/log4j-1.2.17.jar"/>
       <zipfileset src="../dependencies/rhino-1.7R5.jar"/>
       <manifest>
         <attribute name="Main-Class" value="nu.validator.client.SimpleCommandLineValidator"/>
@@ -185,7 +185,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/jetty-http-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
       <fileset file="../dependencies/jetty-servlets-9.2.9.v20150224.jar"/> <!-- GzipFilter provider -->
       <fileset file="../dependencies/jetty-util-9.2.9.v20150224.jar"/> <!-- GzipFilter dependency -->
-      <fileset file="../dependencies/log4j-1.2.15.jar"/>
+      <fileset file="../dependencies/log4j-1.2.17.jar"/>
       <fileset file="../dependencies/rhino-1.7R5.jar"/>
     </copy>
     <war destfile="${dist}/vnu.war" webxml="${dist}/war/web.xml">
@@ -274,7 +274,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="io.mola.galimatias" artifactId="galimatias" version="0.1.0"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="javax.servlet" artifactId="javax.servlet-api" version="3.1.0"/>
-      <dependency groupId="log4j" artifactId="log4j" version="1.2.15"/>
+      <dependency groupId="log4j" artifactId="log4j" version="1.2.17"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0"/>
       <dependency groupId="org.apache.maven" artifactId="maven-ant-tasks" version="2.1.3"/>

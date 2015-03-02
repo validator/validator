@@ -104,7 +104,7 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar", "4374238076ab08e60e0d296234480837"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
-  ("https://repo1.maven.org/maven2/log4j/log4j/1.2.15/log4j-1.2.15.jar", "4d4609998fbc124ce6f0d1d48fca2614"),
+  ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),
   ("https://repo1.maven.org/maven2/net/sourceforge/jchardet/jchardet/1.0/jchardet-1.0.jar", "90c63f0e53e6f714dbc7641e066620e4"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/9.2.9.v20150224/jetty-http-9.2.9.v20150224.jar", "800c59fd3f976720f2ded0b30986d072"),
   ("https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.2.9.v20150224/jetty-io-9.2.9.v20150224.jar", "37532e30810cf6a84fd09d9e7cf720e5"),
@@ -140,7 +140,7 @@ runDependencyJars = [
   "jetty-servlets-9.2.9.v20150224.jar",
   "jetty-util-9.2.9.v20150224.jar",
   "jetty-util-ajax-9.2.9.v20150224.jar",
-  "log4j-1.2.15.jar",
+  "log4j-1.2.17.jar",
   "rhino-1.7R5.jar",
 ]
 
