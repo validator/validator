@@ -22,8 +22,6 @@
 
 package nu.validator.xml.dataattributes;
 
-import nu.validator.xml.langattributes.XmlLangAttributeDroppingValidatorWrapper;
-
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.validate.Schema;
 import com.thaiopensource.validate.Validator;

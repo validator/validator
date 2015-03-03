@@ -36,7 +36,6 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 
-import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.validate.IncorrectSchemaException;
 
 

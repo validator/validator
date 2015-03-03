@@ -23,7 +23,6 @@
 package nu.validator.xml;
 
 import org.xml.sax.ContentHandler;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
 public class ForbiddenCharacterFilter extends ContentHandlerFilter {

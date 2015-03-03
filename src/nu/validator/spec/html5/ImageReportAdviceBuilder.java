@@ -23,10 +23,8 @@
 package nu.validator.spec.html5;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
@@ -35,9 +33,6 @@ import nu.validator.saxtree.TreeBuilder;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.EmptyAttributes;
 
-import org.relaxng.datatype.DatatypeException;
-import nu.validator.datatype.AbstractDatatype;
-import nu.validator.datatype.Html5DatatypeLibrary;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;

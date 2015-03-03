@@ -25,10 +25,6 @@ package nu.validator.xml;
 
 import nu.validator.io.SystemIdIOException;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

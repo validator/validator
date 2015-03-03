@@ -77,9 +77,8 @@ import nu.validator.htmlparser.io.Encoding;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.ibm.icu.text.UnicodeSet;
-
 // Organized imports -- 2005-08-20 hsivonen
+// Removed unused imports -- 2015-03-03 rwhogg
 
 /**
  * Parse XML documents and return parse events through call-backs. Use the
