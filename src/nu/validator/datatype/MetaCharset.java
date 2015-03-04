@@ -22,11 +22,6 @@
 
 package nu.validator.datatype;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import nu.validator.datatype.data.CharsetData;
 import org.relaxng.datatype.DatatypeException;
 

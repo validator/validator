@@ -1377,7 +1377,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     private void addAttributeWithValue() throws SAXException {
         if (attributeName != null) {
             String value = longStrBufToString();
-            if (value.indexOf("<") != -1) {
+            if (value.indexOf('<') != -1) {
                 errAttributeValueContainsLt();
                 return;
             }
@@ -1401,12 +1401,12 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private boolean badCharInCandidateAttributeName() {
-        return attributeName.indexOf("/") != -1
-                || attributeName.indexOf(">") != -1
-                || attributeName.indexOf("\"") != -1
-                || attributeName.indexOf("\'") != -1
-                || attributeName.indexOf("<") != -1
-                || attributeName.indexOf("=") != -1;
+        return attributeName.indexOf('/') != -1
+                || attributeName.indexOf('>') != -1
+                || attributeName.indexOf('\"') != -1
+                || attributeName.indexOf('\'') != -1
+                || attributeName.indexOf('<') != -1
+                || attributeName.indexOf('=') != -1;
     }
 
     private void handleNcrValue(int returnState) throws SAXException {

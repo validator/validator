@@ -47,6 +47,8 @@ import org.xml.sax.SAXException;
  */
 public final class TextContentChecker extends Checker {
 
+    private final static String XHTML_URL = "http://www.w3.org/1999/xhtml";
+
     /**
      * The stack of <code>DatatypeStreamingValidator</code>s corresponding to
      * open elements. Stack entry is <code>null</code> if the corresponding
@@ -79,7 +81,7 @@ public final class TextContentChecker extends Checker {
      */
     private DatatypeStreamingValidator streamingValidatorFor(String uri,
             String localName, Attributes atts) {
-        if ("http://www.w3.org/1999/xhtml".equals(uri)) {
+        if (XHTML_URL.equals(uri)) {
             if ("time".equals(localName)) {
                 if (atts.getIndex("", "datetime") < 0) {
                     return TimeDatetime.THE_INSTANCE.createStreamingValidator(null);
@@ -130,11 +132,11 @@ public final class TextContentChecker extends Checker {
      */
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
+        if (inEmptyTitleOrOption && XHTML_URL.equals(uri)
                 && "title".equals(localName)) {
             err("Element \u201Ctitle\u201d must not be empty.");
             inEmptyTitleOrOption = false;
-        } else if (inEmptyTitleOrOption && "http://www.w3.org/1999/xhtml".equals(uri)
+        } else if (inEmptyTitleOrOption && XHTML_URL.equals(uri)
                 && "option".equals(localName)) {
             err("Element \u201Coption\u201d without "
                     + "attribute \u201clabel\u201d must not be empty.");
@@ -240,7 +242,7 @@ public final class TextContentChecker extends Checker {
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         stack.addLast(streamingValidatorFor(uri, localName, atts));
-        if ("http://www.w3.org/1999/xhtml".equals(uri)
+        if (XHTML_URL.equals(uri)
                 && ("title".equals(localName))
                 || ("option".equals(localName) && atts.getIndex("", "label") < 0)) {
             inEmptyTitleOrOption = true;
