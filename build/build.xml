@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
   <property name="validator-jar" value="${dist}/${artifactId}-${version}.jar" />
   <property name="javadoc-jar" value="${dist}/${artifactId}-${version}-javadoc.jar" />
   <property name="sources-jar" value="${dist}/${artifactId}-${version}-sources.jar" />
-  <property name="bundle-jar" value="${artifactId}-${version}-bundle.jar" />
+  <property name="bundle-jar" value="${dist}/${artifactId}-${version}-bundle.jar" />
   <property environment="env"/>
   <target name="build" depends="jar"/>
   <target name="clean">
@@ -203,8 +203,7 @@ DEALINGS IN THE SOFTWARE.
   </target>
   <target name="javadoc-jar">
     <property name="javadoc-dir" value="${dist}/javadoc" />
-    <javadoc destdir="${javadoc-dir}"
-      additionalparam="-Xdoclint:none,-reference -quiet">
+    <javadoc destdir="${javadoc-dir}">
       <fileset dir="${src}"/>
       <fileset dir="${htmlparser-src}"/>
       <fileset dir="${jing-datatype-src}"/>
@@ -232,7 +231,7 @@ DEALINGS IN THE SOFTWARE.
   <target name="artifacts" depends="clean, javadoc-jar, sources-jar">
     <artifact:pom
       id="pom"
-      groupId="nu.validator.validator"
+      groupId="nu.validator"
       artifactId="validator"
       version="${version}"
       name="The Nu HTML Checker"
@@ -277,7 +276,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="log4j" artifactId="log4j" version="1.2.17"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
       <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0"/>
-      <dependency groupId="org.apache.maven" artifactId="maven-ant-tasks" version="2.1.3"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-security" version="9.2.9.v20150224"/>
@@ -305,7 +303,8 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="bundle">
+  <target name="bundle" depends="artifacts">
     <jar basedir="${dist}" destfile="${bundle-jar}"/>
   </target>
+  <target name="deploy" depends="artifacts"/>
 </project>

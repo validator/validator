@@ -45,7 +45,11 @@ javadocCmd = 'javadoc'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
-gpgCmd = 'gpg'
+mvnCmd = 'mvn'
+gpgCmd = 'gpg2'
+
+snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 
 buildRoot = '.'
 antRoot = os.path.join(buildRoot, "jing-trang", "lib")
@@ -731,33 +735,56 @@ def checkService():
   time.sleep(5)
   daemon.terminate()
 
-def writeVersion(version):
-  f = open(os.path.join("build", "VERSION"), "w")
-  f.write(version)
-  f.close()
+class Release():
+  def __init__(self, artifactId=None, url=None):
+    self.url = url
+    self.artifactId = artifactId
+    self.classpath = os.pathsep.join([os.pathsep.join(
+      dependencyJarPaths()), antJar, antLauncherJar])
+    self.version = self.getVersion()
 
-def createBundle():
-  print "Waiting for version number on stdin..."
-  version = sys.stdin.read().rstrip()
-  print "Building %s/validator-%s-bundle.jar" % (distDir, version)
-  writeVersion(version)
-  classPath = os.pathsep.join([
-    os.pathsep.join(dependencyJarPaths()),
-    antJar, antLauncherJar])
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s artifacts'
-    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
-  for filename in findFiles(os.path.join(buildRoot, "build", "dist")):
-    runCmd('"%s" -ab %s' % (gpgCmd, filename))
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s bundle'
-    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
+  def getVersion(self):
+    print "Waiting for version number on stdin..."
+    return sys.stdin.read().rstrip()
+
+  def writeVersion(self):
+    f = open(os.path.join("build", "VERSION"), "w")
+    f.write(self.version)
+    f.close()
+
+  def createArtifacts(self, target):
+    self.writeVersion()
+    if (target == "bundle"):
+      print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
+    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
+      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), target))
+
+  def createBundle(self):
+    self.createArtifacts("bundle")
+
+  def deployToCentral(self):
+    self.createArtifacts("deploy")
+    basename = "%s-%s" % (self.artifactId, self.version)
+    mvnArgs = [
+      "-f %s.pom" % os.path.join(distDir, basename),
+      "gpg:sign-and-deploy-file",
+      "-Dgpg.executable=%s" % gpgCmd,
+      "-DrepositoryId=ossrh",
+      "-Durl='%s'" % self.url,
+      "-DpomFile='%s.pom'" % basename,
+      "-Dfile='%s.jar'" % basename,
+      "-Djavadoc='%s-javadoc.jar'" % basename,
+      "-Dsources='%s-sources.jar'" % basename,
+    ]
+    runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
 def createDistZip(distType):
   removeIfDirExists(distDir)
   os.mkdir(distDir)
-  print "Waiting for version number on stdin..."
-  version = sys.stdin.read().rstrip()
+  release = Release()
+  version = release.version
   print "Building %s/vnu-%s.%s.zip" % (distDir, version, distType)
-  writeVersion(version)
+  release.writeVersion()
   classPath = os.pathsep.join([
     os.pathsep.join(dependencyJarPaths()),
     antJar, antLauncherJar])
@@ -1180,7 +1207,14 @@ else:
     elif arg == 'build':
       buildAll()
     elif arg == 'bundle':
-      createBundle()
+      release = Release("bundle")
+      release.createBundle()
+    elif arg == 'snapshot':
+      release = Release("validator", snapshotsRepoUrl)
+      release.deployToCentral()
+    elif arg == 'release':
+      release = Release("validator", stagingRepoUrl)
+      release.deployToCentral()
     elif arg == 'jar':
       createDistZip('jar')
     elif arg == 'checkjar':
