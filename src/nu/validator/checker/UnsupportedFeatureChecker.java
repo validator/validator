@@ -11,8 +11,6 @@ public class UnsupportedFeatureChecker extends Checker {
      */
     @Override public void startElement(String uri, String localName,
             String qName, Attributes atts) throws SAXException {
-        boolean followW3Cspec = "1".equals(System.getProperty("nu.validator.servlet.follow-w3c-spec")) ? true
-            : false;
         if ("http://www.w3.org/1999/xhtml" != uri) {
             return;
         }
