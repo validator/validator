@@ -56,8 +56,6 @@ public class XhtmlSourceHandler implements SourceHandler {
     private boolean charOpen;
     
     private int lineNumber;
-    
-    private boolean lineHadCharacters;
 
     private SortedSet<Integer> oneBasedLineErrors;
     
@@ -72,7 +70,6 @@ public class XhtmlSourceHandler implements SourceHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
         maybeOpen();
-        lineHadCharacters = true;
         emitter.characters(ch, start, length);
     }
 
@@ -98,7 +95,6 @@ public class XhtmlSourceHandler implements SourceHandler {
             emitter.startElement("li", attrs);
             emitter.startElement("code");
             lineOpen = true;
-            lineHadCharacters = false;
             if (rangeOpen != null) {
                 emitter.startElementWithClass("b", rangeOpen);
             }

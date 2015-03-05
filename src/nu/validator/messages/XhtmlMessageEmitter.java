@@ -98,8 +98,6 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
 
     private int oneBasedLastColumn;
 
-    private boolean exact;
-
     private boolean willShowSource;
     
     private final TreeParser treeParser;
@@ -251,14 +249,13 @@ public class XhtmlMessageEmitter extends MessageEmitter implements ImageReviewHa
     @Override
     public void startMessage(MessageType type, String aSystemId,
             int aOneBasedFirstLine, int aOneBasedFirstColumn,
-            int aOneBasedLastLine, int aOneBasedLastColumn, boolean aExact)
+            int aOneBasedLastLine, int aOneBasedLastColumn, boolean exact)
             throws SAXException {
         this.systemId = aSystemId;
         this.oneBasedFirstLine = aOneBasedFirstLine;
         this.oneBasedFirstColumn = aOneBasedFirstColumn;
         this.oneBasedLastLine = aOneBasedLastLine;
         this.oneBasedLastColumn = aOneBasedLastColumn;
-        this.exact = aExact;
 
         this.maybeOpenList();
         this.emitter.startElementWithClass("li", type.getFlatType());
