@@ -25,7 +25,6 @@ package nu.validator.messages;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Map;
-import java.util.Iterator;
 import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.XhtmlSaxEmitter;
 
@@ -78,7 +77,6 @@ public final class XhtmlMessageTextHandler implements MessageTextHandler {
           }
         }
         if (!linkText.isEmpty()) {
-          Iterator entries = linkText.entrySet().iterator();
           int position = start;
           for (Map.Entry<Integer, String> entry : linkText.entrySet()) {
             int linkstart = entry.getKey();
