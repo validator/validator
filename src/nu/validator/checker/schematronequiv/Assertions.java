@@ -1173,17 +1173,21 @@ public class Assertions extends Checker {
             } else if ("select" == localName && node.isOptionNeeded()) {
                 if (!node.hasOption()) {
                     err("A \u201Cselect\u201D element with a"
-                            + " \u201Crequired\u201D attribute and without a"
-                            + " \u201Cmultiple\u201D attribute, and whose size"
-                            + " is \u201C1\u201D, must have a child"
+                            + " \u201Crequired\u201D attribute, and without a"
+                            + " \u201Cmultiple\u201D attribute, and without a"
+                            + " \u201Csize\u201D attribute whose value is"
+                            + " greater than"
+                            + " \u201C1\u201D, must have a child"
                             + " \u201Coption\u201D element.");
                 }
                 if (node.nonEmptyOptionLocator() != null) {
                     err("The first child \u201Coption\u201D element of a"
                             + " \u201Cselect\u201D element with a"
-                            + " \u201Crequired\u201D attribute and without a"
-                            + " \u201Cmultiple\u201D attribute, and whose size"
-                            + " is \u201C1\u201D, must have either an empty"
+                            + " \u201Crequired\u201D attribute, and without a"
+                            + " \u201Cmultiple\u201D attribute, and without a"
+                            + " \u201Csize\u201D attribute whose value is"
+                            + " greater than"
+                            + " \u201C1\u201D, must have either an empty"
                             + " \u201Cvalue\u201D attribute, or must have no"
                             + " text content.", node.nonEmptyOptionLocator());
                 }
