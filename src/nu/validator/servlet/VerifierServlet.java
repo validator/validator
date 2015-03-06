@@ -157,7 +157,6 @@ public class VerifierServlet extends HttpServlet {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return;
     }
 
     /**
