@@ -599,8 +599,6 @@ public class Assertions extends Checker {
 
         private Locator locator = null;
 
-        private boolean children = false;
-
         private boolean selectedOptions = false;
 
         private boolean labeledDescendants = false;
@@ -655,25 +653,6 @@ public class Assertions extends Checker {
          */
         public String getName() {
             return name;
-        }
-
-        /**
-         * Returns the children.
-         * 
-         * @return the children
-         */
-        public boolean isChildren() {
-            return children;
-        }
-
-        /**
-         * Sets the children.
-         * 
-         * @param children
-         *            the children to set
-         */
-        public void setChildren() {
-            this.children = true;
         }
 
         /**
@@ -1305,7 +1284,6 @@ public class Assertions extends Checker {
         if ("http://www.w3.org/1999/xhtml" == uri) {
             boolean controls = false;
             boolean hidden = false;
-            boolean add = false;
             boolean toolbar = false;
             boolean usemap = false;
             boolean ismap = false;
@@ -2140,13 +2118,6 @@ public class Assertions extends Checker {
                 getDocumentLocator()));
     }
 
-    private void processChildContent(StackNode parent) throws SAXException {
-        if (parent == null) {
-            return;
-        }
-        parent.setChildren();
-    }
-
     /**
      * @see nu.validator.checker.Checker#characters(char[], int, int)
      */
@@ -2202,7 +2173,6 @@ public class Assertions extends Checker {
                         stack[currentPtr - 1].setNonEmptyOption((new LocatorImpl(
                                 getDocumentLocator())));
                     }
-                    processChildContent(node);
                     return;
             }
         }
