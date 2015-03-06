@@ -9,7 +9,7 @@ Its [source code is available][6], as are [instructions on how to build, test,
 and run the code][7]. The checker is released as two separate packages:
 
    [3]: https://html5.validator.nu
-   [4]: https://validator.w3.org/nu/
+   [4]: http://validator.w3.org/nu/
    [5]: http://validator.w3.org
    [6]: https://github.com/validator/validator
    [7]: https://validator.github.io/validator/#build-instructions
@@ -396,4 +396,3 @@ separately; e.g.:
   * `python ./build/build.py build test` (to build and test)
 
   * `python ./build/build.py run` (to run only)
-
