@@ -196,7 +196,8 @@ fieldset {
 	font-family: inherit;
 	font-size: inherit;
 	padding: 0.5% 1.5% 0.5% 1.5%;
-	border: 1px dotted #666666;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 	margin: 0;
 	background-color: #ffffff;
 	vertical-align: inherit;
@@ -773,4 +774,27 @@ dl.inputattrs .highlight {
 
 #filters .hide, #filters .show {
 	color: blue;
+}
+
+.checkboxes label {
+	margin-right: 16px;
+}
+
+.showwhat {
+	padding: 2px;
+	padding-right: 6px;
+	padding-top: 3px;
+	padding-bottom: 2px;
+	border-radius: 6px;
+	border: solid #ccc 1px;
+	font-size: 11px;
+	margin-right: 10px;
+}
+
+.showwhat label {
+	font-size: 11px;
+}
+
+label[for=showimagereport] {
+	margin-right: 0px;
 }

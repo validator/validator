@@ -7,15 +7,17 @@
 	><fieldset
 		><legend>Checker Input</legend
 		><p class="checkboxes"
+			>Show <span class="showwhat"
 			><label title="Display the markup source of the input document." for='showsource'
 			><?SaxCompiler-code t.emitShowSourceField();
-			?>Show source</label
+			?>source</label
 			><label title="Display an outline of the input document." for='showoutline'
 			><?SaxCompiler-code t.emitShowOutlineField();
-			?>Show outline</label
+			?>outline</label
 			><label title="Display a report about the textual alternatives for images." for='showimagereport'
 			><?SaxCompiler-code t.emitShowImageReportField();
-			?>Show image report</label
+			?>image report</label
+			></span
 		></p
 		><div id="inputregion"
 			><label id="inputlabel" for="doc">Document URL:</label
