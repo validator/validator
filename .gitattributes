@@ -1,5 +1,6 @@
 resources/spec/html5.html linguist-vendored
 resources/spec/w3c-html5.html linguist-vendored
 schema/.drivers/xhtml10/jing-copying.html linguist-vendored
+site/spec2.html linguist-vendored
 src/nu/validator/gnu/xml/aelfred2/package.html linguist-vendored
 src/nu/validator/localentities/files/about.html linguist-vendored
