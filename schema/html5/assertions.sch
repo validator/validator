@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+<!-- * ********************************************************************* -->
+<!-- * WARNING: This file is no longer maintained and hasn't been updated in -->
+<!-- * years. There are numerous requirements in the HTML spec which should -->
+<!-- * rightly be captured by assertions in this schema but that aren't. So -->
+<!-- * don't consider the set of assertions here to be thorough or complete. -->
+<!-- * ********************************************************************* -->
+
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- Schematron assertions for HTML5                                         -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
