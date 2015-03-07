@@ -50,6 +50,7 @@ gpgCmd = 'gpg2'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+jingVersion = "20130806VNU"
 
 buildRoot = '.'
 antRoot = os.path.join(buildRoot, "jing-trang", "lib")
@@ -736,12 +737,15 @@ def checkService():
   daemon.terminate()
 
 class Release():
-  def __init__(self, artifactId=None, url=None):
+  def __init__(self, artifactId=None, url=None, version=None):
     self.url = url
     self.artifactId = artifactId
     self.classpath = os.pathsep.join([os.pathsep.join(
       dependencyJarPaths()), antJar, antLauncherJar])
-    self.version = self.getVersion()
+    if (version):
+      self.version = version
+    else:
+      self.version = self.getVersion()
 
   def getVersion(self):
     print "Waiting for version number on stdin..."
@@ -752,18 +756,23 @@ class Release():
     f.write(self.version)
     f.close()
 
-  def createArtifacts(self, target):
+  def createArtifacts(self):
     self.writeVersion()
-    if (target == "bundle"):
-      print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
-    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), target))
+    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
+      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), self.artifactId))
 
   def createBundle(self):
-    self.createArtifacts("bundle")
+    self.createArtifacts()
+    print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
+    for filename in findFiles(distDir):
+      runCmd("%s -ab %s" % (gpgCmd, filename))
+    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
+      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), self.artifactId))
 
   def deployToCentral(self):
-    self.createArtifacts("deploy")
+    if (self.url == snapshotsRepoUrl):
+      self.version += "-SNAPSHOT"
+    self.createArtifacts()
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
       "-f %s.pom" % os.path.join(distDir, basename),
@@ -1207,13 +1216,22 @@ else:
     elif arg == 'build':
       buildAll()
     elif arg == 'bundle':
-      release = Release("bundle")
+      release = Release("validator")
       release.createBundle()
     elif arg == 'snapshot':
       release = Release("validator", snapshotsRepoUrl)
       release.deployToCentral()
     elif arg == 'release':
       release = Release("validator", stagingRepoUrl)
+      release.deployToCentral()
+    elif arg == 'jing-bundle':
+      release = Release("jing", None, jingVersion)
+      release.createBundle()
+    elif arg == 'jing-snapshot':
+      release = Release("jing", snapshotsRepoUrl, jingVersion)
+      release.deployToCentral()
+    elif arg == 'jing-release':
+      release = Release("jing", stagingRepoUrl, jingVersion)
       release.deployToCentral()
     elif arg == 'jar':
       createDistZip('jar')
