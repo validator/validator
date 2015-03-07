@@ -1189,7 +1189,13 @@ public class Assertions extends Checker {
                             + " greater than"
                             + " \u201C1\u201D, must have either an empty"
                             + " \u201Cvalue\u201D attribute, or must have no"
-                            + " text content.", node.nonEmptyOptionLocator());
+                            + " text content."
+                            + " Consider either adding a placeholder option"
+                            + " label, or adding a"
+                            + " \u201Csize\u201D attribute with a value equal"
+                            + " to the number of"
+                            + " \u201Coption\u201D elements.",
+                            node.nonEmptyOptionLocator());
                 }
             } else if ("section" == localName && !node.hasHeading()) {
                 warn("Section lacks heading. Consider using"
