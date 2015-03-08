@@ -51,6 +51,7 @@ gpgCmd = 'gpg2'
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 jingVersion = "20130806VNU"
+htmlparserVersion = "1.4.1"
 
 buildRoot = '.'
 antRoot = os.path.join(buildRoot, "jing-trang", "lib")
@@ -768,6 +769,7 @@ class Release():
     print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
     for filename in findFiles(distDir):
       runCmd("%s -ab %s" % (gpgCmd, filename))
+    self.writeVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
       % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), self.artifactId))
 
@@ -1225,6 +1227,15 @@ else:
       release.deployToCentral()
     elif arg == 'release':
       release = Release("validator", stagingRepoUrl)
+      release.deployToCentral()
+    elif arg == 'htmlparser-bundle':
+      release = Release("htmlparser", None, htmlparserVersion)
+      release.createBundle()
+    elif arg == 'htmlparser-snapshot':
+      release = Release("htmlparser", snapshotsRepoUrl, htmlparserVersion)
+      release.deployToCentral()
+    elif arg == 'htmlparser-release':
+      release = Release("htmlparser", stagingRepoUrl, htmlparserVersion)
       release.deployToCentral()
     elif arg == 'jing-bundle':
       release = Release("jing", None, jingVersion)

@@ -29,7 +29,6 @@ DEALINGS IN THE SOFTWARE.
   <property name="artifactId" value="validator" />
   <property name="src" location="../src" />
   <property name="javadoc-dir" value="${dist}/javadoc" />
-  <property name="htmlparser-src" location="../htmlparser/src" />
   <property name="validator-jar" value="${dist}/${artifactId}-${version}.jar" />
   <property name="validator-javadoc-jar" value="${dist}/${artifactId}-${version}-javadoc.jar" />
   <property name="validator-sources-jar" value="${dist}/${artifactId}-${version}-sources.jar" />
@@ -198,7 +197,6 @@ DEALINGS IN THE SOFTWARE.
     <property name="javadoc-dir" value="${dist}/javadoc" />
     <javadoc destdir="${javadoc-dir}">
       <fileset dir="${src}"/>
-      <fileset dir="${htmlparser-src}"/>
     </javadoc>
     <jar destfile="${validator-javadoc-jar}">
       <fileset dir="${javadoc-dir}" />
@@ -208,7 +206,6 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-sources-jar">
     <jar destfile="${validator-sources-jar}">
       <fileset dir="${src}"/>
-      <fileset dir="${htmlparser-src}"/>
     </jar>
   </target>
   <target name="validator-artifacts" depends="validator-javadoc-jar, validator-sources-jar">
@@ -258,7 +255,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="javax.servlet" artifactId="javax.servlet-api" version="3.1.0"/>
       <dependency groupId="log4j" artifactId="log4j" version="1.2.17"/>
       <dependency groupId="net.sf.saxon" artifactId="Saxon-HE" version="9.6.0-4"/>
-      <dependency groupId="net.sourceforge.jchardet" artifactId="jchardet" version="1.0"/>
+      <dependency groupId="nu.validator" artifactId="htmlparser" version="1.4.1"/>
       <dependency groupId="nu.validator" artifactId="jing" version="20130806VNU"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-http" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-io" version="9.2.9.v20150224"/>
@@ -269,12 +266,10 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="9.2.9.v20150224"/>
       <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
       <dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
-      <dependency groupId="xom" artifactId="xom" version="1.2.5"/>
     </artifact:pom>
     <artifact:writepom pomRefId="pom" file="${dist}/validator-${version}.pom"/>
     <jar destfile="${validator-jar}" duplicate="preserve">
       <zipfileset src="../jars/validator.jar"/>
-      <zipfileset src="../jars/htmlparser.jar"/>
       <manifest>
         <attribute name="Implementation-Title" value="The Nu Markup Checker (v.Nu)"/>
         <attribute name="Implementation-Version" value="${version}"/>
@@ -289,5 +284,6 @@ DEALINGS IN THE SOFTWARE.
   <target name="validator-bundle" depends="validator-artifacts">
     <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
   </target>
+  <import file=".ant/build-htmlparser.xml"/>
   <import file=".ant/build-jing.xml"/>
 </project>
