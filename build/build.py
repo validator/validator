@@ -746,13 +746,15 @@ class Release():
       self.version = version
     else:
       self.version = self.getVersion()
+    removeIfDirExists(distDir)
+    ensureDirExists(distDir)
 
   def getVersion(self):
     print "Waiting for version number on stdin..."
     return sys.stdin.read().rstrip()
 
   def writeVersion(self):
-    f = open(os.path.join("build", "VERSION"), "w")
+    f = open(os.path.join(distDir, "VERSION"), "w")
     f.write(self.version)
     f.close()
 
