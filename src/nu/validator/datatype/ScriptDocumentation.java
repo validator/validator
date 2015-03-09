@@ -113,7 +113,6 @@ public final class ScriptDocumentation extends Script {
                     + " the character sequence \u201c*/\u201d.");
         }
         super.checkValid(literal);
-        return;
     }
 
     @Override public String getName() {

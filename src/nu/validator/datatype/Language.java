@@ -436,11 +436,11 @@ public final class Language extends AbstractDatatype {
         }
     }
 
-    private final boolean isLowerCaseAlphaNumeric(char c) {
+    private boolean isLowerCaseAlphaNumeric(char c) {
         return isLowerCaseAlpha(c) || isDigit(c);
     }
 
-    private final boolean isLowerCaseAlphaNumeric(String str) {
+    private boolean isLowerCaseAlphaNumeric(String str) {
         for (int i = 0; i < str.length(); i++) {
             if (!isLowerCaseAlphaNumeric(str.charAt(i))) {
                 return false;
@@ -453,11 +453,11 @@ public final class Language extends AbstractDatatype {
      * @param c
      * @return
      */
-    private final boolean isDigit(char c) {
+    private boolean isDigit(char c) {
         return (c >= '0' && c <= '9');
     }
 
-    private final boolean isDigit(String str) {
+    private boolean isDigit(String str) {
         for (int i = 0; i < str.length(); i++) {
             if (!isDigit(str.charAt(i))) {
                 return false;
@@ -470,11 +470,11 @@ public final class Language extends AbstractDatatype {
      * @param c
      * @return
      */
-    private final boolean isLowerCaseAlpha(char c) {
+    private boolean isLowerCaseAlpha(char c) {
         return (c >= 'a' && c <= 'z');
     }
 
-    private final boolean isLowerCaseAlpha(String str) {
+    private boolean isLowerCaseAlpha(String str) {
         for (int i = 0; i < str.length(); i++) {
             if (!isLowerCaseAlpha(str.charAt(i))) {
                 return false;

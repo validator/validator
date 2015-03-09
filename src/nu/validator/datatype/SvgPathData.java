@@ -15,6 +15,8 @@
  *
  */
 
+// March 5, 2015 - rwhogg - removed unnecessary return statement
+
 package nu.validator.datatype;
 
 import java.io.StringReader;
@@ -1268,8 +1270,6 @@ public class SvgPathData extends AbstractDatatype {
         if (!mantPos) {
             mant = -mant;
         }
-
-        return;
     }
 
     /**

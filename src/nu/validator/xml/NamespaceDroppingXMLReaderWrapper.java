@@ -158,7 +158,7 @@ public final class NamespaceDroppingXMLReaderWrapper implements XMLReader, Conte
         wrappedReader.getErrorHandler().warning(exception);
     }
 
-    private final Attributes filterAttributes(Attributes atts) throws SAXException {
+    private Attributes filterAttributes(Attributes atts) throws SAXException {
         int length = atts.getLength();
         int i = 0;
         while (i < length) {
@@ -191,7 +191,7 @@ public final class NamespaceDroppingXMLReaderWrapper implements XMLReader, Conte
         return atts;
     }
 
-    private final boolean isInNamespacesToRemove(String uri) {
+    private boolean isInNamespacesToRemove(String uri) {
         for (int i = 0; i < namespacesToRemove.length; i++) {
             if (uri == namespacesToRemove[i]) {
                 return true;
