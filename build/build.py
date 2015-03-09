@@ -791,36 +791,33 @@ class Release():
     ]
     runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
-def createDistZip(distType):
-  removeIfDirExists(distDir)
-  os.mkdir(distDir)
-  release = Release()
-  version = release.version
-  print "Building %s/vnu-%s.%s.zip" % (distDir, version, distType)
-  release.writeVersion()
-  classPath = os.pathsep.join([
-    os.pathsep.join(dependencyJarPaths()),
-    antJar, antLauncherJar])
-  if distType == "war":
-    os.mkdir(os.path.join(distDir, "war"))
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
-  shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
-  shutil.copy(os.path.join(buildRoot, "README.md"), distDir)
-  shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), distDir)
-  shutil.copy(os.path.join(buildRoot, "LICENSE"), distDir)
-  os.chdir("build")
-  distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
-  removeIfExists(distroFile)
-  zf = zipfile.ZipFile(distroFile, "w")
-  for dirname, subdirs, files in os.walk("dist"):
-    zf.write(dirname)
-    for filename in files:
-      zf.write(os.path.join(dirname, filename))
-  zf.close()
-  os.chdir("..")
-  if distType == "jar":
-    checkJar()
+  def createDistZip(self, distType):
+    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, distType)
+    release.writeVersion()
+    classPath = os.pathsep.join([
+      os.pathsep.join(dependencyJarPaths()),
+      antJar, antLauncherJar])
+    if distType == "war":
+      os.mkdir(os.path.join(distDir, "war"))
+    runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
+      % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
+    shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
+    shutil.copy(os.path.join(buildRoot, "README.md"), distDir)
+    shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), distDir)
+    shutil.copy(os.path.join(buildRoot, "LICENSE"), distDir)
+    os.chdir("build")
+    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, distType))
+    removeIfExists(distroFile)
+    zf = zipfile.ZipFile(distroFile, "w")
+    for dirname, subdirs, files in os.walk("dist"):
+      zf.write(dirname)
+      for filename in files:
+        zf.write(os.path.join(dirname, filename))
+    zf.close()
+    shutil.move(distroFile, "dist")
+    os.chdir("..")
+    if distType == "jar":
+      checkJar()
 
 def checkJar():
   vnu = os.path.join(distDir, "vnu.jar")
@@ -1247,11 +1244,13 @@ else:
       release = Release("jing", stagingRepoUrl, jingVersion)
       release.deployToCentral()
     elif arg == 'jar':
-      createDistZip('jar')
+      release = Release("validator")
+      release.createDistZip('jar')
     elif arg == 'checkjar':
       checkJar()
     elif arg == 'war':
-      createDistZip('war')
+      release = Release("validator")
+      release.createDistZip('war')
     elif arg == 'localent':
       prepareLocalEntityJar()
     elif arg == 'deploy':
