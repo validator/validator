@@ -41,6 +41,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
   </target>
   <target name="htmlparser-artifacts" depends="htmlparser-javadoc-jar, htmlparser-sources-jar">
+    <delete file="${dist}/VERSION" />
     <artifact:pom
       id="htmlparser-pom"
       groupId="nu.validator"

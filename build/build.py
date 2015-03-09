@@ -738,21 +738,26 @@ def checkService():
   daemon.terminate()
 
 class Release():
-  def __init__(self, artifactId=None, url=None, version=None):
-    self.url = url
+  def __init__(self, artifactId=None, url=None, version=None, jarOrWar="jar"):
     self.artifactId = artifactId
+    self.url = url
+    self.version = ""
+    self.jarOrWar = jarOrWar
+    self.buildXml = os.path.join(buildRoot, "build", "build.xml")
     self.classpath = os.pathsep.join([os.pathsep.join(
       dependencyJarPaths()), antJar, antLauncherJar])
     if (version):
       self.version = version
-    else:
-      self.version = self.getVersion()
     removeIfDirExists(distDir)
     ensureDirExists(distDir)
 
-  def getVersion(self):
-    print "Waiting for version number on stdin..."
-    return sys.stdin.read().rstrip()
+  def setVersion(self):
+    if (self.version == ""):
+      print "Waiting for version number on stdin..."
+      self.version = sys.stdin.read().rstrip()
+    if (self.url == snapshotsRepoUrl):
+      self.version += "-SNAPSHOT"
+    self.writeVersion()
 
   def writeVersion(self):
     f = open(os.path.join(distDir, "VERSION"), "w")
@@ -760,9 +765,9 @@ class Release():
     f.close()
 
   def createArtifacts(self):
-    self.writeVersion()
+    self.setVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
-      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), self.artifactId))
+      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
   def createBundle(self):
     self.createArtifacts()
@@ -771,17 +776,15 @@ class Release():
       runCmd("%s -ab %s" % (gpgCmd, filename))
     self.writeVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
-      % (javaCmd, self.classpath, os.path.join(buildRoot, "build", "build.xml"), self.artifactId))
+      % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
   def deployToCentral(self):
-    if (self.url == snapshotsRepoUrl):
-      self.version += "-SNAPSHOT"
     self.createArtifacts()
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
       "-f %s.pom" % os.path.join(distDir, basename),
       "gpg:sign-and-deploy-file",
-      "-Dgpg.executable=%s" % gpgCmd,
+      "-Dgpg.jarOrWar=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
       "-Durl='%s'" % self.url,
       "-DpomFile='%s.pom'" % basename,
@@ -791,22 +794,24 @@ class Release():
     ]
     runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
-  def createDistZip(self, distType):
-    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, distType)
-    release.writeVersion()
-    classPath = os.pathsep.join([
-      os.pathsep.join(dependencyJarPaths()),
-      antJar, antLauncherJar])
-    if distType == "war":
+  def createExecutable(self):
+    if self.jarOrWar == "war":
       os.mkdir(os.path.join(distDir, "war"))
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-      % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml"), distType))
+      % (javaCmd, self.classpath, self.buildXml, self.jarOrWar))
+    if self.jarOrWar == "jar":
+      self.check()
+
+  def createDist(self):
+    self.setVersion()
+    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, self.jarOrWar)
+    self.createExecutable()
     shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
     shutil.copy(os.path.join(buildRoot, "README.md"), distDir)
     shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), distDir)
     shutil.copy(os.path.join(buildRoot, "LICENSE"), distDir)
     os.chdir("build")
-    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, distType))
+    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, self.jarOrWar))
     removeIfExists(distroFile)
     zf = zipfile.ZipFile(distroFile, "w")
     for dirname, subdirs, files in os.walk("dist"):
@@ -816,20 +821,19 @@ class Release():
     zf.close()
     shutil.move(distroFile, "dist")
     os.chdir("..")
-    if distType == "jar":
-      checkJar()
 
-def checkJar():
-  vnu = os.path.join(distDir, "vnu.jar")
-  formats = ["gnu", "xml", "json", "text"]
-  for _format in formats:
-    if runCmd('echo \'%s\' | "%s" -jar %s --format %s -' % (miniDoc, javaCmd, vnu, _format)):
+  def check(self):
+    vnu = os.path.join(distDir, "vnu.jar")
+    formats = ["gnu", "xml", "json", "text"]
+    for _format in formats:
+      if runCmd('echo \'%s\' | "%s" -jar %s --format %s -'
+          % (miniDoc, javaCmd, vnu, _format)):
+        sys.exit(1)
+    # to also make sure it works even w/o --format value given; returns gnu output
+    if runCmd('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
       sys.exit(1)
-  # to also make sure it works even w/o --format value given; returns gnu output
-  if runCmd('echo \'%s\' | "%s" -jar %s -' % (miniDoc, javaCmd, vnu)):
-    sys.exit(1)
-  if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
-    sys.exit(1)
+    if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
+      sys.exit(1)
 
 def createTarball():
   args = [
@@ -848,16 +852,6 @@ def createDepTarball():
     os.path.join(buildRoot, "deps.tar.gz"),
   ] + dependencyJarPaths(runDependencyJars)
   runCmd('"%s" %s' %(tarCmd, " ".join(args)))
-
-def createWar():
-  warDir = (os.path.join(buildRoot, "build", "vnu", "war"))
-  removeIfDirExists(warDir)
-  os.mkdir(warDir)
-  classPath = os.pathsep.join([
-    os.pathsep.join(dependencyJarPaths()),
-    antJar, antLauncherJar])
-  runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s war'
-    % (javaCmd, classPath, os.path.join(buildRoot, "build", "build.xml")))
 
 def deployOverScp():
   if not deploymentTarget:
@@ -1222,35 +1216,41 @@ else:
     elif arg == 'snapshot':
       release = Release("validator", snapshotsRepoUrl)
       release.deployToCentral()
-    elif arg == 'release':
+    elif arg == 'stage':
       release = Release("validator", stagingRepoUrl)
       release.deployToCentral()
     elif arg == 'htmlparser-bundle':
-      release = Release("htmlparser", None, htmlparserVersion)
+      release = Release("htmlparser", "", htmlparserVersion)
       release.createBundle()
     elif arg == 'htmlparser-snapshot':
       release = Release("htmlparser", snapshotsRepoUrl, htmlparserVersion)
       release.deployToCentral()
-    elif arg == 'htmlparser-release':
+    elif arg == 'htmlparser-stage':
       release = Release("htmlparser", stagingRepoUrl, htmlparserVersion)
       release.deployToCentral()
     elif arg == 'jing-bundle':
-      release = Release("jing", None, jingVersion)
+      release = Release("jing", "", jingVersion)
       release.createBundle()
     elif arg == 'jing-snapshot':
       release = Release("jing", snapshotsRepoUrl, jingVersion)
       release.deployToCentral()
-    elif arg == 'jing-release':
+    elif arg == 'jing-stage':
       release = Release("jing", stagingRepoUrl, jingVersion)
       release.deployToCentral()
     elif arg == 'jar':
       release = Release("validator")
-      release.createDistZip('jar')
+      release.createExecutable()
+    elif arg == 'war':
+      release = Release("validator", "", "", "war")
+      release.createExecutable()
+    elif arg == 'jar-release':
+      release = Release("validator")
+      release.createDist()
+    elif arg == 'war-release':
+      release = Release("validator", "", "", "war")
+      release.createDist()
     elif arg == 'checkjar':
       checkJar()
-    elif arg == 'war':
-      release = Release("validator")
-      release.createDistZip('war')
     elif arg == 'localent':
       prepareLocalEntityJar()
     elif arg == 'deploy':

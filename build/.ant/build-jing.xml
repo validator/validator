@@ -63,6 +63,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
   </target>
   <target name="jing-artifacts" depends="jing-javadoc-jar, jing-sources-jar">
+    <delete file="${dist}/VERSION" />
     <artifact:pom
       id="jing-pom"
       groupId="nu.validator"

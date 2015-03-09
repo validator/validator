@@ -21,10 +21,10 @@ DEALINGS IN THE SOFTWARE.
 -->
 <project name="html5-validator" basedir="." default="build"
   xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+  <tstamp/>
   <property name="dist" location="dist" />
   <loadfile property="version" srcfile="${dist}/VERSION" failonerror="false" />
-  <delete file="${dist}/VERSION" />
-  <property name="version" location="dev" />
+  <property name="version" value="nightly-${DSTAMP}" />
   <property name="groupId" value="nu.validator" />
   <property name="artifactId" value="validator" />
   <property name="src" location="../src" />
@@ -209,6 +209,7 @@ DEALINGS IN THE SOFTWARE.
     </jar>
   </target>
   <target name="validator-artifacts" depends="validator-javadoc-jar, validator-sources-jar">
+    <delete file="${dist}/VERSION" />
     <artifact:pom
       id="pom"
       groupId="nu.validator"
