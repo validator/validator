@@ -799,8 +799,6 @@ class Release():
       os.mkdir(os.path.join(distDir, "war"))
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
       % (javaCmd, self.classpath, self.buildXml, self.jarOrWar))
-    if self.jarOrWar == "jar":
-      self.check()
 
   def createDist(self):
     self.setVersion()
@@ -824,6 +822,8 @@ class Release():
 
   def check(self):
     vnu = os.path.join(distDir, "vnu.jar")
+    if not os.path.exists(vnu):
+      return
     formats = ["gnu", "xml", "json", "text"]
     for _format in formats:
       if runCmd('echo \'%s\' | "%s" -jar %s --format %s -'
@@ -1240,6 +1240,7 @@ else:
     elif arg == 'jar':
       release = Release("validator")
       release.createExecutable()
+      release.check()
     elif arg == 'war':
       release = Release("validator", "", "", "war")
       release.createExecutable()
@@ -1249,8 +1250,6 @@ else:
     elif arg == 'war-release':
       release = Release("validator", "", "", "war")
       release.createDist()
-    elif arg == 'checkjar':
-      checkJar()
     elif arg == 'localent':
       prepareLocalEntityJar()
     elif arg == 'deploy':
