@@ -813,7 +813,7 @@ def createDistZip(distType):
   distroFile = os.path.join("vnu-%s.%s.zip" % (version, distType))
   removeIfExists(distroFile)
   zf = zipfile.ZipFile(distroFile, "w")
-  for dirname, subdirs, files in os.walk("vnu"):
+  for dirname, subdirs, files in os.walk("dist"):
     zf.write(dirname)
     for filename in files:
       zf.write(os.path.join(dirname, filename))
