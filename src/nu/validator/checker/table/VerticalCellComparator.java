@@ -41,7 +41,7 @@ final class VerticalCellComparator implements Comparator<Cell> {
         super();
     }
 
-    public final int compare(Cell cell0, Cell cell1) {
+    public int compare(Cell cell0, Cell cell1) {
         if (cell0.getBottom() < cell1.getBottom()) {
             return -1;
         } else if (cell0.getBottom() > cell1.getBottom()) {

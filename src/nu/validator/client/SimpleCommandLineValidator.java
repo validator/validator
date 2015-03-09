@@ -252,7 +252,7 @@ public class SimpleCommandLineValidator {
         try {
             String path = file.getPath();
             if (path.matches("^http:/[^/].+$")) {
-                path = "http://" + path.substring(path.indexOf("/") + 1);
+                path = "http://" + path.substring(path.indexOf('/') + 1);
                 emitFilename(path);
                 try {
                     validator.checkHttpURL(new URL(path));
@@ -261,7 +261,7 @@ public class SimpleCommandLineValidator {
                             null, path, -1, -1));
                 }
             } else if (path.matches("^https:/[^/].+$")) {
-                path = "https://" + path.substring(path.indexOf("/") + 1);
+                path = "https://" + path.substring(path.indexOf('/') + 1);
                 emitFilename(path);
                 try {
                     validator.checkHttpURL(new URL(path));
