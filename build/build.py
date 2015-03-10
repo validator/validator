@@ -58,6 +58,7 @@ stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 nightliesHost = "nightliesHost"
 nightliesPath = "/var/www/nightlies"
 
+validatorVersion = "15.3.10"
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -1257,13 +1258,13 @@ else:
     elif arg == 'build':
       buildAll()
     elif arg == 'bundle':
-      release = Release("validator")
+      release = Release("validator", "", validatorVersion)
       release.createBundle()
     elif arg == 'snapshot':
-      release = Release("validator", snapshotsRepoUrl)
+      release = Release("validator", snapshotsRepoUrl, validatorVersion)
       release.deployToCentral()
     elif arg == 'stage':
-      release = Release("validator", stagingRepoUrl)
+      release = Release("validator", stagingRepoUrl, validatorVersion)
       release.deployToCentral()
     elif arg == 'htmlparser-bundle':
       release = Release("htmlparser", "", htmlparserVersion)
@@ -1291,10 +1292,10 @@ else:
       release = Release("validator", "", "", "war")
       release.createExecutable()
     elif arg == 'jar-release':
-      release = Release("validator")
+      release = Release("validator", "", validatorVersion)
       release.createDist()
     elif arg == 'war-release':
-      release = Release("validator", "", "", "war")
+      release = Release("validator", "", validatorVersion, "war")
       release.createDist()
     elif arg == 'nightly':
       release = Release("validator")
