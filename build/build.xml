@@ -249,8 +249,6 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="commons-httpclient" artifactId="commons-httpclient" version="3.1"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="2.4"/>
       <dependency groupId="commons-logging" artifactId="commons-logging" version="1.2"/>
-      <dependency groupId="commons-logging" artifactId="commons-logging" classifier="adapters" version="1.2"/>
-      <dependency groupId="commons-logging" artifactId="commons-logging" classifier="api" version="1.2"/>
       <dependency groupId="io.mola.galimatias" artifactId="galimatias" version="0.1.0"/>
       <dependency groupId="isorelax" artifactId="isorelax" version="20030108"/>
       <dependency groupId="javax.servlet" artifactId="javax.servlet-api" version="3.1.0"/>
