@@ -263,6 +263,7 @@ DEALINGS IN THE SOFTWARE.
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-servlets" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util" version="9.2.9.v20150224"/>
       <dependency groupId="org.eclipse.jetty" artifactId="jetty-util-ajax" version="9.2.9.v20150224"/>
+      <dependency groupId="org.mozilla" artifactId="rhino" version="1.7R5"/>
       <dependency groupId="xerces" artifactId="xercesImpl" version="2.9.1"/>
       <dependency groupId="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
     </artifact:pom>
