@@ -282,7 +282,7 @@ DEALINGS IN THE SOFTWARE.
       </service>
     </jar>
   </target>
-  <target name="validator-bundle" depends="validator-artifacts">
+  <target name="validator-bundle">
     <jar basedir="${dist}" destfile="${validator-bundle-jar}"/>
   </target>
   <import file=".ant/build-htmlparser.xml"/>

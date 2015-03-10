@@ -754,8 +754,12 @@ class Release():
     self.version = ""
     self.jarOrWar = jarOrWar
     self.buildXml = os.path.join(buildRoot, "build", "build.xml")
-    self.classpath = os.pathsep.join([os.pathsep.join(
-      dependencyJarPaths()), antJar, antLauncherJar])
+    self.classpath = os.pathsep.join([
+      antJar, antLauncherJar,
+      os.pathsep.join(dependencyJarPaths()),
+      os.path.join(buildRoot, "jing-trang", "build", "jing.jar"),
+      os.path.join(buildRoot, "jars", "htmlparser.jar"),
+    ])
     if (version):
       self.version = version
     removeIfDirExists(distDir)
@@ -801,7 +805,7 @@ class Release():
     mvnArgs = [
       "-f %s.pom" % os.path.join(distDir, basename),
       "gpg:sign-and-deploy-file",
-      "-Dgpg.jarOrWar=%s" % gpgCmd,
+      "-Dgpg.executable=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
       "-Durl='%s'" % self.url,
       "-DpomFile='%s.pom'" % basename,
