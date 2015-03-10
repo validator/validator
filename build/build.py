@@ -275,6 +275,8 @@ def copyFiles(sourceDir, classDir):
 def runJar(classDir, jarFile, sourceDir):
   classFiles = []
   for file in findFiles(classDir):
+    if file.endswith(".java"):
+      continue
     classFiles.append(file)
   classList = ["-C " + classDir + " " + x[len(classDir)+1:] + ""
                for x in
