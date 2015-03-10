@@ -49,8 +49,8 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../dependencies/commons-httpclient-3.1.jar"/>
       <zipfileset src="../dependencies/commons-io-2.4.jar"/>
       <zipfileset src="../dependencies/commons-logging-1.2.jar"/>
-      <zipfileset src="../dependencies/commons-logging-adapters-1.2.jar"/>
-      <zipfileset src="../dependencies/commons-logging-api-1.2.jar"/>
+      <zipfileset src="../dependencies/commons-logging-1.2-adapters.jar"/>
+      <zipfileset src="../dependencies/commons-logging-1.2-api.jar"/>
       <zipfileset src="../dependencies/galimatias-0.1.0.jar"/>
       <zipfileset src="../dependencies/icu4j-54.1.1.jar"/>
       <zipfileset src="../dependencies/javax.servlet-api-3.1.0.jar"/>
@@ -169,8 +169,8 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../dependencies/commons-httpclient-3.1.jar"/>
       <fileset file="../dependencies/commons-io-2.4.jar"/>
       <fileset file="../dependencies/commons-logging-1.2.jar"/>
-      <fileset file="../dependencies/commons-logging-adapters-1.2.jar"/>
-      <fileset file="../dependencies/commons-logging-api-1.2.jar"/>
+      <fileset file="../dependencies/commons-logging-1.2-adapters.jar"/>
+      <fileset file="../dependencies/commons-logging-1.2-api.jar"/>
       <fileset file="../dependencies/galimatias-0.1.0.jar"/>
       <fileset file="../dependencies/icu4j-54.1.1.jar"/>
       <fileset file="../dependencies/jchardet-1.0.jar"/>
