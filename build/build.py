@@ -761,16 +761,16 @@ class Release():
       os.path.join(buildRoot, "jing-trang", "build", "jing.jar"),
       os.path.join(buildRoot, "jars", "htmlparser.jar"),
     ])
-    if (version):
+    if version:
       self.version = version
     removeIfDirExists(distDir)
     ensureDirExists(distDir)
 
   def setVersion(self):
-    if (self.version == ""):
+    if self.version == "":
       print "Waiting for version number on stdin..."
       self.version = sys.stdin.read().rstrip()
-    if (self.url == snapshotsRepoUrl):
+    if self.url == snapshotsRepoUrl:
       self.version += "-SNAPSHOT"
     self.writeVersion()
 
@@ -924,7 +924,7 @@ def fetchUrlTo(url, path, md5sum=None):
     data = f.read()
     f.close()
     completed = True
-   except httplib.BadStatusLine, e:
+   except httplib.BadStatusLine:
     print "received error, retrying"
    finally:
     socket.setdefaulttimeout(defaultTimeout)
@@ -1032,17 +1032,6 @@ def createCssParserJS(filesDir):
   '''
   o.write(consoleLogForRhino)
   o.close()
-
-def downloadOperaSuite():
-  return
-  operaSuiteDir = os.path.join(buildRoot, "opera-tests")
-  validDir = os.path.join(operaSuiteDir, "valid")
-  invalidDir = os.path.join(operaSuiteDir, "invalid")
-  if not os.path.exists(operaSuiteDir):
-    os.makedirs(operaSuiteDir)
-    os.makedirs(validDir)
-    os.makedirs(invalidDir)
-    spiderApacheDirectories("http://tc.labs.opera.com/html/", validDir)
 
 def zipExtract(zipArch, targetDir):
   z = zipfile.ZipFile(zipArch)
@@ -1339,7 +1328,6 @@ else:
       updateSubmodules()
       downloadDependencies()
       downloadLocalEntities()
-      downloadOperaSuite()
       prepareLocalEntityJar()
       buildAll()
       runTests()
