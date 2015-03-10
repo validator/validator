@@ -31,6 +31,10 @@ try:
   from hashlib import md5
 except ImportError:
   from md5 import new as md5
+try:
+  from hashlib import sha1
+except ImportError:
+  from sha1 import new as sha1
 import zipfile
 import sys
 from sgmllib import SGMLParser
@@ -50,6 +54,10 @@ gpgCmd = 'gpg2'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+# in your ~/.ssh/config, you'll need to define a host named "nightliesHost"
+nightliesHost = "nightliesHost"
+nightliesPath = "/var/www/nightlies"
+
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -769,11 +777,18 @@ class Release():
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
+  def sign(self):
+    for filename in findFiles(distDir):
+      runCmd("%s -ab %s" % (gpgCmd, filename))
+
+  def upload(self):
+    for filename in findFiles(distDir):
+      runCmd("%s %s %s:%s" % (scpCmd, filename, nightliesHost, nightliesPath))
+
   def createBundle(self):
     self.createArtifacts()
     print "Building %s/%s-%s-bundle.jar" % (distDir, self.artifactId, self.version)
-    for filename in findFiles(distDir):
-      runCmd("%s -ab %s" % (gpgCmd, filename))
+    self.sign()
     self.writeVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
@@ -799,6 +814,17 @@ class Release():
       os.mkdir(os.path.join(distDir, "war"))
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
       % (javaCmd, self.classpath, self.buildXml, self.jarOrWar))
+
+  def writeHashes(self):
+    for filename in findFiles(distDir):
+      writeHash(filename, "md5")
+      writeHash(filename, "sha1")
+
+  def createNightly(self):
+    self.createExecutable()
+    self.writeHashes()
+    self.sign()
+    self.upload()
 
   def createDist(self):
     self.setVersion()
@@ -834,6 +860,20 @@ class Release():
       sys.exit(1)
     if runCmd('"%s" -jar %s --version' % (javaCmd, vnu)):
       sys.exit(1)
+
+def writeHash(filename, md5OrSha1):
+    BLOCKSIZE = 65536
+    hasher = md5()
+    if md5OrSha1 == "sha1":
+      hasher = sha1()
+    with open(filename, 'rb') as f:
+      buf = f.read(BLOCKSIZE)
+      while len(buf) > 0:
+        hasher.update(buf)
+        buf = f.read(BLOCKSIZE)
+    o = open("%s.%s" % (filename, md5OrSha1), 'wb')
+    o.write(hasher.hexdigest())
+    o.close
 
 def createTarball():
   args = [
@@ -1250,6 +1290,11 @@ else:
     elif arg == 'war-release':
       release = Release("validator", "", "", "war")
       release.createDist()
+    elif arg == 'nightly':
+      release = Release("validator")
+      release.createNightly()
+      release = Release("validator", "", "", "war")
+      release.createNightly()
     elif arg == 'localent':
       prepareLocalEntityJar()
     elif arg == 'deploy':
