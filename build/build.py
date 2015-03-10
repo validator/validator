@@ -58,7 +58,7 @@ stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 nightliesHost = "nightliesHost"
 nightliesPath = "/var/www/nightlies"
 
-validatorVersion = "15.3.10"
+validatorVersion = "15.3.11"
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -115,8 +115,8 @@ dependencyPackages = [
   ("https://repo1.maven.org/maven2/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar", "8ad8c9229ef2d59ab9f59f7050e846a5"),
   ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),
   ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar", "040b4b4d8eac886f6b4a2a3bd2f31b00"),
-  ("https://repo1.maven.org/maven2/commons-logging/commons-logging-adapters/1.1/commons-logging-adapters-1.1.jar", "efab4a460e39b4e20fa3ee2b8a24d70c"),
-  ("https://repo1.maven.org/maven2/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar", "4374238076ab08e60e0d296234480837"),
+  ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-adapters.jar", "5c82e86cc5b769f72abd2af1f92255fa"),
+  ("https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2-api.jar", "289dcb376743ab24ecaeb194a0d287d9"),
   ("https://repo1.maven.org/maven2/io/mola/galimatias/galimatias/0.1.0/galimatias-0.1.0.jar", "55f2b9a4648d7593db3d8f307f84bb01"),
   ("https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar", "79de69e9f5ed8c7fcb8342585732bbf7"),
   ("https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar", "04a41f0a068986f0f73485cf507c0f40"),
@@ -141,8 +141,8 @@ runDependencyJars = [
   "commons-httpclient-3.1.jar",
   "commons-io-2.4.jar",
   "commons-logging-1.2.jar",
-  "commons-logging-adapters-1.1.jar",
-  "commons-logging-api-1.1.jar",
+  "commons-logging-adapters-1.2.jar",
+  "commons-logging-api-1.2.jar",
   "galimatias-0.1.0.jar",
   "icu4j-54.1.1.jar",
   "javax.servlet-api-3.1.0.jar",
