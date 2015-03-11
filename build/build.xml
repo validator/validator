@@ -44,7 +44,7 @@ DEALINGS IN THE SOFTWARE.
       <zipfileset src="../jing-trang/lib/saxon9.jar"/>
       <zipfileset src="../jing-trang/lib/xercesImpl.jar"/>
       <zipfileset src="../jing-trang/lib/xml-apis.jar"/>
-      <zipfileset src="../dependencies/commons-codec-1.9.jar"/>
+      <zipfileset src="../dependencies/commons-codec-1.10.jar"/>
       <zipfileset src="../dependencies/commons-fileupload-1.3.1.jar"/>
       <zipfileset src="../dependencies/commons-httpclient-3.1.jar"/>
       <zipfileset src="../dependencies/commons-io-2.4.jar"/>
@@ -164,7 +164,7 @@ DEALINGS IN THE SOFTWARE.
       <fileset file="../jing-trang/lib/saxon9.jar"/>
       <fileset file="../jing-trang/lib/xercesImpl.jar"/>
       <fileset file="../jing-trang/lib/xml-apis.jar"/>
-      <fileset file="../dependencies/commons-codec-1.9.jar"/>
+      <fileset file="../dependencies/commons-codec-1.10.jar"/>
       <fileset file="../dependencies/commons-fileupload-1.3.1.jar"/>
       <fileset file="../dependencies/commons-httpclient-3.1.jar"/>
       <fileset file="../dependencies/commons-io-2.4.jar"/>
@@ -244,7 +244,7 @@ DEALINGS IN THE SOFTWARE.
         email="mike@w3.org"
         url="https://people.w3.org/mike/"/>
       <dependency groupId="com.ibm.icu" artifactId="icu4j" version="54.1.1"/>
-      <dependency groupId="commons-codec" artifactId="commons-codec" version="1.9"/>
+      <dependency groupId="commons-codec" artifactId="commons-codec" version="1.10"/>
       <dependency groupId="commons-fileupload" artifactId="commons-fileupload" version="1.3.1"/>
       <dependency groupId="commons-httpclient" artifactId="commons-httpclient" version="3.1"/>
       <dependency groupId="commons-io" artifactId="commons-io" version="2.4"/>

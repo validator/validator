@@ -113,7 +113,7 @@ miniDoc = '<!doctype html><meta charset=utf-8><title>test</title>'
 
 dependencyPackages = [
   ("https://repo1.maven.org/maven2/com/ibm/icu/icu4j/54.1.1/icu4j-54.1.1.jar", "d75417a813c37b958be2be0a766f0a65"),
-  ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar", "75615356605c8128013da9e3ac62a249"),
+  ("https://repo1.maven.org/maven2/commons-codec/commons-codec/1.10/commons-codec-1.10.jar", "353cf6a2bdba09595ccfa073b78c7fcb"),
   ("https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar", "ed8eec445e21ec7e49b86bf3cbcffcbc"),
   ("https://repo1.maven.org/maven2/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar", "8ad8c9229ef2d59ab9f59f7050e846a5"),
   ("https://repo1.maven.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar", "7f97854dc04c119d461fed14f5d8bb96"),
@@ -139,7 +139,7 @@ dependencyPackages = [
 ]
 
 runDependencyJars = [
-  "commons-codec-1.9.jar",
+  "commons-codec-1.10.jar",
   "commons-fileupload-1.3.1.jar",
   "commons-httpclient-3.1.jar",
   "commons-io-2.4.jar",
