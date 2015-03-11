@@ -63,13 +63,16 @@ jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
 buildRoot = '.'
-antRoot = os.path.join(buildRoot, "jing-trang", "lib")
-antJar = os.path.join(antRoot, "ant.jar")
-antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
 distDir = os.path.join(buildRoot, "build", "dist")
 dependencyDir = os.path.join(buildRoot, "dependencies")
+jarsDir = os.path.join(buildRoot, "jars")
+jingTrangDir = os.path.join(buildRoot, "jing-trang")
 vnuSrc = os.path.join(buildRoot, "src", "nu", "validator")
 filesDir = os.path.join(vnuSrc, "localentities", "files")
+antRoot = os.path.join(jingTrangDir, "lib")
+antJar = os.path.join(antRoot, "ant.jar")
+antLauncherJar = os.path.join(antRoot, "ant-launcher.jar")
+
 pageTemplate = os.path.join("site", "PageEmitter.xml")
 formTemplate = os.path.join("site", "FormEmitter.xml")
 presetsFile = os.path.join("resources", "presets.txt")
@@ -235,7 +238,7 @@ def findFiles(directory):
   return rv
 
 def jarNamesToPaths(names):
-  return [os.path.join(buildRoot, "jars", name + ".jar") for name in names]
+  return [os.path.join(jarsDir, name + ".jar") for name in names]
 
 def jingJarPath():
   return [os.path.join("jing-trang", "build", "jing.jar"),]
@@ -295,26 +298,26 @@ def runJar(classDir, jarFile, sourceDir):
 def buildModule(rootDir, jarName, classPath):
   sourceDir = os.path.join(rootDir, "src")
   classDir = os.path.join(rootDir, "classes")
-  jarsDir = os.path.join(rootDir, "dist")
-  jarFile = os.path.join(jarsDir, jarName + ".jar")
+  modDistDir = os.path.join(rootDir, "dist")
+  jarFile = os.path.join(modDistDir, jarName + ".jar")
   removeIfExists(jarFile)
   removeIfDirExists(classDir)
   ensureDirExists(classDir)
-  ensureDirExists(jarsDir)
+  ensureDirExists(modDistDir)
   runJavac(sourceDir, classDir, classPath)
   copyFiles(sourceDir, classDir)
   runJar(classDir, jarFile, sourceDir)
-  ensureDirExists(os.path.join(buildRoot, "jars"))
-  shutil.copyfile(jarFile, os.path.join(buildRoot, "jars", jarName + ".jar"))
+  ensureDirExists(jarsDir)
+  shutil.copyfile(jarFile, os.path.join(jarsDir, jarName + ".jar"))
   removeIfDirExists(classDir)
-  removeIfDirExists(jarsDir)
+  removeIfDirExists(modDistDir)
 
 def dependencyJarPaths(depList=dependencyJars):
   extrasDir = os.path.join(buildRoot, "extras")
   # XXX may need work for Windows portability
   pathList = [os.path.join(dependencyDir, dep) for dep in depList]
   for jar in ["saxon9.jar", "xercesImpl.jar", "xml-apis.jar", "isorelax.jar"]:
-    pathList += [ os.path.join(buildRoot, "jing-trang", "lib", jar) ]
+    pathList += [ os.path.join(jingTrangDir, "lib", jar) ]
   ensureDirExists(extrasDir)
   pathList += findFilesWithExtension(extrasDir, "jar")
   return pathList
@@ -748,6 +751,11 @@ def checkService():
   time.sleep(5)
   daemon.terminate()
 
+def clean():
+  removeIfDirExists(distDir)
+  removeIfDirExists(dependencyDir)
+  removeIfDirExists(jarsDir)
+
 class Release():
   def __init__(self, artifactId=None, url=None, version=None, jarOrWar="jar"):
     self.artifactId = artifactId
@@ -758,8 +766,8 @@ class Release():
     self.classpath = os.pathsep.join([
       antJar, antLauncherJar,
       os.pathsep.join(dependencyJarPaths()),
-      os.path.join(buildRoot, "jing-trang", "build", "jing.jar"),
-      os.path.join(buildRoot, "jars", "htmlparser.jar"),
+      os.path.join(jingTrangDir, "build", "jing.jar"),
+      os.path.join(jarsDir, "htmlparser.jar"),
     ])
     if version:
       self.version = version
@@ -1316,6 +1324,8 @@ else:
       if not icon:
         icon = 'icon.png'
       checkService()
+    elif arg == 'clean':
+      clean();
     elif arg == 'run':
       if not stylesheet:
         stylesheet = 'style.css'
