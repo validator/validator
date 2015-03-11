@@ -1,13 +1,19 @@
 language: java
-
+deploy:
+  api_key:
+    secure: ayJRuase0HQbdrGmXd+FiX/JI0BUdIP6L/ovLLvIZSwaN+YopJaVkFSviZ5ce7NlAeTLeCjPErgjEPIN3Pok0ujLosshaL1U6KHwCCvnQNC1Sy3s0mQcDyv9aDeQ/ln7wQR6/Tb72BZbyr1nYmhDHKnRq/s1wMYjINGsBmt9aEg=
 script:
-  - python ./build/build.py dldeps
-  - python ./build/build.py build
-  - python ./build/build.py check
-  - python ./build/build.py test
-  - echo "test" | python ./build/build.py jar
-  - java -jar ./build/dist/vnu.jar ./build/dist/index.html
-  - java -jar ./build/dist/vnu.jar ./site/nu-about.html
-  - jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class | grep "version 50.0"
-  - echo "test" | python ./build/build.py war
-  - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class | grep "version 50.0"
+- python ./build/build.py dldeps
+- python ./build/build.py build
+- python ./build/build.py check
+- python ./build/build.py test
+- echo "test" | python ./build/build.py jar
+- java -jar ./build/dist/vnu.jar ./build/dist/index.html
+- java -jar ./build/dist/vnu.jar ./site/nu-about.html
+- jar xf ./build/dist/vnu.jar && file nu/validator/client/SimpleCommandLineValidator.class
+  | grep "version 50.0"
+- echo "test" | python ./build/build.py war
+- jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class
+  | grep "version 50.0"
+- heroku plugins:install https://github.com/heroku/heroku-deploy
+- heroku deploy:war --war ./build/dist/vnu.war --app vnu
