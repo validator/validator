@@ -15,6 +15,12 @@ script:
 - echo "test" | python ./build/build.py war
 - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class
   | grep "version 50.0"
+- sudo apt-get update
+- sudo apt-get install tomcat7
+- cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
+- sleep 10
+- curl 'http://localhost:8080/?out=gnu&doc=data:text/html;charset=utf-8,<!doctype%20html><meta%20charset=utf-8><title>test</title>'
+- sudo /etc/init.d/tomcat7 stop
 - sudo apt-get install tomcat8
 - cp ./build/dist/vnu.war /var/lib/tomcat8/webapps
 - sleep 10
