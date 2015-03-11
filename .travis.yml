@@ -16,5 +16,5 @@ script:
 - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class
   | grep "version 50.0"
 - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-- /usr/local/heroku plugins:install https://github.com/heroku/heroku-deploy
-- /usr/local/heroku deploy:war --war ./build/dist/vnu.war --app vnu
+- /usr/local/heroku/bin/heroku plugins:install https://github.com/heroku/heroku-deploy
+- /usr/local/heroku/bin/heroku deploy:war --war ./build/dist/vnu.war --app vnu
