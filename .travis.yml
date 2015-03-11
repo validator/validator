@@ -14,5 +14,10 @@ script:
   | grep "version 50.0"
 - sudo apt-get install tomcat7
 - sudo cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
-- sleep 10
-- test -z "$(curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E')"
+- sleep 15
+- curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20html%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
+- test -s RESULTS
+- if [ $? != 0 ]; then cat RESULTS; fi
+- curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20htooml%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctitle%3ETest%3C%2Ftitle%3E' > RESULTS
+- test -s RESULTS
+- if [ $? != 0 ]; then cat RESULTS; fi
