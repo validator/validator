@@ -15,5 +15,6 @@ script:
 - echo "test" | python ./build/build.py war
 - jar xf ./build/dist/vnu.war && file WEB-INF/classes/nu/validator/servlet/VerifierServlet.class
   | grep "version 50.0"
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
 - heroku plugins:install https://github.com/heroku/heroku-deploy
 - heroku deploy:war --war ./build/dist/vnu.war --app vnu
