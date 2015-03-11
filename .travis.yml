@@ -19,5 +19,5 @@ script:
 - test -z $(cat RESULTS)
 - if [ $? != 0 ]; then cat RESULTS; fi
 - curl -sS 'http://localhost:8080/vnu/?out=gnu&doc=data:text/html;charset=utf-8,%3C%21doctype%20htooml%3E%3Cmeta%20charset%3Dutf-8%3E%3Ctiootle%3ETest%3C%2Ftitle%3E' > RESULTS
-- test -z RESULTS
+- test -z $(cat RESULTS)
 - if [ $? != 0 ]; then cat RESULTS; fi
