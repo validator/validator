@@ -1,7 +1,4 @@
 language: java
-deploy:
-  api_key:
-    secure: ayJRuase0HQbdrGmXd+FiX/JI0BUdIP6L/ovLLvIZSwaN+YopJaVkFSviZ5ce7NlAeTLeCjPErgjEPIN3Pok0ujLosshaL1U6KHwCCvnQNC1Sy3s0mQcDyv9aDeQ/ln7wQR6/Tb72BZbyr1nYmhDHKnRq/s1wMYjINGsBmt9aEg=
 script:
 - python ./build/build.py dldeps
 - python ./build/build.py build
@@ -19,7 +16,4 @@ script:
 - sudo apt-get install tomcat7
 - sudo cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
 - sleep 10
-- curl 'http://localhost:8080/?out=gnu&doc=data:text/html;charset=utf-8,<!doctype%20html><meta%20charset=utf-8><title>test</title>'
-  #- wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  #- /usr/local/heroku/bin/heroku plugins:install https://github.com/heroku/heroku-deploy
-  #- HEROKU_API_KEY=ayJRuase0HQbdrGmXd+FiX/JI0BUdIP6L/ovLLvIZSwaN+YopJaVkFSviZ5ce7NlAeTLeCjPErgjEPIN3Pok0ujLosshaL1U6KHwCCvnQNC1Sy3s0mQcDyv9aDeQ/ln7wQR6/Tb72BZbyr1nYmhDHKnRq/s1wMYjINGsBmt9aEg= /usr/local/heroku/bin/heroku deploy:war --war ./build/dist/vnu.war --app vnu
+- test -z "$(curl 'http://localhost:8080/?out=gnu&doc=data:text/html;charset=utf-8,<!doctype%20html><meta%20charset=utf-8><title>test</title>')"
