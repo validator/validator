@@ -67,7 +67,7 @@ public class Html4Assertions extends Checker {
 
     private static boolean equalsIgnoreAsciiCase(String one, String other) {
         if (other == null) {
-	    return one == null;
+            return one == null;
         }
         if (one.length() != other.length()) {
             return false;

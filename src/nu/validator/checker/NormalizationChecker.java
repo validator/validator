@@ -261,8 +261,9 @@ public final class NormalizationChecker extends Checker {
             while (i > start && isComposingCharOrSurrogate(ch[i])) {
                 i--;
             }
-            if (i > start && !Normalizer.isNormalized(ch, start, i, Normalizer.NFC, 0)) {
-		errAboutTextRun();
+            if (i > start
+                    && !Normalizer.isNormalized(ch, start, i, Normalizer.NFC, 0)) {
+                errAboutTextRun();
             }
             appendToBuf(ch, i, stop);
         }
@@ -325,7 +326,7 @@ public final class NormalizationChecker extends Checker {
             throws SAXException {
         flush();
         if (!target.isEmpty() && startsWithComposingChar(target)) {
-	    warn("Processing instruction target starts with a composing character.");
+            warn("Processing instruction target starts with a composing character.");
         }
         if (!data.isEmpty()) {
             if (startsWithComposingChar(data)) {
