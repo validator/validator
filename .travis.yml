@@ -17,5 +17,4 @@ script:
   | grep "version 50.0"
 - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 - /usr/local/heroku/bin/heroku plugins:install https://github.com/heroku/heroku-deploy
-- HEROKU_API_KEY=ayJRuase0HQbdrGmXd+FiX/JI0BUdIP6L/ovLLvIZSwaN+YopJaVkFSviZ5ce7NlAeTLeCjPErgjEPIN3Pok0ujLosshaL1U6KHwCCvnQNC1Sy3s0mQcDyv9aDeQ/ln7wQR6/Tb72BZbyr1nYmhDHKnRq/s1wMYjINGsBmt9aEg= \
-  /usr/local/heroku/bin/heroku deploy:war --war ./build/dist/vnu.war --app vnu
+- HEROKU_API_KEY=ayJRuase0HQbdrGmXd+FiX/JI0BUdIP6L/ovLLvIZSwaN+YopJaVkFSviZ5ce7NlAeTLeCjPErgjEPIN3Pok0ujLosshaL1U6KHwCCvnQNC1Sy3s0mQcDyv9aDeQ/ln7wQR6/Tb72BZbyr1nYmhDHKnRq/s1wMYjINGsBmt9aEg= /usr/local/heroku/bin/heroku deploy:war --war ./build/dist/vnu.war --app vnu
