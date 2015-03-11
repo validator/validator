@@ -49,7 +49,7 @@ public class CssParser {
                                     "nu/validator/localentities/files/parse-css-js")));
             br.mark(1);
             Context context = ContextFactory.getGlobal().enterContext();
-            context.setOptimizationLevel(0);
+            context.setOptimizationLevel(1);
             context.setLanguageVersion(Context.VERSION_1_6);
             scope = context.initStandardObjects();
             context.evaluateReader(scope, br, null, -1, null);
