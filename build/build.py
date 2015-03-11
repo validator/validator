@@ -46,6 +46,7 @@ javacCmd = 'javac'
 jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
+herokuCmd= 'heroku'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
@@ -824,6 +825,11 @@ class Release():
     ]
     runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
+  def deployToHeroku(self):
+    self.createExecutable()
+    runCmd("%s deploy:war --war %s --app vnu"
+        % (herokuCmd, os.path.join(distDir, "vnu.war")))
+
   def createExecutable(self):
     if self.jarOrWar == "war":
       os.mkdir(os.path.join(distDir, "war"))
@@ -1299,6 +1305,9 @@ else:
       release.createNightly()
       release = Release("validator", "", "", "war")
       release.createNightly()
+    elif arg == 'heroku':
+      release = Release("validator", "", "", "war")
+      release.deployToHeroku()
     elif arg == 'localent':
       prepareLocalEntityJar()
     elif arg == 'deploy':
