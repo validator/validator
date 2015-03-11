@@ -1,4 +1,5 @@
 .project
+nbproject
 build/dist
 build/vnu*.jar.zip
 build/vnu*.war.zip
