@@ -16,4 +16,4 @@ script:
 - sudo apt-get install tomcat7
 - sudo cp ./build/dist/vnu.war /var/lib/tomcat7/webapps
 - sleep 10
-- test -z "$(curl 'http://localhost:8080/?out=gnu&doc=data:text/html;charset=utf-8,<!doctype%20html><meta%20charset=utf-8><title>test</title>')"
+- test -z "$(curl -s 'http://localhost:8080/?out=gnu&doc=data:text/html;charset=utf-8,<!doctype%20html><meta%20charset=utf-8><title>test</title>')"
