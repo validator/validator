@@ -60,6 +60,7 @@ public final class Pattern extends AbstractDatatype {
         // TODO find out what kind of thread concurrency guarantees are made
         ContextFactory cf = new ContextFactory();
         Context cx = cf.enterContext();
+        cx.setOptimizationLevel(0);
         RegExpImpl rei = new RegExpImpl();
         String anchoredRegex = "^(?:" + literal + ")$";
         try {
