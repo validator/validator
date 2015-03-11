@@ -59,7 +59,7 @@ stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 nightliesHost = "nightliesHost"
 nightliesPath = "/var/www/nightlies"
 
-validatorVersion = "15.3.11"
+validatorVersion = "15.3.12"
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -824,6 +824,34 @@ class Release():
       "-Dsources='%s-sources.jar'" % basename,
     ]
     runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
+    mvnArgs = [
+      "-f %s.pom" % os.path.join(distDir, basename),
+      "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
+      "-DnexusUrl=https://oss.sonatype.org/",
+      "-DserverId=ossrh",
+    ]
+    output = subprocess.check_output("%s %s" % (mvnCmd, " ".join(mvnArgs)), shell=True)
+    for line in output.split('\n'):
+      if "nuvalidator" in line:
+         stagingRepositoryId = "nuvalidator-" + line[19:23]
+         mvnArgs = [
+           "-f %s.pom" % os.path.join(distDir, basename),
+           "org.sonatype.plugins:nexus-staging-maven-plugin:close",
+           "-DnexusUrl=https://oss.sonatype.org/",
+           "-DserverId=ossrh",
+           "-DautoReleaseAfterClose=true",
+           "-DstagingRepositoryId=" + stagingRepositoryId
+         ]
+         runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
+         mvnArgs = [
+           "-f %s.pom" % os.path.join(distDir, basename),
+           "org.sonatype.plugins:nexus-staging-maven-plugin:release",
+           "-DnexusUrl=https://oss.sonatype.org/",
+           "-DserverId=ossrh",
+           "-DautoReleaseAfterClose=true",
+           "-DstagingRepositoryId=" + stagingRepositoryId
+         ]
+         runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
   def deployToHeroku(self):
     self.createExecutable()
