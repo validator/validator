@@ -156,11 +156,7 @@ public class XmlLangAttributeDroppingContentHandlerWrapper implements ContentHan
     private static boolean equalsIgnoreAsciiCase(String one,
             String other) {
         if (other == null) {
-            if (one == null) {
-                return true;
-            } else {
-                return false;
-            }
+            return one == null;
         }
         if (one.length() != other.length()) {
             return false;

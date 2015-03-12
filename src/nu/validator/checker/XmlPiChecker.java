@@ -1605,9 +1605,7 @@ public class XmlPiChecker extends Checker implements LexicalHandler {
     }
 
     private void errQuoteOrLtInAttributeNameOrNull(char c) throws SAXException {
-        if (c == '<') {
-            // err("\u201C<\u201D in attribute name. Probable cause: \u201C>\u201D missing immediately before.");
-        } else if (c != '\uFFFD') {
+        if (c != '\uFFFD') {
             err("Quote \u201C"
                     + c
                     + "\u201D in pseudo-attribute name. Probable cause: Matching quote missing somewhere earlier.");

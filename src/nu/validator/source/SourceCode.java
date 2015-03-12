@@ -251,11 +251,7 @@ public final class SourceCode implements CharacterHandler {
             return false;
         }
         Line line = lines.get(location.getLine());
-        if (line.getBufferLength() >= location.getColumn()) {
-            return true;
-        } else {
-            return false;
-        }
+        return line.getBufferLength() >= location.getColumn();
     }
 
     public boolean isWithinKnownSource(int oneBasedLine) {

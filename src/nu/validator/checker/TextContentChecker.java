@@ -82,10 +82,8 @@ public final class TextContentChecker extends Checker {
     private DatatypeStreamingValidator streamingValidatorFor(String uri,
             String localName, Attributes atts) {
         if (XHTML_URL.equals(uri)) {
-            if ("time".equals(localName)) {
-                if (atts.getIndex("", "datetime") < 0) {
-                    return TimeDatetime.THE_INSTANCE.createStreamingValidator(null);
-                }
+            if ("time".equals(localName) && (atts.getIndex("", "datetime") < 0)) {
+                return TimeDatetime.THE_INSTANCE.createStreamingValidator(null);
             }
             if ("script".equals(localName)) {
                 if (atts.getIndex("", "src") < 0) {
