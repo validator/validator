@@ -55,9 +55,10 @@ gpgCmd = 'gpg2'
 
 snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 stagingRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-# in your ~/.ssh/config, you'll need to define a host named "nightliesHost"
-nightliesHost = "nightliesHost"
+# in your ~/.ssh/config, you'll need to define a host named "releasesHost"
+releasesHost = "releasesHost"
 nightliesPath = "/var/www/nightlies"
+releasesPath = "/var/www/releases"
 
 validatorVersion = "15.3.12"
 jingVersion = "20130806VNU"
@@ -758,11 +759,9 @@ def clean():
   removeIfDirExists(jarsDir)
 
 class Release():
-  def __init__(self, artifactId=None, url=None, version=None, jarOrWar="jar"):
+  def __init__(self, artifactId="validator"):
     self.artifactId = artifactId
-    self.url = url
-    self.version = ""
-    self.jarOrWar = jarOrWar
+    self.version = validatorVersion
     self.buildXml = os.path.join(buildRoot, "build", "build.xml")
     self.classpath = os.pathsep.join([
       antJar, antLauncherJar,
@@ -770,17 +769,14 @@ class Release():
       os.path.join(jingTrangDir, "build", "jing.jar"),
       os.path.join(jarsDir, "htmlparser.jar"),
     ])
-    if version:
-      self.version = version
+
+  def reInitDistDir(self):
     removeIfDirExists(distDir)
     ensureDirExists(distDir)
 
   def setVersion(self):
-    if self.version == "":
-      print "Waiting for version number on stdin..."
-      self.version = sys.stdin.read().rstrip()
-    if self.url == snapshotsRepoUrl:
-      self.version += "-SNAPSHOT"
+    if self.artifactId == "jing" : self.version = jingVersion
+    if self.artifactId == "htmlparser": self.version = jingVersion
     self.writeVersion()
 
   def writeVersion(self):
@@ -789,6 +785,7 @@ class Release():
     f.close()
 
   def createArtifacts(self):
+    self.reInitDistDir()
     self.setVersion()
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-artifacts'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
@@ -797,9 +794,9 @@ class Release():
     for filename in findFiles(distDir):
       runCmd("%s -ab %s" % (gpgCmd, filename))
 
-  def upload(self):
+  def upload(self, path):
     for filename in findFiles(distDir):
-      runCmd("%s %s %s:%s" % (scpCmd, filename, nightliesHost, nightliesPath))
+      runCmd("%s %s %s:%s" % (scpCmd, filename, releasesHost, path))
 
   def createBundle(self):
     self.createArtifacts()
@@ -809,7 +806,8 @@ class Release():
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s-bundle'
       % (javaCmd, self.classpath, self.buildXml, self.artifactId))
 
-  def deployToCentral(self):
+  def deployToCentral(self, url):
+    if url == snapshotsRepoUrl: self.version += "-SNAPSHOT"
     self.createArtifacts()
     basename = "%s-%s" % (self.artifactId, self.version)
     mvnArgs = [
@@ -817,7 +815,7 @@ class Release():
       "gpg:sign-and-deploy-file",
       "-Dgpg.executable=%s" % gpgCmd,
       "-DrepositoryId=ossrh",
-      "-Durl='%s'" % self.url,
+      "-Durl='%s'" % url,
       "-DpomFile='%s.pom'" % basename,
       "-Dfile='%s.jar'" % basename,
       "-Djavadoc='%s-javadoc.jar'" % basename,
@@ -836,7 +834,7 @@ class Release():
          stagingRepositoryId = "nuvalidator-" + line[19:23]
          mvnArgs = [
            "-f %s.pom" % os.path.join(distDir, basename),
-           "org.sonatype.plugins:nexus-staging-maven-plugin:close",
+           "org.sonatype.plugins:nexus-staging-maven-plugin:rc-close",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
            "-DautoReleaseAfterClose=true",
@@ -845,7 +843,7 @@ class Release():
          runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
          mvnArgs = [
            "-f %s.pom" % os.path.join(distDir, basename),
-           "org.sonatype.plugins:nexus-staging-maven-plugin:release",
+           "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",
            "-DnexusUrl=https://oss.sonatype.org/",
            "-DserverId=ossrh",
            "-DautoReleaseAfterClose=true",
@@ -854,37 +852,38 @@ class Release():
          runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
 
   def deployToHeroku(self):
-    self.createExecutable()
+    self.createExecutable("war")
     runCmd("%s deploy:war --war %s --app vnu"
         % (herokuCmd, os.path.join(distDir, "vnu.war")))
 
-  def createExecutable(self):
-    if self.jarOrWar == "war":
+  def createExecutable(self, jarOrWar):
+    self.reInitDistDir()
+    self.setVersion()
+    if jarOrWar == "war":
       os.mkdir(os.path.join(distDir, "war"))
     runCmd('"%s" -cp %s org.apache.tools.ant.Main -f %s %s'
-      % (javaCmd, self.classpath, self.buildXml, self.jarOrWar))
+      % (javaCmd, self.classpath, self.buildXml, jarOrWar))
 
   def writeHashes(self):
     for filename in findFiles(distDir):
       writeHash(filename, "md5")
       writeHash(filename, "sha1")
 
-  def createNightly(self):
-    self.createExecutable()
+  def createNightly(self, jarOrWar):
+    self.createExecutable(jarOrWar)
     self.writeHashes()
     self.sign()
-    self.upload()
+    self.upload(nightliesPath)
 
-  def createDist(self):
+  def createAndUploadDist(self, jarOrWar):
     self.setVersion()
-    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, self.jarOrWar)
-    self.createExecutable()
-    shutil.copy(os.path.join(buildRoot, "index.html"), distDir)
-    shutil.copy(os.path.join(buildRoot, "README.md"), distDir)
-    shutil.copy(os.path.join(buildRoot, "CHANGELOG.md"), distDir)
-    shutil.copy(os.path.join(buildRoot, "LICENSE"), distDir)
+    print "Building %s/vnu-%s.%s.zip" % (distDir, self.version, jarOrWar)
+    self.createExecutable(jarOrWar)
+    docs = ["index.html", "README.md", "CHANGELOG.md", "LICENSE"]
+    for filename in docs:
+      shutil.copy(os.path.join(buildRoot, filename), distDir)
     os.chdir("build")
-    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, self.jarOrWar))
+    distroFile = os.path.join("vnu-%s.%s.zip" % (self.version, jarOrWar))
     removeIfExists(distroFile)
     zf = zipfile.ZipFile(distroFile, "w")
     for dirname, subdirs, files in os.walk("dist"):
@@ -892,8 +891,15 @@ class Release():
       for filename in files:
         zf.write(os.path.join(dirname, filename))
     zf.close()
+    for filename in docs:
+      removeIfExists(os.path.join("dist", filename))
+      removeIfExists(os.path.join("dist", "VERSION"))
+      removeIfExists(os.path.join("dist", "vnu.%s" % jarOrWar))
     shutil.move(distroFile, "dist")
     os.chdir("..")
+    self.writeHashes()
+    self.sign()
+    self.upload(releasesPath)
 
   def check(self):
     vnu = os.path.join(distDir, "vnu.jar")
@@ -1289,52 +1295,50 @@ else:
     elif arg == 'build':
       buildAll()
     elif arg == 'bundle':
-      release = Release("validator", "", validatorVersion)
+      release = Release()
       release.createBundle()
     elif arg == 'snapshot':
-      release = Release("validator", snapshotsRepoUrl, validatorVersion)
-      release.deployToCentral()
-    elif arg == 'stage':
-      release = Release("validator", stagingRepoUrl, validatorVersion)
-      release.deployToCentral()
+      release = Release()
+      release.deployToCentral(snapshotsRepoUrl)
+    elif arg == 'foo':
+      release = Release()
+      release.createAndUploadDist("jar")
+    elif arg == 'release':
+      release = Release()
+      release.deployToCentral(stagingRepoUrl)
+      release.createAndUploadDist("jar")
+      release.createAndUploadDist("war")
     elif arg == 'htmlparser-bundle':
-      release = Release("htmlparser", "", htmlparserVersion)
+      release = Release("htmlparser")
       release.createBundle()
     elif arg == 'htmlparser-snapshot':
-      release = Release("htmlparser", snapshotsRepoUrl, htmlparserVersion)
-      release.deployToCentral()
-    elif arg == 'htmlparser-stage':
-      release = Release("htmlparser", stagingRepoUrl, htmlparserVersion)
-      release.deployToCentral()
+      release = Release("htmlparser")
+      release.deployToCentral(snapshotsRepoUrl)
+    elif arg == 'htmlparser-release':
+      release = Release("htmlparser")
+      release.deployToCentral(stagingRepoUrl)
     elif arg == 'jing-bundle':
-      release = Release("jing", "", jingVersion)
+      release = Release("jing")
       release.createBundle()
     elif arg == 'jing-snapshot':
-      release = Release("jing", snapshotsRepoUrl, jingVersion)
-      release.deployToCentral()
-    elif arg == 'jing-stage':
-      release = Release("jing", stagingRepoUrl, jingVersion)
-      release.deployToCentral()
+      release = Release("jing")
+      release.deployToCentral(snapshotsRepoUrl)
+    elif arg == 'jing-release':
+      release = Release("jing")
+      release.deployToCentral(stagingRepoUrl)
     elif arg == 'jar':
-      release = Release("validator")
-      release.createExecutable()
+      release = Release()
+      release.createExecutable("jar")
       release.check()
     elif arg == 'war':
-      release = Release("validator", "", "", "war")
-      release.createExecutable()
-    elif arg == 'jar-release':
-      release = Release("validator", "", validatorVersion)
-      release.createDist()
-    elif arg == 'war-release':
-      release = Release("validator", "", validatorVersion, "war")
-      release.createDist()
+      release = Release()
+      release.createExecutable("war")
     elif arg == 'nightly':
-      release = Release("validator")
-      release.createNightly()
-      release = Release("validator", "", "", "war")
-      release.createNightly()
+      release = Release()
+      release.createNightly("jar")
+      release.createNightly("war")
     elif arg == 'heroku':
-      release = Release("validator", "", "", "war")
+      release = Release()
       release.deployToHeroku()
     elif arg == 'localent':
       prepareLocalEntityJar()
@@ -1387,3 +1391,4 @@ else:
       runValidator()
     else:
       print "Unknown option %s." % arg
+# vim: sw=2
