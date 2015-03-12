@@ -57,13 +57,11 @@ public class UsemapChecker extends Checker {
                 String usemap = atts.getValue("", "usemap");
                 if (usemap != null) {
                     int hashIndex = usemap.indexOf('#');
-                    if (hashIndex > -1) {
+                    if ((hashIndex > -1) && (hashIndex < usemap.length() - 1)) {
                         // XXX not complaining about bad values here as 
                         // the schema takes care of that.
-                        if (hashIndex < usemap.length() - 1) {
-                            String ref = usemap.substring(hashIndex + 1);
-                            usemapLocationsByName.put(ref, new LocatorImpl(locator));
-                        }
+                        String ref = usemap.substring(hashIndex + 1);
+                        usemapLocationsByName.put(ref, new LocatorImpl(locator));
                     }
                 }
             }
