@@ -39,7 +39,6 @@ public class Script extends CdoCdcPair {
             throws DatatypeException {
         // FIXME This does not yet check for script-start and script-end.
         super.checkValid(literal);
-        return;
     }
 
     @Override public String getName() {
