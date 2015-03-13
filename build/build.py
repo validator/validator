@@ -792,11 +792,11 @@ class Release():
 
   def sign(self):
     for filename in findFiles(distDir):
-      runCmd("%s -ab %s" % (gpgCmd, filename))
+      runCmd('"%s" -ab %s' % (gpgCmd, filename))
 
   def upload(self, path):
     for filename in findFiles(distDir):
-      runCmd("%s %s %s:%s" % (scpCmd, filename, releasesHost, path))
+      runCmd('"%s" %s %s:%s' % (scpCmd, filename, releasesHost, path))
 
   def createBundle(self):
     self.createArtifacts()
@@ -821,7 +821,7 @@ class Release():
       "-Djavadoc='%s-javadoc.jar'" % basename,
       "-Dsources='%s-sources.jar'" % basename,
     ]
-    runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
+    runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
     mvnArgs = [
       "-f %s.pom" % os.path.join(distDir, basename),
       "org.sonatype.plugins:nexus-staging-maven-plugin:rc-list",
@@ -840,7 +840,7 @@ class Release():
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
+         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
          mvnArgs = [
            "-f %s.pom" % os.path.join(distDir, basename),
            "org.sonatype.plugins:nexus-staging-maven-plugin:rc-release",
@@ -849,11 +849,11 @@ class Release():
            "-DautoReleaseAfterClose=true",
            "-DstagingRepositoryId=" + stagingRepositoryId
          ]
-         runCmd("%s %s" % (mvnCmd, " ".join(mvnArgs)))
+         runCmd('"%s" %s' % (mvnCmd, " ".join(mvnArgs)))
 
   def deployToHeroku(self):
     self.createExecutable("war")
-    runCmd("%s deploy:war --war %s --app vnu"
+    runCmd('"%s" deploy:war --war %s --app vnu'
         % (herokuCmd, os.path.join(distDir, "vnu.war")))
 
   def createExecutable(self, jarOrWar):
