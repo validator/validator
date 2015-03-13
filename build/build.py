@@ -47,6 +47,7 @@ jarCmd = 'jar'
 javaCmd = 'java'
 javadocCmd = 'javadoc'
 herokuCmd= 'heroku'
+ghRelCmd = 'github-release'
 tarCmd = 'tar'
 scpCmd = 'scp'
 gitCmd = 'git'
@@ -60,7 +61,8 @@ releasesHost = "releasesHost"
 nightliesPath = "/var/www/nightlies"
 releasesPath = "/var/www/releases"
 
-validatorVersion = "15.3.12"
+releaseDate = "14 March 2015"
+validatorVersion = "15.3.14"
 jingVersion = "20130806VNU"
 htmlparserVersion = "1.4.1"
 
@@ -900,6 +902,34 @@ class Release():
     self.writeHashes()
     self.sign()
     self.upload(releasesPath)
+    self.uploadToGithub()
+
+  def createOrUpdateGithubData(self):
+    runCmd('"%s" tag -f v%s' % (gitCmd, validatorVersion))
+    args = [
+      "-u validator -r validator",
+      "-t %s" % validatorVersion,
+    ]
+    if (runCmd('"%s" info %s > /dev/null 2>&1' % (ghRelCmd, " ".join(args)))):
+       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
+    else:
+       runCmd('"%s" delete %s' % (ghRelCmd, " ".join(args)))
+       runCmd('"%s" release -p %s' % (ghRelCmd, " ".join(args)))
+    args.append('-n "%s"' % releaseDate)
+    f = open(os.path.join(buildRoot, "WHATSNEW.md"))
+    desc = f.read().replace('"', '\\"')
+    args.append('-d "%s"' % desc)
+    runCmd('"%s" edit -p %s' % (ghRelCmd, " ".join(args)))
+
+  def uploadToGithub(self):
+    for filename in findFiles(distDir):
+      args = [
+        "-u validator -r validator",
+        "-t %s" % validatorVersion,
+        "-n %s" % os.path.basename(filename),
+        "-f %s" % filename,
+      ]
+      runCmd('"%s" upload %s' % (ghRelCmd, " ".join(args)))
 
   def check(self):
     vnu = os.path.join(distDir, "vnu.jar")
@@ -1300,12 +1330,10 @@ else:
     elif arg == 'snapshot':
       release = Release()
       release.deployToCentral(snapshotsRepoUrl)
-    elif arg == 'foo':
-      release = Release()
-      release.createAndUploadDist("jar")
     elif arg == 'release':
       release = Release()
       release.deployToCentral(stagingRepoUrl)
+      release.createOrUpdateGithubData()
       release.createAndUploadDist("jar")
       release.createAndUploadDist("war")
     elif arg == 'htmlparser-bundle':
