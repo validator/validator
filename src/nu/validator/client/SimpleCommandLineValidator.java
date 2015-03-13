@@ -276,9 +276,6 @@ public class SimpleCommandLineValidator {
                             file.toURI().toURL().toString(), -1, -1));
                 }
                 return;
-            } else if (isHtml(file)) {
-                emitFilename(path);
-                validator.checkHtmlFile(file, true);
             } else if (isXhtml(file)) {
                 emitFilename(path);
                 if (forceHTML) {
@@ -286,6 +283,9 @@ public class SimpleCommandLineValidator {
                 } else {
                     validator.checkXmlFile(file);
                 }
+            } else if (isHtml(file)) {
+                emitFilename(path);
+                validator.checkHtmlFile(file, true);
             } else {
                 if (verbose) {
                     errorHandler.warning(new SAXParseException(
