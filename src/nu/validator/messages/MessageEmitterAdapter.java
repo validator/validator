@@ -748,14 +748,14 @@ public final class MessageEmitterAdapter implements ErrorHandler {
                 && (uri == systemId || (uri != null && uri.equals(systemId)))) {
             if (oneBasedColumn > -1) {
                 if (exact) {
-                    messageWithExact(type, message, oneBasedLine,
+                    messageWithExact(type, message, systemId, oneBasedLine,
                             oneBasedColumn);
                 } else {
-                    messageWithRange(type, message, oneBasedLine,
+                    messageWithRange(type, message, systemId, oneBasedLine,
                             oneBasedColumn);
                 }
             } else {
-                messageWithLine(type, message, oneBasedLine);
+                messageWithLine(type, message, systemId, oneBasedLine);
             }
         } else {
             messageWithoutExtract(type, message, systemId, oneBasedLine,
@@ -764,7 +764,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageWithRange(MessageType type, Exception message,
-            int oneBasedLine, int oneBasedColumn) throws SAXException {
+            String systemId, int oneBasedLine, int oneBasedColumn)
+            throws SAXException {
+        systemId = batchMode ? systemId : null;
         Location rangeLast = sourceCode.newLocatorLocation(oneBasedLine,
                 oneBasedColumn);
         if (!sourceCode.isWithinKnownSource(rangeLast)) {
@@ -773,8 +775,9 @@ public final class MessageEmitterAdapter implements ErrorHandler {
             return;
         }
         Location rangeStart = sourceCode.rangeStartForRangeLast(rangeLast);
-        startMessage(type, null, rangeStart.getLine() + 1,
-                rangeStart.getColumn() + 1, oneBasedLine, oneBasedColumn, false);
+        startMessage(type, scrub(shortenDataUri(systemId)),
+                rangeStart.getLine() + 1, rangeStart.getColumn() + 1,
+                oneBasedLine, oneBasedColumn, false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
         if (sourceHandler != null) {
@@ -786,9 +789,11 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageWithExact(MessageType type, Exception message,
-            int oneBasedLine, int oneBasedColumn) throws SAXException {
-        startMessage(type, null, oneBasedLine, oneBasedColumn, oneBasedLine,
-                oneBasedColumn, true);
+            String systemId, int oneBasedLine, int oneBasedColumn)
+            throws SAXException {
+        systemId = batchMode ? systemId : null;
+        startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine,
+                oneBasedColumn, oneBasedLine, oneBasedColumn, true);
         messageText(message);
         Location location = sourceCode.newLocatorLocation(oneBasedLine,
                 oneBasedColumn);
@@ -806,11 +811,13 @@ public final class MessageEmitterAdapter implements ErrorHandler {
     }
 
     private void messageWithLine(MessageType type, Exception message,
-            int oneBasedLine) throws SAXException {
+            String systemId, int oneBasedLine) throws SAXException {
+        systemId = batchMode ? systemId : null;
         if (!sourceCode.isWithinKnownSource(oneBasedLine)) {
             throw new RuntimeException("Bug. Line out of range!");
         }
-        startMessage(type, null, oneBasedLine, -1, oneBasedLine, -1, false);
+        startMessage(type, scrub(shortenDataUri(systemId)), oneBasedLine, -1,
+                oneBasedLine, -1, false);
         messageText(message);
         SourceHandler sourceHandler = emitter.startSource();
         if (sourceHandler != null) {
