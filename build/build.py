@@ -873,6 +873,7 @@ class Release():
 
   def createNightly(self, jarOrWar):
     self.createExecutable(jarOrWar)
+    removeIfExists(os.path.join(distDir, "VERSION"))
     self.writeHashes()
     self.sign()
     self.upload(nightliesPath)
