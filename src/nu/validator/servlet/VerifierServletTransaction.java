@@ -46,6 +46,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nu.validator.checker.XmlPiChecker;
+import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.DocumentMode;
@@ -56,6 +58,7 @@ import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.htmlparser.sax.HtmlSerializer;
 import nu.validator.htmlparser.sax.XmlSerializer;
 import nu.validator.io.BoundedInputStream;
+import nu.validator.io.DataUri;
 import nu.validator.io.StreamBoundException;
 import nu.validator.localentities.LocalCacheEntityResolver;
 import nu.validator.messages.GnuMessageEmitter;
@@ -89,11 +92,6 @@ import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 
-import nu.validator.checker.XmlPiChecker;
-
-import org.apache.log4j.Logger;
-import nu.validator.checker.jing.CheckerSchema;
-import nu.validator.io.DataUri;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
@@ -105,7 +103,6 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
-import com.ibm.icu.text.Normalizer;
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -119,6 +116,9 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.prop.wrap.WrapProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
+
+import org.apache.log4j.Logger;
+import com.ibm.icu.text.Normalizer;
 
 /**
  * @version $Id: VerifierServletTransaction.java,v 1.10 2005/07/24 07:32:48

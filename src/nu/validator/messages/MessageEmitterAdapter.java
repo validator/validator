@@ -33,6 +33,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Set;
 
+import nu.validator.checker.NormalizationChecker;
+import nu.validator.checker.DatatypeMismatchException;
+import nu.validator.checker.VnuBadAttrValueException;
+import nu.validator.datatype.Html5DatatypeException;
+import nu.validator.io.DataUri;
 import nu.validator.io.SystemIdIOException;
 import nu.validator.messages.types.MessageType;
 import nu.validator.saxtree.DocumentFragment;
@@ -50,19 +55,13 @@ import nu.validator.xml.AttributesImpl;
 import nu.validator.xml.CharacterUtil;
 import nu.validator.xml.XhtmlSaxEmitter;
 
-import org.apache.log4j.Logger;
 import org.relaxng.datatype.DatatypeException;
-import nu.validator.checker.NormalizationChecker;
-import nu.validator.checker.DatatypeMismatchException;
-import nu.validator.checker.VnuBadAttrValueException;
-import nu.validator.datatype.Html5DatatypeException;
-import nu.validator.io.DataUri;
+
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.ibm.icu.text.Normalizer;
 import com.thaiopensource.relaxng.exceptions.AbstractValidationException;
 import com.thaiopensource.relaxng.exceptions.BadAttributeValueException;
 import com.thaiopensource.relaxng.exceptions.ImpossibleAttributeIgnoredException;
@@ -78,6 +77,9 @@ import com.thaiopensource.relaxng.exceptions.UnfinishedElementException;
 import com.thaiopensource.relaxng.exceptions.UnfinishedElementOneOfException;
 import com.thaiopensource.relaxng.exceptions.UnknownElementException;
 import com.thaiopensource.xml.util.Name;
+
+import org.apache.log4j.Logger;
+import com.ibm.icu.text.Normalizer;
 
 public final class MessageEmitterAdapter implements ErrorHandler {
 

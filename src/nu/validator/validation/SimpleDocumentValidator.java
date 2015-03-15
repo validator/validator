@@ -28,6 +28,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.HttpURLConnection;
 
+import nu.validator.checker.jing.CheckerSchema;
+import nu.validator.checker.jing.CheckerValidator;
+import nu.validator.checker.table.TableChecker;
+import nu.validator.checker.ConformingButObsoleteWarner;
+import nu.validator.checker.MicrodataChecker;
+import nu.validator.checker.NormalizationChecker;
+import nu.validator.checker.TextContentChecker;
+import nu.validator.checker.UncheckedSubtreeWarner;
+import nu.validator.checker.UnsupportedFeatureChecker;
+import nu.validator.checker.UsemapChecker;
+import nu.validator.checker.XmlPiChecker;
 import nu.validator.gnu.xml.aelfred2.SAXDriver;
 import nu.validator.htmlparser.common.DoctypeExpectation;
 import nu.validator.htmlparser.common.Heuristics;
@@ -42,17 +53,6 @@ import nu.validator.xml.IdFilter;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.TypedInputSource;
 import nu.validator.xml.WiretapXMLReaderWrapper;
-import nu.validator.checker.jing.CheckerSchema;
-import nu.validator.checker.jing.CheckerValidator;
-import nu.validator.checker.table.TableChecker;
-import nu.validator.checker.ConformingButObsoleteWarner;
-import nu.validator.checker.MicrodataChecker;
-import nu.validator.checker.NormalizationChecker;
-import nu.validator.checker.TextContentChecker;
-import nu.validator.checker.UncheckedSubtreeWarner;
-import nu.validator.checker.UnsupportedFeatureChecker;
-import nu.validator.checker.UsemapChecker;
-import nu.validator.checker.XmlPiChecker;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -61,8 +61,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
-
-import org.apache.log4j.PropertyConfigurator;
 
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
@@ -75,6 +73,8 @@ import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.validate.prop.rng.RngProperty;
 import com.thaiopensource.validate.rng.CompactSchemaReader;
 import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Simple validation interface.

@@ -36,7 +36,6 @@ import nu.validator.checker.Checker;
 import nu.validator.checker.LocatorImpl;
 import nu.validator.checker.TaintableLocatorImpl;
 import nu.validator.checker.VnuBadAttrValueException;
-
 import nu.validator.datatype.Html5DatatypeException;
 import nu.validator.datatype.ImageCandidateStringsWidthRequired;
 import nu.validator.datatype.ImageCandidateStrings;
