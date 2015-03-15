@@ -254,6 +254,7 @@ public class SimpleDocumentValidator {
                     (LexicalHandler) lexicalHandler);
         }
         xmlReader = new IdFilter(xmlParser);
+        xmlReader.setFeature("http://xml.org/sax/features/string-interning", true);
         xmlReader.setContentHandler(validator.getContentHandler());
         xmlReader.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
