@@ -29,7 +29,7 @@ import java.util.HashSet;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class LinkRel extends AbstractRel {
+public final class LinkRel extends AbstractRel {
 
     private static final HashSet<String> registeredValues = new HashSet<String>();
 

@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class NonEmptyString extends AbstractDatatype {
+public final class NonEmptyString extends AbstractDatatype {
 
     /**
      * The singleton instance.
@@ -32,7 +32,7 @@ public class NonEmptyString extends AbstractDatatype {
     public static final NonEmptyString THE_INSTANCE = new NonEmptyString();
     
     /**
-     * Package-private constructor
+     * Private constructor
      */
     private NonEmptyString() {
         super();

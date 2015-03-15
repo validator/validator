@@ -27,7 +27,7 @@ import org.relaxng.datatype.DatatypeException;
 import java.util.Arrays;
 import com.ibm.icu.lang.UCharacter;
 
-public class KeyLabelList extends AbstractDatatype {
+public final class KeyLabelList extends AbstractDatatype {
 
     /**
      * The singleton instance.

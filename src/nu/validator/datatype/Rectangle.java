@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Rectangle extends AbstractInt {
+public final class Rectangle extends AbstractInt {
 
     /**
      * The singleton instance.

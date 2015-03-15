@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Circle extends AbstractInt {
+public final class Circle extends AbstractInt {
 
     /**
      * The singleton instance.

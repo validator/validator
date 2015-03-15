@@ -24,7 +24,7 @@ package nu.validator.datatype;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class SimpleColor extends AbstractDatatype {
+public final class SimpleColor extends AbstractDatatype {
 
     /**
      * The singleton instance.
@@ -32,7 +32,7 @@ public class SimpleColor extends AbstractDatatype {
     public static final SimpleColor THE_INSTANCE = new SimpleColor();
 
     /**
-     * Package-private constructor
+     * Private constructor
      */
     private SimpleColor() {
         super();

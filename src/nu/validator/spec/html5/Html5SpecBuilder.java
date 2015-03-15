@@ -46,7 +46,7 @@ import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.xml.util.Name;
 
-public class Html5SpecBuilder implements ContentHandler {
+public final class Html5SpecBuilder implements ContentHandler {
 
     private static final String NS = "http://www.w3.org/1999/xhtml";
 

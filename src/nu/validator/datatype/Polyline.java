@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.relaxng.datatype.DatatypeException;
 
-public class Polyline extends AbstractInt {
+public final class Polyline extends AbstractInt {
 
     /**
      * The singleton instance.
