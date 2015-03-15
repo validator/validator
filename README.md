@@ -1,9 +1,9 @@
-# The Nu HTML Checker (v.Nu) [![Nu HTML Checker chat room][1]][2]
+# The Nu Html Checker (v.Nu) [![Nu Html Checker chat room][1]][2]
 
    [1]: https://goo.gl/1kHqwI
    [2]: https://gitter.im/validator/validator
 
-The Nu HTML Checker (v.Nu) is a name for the backend of [html5.validator.nu][3],
+The Nu Html Checker (v.Nu) is a name for the backend of [html5.validator.nu][3],
 [validator.w3.org/nu][4], and the HTML5 facet of the legacy [W3C Validator][5].
 Its [source code is available][6], as are [instructions on how to build, test,
 and run the code][7]. The checker is released as two separate packages:
@@ -25,7 +25,7 @@ and run the code][7]. The checker is released as two separate packages:
    [9]: https://validator.github.io/validator/#standalone
    [10]: https://validator.github.io/validator/#servlet
 
-To use the Nu HTML Checker on your own, [get the latest release][11] and see the
+To use the Nu Html Checker on your own, [get the latest release][11] and see the
 **Usage** and **Web-based checking** sections belowーor alternatively, consider
 automating your HTML checking with a frontend such as:
 
@@ -147,7 +147,7 @@ executable provides the following options:
 
 ## Web-based checking with vnu.war or vnu.jar
 
-The Nu HTML Checkerーalong with being usable as [a standalone command-line
+The Nu Html Checkerーalong with being usable as [a standalone command-line
 client][16]ーcan be run as an HTTP service, similar to [html5.validator.nu][17]
 and [validator.w3.org/nu][18], for browser-based checking of HTML documents over
 the Web. To that end, the checker is released as two separate packages:

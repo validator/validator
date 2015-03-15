@@ -70,7 +70,7 @@ DEALINGS IN THE SOFTWARE.
       artifactId="jing"
       version="${version}"
       name="Jing"
-      description="A branch of Jing used by the Nu HTML Checker. (Jing is a tool for validating documents against RelaxNG schemas.)"
+      description="A branch of Jing used by the Nu Html Checker. (Jing is a tool for validating documents against RelaxNG schemas.)"
       url="http://www.thaiopensource.com/relaxng/jing.html"
       packaging="jar">
       <license

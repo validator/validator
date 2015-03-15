@@ -215,7 +215,7 @@ DEALINGS IN THE SOFTWARE.
       groupId="nu.validator"
       artifactId="validator"
       version="${version}"
-      name="The Nu HTML Checker"
+      name="The Nu Html Checker"
       description="An HTML-checking library (used by https://html5.validator.nu and the HTML5 facet of the W3C Validator)"
       url="https://validator.github.io/validator/"
       packaging="jar">
