@@ -68,7 +68,7 @@ public final class DatetimeTz extends AbstractDatetime {
      * @return the regexp for this datatype
      * @see nu.validator.datatype.AbstractDatetime#getPattern()
      */
-    protected final Pattern getPattern() {
+    protected Pattern getPattern() {
         return THE_PATTERN;
     }
 

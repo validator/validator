@@ -79,6 +79,7 @@ import org.xml.sax.SAXException;
 
 // Organized imports -- 2005-08-20 hsivonen
 // Removed unused imports -- 2015-03-03 rwhogg
+// removed unnecessary final -- 2015-03-12 rwhogg
 
 /**
  * Parse XML documents and return parse events through call-backs. Use the
@@ -2894,7 +2895,7 @@ final class XmlParser {
      *            The character to test.
      * @return true if the character is whitespace.
      */
-    private final boolean isWhitespace(char c) {
+    private boolean isWhitespace(char c) {
         if (c > 0x20) {
             return false;
         }
