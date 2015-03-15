@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Mozilla Foundation
+ * Copyright (c) 2013-2015 Mozilla Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -34,13 +34,14 @@ import nu.validator.htmlparser.common.Heuristics;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 import nu.validator.localentities.LocalCacheEntityResolver;
+import nu.validator.source.SourceCode;
 import nu.validator.xml.dataattributes.DataAttributeDroppingSchemaWrapper;
 import nu.validator.xml.langattributes.XmlLangAttributeDroppingSchemaWrapper;
 import nu.validator.xml.roleattributes.RoleAttributeFilteringSchemaWrapper;
 import nu.validator.xml.IdFilter;
 import nu.validator.xml.NullEntityResolver;
 import nu.validator.xml.TypedInputSource;
-
+import nu.validator.xml.WiretapXMLReaderWrapper;
 import nu.validator.checker.jing.CheckerSchema;
 import nu.validator.checker.jing.CheckerValidator;
 import nu.validator.checker.table.TableChecker;
@@ -53,11 +54,15 @@ import nu.validator.checker.UnsupportedFeatureChecker;
 import nu.validator.checker.UsemapChecker;
 import nu.validator.checker.XmlPiChecker;
 
+import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.ext.LexicalHandler;
+
+import org.apache.log4j.PropertyConfigurator;
 
 import com.thaiopensource.relaxng.impl.CombineValidator;
 import com.thaiopensource.util.PropertyMap;
@@ -86,9 +91,17 @@ public class SimpleDocumentValidator {
 
     private Validator validator;
 
+    private SourceCode sourceCode = new SourceCode();
+
     private HtmlParser htmlParser = null;
 
-    private XMLReader xmlParser;
+    private XMLReader htmlReader;
+
+    private SAXDriver xmlParser;
+
+    private XMLReader xmlReader;
+
+    private LexicalHandler lexicalHandler;
 
     private Schema schemaByUrl(String schemaUrl, ErrorHandler errorHandler)
             throws Exception, SchemaReadException {
@@ -117,9 +130,15 @@ public class SimpleDocumentValidator {
     }
 
     public SimpleDocumentValidator() {
+        PropertyConfigurator.configure(SimpleDocumentValidator.class.getClassLoader().getResource(
+                "nu/validator/localentities/files/log4j.properties"));
         this.entityResolver = new LocalCacheEntityResolver(
                 new NullEntityResolver());
         this.entityResolver.setAllowRnc(true);
+    }
+
+    public SourceCode getSourceCode() {
+        return this.sourceCode;
     }
 
     /* *
@@ -205,6 +224,7 @@ public class SimpleDocumentValidator {
         }
 
         htmlParser = new HtmlParser();
+        htmlParser.addCharacterHandler(sourceCode);
         htmlParser.setCommentPolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setContentNonXmlCharPolicy(XmlViolationPolicy.ALLOW);
         htmlParser.setContentSpacePolicy(XmlViolationPolicy.ALTER_INFOSET);
@@ -224,24 +244,41 @@ public class SimpleDocumentValidator {
         if (!noStream) {
             htmlParser.setStreamabilityViolationPolicy(XmlViolationPolicy.FATAL);
         }
+        htmlReader = getWiretap(htmlParser);
 
-        xmlParser = new IdFilter(new SAXDriver());
-        xmlParser.setContentHandler(validator.getContentHandler());
-        xmlParser.setErrorHandler(docValidationErrHandler);
-        xmlParser.setFeature(
+        xmlParser = new SAXDriver();
+        if (lexicalHandler != null) {
+            xmlParser.setProperty(
+                    "http://xml.org/sax/properties/lexical-handler",
+                    (LexicalHandler) lexicalHandler);
+        }
+        xmlReader = new IdFilter(xmlParser);
+        xmlReader.setContentHandler(validator.getContentHandler());
+        xmlReader.setFeature(
                 "http://xml.org/sax/features/unicode-normalization-checking",
                 true);
         if (loadExternalEnts) {
-            xmlParser.setEntityResolver(entityResolver);
+            xmlReader.setEntityResolver(entityResolver);
         } else {
-            xmlParser.setFeature(
+            xmlReader.setFeature(
                     "http://xml.org/sax/features/external-general-entities",
                     false);
-            xmlParser.setFeature(
+            xmlReader.setFeature(
                     "http://xml.org/sax/features/external-parameter-entities",
                     false);
-            xmlParser.setEntityResolver(new NullEntityResolver());
+            xmlReader.setEntityResolver(new NullEntityResolver());
         }
+        xmlReader = getWiretap(xmlParser);
+        xmlParser.setErrorHandler(docValidationErrHandler);
+        xmlParser.lockErrorHandler();
+    }
+
+    private WiretapXMLReaderWrapper getWiretap(XMLReader reader) {
+        WiretapXMLReaderWrapper wiretap = new WiretapXMLReaderWrapper(reader);
+        ContentHandler recorder = sourceCode.getLocationRecorder();
+        wiretap.setWiretapContentHander(recorder);
+        wiretap.setWiretapLexicalHandler((LexicalHandler) recorder);
+        return wiretap;
     }
 
     /* *
@@ -316,8 +353,9 @@ public class SimpleDocumentValidator {
      * Parses a document with the text/html parser and validates it.
      */
     private void checkAsHTML(InputSource is) throws IOException, SAXException {
+        sourceCode.initialize(is);
         try {
-            htmlParser.parse(is);
+            htmlReader.parse(is);
         } catch (SAXParseException e) {
         }
     }
@@ -326,8 +364,10 @@ public class SimpleDocumentValidator {
      * Parses a document with the XML parser and validates it.
      */
     private void checkAsXML(InputSource is) throws IOException, SAXException {
+        xmlParser.setCharacterHandler(sourceCode);
+        sourceCode.initialize(is);
         try {
-            xmlParser.parse(is);
+            xmlReader.parse(is);
         } catch (SAXParseException e) {
         }
     }

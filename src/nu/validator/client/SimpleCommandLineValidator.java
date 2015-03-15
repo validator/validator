@@ -319,7 +319,7 @@ public class SimpleCommandLineValidator {
     }
 
     private static void setErrorHandler() {
-        SourceCode sourceCode = new SourceCode();
+        SourceCode sourceCode = validator.getSourceCode();
         ImageCollector imageCollector = new ImageCollector(sourceCode);
         boolean showSource = false;
         if (outputFormat == OutputFormat.TEXT) {
