@@ -1409,7 +1409,7 @@ public class Assertions extends Checker {
                     }
                 }
 
-                if (atts.getType(i) == "ID") {
+                if (atts.getType(i) == "ID" || "id" == atts.getLocalName(i)) {
                     String attVal = atts.getValue(i);
                     if (attVal.length() != 0) {
                         ids.add(attVal);
