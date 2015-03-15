@@ -249,7 +249,7 @@ datatypes w = "http://whattf.org/datatype-draft"
 		)
 		meta.name.attrs.name =
 			attribute name {
-				w:meta-name
+				w:non-empty-string
 			}
 		meta.name.attrs.content =
 			attribute content {

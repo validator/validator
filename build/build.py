@@ -1036,7 +1036,6 @@ def downloadLocalEntities():
     "subtag-registry": "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry",
     "syntax-descriptions": "https://wiki.whatwg.org/wiki/MicrosyntaxDescriptions",
     "vnu-alt-advice": "https://wiki.whatwg.org/wiki/Validator.nu_alt_advice",
-    "meta-name-extensions": "https://help.whatwg.org/extensions/meta-name/",
     "link-rel-extensions": "https://help.whatwg.org/extensions/link-rel/",
     "a-rel-extensions": "https://help.whatwg.org/extensions/a-rel/",
   }

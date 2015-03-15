@@ -49,7 +49,7 @@ public class ARel extends AbstractRel {
         registeredValues.add("tag");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
-                MetaName.class.getClassLoader().getResourceAsStream(
+                ARel.class.getClassLoader().getResourceAsStream(
                         "nu/validator/localentities/files/a-rel-extensions")));
         // Read in registered rel values from cached copy of the registry
         try {

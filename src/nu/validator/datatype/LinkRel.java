@@ -50,7 +50,7 @@ public class LinkRel extends AbstractRel {
 
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(
-                        MetaName.class.getClassLoader().getResourceAsStream(
+                        LinkRel.class.getClassLoader().getResourceAsStream(
                                 "nu/validator/localentities/files/link-rel-extensions")));
         // Read in registered rel values from cached copy of the registry
         try {

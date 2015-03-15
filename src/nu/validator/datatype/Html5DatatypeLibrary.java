@@ -160,8 +160,6 @@ public class Html5DatatypeLibrary implements DatatypeLibrary {
             return ARel.THE_INSTANCE;
         } else if ("link-rel".equals(typeLocalName)) {
             return LinkRel.THE_INSTANCE;
-        } else if ("meta-name".equals(typeLocalName)) {
-            return MetaName.THE_INSTANCE;
         } else if ("non-empty-string".equals(typeLocalName)) {
             return NonEmptyString.THE_INSTANCE;
         } else if ("string-without-line-breaks".equals(typeLocalName)) {
