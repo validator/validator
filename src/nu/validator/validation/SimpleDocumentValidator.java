@@ -247,6 +247,7 @@ public class SimpleDocumentValidator {
         htmlReader = getWiretap(htmlParser);
 
         xmlParser = new SAXDriver();
+        xmlParser.setContentHandler(validator.getContentHandler());
         if (lexicalHandler != null) {
             xmlParser.setProperty(
                     "http://xml.org/sax/properties/lexical-handler",
