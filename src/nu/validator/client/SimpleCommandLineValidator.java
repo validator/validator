@@ -350,7 +350,7 @@ public class SimpleCommandLineValidator {
         System.out.println("");
         System.out.println("    java -jar vnu.jar [--errors-only] [--no-stream]");
         System.out.println("         [--format gnu|xml|json|text] [--help] [--html]");
-        System.out.println("         [--verbose] [--version] FILES");
+        System.out.println("         [--skip-non-html] [--verbose] [--version] FILES");
         System.out.println("");
         System.out.println("    java -cp vnu.jar nu.validator.servlet.Main 8888");
         System.out.println("");
